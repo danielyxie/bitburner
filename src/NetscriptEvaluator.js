@@ -196,8 +196,11 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
                 }
                 var runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;
-                server.runningScripts.push(runningScriptObj);    //Push onto runningScripts
                 addWorkerScript(runningScriptObj, server);
+
+                // Push onto runningScripts.
+                // This has to come after addWorkerScript() because that fn updates RAM usage
+                server.runScript(runningScriptObj, Player);
                 return Promise.resolve(true);
             }
         }

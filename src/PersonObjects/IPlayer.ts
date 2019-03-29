@@ -12,6 +12,8 @@ import { IPlayerOwnedAugmentation }     from "../Augmentation/PlayerOwnedAugment
 import { Company }                      from "../Company/Company";
 import { CompanyPosition }              from "../Company/CompanyPosition";
 import { CityName }                     from "../Locations/data/CityNames";
+import { HacknetNode }                  from "../Hacknet/HacknetNode";
+import { HacknetServer }                from "../Hacknet/HacknetServer";
 import { LocationName }                 from "../Locations/data/LocationNames";
 import { IPlayerOwnedSourceFile }       from "../SourceFile/PlayerOwnedSourceFile";
 import { MoneySourceTracker }           from "../utils/MoneySourceTracker";
@@ -26,7 +28,7 @@ export interface IPlayer {
     corporation: any;
     currentServer: string;
     factions: string[];
-    hacknetNodes: any[];
+    hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
     hasWseAccount: boolean;
     jobs: IMap<string>;
     karma: number;

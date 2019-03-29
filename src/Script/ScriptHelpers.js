@@ -1,3 +1,5 @@
+import { Script }                               from "./Script";
+
 import { calculateRamUsage }                    from "./RamCalculations";
 import { isScriptFilename }                     from "./ScriptHelpersTS";
 
@@ -269,7 +271,7 @@ function saveAndCloseScriptEditor() {
         }
 
         //If the current script does NOT exist, create a new one
-        var script = new Script();
+        const script = new Script();
         script.saveScript(getCurrentEditor().getCode(), Player);
         s.scripts.push(script);
     } else if (filename.endsWith(".txt")) {

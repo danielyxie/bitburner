@@ -327,7 +327,7 @@ function displayLocationContent() {
     setJobRequirementTooltip(loc, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]], networkEngineerJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessCompanyPositions[0]], businessJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], businessConsultantJob);
-    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityCompanyPositions[0]], securityJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityCompanyPositions[2]], securityJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.AgentCompanyPositions[0]], agentJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.MiscCompanyPositions[1]], employeeJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.PartTimeCompanyPositions[1]], employeePartTimeJob);

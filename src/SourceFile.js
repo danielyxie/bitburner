@@ -68,9 +68,9 @@ function initSourceFiles() {
     SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
                                                      "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
                                                      " increases the player's company salary and reputation gain multipliers by:<br><br>" +
-                                                     "Level 1: 24%<br>" +
-                                                     "Level 2: 36%<br>" +
-                                                     "Level 3: 42%<br>");
+                                                     "Level 1: 32%<br>" +
+                                                     "Level 2: 48%<br>" +
+                                                     "Level 3: 56%<br>");
     SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is multiplicative with itself. " +
                                                      "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
 }
@@ -194,7 +194,7 @@ function applySourceFile(srcFile) {
         case 11: //The Big Crash
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (24 / (Math.pow(2, i)));
+                mult += (32 / (Math.pow(2, i)));
             }
             var incMult = 1 + (mult / 100);
             Player.work_money_mult    *= incMult;

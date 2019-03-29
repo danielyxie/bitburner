@@ -21,6 +21,8 @@ import { Faction }                              from "./Faction/Faction";
 import { Factions }                             from "./Faction/Factions";
 import { displayFactionContent }                from "./Faction/FactionHelpers";
 import {Gang, resetGangs}                       from "./Gang";
+import { hasHacknetServers }                    from "./Hacknet/HacknetHelpers";
+import { HashManager }                          from "./Hacknet/HashManager";
 import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import { Sleeve }                               from "./PersonObjects/Sleeve/Sleeve";
@@ -111,10 +113,13 @@ function PlayerObject() {
     // Company at which player is CURRENTLY working (only valid when the player is actively working)
     this.companyName = "";      // Name of Company. Must match a key value in Companies map
 
-    //Servers
+    // Servers
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
-    this.hacknetNodes           = [];
+
+    // Hacknet Nodes/Servers
+    this.hacknetNodes           = []; // Note: For Hacknet Servers, this array holds the IP addresses of the servers
+    this.hashManager            = new HashManager();
 
     //Factions
     this.factions = [];             //Names of all factions player has joined
@@ -283,7 +288,11 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     for (let i = 0; i < this.sleeves.length; ++i) {
         if (this.sleeves[i] instanceof Sleeve) {
-            this.sleeves[i].shockRecovery(this);
+            if (this.sleeves[i].shock >= 100) {
+                this.sleeves[i].synchronize(this);
+            } else {
+                this.sleeves[i].shockRecovery(this);
+            }
         }
     }
 
@@ -374,7 +383,11 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
     this.sleeves.length = SourceFileFlags[10] + this.sleevesFromCovenant;
     for (let i = 0; i < this.sleeves.length; ++i) {
-        this.sleeves[i] = new Sleeve(this);
+        if (this.sleeves[i] instanceof Sleeve) {
+            this.sleeves[i].prestige(this);
+        } else {
+            this.sleeves[i] = new Sleeve(this);
+        }
     }
 
     this.isWorking = false;
@@ -1387,45 +1400,46 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     //Find cost and exp gain per game cycle
     var cost = 0;
     var hackExp = 0, strExp = 0, defExp = 0, dexExp = 0, agiExp = 0, chaExp = 0;
+    const hashManager = this.hashManager;
     switch (className) {
         case CONSTANTS.ClassStudyComputerScience:
-            hackExp = baseStudyComputerScienceExp * expMult / gameCPS;
+            hackExp = baseStudyComputerScienceExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassDataStructures:
             cost = CONSTANTS.ClassDataStructuresBaseCost * costMult / gameCPS;
-            hackExp = baseDataStructuresExp * expMult / gameCPS;
+            hackExp = baseDataStructuresExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassNetworks:
             cost = CONSTANTS.ClassNetworksBaseCost * costMult / gameCPS;
-            hackExp = baseNetworksExp * expMult / gameCPS;
+            hackExp = baseNetworksExp * expMult / gameCPS  * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassAlgorithms:
             cost = CONSTANTS.ClassAlgorithmsBaseCost * costMult / gameCPS;
-            hackExp = baseAlgorithmsExp * expMult / gameCPS;
+            hackExp = baseAlgorithmsExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassManagement:
             cost = CONSTANTS.ClassManagementBaseCost * costMult / gameCPS;
-            chaExp = baseManagementExp * expMult / gameCPS;
+            chaExp = baseManagementExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassLeadership:
             cost = CONSTANTS.ClassLeadershipBaseCost * costMult / gameCPS;
-            chaExp = baseLeadershipExp * expMult / gameCPS;
+            chaExp = baseLeadershipExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassGymStrength:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            strExp = baseGymExp * expMult / gameCPS;
+            strExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDefense:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            defExp = baseGymExp * expMult / gameCPS;
+            defExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDexterity:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            dexExp = baseGymExp * expMult / gameCPS;
+            dexExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymAgility:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            agiExp = baseGymExp * expMult / gameCPS;
+            agiExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         default:
             throw new Error("ERR: Invalid/unrecognized class name");
@@ -2324,10 +2338,19 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var totalHacknetRam = 0;
     var totalHacknetCores = 0;
     var totalHacknetLevels = 0;
-    for (var i = 0; i < this.hacknetNodes.length; ++i) {
-        totalHacknetLevels += this.hacknetNodes[i].level;
-        totalHacknetRam += this.hacknetNodes[i].ram;
-        totalHacknetCores += this.hacknetNodes[i].cores;
+    for (let i = 0; i < this.hacknetNodes.length; ++i) {
+        if (hasHacknetServers()) {
+            const hserver = AllServers[this.hacknetNodes[i]];
+            if (hserver) {
+                totalHacknetLevels += hserver.level;
+                totalHacknetRam += hserver.maxRam;
+                totalHacknetCores += hserver.cores;
+            }
+        } else {
+            totalHacknetLevels += this.hacknetNodes[i].level;
+            totalHacknetRam += this.hacknetNodes[i].ram;
+            totalHacknetCores += this.hacknetNodes[i].cores;
+        }
     }
     if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
         this.hacking_skill >= 80 && totalHacknetRam >= 8 &&

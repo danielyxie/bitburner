@@ -8,6 +8,8 @@ import { ResearchMap } from "./ResearchMap";
 
 import { IMap } from "../types";
 
+import { numeralWrapper } from "../ui/numeralFormat";
+
 interface IConstructorParams {
     children?: Node[];
     cost: number;
@@ -83,7 +85,7 @@ export class Node {
             children: childrenArray,
             HTMLclass: htmlClass,
             innerHTML:  `<div id="${sanitizedName}-corp-research-click-listener" class="tooltip">` +
-                            `${this.text}<br>${this.cost} Scientific Research` +
+                            `${this.text}<br>${numeralWrapper.format(this.cost, "0,0")} Scientific Research` +
                             `<span class="tooltiptext">` +
                                 `${research.desc}` +
                             `</span>` +

@@ -14,7 +14,7 @@ import { PurchaseAugmentationsOrderSetting }    from "../Settings/SettingEnums";
 import { Settings }                             from "../Settings/Settings";
 import { SourceFileFlags }                      from "../SourceFile/SourceFileFlags";
 
-import { createPurchaseSleevesFromCovenantPopup }   from "../PersonObjects/Sleeve/SleeveCovenantPurchases";
+import { createSleevePurchasesFromCovenantPopup }   from "../PersonObjects/Sleeve/SleeveCovenantPurchases";
 
 import {Page, routing}                          from "../ui/navigationTracking";
 import {numeralWrapper}                         from "../ui/numeralFormat";
@@ -199,7 +199,7 @@ function displayFactionContent(factionName) {
         innerText:"This donation will result in 0.000 reputation gain"
     });
     var donateAmountInput = createElement("input", {
-        placeholder:"Donation amount",
+        class: "text-input", placeholder:"Donation amount",
         inputListener:()=>{
             let amt = 0;
             if(donateAmountInput.value !== "") {
@@ -348,7 +348,7 @@ function displayFactionContent(factionName) {
             class: "std-button",
             innerText: "Purchase Duplicate Sleeves",
             clickListener: () => {
-                createPurchaseSleevesFromCovenantPopup(Player);
+                createSleevePurchasesFromCovenantPopup(Player);
             }
         }));
         covenantPurchaseSleevesDivWrapper.appendChild(createElement("p", {

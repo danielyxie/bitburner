@@ -9,7 +9,7 @@ and creating programs.
 
 The Singularity Functions are **not** immediately available to the player and must be unlocked later in the game.
 
-**WARNING: This page contains spoilers for the game**.
+.. warning:: This page contains spoilers for the game
 
 The Singularity Functions are unlocked in BitNode-4. If you are in BitNode-4, then you will automatically have access to all of these functions.
 You can use the Singularity Functions in other BitNodes if and only if you have the Source-File for BitNode-4 (aka Source-File 4). Each level of
@@ -20,7 +20,7 @@ Note that Singularity Functions require twice as much RAM outside of BitNode-4
 
 .. toctree::
     :caption: Functions:
-    
+
     universityCourse() <singularityfunctions/universityCourse>
     gymWorkout() <singularityfunctions/gymWorkout>
     travelToCity() <singularityfunctions/travelToCity>

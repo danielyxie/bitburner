@@ -160,6 +160,8 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                     func = workerScript.env.vars.codingcontract[ref];
                 } else if (ref in workerScript.env.vars.gang) {
                     func = workerScript.env.vars.gang[ref];
+                } else if (ref in workerScript.env.vars.sleeve) {
+                    func = workerScript.env.vars.sleeve[ref];
                 } else {
                     func = workerScript.env.get(ref);
                 }

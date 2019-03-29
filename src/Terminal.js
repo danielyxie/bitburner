@@ -19,6 +19,7 @@ import {calculateHackingChance,
         calculateHackingTime,
         calculateGrowTime,
         calculateWeakenTime}                from "./Hacking";
+import { HacknetServer }                    from "./Hacknet/HacknetServer";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         ITutorial}                          from "./InteractiveTutorial";
@@ -760,18 +761,19 @@ let Terminal = {
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
             let currServ = Player.getCurrentServer();
+            const isHacknet = currServ instanceof HacknetServer;
 			post(currServ.hostname + ": ");
             post("Organization name: " + currServ.organizationName);
             var rootAccess = "";
             if (currServ.hasAdminRights) {rootAccess = "YES";}
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
-			post("Required hacking skill: " + currServ.requiredHackingSkill);
+			if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
 			post("Server security level: " + numeralWrapper.format(currServ.hackDifficulty, '0.000a'));
 			post("Chance to hack: " + numeralWrapper.format(calculateHackingChance(currServ), '0.00%'));
 			post("Time to hack: " + numeralWrapper.format(calculateHackingTime(currServ), '0.000') + " seconds");
 			post("Total money available on server: " + numeralWrapper.format(currServ.moneyAvailable, '$0,0.00'));
-			post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
+			if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
 
             if (currServ.sshPortOpen) {
 				post("SSH port: Open")
@@ -1859,17 +1861,20 @@ let Terminal = {
             visited[ip] = 0;
         }
 
-        var stack = [];
-        var depthQueue = [0];
-        var currServ = Player.getCurrentServer();
+        const stack = [];
+        const depthQueue = [0];
+        const currServ = Player.getCurrentServer();
         stack.push(currServ);
         while(stack.length != 0) {
-            var s = stack.pop();
-            var d = depthQueue.pop();
+            const s = stack.pop();
+            const d = depthQueue.pop();
+            const isHacknet = s instanceof HacknetServer;
             if (!all && s.purchasedByPlayer && s.hostname != "home") {
-                continue; //Purchased server
+                continue; // Purchased server
             } else if (visited[s.ip] || d > depth) {
-                continue; //Already visited or out-of-depth
+                continue; // Already visited or out-of-depth
+            } else if (!all && isHacknet) {
+                continue; // Hacknet Server
             } else {
                 visited[s.ip] = 1;
             }
@@ -1889,8 +1894,8 @@ let Terminal = {
             //var dashes = Array(d * 2 + 1).join("-");
             var c = "NO";
             if (s.hasAdminRights) {c = "YES";}
-            post(dashes + "Root Access: " + c + ", Required hacking skill: " + s.requiredHackingSkill);
-            post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+            post(`${dashes}Root Access: ${c} ${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
+            if (!isHacknet) { post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired); }
             post(dashes + "RAM: " + s.maxRam);
             post(" ");
         }
@@ -2240,9 +2245,12 @@ let Terminal = {
                     post("May take a few seconds to start up the process...");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;
-					server.runningScripts.push(runningScriptObj);
 
 					addWorkerScript(runningScriptObj, server);
+
+                    // This has to come after addWorkerScript() because that fn
+                    // updates the RAM usage. This kinda sucks, address if possible
+                    server.runScript(runningScriptObj, Player);
 					return;
 				}
 			}

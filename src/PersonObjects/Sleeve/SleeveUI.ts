@@ -288,7 +288,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     }
 
     elems.taskPanel = createElement("div", { class: "sleeve-panel", width: "40%" });
-    elems.taskSelector = createElement("select") as HTMLSelectElement;
+    elems.taskSelector = createElement("select", { class: "dropdown" }) as HTMLSelectElement;
     elems.taskSelector.add(createOptionElement("------"));
     elems.taskSelector.add(createOptionElement("Work for Company"));
     elems.taskSelector.add(createOptionElement("Work for Faction"));
@@ -297,8 +297,8 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     elems.taskSelector.add(createOptionElement("Workout at Gym"));
     elems.taskSelector.add(createOptionElement("Shock Recovery"));
     elems.taskSelector.add(createOptionElement("Synchronize"));
-    elems.taskDetailsSelector = createElement("select") as HTMLSelectElement;
-    elems.taskDetailsSelector2 = createElement("select") as HTMLSelectElement;
+    elems.taskDetailsSelector = createElement("select", { class: "dropdown" }) as HTMLSelectElement;
+    elems.taskDetailsSelector2 = createElement("select", { class: "dropdown" }) as HTMLSelectElement;
     elems.taskDescription = createElement("p");
     elems.taskProgressBar = createElement("p");
     elems.taskSelector.addEventListener("change", () => {
@@ -383,7 +383,8 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
                               `HP: ${numeralWrapper.format(sleeve.hp, "0,0")} / ${numeralWrapper.format(sleeve.max_hp, "0,0")}`,
                               `City: ${sleeve.city}`,
                               `Shock: ${numeralWrapper.format(100 - sleeve.shock, "0,0.000")}`,
-                              `Sync: ${numeralWrapper.format(sleeve.sync, "0,0.000")}`].join("<br>");
+                              `Sync: ${numeralWrapper.format(sleeve.sync, "0,0.000")}`,
+                              `Memory: ${numeralWrapper.format(sleeve.memory, "0")}`].join("<br>");
 
     let repGainText: string = "";
     if (sleeve.currentTask === SleeveTaskType.Company || sleeve.currentTask === SleeveTaskType.Faction) {

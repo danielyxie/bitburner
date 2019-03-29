@@ -1,48 +1,18 @@
 /**
- * Implements the purchasing of extra Duplicate Sleeves from The Covenant
+ * Implements the purchasing of extra Duplicate Sleeves from The Covenant,
+ * as well as the purchasing of upgrades (memory)
  */
-import { Sleeve } from "./Sleeve";
 import { IPlayer } from "../IPlayer";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
-
-import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { yesNoBoxCreate,
-         yesNoBoxClose,
-         yesNoBoxGetYesButton,
-         yesNoBoxGetNoButton } from "../../../utils/YesNoBox";
+import { CovenantPurchasesRoot } from "./ui/CovenantPurchasesRoot";
+import { createPopup,
+         removePopup } from "../../ui/React/createPopup";
 
 export const MaxSleevesFromCovenant: number = 5;
+export const BaseCostPerSleeve: number = 10e12;
+export const PopupId: string = "covenant-sleeve-purchases-popup";
 
-export function createPurchaseSleevesFromCovenantPopup(p: IPlayer) {
-    if (p.sleevesFromCovenant >= MaxSleevesFromCovenant) { return; }
-
-    // First sleeve purchased costs the base amount. Then, the price of
-    // each successive one increases by the same amount
-    const baseCostPerExtraSleeve: number = 10e12;
-    const cost: number = (p.sleevesFromCovenant + 1) * baseCostPerExtraSleeve;
-
-    const yesBtn = yesNoBoxGetYesButton();
-    const noBtn = yesNoBoxGetNoButton();
-
-    yesBtn!.addEventListener("click", () => {
-        if (p.canAfford(cost)) {
-            p.loseMoney(cost);
-            p.sleevesFromCovenant += 1;
-            p.sleeves.push(new Sleeve(p));
-            yesNoBoxClose();
-        } else {
-            dialogBoxCreate("You cannot afford to purchase a Duplicate Sleeve", false);
-        }
-    });
-
-    noBtn!.addEventListener("click", () => {
-        yesNoBoxClose();
-    });
-
-    const txt = `Would you like to purchase an additional Duplicate Sleeve from The Covenant for ` +
-                `${numeralWrapper.formatMoney(cost)}?<br><br>` +
-                `These Duplicate Sleeves are permanent. You can purchase a total of 5 Duplicate ` +
-                `Sleeves from The Covenant`;
-    yesNoBoxCreate(txt);
+export function createSleevePurchasesFromCovenantPopup(p: IPlayer) {
+    const removePopupFn = removePopup.bind(null, PopupId);
+    createPopup(PopupId, CovenantPurchasesRoot, { p: p, closeFn: removePopupFn });
 }

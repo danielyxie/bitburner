@@ -1,4 +1,3 @@
-import {HacknetNode}                    from "./HacknetNode";
 import {NetscriptFunctions}             from "./NetscriptFunctions";
 import {NetscriptPort}                  from "./NetscriptPort";
 
@@ -54,37 +53,6 @@ Environment.prototype = {
         } else {
             return this.vars[name] = value;
         }
-    },
-
-    setArrayElement: function(name, idx, value) {
-        if (!(idx instanceof Array)) {
-            throw new Error("idx parameter is not an Array");
-        }
-        var scope = this.lookup(name);
-        if (!scope && this.parent) {
-            throw new Error("Undefined variable " + name);
-        }
-        var arr = (scope || this).vars[name];
-        if (!(arr.constructor === Array || arr instanceof Array)) {
-            throw new Error("Variable is not an array: " + name);
-        }
-        var res = arr;
-        for (var iterator = 0; iterator < idx.length-1; ++iterator) {
-            var i = idx[iterator];
-            if (!(res instanceof Array) || i >= res.length) {
-                throw new Error("Out-of-bounds array access");
-            }
-            res = res[i];
-        }
-
-        //Cant assign to ports or HacknetNodes
-        if (res[idx[idx.length-1]] instanceof HacknetNode) {
-            throw new Error("Cannot assign a Hacknet Node handle to a new value");
-        }
-        if (res[idx[idx.length-1]] instanceof NetscriptPort) {
-            throw new Error("Cannot assign a Netscript Port handle to a new value");
-        }
-        return res[idx[idx.length-1]] = value;
     },
 
 	//Creates (or overwrites) a variable in the current scope

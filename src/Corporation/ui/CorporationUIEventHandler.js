@@ -10,14 +10,22 @@ import { Corporation,
          OfficeInitialSize,
          SellSharesCooldown,
          WarehouseInitialCost,
-         WarehouseInitialSize } from "../Corporation";
+         WarehouseInitialSize,
+         BribeToRepRatio } from "../Corporation";
 
 import { Industries,
          IndustryStartingCosts,
          IndustryDescriptions,
          IndustryResearchTrees } from "../IndustryData";
 
+import { MaterialSizes } from "../MaterialSizes";
+
+import { Product } from "../Product";
+
 import { Player } from "../../Player";
+
+import { Factions } from "../../Faction/Factions";
+import { Cities } from "../../Locations/Cities";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -79,7 +87,7 @@ export class CorporationEventHandler {
 
                     var totalAmount = Number(money) + (stockShares * stockPrice);
                     var repGain = totalAmount / BribeToRepRatio;
-                    repGainText.innerText = "You will gain " + numeralWrapper.formatNumber(repGain, "0,0") +
+                    repGainText.innerText = "You will gain " + numeralWrapper.format(repGain, "0,0") +
                                             " reputation with " +
                                             factionSelector.options[factionSelector.selectedIndex].value +
                                             " with this bribe";
@@ -102,14 +110,14 @@ export class CorporationEventHandler {
                     var totalAmount = money + (stockShares * stockPrice);
                     var repGain = totalAmount / BribeToRepRatio;
                     console.log("repGain: " + repGain);
-                    repGainText.innerText = "You will gain " + numeralWrapper.formatNumber(repGain, "0,0") +
+                    repGainText.innerText = "You will gain " + numeralWrapper.format(repGain, "0,0") +
                                             " reputation with " +
                                             factionSelector.options[factionSelector.selectedIndex].value +
                                             " with this bribe";
                 }
             }
         });
-        var confirmButton = createElement("a", {
+        var confirmButton = createElement("button", {
             class:"a-link-button", innerText:"Bribe", display:"inline-block",
             clickListener:()=>{
                 var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -129,7 +137,7 @@ export class CorporationEventHandler {
                 } else {
                     var totalAmount = money + (stockShares * stockPrice);
                     var repGain = totalAmount / BribeToRepRatio;
-                    dialogBoxCreate("You gained " + formatNumber(repGain, 0) +
+                    dialogBoxCreate("You gained " + numeralWrapper.format(repGain, "0,0") +
                                     " reputation with " + fac.name  + " by bribing them.");
                     fac.playerReputation += repGain;
                     this.corp.funds = this.corp.funds.minus(money);
@@ -140,6 +148,7 @@ export class CorporationEventHandler {
             }
         });
         const cancelButton = createPopupCloseButton(popupId, {
+            class: "std-button",
             display: "inline-block",
             innerText: "Cancel",
         })
@@ -168,7 +177,6 @@ export class CorporationEventHandler {
             type:"number", placeholder:"Shares to buyback", margin:"5px",
             inputListener: ()=> {
                 var numShares = Math.round(input.value);
-                //TODO add conditional for if player doesn't have enough money
                 if (isNaN(numShares) || numShares <= 0) {
                     costIndicator.innerText = "ERROR: Invalid value entered for number of shares to buyback"
                 } else if (numShares > this.corp.issuedShares) {
@@ -181,7 +189,7 @@ export class CorporationEventHandler {
                 }
             }
         });
-        var confirmBtn = createElement("a", {
+        var confirmBtn = createElement("button", {
             class:"a-link-button", innerText:"Buy shares", display:"inline-block",
             clickListener: () => {
                 var shares = Math.round(input.value);
@@ -226,7 +234,7 @@ export class CorporationEventHandler {
     }
 
     // Create a popup that lets the player discontinue a product
-    createDiscontinueProductPopup(product) {
+    createDiscontinueProductPopup(product, industry) {
         const popupId = "cmpy-mgmt-discontinue-product-popup";
         const txt = createElement("p", {
             innerText:"Are you sure you want to do this? Discontinuing a product " +
@@ -234,18 +242,18 @@ export class CorporationEventHandler {
                       "produce this product and all of its existing stock will be " +
                       "removed and left unsold",
         });
-        const confirmBtn = createElement("a", {
-            class:"a-link-button",innerText:"Discontinue",
-            clickListener:()=>{
-                industry.discontinueProduct(product, parentRefs);
+        const confirmBtn = createElement("button", {
+            class:"popup-box-button",innerText:"Discontinue",
+            clickListener: () => {
+                industry.discontinueProduct(product);
                 removeElementById(popupId);
-                this.corp.rerender();
+                this.rerender();
                 return false;
             }
         });
         const cancelBtn = createPopupCloseButton(popupId, { innerText: "Cancel" });
 
-        createPopup(popupId, [txt, confirmBtn, cancelBtn]);
+        createPopup(popupId, [txt, cancelBtn, confirmBtn]);
     }
 
     // Create a popup that lets the player manage exports
@@ -294,7 +302,7 @@ export class CorporationEventHandler {
             placeholder:"Export amount / s"
         });
 
-        const exportBtn  = createElement("a", {
+        const exportBtn  = createElement("button", {
             class: "std-button", display:"inline-block", innerText:"Export",
             clickListener: () => {
                 const industryName = getSelectText(industrySelector);
@@ -340,7 +348,7 @@ export class CorporationEventHandler {
                 clickListener:()=>{
                     mat.exp.splice(i, 1); //Remove export object
                     removeElementById(popupId);
-                    createExportPopup();
+                    createExportMaterialPopup(mat);
                 }
             }));
             })(i, mat, currExports);
@@ -473,7 +481,7 @@ export class CorporationEventHandler {
             }
         });
 
-        issueBtn = createElement("a", {
+        issueBtn = createElement("button", {
             class: "std-button",
             display: "inline-block",
             innerText: "Issue New Shares",
@@ -529,7 +537,7 @@ export class CorporationEventHandler {
     }
 
     // Create a popup that lets the player limit the production of a product
-    createLimitProductProdutionPopup(product) {
+    createLimitProductProdutionPopup(product, city) {
         const popupId = "cmpy-mgmt-limit-product-production-popup";
         const txt = createElement("p", {
             innerText:"Enter a limit to the amount of this product you would " +
@@ -537,17 +545,19 @@ export class CorporationEventHandler {
         });
         let confirmBtn;
         const input = createElement("input", {
-            type:"number", placeholder:"Limit",
+            margin: "5px",
+            placeholder:"Limit",
+            type:"number",
             onkeyup: (e) => {
                 e.preventDefault();
                 if (e.keyCode === KEY.ENTER) { confirmBtn.click(); }
             }
         });
-        confirmBtn = createElement("a", {
+        confirmBtn = createElement("button", {
             class: "std-button",
-            display:"inline-block",
-            innerText:"Limit production",
-            margin:'6px',
+            display: "inline-block",
+            innerText: "Limit production",
+            margin: "5px",
             clickListener: () => {
                 if (input.value === "") {
                     product.prdman[city][0] = false;
@@ -585,7 +595,7 @@ export class CorporationEventHandler {
         const txt = createElement("p", {
             innerHTML: popupText,
         });
-        const designCity = createElement("select");
+        const designCity = createElement("select", { margin: "5px" });
         for (const cityName in division.offices) {
             if (division.offices[cityName] instanceof OfficeSpace) {
                 designCity.add(createElement("option", {
@@ -603,18 +613,26 @@ export class CorporationEventHandler {
             productNamePlaceholder = "Property Name";
         }
         var productNameInput = createElement("input", {
+            margin: "5px",
             placeholder: productNamePlaceholder,
         });
         var lineBreak1 = createElement("br");
         var designInvestInput = createElement("input", {
+            margin: "5px",
+            placeholder: "Design investment",
             type: "number",
-            placeholder: "Design investment"
         });
+        let confirmBtn;
         var marketingInvestInput = createElement("input", {
+            margin: "5px",
+            placeholder: "Marketing investment",
             type: "number",
-            placeholder: "Marketing investment"
+            onkeyup: (e) => {
+                e.preventDefault();
+                if (e.keyCode === KEY.ENTER) { confirmBtn.click(); }
+            }
         });
-        const confirmBtn = createElement("a", {
+        confirmBtn = createElement("button", {
             class: "std-button",
             innerText: "Develop Product",
             clickListener: () => {
@@ -637,17 +655,19 @@ export class CorporationEventHandler {
                         designCost: designInvest,
                         advCost: marketingInvest,
                     });
+                    if (division.products[product.name] instanceof Product) {
+                        dialogBoxCreate(`You already have a product with this name!`);
+                        return;
+                    }
                     this.corp.funds = this.corp.funds.minus(designInvest + marketingInvest);
                     division.products[product.name] = product;
                     removeElementById(popupId);
                 }
                 this.rerender();
-                //this.updateUIContent();
-                //this.displayDivisionContent(division, city);
                 return false;
             }
         })
-        const cancelBtn = createPopupCloseButton(popupid, {
+        const cancelBtn = createPopupCloseButton(popupId, {
             class: "std-button",
             innerText: "Cancel",
         });
@@ -657,8 +677,8 @@ export class CorporationEventHandler {
         productNameInput.focus();
     }
 
-    // Create a popup that lets the player use the Market TA research
-    createMarketTaPopup(mat, industry) {
+    // Create a popup that lets the player use the Market TA research for Materials
+    createMaterialMarketTaPopup(mat, industry) {
         const corp = this.corp;
 
         const popupId = "cmpy-mgmt-marketta-popup";
@@ -682,19 +702,21 @@ export class CorporationEventHandler {
                      "be sold at the price identified by Market-TA.I (i.e. the price shown above)"
         })
         const useTa1AutoSaleCheckbox = createElement("input", {
+            checked: mat.marketTa1,
             id: useTa1AutoSaleId,
+            margin: "3px",
             type: "checkbox",
-            value: mat.marketTa1,
             changeListener: (e) => {
-                mat.marketTa1 = e.target.value;
+                mat.marketTa1 = e.target.checked;
             }
         });
-        useTa1AutoSaleDiv.appendChild(useTa1AutoSaleCheckbox);
+        useTa1AutoSaleDiv.appendChild(useTa1AutoSaleLabel);
         useTa1AutoSaleDiv.appendChild(useTa1AutoSaleCheckbox);
 
         const closeBtn = createPopupCloseButton(popupId, {
             class: "std-button",
             display: "block",
+            innerText: "Close",
         });
 
         if (industry.hasResearch("Market-TA.II")) {
@@ -729,11 +751,41 @@ export class CorporationEventHandler {
                 }
                 ta2Text.innerHTML = `<br><u><strong>Market-TA.II</strong></u><br>` +
                                     `If you sell at ${numeralWrapper.formatMoney(sCost)}, ` +
-                                    `then you will sell ${formatNumber(markup, 5)}x as much compared ` +
+                                    `then you will sell ${numeralWrapper.format(markup, "0.00000")}x as much compared ` +
                                     `to if you sold at market price.`;
             }
             updateTa2Text();
-            createPopup(popupId, [ta1, ta2Text, ta2Input, closeBtn]);
+
+            // Enable using Market-TA2 for automatically setting sale price
+            const useTa2AutoSaleId = "cmpy-mgmt-marketa2-checkbox";
+            const useTa2AutoSaleDiv = createElement("div", { display: "block" });
+            const useTa2AutoSaleLabel = createElement("label", {
+                color: "white",
+                for: useTa2AutoSaleId,
+                innerText: "Use Market-TA.II for Auto-Sale Price",
+                tooltip: "If this is enabled, then this Material will automatically " +
+                         "be sold at the optimal price such that the amount sold matches the " +
+                         "amount produced. (i.e. the highest possible price, while still ensuring " +
+                         " that all produced materials will be sold)"
+            })
+            const useTa2AutoSaleCheckbox = createElement("input", {
+                checked: mat.marketTa2,
+                id: useTa2AutoSaleId,
+                margin: "3px",
+                type: "checkbox",
+                changeListener: (e) => {
+                    mat.marketTa2 = e.target.checked;
+                }
+            });
+            useTa2AutoSaleDiv.appendChild(useTa2AutoSaleLabel);
+            useTa2AutoSaleDiv.appendChild(useTa2AutoSaleCheckbox);
+
+            const ta2OverridesTa1 = createElement("p", {
+                innerText: "Note that Market-TA.II overrides Market-TA.I. This means that if " +
+                           "both are enabled, then Market-TA.II will take effect, not Market-TA.I"
+            });
+
+            createPopup(popupId, [ta1, useTa1AutoSaleDiv, ta2Text, ta2Input, useTa2AutoSaleDiv, ta2OverridesTa1, closeBtn]);
         } else {
             // Market-TA.I only
             createPopup(popupId, [ta1, useTa1AutoSaleDiv, closeBtn]);
@@ -741,7 +793,8 @@ export class CorporationEventHandler {
     }
 
     // Create a popup that lets the player expand into a new city (for the current industry)
-    createNewCityPopup(division) {
+    // The 'cityStateSetter' arg is a function that sets the UI's 'city' state property
+    createNewCityPopup(division, cityStateSetter) {
         const popupId = "cmpy-mgmt-expand-city-popup";
         const text = createElement("p", {
             innerText: "Would you like to expand into a new city by opening an office? " +
@@ -757,11 +810,12 @@ export class CorporationEventHandler {
             }
         }
 
-        const confirmBtn = createElement("a", {
+        const confirmBtn = createElement("button", {
             class:"std-button",
             display:"inline-block",
             innerText: "Confirm",
             clickListener: () => {
+                if (citySelector.length <= 0) { return false; }
                 let city = citySelector.options[citySelector.selectedIndex].value;
                 if (this.corp.funds.lt(OfficeInitialCost)) {
                     dialogBoxCreate("You don't have enough company funds to open a new office!");
@@ -772,9 +826,11 @@ export class CorporationEventHandler {
                         loc: city,
                         size: OfficeInitialSize,
                     });
-                    this.corp.displayDivisionContent(division, city);
                 }
+
+                cityStateSetter(city);
                 removeElementById(popupId);
+                this.rerender();
                 return false;
             }
         });
@@ -836,15 +892,17 @@ export class CorporationEventHandler {
                 } else {
                     this.corp.funds = this.corp.funds.minus(IndustryStartingCosts[ind]);
                     var newInd = new Industry({
-                        name:newDivisionName,
-                        type:ind,
+                        corp: this.corp,
+                        name: newDivisionName,
+                        type: ind,
                     });
                     this.corp.divisions.push(newInd);
-                    // this.corp.updateUIHeaderTabs();
-                    // this.corp.selectHeaderTab(headerTabs[headerTabs.length-2]);
+
+                    // Set routing to the new division so that the UI automatically switches to it
+                    this.routing.routeTo(newDivisionName);
+
                     removeElementById("cmpy-mgmt-expand-industry-popup");
                     this.rerender();
-                    // this.corp.displayDivisionContent(newInd, Locations.Sector12);
                 }
                 return false;
             }
@@ -855,14 +913,14 @@ export class CorporationEventHandler {
             innerText: "Cancel",
         });
 
-        //Make an object to keep track of what industries you're already in
+        // Make an object to keep track of what industries you're already in
         const ownedIndustries = {};
         for (let i = 0; i < this.corp.divisions.length; ++i) {
             ownedIndustries[this.corp.divisions[i].type] = true;
         }
 
-        //Add industry types to selector
-        //Have Agriculture be first as recommended option
+        // Add industry types to selector
+        // Have Agriculture be first as recommended option
         if (!ownedIndustries["Agriculture"]) {
             selector.add(createElement("option", {
                 text:Industries["Agriculture"], value:"Agriculture"
@@ -904,8 +962,115 @@ export class CorporationEventHandler {
         return false;
     }
 
+    // Create a popup that lets the player use the Market TA research for Products
+    createProductMarketTaPopup(product, industry) {
+        const corp = this.corp;
+
+        const popupId = "cmpy-mgmt-marketta-popup";
+        const markupLimit = product.rat / product.mku;
+        const ta1 = createElement("p", {
+            innerHTML: "<u><strong>Market-TA.I</strong></u><br>" +
+                       "The maximum sale price you can mark this up to is "  +
+                       numeralWrapper.formatMoney(product.pCost + markupLimit) +
+                       ". This means that if you set the sale price higher than this, " +
+                       "you will begin to experience a loss in number of sales",
+        });
+
+        // Enable using Market-TA1 for automatically setting sale price
+        const useTa1AutoSaleId = "cmpy-mgmt-marketa1-checkbox";
+        const useTa1AutoSaleDiv = createElement("div", { display: "block" });
+        const useTa1AutoSaleLabel = createElement("label", {
+            color: "white",
+            for: useTa1AutoSaleId,
+            innerText: "Use Market-TA.I for Auto-Sale Price",
+            tooltip: "If this is enabled, then this Product will automatically " +
+                     "be sold at the price identified by Market-TA.I (i.e. the price shown above)"
+        })
+        const useTa1AutoSaleCheckbox = createElement("input", {
+            checked: product.marketTa1,
+            id: useTa1AutoSaleId,
+            margin: "3px",
+            type: "checkbox",
+            changeListener: (e) => {
+                product.marketTa1 = e.target.checked;
+            }
+        });
+        useTa1AutoSaleDiv.appendChild(useTa1AutoSaleLabel);
+        useTa1AutoSaleDiv.appendChild(useTa1AutoSaleCheckbox);
+
+        const closeBtn = createPopupCloseButton(popupId, {
+            class: "std-button",
+            display: "block",
+            innerText: "Close",
+        });
+
+        if (industry.hasResearch("Market-TA.II")) {
+            let updateTa2Text;
+            const ta2Text = createElement("p");
+            const ta2Input = createElement("input", {
+                marginTop: "4px",
+                onkeyup: (e) => {
+                    e.preventDefault();
+                    updateTa2Text();
+                },
+                type: "number",
+                value: product.pCost,
+            });
+
+            // Function that updates the text in ta2Text element
+            updateTa2Text = function() {
+                const sCost = parseFloat(ta2Input.value);
+                let markup = 1;
+                if (sCost > product.pCost) {
+                    if ((sCost - product.pCost) > markupLimit) {
+                        markup = markupLimit / (sCost - product.pCost);
+                    }
+                }
+                ta2Text.innerHTML = `<br><u><strong>Market-TA.II</strong></u><br>` +
+                                    `If you sell at ${numeralWrapper.formatMoney(sCost)}, ` +
+                                    `then you will sell ${numeralWrapper.format(markup, "0.00000")}x as much compared ` +
+                                    `to if you sold at market price.`;
+            }
+            updateTa2Text();
+
+            // Enable using Market-TA2 for automatically setting sale price
+            const useTa2AutoSaleId = "cmpy-mgmt-marketa2-checkbox";
+            const useTa2AutoSaleDiv = createElement("div", { display: "block" });
+            const useTa2AutoSaleLabel = createElement("label", {
+                color: "white",
+                for: useTa2AutoSaleId,
+                innerText: "Use Market-TA.II for Auto-Sale Price",
+                tooltip: "If this is enabled, then this Product will automatically " +
+                         "be sold at the optimal price such that the amount sold matches the " +
+                         "amount produced. (i.e. the highest possible price, while still ensuring " +
+                         " that all produced materials will be sold)"
+            })
+            const useTa2AutoSaleCheckbox = createElement("input", {
+                checked: product.marketTa2,
+                id: useTa2AutoSaleId,
+                margin: "3px",
+                type: "checkbox",
+                changeListener: (e) => {
+                    product.marketTa2 = e.target.checked;
+                }
+            });
+            useTa2AutoSaleDiv.appendChild(useTa2AutoSaleLabel);
+            useTa2AutoSaleDiv.appendChild(useTa2AutoSaleCheckbox);
+
+            const ta2OverridesTa1 = createElement("p", {
+                innerText: "Note that Market-TA.II overrides Market-TA.I. This means that if " +
+                           "both are enabled, then Market-TA.II will take effect, not Market-TA.I"
+            });
+
+            createPopup(popupId, [ta1, useTa1AutoSaleDiv, ta2Text, ta2Input, useTa2AutoSaleDiv, ta2OverridesTa1, closeBtn]);
+        } else {
+            // Market-TA.I only
+            createPopup(popupId, [ta1, useTa1AutoSaleDiv, closeBtn]);
+        }
+    }
+
     // Create a popup that lets the player purchase a Material
-    createPurchaseMaterialPopup(mat, industry) {
+    createPurchaseMaterialPopup(mat, industry, warehouse) {
         const corp = this.corp;
 
         const purchasePopupId = "cmpy-mgmt-material-purchase-popup";
@@ -933,6 +1098,7 @@ export class CorporationEventHandler {
                     mat.buy = parseFloat(input.value);
                     if (isNaN(mat.buy)) {mat.buy = 0;}
                     removeElementById(purchasePopupId);
+                    this.rerender();
                     return false;
                 }
             }
@@ -942,6 +1108,7 @@ export class CorporationEventHandler {
             clickListener: () => {
                 mat.buy = 0;
                 removeElementById(purchasePopupId);
+                this.rerender();
                 return false;
             }
         });
@@ -961,15 +1128,20 @@ export class CorporationEventHandler {
 
             let bulkPurchaseCostTxt = createElement("p");
             function updateBulkPurchaseText(amount) {
-                const cost = parseFloat(amount) * mat.bCost;
-                if (isNaN(cost)) {
-                    dialogBoxCreate(`Bulk Purchase Cost calculated to be NaN. This is either due to ` +
-                                    `invalid input, or it is a bug (in which case you should report to dev)`);
-                    return;
-                }
+                const parsedAmt = parseFloat(amount);
+                const cost = parsedAmt * mat.bCost;
 
-                bulkPurchaseCostTxt.innerText = `Purchasing ${numeralWrapper.format(amt, "0,0.00")} of ` +
-                                                `${mat.name} will cost ${numeralWrapper.formatMoney(cost)}`;
+                const matSize = MaterialSizes[mat.name];
+                const maxAmount = ((warehouse.size - warehouse.sizeUsed) / matSize);
+
+                if (parsedAmt * matSize > maxAmount) {
+                    bulkPurchaseCostTxt.innerText = "Not enough warehouse space to purchase this amount";
+                } else if (isNaN(cost)) {
+                    bulkPurchaseCostTxt.innerText = "Invalid put for Bulk Purchase amount";
+                } else {
+                    bulkPurchaseCostTxt.innerText = `Purchasing ${numeralWrapper.format(parsedAmt, "0,0.00")} of ` +
+                                                    `${mat.name} will cost ${numeralWrapper.formatMoney(cost)}`;
+                }
             }
 
             let bulkPurchaseConfirmBtn;
@@ -979,7 +1151,7 @@ export class CorporationEventHandler {
                 type: "number",
                 onkeyup: (e) => {
                     e.preventDefault();
-                    bulkPurchaseUpdateCostTxt();
+                    updateBulkPurchaseText(e.target.value);
                     if (e.keyCode === KEY.ENTER) {bulkPurchaseConfirmBtn.click();}
                 }
             });
@@ -988,7 +1160,15 @@ export class CorporationEventHandler {
                 class: "std-button",
                 innerText: "Confirm Bulk Purchase",
                 clickListener: () => {
-                    const amount = parseFloat(input.value);
+                    const amount = parseFloat(bulkPurchaseInput.value);
+
+                    const matSize = MaterialSizes[mat.name];
+                    const maxAmount = ((warehouse.size - warehouse.sizeUsed) / matSize);
+                    if (amount * matSize > maxAmount) {
+                        dialogBoxCreate(`You do not have enough warehouse size to fit this purchase`);
+                        return false;
+                    }
+
                     if (isNaN(amount)) {
                         dialogBoxCreate("Invalid input amount");
                     } else {
@@ -1010,6 +1190,7 @@ export class CorporationEventHandler {
             elems.push(bulkPurchaseInfo);
             elems.push(bulkPurchaseCostTxt);
             elems.push(bulkPurchaseInput);
+            elems.push(bulkPurchaseConfirmBtn);
         }
 
         createPopup(purchasePopupId, elems);
@@ -1045,9 +1226,18 @@ export class CorporationEventHandler {
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
             }
         });
+
+        let inputButtonInitValue = mat.sCost ? mat.sCost : null;
+        if (mat.marketTa2) {
+            inputButtonInitValue += " (Market-TA.II)";
+        } else if (mat.marketTa1) {
+            inputButtonInitValue += " (Market-TA.I)";
+        }
+
         const inputPx = createElement("input", {
             type: "text", marginTop: "4px",
-            value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
+            value: inputButtonInitValue,
+            placeholder: "Sell price",
             onkeyup: (e) => {
                 e.preventDefault();
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
@@ -1129,7 +1319,7 @@ export class CorporationEventHandler {
     }
 
     // Create a popup that lets the player manage sales of the product
-    createSellProductPopup(product) {
+    createSellProductPopup(product, city) {
         const popupId = "cmpy-mgmt-sell-product-popup";
         const txt = createElement("p", {
             innerHTML:"Enter the maximum amount of " + product.name + " you would like " +
@@ -1150,24 +1340,51 @@ export class CorporationEventHandler {
         });
         let confirmBtn;
         const inputQty = createElement("input", {
+            margin: "5px 0px 5px 0px",
             placeholder: "Sell amount",
             type: "text",
-            value:product.sllman[city][1] ? product.sllman[city][1] : null,
+            value: product.sllman[city][1] ? product.sllman[city][1] : null,
             onkeyup: (e) => {
                 e.preventDefault();
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
             }
         });
+
+        let inputButtonInitValue = product.sCost ? product.sCost : null;
+        if (product.marketTa2) {
+            inputButtonInitValue += " (Market-TA.II)";
+        } else if (product.marketTa1) {
+            inputButtonInitValue += " (Market-TA.I)";
+        }
+
         const inputPx = createElement("input", {
+            margin: "5px 0px 5px 0px",
             placeholder: "Sell price",
             type: "text",
-            value: product.sCost ? product.sCost : null,
+            value: inputButtonInitValue,
             onkeyup: (e) => {
                 e.preventDefault();
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
             }
         });
-        confirmBtn = createElement("a", {
+        const checkboxDiv = createElement("div", {
+            border: "1px solid white",
+            display: "inline-block",
+        })
+        const checkboxLabel = createElement("label", {
+            for: popupId + "-checkbox",
+            innerText: "Use same 'Sell Amount' for all cities",
+        });
+        const checkbox = createElement("input", {
+            checked: true,
+            id: popupId + "-checkbox",
+            margin: "2px",
+            type: "checkbox",
+        });
+        checkboxDiv.appendChild(checkboxLabel);
+        checkboxDiv.appendChild(checkbox);
+
+        confirmBtn = createElement("button", {
             class: "std-button",
             innerText: "Confirm",
             clickListener: () => {
@@ -1198,7 +1415,10 @@ export class CorporationEventHandler {
                     product.sCost = cost;
                 }
 
-                //Parse quantity
+                // Array of all cities. Used later
+                const cities = Object.values(Cities);
+
+                // Parse quantity
                 if (inputQty.value.includes("MAX") || inputQty.value.includes("PROD")) {
                     //Dynamically evaluated quantity. First test to make sure its valid
                     var qty = inputQty.value.replace(/\s+/g, '');
@@ -1216,8 +1436,16 @@ export class CorporationEventHandler {
                         dialogBoxCreate("Invalid value or expression for sell price field");
                         return false;
                     }
-                    product.sllman[city][0] = true;
-                    product.sllman[city][1] = qty; //Use sanitized input
+                    if (checkbox.checked) {
+                        for (let i = 0; i < cities.length; ++i) {
+                            const tempCity = cities[i];
+                            product.sllman[tempCity][0] = true;
+                            product.sllman[tempCity][1] = qty; //Use sanitized input
+                        }
+                    } else {
+                        product.sllman[city][0] = true;
+                        product.sllman[city][1] = qty; //Use sanitized input
+                    }
                 } else if (isNaN(inputQty.value)) {
                     dialogBoxCreate("Invalid value for sell quantity field! Must be numeric");
                     return false;
@@ -1225,10 +1453,25 @@ export class CorporationEventHandler {
                     var qty = parseFloat(inputQty.value);
                     if (isNaN(qty)) {qty = 0;}
                     if (qty === 0) {
-                        product.sllman[city][0] = false;
+                        if (checkbox.checked) {
+                            for (let i = 0; i < cities.length; ++i) {
+                                const tempCity = cities[i];
+                                product.sllman[tempCity][0] = false;
+                            }
+                        } else {
+                            product.sllman[city][0] = false;
+                        }
                     } else {
-                        product.sllman[city][0] = true;
-                        product.sllman[city][1] = qty;
+                        if (checkbox.checked) {
+                            for (let i = 0; i < cities.length; ++i) {
+                                const tempCity = cities[i];
+                                product.sllman[tempCity][0] = true;
+                                product.sllman[tempCity][1] = qty;
+                            }
+                        } else {
+                            product.sllman[city][0] = true;
+                            product.sllman[city][1] = qty;
+                        }
                     }
                 }
 
@@ -1237,9 +1480,12 @@ export class CorporationEventHandler {
                 return false;
             }
         });
-        const cancelBtn = createPopupCloseButton(popupId, { innerText: "Cancel" });
+        const cancelBtn = createPopupCloseButton(popupId, { class: "std-button" });
 
-        createPopup(popupId, [txt, inputQty, inputPx, confirmBtn, cancelBtn]);
+        const linebreak1 = createElement("br");
+
+        createPopup(popupId, [txt, inputQty, inputPx, confirmBtn, cancelBtn, linebreak1,
+                              checkboxDiv]);
         inputQty.focus();
     }
 
@@ -1276,7 +1522,7 @@ export class CorporationEventHandler {
                 }
             }
         });
-        const confirmBtn = createElement("a", {
+        const confirmBtn = createElement("button", {
             class:"a-link-button", innerText:"Sell shares", display:"inline-block",
             clickListener:()=>{
                 var shares = Math.round(input.value);
@@ -1355,7 +1601,7 @@ export class CorporationEventHandler {
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
             }
         });
-        confirmBtn = createElement("a", {
+        confirmBtn = createElement("button", {
             class: "std-button",
             innerText: "Throw Party",
             clickListener:()=>{
@@ -1366,20 +1612,20 @@ export class CorporationEventHandler {
                     if (this.corp.funds.lt(totalCost)) {
                         dialogBoxCreate("You don't have enough company funds to throw this.corp party!");
                     } else {
-                        this.corp.funds = this.funds.minus(totalCost);
+                        this.corp.funds = this.corp.funds.minus(totalCost);
                         var mult;
                         for (let fooit = 0; fooit < office.employees.length; ++fooit) {
                             mult = office.employees[fooit].throwParty(input.value);
                         }
                         dialogBoxCreate("You threw a party for the office! The morale and happiness " +
-                                        "of each employee increased by " + formatNumber((mult-1) * 100, 2) + "%.");
+                                        "of each employee increased by " + numeralWrapper.formatPercentage((mult-1)));
                         removeElementById(popupId);
                     }
                 }
                 return false;
             }
         });
-        const cancelBtn = createPopupCloseButton(popupId, { innerText: "Cancel" });
+        const cancelBtn = createPopupCloseButton(popupId, { class: "std-button", innerText: "Cancel" });
 
         createPopup(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
         input.focus();
@@ -1420,7 +1666,7 @@ export class CorporationEventHandler {
         });
         const text2 = createElement("p", { innerText: "Upgrade size: " });
 
-        const confirmBtn = createElement("a", {
+        const confirmBtn = createElement("button", {
             class: this.corp.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
             display:"inline-block", margin:"4px", innerText:"by 3",
             tooltip:numeralWrapper.format(upgradeCost, "$0.000a"),
@@ -1437,7 +1683,7 @@ export class CorporationEventHandler {
                 return false;
             }
         });
-        const confirmBtn15 = createElement("a", {
+        const confirmBtn15 = createElement("button", {
             class: this.corp.funds.lt(upgradeCost15) ? "a-link-button-inactive" : "a-link-button",
             display:"inline-block", margin:"4px", innerText:"by 15",
             tooltip:numeralWrapper.format(upgradeCost15, "$0.000a"),
@@ -1454,7 +1700,7 @@ export class CorporationEventHandler {
                 return false;
             }
         });
-        const confirmBtnMax = createElement("a", {
+        const confirmBtnMax = createElement("button", {
             class:this.corp.funds.lt(upgradeCostMax) ? "a-link-button-inactive" : "a-link-button",
             display:"inline-block", margin:"4px", innerText:"by MAX (" + maxNum*OfficeInitialSize + ")",
             tooltip:numeralWrapper.format(upgradeCostMax, "$0.000a"),
@@ -1484,6 +1730,8 @@ export class CorporationEventHandler {
             dialogBoxCreate("You do not have enough funds to do this!");
         } else {
             division.warehouses[city] = new Warehouse({
+                corp: corp,
+                industry: division,
                 loc: city,
                 size: WarehouseInitialSize,
             });

@@ -7,9 +7,11 @@ import { LocationName }     from "../data/LocationNames";
 
 import { Companies }        from "../../Company/Companies";
 import { Company }          from "../../Company/Company";
+import { CompanyPosition }  from "../../Company/CompanyPosition";
 import { IPlayer }          from "../../PersonObjects/IPlayer";
 
-import { StdButton }        from "../../ui/React/StdButton";
+import { StdButton }            from "../../ui/React/StdButton";
+import { StdButtonWithTooltip } from "../../ui/React/StdButtonWithTooltip";
 
 type IProps = {
     locName: LocationName;
@@ -98,6 +100,18 @@ export class CompanyLocation extends React.Component<IProps, any> {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForWaiterJob();
     }
+
+    getJobRequirementTooltip(company: Company, entryPosType: CompanyPosition) {
+        if (!(company instanceof Company)) { return; }
+
+        const pos = this.props.p.getNextCompanyPosition(company, entryPosType);
+        if (pos == null) { return };
+
+        if (!company.hasPosition(pos)) { return; }
+
+        return getJobRequirementText(company, pos, true);
+    }
+
 
     render() {
         return (

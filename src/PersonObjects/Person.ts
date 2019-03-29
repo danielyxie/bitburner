@@ -105,7 +105,7 @@ export abstract class Person {
     /**
      * City that the person is in
      */
-    city: string = CityName.Sector12;
+    city: CityName = CityName.Sector12;
 
     constructor() {}
 

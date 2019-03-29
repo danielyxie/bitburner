@@ -78,6 +78,21 @@ export const researchMetadata: IConstructorParams[] = [
         sciResearchMult: 1.1,
     },
     {
+        name: "HRBuddy-Recruitment",
+        cost: 15e3,
+        desc: "Use automated software to handle the hiring of employees. With this " +
+              "research, each office will automatically hire one employee per " +
+              "market cycle if there is available space."
+
+    },
+    {
+        name: "HRBuddy-Training",
+        cost: 20e3,
+        desc: "Use automated software to handle the training of employees. With this " +
+              "research, each employee hired with HRBuddy-Recruitment will automatically " +
+              "be assigned to 'Training', rather than being unassigned."
+    },
+    {
         name: "JoyWire",
         cost: 20e3,
         desc: "A brain implant which is installed in employees, increasing their " +
@@ -94,11 +109,13 @@ export const researchMetadata: IConstructorParams[] = [
     },
     {
         name: "Market-TA.II",
-        cost: 40e3,
+        cost: 50e3,
         desc: "Develop double-advanced AI software that uses technical analysis to " +
               "help you understand and exploit the market. This research " +
               "allows you to know how many sales of a Material/Product you lose or gain " +
-              "from having too high or too low or a sale price.",
+              "from having too high or too low or a sale price. It also lets you automatically " +
+              "set the sale price of your Materials/Products at the optimal price such that " +
+              "the amount sold matches the amount produced.",
     },
     {
         name: "Overclock",

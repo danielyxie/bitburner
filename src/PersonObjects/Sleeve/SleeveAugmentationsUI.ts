@@ -2,7 +2,7 @@
  * Module for handling the UI for purchasing Sleeve Augmentations
  * This UI is a popup, not a full page
  */
-import { Sleeve } from "./Sleeve";
+import { Sleeve, findSleevePurchasableAugs } from "./Sleeve";
 
 import { IPlayer } from "../IPlayer";
 
@@ -29,23 +29,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
     // You can only purchase Augmentations that are actually available from
     // your factions. I.e. you must be in a faction that has the Augmentation
     // and you must also have enough rep in that faction in order to purchase it.
-    const availableAugs: Augmentation[] = [];
-
-    for (const facName of p.factions) {
-        if (facName === "Bladeburners") { continue; }
-        const fac: Faction | null = Factions[facName];
-        if (fac == null) { continue; }
-
-        for (const augName of fac.augmentations) {
-            if (augName === AugmentationNames.NeuroFluxGovernor) { continue; }
-            if (ownedAugNames.includes(augName)) { continue; }
-            const aug: Augmentation | null = Augmentations[augName];
-
-            if (fac.playerReputation > aug.baseRepRequirement && !availableAugs.includes(aug)) {
-                availableAugs.push(aug);
-            }
-        }
-    }
+    const availableAugs = findSleevePurchasableAugs(sleeve, p);
 
     // Create popup
     const popupId = "purchase-sleeve-augs-popup";
@@ -105,15 +89,13 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             innerHTML:
             [
                 `<h2>${aug.name}</h2><br>`,
-                `Cost: ${numeralWrapper.formatMoney(aug.baseCost)}<br><br>`,
+                `Cost: ${numeralWrapper.formatMoney(aug.startingCost)}<br><br>`,
                 `${aug.info}`
             ].join(" "),
             padding: "2px",
             clickListener: () => {
-                if (p.canAfford(aug.baseCost)) {
-                    p.loseMoney(aug.baseCost);
-                    sleeve.installAugmentation(aug);
-                    dialogBoxCreate(`Installed ${aug.name} on Duplicate Sleeve!`, false)
+                if (sleeve.tryBuyAugmentation(p, aug)) {
+                    dialogBoxCreate(`Installed ${aug.name} on Duplicate Sleeve!`, false);
                     removeElementById(popupId);
                     createSleevePurchaseAugsPopup(sleeve, p);
                 } else {

@@ -14,6 +14,8 @@ import { Person,
          createTaskTracker } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
+import { Augmentations } from "../../Augmentation/Augmentations";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
@@ -112,13 +114,12 @@ export class Sleeve extends Person {
     logs: string[] = [];
 
     /**
-     * Clone retains memory% of exp upon prestige. If exp would be lower than previously
-     * kept exp, nothing happens
+     * Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs
      */
-    memory: number = 0;
+    memory: number = 1;
 
     /**
-     * Sleeve shock. Number between 1 and 100
+     * Sleeve shock. Number between 0 and 100
      * Trauma/shock that comes with being in a sleeve. Experience earned
      * is multipled by shock%. This gets applied before synchronization
      *
@@ -338,6 +339,31 @@ export class Sleeve extends Person {
     }
 
     /**
+     * Returns the cost of upgrading this sleeve's memory by a certain amount
+     */
+    getMemoryUpgradeCost(n: number): number {
+        const amt = Math.round(n);
+        if (amt < 0) {
+            return 0;
+        }
+
+        if (this.memory + amt > 100) {
+            return this.getMemoryUpgradeCost(100 - this.memory);
+        }
+
+        const mult = 1.02;
+        const baseCost = 1e12;
+        let currCost = 0;
+        let currMemory = this.memory-1;
+        for (let i = 0; i < n; ++i) {
+            currCost += (Math.pow(mult, currMemory));
+            ++currMemory;
+        }
+
+        return currCost * baseCost;
+    }
+
+    /**
      * Gets reputation gain for the current task
      * Only applicable when working for company or faction
      */
@@ -404,6 +430,20 @@ export class Sleeve extends Person {
         if (this.logs.length > MaxLogSize) {
             this.logs.shift();
         }
+    }
+
+    /**
+     * Called on every sleeve for a Source File prestige
+     */
+    prestige(p: IPlayer) {
+        this.resetTaskStatus();
+        this.earningsForSleeves = createTaskTracker();
+        this.earningsForPlayer = createTaskTracker();
+        this.logs = [];
+        this.shock = 1;
+        this.storedCycles = 0;
+        this.sync = Math.max(this.memory, 1);
+        this.shockRecovery(p);
     }
 
     /**
@@ -612,12 +652,7 @@ export class Sleeve extends Person {
     /**
      * Travel to another City. Costs money from player
      */
-    travel(p: IPlayer, newCity: string): boolean {
-        if (CityName[newCity] == null) {
-            console.error(`Invalid city ${newCity} passed into Sleeve.travel()`);
-            return false;
-        }
-
+    travel(p: IPlayer, newCity: CityName): boolean {
         p.loseMoney(CONSTANTS.TravelCost);
         this.city = newCity;
 
@@ -641,8 +676,8 @@ export class Sleeve extends Person {
 
         const company: Company | null = Companies[companyName];
         const companyPosition: CompanyPosition | null = CompanyPositions[p.jobs[companyName]];
-        if (company == null) { throw new Error(`Invalid company name specified in Sleeve.workForCompany(): ${companyName}`); }
-        if (companyPosition == null) { throw new Error(`Invalid CompanyPosition data in Sleeve.workForCompany(): ${companyName}`); }
+        if (company == null) { return false; }
+        if (companyPosition == null) { return false; }
         this.gainRatesForTask.money = companyPosition.baseSalary *
                                       company.salaryMultiplier *
                                       this.work_money_mult *
@@ -684,8 +719,8 @@ export class Sleeve extends Person {
      * Returns boolean indicating success
      */
     workForFaction(p: IPlayer, factionName: string, workType: string): boolean {
+        if (factionName === "") { return false; }
         if (!(Factions[factionName] instanceof Faction) || !p.factions.includes(factionName)) {
-            throw new Error(`Invalid Faction specified for Sleeve.workForFaction(): ${factionName}`);
             return false;
         }
 
@@ -807,12 +842,58 @@ export class Sleeve extends Person {
         return true;
     }
 
+    tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
+        if (!p.canAfford(aug.startingCost)) {
+            return false;
+        }
+
+        p.loseMoney(aug.startingCost);
+        this.installAugmentation(aug);
+        return true;
+    }
+
+    upgradeMemory(n: number): void {
+        if (n < 0) {
+            console.warn(`Sleeve.upgradeMemory() called with negative value: ${n}`);
+            return;
+        }
+
+        this.memory = Math.min(100, Math.round(this.memory + n));
+    }
+
     /**
      * Serialize the current object to a JSON save state.
      */
     toJSON(): any {
         return Generic_toJSON("Sleeve", this);
     }
+}
+
+export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
+    // You can only purchase Augmentations that are actually available from
+    // your factions. I.e. you must be in a faction that has the Augmentation
+    // and you must also have enough rep in that faction in order to purchase it.
+
+    const ownedAugNames: string[] = sleeve.augmentations.map((e) => {return e.name});
+    const availableAugs: Augmentation[] = [];
+
+    for (const facName of p.factions) {
+        if (facName === "Bladeburners") { continue; }
+        const fac: Faction | null = Factions[facName];
+        if (fac == null) { continue; }
+
+        for (const augName of fac.augmentations) {
+            if (augName === AugmentationNames.NeuroFluxGovernor) { continue; }
+            if (ownedAugNames.includes(augName)) { continue; }
+            const aug: Augmentation | null = Augmentations[augName];
+
+            if (fac.playerReputation > aug.baseRepRequirement && !availableAugs.includes(aug)) {
+                availableAugs.push(aug);
+            }
+        }
+    }
+
+    return availableAugs;
 }
 
 Reviver.constructors.Sleeve = Sleeve;

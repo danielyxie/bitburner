@@ -3,7 +3,7 @@ import { MaterialSizes }            from "./MaterialSizes";
 import { ProductRatingWeights,
          IProductRatingWeight }     from "./ProductRatingWeights";
 
-import { CityName }                 from "../Locations/data/CityNames";
+import { createCityMap }            from "../Locations/createCityMap";
 import { IMap }                     from "../types";
 
 import { Generic_fromJSON,
@@ -89,14 +89,7 @@ export class Product {
     // Data refers to the production, sale, and quantity of the products
     // These values are specific to a city
     // For each city, the data is [qty, prod, sell]
-    data: IMap<number[]> = {
-        [Cities.Aevum]: [0, 0, 0],
-        [Cities.Chongqing]: [0, 0, 0],
-        [Cities.Sector12]: [0, 0, 0],
-        [Cities.NewTokyo]: [0, 0, 0],
-        [Cities.Ishima]: [0, 0, 0],
-        [Cities.Volhaven]: [0, 0, 0],
-    }
+    data: IMap<number[]> = createCityMap<number[]>([0, 0, 0]);
 
     // Location of this Product
     // Only applies for location-based products like restaurants/hospitals
@@ -113,23 +106,13 @@ export class Product {
     // Data to keep track of whether production/sale of this Product is
     // manually limited. These values are specific to a city
     //  [Whether production/sale is limited, limit amount]
-    prdman: IMap<any[]> = {
-        [Cities.Aevum]: [false, 0],
-        [Cities.Chongqing]: [false, 0],
-        [Cities.Sector12]: [false, 0],
-        [Cities.NewTokyo]: [false, 0],
-        [Cities.Ishima]: [false, 0],
-        [Cities.Volhaven]: [false, 0],
-    }
+    prdman: IMap<any[]> = createCityMap<any[]>([false, 0]);
+    sllman: IMap<any[]> = createCityMap<any[]>([false, 0]);
 
-    sllman: IMap<any[]> = {
-        [Cities.Aevum]: [false, 0],
-        [Cities.Chongqing]: [false, 0],
-        [Cities.Sector12]: [false, 0],
-        [Cities.NewTokyo]: [false, 0],
-        [Cities.Ishima]: [false, 0],
-        [Cities.Volhaven]: [false, 0],
-    }
+    // Flags that signal whether automatic sale pricing through Market TA is enabled
+    marketTa1: boolean = false;
+    marketTa2: boolean = false;
+    marketTa2Price: IMap<number> = createCityMap<number>(0);
 
     constructor(params: IConstructorParams={}) {
         this.name       = params.name           ? params.name           : "";
@@ -164,11 +147,11 @@ export class Product {
         //Calculate properties
         var progrMult = this.prog / 100;
 
-        var engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"],
-            mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"],
-            rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"],
-            opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"],
-            busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
+        const engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"];
+        const mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"];
+        const rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"];
+        const opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"];
+        const busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
         var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
         console.log("designMult: " + designMult);
         var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +

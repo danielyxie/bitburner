@@ -14,6 +14,8 @@ Sleeve technology unlocks two different gameplay features:
 
 Sleeve technology is unlocked in :ref:`BitNode-10 <gameplay_bitnodes>`.
 
+.. _gameplay_duplicatesleeves:
+
 Duplicate Sleeves
 ^^^^^^^^^^^^^^^^^
 Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your consciuosness
@@ -27,6 +29,19 @@ Sleeves are their own individuals, which means they each have their own experien
 
 When a sleeve earns experience, it earns experience for itself, the player's
 original consciousness, as well as all of the player's other sleeves.
+
+Duplicate Sleeves are **not** reset when installing Augmentations, but they are reset
+when switching BitNodes.
+
+Obtaining Duplicate Sleeves
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are two methods of obtaining Duplicate Sleeves:
+
+1. Destroy BitNode-10. Each completion give you one additional Duplicate Sleeve
+2. Purchase Duplicate Sleeves from :ref:`the faction The Covenant <gameplay_factions>`.
+   This is only available in BitNodes-10 and above, and is only available after defeating
+   BitNode-10 at least once. Sleeves purchased this way are **permanent** (they persist
+   through BitNodes). You can purchase up to 5 Duplicate Sleeves from The Covenant.
 
 Synchronization
 ~~~~~~~~~~~~~~~
@@ -50,15 +65,30 @@ no shock. Shock affects the amount of experience earned by the sleeve.
 Sleeve shock slowly decreases over time. You can further increase the rate at which
 it decreases by assigning sleeves to the 'Shock Recovery' task.
 
-Obtaining Duplicate Sleeves
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There are two methods of obtaining Duplicate Sleeves:
+Augmentations
+~~~~~~~~~~~~~
+You can purchase :ref:`Augmentations <gameplay_augmentations>` for your Duplicate
+Sleeves. In order to do this, the Sleeve's Shock must be at 0. Any Augmentation
+that is currently available to you through a faction is also available for your
+Duplicate Sleeves. There are a few Augmentations, such as NeuroFlux Governor and
+Bladeburner-specific ones, that cannot be purchased for a Duplicate Sleeve.
 
-1. Destroy BitNode-10. Each completion give you one additional Duplicate Sleeve
-2. Purchase Duplicate Sleeves from :ref:`the faction The Covenant <gameplay_factions>`.
-   This is only available in BitNodes-10 and above, and is only available after defeating
-   BitNode-10 at least once. Sleeves purchased this way are permanent. You can purchase
-   up to 5 Duplicate Sleeves from The Covenant. 
+When you purchase an Augmentation for a Duplicate Sleeve, it is instantly installed.
+When this happens, the Sleeve's stats are instantly reset back to 0, similar to
+when you normally install Augmentations.
+
+The cost of purchasing an Augmentation for a Duplicate Sleeve is **not** affected
+by how many Augmentations you have purchased for yourself, and vice versa.
+
+Memory
+~~~~~~
+Sleeve memory dictates what a sleeve's synchronization will be when its reset by
+switching BitNodes. For example, if a sleeve has a memory of 10, then when you
+switch BitNodes its synchronization will initially be set to 10, rather than 1.
+
+Memory can only be increased by purchasing upgrades from The Covenant.
+It is a persistent stat, meaning it never gets reset back to 1.
+The maximum possible value for a sleeve's memory is 100.
 
 Re-sleeving
 ^^^^^^^^^^^

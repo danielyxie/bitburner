@@ -3,6 +3,7 @@ import { Server }                               from "./Server";
 
 import { BitNodeMultipliers }                   from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS }                            from "../Constants";
+import { HacknetServer }                        from "../Hacknet/HacknetServer";
 import { IPlayer }                              from "../PersonObjects/IPlayer";
 import { Programs }                             from "../Programs/Programs";
 
@@ -18,7 +19,8 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer) {
 
     const serverGrowthPercentage = server.serverGrowth / 100;
 
-    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate) * p.hacking_grow_mult * serverGrowthPercentage);
+    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate) * p.hacking_grow_mult * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate);
+
     return cycles;
 }
 
@@ -88,7 +90,7 @@ export function prestigeHomeComputer(homeComp: Server) {
 
 //Returns server object with corresponding hostname
 //    Relatively slow, would rather not use this a lot
-export function GetServerByHostname(hostname: string): Server | null {
+export function GetServerByHostname(hostname: string): Server | HacknetServer | null {
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
             if (AllServers[ip].hostname == hostname) {
@@ -96,12 +98,12 @@ export function GetServerByHostname(hostname: string): Server | null {
             }
         }
     }
-    
+
     return null;
 }
 
 //Get server by IP or hostname. Returns null if invalid
-export function getServer(s: string): Server | null {
+export function getServer(s: string): Server | HacknetServer | null {
     if (!isValidIPAddress(s)) {
         return GetServerByHostname(s);
     }
