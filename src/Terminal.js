@@ -2,6 +2,7 @@ import {substituteAliases, printAliases,
         parseAliasDeclaration,
         removeAlias, GlobalAliases,
         Aliases}                                from "./Alias";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import {CodingContract, CodingContractResult,
         CodingContractRewardType}               from "./CodingContracts";
 import {CONSTANTS}                              from "./Constants";
@@ -2144,7 +2145,8 @@ let Terminal = {
             post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
         };
         programHandlers[Programs.Flight.name] = () => {
-            const fulfilled = Player.augmentations.length >= 30 &&
+            const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement*30)
+            const fulfilled = Player.augmentations.length >= numAugReq &&
                 Player.money.gt(1e11) &&
                 ((Player.hacking_skill >= 2500)||
                 (Player.strength >= 1500 &&
@@ -2152,17 +2154,17 @@ let Terminal = {
                 Player.dexterity >= 1500 &&
                 Player.agility >= 1500));
             if(!fulfilled) {
-                post("Augmentations: " + Player.augmentations.length + " / 30");
+                post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
 
-                post("Money: " + numeralWrapper.format(Player.money.toNumber(), '($0.000a)') + " / " + numeralWrapper.format(1e11, '($0.000a)'));
+                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / numeralWrapper.format(1e11, '($0.000a)')`);
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
-                post("Hacking skill: " + Player.hacking_skill + " / 2500");
+                post(`Hacking skill: ${Player.hacking_skill} / 2500`);
                 post("----------COMBAT PATH----------");
-                post("Strength: " + Player.strength + " / 1500");
-                post("Defense: " + Player.defense + " / 1500");
-                post("Dexterity: " + Player.dexterity + " / 1500");
-                post("Agility: " + Player.agility + " / 1500");
+                post(`Strength: ${Player.strength} / 1500`);
+                post(`Defense: ${Player.defense} / 1500`);
+                post(`Dexterity: ${Player.dexterity} / 1500`);
+                post(`Agility: ${Player.agility} / 1500`);
                 return;
             }
 
