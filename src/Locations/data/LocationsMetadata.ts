@@ -5,312 +5,278 @@
 import { CityName } from "./CityNames";
 import { LocationName } from "./LocationNames";
 import { IConstructorParams } from "../Location";
+import { LocationType } from "../LocationTypeEnum";
 
 export const LocationsMetadata: IConstructorParams[] = [
     {
         city: CityName.Aevum,
         name: LocationName.AevumAeroCorp,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumBachmanAndAssociates,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumClarkeIncorporated,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumCrushFitnessGym,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Gym],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumECorp,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 512,
+        techVendorMinRam: 128,
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumFulcrumTechnologies,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 1024,
+        techVendorMinRam: 256,
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumGalacticCybersystems,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Aevum,
-        name: LocationName.AevumNetLinkTechnologies
-        types:
-        techVendorMaxRam:
+        name: LocationName.AevumNetLinkTechnologies,
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 64,
+        techVendorMinRam: 8,
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumPolice,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumRhoConstruction,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumSnapFitnessGym,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Gym],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumSummitUniversity,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.University],
     },
     {
         city: CityName.Aevum,
         name: LocationName.AevumWatchdogSecurity,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Chongqing,
         name: LocationName.ChongqingKuaiGongInternational,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Chongqing,
         name: LocationName.ChongqingSolarisSpaceSystems,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Ishima,
         name: LocationName.IshimaNovaMedical,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Ishima,
         name: LocationName.IshimaOmegaSoftware,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 128,
+        techVendorMinRam: 4,
     },
     {
         city: CityName.Ishima,
         name: LocationName.IshimaStormTechnologies,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 512,
+        techVendorMinRam: 32,
     },
     {
         city: CityName.NewTokyo,
         name: LocationName.NewTokyoDefComm,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.NewTokyo,
         name: LocationName.NewTokyoGlobalPharmaceuticals,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.NewTokyo,
         name: LocationName.NewTokyoNoodleBar,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.NewTokyo,
         name: LocationName.NewTokyoVitaLife,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.Special],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12AlphaEnterprises,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 8,
+        techVendorMinRam: 2,
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12BladeIndustries,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12CIA,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12CarmichaelSecurity,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12CityHall,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Special],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12DeltaOne,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12FoodNStuff,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12FourSigma,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12IcarusMicrosystems,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12IronGym,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Gym],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12JoesGuns,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12MegaCorp,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12NSA,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.Special],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12PowerhouseGym,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Gym],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12RothmanUniversity,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.University],
     },
     {
         city: CityName.Sector12,
         name: LocationName.Sector12UniversalEnergy,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenCompuTek,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 256,
+        techVendorMinRam: 8,
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenHeliosLabs,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenLexoCorp,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenMilleniumFitnessGym,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Gym],
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenNWO,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenOmniTekIncorporated,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company, LocationType.TechVendor],
+        techVendorMaxRam: 1024,
+        techVendorMinRam: 128,
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenOmniaCybersystems,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenSysCoreSecurities,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Company],
     },
     {
         city: CityName.Volhaven,
         name: LocationName.VolhavenZBInstituteOfTechnology,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.University],
     },
     {
         city: null,
         name: LocationName.Hospital,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Hospital],
     },
     {
         city: null,
         name: LocationName.Slums,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.Slums],
     },
     {
         city: null,
         name: LocationName.TravelAgency,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.TravelAgency],
     },
     {
         city: null,
         name: LocationName.WorldStockExchange,
-        types:
-        techVendorMaxRam:
+        types: [LocationType.StockMarket],
     },
 ];

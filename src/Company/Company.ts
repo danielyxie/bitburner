@@ -1,7 +1,10 @@
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { CompanyPosition } from "./CompanyPosition";
+import * as posNames from "./data/companypositionnames";
+
 import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
+
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export interface IConstructorParams {
     name: string;
@@ -92,6 +95,43 @@ export class Company {
             return (this.companyPositions[pos] != null);
         }
     }
+
+    hasAgentPositions(): boolean {
+        return (this.companyPositions[posNames.AgentCompanyPositions[0]] != null);
+    }
+
+    hasBusinessConsultantPositions(): boolean {
+        return (this.companyPositions[posNames.BusinessConsultantCompanyPositions[0]] != null);
+    }
+
+    hasBusinessPositions(): boolean {
+        return (this.companyPositions[posNames.BusinessCompanyPositions[0]] != null);
+    }
+
+    hasEmployeePositions(): boolean {
+        return (this.companyPositions[posNames.MiscCompanyPositions[1]] != null);
+    }
+
+    hasITPositions(): boolean {
+        return (this.companyPositions[posNames.ITCompanyPositions[0]] != null);
+    }
+
+    hasSecurityPositions(): boolean {
+        return (this.companyPositions[posNames.SecurityCompanyPositions[2]] != null);
+    }
+
+    hasSoftwareConsultantPositions(): boolean {
+        return (this.companyPositions[posNames.SoftwareConsultantCompanyPositions[0]] != null);
+    }
+
+    hasSoftwarePositions(): boolean {
+        return (this.companyPositions[posNames.SoftwareCompanyPositions[0]] != null);
+    }
+
+    hasWaiterPositions(): boolean {
+        return (this.companyPositions[posNames.MiscCompanyPositions[0]] != null);
+    }
+
 
     gainFavor(): void {
         if (this.favor == null) { this.favor = 0; }

@@ -8,16 +8,20 @@ import { Sleeve } from "./Sleeve/Sleeve";
 
 import { IMap } from "../types";
 
-import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
-import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
-import { MoneySourceTracker } from "../utils/MoneySourceTracker";
+import { IPlayerOwnedAugmentation }     from "../Augmentation/PlayerOwnedAugmentation";
+import { Company }                      from "../Company/Company";
+import { CompanyPosition }              from "../Company/CompanyPosition";
+import { CityName }                     from "../Locations/data/CityNames";
+import { LocationName }                 from "../Locations/data/LocationNames";
+import { IPlayerOwnedSourceFile }       from "../SourceFile/PlayerOwnedSourceFile";
+import { MoneySourceTracker }           from "../utils/MoneySourceTracker";
 
 export interface IPlayer {
     // Class members
     augmentations: IPlayerOwnedAugmentation[];
     bladeburner: any;
     bitNodeN: number;
-    city: string;
+    city: CityName;
     companyName: string;
     corporation: any;
     currentServer: string;
@@ -26,6 +30,7 @@ export interface IPlayer {
     hasWseAccount: boolean;
     jobs: IMap<string>;
     karma: number;
+    location: LocationName;
     money: any;
     moneySourceA: MoneySourceTracker;
     moneySourceB: MoneySourceTracker;
@@ -85,6 +90,20 @@ export interface IPlayer {
     crime_money_mult: number;
 
     // Methods
+    applyForAgentJob(sing?: boolean): boolean | void;
+    applyForBusinessConsultantJob(sing?: boolean): boolean | void;
+    applyForBusinessJob(sing?: boolean): boolean | void;
+    applyForEmployeeJob(sing?: boolean): boolean | void;
+    applyForItJob(sing?: boolean): boolean | void;
+    applyForJob(entryPosType: CompanyPosition, sing?: boolean): boolean | void;
+    applyForNetworkEngineerJob(sing?: boolean): boolean | void;
+    applyForPartTimeEmployeeJob(sing?: boolean): boolean | void;
+    applyForPartTimeWaiterJob(sing?: boolean): boolean | void;
+    applyForSecurityEngineerJob(sing?: boolean): boolean | void;
+    applyForSecurityJob(sing?: boolean): boolean | void;
+    applyForSoftwareConsultantJob(sing?: boolean): boolean | void;
+    applyForSoftwareJob(sing?: boolean): boolean | void;
+    applyForWaiterJob(sing?: boolean): boolean | void;
     canAfford(cost: number): boolean;
     gainHackingExp(exp: number): void;
     gainStrengthExp(exp: number): void;
@@ -93,9 +112,11 @@ export interface IPlayer {
     gainAgilityExp(exp: number): void;
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
+    getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
     hasCorporation(): boolean;
     inBladeburner(): boolean;
     inGang(): boolean;
+    isQualified(company: Company, position: CompanyPosition): boolean;
     loseMoney(money: number): void;
     reapplyAllAugmentations(resetMultipliers: boolean): void;
     reapplyAllSourceFiles(): void;
@@ -110,4 +131,5 @@ export interface IPlayer {
                money: number,
                time: number,
                singParams: any): void;
+    travel(to: CityName): boolean;
 }

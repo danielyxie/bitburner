@@ -2,15 +2,23 @@
  * Map of all Locations in the game
  * Key = Location name, value = Location object
  */
+import { City }                 from "./City";
+import { Cities }               from "./Cities";
 import { Location,
-         IConstructorParams } from "./Location";
-import { LocationsMetadata } from "./data/LocationsMetadata";
+         IConstructorParams }   from "./Location";
+import { CityName }             from "./data/CityNames";
+import { LocationsMetadata }    from "./data/LocationsMetadata";
+
 
 import { IMap } from "../types";
 
 export const Locations: IMap<Location> = {};
 
-function constructLocation(p: IConstructorParams) {
+/**
+ * Here, we'll initialize both Locations and Cities data. These can both
+ * be initialized from the `LocationsMetadata`
+ */
+function constructLocation(p: IConstructorParams): Location {
     if (!p.name) {
         throw new Error(`Invalid constructor parameters for Location. No 'name' property`);
     }
@@ -20,8 +28,29 @@ function constructLocation(p: IConstructorParams) {
     }
 
     Locations[p.name] = new Location(p);
+
+    return Locations[p.name];
 }
 
-for (const metadata of LocationsMetadata {
-    constructLocation(metadata);
+// First construct all cities
+Cities[CityName.Aevum]          = new City(CityName.Aevum);
+Cities[CityName.Chongqing]      = new City(CityName.Chongqing);
+Cities[CityName.Ishima]         = new City(CityName.Ishima);
+Cities[CityName.NewTokyo]       = new City(CityName.NewTokyo);
+Cities[CityName.Sector12]       = new City(CityName.Sector12);
+Cities[CityName.Volhaven]       = new City(CityName.Volhaven);
+
+// Then construct all locations, and add them to the cities as we go.
+for (const metadata of LocationsMetadata) {
+    const loc = constructLocation(metadata);
+
+    const cityName = loc.city;
+    if (cityName === null) {
+        // Generic location, add to all cities
+        for (const city in Cities) {
+            Cities[city].addLocation(loc.name);
+        }
+    } else {
+        Cities[cityName].addLocation(loc.name);
+    }
 }
