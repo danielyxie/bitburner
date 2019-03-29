@@ -295,7 +295,7 @@ function saveAndCloseScriptEditor() {
 //Checks that the string contains only valid characters for a filename, which are alphanumeric,
 // underscores, hyphens, and dots
 function checkValidFilename(filename) {
-	var regex = /^[.a-zA-Z0-9_-]+$/;
+	var regex = /^[.a-zA-Z0-9\/_-]+$/;
 
 	if (filename.match(regex)) {
 		return true;

@@ -56,6 +56,7 @@ import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
 import { post,
+         postContent,
          postError,
          hackProgressBarPost,
          hackProgressPost }                 from "./ui/postToTerminal";
@@ -542,6 +543,15 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith("download ")) {
+        for (var i = 0; i < currServ.textFiles.length; ++i) {
+            allPos.push(currServ.textFiles[i].fn);
+        }
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+    }
+
+    if (input.startsWith("ls ")) {
         for (var i = 0; i < currServ.textFiles.length; ++i) {
             allPos.push(currServ.textFiles[i].fn);
         }
@@ -1667,13 +1677,14 @@ let Terminal = {
     },
 
     executeListCommand: function(commandArray) {
-        if (commandArray.length !== 1 && commandArray.length !== 4) {
+        if (commandArray.length !== 1 && commandArray.length !== 2 && commandArray.length !== 4) {
             postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
             return;
         }
 
         // grep
-        var filter = null;
+        let filter = null;
+        let prefix = null;
         if (commandArray.length === 4) {
             if (commandArray[1] === "|" && commandArray[2] === "grep") {
                 if (commandArray[3] !== " ") {
@@ -1683,73 +1694,60 @@ let Terminal = {
                 postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
                 return;
             }
+        } else if (commandArray.length === 2) { // want to ls a folder
+            prefix = commandArray[1];
+            if (!prefix.endsWith("/")) {
+                prefix += "/";
+            }
         }
 
         //Display all programs and scripts
-        var allFiles = [];
+        let allFiles = [];
+        let folders = [];
+
+        function handleFn(fn) {
+            if (filter && !fn.includes(filter)) {
+                return;
+            }
+
+            if (prefix) {
+                if (!fn.startsWith(prefix)) {
+                    return;
+                } else {
+                    fn = fn.slice(prefix.length, fn.length);
+                }
+            }
+
+            if (fn.includes("/")) {
+                fn = fn.split("/")[0]+"/";
+                if (folders.includes(fn)) {
+                    return;
+                }
+                folders.push(fn);
+            }
+
+            allFiles.push(fn);
+        }
 
         //Get all of the programs and scripts on the machine into one temporary array
         const s = Player.getCurrentServer();
-        for (const program of s.programs) {
-            if (filter) {
-                if (program.includes(filter)) {
-                    allFiles.push(program);
-                }
-            } else {
-                allFiles.push(program);
-            }
-        }
-        for (const script of s.scripts) {
-            if (filter) {
-                if (script.filename.includes(filter)) {
-                    allFiles.push(script.filename);
-                }
-            } else {
-                allFiles.push(script.filename);
-            }
-
-        }
-        for (const msgOrLit of s.messages) {
-            if (filter) {
-                if (msgOrLit instanceof Message) {
-                    if (msgOrLit.filename.includes(filter)) {
-                        allFiles.push(msgOrLit.filename);
-                    }
-                } else if (msgOrLit.includes(filter)) {
-                    allFiles.push(msgOrLit);
-                }
-            } else {
-                if (msgOrLit instanceof Message) {
-                    allFiles.push(msgOrLit.filename);
-                } else {
-                    allFiles.push(msgOrLit);
-                }
-            }
-        }
-        for (const txt of s.textFiles) {
-            if (filter) {
-                if (txt.fn.includes(filter)) {
-                    allFiles.push(txt.fn);
-                }
-            } else {
-                allFiles.push(txt.fn);
-            }
-        }
-        for (const contract of s.contracts) {
-            if (filter) {
-                if (contract.fn.includes(filter)) {
-                    allFiles.push(contract.fn);
-                }
-            } else {
-                allFiles.push(contract.fn);
-            }
-        }
+        for (const program of s.programs) handleFn(program);
+        for (const script of s.scripts) handleFn(script.filename);
+        for (const txt of s.textFiles) handleFn(txt.fn);
+        for (const contract of s.contracts) handleFn(contract.fn);
+        for (const msgOrLit of s.messages) (msgOrLit instanceof Message) ? handleFn(msgOrLit.filename) : handleFn(msgOrLit);
 
         //Sort the files alphabetically then print each
         allFiles.sort();
 
         for (var i = 0; i < allFiles.length; i++) {
-            post(allFiles[i]);
+            let config = {};
+            if (allFiles[i].endsWith("/")) {
+                // Don't let the colorblind chose the color. I believe that's
+                // ubuntu folder color but what the fuck do I know.
+                config.color = "#58698c";
+            }
+            postContent(allFiles[i], config);
         }
     },
 
