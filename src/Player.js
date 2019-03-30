@@ -420,20 +420,21 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     this.lastUpdate = new Date().getTime();
 
+    // Hacknet Nodes
     this.hacknetNodes.length = 0;
     this.hashManager.prestige(this);
 
-    //Gang
+    // Gang
     this.gang = null;
     resetGangs();
 
-    //Reset Stock market
+    // Reset Stock market
     this.hasWseAccount = false;
     this.hasTixApiAccess = false;
     this.has4SData = false;
     this.has4SDataTixApi = false;
 
-    //BitNode 3: Corporatocracy
+    // Corporation
     this.corporation = 0;
 
     // Statistics trackers

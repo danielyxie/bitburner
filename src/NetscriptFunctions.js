@@ -32,10 +32,11 @@ import { FactionWorkType }                          from "./Faction/FactionWorkT
 import { netscriptCanGrow,
          netscriptCanHack,
          netscriptCanWeaken }                       from "./Hacking/netscriptCanHack";
+
 import { getCostOfNextHacknetNode,
          getCostOfNextHacknetServer,
          hasHacknetServers,
-         purchaseHacknet }                          from "./Hacknet/HacknetNode";
+         purchaseHacknet }                          from "./Hacknet/HacknetHelpers";
 import {Locations}                                  from "./Locations";
 import { Message }                                  from "./Message/Message";
 import { Messages }                                 from "./Message/MessageHelpers";
@@ -318,7 +319,11 @@ function NetscriptFunctions(workerScript) {
             upgradeCache : function(i, n) {
                 if (!hasHacknetServers()) { return false; }
                 const node = getHacknetNode(i);
-                return node.purchaseCacheUpgrade(n, Player);
+                const res = node.purchaseCacheUpgrade(n, Player);
+                if (res) {
+                    Player.hashManager.updateCapacity(Player);
+                }
+                return res;
             },
             getLevelUpgradeCost : function(i, n) {
                 const node = getHacknetNode(i);

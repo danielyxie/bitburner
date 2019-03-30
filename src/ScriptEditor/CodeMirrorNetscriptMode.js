@@ -177,9 +177,11 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "upgradeLevel": atom,
       "upgradeRam": atom,
       "upgradeCore": atom,
+      "upgradeCache": atom,
       "getLevelUpgradeCost": atom,
       "getRamUpgradeCost": atom,
       "getCoreUpgradeCost": atom,
+      "getCacheUpgradeCost": atom,
 
       // Netscript Gang API
       "gang": atom,

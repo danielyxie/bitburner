@@ -14,6 +14,7 @@ import { Faction }                              from "./Faction/Faction";
 import { Factions,
          initFactions }                         from "./Faction/Factions";
 import { joinFaction }                          from "./Faction/FactionHelpers";
+import { createHacknetServer }                  from "./Hacknet/HacknetHelpers";
 import {deleteGangDisplayContent}               from "./Gang";
 import {Locations}                              from "./Location";
 import { Message }                              from "./Message/Message";
@@ -30,7 +31,8 @@ import { AllServers,
          prestigeAllServers }                   from "./Server/AllServers";
 import { Server }                               from "./Server/Server"
 import { prestigeHomeComputer }                 from "./Server/ServerHelpers";
-import { updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
+import { SourceFileFlags,
+         updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps,
          SpecialServerIpsMap,
          prestigeSpecialServerIps,
@@ -201,49 +203,45 @@ function prestigeSourceFile() {
     //Re-create foreign servers
     initForeignServers(Player.getHomeComputer());
 
-    var srcFile1Owned = false;
-    for (var i = 0; i < Player.sourceFiles.length; ++i) {
-        if (Player.sourceFiles[i].n == 1) {
-            srcFile1Owned = true;
-        }
-    }
-    if (srcFile1Owned) {
+    if (SourceFileFlags[9] >= 2) {
+        homeComp.setMaxRam(128);
+    } else if (SourceFileFlags[1] > 0) {
         homeComp.setMaxRam(32);
     } else {
         homeComp.setMaxRam(8);
     }
     homeComp.cpuCores = 1;
 
-    //Reset favor for Companies
+    // Reset favor for Companies
     for (var member in Companies) {
         if (Companies.hasOwnProperty(member)) {
             Companies[member].favor = 0;
         }
     }
 
-    //Reset favor for factions
+    // Reset favor for factions
     for (var member in Factions) {
         if (Factions.hasOwnProperty(member)) {
             Factions[member].favor = 0;
         }
     }
 
-    //Stop a Terminal action if there is one
+    // Stop a Terminal action if there is one
     if (Engine._actionInProgress) {
         Engine._actionInProgress = false;
         Terminal.finishAction(true);
     }
 
-    //Delete all Augmentations
+    // Delete all Augmentations
     for (var name in Augmentations) {
         if (Augmentations.hasOwnProperty(name)) {
             delete Augmentations[name];
         }
     }
 
-    //Re-initialize things - This will update any changes
-    initFactions(); //Factions must be initialized before augmentations
-    initAugmentations();    //Calls reapplyAllAugmentations() and resets Player multipliers
+    // Re-initialize things - This will update any changes
+    initFactions(); // Factions must be initialized before augmentations
+    initAugmentations();    // Calls reapplyAllAugmentations() and resets Player multipliers
     Player.reapplyAllSourceFiles();
     initCompanies();
 
@@ -325,7 +323,7 @@ function prestigeSourceFile() {
         dialogBoxCreate("Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!");
     }
 
-    //Reset Stock market, gang, and corporation
+    // Reset Stock market, gang, and corporation
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
@@ -341,6 +339,16 @@ function prestigeSourceFile() {
     Player.corporation = null; resetIndustryResearchTrees();
     Player.bladeburner = null;
 
+    // Source-File 9 (level 3) effect
+    if (SourceFileFlags[9] >= 3) {
+        const hserver = createHacknetServer();
+        hserver.level = 100;
+        hserver.cores = 10;
+        hserver.cache = 5;
+        hserver.updateHashRate(Player);
+        hserver.updateHashCapacity();
+        Player.hashManager.updateCapacity(Player);
+    }
 
     // Refresh Main Menu (the 'World' menu, specifically)
     document.getElementById("world-menu-header").click();

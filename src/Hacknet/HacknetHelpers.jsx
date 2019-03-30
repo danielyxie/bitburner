@@ -45,6 +45,25 @@ export function hasHacknetServers() {
     return (Player.bitNodeN === 9 || SourceFileFlags[9] > 0);
 }
 
+export function createHacknetServer() {
+    const numOwned = Player.hacknetNodes.length;
+    const name = `hacknet-node-${numOwned}`;
+    const server = new HacknetServer({
+        adminRights: true,
+        hostname: name,
+        player: Player,
+    });
+    Player.hacknetNodes.push(server.ip);
+
+    // Configure the HacknetServer to actually act as a Server
+    AddToAllServers(server);
+    const homeComputer = Player.getHomeComputer();
+    homeComputer.serversOnNetwork.push(server.ip);
+    server.serversOnNetwork.push(homeComputer.ip);
+
+    return server;
+}
+
 export function purchaseHacknet() {
     /* INTERACTIVE TUTORIAL */
     if (ITutorial.isRunning) {
@@ -63,24 +82,8 @@ export function purchaseHacknet() {
         }
 
         if (!Player.canAfford(cost)) { return -1; }
-
-        // Auto generate a hostname for this Server
-        const numOwned = Player.hacknetNodes.length;
-        const name = `hacknet-node-${numOwned}`;
-        const server = new HacknetServer({
-            adminRights: true,
-            hostname: name,
-            player: Player,
-        });
-
         Player.loseMoney(cost);
-        Player.hacknetNodes.push(server.ip);
-
-        // Configure the HacknetServer to actually act as a Server
-        AddToAllServers(server);
-        const homeComputer = Player.getHomeComputer();
-        homeComputer.serversOnNetwork.push(server.ip);
-        server.serversOnNetwork.push(homeComputer.ip);
+        const server = createHacknetServer();
 
         return numOwned;
     } else {
