@@ -75,6 +75,7 @@ export function purchaseHacknet() {
     }
     /* END INTERACTIVE TUTORIAL */
 
+    const numOwned = Player.hacknetNodes.length;
     if (hasHacknetServers()) {
         const cost = getCostOfNextHacknetServer();
         if (isNaN(cost)) {
@@ -84,6 +85,7 @@ export function purchaseHacknet() {
         if (!Player.canAfford(cost)) { return -1; }
         Player.loseMoney(cost);
         const server = createHacknetServer();
+        Player.hashManager.updateCapacity(Player);
 
         return numOwned;
     } else {
@@ -95,7 +97,6 @@ export function purchaseHacknet() {
         if (!Player.canAfford(cost)) { return -1; }
 
         // Auto generate a name for the Node
-        const numOwned = Player.hacknetNodes.length;
         const name = "hacknet-node-" + numOwned;
         const node = new HacknetNode(name);
         node.updateMoneyGainRate(Player);
