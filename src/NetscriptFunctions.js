@@ -37,6 +37,7 @@ import { getCostOfNextHacknetNode,
          getCostOfNextHacknetServer,
          hasHacknetServers,
          purchaseHacknet }                          from "./Hacknet/HacknetHelpers";
+import { HacknetServer }                            from "./Hacknet/HacknetServer";
 import {Locations}                                  from "./Locations";
 import { Message }                                  from "./Message/Message";
 import { Messages }                                 from "./Message/MessageHelpers";
@@ -234,14 +235,32 @@ function NetscriptFunctions(workerScript) {
      * Gets the Server for a specific hostname/ip, throwing an error
      * if the server doesn't exist.
      * @param {string} Hostname or IP of the server
+     * @param {string} callingFnName - Name of calling function. For logging purposes
      * @returns {Server} The specified Server
      */
     const safeGetServer = function(ip, callingFnName="") {
         var server = getServer(ip);
         if (server == null) {
+            workerScript.log(`ERROR: Invalid IP or hostname passed into ${callingFnName}()`);
             throw makeRuntimeRejectMsg(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
         }
         return server;
+    }
+
+    /**
+     * Used to fail a function if the function's target is a Hacknet Server.
+     * This is used for functions that should run on normal Servers, but not Hacknet Servers
+     * @param {Server} server - Target server
+     * @param {string} callingFn - Name of calling function. For logging purposes
+     * @returns {boolean} True if the server is a Hacknet Server, false otherwise
+     */
+    const failOnHacknetServer = function(server, callingFn="") {
+        if (server instanceof HacknetServer) {
+            workerScript.log(`ERROR: ${callingFn}() failed because it does not work on Hacknet Servers`);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Utility function to get Hacknet Node object
@@ -1341,25 +1360,22 @@ function NetscriptFunctions(workerScript) {
             let copy = Object.assign({}, BitNodeMultipliers);
             return copy;
         },
-        getServerMoneyAvailable : function(ip){
+        getServerMoneyAvailable : function(ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getServerMoneyAvailable", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerMoneyAvailable", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
-            }
+            const server = safeGetServer(ip, "getServerMoneyAvailable");
+            if (failOnHacknetServer(server, "getServerMoneyAvailable")) { return 0; }
             if (server.hostname == "home") {
-                //Return player's money
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
-                    workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money.toNumber(), 2));
+                // Return player's money
+                if (workerScript.shouldLog("getServerMoneyAvailable")) {
+                    workerScript.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money.toNumber(), 2));
                 }
                 return Player.money.toNumber();
             }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
-                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
+            if (workerScript.shouldLog("getServerMoneyAvailable")) {
+                workerScript.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
             }
             return server.moneyAvailable;
         },
@@ -1368,13 +1384,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerSecurityLevel");
+            if (failOnHacknetServer(server, "getServerSecurityLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerSecurityLevel")) {
+                workerScript.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
             }
             return server.hackDifficulty;
         },
@@ -1383,13 +1396,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerBaseSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerBaseSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerBaseSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerBaseSecurityLevel");
+            if (failOnHacknetServer(server, "getServerBaseSecurityLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerBaseSecurityLevel")) {
+                workerScript.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
             }
             return server.baseDifficulty;
         },
@@ -1398,13 +1408,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerMinSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerMinSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMinSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerMinSecurityLevel");
+            if (failOnHacknetServer(server, "getServerMinSecurityLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerMinSecurityLevel")) {
+                workerScript.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
             }
             return server.minDifficulty;
         },
@@ -1413,13 +1420,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerRequiredHackingLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerRequiredHackingLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRequiredHackingLevel == null) {
-                workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerRequiredHackingLevel");
+            if (failOnHacknetServer(server, "getServerRequiredHackingLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerRequiredHackingLevel")) {
+                workerScript.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
             }
             return server.requiredHackingSkill;
         },
@@ -1428,13 +1432,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerMaxMoney", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerMaxMoney", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMaxMoney == null) {
-                workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerMaxMoney");
+            if (failOnHacknetServer(server, "getServerMaxMoney")) { return 0; }
+            if (workerScript.shouldLog("getServerMaxMoney")) {
+                workerScript.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
             }
             return server.moneyMax;
         },
@@ -1443,13 +1444,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerGrowth", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerGrowth", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerGrowth == null) {
-                workerScript.scriptRef.log("getServerGrowth() returned " + formatNumber(server.serverGrowth, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerGrowth");
+            if (failOnHacknetServer(server, "getServerGrowth")) { return 1; }
+            if (workerScript.shouldLog("getServerGrowth")) {
+                workerScript.log("getServerGrowth() returned " + formatNumber(server.serverGrowth, 0) + " for " + server.hostname);
             }
             return server.serverGrowth;
         },
@@ -1458,13 +1456,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerNumPortsRequired", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerNumPortsRequired", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerNumPortsRequired == null) {
-                workerScript.scriptRef.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerNumPortsRequired");
+            if (failOnHacknetServer(server, "getServerNumPortsRequired")) { return 5; }
+            if (workerScript.shouldLog("getServerNumPortsRequired")) {
+                workerScript.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
             }
             return server.numOpenPortsRequired;
         },
@@ -1473,13 +1468,9 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerRam", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerRam", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRam == null) {
-                workerScript.scriptRef.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
+            const server = safeGetServer(ip, "getServerRam");
+            if (workerScript.shouldLog("getServerRam")) {
+                workerScript.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
             }
             return [server.maxRam, server.ramUsed];
         },
@@ -4771,7 +4762,7 @@ function NetscriptFunctions(workerScript) {
                     answer = String(answer);
                 }
 
-                const serv = safeGetServer(ip, "codingcontract.attempt()");
+                const serv = safeGetServer(ip, "codingcontract.attempt");
                 if (contract.isSolution(answer)) {
                     const reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
                     workerScript.log(`Successfully completed Coding Contract ${fn}. Reward: ${reward}`);
