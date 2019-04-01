@@ -11,7 +11,7 @@ import { overviewPage } from "./Routing";
 
 import { OfficeSpace } from "../Corporation";
 
-import { CityName } from "../../Locations/data/Cities";
+import { CityName } from "../../Locations/data/CityNames";
 
 export class MainPanel extends BaseReactComponent {
     constructor(props) {

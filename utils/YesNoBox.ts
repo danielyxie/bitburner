@@ -6,7 +6,8 @@
  *  1. Just a Yes/No response from player
  *  2. Popup also includes a text input field in addition to the Yes/No response
  */
-import {clearEventListeners} from "./uiHelpers/clearEventListeners";
+import { clearEventListeners } from "./uiHelpers/clearEventListeners";
+import { KEY } from "./helpers/keyCodes";
 
 export let yesNoBoxOpen: boolean = false;
 
@@ -14,9 +15,9 @@ const yesNoBoxContainer: HTMLElement | null = document.getElementById("yes-no-bo
 const yesNoBoxTextElement: HTMLElement | null = document.getElementById("yes-no-box-text");
 
 export function yesNoBoxHotkeyHandler(e: KeyboardEvent) {
-    if (e.keyCode === 27) {
+    if (e.keyCode === KEY.ESC) {
         yesNoBoxClose();
-    } else if (e.keyCode === 13) {
+    } else if (e.keyCode === KEY.ENTER) {
         const yesBtn: HTMLElement | null = document.getElementById("yes-no-box-yes");
         if (yesBtn) {
             yesBtn.click();
@@ -78,9 +79,9 @@ const yesNoTextInputBoxInput: HTMLInputElement | null = document.getElementById(
 const yesNoTextInputBoxTextElement: HTMLElement | null = document.getElementById("yes-no-text-input-box-text");
 
 export function yesNoTxtInpBoxHotkeyHandler(e: KeyboardEvent) {
-    if (e.keyCode === 27) {
+    if (e.keyCode === KEY.ESC) {
         yesNoTxtInpBoxClose();
-    } else if (e.keyCode === 13) {
+    } else if (e.keyCode === KEY.ENTER) {
         const yesBtn: HTMLElement | null = document.getElementById("yes-no-text-input-box-yes");
         if (yesBtn) {
             yesBtn.click();

@@ -10,7 +10,7 @@ import { Companies }                            from "./Company/Companies";
 import { getNextCompanyPosition }               from "./Company/GetNextCompanyPosition";
 import { getJobRequirementText }                from "./Company/GetJobRequirementText";
 import { CompanyPositions }                     from "./Company/CompanyPositions";
-import * as posNames                            from "./Company/data/CompanyPositionNames";
+import * as posNames                            from "./Company/data/companypositionnames";
 import {CONSTANTS}                              from "./Constants";
 import { Corporation }                          from "./Corporation/Corporation";
 import { Programs }                             from "./Programs/Programs";
@@ -23,7 +23,10 @@ import { displayFactionContent }                from "./Faction/FactionHelpers";
 import {Gang, resetGangs}                       from "./Gang";
 import { hasHacknetServers }                    from "./Hacknet/HacknetHelpers";
 import { HashManager }                          from "./Hacknet/HashManager";
-import {Locations}                              from "./Locations";
+import { Cities }                               from "./Locations/Cities";
+import { Locations }                            from "./Locations/Locations";
+import { CityName }                             from "./Locations/data/CityNames";
+import { LocationName }                         from "./Locations/data/LocationNames";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import { Sleeve }                               from "./PersonObjects/Sleeve/Sleeve";
 import { AllServers,
@@ -33,12 +36,14 @@ import {Settings}                               from "./Settings/Settings";
 import {SpecialServerIps, SpecialServerNames}   from "./Server/SpecialServerIps";
 import {SourceFiles, applySourceFile}           from "./SourceFile";
 import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
+
 import Decimal                                  from "decimal.js";
+
 import {numeralWrapper}                         from "./ui/numeralFormat";
 import { MoneySourceTracker }                   from "./utils/MoneySourceTracker";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
-import {createRandomIp}                         from "../utils/IPAddress";
+import {dialogBoxCreate}                        from "./../utils/DialogBox";
+import {clearEventListeners}                    from "./../utils/uiHelpers/clearEventListeners";
+import {createRandomIp}                         from "./../utils/IPAddress";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions";
@@ -102,7 +107,7 @@ function PlayerObject() {
     this.homeComputer = "";
 
 	//Location information
-	this.city 			= Locations.Sector12;
+	this.city 			= CityName.Sector12;
 	this.location 		= "";
 
     // Jobs that the player holds
@@ -271,7 +276,7 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.money = new Decimal(1000);
 
-    this.city = Locations.Sector12;
+    this.city = CityName.Sector12;
     this.location = "";
 
     this.companyName = "";
@@ -364,7 +369,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     this.money = new Decimal(1000);
 
-    this.city = Locations.Sector12;
+    this.city = CityName.Sector12;
     this.location = "";
 
     this.companyName = "";
@@ -445,26 +450,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.hp = this.max_hp;
 }
 
-PlayerObject.prototype.getCurrentServer = function() {
-    return AllServers[this.currentServer];
-}
-
-PlayerObject.prototype.getHomeComputer = function() {
-    return AllServers[this.homeComputer];
-}
-
-PlayerObject.prototype.getUpgradeHomeRamCost = function() {
-    //Calculate how many times ram has been upgraded (doubled)
-    const currentRam = this.getHomeComputer().maxRam;
-    const numUpgrades = Math.log2(currentRam);
-
-    //Calculate cost
-    //Have cost increase by some percentage each time RAM has been upgraded
-    const mult = Math.pow(1.58, numUpgrades);
-    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
-    return cost;
-}
-
 PlayerObject.prototype.receiveInvite = function(factionName) {
     if(this.factionInvitations.includes(factionName) || this.factions.includes(factionName)) {
         return;
@@ -494,7 +479,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 
     var ratio = this.hp / this.max_hp;
     this.max_hp         = Math.floor(10 + this.defense / 10);
-    Player.hp = Math.round(this.max_hp * ratio);
+    this.hp = Math.round(this.max_hp * ratio);
 }
 
 PlayerObject.prototype.resetMultipliers = function() {
@@ -538,8 +523,8 @@ PlayerObject.prototype.resetMultipliers = function() {
 }
 
 PlayerObject.prototype.hasProgram = function(programName) {
-    var home = Player.getHomeComputer();
-    if (home == null) {return false;}
+    const home = this.getHomeComputer();
+    if (home == null) { return false; }
 
     for (var i = 0; i < home.programs.length; ++i) {
         if (programName.toLowerCase() == home.programs[i].toLowerCase()) {return true;}
@@ -661,13 +646,13 @@ PlayerObject.prototype.gainIntelligenceExp = function(exp) {
 //Given a string expression like "str" or "strength", returns the given stat
 PlayerObject.prototype.queryStatFromString = function(str) {
     const tempStr = str.toLowerCase();
-    if (tempStr.includes("hack"))   {return Player.hacking_skill;}
-    if (tempStr.includes("str"))    {return Player.strength;}
-    if (tempStr.includes("def"))    {return Player.defense;}
-    if (tempStr.includes("dex"))    {return Player.dexterity;}
-    if (tempStr.includes("agi"))    {return Player.agility;}
-    if (tempStr.includes("cha"))    {return Player.charisma;}
-    if (tempStr.includes("int"))    {return Player.intelligence;}
+    if (tempStr.includes("hack"))   { return this.hacking_skill; }
+    if (tempStr.includes("str"))    { return this.strength; }
+    if (tempStr.includes("def"))    { return this.defense; }
+    if (tempStr.includes("dex"))    { return this.dexterity; }
+    if (tempStr.includes("agi"))    { return this.agility; }
+    if (tempStr.includes("cha"))    { return this.charisma; }
+    if (tempStr.includes("int"))    { return this.intelligence; }
 }
 
 /******* Working functions *******/
@@ -752,7 +737,7 @@ PlayerObject.prototype.startWork = function(companyName) {
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
     newCancelButton.innerHTML = "Cancel Work";
     newCancelButton.addEventListener("click", function() {
-        Player.finishWork(true);
+        this.finishWork(true);
         return false;
     });
 
@@ -875,7 +860,7 @@ PlayerObject.prototype.startWorkPartTime = function(companyName) {
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
     newCancelButton.innerHTML = "Stop Working";
     newCancelButton.addEventListener("click", function() {
-        Player.finishWorkPartTime();
+        this.finishWorkPartTime();
         return false;
     });
 
@@ -985,7 +970,7 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Stop Faction Work";
     cancelButton.addEventListener("click", function() {
-        Player.finishFactionWork(true);
+        this.finishFactionWork(true);
         return false;
     });
 
@@ -1322,7 +1307,7 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Cancel work on creating program";
     cancelButton.addEventListener("click", function() {
-        Player.finishCreateProgramWork(true);
+        this.finishCreateProgramWork(true);
         return false;
     });
 
@@ -1464,7 +1449,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
         cancelButton.innerHTML = "Stop taking course";
     }
     cancelButton.addEventListener("click", function() {
-        Player.finishClass();
+        this.finishClass();
         return false;
     });
 
@@ -1562,7 +1547,7 @@ PlayerObject.prototype.startCrime = function(crimeType, hackExp, strExp, defExp,
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button")
     newCancelButton.innerHTML = "Cancel crime"
     newCancelButton.addEventListener("click", function() {
-        Player.finishCrime(true);
+        this.finishCrime(true);
         return false;
     });
 
@@ -1604,8 +1589,8 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                 console.log(this.crimeType);
                 dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             }
-            Player.gainMoney(this.workMoneyGained);
-            Player.recordMoneySource(this.workMoneyGained, "crime");
+            this.gainMoney(this.workMoneyGained);
+            this.recordMoneySource(this.workMoneyGained, "crime");
             this.karma -= crime.karma;
             this.numPeopleKilled += crime.kills;
             if(crime.intelligence_exp > 0) {
@@ -1720,7 +1705,7 @@ PlayerObject.prototype.singularityStopWork = function() {
 }
 
 
-//Returns true if hospitalized, false otherwise
+// Returns true if hospitalized, false otherwise
 PlayerObject.prototype.takeDamage = function(amt) {
     if (typeof amt !== "number") {
         console.warn(`Player.takeDamage() called without a numeric argument: ${amt}`);
@@ -2126,14 +2111,14 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //ECorp
     var ecorpFac = Factions["ECorp"];
     if (!ecorpFac.isBanned && !ecorpFac.isMember && !ecorpFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.AevumECorp)) {
+        checkMegacorpRequirements(LocationName.AevumECorp)) {
         invitedFactions.push(ecorpFac);
     }
 
     //MegaCorp
     var megacorpFac = Factions["MegaCorp"];
     if (!megacorpFac.isBanned && !megacorpFac.isMember && !megacorpFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.Sector12MegaCorp)) {
+        checkMegacorpRequirements(LocationName.Sector12MegaCorp)) {
         invitedFactions.push(megacorpFac);
     }
 
@@ -2141,42 +2126,42 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var bachmanandassociatesFac = Factions["Bachman & Associates"];
     if (!bachmanandassociatesFac.isBanned && !bachmanandassociatesFac.isMember &&
         !bachmanandassociatesFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.AevumBachmanAndAssociates)) {
+        checkMegacorpRequirements(LocationName.AevumBachmanAndAssociates)) {
         invitedFactions.push(bachmanandassociatesFac);
     }
 
     //Blade Industries
     var bladeindustriesFac = Factions["Blade Industries"];
     if (!bladeindustriesFac.isBanned && !bladeindustriesFac.isMember && !bladeindustriesFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.Sector12BladeIndustries)) {
+        checkMegacorpRequirements(LocationName.Sector12BladeIndustries)) {
         invitedFactions.push(bladeindustriesFac);
     }
 
     //NWO
     var nwoFac = Factions["NWO"];
     if (!nwoFac.isBanned && !nwoFac.isMember && !nwoFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.VolhavenNWO)) {
+        checkMegacorpRequirements(LocationName.VolhavenNWO)) {
         invitedFactions.push(nwoFac);
     }
 
     //Clarke Incorporated
     var clarkeincorporatedFac = Factions["Clarke Incorporated"];
     if (!clarkeincorporatedFac.isBanned && !clarkeincorporatedFac.isMember && !clarkeincorporatedFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.AevumClarkeIncorporated)) {
+        checkMegacorpRequirements(LocationName.AevumClarkeIncorporated)) {
         invitedFactions.push(clarkeincorporatedFac);
     }
 
     //OmniTek Incorporated
     var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
     if (!omnitekincorporatedFac.isBanned && !omnitekincorporatedFac.isMember && !omnitekincorporatedFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.VolhavenOmniTekIncorporated)) {
+        checkMegacorpRequirements(LocationName.VolhavenOmniTekIncorporated)) {
         invitedFactions.push(omnitekincorporatedFac);
     }
 
     //Four Sigma
     var foursigmaFac = Factions["Four Sigma"];
     if (!foursigmaFac.isBanned && !foursigmaFac.isMember && !foursigmaFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.Sector12FourSigma)) {
+        checkMegacorpRequirements(LocationName.Sector12FourSigma)) {
         invitedFactions.push(foursigmaFac);
     }
 
@@ -2184,7 +2169,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var kuaigonginternationalFac = Factions["KuaiGong International"];
     if (!kuaigonginternationalFac.isBanned && !kuaigonginternationalFac.isMember &&
         !kuaigonginternationalFac.alreadyInvited &&
-        checkMegacorpRequirements(Locations.ChongqingKuaiGongInternational)) {
+        checkMegacorpRequirements(LocationName.ChongqingKuaiGongInternational)) {
         invitedFactions.push(kuaigonginternationalFac);
     }
 
@@ -2197,7 +2182,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
             !fulcrumsecrettechonologiesFac.alreadyInvited &&
             fulcrumSecretServer.manuallyHacked &&
-            checkMegacorpRequirements(Locations.AevumFulcrumTechnologies, 250e3)) {
+            checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies, 250e3)) {
             invitedFactions.push(fulcrumsecrettechonologiesFac);
         }
     }
@@ -2236,42 +2221,42 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Chongqing
     var chongqingFac = Factions["Chongqing"];
     if (!chongqingFac.isBanned && !chongqingFac.isMember && !chongqingFac.alreadyInvited &&
-        this.money.gte(20000000) && this.city == Locations.Chongqing) {
+        this.money.gte(20000000) && this.city == CityName.Chongqing) {
         invitedFactions.push(chongqingFac);
     }
 
     //Sector-12
     var sector12Fac = Factions["Sector-12"];
     if (!sector12Fac.isBanned && !sector12Fac.isMember && !sector12Fac.alreadyInvited &&
-        this.money.gte(15000000) && this.city == Locations.Sector12) {
+        this.money.gte(15000000) && this.city == CityName.Sector12) {
         invitedFactions.push(sector12Fac);
     }
 
     //New Tokyo
     var newtokyoFac = Factions["New Tokyo"];
     if (!newtokyoFac.isBanned && !newtokyoFac.isMember && !newtokyoFac.alreadyInvited &&
-        this.money.gte(20000000) && this.city == Locations.NewTokyo) {
+        this.money.gte(20000000) && this.city == CityName.NewTokyo) {
         invitedFactions.push(newtokyoFac);
     }
 
     //Aevum
     var aevumFac = Factions["Aevum"];
     if (!aevumFac.isBanned && !aevumFac.isMember  && !aevumFac.alreadyInvited &&
-        this.money.gte(40000000) && this.city == Locations.Aevum) {
+        this.money.gte(40000000) && this.city == CityName.Aevum) {
         invitedFactions.push(aevumFac);
     }
 
     //Ishima
     var ishimaFac = Factions["Ishima"];
     if (!ishimaFac.isBanned && !ishimaFac.isMember && !ishimaFac.alreadyInvited &&
-        this.money.gte(30000000) && this.city == Locations.Ishima) {
+        this.money.gte(30000000) && this.city == CityName.Ishima) {
         invitedFactions.push(ishimaFac);
     }
 
     //Volhaven
     var volhavenFac = Factions["Volhaven"];
     if (!volhavenFac.isBanned && !volhavenFac.isMember && !volhavenFac.alreadyInvited &&
-        this.money.gte(50000000) && this.city == Locations.Volhaven) {
+        this.money.gte(50000000) && this.city == CityName.Volhaven) {
         invitedFactions.push(volhavenFac);
     }
 
@@ -2280,8 +2265,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (!speakersforthedeadFac.isBanned && !speakersforthedeadFac.isMember && !speakersforthedeadFac.alreadyInvited &&
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 &&
         this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 30 &&
-        this.karma <= -45 && !allCompanies.includes(Locations.Sector12CIA) &&
-        !allCompanies.includes(Locations.Sector12NSA)) {
+        this.karma <= -45 && !allCompanies.includes(LocationName.Sector12CIA) &&
+        !allCompanies.includes(LocationName.Sector12NSA)) {
         invitedFactions.push(speakersforthedeadFac);
     }
 
@@ -2289,9 +2274,9 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var thedarkarmyFac = Factions["The Dark Army"];
     if (!thedarkarmyFac.isBanned && !thedarkarmyFac.isMember && !thedarkarmyFac.alreadyInvited &&
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 &&
-        this.dexterity >= 300 && this.agility >= 300 && this.city == Locations.Chongqing &&
-        this.numPeopleKilled >= 5 && this.karma <= -45 && !allCompanies.includes(Locations.Sector12CIA) &&
-        !allCompanies.includes(Locations.Sector12NSA)) {
+        this.dexterity >= 300 && this.agility >= 300 && this.city == CityName.Chongqing &&
+        this.numPeopleKilled >= 5 && this.karma <= -45 && !allCompanies.includes(LocationName.Sector12CIA) &&
+        !allCompanies.includes(LocationName.Sector12NSA)) {
         invitedFactions.push(thedarkarmyFac);
     }
 
@@ -2300,9 +2285,9 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (!thesyndicateFac.isBanned && !thesyndicateFac.isMember && !thesyndicateFac.alreadyInvited &&
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 &&
-        (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
+        (this.city == CityName.Aevum || this.city == CityName.Sector12) &&
         this.money.gte(10000000) && this.karma <= -90 &&
-        !allCompanies.includes(Locations.Sector12CIA) && !allCompanies.includes(Locations.Sector12NSA)) {
+        !allCompanies.includes(LocationName.Sector12CIA) && !allCompanies.includes(LocationName.Sector12NSA)) {
         invitedFactions.push(thesyndicateFac);
     }
 
@@ -2319,8 +2304,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Tetrads
     var tetradsFac = Factions["Tetrads"];
     if (!tetradsFac.isBanned && !tetradsFac.isMember && !tetradsFac.alreadyInvited &&
-        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo ||
-        this.city == Locations.Ishima) && this.strength >= 75 && this.defense >= 75 &&
+        (this.city == CityName.Chongqing || this.city == CityName.NewTokyo ||
+        this.city == CityName.Ishima) && this.strength >= 75 && this.defense >= 75 &&
         this.dexterity >= 75 && this.agility >= 75 && this.karma <= -18) {
         invitedFactions.push(tetradsFac);
     }
@@ -2362,8 +2347,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var tiandihuiFac = Factions["Tian Di Hui"];
     if (!tiandihuiFac.isBanned &&  !tiandihuiFac.isMember && !tiandihuiFac.alreadyInvited &&
         this.money.gte(1000000) && this.hacking_skill >= 50 &&
-        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo ||
-         this.city == Locations.Ishima)) {
+        (this.city == CityName.Chongqing || this.city == CityName.NewTokyo ||
+         this.city == CityName.Ishima)) {
         invitedFactions.push(tiandihuiFac);
     }
 
@@ -2390,18 +2375,6 @@ PlayerObject.prototype.inGang = function() {
 
 PlayerObject.prototype.startGang = function(factionName, hacking) {
     this.gang = new Gang(factionName, hacking);
-}
-
-/*************** Corporation ****************/
-PlayerObject.prototype.hasCorporation = function() {
-    if (this.corporation == null) { return false; }
-    return (this.corporation instanceof Corporation);
-}
-
-/*************** Bladeburner ****************/
-PlayerObject.prototype.inBladeburner = function() {
-    if (this.bladeburner == null) { return false; }
-    return (this.bladeburner instanceof Bladeburner);
 }
 
 /************* BitNodes **************/
@@ -2489,8 +2462,85 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
     /* eslint-enable no-case-declarations */
 }
 
-/* Functions for saving and loading the Player data */
-function loadPlayer(saveString) {
+PlayerObject.prototype.travel = function(to) {
+    if (Cities[to] == null) {
+        console.warn(`Player.travel() called with invalid city: ${to}`);
+        return false;
+    }
+    this.city = to;
+
+    return true;
+}
+
+PlayerObject.prototype.gotoLocation = function(to) {
+    if (Locations[to] == null) {
+        console.warn(`Player.gotoLocation() called with invalid location: ${to}`);
+        return false;
+    }
+    this.location = to;
+
+    return true;
+}
+
+PlayerObject.prototype.hasTorRouter = function() {
+    return SpecialServerIps.hasOwnProperty("Darkweb Server");
+}
+
+PlayerObject.prototype.getCurrentServer = function() {
+    return AllServers[this.currentServer];
+}
+
+PlayerObject.prototype.getHomeComputer = function() {
+    return AllServers[this.homeComputer];
+}
+
+PlayerObject.prototype.getUpgradeHomeRamCost = function() {
+    //Calculate how many times ram has been upgraded (doubled)
+    const currentRam = this.getHomeComputer().maxRam;
+    const numUpgrades = Math.log2(currentRam);
+
+    //Calculate cost
+    //Have cost increase by some percentage each time RAM has been upgraded
+    const mult = Math.pow(1.58, numUpgrades);
+    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
+    return cost;
+}
+
+PlayerObject.prototype.inBladeburner = function() {
+    if (this.bladeburner == null) { return false; }
+    return (this.bladeburner instanceof Bladeburner);
+}
+
+PlayerObject.prototype.startBladeburner = function() {
+    this.bladeburner = new Bladeburner({ new: true });
+}
+
+PlayerObject.prototype.hasCorporation = function() {
+    if (this.corporation == null) { return false; }
+    return (this.corporation instanceof Corporation);
+}
+
+PlayerObject.prototype.startCorporation = function(corpName, additionalShares=0) {
+    this.corporation = new Corporation({
+        name: corpName
+    });
+
+    this.corporation.totalShares += additionalShares;
+}
+
+PlayerObject.prototype.toJSON = function() {
+    return Generic_toJSON("PlayerObject", this);
+}
+
+PlayerObject.fromJSON = function(value) {
+    return Generic_fromJSON(PlayerObject, value.data);
+}
+
+Reviver.constructors.PlayerObject = PlayerObject;
+
+export let Player = new PlayerObject();
+
+export function loadPlayer(saveString) {
     Player  = JSON.parse(saveString, Reviver);
 
     //Parse Decimal.js objects
@@ -2510,16 +2560,3 @@ function loadPlayer(saveString) {
         }
     }
 }
-
-PlayerObject.prototype.toJSON = function() {
-    return Generic_toJSON("PlayerObject", this);
-}
-
-PlayerObject.fromJSON = function(value) {
-    return Generic_fromJSON(PlayerObject, value.data);
-}
-
-Reviver.constructors.PlayerObject = PlayerObject;
-
-let Player = new PlayerObject();
-export {Player, loadPlayer};

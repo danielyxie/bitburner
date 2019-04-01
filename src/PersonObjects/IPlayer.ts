@@ -1,8 +1,8 @@
-// Interface for an object that represents the player (PlayerObject)
-// Used because at the time of implementation, the PlayerObject
-// cant be converted to TypeScript.
-//
-// Only contains the needed properties for Sleeve implementation
+/**
+ * Interface for an object that represents the player (PlayerObject)
+ * Used because at the time of implementation, the PlayerObject
+ * cant be converted to TypeScript.
+ */
 import { Resleeve } from "./Resleeving/Resleeve";
 import { Sleeve } from "./Sleeve/Sleeve";
 
@@ -12,9 +12,10 @@ import { IPlayerOwnedAugmentation }     from "../Augmentation/PlayerOwnedAugment
 import { Company }                      from "../Company/Company";
 import { CompanyPosition }              from "../Company/CompanyPosition";
 import { CityName }                     from "../Locations/data/CityNames";
+import { HashManager }                  from "../Hacknet/HashManager";
 import { HacknetNode }                  from "../Hacknet/HacknetNode";
-import { HacknetServer }                from "../Hacknet/HacknetServer";
 import { LocationName }                 from "../Locations/data/LocationNames";
+import { Server }                       from "../Server/Server";
 import { IPlayerOwnedSourceFile }       from "../SourceFile/PlayerOwnedSourceFile";
 import { MoneySourceTracker }           from "../utils/MoneySourceTracker";
 
@@ -28,11 +29,15 @@ export interface IPlayer {
     corporation: any;
     currentServer: string;
     factions: string[];
+    firstTimeTraveled: boolean;
     hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
+    hashManager: HashManager;
     hasWseAccount: boolean;
+    hp: number;
     jobs: IMap<string>;
     karma: number;
     location: LocationName;
+    max_hp: number;
     money: any;
     moneySourceA: MoneySourceTracker;
     moneySourceB: MoneySourceTracker;
@@ -114,15 +119,22 @@ export interface IPlayer {
     gainAgilityExp(exp: number): void;
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
+    getHomeComputer(): Server;
     getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
+    getUpgradeHomeRamCost(): number;
     hasCorporation(): boolean;
+    hasTorRouter(): boolean;
     inBladeburner(): boolean;
     inGang(): boolean;
     isQualified(company: Company, position: CompanyPosition): boolean;
     loseMoney(money: number): void;
     reapplyAllAugmentations(resetMultipliers: boolean): void;
     reapplyAllSourceFiles(): void;
+    regenerateHp(amt: number): void;
     recordMoneySource(amt: number, source: string): void;
+    startBladeburner(p: object): void;
+    startClass(costMult: number, expMult: number, className: string): void;
+    startCorporation(corpName: string, additionalShares?: number): void;
     startCrime(crimeType: string,
                hackExp: number,
                strExp: number,

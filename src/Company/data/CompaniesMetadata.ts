@@ -1,7 +1,8 @@
-import { IConstructorParams } from "../Company";
-import { Locations } from "../../Locations";
-import * as posNames from "./CompanyPositionNames";
-import { IMap } from "../../types";
+import * as posNames            from "./companypositionnames";
+import { IConstructorParams }   from "../Company";
+
+import { IMap }                 from "../../types";
+import { LocationName }         from "../../Locations/data/LocationNames";
 
 // Create Objects containing Company Positions by category
 // Will help in metadata construction later
@@ -89,7 +90,7 @@ CEOOnly[posNames.BusinessCompanyPositions[5]] = true;
 // Metadata
 export const companiesMetadata: IConstructorParams[] = [
     {
-        name: Locations.AevumECorp,
+        name: LocationName.AevumECorp,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -101,7 +102,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 249,
     },
     {
-        name: Locations.Sector12MegaCorp,
+        name: LocationName.Sector12MegaCorp,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -113,7 +114,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 249,
     },
     {
-        name: Locations.AevumBachmanAndAssociates,
+        name: LocationName.AevumBachmanAndAssociates,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -125,7 +126,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.Sector12BladeIndustries,
+        name: LocationName.Sector12BladeIndustries,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -137,7 +138,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.VolhavenNWO,
+        name: LocationName.VolhavenNWO,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -149,7 +150,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 249,
     },
     {
-        name: Locations.AevumClarkeIncorporated,
+        name: LocationName.AevumClarkeIncorporated,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -161,7 +162,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.VolhavenOmniTekIncorporated,
+        name: LocationName.VolhavenOmniTekIncorporated,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -173,7 +174,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.Sector12FourSigma,
+        name: LocationName.Sector12FourSigma,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -185,7 +186,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.ChongqingKuaiGongInternational,
+        name: LocationName.ChongqingKuaiGongInternational,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -197,7 +198,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.AevumFulcrumTechnologies,
+        name: LocationName.AevumFulcrumTechnologies,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -208,7 +209,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.IshimaStormTechnologies,
+        name: LocationName.IshimaStormTechnologies,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -220,7 +221,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.NewTokyoDefComm,
+        name: LocationName.NewTokyoDefComm,
         info: "",
         companyPositions: Object.assign({},
             CEOOnly,
@@ -232,7 +233,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.VolhavenHeliosLabs,
+        name: LocationName.VolhavenHeliosLabs,
         info: "",
         companyPositions: Object.assign({},
             CEOOnly,
@@ -244,7 +245,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.NewTokyoVitaLife,
+        name: LocationName.NewTokyoVitaLife,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -256,7 +257,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.Sector12IcarusMicrosystems,
+        name: LocationName.Sector12IcarusMicrosystems,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -268,7 +269,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.Sector12UniversalEnergy,
+        name: LocationName.Sector12UniversalEnergy,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -280,7 +281,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.AevumGalacticCybersystems,
+        name: LocationName.AevumGalacticCybersystems,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -292,7 +293,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.AevumAeroCorp,
+        name: LocationName.AevumAeroCorp,
         info: "",
         companyPositions: Object.assign({},
             CEOOnly,
@@ -305,7 +306,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.VolhavenOmniaCybersystems,
+        name: LocationName.VolhavenOmniaCybersystems,
         info: "",
         companyPositions: Object.assign({},
             CEOOnly,
@@ -318,7 +319,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.ChongqingSolarisSpaceSystems,
+        name: LocationName.ChongqingSolarisSpaceSystems,
         info: "",
         companyPositions: Object.assign({},
             CEOOnly,
@@ -331,7 +332,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.Sector12DeltaOne,
+        name: LocationName.Sector12DeltaOne,
         info: "",
         companyPositions: Object.assign({},
             CEOOnly,
@@ -344,7 +345,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.NewTokyoGlobalPharmaceuticals,
+        name: LocationName.NewTokyoGlobalPharmaceuticals,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -357,7 +358,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 224,
     },
     {
-        name: Locations.IshimaNovaMedical,
+        name: LocationName.IshimaNovaMedical,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -370,7 +371,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 199,
     },
     {
-        name: Locations.Sector12CIA,
+        name: LocationName.Sector12CIA,
         info: "",
         companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
@@ -385,7 +386,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 149,
     },
     {
-        name: Locations.Sector12NSA,
+        name: LocationName.Sector12NSA,
         info: "",
         companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
@@ -400,7 +401,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 149,
     },
     {
-        name: Locations.AevumWatchdogSecurity,
+        name: LocationName.AevumWatchdogSecurity,
         info: "",
         companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
@@ -415,7 +416,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 124,
     },
     {
-        name: Locations.VolhavenLexoCorp,
+        name: LocationName.VolhavenLexoCorp,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -428,7 +429,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 99,
     },
     {
-        name: Locations.AevumRhoConstruction,
+        name: LocationName.AevumRhoConstruction,
         info: "",
         companyPositions: Object.assign({},
             SoftwarePositionsUpToLeadDeveloper,
@@ -439,7 +440,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 49,
     },
     {
-        name: Locations.Sector12AlphaEnterprises,
+        name: LocationName.Sector12AlphaEnterprises,
         info: "",
         companyPositions: Object.assign({},
             SoftwarePositionsUpToLeadDeveloper,
@@ -451,7 +452,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 99,
     },
     {
-        name: Locations.AevumPolice,
+        name: LocationName.AevumPolice,
         info: "",
         companyPositions: Object.assign({},
             AllSecurityPositions,
@@ -462,7 +463,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 99,
     },
     {
-        name: Locations.VolhavenSysCoreSecurities,
+        name: LocationName.VolhavenSysCoreSecurities,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions
@@ -472,7 +473,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 124,
     },
     {
-        name: Locations.VolhavenCompuTek,
+        name: LocationName.VolhavenCompuTek,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions
@@ -482,7 +483,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 74,
     },
     {
-        name: Locations.AevumNetLinkTechnologies,
+        name: LocationName.AevumNetLinkTechnologies,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions
@@ -492,7 +493,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 99,
     },
     {
-        name: Locations.Sector12CarmichaelSecurity,
+        name: LocationName.Sector12CarmichaelSecurity,
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
@@ -505,7 +506,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 74,
     },
     {
-        name: Locations.Sector12FoodNStuff,
+        name: LocationName.Sector12FoodNStuff,
         info: "",
         companyPositions: Object.assign({},
             EmployeeOnly, PartTimeEmployeeOnly
@@ -515,7 +516,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 0,
     },
     {
-        name: Locations.Sector12JoesGuns,
+        name: LocationName.Sector12JoesGuns,
         info: "",
         companyPositions: Object.assign({},
             EmployeeOnly, PartTimeEmployeeOnly
@@ -525,7 +526,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 0,
     },
     {
-        name: Locations.IshimaOmegaSoftware,
+        name: LocationName.IshimaOmegaSoftware,
         info: "",
         companyPositions: Object.assign({},
             AllSoftwarePositions,
@@ -537,7 +538,7 @@ export const companiesMetadata: IConstructorParams[] = [
         jobStatReqOffset: 49,
     },
     {
-        name: Locations.NewTokyoNoodleBar,
+        name: LocationName.NewTokyoNoodleBar,
         info: "",
         companyPositions: Object.assign({},
             WaiterOnly, PartTimeWaiterOnly

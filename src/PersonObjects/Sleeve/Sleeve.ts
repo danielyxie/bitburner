@@ -22,8 +22,6 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Crime } from "../../Crime/Crime";
 import { Crimes } from "../../Crime/Crimes";
 
-import { CityName } from "../../Locations/data/CityNames";
-
 import { Companies } from "../../Company/Companies";
 import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
@@ -35,7 +33,8 @@ import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 
-import { Locations } from "../../Locations";
+import { CityName } from "../../Locations/data/CityNames";
+import { LocationName } from "../../Locations/data/LocationNames";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
@@ -586,21 +585,21 @@ export class Sleeve extends Person {
         let costMult: number = 1;
         let expMult: number = 1;
         switch (universityName.toLowerCase()) {
-            case Locations.AevumSummitUniversity.toLowerCase():
+            case LocationName.AevumSummitUniversity.toLowerCase():
                 if (this.city !== CityName.Aevum) { return false; }
-                this.currentTaskLocation = Locations.AevumSummitUniversity;
+                this.currentTaskLocation = LocationName.AevumSummitUniversity;
                 costMult = 4;
                 expMult = 3;
                 break;
-            case Locations.Sector12RothmanUniversity.toLowerCase():
+            case LocationName.Sector12RothmanUniversity.toLowerCase():
                 if (this.city !== CityName.Sector12) { return false; }
-                this.currentTaskLocation = Locations.Sector12RothmanUniversity;
+                this.currentTaskLocation = LocationName.Sector12RothmanUniversity;
                 costMult = 3;
                 expMult = 2;
                 break;
-            case Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
+            case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
                 if (this.city !== CityName.Volhaven) { return false; }
-                this.currentTaskLocation = Locations.VolhavenZBInstituteOfTechnology;
+                this.currentTaskLocation = LocationName.VolhavenZBInstituteOfTechnology;
                 costMult = 5;
                 expMult = 4;
                 break;
@@ -781,33 +780,33 @@ export class Sleeve extends Person {
         let costMult: number = 1;
         let expMult: number = 1;
         switch (gymName.toLowerCase()) {
-            case Locations.AevumCrushFitnessGym.toLowerCase():
+            case LocationName.AevumCrushFitnessGym.toLowerCase():
                 if (this.city != CityName.Aevum) { return false; }
-                this.currentTaskLocation = Locations.AevumCrushFitnessGym;
+                this.currentTaskLocation = LocationName.AevumCrushFitnessGym;
                 costMult = 3;
                 expMult = 2;
                 break;
-            case Locations.AevumSnapFitnessGym.toLowerCase():
+            case LocationName.AevumSnapFitnessGym.toLowerCase():
                 if (this.city != CityName.Aevum) { return false; }
-                this.currentTaskLocation = Locations.AevumSnapFitnessGym;
+                this.currentTaskLocation = LocationName.AevumSnapFitnessGym;
                 costMult = 10;
                 expMult = 5;
                 break;
-            case Locations.Sector12IronGym.toLowerCase():
+            case LocationName.Sector12IronGym.toLowerCase():
                 if (this.city != CityName.Sector12) { return false; }
-                this.currentTaskLocation = Locations.Sector12IronGym;
+                this.currentTaskLocation = LocationName.Sector12IronGym;
                 costMult = 1;
                 expMult = 1;
                 break;
-            case Locations.Sector12PowerhouseGym.toLowerCase():
+            case LocationName.Sector12PowerhouseGym.toLowerCase():
                 if (this.city != CityName.Sector12) { return false; }
-                this.currentTaskLocation = Locations.Sector12PowerhouseGym;
+                this.currentTaskLocation = LocationName.Sector12PowerhouseGym;
                 costMult = 20;
                 expMult = 10;
                 break;
-            case Locations.VolhavenMilleniumFitnessGym:
+            case LocationName.VolhavenMilleniumFitnessGym:
                 if (this.city != CityName.Volhaven) { return false; }
-                this.currentTaskLocation = Locations.VolhavenMilleniumFitnessGym;
+                this.currentTaskLocation = LocationName.VolhavenMilleniumFitnessGym;
                 costMult = 7;
                 expMult = 4;
                 break;

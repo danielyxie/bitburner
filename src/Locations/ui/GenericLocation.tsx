@@ -6,36 +6,33 @@
  */
 import * as React from "react";
 
-import { Location }             from "../Location";
-import { Locations }            from "../Locations";
-import { LocationType }         from "../LocationTypeEnum";
-import { LocationName }         from "../data/LocationNames";
+import { CompanyLocation }          from "./CompanyLocation";
+import { GymLocation }              from "./GymLocation";
+import { HospitalLocation }         from "./HospitalLocation";
+import { SlumsLocation }            from "./SlumsLocation";
+import { SpecialLocation }          from "./SpecialLocation";
+import { TechVendorLocation }       from "./TechVendorLocation";
+import { TravelAgencyLocation }     from "./TravelAgencyLocation";
+import { UniversityLocation }       from "./UniversityLocation";
 
-import { IPlayer }              from "../../PersonObjects/IPlayer";
+import { Location }                 from "../Location";
+import { LocationType }             from "../LocationTypeEnum";
+import { CityName }                 from "../data/CityNames";
 
-import { StdButton }            from "../../ui/React/StdButton";
+import { IEngine }                  from "../../IEngine";
+import { IPlayer }                  from "../../PersonObjects/IPlayer";
+
+import { StdButton }                from "../../ui/React/StdButton";
 
 type IProps = {
-    locName: LocationName;
+    engine: IEngine;
+    loc: Location;
     p: IPlayer;
     returnToCity: () => void;
+    travel: (to: CityName) => void;
 }
 
 export class GenericLocation extends React.Component<IProps, any> {
-    /**
-     * Reference to the Location object that is being rendered
-     */
-    loc: Location;
-
-    constructor(props: IProps) {
-        super(props);
-
-        this.loc = Locations[props.locName];
-        if (this.loc == null) {
-            throw new Error(`Invalid Location being rendered: ${props.locName}`);
-        }
-    }
-
     /**
      * Determine what needs to be rendered for this location based on the locations
      * type. Returns an array of React components that should be rendered
@@ -43,41 +40,79 @@ export class GenericLocation extends React.Component<IProps, any> {
     getLocationSpecificContent(): React.ReactNode[] {
         const content: React.ReactNode[] = [];
 
-        if (this.loc.types.includes(LocationType.Company)) {
-            
+        if (this.props.loc.types.includes(LocationType.Company)) {
+            content.push(
+                <CompanyLocation
+                    engine={this.props.engine}
+                    locName={this.props.loc.name}
+                    p={this.props.p}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.Gym)) {
-
+        if (this.props.loc.types.includes(LocationType.Gym)) {
+            content.push(
+                <GymLocation
+                    loc={this.props.loc}
+                    p={this.props.p}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.Hospital)) {
-
+        if (this.props.loc.types.includes(LocationType.Hospital)) {
+            content.push(
+                <HospitalLocation
+                    p={this.props.p}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.Slums)) {
-
+        if (this.props.loc.types.includes(LocationType.Slums)) {
+            content.push(
+                <SlumsLocation
+                    p={this.props.p}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.Special)) {
-
+        if (this.props.loc.types.includes(LocationType.Special)) {
+            content.push(
+                <SpecialLocation
+                    engine={this.props.engine}
+                    loc={this.props.loc}
+                    p={this.props.p}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.StockMarket)) {
-
+        if (this.props.loc.types.includes(LocationType.TechVendor)) {
+            content.push(
+                <TechVendorLocation
+                    loc={this.props.loc}
+                    p={this.props.p}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.TechVendor)) {
-
+        if (this.props.loc.types.includes(LocationType.TravelAgency)) {
+            content.push(
+                <TravelAgencyLocation
+                    p={this.props.p}
+                    travel={this.props.travel}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.TravelAgency)) {
-
+        if (this.props.loc.types.includes(LocationType.University)) {
+            content.push(
+                <UniversityLocation
+                    loc={this.props.loc}
+                    p={this.props.p}
+                />
+            )
         }
 
-        if (this.loc.types.includes(LocationType.University)) {
-
-        }
+        return content;
     }
 
     render() {
@@ -87,7 +122,7 @@ export class GenericLocation extends React.Component<IProps, any> {
             <div>
                 <StdButton onClick={this.props.returnToCity} text={"Return to world"} />
                 <br />
-                <h1>this.loc.name</h1>
+                <h1>{this.props.loc.name}</h1>
                 {locContent}
             </div>
         )

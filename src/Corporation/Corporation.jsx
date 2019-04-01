@@ -18,8 +18,8 @@ import { BitNodeMultipliers }                           from "../BitNode/BitNode
 import { CONSTANTS }                                    from "../Constants";
 import { Factions }                                     from "../Faction/Factions";
 import { showLiterature }                               from "../Literature";
-import { Locations }                                    from "../Locations";
 import { createCityMap }                                from "../Locations/Cities";
+import { CityName }                                     from "../Locations/data/CityNames";
 import { Player }                                       from "../Player";
 
 import { numeralWrapper }                               from "../ui/numeralFormat";
@@ -113,15 +113,15 @@ $(document).mousedown(function(event) {
 var empManualAssignmentModeActive = false;
 function Industry(params={}) {
     this.offices = { //Maps locations to offices. 0 if no office at that location
-        [Locations.Aevum]: 0,
-        [Locations.Chongqing]: 0,
-        [Locations.Sector12]: new OfficeSpace({
-            loc:Locations.Sector12,
+        [CityName.Aevum]: 0,
+        [CityName.Chongqing]: 0,
+        [CityName.Sector12]: new OfficeSpace({
+            loc:CityName.Sector12,
             size:OfficeInitialSize,
         }),
-        [Locations.NewTokyo]: 0,
-        [Locations.Ishima]: 0,
-        [Locations.Volhaven]: 0
+        [CityName.NewTokyo]: 0,
+        [CityName.Ishima]: 0,
+        [CityName.Volhaven]: 0
     };
 
     this.name   = params.name ? params.name : 0;
@@ -172,17 +172,17 @@ function Industry(params={}) {
     this.newInd = true;
 
     this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
-        [Locations.Aevum]: 0,
-        [Locations.Chonqing]: 0,
-        [Locations.Sector12]: new Warehouse({
+        [CityName.Aevum]: 0,
+        [CityName.Chonqing]: 0,
+        [CityName.Sector12]: new Warehouse({
             corp: params.corp,
             industry: this,
-            loc: Locations.Sector12,
+            loc: CityName.Sector12,
             size: WarehouseInitialSize,
         }),
-        [Locations.NewTokyo]: 0,
-        [Locations.Ishima]: 0,
-        [Locations.Volhaven]: 0
+        [CityName.NewTokyo]: 0,
+        [CityName.Ishima]: 0,
+        [CityName.Volhaven]: 0
     };
 
     this.init();
@@ -571,7 +571,7 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
             const product = this.products[name];
             let change = getRandomInt(0, 3) * 0.0004;
             if (change === 0) { continue; }
-            
+
             if (this.type === Industries.Pharmaceutical || this.type === Industries.Software ||
                 this.type === Industries.Robotics) {
                 change *= 3;

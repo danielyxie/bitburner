@@ -206,11 +206,6 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <!-- React Component -->
     </div>
 
-    <!-- World -->
-	<div id="world-container" class="generic-menupage-container">
-        <!-- React Component -->
-	</div>
-
 	<!-- Create a program(executable) -->
 	<div id="create-program-container" class="generic-menupage-container">
         <p id="create-program-page-text">
@@ -238,160 +233,41 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <h1> Tutorial (AKA Links to Documentation) </h1>
         <a id="tutorial-getting-started-link" class="a-link-button" target="_blank"
            href="https://bitburner.readthedocs.io/en/latest/guidesandtips/gettingstartedguideforbeginnerprogrammers.html" >
-           Getting Started
-        </a><br><br>
+           Getting Started</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/servers.html">
-            Servers & Networking
-        </a><br><br>
+            Servers & Networking</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/hacking.html">
-            Hacking
-        </a><br><br>
+            Hacking</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/scripts.html">
-            Scripts
-        </a><br><br>
+            Scripts</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/netscript.html">
-            Netscript Programming Language
-        </a><br><br>
+            Netscript Programming Language</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/world.html">
-            Traveling
-        </a><br><br>
+            Traveling</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/companies.html">
-            Companies
-        </a><br><br>
+            Companies</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/infiltration.html">
-            Infiltration
-        </a><br><br>
+            Infiltration</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html">
-            Factions
-        </a><br><br>
+            Factions</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/basicgameplay/augmentations.html">
-            Augmentations
-        </a><br><br>
+            Augmentations</a><br><br>
         <a class="a-link-button" target="_blank"
             href="https://bitburner.readthedocs.io/en/latest/shortcuts.html">
-            Keyboard Shortcuts
-        </a>
+            Keyboard Shortcuts</a>
 	</div>
 
     <!-- Location (visiting a location in World) -->
     <div id="location-container" class="generic-menupage-container">
-        <a id="location-return-to-world-button" class="a-link-button"> Return to World </a>
-        <h1 id="location-name"></h1>
-        <p id="location-info"> </p>
-
-        <p id="location-job-title"> </p>
-        <p id="location-text-divider-1"> --------------- </p>
-        <p id="location-job-reputation" class="tooltip"> </p>
-        <p id="location-text-divider-2"> --------------- </p>
-        <p id="location-company-favor" class="tooltip"> </p>
-        <p id="location-text-divider-3"> --------------- </p>
-
-        <!-- Jobs/Work at a company -->
-        <a id="location-software-job" class="a-link-button tooltip"> Apply for Software Job</a>
-        <a id="location-software-consultant-job" class="a-link-button tooltip"> Apply for Software Consultant Job</a>
-        <a id="location-it-job" class="a-link-button tooltip"> Apply for IT Job </a>
-        <a id="location-security-engineer-job" class="a-link-button tooltip"> Apply for Security Engineer Job</a>
-        <a id="location-network-engineer-job" class="a-link-button tooltip"> Apply for Network Engineer Job</a>
-        <a id="location-business-job" class="a-link-button tooltip"> Apply for Business Job</a>
-        <a id="location-business-consultant-job" class="a-link-button tooltip"> Apply for Business Consultant Job </a>
-        <a id="location-security-job" class="a-link-button tooltip"> Apply for Security Job</a>
-        <a id="location-agent-job" class="a-link-button tooltip"> Apply to be an Agent</a>
-        <a id="location-employee-job" class="a-link-button tooltip"> Apply to be an Employee </a>
-        <a id="location-parttime-employee-job" class="a-link-button tooltip"> Apply to be a Part-time Employee </a>
-        <a id="location-waiter-job" class="a-link-button tooltip"> Apply to be a Waiter</a>
-        <a id="location-parttime-waiter-job" class="a-link-button tooltip"> Apply to be a Part-time Waiter</a>
-
-        <a id="location-work" class="a-link-button"> Work </a>
-
-        <!-- Gym -->
-        <a id="location-gym-train-str" class="a-link-button">Train Strength</a>
-        <a id="location-gym-train-def" class="a-link-button">Train Defense </a>
-        <a id="location-gym-train-dex" class="a-link-button">Train Dexterity</a>
-        <a id="location-gym-train-agi" class="a-link-button">Train Agility</a>
-
-        <!-- Study/Take classes at a university -->
-        <a id="location-study-computer-science" class="a-link-button">Study Computer Science (free)</a>
-        <a id="location-data-structures-class" class="a-link-button">Take Data Structures course</a>
-        <a id="location-networks-class" class="a-link-button">Take Networks course</a>
-        <a id="location-algorithms-class" class="a-link-button">Take Algorithms course</a>
-        <a id="location-management-class" class="a-link-button">Take Management course</a>
-        <a id="location-leadership-class" class="a-link-button">Take Leadership course</a>
-
-        <!-- Purchase servers -->
-        <a id="location-purchase-2gb" class="a-link-button"> Purchase 2GB Server - $150,000</a>
-        <a id="location-purchase-4gb" class="a-link-button"> Purchase 4GB Server - $300,000</a>
-        <a id="location-purchase-8gb" class="a-link-button"> Purchase 8GB Server - $600,000</a>
-        <a id="location-purchase-16gb" class="a-link-button"> Purchase 16GB Server - $1,200,000</a>
-        <a id="location-purchase-32gb" class="a-link-button"> Purchase 32GB Server - $2,400,000</a>
-        <a id="location-purchase-64gb" class="a-link-button"> Purchase 64GB Server - $4,800,000</a>
-        <a id="location-purchase-128gb" class="a-link-button"> Purchase 128GB Server - $9,600,000</a>
-        <a id="location-purchase-256gb" class="a-link-button"> Purchase 256GB Server - $19,200,000</a>
-        <a id="location-purchase-512gb" class="a-link-button"> Purchase 512GB Server - $38,400,000</a>
-        <a id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $75,000,000</a>
-        <a id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $100,000</a>
-        <a id="location-purchase-home-ram" class="a-link-button"> Purchase additional RAM for Home computer </a>
-        <a id="location-purchase-home-cores" class="a-link-button"> Purchase additional Core for Home computer </a>
-
-        <!-- Infiltrate -->
-        <a id="location-infiltrate" class="a-link-button tooltip"> Infiltrate Company
-            <span class="tooltiptext">
-                Infiltrate this company's facility to try and steal their classified secrets!
-                Warning: You may end up hospitalized if you are unsuccessful!
-            </span>
-        </a>
-
-        <!-- Hospital -->
-        <a id="location-hospital-treatment" class="a-link-button"> Get Treatment for Wounds </a>
-
-        <!-- Travel agency -->
-        <p id="location-travel-agency-text">
-            From here, you can travel to any other city! A ticket costs $200,000.
-        </p>
-        <a id="location-travel-to-aevum" class="a-link-button"> Travel to Aevum </a>
-        <a id="location-travel-to-chongqing" class="a-link-button"> Travel to Chongqing</a>
-        <a id="location-travel-to-sector12" class="a-link-button"> Travel to Sector-12</a>
-        <a id="location-travel-to-newtokyo" class="a-link-button"> Travel to New Tokyo</a>
-        <a id="location-travel-to-ishima" class="a-link-button"> Travel to Ishima</a>
-        <a id="location-travel-to-volhaven" class="a-link-button"> Travel to Volhaven</a>
-
-        <!-- Slums -->
-        <p id="location-slums-description">
-            You have entered the Slums, a poverty-ridden district filled with gangs, criminals, and
-            other shadowy entities. The city's government and police have neglected this area for years...
-            <br /><br /><br />
-            In the Slums, you can commit crimes to earn money and experience. Crime attempts are not always
-            successful. Your chance at successfully committing a crime is determined by your stats.
-        </p>
-        <a class="a-link-button tooltip" id="location-slums-shoplift"> Shoplift </a>
-        <a id="location-slums-rob-store" class="a-link-button tooltip"> Rob a store </a>
-        <a id="location-slums-mug" class="a-link-button tooltip"> Mug someone </a>
-        <a id="location-slums-larceny" class="a-link-button tooltip"> Commit Larceny </a>
-        <a id="location-slums-deal-drugs" class="a-link-button tooltip"> Deal Drugs </a>
-        <a id="location-slums-bond-forgery" class="a-link-button tooltip">Bond Forgery</a>
-        <a id="location-slums-traffic-arms" class="a-link-button tooltip">Traffick Illegal Arms</a>
-        <a id="location-slums-homicide" class="a-link-button tooltip">Homicide</a>
-        <a id="location-slums-gta" class="a-link-button tooltip"> Grand Theft Auto </a>
-        <a id="location-slums-kidnap" class="a-link-button tooltip"> Kidnap and Ransom </a>
-        <a id="location-slums-assassinate" class="a-link-button tooltip"> Assassinate </a>
-        <a id="location-slums-heist" class="a-link-button tooltip"> Heist </a>
-
-        <!-- City Hall -->
-        <a id="location-cityhall-create-corporation" class="a-link-button">Create a Corporation</a>
-
-        <!-- Bladeburner @ NSA -->
-        <a id="location-nsa-bladeburner" class="a-link-button">Bladeburner Division</a>
-
-        <!-- Re-sleeving @ VitaLife -->
-        <a id="location-vitalife-resleeve" class="a-link-button">Re-Sleeve</a>
     </div>
 
     <div id="infiltration-container" class="generic-menupage-container">

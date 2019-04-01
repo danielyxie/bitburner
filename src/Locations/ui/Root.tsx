@@ -4,13 +4,23 @@
 import * as React from "react";
 
 import { LocationCity }     from "./City";
+import { GenericLocation }  from "./GenericLocation";
+
+import { Cities }           from "../Cities";
+import { Locations }        from "../Locations";
+import { LocationType }     from "../LocationTypeEnum";
 
 import { CityName }         from "../data/CityNames";
 import { LocationName }     from "../data/LocationNames";
 
+import { CONSTANTS }        from "../../Constants";
+import { IEngine }          from "../../IEngine";
 import { IPlayer }          from "../../PersonObjects/IPlayer";
 
+import { dialogBoxCreate }  from "../../../utils/DialogBox";
+
 type IProps = {
+    engine: IEngine;
     p: IPlayer;
 }
 
@@ -30,16 +40,8 @@ export class LocationRoot extends React.Component<IProps, IState> {
             location: props.p.location,
         }
 
-        this.changeCity = this.changeCity.bind(this);
         this.returnToCity = this.returnToCity.bind(this);
-    }
-
-    changeCity(to: CityName): void {
-        if (this.props.p.travel(to)) {
-            this.setState({
-                city: to
-            });
-        }
+        this.travel = this.travel.bind(this);
     }
 
     enterLocation(to: LocationName): void {
@@ -64,10 +66,15 @@ export class LocationRoot extends React.Component<IProps, IState> {
      * Render UI for a city
      */
     renderCity(): React.ReactNode {
+        const city = Cities[this.state.city];
+        if (city == null) {
+            throw new Error(`Invalid city when rendering UI: ${this.state.city}`);
+        }
+
         return (
             <div>
                 <h2>{this.state.city}</h2>
-                <LocationCity city={this.state.city} enterLocation={this.enterLocation} />
+                <LocationCity city={city} enterLocation={this.enterLocation} />
             </div>
         )
     }
@@ -76,9 +83,59 @@ export class LocationRoot extends React.Component<IProps, IState> {
      * Render UI for a specific location
      */
     renderLocation(): React.ReactNode {
+        const loc = Locations[this.state.location];
+
+        if (loc == null) {
+            throw new Error(`Invalid location when rendering UI: ${this.state.location}`);
+        }
+
+        if (loc.types.includes(LocationType.StockMarket)) {
+            this.props.engine.loadStockMarketContent();
+        }
+
         return (
-            <GenericLocation />
+            <GenericLocation
+                engine={this.props.engine}
+                loc={loc}
+                p={this.props.p}
+                returnToCity={this.returnToCity}
+                travel={this.travel}
+            />
         )
+    }
+
+    /**
+     * Travel to a different city
+     * @param {CityName} to - Destination city
+     */
+    travel(to: CityName): void {
+        const p = this.props.p;
+        const cost = CONSTANTS.TravelCost;
+        if (!p.canAfford(cost)) {
+            dialogBoxCreate(`You cannot afford to travel to ${to}`);
+            return;
+        }
+
+        p.loseMoney(cost);
+        p.travel(to);
+        dialogBoxCreate(`You are now in ${to}!`);
+
+        // Dynamically update main menu
+        if (p.firstTimeTraveled === false) {
+            p.firstTimeTraveled = true;
+            const travelTab = document.getElementById("travel-tab");
+            const worldHeader = document.getElementById("world-menu-header");
+            if (travelTab != null && worldHeader !== null) {
+                travelTab.style.display = "list-item";
+                worldHeader.click(); worldHeader.click();
+            }
+        }
+
+        if (this.props.p.travel(to)) {
+            this.setState({
+                city: to
+            });
+        }
     }
 
     render() {

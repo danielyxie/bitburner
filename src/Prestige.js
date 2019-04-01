@@ -15,7 +15,6 @@ import { Factions,
          initFactions }                         from "./Faction/Factions";
 import { joinFaction }                          from "./Faction/FactionHelpers";
 import {deleteGangDisplayContent}               from "./Gang";
-import {Locations}                              from "./Location";
 import { Message }                              from "./Message/Message";
 import { initMessages,
          Messages }                             from "./Message/MessageHelpers";

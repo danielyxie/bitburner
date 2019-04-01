@@ -5,8 +5,18 @@ import { CityName } from "./data/CityNames";
 import { LocationName } from "./data/LocationNames";
 import { LocationType } from "./LocationTypeEnum";
 
+interface IInfiltrationMetadata {
+    baseRewardValue: number;
+    difficulty: number;
+    maxClearanceLevel: number;
+    startingSecurityLevel: number;
+}
+
 export interface IConstructorParams {
     city?: CityName | null;
+    costMult?: number;
+    expMult?: number;
+    infiltrationData?: IInfiltrationMetadata;
     name?: LocationName;
     types?: LocationType[];
     techVendorMaxRam?: number;
@@ -19,6 +29,22 @@ export class Location {
      * is a generic location that is available in all cities
      */
     city: CityName | null = null;
+
+    /**
+     * Cost multiplier that influences how expensive a gym/university is
+     */
+    costMult: number = 0;
+
+    /**
+     * Exp multiplier that influences how effective a gym/university is
+     */
+    expMult: number = 0;
+
+    /**
+     * Companies can be infiltrated. This contains the data required for that
+     * infiltration event
+     */
+    infiltrationData?: IInfiltrationMetadata;
 
     /**
      * Identifier for location
@@ -45,6 +71,9 @@ export class Location {
 
     constructor(p: IConstructorParams) {
         if (p.city)             { this.city = p.city; }
+        if (p.costMult)         { this.costMult = p.costMult; }
+        if (p.expMult)          { this.expMult = p.expMult; }
+        if (p.infiltrationData) { this.infiltrationData = p.infiltrationData; }
         if (p.name)             { this.name = p.name; }
         if (p.types)            { this.types = p.types; }
         if (p.techVendorMaxRam) { this.techVendorMaxRam = p.techVendorMaxRam; }

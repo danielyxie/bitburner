@@ -21,17 +21,13 @@ export enum LocationName {
     AevumNetLinkTechnologies        = "NetLink Technologies",
     AevumPolice                     = "Aevum Police Headquarters",
     AevumRhoConstruction            = "Rho Construction",
-    AevumSlums                      = "Aevum Slums", // TODO Delete this and other Slums locations
     AevumSnapFitnessGym             = "Snap Fitness Gym",
     AevumSummitUniversity           = "Summit University",
-    AevumTravelAgency               = "Aevum Travel Agency", // TODO Delete this and other travel agency locations
     AevumWatchdogSecurity           = "Watchdog Security",
 
     // Chongqing locations
     ChongqingKuaiGongInternational  = "KuaiGong International",
-    ChongqingSlums                  = "Chongqing Slums",
     ChongqingSolarisSpaceSystems    = "Solaris Space Systems",
-    ChongqingTravelAgency           = "Chongqing Travel Agency",
 
     // Sector 12
     Sector12AlphaEnterprises        = "Alpha Enterprises",
@@ -49,24 +45,18 @@ export enum LocationName {
     Sector12NSA                     = "National Security Agency",
     Sector12PowerhouseGym           = "Powerhouse Gym",
     Sector12RothmanUniversity       = "Rothman University",
-    Sector12Slums                   = "Sector-12 Slums",
-    Sector12TravelAgency            = "Sector-12 Travel Agency",
     Sector12UniversalEnergy         = "Universal Energy",
 
     // New Tokyo
     NewTokyoDefComm                 = "DefComm",
     NewTokyoGlobalPharmaceuticals   = "Global Pharmaceuticals",
     NewTokyoNoodleBar               = "Noodle Bar",
-    NewTokyoSlums                   = "New Tokyo Slums",
-    NewTokyoTravelAgency            = "New Tokyo Travel Agency",
     NewTokyoVitaLife                = "VitaLife",
 
     // Ishima
     IshimaNovaMedical               = "Nova Medical",
     IshimaOmegaSoftware             = "Omega Software",
-    IshimaSlums                     = "Ishima Slums",
     IshimaStormTechnologies         = "Storm Technologies",
-    IshimaTravelAgency              = "Ishima Travel Agency",
 
     // Volhaven
     VolhavenCompuTek                = "CompuTek",
@@ -76,9 +66,7 @@ export enum LocationName {
     VolhavenNWO                     = "NWO",
     VolhavenOmniTekIncorporated     = "OmniTek Incorporated",
     VolhavenOmniaCybersystems       = "Omnia Cybersystems",
-    VolhavenSlums                   = "Volhaven Slums",
     VolhavenSysCoreSecurities       = "SysCore Securities",
-    VolhavenTravelAgency            = "Volhaven Travel Agency",
     VolhavenZBInstituteOfTechnology = "ZB Institute of Technology",
 
     // Generic locations
