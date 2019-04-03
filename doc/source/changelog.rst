@@ -3,6 +3,24 @@
 Changelog
 =========
 
+v0.46.0 - 4/3/2019
+------------------
+* Added BitNode-9: Hacktocracy
+* Changed BitNode-11's multipliers to make it slightly harder overall
+* Source-File 11 is now slightly stronger
+* Added several functions to Netscript Sleeve API for buying Sleeve augmentations (by hydroflame)
+* Added a new stat for Duplicate Sleeves: Memory
+* Increase baseline experience earned from Infiltration, but it now gives diminishing returns (on exp) as you get to higher difficulties/levels
+* In Bladeburner, stamina gained from Hyperbolic Regeneration Chamber is now a percentage of your max stamina
+
+* Corporation Changes:
+    * 'Demand' value of products decreases more slowly
+    * Bug Fix: Fixed a Corporation issue that broke the Market-TA2 Research
+    * Bug Fix: Issuing New Shares now works properly
+
+* Bug Fix: Money Statistics tracker was incorrectly recording profits when selling stocks manually
+* Bug Fix: Fixed an issue with the job requirement tooltip for security jobs
+
 v0.45.1 - 3/23/2019
 -------------------
 * Added two new Corporation Researches

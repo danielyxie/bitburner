@@ -436,6 +436,12 @@ export class Sleeve extends Person {
      * Called on every sleeve for a Source File prestige
      */
     prestige(p: IPlayer) {
+        this.hacking_exp = 0;
+        this.strength_exp = 0;
+        this.defense_exp = 0;
+        this.dexterity_exp = 0;
+        this.agility_exp = 0;
+        this.charisma_exp = 0;
         this.resetTaskStatus();
         this.earningsForSleeves = createTaskTracker();
         this.earningsForPlayer = createTaskTracker();
