@@ -327,7 +327,7 @@ function displayLocationContent() {
     setJobRequirementTooltip(loc, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]], networkEngineerJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessCompanyPositions[0]], businessJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], businessConsultantJob);
-    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityCompanyPositions[0]], securityJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityCompanyPositions[2]], securityJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.AgentCompanyPositions[0]], agentJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.MiscCompanyPositions[1]], employeeJob);
     setJobRequirementTooltip(loc, CompanyPositions[posNames.PartTimeCompanyPositions[1]], employeePartTimeJob);
@@ -654,7 +654,7 @@ function displayLocationContent() {
             networkEngineerJob.style.display = "block";
             securityJob.style.display = "block";
             agentJob.style.display = "block";
-            if (Player.bitNodeN === 6 || hasBladeburnerSF === true) {
+            if (Player.bitNodeN === 6 ||Player.bitNodeN === 7 || hasBladeburnerSF === true) {
                 if (Player.bitNodeN === 8) {break;}
                 if (Player.bladeburner instanceof Bladeburner) {
                     //Note: Can't infiltrate NSA when part of bladeburner

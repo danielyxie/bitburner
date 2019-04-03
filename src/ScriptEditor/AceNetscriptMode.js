@@ -101,8 +101,8 @@ let NetscriptFunctions =
 
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
-    "upgradeLevel|upgradeRam|upgradeCore|getLevelUpgradeCost|"                 +
-    "getRamUpgradeCost|getCoreUpgradeCost|"                                    +
+    "upgradeLevel|upgradeRam|upgradeCore|upgradeCache|getLevelUpgradeCost|"    +
+    "getRamUpgradeCost|getCoreUpgradeCost|getCacheUpgradeCost|"                +
 
     // Gang API
     "gang|"                                                                    +
@@ -130,7 +130,8 @@ let NetscriptFunctions =
     // Sleeve API
     "sleeve|getNumSleeves|setToShockRecovery|setToSynchronize|"                +
     "setToCommitCrime|setToUniversityCourse|travel|setToCompanyWork|"          +
-    "setToFactionWork|setToGymWorkout|getSleeveStats|getTask|getInformation";
+    "setToFactionWork|setToGymWorkout|getSleeveStats|getTask|getInformation|"  +
+    "getSleeveAugmentations|getSleevePurchasableAugs|purchaseSleeveAug";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({

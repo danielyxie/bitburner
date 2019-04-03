@@ -14,7 +14,7 @@ import { PurchaseAugmentationsOrderSetting }    from "../Settings/SettingEnums";
 import { Settings }                             from "../Settings/Settings";
 import { SourceFileFlags }                      from "../SourceFile/SourceFileFlags";
 
-import { createPurchaseSleevesFromCovenantPopup }   from "../PersonObjects/Sleeve/SleeveCovenantPurchases";
+import { createSleevePurchasesFromCovenantPopup }   from "../PersonObjects/Sleeve/SleeveCovenantPurchases";
 
 import {Page, routing}                          from "../ui/navigationTracking";
 import {numeralWrapper}                         from "../ui/numeralFormat";
@@ -348,7 +348,7 @@ function displayFactionContent(factionName) {
             class: "std-button",
             innerText: "Purchase Duplicate Sleeves",
             clickListener: () => {
-                createPurchaseSleevesFromCovenantPopup(Player);
+                createSleevePurchasesFromCovenantPopup(Player);
             }
         }));
         covenantPurchaseSleevesDivWrapper.appendChild(createElement("p", {

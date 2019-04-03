@@ -62,15 +62,20 @@ function initSourceFiles() {
                                                    "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
                                                    "This Source-File also increases your hacking growth multipliers by: " +
                                                    "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
-    SourceFiles["SourceFile9"] = new SourceFile(9);
+    SourceFiles["SourceFile9"] = new SourceFile(9, "This Source-File grants the following benefits:<br><br>" +
+                                                   "Level 1: Permanently unlocks the Hacknet Server in other BitNodes<br>" +
+                                                   "Level 2: You start with 128GB of RAM on your home computer when entering a new BitNode<br>" +
+                                                   "Level 3: Grants a highly-upgraded Hacknet Server when entering a new BitNode<br><br>" +
+                                                   "(Note that the Level 3 effect of this Source-File only applies when entering a new BitNode, NOT " +
+                                                   "when installing Augmentations)");
     SourceFiles["SourceFile10"] = new SourceFile(10, "This Source-File unlocks Sleeve technology in other BitNodes. Each level of this " +
                                                      "Source-File also grants you a Duplicate Sleeve");
     SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
                                                      "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
                                                      " increases the player's company salary and reputation gain multipliers by:<br><br>" +
-                                                     "Level 1: 24%<br>" +
-                                                     "Level 2: 36%<br>" +
-                                                     "Level 3: 42%<br>");
+                                                     "Level 1: 32%<br>" +
+                                                     "Level 2: 48%<br>" +
+                                                     "Level 3: 56%<br>");
     SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is multiplicative with itself. " +
                                                      "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
 }
@@ -119,7 +124,7 @@ function applySourceFile(srcFile) {
             Player.hacknet_node_level_cost_mult       *= decMult;
             Player.work_money_mult    *= incMult;
             break;
-        case 2: //Rise of the Underworld
+        case 2: // Rise of the Underworld
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
                 mult += (24 / (Math.pow(2, i)));
@@ -129,7 +134,7 @@ function applySourceFile(srcFile) {
             Player.crime_success_mult  *= incMult;
             Player.charisma_mult       *= incMult;
             break;
-        case 3: //Corporatocracy
+        case 3: // Corporatocracy
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
@@ -138,10 +143,10 @@ function applySourceFile(srcFile) {
             Player.charisma_mult    *= incMult;
             Player.work_money_mult  *= incMult;
             break;
-        case 4: //The Singularity
-            //No effects, just gives access to Singularity functions
+        case 4: // The Singularity
+            // No effects, just gives access to Singularity functions
             break;
-        case 5: //Artificial Intelligence
+        case 5: // Artificial Intelligence
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
@@ -154,7 +159,7 @@ function applySourceFile(srcFile) {
             Player.hacking_mult         *= incMult;
             Player.hacking_exp_mult     *= incMult;
             break;
-        case 6: //Bladeburner
+        case 6: // Bladeburner
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
@@ -169,7 +174,7 @@ function applySourceFile(srcFile) {
             Player.dexterity_mult           *= incMult;
             Player.agility_mult             *= incMult;
             break;
-        case 7: //Bladeburner 2079
+        case 7: // Bladeburner 2079
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
@@ -180,7 +185,7 @@ function applySourceFile(srcFile) {
             Player.bladeburner_analysis_mult        *= incMult;
             Player.bladeburner_success_chance_mult  *= incMult;
             break;
-        case 8: //Ghost of Wall Street
+        case 8: // Ghost of Wall Street
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
                 mult += (12 / (Math.pow(2, i)));
@@ -188,19 +193,22 @@ function applySourceFile(srcFile) {
             var incMult = 1 + (mult / 100);
             Player.hacking_grow_mult    *= incMult;
             break;
+        case 9: // Hacktocracy
+            // This has non-multiplier effects
+            break;
         case 10: // Digital Carbon
             // No effects, just grants sleeves
             break;
-        case 11: //The Big Crash
+        case 11: // The Big Crash
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (24 / (Math.pow(2, i)));
+                mult += (32 / (Math.pow(2, i)));
             }
             var incMult = 1 + (mult / 100);
             Player.work_money_mult    *= incMult;
             Player.company_rep_mult   *= incMult;
             break;
-        case 12: //The Recursion
+        case 12: // The Recursion
             var inc = Math.pow(1.01, srcFile.lvl);
             var dec = Math.pow(0.99, srcFile.lvl);
 

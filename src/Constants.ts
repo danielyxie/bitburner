@@ -1,7 +1,12 @@
+/**
+ * Generic Game Constants
+ *
+ * Constants for specific mechanics or features will NOT be here.
+ */
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.45.1",
+    Version:                "0.46.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -17,23 +22,8 @@ export let CONSTANTS: IMap<any> = {
     /* Base costs */
     BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
-    BaseCostFor1GBOfRamHacknetNode: 30000,
 
     TravelCost: 200e3,
-
-    BaseCostForHacknetNode: 1000,
-    BaseCostForHacknetNodeCore: 500000,
-
-    /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.6,
-    HacknetNodePurchaseNextMult: 1.85,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.48,    //Multiplier for cost when buying another core
-
-    HacknetNodeMaxLevel: 200,
-    HacknetNodeMaxRam: 64,
-    HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
     BaseFavorToDonate:            150,
@@ -126,6 +116,7 @@ export let CONSTANTS: IMap<any> = {
     InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
     InfiltrationMoneyValue:   5e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
+    InfiltrationExpPow: 0.8,
 
     //Stock market constants
     WSEAccountCost:         200e6,
@@ -282,37 +273,21 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.45.1
-    * Added two new Corporation Researches
-    * General UI improvements (by hydroflame and koriar)
-    * Bug Fix: Sleeve Netscript API should no longer cause Dynamic RAM errors
-    * Bug Fix: sleeve.getSleeveStats() should now work properly
+    v0.46.0
+    * Added BitNode-9: Hacktocracy
+    * Changed BitNode-11's multipliers to make it slightly harder overall
+    * Source-File 11 is now slightly stronger
+    * Added several functions to Netscript Sleeve API for buying Sleeve augmentations (by hydroflame)
+    * Added a new stat for Duplicate Sleeves: Memory
+    * Increase baseline experience earned from Infiltration, but it now gives diminishing returns (on exp) as you get to higher difficulties/levels
+    * In Bladeburner, stamina gained from Hyperbolic Regeneration Chamber is now a percentage of your max stamina
 
-    v0.45.0
-    * Corporation changes:
-    ** Decreased the time of a full market cycle from 15 seconds to 10 seconds.
-    ** This means that each Corporation 'state' will now only take 2 seconds, rather than 3
-    ** Increased initial salaries for newly-hired employees
-    ** Increased the cost multiplier for upgrading office size (the cost will increase faster)
-    ** The stats of your employees now has a slightly larger effect on production & sales
-    ** Added several new Research upgrades
-    ** Market-TA research now allows you to automatically set sale price at optimal values
-    ** Market-TA research now works for Products (not just Materials)
-    ** Reduced the amount of Scientific Research needed to unlock the Hi-Tech R&D Laboratory from 10k to 5k
-    ** Energy Material requirement of the Software industry reduced from 1 to 0.5
-    ** It is now slightly easier to increase the Software industry's production multiplier
-    ** Industries now have a maximum number of allowed products, starting at 3. This can be increased through research.
-    ** You can now see an approximation of how each material affects an industry's production multiplier by clicking the "?" help tip next to it
-    ** Significantly changed the effects of the different employee positions. See updated descriptions
-    ** Reduced the amount of money you gain from private investors
-    ** Training employees is now 3x more effective
-    ** Bug Fix: An industry's products are now properly separated between different cities
-    * The QLink Augemntation is now significantly stronger, but also significantly more expensive (by hydroflame)
-    * Added a Netscript API for Duplicate Sleeves (by hydroflame)
-    * Modified the multipliers of BitNode-3 and BitNode-8 to make them slightly harder
-    * After installing Augmentations, Duplicate Sleeves will now default to Synchronize if their Shock is 0
-    * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
-    * Bug Fix: growthAnalyze() function now properly accounts for BitNode multipliers
-    * Bug Fix: The cost of purchasing Augmentations for Duplicate Sleeves no longer scales with how many Augs you've purchased for yourself
+    * Corporation Changes:
+    ** 'Demand' value of products decreases more slowly
+    ** Bug Fix: Fixed a Corporation issue that broke the Market-TA2 Research
+    ** Bug Fix: Issuing New Shares now works properly
+
+    * Bug Fix: Money Statistics tracker was incorrectly recording profits when selling stocks manually
+    * Bug Fix: Fixed an issue with the job requirement tooltip for security jobs
     `
 }

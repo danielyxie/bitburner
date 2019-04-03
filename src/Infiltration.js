@@ -52,9 +52,19 @@ function InfiltrationInstance(companyName, startLevel, val, maxClearance, diff) 
     this.intExpGained       = 0;
 }
 
+InfiltrationInstance.prototype.expMultiplier = function() {
+    if (!this.clearanceLevel || isNaN(this.clearanceLevel) || !this.maxClearanceLevel ||isNaN(this.maxClearanceLevel)) return 1;
+    return 2.5 * this.clearanceLevel / this.maxClearanceLevel;
+}
+
 InfiltrationInstance.prototype.gainHackingExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.hackingExpGained   += amt;
+}
+
+InfiltrationInstance.prototype.calcGainedHackingExp = function() {
+    if(!this.hackingExpGained || isNaN(this.hackingExpGained)) return 0;
+    return Math.pow(this.hackingExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainStrengthExp = function(amt) {
@@ -62,9 +72,19 @@ InfiltrationInstance.prototype.gainStrengthExp = function(amt) {
     this.strExpGained       += amt;
 }
 
+InfiltrationInstance.prototype.calcGainedStrengthExp = function() {
+    if (!this.strExpGained || isNaN(this.strExpGained)) return 0;
+    return Math.pow(this.strExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+}
+
 InfiltrationInstance.prototype.gainDefenseExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.defExpGained       += amt;
+}
+
+InfiltrationInstance.prototype.calcGainedDefenseExp = function() {
+    if (!this.defExpGained || isNaN(this.defExpGained)) return 0;
+    return Math.pow(this.defExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainDexterityExp = function(amt) {
@@ -72,9 +92,19 @@ InfiltrationInstance.prototype.gainDexterityExp = function(amt) {
     this.dexExpGained       += amt;
 }
 
+InfiltrationInstance.prototype.calcGainedDexterityExp = function() {
+    if (!this.dexExpGained || isNaN(this.dexExpGained)) return 0;
+    return Math.pow(this.dexExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+}
+
 InfiltrationInstance.prototype.gainAgilityExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.agiExpGained       += amt;
+}
+
+InfiltrationInstance.prototype.calcGainedAgilityExp = function() {
+    if (!this.agiExpGained || isNaN(this.agiExpGained)) return 0;
+    return Math.pow(this.agiExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainCharismaExp = function(amt) {
@@ -82,9 +112,19 @@ InfiltrationInstance.prototype.gainCharismaExp = function(amt) {
     this.chaExpGained       += amt;
 }
 
+InfiltrationInstance.prototype.calcGainedCharismaExp = function() {
+    if (!this.chaExpGained || isNaN(this.chaExpGained)) return 0;
+    return Math.pow(this.chaExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+}
+
 InfiltrationInstance.prototype.gainIntelligenceExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.intExpGained       += amt;
+}
+
+InfiltrationInstance.prototype.calcGainedIntelligenceExp = function() {
+    if(!this.intExpGained || isNaN(this.intExpGained)) return 0;
+    return Math.pow(this.intExpGained*this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 function beginInfiltration(companyName, startLevel, val, maxClearance, diff) {
@@ -477,12 +517,12 @@ function updateInfiltrationLevelText(inst) {
         "Total value of stolen secrets<br>" +
         "Reputation:       <span class='light-yellow'>" + formatNumber(totalValue, 3) + "</span><br>" +
         "Money:           <span class='money-gold'>$" + formatNumber(totalMoneyValue, 2) + "</span><br><br>" +
-        "Hack exp gained:  " + formatNumber(inst.hackingExpGained * expMultiplier, 3) + "<br>" +
-        "Str exp gained:   " + formatNumber(inst.strExpGained * expMultiplier, 3) + "<br>" +
-        "Def exp gained:   " + formatNumber(inst.defExpGained * expMultiplier, 3) + "<br>" +
-        "Dex exp gained:   " + formatNumber(inst.dexExpGained * expMultiplier, 3) + "<br>" +
-        "Agi exp gained:   " + formatNumber(inst.agiExpGained * expMultiplier, 3) + "<br>" +
-        "Cha exp gained:   " + formatNumber(inst.chaExpGained * expMultiplier, 3);
+        "Hack exp gained:  " + formatNumber(inst.calcGainedHackingExp(), 3) + "<br>" +
+        "Str exp gained:   " + formatNumber(inst.calcGainedStrengthExp(), 3) + "<br>" +
+        "Def exp gained:   " + formatNumber(inst.calcGainedDefenseExp(), 3) + "<br>" +
+        "Dex exp gained:   " + formatNumber(inst.calcGainedDexterityExp(), 3) + "<br>" +
+        "Agi exp gained:   " + formatNumber(inst.calcGainedAgilityExp(), 3) + "<br>" +
+        "Cha exp gained:   " + formatNumber(inst.calcGainedCharismaExp(), 3);
     /* eslint-enable no-irregular-whitespace */
 }
 

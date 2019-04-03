@@ -10,8 +10,8 @@ getSleeveStats() Netscript Function
 .. code-block:: javascript
 
     {
-        shock: current shock of the sleeve [0-1],
-        sync: current sync of the sleeve [0-1],
+        shock: current shock of the sleeve [0-100],
+        sync: current sync of the sleeve [0-100],
         hacking_skill: current hacking skill of the sleeve,
         strength: current strength of the sleeve,
         defense: current defense of the sleeve,

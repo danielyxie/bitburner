@@ -86,7 +86,7 @@ export class Material {
                 this.mku = 6;
                 break;
             case "Energy":
-                this.dmd = 90; this.dmdR = [80, 100];
+                this.dmd = 90; this.dmdR = [80, 99];
                 this.cmp = 80; this.cmpR = [65, 95];
                 this.bCost = 2000; this.mv = 0.2;
                 this.mku = 6;
@@ -122,26 +122,26 @@ export class Material {
                 this.mku = 2;
                 break;
             case "Real Estate":
-                this.dmd = 50; this.dmdR = [5, 100];
+                this.dmd = 50; this.dmdR = [5, 99];
                 this.cmp = 50; this.cmpR = [25, 75];
                 this.bCost = 80e3; this.mv = 1.5; //Less mv bc its processed twice
                 this.mku = 1.5;
                 break;
             case "Drugs":
                 this.dmd = 60; this.dmdR = [45, 75];
-                this.cmp = 70; this.cmpR = [40, 100];
+                this.cmp = 70; this.cmpR = [40, 99];
                 this.bCost = 40e3; this.mv = 1.6;
                 this.mku = 1;
                 break;
             case "Robots":
-                this.dmd = 90; this.dmdR = [80, 100];
-                this.cmp = 90; this.cmpR = [80, 100];
+                this.dmd = 90; this.dmdR = [80, 9];
+                this.cmp = 90; this.cmpR = [80, 9];
                 this.bCost = 75e3; this.mv = 0.5; //Less mv bc its processed twice
                 this.mku = 1;
                 break;
             case "AI Cores":
-                this.dmd = 90; this.dmdR = [80, 100];
-                this.cmp = 90; this.cmpR = [80, 100];
+                this.dmd = 90; this.dmdR = [80, 99];
+                this.cmp = 90; this.cmpR = [80, 9];
                 this.bCost = 15e3; this.mv = 0.8; //Less mv bc its processed twice
                 this.mku = 0.5;
                 break;

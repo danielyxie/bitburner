@@ -2,6 +2,8 @@ import { Server } from "./Server";
 import { SpecialServerIps } from "./SpecialServerIps";
 import { serverMetadata } from "./data/servers";
 
+import { HacknetServer } from "../Hacknet/HacknetServer";
+
 import { IMap } from "../types";
 import { createRandomIp,
          ipExists } from "../../utils/IPAddress";
@@ -11,7 +13,7 @@ import { Reviver } from "../../utils/JSONReviver";
 // Map of all Servers that exist in the game
 // Key (string) = IP
 // Value = Server object
-export let AllServers: IMap<Server> = {};
+export let AllServers: IMap<Server | HacknetServer> = {};
 
 // Saftely add a Server to the AllServers map
 export function AddToAllServers(server: Server): void {

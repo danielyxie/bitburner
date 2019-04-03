@@ -96,7 +96,7 @@ export function createResleevesPage(p: IPlayer) {
             display: "inline-block",
             innerText: "Sort By: "
         });
-        UIElems.sortSelector = createElement("select",{class:"dropdown"}) as HTMLSelectElement;
+        UIElems.sortSelector = createElement("select", { class: "dropdown" }) as HTMLSelectElement;
 
         enum SortOption {
             Cost = "Cost",

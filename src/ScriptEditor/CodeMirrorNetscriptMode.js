@@ -177,9 +177,11 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "upgradeLevel": atom,
       "upgradeRam": atom,
       "upgradeCore": atom,
+      "upgradeCache": atom,
       "getLevelUpgradeCost": atom,
       "getRamUpgradeCost": atom,
       "getCoreUpgradeCost": atom,
+      "getCacheUpgradeCost": atom,
 
       // Netscript Gang API
       "gang": atom,
@@ -257,6 +259,9 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "getSleeveStats": atom,
       "getTask": atom,
       "getInformation": atom,
+      "getSleeveAugmentations": atom,
+      "getSleevePurchasableAugs": atom,
+      "purchaseSleeveAug": atom,
     };
   }();
 

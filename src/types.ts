@@ -35,3 +35,12 @@ export interface ISelfLoading {
    */
   load(saveState: string): void;
 }
+
+/**
+ * Status object for functions that return a boolean indicating success/failure
+ * and an optional message
+ */
+export interface IReturnStatus {
+    res: boolean;
+    msg?: string;
+}

@@ -9,6 +9,8 @@ import { Sleeve } from "./Sleeve/Sleeve";
 import { IMap } from "../types";
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { HacknetNode } from "../Hacknet/HacknetNode";
+import { HacknetServer } from "../Hacknet/HacknetServer";
 import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 
@@ -22,7 +24,7 @@ export interface IPlayer {
     corporation: any;
     currentServer: string;
     factions: string[];
-    hacknetNodes: any[];
+    hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
     hasWseAccount: boolean;
     jobs: IMap<string>;
     karma: number;

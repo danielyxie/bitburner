@@ -2,6 +2,7 @@ import {substituteAliases, printAliases,
         parseAliasDeclaration,
         removeAlias, GlobalAliases,
         Aliases}                                from "./Alias";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import {CodingContract, CodingContractResult,
         CodingContractRewardType}               from "./CodingContracts";
 import {CONSTANTS}                              from "./Constants";
@@ -19,6 +20,7 @@ import {calculateHackingChance,
         calculateHackingTime,
         calculateGrowTime,
         calculateWeakenTime}                from "./Hacking";
+import { HacknetServer }                    from "./Hacknet/HacknetServer";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         ITutorial}                          from "./InteractiveTutorial";
@@ -760,18 +762,19 @@ let Terminal = {
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
             let currServ = Player.getCurrentServer();
+            const isHacknet = currServ instanceof HacknetServer;
 			post(currServ.hostname + ": ");
             post("Organization name: " + currServ.organizationName);
             var rootAccess = "";
             if (currServ.hasAdminRights) {rootAccess = "YES";}
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
-			post("Required hacking skill: " + currServ.requiredHackingSkill);
+			if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
 			post("Server security level: " + numeralWrapper.format(currServ.hackDifficulty, '0.000a'));
 			post("Chance to hack: " + numeralWrapper.format(calculateHackingChance(currServ), '0.00%'));
 			post("Time to hack: " + numeralWrapper.format(calculateHackingTime(currServ), '0.000') + " seconds");
 			post("Total money available on server: " + numeralWrapper.format(currServ.moneyAvailable, '$0,0.00'));
-			post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
+			if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
 
             if (currServ.sshPortOpen) {
 				post("SSH port: Open")
@@ -1244,23 +1247,26 @@ let Terminal = {
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
 				break;
-			case "hack":
-				if (commandArray.length !== 1) {
+			case "hack": {
+                if (commandArray.length !== 1) {
 					postError("Incorrect usage of hack command. Usage: hack");
                     return;
 				}
 				//Hack the current PC (usually for money)
 				//You can't hack your home pc or servers you purchased
-				if (Player.getCurrentServer().purchasedByPlayer) {
+				if (s.purchasedByPlayer) {
 					postError("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
-				} else if (Player.getCurrentServer().hasAdminRights == false ) {
+				} else if (s.hasAdminRights == false ) {
 					postError("You do not have admin rights for this machine! Cannot hack");
-				} else if (Player.getCurrentServer().requiredHackingSkill > Player.hacking_skill) {
+				} else if (s.requiredHackingSkill > Player.hacking_skill) {
 					postError("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
-				} else {
+				} else if (s instanceof HacknetServer) {
+                    postError("Cannot hack this type of Server")
+                } else {
                     Terminal.startHack();
 				}
 				break;
+            }
 			case "help":
 				if (commandArray.length !== 1 && commandArray.length !== 2) {
 					postError("Incorrect usage of help command. Usage: help");
@@ -1638,9 +1644,15 @@ let Terminal = {
             postError("Incorrect usage of free command. Usage: free");
             return;
         }
-        post("Total: " + numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00') + " GB");
-        post("Used: " + numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00') + " GB");
-        post("Available: " + numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00') + " GB");
+        const ram = numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00');
+        const used = numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00');
+        const avail = numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00');
+        const maxLength = Math.max(ram.length, Math.max(used.length, avail.length));
+        const usedPercent = numeralWrapper.format(Player.getCurrentServer().ramUsed/Player.getCurrentServer().maxRam*100, '0.00');
+
+        post(`Total:     ${" ".repeat(maxLength-ram.length)}${ram} GB`);
+        post(`Used:      ${" ".repeat(maxLength-used.length)}${used} GB (${usedPercent}%)`);
+        post(`Available: ${" ".repeat(maxLength-avail.length)}${avail} GB`);
     },
 
     executeKillCommand: function(commandArray) {
@@ -1859,17 +1871,20 @@ let Terminal = {
             visited[ip] = 0;
         }
 
-        var stack = [];
-        var depthQueue = [0];
-        var currServ = Player.getCurrentServer();
+        const stack = [];
+        const depthQueue = [0];
+        const currServ = Player.getCurrentServer();
         stack.push(currServ);
         while(stack.length != 0) {
-            var s = stack.pop();
-            var d = depthQueue.pop();
+            const s = stack.pop();
+            const d = depthQueue.pop();
+            const isHacknet = s instanceof HacknetServer;
             if (!all && s.purchasedByPlayer && s.hostname != "home") {
-                continue; //Purchased server
+                continue; // Purchased server
             } else if (visited[s.ip] || d > depth) {
-                continue; //Already visited or out-of-depth
+                continue; // Already visited or out-of-depth
+            } else if (!all && isHacknet) {
+                continue; // Hacknet Server
             } else {
                 visited[s.ip] = 1;
             }
@@ -1889,8 +1904,8 @@ let Terminal = {
             //var dashes = Array(d * 2 + 1).join("-");
             var c = "NO";
             if (s.hasAdminRights) {c = "YES";}
-            post(dashes + "Root Access: " + c + ", Required hacking skill: " + s.requiredHackingSkill);
-            post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+            post(`${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
+            if (!isHacknet) { post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired); }
             post(dashes + "RAM: " + s.maxRam);
             post(" ");
         }
@@ -2133,7 +2148,8 @@ let Terminal = {
             post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
         };
         programHandlers[Programs.Flight.name] = () => {
-            const fulfilled = Player.augmentations.length >= 30 &&
+            const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement*30)
+            const fulfilled = Player.augmentations.length >= numAugReq &&
                 Player.money.gt(1e11) &&
                 ((Player.hacking_skill >= 2500)||
                 (Player.strength >= 1500 &&
@@ -2141,17 +2157,17 @@ let Terminal = {
                 Player.dexterity >= 1500 &&
                 Player.agility >= 1500));
             if(!fulfilled) {
-                post("Augmentations: " + Player.augmentations.length + " / 30");
+                post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
 
-                post("Money: " + numeralWrapper.format(Player.money.toNumber(), '($0.000a)') + " / " + numeralWrapper.format(1e11, '($0.000a)'));
+                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / ${numeralWrapper.format(1e11, '($0.000a)')}`);
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
-                post("Hacking skill: " + Player.hacking_skill + " / 2500");
+                post(`Hacking skill: ${Player.hacking_skill} / 2500`);
                 post("----------COMBAT PATH----------");
-                post("Strength: " + Player.strength + " / 1500");
-                post("Defense: " + Player.defense + " / 1500");
-                post("Dexterity: " + Player.dexterity + " / 1500");
-                post("Agility: " + Player.agility + " / 1500");
+                post(`Strength: ${Player.strength} / 1500`);
+                post(`Defense: ${Player.defense} / 1500`);
+                post(`Dexterity: ${Player.dexterity} / 1500`);
+                post(`Agility: ${Player.agility} / 1500`);
                 return;
             }
 
@@ -2240,9 +2256,12 @@ let Terminal = {
                     post("May take a few seconds to start up the process...");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;
-					server.runningScripts.push(runningScriptObj);
 
 					addWorkerScript(runningScriptObj, server);
+
+                    // This has to come after addWorkerScript() because that fn
+                    // updates the RAM usage. This kinda sucks, address if possible
+                    server.runScript(runningScriptObj, Player);
 					return;
 				}
 			}

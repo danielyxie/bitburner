@@ -78,8 +78,8 @@ const RanksPerSkillPoint            = 3;  //How many ranks needed to get 1 Skill
 
 const ContractBaseMoneyGain         = 250e3; //Base Money Gained per contract
 
-const HrcHpGain         = 2;    // HP gained from Hyperbolic Regeneration Chamber
-const HrcStaminaGain    = 0.1; // Stamina gained from Hyperbolic Regeneration Chamber
+const HrcHpGain         = 2;    // HP Gained from Hyperbolic Regeneration chamber
+const HrcStaminaGain    = 1;    // Percentage Stamina gained from Hyperbolic Regeneration Chamber
 
 //DOM related variables
 var ActiveActionCssClass        = "bladeburner-active-action";
@@ -1417,14 +1417,17 @@ Bladeburner.prototype.completeAction = function() {
             }
             this.startAction(this.action); // Repeat Action
             break;
-        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+        case ActionTypes["Hyperbolic Regeneration Chamber"]: {
             Player.regenerateHp(HrcHpGain);
-            this.stamina = Math.min(this.maxStamina, this.stamina + HrcStaminaGain);
+
+            const staminaGain = this.maxStamina * (HrcStaminaGain / 100);
+            this.stamina = Math.min(this.maxStamina, this.stamina + staminaGain);
             this.startAction(this.action);
             if (this.logging.general) {
-                this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${HrcHpGain} HP and gained ${HrcStaminaGain} stamina`);
+                this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${HrcHpGain} HP and gained ${numeralWrapper.format(staminaGain, "0.0")} stamina`);
             }
             break;
+        }
         default:
             console.error(`Bladeburner.completeAction() called for invalid action: ${this.action.type}`);
             break;
@@ -2513,7 +2516,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
                   `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
-                  
+
                   "Time Required (s): " + formatNumber(actionTime, 0) + "\n" +
                   "Contracts remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +

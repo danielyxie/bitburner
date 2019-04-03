@@ -29,8 +29,15 @@ import { Factions,
 import { joinFaction,
          purchaseAugmentation }                     from "./Faction/FactionHelpers";
 import { FactionWorkType }                          from "./Faction/FactionWorkTypeEnum";
+import { netscriptCanGrow,
+         netscriptCanHack,
+         netscriptCanWeaken }                       from "./Hacking/netscriptCanHack";
+
 import { getCostOfNextHacknetNode,
-         purchaseHacknet }                          from "./HacknetNode";
+         getCostOfNextHacknetServer,
+         hasHacknetServers,
+         purchaseHacknet }                          from "./Hacknet/HacknetHelpers";
+import { HacknetServer }                            from "./Hacknet/HacknetServer";
 import {Locations}                                  from "./Locations";
 import { Message }                                  from "./Message/Message";
 import { Messages }                                 from "./Message/MessageHelpers";
@@ -73,7 +80,8 @@ import {WorkerScript, workerScripts,
 import {makeRuntimeRejectMsg, netscriptDelay,
         runScriptFromScript}                        from "./NetscriptEvaluator";
 import {NetscriptPort}                              from "./NetscriptPort";
-import { SleeveTaskType }                           from "./PersonObjects/Sleeve/SleeveTaskTypesEnum"
+import { SleeveTaskType }                           from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
+import { findSleevePurchasableAugs }                from "./PersonObjects/Sleeve/Sleeve";
 
 import {Page, routing}                              from "./ui/navigationTracking";
 import {numeralWrapper}                             from "./ui/numeralFormat";
@@ -193,11 +201,11 @@ function initSingularitySFFlags() {
 }
 
 function NetscriptFunctions(workerScript) {
-    var updateDynamicRam = function(fnName, ramCost) {
+    const updateDynamicRam = function(fnName, ramCost) {
         if (workerScript.dynamicLoadedFns[fnName]) {return;}
         workerScript.dynamicLoadedFns[fnName] = true;
 
-        const threads = workerScript.scriptRef.threads;
+        let threads = workerScript.scriptRef.threads;
         if (typeof threads !== 'number') {
             console.warn(`WorkerScript detected NaN for threadcount for ${workerScript.name} on ${workerScript.serverIp}`);
             threads = 1;
@@ -214,7 +222,7 @@ function NetscriptFunctions(workerScript) {
         }
     };
 
-    var updateStaticRam = function(fnName, ramCost) {
+    const updateStaticRam = function(fnName, ramCost) {
         if (workerScript.loadedFns[fnName]) {
             return 0;
         } else {
@@ -227,28 +235,56 @@ function NetscriptFunctions(workerScript) {
      * Gets the Server for a specific hostname/ip, throwing an error
      * if the server doesn't exist.
      * @param {string} Hostname or IP of the server
+     * @param {string} callingFnName - Name of calling function. For logging purposes
      * @returns {Server} The specified Server
      */
-    var safeGetServer = function(ip, callingFnName="") {
+    const safeGetServer = function(ip, callingFnName="") {
         var server = getServer(ip);
         if (server == null) {
+            workerScript.log(`ERROR: Invalid IP or hostname passed into ${callingFnName}()`);
             throw makeRuntimeRejectMsg(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
         }
         return server;
     }
 
+    /**
+     * Used to fail a function if the function's target is a Hacknet Server.
+     * This is used for functions that should run on normal Servers, but not Hacknet Servers
+     * @param {Server} server - Target server
+     * @param {string} callingFn - Name of calling function. For logging purposes
+     * @returns {boolean} True if the server is a Hacknet Server, false otherwise
+     */
+    const failOnHacknetServer = function(server, callingFn="") {
+        if (server instanceof HacknetServer) {
+            workerScript.log(`ERROR: ${callingFn}() failed because it does not work on Hacknet Servers`);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Utility function to get Hacknet Node object
-    var getHacknetNode = function(i) {
+    const getHacknetNode = function(i) {
         if (isNaN(i)) {
             throw makeRuntimeRejectMsg(workerScript, "Invalid index specified for Hacknet Node: " + i);
         }
         if (i < 0 || i >= Player.hacknetNodes.length) {
             throw makeRuntimeRejectMsg(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
         }
-        return Player.hacknetNodes[i];
+
+        if (hasHacknetServers()) {
+            const hserver = AllServers[Player.hacknetNodes[i]];
+            if (hserver == null) {
+                throw makeRuntimeRejectMsg(workerScript, `Could not get Hacknet Server for index ${i}. This is probably a bug, please report to game dev`);
+            }
+
+            return hserver;
+        } else {
+            return Player.hacknetNodes[i];
+        }
     };
 
-    var getCodingContract = function(fn, ip) {
+    const getCodingContract = function(fn, ip) {
         var server = safeGetServer(ip, "getCodingContract");
         return server.getContract(fn);
     }
@@ -262,43 +298,68 @@ function NetscriptFunctions(workerScript) {
                 return purchaseHacknet();
             },
             getPurchaseNodeCost : function() {
-                return getCostOfNextHacknetNode();
+                if (hasHacknetServers()) {
+                    return getCostOfNextHacknetServer();
+                } else {
+                    return getCostOfNextHacknetNode();
+                }
             },
             getNodeStats : function(i) {
-                var node = getHacknetNode(i);
-                return {
+                const node = getHacknetNode(i);
+                const hasUpgraded = hasHacknetServers();
+                const res = {
                     name:               node.name,
                     level:              node.level,
-                    ram:                node.ram,
+                    ram:                hasUpgraded ? node.maxRam : node.ram,
                     cores:              node.cores,
-                    production:         node.moneyGainRatePerSecond,
+                    production:         hasUpgraded ? node.hashRate : node.moneyGainRatePerSecond,
                     timeOnline:         node.onlineTimeSeconds,
-                    totalProduction:    node.totalMoneyGenerated,
+                    totalProduction:    hasUpgraded ? node.totalHashesGenerated : node.totalMoneyGenerated,
                 };
+
+                if (hasUpgraded) {
+                    res.cache = node.cache;
+                }
+
+                return res;
             },
             upgradeLevel : function(i, n) {
-                var node = getHacknetNode(i);
-                return node.purchaseLevelUpgrade(n);
+                const node = getHacknetNode(i);
+                return node.purchaseLevelUpgrade(n, Player);
             },
             upgradeRam : function(i, n) {
-                var node = getHacknetNode(i);
-                return node.purchaseRamUpgrade(n);
+                const node = getHacknetNode(i);
+                return node.purchaseRamUpgrade(n, Player);
             },
             upgradeCore : function(i, n) {
-                var node = getHacknetNode(i);
-                return node.purchaseCoreUpgrade(n);
+                const node = getHacknetNode(i);
+                return node.purchaseCoreUpgrade(n, Player);
+            },
+            upgradeCache : function(i, n) {
+                if (!hasHacknetServers()) { return false; }
+                const node = getHacknetNode(i);
+                const res = node.purchaseCacheUpgrade(n, Player);
+                if (res) {
+                    Player.hashManager.updateCapacity(Player);
+                }
+                return res;
             },
             getLevelUpgradeCost : function(i, n) {
-                var node = getHacknetNode(i);
-                return node.calculateLevelUpgradeCost(n);
+                const node = getHacknetNode(i);
+                return node.calculateLevelUpgradeCost(n, Player);
             },
             getRamUpgradeCost : function(i, n) {
-                var node = getHacknetNode(i);
-                return node.calculateRamUpgradeCost(n);
+                const node = getHacknetNode(i);
+                return node.calculateRamUpgradeCost(n, Player);
             },
             getCoreUpgradeCost : function(i, n) {
-                var node = getHacknetNode(i);
-                return node.calculateCoreUpgradeCost(n);
+                const node = getHacknetNode(i);
+                return node.calculateCoreUpgradeCost(n, Player);
+            },
+            getCacheUpgradeCost : function(i, n) {
+                if (!hasHacknetServers()) { return Infinity; }
+                const node = getHacknetNode(i);
+                return node.calculateCacheUpgradeCost(n);
             }
         },
         sprintf : sprintf,
@@ -350,19 +411,16 @@ function NetscriptFunctions(workerScript) {
             var hackingTime = calculateHackingTime(server); //This is in seconds
 
             //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
-            }
-
-            if (server.requiredHackingSkill > Player.hacking_skill) {
-                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
+            const canHack = netscriptCanHack(server, Player);
+            if (!canHack.res) {
+                workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
+                throw makeRuntimeRejectMsg(workerScript, canHack.msg);
             }
 
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
                 workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
             }
+
             return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 var hackChance = calculateHackingChance(server);
@@ -481,9 +539,10 @@ function NetscriptFunctions(workerScript) {
             }
 
             //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
+            const canHack = netscriptCanGrow(server);
+            if (!canHack.res) {
+                workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
+                throw makeRuntimeRejectMsg(workerScript, canHack.msg);
             }
 
             var growTime = calculateGrowTime(server);
@@ -542,9 +601,10 @@ function NetscriptFunctions(workerScript) {
             }
 
             //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+            const canHack = netscriptCanWeaken(server);
+            if (!canHack.res) {
+                workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
+                throw makeRuntimeRejectMsg(workerScript, canHack.msg);
             }
 
             var weakenTime = calculateWeakenTime(server);
@@ -1300,25 +1360,22 @@ function NetscriptFunctions(workerScript) {
             let copy = Object.assign({}, BitNodeMultipliers);
             return copy;
         },
-        getServerMoneyAvailable : function(ip){
+        getServerMoneyAvailable : function(ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getServerMoneyAvailable", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerMoneyAvailable", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
-            }
+            const server = safeGetServer(ip, "getServerMoneyAvailable");
+            if (failOnHacknetServer(server, "getServerMoneyAvailable")) { return 0; }
             if (server.hostname == "home") {
-                //Return player's money
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
-                    workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money.toNumber(), 2));
+                // Return player's money
+                if (workerScript.shouldLog("getServerMoneyAvailable")) {
+                    workerScript.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money.toNumber(), 2));
                 }
                 return Player.money.toNumber();
             }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
-                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
+            if (workerScript.shouldLog("getServerMoneyAvailable")) {
+                workerScript.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
             }
             return server.moneyAvailable;
         },
@@ -1327,13 +1384,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerSecurityLevel");
+            if (failOnHacknetServer(server, "getServerSecurityLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerSecurityLevel")) {
+                workerScript.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
             }
             return server.hackDifficulty;
         },
@@ -1342,13 +1396,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerBaseSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerBaseSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerBaseSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerBaseSecurityLevel");
+            if (failOnHacknetServer(server, "getServerBaseSecurityLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerBaseSecurityLevel")) {
+                workerScript.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
             }
             return server.baseDifficulty;
         },
@@ -1357,13 +1408,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerMinSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerMinSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMinSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerMinSecurityLevel");
+            if (failOnHacknetServer(server, "getServerMinSecurityLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerMinSecurityLevel")) {
+                workerScript.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
             }
             return server.minDifficulty;
         },
@@ -1372,13 +1420,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerRequiredHackingLevel", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerRequiredHackingLevel", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRequiredHackingLevel == null) {
-                workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerRequiredHackingLevel");
+            if (failOnHacknetServer(server, "getServerRequiredHackingLevel")) { return 1; }
+            if (workerScript.shouldLog("getServerRequiredHackingLevel")) {
+                workerScript.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
             }
             return server.requiredHackingSkill;
         },
@@ -1387,13 +1432,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerMaxMoney", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerMaxMoney", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMaxMoney == null) {
-                workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerMaxMoney");
+            if (failOnHacknetServer(server, "getServerMaxMoney")) { return 0; }
+            if (workerScript.shouldLog("getServerMaxMoney")) {
+                workerScript.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
             }
             return server.moneyMax;
         },
@@ -1402,13 +1444,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerGrowth", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerGrowth", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerGrowth == null) {
-                workerScript.scriptRef.log("getServerGrowth() returned " + formatNumber(server.serverGrowth, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerGrowth");
+            if (failOnHacknetServer(server, "getServerGrowth")) { return 1; }
+            if (workerScript.shouldLog("getServerGrowth")) {
+                workerScript.log("getServerGrowth() returned " + formatNumber(server.serverGrowth, 0) + " for " + server.hostname);
             }
             return server.serverGrowth;
         },
@@ -1417,13 +1456,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerNumPortsRequired", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerNumPortsRequired", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerNumPortsRequired == null) {
-                workerScript.scriptRef.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+            const server = safeGetServer(ip, "getServerNumPortsRequired");
+            if (failOnHacknetServer(server, "getServerNumPortsRequired")) { return 5; }
+            if (workerScript.shouldLog("getServerNumPortsRequired")) {
+                workerScript.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
             }
             return server.numOpenPortsRequired;
         },
@@ -1432,13 +1468,9 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getServerRam", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("getServerRam", CONSTANTS.ScriptGetServerRamCost);
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRam == null) {
-                workerScript.scriptRef.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
+            const server = safeGetServer(ip, "getServerRam");
+            if (workerScript.shouldLog("getServerRam")) {
+                workerScript.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
             }
             return [server.maxRam, server.ramUsed];
         },
@@ -4730,7 +4762,7 @@ function NetscriptFunctions(workerScript) {
                     answer = String(answer);
                 }
 
-                const serv = safeGetServer(ip, "codingcontract.attempt()");
+                const serv = safeGetServer(ip, "codingcontract.attempt");
                 if (contract.isSolution(answer)) {
                     const reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
                     workerScript.log(`Successfully completed Coding Contract ${fn}. Reward: ${reward}`);
@@ -5080,6 +5112,70 @@ function NetscriptFunctions(workerScript) {
                     workRepGain:     sl.getRepGain(),
                 }
             },
+            getSleeveAugmentations : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSleeveAugmentations", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getSleeveAugmentations() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("getSleeveAugmentations", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getSleeveAugmentations(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return [];
+                }
+
+                const augs = [];
+                for (let i = 0; i < Player.sleeves[sleeveNumber].augmentations.length; i++) {
+                    augs.push(Player.sleeves[sleeveNumber].augmentations[i].name);
+                }
+                return augs;
+            },
+            getSleevePurchasableAugs : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSleevePurchasableAugs", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getSleevePurchasableAugs() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("getSleevePurchasableAugs", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getSleevePurchasableAugs(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return [];
+                }
+
+                const purchasableAugs = findSleevePurchasableAugs(Player.sleeves[sleeveNumber], Player);
+                const augs = [];
+                for (let i = 0; i < purchasableAugs.length; i++) {
+                    const aug = purchasableAugs[i];
+                    augs.push({
+                        name: aug.name,
+                        cost: aug.startingCost,
+                    });
+                }
+
+                return augs;
+            },
+            purchaseSleeveAug : function(sleeveNumber=0, augName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("purchaseSleeveAug", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "purchaseSleeveAug() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("purchaseSleeveAug", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.purchaseSleeveAug(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const aug = Augmentations[augName];
+                if (!aug) {
+                    workerScript.log(`ERROR: sleeve.purchaseSleeveAug(${sleeveNumber}) failed because ${augName} is not a valid aug.`);
+                }
+
+                return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
+            }
         } // End sleeve
     } //End return
 } //End NetscriptFunction()

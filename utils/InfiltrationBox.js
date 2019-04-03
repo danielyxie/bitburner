@@ -30,22 +30,21 @@ function infiltrationSetText(txt) {
 //ram argument is in GB
 function infiltrationBoxCreate(inst) {
     //Gain exp
-    var expMultiplier = 2 * inst.clearanceLevel / inst.maxClearanceLevel;
-    Player.gainHackingExp(inst.hackingExpGained * expMultiplier);
-    Player.gainStrengthExp(inst.strExpGained * expMultiplier);
-    Player.gainDefenseExp(inst.defExpGained * expMultiplier);
-    Player.gainDexterityExp(inst.dexExpGained * expMultiplier);
-    Player.gainAgilityExp(inst.agiExpGained * expMultiplier);
-    Player.gainCharismaExp(inst.chaExpGained * expMultiplier);
-    Player.gainIntelligenceExp(inst.intExpGained * expMultiplier);
+    Player.gainHackingExp(inst.calcGainedHackingExp());
+    Player.gainStrengthExp(inst.calcGainedStrengthExp());
+    Player.gainDefenseExp(inst.calcGainedDefenseExp());
+    Player.gainDexterityExp(inst.calcGainedDexterityExp());
+    Player.gainAgilityExp(inst.calcGainedAgilityExp());
+    Player.gainCharismaExp(inst.calcGainedCharismaExp());
+    Player.gainIntelligenceExp(inst.calcGainedIntelligenceExp());
 
     const expGainText = ["You gained:",
-                         `${formatNumber(inst.hackingExpGained * expMultiplier, 3)} hacking exp`,
-                         `${formatNumber(inst.strExpGained * expMultiplier, 3)} str exp`,
-                         `${formatNumber(inst.defExpGained * expMultiplier, 3)} def exp`,
-                         `${formatNumber(inst.dexExpGained * expMultiplier, 3)} dex exp`,
-                         `${formatNumber(inst.agiExpGained * expMultiplier, 3)} agi exp`,
-                         `${formatNumber(inst.chaExpGained * expMultiplier, 3)} cha exp`].join("\n");
+                         `${formatNumber(inst.calcGainedHackingExp(), 3)} hacking exp`,
+                         `${formatNumber(inst.calcGainedStrengthExp(), 3)} str exp`,
+                         `${formatNumber(inst.calcGainedDefenseExp(), 3)} def exp`,
+                         `${formatNumber(inst.calcGainedDexterityExp(), 3)} dex exp`,
+                         `${formatNumber(inst.calcGainedAgilityExp(), 3)} agi exp`,
+                         `${formatNumber(inst.calcGainedCharismaExp(), 3)} cha exp`].join("\n");
 
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
