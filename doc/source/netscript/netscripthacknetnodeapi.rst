@@ -31,9 +31,11 @@ In :ref:`netscriptjs`::
     upgradeLevel() <hacknetnodeapi/upgradeLevel>
     upgradeRam() <hacknetnodeapi/upgradeRam>
     upgradeCore() <hacknetnodeapi/upgradeCore>
+    upgradeCache() <hacknetnodeapi/upgradeCache>
     getLevelUpgradeCost() <hacknetnodeapi/getLevelUpgradeCost>
     getRamUpgradeCost() <hacknetnodeapi/getRamUpgradeCost>
     getCoreUpgradeCost() <hacknetnodeapi/getCoreUpgradeCost>
+    getCacheUpgradeCost() <hacknetnodeapi/getCacheUpgradeCost>
 
 .. _netscript_hacknetnodeapi_referencingahacknetnode:
 
@@ -68,23 +70,25 @@ The following is an example of one way a script can be used to automate the
 purchasing and upgrading of Hacknet Nodes.
 
 This script attempts to purchase Hacknet Nodes until the player has a total of 8. Then
-it gradually upgrades those Node's to a minimum of level 140, 64 GB RAM, and 8 cores::
+it gradually upgrades those Node's to a minimum of level 140, 64 GB RAM, and 8 cores
+
+.. code:: javascript
 
     function myMoney() {
-        return getServerMoneyAvailable("home");() <hacknetnodeapi/    return getServerMoneyAvailable("home");>
-        }
-    }() <hacknetnodeapi/>
+        return getServerMoneyAvailable("home");
+    }
+
     disableLog("getServerMoneyAvailable");
     disableLog("sleep");
 
-    cnt = 8;
+    var cnt = 8;
 
     while(hacknet.numNodes() < cnt) {
         res = hacknet.purchaseNode();
         print("Purchased hacknet Node with index " + res);
     };
 
-    for (i = 0; i < cnt; i++) {
+    for (var i = 0; i < cnt; i++) {
         while (hacknet.getNodeStats(i).level <= 80) {
             var cost = hacknet.getLevelUpgradeCost(i, 10);
             while (myMoney() < cost) {
@@ -95,9 +99,9 @@ it gradually upgrades those Node's to a minimum of level 140, 64 GB RAM, and 8 c
         };
     };
 
-    print("All nodes upgrade to level 80");
+    print("All nodes upgraded to level 80");
 
-    for (i = 0; i < cnt; i++) {
+    for (var i = 0; i < cnt; i++) {
         while (hacknet.getNodeStats(i).ram < 16) {
             var cost = hacknet.getRamUpgradeCost(i, 2);
             while (myMoney() < cost) {
@@ -108,43 +112,4 @@ it gradually upgrades those Node's to a minimum of level 140, 64 GB RAM, and 8 c
         };
     };
 
-    print("All nodes upgrade to 16GB RAM");
-
-    for (i = 0; i < cnt; i++) {
-        while (hacknet.getNodeStats(i).level <= 140) {
-            var cost = hacknet.getLevelUpgradeCost(i, 5);
-            while (myMoney() < cost) {
-                print("Need $" + cost + " . Have $" + myMoney());
-                sleep(3000);
-            }
-            res = hacknet.upgradeLevel(i, 5);
-        };
-    };
-
-    print("All nodes upgrade to level 140");
-
-    for (i = 0; i < cnt; i++) {
-        while (hacknet.getNodeStats(i).ram < 64) {
-            var cost = hacknet.getRamUpgradeCost(i, 2);
-            while (myMoney() < cost) {
-                print("Need $" + cost + " . Have $" + myMoney());
-                sleep(3000);
-            }
-            res = hacknet.upgradeRam(i, 2);
-        };
-    };
-
-    print("All nodes upgrade to 64GB RAM (MAX)");
-
-    for (i = 0; i < cnt; i++) {
-        while (hacknetnodes.getNodeStatsi(i).cores < 8) {
-            var cost = hacknet.getCoreUpgradeCost(7);
-            while (myMoney() < cost) {
-                print("Need $" + cost + " . Have $" + myMoney());
-                sleep(3000);
-            }
-            res = hacknet.upgradeCore(i, 7);
-        };
-    };
-
-    print("All nodes upgrade to 8 cores");
+    print("All nodes upgraded to 16GB RAM");

@@ -6,7 +6,7 @@
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.45.1",
+    Version:                "0.46.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -285,6 +285,7 @@ export let CONSTANTS: IMap<any> = {
     * Corporation Changes:
     ** 'Demand' value of products decreases more slowly
     ** Bug Fix: Fixed a Corporation issue that broke the Market-TA2 Research
+    ** Bug Fix: Issuing New Shares now works properly
 
     * Bug Fix: Money Statistics tracker was incorrectly recording profits when selling stocks manually
     * Bug Fix: Fixed an issue with the job requirement tooltip for security jobs

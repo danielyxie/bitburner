@@ -327,16 +327,17 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
     updateHashRate(p: IPlayer): void {
         const baseGain = HacknetServerHashesPerLevel * this.level;
-        const coreMultiplier = Math.pow(1.1, this.cores - 1);
+        const ramMultiplier = Math.pow(1.07, Math.log2(this.maxRam));
+        const coreMultiplier = 1 + (this.cores - 1) / 5;
         const ramRatio = (1 - this.ramUsed / this.maxRam);
 
-        const hashRate = baseGain * coreMultiplier * ramRatio;
+        const hashRate = baseGain * ramMultiplier * coreMultiplier * ramRatio;
 
         this.hashRate = hashRate * p.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney;
 
         if (isNaN(this.hashRate)) {
             this.hashRate = 0;
-            dialogBoxCreate(`Error calculating Hacknet Server hash production. This is a bug. Please report to game dev`, false);
+            console.error(`Error calculating Hacknet Server hash production. This is a bug. Please report to game dev`, false);
         }
     }
 
