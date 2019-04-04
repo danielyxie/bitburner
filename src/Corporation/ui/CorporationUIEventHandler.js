@@ -31,6 +31,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
+import { getRandomInt } from "../../../utils/helpers/getRandomInt";
 import { KEY } from "../../../utils/helpers/keyCodes";
 
 import { clearSelector } from "../../../utils/uiHelpers/clearSelector";

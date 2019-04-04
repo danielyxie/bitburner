@@ -486,6 +486,7 @@ button {
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6); }
 
 .a-link-button-inactive,
+.std-button-disabled,
 .std-button:disabled {
   text-decoration: none;
   background-color: #333;
@@ -501,11 +502,15 @@ button {
   .a-link-button-inactive:hover .tooltiptext,
   .a-link-button-inactive:hover .tooltiptexthigh,
   .a-link-button-inactive:hover .tooltiptextleft,
+  .std-button-disabled:hover .tooltiptext,
+  .std-button-disabled:hover .tooltiptexthigh,
+  .std-button-disabled:hover .tooltiptextleft,
   .std-button:disabled:hover .tooltiptext,
   .std-button:disabled:hover .tooltiptexthigh,
   .std-button:disabled:hover .tooltiptextleft {
     visibility: visible; }
   .a-link-button-inactive:active,
+  .std-button-disabled:active,
   .std-button:disabled:active {
     pointer-events: none; }
 
@@ -671,7 +676,7 @@ button {
 /* COLORS */
 /* Attributes */
 /**
- * Styling for the Character Overview Panel (top-right)
+ * Styling for the Character Overview Panel (top-right panel)
  */
 #character-overview-wrapper {
   position: relative; }
@@ -929,6 +934,64 @@ button {
 
 /* COLORS */
 /* Attributes */
+/**
+ * Styling for the Hacknet Nodes UI Page
+ */
+#hacknet-nodes-container {
+  position: fixed;
+  padding: 10px; }
+
+.hacknet-general-info {
+  margin: 10px;
+  width: 70vw; }
+
+#hacknet-nodes-container li {
+  float: left;
+  overflow: hidden;
+  white-space: nowrap; }
+  #hacknet-nodes-container li.hacknet-node {
+    -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    margin: 6px;
+    padding: 7px;
+    width: 35vw;
+    border: 2px solid var(--my-highlight-color); }
+
+#hacknet-nodes-list {
+  list-style: none;
+  width: 82vw; }
+
+#hacknet-nodes-money {
+  margin: 10px;
+  float: left; }
+
+#hacknet-nodes-money-multipliers-div {
+  display: inline-block;
+  width: 70vw; }
+
+#hacknet-nodes-multipliers {
+  float: right; }
+
+#hacknet-nodes-purchase-button {
+  display: inline-block; }
+
+.hacknet-node-container {
+  display: inline-table; }
+  .hacknet-node-container .row {
+    display: table-row;
+    height: 30px; }
+    .hacknet-node-container .row p {
+      display: table-cell; }
+  .hacknet-node-container .upgradable-info {
+    display: inline-block;
+    margin: 0 4px;
+    /* Don't want the vertical margin/padding, just left & right */
+    padding: 0 4px;
+    width: 64px; }
+
+/* COLORS */
+/* Attributes */
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
     terminal which has its own page) */
 .generic-menupage-container {
@@ -1043,64 +1106,6 @@ button {
     width: auto;
     color: #fff;
     margin-left: 5%; }
-
-/* Hacknet Nodes */
-#hacknet-nodes-container {
-  position: fixed;
-  padding: 10px; }
-
-#hacknet-nodes-text,
-#hacknet-nodes-container li {
-  margin: 10px;
-  padding: 10px; }
-
-#hacknet-nodes-container li {
-  float: left;
-  overflow: hidden;
-  white-space: nowrap; }
-  #hacknet-nodes-container li.hacknet-node {
-    -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-    margin: 6px;
-    padding: 7px;
-    width: 35vw;
-    border: 2px solid var(--my-highlight-color); }
-
-#hacknet-nodes-list {
-  list-style: none;
-  width: 82vw; }
-
-#hacknet-nodes-money {
-  margin: 10px;
-  float: left; }
-
-#hacknet-nodes-money-multipliers-div {
-  display: inline-block;
-  width: 70vw; }
-
-#hacknet-nodes-multipliers {
-  float: right; }
-
-#hacknet-nodes-purchase-button {
-  display: inline-block; }
-
-.hacknet-node-container {
-  display: inline-table; }
-  .hacknet-node-container .row {
-    display: table-row;
-    height: 30px; }
-    .hacknet-node-container .row p {
-      display: table-cell; }
-  .hacknet-node-container .upgradable-info {
-    display: inline-block;
-    margin: 0 4px;
-    /* Don't want the vertical margin/padding, just left & right */
-    padding: 0 4px;
-    width: 64px; }
-
-.menu-page-text {
-  width: 70vw; }
 
 /* World */
 #world-container {
@@ -1402,7 +1407,7 @@ button {
 /* Pop-up boxes */
 .popup-box-container {
   display: none;
-  /* Hidden by default */
+  /* Initially hidden */
   position: fixed;
   /* Stay in place */
   z-index: 10;

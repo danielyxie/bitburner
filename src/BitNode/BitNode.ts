@@ -176,7 +176,21 @@ export function initBitNodes() {
     BitNodes["BitNode9"] = new BitNode(9, "Hacktocracy", "Hacknet Unleashed",
                                           "When Fulcrum Technologies released their open-source Linux distro Chapeau, it quickly " +
                                           "became the OS of choice for the underground hacking community. Chapeau became especially notorious for " +
-                                          "powering the Hacknet, ");
+                                          "powering the Hacknet, a global, decentralized network used for nefarious purposes. Fulcrum quickly "  +
+                                          "abandoned the project and dissociated themselves from it.<br><br>" +
+                                          "This BitNode unlocks the Hacknet Server, an upgraded version of the Hacknet Node. Hacknet Servers generate " +
+                                          "hashes, which can be spent on a variety of different upgrades.<br><br>" +
+                                          "In this BitNode:<br><br>" +
+                                          "Your stats are significantly decreased<br>" +
+                                          "You cannnot purchase additional servers<br>" +
+                                          "Hacking is significantly less profitable<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 9, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File grants the following benefits:<br><br>" +
+                                          "Level 1: Permanently unlocks the Hacknet Server in other BitNodes<br>" +
+                                          "Level 2: You start with 128GB of RAM on your home computer when entering a new BitNode<br>" +
+                                          "Level 3: Grants a highly-upgraded Hacknet Server when entering a new BitNode<br><br>" +
+                                          "(Note that the Level 3 effect of this Source-File only applies when entering a new BitNode, NOT " +
+                                          "when installing Augmentations)");
     BitNodes["BitNode10"] = new BitNode(10, "Digital Carbon", "Your body is not who you are",
                                             "In 2084, VitaLife unveiled to the world the Persona Core, a technology that allowed people " +
                                             "to digitize their consciousness. Their consciousness could then be transferred into Synthoids " +
@@ -186,7 +200,7 @@ export function initBitNodes() {
                                             "1. Re-sleeve: Purchase and transfer your consciousness into a new body<br>" +
                                             "2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks synchronously<br><br>" +
                                             "In this BitNode:<br><br>" +
-                                            "Your stats are significantly decreased.<br>" +
+                                            "Your stats are significantly decreased<br>" +
                                             "All methods of gaining money are half as profitable (except Stock Market)<br>" +
                                             "Purchased servers are more expensive, have less max RAM, and a lower maximum limit<br>" +
                                             "Augmentations are 5x as expensive and require twice as much reputation<br><br>" +
@@ -350,21 +364,25 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.CodingContractMoney      = 0;
             break;
         case 9: // Hacktocracy
-            BitNodeMultipliers.HackingLevelMultiplier   = 0.4;
-            BitNodeMultipliers.StrengthLevelMultiplier  = 0.45;
-            BitNodeMultipliers.DefenseLevelMultiplier   = 0.45;
-            BitNodeMultipliers.DexterityLevelMultiplier = 0.45;
-            BitNodeMultipliers.AgilityLevelMultiplier   = 0.45;
-            BitNodeMultipliers.CharismaLevelMultiplier  = 0.45;
-            BitNodeMultipliers.PurchasedServerLimit     = 0;
-            BitNodeMultipliers.HomeComputerRamCost      = 5;
-            BitNodeMultipliers.CrimeMoney               = 0.5;
-            BitNodeMultipliers.ScriptHackMoney          = 0.1;
-            BitNodeMultipliers.HackExpGain              = 0.1;
-            BitNodeMultipliers.ServerStartingMoney      = 0.1;
-            BitNodeMultipliers.ServerMaxMoney           = 0.1;
-            BitNodeMultipliers.ServerStartingSecurity   = 2.5;
-            BitNodeMultipliers.CorporationValuation     = 0.5;
+            BitNodeMultipliers.HackingLevelMultiplier       = 0.4;
+            BitNodeMultipliers.StrengthLevelMultiplier      = 0.45;
+            BitNodeMultipliers.DefenseLevelMultiplier       = 0.45;
+            BitNodeMultipliers.DexterityLevelMultiplier     = 0.45;
+            BitNodeMultipliers.AgilityLevelMultiplier       = 0.45;
+            BitNodeMultipliers.CharismaLevelMultiplier      = 0.45;
+            BitNodeMultipliers.PurchasedServerLimit         = 0;
+            BitNodeMultipliers.HomeComputerRamCost          = 5;
+            BitNodeMultipliers.CrimeMoney                   = 0.5;
+            BitNodeMultipliers.ScriptHackMoney              = 0.1;
+            BitNodeMultipliers.HackExpGain                  = 0.05;
+            BitNodeMultipliers.ServerStartingMoney          = 0.1;
+            BitNodeMultipliers.ServerMaxMoney               = 0.1;
+            BitNodeMultipliers.ServerStartingSecurity       = 2.5;
+            BitNodeMultipliers.CorporationValuation         = 0.5;
+            BitNodeMultipliers.FourSigmaMarketDataCost      = 5;
+            BitNodeMultipliers.FourSigmaMarketDataApiCost   = 4;
+            BitNodeMultipliers.BladeburnerRank              = 0.9;
+            BitNodeMultipliers.BladeburnerSkillCost         = 1.2;
             break;
         case 10: // Digital Carbon
             BitNodeMultipliers.HackingLevelMultiplier   = 0.2;

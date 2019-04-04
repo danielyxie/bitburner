@@ -27,15 +27,14 @@ import { displayFactionContent, joinFaction,
          processPassiveFactionRepGain,
          inviteToFaction }                              from "./Faction/FactionHelpers";
 import { FconfSettings }                                from "./Fconf/FconfSettings";
-import {displayLocationContent,
-        initLocationButtons}                            from "./Location";
-import {Locations}                                      from "./Locations";
 import { hasHacknetServers,
          renderHacknetNodesUI,
          clearHacknetNodesUI,
          processHacknetEarnings }                       from "./Hacknet/HacknetHelpers";
 import {iTutorialStart}                                 from "./InteractiveTutorial";
 import {initLiterature}                                 from "./Literature";
+import { LocationName }                                 from "./Locations/data/LocationNames";
+import { LocationRoot }                                 from "./Locations/ui/Root";
 import { checkForMessagesToSend, initMessages }         from "./Message/MessageHelpers";
 import {inMission, currMission}                         from "./Missions";
 import {initSingularitySFFlags,
@@ -174,7 +173,7 @@ $(document).keydown(function(e) {
             Engine.loadHacknetNodesContent();
         } else if (e.keyCode === KEY.W && e.altKey) {
             e.preventDefault();
-            Engine.loadWorldContent();
+            Engine.loadLocationContent();
         } else if (e.keyCode === KEY.J && e.altKey) {
             e.preventDefault();
             Engine.loadJobContent();
@@ -233,7 +232,6 @@ const Engine = {
         scriptEditorContent:            null,
         activeScriptsContent:           null,
         hacknetNodesContent:            null,
-        worldContent:                   null,
         createProgramContent:           null,
         factionsContent:                null,
         factionContent:                 null,
@@ -302,14 +300,6 @@ const Engine = {
         MainMenuLinks.HacknetNodes.classList.add("active");
     },
 
-    loadWorldContent: function() {
-        Engine.hideAllContent();
-        Engine.Display.worldContent.style.display = "block";
-        Engine.displayWorldInfo();
-        routing.navigateTo(Page.World);
-        MainMenuLinks.City.classList.add("active");
-    },
-
     loadCreateProgramContent: function() {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.display = "block";
@@ -354,54 +344,57 @@ const Engine = {
         MainMenuLinks.DevMenu.classList.add("active");
     },
 
-    loadLocationContent: function() {
+    loadLocationContent: function(initiallyInCity=true) {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
-        try {
-            displayLocationContent();
-        } catch(e) {
-            exceptionAlert(e);
-            console.error(e);
-        }
+        MainMenuLinks.City.classList.add("active");
 
         routing.navigateTo(Page.Location);
+        const rootComponent =   <LocationRoot
+                                    initiallyInCity={initiallyInCity}
+                                    engine={Engine}
+                                    p={Player}
+                                />
+        ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
     loadTravelContent: function() {
-        switch(Player.city) {
-            case Locations.Aevum:
-                Player.location = Locations.AevumTravelAgency;
-                break;
-            case Locations.Chongqing:
-                Player.location = Locations.ChongqingTravelAgency;
-                break;
-            case Locations.Sector12:
-                Player.location = Locations.Sector12TravelAgency;
-                break;
-            case Locations.NewTokyo:
-                Player.location = Locations.NewTokyoTravelAgency;
-                break;
-            case Locations.Ishima:
-                Player.location = Locations.IshimaTravelAgency;
-                break;
-            case Locations.Volhaven:
-                Player.location = Locations.VolhavenTravelAgency;
-                break;
-            default:
-                dialogBoxCreate("ERROR: Invalid city. This is a bug please contact game dev");
-                break;
-        }
-        Engine.loadLocationContent();
+        // Same as loadLocationContent() except first set the location to the travel agency,
+        // and make sure that the 'City' main menu link doesnt become 'active'
+        Engine.hideAllContent();
+        Player.gotoLocation(LocationName.TravelAgency);
+        Engine.Display.locationContent.style.display = "block";
+        MainMenuLinks.Travel.classList.add("active");
+
+        routing.navigateTo(Page.Location);
+        const rootComponent =   <LocationRoot
+                                    initiallyInCity={false}
+                                    engine={Engine}
+                                    p={Player}
+                                />
+        ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
     loadJobContent: function() {
+        // Same as loadLocationContent(), except first set the location to the job.
+        // Make sure that the 'City' main menu link doesnt become 'active'
         if (Player.companyName == "") {
             dialogBoxCreate("You do not currently have a job! You can visit various companies " +
                             "in the city and try to find a job.");
             return;
         }
-        Player.location = Player.companyName;
-        Engine.loadLocationContent();
+        Engine.hideAllContent();
+        Player.gotoLocation(Player.companyName);
+        Engine.Display.locationContent.style.display = "block";
+        MainMenuLinks.Job.classList.add("active");
+
+        routing.navigateTo(Page.Location);
+        const rootComponent =   <LocationRoot
+                                    initiallyInCity={false}
+                                    engine={Engine}
+                                    p={Player}
+                                />
+        ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
     loadWorkInProgressContent: function() {
@@ -503,14 +496,13 @@ const Engine = {
         }
     },
 
-    //Helper function that hides all content
+    // Helper function that hides all content
     hideAllContent: function() {
         Engine.Display.terminalContent.style.display = "none";
         Engine.Display.characterContent.style.display = "none";
         Engine.Display.scriptEditorContent.style.display = "none";
         Engine.Display.activeScriptsContent.style.display = "none";
         clearHacknetNodesUI();
-        Engine.Display.worldContent.style.display = "none";
         Engine.Display.createProgramContent.style.display = "none";
         Engine.Display.factionsContent.style.display = "none";
         Engine.Display.factionContent.style.display = "none";
@@ -518,6 +510,7 @@ const Engine = {
         Engine.Display.augmentationsContent.style.display = "none";
         Engine.Display.tutorialContent.style.display = "none";
         Engine.Display.locationContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
         Engine.Display.cinematicTextContent.style.display = "none";
@@ -542,15 +535,15 @@ const Engine = {
         clearResleevesPage();
         clearSleevesPage();
 
-        //Location lists
-        Engine.aevumLocationsList.style.display = "none";
-        Engine.chongqingLocationsList.style.display = "none";
-        Engine.sector12LocationsList.style.display = "none";
-        Engine.newTokyoLocationsList.style.display = "none";
-        Engine.ishimaLocationsList.style.display = "none";
-        Engine.volhavenLocationsList.style.display = "none";
+        // Make nav menu tabs inactive
+        Engine.inactivateMainMenuLinks();
 
-        //Make nav menu tabs inactive
+        // Close dev menu
+        closeDevMenu();
+    },
+
+    // Remove 'active' css class from all main menu links
+    inactivateMainMenuLinks: function() {
         MainMenuLinks.Terminal.classList.remove("active");
         MainMenuLinks.ScriptEditor.classList.remove("active");
         MainMenuLinks.ActiveScripts.classList.remove("active");
@@ -570,9 +563,6 @@ const Engine = {
         MainMenuLinks.Tutorial.classList.remove("active");
         MainMenuLinks.Options.classList.remove("active");
         MainMenuLinks.DevMenu.classList.remove("active");
-
-        // Close dev menu
-        closeDevMenu();
     },
 
     displayCharacterOverviewInfo: function() {
@@ -590,99 +580,6 @@ const Engine = {
     /* Display character info */
     updateCharacterInfo: function() {
         displayCharacterInfo(Engine.Display.characterInfo, Player);
-    },
-
-    /* Display locations in the world*/
-    aevumLocationsList:        null,
-    chongqingLocationsList:    null,
-    sector12LocationsList:     null,
-    newTokyoLocationsList:     null,
-    ishimaLocationsList:       null,
-    volhavenLocationsList:     null,
-
-    displayWorldInfo: function() {
-        Engine.aevumLocationsList.style.display = "none";
-        Engine.chongqingLocationsList.style.display = "none";
-        Engine.sector12LocationsList.style.display = "none";
-        Engine.newTokyoLocationsList.style.display = "none";
-        Engine.ishimaLocationsList.style.display = "none";
-        Engine.volhavenLocationsList.style.display = "none";
-
-        document.getElementById("world-city-name").innerHTML = Player.city;
-        var cityDesc = document.getElementById("world-city-desc"); //TODO
-        switch(Player.city) {
-            case Locations.Aevum:
-                Engine.aevumLocationsList.style.display = "inline";
-                break;
-            case Locations.Chongqing:
-                Engine.chongqingLocationsList.style.display = "inline";
-                break;
-            case Locations.Sector12:
-                Engine.sector12LocationsList.style.display = "inline";
-
-                //City hall only in BitNode-3/with Source-File 3
-                if ((Player.bitNodeN === 3 || hasCorporationSF) && Player.bitNodeN !== 8)  {
-                    document.getElementById("sector12-cityhall-li").style.display = "block";
-                } else {
-                    document.getElementById("sector12-cityhall-li").style.display = "none";
-                }
-                break;
-            case Locations.NewTokyo:
-                Engine.newTokyoLocationsList.style.display = "inline";
-                break;
-            case Locations.Ishima:
-                Engine.ishimaLocationsList.style.display = "inline";
-                break;
-            case Locations.Volhaven:
-                Engine.volhavenLocationsList.style.display = "inline";
-                break;
-            default:
-                console.log("Invalid city value in Player object!");
-                break;
-        }
-
-        //Generic Locations (common to every city):
-        //  World Stock Exchange
-        //  Corporation (if applicable)
-        //  Bladeburner HQ (if applicable);
-        var genericLocationsList = document.getElementById("generic-locations-list");
-        genericLocationsList.style.display = "inline";
-        removeChildrenFromElement(genericLocationsList);
-        var li = createElement("li");
-        li.appendChild(createElement("a", {
-            innerText:"World Stock Exchange", class:"a-link-button",
-            clickListener:()=>{
-                Player.location = Locations.WorldStockExchange;
-                Engine.loadStockMarketContent();
-                return false;
-            }
-        }));
-        genericLocationsList.appendChild(li);
-
-        if (Player.corporation instanceof Corporation && document.getElementById("location-corporation-button") == null) {
-            var li = createElement("li");
-            li.appendChild(createElement("a", {
-                innerText:Player.corporation.name, id:"location-corporation-button",
-                class:"a-link-button",
-                clickListener:()=>{
-                    Engine.loadCorporationContent();
-                    return false;
-                }
-            }));
-            genericLocationsList.appendChild(li);
-        }
-
-        if (Player.bladeburner instanceof Bladeburner) {
-            var li = createElement("li");
-            li.appendChild(createElement("a", {
-                innerText:"Bladeburner Headquarters", class:"a-link-button",
-                clickListener:()=>{
-                    Engine.loadBladeburnerContent();
-                    return false;
-                }
-            }));
-            genericLocationsList.appendChild(li);
-        }
     },
 
     displayFactionsInfo: function() {
@@ -1343,9 +1240,6 @@ const Engine = {
         Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
         Engine.Display.hacknetNodesContent.style.display = "none";
 
-        Engine.Display.worldContent = document.getElementById("world-container");
-        Engine.Display.worldContent.style.display = "none";
-
         Engine.Display.createProgramContent = document.getElementById("create-program-container");
         Engine.Display.createProgramContent.style.display = "none";
 
@@ -1378,22 +1272,12 @@ const Engine = {
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-content");
 
-        //Location lists
-        Engine.aevumLocationsList = document.getElementById("aevum-locations-list");
-        Engine.chongqingLocationsList = document.getElementById("chongqing-locations-list");
-        Engine.sector12LocationsList = document.getElementById("sector12-locations-list");
-        Engine.newTokyoLocationsList = document.getElementById("newtokyo-locations-list");
-        Engine.ishimaLocationsList = document.getElementById("ishima-locations-list");
-        Engine.volhavenLocationsList = document.getElementById("volhaven-locations-list");
-
         //Location page (page that shows up when you visit a specific location in World)
         Engine.Display.locationContent = document.getElementById("location-container");
-        //Engine.Display.locationContent.style.visibility = "hidden";
         Engine.Display.locationContent.style.display = "none";
 
         //Work In Progress
         Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
-        //Engine.Display.workInProgressContent.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.display = "none";
 
         //Red Pill / Hack World Daemon
@@ -1403,9 +1287,6 @@ const Engine = {
         //Cinematic Text
         Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
         Engine.Display.cinematicTextContent.style.display = "none";
-
-		//Init Location buttons
-		initLocationButtons();
 
         // Initialize references to main menu links
         if (!initializeMainMenuLinks()) {
@@ -1480,19 +1361,17 @@ const Engine = {
         });
 
         MainMenuLinks.City.addEventListener("click", function() {
-            Engine.loadWorldContent();
+            Engine.loadLocationContent();
             return false;
         });
 
         MainMenuLinks.Travel.addEventListener("click", function() {
             Engine.loadTravelContent();
-            MainMenuLinks.Travel.classList.add("active");
             return false;
         });
 
         MainMenuLinks.Job.addEventListener("click", function() {
             Engine.loadJobContent();
-            MainMenuLinks.Job.classList.add("active");
             return false;
         });
 

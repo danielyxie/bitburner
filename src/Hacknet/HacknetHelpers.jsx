@@ -45,6 +45,25 @@ export function hasHacknetServers() {
     return (Player.bitNodeN === 9 || SourceFileFlags[9] > 0);
 }
 
+export function createHacknetServer() {
+    const numOwned = Player.hacknetNodes.length;
+    const name = `hacknet-node-${numOwned}`;
+    const server = new HacknetServer({
+        adminRights: true,
+        hostname: name,
+        player: Player,
+    });
+    Player.hacknetNodes.push(server.ip);
+
+    // Configure the HacknetServer to actually act as a Server
+    AddToAllServers(server);
+    const homeComputer = Player.getHomeComputer();
+    homeComputer.serversOnNetwork.push(server.ip);
+    server.serversOnNetwork.push(homeComputer.ip);
+
+    return server;
+}
+
 export function purchaseHacknet() {
     /* INTERACTIVE TUTORIAL */
     if (ITutorial.isRunning) {
@@ -54,9 +73,9 @@ export function purchaseHacknet() {
             return;
         }
     }
-
     /* END INTERACTIVE TUTORIAL */
 
+    const numOwned = Player.hacknetNodes.length;
     if (hasHacknetServers()) {
         const cost = getCostOfNextHacknetServer();
         if (isNaN(cost)) {
@@ -64,24 +83,9 @@ export function purchaseHacknet() {
         }
 
         if (!Player.canAfford(cost)) { return -1; }
-
-        // Auto generate a hostname for this Server
-        const numOwned = Player.hacknetNodes.length;
-        const name = `hacknet-node-${numOwned}`;
-        const server = new HacknetServer({
-            adminRights: true,
-            hostname: name,
-            player: Player,
-        });
-
         Player.loseMoney(cost);
-        Player.hacknetNodes.push(server.ip);
-
-        // Configure the HacknetServer to actually act as a Server
-        AddToAllServers(server);
-        const homeComputer = Player.getHomeComputer();
-        homeComputer.serversOnNetwork.push(server.ip);
-        server.serversOnNetwork.push(homeComputer.ip);
+        const server = createHacknetServer();
+        Player.hashManager.updateCapacity(Player);
 
         return numOwned;
     } else {
@@ -93,7 +97,6 @@ export function purchaseHacknet() {
         if (!Player.canAfford(cost)) { return -1; }
 
         // Auto generate a name for the Node
-        const numOwned = Player.hacknetNodes.length;
         const name = "hacknet-node-" + numOwned;
         const node = new HacknetNode(name);
         node.updateMoneyGainRate(Player);
@@ -396,11 +399,21 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
                 break;
             }
             case "Exchange for Bladeburner Rank": {
-                // This will throw if player doesn't have a corporation
+                // This will throw if player isnt in Bladeburner
                 try {
-                    for (const division of Player.corporation.divisions) {
-                        division.sciResearch.qty += upg.value;
-                    }
+                    Player.bladeburner.changeRank(upg.value);
+                } catch(e) {
+                    Player.hashManager.refundUpgrade(upgName);
+                    return false;
+                }
+                break;
+            }
+            case "Exchange for Bladeburner SP": {
+                // This will throw if player isn't in Bladeburner
+                try {
+                    // As long as we don't change `Bladeburner.totalSkillPoints`, this
+                    // shouldn't affect anything else
+                    Player.bladeburner.skillPoints += upg.value;
                 } catch(e) {
                     Player.hashManager.refundUpgrade(upgName);
                     return false;
@@ -413,6 +426,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
             }
             default:
                 console.warn(`Unrecognized upgrade name ${upgName}. Upgrade has no effect`)
+                Player.hashManager.refundUpgrade(upgName);
                 return false;
         }
 

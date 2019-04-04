@@ -3,7 +3,7 @@ import { getStockMarket4SDataCost,
          getStockMarket4STixApiCost }           from "./StockMarketCosts";
 
 import {CONSTANTS}                              from "../Constants";
-import {Locations}                              from "../Locations";
+import { LocationName }                         from "../Locations/data/LocationNames";
 import {hasWallStreetSF, wallStreetSFLvl}       from "../NetscriptFunctions";
 import {WorkerScript}                           from "../NetscriptWorker";
 import {Player}                                 from "../Player";
@@ -190,34 +190,34 @@ function loadStockMarket(saveString) {
 
 function initStockSymbols() {
     //Stocks for companies at which you can work
-    StockSymbols[Locations.AevumECorp]                      = "ECP";
-    StockSymbols[Locations.Sector12MegaCorp]                = "MGCP";
-    StockSymbols[Locations.Sector12BladeIndustries]         = "BLD";
-    StockSymbols[Locations.AevumClarkeIncorporated]         = "CLRK";
-    StockSymbols[Locations.VolhavenOmniTekIncorporated]     = "OMTK";
-    StockSymbols[Locations.Sector12FourSigma]               = "FSIG";
-    StockSymbols[Locations.ChongqingKuaiGongInternational]  = "KGI";
-    StockSymbols[Locations.AevumFulcrumTechnologies]        = "FLCM";
-    StockSymbols[Locations.IshimaStormTechnologies]         = "STM";
-    StockSymbols[Locations.NewTokyoDefComm]                 = "DCOMM";
-    StockSymbols[Locations.VolhavenHeliosLabs]              = "HLS";
-    StockSymbols[Locations.NewTokyoVitaLife]                = "VITA";
-    StockSymbols[Locations.Sector12IcarusMicrosystems]      = "ICRS";
-    StockSymbols[Locations.Sector12UniversalEnergy]         = "UNV";
-    StockSymbols[Locations.AevumAeroCorp]                   = "AERO";
-    StockSymbols[Locations.VolhavenOmniaCybersystems]       = "OMN";
-    StockSymbols[Locations.ChongqingSolarisSpaceSystems]    = "SLRS";
-    StockSymbols[Locations.NewTokyoGlobalPharmaceuticals]   = "GPH";
-    StockSymbols[Locations.IshimaNovaMedical]               = "NVMD";
-    StockSymbols[Locations.AevumWatchdogSecurity]           = "WDS";
-    StockSymbols[Locations.VolhavenLexoCorp]                = "LXO";
-    StockSymbols[Locations.AevumRhoConstruction]            = "RHOC";
-    StockSymbols[Locations.Sector12AlphaEnterprises]        = "APHE";
-    StockSymbols[Locations.VolhavenSysCoreSecurities]       = "SYSC";
-    StockSymbols[Locations.VolhavenCompuTek]                = "CTK";
-    StockSymbols[Locations.AevumNetLinkTechnologies]        = "NTLK";
-    StockSymbols[Locations.IshimaOmegaSoftware]             = "OMGA";
-    StockSymbols[Locations.Sector12FoodNStuff]              = "FNS";
+    StockSymbols[LocationName.AevumECorp]                      = "ECP";
+    StockSymbols[LocationName.Sector12MegaCorp]                = "MGCP";
+    StockSymbols[LocationName.Sector12BladeIndustries]         = "BLD";
+    StockSymbols[LocationName.AevumClarkeIncorporated]         = "CLRK";
+    StockSymbols[LocationName.VolhavenOmniTekIncorporated]     = "OMTK";
+    StockSymbols[LocationName.Sector12FourSigma]               = "FSIG";
+    StockSymbols[LocationName.ChongqingKuaiGongInternational]  = "KGI";
+    StockSymbols[LocationName.AevumFulcrumTechnologies]        = "FLCM";
+    StockSymbols[LocationName.IshimaStormTechnologies]         = "STM";
+    StockSymbols[LocationName.NewTokyoDefComm]                 = "DCOMM";
+    StockSymbols[LocationName.VolhavenHeliosLabs]              = "HLS";
+    StockSymbols[LocationName.NewTokyoVitaLife]                = "VITA";
+    StockSymbols[LocationName.Sector12IcarusMicrosystems]      = "ICRS";
+    StockSymbols[LocationName.Sector12UniversalEnergy]         = "UNV";
+    StockSymbols[LocationName.AevumAeroCorp]                   = "AERO";
+    StockSymbols[LocationName.VolhavenOmniaCybersystems]       = "OMN";
+    StockSymbols[LocationName.ChongqingSolarisSpaceSystems]    = "SLRS";
+    StockSymbols[LocationName.NewTokyoGlobalPharmaceuticals]   = "GPH";
+    StockSymbols[LocationName.IshimaNovaMedical]               = "NVMD";
+    StockSymbols[LocationName.AevumWatchdogSecurity]           = "WDS";
+    StockSymbols[LocationName.VolhavenLexoCorp]                = "LXO";
+    StockSymbols[LocationName.AevumRhoConstruction]            = "RHOC";
+    StockSymbols[LocationName.Sector12AlphaEnterprises]        = "APHE";
+    StockSymbols[LocationName.VolhavenSysCoreSecurities]       = "SYSC";
+    StockSymbols[LocationName.VolhavenCompuTek]                = "CTK";
+    StockSymbols[LocationName.AevumNetLinkTechnologies]        = "NTLK";
+    StockSymbols[LocationName.IshimaOmegaSoftware]             = "OMGA";
+    StockSymbols[LocationName.Sector12FoodNStuff]              = "FNS";
 
     //Stocks for other companies
     StockSymbols["Sigma Cosmetics"]                         = "SGC";
@@ -241,115 +241,115 @@ function initStockMarket() {
 
     const randInt = getRandomInt;
 
-    var ecorp = Locations.AevumECorp;
+    var ecorp = LocationName.AevumECorp;
     var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 2.4e12);
     StockMarket[ecorp] = ecorpStk;
 
-    var megacorp = Locations.Sector12MegaCorp;
+    var megacorp = LocationName.Sector12MegaCorp;
     var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 2.4e12);
     StockMarket[megacorp] = megacorpStk;
 
-    var blade = Locations.Sector12BladeIndustries;
+    var blade = LocationName.Sector12BladeIndustries;
     var bladeStk = new Stock(blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 1.6e12);
     StockMarket[blade] = bladeStk;
 
-    var clarke = Locations.AevumClarkeIncorporated;
+    var clarke = LocationName.AevumClarkeIncorporated;
     var clarkeStk = new Stock(clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 1.5e12);
     StockMarket[clarke] = clarkeStk;
 
-    var omnitek = Locations.VolhavenOmniTekIncorporated;
+    var omnitek = LocationName.VolhavenOmniTekIncorporated;
     var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 1.8e12);
     StockMarket[omnitek] = omnitekStk;
 
-    var foursigma = Locations.Sector12FourSigma;
+    var foursigma = LocationName.Sector12FourSigma;
     var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 2e12);
     StockMarket[foursigma] = foursigmaStk;
 
-    var kuaigong = Locations.ChongqingKuaiGongInternational;
+    var kuaigong = LocationName.ChongqingKuaiGongInternational;
     var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 1.9e12);
     StockMarket[kuaigong] = kuaigongStk;
 
-    var fulcrum = Locations.AevumFulcrumTechnologies;
+    var fulcrum = LocationName.AevumFulcrumTechnologies;
     var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 2e12);
     StockMarket[fulcrum] = fulcrumStk;
 
-    var storm = Locations.IshimaStormTechnologies;
+    var storm = LocationName.IshimaStormTechnologies;
     var stormStk = new Stock(storm, StockSymbols[storm], randInt(80, 90)/100, true, 7, randInt(20e3, 25e3), 1.2e12);
     StockMarket[storm] = stormStk;
 
-    var defcomm = Locations.NewTokyoDefComm;
+    var defcomm = LocationName.NewTokyoDefComm;
     var defcommStk = new Stock(defcomm, StockSymbols[defcomm], randInt(60, 70)/100, true, 10, randInt(6e3, 19e3), 900e9);
     StockMarket[defcomm] = defcommStk;
 
-    var helios = Locations.VolhavenHeliosLabs;
+    var helios = LocationName.VolhavenHeliosLabs;
     var heliosStk = new Stock(helios, StockSymbols[helios], randInt(55, 65)/100, true, 9, randInt(10e3, 18e3), 825e9);
     StockMarket[helios] = heliosStk;
 
-    var vitalife = Locations.NewTokyoVitaLife;
+    var vitalife = LocationName.NewTokyoVitaLife;
     var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], randInt(70, 80)/100, true, 7, randInt(8e3, 14e3), 1e12);
     StockMarket[vitalife] = vitalifeStk;
 
-    var icarus = Locations.Sector12IcarusMicrosystems;
+    var icarus = LocationName.Sector12IcarusMicrosystems;
     var icarusStk = new Stock(icarus, StockSymbols[icarus], randInt(60, 70)/100, true, 7.5, randInt(12e3, 24e3), 800e9);
     StockMarket[icarus] = icarusStk;
 
-    var universalenergy = Locations.Sector12UniversalEnergy;
+    var universalenergy = LocationName.Sector12UniversalEnergy;
     var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], randInt(50, 60)/100, true, 10, randInt(16e3, 29e3), 900e9);
     StockMarket[universalenergy] = universalenergyStk;
 
-    var aerocorp = Locations.AevumAeroCorp;
+    var aerocorp = LocationName.AevumAeroCorp;
     var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], randInt(55, 65)/100, true, 6, randInt(8e3, 17e3), 640e9);
     StockMarket[aerocorp] = aerocorpStk;
 
-    var omnia = Locations.VolhavenOmniaCybersystems;
+    var omnia = LocationName.VolhavenOmniaCybersystems;
     var omniaStk = new Stock(omnia, StockSymbols[omnia], randInt(65, 75)/100, true, 4.5, randInt(6e3, 15e3), 600e9);
     StockMarket[omnia] = omniaStk;
 
-    var solaris = Locations.ChongqingSolarisSpaceSystems;
+    var solaris = LocationName.ChongqingSolarisSpaceSystems;
     var solarisStk = new Stock(solaris, StockSymbols[solaris], randInt(70, 80)/100, true, 8.5, randInt(14e3, 28e3), 705e9);
     StockMarket[solaris] = solarisStk;
 
-    var globalpharm = Locations.NewTokyoGlobalPharmaceuticals;
+    var globalpharm = LocationName.NewTokyoGlobalPharmaceuticals;
     var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], randInt(55, 65)/100, true, 10.5, randInt(12e3, 30e3), 695e9);
     StockMarket[globalpharm] = globalpharmStk;
 
-    var nova = Locations.IshimaNovaMedical;
+    var nova = LocationName.IshimaNovaMedical;
     var novaStk = new Stock(nova, StockSymbols[nova], randInt(70, 80)/100, true, 5, randInt(15e3, 27e3), 600e9);
     StockMarket[nova] = novaStk;
 
-    var watchdog = Locations.AevumWatchdogSecurity;
+    var watchdog = LocationName.AevumWatchdogSecurity;
     var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], randInt(240, 260)/100, true, 1.5, randInt(4e3, 8.5e3), 450e9);
     StockMarket[watchdog] = watchdogStk;
 
-    var lexocorp = Locations.VolhavenLexoCorp;
+    var lexocorp = LocationName.VolhavenLexoCorp;
     var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], randInt(115, 135)/100, true, 6, randInt(4.5e3, 8e3), 300e9);
     StockMarket[lexocorp] = lexocorpStk;
 
-    var rho = Locations.AevumRhoConstruction;
+    var rho = LocationName.AevumRhoConstruction;
     var rhoStk = new Stock(rho, StockSymbols[rho], randInt(50, 70)/100, true, 1, randInt(2e3, 7e3), 180e9);
     StockMarket[rho] = rhoStk;
 
-    var alpha = Locations.Sector12AlphaEnterprises;
+    var alpha = LocationName.Sector12AlphaEnterprises;
     var alphaStk = new Stock(alpha, StockSymbols[alpha], randInt(175, 205)/100, true, 10, randInt(4e3, 8.5e3), 240e9);
     StockMarket[alpha] = alphaStk;
 
-    var syscore = Locations.VolhavenSysCoreSecurities;
+    var syscore = LocationName.VolhavenSysCoreSecurities;
     var syscoreStk = new Stock(syscore, StockSymbols[syscore], randInt(150, 170)/100, true, 3, randInt(3e3, 8e3), 200e9);
     StockMarket[syscore] = syscoreStk;
 
-    var computek = Locations.VolhavenCompuTek;
+    var computek = LocationName.VolhavenCompuTek;
     var computekStk = new Stock(computek, StockSymbols[computek], randInt(80, 100)/100, true, 4, randInt(1e3, 6e3), 185e9);
     StockMarket[computek] = computekStk;
 
-    var netlink = Locations.AevumNetLinkTechnologies;
+    var netlink = LocationName.AevumNetLinkTechnologies;
     var netlinkStk = new Stock(netlink, StockSymbols[netlink], randInt(400, 430)/100, true, 1, randInt(1e3, 5e3), 58e9);
     StockMarket[netlink] = netlinkStk;
 
-    var omega = Locations.IshimaOmegaSoftware;
+    var omega = LocationName.IshimaOmegaSoftware;
     var omegaStk = new Stock(omega, StockSymbols[omega], randInt(90, 110)/100, true, 0.5, randInt(1e3, 8e3), 60e9);
     StockMarket[omega] = omegaStk;
 
-    var fns = Locations.Sector12FoodNStuff;
+    var fns = LocationName.Sector12FoodNStuff;
     var fnsStk = new Stock(fns, StockSymbols[fns], randInt(70, 80)/100, false, 1, randInt(500, 4.5e3), 45e9);
     StockMarket[fns] = fnsStk;
 

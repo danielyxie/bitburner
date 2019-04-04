@@ -22,8 +22,6 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Crime } from "../../Crime/Crime";
 import { Crimes } from "../../Crime/Crimes";
 
-import { Cities } from "../../Locations/Cities";
-
 import { Companies } from "../../Company/Companies";
 import { Company } from "../../Company/Company";
 import { CompanyPosition } from "../../Company/CompanyPosition";
@@ -35,7 +33,8 @@ import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 
-import { Locations } from "../../Locations";
+import { CityName } from "../../Locations/data/CityNames";
+import { LocationName } from "../../Locations/data/LocationNames";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
@@ -436,6 +435,12 @@ export class Sleeve extends Person {
      * Called on every sleeve for a Source File prestige
      */
     prestige(p: IPlayer) {
+        this.hacking_exp = 0;
+        this.strength_exp = 0;
+        this.defense_exp = 0;
+        this.dexterity_exp = 0;
+        this.agility_exp = 0;
+        this.charisma_exp = 0;
         this.resetTaskStatus();
         this.earningsForSleeves = createTaskTracker();
         this.earningsForPlayer = createTaskTracker();
@@ -586,21 +591,21 @@ export class Sleeve extends Person {
         let costMult: number = 1;
         let expMult: number = 1;
         switch (universityName.toLowerCase()) {
-            case Locations.AevumSummitUniversity.toLowerCase():
-                if (this.city !== Cities.Aevum) { return false; }
-                this.currentTaskLocation = Locations.AevumSummitUniversity;
+            case LocationName.AevumSummitUniversity.toLowerCase():
+                if (this.city !== CityName.Aevum) { return false; }
+                this.currentTaskLocation = LocationName.AevumSummitUniversity;
                 costMult = 4;
                 expMult = 3;
                 break;
-            case Locations.Sector12RothmanUniversity.toLowerCase():
-                if (this.city !== Cities.Sector12) { return false; }
-                this.currentTaskLocation = Locations.Sector12RothmanUniversity;
+            case LocationName.Sector12RothmanUniversity.toLowerCase():
+                if (this.city !== CityName.Sector12) { return false; }
+                this.currentTaskLocation = LocationName.Sector12RothmanUniversity;
                 costMult = 3;
                 expMult = 2;
                 break;
-            case Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
-                if (this.city !== Cities.Volhaven) { return false; }
-                this.currentTaskLocation = Locations.VolhavenZBInstituteOfTechnology;
+            case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
+                if (this.city !== CityName.Volhaven) { return false; }
+                this.currentTaskLocation = LocationName.VolhavenZBInstituteOfTechnology;
                 costMult = 5;
                 expMult = 4;
                 break;
@@ -652,11 +657,7 @@ export class Sleeve extends Person {
     /**
      * Travel to another City. Costs money from player
      */
-    travel(p: IPlayer, newCity: string): boolean {
-        if (Cities[newCity] == null) {
-            return false;
-        }
-
+    travel(p: IPlayer, newCity: CityName): boolean {
         p.loseMoney(CONSTANTS.TravelCost);
         this.city = newCity;
 
@@ -785,33 +786,33 @@ export class Sleeve extends Person {
         let costMult: number = 1;
         let expMult: number = 1;
         switch (gymName.toLowerCase()) {
-            case Locations.AevumCrushFitnessGym.toLowerCase():
-                if (this.city != Cities.Aevum) { return false; }
-                this.currentTaskLocation = Locations.AevumCrushFitnessGym;
+            case LocationName.AevumCrushFitnessGym.toLowerCase():
+                if (this.city != CityName.Aevum) { return false; }
+                this.currentTaskLocation = LocationName.AevumCrushFitnessGym;
                 costMult = 3;
                 expMult = 2;
                 break;
-            case Locations.AevumSnapFitnessGym.toLowerCase():
-                if (this.city != Cities.Aevum) { return false; }
-                this.currentTaskLocation = Locations.AevumSnapFitnessGym;
+            case LocationName.AevumSnapFitnessGym.toLowerCase():
+                if (this.city != CityName.Aevum) { return false; }
+                this.currentTaskLocation = LocationName.AevumSnapFitnessGym;
                 costMult = 10;
                 expMult = 5;
                 break;
-            case Locations.Sector12IronGym.toLowerCase():
-                if (this.city != Cities.Sector12) { return false; }
-                this.currentTaskLocation = Locations.Sector12IronGym;
+            case LocationName.Sector12IronGym.toLowerCase():
+                if (this.city != CityName.Sector12) { return false; }
+                this.currentTaskLocation = LocationName.Sector12IronGym;
                 costMult = 1;
                 expMult = 1;
                 break;
-            case Locations.Sector12PowerhouseGym.toLowerCase():
-                if (this.city != Cities.Sector12) { return false; }
-                this.currentTaskLocation = Locations.Sector12PowerhouseGym;
+            case LocationName.Sector12PowerhouseGym.toLowerCase():
+                if (this.city != CityName.Sector12) { return false; }
+                this.currentTaskLocation = LocationName.Sector12PowerhouseGym;
                 costMult = 20;
                 expMult = 10;
                 break;
-            case Locations.VolhavenMilleniumFitnessGym:
-                if (this.city != Cities.Volhaven) { return false; }
-                this.currentTaskLocation = Locations.VolhavenMilleniumFitnessGym;
+            case LocationName.VolhavenMilleniumFitnessGym:
+                if (this.city != CityName.Volhaven) { return false; }
+                this.currentTaskLocation = LocationName.VolhavenMilleniumFitnessGym;
                 costMult = 7;
                 expMult = 4;
                 break;

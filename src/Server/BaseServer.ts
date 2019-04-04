@@ -20,7 +20,7 @@ interface IConstructorParams {
     organizationName?: string;
 }
 
-export abstract class BaseServer {
+export class BaseServer {
     // Coding Contract files on this server
     contracts: CodingContract[] = [];
 

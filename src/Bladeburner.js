@@ -6,7 +6,6 @@ import { Engine }                                   from "./engine";
 import { Faction }                                  from "./Faction/Faction";
 import { Factions, factionExists }                  from "./Faction/Factions";
 import { joinFaction, displayFactionContent }       from "./Faction/FactionHelpers";
-import { Locations }                                from "./Locations";
 import { Player }                                   from "./Player";
 import { hackWorldDaemon, redPillFlag }             from "./RedPill";
 import { numeralWrapper }                           from "./ui/numeralFormat";
@@ -218,7 +217,7 @@ $(document).keydown(function(event) {
 });
 
 function City(params={}) {
-    this.name = params.name ? params.name : Locations.Sector12;
+    this.name = params.name ? params.name : CityNames[2]; // Sector-12
 
     //Synthoid population and estimate
     this.pop    = params.pop ? params.pop : getRandomInt(PopulationThreshold, 1.5 * PopulationThreshold);
@@ -690,7 +689,7 @@ function Bladeburner(params={}) {
     for (var i = 0; i < CityNames.length; ++i) {
         this.cities[CityNames[i]] =  new City({name:CityNames[i]});
     }
-    this.city = Locations.Sector12;
+    this.city = CityNames[2]; // Sector-12
 
     //Map of SkillNames -> level
     this.skills = {};

@@ -84,9 +84,14 @@ export class HashManager {
         return upg.getCost(currLevel);
     }
 
-    storeHashes(numHashes: number): void {
-        this.hashes += numHashes;
-        this.hashes = Math.min(this.hashes, this.capacity);
+    prestige(p: IPlayer): void {
+        for (const name in HashUpgrades) {
+            this.upgrades[name] = 0;
+        }
+        this.hashes = 0;
+        if (p != null) {
+            this.updateCapacity(p);
+        }
     }
 
     /**
@@ -104,6 +109,11 @@ export class HashManager {
         --this.upgrades[upgName];
         const cost = upg.getCost(currLevel);
         this.hashes += cost;
+    }
+
+    storeHashes(numHashes: number): void {
+        this.hashes += numHashes;
+        this.hashes = Math.min(this.hashes, this.capacity);
     }
 
     updateCapacity(p: IPlayer): void {

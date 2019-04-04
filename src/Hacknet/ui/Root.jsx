@@ -89,7 +89,6 @@ export class HacknetRoot extends React.Component {
         const purchaseOnClick = () => {
             if (purchaseHacknet() >= 0) {
                 this.recalculateTotalProduction();
-                Player.hashManager.updateCapacity(Player);
             }
         }
 

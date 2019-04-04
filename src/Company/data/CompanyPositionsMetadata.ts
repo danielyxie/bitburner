@@ -1,6 +1,6 @@
 // Metadata used for constructing Company Positions
 import { IConstructorParams } from "../CompanyPosition";
-import * as posNames from "./CompanyPositionNames";
+import * as posNames from "./companypositionnames";
 
 export const companyPositionMetadata: IConstructorParams[] = [
     {

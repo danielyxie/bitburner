@@ -2,6 +2,7 @@ import {substituteAliases, printAliases,
         parseAliasDeclaration,
         removeAlias, GlobalAliases,
         Aliases}                                from "./Alias";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import {CodingContract, CodingContractResult,
         CodingContractRewardType}               from "./CodingContracts";
 import {CONSTANTS}                              from "./Constants";
@@ -56,6 +57,7 @@ import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
 import { post,
+         postContent,
          postError,
          hackProgressBarPost,
          hackProgressPost }                 from "./ui/postToTerminal";
@@ -542,6 +544,15 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith("download ")) {
+        for (var i = 0; i < currServ.textFiles.length; ++i) {
+            allPos.push(currServ.textFiles[i].fn);
+        }
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+    }
+
+    if (input.startsWith("ls ")) {
         for (var i = 0; i < currServ.textFiles.length; ++i) {
             allPos.push(currServ.textFiles[i].fn);
         }
@@ -1246,23 +1257,26 @@ let Terminal = {
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
 				break;
-			case "hack":
-				if (commandArray.length !== 1) {
+			case "hack": {
+                if (commandArray.length !== 1) {
 					postError("Incorrect usage of hack command. Usage: hack");
                     return;
 				}
 				//Hack the current PC (usually for money)
 				//You can't hack your home pc or servers you purchased
-				if (Player.getCurrentServer().purchasedByPlayer) {
+				if (s.purchasedByPlayer) {
 					postError("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
-				} else if (Player.getCurrentServer().hasAdminRights == false ) {
+				} else if (s.hasAdminRights == false ) {
 					postError("You do not have admin rights for this machine! Cannot hack");
-				} else if (Player.getCurrentServer().requiredHackingSkill > Player.hacking_skill) {
+				} else if (s.requiredHackingSkill > Player.hacking_skill) {
 					postError("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
-				} else {
+				} else if (s instanceof HacknetServer) {
+                    postError("Cannot hack this type of Server")
+                } else {
                     Terminal.startHack();
 				}
 				break;
+            }
 			case "help":
 				if (commandArray.length !== 1 && commandArray.length !== 2) {
 					postError("Incorrect usage of help command. Usage: help");
@@ -1640,9 +1654,15 @@ let Terminal = {
             postError("Incorrect usage of free command. Usage: free");
             return;
         }
-        post("Total: " + numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00') + " GB");
-        post("Used: " + numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00') + " GB");
-        post("Available: " + numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00') + " GB");
+        const ram = numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00');
+        const used = numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00');
+        const avail = numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00');
+        const maxLength = Math.max(ram.length, Math.max(used.length, avail.length));
+        const usedPercent = numeralWrapper.format(Player.getCurrentServer().ramUsed/Player.getCurrentServer().maxRam*100, '0.00');
+
+        post(`Total:     ${" ".repeat(maxLength-ram.length)}${ram} GB`);
+        post(`Used:      ${" ".repeat(maxLength-used.length)}${used} GB (${usedPercent}%)`);
+        post(`Available: ${" ".repeat(maxLength-avail.length)}${avail} GB`);
     },
 
     executeKillCommand: function(commandArray) {
@@ -1667,13 +1687,14 @@ let Terminal = {
     },
 
     executeListCommand: function(commandArray) {
-        if (commandArray.length !== 1 && commandArray.length !== 4) {
+        if (commandArray.length !== 1 && commandArray.length !== 2 && commandArray.length !== 4) {
             postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
             return;
         }
 
         // grep
-        var filter = null;
+        let filter = null;
+        let prefix = null;
         if (commandArray.length === 4) {
             if (commandArray[1] === "|" && commandArray[2] === "grep") {
                 if (commandArray[3] !== " ") {
@@ -1683,73 +1704,60 @@ let Terminal = {
                 postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
                 return;
             }
+        } else if (commandArray.length === 2) { // want to ls a folder
+            prefix = commandArray[1];
+            if (!prefix.endsWith("/")) {
+                prefix += "/";
+            }
         }
 
         //Display all programs and scripts
-        var allFiles = [];
+        let allFiles = [];
+        let folders = [];
+
+        function handleFn(fn) {
+            if (filter && !fn.includes(filter)) {
+                return;
+            }
+
+            if (prefix) {
+                if (!fn.startsWith(prefix)) {
+                    return;
+                } else {
+                    fn = fn.slice(prefix.length, fn.length);
+                }
+            }
+
+            if (fn.includes("/")) {
+                fn = fn.split("/")[0]+"/";
+                if (folders.includes(fn)) {
+                    return;
+                }
+                folders.push(fn);
+            }
+
+            allFiles.push(fn);
+        }
 
         //Get all of the programs and scripts on the machine into one temporary array
         const s = Player.getCurrentServer();
-        for (const program of s.programs) {
-            if (filter) {
-                if (program.includes(filter)) {
-                    allFiles.push(program);
-                }
-            } else {
-                allFiles.push(program);
-            }
-        }
-        for (const script of s.scripts) {
-            if (filter) {
-                if (script.filename.includes(filter)) {
-                    allFiles.push(script.filename);
-                }
-            } else {
-                allFiles.push(script.filename);
-            }
-
-        }
-        for (const msgOrLit of s.messages) {
-            if (filter) {
-                if (msgOrLit instanceof Message) {
-                    if (msgOrLit.filename.includes(filter)) {
-                        allFiles.push(msgOrLit.filename);
-                    }
-                } else if (msgOrLit.includes(filter)) {
-                    allFiles.push(msgOrLit);
-                }
-            } else {
-                if (msgOrLit instanceof Message) {
-                    allFiles.push(msgOrLit.filename);
-                } else {
-                    allFiles.push(msgOrLit);
-                }
-            }
-        }
-        for (const txt of s.textFiles) {
-            if (filter) {
-                if (txt.fn.includes(filter)) {
-                    allFiles.push(txt.fn);
-                }
-            } else {
-                allFiles.push(txt.fn);
-            }
-        }
-        for (const contract of s.contracts) {
-            if (filter) {
-                if (contract.fn.includes(filter)) {
-                    allFiles.push(contract.fn);
-                }
-            } else {
-                allFiles.push(contract.fn);
-            }
-        }
+        for (const program of s.programs) handleFn(program);
+        for (const script of s.scripts) handleFn(script.filename);
+        for (const txt of s.textFiles) handleFn(txt.fn);
+        for (const contract of s.contracts) handleFn(contract.fn);
+        for (const msgOrLit of s.messages) (msgOrLit instanceof Message) ? handleFn(msgOrLit.filename) : handleFn(msgOrLit);
 
         //Sort the files alphabetically then print each
         allFiles.sort();
 
         for (var i = 0; i < allFiles.length; i++) {
-            post(allFiles[i]);
+            let config = {};
+            if (allFiles[i].endsWith("/")) {
+                // Don't let the colorblind chose the color. I believe that's
+                // ubuntu folder color but what the fuck do I know.
+                config.color = "#58698c";
+            }
+            postContent(allFiles[i], config);
         }
     },
 
@@ -1894,7 +1902,7 @@ let Terminal = {
             //var dashes = Array(d * 2 + 1).join("-");
             var c = "NO";
             if (s.hasAdminRights) {c = "YES";}
-            post(`${dashes}Root Access: ${c} ${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
+            post(`${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
             if (!isHacknet) { post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired); }
             post(dashes + "RAM: " + s.maxRam);
             post(" ");
@@ -2138,7 +2146,8 @@ let Terminal = {
             post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
         };
         programHandlers[Programs.Flight.name] = () => {
-            const fulfilled = Player.augmentations.length >= 30 &&
+            const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement*30)
+            const fulfilled = Player.augmentations.length >= numAugReq &&
                 Player.money.gt(1e11) &&
                 ((Player.hacking_skill >= 2500)||
                 (Player.strength >= 1500 &&
@@ -2146,17 +2155,17 @@ let Terminal = {
                 Player.dexterity >= 1500 &&
                 Player.agility >= 1500));
             if(!fulfilled) {
-                post("Augmentations: " + Player.augmentations.length + " / 30");
+                post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
 
-                post("Money: " + numeralWrapper.format(Player.money.toNumber(), '($0.000a)') + " / " + numeralWrapper.format(1e11, '($0.000a)'));
+                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / ${numeralWrapper.format(1e11, '($0.000a)')}`);
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
-                post("Hacking skill: " + Player.hacking_skill + " / 2500");
+                post(`Hacking skill: ${Player.hacking_skill} / 2500`);
                 post("----------COMBAT PATH----------");
-                post("Strength: " + Player.strength + " / 1500");
-                post("Defense: " + Player.defense + " / 1500");
-                post("Dexterity: " + Player.dexterity + " / 1500");
-                post("Agility: " + Player.agility + " / 1500");
+                post(`Strength: ${Player.strength} / 1500`);
+                post(`Defense: ${Player.defense} / 1500`);
+                post(`Dexterity: ${Player.dexterity} / 1500`);
+                post(`Agility: ${Player.agility} / 1500`);
                 return;
             }
 
