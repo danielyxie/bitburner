@@ -18,8 +18,15 @@ type IProps = {
 }
 
 export class HospitalLocation extends React.Component<IProps, any> {
+    /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
     constructor(props: IProps) {
         super(props);
+
+        this.btnStyle = { display: "block" };
 
         this.getCost = this.getCost.bind(this);
         this.getHealed = this.getHealed.bind(this);
@@ -48,6 +55,7 @@ export class HospitalLocation extends React.Component<IProps, any> {
         return (
             <AutoupdatingStdButton
                 onClick={this.getHealed}
+                style={this.btnStyle}
                 text={`Get treatment for wounds - ${numeralWrapper.formatMoney(cost)}`}
             />
         )

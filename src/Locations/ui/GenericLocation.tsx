@@ -34,6 +34,17 @@ type IProps = {
 
 export class GenericLocation extends React.Component<IProps, any> {
     /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
+    constructor(props: IProps) {
+        super(props);
+
+        this.btnStyle = { display: "block" };
+    }
+
+    /**
      * Determine what needs to be rendered for this location based on the locations
      * type. Returns an array of React components that should be rendered
      */
@@ -44,6 +55,7 @@ export class GenericLocation extends React.Component<IProps, any> {
             content.push(
                 <CompanyLocation
                     engine={this.props.engine}
+                    key={"companylocation"}
                     locName={this.props.loc.name}
                     p={this.props.p}
                 />
@@ -53,6 +65,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         if (this.props.loc.types.includes(LocationType.Gym)) {
             content.push(
                 <GymLocation
+                    key={"gymlocation"}
                     loc={this.props.loc}
                     p={this.props.p}
                 />
@@ -62,6 +75,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         if (this.props.loc.types.includes(LocationType.Hospital)) {
             content.push(
                 <HospitalLocation
+                    key={"hospitallocation"}
                     p={this.props.p}
                 />
             )
@@ -70,6 +84,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         if (this.props.loc.types.includes(LocationType.Slums)) {
             content.push(
                 <SlumsLocation
+                    key={"slumslocation"}
                     p={this.props.p}
                 />
             )
@@ -79,6 +94,7 @@ export class GenericLocation extends React.Component<IProps, any> {
             content.push(
                 <SpecialLocation
                     engine={this.props.engine}
+                    key={"speciallocation"}
                     loc={this.props.loc}
                     p={this.props.p}
                 />
@@ -88,6 +104,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         if (this.props.loc.types.includes(LocationType.TechVendor)) {
             content.push(
                 <TechVendorLocation
+                    key={"techvendorlocation"}
                     loc={this.props.loc}
                     p={this.props.p}
                 />
@@ -97,6 +114,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         if (this.props.loc.types.includes(LocationType.TravelAgency)) {
             content.push(
                 <TravelAgencyLocation
+                    key={"travelagencylocation"}
                     p={this.props.p}
                     travel={this.props.travel}
                 />
@@ -106,6 +124,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         if (this.props.loc.types.includes(LocationType.University)) {
             content.push(
                 <UniversityLocation
+                    key={"universitylocation"}
                     loc={this.props.loc}
                     p={this.props.p}
                 />
@@ -120,8 +139,7 @@ export class GenericLocation extends React.Component<IProps, any> {
 
         return (
             <div>
-                <StdButton onClick={this.props.returnToCity} text={"Return to world"} />
-                <br />
+                <StdButton onClick={this.props.returnToCity} style={this.btnStyle} text={"Return to World"} />
                 <h1>{this.props.loc.name}</h1>
                 {locContent}
             </div>

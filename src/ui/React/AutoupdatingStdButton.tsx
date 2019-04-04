@@ -19,6 +19,10 @@ interface IState {
     i: number;
 }
 
+type IInnerHTMLMarkup = {
+    __html: string;
+}
+
 export class AutoupdatingStdButton extends React.Component<IProps, IState> {
     /**
      *  Timer ID for auto-updating implementation (returned value from setInterval())
@@ -48,11 +52,19 @@ export class AutoupdatingStdButton extends React.Component<IProps, IState> {
     }
 
     render() {
-        const hasTooltip = this.props.tooltip !== "";
+        const hasTooltip = this.props.tooltip != null && this.props.tooltip !== "";
 
         let className = this.props.disabled ? "std-button-disabled" : "std-button";
         if (hasTooltip) {
             className += " tooltip"
+        }
+
+        // Tooltip will eb set using inner HTML
+        let tooltipMarkup: IInnerHTMLMarkup | null;
+        if (hasTooltip) {
+            tooltipMarkup = {
+                __html: this.props.tooltip!
+            }
         }
 
         return (
@@ -60,9 +72,7 @@ export class AutoupdatingStdButton extends React.Component<IProps, IState> {
                 {this.props.text}
                 {
                     hasTooltip &&
-                    <span className={"tooltiptext"}>
-                        {this.props.tooltip}
-                    </span>
+                    <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
                 }
             </button>
         )

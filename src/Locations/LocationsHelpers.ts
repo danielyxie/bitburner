@@ -107,7 +107,7 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer) {
  * Create a popup that lets the player start a Corporation
  */
 export function createStartCorporationPopup(p: IPlayer) {
-    if (p.hasCorporation) { return; }
+    if (!p.canAccessCorporation() || p.hasCorporation) { return; }
 
     const popupId = "create-corporation-popup";
     const txt = createElement("p", {

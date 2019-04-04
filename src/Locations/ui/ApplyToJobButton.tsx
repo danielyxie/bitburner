@@ -15,6 +15,7 @@ type IProps = {
     entryPosType: CompanyPosition;
     onClick: (e: React.MouseEvent<HTMLElement>) => void;
     p: IPlayer;
+    style?: object;
     text: string;
 }
 
@@ -38,6 +39,7 @@ export class ApplyToJobButton extends React.Component<IProps, any> {
         return (
             <StdButton
                 onClick={this.props.onClick}
+                style={this.props.style}
                 text={this.props.text}
                 tooltip={this.getJobRequirementTooltip()}
             />

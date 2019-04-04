@@ -20,8 +20,15 @@ type IProps = {
 }
 
 export class TravelAgencyLocation extends React.Component<IProps, any> {
+    /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
     constructor(props: IProps) {
         super(props);
+
+        this.btnStyle = { display: "block" };
     }
 
     render() {
@@ -36,6 +43,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
                 <StdButton
                     key={city}
                     onClick={createTravelPopup.bind(null, city, this.props.travel)}
+                    style={this.btnStyle}
                     text={`Travel to ${city}`}
                 />
             )
@@ -44,8 +52,8 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
         return (
             <div>
                 <p>
-                    From here, you can travel to any other city! A ticket costs
-                    {numeralWrapper.formatMoney(CONSTANTS.TravelCost)}
+                    From here, you can travel to any other city! A ticket
+                    costs {numeralWrapper.formatMoney(CONSTANTS.TravelCost)}
                 </p>
                 {travelBtns}
             </div>

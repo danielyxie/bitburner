@@ -25,8 +25,15 @@ type IProps = {
 }
 
 export class TechVendorLocation extends React.Component<IProps, any> {
+    /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
     constructor(props: IProps) {
         super(props);
+
+        this.btnStyle = { display: "block" };
 
         this.state = {
             torPurchased: props.p.hasTorRouter(),
@@ -59,6 +66,7 @@ export class TechVendorLocation extends React.Component<IProps, any> {
                 <StdButton
                     key={i}
                     onClick={() => createPurchaseServerPopup(i, this.props.p)}
+                    style={this.btnStyle}
                     text={`Purchase ${i}GB Server - ${numeralWrapper.formatMoney(cost)}`}
                 />
             )
@@ -70,11 +78,13 @@ export class TechVendorLocation extends React.Component<IProps, any> {
                 {
                     this.state.torPurchased ? (
                         <StdButtonPurchased
+                        style={this.btnStyle}
                             text={"TOR Router - Purchased"}
                         />
                     ) : (
                         <StdButton
                             onClick={this.purchaseTorRouter}
+                            style={this.btnStyle}
                             text={`Purchase TOR Router - ${numeralWrapper.formatMoney(CONSTANTS.TorRouterCost)}`}
                         />
                     )
@@ -82,10 +92,12 @@ export class TechVendorLocation extends React.Component<IProps, any> {
                 }
                 <StdButton
                     onClick={this.createUpgradeHomeRamPopup}
+                    style={this.btnStyle}
                     text={`Purchase additional RAM for Home computer`}
                 />
                 <StdButton
                     onClick={this.createUpgradeHomeCoresPopup}
+                    style={this.btnStyle}
                     text={`Purchase additional Core for Home computer`}
                 />
             </div>

@@ -19,8 +19,8 @@ export class LocationCity extends React.Component<IProps, any> {
     render() {
         const locationButtons = this.props.city.locations.map((locName) => {
             return (
-                <li>
-                    <StdButton onClick={this.props.enterLocation.bind(this, locName)} text={locName} key={locName} />
+                <li key={locName}>
+                    <StdButton onClick={this.props.enterLocation.bind(this, locName)} text={locName} />
                 </li>
             )
         });

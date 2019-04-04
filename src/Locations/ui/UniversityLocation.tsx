@@ -19,10 +19,18 @@ type IProps = {
 }
 
 export class UniversityLocation extends React.Component<IProps, any> {
+    /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
     constructor(props: IProps) {
         super(props);
 
+        this.btnStyle = { display: "block" };
+
         this.take = this.take.bind(this);
+        this.study = this.study.bind(this);
         this.dataStructures = this.dataStructures.bind(this);
         this.networks = this.networks.bind(this);
         this.algorithms = this.algorithms.bind(this);
@@ -72,26 +80,32 @@ export class UniversityLocation extends React.Component<IProps, any> {
             <div>
                 <StdButton
                     onClick={this.study}
+                    style={this.btnStyle}
                     text={`Study Computer Science (free)`}
                 />
                 <StdButton
                     onClick={this.dataStructures}
+                    style={this.btnStyle}
                     text={`Take Data Structures course (${numeralWrapper.formatMoney(dataStructuresCost)} / sec)`}
                 />
                 <StdButton
                     onClick={this.networks}
+                    style={this.btnStyle}
                     text={`Take Networks course (${numeralWrapper.formatMoney(networksCost)} / sec)`}
                 />
                 <StdButton
                     onClick={this.algorithms}
+                    style={this.btnStyle}
                     text={`Take Algorithms course (${numeralWrapper.formatMoney(algorithmsCost)} / sec)`}
                 />
                 <StdButton
                     onClick={this.management}
+                    style={this.btnStyle}
                     text={`Take Management course (${numeralWrapper.formatMoney(managementCost)} / sec)`}
                 />
                 <StdButton
                     onClick={this.leadership}
+                    style={this.btnStyle}
                     text={`Take Leadership course (${numeralWrapper.formatMoney(leadershipCost)} / sec)`}
                 />
             </div>

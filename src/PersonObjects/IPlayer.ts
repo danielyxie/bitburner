@@ -33,6 +33,7 @@ export interface IPlayer {
     hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
     hashManager: HashManager;
     hasWseAccount: boolean;
+    homeComputer: string;
     hp: number;
     jobs: IMap<string>;
     karma: number;
@@ -111,6 +112,9 @@ export interface IPlayer {
     applyForSoftwareConsultantJob(sing?: boolean): boolean | void;
     applyForSoftwareJob(sing?: boolean): boolean | void;
     applyForWaiterJob(sing?: boolean): boolean | void;
+    canAccessBladeburner(): boolean;
+    canAccessCorporation(): boolean;
+    canAccessResleeving(): boolean;
     canAfford(cost: number): boolean;
     gainHackingExp(exp: number): void;
     gainStrengthExp(exp: number): void;
@@ -122,6 +126,7 @@ export interface IPlayer {
     getHomeComputer(): Server;
     getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
     getUpgradeHomeRamCost(): number;
+    gotoLocation(to: LocationName): boolean;
     hasCorporation(): boolean;
     hasTorRouter(): boolean;
     inBladeburner(): boolean;
@@ -145,5 +150,7 @@ export interface IPlayer {
                money: number,
                time: number,
                singParams: any): void;
+    startWork(companyName: string): void;
+    startWorkPartTime(companyName: string): void;
     travel(to: CityName): boolean;
 }

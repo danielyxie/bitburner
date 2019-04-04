@@ -35,8 +35,15 @@ type IState = {
 }
 
 export class SpecialLocation extends React.Component<IProps, IState> {
+    /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
     constructor(props: IProps) {
         super(props);
+
+        this.btnStyle = { display: "block" };
 
         this.createCorporationPopup = this.createCorporationPopup.bind(this);
         this.handleBladeburner = this.handleBladeburner.bind(this);
@@ -89,29 +96,35 @@ export class SpecialLocation extends React.Component<IProps, IState> {
     }
 
     renderBladeburner(): React.ReactNode {
+        if (!this.props.p.canAccessBladeburner()) { return null; }
         const text = this.state.inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
         return (
             <StdButton
                 onClick={this.handleBladeburner}
+                style={this.btnStyle}
                 text={text}
             />
         )
     }
 
     renderCreateCorporation(): React.ReactNode {
+        if (!this.props.p.canAccessCorporation()) { return null; }
         return (
             <AutoupdatingStdButton
-                disabled={this.props.p.hasCorporation()}
+                disabled={!this.props.p.canAccessCorporation() || this.props.p.hasCorporation()}
                 onClick={this.createCorporationPopup}
+                style={this.btnStyle}
                 text={"Create a Corporation"}
             />
         )
     }
 
     renderResleeving(): React.ReactNode {
+        if (!this.props.p.canAccessResleeving()) { return null; }
         return (
             <StdButton
                 onClick={this.handleResleeving}
+                style={this.btnStyle}
                 text={"Re-Sleeve"}
             />
         )

@@ -16,10 +16,12 @@ import { beginInfiltration }        from "../../Infiltration";
 
 import { Companies }                from "../../Company/Companies";
 import { Company }                  from "../../Company/Company";
+import { CompanyPosition }          from "../../Company/CompanyPosition";
 import { CompanyPositions }         from "../../Company/CompanyPositions";
 import * as posNames                from "../../Company/data/companypositionnames";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
 
+import { numeralWrapper }           from "../../ui/numeralFormat";
 import { StdButton }                from "../../ui/React/StdButton";
 
 type IProps = {
@@ -28,7 +30,11 @@ type IProps = {
     p: IPlayer;
 }
 
-export class CompanyLocation extends React.Component<IProps, any> {
+type IState = {
+    employedHere: boolean;
+}
+
+export class CompanyLocation extends React.Component<IProps, IState> {
     /**
      * We'll keep a reference to the Company that this component is being rendered for,
      * so we don't have to look it up every time
@@ -36,12 +42,30 @@ export class CompanyLocation extends React.Component<IProps, any> {
     company: Company;
 
     /**
+     * CompanyPosition object for the job that the player holds at this company
+     * (if he has one)
+     */
+    companyPosition: CompanyPosition | null = null;
+
+    /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
+    /**
      * Reference to the Location that this component is being rendered for
      */
     location: Location;
 
+    /**
+     * Name of company position that player holds, if applicable
+     */
+    jobTitle: string | null = null;
+
     constructor(props: IProps) {
         super(props);
+
+        this.btnStyle = { display: "block" };
 
         this.applyForAgentJob = this.applyForAgentJob.bind(this);
         this.applyForBusinessConsultantJob = this.applyForBusinessConsultantJob.bind(this);
@@ -54,7 +78,9 @@ export class CompanyLocation extends React.Component<IProps, any> {
         this.applyForSoftwareConsultantJob = this.applyForSoftwareConsultantJob.bind(this);
         this.applyForSoftwareJob = this.applyForSoftwareJob.bind(this);
         this.applyForWaiterJob = this.applyForWaiterJob.bind(this);
+        this.checkIfEmployedHere = this.checkIfEmployedHere.bind(this);
         this.startInfiltration = this.startInfiltration.bind(this);
+        this.work = this.work.bind(this);
 
         this.location = Locations[props.locName];
         if (this.location == null) {
@@ -65,61 +91,91 @@ export class CompanyLocation extends React.Component<IProps, any> {
         if (this.company == null) {
             throw new Error(`CompanyLocation component constructed with invalid company: ${props.locName}`);
         }
+
+        this.state = {
+            employedHere: false,
+        }
+
+        this.checkIfEmployedHere(false);
     }
 
     applyForAgentJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForAgentJob();
+        this.checkIfEmployedHere();
     }
 
     applyForBusinessConsultantJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForBusinessConsultantJob();
+        this.checkIfEmployedHere();
     }
 
     applyForBusinessJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForBusinessJob();
+        this.checkIfEmployedHere();
     }
 
     applyForEmployeeJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForEmployeeJob();
+        this.checkIfEmployedHere();
     }
 
     applyForItJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForItJob();
+        this.checkIfEmployedHere();
     }
 
     applyForPartTimeEmployeeJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForPartTimeEmployeeJob();
+        this.checkIfEmployedHere();
     }
 
     applyForPartTimeWaiterJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForPartTimeWaiterJob();
+        this.checkIfEmployedHere();
     }
 
     applyForSecurityJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForSecurityJob();
+        this.checkIfEmployedHere();
     }
 
     applyForSoftwareConsultantJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForSoftwareConsultantJob();
+        this.checkIfEmployedHere();
     }
 
     applyForSoftwareJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForSoftwareJob();
+        this.checkIfEmployedHere();
     }
 
     applyForWaiterJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForWaiterJob();
+        this.checkIfEmployedHere();
+    }
+
+    checkIfEmployedHere(updateState=true) {
+        this.jobTitle = this.props.p.jobs[this.props.locName];
+        if (this.jobTitle != null) {
+            this.companyPosition = CompanyPositions[this.jobTitle];
+        }
+
+        if (updateState) {
+            this.setState({
+                employedHere: this.jobTitle != null
+            });
+        }
     }
 
     startInfiltration(e: React.MouseEvent<HTMLElement>) {
@@ -133,9 +189,54 @@ export class CompanyLocation extends React.Component<IProps, any> {
         beginInfiltration(this.props.locName, data.startingSecurityLevel, data.baseRewardValue, data.maxClearanceLevel, data.difficulty);
     }
 
+    work(e: React.MouseEvent<HTMLElement>) {
+        if (!e.isTrusted) { return false; }
+
+        const pos = this.companyPosition;
+        if (pos instanceof CompanyPosition) {
+            if (pos.isPartTimeJob() || pos.isSoftwareConsultantJob() || pos.isBusinessConsultantJob()) {
+                this.props.p.startWorkPartTime(this.props.locName);
+            } else {
+                this.props.p.startWork(this.props.locName);
+            }
+        }
+    }
+
     render() {
+        const isEmployedHere = this.jobTitle != null;
+        const favorGain = this.company.getFavorGain();
+
         return (
             <div>
+                {
+                    isEmployedHere &&
+                    <div>
+                        <p>Job Title: {this.jobTitle}</p>
+                        <p>--------------------</p>
+                        <p className={"tooltip"}>
+                            Company reputation: {numeralWrapper.format(this.company.playerReputation, "0,0.000")}
+                            <span className={"tooltiptext"}>
+                                You will earn ${numeralWrapper.format(favorGain[0], "0,0")} company
+                                favor upon resetting after installing Augmentations
+                            </span>
+                        </p>
+                        <p>--------------------</p>
+                        <p className={"tooltip"}>
+                            Company Favor: {numeralWrapper.format(this.company.favor, "0,0")}
+                            <span className={"tooltiptext"}>
+                                Company favor increases the rate at which you earn reputation for this company by
+                                1% per favor. Company favor is gained whenever you reset after installing Augmentations. The amount
+                                of favor you gain depends on how much reputation you have with the comapny.
+                            </span>
+                        </p>
+                        <StdButton
+                            id={"foo-work-button-id"}
+                            onClick={this.work}
+                            style={this.btnStyle}
+                            text={"Work"}
+                        />
+                    </div>
+                }
                 {
                     this.company.hasAgentPositions() &&
                     <ApplyToJobButton
@@ -143,6 +244,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.AgentCompanyPositions[0]]}
                         onClick={this.applyForAgentJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply for Agent Job"}
                     />
                 }
@@ -153,6 +255,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]]}
                         onClick={this.applyForBusinessConsultantJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply for Business Consultant Job"}
                     />
                 }
@@ -163,6 +266,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.BusinessCompanyPositions[0]]}
                         onClick={this.applyForBusinessJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply for Business Job"}
                     />
                 }
@@ -173,6 +277,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.MiscCompanyPositions[1]]}
                         onClick={this.applyForEmployeeJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply to be an Employee"}
                     />
                 }
@@ -183,6 +288,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[1]]}
                         onClick={this.applyForPartTimeEmployeeJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply to be a part-time Employee"}
                     />
                 }
@@ -193,6 +299,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.ITCompanyPositions[0]]}
                         onClick={this.applyForItJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply for IT Job"}
                     />
                 }
@@ -203,6 +310,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.SecurityCompanyPositions[2]]}
                         onClick={this.applyForSecurityJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply for Security Job"}
                     />
                 }
@@ -213,6 +321,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]]}
                         onClick={this.applyForSoftwareConsultantJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply for Software Consultant Job"}
                     />
                 }
@@ -223,6 +332,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.SoftwareCompanyPositions[0]]}
                         onClick={this.applyForSoftwareJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply for Software Job"}
                     />
                 }
@@ -233,6 +343,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.MiscCompanyPositions[0]]}
                         onClick={this.applyForWaiterJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply to be a Waiter"}
                     />
                 }
@@ -243,6 +354,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                         entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[0]]}
                         onClick={this.applyForPartTimeWaiterJob}
                         p={this.props.p}
+                        style={this.btnStyle}
                         text={"Apply to be a part-time Waiter"}
                     />
                 }
@@ -250,6 +362,7 @@ export class CompanyLocation extends React.Component<IProps, any> {
                     (this.location.infiltrationData != null) &&
                     <StdButton
                         onClick={this.startInfiltration}
+                        style={this.btnStyle}
                         text={"Infiltration Company"}
                     />
                 }

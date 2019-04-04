@@ -19,8 +19,15 @@ type IProps = {
 }
 
 export class GymLocation extends React.Component<IProps, any> {
+    /**
+     * Stores button styling that sets them all to block display
+     */
+    btnStyle: object;
+
     constructor(props: IProps) {
         super(props);
+
+        this.btnStyle = { display: "block" };
 
         this.trainStrength = this.trainStrength.bind(this);
         this.trainDefense = this.trainDefense.bind(this);
@@ -58,18 +65,22 @@ export class GymLocation extends React.Component<IProps, any> {
             <div>
                 <StdButton
                     onClick={this.trainStrength}
+                    style={this.btnStyle}
                     text={`Train Strength (${numeralWrapper.formatMoney(cost)} / sec)`}
                 />
                 <StdButton
                     onClick={this.trainDefense}
+                    style={this.btnStyle}
                     text={`Train Defense (${numeralWrapper.formatMoney(cost)} / sec)`}
                 />
                 <StdButton
                     onClick={this.trainDexterity}
+                    style={this.btnStyle}
                     text={`Train Dexterity (${numeralWrapper.formatMoney(cost)} / sec)`}
                 />
                 <StdButton
                     onClick={this.trainAgility}
+                    style={this.btnStyle}
                     text={`Train Agility (${numeralWrapper.formatMoney(cost)} / sec)`}
                 />
             </div>

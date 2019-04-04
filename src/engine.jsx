@@ -33,6 +33,7 @@ import { hasHacknetServers,
          processHacknetEarnings }                       from "./Hacknet/HacknetHelpers";
 import {iTutorialStart}                                 from "./InteractiveTutorial";
 import {initLiterature}                                 from "./Literature";
+import { LocationName }                                 from "./Locations/data/LocationNames";
 import { LocationRoot }                                 from "./Locations/ui/Root";
 import { checkForMessagesToSend, initMessages }         from "./Message/MessageHelpers";
 import {inMission, currMission}                         from "./Missions";
@@ -343,12 +344,14 @@ const Engine = {
         MainMenuLinks.DevMenu.classList.add("active");
     },
 
-    loadLocationContent: function() {
+    loadLocationContent: function(initiallyInCity=true) {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
+        MainMenuLinks.City.classList.add("active");
 
         routing.navigateTo(Page.Location);
         const rootComponent =   <LocationRoot
+                                    initiallyInCity={initiallyInCity}
                                     engine={Engine}
                                     p={Player}
                                 />
@@ -356,18 +359,42 @@ const Engine = {
     },
 
     loadTravelContent: function() {
+        // Same as loadLocationContent() except first set the location to the travel agency,
+        // and make sure that the 'City' main menu link doesnt become 'active'
+        Engine.hideAllContent();
         Player.gotoLocation(LocationName.TravelAgency);
-        Engine.loadLocationContent();
+        Engine.Display.locationContent.style.display = "block";
+        MainMenuLinks.Travel.classList.add("active");
+
+        routing.navigateTo(Page.Location);
+        const rootComponent =   <LocationRoot
+                                    initiallyInCity={false}
+                                    engine={Engine}
+                                    p={Player}
+                                />
+        ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
     loadJobContent: function() {
+        // Same as loadLocationContent(), except first set the location to the job.
+        // Make sure that the 'City' main menu link doesnt become 'active'
         if (Player.companyName == "") {
             dialogBoxCreate("You do not currently have a job! You can visit various companies " +
                             "in the city and try to find a job.");
             return;
         }
-        Player.location = Player.companyName;
-        Engine.loadLocationContent();
+        Engine.hideAllContent();
+        Player.gotoLocation(Player.companyName);
+        Engine.Display.locationContent.style.display = "block";
+        MainMenuLinks.Job.classList.add("active");
+
+        routing.navigateTo(Page.Location);
+        const rootComponent =   <LocationRoot
+                                    initiallyInCity={false}
+                                    engine={Engine}
+                                    p={Player}
+                                />
+        ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
     loadWorkInProgressContent: function() {
@@ -469,7 +496,7 @@ const Engine = {
         }
     },
 
-    //Helper function that hides all content
+    // Helper function that hides all content
     hideAllContent: function() {
         Engine.Display.terminalContent.style.display = "none";
         Engine.Display.characterContent.style.display = "none";
@@ -483,6 +510,7 @@ const Engine = {
         Engine.Display.augmentationsContent.style.display = "none";
         Engine.Display.tutorialContent.style.display = "none";
         Engine.Display.locationContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
         Engine.Display.cinematicTextContent.style.display = "none";
@@ -507,7 +535,15 @@ const Engine = {
         clearResleevesPage();
         clearSleevesPage();
 
-        //Make nav menu tabs inactive
+        // Make nav menu tabs inactive
+        Engine.inactivateMainMenuLinks();
+
+        // Close dev menu
+        closeDevMenu();
+    },
+
+    // Remove 'active' css class from all main menu links
+    inactivateMainMenuLinks: function() {
         MainMenuLinks.Terminal.classList.remove("active");
         MainMenuLinks.ScriptEditor.classList.remove("active");
         MainMenuLinks.ActiveScripts.classList.remove("active");
@@ -527,9 +563,6 @@ const Engine = {
         MainMenuLinks.Tutorial.classList.remove("active");
         MainMenuLinks.Options.classList.remove("active");
         MainMenuLinks.DevMenu.classList.remove("active");
-
-        // Close dev menu
-        closeDevMenu();
     },
 
     displayCharacterOverviewInfo: function() {
@@ -1334,13 +1367,11 @@ const Engine = {
 
         MainMenuLinks.Travel.addEventListener("click", function() {
             Engine.loadTravelContent();
-            MainMenuLinks.Travel.classList.add("active");
             return false;
         });
 
         MainMenuLinks.Job.addEventListener("click", function() {
             Engine.loadJobContent();
-            MainMenuLinks.Job.classList.add("active");
             return false;
         });
 

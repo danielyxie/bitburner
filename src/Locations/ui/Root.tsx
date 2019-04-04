@@ -20,6 +20,7 @@ import { IPlayer }          from "../../PersonObjects/IPlayer";
 import { dialogBoxCreate }  from "../../../utils/DialogBox";
 
 type IProps = {
+    initiallyInCity?: boolean;
     engine: IEngine;
     p: IPlayer;
 }
@@ -36,16 +37,17 @@ export class LocationRoot extends React.Component<IProps, IState> {
 
         this.state = {
             city: props.p.city,
-            inCity: true,
+            inCity: props.initiallyInCity == null ? true : props.initiallyInCity,
             location: props.p.location,
         }
 
+        this.enterLocation = this.enterLocation.bind(this);
         this.returnToCity = this.returnToCity.bind(this);
         this.travel = this.travel.bind(this);
     }
 
     enterLocation(to: LocationName): void {
-        this.props.p.location = to;
+        this.props.p.gotoLocation(to);
         this.setState({
             inCity: false,
             location: to,
@@ -133,6 +135,7 @@ export class LocationRoot extends React.Component<IProps, IState> {
 
         if (this.props.p.travel(to)) {
             this.setState({
+                inCity: true,
                 city: to
             });
         }
