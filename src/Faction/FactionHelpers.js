@@ -7,7 +7,6 @@ import { Engine }                               from "../engine";
 import { Faction }                              from "./Faction";
 import { Factions }                             from "./Factions";
 import { FactionInfos }                         from "./FactionInfo";
-import { Locations}                             from "../Location";
 import { HackingMission, setInMission }         from "../Missions";
 import { Player }                               from "../Player";
 import { PurchaseAugmentationsOrderSetting }    from "../Settings/SettingEnums";

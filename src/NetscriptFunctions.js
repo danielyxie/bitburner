@@ -35,8 +35,11 @@ import { netscriptCanGrow,
 
 import { getCostOfNextHacknetNode,
          getCostOfNextHacknetServer,
-         hasHacknetServers,
-         purchaseHacknet }                          from "./Hacknet/HacknetHelpers";
+         purchaseHacknet,
+         hasHacknetServers }                        from "./Hacknet/HacknetHelpers";
+import { CityName }                                 from "./Locations/data/CityNames";
+import { LocationName }                             from "./Locations/data/LocationNames";
+
 import { HacknetServer }                            from "./Hacknet/HacknetServer";
 import {Locations}                                  from "./Locations";
 import { Message }                                  from "./Message/Message";
@@ -2615,30 +2618,30 @@ function NetscriptFunctions(workerScript) {
 
             var costMult, expMult;
             switch(universityName.toLowerCase()) {
-                case Locations.AevumSummitUniversity.toLowerCase():
-                    if (Player.city != Locations.Aevum) {
+                case LocationName.AevumSummitUniversity.toLowerCase():
+                    if (Player.city != CityName.Aevum) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Summit University because you are not in Aevum. universityCourse() failed");
                         return false;
                     }
-                    Player.location = Locations.AevumSummitUniversity;
+                    Player.gotoLocation(LocationName.AevumSummitUniversity);
                     costMult = 4;
                     expMult = 3;
                     break;
-                case Locations.Sector12RothmanUniversity.toLowerCase():
-                    if (Player.city != Locations.Sector12) {
+                case LocationName.Sector12RothmanUniversity.toLowerCase():
+                    if (Player.city != CityName.Sector12) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Rothman University because you are not in Sector-12. universityCourse() failed");
                         return false;
                     }
-                    Player.location = Locations.Sector12RothmanUniversity;
+                    Player.location = LocationName.Sector12RothmanUniversity;
                     costMult = 3;
                     expMult = 2;
                     break;
-                case Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
-                    if (Player.city != Locations.Volhaven) {
+                case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
+                    if (Player.city != CityName.Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
                         return false;
                     }
-                    Player.location = Locations.VolhavenZBInstituteOfTechnology;
+                    Player.location = LocationName.VolhavenZBInstituteOfTechnology;
                     costMult = 5;
                     expMult = 4;
                     break;
@@ -2703,48 +2706,48 @@ function NetscriptFunctions(workerScript) {
             }
             var costMult, expMult;
             switch(gymName.toLowerCase()) {
-                case Locations.AevumCrushFitnessGym.toLowerCase():
-                    if (Player.city != Locations.Aevum) {
+                case LocationName.AevumCrushFitnessGym.toLowerCase():
+                    if (Player.city != CityName.Aevum) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Crush Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
-                    Player.location = Locations.AevumCrushFitnessGym;
+                    Player.location = LocationName.AevumCrushFitnessGym;
                     costMult = 3;
                     expMult = 2;
                     break;
-                case Locations.AevumSnapFitnessGym.toLowerCase():
-                    if (Player.city != Locations.Aevum) {
+                case LocationName.AevumSnapFitnessGym.toLowerCase():
+                    if (Player.city != CityName.Aevum) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Snap Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
-                    Player.location = Locations.AevumSnapFitnessGym;
+                    Player.location = LocationName.AevumSnapFitnessGym;
                     costMult = 10;
                     expMult = 5;
                     break;
-                case Locations.Sector12IronGym.toLowerCase():
-                    if (Player.city != Locations.Sector12) {
+                case LocationName.Sector12IronGym.toLowerCase():
+                    if (Player.city != CityName.Sector12) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Iron Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
-                    Player.location = Locations.Sector12IronGym;
+                    Player.location = LocationName.Sector12IronGym;
                     costMult = 1;
                     expMult = 1;
                     break;
-                case Locations.Sector12PowerhouseGym.toLowerCase():
-                    if (Player.city != Locations.Sector12) {
+                case LocationName.Sector12PowerhouseGym.toLowerCase():
+                    if (Player.city != CityName.Sector12) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Powerhouse Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
-                    Player.location = Locations.Sector12PowerhouseGym;
+                    Player.location = LocationName.Sector12PowerhouseGym;
                     costMult = 20;
                     expMult = 10;
                     break;
-                case Locations.VolhavenMilleniumFitnessGym.toLowerCase():
-                    if (Player.city != Locations.Volhaven) {
+                case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
+                    if (Player.city != CityName.Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
                         return false;
                     }
-                    Player.location = Locations.VolhavenMilleniumFitnessGym;
+                    Player.location = LocationName.VolhavenMilleniumFitnessGym;
                     costMult = 7;
                     expMult = 4;
                     break;
@@ -2795,12 +2798,12 @@ function NetscriptFunctions(workerScript) {
             }
 
             switch(cityname) {
-                case Locations.Aevum:
-                case Locations.Chongqing:
-                case Locations.Sector12:
-                case Locations.NewTokyo:
-                case Locations.Ishima:
-                case Locations.Volhaven:
+                case CityName.Aevum:
+                case CityName.Chongqing:
+                case CityName.Sector12:
+                case CityName.NewTokyo:
+                case CityName.Ishima:
+                case CityName.Volhaven:
                     if(Player.money.lt(CONSTANTS.TravelCost)) {
                         workerScript.scriptRef.log("ERROR: not enough money to travel with travelToCity().");
                         throw makeRuntimeRejectMsg(workerScript, "ERROR: not enough money to travel with travelToCity().");
@@ -3618,29 +3621,8 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            //Set Location to slums
-            switch(Player.city) {
-                case Locations.Aevum:
-                    Player.location = Locations.AevumSlums;
-                    break;
-                case Locations.Chongqing:
-                    Player.location = Locations.ChongqingSlums;
-                    break;
-                case Locations.Sector12:
-                    Player.location = Locations.Sector12Slums;
-                    break;
-                case Locations.NewTokyo:
-                    Player.location = Locations.NewTokyoSlums;
-                    break;
-                case Locations.Ishima:
-                    Player.location = Locations.IshimaSlums;
-                    break;
-                case Locations.Volhaven:
-                    Player.location = Locations.VolhavenSlums;
-                    break;
-                default:
-                    console.log("Invalid Player.city value");
-            }
+            // Set Location to slums
+            Player.gotoLocation(LocationName.Slums);
 
             const crime = findCrime(crimeRoughName.toLowerCase());
             if(crime == null) { // couldn't find crime

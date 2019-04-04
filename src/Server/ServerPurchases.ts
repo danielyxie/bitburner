@@ -4,9 +4,8 @@
  */
 import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS }                        from "../Constants";
-import { Player }                           from "../Player";
-import { AllServers,
-         AddToAllServers }                  from "../Server/AllServers";
+import { IPlayer }                          from "../PersonObjects/IPlayer";
+import { AddToAllServers }                  from "../Server/AllServers";
 import { Server }                           from "../Server/Server";
 import { dialogBoxCreate }                  from "../../utils/DialogBox";
 import { createRandomIp }                   from "../../utils/IPAddress";
@@ -15,7 +14,11 @@ import { isPowerOfTwo }                     from "../../utils/helpers/isPowerOfT
 
 // Returns the cost of purchasing a server with the given RAM
 // Returns Infinity for invalid 'ram' arguments
-export function getPurchaseServerCost(ram) {
+/**
+ * @param ram Amount of RAM on purchased server (GB)
+ * @returns Cost of purchasing the given server. Returns infinity for invalid arguments
+ */
+export function getPurchaseServerCost(ram: number) {
     const sanitizedRam = Math.round(ram);
     if (isNaN(sanitizedRam) || !isPowerOfTwo(sanitizedRam)) {
         return Infinity;
@@ -40,17 +43,17 @@ export function getPurchaseServerMaxRam() {
 }
 
 // Manually purchase a server (NOT through Netscript)
-export function purchaseServer(ram) {
+export function purchaseServer(ram: number, p: IPlayer) {
     const cost = getPurchaseServerCost(ram);
 
     //Check if player has enough money
-    if (Player.money.lt(cost)) {
-        dialogBoxCreate("You don't have enough money to purchase this server!");
+    if (!p.canAfford(cost)) {
+        dialogBoxCreate("You don't have enough money to purchase this server!", false);
         return;
     }
 
     //Maximum server limit
-    if (Player.purchasedServers.length >= getPurchaseServerLimit()) {
+    if (p.purchasedServers.length >= getPurchaseServerLimit()) {
         dialogBoxCreate("You have reached the maximum limit of " + getPurchaseServerLimit() + " servers. " +
                         "You cannot purchase any more. You can " +
                         "delete some of your purchased servers using the deleteServer() Netscript function in a script");
@@ -71,26 +74,26 @@ export function purchaseServer(ram) {
     AddToAllServers(newServ);
 
     //Add to Player's purchasedServers array
-    Player.purchasedServers.push(newServ.ip);
+    p.purchasedServers.push(newServ.ip);
 
     //Connect new server to home computer
-    var homeComputer = Player.getHomeComputer();
+    var homeComputer = p.getHomeComputer();
     homeComputer.serversOnNetwork.push(newServ.ip);
     newServ.serversOnNetwork.push(homeComputer.ip);
 
-    Player.loseMoney(cost);
+    p.loseMoney(cost);
 
     dialogBoxCreate("Server successfully purchased with hostname " + hostname);
 }
 
 // Manually upgrade RAM on home computer (NOT through Netscript)
-export function purchaseRamForHomeComputer(cost) {
-    if (Player.money.lt(cost)) {
+export function purchaseRamForHomeComputer(cost: number, p: IPlayer) {
+    if (!p.canAfford(cost)) {
         dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
         return;
     }
 
-    const homeComputer = Player.getHomeComputer();
+    const homeComputer = p.getHomeComputer();
     if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
         dialogBoxCreate(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
         return;
@@ -98,7 +101,7 @@ export function purchaseRamForHomeComputer(cost) {
 
 
     homeComputer.maxRam *= 2;
-    Player.loseMoney(cost);
+    p.loseMoney(cost);
 
     dialogBoxCreate("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
 }

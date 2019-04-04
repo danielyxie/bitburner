@@ -11,7 +11,7 @@ import { overviewPage } from "./Routing";
 
 import { OfficeSpace } from "../Corporation";
 
-import { Cities } from "../../Locations/Cities";
+import { CityName } from "../../Locations/data/CityNames";
 
 export class MainPanel extends BaseReactComponent {
     constructor(props) {
@@ -19,7 +19,7 @@ export class MainPanel extends BaseReactComponent {
 
         this.state = {
             division: "",
-            city: Cities.Sector12,
+            city: CityName.Sector12,
         }
     }
 

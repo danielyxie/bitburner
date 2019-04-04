@@ -9,15 +9,16 @@ import { SleeveFaq } from "./data/SleeveFaq";
 import { IPlayer } from "../IPlayer";
 
 import { CONSTANTS } from "../../Constants";
-import { Locations } from "../../Locations";
 
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 
-import { Cities } from "../../Locations/Cities";
 import { Crime } from "../../Crime/Crime";
 import { Crimes } from "../../Crime/Crimes";
+import { Cities } from "../../Locations/Cities";
+import { CityName } from "../../Locations/data/CityNames";
+import { LocationName } from "../../Locations/data/LocationNames";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Page,
@@ -243,20 +244,20 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
                            `Traveling to a different city costs ${numeralWrapper.formatMoney(CONSTANTS.TravelCost)}. ` +
                            "It will also CANCEL the sleeve's current task (setting it to idle)",
             }));
-            for (const label in Cities) {
-                if (sleeve.city === Cities[label]) { continue; }
-                (function(sleeve, label) {
+            for (const cityName in Cities) {
+                if (sleeve.city === cityName) { continue; }
+                (function(sleeve, cityName) {
                     popupArguments.push(createElement("div", {
                         // Reusing this css class. It adds a border and makes it so that
                         // the background color changes when you hover
                         class: "cmpy-mgmt-find-employee-option",
-                        innerText: Cities[label],
+                        innerText: cityName,
                         clickListener: () => {
                             if (!playerRef!.canAfford(CONSTANTS.TravelCost)) {
                                 dialogBoxCreate("You cannot afford to have this sleeve travel to another city", false);
                                 return false;
                             }
-                            sleeve.city = Cities[label];
+                            sleeve.city = <CityName>cityName;
                             playerRef!.loseMoney(CONSTANTS.TravelCost);
                             sleeve.resetTaskStatus();
                             removeElementById(popupId);
@@ -265,7 +266,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
                             return false;
                         }
                     }));
-                })(sleeve, label);
+                })(sleeve, cityName);
             }
 
             createPopup(popupId, popupArguments);
@@ -569,14 +570,14 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
 
             // Second selector has which university
             switch (sleeve.city) {
-                case Cities.Aevum:
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.AevumSummitUniversity));
+                case CityName.Aevum:
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.AevumSummitUniversity));
                     break;
-                case Cities.Sector12:
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.Sector12RothmanUniversity));
+                case CityName.Sector12:
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.Sector12RothmanUniversity));
                     break;
-                case Cities.Volhaven:
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.VolhavenZBInstituteOfTechnology));
+                case CityName.Volhaven:
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.VolhavenZBInstituteOfTechnology));
                     break;
                 default:
                     elems.taskDetailsSelector2!.add(createOptionElement("No university available in city!"));
@@ -597,30 +598,30 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
             // Second selector has gym
             // In this switch statement we also set the initial value of the second selector
             switch (sleeve.city) {
-                case Cities.Aevum:
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.AevumCrushFitnessGym));
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.AevumSnapFitnessGym));
+                case CityName.Aevum:
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.AevumCrushFitnessGym));
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.AevumSnapFitnessGym));
 
                     // Set initial value
-                    if (sleeve.currentTaskLocation === Locations.AevumCrushFitnessGym) {
+                    if (sleeve.currentTaskLocation === LocationName.AevumCrushFitnessGym) {
                         elems.taskDetailsSelector2!.selectedIndex = 0;
-                    } else if (sleeve.currentTaskLocation === Locations.AevumSnapFitnessGym) {
+                    } else if (sleeve.currentTaskLocation === LocationName.AevumSnapFitnessGym) {
                         elems.taskDetailsSelector2!.selectedIndex = 1;
                     }
                     break;
-                case Cities.Sector12:
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.Sector12IronGym));
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.Sector12PowerhouseGym));
+                case CityName.Sector12:
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.Sector12IronGym));
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.Sector12PowerhouseGym));
 
                     // Set initial value
-                    if (sleeve.currentTaskLocation === Locations.Sector12IronGym) {
+                    if (sleeve.currentTaskLocation === LocationName.Sector12IronGym) {
                         elems.taskDetailsSelector2!.selectedIndex = 0;
-                    } else if (sleeve.currentTaskLocation === Locations.Sector12PowerhouseGym) {
+                    } else if (sleeve.currentTaskLocation === LocationName.Sector12PowerhouseGym) {
                         elems.taskDetailsSelector2!.selectedIndex = 1;
                     }
                     break;
-                case Cities.Volhaven:
-                    elems.taskDetailsSelector2!.add(createOptionElement(Locations.VolhavenMilleniumFitnessGym));
+                case CityName.Volhaven:
+                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.VolhavenMilleniumFitnessGym));
                     break;
                 default:
                     elems.taskDetailsSelector2!.add(createOptionElement("No gym available in city!"));
