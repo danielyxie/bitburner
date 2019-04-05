@@ -1631,9 +1631,8 @@ export function applyForJob(entryPosType, sing=false) {
     document.getElementById("world-menu-header").click();
 
     if (sing) { return true; }
-    dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
 
-    Engine.loadLocationContent(false);
+    dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
 }
 
 //Returns your next position at a company given the field (software, business, etc.)
@@ -1734,7 +1733,6 @@ export function applyForEmployeeJob(sing=false) {
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed at " + this.companyName);
-        Engine.loadLocationContent(false);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1750,7 +1748,6 @@ export function applyForPartTimeEmployeeJob(sing=false) {
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed part-time at " + this.companyName);
-        Engine.loadLocationContent(false);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1766,7 +1763,6 @@ export function applyForWaiterJob(sing=false) {
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.companyName);
-        Engine.loadLocationContent(false);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1782,7 +1778,6 @@ export function applyForPartTimeWaiterJob(sing=false) {
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
-        Engine.loadLocationContent(false);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");

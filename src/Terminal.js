@@ -1,7 +1,16 @@
-import {substituteAliases, printAliases,
-        parseAliasDeclaration,
-        removeAlias, GlobalAliases,
-        Aliases}                                from "./Alias";
+import {
+    evaluateDirectoryPath,
+    isValidDirectoryPath,
+    isValidFilename
+}                                                       from "./Terminal/DirectoryHelpers";
+import { determineAllPossibilitiesForTabCompletion }    from "./Terminal/determineAllPossibilitiesForTabCompletion";
+
+import { Aliases,
+         GlobalAliases,
+         parseAliasDeclaration,
+         printAliases,
+         removeAlias,
+         substituteAliases }                    from "./Alias";
 import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import {CodingContract, CodingContractResult,
         CodingContractRewardType}               from "./CodingContracts";
@@ -85,12 +94,13 @@ $(document).keydown(function(event) {
 
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
-			var command = terminalInput.value;
+			const command = terminalInput.value;
+            const dir = Terminal.currDir + "/";
 			post(
                 "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
-                " ~]&gt;</span> " + command
+                ` ~${dir}]&gt;</span> ${command}`
             );
 
             if (command.length > 0) {
@@ -183,7 +193,7 @@ $(document).keydown(function(event) {
             var commandArray = input.split(" ");
             var index = commandArray.length - 2;
             if (index < -1) {index = 0;}
-            var allPos = determineAllPossibilitiesForTabCompletion(input, index);
+            var allPos = determineAllPossibilitiesForTabCompletion(Player, input, index);
             if (allPos.length == 0) {return;}
 
             var arg = "";
@@ -393,178 +403,8 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     }
 }
 
-function determineAllPossibilitiesForTabCompletion(input, index=0) {
-    var allPos = [];
-    allPos = allPos.concat(Object.keys(GlobalAliases));
-    var currServ = Player.getCurrentServer();
-    input = input.toLowerCase();
-
-    //If the command starts with './' and the index == -1, then the user
-    //has input ./partialexecutablename so autocomplete the script or program
-    //Put './' in front of each script/executable
-    if (input.startsWith("./") && index == -1) {
-        //All programs and scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push("./" + currServ.scripts[i].filename);
-        }
-
-        //Programs are on home computer
-        var homeComputer = Player.getHomeComputer();
-        for(var i = 0; i < homeComputer.programs.length; ++i) {
-            allPos.push("./" + homeComputer.programs[i]);
-        }
-        return allPos;
-    }
-
-    //Autocomplete the command
-    if (index == -1) {
-        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "download", "expr",
-                "free", "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
-                "ls", "lscpu", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze",
-                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
-    }
-
-    if (input.startsWith ("buy ")) {
-        let options = [];
-        for(const i in DarkWebItems) {
-            const item = DarkWebItems[i]
-            options.push(item.program);
-        }
-        return options.concat(Object.keys(GlobalAliases));
-    }
-
-    if (input.startsWith("scp ") && index == 1) {
-        for (var iphostname in AllServers) {
-            if (AllServers.hasOwnProperty(iphostname)) {
-                allPos.push(AllServers[iphostname].ip);
-                allPos.push(AllServers[iphostname].hostname);
-            }
-        }
-    }
-
-    if (input.startsWith("scp ") && index == 0) {
-        //All Scripts and lit files
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (var i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof Message)) {
-                allPos.push(currServ.messages[i]);
-            }
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-    }
-
-    if (input.startsWith("connect ") || input.startsWith("telnet ")) {
-        //All network connections
-        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-            var serv = AllServers[currServ.serversOnNetwork[i]];
-            if (serv == null) {continue;}
-            allPos.push(serv.ip); //IP
-            allPos.push(serv.hostname); //Hostname
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("kill ") || input.startsWith("tail ") ||
-        input.startsWith("mem ") || input.startsWith("check ")) {
-        //All Scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("nano ")) {
-        //Scripts and text files and .fconf
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        allPos.push(".fconf");
-        return allPos;
-    }
-
-    if (input.startsWith("rm ")) {
-        for (let i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (let i = 0; i < currServ.programs.length; ++i) {
-            allPos.push(currServ.programs[i]);
-        }
-        for (let i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof Message) && isString(currServ.messages[i]) &&
-                  currServ.messages[i].endsWith(".lit")) {
-                allPos.push(currServ.messages[i]);
-            }
-        }
-        for (let i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (let i = 0; i < currServ.contracts.length; ++i) {
-            allPos.push(currServ.contracts[i].fn);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("run ")) {
-        //All programs, scripts, and contracts
-        for (let i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-
-        //Programs are on home computer
-        var homeComputer = Player.getHomeComputer();
-        for (let i = 0; i < homeComputer.programs.length; ++i) {
-            allPos.push(homeComputer.programs[i]);
-        }
-
-        for (let i = 0; i < currServ.contracts.length; ++i) {
-            allPos.push(currServ.contracts[i].fn);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("cat ")) {
-        for (var i = 0; i < currServ.messages.length; ++i) {
-            if (currServ.messages[i] instanceof Message) {
-                allPos.push(currServ.messages[i].filename);
-            } else {
-                allPos.push(currServ.messages[i]);
-            }
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("download ")) {
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-    }
-
-    if (input.startsWith("ls ")) {
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-    }
-    return allPos;
-}
-
 let Terminal = {
-    //Flags to determine whether the player is currently running a hack or an analyze
+    // Flags to determine whether the player is currently running a hack or an analyze
     hackFlag:           false,
     analyzeFlag:        false,
     actionStarted:      false,
@@ -573,7 +413,12 @@ let Terminal = {
     commandHistory: [],
     commandHistoryIndex: 0,
 
-    contractOpen:       false, //True if a Coding Contract prompt is opened
+    // True if a Coding Contract prompt is opened
+    contractOpen:       false,
+
+    // Full Path of current directory
+    // Excludes the trailing forward slash
+    currDir:            "",
 
     resetTerminalInput: function() {
         if (FconfSettings.WRAP_INPUT) {
@@ -1104,7 +949,7 @@ let Terminal = {
                     postError("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
                 }
                 break;
-            case "cat":
+            case "cat": {
                 if (commandArray.length !== 2) {
                     postError("Incorrect usage of cat command. Usage: cat [file]");
                     return;
@@ -1131,6 +976,34 @@ let Terminal = {
                 }
                 postError(`No such file ${filename}`);
                 break;
+            }
+            case "cd": {
+                if (commandArray.length !== 2) {
+                    postError("Incorrect number of arguments. Usage: cd [dir]");
+                } else {
+                    let dir = commandArray[1];
+
+                    // Ignore trailing slashes
+                    if (dir.endsWith("/")) {
+                        dir = dir.slice(0, -1);
+                    }
+
+                    // If the path begins with a slash, then its an absolute path. Otherwise its relative
+                    if (dir.startsWith("/")) {
+                        // TODO
+                    } else {
+                        // TODO
+                    }
+
+                    evaledDir = evaluateDirectoryPath(dir);
+                    if (evaledDir == null) {
+                        postError("Invalid path");
+                        return;
+                    }
+
+                }
+                break;
+            }
             case "check":
                 if (commandArray.length < 2) {
                     postError("Incorrect number of arguments. Usage: check [script] [arg1] [arg2]...");
@@ -1687,27 +1560,34 @@ let Terminal = {
     },
 
     executeListCommand: function(commandArray) {
-        if (commandArray.length !== 1 && commandArray.length !== 2 && commandArray.length !== 4) {
-            postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
-            return;
+        const numArgs = commandArray.length;
+        function incorrectUsage() {
+            postError("Incorrect usage of ls command. Usage: ls [dir] [| grep pattern]");
         }
 
-        // grep
-        let filter = null;
-        let prefix = null;
-        if (commandArray.length === 4) {
-            if (commandArray[1] === "|" && commandArray[2] === "grep") {
-                if (commandArray[3] !== " ") {
-                    filter = commandArray[3];
-                }
-            } else {
-                postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
-                return;
+        if (numArgs <= 0 || numArgs > 5 || numArgs === 3) {
+            return incorrectUsage();
+        }
+
+        let filter = null; // Grep
+        let prefix = null; // Directory path
+
+        // If there are 4+ arguments, then the last 3 must be for grep
+        if (numArgs >= 4) {
+            if (commandArray[numArgs - 2] !== "grep" || commandArray[numArgs - 3] !== "|") {
+                return incorrectUsage();
             }
-        } else if (commandArray.length === 2) { // want to ls a folder
+            filter = commandArray[numArgs - 1];
+        }
+
+        // If the second argument is not a pipe, then it must be for listing a directory
+        if (numArgs >= 2 && commandArray[1] !== "|") {
             prefix = commandArray[1];
             if (!prefix.endsWith("/")) {
                 prefix += "/";
+            }
+            if (!isValidDirectoryPath(prefix)) {
+                return incorrectUsage();
             }
         }
 
@@ -1728,12 +1608,15 @@ let Terminal = {
                 }
             }
 
+            // If the fn includes a forward slash, it must be in a subdirectory.
+            // Therefore, we only list the "first" directory in its path
             if (fn.includes("/")) {
-                fn = fn.split("/")[0]+"/";
+                fn = fn.split("/")[0] + "/";
                 if (folders.includes(fn)) {
                     return;
                 }
                 folders.push(fn);
+                return;
             }
 
             allFiles.push(fn);

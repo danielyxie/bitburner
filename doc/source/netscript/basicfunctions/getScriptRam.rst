@@ -1,5 +1,5 @@
 getScriptRam() Netscript Function
-===========================
+=================================
 
 .. js:function:: getScriptRam(scriptname[, hostname/ip])
 

@@ -1,8 +1,14 @@
+/**
+ * Server and HacknetServer-related methods for the Player class (PlayerObject)
+ */
 import { IPlayer }                      from "../IPlayer";
 
 import { CONSTANTS }                    from "../../Constants";
-import { AllServers }                   from "../../Server/AllServers";
+
 import { BitNodeMultipliers }           from "../../BitNode/BitNodeMultipliers";
+import { HacknetServer }                from "../../Hacknet/HacknetServer";
+import { AddToAllServers,
+         AllServers }                   from "../../Server/AllServers";
 import { SpecialServerIps }             from "../../Server/SpecialServerIps";
 
 export function hasTorRouter(this: IPlayer) {
@@ -27,4 +33,23 @@ export function getUpgradeHomeRamCost(this: IPlayer) {
     const mult = Math.pow(1.58, numUpgrades);
     var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
     return cost;
+}
+
+export function createHacknetServer(this: IPlayer): HacknetServer {
+    const numOwned = this.hacknetNodes.length;
+    const name = `hacknet-node-${numOwned}`;
+    const server = new HacknetServer({
+        adminRights: true,
+        hostname: name,
+        player: this,
+    });
+    this.hacknetNodes.push(server.ip);
+
+    // Configure the HacknetServer to actually act as a Server
+    AddToAllServers(server);
+    const homeComputer = this.getHomeComputer();
+    homeComputer.serversOnNetwork.push(server.ip);
+    server.serversOnNetwork.push(homeComputer.ip);
+
+    return server;
 }

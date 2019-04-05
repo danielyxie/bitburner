@@ -273,21 +273,13 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.46.0
-    * Added BitNode-9: Hacktocracy
-    * Changed BitNode-11's multipliers to make it slightly harder overall
-    * Source-File 11 is now slightly stronger
-    * Added several functions to Netscript Sleeve API for buying Sleeve augmentations (by hydroflame)
-    * Added a new stat for Duplicate Sleeves: Memory
-    * Increase baseline experience earned from Infiltration, but it now gives diminishing returns (on exp) as you get to higher difficulties/levels
-    * In Bladeburner, stamina gained from Hyperbolic Regeneration Chamber is now a percentage of your max stamina
-
-    * Corporation Changes:
-    ** 'Demand' value of products decreases more slowly
-    ** Bug Fix: Fixed a Corporation issue that broke the Market-TA2 Research
-    ** Bug Fix: Issuing New Shares now works properly
-
-    * Bug Fix: Money Statistics tracker was incorrectly recording profits when selling stocks manually
-    * Bug Fix: Fixed an issue with the job requirement tooltip for security jobs
+    v0.46.1
+    * Added numHashes(), hashCost(), and spendHashes() functions to the Netscript Hacknet Node API
+    * 'Generate Coding Contract' hash upgrade is now more expensive
+    * 'Generate Coding Contract' hash upgrade now generates the contract randomly on the server, rather than on home computer
+    * The cost of selling hashes for money no longer increases each time
+    * Selling hashes for money now costs 4 hashes (in exchange for $1m)
+    * Bug Fix: Hacknet Node earnings should work properly when game is inactive/offline
+    * Bug Fix: Duplicate Sleeve augmentations are now properly reset when switching to a new BitNode
     `
 }

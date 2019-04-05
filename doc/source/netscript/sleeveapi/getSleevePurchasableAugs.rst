@@ -1,5 +1,5 @@
 getSleevePurchasableAugs() Netscript Function
-=======================================
+=============================================
 
 .. js:function:: getSleevePurchasableAugs(sleeveNumber)
 

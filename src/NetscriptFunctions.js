@@ -36,12 +36,12 @@ import { netscriptCanGrow,
 import { getCostOfNextHacknetNode,
          getCostOfNextHacknetServer,
          purchaseHacknet,
-         hasHacknetServers }                        from "./Hacknet/HacknetHelpers";
+         hasHacknetServers,
+         purchaseHashUpgrade }                      from "./Hacknet/HacknetHelpers";
 import { CityName }                                 from "./Locations/data/CityNames";
 import { LocationName }                             from "./Locations/data/LocationNames";
 
 import { HacknetServer }                            from "./Hacknet/HacknetServer";
-import {Locations}                                  from "./Locations";
 import { Message }                                  from "./Message/Message";
 import { Messages }                                 from "./Message/MessageHelpers";
 import {inMission}                                  from "./Missions";
@@ -363,6 +363,19 @@ function NetscriptFunctions(workerScript) {
                 if (!hasHacknetServers()) { return Infinity; }
                 const node = getHacknetNode(i);
                 return node.calculateCacheUpgradeCost(n);
+            },
+            numHashes : function() {
+                if (!hasHacknetServers()) { return 0; }
+                return Player.hashManager.hashes;
+            },
+            hashCost : function(upgName) {
+                if (!hasHacknetServers()) { return Infinity; }
+
+                return Player.hashManager.getUpgradeCost(upgName);
+            },
+            spendHashes : function(upgName, upgTarget) {
+                if (!hasHacknetServers()) { return false; }
+                return purchaseHashUpgrade(upgName, upgTarget);
             }
         },
         sprintf : sprintf,
@@ -2851,10 +2864,6 @@ function NetscriptFunctions(workerScript) {
             });
             AddToAllServers(darkweb);
             SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
-
-            const purchaseTor = document.getElementById("location-purchase-tor");
-            purchaseTor.setAttribute("class", "a-link-button-bought");
-            purchaseTor.innerHTML = "TOR Router - Purchased";
 
             Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
             darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);

@@ -15,7 +15,7 @@ import { HacknetServer,
 import { HashManager }                          from "./HashManager";
 import { HashUpgrades }                         from "./HashUpgrades";
 
-import { generateRandomContractOnHome }         from "../CodingContractGenerator";
+import { generateRandomContract }               from "../CodingContractGenerator";
 import { iTutorialSteps, iTutorialNextStep,
          ITutorial}                             from "../InteractiveTutorial";
 import { Player }                               from "../Player";
@@ -45,25 +45,6 @@ export function hasHacknetServers() {
     return (Player.bitNodeN === 9 || SourceFileFlags[9] > 0);
 }
 
-export function createHacknetServer() {
-    const numOwned = Player.hacknetNodes.length;
-    const name = `hacknet-node-${numOwned}`;
-    const server = new HacknetServer({
-        adminRights: true,
-        hostname: name,
-        player: Player,
-    });
-    Player.hacknetNodes.push(server.ip);
-
-    // Configure the HacknetServer to actually act as a Server
-    AddToAllServers(server);
-    const homeComputer = Player.getHomeComputer();
-    homeComputer.serversOnNetwork.push(server.ip);
-    server.serversOnNetwork.push(homeComputer.ip);
-
-    return server;
-}
-
 export function purchaseHacknet() {
     /* INTERACTIVE TUTORIAL */
     if (ITutorial.isRunning) {
@@ -84,7 +65,7 @@ export function purchaseHacknet() {
 
         if (!Player.canAfford(cost)) { return -1; }
         Player.loseMoney(cost);
-        const server = createHacknetServer();
+        const server = Player.createHacknetServer();
         Player.hashManager.updateCapacity(Player);
 
         return numOwned;
@@ -281,9 +262,9 @@ export function processHacknetEarnings(numCycles) {
     // call the appropriate function
     if (Player.hacknetNodes.length === 0) { return 0; }
     if (hasHacknetServers()) {
-        return processAllHacknetServerEarnings();
+        return processAllHacknetServerEarnings(numCycles);
     } else if (Player.hacknetNodes[0] instanceof HacknetNode) {
-        return processAllHacknetNodeEarnings();
+        return processAllHacknetNodeEarnings(numCycles);
     } else {
         return 0;
     }
@@ -421,7 +402,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
                 break;
             }
             case "Generate Coding Contract": {
-                generateRandomContractOnHome();
+                generateRandomContract();
                 break;
             }
             default:

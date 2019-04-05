@@ -435,20 +435,30 @@ export class Sleeve extends Person {
      * Called on every sleeve for a Source File prestige
      */
     prestige(p: IPlayer) {
+        // Reset exp
         this.hacking_exp = 0;
         this.strength_exp = 0;
         this.defense_exp = 0;
         this.dexterity_exp = 0;
         this.agility_exp = 0;
         this.charisma_exp = 0;
+
+        // Reset task-related stuff
         this.resetTaskStatus();
         this.earningsForSleeves = createTaskTracker();
         this.earningsForPlayer = createTaskTracker();
-        this.logs = [];
+        this.shockRecovery(p);
+
+        // Reset augs and multipliers
+        this.augmentations = [];
+        this.resetMultipliers();
+
+        // Reset sleeve-related stats
         this.shock = 1;
         this.storedCycles = 0;
         this.sync = Math.max(this.memory, 1);
-        this.shockRecovery(p);
+
+        this.logs = [];
     }
 
     /**
