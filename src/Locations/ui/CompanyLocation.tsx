@@ -78,7 +78,6 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         this.applyForSoftwareConsultantJob = this.applyForSoftwareConsultantJob.bind(this);
         this.applyForSoftwareJob = this.applyForSoftwareJob.bind(this);
         this.applyForWaiterJob = this.applyForWaiterJob.bind(this);
-        this.checkIfEmployedHere = this.checkIfEmployedHere.bind(this);
         this.startInfiltration = this.startInfiltration.bind(this);
         this.work = this.work.bind(this);
 
@@ -102,70 +101,70 @@ export class CompanyLocation extends React.Component<IProps, IState> {
     applyForAgentJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForAgentJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForBusinessConsultantJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForBusinessConsultantJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForBusinessJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForBusinessJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForEmployeeJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForEmployeeJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForItJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForItJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForPartTimeEmployeeJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForPartTimeEmployeeJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForPartTimeWaiterJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForPartTimeWaiterJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForSecurityJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForSecurityJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForSoftwareConsultantJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForSoftwareConsultantJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForSoftwareJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForSoftwareJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
     applyForWaiterJob(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
         this.props.p.applyForWaiterJob();
-        this.checkIfEmployedHere();
+        this.checkIfEmployedHere(true);
     }
 
-    checkIfEmployedHere(updateState=true) {
+    checkIfEmployedHere(updateState=false) {
         this.jobTitle = this.props.p.jobs[this.props.locName];
         if (this.jobTitle != null) {
             this.companyPosition = CompanyPositions[this.jobTitle];
@@ -216,7 +215,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
                         <p className={"tooltip"}>
                             Company reputation: {numeralWrapper.format(this.company.playerReputation, "0,0.000")}
                             <span className={"tooltiptext"}>
-                                You will earn ${numeralWrapper.format(favorGain[0], "0,0")} company
+                                You will earn {numeralWrapper.format(favorGain[0], "0,0")} company
                                 favor upon resetting after installing Augmentations
                             </span>
                         </p>

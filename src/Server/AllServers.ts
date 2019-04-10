@@ -16,7 +16,7 @@ import { Reviver } from "../../utils/JSONReviver";
 export let AllServers: IMap<Server | HacknetServer> = {};
 
 // Saftely add a Server to the AllServers map
-export function AddToAllServers(server: Server): void {
+export function AddToAllServers(server: Server | HacknetServer): void {
     var serverIp = server.ip;
     if (ipExists(serverIp)) {
         console.log("IP of server that's being added: " + serverIp);

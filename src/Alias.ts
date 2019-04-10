@@ -1,9 +1,10 @@
-import {post}                   from "./ui/postToTerminal";
+import { IMap }                 from "./types";
+import { post }                 from "./ui/postToTerminal";
 
-let Aliases = {};
-let GlobalAliases = {};
+export let Aliases: IMap<string> = {};
+export let GlobalAliases: IMap<string> = {};
 
-function loadAliases(saveString) {
+export function loadAliases(saveString: string): void {
     if (saveString === "") {
         Aliases = {};
     } else {
@@ -11,7 +12,7 @@ function loadAliases(saveString) {
     }
 }
 
-function loadGlobalAliases(saveString) {
+export function loadGlobalAliases(saveString: string): void {
     if (saveString === "") {
         GlobalAliases = {};
     } else {
@@ -20,7 +21,7 @@ function loadGlobalAliases(saveString) {
 }
 
 //Print all aliases to terminal
-function printAliases() {
+export function printAliases(): void {
     for (var name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
             post("alias " + name + "=" + Aliases[name]);
@@ -34,7 +35,7 @@ function printAliases() {
 }
 
 //True if successful, false otherwise
-function parseAliasDeclaration(dec,global=false) {
+export function parseAliasDeclaration(dec: string, global: boolean=false) {
     var re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
     var matches = dec.match(re);
     if (matches == null || matches.length != 3) {return false;}
@@ -46,50 +47,53 @@ function parseAliasDeclaration(dec,global=false) {
     return true;
 }
 
-function addAlias(name, value) {
-    if (name in GlobalAliases){
+function addAlias(name: string, value: string): void {
+    if (name in GlobalAliases) {
         delete GlobalAliases[name];
     }
     Aliases[name] = value;
 }
 
-function addGlobalAlias(name, value) {
+function addGlobalAlias(name: string, value: string): void {
     if (name in Aliases){
         delete Aliases[name];
     }
     GlobalAliases[name] = value;
 }
 
-function getAlias(name) {
+function getAlias(name: string): string | null {
     if (Aliases.hasOwnProperty(name)) {
         return Aliases[name];
     }
+
     return null;
 }
 
-function getGlobalAlias(name) {
+function getGlobalAlias(name: string): string | null {
     if (GlobalAliases.hasOwnProperty(name)) {
         return GlobalAliases[name];
     }
     return null;
 }
 
-function removeAlias(name) {
+export function removeAlias(name: string): boolean {
     if (Aliases.hasOwnProperty(name)) {
         delete Aliases[name];
         return true;
     }
+
     if (GlobalAliases.hasOwnProperty(name)) {
         delete GlobalAliases[name];
         return true;
     }
+
     return false;
 }
 
 //Returns the original string with any aliases substituted in
 //Aliases only applied to "whole words", one level deep
-function substituteAliases(origCommand) {
-    var commandArray = origCommand.split(" ");
+export function substituteAliases(origCommand: string): string {
+    const commandArray = origCommand.split(" ");
     if (commandArray.length > 0){
         // For the unalias command, dont substite
         if (commandArray[0] === "unalias") { return commandArray.join(" "); }
@@ -112,6 +116,3 @@ function substituteAliases(origCommand) {
     }
     return commandArray.join(" ");
 }
-
-export {Aliases, GlobalAliases, printAliases, parseAliasDeclaration,
-        removeAlias, substituteAliases, loadAliases, loadGlobalAliases};

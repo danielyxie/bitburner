@@ -17,6 +17,7 @@ import { AllServers }                           from "../Server/AllServers";
 import { processSingleServerGrowth }            from "../Server/ServerHelpers";
 import { Settings }                             from "../Settings/Settings";
 import { EditorSetting }                        from "../Settings/SettingEnums";
+import { isValidFilePath }                      from "../Terminal/DirectoryHelpers";
 import {TextFile}                               from "../TextFile";
 
 import {Page, routing}                          from "../ui/navigationTracking";
@@ -247,7 +248,7 @@ function saveAndCloseScriptEditor() {
         return;
     }
 
-    if (checkValidFilename(filename) == false) {
+    if (filename !== ".fconf" && !isValidFilePath(filename)) {
         dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
         return;
     }
@@ -290,17 +291,6 @@ function saveAndCloseScriptEditor() {
         return;
     }
     Engine.loadTerminalContent();
-}
-
-//Checks that the string contains only valid characters for a filename, which are alphanumeric,
-// underscores, hyphens, and dots
-function checkValidFilename(filename) {
-	var regex = /^[.a-zA-Z0-9\/_-]+$/;
-
-	if (filename.match(regex)) {
-		return true;
-	}
-	return false;
 }
 
 //Called when the game is loaded. Loads all running scripts (from all servers)

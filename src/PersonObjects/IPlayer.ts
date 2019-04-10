@@ -123,6 +123,7 @@ export interface IPlayer {
     gainAgilityExp(exp: number): void;
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
+    getCurrentServer(): Server;
     getHomeComputer(): Server;
     getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
     getUpgradeHomeRamCost(): number;

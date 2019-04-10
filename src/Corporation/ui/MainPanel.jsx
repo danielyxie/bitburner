@@ -25,7 +25,7 @@ export class MainPanel extends BaseReactComponent {
 
     // We can pass this setter to child components
     changeCityState(newCity) {
-        if (Object.values(Cities).includes(newCity)) {
+        if (Object.values(CityName).includes(newCity)) {
             this.state.city = newCity;
         } else {
             console.error(`Tried to change MainPanel's city state to an invalid city: ${newCity}`);
@@ -45,7 +45,7 @@ export class MainPanel extends BaseReactComponent {
             const currentDivision = this.routing().current();
             if (currentDivision !== this.state.division) {
                 this.state.division = currentDivision;
-                this.state.city = Cities.Sector12;
+                this.state.city = CityName.Sector12;
             }
 
             return this.renderDivisionPage();

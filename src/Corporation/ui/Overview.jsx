@@ -54,7 +54,7 @@ export class Overview extends BaseReactComponent {
                           `Dividends per share: ${numeralWrapper.format(dividendsPerShare, "$0.000a")} / s<br>` +
                           `Your earnings as a shareholder (Pre-Tax): ${numeralWrapper.format(playerEarnings, "$0.000a")} / s<br>` +
                           `Dividend Tax Rate: ${this.corp().dividendTaxPercentage}%<br>` +
-                          `Your earnings as a shareholder (Post-Tax): ${numeralWrapper.format(playerEarnings * (1 - (this.corp().dividendTaxPercentage / 100)), "$0.000a")} / s<br>`;
+                          `Your earnings as a shareholder (Post-Tax): ${numeralWrapper.format(playerEarnings * (1 - (this.corp().dividendTaxPercentage / 100)), "$0.000a")} / s<br><br>`;
         }
 
         let txt = "Total Funds: " + numeralWrapper.format(this.corp().funds.toNumber(), '$0.000a') + "<br>" +
