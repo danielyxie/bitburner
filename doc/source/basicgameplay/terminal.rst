@@ -90,9 +90,10 @@ Note that in order to reference a file, :ref:`netscript` functions require the
 
 Missing Features
 ^^^^^^^^^^^^^^^^
-Terminal/Filesystem features that are not yet implemented:
+These features that are typically in Linux filesystems have not yet been added to the game:
 
 * Tab autocompletion does not work with relative paths
+* :code:`mv` only accepts full filepaths for the destination argument. It does not accept directories
 
 Commands
 --------
@@ -399,7 +400,10 @@ See :ref:`terminal_filesystem` for more details about the Terminal's filesystem.
 This command only works for scripts and text files (.txt). It cannot, however,  be used
 to convert from script to text file, or vice versa.
 
-Note that this function can also be used to rename files.
+This function can also be used to rename files.
+
+.. note:: Unlike the Linux :code:`mv` command, the *destination* argument must be the
+          full filepath. It cannot be a directory. 
 
 Examples::
 

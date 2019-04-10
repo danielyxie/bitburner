@@ -166,8 +166,11 @@ export const HelpTexts: IMap<string> = {
                     "above will print the amount of RAM needed to run 'foo.script' with 50 threads.",
     mv:             "mv [src] [dest]<br>" +
                     "Move the source file to the specified destination. This can also be used to rename files. " +
-                    "Note that this only works for scripts and text files (.txt). This command CANNOT be used to " +
-                    "convert to different file types. Examples: <br><br>" +
+                    "This command only works for scripts and text files (.txt). This command CANNOT be used to " +
+                    "convert to different file types<br><br>" +
+                    "Note that, unlike the Linux 'mv' command, the destination argument must be the " + 
+                    "full filepath. " +
+                    "Examples: <br><br>" +
                     "mv hacking-controller.script scripts/hacking-controller.script<br>" +
                     "mv myScript.js myOldScript.js",
     nano:           "nano [file name]<br>" +

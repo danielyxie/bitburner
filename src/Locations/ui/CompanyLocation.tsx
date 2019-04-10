@@ -215,7 +215,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
                         <p className={"tooltip"}>
                             Company reputation: {numeralWrapper.format(this.company.playerReputation, "0,0.000")}
                             <span className={"tooltiptext"}>
-                                You will earn ${numeralWrapper.format(favorGain[0], "0,0")} company
+                                You will earn {numeralWrapper.format(favorGain[0], "0,0")} company
                                 favor upon resetting after installing Augmentations
                             </span>
                         </p>

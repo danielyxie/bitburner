@@ -1163,6 +1163,11 @@ let Terminal = {
                     const source = commandArray[1];
                     const dest = commandArray[2];
 
+                    if (!isScriptFilename(source) && !source.endsWith(".txt")) {
+                        postError(`'mv' can only be used on scripts and text files (.txt)`);
+                        return;
+                    }
+
                     const srcFile = Terminal.getFile(source);
                     if (srcFile == null) {
                         postError(`Source file ${source} does not exist`);
@@ -1218,9 +1223,6 @@ let Terminal = {
                         }
 
                         srcFile.fn = destPath;
-                    } else {
-                        postError(`'mv' can only be used on scripts, literature files (.lit), and text files (.txt)`);
-                        return;
                     }
                 } catch(e) {
                     Terminal.postThrownError(e);

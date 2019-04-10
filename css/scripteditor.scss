@@ -68,13 +68,14 @@
     @include boxShadow($boxShadowArgs);
 
     background-color: #555;
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
     display: inline-block;
     float: center;
-    resize: none;
-    color: #fff;
     margin: 4px;
     padding: 2px;
-    border: 2px solid var(--my-highlight-color);
+    resize: none;
+    width: 50%;
 }
 
 #script-editor-status {
