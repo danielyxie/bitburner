@@ -1,9 +1,53 @@
-import { Aliases,
-         GlobalAliases }                        from "../Alias";
-import { DarkWebItems }                         from "../DarkWeb/DarkWebItems";
-import { Message }                              from "../Message/Message";
-import { IPlayer }                              from "../PersonObjects/IPlayer"
-import { AllServers }                           from "../Server/AllServers";
+import {
+    getFirstParentDirectory,
+    isInRootDirectory
+} from "./DirectoryHelpers";
+
+import {
+    Aliases,
+    GlobalAliases
+} from "../Alias";
+import { DarkWebItems } from "../DarkWeb/DarkWebItems";
+import { Message } from "../Message/Message";
+import { IPlayer } from "../PersonObjects/IPlayer"
+import { AllServers } from "../Server/AllServers";
+
+// An array of all Terminal commands
+const commands = [
+    "alias",
+    "analyze",
+    "cat",
+    "cd",
+    "check",
+    "clear",
+    "cls",
+    "connect",
+    "download",
+    "expr",
+    "free",
+    "hack",
+    "help",
+    "home",
+    "hostname",
+    "ifconfig",
+    "kill",
+    "killall",
+    "ls",
+    "lscpu",
+    "mem",
+    "mv",
+    "nano",
+    "ps",
+    "rm",
+    "run",
+    "scan",
+    "scan-analyze",
+    "scp",
+    "sudov",
+    "tail",
+    "theme",
+    "top"
+];
 
 export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: string, index: number=0): string[] {
     let allPos: string[] = [];
@@ -12,10 +56,62 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     const homeComputer = p.getHomeComputer();
     input = input.toLowerCase();
 
-    //If the command starts with './' and the index == -1, then the user
-    //has input ./partialexecutablename so autocomplete the script or program
-    //Put './' in front of each script/executable
-    if (input.startsWith("./") && index == -1) {
+    // Helper functions
+    function addAllCodingContracts() {
+        for (const cct of currServ.contracts) {
+            allPos.push(cct.fn);
+        }
+    }
+
+    function addAllLitFiles() {
+        for (const file of currServ.messages) {
+            if (!(file instanceof Message)) {
+                allPos.push(file);
+            }
+        }
+    }
+
+    function addAllMessages() {
+        for (const file of currServ.messages) {
+            if (file instanceof Message) {
+                allPos.push(file.filename);
+            }
+        }
+    }
+
+    function addAllPrograms() {
+        for (const program of currServ.programs) {
+            allPos.push(program);
+        }
+    }
+
+    function addAllScripts() {
+        for (const script of currServ.scripts) {
+            allPos.push(script.filename);
+        }
+    }
+
+    function addAllTextFiles() {
+        for (const txt of currServ.textFiles) {
+            allPos.push(txt.fn);
+        }
+    }
+
+    function isCommand(cmd: string) {
+        let t_cmd = cmd;
+        if (!t_cmd.endsWith(" ")) {
+            t_cmd += " ";
+        }
+
+        return input.startsWith(t_cmd);
+    }
+
+    /**
+     * If the command starts with './' and the index == -1, then the user
+     * has input ./partialexecutablename so autocomplete the script or program.
+     * Put './' in front of each script/executable
+     */
+    if (isCommand("./") && index == -1) {
         //All programs and scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push("./" + currServ.scripts[i].filename);
@@ -28,148 +124,96 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
         return allPos;
     }
 
-    //Autocomplete the command
+    // Autocomplete the command
     if (index == -1) {
-        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "download", "expr",
-                "free", "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
-                "ls", "lscpu", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze",
-                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
+        return commands.concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
     }
 
-    if (input.startsWith("buy ")) {
+    if (isCommand("buy")) {
         let options = [];
         for (const i in DarkWebItems) {
             const item = DarkWebItems[i]
             options.push(item.program);
         }
+
         return options.concat(Object.keys(GlobalAliases));
     }
 
-    if (input.startsWith("scp ") && index == 1) {
-        for (var iphostname in AllServers) {
-            if (AllServers.hasOwnProperty(iphostname)) {
-                allPos.push(AllServers[iphostname].ip);
-                allPos.push(AllServers[iphostname].hostname);
-            }
+    if (isCommand("scp") && index === 1) {
+        for (const iphostname in AllServers) {
+            allPos.push(AllServers[iphostname].ip);
+            allPos.push(AllServers[iphostname].hostname);
         }
+
+        return allPos;
     }
 
-    if (input.startsWith("scp ") && index == 0) {
-        //All Scripts and lit files
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (var i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof Message)) {
-                allPos.push(<string>currServ.messages[i]);
-            }
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
+    if (isCommand("scp") && index === 0) {
+        addAllScripts();
+        addAllLitFiles();
+        addAllTextFiles();
+
+        return allPos;
     }
 
-    if (input.startsWith("connect ") || input.startsWith("telnet ")) {
-        //All network connections
+    if (isCommand("connect")) {
+        // All network connections
         for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
             var serv = AllServers[currServ.serversOnNetwork[i]];
-            if (serv == null) {continue;}
-            allPos.push(serv.ip); //IP
-            allPos.push(serv.hostname); //Hostname
+            if (serv == null) { continue; }
+            allPos.push(serv.ip);
+            allPos.push(serv.hostname);
         }
+
         return allPos;
     }
 
-    if (input.startsWith("kill ") || input.startsWith("tail ") ||
-        input.startsWith("mem ") || input.startsWith("check ")) {
-        //All Scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
+    if (isCommand("kill") || isCommand("tail") || isCommand("mem") || isCommand("check")) {
+        addAllScripts();
+
         return allPos;
     }
 
-    if (input.startsWith("nano ")) {
-        //Scripts and text files and .fconf
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
+    if (isCommand("nano")) {
+        addAllScripts();
+        addAllTextFiles();
         allPos.push(".fconf");
+
         return allPos;
     }
 
-    if (input.startsWith("rm ")) {
-        for (let i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (let i = 0; i < currServ.programs.length; ++i) {
-            allPos.push(currServ.programs[i]);
-        }
-        for (let i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof Message)) {
-                allPos.push(<string>currServ.messages[i]);
-            }
-        }
-        for (let i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (let i = 0; i < currServ.contracts.length; ++i) {
-            allPos.push(currServ.contracts[i].fn);
-        }
+    if (isCommand("rm")) {
+        addAllScripts();
+        addAllPrograms();
+        addAllLitFiles();
+        addAllTextFiles();
+        addAllCodingContracts();
+
         return allPos;
     }
 
-    if (input.startsWith("run ")) {
-        //All programs, scripts, and contracts
-        for (let i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
+    if (isCommand("run")) {
+        addAllScripts();
+        addAllPrograms();
+        addAllCodingContracts();
 
-        //Programs are on home computer
-        for (let i = 0; i < homeComputer.programs.length; ++i) {
-            allPos.push(homeComputer.programs[i]);
-        }
-
-        for (let i = 0; i < currServ.contracts.length; ++i) {
-            allPos.push(currServ.contracts[i].fn);
-        }
         return allPos;
     }
 
-    if (input.startsWith("cat ")) {
-        for (var i = 0; i < currServ.messages.length; ++i) {
-            if (currServ.messages[i] instanceof Message) {
-                const msg: Message = <Message>currServ.messages[i];
-                allPos.push(msg.filename);
-            } else {
-                allPos.push(<string>currServ.messages[i]);
-            }
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
+    if (isCommand("cat")) {
+        addAllMessages();
+        addAllLitFiles();
+        addAllTextFiles();
+
         return allPos;
     }
 
-    if (input.startsWith("download ")) {
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
+    if (isCommand("download") || isCommand("mv")) {
+        addAllScripts();
+        addAllTextFiles();
+
+        return allPos;
     }
 
-    if (input.startsWith("ls ")) {
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-    }
     return allPos;
 }

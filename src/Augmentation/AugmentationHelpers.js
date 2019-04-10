@@ -2097,12 +2097,6 @@ function displayAugmentationsContent(contentEl) {
         innerText:"Purchased Augmentations",
     }));
 
-    //Bladeburner text, once mechanic is unlocked
-    var bladeburnerText = "\n";
-    if (Player.bitNodeN === 6 || hasBladeburnerSF) {
-        bladeburnerText = "Bladeburner Progress\n\n";
-    }
-
     contentEl.appendChild(createElement("pre", {
         width:"70%", whiteSpace:"pre-wrap", display:"block",
         innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
@@ -2114,7 +2108,6 @@ function displayAugmentationsContent(contentEl) {
                   "Hacknet Nodes\n" +
                   "Faction/Company reputation\n" +
                   "Stocks\n" +
-                  bladeburnerText +
                   "Installing Augmentations lets you start over with the perks and benefits granted by all " +
                   "of the Augmentations you have ever installed. Also, you will keep any scripts and RAM/Core upgrades " +
                   "on your home computer (but you will lose all programs besides NUKE.exe)."

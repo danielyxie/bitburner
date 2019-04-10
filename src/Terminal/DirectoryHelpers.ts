@@ -4,6 +4,29 @@
  */
 
 /**
+ * Removes leading forward slash ("/") from a string.
+ */
+export function removeLeadingSlash(s: string): string {
+    if (s.startsWith("/")) {
+        return s.slice(1);
+    }
+
+    return s;
+}
+
+/**
+ * Removes trailing forward slash ("/") from a string.
+ * Note that this will also remove the slash if it is the leading slash (i.e. if s = "/")
+ */
+export function removeTrailingSlash(s: string): string {
+    if (s.endsWith("/")) {
+        return s.slice(0, -1);
+    }
+
+    return s;
+}
+
+/**
  * Checks whether a string is a valid filename. Only used for the filename itself,
  * not the entire filepath
  */
@@ -39,12 +62,18 @@ export function isValidDirectoryPath(path: string): boolean {
 
     if (t_path.length === 0) { return false; }
     if (t_path.length === 1) {
-        return isValidDirectoryName(t_path);
+        return t_path === "/";
     }
 
-    // Leading/Trailing slashes dont matter for this
-    if (t_path.startsWith("/")) { t_path = t_path.slice(1); }
-    if (t_path.endsWith("/")) { t_path = t_path.slice(0, -1); }
+    // A full path must have a leading slash, but we'll ignore it for the checks
+    if (t_path.startsWith("/")) {
+        t_path = t_path.slice(1);
+    } else {
+        return false;
+    }
+
+    // Trailing slash does not matter
+    t_path = removeTrailingSlash(t_path);
 
     // Check that every section of the path is a valid directory name
     const dirs = t_path.split("/");
@@ -69,9 +98,8 @@ export function isValidFilePath(path: string): boolean {
     // Impossible for filename to have less than length of 3
     if (t_path.length < 3) { return false; }
 
-    // Filename can't end with trailing slash. Leading slash can be ignored
-    if (t_path.endsWith("")) { return false; }
-    if (t_path.startsWith("/")) { t_path = t_path.slice(1); }
+    // Full filepath can't end with trailing slash because it must be a file
+    if (t_path.endsWith("/")) { return false; }
 
     // Everything after the last forward slash is the filename. Everything before
     // it is the file path
@@ -81,23 +109,55 @@ export function isValidFilePath(path: string): boolean {
     }
 
     const fn = t_path.slice(fnSeparator + 1);
-    const dirPath = t_path.slice(0, fnSeparator);
+    const dirPath = t_path.slice(0, fnSeparator + 1);
 
-    return (isValidDirectoryPath(dirPath) && isValidFilename(fn));
+    return isValidDirectoryPath(dirPath) && isValidFilename(fn);
+}
+
+/**
+ * Returns a formatter string for the first parent directory in a filepath. For example:
+ * /home/var/test/ -> home/
+ * If there is no first parent directory, then it returns "/" for root
+ */
+export function getFirstParentDirectory(path: string): string {
+    let t_path = path;
+    t_path = removeLeadingSlash(t_path);
+    t_path = removeTrailingSlash(t_path);
+
+    let dirs = t_path.split("/");
+    if (dirs.length === 0) { return "/"; }
+
+    return dirs[0] + "/";
+}
+
+/**
+ * Checks if a file path refers to a file in the root directory.
+ */
+export function isInRootDirectory(path: string): boolean {
+    if (!isValidFilePath(path)) { return false; }
+    if (path == null || path.length === 0) { return false; }
+
+    return (path.lastIndexOf("/") <= 0);
 }
 
 /**
  * Evaluates a directory path, including the processing of linux dots.
  * Returns the full, proper path, or null if an invalid path is passed in
  */
-export function evaluateDirectoryPath(path: string): string | null {
-    if (!isValidDirectoryPath(path)) { return null; }
-
+export function evaluateDirectoryPath(path: string, currPath?: string): string | null {
     let t_path = path;
 
+    // If the path begins with a slash, then its an absolute path. Otherwise its relative
+    // For relative paths, we need to prepend the current directory
+    if (!t_path.startsWith("/") && currPath != null) {
+        t_path = currPath + (currPath.endsWith("/") ? "" : "/") + t_path;
+    }
+
+    if (!isValidDirectoryPath(t_path)) { return null; }
+
     // Trim leading/trailing slashes
-    if (t_path.startsWith("/")) { t_path = t_path.slice(1); }
-    if (t_path.endsWith("/")) { t_path = t_path.slice(0, -1); }
+    t_path = removeLeadingSlash(t_path);
+    t_path = removeTrailingSlash(t_path);
 
     const dirs = t_path.split("/");
     const reconstructedPath: string[] = [];
@@ -117,5 +177,44 @@ export function evaluateDirectoryPath(path: string): string | null {
         }
     }
 
-    return reconstructedPath.join("/");
+    return "/" + reconstructedPath.join("/");
+}
+
+/**
+ * Evaluates a file path, including the processing of linux dots.
+ * Returns the full, proper path, or null if an invalid path is passed in
+ */
+export function evaluateFilePath(path: string, currPath?: string): string | null {
+    let t_path = path;
+
+    // If the path begins with a slash, then its an absolute path. Otherwise its relative
+    // For relative paths, we need to prepend the current directory
+    if (!t_path.startsWith("/") && currPath != null) {
+        t_path = currPath + (currPath.endsWith("/") ? "" : "/") + t_path;
+    }
+
+    if (!isValidFilePath(t_path)) { return null; }
+
+    // Trim leading/trailing slashes
+    t_path = removeLeadingSlash(t_path);
+
+    const dirs = t_path.split("/");
+    const reconstructedPath: string[] = [];
+
+    for (const dir of dirs) {
+        if (dir === ".") {
+            // Current directory, do nothing
+            continue;
+        } else if (dir === "..") {
+            // Parent directory
+            const res = reconstructedPath.pop();
+            if (res == null) {
+                return null; // Array was empty, invalid path
+            }
+        } else {
+            reconstructedPath.push(dir);
+        }
+    }
+
+    return "/" + reconstructedPath.join("/");
 }

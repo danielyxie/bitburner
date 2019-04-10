@@ -274,6 +274,9 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.46.1
+    * Added a very rudimentary directory system to the Terminal
+    ** Details here: https://bitburner.readthedocs.io/en/latest/basicgameplay/terminal.html#filesystem-directories
+
     * Added numHashes(), hashCost(), and spendHashes() functions to the Netscript Hacknet Node API
     * 'Generate Coding Contract' hash upgrade is now more expensive
     * 'Generate Coding Contract' hash upgrade now generates the contract randomly on the server, rather than on home computer

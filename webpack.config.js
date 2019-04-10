@@ -126,6 +126,7 @@ module.exports = (env, argv) => {
             }
         },
         devServer: {
+            port: 8000,
             publicPath: `/`,
         },
         resolve: {

@@ -17,7 +17,7 @@ import { AllServers }                           from "../Server/AllServers";
 import { processSingleServerGrowth }            from "../Server/ServerHelpers";
 import { Settings }                             from "../Settings/Settings";
 import { EditorSetting }                        from "../Settings/SettingEnums";
-import { isValidFilename }                      from "../Terminal/DirectoryHelpers";
+import { isValidFilePath }                      from "../Terminal/DirectoryHelpers";
 import {TextFile}                               from "../TextFile";
 
 import {Page, routing}                          from "../ui/navigationTracking";
@@ -248,7 +248,7 @@ function saveAndCloseScriptEditor() {
         return;
     }
 
-    if (filename !== ".fconf" && !isValidFilename(filename)) {
+    if (filename !== ".fconf" && !isValidFilePath(filename)) {
         dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
         return;
     }

@@ -2315,56 +2315,14 @@ function NetscriptFunctions(workerScript) {
             if (ip == null || ip === "") {
                 ip = workerScript.serverIp;
             }
-            var s = getServer(ip);
-            if (s == null) {
-                throw makeRuntimeRejectMsg(workerScript, `Invalid server specified for rm(): ${ip}`);
+            const s = safeGetServer(ip, "rm");
+
+            const status = s.removeFile(fn);
+            if (!status.res) {
+                workerScript.log(status.msg);
             }
 
-            if (fn.endsWith(".exe")) {
-                for (var i = 0; i < s.programs.length; ++i) {
-                    if (s.programs[i] === fn) {
-                       s.programs.splice(i, 1);
-                       return true;
-                    }
-                }
-            } else if (isScriptFilename(fn)) {
-                for (var i = 0; i < s.scripts.length; ++i) {
-                    if (s.scripts[i].filename === fn) {
-                        //Check that the script isnt currently running
-                        for (var j = 0; j < s.runningScripts.length; ++j) {
-                            if (s.runningScripts[j].filename === fn) {
-                                workerScript.scriptRef.log("Cannot delete a script that is currently running!");
-                                return false;
-                            }
-                        }
-                        s.scripts.splice(i, 1);
-                        return true;
-                    }
-                }
-            } else if (fn.endsWith(".lit")) {
-                for (var i = 0; i < s.messages.length; ++i) {
-                    var f = s.messages[i];
-                    if (!(f instanceof Message) && isString(f) && f === fn) {
-                        s.messages.splice(i, 1);
-                        return true;
-                    }
-                }
-            } else if (fn.endsWith(".txt")) {
-                for (var i = 0; i < s.textFiles.length; ++i) {
-                    if (s.textFiles[i].fn === fn) {
-                        s.textFiles.splice(i, 1);
-                        return true;
-                    }
-                }
-            } else if (fn.endsWith(".cct")) {
-                for (var i = 0; i < s.contracts.length; ++i) {
-                    if (s.contracts[i].fn === fn) {
-                        s.contracts.splice(i, 1);
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return status.res;
         },
         scriptRunning : function(scriptname, ip) {
             if (workerScript.checkingRam) {

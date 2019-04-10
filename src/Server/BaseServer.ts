@@ -6,6 +6,7 @@ import { Message } from "../Message/Message";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { TextFile } from "../TextFile";
+import { IReturnStatus } from "../types";
 
 import { isScriptFilename } from "../Script/ScriptHelpersTS";
 
@@ -123,6 +124,20 @@ export class BaseServer {
         return null;
     }
 
+    /**
+     * Returns boolean indicating whether the given script is running on this server
+     */
+    isRunning(fn: string): boolean {
+        // Check that the script isnt currently running
+        for (const runningScriptObj of this.runningScripts) {
+            if (runningScriptObj.filename === fn) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     removeContract(contract: CodingContract) {
         if (contract instanceof CodingContract) {
             this.contracts = this.contracts.filter((c) => {
@@ -133,6 +148,60 @@ export class BaseServer {
                 return c.fn !== contract;
             });
         }
+    }
+
+    /**
+     * Remove a file from the server
+     * @param fn {string} Name of file to be deleted
+     * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
+     */
+    removeFile(fn: string): IReturnStatus {
+        if (fn.endsWith(".exe")) {
+            for (let i = 0; i < this.programs.length; ++i) {
+                if (this.programs[i] === fn) {
+                   this.programs.splice(i, 1);
+                   return { res: true };
+                }
+            }
+        } else if (isScriptFilename(fn)) {
+            for (let i = 0; i < this.scripts.length; ++i) {
+                if (this.scripts[i].filename === fn) {
+                    if (this.isRunning(fn)) {
+                        return {
+                            res: false,
+                            msg: "Cannot delete a script that is currently running!",
+                        };
+                    }
+
+                    this.scripts.splice(i, 1);
+                    return { res: true };
+                }
+            }
+        } else if (fn.endsWith(".lit")) {
+            for (let i = 0; i < this.messages.length; ++i) {
+                let f = this.messages[i];
+                if (typeof f === "string" && f === fn) {
+                    this.messages.splice(i, 1);
+                    return { res: true };
+                }
+            }
+        } else if (fn.endsWith(".txt")) {
+            for (let i = 0; i < this.textFiles.length; ++i) {
+                if (this.textFiles[i].fn === fn) {
+                    this.textFiles.splice(i, 1);
+                    return { res: true };
+                }
+            }
+        } else if (fn.endsWith(".cct")) {
+            for (let i = 0; i < this.contracts.length; ++i) {
+                if (this.contracts[i].fn === fn) {
+                    this.contracts.splice(i, 1);
+                    return { res: true };
+                }
+            }
+        }
+
+        return { res: false, msg: "No such file exists" };
     }
 
     /**

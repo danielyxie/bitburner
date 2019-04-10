@@ -98,9 +98,10 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer) {
         yesNoTxtInpBoxClose();
     });
 
-    yesNoTxtInpBoxCreate("Would you like to purchase a new server with " + ram +
-                         "GB of RAM for $" + numeralWrapper.formatMoney(cost) + "?<br><br>" +
-                         "Please enter the server hostname below:<br>");
+    yesNoTxtInpBoxCreate(
+        `Would you like to purchase a new server with ${ram} GB of RAM for ` +
+        `${numeralWrapper.formatMoney(cost)}?<br><br>Please enter the server hostname below:<br>`
+    );
 }
 
 /**
