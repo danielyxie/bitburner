@@ -1,117 +1,149 @@
-var sprintf = require('sprintf-js').sprintf,
-    vsprintf = require('sprintf-js').vsprintf
+const sprintf = require("sprintf-js").sprintf;
+const vsprintf = require("sprintf-js").vsprintf;
 
-import {updateActiveScriptsItems}                   from "./ActiveScriptsUI";
-import { Augmentation }                             from "./Augmentation/Augmentation";
-import { Augmentations }                            from "./Augmentation/Augmentations";
-import { augmentationExists,
-         installAugmentations }                     from "./Augmentation/AugmentationHelpers";
-import { AugmentationNames }                        from "./Augmentation/data/AugmentationNames";
-import { BitNodeMultipliers }                       from "./BitNode/BitNodeMultipliers";
-import { findCrime }                                from "./Crime/CrimeHelpers";
-import {Bladeburner}                                from "./Bladeburner";
-import {Company}                                    from "./Company/Company";
-import {Companies, companyExists}                   from "./Company/Companies";
-import {CompanyPosition}                            from "./Company/CompanyPosition";
-import {CompanyPositions}                           from "./Company/CompanyPositions";
-import {CONSTANTS}                                  from "./Constants";
-import { DarkWebItems }                             from "./DarkWeb/DarkWebItems";
-import {calculateHackingChance,
-        calculateHackingExpGain,
-        calculatePercentMoneyHacked,
-        calculateHackingTime,
-        calculateGrowTime,
-        calculateWeakenTime}                        from "./Hacking";
-import {AllGangs}                                   from "./Gang";
-import { Faction }                                  from "./Faction/Faction";
-import { Factions,
-         factionExists }                            from "./Faction/Factions";
-import { joinFaction,
-         purchaseAugmentation }                     from "./Faction/FactionHelpers";
-import { FactionWorkType }                          from "./Faction/FactionWorkTypeEnum";
-import { netscriptCanGrow,
-         netscriptCanHack,
-         netscriptCanWeaken }                       from "./Hacking/netscriptCanHack";
+import { updateActiveScriptsItems } from "./ActiveScriptsUI";
+import { Augmentation } from "./Augmentation/Augmentation";
+import { Augmentations } from "./Augmentation/Augmentations";
+import {
+    augmentationExists,
+    installAugmentations
+} from "./Augmentation/AugmentationHelpers";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
+import { findCrime } from "./Crime/CrimeHelpers";
+import { Bladeburner } from "./Bladeburner";
+import { Company } from "./Company/Company";
+import { Companies, companyExists } from "./Company/Companies";
+import { CompanyPosition } from "./Company/CompanyPosition";
+import { CompanyPositions } from "./Company/CompanyPositions";
+import { CONSTANTS } from "./Constants";
+import { DarkWebItems } from "./DarkWeb/DarkWebItems";
+import {
+    calculateHackingChance,
+    calculateHackingExpGain,
+    calculatePercentMoneyHacked,
+    calculateHackingTime,
+    calculateGrowTime,
+    calculateWeakenTime
+} from "./Hacking";
+import { AllGangs } from "./Gang";
+import { Faction } from "./Faction/Faction";
+import { Factions, factionExists } from "./Faction/Factions";
+import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
+import { FactionWorkType } from "./Faction/FactionWorkTypeEnum";
+import {
+    netscriptCanGrow,
+    netscriptCanHack,
+    netscriptCanWeaken
+} from "./Hacking/netscriptCanHack";
 
-import { getCostOfNextHacknetNode,
-         getCostOfNextHacknetServer,
-         purchaseHacknet,
-         hasHacknetServers,
-         purchaseHashUpgrade }                      from "./Hacknet/HacknetHelpers";
-import { CityName }                                 from "./Locations/data/CityNames";
-import { LocationName }                             from "./Locations/data/LocationNames";
+import {
+    getCostOfNextHacknetNode,
+    getCostOfNextHacknetServer,
+    purchaseHacknet,
+    hasHacknetServers,
+    purchaseHashUpgrade
+} from "./Hacknet/HacknetHelpers";
+import { CityName } from "./Locations/data/CityNames";
+import { LocationName } from "./Locations/data/LocationNames";
 
-import { HacknetServer }                            from "./Hacknet/HacknetServer";
-import { Message }                                  from "./Message/Message";
-import { Messages }                                 from "./Message/MessageHelpers";
-import {inMission}                                  from "./Missions";
-import {Player}                                     from "./Player";
-import { Programs }                                 from "./Programs/Programs";
-import { Script }                                   from "./Script/Script";
-import { findRunningScript }                        from "./Script/ScriptHelpers";
-import { isScriptFilename }                         from "./Script/ScriptHelpersTS";
-import { AllServers,
-         AddToAllServers }                          from "./Server/AllServers";
-import { Server }                                   from "./Server/Server";
-import { GetServerByHostname,
-         getServer,
-         getServerOnNetwork,
-         numCycleForGrowth,
-         processSingleServerGrowth }                from "./Server/ServerHelpers";
-import { getPurchaseServerCost,
-         getPurchaseServerLimit,
-         getPurchaseServerMaxRam }                  from "./Server/ServerPurchases";
-import {Settings}                                   from "./Settings/Settings";
-import {SpecialServerIps}                           from "./Server/SpecialServerIps";
-import {Stock}                                      from "./StockMarket/Stock";
-import {StockMarket, StockSymbols, SymbolToStockMap,
-        initStockMarket, initSymbolToStockMap, buyStock,
-        sellStock, updateStockPlayerPosition,
-        shortStock, sellShort, OrderTypes,
-        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
-import { getStockmarket4SDataCost,
-         getStockMarket4STixApiCost }               from "./StockMarket/StockMarketCosts";
-import { SourceFileFlags }                          from "./SourceFile/SourceFileFlags"
-import {TextFile, getTextFile, createTextFile}      from "./TextFile";
+import { HacknetServer } from "./Hacknet/HacknetServer";
+import { Message } from "./Message/Message";
+import { Messages } from "./Message/MessageHelpers";
+import { inMission } from "./Missions";
+import { Player } from "./Player";
+import { Programs } from "./Programs/Programs";
+import { Script } from "./Script/Script";
+import { findRunningScript } from "./Script/ScriptHelpers";
+import { isScriptFilename } from "./Script/ScriptHelpersTS";
+import { AllServers, AddToAllServers } from "./Server/AllServers";
+import { Server } from "./Server/Server";
+import {
+    GetServerByHostname,
+    getServer,
+    getServerOnNetwork,
+    numCycleForGrowth,
+    processSingleServerGrowth
+} from "./Server/ServerHelpers";
+import {
+    getPurchaseServerCost,
+    getPurchaseServerLimit,
+    getPurchaseServerMaxRam
+} from "./Server/ServerPurchases";
+import { Settings } from "./Settings/Settings";
+import { SpecialServerIps } from "./Server/SpecialServerIps";
+import { Stock } from "./StockMarket/Stock";
+import {
+    StockMarket,
+    StockSymbols,
+    SymbolToStockMap,
+    initStockMarket,
+    initSymbolToStockMap,
+    buyStock,
+    sellStock,
+    updateStockPlayerPosition,
+    shortStock,
+    sellShort,
+    OrderTypes,
+    PositionTypes,
+    placeOrder,
+    cancelOrder
+} from "./StockMarket/StockMarket";
+import {
+    getStockmarket4SDataCost,
+    getStockMarket4STixApiCost
+} from "./StockMarket/StockMarketCosts";
+import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
+import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
-import {unknownBladeburnerActionErrorMessage,
-        unknownBladeburnerExceptionMessage,
-        checkBladeburnerAccess}                     from "./NetscriptBladeburner";
-import * as nsGang                                  from "./NetscriptGang";
-import {WorkerScript, workerScripts,
-        killWorkerScript, NetscriptPorts}           from "./NetscriptWorker";
-import {makeRuntimeRejectMsg, netscriptDelay,
-        runScriptFromScript}                        from "./NetscriptEvaluator";
-import {NetscriptPort}                              from "./NetscriptPort";
-import { SleeveTaskType }                           from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
-import { findSleevePurchasableAugs }                from "./PersonObjects/Sleeve/Sleeve";
+import {
+    unknownBladeburnerActionErrorMessage,
+    unknownBladeburnerExceptionMessage,
+    checkBladeburnerAccess
+} from "./NetscriptBladeburner";
+import * as nsGang from "./NetscriptGang";
+import {
+    WorkerScript,
+    workerScripts,
+    killWorkerScript,
+    NetscriptPorts
+} from "./NetscriptWorker";
+import {
+    makeRuntimeRejectMsg,
+    netscriptDelay,
+    runScriptFromScript
+} from "./NetscriptEvaluator";
+import { NetscriptPort } from "./NetscriptPort";
+import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
+import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/Sleeve";
 
-import {Page, routing}                              from "./ui/navigationTracking";
-import {numeralWrapper}                             from "./ui/numeralFormat";
-import {post}                                       from "./ui/postToTerminal";
-import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
-import { is2DArray }                                from "./utils/helpers/is2DArray";
+import { Page, routing } from "./ui/navigationTracking";
+import { numeralWrapper } from "./ui/numeralFormat";
+import { post } from "./ui/postToTerminal";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
+import { is2DArray } from "./utils/helpers/is2DArray";
 
-import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {isPowerOfTwo}                               from "../utils/helpers/isPowerOfTwo";
-import {arrayToString}                              from "../utils/helpers/arrayToString";
-import {createRandomIp}                             from "../utils/IPAddress";
-import {formatNumber, isHTML}                       from "../utils/StringHelperFunctions";
-import {isString}                                   from "../utils/helpers/isString";
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
+import { arrayToString } from "../utils/helpers/arrayToString";
+import { createRandomIp } from "../utils/IPAddress";
+import { formatNumber, isHTML } from "../utils/StringHelperFunctions";
+import { isString } from "../utils/helpers/isString";
 
-import { createElement }                            from "../utils/uiHelpers/createElement";
-import { createPopup }                              from "../utils/uiHelpers/createPopup";
-import { removeElementById }                        from "../utils/uiHelpers/removeElementById";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { createPopup } from "../utils/uiHelpers/createPopup";
+import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
-var hasCorporationSF            = false, //Source-File 3
-    hasSingularitySF            = false, //Source-File 4
-    hasAISF                     = false, //Source-File 5
-    hasBladeburnerSF            = false, //Source-File 6
-    hasBladeburner2079SF        = false, //Source-File 7
-    hasWallStreetSF             = false, //Source-File 8
-    hasBn11SF                   = false; //Source-File 11
+let hasCorporationSF            = false; //Source-File 3
+let hasSingularitySF            = false; //Source-File 4
+let hasAISF                     = false; //Source-File 5
+let hasBladeburnerSF            = false; //Source-File 6
+let hasBladeburner2079SF        = false; //Source-File 7
+let hasWallStreetSF             = false; //Source-File 8
+let hasBn11SF                   = false; //Source-File 11
 
-var singularitySFLvl=1, wallStreetSFLvl=1;
+let singularitySFLvl = 1;
+let wallStreetSFLvl = 1;
 
 var possibleLogs = {
     ALL: true,

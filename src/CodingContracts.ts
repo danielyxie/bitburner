@@ -1,15 +1,22 @@
-import { codingContractTypesMetadata,
-         DescriptionFunc,
-         GeneratorFunc,
-         SolverFunc }                       from "./data/codingcontracttypes";
+import {
+    codingContractTypesMetadata,
+    DescriptionFunc,
+    GeneratorFunc,
+    SolverFunc
+} from "./data/codingcontracttypes";
 
-import { IMap }                             from "./types";
+import { IMap } from "./types";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import {
+    Generic_fromJSON,
+    Generic_toJSON,
+    Reviver
+} from "../utils/JSONReviver";
 import { KEY } from "../utils/helpers/keyCodes";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
+
 
 
 

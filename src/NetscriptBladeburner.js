@@ -1,6 +1,6 @@
-import {Player}               from "./Player";
-import {Bladeburner}          from "./Bladeburner";
-import {makeRuntimeRejectMsg} from "./NetscriptEvaluator";
+import { Player } from "./Player";
+import { Bladeburner } from "./Bladeburner";
+import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 
 function unknownBladeburnerActionErrorMessage(functionName, actionType, actionName) {
 	return `ERROR: bladeburner.${functionName}() failed due to an invalid action specified. ` +

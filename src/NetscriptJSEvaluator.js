@@ -1,4 +1,4 @@
-import {makeRuntimeRejectMsg} from "./NetscriptEvaluator";
+import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 
 // Makes a blob that contains the code of a given script.
 export function makeScriptBlob(code) {

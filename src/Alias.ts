@@ -1,5 +1,5 @@
-import { IMap }                 from "./types";
-import { post }                 from "./ui/postToTerminal";
+import { IMap } from "./types";
+import { post } from "./ui/postToTerminal";
 
 export let Aliases: IMap<string> = {};
 export let GlobalAliases: IMap<string> = {};

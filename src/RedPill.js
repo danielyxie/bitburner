@@ -1,18 +1,22 @@
-import { BitNodes }                             from "./BitNode/BitNode";
-import { Engine }                               from "./engine";
-import { Player }                               from "./Player";
-import { prestigeSourceFile }                   from "./Prestige";
-import { SourceFiles,
-         SourceFile }                           from "./SourceFile";
-import { PlayerOwnedSourceFile }                from "./SourceFile/PlayerOwnedSourceFile";
-import { Terminal }                             from "./Terminal";
-import { setTimeoutRef }                        from "./utils/SetTimeoutRef";
+import { BitNodes } from "./BitNode/BitNode";
+import { Engine } from "./engine";
+import { Player } from "./Player";
+import { prestigeSourceFile } from "./Prestige";
+import { SourceFiles, SourceFile } from "./SourceFile";
+import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
+import { Terminal } from "./Terminal";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
-import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
-import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
+import { dialogBoxCreate } from "../utils/DialogBox";
+import {
+    yesNoBoxCreate,
+    yesNoBoxGetYesButton,
+    yesNoBoxGetNoButton,
+    yesNoBoxClose
+} from "../utils/YesNoBox";
+import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
+import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
+
 
 /* RedPill.js
  *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
