@@ -1,55 +1,68 @@
-import {deleteActiveScriptsItem}                from "./ActiveScriptsUI";
-import { Augmentations }                        from "./Augmentation/Augmentations";
-import { augmentationExists,
-         initAugmentations }                    from "./Augmentation/AugmentationHelpers";
-import { AugmentationNames }                    from "./Augmentation/data/AugmentationNames";
-import { initBitNodeMultipliers }               from "./BitNode/BitNode";
-import {Bladeburner}                            from "./Bladeburner";
-import {writeCinematicText}                     from "./CinematicText";
-import {Companies, initCompanies}               from "./Company/Companies";
-import { resetIndustryResearchTrees }           from "./Corporation/IndustryData";
-import { Programs }                             from "./Programs/Programs";
-import {Engine}                                 from "./engine";
-import { Faction }                              from "./Faction/Faction";
-import { Factions,
-         initFactions }                         from "./Faction/Factions";
-import { joinFaction }                          from "./Faction/FactionHelpers";
-import {deleteGangDisplayContent}               from "./Gang";
-import { Message }                              from "./Message/Message";
-import { initMessages,
-         Messages }                             from "./Message/MessageHelpers";
-import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions";
-import {WorkerScript, workerScripts,
-        prestigeWorkerScripts}                  from "./NetscriptWorker";
-import {Player}                                 from "./Player";
+import { deleteActiveScriptsItem } from "./ActiveScriptsUI";
+import { Augmentations } from "./Augmentation/Augmentations";
+import {
+    augmentationExists,
+    initAugmentations
+} from "./Augmentation/AugmentationHelpers";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
+import { initBitNodeMultipliers } from "./BitNode/BitNode";
+import { Bladeburner } from "./Bladeburner";
+import { writeCinematicText } from "./CinematicText";
+import { Companies, initCompanies } from "./Company/Companies";
+import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
+import { Programs } from "./Programs/Programs";
+import { Engine } from "./engine";
+import { Faction } from "./Faction/Faction";
+import { Factions, initFactions } from "./Faction/Factions";
+import { joinFaction } from "./Faction/FactionHelpers";
+import { deleteGangDisplayContent } from "./Gang";
+import { Message } from "./Message/Message";
+import { initMessages, Messages } from "./Message/MessageHelpers";
+import { initSingularitySFFlags, hasWallStreetSF } from "./NetscriptFunctions";
+import {
+    WorkerScript,
+    workerScripts,
+    prestigeWorkerScripts
+} from "./NetscriptWorker";
+import { Player } from "./Player";
 
-import { AllServers,
-         AddToAllServers,
-         initForeignServers,
-         prestigeAllServers }                   from "./Server/AllServers";
-import { Server }                               from "./Server/Server"
-import { prestigeHomeComputer }                 from "./Server/ServerHelpers";
-import { SourceFileFlags,
-         updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
-import { SpecialServerIps,
-         SpecialServerIpsMap,
-         prestigeSpecialServerIps,
-         SpecialServerNames}                    from "./Server/SpecialServerIps";
-import {initStockMarket, initSymbolToStockMap,
-        stockMarketContentCreated,
-        setStockMarketContentCreated}           from "./StockMarket/StockMarket";
-import {Terminal, postNetburnerText}            from "./Terminal";
+import {
+    AllServers,
+    AddToAllServers,
+    initForeignServers,
+    prestigeAllServers
+} from "./Server/AllServers";
+import { Server } from "./Server/Server";
+import { prestigeHomeComputer } from "./Server/ServerHelpers";
+import {
+    SourceFileFlags,
+    updateSourceFileFlags
+} from "./SourceFile/SourceFileFlags";
+import {
+    SpecialServerIps,
+    SpecialServerIpsMap,
+    prestigeSpecialServerIps,
+    SpecialServerNames
+} from "./Server/SpecialServerIps";
+import {
+    initStockMarket,
+    initSymbolToStockMap,
+    stockMarketContentCreated,
+    setStockMarketContentCreated
+} from "./StockMarket/StockMarket";
+import { Terminal, postNetburnerText } from "./Terminal";
 
-import {Page, routing}                          from "./ui/navigationTracking";
+import { Page, routing } from "./ui/navigationTracking";
 
-import Decimal                                  from "decimal.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
-import {createElement}                          from "../utils/uiHelpers/createElement";
-import {createPopup}                            from "../utils/uiHelpers/createPopup";
-import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { createPopup } from "../utils/uiHelpers/createPopup";
 
-let BitNode8StartingMoney = 250e6;
+import Decimal from "decimal.js";
+
+const BitNode8StartingMoney = 250e6;
 
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {

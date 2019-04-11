@@ -1,12 +1,15 @@
-import { Engine }                       from "./engine";
-import { Player }                       from "./Player";
-import { Settings }                     from "./Settings/Settings";
-import { initializeMainMenuLinks }      from "./ui/MainMenu/Links";
-import { exceptionAlert }               from "../utils/helpers/exceptionAlert";
-import { clearEventListeners }          from "../utils/uiHelpers/clearEventListeners";
-import { createElement }                from "../utils/uiHelpers/createElement";
-import { createPopup }                  from "../utils/uiHelpers/createPopup";
-import { removeElementById }            from "../utils/uiHelpers/removeElementById";
+import { Engine } from "./engine";
+import { Player } from "./Player";
+import { Settings } from "./Settings/Settings";
+
+import { initializeMainMenuLinks } from "./ui/MainMenu/Links";
+
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { createPopup } from "../utils/uiHelpers/createPopup";
+import { removeElementById } from "../utils/uiHelpers/removeElementById";
+
 
 //Ordered array of keys to Interactive Tutorial Steps
 const orderedITutorialSteps = [
