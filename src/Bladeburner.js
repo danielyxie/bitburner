@@ -1,34 +1,40 @@
-import { Augmentations }                            from "./Augmentation/Augmentations";
-import { AugmentationNames }                        from "./Augmentation/data/AugmentationNames";
-import { BitNodeMultipliers }                       from "./BitNode/BitNodeMultipliers";
-import { CONSTANTS }                                from "./Constants";
-import { Engine }                                   from "./engine";
-import { Faction }                                  from "./Faction/Faction";
-import { Factions, factionExists }                  from "./Faction/Factions";
-import { joinFaction, displayFactionContent }       from "./Faction/FactionHelpers";
-import { Player }                                   from "./Player";
-import { hackWorldDaemon, redPillFlag }             from "./RedPill";
-import { numeralWrapper }                           from "./ui/numeralFormat";
-import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
-import { KEY }                                      from "../utils/helpers/keyCodes";
+import { Augmentations } from "./Augmentation/Augmentations";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "./Constants";
+import { Engine } from "./engine";
+import { Faction } from "./Faction/Faction";
+import { Factions, factionExists } from "./Faction/Factions";
+import { joinFaction, displayFactionContent } from "./Faction/FactionHelpers";
+import { Player } from "./Player";
+import { hackWorldDaemon, redPillFlag } from "./RedPill";
 
-import { createProgressBarText }                    from "../utils/helpers/createProgressBarText";
-import { dialogBoxCreate }                          from "../utils/DialogBox";
-import { removeChildrenFromElement }                from "../utils/uiHelpers/removeChildrenFromElement";
-import { Reviver, Generic_toJSON,
-         Generic_fromJSON }                         from "../utils/JSONReviver";
-import { addOffset }                                from "../utils/helpers/addOffset";
-import { appendLineBreaks }                         from "../utils/uiHelpers/appendLineBreaks";
-import { clearObject }                              from "../utils/helpers/clearObject";
-import { createElement }                            from "../utils/uiHelpers/createElement";
-import { createPopup }                              from "../utils/uiHelpers/createPopup";
-import { Page, routing }                            from "./ui/navigationTracking";
-import { exceptionAlert }                           from "../utils/helpers/exceptionAlert";
-import { formatNumber }                             from "../utils/StringHelperFunctions";
-import { getRandomInt }                             from "../utils/helpers/getRandomInt";
-import { getTimestamp }                             from "../utils/helpers/getTimestamp";
-import { removeElement }                            from "../utils/uiHelpers/removeElement";
-import { removeElementById }                        from "../utils/uiHelpers/removeElementById";
+import { Page, routing } from "./ui/navigationTracking";
+import { numeralWrapper } from "./ui/numeralFormat";
+
+import { dialogBoxCreate } from "../utils/DialogBox";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON
+} from "../utils/JSONReviver";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
+import { formatNumber } from "../utils/StringHelperFunctions";
+
+import { addOffset } from "../utils/helpers/addOffset";
+import { clearObject } from "../utils/helpers/clearObject";
+import { createProgressBarText } from "../utils/helpers/createProgressBarText";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { getTimestamp } from "../utils/helpers/getTimestamp";
+import { KEY } from "../utils/helpers/keyCodes";
+
+import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
+import { appendLineBreaks } from "../utils/uiHelpers/appendLineBreaks";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { createPopup } from "../utils/uiHelpers/createPopup";
+import { removeElement } from "../utils/uiHelpers/removeElement";
+import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 166 132"  style="fill:#adff2f;"><g><path d="M132.658-0.18l-24.321,24.321c-7.915-2.71-16.342-4.392-25.087-4.392c-45.84,0-83,46-83,46   s14.1,17.44,35.635,30.844L12.32,120.158l12.021,12.021L144.68,11.841L132.658-0.18z M52.033,80.445   c-2.104-4.458-3.283-9.438-3.283-14.695c0-19.054,15.446-34.5,34.5-34.5c5.258,0,10.237,1.179,14.695,3.284L52.033,80.445z"/><path d="M134.865,37.656l-18.482,18.482c0.884,3.052,1.367,6.275,1.367,9.612c0,19.055-15.446,34.5-34.5,34.5   c-3.337,0-6.56-0.483-9.611-1.367l-10.124,10.124c6.326,1.725,12.934,2.743,19.735,2.743c45.84,0,83-46,83-46   S153.987,50.575,134.865,37.656z"/></g></svg>&nbsp;`
 const killIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="-22 0 511 511.99561" style="fill:#adff2f;"><path d="m.496094 466.242188 39.902344-39.902344 45.753906 45.753906-39.898438 39.902344zm0 0"/><path d="m468.421875 89.832031-1.675781-89.832031-300.265625 300.265625 45.753906 45.753906zm0 0"/><path d="m95.210938 316.785156 16.84375 16.847656h.003906l83.65625 83.65625 22.753906-22.753906-100.503906-100.503906zm0 0"/><path d="m101.445312 365.300781-39.902343 39.902344 45.753906 45.753906 39.902344-39.902343-39.90625-39.902344zm0 0"/></svg>`

@@ -1,35 +1,38 @@
-import {workerScripts,
-        killWorkerScript}                   from "./NetscriptWorker";
-import { Player }                           from "./Player";
-import { getServer }                        from "./Server/ServerHelpers";
-import {numeralWrapper}                     from "./ui/numeralFormat";
-import {dialogBoxCreate}                    from "../utils/DialogBox";
-import {createAccordionElement}             from "../utils/uiHelpers/createAccordionElement";
-import {arrayToString}                      from "../utils/helpers/arrayToString";
-import {createElement}                      from "../utils/uiHelpers/createElement";
-import {createProgressBarText}              from "../utils/helpers/createProgressBarText";
-import {exceptionAlert}                     from "../utils/helpers/exceptionAlert";
-import {getElementById}                     from "../utils/uiHelpers/getElementById";
-import {logBoxCreate}                       from "../utils/LogBox";
-import {formatNumber,
-        convertTimeMsToTimeElapsedString }  from "../utils/StringHelperFunctions";
-import {removeChildrenFromElement}          from "../utils/uiHelpers/removeChildrenFromElement";
-import {removeElement}                      from "../utils/uiHelpers/removeElement";
-import {roundToTwo}                         from "../utils/helpers/roundToTwo";
-import {Page, routing}                      from "./ui/navigationTracking";
+// TODO - Convert this to React
+import { workerScripts, killWorkerScript } from "./NetscriptWorker";
+import { Player } from "./Player";
+import { getServer } from "./Server/ServerHelpers";
 
-/* {
- *     serverName: {
- *         header: Server Header Element
- *         panel: Server Panel List (ul) element
- *         scripts: {
- *             script id: Ref to Script information
- *         }
- *     }
- *     ...
+import { Page, routing } from "./ui/navigationTracking";
+import { numeralWrapper } from "./ui/numeralFormat";
+
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { logBoxCreate } from "../utils/LogBox";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { arrayToString } from "../utils/helpers/arrayToString";
+import { createProgressBarText } from "../utils/helpers/createProgressBarText";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { roundToTwo } from "../utils/helpers/roundToTwo";
+import { createAccordionElement } from "../utils/uiHelpers/createAccordionElement";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { getElementById } from "../utils/uiHelpers/getElementById";
+import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
+import { removeElement } from "../utils/uiHelpers/removeElement";
+
+
+/**
+ * {
+ *      serverName: {
+ *          header: Server Header Element
+ *          panel: Server Panel List (ul) element
+ *          scripts: {
+ *              script id: Ref to Script information
+ *          }
+ *      }
+ *      ...
  */
-let ActiveScriptsUI = {};
-let ActiveScriptsTasks = []; //Sequentially schedule the creation/deletion of UI elements
+const ActiveScriptsUI = {};
+const ActiveScriptsTasks = []; //Sequentially schedule the creation/deletion of UI elements
 
 const getHeaderHtml = (server) => {
     // TODO: calculate the longest hostname length rather than hard coding it

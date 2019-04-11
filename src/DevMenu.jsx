@@ -1,33 +1,35 @@
-import { AugmentationNames }            from "./Augmentation/data/AugmentationNames";
-import { CodingContractTypes }          from "./CodingContracts";
-import { generateContract,
-         generateRandomContract,
-         generateRandomContractOnHome } from "./CodingContractGenerator";
-import { Companies }                    from "./Company/Companies";
-import { Company }                      from "./Company/Company";
-import { Programs }                     from "./Programs/Programs";
-import { Factions }                     from "./Faction/Factions";
-import { Player }                       from "./Player";
-import { PlayerOwnedSourceFile }        from "./SourceFile/PlayerOwnedSourceFile";
-import { AllServers }                   from "./Server/AllServers";
-import { GetServerByHostname }          from "./Server/ServerHelpers";
-import { hackWorldDaemon }              from "./RedPill";
-import { StockMarket,
-         SymbolToStockMap }             from "./StockMarket/StockMarket";
-import { Stock }                        from "./StockMarket/Stock";
-import { Terminal }                     from "./Terminal";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
+import { CodingContractTypes } from "./CodingContracts";
+import {
+    generateContract,
+    generateRandomContract,
+    generateRandomContractOnHome
+} from "./CodingContractGenerator";
+import { Companies } from "./Company/Companies";
+import { Company } from "./Company/Company";
+import { Programs } from "./Programs/Programs";
+import { Factions } from "./Faction/Factions";
+import { Player } from "./Player";
+import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
+import { AllServers } from "./Server/AllServers";
+import { GetServerByHostname } from "./Server/ServerHelpers";
+import { hackWorldDaemon } from "./RedPill";
+import { StockMarket, SymbolToStockMap } from "./StockMarket/StockMarket";
+import { Stock } from "./StockMarket/Stock";
+import { Terminal } from "./Terminal";
 
-import { numeralWrapper }               from "./ui/numeralFormat";
+import { numeralWrapper } from "./ui/numeralFormat";
 
-import { dialogBoxCreate }              from "../utils/DialogBox";
-import { exceptionAlert }               from "../utils/helpers/exceptionAlert";
-import { createElement }                from "../utils/uiHelpers/createElement";
-import { createOptionElement }          from "../utils/uiHelpers/createOptionElement";
-import { getSelectText }                from "../utils/uiHelpers/getSelectData";
-import { removeElementById }            from "../utils/uiHelpers/removeElementById";
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { createOptionElement } from "../utils/uiHelpers/createOptionElement";
+import { getSelectText } from "../utils/uiHelpers/getSelectData";
+import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 import React from "react";
-import ReactDOM                                         from "react-dom";
+import ReactDOM from "react-dom";
+
 
 const Component = React.Component;
 
@@ -713,11 +715,11 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Hacking:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
-                              title="hacking exp" 
-                              add={this.modifyExp('hacking', 1)} 
-                              subtract={this.modifyExp('hacking', -1)} 
-                              reset={this.resetExperience('hacking')} 
+                            <ValueAdjusterComponent
+                              title="hacking exp"
+                              add={this.modifyExp('hacking', 1)}
+                              subtract={this.modifyExp('hacking', -1)}
+                              reset={this.resetExperience('hacking')}
                             />
                         </td>
                     </tr>
@@ -726,7 +728,7 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Strength:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="strength exp"
                               add={this.modifyExp('strength', 1)}
                               subtract={this.modifyExp('strength', -1)}
@@ -739,7 +741,7 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Defense:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="defense exp"
                               add={this.modifyExp('defense', 1)}
                               subtract={this.modifyExp('defense', -1)}
@@ -752,7 +754,7 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Dexterity:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="dexterity exp"
                               add={this.modifyExp('dexterity', 1)}
                               subtract={this.modifyExp('dexterity', -1)}
@@ -765,7 +767,7 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Agility:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="agility exp"
                               add={this.modifyExp('agility', 1)}
                               subtract={this.modifyExp('agility', -1)}
@@ -778,7 +780,7 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Charisma:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="charisma exp"
                               add={this.modifyExp('charisma', 1)}
                               subtract={this.modifyExp('charisma', -1)}
@@ -791,7 +793,7 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Intelligence:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="intelligence exp"
                               add={this.modifyExp('intelligence', 1)}
                               subtract={this.modifyExp('intelligence', -1)}
@@ -832,7 +834,7 @@ class DevMenuComponent extends Component {
                             <span className="text">Reputation:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="reputation"
                               add={this.modifyFactionRep(1)}
                               subtract={this.modifyFactionRep(-1)}
@@ -845,7 +847,7 @@ class DevMenuComponent extends Component {
                             <span className="text">Favor:</span>
                         </td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="favor"
                               add={this.modifyFactionFavor(1)}
                               subtract={this.modifyFactionFavor(-1)}
@@ -979,7 +981,7 @@ class DevMenuComponent extends Component {
                     <tr>
                         <td><span className="text">Reputation:</span></td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="reputation"
                               add={this.modifyCompanyRep(1)}
                               subtract={this.modifyCompanyRep(-1)}
@@ -990,7 +992,7 @@ class DevMenuComponent extends Component {
                     <tr>
                         <td><span className="text">Favor:</span></td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="favor"
                               add={this.modifyCompanyFavor(1)}
                               subtract={this.modifyCompanyFavor(-1)}
@@ -1028,7 +1030,7 @@ class DevMenuComponent extends Component {
                         <td><span className="text">Rank:</span></td>
                         <td><button className="std-button" onClick={this.addTonsBladeburnerRank}>Tons</button></td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="rank"
                               add={this.modifyBladeburnerRank(1)}
                               subtract={this.modifyBladeburnerRank(-1)}
@@ -1040,7 +1042,7 @@ class DevMenuComponent extends Component {
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsBladeburnerCycles}>Tons</button></td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="cycles"
                               add={this.modifyBladeburnerCycles(1)}
                               subtract={this.modifyBladeburnerCycles(-1)}
@@ -1064,7 +1066,7 @@ class DevMenuComponent extends Component {
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsGangCycles}>Tons</button></td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="cycles"
                               add={this.modifyGangCycles(1)}
                               subtract={this.modifyGangCycles(-1)}
@@ -1088,7 +1090,7 @@ class DevMenuComponent extends Component {
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsCorporationCycles}>Tons</button></td>
                         <td>
-                            <ValueAdjusterComponent 
+                            <ValueAdjusterComponent
                               title="cycles"
                               add={this.modifyCorporationCycles(1)}
                               subtract={this.modifyCorporationCycles(-1)}
@@ -1121,7 +1123,7 @@ class DevMenuComponent extends Component {
                             {contractTypes}
                         </select>
                         <button className="std-button" onClick={this.specificContract}>Generate Specified Contract Type on Home Comp</button>
-                        
+
                     </td>
                 </tr>
             </tbody>

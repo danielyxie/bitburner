@@ -1,104 +1,129 @@
-import {formatNumber,
-        convertTimeMsToTimeElapsedString,
-        replaceAt}                                      from "../utils/StringHelperFunctions";
-import {loxBoxCreate, logBoxUpdateText,
-        logBoxOpened}                                   from "../utils/LogBox";
-import {updateActiveScriptsItems}                       from "./ActiveScriptsUI";
-import { Augmentations }                                from "./Augmentation/Augmentations";
-import { installAugmentations,
-         initAugmentations,
-         displayAugmentationsContent,
-         PlayerOwnedAugmentation }                      from "./Augmentation/AugmentationHelpers";
-import { AugmentationNames }                            from "./Augmentation/data/AugmentationNames";
+import {
+    formatNumber,
+    convertTimeMsToTimeElapsedString,
+    replaceAt
+} from "../utils/StringHelperFunctions";
+import { loxBoxCreate, logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
+import { updateActiveScriptsItems } from "./ActiveScriptsUI";
+import { Augmentations } from "./Augmentation/Augmentations";
+import {
+    installAugmentations,
+    initAugmentations,
+    displayAugmentationsContent,
+    PlayerOwnedAugmentation
+} from "./Augmentation/AugmentationHelpers";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 
-import {BitNodes, initBitNodes,
-        initBitNodeMultipliers}                         from "./BitNode/BitNode";
-import {Bladeburner}                                    from "./Bladeburner";
-import { CharacterOverviewComponent }                   from "./ui/React/CharacterOverview";
-import {cinematicTextFlag}                              from "./CinematicText";
-import {generateRandomContract}                         from "./CodingContractGenerator";
-import {CompanyPositions}                               from "./Company/CompanyPositions";
-import {initCompanies}                                  from "./Company/Companies";
-import { Corporation }                                  from "./Corporation/Corporation";
-import {CONSTANTS}                                      from "./Constants";
-import {createDevMenu, closeDevMenu}                    from "./DevMenu";
-import { Factions, initFactions }                       from "./Faction/Factions";
-import { displayFactionContent, joinFaction,
-         processPassiveFactionRepGain,
-         inviteToFaction }                              from "./Faction/FactionHelpers";
-import { FconfSettings }                                from "./Fconf/FconfSettings";
-import { hasHacknetServers,
-         renderHacknetNodesUI,
-         clearHacknetNodesUI,
-         processHacknetEarnings }                       from "./Hacknet/HacknetHelpers";
-import {iTutorialStart}                                 from "./InteractiveTutorial";
-import {initLiterature}                                 from "./Literature";
-import { LocationName }                                 from "./Locations/data/LocationNames";
-import { LocationRoot }                                 from "./Locations/ui/Root";
-import { checkForMessagesToSend, initMessages }         from "./Message/MessageHelpers";
-import {inMission, currMission}                         from "./Missions";
-import {initSingularitySFFlags,
-        hasSingularitySF, hasCorporationSF}             from "./NetscriptFunctions";
-import {updateOnlineScriptTimes,
-        runScriptsLoop}                                 from "./NetscriptWorker";
-import {Player}                                         from "./Player";
-import {prestigeAugmentation,
-        prestigeSourceFile}                             from "./Prestige";
-import { Programs }                                     from "./Programs/Programs";
-import { displayCreateProgramContent,
-         getNumAvailableCreateProgram,
-         initCreateProgramButtons }                     from "./Programs/ProgramHelpers";
-import {redPillFlag, hackWorldDaemon}                   from "./RedPill";
-import {saveObject, loadGame}                           from "./SaveObject";
-import { getCurrentEditor,
-         loadAllRunningScripts,
-         scriptEditorInit,
-         updateScriptEditorContent }                    from "./Script/ScriptHelpers";
-import { AllServers,
-         initForeignServers }                           from "./Server/AllServers";
+import {
+    BitNodes,
+    initBitNodes,
+    initBitNodeMultipliers
+} from "./BitNode/BitNode";
+import { Bladeburner } from "./Bladeburner";
+import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
+import { cinematicTextFlag } from "./CinematicText";
+import { generateRandomContract } from "./CodingContractGenerator";
+import { CompanyPositions } from "./Company/CompanyPositions";
+import { initCompanies } from "./Company/Companies";
+import { Corporation } from "./Corporation/Corporation";
+import { CONSTANTS } from "./Constants";
+import { createDevMenu, closeDevMenu } from "./DevMenu";
+import { Factions, initFactions } from "./Faction/Factions";
+import {
+    displayFactionContent,
+    joinFaction,
+    processPassiveFactionRepGain,
+    inviteToFaction
+} from "./Faction/FactionHelpers";
+import { FconfSettings } from "./Fconf/FconfSettings";
+import {
+    hasHacknetServers,
+    renderHacknetNodesUI,
+    clearHacknetNodesUI,
+    processHacknetEarnings
+} from "./Hacknet/HacknetHelpers";
+import { iTutorialStart } from "./InteractiveTutorial";
+import { initLiterature } from "./Literature";
+import { LocationName } from "./Locations/data/LocationNames";
+import { LocationRoot } from "./Locations/ui/Root";
+import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
+import { inMission, currMission } from "./Missions";
+import {
+    initSingularitySFFlags,
+    hasSingularitySF,
+    hasCorporationSF
+} from "./NetscriptFunctions";
+import { updateOnlineScriptTimes, runScriptsLoop } from "./NetscriptWorker";
+import { Player } from "./Player";
+import { prestigeAugmentation, prestigeSourceFile } from "./Prestige";
+import { Programs } from "./Programs/Programs";
+import {
+    displayCreateProgramContent,
+    getNumAvailableCreateProgram,
+    initCreateProgramButtons
+} from "./Programs/ProgramHelpers";
+import { redPillFlag, hackWorldDaemon } from "./RedPill";
+import { saveObject, loadGame } from "./SaveObject";
+import {
+    getCurrentEditor,
+    loadAllRunningScripts,
+    scriptEditorInit,
+    updateScriptEditorContent
+} from "./Script/ScriptHelpers";
+import { AllServers, initForeignServers } from "./Server/AllServers";
 
-import { Server }                                       from "./Server/Server";
-import {Settings}                                       from "./Settings/Settings";
-import { initSourceFiles, SourceFiles }                 from "./SourceFile";
-import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
-import {SpecialServerIps, initSpecialServerIps}         from "./Server/SpecialServerIps";
-import {StockMarket, StockSymbols,
-        SymbolToStockMap, initStockSymbols,
-        initSymbolToStockMap, stockMarketCycle,
-        processStockPrices,
-        displayStockMarketContent}                      from "./StockMarket/StockMarket";
-import {Terminal, postNetburnerText}                    from "./Terminal";
+import { Server } from "./Server/Server";
+import { Settings } from "./Settings/Settings";
+import { initSourceFiles, SourceFiles } from "./SourceFile";
+import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
+import {
+    SpecialServerIps,
+    initSpecialServerIps
+} from "./Server/SpecialServerIps";
+import {
+    StockMarket,
+    StockSymbols,
+    SymbolToStockMap,
+    initStockSymbols,
+    initSymbolToStockMap,
+    stockMarketCycle,
+    processStockPrices,
+    displayStockMarketContent
+} from "./StockMarket/StockMarket";
+import { Terminal, postNetburnerText } from "./Terminal";
 
-import { Sleeve }                                       from "./PersonObjects/Sleeve/Sleeve";
-import { clearSleevesPage,
-         createSleevesPage,
-         updateSleevesPage }                            from "./PersonObjects/Sleeve/SleeveUI";
-import { clearResleevesPage,
-         createResleevesPage }                          from "./PersonObjects/Resleeving/ResleevingUI";
+import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
+import {
+    clearSleevesPage,
+    createSleevesPage,
+    updateSleevesPage
+} from "./PersonObjects/Sleeve/SleeveUI";
+import {
+    clearResleevesPage,
+    createResleevesPage
+} from "./PersonObjects/Resleeving/ResleevingUI";
 
-import { createStatusText }                             from "./ui/createStatusText";
-import { displayCharacterInfo }                         from "./ui/displayCharacterInfo";
-import {Page, routing}                                  from "./ui/navigationTracking";
-import {numeralWrapper}                                 from "./ui/numeralFormat";
-import {setSettingsLabels}                              from "./ui/setSettingsLabels";
-import { initializeMainMenuHeaders }                    from "./ui/MainMenu/Headers";
-import { initializeMainMenuLinks,
-         MainMenuLinks }                                from "./ui/MainMenu/Links";
+import { createStatusText } from "./ui/createStatusText";
+import { displayCharacterInfo } from "./ui/displayCharacterInfo";
+import { Page, routing } from "./ui/navigationTracking";
+import { numeralWrapper } from "./ui/numeralFormat";
+import { setSettingsLabels } from "./ui/setSettingsLabels";
+import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
+import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
 
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
+import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
+import { KEY } from "../utils/helpers/keyCodes";
 
-import { dialogBoxCreate}                               from "../utils/DialogBox";
-import { gameOptionsBoxClose,
-         gameOptionsBoxOpen }                           from "../utils/GameOptions";
-import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
-import { removeChildrenFromElement }                    from "../utils/uiHelpers/removeChildrenFromElement";
-import { clearEventListeners }                          from "../utils/uiHelpers/clearEventListeners";
-import { createElement }                                from "../utils/uiHelpers/createElement";
-import { exceptionAlert }                               from "../utils/helpers/exceptionAlert";
-import { removeLoadingScreen }                          from "../utils/uiHelpers/removeLoadingScreen";
-import {KEY}                                            from "../utils/helpers/keyCodes";
+import React from "react";
+import ReactDOM from "react-dom";
 
-import React                                            from "react";
-import ReactDOM                                         from "react-dom";
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.

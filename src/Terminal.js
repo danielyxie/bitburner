@@ -8,77 +8,85 @@ import {
     removeLeadingSlash,
     removeTrailingSlash
 } from "./Terminal/DirectoryHelpers";
+import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
+import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
+import { tabCompletion } from "./Terminal/tabCompletion";
 
 import {
-    determineAllPossibilitiesForTabCompletion
-} from "./Terminal/determineAllPossibilitiesForTabCompletion";
-
+    Aliases,
+    GlobalAliases,
+    parseAliasDeclaration,
+    printAliases,
+    removeAlias,
+    substituteAliases
+} from "./Alias";
+import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import {
-    TerminalHelpText,
-    HelpTexts
-} from "./Terminal/HelpText";
-
+    CodingContract,
+    CodingContractResult,
+    CodingContractRewardType
+} from "./CodingContracts";
+import { CONSTANTS } from "./Constants";
+import { Programs } from "./Programs/Programs";
 import {
-    tabCompletion
-} from "./Terminal/tabCompletion";
-
-import { Aliases,
-         GlobalAliases,
-         parseAliasDeclaration,
-         printAliases,
-         removeAlias,
-         substituteAliases }                    from "./Alias";
-import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
-import {CodingContract, CodingContractResult,
-        CodingContractRewardType}               from "./CodingContracts";
-import {CONSTANTS}                              from "./Constants";
-import { Programs }                             from "./Programs/Programs";
-import { executeDarkwebTerminalCommand,
-         checkIfConnectedToDarkweb }            from "./DarkWeb/DarkWeb";
-import { DarkWebItems }                         from "./DarkWeb/DarkWebItems";
-import {Engine}                                 from "./engine";
-import { parseFconfSettings,
-         createFconf }                          from "./Fconf/Fconf";
-import { FconfSettings }                        from "./Fconf/FconfSettings";
-import {calculateHackingChance,
-        calculateHackingExpGain,
-        calculatePercentMoneyHacked,
-        calculateHackingTime,
-        calculateGrowTime,
-        calculateWeakenTime}                from "./Hacking";
-import { HacknetServer }                    from "./Hacknet/HacknetServer";
-import {iTutorialNextStep, iTutorialSteps,
-        ITutorial}                          from "./InteractiveTutorial";
-import {showLiterature}                     from "./Literature";
-import { Message }                          from "./Message/Message";
-import { showMessage }                      from "./Message/MessageHelpers";
-import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
-import {Player}                             from "./Player";
-import {hackWorldDaemon}                    from "./RedPill";
-import { RunningScript }                    from "./Script/RunningScript";
-import { findRunningScript }                from "./Script/ScriptHelpers";
-import { isScriptFilename }                 from "./Script/ScriptHelpersTS";
-import { AllServers }                       from "./Server/AllServers";
-import { Server }                           from "./Server/Server";
-import { GetServerByHostname,
-         getServer,
-         getServerOnNetwork }               from "./Server/ServerHelpers";
-import {Settings}                           from "./Settings/Settings";
-import { SpecialServerIps,
-         SpecialServerNames }               from "./Server/SpecialServerIps";
-import {getTextFile}                        from "./TextFile";
-import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
-import {Page, routing}                      from "./ui/navigationTracking";
-import {numeralWrapper}                     from "./ui/numeralFormat";
-import {KEY}                                from "../utils/helpers/keyCodes";
-import {addOffset}                          from "../utils/helpers/addOffset";
-import {isString}                           from "../utils/helpers/isString";
-import {arrayToString}                      from "../utils/helpers/arrayToString";
-import {getTimestamp}                       from "../utils/helpers/getTimestamp";
-import {logBoxCreate}                       from "../utils/LogBox";
-import {yesNoBoxCreate,
-        yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
+    executeDarkwebTerminalCommand,
+    checkIfConnectedToDarkweb
+} from "./DarkWeb/DarkWeb";
+import { DarkWebItems } from "./DarkWeb/DarkWebItems";
+import { Engine } from "./engine";
+import { parseFconfSettings, createFconf } from "./Fconf/Fconf";
+import { FconfSettings } from "./Fconf/FconfSettings";
+import {
+    calculateHackingChance,
+    calculateHackingExpGain,
+    calculatePercentMoneyHacked,
+    calculateHackingTime,
+    calculateGrowTime,
+    calculateWeakenTime
+} from "./Hacking";
+import { HacknetServer } from "./Hacknet/HacknetServer";
+import {
+    iTutorialNextStep,
+    iTutorialSteps,
+    ITutorial
+} from "./InteractiveTutorial";
+import { showLiterature } from "./Literature";
+import { Message } from "./Message/Message";
+import { showMessage } from "./Message/MessageHelpers";
+import { killWorkerScript, addWorkerScript } from "./NetscriptWorker";
+import { Player } from "./Player";
+import { hackWorldDaemon } from "./RedPill";
+import { RunningScript } from "./Script/RunningScript";
+import { findRunningScript } from "./Script/ScriptHelpers";
+import { isScriptFilename } from "./Script/ScriptHelpersTS";
+import { AllServers } from "./Server/AllServers";
+import { Server } from "./Server/Server";
+import {
+    GetServerByHostname,
+    getServer,
+    getServerOnNetwork
+} from "./Server/ServerHelpers";
+import { Settings } from "./Settings/Settings";
+import {
+    SpecialServerIps,
+    SpecialServerNames
+} from "./Server/SpecialServerIps";
+import { getTextFile } from "./TextFile";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
+import { Page, routing } from "./ui/navigationTracking";
+import { numeralWrapper } from "./ui/numeralFormat";
+import { KEY } from "../utils/helpers/keyCodes";
+import { addOffset } from "../utils/helpers/addOffset";
+import { isString } from "../utils/helpers/isString";
+import { arrayToString } from "../utils/helpers/arrayToString";
+import { getTimestamp } from "../utils/helpers/getTimestamp";
+import { logBoxCreate } from "../utils/LogBox";
+import {
+    yesNoBoxCreate,
+    yesNoBoxGetYesButton,
+    yesNoBoxGetNoButton,
+    yesNoBoxClose
+} from "../utils/YesNoBox";
 import {
     post,
     postContent,
@@ -87,9 +95,10 @@ import {
     hackProgressPost
 } from "./ui/postToTerminal";
 
-import autosize from 'autosize';
-import * as JSZip from 'jszip';
-import * as FileSaver from 'file-saver';
+import autosize from "autosize";
+import * as JSZip from "jszip";
+import * as FileSaver from "file-saver";
+
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);

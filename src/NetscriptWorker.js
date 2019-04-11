@@ -1,28 +1,34 @@
-import {addActiveScriptsItem,
-        deleteActiveScriptsItem,
-        updateActiveScriptsItems}           from "./ActiveScriptsUI";
-import {CONSTANTS}                          from "./Constants";
-import {Engine}                             from "./engine";
-import {Interpreter}                        from "./JSInterpreter";
-import {Environment}                        from "./NetscriptEnvironment";
-import {evaluate, isScriptErrorMessage,
-        makeRuntimeRejectMsg,
-        killNetscriptDelay}                 from "./NetscriptEvaluator";
-import {NetscriptFunctions}                 from "./NetscriptFunctions";
-import {executeJSScript}                    from "./NetscriptJSEvaluator";
-import {NetscriptPort}                      from "./NetscriptPort";
-import { AllServers }                       from "./Server/AllServers";
-import {Settings}                           from "./Settings/Settings";
-import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
+import {
+    addActiveScriptsItem,
+    deleteActiveScriptsItem,
+    updateActiveScriptsItems
+} from "./ActiveScriptsUI";
+import { CONSTANTS } from "./Constants";
+import { Engine } from "./engine";
+import { Interpreter } from "./JSInterpreter";
+import { Environment } from "./NetscriptEnvironment";
+import {
+    evaluate,
+    isScriptErrorMessage,
+    makeRuntimeRejectMsg,
+    killNetscriptDelay
+} from "./NetscriptEvaluator";
+import { NetscriptFunctions } from "./NetscriptFunctions";
+import { executeJSScript } from "./NetscriptJSEvaluator";
+import { NetscriptPort } from "./NetscriptPort";
+import { AllServers } from "./Server/AllServers";
+import { Settings } from "./Settings/Settings";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
-import {generate}                           from 'escodegen';
+import { generate } from "escodegen";
 
-import {parse, Node}                        from "../utils/acorn";
-import {dialogBoxCreate}                    from "../utils/DialogBox";
-import {compareArrays}                      from "../utils/helpers/compareArrays";
-import {arrayToString}                      from "../utils/helpers/arrayToString";
-import {roundToTwo}                         from "../utils/helpers/roundToTwo";
-import {isString}                           from "../utils/StringHelperFunctions";
+import { parse, Node } from "../utils/acorn";
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { compareArrays } from "../utils/helpers/compareArrays";
+import { arrayToString } from "../utils/helpers/arrayToString";
+import { roundToTwo } from "../utils/helpers/roundToTwo";
+import { isString } from "../utils/StringHelperFunctions";
+
 
 const walk  = require("acorn/dist/walk");
 

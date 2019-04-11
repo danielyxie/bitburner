@@ -1,5 +1,5 @@
-import {NetscriptFunctions}             from "./NetscriptFunctions";
-import {NetscriptPort}                  from "./NetscriptPort";
+import { NetscriptFunctions } from "./NetscriptFunctions";
+import { NetscriptPort } from "./NetscriptPort";
 
 /* Environment
  * 	NetScript program environment

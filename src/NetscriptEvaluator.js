@@ -1,21 +1,21 @@
-import { BitNodeMultipliers }               from "./BitNode/BitNodeMultipliers";
-import { CONSTANTS }                        from "./Constants";
-import { Player }                           from "./Player";
-import { Environment }                      from "./NetscriptEnvironment";
-import { WorkerScript, addWorkerScript}     from "./NetscriptWorker";
-import { Server }                           from "./Server/Server";
-import { getServer }                        from "./Server/ServerHelpers";
-import { Settings }                         from "./Settings/Settings";
-import { RunningScript }                    from "./Script/RunningScript";
-import { Script }                           from "./Script/Script";
-import { findRunningScript }                from "./Script/ScriptHelpers";
+import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "./Constants";
+import { Player } from "./Player";
+import { Environment } from "./NetscriptEnvironment";
+import { WorkerScript, addWorkerScript } from "./NetscriptWorker";
+import { Server } from "./Server/Server";
+import { getServer } from "./Server/ServerHelpers";
+import { Settings } from "./Settings/Settings";
+import { RunningScript } from "./Script/RunningScript";
+import { Script } from "./Script/Script";
+import { findRunningScript } from "./Script/ScriptHelpers";
 
-import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
+import { parse, Node } from "../utils/acorn";
 
-import {parse, Node}                        from "../utils/acorn";
-import {arrayToString}                      from "../utils/helpers/arrayToString";
-import {isValidIPAddress}                   from "../utils/helpers/isValidIPAddress";
-import {isString}                           from "../utils/helpers/isString";
+import { arrayToString } from "../utils/helpers/arrayToString";
+import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
+import { isString } from "../utils/helpers/isString";
 
 export function evaluateImport(exp, workerScript, checkingRam=false) {
     //When its checking RAM, it exports an array of nodes for each imported function

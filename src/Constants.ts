@@ -3,7 +3,7 @@
  *
  * Constants for specific mechanics or features will NOT be here.
  */
-import {IMap} from "./types";
+import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
     Version:                "0.46.1",
