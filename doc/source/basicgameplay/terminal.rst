@@ -16,6 +16,85 @@ the terminal and enter::
 
     nano .fconf
 
+
+.. _terminal_filesystem:
+
+Filesystem (Directories)
+------------------------
+The Terminal contains a **very** basic filesystem that allows you to store and
+organize your files into different directories. Note that this is **not** a true
+filesystem implementation. Instead, it is done almost entirely using string manipulation.
+For this reason, many of the nice & useful features you'd find in a real
+filesystem do not exist.
+
+Here are the Terminal commands you'll commonly use when dealing with the filesystem.
+
+* :ref:`ls_terminal_command`
+* :ref:`cd_terminal_command`
+* :ref:`mv_terminal_command`
+
+Directories
+^^^^^^^^^^^
+In order to create a directory, simply name a file using a full absolute Linux-style path::
+
+    /scripts/myScript.js
+
+This will automatically create a "directory" called :code:`scripts`. This will also work
+for subdirectories::
+
+    /scripts/hacking/helpers/myHelperScripts.script
+
+Files in the root directory do not need to begin with a forward slash::
+
+    thisIsAFileInTheRootDirectory.txt
+
+Note that there is no way to manually create or remove directories. The creation and
+deletion of directories is automatically handled as you name/rename/delete
+files.
+
+Absolute vs Relative Paths
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+Many Terminal commands accept absolute both absolute and relative paths for specifying a
+file.
+
+An absolute path specifies the location of the file from the root directory (/).
+Any path that begins with the forward slash is an absolute path::
+
+    $ nano /scripts/myScript.js
+    $ cat /serverList.txt
+
+A relative path specifies the location of the file relative to the current working directory.
+Any path that does **not** begin with a forward slash is a relative path. Note that the
+Linux-style dot symbols will work for relative paths::
+
+    . (a single dot) - represents the current directory
+    .. (two dots) - represents the parent directory
+
+    $ cd ..
+    $ nano ../scripts/myScript.js
+    $ nano ../../helper.js
+
+Netscript
+^^^^^^^^^
+Note that in order to reference a file, :ref:`netscript` functions require the
+**full** absolute file path. For example
+
+.. code:: javascript
+
+    run("/scripts/hacking/helpers.myHelperScripts.script");
+    rm("/logs/myHackingLogs.txt");
+    rm("thisIsAFileInTheRootDirectory.txt");
+
+.. note:: A full file path **must** begin with a forward slash (/) if that file
+          is not in the root directory.
+
+Missing Features
+^^^^^^^^^^^^^^^^
+These features that are typically in Linux filesystems have not yet been added to the game:
+
+* Tab autocompletion does not work with relative paths
+* :code:`mv` only accepts full filepaths for the destination argument. It does not accept directories
+
 Commands
 --------
 
@@ -97,6 +176,25 @@ Display a message (.msg), literature (.lit), or text (.txt) file::
     $ cat j1.msg
     $ cat foo.lit
     $ cat servers.txt
+
+.. _cd_terminal_command:
+
+cd
+^^
+
+    $ cd [dir]
+
+Change to the specified directory.
+
+See :ref:`terminal_filesystem` for details on directories.
+
+Note that this command works even for directories that don't exist. If you change
+to a directory that doesn't exist, it will not be created. A directory is only created
+once there is a file in it::
+
+    $ cd scripts/hacking
+    $ cd /logs
+    $ cd ..
 
 check
 ^^^^^
@@ -234,27 +332,35 @@ killall
 
 Kills all scripts on the current server.
 
+.. _ls_terminal_command:
+
 ls
 ^^
 
-    $ ls [| grep pattern]
+    $ ls [dir] [| grep pattern]
 
-Prints files on the current server to the Terminal screen.
+Prints files and directories on the current server to the Terminal screen.
 
-If this command is run with no arguments, then it prints all files on the current
-server to the Terminal screen. The files will be displayed in alphabetical
-order.
+If this command is run with no arguments, then it prints all files and directories on the current
+server to the Terminal screen. Directories will be printed first in alphabetical order,
+followed by the files (also in alphabetical order).
 
-The '| grep pattern' is an optional parameter that can be used to only display files
-whose filenames match the specified pattern. For example, if you wanted to only display
-files with the .script extension, you could use::
+The :code:`dir` optional parameter allows you to specify the directory for which to display
+files.
 
+The :code:`| grep pattern` optional parameter allows you to only display files and directories
+with a certain pattern in their names.
+
+Examples::
+
+    // List files/directories with the '.script' extension in the current directory
     $ ls | grep .script
 
-Alternatively, if you wanted to display all files with the word *purchase* in the filename,
-you could use::
+    // List files/directories with the '.js' extension in the root directory
+    $ ls / | grep .js
 
-    $ ls | grep purchase
+    // List files/directories with the word 'purchase' in the name, in the :code:`scripts` directory
+    $ ls scripts | grep purchase
 
 
 lscpu
@@ -281,6 +387,28 @@ afterwards. Examples::
 The first example above will print the amount of RAM needed to run 'foo.script'
 with a single thread. The second example above will print the amount of RAM needed
 to run 'foo.script' with 50 threads.
+
+.. _mv_terminal_command:
+
+mv
+^^
+
+    $ mv [source] [destination]
+
+Move the source file to the specified destination in the filesystem.
+See :ref:`terminal_filesystem` for more details about the Terminal's filesystem.
+This command only works for scripts and text files (.txt). It cannot, however,  be used
+to convert from script to text file, or vice versa.
+
+This function can also be used to rename files.
+
+.. note:: Unlike the Linux :code:`mv` command, the *destination* argument must be the
+          full filepath. It cannot be a directory. 
+
+Examples::
+
+    $ mv hacking.script scripts/hacking.script
+    $ mv myScript.js myOldScript.js
 
 nano
 ^^^^

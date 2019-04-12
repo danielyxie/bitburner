@@ -70,7 +70,11 @@ function checkForMessagesToSend() {
         }
     } else if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
         sendMessage(jumper0);
-        Player.getHomeComputer().programs.push(Programs.Flight.name);
+        const flightName = Programs.Flight.name;
+        const homeComp = Player.getHomeComputer();
+        if (!homeComp.programs.includes(flightName)) {
+            homeComp.programs.push(flightName);
+        }
     } else if (jumper1 && !jumper1.recvd && Player.hacking_skill >= 40) {
         sendMessage(jumper1);
     } else if (cybersecTest && !cybersecTest.recvd && Player.hacking_skill >= 50) {

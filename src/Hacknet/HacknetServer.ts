@@ -3,13 +3,13 @@
  */
 import { CONSTANTS } from "../Constants";
 
+import { IHacknetNode } from "./IHacknetNode";
+
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { IHacknetNode } from "../Hacknet/IHacknetNode";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { BaseServer } from "../Server/BaseServer";
 import { RunningScript } from "../Script/RunningScript";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
 import { createRandomIp } from "../../utils/IPAddress";
 
 import { Generic_fromJSON,

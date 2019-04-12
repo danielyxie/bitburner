@@ -14,9 +14,7 @@ import { Faction }                              from "./Faction/Faction";
 import { Factions,
          initFactions }                         from "./Faction/Factions";
 import { joinFaction }                          from "./Faction/FactionHelpers";
-import { createHacknetServer }                  from "./Hacknet/HacknetHelpers";
 import {deleteGangDisplayContent}               from "./Gang";
-import {Locations}                              from "./Location";
 import { Message }                              from "./Message/Message";
 import { initMessages,
          Messages }                             from "./Message/MessageHelpers";
@@ -97,9 +95,6 @@ function prestigeAugmentation() {
 
     //Re-create foreign servers
     initForeignServers(Player.getHomeComputer());
-
-    //Darkweb is purchase-able
-    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
 
     //Gain favor for Companies
     for (var member in Companies) {
@@ -341,7 +336,8 @@ function prestigeSourceFile() {
 
     // Source-File 9 (level 3) effect
     if (SourceFileFlags[9] >= 3) {
-        const hserver = createHacknetServer();
+        const hserver = Player.createHacknetServer();
+
         hserver.level = 100;
         hserver.cores = 10;
         hserver.cache = 5;

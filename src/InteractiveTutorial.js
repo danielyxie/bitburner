@@ -382,13 +382,13 @@ function iTutorialEvaluateStep() {
         //Flash 'City' menu and set its tutorial click handler
         cityMainMenu.setAttribute("class", "flashing-button");
         cityMainMenu.addEventListener("click", function() {
-            Engine.loadWorldContent();
+            Engine.loadLocationContent();
             iTutorialNextStep();
             return false;
         });
         break;
     case iTutorialSteps.WorldDescription:
-        Engine.loadWorldContent();
+        Engine.loadLocationContent();
         iTutorialSetText("This page lists all of the different locations you can currently " +
                          "travel to. Each location has something that you can do. " +
                          "There's a lot of content out in the world, make sure " +

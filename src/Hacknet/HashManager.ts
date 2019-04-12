@@ -151,13 +151,12 @@ export class HashManager {
      */
     upgrade(upgName: string): boolean {
         const upg = HashUpgrades[upgName];
-        const currLevel = this.upgrades[upgName];
-        if (upg == null || currLevel == null) {
+        if (upg == null) {
             console.error(`Invalid Upgrade Name given to HashManager.upgrade(): ${upgName}`);
             return false;
         }
 
-        const cost = upg.getCost(currLevel);
+        const cost = this.getUpgradeCost(upgName);
 
         if (this.hashes < cost) {
             return false;

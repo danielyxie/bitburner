@@ -6,7 +6,7 @@ import { GetServerByHostname } from "./ServerHelpers";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
-import { createRandomString } from "../utils/createRandomString";
+import { createRandomString } from "../utils/helpers/createRandomString";
 import { createRandomIp } from "../../utils/IPAddress";
 import { Generic_fromJSON,
          Generic_toJSON,
@@ -137,14 +137,6 @@ export class Server extends BaseServer {
     }
 
     /**
-     * Strengthens a server's security level (difficulty) by the specified amount
-     */
-    fortify(amt: number): void {
-        this.hackDifficulty += amt;
-        this.capDifficulty();
-    }
-
-    /**
      * Change this server's maximum money
      * @param n - Value by which to change the server's maximum money
      * @param perc - Whether it should be changed by a percentage, or a flat value
@@ -155,6 +147,14 @@ export class Server extends BaseServer {
         } else {
             this.moneyMax += n;
         }
+    }
+
+    /**
+     * Strengthens a server's security level (difficulty) by the specified amount
+     */
+    fortify(amt: number): void {
+        this.hackDifficulty += amt;
+        this.capDifficulty();
     }
 
     /**

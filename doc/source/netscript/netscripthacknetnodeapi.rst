@@ -3,6 +3,10 @@
 Netscript Hacknet Node API
 ==========================
 
+.. warning:: Not all functions in the Hacknet Node API are immediately available.
+             For this reason, the documentation for this API may contains spoilers
+             for the game.
+
 Netscript provides the following API for accessing and upgrading your Hacknet Nodes
 through scripts.
 
@@ -36,6 +40,9 @@ In :ref:`netscriptjs`::
     getRamUpgradeCost() <hacknetnodeapi/getRamUpgradeCost>
     getCoreUpgradeCost() <hacknetnodeapi/getCoreUpgradeCost>
     getCacheUpgradeCost() <hacknetnodeapi/getCacheUpgradeCost>
+    numHashes() <hacknetnodeapi/numHashes>
+    hashCost() <hacknetnodeapi/hashCost>
+    spendHashes() <hacknetnodeapi/spendHashes>
 
 .. _netscript_hacknetnodeapi_referencingahacknetnode:
 

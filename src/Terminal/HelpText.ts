@@ -1,10 +1,13 @@
 /* tslint:disable:max-line-length completed-docs variable-name*/
+import { IMap } from "../types";
+
 export const TerminalHelpText: string =
     "Type 'help name' to learn more about the command 'name'<br><br>" +
     'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
     "analyze                        Get information about the current machine <br>" +
     "buy [-l/program]               Purchase a program through the Dark Web<br>" +
     "cat [file]                     Display a .msg, .lit, or .txt file<br>" +
+    "cd [dir]                       Change to a new directory<br>" +
     "check [script] [args...]       Print a script's logs to Terminal<br>" +
     "clear                          Clear all text on the terminal <br>" +
     "cls                            See 'clear' command <br>" +
@@ -19,9 +22,10 @@ export const TerminalHelpText: string =
     "ifconfig                       Displays the IP address of the machine<br>" +
     "kill [script] [args...]        Stops the specified script on the current server <br>" +
     "killall                        Stops all running scripts on the current machine<br>" +
-    "ls [| grep pattern]            Displays all files on the machine<br>" +
+    "ls [dir] [| grep pattern]      Displays all files on the machine<br>" +
     "lscpu                          Displays the number of CPU cores on the machine<br>" +
     "mem [script] [-t] [n]          Displays the amount of RAM required to run the script<br>" +
+    "mv [src] [dest]                Move/rename a text or script file<br>" +
     "nano [file]                    Text editor - Open up and edit a script or text file<br>" +
     "ps                             Display all scripts that are currently running<br>" +
     "rm [file]                      Delete a file from the server<br>" +
@@ -36,9 +40,6 @@ export const TerminalHelpText: string =
     'unalias [alias name]           Deletes the specified alias<br>' +
     "wget [url] [target file]       Retrieves code/text from a web server<br>";
 
-interface IMap<T> {
-    [key: string]: T;
-}
 export const HelpTexts: IMap<string> = {
     alias:          'alias [-g] [name="value"] <br>' +
                     "Create or display aliases. An alias enables a replacement of a word with another string. " +
@@ -74,6 +75,12 @@ export const HelpTexts: IMap<string> = {
                     "cat j1.msg<br>" +
                     "cat foo.lit<br>" +
                     "cat servers.txt",
+    cd:             "cd [dir]<br>" +
+                    "Change to the specified directory. Note that this works even for directories that don't exist. If you " +
+                    "change to a directory that does not exist, it will not be 'created'. Examples:<br><br>" +
+                    "cd scripts/hacking<br>" +
+                    "cd /logs<br>" +
+                    "cd ../",
     check:          "check [script name] [args...]<br>" +
                     "Print the logs of the script specified by the script name and arguments to the Terminal. Each argument must be separated by " +
                     "a space. Remember that a running script is uniquely " +
@@ -135,15 +142,18 @@ export const HelpTexts: IMap<string> = {
                     "Note that after the 'kill' command is issued for a script, it may take a while for the script to actually stop running. " +
                     "This will happen if the script is in the middle of a command such as grow() or weaken() that takes time to execute. " +
                     "The script will not be stopped/killed until after that time has elapsed.",
-    ls:             "ls [| grep pattern]<br>" +
-                    "The ls command, with no arguments, prints all files on the current server to the Terminal screen. " +
-                    "This includes all scripts, programs, and message files. " +
+    ls:             "ls [dir] [| grep pattern]<br>" +
+                    "The ls command, with no arguments, prints all files and directories on the current server's directory to the Terminal screen. " +
                     "The files will be displayed in alphabetical order. <br><br>" +
-                    "The '| grep pattern' optional parameter can be used to only display files whose filenames match the specified pattern. " +
-                    "For example, if you wanted to only display files with the .script extension, you could use: <br><br>" +
+                    "The 'dir' optional parameter can be used to display files/directories in another directory.<br><br>" +
+                    "The '| grep pattern' optional parameter can be used to only display files whose filenames match the specified pattern.<br><br>" +
+                    "Examples:<br><br>" +
+                    "List all files with the '.script' extension in the current directory:<br>" +
                     "ls | grep .script<br><br>" +
-                    "Alternatively, if you wanted to display all files with the word purchase in the filename, you could use: <br><br>" +
-                    "ls | grep purchase",
+                    "List all files with the '.js' extension in the root directory:<br>" +
+                    "ls / | grep .js<br><br>" +
+                    "List all files with the word 'purchase' in the filename, in the 'scripts' directory:<br>" +
+                    "ls scripts | grep purchase",
     lscpu:          "lscpu<br>" +
                     "Prints the number of CPU Cores the current server has",
     mem:            "mem [script name] [-t] [num threads]<br>" +
@@ -154,6 +164,15 @@ export const HelpTexts: IMap<string> = {
                     "mem foo.script -t 50<br>" +
                     "The first example above will print the amount of RAM needed to run 'foo.script' with a single thread. The second example " +
                     "above will print the amount of RAM needed to run 'foo.script' with 50 threads.",
+    mv:             "mv [src] [dest]<br>" +
+                    "Move the source file to the specified destination. This can also be used to rename files. " +
+                    "This command only works for scripts and text files (.txt). This command CANNOT be used to " +
+                    "convert to different file types<br><br>" +
+                    "Note that, unlike the Linux 'mv' command, the destination argument must be the " + 
+                    "full filepath. " +
+                    "Examples: <br><br>" +
+                    "mv hacking-controller.script scripts/hacking-controller.script<br>" +
+                    "mv myScript.js myOldScript.js",
     nano:           "nano [file name]<br>" +
                     "Opens up the specified file in the Text Editor. Only scripts (.script) or text files (.txt) can be " +
                     "edited using the Text Editor. If the file does not already exist, then a new, empty one " +

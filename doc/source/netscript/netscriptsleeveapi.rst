@@ -41,6 +41,9 @@ In :ref:`netscriptjs`::
     setToUniversityCourse() <sleeveapi/setToUniversityCourse>
     setToGymWorkout() <sleeveapi/setToGymWorkout>
     travel() <sleeveapi/travel>
+    getSleeveAugmentations() <sleeveapi/getSleeveAugmentations>
+    getSleevePurchasableAugs() <sleeveapi/getSleevePurchasableAugs>
+    purchaseSleeveAug() <sleeveapi/purchaseSleeveAug>
 
 .. _netscript_sleeveapi_referencingaduplicatesleeve:
 

@@ -1,7 +1,33 @@
-import {substituteAliases, printAliases,
-        parseAliasDeclaration,
-        removeAlias, GlobalAliases,
-        Aliases}                                from "./Alias";
+import {
+    evaluateDirectoryPath,
+    evaluateFilePath,
+    getFirstParentDirectory,
+    isInRootDirectory,
+    isValidDirectoryPath,
+    isValidFilename,
+    removeLeadingSlash,
+    removeTrailingSlash
+} from "./Terminal/DirectoryHelpers";
+
+import {
+    determineAllPossibilitiesForTabCompletion
+} from "./Terminal/determineAllPossibilitiesForTabCompletion";
+
+import {
+    TerminalHelpText,
+    HelpTexts
+} from "./Terminal/HelpText";
+
+import {
+    tabCompletion
+} from "./Terminal/tabCompletion";
+
+import { Aliases,
+         GlobalAliases,
+         parseAliasDeclaration,
+         printAliases,
+         removeAlias,
+         substituteAliases }                    from "./Alias";
 import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import {CodingContract, CodingContractResult,
         CodingContractRewardType}               from "./CodingContracts";
@@ -21,7 +47,6 @@ import {calculateHackingChance,
         calculateGrowTime,
         calculateWeakenTime}                from "./Hacking";
 import { HacknetServer }                    from "./Hacknet/HacknetServer";
-import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         ITutorial}                          from "./InteractiveTutorial";
 import {showLiterature}                     from "./Literature";
@@ -43,8 +68,6 @@ import { SpecialServerIps,
          SpecialServerNames }               from "./Server/SpecialServerIps";
 import {getTextFile}                        from "./TextFile";
 import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
-import {containsAllStrings,
-        longestCommonStart}                 from "../utils/StringHelperFunctions";
 import {Page, routing}                      from "./ui/navigationTracking";
 import {numeralWrapper}                     from "./ui/numeralFormat";
 import {KEY}                                from "../utils/helpers/keyCodes";
@@ -56,10 +79,13 @@ import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
-import { post,
-         postError,
-         hackProgressBarPost,
-         hackProgressPost }                 from "./ui/postToTerminal";
+import {
+    post,
+    postContent,
+    postError,
+    hackProgressBarPost,
+    hackProgressPost
+} from "./ui/postToTerminal";
 
 import autosize from 'autosize';
 import * as JSZip from 'jszip';
@@ -75,7 +101,7 @@ function isNumber(str) {
     return !isNaN(str) && !isNaN(parseFloat(str));
 }
 
-//Defines key commands in terminal
+// Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
 	if (routing.isOn(Page.Terminal)) {
@@ -84,12 +110,13 @@ $(document).keydown(function(event) {
 
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
-			var command = terminalInput.value;
+			const command = terminalInput.value;
+            const dir = Terminal.currDir;
 			post(
                 "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
-                " ~]&gt;</span> " + command
+                ` ~${dir}]&gt;</span> ${command}`
             );
 
             if (command.length > 0) {
@@ -182,7 +209,7 @@ $(document).keydown(function(event) {
             var commandArray = input.split(" ");
             var index = commandArray.length - 2;
             if (index < -1) {index = 0;}
-            var allPos = determineAllPossibilitiesForTabCompletion(input, index);
+            var allPos = determineAllPossibilitiesForTabCompletion(Player, input, index);
             if (allPos.length == 0) {return;}
 
             var arg = "";
@@ -259,6 +286,7 @@ $(document).ready(function() {
 		$('.terminal-input').focus();
 	}
 });
+
 $(document).keydown(function(e) {
 	if (routing.isOn(Page.Terminal)) {
 		if (e.which == KEY.CTRL) {
@@ -275,7 +303,8 @@ $(document).keydown(function(e) {
             shiftKeyPressed = false;
 		}
 	}
-})
+});
+
 $(document).keyup(function(e) {
 	if (routing.isOn(Page.Terminal)) {
 		if (e.which == KEY.CTRL) {
@@ -285,276 +314,10 @@ $(document).keyup(function(e) {
             shiftKeyPressed = false;
         }
 	}
-})
-
-//Implements a tab completion feature for terminal
-//  command - Terminal command except for the last incomplete argument
-//  arg - Incomplete argument string that the function will try to complete, or will display
-//        a series of possible options for
-//  allPossibilities - Array of strings containing all possibilities that the
-//                     string can complete to
-//  index - index of argument that is being "tab completed". By default is 0, the first argument
-function tabCompletion(command, arg, allPossibilities, index=0) {
-    if (!(allPossibilities.constructor === Array)) {return;}
-    if (!containsAllStrings(allPossibilities)) {return;}
-
-    //if (!command.startsWith("./")) {
-        //command = command.toLowerCase();
-    //}
-
-    //Remove all options in allPossibilities that do not match the current string
-    //that we are attempting to autocomplete
-    if (arg == "") {
-        for (var i = allPossibilities.length-1; i >= 0; --i) {
-            if (!allPossibilities[i].toLowerCase().startsWith(command.toLowerCase())) {
-                allPossibilities.splice(i, 1);
-            }
-        }
-    } else {
-        for (var i = allPossibilities.length-1; i >= 0; --i) {
-            if (!allPossibilities[i].toLowerCase().startsWith(arg.toLowerCase())) {
-                allPossibilities.splice(i, 1);
-            }
-        }
-    }
-
-    const textBox = document.getElementById("terminal-input-text-box");
-    if (textBox == null) {
-        console.warn(`Couldn't find terminal input DOM element (id=terminal-input-text-box) when trying to autocomplete`);
-        return;
-    }
-    const oldValue = textBox.value;
-    const semiColonIndex = oldValue.lastIndexOf(";");
-
-    var val = "";
-    if (allPossibilities.length == 0) {
-        return;
-    } else if (allPossibilities.length == 1) {
-        if (arg == "") {
-            //Autocomplete command
-            val = allPossibilities[0] + " ";
-        } else {
-            val = command + " " + allPossibilities[0];
-        }
-
-        if (semiColonIndex === -1) {
-            // no ; replace the whole thing.
-            textBox.value = val;
-        } else {
-            // replace just after the last semicolon
-            textBox.value = textBox.value.slice(0, semiColonIndex+1)+" "+val;
-        }
-
-        textBox.focus();
-    } else {
-        var longestStartSubstr = longestCommonStart(allPossibilities);
-        //If the longest common starting substring of remaining possibilities is the same
-        //as whatevers already in terminal, just list all possible options. Otherwise,
-        //change the input in the terminal to the longest common starting substr
-        var allOptionsStr = "";
-        for (var i = 0; i < allPossibilities.length; ++i) {
-            allOptionsStr += allPossibilities[i];
-            allOptionsStr += "   ";
-        }
-        if (arg == "") {
-            if (longestStartSubstr == command) {
-                post("> " + command);
-                post(allOptionsStr);
-            } else {
-                if (semiColonIndex === -1) {
-                    // No ; just replace the whole thing
-                    textBox.value = longestStartSubstr;
-                } else {
-                    // Multiple commands, so only replace after the last semicolon
-                    textBox.value = textBox.value.slice(0, semiColonIndex + 1) + " " + longestStartSubstr;
-                }
-
-                textBox.focus();
-            }
-        } else {
-            if (longestStartSubstr == arg) {
-                //List all possible options
-                post("> " + command + " " + arg);
-                post(allOptionsStr);
-            } else {
-                if (semiColonIndex == -1) {
-                    // No ; so just replace the whole thing
-                    textBox.value = command + " " + longestStartSubstr;
-                } else {
-                    // Multiple commands, so only replace after the last semiclon
-                    textBox.value = textBox.value.slice(0, semiColonIndex + 1) + " " + command + " " + longestStartSubstr;
-                }
-
-                textBox.focus();
-            }
-        }
-
-    }
-}
-
-function determineAllPossibilitiesForTabCompletion(input, index=0) {
-    var allPos = [];
-    allPos = allPos.concat(Object.keys(GlobalAliases));
-    var currServ = Player.getCurrentServer();
-    input = input.toLowerCase();
-
-    //If the command starts with './' and the index == -1, then the user
-    //has input ./partialexecutablename so autocomplete the script or program
-    //Put './' in front of each script/executable
-    if (input.startsWith("./") && index == -1) {
-        //All programs and scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push("./" + currServ.scripts[i].filename);
-        }
-
-        //Programs are on home computer
-        var homeComputer = Player.getHomeComputer();
-        for(var i = 0; i < homeComputer.programs.length; ++i) {
-            allPos.push("./" + homeComputer.programs[i]);
-        }
-        return allPos;
-    }
-
-    //Autocomplete the command
-    if (index == -1) {
-        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "download", "expr",
-                "free", "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
-                "ls", "lscpu", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze",
-                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
-    }
-
-    if (input.startsWith ("buy ")) {
-        let options = [];
-        for(const i in DarkWebItems) {
-            const item = DarkWebItems[i]
-            options.push(item.program);
-        }
-        return options.concat(Object.keys(GlobalAliases));
-    }
-
-    if (input.startsWith("scp ") && index == 1) {
-        for (var iphostname in AllServers) {
-            if (AllServers.hasOwnProperty(iphostname)) {
-                allPos.push(AllServers[iphostname].ip);
-                allPos.push(AllServers[iphostname].hostname);
-            }
-        }
-    }
-
-    if (input.startsWith("scp ") && index == 0) {
-        //All Scripts and lit files
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (var i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof Message)) {
-                allPos.push(currServ.messages[i]);
-            }
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-    }
-
-    if (input.startsWith("connect ") || input.startsWith("telnet ")) {
-        //All network connections
-        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-            var serv = AllServers[currServ.serversOnNetwork[i]];
-            if (serv == null) {continue;}
-            allPos.push(serv.ip); //IP
-            allPos.push(serv.hostname); //Hostname
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("kill ") || input.startsWith("tail ") ||
-        input.startsWith("mem ") || input.startsWith("check ")) {
-        //All Scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("nano ")) {
-        //Scripts and text files and .fconf
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        allPos.push(".fconf");
-        return allPos;
-    }
-
-    if (input.startsWith("rm ")) {
-        for (let i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-        for (let i = 0; i < currServ.programs.length; ++i) {
-            allPos.push(currServ.programs[i]);
-        }
-        for (let i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof Message) && isString(currServ.messages[i]) &&
-                  currServ.messages[i].endsWith(".lit")) {
-                allPos.push(currServ.messages[i]);
-            }
-        }
-        for (let i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (let i = 0; i < currServ.contracts.length; ++i) {
-            allPos.push(currServ.contracts[i].fn);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("run ")) {
-        //All programs, scripts, and contracts
-        for (let i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-
-        //Programs are on home computer
-        var homeComputer = Player.getHomeComputer();
-        for (let i = 0; i < homeComputer.programs.length; ++i) {
-            allPos.push(homeComputer.programs[i]);
-        }
-
-        for (let i = 0; i < currServ.contracts.length; ++i) {
-            allPos.push(currServ.contracts[i].fn);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("cat ")) {
-        for (var i = 0; i < currServ.messages.length; ++i) {
-            if (currServ.messages[i] instanceof Message) {
-                allPos.push(currServ.messages[i].filename);
-            } else {
-                allPos.push(currServ.messages[i]);
-            }
-        }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        return allPos;
-    }
-
-    if (input.startsWith("download ")) {
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
-            allPos.push(currServ.textFiles[i].fn);
-        }
-        for (var i = 0; i < currServ.scripts.length; ++i) {
-            allPos.push(currServ.scripts[i].filename);
-        }
-    }
-    return allPos;
-}
+});
 
 let Terminal = {
-    //Flags to determine whether the player is currently running a hack or an analyze
+    // Flags to determine whether the player is currently running a hack or an analyze
     hackFlag:           false,
     analyzeFlag:        false,
     actionStarted:      false,
@@ -563,20 +326,26 @@ let Terminal = {
     commandHistory: [],
     commandHistoryIndex: 0,
 
-    contractOpen:       false, //True if a Coding Contract prompt is opened
+    // True if a Coding Contract prompt is opened
+    contractOpen:       false,
+
+    // Full Path of current directory
+    // Excludes the trailing forward slash
+    currDir:            "/",
 
     resetTerminalInput: function() {
+        const dir = Terminal.currDir;
         if (FconfSettings.WRAP_INPUT) {
             document.getElementById("terminal-input-td").innerHTML =
-                "<div id='terminal-input-header' class='prompt'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+                `<div id='terminal-input-header' class='prompt'>[${Player.getCurrentServer().hostname} ~${dir}]$ </div>` +
                 '<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
 
             //Auto re-size the line element as it wraps
             autosize(document.getElementById("terminal-input-text-box"));
         } else {
             document.getElementById("terminal-input-td").innerHTML =
-                "<div id='terminal-input-header' class='prompt'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
-                '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+                `<div id='terminal-input-header' class='prompt'>[${Player.getCurrentServer().hostname} ~${dir}]$ </div>` +
+                `<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>`;
         }
         var hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
@@ -1094,59 +863,101 @@ let Terminal = {
                     postError("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
                 }
                 break;
-            case "cat":
+            case "cat": {
+                try {
+                    if (commandArray.length !== 2) {
+                        postError("Incorrect usage of cat command. Usage: cat [file]");
+                        return;
+                    }
+                    const filename = Terminal.getFilepath(commandArray[1]);
+    				if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt")) {
+    					postError("Only .msg, .txt, and .lit files are viewable with cat (filename must end with .msg, .txt, or .lit)");
+                        return;
+    				}
+
+                    if (filename.endsWith(".msg") || filename.endsWith(".lit")) {
+                        for (let i = 0; i < s.messages.length; ++i) {
+                            if (filename.endsWith(".lit") && s.messages[i] === filename) {
+                                showLiterature(s.messages[i]);
+                                return;
+                            } else if (filename.endsWith(".msg") && s.messages[i].filename === filename) {
+                                showMessage(s.messages[i]);
+                                return;
+                            }
+                        }
+                    } else if (filename.endsWith(".txt")) {
+                        const txt = Terminal.getTextFile(filename);
+                        if (txt != null) {
+                            txt.show();
+                            return;
+                        }
+                    }
+
+                    postError(`No such file ${filename}`);
+                } catch(e) {
+                    Terminal.postThrownError(e);
+                }
+                break;
+            }
+            case "cd": {
                 if (commandArray.length !== 2) {
-                    postError("Incorrect usage of cat command. Usage: cat [file]");
-                    return;
-                }
-                let filename = commandArray[1];
-				if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt")) {
-					postError("Only .msg, .txt, and .lit files are viewable with cat (filename must end with .msg, .txt, or .lit)");
-                    return;
-				}
-                for (var i = 0; i < s.messages.length; ++i) {
-                    if (filename.endsWith(".lit") && s.messages[i] == filename) {
-                        showLiterature(s.messages[i]);
-                        return;
-                    } else if (filename.endsWith(".msg") && s.messages[i].filename == filename) {
-                        showMessage(s.messages[i]);
-                        return;
-                    }
-                }
-                for (var i = 0; i < s.textFiles.length; ++i) {
-                    if (s.textFiles[i].fn === filename) {
-                        s.textFiles[i].show();
-                        return;
-                    }
-                }
-                postError(`No such file ${filename}`);
-                break;
-            case "check":
-                if (commandArray.length < 2) {
-                    postError("Incorrect number of arguments. Usage: check [script] [arg1] [arg2]...");
+                    postError("Incorrect number of arguments. Usage: cd [dir]");
                 } else {
-                    var scriptName = commandArray[1];
-                    //Can only tail script files
-                    if (!isScriptFilename(scriptName)) {
-                        postError("tail can only be called on .script files (filename must end with .script)");
-                        return;
+                    let dir = commandArray[1];
+
+                    let evaledDir;
+                    if (dir === "/") {
+                        evaledDir = "/";
+                    } else {
+                        // Ignore trailing slashes
+                        dir = removeTrailingSlash(dir);
+
+                        evaledDir = evaluateDirectoryPath(dir, Terminal.currDir);
+                        if (evaledDir == null || evaledDir === "") {
+                            postError("Invalid path. Failed to change directories");
+                            return;
+                        }
                     }
 
-                    // Get args
-                    let args = [];
-                    for (var i = 2; i < commandArray.length; ++i) {
-                        args.push(commandArray[i]);
-                    }
+                    Terminal.currDir = evaledDir;
 
-                    // Check that the script exists on this machine
-                    var runningScript = findRunningScript(scriptName, args, s);
-                    if (runningScript == null) {
-                        postError("No such script exists");
-                        return;
-                    }
-                    runningScript.displayLog();
+                    // Reset input to update current directory on UI
+                    Terminal.resetTerminalInput();
                 }
                 break;
+            }
+            case "check": {
+                try {
+                    if (commandArray.length < 2) {
+                        postError("Incorrect number of arguments. Usage: check [script] [arg1] [arg2]...");
+                    } else {
+                        const scriptName = Terminal.getFilepath(commandArray[1]);
+                        //Can only tail script files
+                        if (!isScriptFilename(scriptName)) {
+                            postError("tail can only be called on .script files (filename must end with .script)");
+                            return;
+                        }
+
+                        // Get args
+                        let args = [];
+                        for (var i = 2; i < commandArray.length; ++i) {
+                            args.push(commandArray[i]);
+                        }
+
+                        // Check that the script exists on this machine
+                        var runningScript = findRunningScript(scriptName, args, s);
+                        if (runningScript == null) {
+                            postError("No such script exists");
+                            return;
+                        }
+                        runningScript.displayLog();
+                    }
+                } catch(e) {
+                    Terminal.postThrownError(e);
+                }
+
+                break;
+            }
 			case "clear":
 			case "cls":
 				if (commandArray.length !== 1) {
@@ -1156,7 +967,7 @@ let Terminal = {
 				$("#terminal tr:not(:last)").remove();
 				postNetburnerText();
 				break;
-			case "connect":
+			case "connect": {
 				//Disconnect from current server in terminal and connect to new one
                 if (commandArray.length !== 2) {
                     postError("Incorrect usage of connect command. Usage: connect [ip/hostname]");
@@ -1165,7 +976,7 @@ let Terminal = {
 
                 let ip = commandArray[1];
 
-                for (var i = 0; i < s.serversOnNetwork.length; i++) {
+                for (let i = 0; i < s.serversOnNetwork.length; i++) {
                     if (getServerOnNetwork(s, i).ip == ip || getServerOnNetwork(s, i).hostname == ip) {
                         Terminal.connectToServer(ip);
                         return;
@@ -1174,59 +985,67 @@ let Terminal = {
 
                 postError("Host not found");
 				break;
-            case "download":
-                if (commandArray.length !== 2) {
-                    postError("Incorrect usage of download command. Usage: download [script/text file]");
-                    return;
-                }
-                var fn = commandArray[1];
-                if (fn === "*" || fn === "*.script" || fn === "*.txt") {
-                    //Download all scripts as a zip
-                    var zip = new JSZip();
-                    if (fn === "*" || fn === "*.script") {
-                        for (var i = 0; i < s.scripts.length; ++i) {
-                            var file = new Blob([s.scripts[i].code], {type:"text/plain"});
-                            zip.file(s.scripts[i].filename + ".js", file);
-                        }
+            }
+            case "download": {
+                try {
+                    if (commandArray.length !== 2) {
+                        postError("Incorrect usage of download command. Usage: download [script/text file]");
+                        return;
                     }
-                    if (fn === "*" || fn === "*.txt") {
-                        for (var i = 0; i < s.textFiles.length; ++i) {
-                            var file = new Blob([s.textFiles[i].text], {type:"text/plain"});
-                            zip.file(s.textFiles[i].fn, file);
+                    const fn = commandArray[1];
+                    if (fn === "*" || fn === "*.script" || fn === "*.txt") {
+                        //Download all scripts as a zip
+                        var zip = new JSZip();
+                        if (fn === "*" || fn === "*.script") {
+                            for (var i = 0; i < s.scripts.length; ++i) {
+                                var file = new Blob([s.scripts[i].code], {type:"text/plain"});
+                                zip.file(s.scripts[i].filename + ".js", file);
+                            }
                         }
-                    }
+                        if (fn === "*" || fn === "*.txt") {
+                            for (var i = 0; i < s.textFiles.length; ++i) {
+                                var file = new Blob([s.textFiles[i].text], {type:"text/plain"});
+                                zip.file(s.textFiles[i].fn, file);
+                            }
+                        }
 
-                    let zipFn;
-                    switch (fn) {
-                        case "*.script":
-                            zipFn = "bitburnerScripts.zip"; break;
-                        case "*.txt":
-                            zipFn = "bitburnerTexts.zip"; break;
-                        default:
-                            zipFn = "bitburnerFiles.zip"; break;
-                    }
-
-                    zip.generateAsync({type:"blob"}).then(function(content) {
-                        FileSaver.saveAs(content, zipFn);
-                    });
-                    return;
-                } else if (isScriptFilename(fn)) {
-                    //Download a single script
-                    for (var i = 0; i < s.scripts.length; ++i) {
-                        if (s.scripts[i].filename === fn) {
-                            return s.scripts[i].download();
+                        let zipFn;
+                        switch (fn) {
+                            case "*.script":
+                                zipFn = "bitburnerScripts.zip"; break;
+                            case "*.txt":
+                                zipFn = "bitburnerTexts.zip"; break;
+                            default:
+                                zipFn = "bitburnerFiles.zip"; break;
                         }
+
+                        zip.generateAsync({type:"blob"}).then(function(content) {
+                            FileSaver.saveAs(content, zipFn);
+                        });
+                        return;
+                    } else if (isScriptFilename(fn)) {
+                        // Download a single script
+                        const script = Terminal.getScript(fn);
+                        if (script != null) {
+                            return script.download();
+                        }
+                    } else if (fn.endsWith(".txt")) {
+                        // Download a single text file
+                        const txt = Terminal.getTextFile(fn);
+                        if (txt != null) {
+                            return txt.download();
+                        }
+                    } else {
+                        postError(`Cannot download this filetype`);
+                        return;
                     }
-                } else if (fn.endsWith(".txt")) {
-                    //Download a single text file
-                    var txtFile = getTextFile(fn, s);
-                    if (txtFile !== null) {
-                        return txtFile.download();
-                    }
+                    postError(`${fn} does not exist`);
+                } catch(e) {
+                    Terminal.postThrownError(e);
                 }
-                postError(`${fn} does not exist`);
                 break;
-            case "expr":
+            }
+            case "expr": {
                 if (commandArray.length <= 1) {
                     postError("Incorrect usage of expr command. Usage: expr [math expression]");
                     return;
@@ -1244,6 +1063,7 @@ let Terminal = {
                 }
                 post(result);
                 break;
+            }
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
 				break;
@@ -1293,6 +1113,7 @@ let Terminal = {
                 Player.currentServer = Player.getHomeComputer().ip;
                 Player.getCurrentServer().isConnectedTo = true;
                 post("Connected to home");
+                Terminal.currDir = "/";
                 Terminal.resetTerminalInput();
 				break;
 			case "hostname":
@@ -1309,24 +1130,106 @@ let Terminal = {
 				}
 				post(Player.getCurrentServer().ip);
 				break;
-			case "kill":
+			case "kill": {
                 Terminal.executeKillCommand(commandArray);
 				break;
-            case "killall":
-                for (var i = s.runningScripts.length-1; i >= 0; --i) {
+            }
+            case "killall": {
+                for (let i = s.runningScripts.length - 1; i >= 0; --i) {
                     killWorkerScript(s.runningScripts[i], s.ip);
                 }
                 post("Killing all running scripts. May take up to a few minutes for the scripts to die...");
                 break;
-			case "ls":
+            }
+			case "ls": {
                 Terminal.executeListCommand(commandArray);
 				break;
-            case "lscpu":
+            }
+            case "lscpu": {
                 post(Player.getCurrentServer().cpuCores + " Core(s)");
                 break;
-            case "mem":
+            }
+            case "mem": {
                 Terminal.executeMemCommand(commandArray);
                 break;
+            }
+            case "mv": {
+                if (commandArray.length !== 3) {
+                    postError(`Incorrect number of arguments. Usage: mv [src] [dest]`);
+                    return;
+                }
+
+                try {
+                    const source = commandArray[1];
+                    const dest = commandArray[2];
+
+                    if (!isScriptFilename(source) && !source.endsWith(".txt")) {
+                        postError(`'mv' can only be used on scripts and text files (.txt)`);
+                        return;
+                    }
+
+                    const srcFile = Terminal.getFile(source);
+                    if (srcFile == null) {
+                        postError(`Source file ${source} does not exist`);
+                        return;
+                    }
+
+                    const sourcePath = Terminal.getFilepath(source);
+                    const destPath = Terminal.getFilepath(dest);
+
+                    const destFile = Terminal.getFile(dest);
+
+                    // 'mv' command only works on scripts and txt files.
+                    // Also, you can't convert between different file types
+                    if (isScriptFilename(source)) {
+                        if (!isScriptFilename(dest)) {
+                            postError(`Source and destination files must have the same type`);
+                            return;
+                        }
+
+                        // Command doesnt work if script is running
+                        if (s.isRunning(sourcePath)) {
+                            postError(`Cannot use 'mv' on a script that is running`);
+                            return;
+                        }
+
+                        if (destFile != null) {
+                            // Already exists, will be overwritten, so we'll delete it
+                            const status = s.removeFile(destPath);
+                            if (!status.res) {
+                                postError(`Something went wrong...please contact game dev (probably a bug)`);
+                                return;
+                            } else {
+                                post("Warning: The destination file was overwritten");
+                            }
+                        }
+
+                        srcFile.filename = destPath;
+                    } else if (source.endsWith(".txt")) {
+                        if (!dest.endsWith(".txt")) {
+                            postError(`Source and destination files must have the same type`);
+                            return;
+                        }
+
+                        if (destFile != null) {
+                            // Already exists, will be overwritten, so we'll delete it
+                            const status = s.removeFile(destPath);
+                            if (!status.res) {
+                                postError(`Something went wrong...please contact game dev (probably a bug)`);
+                                return;
+                            } else {
+                                post("Warning: The destination file was overwritten");
+                            }
+                        }
+
+                        srcFile.fn = destPath;
+                    }
+                } catch(e) {
+                    Terminal.postThrownError(e);
+                }
+
+                break;
+            }
 			case "nano":
                 Terminal.executeNanoCommand(commandArray);
 				break;
@@ -1344,61 +1247,21 @@ let Terminal = {
 					post(res);
 				}
 				break;
-			case "rm":
+			case "rm": {
 				if (commandArray.length !== 2) {
                     postError("Incorrect number of arguments. Usage: rm [program/script]");
                     return;
                 }
 
                 //Check programs
-                let delTarget = commandArray[1];
+                let delTarget = Terminal.getFilepath(commandArray[1]);
 
-                if (delTarget.endsWith(".exe")) {
-                    for (let i = 0; i < s.programs.length; ++i) {
-                        if (s.programs[i] === delTarget) {
-                           s.programs.splice(i, 1);
-                           return;
-                        }
-                    }
-                } else if (isScriptFilename(delTarget)) {
-                    for (let i = 0; i < s.scripts.length; ++i) {
-                        if (s.scripts[i].filename === delTarget) {
-                            //Check that the script isnt currently running
-                            for (let j = 0; j < s.runningScripts.length; ++j) {
-                                if (s.runningScripts[j].filename == delTarget) {
-                                    postError("Cannot delete a script that is currently running!");
-                                    return;
-                                }
-                            }
-                            s.scripts.splice(i, 1);
-                            return;
-                        }
-                    }
-                } else if (delTarget.endsWith(".lit")) {
-                    for (let i = 0; i < s.messages.length; ++i) {
-                        let f = s.messages[i];
-                        if (!(f instanceof Message) && isString(f) && f === delTarget) {
-                            s.messages.splice(i, 1);
-                            return;
-                        }
-                    }
-                } else if (delTarget.endsWith(".txt")) {
-                    for (let i = 0; i < s.textFiles.length; ++i) {
-                        if (s.textFiles[i].fn === delTarget) {
-                            s.textFiles.splice(i, 1);
-                            return;
-                        }
-                    }
-                } else if (delTarget.endsWith(".cct")) {
-                    for (let i = 0; i < s.contracts.length; ++i) {
-                        if (s.contracts[i].fn === delTarget) {
-                            s.contracts.splice(i, 1);
-                            return;
-                        }
-                    }
+                const status = s.removeFile(delTarget);
+                if (!status.res) {
+                    postError(status.msg);
                 }
-                postError("Error: No such file exists");
 				break;
+            }
 			case "run":
 				//Run a program or a script
 				if (commandArray.length < 2) {
@@ -1476,32 +1339,38 @@ let Terminal = {
                     post("You do NOT have root access to this machine");
                 }
                 break;
-			case "tail":
-				if (commandArray.length < 2) {
-                    postError("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
-                } else {
-                    let scriptName = commandArray[1];
-                    if (!isScriptFilename(scriptName)) {
-                        postError("tail can only be called on .script files (filename must end with .script)");
-                        return;
-                    }
+			case "tail": {
+                try {
+                    if (commandArray.length < 2) {
+                        postError("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
+                    } else {
+                        const scriptName = Terminal.getFilepath(commandArray[1]);
+                        if (!isScriptFilename(scriptName)) {
+                            postError("tail can only be called on .script files (filename must end with .script)");
+                            return;
+                        }
 
-                    // Get script arguments
-                    let args = [];
-                    for (var i = 2; i < commandArray.length; ++i) {
-                        args.push(commandArray[i]);
-                    }
+                        // Get script arguments
+                        const args = [];
+                        for (let i = 2; i < commandArray.length; ++i) {
+                            args.push(commandArray[i]);
+                        }
 
-                    //Check that the script exists on this machine
-                    let runningScript = findRunningScript(scriptName, args, s);
-                    if (runningScript == null) {
-                        postError("No such script exists");
-                        return;
+                        // Check that the script exists on this machine
+                        const runningScript = findRunningScript(scriptName, args, s);
+                        if (runningScript == null) {
+                            postError("No such script exists");
+                            return;
+                        }
+                        logBoxCreate(runningScript);
                     }
-                    logBoxCreate(runningScript);
+                } catch(e) {
+                    Terminal.postThrownError(e);
                 }
+
 				break;
-            case "theme":
+            }
+            case "theme": {
                 let args = commandArray.slice(1);
                 if (args.length !== 1 && args.length !== 3) {
                     postError("Incorrect number of arguments.");
@@ -1546,7 +1415,8 @@ let Terminal = {
                     }
                 }
                 break;
-			case "top":
+            }
+			case "top": {
 				if (commandArray.length !== 1) {
 				    postError("Incorrect usage of top command. Usage: top");
                     return;
@@ -1575,7 +1445,8 @@ let Terminal = {
 					post(entry.join(""));
 				}
 				break;
-            case "unalias":
+            }
+            case "unalias": {
                 if (commandArray.length !== 2) {
                     postError('Incorrect usage of unalias name. Usage: unalias [alias]');
                     return;
@@ -1587,8 +1458,8 @@ let Terminal = {
                     }
                 }
                 break;
-            /* eslint-disable no-case-declarations */
-            case "wget":
+            }
+            case "wget": {
                 if (commandArray.length !== 3) {
                     postError("Incorrect usage of wget command. Usage: wget [url] [target file]");
                     return;
@@ -1617,7 +1488,7 @@ let Terminal = {
                     return postError("wget failed: " + JSON.stringify(e));
                 })
                 break;
-            /* eslint-enable no-case-declarations */
+            }
 			default:
 				postError(`Command ${commandArray[0]} not found`);
 		}
@@ -1633,6 +1504,7 @@ let Terminal = {
         Player.currentServer = serv.ip;
         Player.getCurrentServer().isConnectedTo = true;
         post("Connected to " + serv.hostname);
+        Terminal.currDir = "/";
         if (Player.getCurrentServer().hostname == "darkweb") {
             checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
         }
@@ -1656,140 +1528,163 @@ let Terminal = {
     },
 
     executeKillCommand: function(commandArray) {
-        if (commandArray.length < 2) {
-            postError("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]...");
-            return;
-        }
+        try {
+            if (commandArray.length < 2) {
+                postError("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]...");
+                return;
+            }
 
-        const s = Player.getCurrentServer();
-        const scriptName = commandArray[1];
-        const args = [];
-        for (let i = 2; i < commandArray.length; ++i) {
-            args.push(commandArray[i]);
+            const s = Player.getCurrentServer();
+            const scriptName = Terminal.getFilepath(commandArray[1]);
+            const args = [];
+            for (let i = 2; i < commandArray.length; ++i) {
+                args.push(commandArray[i]);
+            }
+            const runningScript = findRunningScript(scriptName, args, s);
+            if (runningScript == null) {
+                postError("No such script is running. Nothing to kill");
+                return;
+            }
+            killWorkerScript(runningScript, s.ip);
+            post(`Killing ${scriptName}. May take up to a few seconds for the scripts to die...`);
+        } catch(e) {
+            Terminal.postThrownError(e);
         }
-        const runningScript = findRunningScript(scriptName, args, s);
-        if (runningScript == null) {
-            postError("No such script is running. Nothing to kill");
-            return;
-        }
-        killWorkerScript(runningScript, s.ip);
-        post(`Killing ${scriptName}. May take up to a few seconds for the scripts to die...`);
     },
 
     executeListCommand: function(commandArray) {
-        if (commandArray.length !== 1 && commandArray.length !== 4) {
-            postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
-            return;
+        const numArgs = commandArray.length;
+        function incorrectUsage() {
+            postError("Incorrect usage of ls command. Usage: ls [dir] [| grep pattern]");
         }
 
-        // grep
-        var filter = null;
-        if (commandArray.length === 4) {
-            if (commandArray[1] === "|" && commandArray[2] === "grep") {
-                if (commandArray[3] !== " ") {
-                    filter = commandArray[3];
-                }
-            } else {
-                postError("Incorrect usage of ls command. Usage: ls [| grep pattern]");
-                return;
+        if (numArgs <= 0 || numArgs > 5 || numArgs === 3) {
+            return incorrectUsage();
+        }
+
+        // Grep
+        let filter = null; // Grep
+
+        // Directory path
+        let prefix = Terminal.currDir;
+        if (!prefix.endsWith("/")) {
+            prefix += "/";
+        }
+
+        // If there are 4+ arguments, then the last 3 must be for grep
+        if (numArgs >= 4) {
+            if (commandArray[numArgs - 2] !== "grep" || commandArray[numArgs - 3] !== "|") {
+                return incorrectUsage();
             }
+            filter = commandArray[numArgs - 1];
+        }
+
+        // If the second argument is not a pipe, then it must be for listing a directory
+        if (numArgs >= 2 && commandArray[1] !== "|") {
+            prefix = evaluateDirectoryPath(commandArray[1], Terminal.currDir);
+            if (prefix != null) {
+                if (!prefix.endsWith("/")) {
+                    prefix += "/";
+                }
+                if (!isValidDirectoryPath(prefix)) {
+                    return incorrectUsage();
+                }
+            }
+        }
+
+        // Root directory, which is the same as no 'prefix' at all
+        if (prefix === "/") {
+            prefix = null;
         }
 
         //Display all programs and scripts
-        var allFiles = [];
+        let allFiles = [];
+        let folders = [];
 
-        //Get all of the programs and scripts on the machine into one temporary array
-        const s = Player.getCurrentServer();
-        for (const program of s.programs) {
-            if (filter) {
-                if (program.includes(filter)) {
-                    allFiles.push(program);
-                }
-            } else {
-                allFiles.push(program);
-            }
-        }
-        for (const script of s.scripts) {
-            if (filter) {
-                if (script.filename.includes(filter)) {
-                    allFiles.push(script.filename);
-                }
-            } else {
-                allFiles.push(script.filename);
-            }
-
-        }
-        for (const msgOrLit of s.messages) {
-            if (filter) {
-                if (msgOrLit instanceof Message) {
-                    if (msgOrLit.filename.includes(filter)) {
-                        allFiles.push(msgOrLit.filename);
-                    }
-                } else if (msgOrLit.includes(filter)) {
-                    allFiles.push(msgOrLit);
-                }
-            } else {
-                if (msgOrLit instanceof Message) {
-                    allFiles.push(msgOrLit.filename);
+        function handleFn(fn) {
+            let parsedFn = fn;
+            if (prefix) {
+                if (!fn.startsWith(prefix)) {
+                    return;
                 } else {
-                    allFiles.push(msgOrLit);
+                    parsedFn = fn.slice(prefix.length, fn.length);
                 }
             }
-        }
-        for (const txt of s.textFiles) {
-            if (filter) {
-                if (txt.fn.includes(filter)) {
-                    allFiles.push(txt.fn);
-                }
-            } else {
-                allFiles.push(txt.fn);
+
+            if (filter && !parsedFn.includes(filter)) {
+                return;
             }
-        }
-        for (const contract of s.contracts) {
-            if (filter) {
-                if (contract.fn.includes(filter)) {
-                    allFiles.push(contract.fn);
+
+            // If the fn includes a forward slash, it must be in a subdirectory.
+            // Therefore, we only list the "first" directory in its path
+            if (parsedFn.includes("/")) {
+                const firstParentDir = getFirstParentDirectory(parsedFn);
+                if (filter && !firstParentDir.includes(filter)) {
+                    return;
                 }
-            } else {
-                allFiles.push(contract.fn);
+
+                if (!folders.includes(firstParentDir)) {
+                    folders.push(firstParentDir);
+                }
+
+                return;
             }
+
+            allFiles.push(parsedFn);
         }
 
-        //Sort the files alphabetically then print each
+        // Get all of the programs and scripts on the machine into one temporary array
+        const s = Player.getCurrentServer();
+        for (const program of s.programs) handleFn(program);
+        for (const script of s.scripts) handleFn(script.filename);
+        for (const txt of s.textFiles) handleFn(txt.fn);
+        for (const contract of s.contracts) handleFn(contract.fn);
+        for (const msgOrLit of s.messages) (msgOrLit instanceof Message) ? handleFn(msgOrLit.filename) : handleFn(msgOrLit);
+
+        // Sort the files/folders alphabetically then print each
         allFiles.sort();
+        folders.sort();
 
-        for (var i = 0; i < allFiles.length; i++) {
-            post(allFiles[i]);
+        const config = { color: "#0000FF" };
+        for (const dir of folders) {
+            postContent(dir, config);
+        }
+
+        for (const file of allFiles) {
+            postContent(file);
         }
     },
 
     executeMemCommand: function(commandArray) {
-        if (commandArray.length !== 2 && commandArray.length !== 4) {
-            postError("Incorrect usage of mem command. usage: mem [scriptname] [-t] [number threads]");
-            return;
-        }
-
-        const s = Player.getCurrentServer();
-        const scriptName = commandArray[1];
-        let numThreads = 1;
-        if (commandArray.length === 4 && commandArray[2] === "-t") {
-            numThreads = Math.round(parseInt(commandArray[3]));
-            if (isNaN(numThreads) || numThreads < 1) {
-                postError("Invalid number of threads specified. Number of threads must be greater than 1");
+        try {
+            if (commandArray.length !== 2 && commandArray.length !== 4) {
+                postError("Incorrect usage of mem command. usage: mem [scriptname] [-t] [number threads]");
                 return;
             }
-        }
 
-        for (let i = 0; i < s.scripts.length; ++i) {
-            if (scriptName === s.scripts[i].filename) {
-                const scriptBaseRamUsage = s.scripts[i].ramUsage;
-                const ramUsage = scriptBaseRamUsage * numThreads;
+            const s = Player.getCurrentServer();
+            const scriptName = commandArray[1];
+            let numThreads = 1;
+            if (commandArray.length === 4 && commandArray[2] === "-t") {
+                numThreads = Math.round(parseInt(commandArray[3]));
+                if (isNaN(numThreads) || numThreads < 1) {
+                    postError("Invalid number of threads specified. Number of threads must be greater than 1");
+                    return;
+                }
+            }
 
-                post(`This script requires ${numeralWrapper.format(ramUsage, '0.00')} GB of RAM to run for ${numThreads} thread(s)`);
+            const script = Terminal.getScript(scriptName);
+            if (script == null) {
+                postError("No such script exists!");
                 return;
             }
+
+            const ramUsage = script.ramUsage * numThreads;
+
+            post(`This script requires ${numeralWrapper.format(ramUsage, '0.00')} GB of RAM to run for ${numThreads} thread(s)`);
+        } catch(e) {
+            Terminal.postThrownError(e);
         }
-        postError("No such script exists!");
     },
 
     executeNanoCommand: function(commandArray) {
@@ -1798,30 +1693,34 @@ let Terminal = {
             return;
         }
 
-        const s = Player.getCurrentServer();
-        const filename = commandArray[1];
-        if (filename === ".fconf") {
-            let text = createFconf();
-            Engine.loadScriptEditorContent(filename, text);
-            return;
-        } else if (isScriptFilename(filename)) {
-            for (let i = 0; i < s.scripts.length; i++) {
-                if (filename == s.scripts[i].filename) {
-                    Engine.loadScriptEditorContent(filename, s.scripts[i].code);
-                    return;
+        try {
+            const filename = commandArray[1];
+            if (filename === ".fconf") {
+                let text = createFconf();
+                Engine.loadScriptEditorContent(filename, text);
+                return;
+            } else if (isScriptFilename(filename)) {
+                const filepath = Terminal.getFilepath(filename);
+                const script = Terminal.getScript(filename);
+                if (script == null) {
+                    Engine.loadScriptEditorContent(filepath);
+                } else {
+                    Engine.loadScriptEditorContent(filepath, script.code);
                 }
-            }
-        } else if (filename.endsWith(".txt")) {
-            for (let i = 0; i < s.textFiles.length; ++i) {
-                if (filename === s.textFiles[i].fn) {
-                    Engine.loadScriptEditorContent(filename, s.textFiles[i].text);
-                    return;
+            } else if (filename.endsWith(".txt")) {
+                const filepath = Terminal.getFilepath(filename);
+                const txt = Terminal.getTextFile(filename);
+                if (txt == null) {
+                    Engine.loadScriptEditorContent(filepath);
+                } else {
+                    Engine.loadScriptEditorContent(filepath, txt.text);
                 }
+            } else {
+                postError("Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano"); return;
             }
-        } else {
-            postError("Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano"); return;
+        } catch(e) {
+            Terminal.postThrownError(e);
         }
-        Engine.loadScriptEditorContent(filename); // Open a new file
     },
 
     executeScanCommand: function(commandArray) {
@@ -1923,96 +1822,101 @@ let Terminal = {
     },
 
     executeScpCommand(commandArray) {
-        if (commandArray.length !== 3) {
-            postError("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
-            return;
-        }
-        const scriptname = commandArray[1];
-        if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith(".txt")) {
-            postError("scp only works for scripts, text files (.txt), and literature files (.lit)");
-            return;
-        }
-        const destServer = getServer(commandArray[2]);
-        if (destServer == null) {
-            postError(`Invalid destination. ${commandArray[2]} not found`);
-            return;
-        }
-        const ip = destServer.ip;
-        const currServ = Player.getCurrentServer();
-
-        //Scp for lit files
-        if (scriptname.endsWith(".lit")) {
-            var found = false;
-            for (var i = 0; i < currServ.messages.length; ++i) {
-                if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) { return postError("No such file exists!"); }
-
-            for (var i = 0; i < destServer.messages.length; ++i) {
-                if (destServer.messages[i] === scriptname) {
-                    post(scriptname + " copied over to " + destServer.hostname);
-                    return; //Already exists
-                }
-            }
-            destServer.messages.push(scriptname);
-            return post(scriptname + " copied over to " + destServer.hostname);
-        }
-
-        //Scp for txt files
-        if (scriptname.endsWith(".txt")) {
-            var found = false, txtFile;
-            for (var i = 0; i < currServ.textFiles.length; ++i) {
-                if (currServ.textFiles[i].fn === scriptname) {
-                    found = true;
-                    txtFile = currServ.textFiles[i];
-                    break;
-                }
-            }
-
-            if (!found) { return postError("No such file exists!"); }
-
-            let tRes = destServer.writeToTextFile(txtFile.fn, txtFile.text);
-            if (!tRes.success) {
-                postError("scp failed");
+        try {
+            if (commandArray.length !== 3) {
+                postError("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
                 return;
             }
-            if (tRes.overwritten) {
-                post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
+            const scriptname = Terminal.getFilepath(commandArray[1]);
+            if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith(".txt")) {
+                postError("scp only works for scripts, text files (.txt), and literature files (.lit)");
+                return;
+            }
+
+            const destServer = getServer(commandArray[2]);
+            if (destServer == null) {
+                postError(`Invalid destination. ${commandArray[2]} not found`);
+                return;
+            }
+            const ip = destServer.ip;
+            const currServ = Player.getCurrentServer();
+
+            //Scp for lit files
+            if (scriptname.endsWith(".lit")) {
+                var found = false;
+                for (var i = 0; i < currServ.messages.length; ++i) {
+                    if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) { return postError("No such file exists!"); }
+
+                for (var i = 0; i < destServer.messages.length; ++i) {
+                    if (destServer.messages[i] === scriptname) {
+                        post(scriptname + " copied over to " + destServer.hostname);
+                        return; //Already exists
+                    }
+                }
+                destServer.messages.push(scriptname);
+                return post(scriptname + " copied over to " + destServer.hostname);
+            }
+
+            //Scp for txt files
+            if (scriptname.endsWith(".txt")) {
+                var found = false, txtFile;
+                for (var i = 0; i < currServ.textFiles.length; ++i) {
+                    if (currServ.textFiles[i].fn === scriptname) {
+                        found = true;
+                        txtFile = currServ.textFiles[i];
+                        break;
+                    }
+                }
+
+                if (!found) { return postError("No such file exists!"); }
+
+                let tRes = destServer.writeToTextFile(txtFile.fn, txtFile.text);
+                if (!tRes.success) {
+                    postError("scp failed");
+                    return;
+                }
+                if (tRes.overwritten) {
+                    post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
+                    post(`${scriptname} overwritten on ${destServer.hostname}`);
+                    return;
+                }
+                post(`${scriptname} copied over to ${destServer.hostname}`);
+                return;
+            }
+
+            // Get the current script
+            let sourceScript = null;
+            for (let i = 0; i < currServ.scripts.length; ++i) {
+                if (scriptname == currServ.scripts[i].filename) {
+                    sourceScript = currServ.scripts[i];
+                    break;
+                }
+            }
+            if (sourceScript == null) {
+                postError("scp() failed. No such script exists");
+                return;
+            }
+
+            let sRes = destServer.writeToScriptFile(scriptname, sourceScript.code);
+            if (!sRes.success) {
+                postError(`scp failed`);
+                return;
+            }
+            if (sRes.overwritten) {
+                post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
                 post(`${scriptname} overwritten on ${destServer.hostname}`);
                 return;
             }
             post(`${scriptname} copied over to ${destServer.hostname}`);
-            return;
+        } catch(e) {
+            Terminal.postThrownError(e);
         }
-
-        // Get the current script
-        let sourceScript = null;
-        for (let i = 0; i < currServ.scripts.length; ++i) {
-            if (scriptname == currServ.scripts[i].filename) {
-                sourceScript = currServ.scripts[i];
-                break;
-            }
-        }
-        if (sourceScript == null) {
-            postError("scp() failed. No such script exists");
-            return;
-        }
-
-        let sRes = destServer.writeToScriptFile(scriptname, sourceScript.code);
-        if (!sRes.success) {
-            postError(`scp failed`);
-            return;
-        }
-        if (sRes.overwritten) {
-            post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
-            post(`${scriptname} overwritten on ${destServer.hostname}`);
-            return;
-        }
-        post(`${scriptname} copied over to ${destServer.hostname}`);
     },
 
 	//First called when the "run [program]" command is called. Checks to see if you
@@ -2199,6 +2103,102 @@ let Terminal = {
         programHandlers[programName](s, splitArgs);
 	},
 
+    /**
+     * Given a filename, returns that file's full path. This takes into account
+     * the Terminal's current directory.
+     */
+    getFilepath : function(filename) {
+        const path = evaluateFilePath(filename, Terminal.currDir);
+        if (path == null) {
+            throw new Error(`Invalid file path specified: ${filename}`);
+        }
+
+        if (isInRootDirectory(path)) {
+            return removeLeadingSlash(path);
+        }
+
+        return path;
+    },
+
+    /**
+     * Given a filename, searches and returns that file. File-type agnostic
+     */
+    getFile: function (filename) {
+        if (isScriptFilename(filename)) {
+            return Terminal.getScript(filename);
+        }
+
+        if (filename.endsWith(".lit")) {
+            return Terminal.getLitFile(filename);
+        }
+
+        if (filename.endsWith(".txt")) {
+            return Terminal.getTextFile(filename);
+        }
+
+        return null;
+    },
+
+    /**
+     * Processes a file path referring to a literature file, taking into account the terminal's
+     * current directory + server. Returns the lit file if it exists, and null otherwise
+     */
+    getLitFile: function(filename) {
+        const s = Player.getCurrentServer();
+        const filepath = Terminal.getFilepath(filename);
+        for (const lit of s.messages) {
+            if (typeof lit === "string" && filepath === lit) {
+                return lit;
+            }
+        }
+
+        return null;
+    },
+
+    /**
+     * Processes a file path referring to a script, taking into account the terminal's
+     * current directory + server. Returns the script if it exists, and null otherwise.
+     */
+    getScript: function(filename) {
+        const s = Player.getCurrentServer();
+        const filepath = Terminal.getFilepath(filename);
+        for (const script of s.scripts) {
+            if (filepath === script.filename) {
+                return script;
+            }
+        }
+
+        return null;
+    },
+
+    /**
+     * Processes a file path referring to a text file, taking into account the terminal's
+     * current directory + server. Returns the text file if it exists, and null otherwise.
+     */
+    getTextFile: function(filename) {
+        const s = Player.getCurrentServer();
+        const filepath = Terminal.getFilepath(filename);
+        for (const txt of s.textFiles) {
+            if (filepath === txt.fn) {
+                return txt;
+            }
+        }
+
+        return null;
+    },
+
+    postThrownError: function(e) {
+        if (e instanceof Error) {
+            const errorLabel = "Error: ";
+            const errorString = e.toString();
+            if (errorString.startsWith(errorLabel)) {
+                postError(errorString.slice(errorLabel.length));
+            } else {
+                postError(errorString);
+            }
+        }
+    },
+
 	runScript: function(commandArray) {
         if (commandArray.length < 2) {
             dialogBoxCreate(`Bug encountered with Terminal.runScript(). Command array has a length of less than 2: ${commandArray}`);
@@ -2209,7 +2209,7 @@ let Terminal = {
 
         let numThreads = 1;
         const args = [];
-        const scriptName = commandArray[1];
+        const scriptName = Terminal.getFilepath(commandArray[1]);
 
         if (commandArray.length > 2) {
             if (commandArray.length >= 4 && commandArray[2] == "-t") {
@@ -2237,7 +2237,7 @@ let Terminal = {
 
 		//Check if the script exists and if it does run it
 		for (var i = 0; i < server.scripts.length; i++) {
-			if (server.scripts[i].filename == scriptName) {
+			if (server.scripts[i].filename === scriptName) {
 				//Check for admin rights and that there is enough RAM availble to run
                 var script = server.scripts[i];
 				var ramUsage = script.ramUsage * numThreads;

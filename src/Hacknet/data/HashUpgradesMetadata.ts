@@ -3,7 +3,8 @@ import { IConstructorParams } from "../HashUpgrade";
 
 export const HashUpgradesMetadata: IConstructorParams[] = [
     {
-        costPerLevel: 1,
+        cost: 4,
+        costPerLevel: 4,
         desc: "Sell hashes for $1m",
         name: "Sell for Money",
         value: 1e6,
@@ -62,8 +63,8 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
         value: 10,
     },
     {
-        costPerLevel: 150,
-        desc: "Generate a random Coding Contract on your home computer",
+        costPerLevel: 200,
+        desc: "Generate a random Coding Contract somewhere on the network",
         name: "Generate Coding Contract",
         value: 1,
     },
