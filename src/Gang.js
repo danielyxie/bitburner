@@ -74,8 +74,16 @@ $(document).mousedown(function(event) {
     }
 });
 
-let GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
-             "NiteSec", "The Black Hand"];
+const GangNames = [
+    "Slum Snakes",
+    "Tetrads",
+    "The Syndicate",
+    "The Dark Army",
+    "Speakers for the Dead",
+    "NiteSec",
+    "The Black Hand"
+];
+
 export let AllGangs = {
     "Slum Snakes" : {
         power: 1,
@@ -299,9 +307,9 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     }
 
     // Then process territory
-    for (var i = 0; i < GangNames.length; ++i) {
+    for (let i = 0; i < GangNames.length; ++i) {
         const others = GangNames.filter((e) => {
-            return e !== i;
+            return e !== GangNames[i];
         });
         const other = getRandomInt(0, others.length - 1);
 
@@ -326,6 +334,7 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
             AllGangs[otherGang].territory -= 0.0001;
             if (thisGang === gangName) {
                 this.clash(true); // Player won
+                AllGangs[otherGang].power *= (1 / 1.01);
             } else if (otherGang === gangName) {
                 this.clash(false); // Player lost
             } else {
@@ -341,6 +350,7 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
                 this.clash(false); // Player lost
             } else if (otherGang === gangName) {
                 this.clash(true); // Player won
+                AllGangs[thisGang].power *= (1 / 1.01);
             } else {
                 AllGangs[thisGang].power *= (1 / 1.01);
             }
