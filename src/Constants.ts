@@ -279,5 +279,7 @@ export let CONSTANTS: IMap<any> = {
     * Gang changes:
     ** Bug Fix: Gangs can no longer clash with themselve
     ** Bug Fix: Winning against another gang should properly reduce their power
+
+    * Bug Fix: Terminal 'wget' command now works properly
     `
 }

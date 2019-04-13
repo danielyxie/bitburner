@@ -5156,7 +5156,15 @@ function NetscriptFunctions(workerScript) {
 
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
             }
-        } // End sleeve
+        }, // End sleeve
+        heart: {
+            // Easter egg function
+            break : function() {
+                if (workerScript.checkingRam) { return 0; }
+                
+                return Player.karma;
+            }
+        }
     } // End return
 } // End NetscriptFunction()
 
