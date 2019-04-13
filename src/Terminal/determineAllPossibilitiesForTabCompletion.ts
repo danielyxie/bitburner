@@ -1,9 +1,4 @@
 import {
-    getFirstParentDirectory,
-    isInRootDirectory
-} from "./DirectoryHelpers";
-
-import {
     Aliases,
     GlobalAliases
 } from "../Alias";
@@ -80,7 +75,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     }
 
     function addAllPrograms() {
-        for (const program of currServ.programs) {
+        for (const program of homeComputer.programs) {
             allPos.push(program);
         }
     }

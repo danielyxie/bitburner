@@ -17,7 +17,11 @@ type IProps = {
     p: IPlayer;
 }
 
-export class HospitalLocation extends React.Component<IProps, any> {
+type IState = {
+    currHp: number;
+}
+
+export class HospitalLocation extends React.Component<IProps, IState> {
     /**
      * Stores button styling that sets them all to block display
      */
@@ -30,6 +34,10 @@ export class HospitalLocation extends React.Component<IProps, any> {
 
         this.getCost = this.getCost.bind(this);
         this.getHealed = this.getHealed.bind(this);
+
+        this.state = {
+            currHp: this.props.p.hp,
+        }
     }
 
     getCost(): number {
@@ -45,6 +53,11 @@ export class HospitalLocation extends React.Component<IProps, any> {
         const cost = this.getCost();
         this.props.p.loseMoney(cost);
         this.props.p.hp = this.props.p.max_hp;
+
+        // This just forces a re-render to update the cost
+        this.setState({
+            currHp: this.props.p.hp,
+        });
 
         dialogBoxCreate(`You were healed to full health! The hospital billed you for ${numeralWrapper.formatMoney(cost)}`);
     }

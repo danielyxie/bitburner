@@ -1417,7 +1417,7 @@ export class CorporationEventHandler {
                 }
 
                 // Array of all cities. Used later
-                const cities = Object.values(Cities);
+                const cities = Object.keys(Cities);
 
                 // Parse quantity
                 if (inputQty.value.includes("MAX") || inputQty.value.includes("PROD")) {
