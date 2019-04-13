@@ -8,93 +8,93 @@ import { IMap } from "./types";
 export let CONSTANTS: IMap<any> = {
     Version:                "0.46.0",
 
-	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
-    //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
-    //the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
+	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
+     * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
+     * the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
+     */
 	MaxSkillLevel: 			975,
 
-    //Milliseconds per game cycle
+    // Milliseconds per game cycle
     MilliPerCycle: 200,
 
-    //How much reputation is needed to join a megacorporation's faction
+    // How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 200e3,
 
-    /* Base costs */
+    // Base RAM costs
     BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
 
+    // Cost to travel to another city
     TravelCost: 200e3,
 
-    /* Faction and Company favor */
-    BaseFavorToDonate:            150,
-    DonateMoneyToRepDivisor:      1e6,
+    // Faction and Company favor-related things
+    BaseFavorToDonate: 150,
+    DonateMoneyToRepDivisor: 1e6,
     FactionReputationToFavorBase: 500,
     FactionReputationToFavorMult: 1.02,
     CompanyReputationToFavorBase: 500,
     CompanyReputationToFavorMult: 1.02,
 
-    /* Augmentation */
-    //NeuroFlux Governor cost multiplier as you level up
+    // NeuroFlux Governor Augmentation cost multiplier
     NeuroFluxGovernorLevelMult: 1.14,
 
-    /* Netscript Constants */
-    //RAM Costs for different commands
-    ScriptBaseRamCost:              1.6,
-    ScriptDomRamCost:               25,
-    ScriptWhileRamCost:             0,
-    ScriptForRamCost:               0,
-    ScriptIfRamCost:                0,
-    ScriptHackRamCost:              0.1,
-    ScriptHackAnalyzeRamCost:       1,
-    ScriptGrowRamCost:              0.15,
-    ScriptGrowthAnalyzeRamCost:     1,
-    ScriptWeakenRamCost:            0.15,
-    ScriptScanRamCost:              0.2,
-    ScriptPortProgramRamCost:       0.05,
-    ScriptRunRamCost:               1.0,
-    ScriptExecRamCost:              1.3,
-    ScriptSpawnRamCost:             2.0,
-    ScriptScpRamCost:               0.6,
-    ScriptKillRamCost:              0.5, //Kill and killall
-    ScriptHasRootAccessRamCost:     0.05,
-    ScriptGetHostnameRamCost:       0.05, //getHostname() and getIp()
-    ScriptGetHackingLevelRamCost:   0.05, //getHackingLevel()
-    ScriptGetMultipliersRamCost:    4.0, //getHackingMultipliers() and getBitNodeMultipliers()
-    ScriptGetServerRamCost:         0.1,
-    ScriptFileExistsRamCost:        0.1,
-    ScriptIsRunningRamCost:         0.1,
-    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing Hacknet Node API
-    ScriptHNUpgLevelRamCost:        0.4,
-    ScriptHNUpgRamRamCost:          0.6,
-    ScriptHNUpgCoreRamCost:         0.8,
-    ScriptGetStockRamCost:          2.0,
-    ScriptBuySellStockRamCost:      2.5,
+    // RAM Costs for Netscript functions
+    ScriptBaseRamCost: 1.6,
+    ScriptDomRamCost: 25,
+    ScriptWhileRamCost: 0,
+    ScriptForRamCost: 0,
+    ScriptIfRamCost: 0,
+    ScriptHackRamCost: 0.1,
+    ScriptHackAnalyzeRamCost: 1,
+    ScriptGrowRamCost: 0.15,
+    ScriptGrowthAnalyzeRamCost: 1,
+    ScriptWeakenRamCost: 0.15,
+    ScriptScanRamCost: 0.2,
+    ScriptPortProgramRamCost: 0.05,
+    ScriptRunRamCost: 1.0,
+    ScriptExecRamCost: 1.3,
+    ScriptSpawnRamCost: 2.0,
+    ScriptScpRamCost: 0.6,
+    ScriptKillRamCost: 0.5,
+    ScriptHasRootAccessRamCost: 0.05,
+    ScriptGetHostnameRamCost: 0.05,
+    ScriptGetHackingLevelRamCost: 0.05,
+    ScriptGetMultipliersRamCost: 4.0,
+    ScriptGetServerRamCost: 0.1,
+    ScriptFileExistsRamCost: 0.1,
+    ScriptIsRunningRamCost: 0.1,
+    ScriptHacknetNodesRamCost: 4.0,
+    ScriptHNUpgLevelRamCost: 0.4,
+    ScriptHNUpgRamRamCost: 0.6,
+    ScriptHNUpgCoreRamCost: 0.8,
+    ScriptGetStockRamCost: 2.0,
+    ScriptBuySellStockRamCost: 2.5,
     ScriptGetPurchaseServerRamCost: 0.25,
-    ScriptPurchaseServerRamCost:    2.25,
-    ScriptGetPurchasedServerLimit:  0.05,
+    ScriptPurchaseServerRamCost: 2.25,
+    ScriptGetPurchasedServerLimit: 0.05,
     ScriptGetPurchasedServerMaxRam: 0.05,
-    ScriptRoundRamCost:             0.05,
-    ScriptReadWriteRamCost:         1.0,
-    ScriptArbScriptRamCost:         1.0, // Functions that apply to all scripts regardless of args
-    ScriptGetScriptRamCost:         0.1,
-    ScriptGetHackTimeRamCost:       0.05,
-    ScriptGetFavorToDonate:         0.10,
-    ScriptCodingContractBaseRamCost:10,
-    ScriptSleeveBaseRamCost:        4,
+    ScriptRoundRamCost: 0.05,
+    ScriptReadWriteRamCost: 1.0,
+    ScriptArbScriptRamCost: 1.0,
+    ScriptGetScriptRamCost: 0.1,
+    ScriptGetHackTimeRamCost: 0.05,
+    ScriptGetFavorToDonate: 0.10,
+    ScriptCodingContractBaseRamCost: 10,
+    ScriptSleeveBaseRamCost: 4,
 
-    ScriptSingularityFn1RamCost:    1,
-    ScriptSingularityFn2RamCost:    2,
-    ScriptSingularityFn3RamCost:    3,
+    ScriptSingularityFn1RamCost: 1,
+    ScriptSingularityFn2RamCost: 2,
+    ScriptSingularityFn3RamCost: 3,
 
-    ScriptSingularityFnRamMult:     2, // Multiplier for RAM cost outside of BN-4
+    ScriptSingularityFnRamMult: 2,      // Multiplier for RAM cost outside of BN-4
 
-    ScriptGangApiBaseRamCost:   4,
+    ScriptGangApiBaseRamCost: 4,
 
-    ScriptBladeburnerApiBaseRamCost:    4,
+    ScriptBladeburnerApiBaseRamCost: 4,
 
-    NumNetscriptPorts:              20,
+    NumNetscriptPorts: 20,
 
-    //Server constants
+    // Server-related constants
     HomeComputerMaxRam: 1073741824, // 2 ^ 30
     ServerBaseGrowthRate: 1.03,     // Unadjusted Growth rate
     ServerMaxGrowthRate: 1.0035,    // Maximum possible growth rate (max rate accounting for server security)
@@ -102,49 +102,50 @@ export let CONSTANTS: IMap<any> = {
     ServerWeakenAmount: 0.05,       // Amount by which server's security decreases when weakened
 
     PurchasedServerLimit: 25,
-    PurchasedServerMaxRam: 1048576, //2^20
+    PurchasedServerMaxRam: 1048576, // 2^20
 
-    //Augmentation Constants
-    AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
-    AugmentationRepMultiplier:  2.5, //Used for balancing rep cost without having to readjust every value
-    MultipleAugMultiplier:      1.9,
+    // Augmentation Constants
+    AugmentationCostMultiplier: 5,  // Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationRepMultiplier: 2.5, // Used for balancing rep cost without having to readjust every value
+    MultipleAugMultiplier: 1.9,
 
-    //How much a TOR router costs
-    TorRouterCost: 200000,
+    // TOR Router
+    TorRouterCost: 200e3,
 
-    //Infiltration constants
+    // Infiltration
     InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
-    InfiltrationMoneyValue:   5e3,         //Convert "secret" value to money
+    InfiltrationMoneyValue: 5e3,            //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
     InfiltrationExpPow: 0.8,
 
-    //Stock market constants
-    WSEAccountCost:         200e6,
-    TIXAPICost:             5e9,
-    MarketData4SCost:       1e9,
+    // Stock market
+    WSEAccountCost: 200e6,
+    TIXAPICost: 5e9,
+    MarketData4SCost: 1e9,
     MarketDataTixApi4SCost: 25e9,
-    StockMarketCommission:  100e3,
+    StockMarketCommission: 100e3,
 
-    //Hospital/Health
+    // Hospital/Health
     HospitalCostPerHp: 100e3,
 
-    //Intelligence-related constants
-    IntelligenceCrimeWeight: 0.05,  //Weight for how much int affects crime success rates
-    IntelligenceInfiltrationWeight: 0.1, //Weight for how much int affects infiltration success rates
+    // Intelligence-related constants
+    IntelligenceCrimeWeight: 0.05, // Weight for how much int affects crime success rates
+    IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
     IntelligenceCrimeBaseExpGain: 0.001,
-    IntelligenceProgramBaseExpGain: 500, //Program required hack level divided by this to determine int exp gain
-    IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
+    IntelligenceProgramBaseExpGain: 500, // Program required hack level divided by this to determine int exp gain
+    IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
     IntelligenceSingFnBaseExpGain: 0.002,
     IntelligenceClassBaseExpGain: 0.000001,
-    IntelligenceHackingMissionBaseExpGain: 0.03, //Hacking Mission difficulty multiplied by this to get exp gain
+    IntelligenceHackingMissionBaseExpGain: 0.03, // Hacking Mission difficulty multiplied by this to get exp gain
 
-    //Hacking Missions
-    HackingMissionRepToDiffConversion: 10000, //Faction rep is divided by this to get mission difficulty
-    HackingMissionRepToRewardConversion: 7, //Faction rep divided byt his to get mission rep reward
-    HackingMissionSpamTimeIncrease: 25000, //How much time limit increase is gained when conquering a Spam Node (ms)
-    HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
-    HackingMissionMiscDefenseIncrease: 1.05, //The amount by which every misc node's defense is multiplied when one is conquered
-    HackingMissionDifficultyToHacking: 135, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
+    // Hacking Missions
+    // TODO Move this into Hacking Mission implementation
+    HackingMissionRepToDiffConversion: 10000, // Faction rep is divided by this to get mission difficulty
+    HackingMissionRepToRewardConversion: 7, // Faction rep divided byt his to get mission rep reward
+    HackingMissionSpamTimeIncrease: 25000, // How much time limit increase is gained when conquering a Spam Node (ms)
+    HackingMissionTransferAttackIncrease: 1.05, // Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
+    HackingMissionMiscDefenseIncrease: 1.05, // The amount by which every misc node's defense is multiplied when one is conquered
+    HackingMissionDifficultyToHacking: 135, // Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
@@ -192,7 +193,7 @@ export let CONSTANTS: IMap<any> = {
                              "-Miscellaneous Nodes slowly raise their defense over time<br><br>" +
                              "-Nodes slowly regenerate health over time.",
 
-    /* Time Constants */
+    // Time-related constants
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
 
@@ -220,7 +221,7 @@ export let CONSTANTS: IMap<any> = {
     MillisecondsPerFiveMinutes: 300000,
     GameCyclesPerFiveMinutes: 300000 / 200,
 
-    /* Player Work / Action related Constants */
+    // Player Work & Action
     FactionWorkHacking: "Faction Hacking Work",
     FactionWorkField: "Faction Field Work",
     FactionWorkSecurity: "Faction Security Work",
@@ -263,10 +264,11 @@ export let CONSTANTS: IMap<any> = {
     CrimeAssassination: "assassinate a high-profile target",
     CrimeHeist: "pull off the ultimate heist",
 
-    /* Coding Contract Constants */
-    CodingContractBaseFactionRepGain:   2500,
-    CodingContractBaseCompanyRepGain:   4000,
-    CodingContractBaseMoneyGain:        75e6,
+    // Coding Contract
+    // TODO Move this into Coding contract impelmentation?
+    CodingContractBaseFactionRepGain: 2500,
+    CodingContractBaseCompanyRepGain: 4000,
+    CodingContractBaseMoneyGain: 75e6,
 
     // BitNode/Source-File related stuff
     TotalNumBitNodes: 24,

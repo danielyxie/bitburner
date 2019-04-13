@@ -134,13 +134,13 @@ import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
-let hasCorporationSF            = false; //Source-File 3
-let hasSingularitySF            = false; //Source-File 4
-let hasAISF                     = false; //Source-File 5
-let hasBladeburnerSF            = false; //Source-File 6
-let hasBladeburner2079SF        = false; //Source-File 7
-let hasWallStreetSF             = false; //Source-File 8
-let hasBn11SF                   = false; //Source-File 11
+let hasCorporationSF            = false; // Source-File 3
+let hasSingularitySF            = false; // Source-File 4
+let hasAISF                     = false; // Source-File 5
+let hasBladeburnerSF            = false; // Source-File 6
+let hasBladeburner2079SF        = false; // Source-File 7
+let hasWallStreetSF             = false; // Source-File 8
+let hasBn11SF                   = false; // Source-File 11
 
 let singularitySFLvl = 1;
 let wallStreetSFLvl = 1;
@@ -216,7 +216,7 @@ var possibleLogs = {
     setTerritoryWarfare: true,
 }
 
-//Used to check and set flags for every Source File, despite the name of the function
+// Used to check and set flags for every Source File, despite the name of the function
 function initSingularitySFFlags() {
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
         if (Player.sourceFiles[i].n === 3) {hasCorporationSF        = true;}
@@ -455,10 +455,10 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
             }
 
-            //Calculate the hacking time
-            var hackingTime = calculateHackingTime(server); //This is in seconds
+            // Calculate the hacking time
+            var hackingTime = calculateHackingTime(server); // This is in seconds
 
-            //No root access or skill level too low
+            // No root access or skill level too low
             const canHack = netscriptCanHack(server, Player);
             if (!canHack.res) {
                 workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
@@ -475,18 +475,17 @@ function NetscriptFunctions(workerScript) {
                 var rand = Math.random();
                 var expGainedOnSuccess = calculateHackingExpGain(server) * threads;
                 var expGainedOnFailure = (expGainedOnSuccess / 4);
-                if (rand < hackChance) { //Success!
+                if (rand < hackChance) { // Success!
                     const percentHacked = calculatePercentMoneyHacked(server);
                     let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
                     if (isNaN(maxThreadNeeded)) {
-                        //Server has a 'max money' of 0 (probably).
-                        //We'll set this to an arbitrarily large value
+                        // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
                         maxThreadNeeded = 1e6;
                     }
 
                     let moneyGained = Math.floor(server.moneyAvailable * percentHacked) * threads;
 
-                    //Over-the-top safety checks
+                    // Over-the-top safety checks
                     if (moneyGained <= 0) {
                         moneyGained = 0;
                         expGainedOnSuccess = expGainedOnFailure;
@@ -508,7 +507,7 @@ function NetscriptFunctions(workerScript) {
                     server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
                     return Promise.resolve(moneyGained);
                 } else {
-                    //Player only gains 25% exp for failure?
+                    // Player only gains 25% exp for failure?
                     Player.gainHackingExp(expGainedOnFailure);
                     workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
@@ -586,7 +585,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot grow(). Invalid IP or hostname passed in: " + ip);
             }
 
-            //No root access or skill level too low
+            // No root access or skill level too low
             const canHack = netscriptCanGrow(server);
             if (!canHack.res) {
                 workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
@@ -600,7 +599,7 @@ function NetscriptFunctions(workerScript) {
             return netscriptDelay(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
-                server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
+                server.moneyAvailable += (1 * threads); // It can be grown even if it has no money
                 var growthPercentage = processSingleServerGrowth(server, 450 * threads, Player);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
@@ -648,7 +647,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot weaken(). Invalid IP or hostname passed in: " + ip);
             }
 
-            //No root access or skill level too low
+            // No root access or skill level too low
             const canHack = netscriptCanWeaken(server);
             if (!canHack.res) {
                 workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
@@ -1075,7 +1074,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
             if (scriptname && scriptname.constructor === Array) {
-                //Recursively call scp on all elements of array
+                // Recursively call scp on all elements of array
                 var res = false;
                 scriptname.forEach(function(script) {
                     if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
@@ -1121,7 +1120,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
 
-            //Scp for lit files
+            // Scp for lit files
             if (scriptname.endsWith(".lit")) {
                 var found = false;
                 for (var i = 0; i < currServ.messages.length; ++i) {
@@ -1141,7 +1140,7 @@ function NetscriptFunctions(workerScript) {
                         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
                             workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
                         }
-                        return true; //Already exists
+                        return true; // Already exists
                     }
                 }
                 destServer.messages.push(scriptname);
@@ -1151,7 +1150,7 @@ function NetscriptFunctions(workerScript) {
                 return true;
             }
 
-            //Scp for text files
+            // Scp for text files
             if (scriptname.endsWith(".txt")) {
                 var found = false, txtFile;
                 for (var i = 0; i < currServ.textFiles.length; ++i) {
@@ -1169,7 +1168,7 @@ function NetscriptFunctions(workerScript) {
 
                 for (var i = 0; i < destServer.textFiles.length; ++i) {
                     if (destServer.textFiles[i].fn === scriptname) {
-                        //Overwrite
+                        // Overwrite
                         destServer.textFiles[i].text = txtFile.text;
                         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
                             workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
@@ -1185,7 +1184,7 @@ function NetscriptFunctions(workerScript) {
                 return true;
             }
 
-            //Scp for script files
+            // Scp for script files
             var sourceScript = null;
             for (var i = 0; i < currServ.scripts.length; ++i) {
                 if (scriptname == currServ.scripts[i].filename) {
@@ -1198,7 +1197,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            //Overwrite script if it already exists
+            // Overwrite script if it already exists
             for (var i = 0; i < destServer.scripts.length; ++i) {
                 if (scriptname == destServer.scripts[i].filename) {
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
@@ -1213,7 +1212,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            //Create new script if it does not already exist
+            // Create new script if it does not already exist
             var newScript = new Script();
             newScript.filename = scriptname;
             newScript.code = sourceScript.code;
@@ -1239,7 +1238,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
             }
 
-            //Get the grep filter, if one exists
+            // Get the grep filter, if one exists
             var filter = false;
             if (arguments.length >= 2) {
                 filter = grep.toString();
@@ -1303,7 +1302,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            //Sort the files alphabetically then print each
+            // Sort the files alphabetically then print each
             allFiles.sort();
             return allFiles;
         },
@@ -1708,7 +1707,7 @@ function NetscriptFunctions(workerScript) {
             var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
             Player.gainMoney(gains);
 
-            //Calculate net profit and add to script stats
+            // Calculate net profit and add to script stats
             var netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
             if (isNaN(netProfit)) {netProfit = 0;}
             workerScript.scriptRef.onlineMoneyMade += netProfit;
@@ -1908,7 +1907,7 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into getStockVolatility()");
             }
-            return stock.mv / 100; //Convert from percentage to decimal
+            return stock.mv / 100; // Convert from percentage to decimal
         },
         getStockForecast : function(symbol) {
             if (workerScript.checkingRam) {
@@ -1924,7 +1923,7 @@ function NetscriptFunctions(workerScript) {
             }
             var forecast = 50;
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
-            return forecast / 100; //Convert from percentage to decimal
+            return forecast / 100; // Convert from percentage to decimal
         },
         purchase4SMarketData : function() {
             if (workerScript.checkingRam) {
@@ -2087,25 +2086,25 @@ function NetscriptFunctions(workerScript) {
 
             var ip = server.ip;
 
-            //Can't delete server you're currently connected to
+            // Can't delete server you're currently connected to
             if (server.isConnectedTo) {
                 workerScript.scriptRef.log("ERROR: deleteServer() failed because you are currently connected to the server you are trying to delete");
                 return false;
             }
 
-            //A server cannot delete itself
+            // A server cannot delete itself
             if (ip === workerScript.serverIp) {
                 workerScript.scriptRef.log("ERROR: Cannot call deleteServer() on self. deleteServer() failed");
                 return false;
             }
 
-            //Delete all scripts running on server
+            // Delete all scripts running on server
             if (server.runningScripts.length > 0) {
                 workerScript.scriptRef.log("ERROR: Cannot delete server " + server.hostname + " because it still has scripts running.");
                 return false;
             }
 
-            //Delete from player's purchasedServers array
+            // Delete from player's purchasedServers array
             var found = false;
             for (var i = 0; i < Player.purchasedServers.length; ++i) {
                 if (ip == Player.purchasedServers[i]) {
@@ -2121,10 +2120,10 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            //Delete from all servers
+            // Delete from all servers
             delete AllServers[ip];
 
-            //Delete from home computer
+            // Delete from home computer
             found = false;
             var homeComputer = Player.getHomeComputer();
             for (var i = 0; i < homeComputer.serversOnNetwork.length; ++i) {
@@ -2136,7 +2135,7 @@ function NetscriptFunctions(workerScript) {
                     return true;
                 }
             }
-            //Wasn't found on home computer
+            // Wasn't found on home computer
             workerScript.scriptRef.log("ERROR: Could not find server " + server.hostname +
                                        "as a purchased server. This is likely a bug please contact game dev");
             return false;
@@ -2165,8 +2164,8 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("write", CONSTANTS.ScriptReadWriteRamCost);
             }
             updateDynamicRam("write", CONSTANTS.ScriptReadWriteRamCost);
-            if (!isNaN(port)) { //Write to port
-                //Port 1-10
+            if (!isNaN(port)) { // Write to port
+                // Port 1-10
                 port = Math.round(port);
                 if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Trying to write to invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
@@ -2176,17 +2175,17 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.write(data);
-            } else if (isString(port)) { //Write to script or text file
+            } else if (isString(port)) { // Write to script or text file
                 var fn = port;
                 var server = workerScript.getServer();
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
                 }
                 if (isScriptFilename(fn)) {
-                    //Write to script
+                    // Write to script
                     let script = workerScript.getScriptOnServer(fn);
                     if (script == null) {
-                        //Create a new script
+                        // Create a new script
                         script = new Script(fn, data, server.ip);
                         server.scripts.push(script);
                         return true;
@@ -2194,7 +2193,7 @@ function NetscriptFunctions(workerScript) {
                     mode === "w" ? script.code = data : script.code += data;
                     script.updateRamUsage();
                 } else {
-                    //Write to text file
+                    // Write to text file
                     let txtFile = getTextFile(fn, server);
                     if (txtFile == null) {
                         txtFile = createTextFile(fn, data, server);
@@ -2235,8 +2234,8 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("read", CONSTANTS.ScriptReadWriteRamCost);
             }
             updateDynamicRam("read", CONSTANTS.ScriptReadWriteRamCost);
-            if (!isNaN(port)) { //Read from port
-                //Port 1-10
+            if (!isNaN(port)) { // Read from port
+                // Port 1-10
                 port = Math.round(port);
                 if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Trying to read from invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
@@ -2246,21 +2245,21 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.read();
-            } else if (isString(port)) { //Read from script or text file
+            } else if (isString(port)) { // Read from script or text file
                 let fn = port;
                 let server = getServer(workerScript.serverIp);
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
                 }
                 if (isScriptFilename(fn)) {
-                    //Read from script
+                    // Read from script
                     let script = workerScript.getScriptOnServer(fn);
                     if (script == null) {
                         return "";
                     }
                     return script.code;
                 } else {
-                    //Read from text file
+                    // Read from text file
                     let txtFile = getTextFile(fn, server);
                     if (txtFile !== null) {
                         return txtFile.text;
@@ -2295,7 +2294,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("clear", CONSTANTS.ScriptReadWriteRamCost);
             }
             updateDynamicRam("clear", CONSTANTS.ScriptReadWriteRamCost);
-            if (!isNaN(port)) { //Clear port
+            if (!isNaN(port)) { // Clear port
                 port = Math.round(port);
                 if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Trying to clear invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid");
@@ -2305,7 +2304,7 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.clear();
-            } else if (isString(port)) { //Clear text file
+            } else if (isString(port)) { // Clear text file
                 var fn = port;
                 var server = getServer(workerScript.serverIp);
                 if (server == null) {
@@ -2423,7 +2422,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return calculateHackingTime(server, hack, int); //Returns seconds
+            return calculateHackingTime(server, hack, int); // Returns seconds
         },
         getGrowTime : function(ip, hack, int) {
             if (workerScript.checkingRam) {
@@ -2435,7 +2434,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return calculateGrowTime(server, hack, int); //Returns seconds
+            return calculateGrowTime(server, hack, int); // Returns seconds
         },
         getWeakenTime : function(ip, hack, int) {
             if (workerScript.checkingRam) {
@@ -2447,7 +2446,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return calculateWeakenTime(server, hack, int); //Returns seconds
+            return calculateWeakenTime(server, hack, int); // Returns seconds
         },
         getScriptIncome : function(scriptname, ip) {
             if (workerScript.checkingRam) {
@@ -2455,13 +2454,13 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getScriptIncome", CONSTANTS.ScriptGetScriptRamCost);
             if (arguments.length === 0) {
-                //Get total script income
+                // Get total script income
                 var res = [];
                 res.push(updateActiveScriptsItems());
                 res.push(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000));
                 return res;
             } else {
-                //Get income for a particular script
+                // Get income for a particular script
                 var server = getServer(ip);
                 if (server == null) {
                     workerScript.scriptRef.log("getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
@@ -2491,7 +2490,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 return total;
             } else {
-                //Get income for a particular script
+                // Get income for a particular script
                 var server = getServer(ip);
                 if (server == null) {
                     workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
@@ -3206,7 +3205,7 @@ function NetscriptFunctions(workerScript) {
                     workerScript.scriptRef.log("ERROR: Invalid job passed into applyToCompany: " + field + ". applyToCompany() failed");
                     return false;
             }
-            //The Player object's applyForJob function can return string with special error messages
+            // The Player object's applyForJob function can return string with special error messages
             if (isString(res)) {
                 workerScript.scriptRef.log(res);
                 return false;
@@ -3298,7 +3297,7 @@ function NetscriptFunctions(workerScript) {
                     return false;
                 }
             }
-            //Make a copy of Player.factionInvitations
+            // Make a copy of Player.factionInvitations
             return Player.factionInvitations.slice();
         },
         joinFaction : function(name) {
@@ -3327,7 +3326,7 @@ function NetscriptFunctions(workerScript) {
             var fac = Factions[name];
             joinFaction(fac);
 
-            //Update Faction Invitation list to account for joined + banned factions
+            // Update Faction Invitation list to account for joined + banned factions
             for (var i = 0; i < Player.factionInvitations.length; ++i) {
                 if (Player.factionInvitations[i] == name || Factions[Player.factionInvitations[i]].isBanned) {
                     Player.factionInvitations.splice(i, 1);
@@ -3383,7 +3382,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var fac = Factions[name];
-            //Arrays listing factions that allow each time of work
+            // Arrays listing factions that allow each time of work
             var hackAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
                                  "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
                                  "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
@@ -4695,7 +4694,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("joinBladeburnerDivision", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 if ((Player.bitNodeN === 7 || hasBladeburner2079SF)) {
                     if (Player.bladeburner instanceof Bladeburner) {
-                        return true; //Already member
+                        return true; // Already member
                     } else if (Player.strength >= 100 && Player.defense >= 100 &&
                                Player.dexterity >= 100 && Player.agility >= 100) {
                         Player.bladeburner = new Bladeburner({new:true});
@@ -5158,8 +5157,8 @@ function NetscriptFunctions(workerScript) {
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
             }
         } // End sleeve
-    } //End return
-} //End NetscriptFunction()
+    } // End return
+} // End NetscriptFunction()
 
 export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF, hasBn11SF,
         hasWallStreetSF, wallStreetSFLvl, hasCorporationSF, hasAISF, hasBladeburnerSF};

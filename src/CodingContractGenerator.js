@@ -130,14 +130,15 @@ function getRandomReward() {
     });
 
     switch (reward.type) {
-        case CodingContractRewardType.FactionReputation:
+        case CodingContractRewardType.FactionReputation: {
             // Get a random faction that player is a part of. That
             // faction must allow hacking contracts
             var numFactions = factionsThatAllowHacking.length;
             var randFaction = factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
             reward.name = randFaction;
             break;
-        case CodingContractRewardType.CompanyReputation:
+        }
+        case CodingContractRewardType.CompanyReputation: {
             const allJobs = Object.keys(Player.jobs);
             if (allJobs.length > 0) {
                 reward.name = allJobs[getRandomInt(0, allJobs.length - 1)];
@@ -145,6 +146,7 @@ function getRandomReward() {
                 reward.type = CodingContractRewardType.Money;
             }
             break;
+        }
         default:
             break;
     }

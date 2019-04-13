@@ -10,7 +10,7 @@ export let Player = new PlayerObject();
 export function loadPlayer(saveString) {
     Player  = JSON.parse(saveString, Reviver);
 
-    //Parse Decimal.js objects
+    // Parse Decimal.js objects
     Player.money = new Decimal(Player.money);
 
     if (Player.corporation instanceof Corporation) {

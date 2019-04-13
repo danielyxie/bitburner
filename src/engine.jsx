@@ -155,7 +155,8 @@ import "../css/grid.min.css";
 import "../css/dev-menu.css";
 
 
-/* Shortcuts to navigate through the game
+/**
+ * Shortcuts to navigate through the game
  *  Alt-t - Terminal
  *  Alt-c - Character
  *  Alt-e - Script editor
@@ -209,7 +210,7 @@ $(document).keydown(function(e) {
             e.preventDefault();
             Engine.loadCreateProgramContent();
         } else if (e.keyCode === KEY.F && e.altKey) {
-            //Overriden by Fconf
+            // Overriden by Fconf
             if (routing.isOn(Page.Terminal) && FconfSettings.ENABLE_BASH_HOTKEYS) {
                 return;
             }
@@ -234,24 +235,25 @@ const Engine = {
     version: "",
     Debug: true,
 
-    //Clickable objects
+    // Clickable objects
     Clickables: {
-        //Main menu buttons
+        // Main menu buttons
         saveMainMenuButton:             null,
         deleteMainMenuButton:           null,
     },
 
-    //Display objects
+    // Display objects
+    // TODO-Refactor this into its own component
     Display: {
-        //Progress bar
+        // Progress bar
         progress:               null,
 
-        //Display for status text (such as "Saved" or "Loaded")
+        // Display for status text (such as "Saved" or "Loaded")
         statusText:             null,
 
         hacking_skill:          null,
 
-        //Main menu content
+        // Main menu content
         terminalContent:                null,
         characterContent:               null,
         scriptEditorContent:            null,
@@ -271,15 +273,14 @@ const Engine = {
         cinematicTextContent:           null,
         missionContent:                 null,
 
-        //Character info
+        // Character info
         characterInfo:                  null,
     },
 
-    //Time variables (milliseconds unix epoch time)
+    // Time variables (milliseconds unix epoch time)
     _lastUpdate: new Date().getTime(),
-    _idleSpeed: 200,    //Speed (in ms) at which the main loop is updated
+    _idleSpeed: 200, // Speed (in ms) at which the main loop is updated
 
-    /* Load content when a main menu button is clicked */
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.display = "block";
@@ -425,7 +426,6 @@ const Engine = {
     loadWorkInProgressContent: function() {
         Engine.hideAllContent();
         var mainMenu = document.getElementById("mainmenu-container");
-        //mainMenu.style.visibility = "hidden";
         mainMenu.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.display = "block";
         routing.navigateTo(Page.WorkInProgress);
@@ -602,15 +602,16 @@ const Engine = {
         }
     },
 
-    /* Display character info */
+    /// Display character info
     updateCharacterInfo: function() {
         displayCharacterInfo(Engine.Display.characterInfo, Player);
     },
 
+    // TODO Refactor this into Faction implementation
     displayFactionsInfo: function() {
         removeChildrenFromElement(Engine.Display.factionsContent);
 
-        //Factions
+        // Factions
         Engine.Display.factionsContent.appendChild(createElement("h1", {
             innerText:"Factions"
         }));
@@ -620,7 +621,7 @@ const Engine = {
         var factionsList = createElement("ul");
         Engine.Display.factionsContent.appendChild(createElement("br"));
 
-        //Add a button for each faction you are a member of
+        // Add a button for each faction you are a member of
         for (var i = 0; i < Player.factions.length; ++i) {
             (function () {
                 var factionName = Player.factions[i];
@@ -635,12 +636,12 @@ const Engine = {
                     }
                 }));
                 factionsList.appendChild(createElement("br"));
-            }()); //Immediate invocation
+            }()); // Immediate invocation
         }
         Engine.Display.factionsContent.appendChild(factionsList);
         Engine.Display.factionsContent.appendChild(createElement("br"));
 
-        //Invited Factions
+        // Invited Factions
         Engine.Display.factionsContent.appendChild(createElement("h1", {
             innerText:"Outstanding Faction Invitations"
         }));
@@ -652,7 +653,7 @@ const Engine = {
         }));
         var invitationsList = createElement("ul");
 
-        //Add a button to accept for each faction you have invitiations for
+        // Add a button to accept for each faction you have invitiations for
         for (var i = 0; i < Player.factionInvitations.length; ++i) {
             (function () {
                 var factionName = Player.factionInvitations[i];
@@ -685,18 +686,18 @@ const Engine = {
         Engine.Display.factionsContent.appendChild(invitationsList);
     },
 
-    /* Main Event Loop */
+    // Main Game Loop
     idleTimer: function() {
-        //Get time difference
+        // Get time difference
         var _thisUpdate = new Date().getTime();
         var diff = _thisUpdate - Engine._lastUpdate;
         var offset = diff % Engine._idleSpeed;
 
-        //Divide this by cycle time to determine how many cycles have elapsed since last update
+        // Divide this by cycle time to determine how many cycles have elapsed since last update
         diff = Math.floor(diff / Engine._idleSpeed);
 
         if (diff > 0) {
-            //Update the game engine by the calculated number of cycles
+            // Update the game engine by the calculated number of cycles
             Engine._lastUpdate = _thisUpdate - offset;
             Player.lastUpdate = _thisUpdate - offset;
             Engine.updateGame(diff);
@@ -714,7 +715,7 @@ const Engine = {
         Player.playtimeSinceLastAug += time;
         Player.playtimeSinceLastBitnode += time;
 
-        //Start Manual hack
+        // Start Manual hack
         if (Terminal.actionStarted === true) {
             Engine._totalActionTime = Terminal.actionTime;
             Engine._actionTimeLeft = Terminal.actionTime;
@@ -725,7 +726,7 @@ const Engine = {
             Terminal.actionStarted = false;
         }
 
-        //Working
+        // Working
         if (Player.isWorking) {
             if (Player.workType == CONSTANTS.WorkTypeFaction) {
                 Player.workForFaction(numCycles);
@@ -747,20 +748,19 @@ const Engine = {
             processStockPrices(numCycles);
         }
 
-        //Gang, if applicable
+        // Gang, if applicable
         if (Player.bitNodeN == 2 && Player.inGang()) {
             Player.gang.process(numCycles, Player);
         }
 
-        //Mission
+        // Mission
         if (inMission && currMission) {
             currMission.process(numCycles);
         }
 
-        //Corporation
+        // Corporation
         if (Player.corporation instanceof Corporation) {
-            //Stores cycles in a "buffer". Processed separately using Engine Counters
-            //This is to avoid constant DOM redraws when Corporation is catching up
+            // Stores cycles in a "buffer". Processed separately using Engine Counters
             Player.corporation.storeCycles(numCycles);
         }
 
@@ -782,38 +782,41 @@ const Engine = {
             }
         }
 
-        //Counters
+        // Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
 
-        //Manual hacks
+        // Manual hacks
         if (Engine._actionInProgress == true) {
             Engine.updateHackProgress(numCycles);
         }
 
-        //Update the running time of all active scripts
+        // Update the running time of all active scripts
         updateOnlineScriptTimes(numCycles);
 
-        //Hacknet Nodes
+        // Hacknet Nodes
         processHacknetEarnings(numCycles);
     },
 
-    //Counters for the main event loop. Represent the number of game cycles are required
-    //for something to happen.
+    /**
+     * Counters for the main event loop. Represent the number of game cycles that
+     * are required for something to happen. These counters are in game cycles,
+     * which is once every 200ms
+     */
     Counters: {
-        autoSaveCounter:    300,            //Autosave every minute
-        updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
+        autoSaveCounter:    300,
+        updateSkillLevelsCounter: 10,
         updateDisplays: 3,
         updateDisplaysMed: 9,
         updateDisplaysLong: 15,
         updateActiveScriptsDisplay: 5,
-        createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
-        checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations
+        createProgramNotifications: 10,
+        checkFactionInvitations: 100,
         passiveFactionGrowth: 600,
         messages: 150,
         sCr: 1500,
-        mechanicProcess: 5,                 //Processes certain mechanics (Corporation, Bladeburner)
-        contractGeneration: 3000            //Generate Coding Contracts
+        mechanicProcess: 5, // Processes certain mechanics (Corporation, Bladeburner)
+        contractGeneration: 3000, // Generate Coding Contracts
     },
 
     decrementAllCounters: function(numCycles = 1) {
@@ -824,8 +827,10 @@ const Engine = {
         }
     },
 
-    //Checks if any counters are 0 and if they are, executes whatever
-    //is necessary and then resets the counter
+    /**
+     * Checks if any counters are 0. If they are, executes whatever
+     * is necessary and then resets the counter
+     */
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
             if (Settings.AutosaveInterval == null) {
@@ -845,7 +850,7 @@ const Engine = {
         }
 
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
-            //Always update, but make the interval longer if the page isn't active
+            // Always update, but make the interval longer if the page isn't active
             updateActiveScriptsItems();
             if (routing.isOn(Page.ActiveScripts)) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
@@ -925,7 +930,7 @@ const Engine = {
         if (Engine.Counters.messages <= 0) {
             checkForMessagesToSend();
             if (Augmentations[AugmentationNames.TheRedPill].owned) {
-                Engine.Counters.messages = 4500; //15 minutes for Red pill message
+                Engine.Counters.messages = 4500; // 15 minutes for Red pill message
             } else {
                 Engine.Counters.messages = 150;
             }
@@ -962,7 +967,8 @@ const Engine = {
         }
     },
 
-    /* Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly */
+    // Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly
+    // TODO Refactor this into Terminal module
     _totalActionTime: 0,
     _actionTimeLeft: 0,
     _actionTimeStr: "Time left: ",
@@ -971,34 +977,36 @@ const Engine = {
     _actionInProgress: false,
     updateHackProgress: function(numCycles = 1) {
         var timeElapsedMilli = numCycles * Engine._idleSpeed;
-        Engine._actionTimeLeft -= (timeElapsedMilli/ 1000);    //Substract idle speed (ms)
+        Engine._actionTimeLeft -= (timeElapsedMilli/ 1000); // Substract idle speed (ms)
         Engine._actionTimeLeft = Math.max(Engine._actionTimeLeft, 0);
 
-        //Calculate percent filled
+        // Calculate percent filled
         var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);
 
-        //Update progress bar
+        // Update progress bar
         while (Engine._actionProgressBarCount * 2 <= percent) {
             Engine._actionProgressStr = replaceAt(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
             Engine._actionProgressBarCount += 1;
         }
 
-        //Update hack time remaining
+        // Update hack time remaining
         Engine._actionTimeStr = "Time left: " + Math.max(0, Math.round(Engine._actionTimeLeft)).toString() + "s";
         document.getElementById("hack-progress").innerHTML = Engine._actionTimeStr;
 
-        //Dynamically update progress bar
+        // Dynamically update progress bar
         document.getElementById("hack-progress-bar").innerHTML = Engine._actionProgressStr.replace( / /g, "&nbsp;" );
 
-        //Once percent is 100, the hack is completed
+        // Once percent is 100, the hack is completed
         if (percent >= 100) {
             Engine._actionInProgress = false;
             Terminal.finishAction();
         }
     },
 
-    //Used when initializing a game
-    //elems should be an array of all DOM elements under the header
+    /**
+     * Collapses a main menu header. Used when initializing the game.
+     * @param elems {HTMLElement[]} Elements under header
+     */
     closeMainMenuHeader: function(elems) {
         for (var i = 0; i < elems.length; ++i) {
             elems[i].style.maxHeight            = null;
@@ -1007,8 +1015,10 @@ const Engine = {
         }
     },
 
-    //Used when initializing the game
-    //elems should be an array of all DOM elements under the header
+    /**
+     * Expands a main menu header. Used when initializing the game.
+     * @param elems {HTMLElement[]} Elements under header
+     */
     openMainMenuHeader: function(elems) {
         for (var i = 0; i < elems.length; ++i) {
             elems[i].style.maxHeight = elems[i].scrollHeight + "px";
@@ -1016,10 +1026,12 @@ const Engine = {
         }
     },
 
-    //Used in game when clicking on a main menu header (NOT FOR INITIALIZATION)
-    //open is a boolean specifying whether its being opened or closed
-    //elems is an array of DOM elements for main menu tabs (li)
-    //links is an array of DOM elements for main menu links (a)
+    /**
+     * Used in game when clicking on a main menu header (NOT used for initialization)
+     * @param open {boolean} Whether header is being opened or closed
+     * @param elems {HTMLElement[]} li Elements under header
+     * @param links {HTMLElement[]} a elements under header
+     */
     toggleMainMenuHeader: function(open, elems, links) {
         for (var i = 0; i < elems.length; ++i) {
             if (open) {
@@ -1045,35 +1057,34 @@ const Engine = {
     },
 
     load: function(saveString) {
-        //Initialize main menu accordion panels to all start as "open"
-        var terminal            = document.getElementById("terminal-tab");
-        var createScript        = document.getElementById("create-script-tab");
-        var activeScripts       = document.getElementById("active-scripts-tab");
-        var createProgram       = document.getElementById("create-program-tab");
-        var stats               = document.getElementById("stats-tab");
-        var factions            = document.getElementById("factions-tab");
-        var augmentations       = document.getElementById("augmentations-tab");
-        var hacknetnodes        = document.getElementById("hacknet-nodes-tab");
-        var city                = document.getElementById("city-tab");
-        var travel              = document.getElementById("travel-tab");
-        var job                 = document.getElementById("job-tab");
-        var stockmarket         = document.getElementById("stock-market-tab");
-        var bladeburner         = document.getElementById("bladeburner-tab");
-        var corp                = document.getElementById("corporation-tab");
-        var gang                = document.getElementById("gang-tab");
-        var tutorial            = document.getElementById("tutorial-tab");
-        var options             = document.getElementById("options-tab");
-        var dev                 = document.getElementById("dev-tab");
+        // Initialize main menu accordion panels to all start as "open"
+        const terminal          = document.getElementById("terminal-tab");
+        const createScript      = document.getElementById("create-script-tab");
+        const activeScripts     = document.getElementById("active-scripts-tab");
+        const createProgram     = document.getElementById("create-program-tab");
+        const stats             = document.getElementById("stats-tab");
+        const factions          = document.getElementById("factions-tab");
+        const augmentations     = document.getElementById("augmentations-tab");
+        const hacknetnodes      = document.getElementById("hacknet-nodes-tab");
+        const city              = document.getElementById("city-tab");
+        const travel            = document.getElementById("travel-tab");
+        const job               = document.getElementById("job-tab");
+        const stockmarket       = document.getElementById("stock-market-tab");
+        const bladeburner       = document.getElementById("bladeburner-tab");
+        const corp              = document.getElementById("corporation-tab");
+        const gang              = document.getElementById("gang-tab");
+        const tutorial          = document.getElementById("tutorial-tab");
+        const options           = document.getElementById("options-tab");
+        const dev               = document.getElementById("dev-tab");
 
-        //Load game from save or create new game
+        // Load game from save or create new game
         if (loadGame(saveString)) {
-            console.log("Loaded game from save");
             initBitNodes();
             initBitNodeMultipliers(Player);
             initSourceFiles();
-            Engine.setDisplayElements();    //Sets variables for important DOM elements
-            Engine.init();                  //Initialize buttons, work, etc.
-            initAugmentations();            //Also calls Player.reapplyAllAugmentations()
+            Engine.setDisplayElements();    // Sets variables for important DOM elements
+            Engine.init();                  // Initialize buttons, work, etc.
+            initAugmentations();            // Also calls Player.reapplyAllAugmentations()
             Player.reapplyAllSourceFiles();
             initStockSymbols();
             if (Player.hasWseAccount) {
@@ -1083,13 +1094,13 @@ const Engine = {
             initSingularitySFFlags();
             updateSourceFileFlags(Player);
 
-            //Calculate the number of cycles have elapsed while offline
+            // Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
             var lastUpdate = Player.lastUpdate;
             var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
 
-            /* Process offline progress */
-            var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
+            // Process offline progress
+            var offlineProductionFromScripts = loadAllRunningScripts(); // This also takes care of offline production for those scripts
             if (Player.isWorking) {
                 console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
@@ -1107,13 +1118,13 @@ const Engine = {
                 }
             }
 
-            //Hacknet Nodes offline progress
+            // Hacknet Nodes offline progress
             var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
             const hacknetProdInfo = hasHacknetServers() ?
                                     `${numeralWrapper.format(offlineProductionFromHacknetNodes, "0.000a")} hashes` :
                                     `${numeralWrapper.formatMoney(offlineProductionFromHacknetNodes)}`;
 
-            //Passive faction rep gain offline
+            // Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
 
             // Stock Market offline progress
@@ -1150,7 +1161,7 @@ const Engine = {
                 }
             }
 
-            //Update total playtime
+            // Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
             if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
@@ -1160,14 +1171,14 @@ const Engine = {
             Player.playtimeSinceLastBitnode += time;
 
             Player.lastUpdate = Engine._lastUpdate;
-            Engine.start();                 //Run main game loop and Scripts loop
+            Engine.start(); // Run main game loop and Scripts loop
             removeLoadingScreen();
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
             dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
                             "generated <span class='money-gold'>" +
                             numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> " +
                             "and your Hacknet Nodes generated <span class='money-gold'>" + hacknetProdInfo + "</span>");
-            //Close main menu accordions for loaded game
+            // Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];
             if (Player.firstFacInvRecvd) {visibleMenuTabs.push(factions);}
@@ -1191,14 +1202,14 @@ const Engine = {
 
             Engine.closeMainMenuHeader(visibleMenuTabs);
         } else {
-            //No save found, start new game
+            // No save found, start new game
             console.log("Initializing new game");
             initBitNodes();
             initBitNodeMultipliers(Player);
             initSourceFiles();
             initSpecialServerIps();
-            Engine.setDisplayElements();        //Sets variables for important DOM elements
-            Engine.start();                     //Run main game loop and Scripts loop
+            Engine.setDisplayElements(); // Sets variables for important DOM elements
+            Engine.start(); // Run main game loop and Scripts loop
             Player.init();
             initForeignServers(Player.getHomeComputer());
             initCompanies();
@@ -1209,18 +1220,17 @@ const Engine = {
             initLiterature();
             initSingularitySFFlags();
 
-            //Open main menu accordions for new game
-            //Main menu accordions
-            var hackingHdr      = document.getElementById("hacking-menu-header");
+            // Open main menu accordions for new game
+            const hackingHdr      = document.getElementById("hacking-menu-header");
             hackingHdr.classList.toggle("opened");
-            var characterHdr    = document.getElementById("character-menu-header");
+            const characterHdr    = document.getElementById("character-menu-header");
             characterHdr.classList.toggle("opened");
-            var worldHdr        = document.getElementById("world-menu-header");
+            const worldHdr        = document.getElementById("world-menu-header");
             worldHdr.classList.toggle("opened");
-            var helpHdr         = document.getElementById("help-menu-header");
+            const helpHdr         = document.getElementById("help-menu-header");
             helpHdr.classList.toggle("opened");
 
-            //Hide tabs that wont be revealed until later
+            // Hide tabs that wont be revealed until later
             factions.style.display = "none";
             augmentations.style.display = "none";
             job.style.display = "none";
@@ -1238,18 +1248,18 @@ const Engine = {
                  tutorial, options]
             );
 
-            //Start interactive tutorial
+            // Start interactive tutorial
             iTutorialStart();
             removeLoadingScreen();
         }
-        //Initialize labels on game settings
+        // Initialize labels on game settings
         setSettingsLabels();
         scriptEditorInit();
         Terminal.resetTerminalInput();
     },
 
     setDisplayElements: function() {
-        //Content elements
+        // Content elements
         Engine.Display.terminalContent = document.getElementById("terminal-container");
         routing.navigateTo(Page.Terminal);
 
@@ -1294,22 +1304,22 @@ const Engine = {
         Engine.Display.missionContent = document.getElementById("mission-container");
         Engine.Display.missionContent.style.display = "none";
 
-        //Character info
+        // Character info
         Engine.Display.characterInfo = document.getElementById("character-content");
 
-        //Location page (page that shows up when you visit a specific location in World)
+        // Location page (page that shows up when you visit a specific location in World)
         Engine.Display.locationContent = document.getElementById("location-container");
         Engine.Display.locationContent.style.display = "none";
 
-        //Work In Progress
+        // Work In Progress
         Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
         Engine.Display.workInProgressContent.style.display = "none";
 
-        //Red Pill / Hack World Daemon
+        // Red Pill / Hack World Daemon
         Engine.Display.redPillContent = document.getElementById("red-pill-container");
         Engine.Display.redPillContent.style.display = "none";
 
-        //Cinematic Text
+        // Cinematic Text
         Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
         Engine.Display.cinematicTextContent.style.display = "none";
 
@@ -1323,9 +1333,9 @@ const Engine = {
         }
     },
 
-    /* Initialization */
+    // Initialization
     init: function() {
-        //Import game link
+        // Import game link
         document.getElementById("import-game-link").onclick = function() {
             saveObject.importGame();
         };
@@ -1434,10 +1444,10 @@ const Engine = {
             return false;
         });
 
-        //Active scripts list
+        // Active scripts list
         Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
 
-        //Save, Delete, Import/Export buttons
+        // Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
             saveObject.saveGame(indexedDb);
@@ -1455,7 +1465,7 @@ const Engine = {
             return false;
         });
 
-        //Character Overview buttons
+        // Character Overview buttons
         document.getElementById("character-overview-save-button").addEventListener("click", function() {
             saveObject.saveGame(indexedDb);
             return false;
@@ -1466,13 +1476,13 @@ const Engine = {
             return false;
         });
 
-        //Create Program buttons
+        // Create Program buttons
         initCreateProgramButtons();
 
-        //Message at the top of terminal
+        // Message at the top of terminal
         postNetburnerText();
 
-        //Player was working cancel button
+        // Player was working cancel button
         if (Player.isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
@@ -1494,10 +1504,10 @@ const Engine = {
             Engine.loadWorkInProgressContent();
         }
 
-        //character overview screen
+        // Character overview screen
         document.getElementById("character-overview-container").style.display = "block";
 
-        //Remove classes from links (they might be set from tutorial)
+        // Remove classes from links (they might be set from tutorial)
         document.getElementById("terminal-menu-link").removeAttribute("class");
         document.getElementById("stats-menu-link").removeAttribute("class");
         document.getElementById("create-script-menu-link").removeAttribute("class");
@@ -1543,7 +1553,7 @@ const Engine = {
             }
         });
 
-        //DEBUG Delete active Scripts on home
+        // DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
@@ -1552,7 +1562,7 @@ const Engine = {
             return false;
         });
 
-        //DEBUG Soft Reset
+        // DEBUG Soft Reset
         document.getElementById("debug-soft-reset").addEventListener("click", function() {
             dialogBoxCreate("Soft Reset!");
             prestigeAugmentation();
@@ -1562,10 +1572,10 @@ const Engine = {
     },
 
     start: function() {
-        //Run main loop
+        // Run main loop
         Engine.idleTimer();
 
-        //Scripts
+        // Script-processing loop
         runScriptsLoop();
     }
 };
@@ -1573,18 +1583,20 @@ const Engine = {
 var indexedDb, indexedDbRequest;
 window.onload = function() {
     if (!window.indexedDB) {
-        return Engine.load(null); //Will try to load from localstorage
+        return Engine.load(null); // Will try to load from localstorage
     }
 
-    //DB is called bitburnerSave
-    //Object store is called savestring
-    //key for the Object store is called save
+    /**
+     * DB is called bitburnerSave
+     * Object store is called savestring
+     * key for the Object store is called save
+     */
     indexedDbRequest = window.indexedDB.open("bitburnerSave", 1);
 
     indexedDbRequest.onerror = function(e) {
         console.log("Error opening indexedDB: ");
         console.log(e);
-        return Engine.load(null); //Try to load from localstorage
+        return Engine.load(null); // Try to load from localstorage
     };
 
     indexedDbRequest.onsuccess = function(e) {
@@ -1595,11 +1607,11 @@ window.onload = function() {
         var request = objectStore.get("save");
         request.onerror = function(e) {
             console.log("Error in Database request to get savestring: " + e);
-            return Engine.load(null); //Try to load from localstorage
+            return Engine.load(null); // Try to load from localstorage
         }
 
         request.onsuccess = function(e) {
-            Engine.load(request.result); //Is this right?
+            Engine.load(request.result);
         }
     };
 
