@@ -72,7 +72,7 @@ function BitburnerSaveObject() {
 BitburnerSaveObject.prototype.getSaveString = function() {
     this.PlayerSave                 = JSON.stringify(Player);
 
-    //Delete all logs from all running scripts
+    // Delete all logs from all running scripts
     var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
     for (var ip in TempAllServers) {
         var server = TempAllServers[ip];
@@ -106,7 +106,7 @@ BitburnerSaveObject.prototype.getSaveString = function() {
 BitburnerSaveObject.prototype.saveGame = function(db) {
     var saveString = this.getSaveString();
 
-    //We'll save to both localstorage and indexedDb
+    // We'll save to both localstorage and indexedDb
     var objectStore = db.transaction(["savestring"], "readwrite").objectStore("savestring");
     var request = objectStore.put(saveString, "save");
 
@@ -115,12 +115,11 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     }
 
     request.onsuccess = function(e) {
-        //console.log("Saved game to IndexedDB!");
+        // TODO anything here?
     }
 
     try {
         window.localStorage.setItem("bitburnerSave", saveString);
-        //console.log("Saved game to LocalStorage!");
     } catch(e) {
         if (e.code == 22) {
             createStatusText("Save failed for localStorage! Check console(F12)");
@@ -260,7 +259,7 @@ function loadGame(saveString) {
             evaluateVersionCompatibility(ver);
 
             if (window.location.href.toLowerCase().includes("bitburner-beta")) {
-                //Beta branch, always show changes
+                // Beta branch, always show changes
                 createBetaUpdateText();
             } else if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
@@ -296,8 +295,8 @@ function loadImportedGame(saveObj, saveString) {
     var tempAllGangs = null;
     let tempCorporationResearchTrees = null;
 
-    //Check to see if the imported save file can be parsed. If any
-    //errors are caught it will fail
+    // Check to see if the imported save file can be parsed. If any
+    // errors are caught it will fail
     try {
         var decodedSaveString = decodeURIComponent(escape(atob(saveString)));
         tempSaveObj = new BitburnerSaveObject();
@@ -305,7 +304,7 @@ function loadImportedGame(saveObj, saveString) {
 
         tempPlayer = JSON.parse(tempSaveObj.PlayerSave, Reviver);
 
-        //Parse Decimal.js objects
+        // Parse Decimal.js objects
         tempPlayer.money = new Decimal(tempPlayer.money);
 
         tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, Reviver);
@@ -374,7 +373,7 @@ function loadImportedGame(saveObj, saveString) {
         return false;
     }
 
-    //Since the save file is valid, load everything for real
+    // Since the save file is valid, load everything for real
     saveString = decodeURIComponent(escape(atob(saveString)));
     saveObj = JSON.parse(saveString, Reviver);
 
@@ -472,18 +471,18 @@ function loadImportedGame(saveObj, saveString) {
     createPopup(popupId, [txt, gotitBtn]);
     gameOptionsBoxClose();
 
-    //Re-start game
+    // Re-start game
     console.log("Importing game");
-    Engine.setDisplayElements();    //Sets variables for important DOM elements
-    Engine.init();                  //Initialize buttons, work, etc.
+    Engine.setDisplayElements();    // Sets variables for important DOM elements
+    Engine.init();                  // Initialize buttons, work, etc.
 
-    //Calculate the number of cycles have elapsed while offline
+    // Calculate the number of cycles have elapsed while offline
     Engine._lastUpdate = new Date().getTime();
     var lastUpdate = Player.lastUpdate;
     var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
 
-    /* Process offline progress */
-    var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
+    // Process offline progress
+    var offlineProductionFromScripts = loadAllRunningScripts();    // This also takes care of offline production for those scripts
     if (Player.isWorking) {
         console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
         if (Player.workType == CONSTANTS.WorkTypeFaction) {
@@ -501,16 +500,16 @@ function loadImportedGame(saveObj, saveString) {
         }
     }
 
-    //Hacknet Nodes offline progress
+    // Hacknet Nodes offline progress
     var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
     const hacknetProdInfo = hasHacknetServers() ?
                             `${numeralWrapper.format(offlineProductionFromHacknetNodes, "0.000a")} hashes` :
                             `${numeralWrapper.formatMoney(offlineProductionFromHacknetNodes)}`;
 
-    //Passive faction rep gain offline
+    // Passive faction rep gain offline
     processPassiveFactionRepGain(numCyclesOffline);
 
-    //Update total playtime
+    // Update total playtime
     var time = numCyclesOffline * Engine._idleSpeed;
     if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
     if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
@@ -519,14 +518,14 @@ function loadImportedGame(saveObj, saveString) {
     Player.playtimeSinceLastAug += time;
     Player.playtimeSinceLastBitnode += time;
 
-    //Re-apply augmentations
+    // Re-apply augmentations
     Player.reapplyAllAugmentations();
 
-    //Clear terminal
+    // Clear terminal
     $("#terminal tr:not(:last)").remove();
 
     Player.lastUpdate = Engine._lastUpdate;
-    Engine.start();                 //Run main game loop and Scripts loop
+    Engine.start(); // Run main game loop and Scripts loop
     const timeOfflineString = convertTimeMsToTimeElapsedString(time);
     dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
                     "generated <span class='money-gold'>" +
@@ -582,12 +581,12 @@ BitburnerSaveObject.prototype.importGame = function() {
 }
 
 BitburnerSaveObject.prototype.deleteGame = function(db) {
-    //Delete from local storage
+    // Delete from local storage
     if (window.localStorage.getItem("bitburnerSave")) {
         window.localStorage.removeItem("bitburnerSave");
     }
 
-    //Delete from indexedDB
+    // Delete from indexedDB
     var request = db.transaction(["savestring"], "readwrite").objectStore("savestring").delete("save");
     request.onsuccess = function(e) {
         console.log("Successfully deleted save from indexedDb");
@@ -623,8 +622,6 @@ BitburnerSaveObject.fromJSON = function(value) {
 }
 
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;
-
-//Import game
 
 function openImportFileHandler(evt) {
     var file = evt.target.files[0];

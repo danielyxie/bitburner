@@ -20,7 +20,7 @@ export function loadGlobalAliases(saveString: string): void {
     }
 }
 
-//Print all aliases to terminal
+// Prints all aliases to terminal
 export function printAliases(): void {
     for (var name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
@@ -34,7 +34,7 @@ export function printAliases(): void {
     }
 }
 
-//True if successful, false otherwise
+// Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global: boolean=false) {
     var re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
     var matches = dec.match(re);
@@ -90,8 +90,10 @@ export function removeAlias(name: string): boolean {
     return false;
 }
 
-//Returns the original string with any aliases substituted in
-//Aliases only applied to "whole words", one level deep
+/**
+ * Returns the original string with any aliases substituted in.
+ * Aliases are only applied to "whole words", one level deep
+ */
 export function substituteAliases(origCommand: string): string {
     const commandArray = origCommand.split(" ");
     if (commandArray.length > 0){

@@ -1,8 +1,9 @@
+/**
+ * Lore / world building literature files that can be found on servers.
+ * These files can be read by the player
+ */
 import { dialogBoxCreate } from "../utils/DialogBox";
 
-/* Literature.js
- *  Lore / world building literature that can be found on servers
- */
 function Literature(title, filename, txt) {
     this.title      = title;
     this.fn         = filename;
@@ -10,10 +11,9 @@ function Literature(title, filename, txt) {
 }
 
 function showLiterature(fn) {
-    var litObj = Literatures[fn];
-    if (litObj == null) {return;}
-    var txt = "<i>" + litObj.title + "</i><br><br>" +
-              litObj.txt;
+    const litObj = Literatures[fn];
+    if (litObj == null) { return; }
+    const txt = `<i>${litObj.title}</i><br><br>${litObj.txt}`;
     dialogBoxCreate(txt);
 }
 
@@ -430,7 +430,10 @@ function initLiterature() {
     fn      = "the-secret-war.lit";
     txt     = ""
     Literatures[fn] = new Literature(title, fn, txt);
-
 }
 
-export {Literatures, initLiterature, showLiterature};
+export {
+    Literatures,
+    initLiterature,
+    showLiterature
+};

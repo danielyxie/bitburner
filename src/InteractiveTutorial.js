@@ -11,27 +11,27 @@ import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 
-//Ordered array of keys to Interactive Tutorial Steps
+// Ordered array of keys to Interactive Tutorial Steps
 const orderedITutorialSteps = [
     "Start",
-    "GoToCharacterPage",                //Click on 'Stats' page
-    "CharacterPage",                    //Introduction to 'Stats' page
-    "CharacterGoToTerminalPage",        //Go back to Terminal
-    "TerminalIntro",                    //Introduction to Terminal
-    "TerminalHelp",                     //Using 'help' Terminal command
-    "TerminalLs",                       //Using 'ls' Terminal command
-    "TerminalScan",                     //Using 'scan' Terminal command
-    "TerminalScanAnalyze1",             //Using 'scan-analyze' Terminal command
-    "TerminalScanAnalyze2",             //Using 'scan-analyze 3' Terminal command
-    "TerminalConnect",                  //Connecting to foodnstuff
-    "TerminalAnalyze",                  //Analyzing foodnstuff
-    "TerminalNuke",                     //NUKE foodnstuff
-    "TerminalManualHack",               //Hack foodnstuff
-    "TerminalHackingMechanics",         //Explanation of hacking mechanics
-    "TerminalCreateScript",             //Create a script using 'nano'
-    "TerminalTypeScript",               //Script Editor page - Type script and then save & close
-    "TerminalFree",                     //Using 'Free' Terminal command
-    "TerminalRunScript",                //Running script using 'run' Terminal command
+    "GoToCharacterPage",                // Click on 'Stats' page
+    "CharacterPage",                    // Introduction to 'Stats' page
+    "CharacterGoToTerminalPage",        // Go back to Terminal
+    "TerminalIntro",                    // Introduction to Terminal
+    "TerminalHelp",                     // Using 'help' Terminal command
+    "TerminalLs",                       // Using 'ls' Terminal command
+    "TerminalScan",                     // Using 'scan' Terminal command
+    "TerminalScanAnalyze1",             // Using 'scan-analyze' Terminal command
+    "TerminalScanAnalyze2",             // Using 'scan-analyze 3' Terminal command
+    "TerminalConnect",                  // Connecting to foodnstuff
+    "TerminalAnalyze",                  // Analyzing foodnstuff
+    "TerminalNuke",                     // NUKE foodnstuff
+    "TerminalManualHack",               // Hack foodnstuff
+    "TerminalHackingMechanics",         // Explanation of hacking mechanics
+    "TerminalCreateScript",             // Create a script using 'nano'
+    "TerminalTypeScript",               // Script Editor page - Type script and then save & close
+    "TerminalFree",                     // Using 'Free' Terminal command
+    "TerminalRunScript",                // Running script using 'run' Terminal command
     "TerminalGoToActiveScriptsPage",
     "ActiveScriptsPage",
     "ActiveScriptsToTerminal",
@@ -44,22 +44,22 @@ const orderedITutorialSteps = [
     "End"
 ]
 
-//Create an 'enum' for the Steps
+// Create an 'enum' for the Steps
 const iTutorialSteps = {};
 for (let i = 0; i < orderedITutorialSteps.length; ++i) {
     iTutorialSteps[orderedITutorialSteps[i]] = i;
 }
 
 var ITutorial = {
-    currStep:   0, //iTutorialSteps.Start
+    currStep:   0, // iTutorialSteps.Start
     isRunning:  false,
 
-    //Keeps track of whether each step has been done
+    // Keeps track of whether each step has been done
     stepIsDone: {},
 }
 
 function iTutorialStart() {
-    //Initialize Interactive Tutorial state by settings 'done' for each state to false
+    // Initialize Interactive Tutorial state by settings 'done' for each state to false
     ITutorial.stepIsDone = {};
     for (let i = 0; i < orderedITutorialSteps.length; ++i) {
         ITutorial.stepIsDone[i] = false;
@@ -67,7 +67,7 @@ function iTutorialStart() {
 
     Engine.loadTerminalContent();
 
-    //Don't autosave during this interactive tutorial
+    // Don't autosave during this interactive tutorial
     Engine.Counters.autoSaveCounter = Infinity;
     console.log("Interactive Tutorial started");
     ITutorial.currStep = 0;
@@ -75,21 +75,21 @@ function iTutorialStart() {
 
     document.getElementById("interactive-tutorial-container").style.display = "block";
 
-    //Exit tutorial button
+    // Exit tutorial button
     var exitButton = clearEventListeners("interactive-tutorial-exit");
     exitButton.addEventListener("click", function() {
         iTutorialEnd();
         return false;
     });
 
-    //Back button
+    // Back button
     var backButton = clearEventListeners("interactive-tutorial-back");
     backButton.addEventListener("click", function() {
         iTutorialPrevStep();
         return false;
     });
 
-    //Next button
+    // Next button
     var nextButton = clearEventListeners("interactive-tutorial-next");
     nextButton.addEventListener("click", function() {
         iTutorialNextStep();
@@ -102,7 +102,7 @@ function iTutorialStart() {
 function iTutorialEvaluateStep() {
     if (!ITutorial.isRunning) {console.log("Interactive Tutorial not running"); return;}
 
-    //Disable and clear main menu
+    // Disable and clear main menu
     var terminalMainMenu        = clearEventListeners("terminal-menu-link");
     var statsMainMenu           = clearEventListeners("stats-menu-link");
     var activeScriptsMainMenu   = clearEventListeners("active-scripts-menu-link");
@@ -116,7 +116,7 @@ function iTutorialEvaluateStep() {
     cityMainMenu.removeAttribute("class");
     tutorialMainMenu.removeAttribute("class");
 
-    //Interactive Tutorial Next button
+    // Interactive Tutorial Next button
     var nextBtn = document.getElementById("interactive-tutorial-next");
 
     switch(ITutorial.currStep) {
@@ -134,7 +134,7 @@ function iTutorialEvaluateStep() {
                          "the main navigation menu (left-hand side of the screen)");
         nextBtn.style.display = "none";
 
-        //Flash 'Stats' menu and set its tutorial click handler
+        // Flash 'Stats' menu and set its tutorial click handler
         statsMainMenu.setAttribute("class", "flashing-button");
         statsMainMenu.addEventListener("click", function() {
             Engine.loadCharacterContent();
@@ -154,7 +154,7 @@ function iTutorialEvaluateStep() {
                          "main navigation menu.");
         nextBtn.style.display = "none";
 
-        //Flash 'Terminal' menu and set its tutorial click handler
+        // Flash 'Terminal' menu and set its tutorial click handler
         terminalMainMenu.setAttribute("class", "flashing-button");
         terminalMainMenu.addEventListener("click", function() {
             Engine.loadTerminalContent();
@@ -172,13 +172,13 @@ function iTutorialEvaluateStep() {
         Engine.loadTerminalContent();
         iTutorialSetText("Let's try it out. Start by entering the 'help' command into the Terminal " +
                          "(Don't forget to press Enter after typing the command)");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalLs:
         Engine.loadTerminalContent();
         iTutorialSetText("The 'help' command displays a list of all available Terminal commands, how to use them, " +
                          "and a description of what they do. <br><br>Let's try another command. Enter the 'ls' command");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalScan:
         Engine.loadTerminalContent();
@@ -187,7 +187,7 @@ function iTutorialEvaluateStep() {
                          "We'll get to what this does later. <br><br>Using your home computer's terminal, you can connect " +
                          "to other machines throughout the world. Let's do that now by first entering " +
                          "the 'scan' command.");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalScanAnalyze1:
         Engine.loadTerminalContent();
@@ -197,7 +197,7 @@ function iTutorialEvaluateStep() {
                          "That's great and all, but there's so many servers. Which one should you go to? " +
                          "The 'scan-analyze' command gives some more detailed information about servers on the " +
                          "network. Try it now");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalScanAnalyze2:
         Engine.loadTerminalContent();
@@ -205,7 +205,7 @@ function iTutorialEvaluateStep() {
                          "information about each server that you can connect to (servers that are a distance of " +
                          "one node away). <br><br> It is also possible to run 'scan-analyze' with " +
                          "a higher depth. Let's try a depth of two with the following command: 'scan-analyze 2'.")
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalConnect:
         Engine.loadTerminalContent();
@@ -215,7 +215,7 @@ function iTutorialEvaluateStep() {
                          "the ip or the hostname, but dont use both.<br><br>" +
                          "From the results of the 'scan-analyze' command, we can see that the 'foodnstuff' server is " +
                          "only one node away. Let's connect so it now using: 'connect foodnstuff'");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalAnalyze:
         Engine.loadTerminalContent();
@@ -224,7 +224,7 @@ function iTutorialEvaluateStep() {
                          "on servers and computers. Using your hacking abilities, you can hack servers " +
                          "to steal money and gain experience. <br><br> " +
                          "Before you try to hack a server, you should run diagnostics using the 'analyze' command");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalNuke:
         Engine.loadTerminalContent();
@@ -236,13 +236,13 @@ function iTutorialEvaluateStep() {
                          "open ports.<br><br> The 'analyze' results shows that there do not need to be any open ports " +
                          "on this machine for the NUKE virus to work, so go ahead and run the virus using the " +
                          "'run NUKE.exe' command.");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalManualHack:
         Engine.loadTerminalContent();
         iTutorialSetText("You now have root access! You can hack the server using the 'hack' command. " +
                          "Try doing that now.");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalHackingMechanics:
         Engine.loadTerminalContent();
@@ -265,7 +265,7 @@ function iTutorialEvaluateStep() {
                          "command. Scripts must end with the '.script' extension. Let's make a script now by " +
                          "entering 'nano foodnstuff.script' after the hack command finishes running (Sidenote: Pressing ctrl + c" +
                          " will end a command like hack early)");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalTypeScript:
         Engine.loadScriptEditorContent("foodnstuff.script", "");
@@ -281,7 +281,7 @@ function iTutorialEvaluateStep() {
                          "For anyone with basic programming experience, this code should be straightforward. " +
                          "This script will continuously hack the 'foodnstuff' server.<br><br>" +
                          "To save and close the script editor, press the button in the bottom left, or press ctrl + b.");
-        nextBtn.style.display = "none"; //next step triggered in saveAndCloseScriptEditor() (Script.js)
+        nextBtn.style.display = "none"; // next step triggered in saveAndCloseScriptEditor() (Script.js)
         break;
     case iTutorialSteps.TerminalFree:
         Engine.loadTerminalContent();
@@ -289,13 +289,13 @@ function iTutorialEvaluateStep() {
                          "run on any machine which you have root access to. Different servers have different " +
                          "amounts of RAM. You can also purchase more RAM for your home server.<br><br>To check how much " +
                          "RAM is available on this machine, enter the 'free' command.");
-        nextBtn.style.display = "none"; //next step triggered by terminal commmand
+        nextBtn.style.display = "none"; // next step triggered by terminal commmand
         break;
     case iTutorialSteps.TerminalRunScript:
         Engine.loadTerminalContent();
         iTutorialSetText("We have 16GB of free RAM on this machine, which is enough to run our " +
                          "script. Let's run our script using 'run foodnstuff.script'.");
-        nextBtn.style.display = "none"; //next step triggered by terminal commmand
+        nextBtn.style.display = "none"; // next step triggered by terminal commmand
         break;
     case iTutorialSteps.TerminalGoToActiveScriptsPage:
         Engine.loadTerminalContent();
@@ -309,7 +309,7 @@ function iTutorialEvaluateStep() {
                          "'Active Scripts' link in the main navigation menu.");
         nextBtn.style.display = "none";
 
-        //Flash 'Active Scripts' menu and set its tutorial click handler
+        // Flash 'Active Scripts' menu and set its tutorial click handler
         activeScriptsMainMenu.setAttribute("class", "flashing-button");
         activeScriptsMainMenu.addEventListener("click", function() {
             Engine.loadActiveScriptsContent();
@@ -325,7 +325,7 @@ function iTutorialEvaluateStep() {
                          "link.");
         nextBtn.style.display = "none";
 
-        //Flash 'Terminal' button and set its tutorial click handler
+        // Flash 'Terminal' button and set its tutorial click handler
         terminalMainMenu.setAttribute("class", "flashing-button");
         terminalMainMenu.addEventListener("click", function() {
             Engine.loadTerminalContent();
@@ -338,7 +338,7 @@ function iTutorialEvaluateStep() {
         iTutorialSetText("One last thing about scripts, each active script contains logs that detail " +
                          "what it's doing. We can check these logs using the 'tail' command. Do that " +
                          "now for the script we just ran by typing 'tail foodnstuff.script'");
-        nextBtn.style.display = "none"; //next step triggered by terminal command
+        nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalTailScript:
         Engine.loadTerminalContent();
@@ -359,7 +359,7 @@ function iTutorialEvaluateStep() {
                          "the 'Hacknet Nodes' page through the main navigation menu now.");
         nextBtn.style.display = "none";
 
-        //Flash 'Hacknet' menu and set its tutorial click handler
+        // Flash 'Hacknet' menu and set its tutorial click handler
         hacknetMainMenu.setAttribute("class", "flashing-button");
         hacknetMainMenu.addEventListener("click", function() {
             Engine.loadHacknetNodesContent();
@@ -371,7 +371,7 @@ function iTutorialEvaluateStep() {
         Engine.loadHacknetNodesContent();
         iTutorialSetText("From this page you can purchase new Hacknet Nodes and upgrade your " +
                          "existing ones. Let's purchase a new one now.");
-        nextBtn.style.display = "none"; //Next step triggered by purchaseHacknet() (HacknetNode.js)
+        nextBtn.style.display = "none"; // Next step triggered by purchaseHacknet() (HacknetNode.js)
         break;
     case iTutorialSteps.HacknetNodesGoToWorldPage:
         Engine.loadHacknetNodesContent();
@@ -382,7 +382,7 @@ function iTutorialEvaluateStep() {
                          "Let's go to the 'City' page through the main navigation menu.");
         nextBtn.style.display = "none";
 
-        //Flash 'City' menu and set its tutorial click handler
+        // Flash 'City' menu and set its tutorial click handler
         cityMainMenu.setAttribute("class", "flashing-button");
         cityMainMenu.addEventListener("click", function() {
             Engine.loadLocationContent();
@@ -399,7 +399,7 @@ function iTutorialEvaluateStep() {
                          "Lastly, click on the 'Tutorial' link in the main navigation menu.");
         nextBtn.style.display = "none";
 
-        //Flash 'Tutorial' menu and set its tutorial click handler
+        // Flash 'Tutorial' menu and set its tutorial click handler
         tutorialMainMenu.setAttribute("class", "flashing-button");
         tutorialMainMenu.addEventListener("click", function() {
             Engine.loadTutorialContent();
@@ -428,9 +428,9 @@ function iTutorialEvaluateStep() {
     }
 }
 
-//Go to the next step and evaluate it
+// Go to the next step and evaluate it
 function iTutorialNextStep() {
-    //Special behavior for certain steps
+    // Special behavior for certain steps
     if (ITutorial.currStep === iTutorialSteps.GoToCharacterPage) {
         document.getElementById("stats-menu-link").removeAttribute("class");
     }
@@ -460,7 +460,7 @@ function iTutorialNextStep() {
     iTutorialEvaluateStep();
 }
 
-//Go to previous step and evaluate
+// Go to previous step and evaluate
 function iTutorialPrevStep() {
     if (ITutorial.currStep > iTutorialSteps.Start) {
         ITutorial.currStep -= 1;
@@ -469,7 +469,7 @@ function iTutorialPrevStep() {
 }
 
 function iTutorialEnd() {
-    //Re-enable auto save
+    // Re-enable auto save
     if (Settings.AutosaveInterval === 0) {
         Engine.Counters.autoSaveCounter = Infinity;
     } else {
@@ -494,7 +494,7 @@ function iTutorialEnd() {
     ITutorial.isRunning = false;
     document.getElementById("interactive-tutorial-container").style.display = "none";
 
-    //Create a popup with final introductory stuff
+    // Create a popup with final introductory stuff
     var popupId = "interactive-tutorial-ending-popup";
     var txt = createElement("p", {
         innerHTML:

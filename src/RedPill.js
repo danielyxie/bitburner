@@ -1,3 +1,6 @@
+/**
+ * Implementation for what happens when you destroy a BitNode
+ */
 import { BitNodes } from "./BitNode/BitNode";
 import { Engine } from "./engine";
 import { Player } from "./Player";
@@ -18,10 +21,9 @@ import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 
 
-/* RedPill.js
- *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
 
-//Returns promise
+
+// Returns promise
 function writeRedPillLine(line) {
     return new Promise(function(resolve, reject) {
         var container = document.getElementById("red-pill-content");
@@ -100,8 +102,6 @@ function hackWorldDaemon(currentNodeNumber, flume=false) {
     });
 }
 
-//The bitNode name passed in will have a hyphen between number (e.g. BitNode-1)
-//This needs to be removed
 function giveSourceFile(bitNodeNumber) {
     var sourceFileKey = "SourceFile"+ bitNodeNumber.toString();
     var sourceFile = SourceFiles[sourceFileKey];
@@ -110,7 +110,7 @@ function giveSourceFile(bitNodeNumber) {
         return;
     }
 
-    //Check if player already has this source file
+    // Check if player already has this source file
     var alreadyOwned = false;
     var ownedSourceFile = null;
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
@@ -133,7 +133,7 @@ function giveSourceFile(bitNodeNumber) {
     } else {
         var playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
         Player.sourceFiles.push(playerSrcFile);
-        if (bitNodeNumber === 5) { //Artificial Intelligence
+        if (bitNodeNumber === 5) { // Artificial Intelligence
             Player.intelligence = 1;
         }
         dialogBoxCreate("You received a Source-File for destroying a Bit Node!<br><br>" +
@@ -142,11 +142,11 @@ function giveSourceFile(bitNodeNumber) {
 }
 
 function loadBitVerse(destroyedBitNodeNum, flume=false) {
-    //Clear the screen
+    // Clear the screen
     var container = document.getElementById("red-pill-content");
     removeChildrenFromElement(container);
 
-    //Create the Bit Verse
+    // Create the Bit Verse
     var bitVerseImage = document.createElement("pre");
     var bitNodes = [];
     for (var i = 1; i <= 12; ++i) {
@@ -211,7 +211,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
 
     container.appendChild(bitVerseImage);
 
-    //Bit node event listeners
+    // Bit node event listeners
     for (var i = 1; i <= 12; ++i) {
         (function(i) {
             var elemId = "bitnode-" + i.toString();
@@ -233,10 +233,10 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
                     dialogBoxCreate("Not yet implemented! Coming soon!")
                 });
             }
-        }(i)); //Immediate invocation closure
+        }(i)); // Immediate invocation closure
     }
 
-    //Create lore text
+    // Create lore text
     return writeRedPillLine("Many decades ago, a humanoid extraterrestial species which we call the Enders descended on the Earth...violently").then(function() {
         return writeRedPillLine("Our species fought back, but it was futile. The Enders had technology far beyond our own...");
     }).then(function() {
@@ -285,7 +285,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
 }
 
 
-//Returns string with DOM element for Bit Node
+// Returns string with DOM element for Bit Node
 function createBitNode(n) {
     var bitNodeStr = "BitNode" + n.toString();
     var bitNode = BitNodes[bitNodeStr];
@@ -304,19 +304,19 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
         if (!flume) {
             giveSourceFile(destroyedBitNode);
         } else {
-            //If player used flume, subtract 5 int exp. The prestigeSourceFile()
-            //function below grants 5 int exp, so this allows sets net gain to 0
+            // If player used flume, subtract 5 int exp. The prestigeSourceFile()
+            // function below grants 5 int exp, so this allows sets net gain to 0
             Player.gainIntelligenceExp(-5);
         }
         redPillFlag = false;
         var container = document.getElementById("red-pill-content");
         removeChildrenFromElement(container);
 
-        //Set new Bit Node
+        // Set new Bit Node
         Player.bitNodeN = newBitNode;
         console.log("Entering Bit Node " + Player.bitNodeN);
 
-        //Reenable terminal
+        // Reenable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
         document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
