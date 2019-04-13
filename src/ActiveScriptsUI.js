@@ -32,7 +32,7 @@ import { removeElement } from "../utils/uiHelpers/removeElement";
  *      ...
  */
 const ActiveScriptsUI = {};
-const ActiveScriptsTasks = []; //Sequentially schedule the creation/deletion of UI elements
+const ActiveScriptsTasks = []; // Sequentially schedule the creation/deletion of UI elements
 
 const getHeaderHtml = (server) => {
     // TODO: calculate the longest hostname length rather than hard coding it
@@ -51,7 +51,7 @@ const updateHeaderHtml = (server) => {
         return;
     }
 
-    // convert it to a string, as that's how it's stored it will come out of the data attributes
+    // Convert it to a string, as that's how it's stored it will come out of the data attributes
     const ramPercentage = '' + roundToTwo(server.ramUsed / server.maxRam);
     if (accordion.header.dataset.ramPercentage !== ramPercentage) {
         accordion.header.dataset.ramPercentage = ramPercentage;
@@ -84,16 +84,18 @@ function createActiveScriptsServerPanel(server) {
         header: hdr,
         panel: panel,
         panelList: panelScriptList,
-        scripts: {},            //Holds references to li elements for each active script
-        scriptHdrs: {},         //Holds references to header elements for each active script
-        scriptStats: {}         //Holds references to the p elements containing text for each active script
+        scripts: {},        // Holds references to li elements for each active script
+        scriptHdrs: {},     // Holds references to header elements for each active script
+        scriptStats: {},    // Holds references to the p elements containing text for each active script
     };
 
     return li;
 }
 
-//Deletes the info for a particular server (Dropdown header + Panel with all info)
-//in the Active Scripts page if it exists
+/**
+ * Deletes the info for a particular server (Dropdown header + Panel with all info)
+ * in the Active Scripts page if it exists
+ */
 function deleteActiveScriptsServerPanel(server) {
     let hostname = server.hostname;
     if (ActiveScriptsUI[hostname] == null) {
@@ -101,9 +103,9 @@ function deleteActiveScriptsServerPanel(server) {
         return;
     }
 
-    //Make sure it's empty
+    // Make sure it's empty
     if (Object.keys(ActiveScriptsUI[hostname].scripts).length > 0) {
-        console.log("WARNING: Tried to delete Active Scripts Server panel  that still has scripts. Aborting");
+        console.warn("Tried to delete Active Scripts Server panel  that still has scripts. Aborting");
         return;
     }
 
@@ -115,7 +117,7 @@ function deleteActiveScriptsServerPanel(server) {
 function addActiveScriptsItem(workerscript) {
     var server = getServer(workerscript.serverIp);
     if (server == null) {
-        console.log("ERROR: Invalid server IP for workerscript in addActiveScriptsItem()");
+        console.warn("Invalid server IP for workerscript in addActiveScriptsItem()");
         return;
     }
     let hostname = server.hostname;
@@ -125,7 +127,7 @@ function addActiveScriptsItem(workerscript) {
             createActiveScriptsServerPanel(server);
         }
 
-        //Create the unique identifier (key) for this script
+        // Create the unique identifier (key) for this script
         var itemNameArray = ["active", "scripts", hostname, workerscript.name];
         for (var i = 0; i < workerscript.args.length; ++i) {
             itemNameArray.push(String(workerscript.args[i]));
@@ -142,8 +144,10 @@ function addActiveScriptsItem(workerscript) {
         panel.classList.remove("accordion-panel");
         panel.classList.add("active-scripts-script-panel");
 
-        //Handle the constant elements on the panel that don't change after creation
-        //Threads, args, kill/log button
+        /**
+         * Handle the constant elements on the panel that don't change after creation:
+         * Threads, args, kill/log button
+         */
         panel.appendChild(createElement("p", {
             innerHTML: "Threads: " + workerscript.scriptRef.threads + "<br>" +
                        "Args: " + arrayToString(workerscript.args)
@@ -176,7 +180,7 @@ function addActiveScriptsItem(workerscript) {
             }
         }));
 
-        //Append element to list
+        // Append element to list
         ActiveScriptsUI[hostname]["panelList"].appendChild(li);
         ActiveScriptsUI[hostname].scripts[itemName] = li;
         ActiveScriptsUI[hostname].scriptHdrs[itemName] = hdr;
@@ -221,11 +225,13 @@ function deleteActiveScriptsItem(workerscript) {
     }.bind(null, workerscript));
 }
 
-//Update the ActiveScriptsItems array
 function updateActiveScriptsItems(maxTasks=150) {
-    //Run tasks that need to be done sequentially (adding items, creating/deleting server panels)
-    //We'll limit this to 150 at a time in case someone decides to start a bunch of scripts all at once...
-    let numTasks = Math.min(maxTasks, ActiveScriptsTasks.length);
+    /**
+     * Run tasks that need to be done sequentially (adding items, creating/deleting server panels)
+     * We'll limit this to 150 at a time for performance (in case someone decides to start a
+     * bunch of scripts all at once...)
+     */
+    const numTasks = Math.min(maxTasks, ActiveScriptsTasks.length);
     for (let i = 0; i < numTasks; ++i) {
         let task = ActiveScriptsTasks.shift();
         try {
@@ -236,8 +242,8 @@ function updateActiveScriptsItems(maxTasks=150) {
         }
     }
 
-    if (!routing.isOn(Page.ActiveScripts)) {return;}
-    var total = 0;
+    if (!routing.isOn(Page.ActiveScripts)) { return; }
+    let total = 0;
     for (var i = 0; i < workerScripts.length; ++i) {
         try {
             total += updateActiveScriptsItemContent(workerScripts[i]);
@@ -249,10 +255,10 @@ function updateActiveScriptsItems(maxTasks=150) {
     getElementById("active-scripts-total-production-active").innerText = numeralWrapper.formatMoney(total);
     getElementById("active-scripts-total-prod-aug-total").innerText = numeralWrapper.formatMoney(Player.scriptProdSinceLastAug);
     getElementById("active-scripts-total-prod-aug-avg").innerText = numeralWrapper.formatMoney(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000));
+
     return total;
 }
 
-//Updates the content of the given item in the Active Scripts list
 function updateActiveScriptsItemContent(workerscript) {
     var server = getServer(workerscript.serverIp);
     if (server == null) {
@@ -261,7 +267,7 @@ function updateActiveScriptsItemContent(workerscript) {
     }
     let hostname = server.hostname;
     if (ActiveScriptsUI[hostname] == null) {
-        return; //Hasn't been created yet. We'll skip it
+        return; // Hasn't been created yet. We'll skip it
     }
 
     updateHeaderHtml(server);
@@ -273,11 +279,11 @@ function updateActiveScriptsItemContent(workerscript) {
     var itemName = itemNameArray.join("-");
 
     if (ActiveScriptsUI[hostname].scriptStats[itemName] == null) {
-        return; //Hasn't been fully added yet. We'll skip it
+        return; // Hasn't been fully added yet. We'll skip it
     }
     var item = ActiveScriptsUI[hostname].scriptStats[itemName];
 
-    //Update the text if necessary. This fn returns the online $/s production
+    // Update the text if necessary. This fn returns the online $/s production
     return updateActiveScriptsText(workerscript, item, itemName);
 }
 
@@ -296,7 +302,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
     updateHeaderHtml(server);
     var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
 
-    //Only update if the item is visible
+    // Only update if the item is visible
     if (ActiveScriptsUI[hostname].header.classList.contains("active") === false) {return onlineMps;}
     if (ActiveScriptsUI[hostname].scriptHdrs[itemName].classList.contains("active") === false) {return onlineMps;}
 
@@ -305,7 +311,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
     var onlineTime = "Online Time: " + convertTimeMsToTimeElapsedString(workerscript.scriptRef.onlineRunningTime * 1e3);
     var offlineTime = "Offline Time: " + convertTimeMsToTimeElapsedString(workerscript.scriptRef.offlineRunningTime * 1e3);
 
-    //Online
+    // Online
     var onlineTotalMoneyMade = "Total online production: " + numeralWrapper.formatMoney(workerscript.scriptRef.onlineMoneyMade);
     var onlineTotalExpEarned = (Array(26).join(" ") + numeralWrapper.formatBigNumber(workerscript.scriptRef.onlineExpGained) + " hacking exp").replace( / /g, "&nbsp;");
 
@@ -313,7 +319,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
     var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
     var onlineEpsText = (Array(25).join(" ") + numeralWrapper.formatBigNumber(onlineEps) + " hacking exp / second").replace( / /g, "&nbsp;");
 
-    //Offline
+    // Offline
     var offlineTotalMoneyMade = "Total offline production: " + numeralWrapper.formatMoney(workerscript.scriptRef.offlineMoneyMade);
     var offlineTotalExpEarned = (Array(27).join(" ") + numeralWrapper.formatBigNumber(workerscript.scriptRef.offlineExpGained) + " hacking exp").replace( / /g, "&nbsp;");
 

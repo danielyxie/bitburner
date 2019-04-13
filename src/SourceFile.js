@@ -1,8 +1,7 @@
 import { Player } from "./Player";
 import { BitNodes } from "./BitNode/BitNode";
 
-/* SourceFile.js */
-//Each SourceFile corresponds to a BitNode with the same number
+// Each SourceFile corresponds to a BitNode with the same number
 function SourceFile(number, info="") {
     var bitnodeKey = "BitNode" + number;
     var bitnode = BitNodes[bitnodeKey];
@@ -80,7 +79,7 @@ function initSourceFiles() {
                                                      "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
 }
 
-//Takes in a PlayerOwnedSourceFile as the "srcFile" argument
+// Takes in a PlayerOwnedSourceFile as the "srcFile" argument
 function applySourceFile(srcFile) {
     var srcFileKey = "SourceFile" + srcFile.n;
     var sourceFileObject = SourceFiles[srcFileKey];

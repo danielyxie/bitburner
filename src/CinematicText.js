@@ -1,3 +1,4 @@
+
 import { Engine } from "./engine";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
@@ -8,7 +9,12 @@ import { isString } from "../utils/helpers/isString";
 
 export let cinematicTextFlag = false;
 
-// Lines must be an array of strings
+/**
+ * Print a message using a hacking-style "typing" effect.
+ * Note that this clears the UI so that the text from this is the only thing visible.
+ * 
+ * @param lines {string[]} Array of strings to print, where each element is a separate line
+ */
 export function writeCinematicText(lines) {
     cinematicTextFlag = true;
 

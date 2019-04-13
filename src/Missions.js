@@ -15,7 +15,7 @@ import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import jsplumb from "jsplumb";
 
 
-let inMission = false; //Flag to denote whether a mission is running
+let inMission = false; // Flag to denote whether a mission is running
 let currMission = null;
 function setInMission(bool, mission) {
     inMission = bool;
@@ -26,26 +26,26 @@ function setInMission(bool, mission) {
     }
 }
 
-//Keyboard shortcuts
+// Keyboard shortcuts
 $(document).keydown(function(e) {
     if (inMission && currMission && currMission.selectedNode.length != 0) {
         switch (e.keyCode) {
-            case 65: //a for Attack
+            case 65: // a for Attack
                 currMission.actionButtons[0].click();
                 break;
-            case 83: //s for Scan
+            case 83: // s for Scan
                 currMission.actionButtons[1].click();
                 break;
-            case 87: //w for Weaken
+            case 87: // w for Weaken
                 currMission.actionButtons[2].click();
                 break;
-            case 70: //f for Fortify
+            case 70: // f for Fortify
                 currMission.actionButtons[3].click();
                 break;
-            case 82: //r for Overflow
+            case 82: // r for Overflow
                 currMission.actionButtons[4].click();
                 break;
-            case 68: //d for Detach connection
+            case 68: // d for Detach connection
                 currMission.actionButtons[5].click();
                 break;
             default:
@@ -55,20 +55,20 @@ $(document).keydown(function(e) {
 });
 
 let NodeTypes = {
-    Core: "CPU Core Node",      //All actions available
-    Firewall: "Firewall Node",  //No actions available
-    Database: "Database Node",  //No actions available
-    Spam: "Spam Node",          //No actions Available
-    Transfer: "Transfer Node",  //Can Weaken, Scan, Fortify and Overflow
-    Shield: "Shield Node"       //Can Fortify
+    Core: "CPU Core Node", // All actions available
+    Firewall: "Firewall Node", // No actions available
+    Database: "Database Node", // No actions available
+    Spam: "Spam Node", // No actions Available
+    Transfer: "Transfer Node", // Can Weaken, Scan, Fortify and Overflow
+    Shield: "Shield Node" // Can Fortify
 }
 
 let NodeActions = {
-    Attack: "Attacking", //Damaged based on attack stat + hacking level + opp def
-    Scan: "Scanning", //-Def for target, affected by attack and hacking level
-    Weaken: "Weakening", //-Attack for target, affected by attack and hacking level
-    Fortify: "Fortifying", //+Defense for Node, affected by hacking level
-    Overflow: "Overflowing", //+Attack but -Defense for Node, affected by hacking level
+    Attack: "Attacking", // Damaged based on attack stat + hacking level + opp def
+    Scan: "Scanning", // -Def for target, affected by attack and hacking level
+    Weaken: "Weakening", // -Attack for target, affected by attack and hacking level
+    Fortify: "Fortifying", // +Defense for Node, affected by hacking level
+    Overflow: "Overflowing", // +Attack but -Defense for Node, affected by hacking level
 }
 
 function Node(type, stats) {
@@ -79,14 +79,15 @@ function Node(type, stats) {
     this.maxhp = this.hp;
     this.plyrCtrl = false;
     this.enmyCtrl = false;
-    this.pos = [0, 0]; //x, y
-    this.el = null; //Holds the Node's DOM element
+    this.pos = [0, 0]; // x, y
+    this.el = null; // Holds the Node's DOM element
     this.action = null;
-    this.targetedCount = 0; //Count of how many connections this node is the target of
+    this.targetedCount = 0; // Count of how many connections this node is the target of
 
-    //Holds the JsPlumb Connection object for this Node,
-    //where this Node is the Source (since each Node
-    //can only have 1 outgoing Connection)
+    /**
+     * Holds the JsPlumb Connection object for this Node, where this Node is the Source (since each Node
+     * can only have 1 outgoing Connection)
+     */
     this.conn = null;
 }
 
@@ -112,12 +113,12 @@ Node.prototype.setControlledByEnemy = function() {
     }
 }
 
-//Sets this node to be the active node
+// Sets this node to be the active node
 Node.prototype.select = function(actionButtons) {
     if (this.enmyCtrl) {return;}
     this.el.classList.add("hack-mission-player-node-active");
 
-    //Make all buttons inactive
+    // Make all buttons inactive
     for (var i = 0; i < actionButtons.length; ++i) {
         actionButtons[i].classList.remove("a-link-button");
         actionButtons[i].classList.add("a-link-button-inactive");
@@ -125,7 +126,7 @@ Node.prototype.select = function(actionButtons) {
 
     switch(this.type) {
         case NodeTypes.Core:
-            //All buttons active
+            // All buttons active
             for (var i = 0; i < actionButtons.length; ++i) {
                 actionButtons[i].classList.remove("a-link-button-inactive");
                 actionButtons[i].classList.add("a-link-button");
@@ -170,31 +171,33 @@ Node.prototype.untarget = function() {
     --this.targetedCount;
 }
 
-//Hacking mission instance
-//Takes in the reputation of the Faction for which the mission is
-//being conducted
+/**
+ * Hacking mission instance
+ * @param rep {number} How much reputation the player has for the faction
+ * @param fac {Faction} Faction for which this mission is being conducted
+ */
 function HackingMission(rep, fac) {
     this.faction = fac;
 
     this.started = false;
-    this.time = 180000; //5 minutes to start, milliseconds
+    this.time = 180000; // 5 minutes to start, milliseconds
 
     this.playerCores = [];
-    this.playerNodes = []; //Non-core nodes
+    this.playerNodes = []; // Non-core nodes
     this.playerAtk = 0;
     this.playerDef = 0;
 
     this.enemyCores = [];
     this.enemyDatabases = [];
-    this.enemyNodes = []; //Non-core nodes
+    this.enemyNodes = []; // Non-core nodes
     this.enemyAtk = 0;
     this.enemyDef = 0;
 
     this.miscNodes = [];
 
-    this.selectedNode = []; //Which of the player's nodes are currently selected
+    this.selectedNode = []; // Which of the player's nodes are currently selected
 
-    this.actionButtons = []; //DOM buttons for actions
+    this.actionButtons = []; // DOM buttons for actions
 
     this.availablePositions = [];
     for (var r = 0; r < 8; ++r) {
@@ -216,10 +219,10 @@ function HackingMission(rep, fac) {
 }
 
 HackingMission.prototype.init = function() {
-    //Create Header DOM
+    // Create Header DOM
     this.createPageDom();
 
-    //Create player starting nodes
+    // Create player starting nodes
     var home = Player.getHomeComputer()
     for (var i = 0; i < home.cpuCores; ++i) {
         var stats = {
@@ -233,7 +236,7 @@ HackingMission.prototype.init = function() {
         this.removeAvailablePosition(i, 0);
     }
 
-    //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
+    // Randomly generate enemy nodes (CPU and Firewall) based on difficulty
     var numNodes = Math.min(8, Math.max(1, Math.round(this.difficulty / 4)));
     var numFirewalls = Math.min(20,
                                 getRandomInt(Math.round(this.difficulty/3), Math.round(this.difficulty/3) + 1));
@@ -309,10 +312,10 @@ HackingMission.prototype.createPageDom = function() {
     wikiGuideBtn.style.display = "inline-block";
     wikiGuideBtn.classList.add("hack-mission-header-element");
     wikiGuideBtn.target = "_blank";
-    //TODO Add link to wiki page     wikiGuideBtn.href =
+    // TODO Add link to wiki page     wikiGuideBtn.href =
 
 
-    //Start button will get replaced with forfeit when game is started
+    // Start button will get replaced with forfeit when game is started
     var startBtn = document.createElement("a");
     startBtn.innerHTML = "Start";
     startBtn.setAttribute("id", "hack-mission-start-btn");
@@ -339,15 +342,15 @@ HackingMission.prototype.createPageDom = function() {
     timer.style.display = "inline-block";
     timer.style.margin = "6px";
 
-    //Create Action Buttons (Attack/Scan/Weaken/ etc...)
+    // Create Action Buttons (Attack/Scan/Weaken/ etc...)
     var actionsContainer = document.createElement("span");
     actionsContainer.style.display = "block";
     actionsContainer.classList.add("hack-mission-action-buttons-container");
     for (var i = 0; i < 6; ++i) {
         this.actionButtons.push(document.createElement("a"));
         this.actionButtons[i].style.display = "inline-block";
-        this.actionButtons[i].classList.add("a-link-button-inactive"); //Disabled at start
-        this.actionButtons[i].classList.add("tooltip"); //Disabled at start
+        this.actionButtons[i].classList.add("a-link-button-inactive"); // Disabled at start
+        this.actionButtons[i].classList.add("tooltip"); // Disabled at start
         this.actionButtons[i].classList.add("hack-mission-header-element");
         actionsContainer.appendChild(this.actionButtons[i]);
     }
@@ -388,7 +391,7 @@ HackingMission.prototype.createPageDom = function() {
                                 "also be done by simply clicking the white connection line.";
     this.actionButtons[5].appendChild(dropconnTooltip);
 
-    //Player/enemy defense displays will be in action container
+    // Player/enemy defense displays will be in action container
     var playerStats = document.createElement("p");
     var enemyStats = document.createElement("p");
     playerStats.style.display = "inline-block";
@@ -402,7 +405,7 @@ HackingMission.prototype.createPageDom = function() {
     actionsContainer.appendChild(playerStats);
     actionsContainer.appendChild(enemyStats);
 
-    //Set Action Button event listeners
+    // Set Action Button event listeners
     this.actionButtons[0].addEventListener("click", ()=>{
         if (!(this.selectedNode.length > 0)) {
             console.log("ERR: Pressing Action button without selected node");
@@ -410,7 +413,7 @@ HackingMission.prototype.createPageDom = function() {
         }
         if (this.selectedNode[0].type !== NodeTypes.Core) {return;}
         this.setActionButtonsActive(this.selectedNode[0].type);
-        this.setActionButton(NodeActions.Attack, false); //Set attack button inactive
+        this.setActionButton(NodeActions.Attack, false); // Set attack button inactive
         this.selectedNode.forEach(function(node){
             node.action = NodeActions.Attack;
         });
@@ -421,10 +424,10 @@ HackingMission.prototype.createPageDom = function() {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        var nodeType = this.selectedNode[0].type; // In a multiselect, every Node will have the same type
         if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
         this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Scan, false); //Set scan button inactive
+        this.setActionButton(NodeActions.Scan, false); // Set scan button inactive
         this.selectedNode.forEach(function(node){
             node.action = NodeActions.Scan;
         });
@@ -435,10 +438,10 @@ HackingMission.prototype.createPageDom = function() {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        var nodeType = this.selectedNode[0].type; // In a multiselect, every Node will have the same type
         if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
         this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Weaken, false); //Set Weaken button inactive
+        this.setActionButton(NodeActions.Weaken, false); // Set Weaken button inactive
         this.selectedNode.forEach(function(node){
             node.action = NodeActions.Weaken;
         });
@@ -450,7 +453,7 @@ HackingMission.prototype.createPageDom = function() {
             return;
         }
         this.setActionButtonsActive(this.selectedNode[0].type);
-        this.setActionButton(NodeActions.Fortify, false); //Set Fortify button inactive
+        this.setActionButton(NodeActions.Fortify, false); // Set Fortify button inactive
         this.selectedNode.forEach(function(node){
             node.action = NodeActions.Fortify;
         });
@@ -464,7 +467,7 @@ HackingMission.prototype.createPageDom = function() {
         var nodeType = this.selectedNode[0].type;
         if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
         this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Overflow, false); //Set Overflow button inactive
+        this.setActionButton(NodeActions.Overflow, false); // Set Overflow button inactive
         this.selectedNode.forEach(function(node){
             node.action = NodeActions.Overflow;
         });
@@ -482,11 +485,7 @@ HackingMission.prototype.createPageDom = function() {
             }
             node.action = NodeActions.Fortify;
         });
-        // if (this.selectedNode.conn) {
-        //     var endpoints = this.selectedNode.conn.endpoints;
-        //     endpoints[0].detachFrom(endpoints[1]);
-        // }
-    })
+    });
 
     var timeDisplay = document.createElement("p");
 
@@ -513,8 +512,10 @@ HackingMission.prototype.setActionButtonsActive = function(nodeType=null) {
         this.actionButtons[i].classList.remove("a-link-button-inactive");
     }
 
-    //For Transfer, FireWall and Shield Nodes, certain buttons should always be disabled
-    //0 = Attack, 1 = Scan, 2 = Weaken, 3 = Fortify, 4 = overflow, 5 = Drop conn
+    /**
+     * For Transfer, FireWall and Shield Nodes, certain buttons should always be disabled
+     * 0 = Attack, 1 = Scan, 2 = Weaken, 3 = Fortify, 4 = overflow, 5 = Drop conn
+     */
     if (nodeType) {
         switch (nodeType) {
             case NodeTypes.Firewall:
@@ -540,7 +541,7 @@ HackingMission.prototype.setActionButtonsActive = function(nodeType=null) {
     }
 }
 
-//True for active, false for inactive
+// True for active, false for inactive
 HackingMission.prototype.setActionButton = function(i, active=true) {
     if (isString(i)) {
         switch (i) {
@@ -657,7 +658,7 @@ HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
 HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
     var i = getRandomInt(0, this.availablePositions.length - 1);
     if (this.availablePositions[i][1] < xlimit) {
-        //Recurse if not within limit
+        // Recurse if not within limit
         return this.setNodeRandomPosition(nodeObj, xlimit);
     }
     var pos = this.availablePositions.splice(i, 1);
@@ -666,15 +667,15 @@ HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
 }
 
 HackingMission.prototype.createMap = function() {
-    //Use a grid
+    // Use a grid
     var map = document.createElement("div");
     map.classList.add("hack-mission-grid");
     map.setAttribute("id", "hacking-mission-map");
     document.getElementById("mission-container").appendChild(map);
 
-    //Create random Nodes for every space in the map that
-    //hasn't been filled yet. The stats of each Node will be based on
-    //the player/enemy attack
+    // Create random Nodes for every space in the map that
+    // hasn't been filled yet. The stats of each Node will be based on
+    // the player/enemy attack
     var averageAttack = (this.playerAtk + this.enemyAtk) / 2;
     for (var x = 0; x < 8; ++x) {
         for (var y = 0; y < 8; ++y) {
@@ -682,7 +683,7 @@ HackingMission.prototype.createMap = function() {
                 var node, type = getRandomInt(0, 2);
                 var randMult = addOffset(0.85 + (this.difficulty / 2), 15);
                 switch (type) {
-                    case 0: //Spam
+                    case 0: // Spam
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(15, 45),
@@ -690,7 +691,7 @@ HackingMission.prototype.createMap = function() {
                         }
                         node = new Node(NodeTypes.Spam, stats);
                         break;
-                    case 1: //Transfer
+                    case 1: // Transfer
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(15, 45),
@@ -698,7 +699,7 @@ HackingMission.prototype.createMap = function() {
                         }
                         node = new Node(NodeTypes.Transfer, stats);
                         break;
-                    case 2: //Shield
+                    case 2: // Shield
                     default:
                         var stats = {
                             atk: 0,
@@ -715,14 +716,14 @@ HackingMission.prototype.createMap = function() {
         }
     }
 
-    //Create DOM elements in order
+    // Create DOM elements in order
     for (var r = 0; r < 8; ++r) {
         for (var c = 0; c < 8; ++c) {
             this.createNodeDomElement(this.map[r][c]);
         }
     }
 
-    //Configure all Player CPUS
+    // Configure all Player CPUS
     for (var i = 0; i < this.playerCores.length; ++i) {
         console.log("Configuring Player Node: " + this.playerCores[i].el.id);
         this.configurePlayerNodeElement(this.playerCores[i].el);
@@ -733,12 +734,12 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
     var nodeDiv = document.createElement("a"), txtEl = document.createElement('p');
     nodeObj.el = nodeDiv;
 
-    //Set the node element's id based on its coordinates
+    // Set the node element's id based on its coordinates
     var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
     nodeDiv.setAttribute("id", id);
     txtEl.setAttribute("id", id + "-txt");
 
-    //Set node classes for owner
+    // Set node classes for owner
     nodeDiv.classList.add("hack-mission-node");
     if (nodeObj.plyrCtrl) {
         nodeDiv.classList.add("hack-mission-player-node");
@@ -746,7 +747,7 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
         nodeDiv.classList.add("hack-mission-enemy-node");
     }
 
-    //Set node classes based on type
+    // Set node classes based on type
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
@@ -799,7 +800,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
     var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
 
-    //Set node classes based on type
+    // Set node classes based on type
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
@@ -837,9 +838,11 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     txtEl.innerHTML = txt;
 }
 
-//Gets a Node DOM element's corresponding Node object using its
-//element id. Function accepts either the DOM element object or the ID as
-//an argument
+/**
+ * Gets a Node DOM element's corresponding Node object using its
+ * element id. Function accepts either the DOM element object or the ID as
+ * an argument
+ */
 HackingMission.prototype.getNodeFromElement = function(el) {
     var id;
     if (isString(el)) {
@@ -902,14 +905,16 @@ function clearAllSelectedNodes(hackMissionInst) {
     }
 }
 
-//Configures a DOM element representing a player-owned node to
-//be selectable and actionable
-//Note: Does NOT change its css class. This is handled by Node.setControlledBy...
+/**
+ * Configures a DOM element representing a player-owned node to
+ * be selectable and actionable.
+ * Note: Does NOT change its css class. This is handled by Node.setControlledBy...
+ */
 HackingMission.prototype.configurePlayerNodeElement = function(el) {
     var nodeObj = this.getNodeFromElement(el);
     if (nodeObj == null) {console.log("Error getting Node object");}
 
-    //Add event listener
+    // Add event listener
     var self = this;
     function selectNodeWrapper() {
         selectNode(self, el);
@@ -927,10 +932,12 @@ HackingMission.prototype.configurePlayerNodeElement = function(el) {
     }
 }
 
-//Configures a DOM element representing an enemy-node by removing
-//any event listeners
+/**
+ * Configures a DOM element representing an enemy-node by removing
+ * any event listeners
+ */
 HackingMission.prototype.configureEnemyNodeElement = function(el) {
-    //Deselect node if it was the selected node
+    // Deselect node if it was the selected node
     var nodeObj = this.getNodeFromElement(el);
     for (var i = 0; i < this.selectedNode.length; ++i) {
         if (this.selectedNode[i] == nodeObj) {
@@ -941,8 +948,10 @@ HackingMission.prototype.configureEnemyNodeElement = function(el) {
     }
 }
 
-//Returns bool indicating whether a node is reachable by player
-//by checking if any of the adjacent nodes are owned by the player
+/**
+ * Returns bool indicating whether a node is reachable by player
+ * by checking if any of the adjacent nodes are owned by the player
+ */
 HackingMission.prototype.nodeReachable = function(node) {
     var x = node.pos[0], y = node.pos[1];
     if (x > 0 && this.map[x-1][y].plyrCtrl) {return true;}
@@ -985,7 +994,7 @@ HackingMission.prototype.initJsPlumb = function() {
 
     this.jsplumbinstance = instance;
 
-    //All player cores are sources
+    // All player cores are sources
     for (var i = 0; i < this.playerCores.length; ++i) {
         instance.makeSource(this.playerCores[i].el, {
             deleteEndpointsOnEmpty:true,
@@ -995,7 +1004,7 @@ HackingMission.prototype.initJsPlumb = function() {
         });
     }
 
-    //Everything else is a target
+    // Everything else is a target
     for (var i = 0; i < this.enemyCores.length; ++i) {
         instance.makeTarget(this.enemyCores[i].el, {
             maxConnections:-1,
@@ -1025,7 +1034,7 @@ HackingMission.prototype.initJsPlumb = function() {
         });
     }
 
-    //Clicking a connection drops it
+    // Clicking a connection drops it
     instance.bind("click", (conn, originalEvent) => {
         // Cannot drop enemy's connections
         const sourceNode = this.getNodeFromElement(conn.source);
@@ -1035,15 +1044,15 @@ HackingMission.prototype.initJsPlumb = function() {
         endpoints[0].detachFrom(endpoints[1]);
     });
 
-    //Connection events
+    // Connection events
     instance.bind("connection", (info) => {
         var targetNode = this.getNodeFromElement(info.target);
 
-        //Do not detach for enemy nodes
+        // Do not detach for enemy nodes
         var thisNode = this.getNodeFromElement(info.source);
         if (thisNode.enmyCtrl) {return;}
 
-        //If the node is not reachable, drop the connection
+        // If the node is not reachable, drop the connection
         if (!this.nodeReachable(targetNode)) {
             info.sourceEndpoint.detachFrom(info.targetEndpoint);
             return;
@@ -1055,7 +1064,7 @@ HackingMission.prototype.initJsPlumb = function() {
         ++targetNode.targetedCount;
     });
 
-    //Detach Connection events
+    // Detach Connection events
     instance.bind("connectionDetached", (info, originalEvent)=>{
         var sourceNode = this.getNodeFromElement(info.source);
         sourceNode.conn = null;
@@ -1065,7 +1074,7 @@ HackingMission.prototype.initJsPlumb = function() {
 
 }
 
-//Drops all connections where the specified node is the source
+// Drops all connections where the specified node is the source
 HackingMission.prototype.dropAllConnectionsFromNode = function(node) {
     var allConns = this.jsplumbinstance.getAllConnections();
     for (var i = allConns.length-1; i >= 0; --i) {
@@ -1075,7 +1084,7 @@ HackingMission.prototype.dropAllConnectionsFromNode = function(node) {
     }
 }
 
-//Drops all connections where the specified node is the target
+// Drops all connections where the specified node is the target
 HackingMission.prototype.dropAllConnectionsToNode = function(node) {
     var allConns = this.jsplumbinstance.getAllConnections();
     for (var i = allConns.length-1; i >= 0; --i) {
@@ -1090,10 +1099,10 @@ var storedCycles = 0;
 HackingMission.prototype.process = function(numCycles=1) {
     if (!this.started) {return;}
     storedCycles += numCycles;
-    if (storedCycles < 2) {return;} //Only process every 3 cycles minimum
+    if (storedCycles < 2) {return;} // Only process every 3 cycles minimum
 
     var res = false;
-    //Process actions of all player nodes
+    // Process actions of all player nodes
     this.playerCores.forEach((node)=>{
         res |= this.processNode(node, storedCycles);
     });
@@ -1106,7 +1115,7 @@ HackingMission.prototype.process = function(numCycles=1) {
         }
     });
 
-    //Process actions of all enemy nodes
+    // Process actions of all enemy nodes
     this.enemyCores.forEach((node)=>{
         this.enemyAISelectAction(node);
         res |= this.processNode(node, storedCycles);
@@ -1121,7 +1130,7 @@ HackingMission.prototype.process = function(numCycles=1) {
         }
     });
 
-    //The hp of enemy databases increases slowly
+    // The hp of enemy databases increases slowly
     this.enemyDatabases.forEach((node)=>{
         node.maxhp += (0.1 * storedCycles);
         node.hp += (0.1 * storedCycles);
@@ -1132,19 +1141,19 @@ HackingMission.prototype.process = function(numCycles=1) {
         this.calculateDefenses();
     }
 
-    //Win if all enemy databases are conquered
+    // Win if all enemy databases are conquered
     if (this.enemyDatabases.length === 0) {
         this.finishMission(true);
         return;
     }
 
-    //Lose if all your cores are gone
+    // Lose if all your cores are gone
     if (this.playerCores.length === 0) {
         this.finishMission(false);
         return;
     }
 
-    //Defense/hp of misc nodes increases slowly over time
+    // Defense/hp of misc nodes increases slowly over time
     this.miscNodes.forEach((node)=>{
         node.def += (0.1 * storedCycles);
         node.maxhp += (0.05 * storedCycles);
@@ -1153,7 +1162,7 @@ HackingMission.prototype.process = function(numCycles=1) {
         this.updateNodeDomElement(node);
     });
 
-    //Update timer and check if player lost
+    // Update timer and check if player lost
     this.time -= (storedCycles * Engine._idleSpeed);
     if (this.time <= 0) {
         this.finishMission(false);
@@ -1164,7 +1173,7 @@ HackingMission.prototype.process = function(numCycles=1) {
     storedCycles = 0;
 }
 
-//Returns a bool representing whether defenses need to be re-calculated
+// Returns a bool representing whether defenses need to be re-calculated
 HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
     if (nodeObj.action == null) {
         return;
@@ -1179,21 +1188,21 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
         }
 
         if (targetNode == null) {
-            //Player is in the middle of  dragging the connection,
-            //so the target node is null. Do nothing here
+            // Player is in the middle of  dragging the connection,
+            // so the target node is null. Do nothing here
         } else if (targetNode.plyrCtrl) {
             def = this.playerDef;
             atk = this.enemyAtk;
         } else if (targetNode.enmyCtrl) {
             def = this.enemyDef;
             atk = this.playerAtk;
-        } else { //Misc Node
+        } else { // Misc Node
             def = targetNode.def;
             nodeObj.plyrCtrl ? atk = this.playerAtk : atk = this.enemyAtk;
         }
     }
 
-    //Calculations are per second, so divide everything by 5
+    // Calculations are per second, so divide everything by 5
     var calcStats = false, plyr = nodeObj.plyrCtrl;
     var enmyHacking = this.difficulty * CONSTANTS.HackingMissionDifficultyToHacking;
     switch(nodeObj.action) {
@@ -1234,13 +1243,13 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             break;
     }
 
-    //Stats can't go below 0
+    // Stats can't go below 0
     if (nodeObj.atk < 0) {nodeObj.atk = 0;}
     if (nodeObj.def < 0) {nodeObj.def = 0;}
     if (targetNode && targetNode.atk < 0) {targetNode.atk = 0;}
     if (targetNode && targetNode.def < 0) {targetNode.def = 0;}
 
-    //Conquering a node
+    // Conquering a node
     if (targetNode && targetNode.hp <= 0) {
         var conqueredByPlayer = nodeObj.plyrCtrl;
         targetNode.hp = targetNode.maxhp;
@@ -1250,18 +1259,18 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             targetNode.deselect(this.actionButtons);
         }
 
-        //The conquered node has its stats reduced
+        // The conquered node has its stats reduced
         targetNode.atk /= 2;
         targetNode.def /= 3.5;
 
-        //Flag for whether the target node was a misc node
+        // Flag for whether the target node was a misc node
         var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
 
-        //Remove all connections from Node
+        // Remove all connections from Node
         this.dropAllConnectionsToNode(targetNode);
         this.dropAllConnectionsFromNode(targetNode);
 
-        //Changes the css class and turn the node into a JsPlumb Source/Target
+        // Changes the css class and turn the node into a JsPlumb Source/Target
         if (conqueredByPlayer) {
             targetNode.setControlledByPlayer();
             this.jsplumbinstance.unmakeTarget(targetNode.el);
@@ -1273,7 +1282,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             });
         } else {
             targetNode.setControlledByEnemy();
-            nodeObj.conn = null; //Clear connection
+            nodeObj.conn = null; // Clear connection
             this.jsplumbinstance.unmakeSource(targetNode.el);
             this.jsplumbinstance.makeTarget(targetNode.el, {
                 maxConnections:-1,
@@ -1284,7 +1293,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
 
         calcStats = true;
 
-        //Helper function to swap nodes between the respective enemyNodes/playerNodes arrays
+        // Helper function to swap nodes between the respective enemyNodes/playerNodes arrays
         function swapNodes(orig, dest, targetNode) {
             for (var i = 0; i < orig.length; ++i) {
                 if (orig[i] == targetNode) {
@@ -1324,7 +1333,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             case NodeTypes.Spam:
                 if (conqueredByPlayer) {
                     swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
-                    //Conquering spam node increases time limit
+                    // Conquering spam node increases time limit
                     this.time += CONSTANTS.HackingMissionSpamTimeIncrease;
                 } else {
                     swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
@@ -1332,7 +1341,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
 
                 break;
             case NodeTypes.Transfer:
-                //Conquering a Transfer node increases the attack of all cores by some percentages
+                // Conquering a Transfer node increases the attack of all cores by some percentages
                 if (conqueredByPlayer) {
                     swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
                     this.playerCores.forEach(function(node) {
@@ -1358,7 +1367,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
                 break;
         }
 
-        //If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
+        // If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
         if (isMiscNode) { //&& conqueredByPlayer) {
             this.miscNodes.forEach((node)=>{
                 if (node.targetedCount === 0) {
@@ -1368,23 +1377,25 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
         }
     }
 
-    //Update node DOMs
+    // Update node DOMs
     this.updateNodeDomElement(nodeObj);
     if (targetNode) {this.updateNodeDomElement(targetNode);}
     return calcStats;
 }
 
-//Enemy "AI" for CPU Core and Transfer Nodes
+// Enemy "AI" for CPU Core and Transfer Nodes
 HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
     if (nodeObj == null) {return;}
     switch(nodeObj.type) {
         case NodeTypes.Core:
-            //Select a single RANDOM target from miscNodes and player's Nodes
-            //If it is reachable, it will target it. If not, no target will
-            //be selected for now, and the next time process() gets called this will repeat
+            /**
+             * Select a single RANDOM target from miscNodes and player's Nodes
+             * If it is reachable, it will target it. If not, no target will
+             * be selected for now, and the next time process() gets called this will repeat
+             */
             if (nodeObj.conn == null) {
                 if (this.miscNodes.length === 0) {
-                    //Randomly pick a player node and attack it if its reachable
+                    // Randomly pick a player node and attack it if its reachable
                     var rand = getRandomInt(0, this.playerNodes.length-1);
                     var node;
                     if (this.playerNodes.length === 0) {
@@ -1393,23 +1404,23 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                         node = this.playerNodes[rand];
                     }
                     if (this.nodeReachableByEnemy(node)) {
-                        //Create connection
+                        // Create connection
                         nodeObj.conn = this.jsplumbinstance.connect({
                             source:nodeObj.el,
                             target:node.el
                         });
                         ++node.targetedCount;
                     } else {
-                        //Randomly pick a player core and attack it if its reachable
+                        // Randomly pick a player core and attack it if its reachable
                         rand = getRandomInt(0, this.playerCores.length-1);
                         if (this.playerCores.length === 0) {
-                            return; //No Misc Nodes, no player Nodes, no Player cores. Player lost
+                            return; // No Misc Nodes, no player Nodes, no Player cores. Player lost
                         } else {
                             node = this.playerCores[rand];
                         }
 
                         if (this.nodeReachableByEnemy(node)) {
-                            //Create connection
+                            // Create connection
                             nodeObj.conn = this.jsplumbinstance.connect({
                                 source:nodeObj.el,
                                 target:node.el
@@ -1418,7 +1429,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                         }
                     }
                 } else {
-                    //Randomly pick a misc node and attack it if its reachable
+                    // Randomly pick a misc node and attack it if its reachable
                     var rand = getRandomInt(0, this.miscNodes.length-1);
                     var node = this.miscNodes[rand];
                     if (this.nodeReachableByEnemy(node)) {
@@ -1430,10 +1441,10 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                     }
                 }
 
-                //If no connection was made, set the Core to Fortify
+                // If no connection was made, set the Core to Fortify
                 nodeObj.action = NodeActions.Fortify;
             } else {
-                //If this node has a selected target
+                // If this node has a selected target
                 var targetNode;
                 if (nodeObj.conn.target) {
                     targetNode = this.getNodeFromElement(nodeObj.conn.target);
@@ -1458,7 +1469,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
             }
             break;
         case NodeTypes.Transfer:
-            //Switch between fortifying and overflowing as necessary
+            // Switch between fortifying and overflowing as necessary
             if (nodeObj.def < 125) {
                 nodeObj.action = NodeActions.Fortify;
             } else {
@@ -1474,11 +1485,11 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
     }
 }
 
-var hackEffWeightSelf = 130; //Weight for Node actions on self
-var hackEffWeightTarget = 25; //Weight for Node Actions against Target
-var hackEffWeightAttack = 80; //Weight for Attack action
+var hackEffWeightSelf = 130; // Weight for Node actions on self
+var hackEffWeightTarget = 25; // Weight for Node Actions against Target
+var hackEffWeightAttack = 80; // Weight for Attack action
 
-//Returns damage per cycle based on stats
+// Returns damage per cycle based on stats
 HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
     return Math.max(0.55 * (atk + (hacking / hackEffWeightAttack) - def), 1);
 }
@@ -1499,11 +1510,11 @@ HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
     return 0.95 * hacking / hackEffWeightSelf;
 }
 
-//Updates timer display
+// Updates timer display
 HackingMission.prototype.updateTimer = function() {
     var timer = document.getElementById("hacking-mission-timer");
 
-    //Convert time remaining to a string of the form mm:ss
+    // Convert time remaining to a string of the form mm:ss
     var seconds = Math.round(this.time / 1000);
     var minutes = Math.trunc(seconds / 60);
     seconds %= 60;
@@ -1511,7 +1522,7 @@ HackingMission.prototype.updateTimer = function() {
     timer.innerText = "Time left: " + str;
 }
 
-//The 'win' argument is a bool for whether or not the player won
+// The 'win' argument is a bool for whether or not the player won
 HackingMission.prototype.finishMission = function(win) {
     inMission = false;
     currMission = null;
@@ -1530,13 +1541,13 @@ HackingMission.prototype.finishMission = function(win) {
         dialogBoxCreate("Mission lost/forfeited! You did not gain any faction reputation.");
     }
 
-    //Clear mission container
+    // Clear mission container
     var container = document.getElementById("mission-container");
     while(container.firstChild) {
         container.removeChild(container.firstChild);
     }
 
-    //Return to Faction page
+    // Return to Faction page
     document.getElementById("mainmenu-container").style.visibility = "visible";
     document.getElementById("character-overview-wrapper").style.visibility = "visible";
     Engine.loadFactionContent();

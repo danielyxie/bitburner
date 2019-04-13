@@ -33,7 +33,12 @@ import ReactDOM from "react-dom";
 
 const Component = React.Component;
 
-const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12];
+// Update as additional BitNodes get implemented
+const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+// Some dev menu buttons just add a lot of something for convenience
+const tonsPP = 1e27;
+const tonsP = 1e12;
 
 
 class ValueAdjusterComponent extends Component {
@@ -189,13 +194,13 @@ class DevMenuComponent extends Component {
     }
 
     tonsOfExp() {
-        Player.gainHackingExp(1e27);
-        Player.gainStrengthExp(1e27);
-        Player.gainDefenseExp(1e27);
-        Player.gainDexterityExp(1e27);
-        Player.gainAgilityExp(1e27);
-        Player.gainCharismaExp(1e27);
-        Player.gainIntelligenceExp(1e27);
+        Player.gainHackingExp(tonsPP);
+        Player.gainStrengthExp(tonsPP);
+        Player.gainDefenseExp(tonsPP);
+        Player.gainDexterityExp(tonsPP);
+        Player.gainAgilityExp(tonsPP);
+        Player.gainCharismaExp(tonsPP);
+        Player.gainIntelligenceExp(tonsPP);
         Player.updateSkillLevels();
     }
 
@@ -298,7 +303,7 @@ class DevMenuComponent extends Component {
 
     tonsOfRep() {
         for (const i in Factions) {
-            Factions[i].playerReputation = 1e27;
+            Factions[i].playerReputation = tonsPP;
         }
     }
 
@@ -310,7 +315,7 @@ class DevMenuComponent extends Component {
 
     tonsOfFactionFavor() {
         for (const i in Factions) {
-            Factions[i].favor = 1e27;
+            Factions[i].favor = tonsPP;
         }
     }
 
@@ -456,7 +461,7 @@ class DevMenuComponent extends Component {
 
     tonsOfRepCompanies() {
         for (const c in Companies) {
-            Companies[c].playerReputation = 1e12;
+            Companies[c].playerReputation = tonsP;
         }
     }
 
@@ -468,7 +473,7 @@ class DevMenuComponent extends Component {
 
     tonsOfFavorCompanies() {
         for (const c in Companies) {
-            Companies[c].favor = 1e12;
+            Companies[c].favor = tonsP;
         }
     }
 
@@ -493,7 +498,7 @@ class DevMenuComponent extends Component {
 
     addTonsBladeburnerRank() {
         if (!!Player.bladeburner) {
-            Player.bladeburner.changeRank(1e12);
+            Player.bladeburner.changeRank(tonsP);
         }
     }
 
@@ -513,13 +518,13 @@ class DevMenuComponent extends Component {
 
     addTonsBladeburnerCycles() {
         if (!!Player.bladeburner) {
-            Player.bladeburner.storedCycles += 1e12;
+            Player.bladeburner.storedCycles += tonsP;
         }
     }
 
     addTonsGangCycles() {
         if (!!Player.gang) {
-            Player.gang.storedCycles = 1e12;
+            Player.gang.storedCycles = tonsP;
         }
     }
 
@@ -539,7 +544,7 @@ class DevMenuComponent extends Component {
 
     addTonsCorporationCycles() {
         if (!!Player.corporation) {
-            Player.corporation.storedCycles = 1e12;
+            Player.corporation.storedCycles = tonsP;
         }
     }
 
@@ -646,16 +651,16 @@ class DevMenuComponent extends Component {
 
         let sourceFiles = [];
         validSFN.forEach( i => sourceFiles.push(
-<tr key={'sf-'+i}>
-    <td><span className="text">SF-{i}:</span></td>
-    <td>
-        <button className="std-button touch-right" onClick={this.setSF(i, 0)}>0</button>
-        <button className="std-button touch-sides" onClick={this.setSF(i, 1)}>1</button>
-        <button className="std-button touch-sides" onClick={this.setSF(i, 2)}>2</button>
-        <button className="std-button touch-left" onClick={this.setSF(i, 3)}>3</button>
-    </td>
-</tr>
-));
+            <tr key={'sf-'+i}>
+                <td><span className="text">SF-{i}:</span></td>
+                <td>
+                    <button className="std-button touch-right" onClick={this.setSF(i, 0)}>0</button>
+                    <button className="std-button touch-sides" onClick={this.setSF(i, 1)}>1</button>
+                    <button className="std-button touch-sides" onClick={this.setSF(i, 2)}>2</button>
+                    <button className="std-button touch-left" onClick={this.setSF(i, 3)}>3</button>
+                </td>
+            </tr>
+        ));
 
 
 
@@ -1187,7 +1192,6 @@ class DevMenuComponent extends Component {
     }
 }
 
-
 const devMenuContainerId = "dev-menu-container";
 
 export function createDevMenu() {
@@ -1201,11 +1205,11 @@ export function createDevMenu() {
         id: devMenuContainerId,
     });
 
-   const entireGameContainer = document.getElementById("entire-game-container");
-   if (entireGameContainer == null) {
-       throw new Error("Could not find entire-game-container DOM element");
-   }
-   entireGameContainer.appendChild(devMenuContainer);
+    const entireGameContainer = document.getElementById("entire-game-container");
+    if (entireGameContainer == null) {
+        throw new Error("Could not find entire-game-container DOM element");
+    }
+    entireGameContainer.appendChild(devMenuContainer);
 
     ReactDOM.render(<DevMenuComponent />, devMenuContainer);
 }
