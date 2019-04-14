@@ -40,7 +40,6 @@ const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const tonsPP = 1e27;
 const tonsP = 1e12;
 
-
 class ValueAdjusterComponent extends Component {
     constructor(props) {
         super(props);
@@ -48,7 +47,7 @@ class ValueAdjusterComponent extends Component {
         this.setValue = this.setValue.bind(this);
     }
     setValue(event) {
-        this.setState({ value: event.target.value });
+        this.setState({ value: parseFloat(event.target.value) });
     }
     render() {
         const { title, add, subtract, reset } = this.props;
@@ -131,7 +130,6 @@ class DevMenuComponent extends Component {
         this.setState({ codingcontract: event.target.value });
     }
 
-
     addMoney(n) {
         return function() {
             Player.gainMoney(n);
@@ -193,6 +191,12 @@ class DevMenuComponent extends Component {
         }
     }
 
+    modifyKarma(modifier) {
+        return function(amt) {
+            Player.karma += (amt * modifier);
+        }
+    }
+
     tonsOfExp() {
         Player.gainHackingExp(tonsPP);
         Player.gainStrengthExp(tonsPP);
@@ -241,6 +245,12 @@ class DevMenuComponent extends Component {
                 break;
             }
             Player.updateSkillLevels();
+        }
+    }
+
+    resetKarma() {
+        return function() {
+            Player.karma = 0;
         }
     }
 
@@ -810,6 +820,19 @@ class DevMenuComponent extends Component {
                         </td>
                         <td>
                             <button className="std-button" onClick={this.disableIntelligence}>Disable</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span className="text text-center">Karma:</span>
+                        </td>
+                        <td>
+                            <ValueAdjusterComponent
+                              title="karma"
+                              add={this.modifyKarma(1)}
+                              subtract={this.modifyKarma(-1)}
+                              reset={this.resetKarma()}
+                            />
                         </td>
                     </tr>
                 </tbody>

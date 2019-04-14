@@ -24,8 +24,9 @@ function initSourceFiles() {
                                       "Level 1: 16%<br>" +
                                       "Level 2: 24%<br>" +
                                       "Level 3: 28%");
-    SourceFiles["SourceFile2"] = new SourceFile(2, "This Source-File increases the player's crime success rate, crime money, and charisma " +
-                                      "multipliers by:<br><br>" +
+    SourceFiles["SourceFile2"] = new SourceFile(2, "This Source-File allows you to form gangs in other BitNodes " +
+                                      "once your karma decreases to a certain value. It also increases the player's " +
+                                      "crime success rate, crime money, and charisma multipliers by:<br><br>" +
                                       "Level 1: 24%<br>" +
                                       "Level 2: 36%<br>" +
                                       "Level 3: 42%");

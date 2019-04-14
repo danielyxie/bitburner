@@ -117,7 +117,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
 
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag"> <strong style="background-color:#555;">Script name: </strong></p>
-            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1" />
+            <input id="script-editor-filename" type="text" maxlength="100" tabindex="1" />
         </div>
 
         <div id="ace-editor"></div>
@@ -222,8 +222,6 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
 
 	<!-- Single Faction info (when you select a faction from the Factions menu) -->
 	<div id="faction-container" class="generic-menupage-container"></div>
-
-    <div id="faction-augmentations-container" class="generic-menupage-container"></div>
 
 	<!-- Augmentations -->
 	<div id="augmentations-container" class="generic-menupage-container"></div>

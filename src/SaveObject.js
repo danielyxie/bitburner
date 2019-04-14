@@ -95,7 +95,7 @@ BitburnerSaveObject.prototype.getSaveString = function() {
     this.SettingsSave               = JSON.stringify(Settings);
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    if (Player.bitNodeN == 2 && Player.inGang()) {
+    if (Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
@@ -270,7 +270,7 @@ function loadGame(saveString) {
     } else {
         createNewUpdateText();
     }
-    if (Player.bitNodeN == 2 && Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+    if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
         try {
             loadAllGangs(saveObj.AllGangsSave);
         } catch(e) {
@@ -360,7 +360,7 @@ function loadImportedGame(saveObj, saveString) {
             }
         } else {
         }
-        if (tempPlayer.bitNodeN == 2 && tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
+        if (tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
             try {
                 loadAllGangs(tempSaveObj.AllGangsSave);
             } catch(e) {
@@ -449,7 +449,7 @@ function loadImportedGame(saveObj, saveString) {
     } else {
         createNewUpdateText();
     }
-    if (Player.bitNodeN == 2 && Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+    if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
         try {
             loadAllGangs(saveObj.AllGangsSave);
         } catch(e) {
@@ -546,7 +546,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.StockMarketSave            = JSON.stringify(StockMarket);
     this.SettingsSave               = JSON.stringify(Settings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    if (Player.bitNodeN == 2 && Player.inGang()) {
+    if (Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
 

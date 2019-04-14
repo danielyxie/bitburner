@@ -20,7 +20,7 @@ import {Engine}                                 from "../../engine";
 import { Faction }                              from "../../Faction/Faction";
 import { Factions }                             from "../../Faction/Factions";
 import { displayFactionContent }                from "../../Faction/FactionHelpers";
-import {Gang, resetGangs}                       from "../../Gang";
+import { resetGangs }                           from "../../Gang";
 import { hasHacknetServers }                    from "../../Hacknet/HacknetHelpers";
 import { HashManager }                          from "../../Hacknet/HashManager";
 import { Cities }                               from "../../Locations/Cities";
@@ -150,8 +150,9 @@ export function prestigeAugmentation() {
     this.moneySourceA.reset();
 
     this.hacknetNodes.length = 0;
+    this.hashManager.prestige(this);
 
-    //Re-calculate skills and reset HP
+    // Re-calculate skills and reset HP
     this.updateSkillLevels();
     this.hp = this.max_hp;
 }
@@ -239,18 +240,19 @@ export function prestigeSourceFile() {
     this.lastUpdate = new Date().getTime();
 
     this.hacknetNodes.length = 0;
+    this.hashManager.prestige(this);
 
-    //Gang
+    // Gang
     this.gang = null;
     resetGangs();
 
-    //Reset Stock market
+    // Reset Stock market
     this.hasWseAccount = false;
     this.hasTixApiAccess = false;
     this.has4SData = false;
     this.has4SDataTixApi = false;
 
-    //BitNode 3: Corporatocracy
+    // BitNode 3: Corporatocracy
     this.corporation = 0;
 
     // Statistics trackers
@@ -2172,18 +2174,6 @@ export function checkForFactionInvitations() {
     }
 
     return invitedFactions;
-}
-
-
-/*************** Gang ****************/
-//Returns true if Player is in a gang and false otherwise
-export function inGang() {
-    if (this.gang == null || this.gang == undefined) {return false;}
-    return (this.gang instanceof Gang);
-}
-
-export function startGang(factionName, hacking) {
-    this.gang = new Gang(factionName, hacking);
 }
 
 /************* BitNodes **************/

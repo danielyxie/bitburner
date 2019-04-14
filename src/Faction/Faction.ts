@@ -97,16 +97,6 @@ export class Faction {
         return [favorGain, rep];
     }
 
-    //Adds all Augmentations to this faction.
-    addAllAugmentations(augs: object): void {
-        this.augmentations.length = 0;
-        for (const name in augs) {
-            if (augs.hasOwnProperty(name)) {
-                this.augmentations.push(name);
-            }
-        }
-    }
-
     /**
      * Serialize the current object to a JSON save state.
      */

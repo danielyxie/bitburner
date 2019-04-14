@@ -1,17 +1,20 @@
-import * as generalMethods                      from "./PlayerObjectGeneralMethods";
-import * as serverMethods                       from "./PlayerObjectServerMethods";
-import * as bladeburnerMethods                  from "./PlayerObjectBladeburnerMethods";
-import * as corporationMethods                  from "./PlayerObjectCorporationMethods";
+import * as bladeburnerMethods from "./PlayerObjectBladeburnerMethods";
+import * as corporationMethods from "./PlayerObjectCorporationMethods";
+import * as gangMethods from "./PlayerObjectGangMethods";
+import * as generalMethods from "./PlayerObjectGeneralMethods";
+import * as serverMethods from "./PlayerObjectServerMethods";
 
-import { HashManager }                          from "../../Hacknet/HashManager";
-import { CityName }                             from "../../Locations/data/CityNames";
+import { HashManager } from "../../Hacknet/HashManager";
+import { CityName } from "../../Locations/data/CityNames";
 
-import { MoneySourceTracker }                   from "../../utils/MoneySourceTracker";
-import { Reviver,
-         Generic_toJSON,
-         Generic_fromJSON }                     from "../../../utils/JSONReviver";
+import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON
+} from "../../../utils/JSONReviver";
 
-import Decimal                                  from "decimal.js";
+import Decimal from "decimal.js";
 
 export function PlayerObject() {
     //Skills and stats
@@ -199,7 +202,15 @@ export function PlayerObject() {
     this.scriptProdSinceLastAug = 0;
 };
 
-Object.assign(PlayerObject.prototype, generalMethods, serverMethods, bladeburnerMethods, corporationMethods);
+// Apply player methods to the prototype using Object.assign()
+Object.assign(
+    PlayerObject.prototype,
+    generalMethods,
+    serverMethods,
+    bladeburnerMethods,
+    corporationMethods,
+    gangMethods
+);
 
 PlayerObject.prototype.toJSON = function() {
     return Generic_toJSON("PlayerObject", this);

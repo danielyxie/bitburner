@@ -12,6 +12,7 @@ import { IPlayerOwnedAugmentation }     from "../Augmentation/PlayerOwnedAugment
 import { Company }                      from "../Company/Company";
 import { CompanyPosition }              from "../Company/CompanyPosition";
 import { CityName }                     from "../Locations/data/CityNames";
+import { Faction }                      from "../Faction/Faction";
 import { HashManager }                  from "../Hacknet/HashManager";
 import { HacknetNode }                  from "../Hacknet/HacknetNode";
 import { LocationName }                 from "../Locations/data/LocationNames";
@@ -114,6 +115,7 @@ export interface IPlayer {
     applyForWaiterJob(sing?: boolean): boolean | void;
     canAccessBladeburner(): boolean;
     canAccessCorporation(): boolean;
+    canAccessGang(): boolean;
     canAccessResleeving(): boolean;
     canAfford(cost: number): boolean;
     gainHackingExp(exp: number): void;
@@ -124,6 +126,7 @@ export interface IPlayer {
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
     getCurrentServer(): Server;
+    getGangName(): string;
     getHomeComputer(): Server;
     getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
     getUpgradeHomeRamCost(): number;
@@ -151,6 +154,10 @@ export interface IPlayer {
                money: number,
                time: number,
                singParams: any): void;
+    startFactionFieldWork(faction: Faction): void;
+    startFactionHackWork(faction: Faction): void;
+    startFactionSecurityWork(faction: Faction): void;
+    startGang(facName: string, isHacking: boolean): void;
     startWork(companyName: string): void;
     startWorkPartTime(companyName: string): void;
     travel(to: CityName): boolean;
