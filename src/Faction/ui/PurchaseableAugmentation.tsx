@@ -142,6 +142,7 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
                         onClick={this.handleClick}
                         style={inlineStyleMarkup}
                         text={btnTxt}
+                        tooltip={this.aug.info}
                     />
                     <p style={txtStyle}>{statusTxt}</p>
                 </span>
