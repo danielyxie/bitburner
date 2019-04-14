@@ -3,8 +3,13 @@
  * to TypeScript at the moment
  */
 export interface IEngine {
+    hideAllContent: () => void;
     loadBladeburnerContent: () => void;
+    loadFactionContent: () => void;
+    loadFactionsContent: () => void;
+    loadGangContent: () => void;
     loadInfiltrationContent: () => void;
+    loadMissionContent: () => void;
     loadResleevingContent: () => void;
     loadStockMarketContent: () => void;
 }

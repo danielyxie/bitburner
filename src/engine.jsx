@@ -262,7 +262,6 @@ const Engine = {
         createProgramContent:           null,
         factionsContent:                null,
         factionContent:                 null,
-        factionAugmentationsContent:    null,
         augmentationsContent:           null,
         tutorialContent:                null,
         infiltrationContent:            null,
@@ -530,8 +529,8 @@ const Engine = {
         clearHacknetNodesUI();
         Engine.Display.createProgramContent.style.display = "none";
         Engine.Display.factionsContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
         Engine.Display.factionContent.style.display = "none";
-        Engine.Display.factionAugmentationsContent.style.display = "none";
         Engine.Display.augmentationsContent.style.display = "none";
         Engine.Display.tutorialContent.style.display = "none";
         Engine.Display.locationContent.style.display = "none";
@@ -749,7 +748,7 @@ const Engine = {
         }
 
         // Gang, if applicable
-        if (Player.bitNodeN == 2 && Player.inGang()) {
+        if (Player.inGang()) {
             Player.gang.process(numCycles, Player);
         }
 
@@ -1133,7 +1132,7 @@ const Engine = {
             }
 
             // Gang progress for BitNode 2
-            if (Player.bitNodeN != null && Player.bitNodeN === 2 && Player.inGang()) {
+            if (Player.inGang()) {
                 Player.gang.process(numCyclesOffline, Player);
             }
 
@@ -1281,12 +1280,8 @@ const Engine = {
         Engine.Display.factionsContent = document.getElementById("factions-container");
         Engine.Display.factionsContent.style.display = "none";
 
-
         Engine.Display.factionContent = document.getElementById("faction-container");
         Engine.Display.factionContent.style.display = "none";
-
-        Engine.Display.factionAugmentationsContent = document.getElementById("faction-augmentations-container");
-        Engine.Display.factionAugmentationsContent.style.display = "none";
 
         Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
         Engine.Display.augmentationsContent.style.display = "none";

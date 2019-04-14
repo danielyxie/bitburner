@@ -10,6 +10,7 @@ import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviv
 
 interface IConstructorParams {
     info: string;
+    isSpecial?: boolean;
     moneyCost: number;
     name: string;
     prereqs?: string[];
@@ -62,6 +63,9 @@ export class Augmentation {
     // Description of what this Aug is and what it does
     info: string = "";
 
+    // Any Augmentation not immediately available in BitNode-1 is special (e.g. Bladeburner augs)
+    isSpecial: boolean = false;
+
     // Augmentation level - for repeatable Augs like NeuroFlux Governor
     level: number = 0;
 
@@ -89,6 +93,10 @@ export class Augmentation {
         this.baseRepRequirement = params.repCost * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
         this.baseCost = params.moneyCost * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
         this.startingCost = this.baseCost;
+
+        if (params.isSpecial) {
+            this.isSpecial = true;
+        }
 
         this.level = 0;
 

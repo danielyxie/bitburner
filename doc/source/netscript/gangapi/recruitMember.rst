@@ -8,6 +8,7 @@ recruitMember() Netscript Function
     Attempt to recruit a new gang member.
 
     Possible reasons for failure:
+    
     * Cannot currently recruit a new member
     * There already exists a member with the specified name
 

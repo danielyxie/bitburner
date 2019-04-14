@@ -57,8 +57,9 @@ export function initBitNodes() {
                             "For every Faction NOT listed above, reputation gains are halved<br>" +
                             "You will no longer gain passive reputation with Factions<br><br>" +
                             "Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will " +
-                            "upgrade its level up to a maximum of 3. This Source-File increases the player's crime success rate, " +
-                            "crime money, and charisma multipliers by:<br><br>" +
+                            "upgrade its level up to a maximum of 3. This Source-File allows you to form gangs in other BitNodes " +
+                            "once your karma decreases to a certain value. " + 
+                            "It also increases the player's crime success rate, crime money, and charisma multipliers by:<br><br>" +
                             "Level 1: 24%<br>" +
                             "Level 2: 36%<br>" +
                             "Level 3: 42%");

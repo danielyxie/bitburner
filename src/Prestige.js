@@ -138,9 +138,9 @@ function prestigeAugmentation() {
     // Messages
     initMessages();
 
-    // Gang, in BitNode 2
-    if (Player.bitNodeN == 2 && Player.inGang()) {
-        var faction = Factions[Player.gang.facName];
+    // Gang
+    if (Player.inGang()) {
+        const faction = Factions[Player.gang.facName];
         if (faction instanceof Faction) {
             joinFaction(faction);
         }

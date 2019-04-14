@@ -1677,19 +1677,6 @@ function initAugmentations() {
     }
     AddToAugmentations(SNA);
 
-    //For BitNode-2, add all Augmentations to crime/evil factions.
-    //Do this before adding special Augmentations that become available in later BitNodes
-    if (Player.bitNodeN === 2) {
-        console.log("Adding all augmentations to crime factions for Bit node 2");
-        Factions["Slum Snakes"].addAllAugmentations(Augmentations);
-        Factions["Tetrads"].addAllAugmentations(Augmentations);
-        Factions["The Syndicate"].addAllAugmentations(Augmentations);
-        Factions["The Dark Army"].addAllAugmentations(Augmentations);
-        Factions["Speakers for the Dead"].addAllAugmentations(Augmentations);
-        Factions["NiteSec"].addAllAugmentations(Augmentations);
-        Factions["The Black Hand"].addAllAugmentations(Augmentations);
-    }
-
     //Special Bladeburner Augmentations
     var BladeburnersFactionName = "Bladeburners";
     if (factionExists(BladeburnersFactionName)) {
@@ -1708,6 +1695,7 @@ function initAugmentations() {
                  "Increases the player's dexterity by 5%.",
             bladeburner_success_chance_mult: 1.03,
             dexterity_mult: 1.05,
+            isSpecial: true,
         });
         EsperEyewear.addToFactions([BladeburnersFactionName]);
         resetAugmentation(EsperEyewear);
@@ -1725,6 +1713,7 @@ function initAugmentations() {
             bladeburner_success_chance_mult: 1.03,
             bladeburner_analysis_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.02,
+            isSpecial: true,
         });
         EMS4Recombination.addToFactions([BladeburnersFactionName]);
         resetAugmentation(EMS4Recombination);
@@ -1743,6 +1732,7 @@ function initAugmentations() {
             strength_mult: 1.05,
             dexterity_mult: 1.05,
             bladeburner_success_chance_mult: 1.04,
+            isSpecial: true,
         });
         OrionShoulder.addToFactions([BladeburnersFactionName]);
         resetAugmentation(OrionShoulder);
@@ -1758,6 +1748,7 @@ function initAugmentations() {
                  "This augmentation:<br>" +
                  "Increases the player's success chance in Bladeburner contracts/operations by 6%.",
             bladeburner_success_chance_mult: 1.06,
+            isSpecial: true,
         });
         HyperionV1.addToFactions([BladeburnersFactionName]);
         resetAugmentation(HyperionV1);
@@ -1772,6 +1763,7 @@ function initAugmentations() {
                  "Increases the player's success chance in Bladeburner contracts/operations by 8%.",
             prereqs:[AugmentationNames.HyperionV1],
             bladeburner_success_chance_mult: 1.08,
+            isSpecial: true,
         });
         HyperionV2.addToFactions([BladeburnersFactionName]);
         resetAugmentation(HyperionV2);
@@ -1790,6 +1782,7 @@ function initAugmentations() {
             dexterity_mult: 1.07,
             agility_mult: 1.07,
             bladeburner_stamina_gain_mult: 1.05,
+            isSpecial: true,
         });
         GolemSerum.addToFactions([BladeburnersFactionName]);
         resetAugmentation(GolemSerum);
@@ -1805,6 +1798,7 @@ function initAugmentations() {
             dexterity_exp_mult: 1.1,
             bladeburner_analysis_mult: 1.1,
             bladeburner_success_chance_mult: 1.04,
+            isSpecial: true,
         });
         VangelisVirus.addToFactions([BladeburnersFactionName]);
         resetAugmentation(VangelisVirus);
@@ -1824,6 +1818,7 @@ function initAugmentations() {
             dexterity_exp_mult: 1.1,
             bladeburner_analysis_mult: 1.15,
             bladeburner_success_chance_mult: 1.05,
+            isSpecial: true,
         });
         VangelisVirus3.addToFactions([BladeburnersFactionName]);
         resetAugmentation(VangelisVirus3);
@@ -1842,6 +1837,7 @@ function initAugmentations() {
             dexterity_exp_mult: 1.05,
             agility_exp_mult: 1.05,
             bladeburner_max_stamina_mult: 1.1,
+            isSpecial: true,
         });
         INTERLINKED.addToFactions([BladeburnersFactionName]);
         resetAugmentation(INTERLINKED);
@@ -1859,6 +1855,7 @@ function initAugmentations() {
             agility_mult: 1.05,
             bladeburner_max_stamina_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.05,
+            isSpecial: true,
         });
         BladeRunner.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeRunner);
@@ -1879,6 +1876,7 @@ function initAugmentations() {
             agility_mult: 1.04,
             bladeburner_stamina_gain_mult: 1.02,
             bladeburner_success_chance_mult: 1.03,
+            isSpecial: true,
         });
         BladeArmor.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmor);
@@ -1895,6 +1893,7 @@ function initAugmentations() {
             bladeburner_success_chance_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.02,
             bladeburner_max_stamina_mult: 1.05,
+            isSpecial: true,
         });
         BladeArmorPowerCells.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmorPowerCells);
@@ -1909,6 +1908,7 @@ function initAugmentations() {
             prereqs:[AugmentationNames.BladeArmor],
             defense_mult: 1.05,
             bladeburner_success_chance_mult: 1.06,
+            isSpecial: true,
         });
         BladeArmorEnergyShielding.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmorEnergyShielding);
@@ -1922,6 +1922,7 @@ function initAugmentations() {
                  "Increases the player's success chance in Bladeburner contracts/operations by 8%.",
             prereqs:[AugmentationNames.BladeArmor],
             bladeburner_success_chance_mult: 1.08,
+            isSpecial: true,
         });
         BladeArmorUnibeam.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmorUnibeam);
@@ -1936,6 +1937,7 @@ function initAugmentations() {
                  "Increases the player's success chance in Bladeburner contracts/operations by 10%.",
             prereqs:[AugmentationNames.BladeArmorUnibeam],
             bladeburner_success_chance_mult: 1.1,
+            isSpecial: true,
         });
         BladeArmorOmnibeam.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmorOmnibeam);
@@ -1951,6 +1953,7 @@ function initAugmentations() {
             prereqs:[AugmentationNames.BladeArmor],
             bladeburner_analysis_mult: 1.15,
             bladeburner_success_chance_mult: 1.02,
+            isSpecial: true,
         });
         BladeArmorIPU.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmorIPU);
@@ -1963,7 +1966,8 @@ function initAugmentations() {
                  "extremely large radius. These specially-modified holograms were specially " +
                  "weaponized by Bladeburner units to be used against Synthoids.<br><br>"  +
                  "This augmentation allows you to perform Bladeburner actions and other " +
-                 "actions (such as working, commiting crimes, etc.) at the same time."
+                 "actions (such as working, commiting crimes, etc.) at the same time.",
+            isSpecial: true,
         });
         BladesSimulacrum.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladesSimulacrum);

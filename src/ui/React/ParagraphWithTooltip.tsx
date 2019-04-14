@@ -12,7 +12,7 @@ export interface IParagraphWithTooltipProps {
 export class ParagraphWithTooltip extends React.Component<IParagraphWithTooltipProps, any> {
     render() {
         return (
-            <p className={"tooltip"}>
+            <p className={"tooltip"} style={this.props.style}>
                 {this.props.text}
                 <span className={"tooltiptext"}>
                     {this.props.tooltip}

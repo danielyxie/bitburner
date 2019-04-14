@@ -3,7 +3,7 @@ hashCost() Netscript Function
 
 .. warning:: This page contains spoilers for the game
 
-.. js:function:: hashCost(upgName, upgTarget)
+.. js:function:: hashCost(upgName)
 
     :param string upgName: Name of upgrade to get the cost of. Must be an exact match
 
