@@ -58,7 +58,7 @@ export function initBitNodes() {
                             "You will no longer gain passive reputation with Factions<br><br>" +
                             "Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will " +
                             "upgrade its level up to a maximum of 3. This Source-File allows you to form gangs in other BitNodes " +
-                            "once your karma decreases to a certain value. " + 
+                            "once your karma decreases to a certain value. " +
                             "It also increases the player's crime success rate, crime money, and charisma multipliers by:<br><br>" +
                             "Level 1: 24%<br>" +
                             "Level 2: 36%<br>" +
@@ -82,7 +82,8 @@ export function initBitNodes() {
                                           "Level 1: 8%<br>" +
                                           "Level 2: 12%<br>" +
                                           "Level 3: 14%");
-    BitNodes["BitNode4"] = new BitNode(4, "The Singularity", "The Man and the Machine",  "The Singularity has arrived. The human race is gone, replaced " +
+    BitNodes["BitNode4"] = new BitNode(4, "The Singularity", "The Man and the Machine",
+                                          "The Singularity has arrived. The human race is gone, replaced " +
                                           "by artificially superintelligent beings that are more machine than man. <br><br>" +
                                           "In this BitNode, progressing is significantly harder. Experience gain rates " +
                                           "for all stats are reduced. Most methods of earning money will now give significantly less.<br><br>" +
@@ -93,7 +94,8 @@ export function initBitNodes() {
                                           "upgrade its level up to a maximum of 3. This Source-File lets you access and use the Singularity  " +
                                           "Functions in other BitNodes. Each level of this Source-File will open up more Singularity Functions " +
                                           "that you can use.");
-    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "Posthuman", "They said it couldn't be done. They said the human brain, " +
+    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "Posthuman",
+                                          "They said it couldn't be done. They said the human brain, " +
                                           "along with its consciousness and intelligence, couldn't be replicated. They said the complexity " +
                                           "of the brain results from unpredictable, nonlinear interactions that couldn't be modeled " +
                                           "by 1's and 0's. They were wrong.<br><br>" +

@@ -1359,6 +1359,7 @@ Gang.prototype.displayGangContent = function(player) {
                     innerText: "Cancel",
                 });
                 createPopup(popupId, [txt, br, nameInput, yesBtn, noBtn]);
+                nameInput.focus();
             }
         });
         UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitMemberButton);

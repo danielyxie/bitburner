@@ -208,8 +208,12 @@ export class FactionRoot extends React.Component<IProps, IState> {
         const canPurchaseSleeves = (faction.name === "The Covenant" && p.bitNodeN >= 10 && SourceFileFlags[10]);
 
         let canAccessGang = (p.canAccessGang() && GangNames.includes(faction.name));
-        if (p.inGang() && (p.getGangName() !== faction.name)) {
-            canAccessGang = false;
+        if (p.inGang()) {
+            if (p.getGangName() !== faction.name) {
+                canAccessGang = false;
+            } else if (p.getGangName() === faction.name) {
+                canAccessGang = true;
+            }
         }
 
         return (
