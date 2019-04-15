@@ -261,6 +261,10 @@ export function createUpgradeHomeRamPopup(p: IPlayer) {
  * @param p - Player object
  */
 export function purchaseTorRouter(p: IPlayer) {
+    if (p.hasTorRouter()) {
+        dialogBoxCreate(`You already have a TOR Router`);
+        return;
+    }
     if (!p.canAfford(CONSTANTS.TorRouterCost)) {
         dialogBoxCreate("You cannot afford to purchase the Tor router");
         return;

@@ -54,6 +54,9 @@ export class TechVendorLocation extends React.Component<IProps, any> {
 
     purchaseTorRouter() {
         purchaseTorRouter(this.props.p);
+        this.setState({
+            torPurchased: this.props.p.hasTorRouter(),
+        });
     }
 
     render() {

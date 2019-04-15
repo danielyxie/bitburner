@@ -894,6 +894,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
 
     for (const facName of p.factions) {
         if (facName === "Bladeburners") { continue; }
+        if (facName === "Netburners") { continue; }
         const fac: Faction | null = Factions[facName];
         if (fac == null) { continue; }
 

@@ -45,7 +45,9 @@ export class Info extends React.Component<IProps, any> {
 
         return (
             <div>
-                <i className={"text"} style={infoStyleMarkup} dangerouslySetInnerHTML={infoText}></i>
+                <pre>
+                    <i className={"text"} dangerouslySetInnerHTML={infoText}></i>
+                </pre>
                 <p style={blockStyleMarkup}>-------------------------</p>
                 <AutoupdatingParagraph
                     intervalTime={5e3}

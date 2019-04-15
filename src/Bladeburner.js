@@ -811,7 +811,7 @@ Bladeburner.prototype.create = function() {
     this.contracts["Retirement"] = new Contract({
         name:"Retirement",
         desc:"Hunt down and retire (kill) rogue Synthoids.<br><br>" +
-             "Successfully copmleting a Retirement contract will lower the population in your current " +
+             "Successfully completing a Retirement contract will lower the population in your current " +
              "city, and will also increase its chaos level.",
         baseDifficulty:200, difficultyFac:1.03, rewardFac:1.065,
         rankGain:0.6, hpLoss:1,
