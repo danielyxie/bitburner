@@ -45,9 +45,9 @@ export class DonateOption extends React.Component<IProps, IState> {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    // Returns rep gain for the current donation amount
-    calculateRepGain(): number {
-        return this.state.donateAmt / CONSTANTS.DonateMoneyToRepDivisor * this.props.p.faction_rep_mult;
+    // Returns rep gain for a given donation amount
+    calculateRepGain(amt: number): number {
+        return amt / CONSTANTS.DonateMoneyToRepDivisor * this.props.p.faction_rep_mult;
     }
 
     donate(): void  {
@@ -59,7 +59,7 @@ export class DonateOption extends React.Component<IProps, IState> {
             dialogBoxCreate(`You cannot afford to donate this much money!`);
         } else {
             this.props.p.loseMoney(amt);
-            const repGain = this.calculateRepGain();
+            const repGain = this.calculateRepGain(amt);
             this.props.faction.playerReputation += repGain;
             dialogBoxCreate(`You just donated ${numeralWrapper.formatMoney(amt)} to ${fac.name} to gain ` +
                             `${numeralWrapper.format(repGain, "0,0.000")} reputation`);
@@ -76,11 +76,11 @@ export class DonateOption extends React.Component<IProps, IState> {
                 statusTxt: "Invalid donate amount entered!",
             });
         } else {
-            const repGain = this.calculateRepGain();
+            const repGain = this.calculateRepGain(amt);
             this.setState({
                 donateAmt: amt,
                 statusTxt: `This donation will result in ${numeralWrapper.format(repGain, "0,0.000")} reputation gain`,
-            })
+            });
         }
     }
 
