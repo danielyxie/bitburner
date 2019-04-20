@@ -204,8 +204,8 @@ $(document).keydown(function(event) {
 
             // Autocomplete
             if (terminalInput == null) {return;}
-            var input = terminalInput.value;
-            if (input == "") {return;}
+            let input = terminalInput.value;
+            if (input == "") { return; }
 
             const semiColonIndex = input.lastIndexOf(";");
             if(semiColonIndex !== -1) {
@@ -215,14 +215,14 @@ $(document).keydown(function(event) {
             input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
 
-            var commandArray = input.split(" ");
-            var index = commandArray.length - 2;
-            if (index < -1) {index = 0;}
-            var allPos = determineAllPossibilitiesForTabCompletion(Player, input, index);
+            const commandArray = input.split(" ");
+            let index = commandArray.length - 2;
+            if (index < -1) { index = 0; }
+            const allPos = determineAllPossibilitiesForTabCompletion(Player, input, index, Terminal.currDir);
             if (allPos.length == 0) {return;}
 
-            var arg = "";
-            var command = "";
+            let arg = "";
+            let command = "";
             if (commandArray.length == 0) {return;}
             if (commandArray.length == 1) {command = commandArray[0];}
             else if (commandArray.length == 2) {

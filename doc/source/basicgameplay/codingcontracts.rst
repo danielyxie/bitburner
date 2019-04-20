@@ -40,7 +40,7 @@ solutions. Some may be numbers, others may be strings or arrays.
 If a contract asks for a specific solution format, then
 use that. Otherwise, follow these rules when submitting solutions:
 
-* String-type solutions should not have quotation marks surrounding
+* String-type solutions should **not** have quotation marks surrounding
   the string (unless specifically asked for). Only quotation
   marks that are part of the actual string solution should be included.
 * Array-type solutions should be submitted with each element

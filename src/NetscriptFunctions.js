@@ -4693,12 +4693,19 @@ function NetscriptFunctions(workerScript) {
                 }
                 updateDynamicRam("joinBladeburnerDivision", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 if ((Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    if (Player.bitNodeN === 8) { return false; }
                     if (Player.bladeburner instanceof Bladeburner) {
                         return true; // Already member
                     } else if (Player.strength >= 100 && Player.defense >= 100 &&
                                Player.dexterity >= 100 && Player.agility >= 100) {
                         Player.bladeburner = new Bladeburner({new:true});
                         workerScript.log("You have been accepted into the Bladeburner division");
+
+                        const worldHeader = document.getElementById("world-menu-header");
+                        if (worldHeader instanceof HTMLElement) {
+                            worldHeader.click(); worldHeader.click();
+                        }
+
                         return true;
                     } else {
                         workerScript.log("You do not meet the requirements for joining the Bladeburner division");
@@ -5161,7 +5168,7 @@ function NetscriptFunctions(workerScript) {
             // Easter egg function
             break : function() {
                 if (workerScript.checkingRam) { return 0; }
-                
+
                 return Player.karma;
             }
         }

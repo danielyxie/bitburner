@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.46.2",
+    Version:                "0.46.3",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -275,6 +275,15 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
+    v0.46.3
+    * Added a new Augmentation: The Shadow's Simulacrum
+    * Improved tab autocompletion feature in Terminal so that it works better with directories
+    * Bug Fix: Tech vendor location UI now properly refreshed when purchasing a TOR router
+    * Bug Fix: Fixed UI issue with faction donations
+    * Bug Fix: The money statistics & breakdown should now properly track money earned from Hacknet Server (hashes -> money)
+    * Bug Fix: Fixed issue with changing input in 'Minimum Path Sum in a Triangle' coding contract problem
+    * Fixed several typos in various places
+
     v0.46.2
     * Source-File 2 now allows you to form gangs in other BitNodes when your karma reaches a very large negative value
     ** (Karma is a hidden stat and is lowered by committing crimes)

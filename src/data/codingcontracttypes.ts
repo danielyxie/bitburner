@@ -621,7 +621,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         numTries: 10,
         solver: (data: number[][], ans: string) => {
             let n: number = data.length;
-            let dp: number[] = data[n-1];
+            let dp: number[] = data[n-1].slice();
             for (let i = n-2; i > -1; --i) {
                 for (let j = 0; j < data[i].length; ++j) {
                     dp[j] = Math.min(dp[j], dp[j + 1]) + data[i][j];
@@ -642,7 +642,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "move down or right on each step. Determine how many",
                     "unique paths there are from start to finish.\n\n",
                     "NOTE: The data returned for this contract is an array",
-                    "with the number or rows and columns:\n\n",
+                    "with the number of rows and columns:\n\n",
                     `[${numRows}, ${numColumns}]`].join(" ");
         },
         difficulty: 3,
