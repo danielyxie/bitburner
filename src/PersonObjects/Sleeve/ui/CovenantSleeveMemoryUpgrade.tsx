@@ -69,10 +69,10 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
         const cost = this.getPurchaseCost();
         const purchaseBtnDisabled = !this.props.p.canAfford(cost);
         let purchaseBtnText;
-        if (this.state.amt > maxMemory) {
-            purchaseBtnText = `Memory cannot exceed 100`;
-        } else if (isNaN(this.state.amt)) {
+        if (isNaN(this.state.amt)) {
             purchaseBtnText = "Invalid value";
+        } else if (this.state.amt > maxMemory) {
+            purchaseBtnText = `Memory cannot exceed 100`;
         } else {
             purchaseBtnText = `Purchase ${this.state.amt} memory - ${numeralWrapper.formatMoney(cost)}`;
         }
@@ -88,7 +88,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
                 <label htmlFor={inputId}>
                     Amount of memory to purchase (must be an integer):
                 </label>
-                <input id={inputId} onChange={this.changePurchaseAmount} type={"number"} value={this.state.amt} />
+                <input id={inputId} onChange={this.changePurchaseAmount} type={"number"} value={isNaN(this.state.amt) ? this.state.amt.toString() : this.state.amt} />
                 <br />
                 <StdButton disabled={purchaseBtnDisabled} onClick={this.purchaseMemory} text={purchaseBtnText} />
             </div>

@@ -2,6 +2,8 @@
  * Helper functions that implement "directory" functionality in the Terminal.
  * These aren't real directories, they're more of a pseudo-directory implementation
  */
+import { HacknetServer } from "../Hacknet/HacknetServer";
+import { Server } from "../Server/Server";
 
 /**
  * Removes leading forward slash ("/") from a string.
@@ -115,7 +117,7 @@ export function isValidFilePath(path: string): boolean {
 }
 
 /**
- * Returns a formatter string for the first parent directory in a filepath. For example:
+ * Returns a formatted string for the first parent directory in a filepath. For example:
  * /home/var/test/ -> home/
  * If there is no first parent directory, then it returns "/" for root
  */
@@ -124,10 +126,65 @@ export function getFirstParentDirectory(path: string): string {
     t_path = removeLeadingSlash(t_path);
     t_path = removeTrailingSlash(t_path);
 
+    if (t_path.lastIndexOf("/") === -1) { return "/"; }
+
     let dirs = t_path.split("/");
     if (dirs.length === 0) { return "/"; }
 
     return dirs[0] + "/";
+}
+
+/**
+ * Given a filepath, returns a formatted string for all of the parent directories
+ * in that filepath. For example:
+ * /home/var/tes -> home/var/
+ * /home/var/test/ -> home/var/test/
+ * If there are no parent directories, it returns the empty string
+ */
+export function getAllParentDirectories(path: string): string {
+    let t_path = path;
+    const lastSlash = t_path.lastIndexOf("/");
+    if (lastSlash === -1) { return ""; }
+
+    return t_path.slice(0, lastSlash + 1);
+}
+
+/**
+ * Given a directory (by the full directory path) and a server, returns all
+ * subdirectories of that directory. This is only for FIRST-LEVEl/immediate subdirectories
+ */
+export function getSubdirectories(serv: Server | HacknetServer, dir: string): string[] {
+    const res: string[] = [];
+
+    if (!isValidDirectoryPath(dir)) { return res; }
+
+    let t_dir = dir;
+    if (!t_dir.endsWith("/")) { t_dir += "/"; }
+
+    function processFile(fn: string) {
+        if (t_dir === "/" && isInRootDirectory(fn)) {
+            const subdir = getFirstParentDirectory(fn);
+            if (subdir !== "/" && !res.includes(subdir)) {
+                res.push(subdir);
+            }
+        } else if (fn.startsWith(t_dir)) {
+            const remaining = fn.slice(t_dir.length);
+            const subdir = getFirstParentDirectory(remaining);
+            if (subdir !== "/" && !res.includes(subdir)) {
+                res.push(subdir);
+            }
+        }
+    }
+
+    for (const script of serv.scripts) {
+        processFile(script.filename);
+    }
+
+    for (const txt of serv.textFiles) {
+        processFile(txt.fn);
+    }
+
+    return res;
 }
 
 /**

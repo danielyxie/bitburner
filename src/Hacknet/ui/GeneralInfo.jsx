@@ -15,7 +15,7 @@ export class GeneralInfo extends React.Component {
                    `you hashes. Hashes can be spent on a variety of different upgrades.`;
         } else {
             return `Here, you can purchase a Hacknet Node, a specialized machine that can connect ` +
-                   `and contribute its resources to the Hacknet networ. This allows you to take ` +
+                   `and contribute its resources to the Hacknet network. This allows you to take ` +
                    `a small percentage of profits from hacks performed on the network. Essentially, ` +
                    `you are renting out your Node's computing power.`;
         }

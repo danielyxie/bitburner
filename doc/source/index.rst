@@ -5,8 +5,9 @@
 
 Welcome to Bitburner's documentation!
 =====================================
-Bitburner is a cyberpunk-themed `incremental game <https://en.wikipedia.org/wiki/Incremental_game>`_ that is currently in the
-early beta stage of development. The game `can be played here <https://danielyxie.github.io/bitburner/>`_.
+Bitburner is a programming-based `incremental game <https://en.wikipedia.org/wiki/Incremental_game>`_
+that revolves around hacking and cyberpunk themes. The game is currently in the
+early beta stage of development. It `can be played here <https://danielyxie.github.io/bitburner/>`_.
 
 What is Bitburner?
 ------------------

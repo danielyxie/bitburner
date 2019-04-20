@@ -317,6 +317,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
         switch (upgName) {
             case "Sell for Money": {
                 Player.gainMoney(upg.value);
+                Player.recordMoneySource(upg.value, "hacknetnode");
                 break;
             }
             case "Sell for Corporation Funds": {

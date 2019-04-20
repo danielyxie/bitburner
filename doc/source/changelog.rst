@@ -6,10 +6,11 @@ Changelog
 v0.46.2 - 4/14/2019
 -------------------
 * Source-File 2 now allows you to form gangs in other BitNodes when your karma reaches a very large negative value
-** (Karma is a hidden stat and is lowered by committing crimes)
+    * (Karma is a hidden stat and is lowered by committing crimes)
+    
 * Gang changes:
-** Bug Fix: Gangs can no longer clash with themselve
-** Bug Fix: Winning against another gang should properly reduce their power
+    * Bug Fix: Gangs can no longer clash with themselve
+    * Bug Fix: Winning against another gang should properly reduce their power
 
 * Bug Fix: Terminal 'wget' command now works properly
 * Bug Fix: Hacknet Server Hash upgrades now properly reset upon installing Augs/switching BitNodes

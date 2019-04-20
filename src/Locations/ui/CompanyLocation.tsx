@@ -362,7 +362,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
                     <StdButton
                         onClick={this.startInfiltration}
                         style={this.btnStyle}
-                        text={"Infiltration Company"}
+                        text={"Infiltrate Company"}
                     />
                 }
             </div>
