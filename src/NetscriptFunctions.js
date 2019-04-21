@@ -1648,42 +1648,9 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into buyStock()");
             }
-            if (shares < 0 || isNaN(shares)) {
-                workerScript.scriptRef.log("ERROR: Invalid 'shares' argument passed to buyStock()");
-                return 0;
-            }
-            shares = Math.round(shares);
-            if (shares === 0) {return 0;}
+            const res = buyStock(stock, shares, workerScript);
 
-            // Does player have enough money?
-            var totalPrice = stock.price * shares;
-            if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
-                workerScript.scriptRef.log("Not enough money to purchase " + formatNumber(shares, 0) + " shares of " +
-                                           symbol + ". Need $" +
-                                           formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString());
-                return 0;
-            }
-
-            // Would this purchase exceed the maximum number of shares?
-            if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
-                workerScript.scriptRef.log(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ` +
-                                           `${stock.maxShares} shares.`);
-                return 0;
-            }
-
-            var origTotal = stock.playerShares * stock.playerAvgPx;
-            Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
-            var newTotal = origTotal + totalPrice;
-            stock.playerShares += shares;
-            stock.playerAvgPx = newTotal / stock.playerShares;
-            if (routing.isOn(Page.StockMarket)) {
-                updateStockPlayerPosition(stock);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.buyStock == null) {
-                workerScript.scriptRef.log("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                           formatNumber(stock.price, 2) + " per share");
-            }
-            return stock.price;
+            return res ? stock.price : 0;
         },
         sellStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
@@ -1697,36 +1664,10 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into sellStock()");
             }
-            if (shares < 0 || isNaN(shares)) {
-                workerScript.scriptRef.log("ERROR: Invalid 'shares' argument passed to sellStock()");
-                return 0;
-            }
-            shares = Math.round(shares);
-            if (shares > stock.playerShares) {shares = stock.playerShares;}
-            if (shares === 0) {return 0;}
-            var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
-            Player.gainMoney(gains);
 
-            // Calculate net profit and add to script stats
-            var netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
-            if (isNaN(netProfit)) {netProfit = 0;}
-            workerScript.scriptRef.onlineMoneyMade += netProfit;
-            Player.scriptProdSinceLastAug += netProfit;
-            Player.recordMoneySource(netProfit, "stock");
+            const res = sellStock(stock, shares, workerScript);
 
-            stock.playerShares -= shares;
-            if (stock.playerShares == 0) {
-                stock.playerAvgPx = 0;
-            }
-            if (routing.isOn(Page.StockMarket)) {
-                updateStockPlayerPosition(stock);
-            }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellStock == null) {
-                workerScript.scriptRef.log("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                           formatNumber(stock.price, 2) + " per share. Gained " +
-                                           "$" + formatNumber(gains, 2));
-            }
-            return stock.price;
+            return res ? stock.price : 0;
         },
         shortStock(symbol, shares) {
             if (workerScript.checkingRam) {
@@ -1745,7 +1686,8 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into shortStock()");
             }
-            var res = shortStock(stock, shares, workerScript);
+            const res = shortStock(stock, shares, workerScript);
+
             return res ? stock.price : 0;
         },
         sellShort(symbol, shares) {
@@ -1765,7 +1707,8 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into sellShort()");
             }
-            var res = sellShort(stock, shares, workerScript);
+            const res = sellShort(stock, shares, workerScript);
+            
             return res ? stock.price : 0;
         },
         placeOrder(symbol, shares, price, type, pos) {
