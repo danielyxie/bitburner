@@ -1,20 +1,31 @@
-import {Stock}                                  from "./Stock";
-import { getStockMarket4SDataCost,
-         getStockMarket4STixApiCost }           from "./StockMarketCosts";
+import {
+    Order,
+    OrderTypes,
+    PositionTypes
+} from "./Order";
+import { Stock } from "./Stock";
+import {
+    getStockMarket4SDataCost,
+    getStockMarket4STixApiCost
+} from "./StockMarketCosts";
+import { StockSymbols } from "./data/StockSymbols";
 
-import {CONSTANTS}                              from "../Constants";
-import { LocationName }                         from "../Locations/data/LocationNames";
-import {hasWallStreetSF, wallStreetSFLvl}       from "../NetscriptFunctions";
-import {WorkerScript}                           from "../NetscriptWorker";
-import {Player}                                 from "../Player";
+import { CONSTANTS } from "../Constants";
+import { LocationName } from "../Locations/data/LocationNames";
+import { hasWallStreetSF, wallStreetSFLvl } from "../NetscriptFunctions";
+import { WorkerScript } from "../NetscriptWorker";
+import { Player } from "../Player";
 
-import {Page, routing}                          from ".././ui/navigationTracking";
-import {numeralWrapper}                         from ".././ui/numeralFormat";
+import { Page, routing } from ".././ui/navigationTracking";
+import { numeralWrapper } from ".././ui/numeralFormat";
 
-import {dialogBoxCreate}                        from "../../utils/DialogBox";
-import {clearEventListeners}                    from "../../utils/uiHelpers/clearEventListeners";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../../utils/JSONReviver";
+import { dialogBoxCreate } from "../../utils/DialogBox";
+import { clearEventListeners } from "../../utils/uiHelpers/clearEventListeners";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON
+} from "../../utils/JSONReviver";
 import {exceptionAlert}                         from "../../utils/helpers/exceptionAlert";
 import {getRandomInt}                           from "../../utils/helpers/getRandomInt";
 import {KEY}                                    from "../../utils/helpers/keyCodes";
@@ -27,19 +38,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
         yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../../utils/YesNoBox";
 
-var OrderTypes = {
-    LimitBuy: "Limit Buy Order",
-    LimitSell: "Limit Sell Order",
-    StopBuy: "Stop Buy Order",
-    StopSell: "Stop Sell Order"
-}
-
-var PositionTypes = {
-    Long: "L",
-    Short: "S"
-}
-
-function placeOrder(stock, shares, price, type, position, workerScript=null) {
+export function placeOrder(stock, shares, price, type, position, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
     var order = new Order(stock, shares, price, type, position);
     if (isNaN(shares) || isNaN(price)) {
@@ -51,12 +50,12 @@ function placeOrder(stock, shares, price, type, position, workerScript=null) {
         return false;
     }
     if (StockMarket["Orders"] == null) {
-        var orders = {};
-        for (var name in StockMarket) {
+        const orders = {};
+        for (const name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
-                var stock = StockMarket[name];
-                if (!(stock instanceof Stock)) {continue;}
-                orders[stock.symbol] = [];
+                const stk = StockMarket[name];
+                if (!(stk instanceof Stock)) { continue; }
+                orders[stk.symbol] = [];
             }
         }
         StockMarket["Orders"] = orders;
@@ -68,8 +67,8 @@ function placeOrder(stock, shares, price, type, position, workerScript=null) {
     return true;
 }
 
-//Returns true if successfully cancels an order, false otherwise
-function cancelOrder(params, workerScript=null) {
+// Returns true if successfully cancels an order, false otherwise
+export function cancelOrder(params, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
     if (StockMarket["Orders"] == null) {return false;}
     if (params.order && params.order instanceof Order) {
@@ -153,34 +152,20 @@ function executeOrder(order) {
     }
 }
 
-function Order(stock, shares, price, type, position) {
-    this.stock = stock;
-    this.shares = shares;
-    this.price = price;
-    this.type = type;
-    this.pos = position;
-}
-
-Order.prototype.toJSON = function() {
-	return Generic_toJSON("Order", this);
-}
-
-Order.fromJSON = function(value) {
-	return Generic_fromJSON(Order, value.data);
-}
-
-Reviver.constructors.Order = Order;
-
-let StockMarket = {}        //Full name to stock object
-let StockSymbols = {}       //Full name to symbol
-let SymbolToStockMap = {};  //Symbol to Stock object
+export let StockMarket = {}; // Maps full stock name -> Stock object
+export let SymbolToStockMap = {}; // Maps symbol -> Stock object
 
 let formatHelpData = {
     longestName: 0,
     longestSymbol: 0,
 };
 
-function loadStockMarket(saveString) {
+for (const key in StockSymbols) {
+    formatHelpData.longestName = key.length > formatHelpData.longestName ? key.length : formatHelpData.longestName;
+    formatHelpData.longestSymbol = StockSymbols[key].length > formatHelpData.longestSymbol ? StockSymbols[key].length : formatHelpData.longestSymbol;
+}
+
+export function loadStockMarket(saveString) {
     if (saveString === "") {
         StockMarket = {};
     } else {
@@ -188,51 +173,7 @@ function loadStockMarket(saveString) {
     }
 }
 
-function initStockSymbols() {
-    //Stocks for companies at which you can work
-    StockSymbols[LocationName.AevumECorp]                      = "ECP";
-    StockSymbols[LocationName.Sector12MegaCorp]                = "MGCP";
-    StockSymbols[LocationName.Sector12BladeIndustries]         = "BLD";
-    StockSymbols[LocationName.AevumClarkeIncorporated]         = "CLRK";
-    StockSymbols[LocationName.VolhavenOmniTekIncorporated]     = "OMTK";
-    StockSymbols[LocationName.Sector12FourSigma]               = "FSIG";
-    StockSymbols[LocationName.ChongqingKuaiGongInternational]  = "KGI";
-    StockSymbols[LocationName.AevumFulcrumTechnologies]        = "FLCM";
-    StockSymbols[LocationName.IshimaStormTechnologies]         = "STM";
-    StockSymbols[LocationName.NewTokyoDefComm]                 = "DCOMM";
-    StockSymbols[LocationName.VolhavenHeliosLabs]              = "HLS";
-    StockSymbols[LocationName.NewTokyoVitaLife]                = "VITA";
-    StockSymbols[LocationName.Sector12IcarusMicrosystems]      = "ICRS";
-    StockSymbols[LocationName.Sector12UniversalEnergy]         = "UNV";
-    StockSymbols[LocationName.AevumAeroCorp]                   = "AERO";
-    StockSymbols[LocationName.VolhavenOmniaCybersystems]       = "OMN";
-    StockSymbols[LocationName.ChongqingSolarisSpaceSystems]    = "SLRS";
-    StockSymbols[LocationName.NewTokyoGlobalPharmaceuticals]   = "GPH";
-    StockSymbols[LocationName.IshimaNovaMedical]               = "NVMD";
-    StockSymbols[LocationName.AevumWatchdogSecurity]           = "WDS";
-    StockSymbols[LocationName.VolhavenLexoCorp]                = "LXO";
-    StockSymbols[LocationName.AevumRhoConstruction]            = "RHOC";
-    StockSymbols[LocationName.Sector12AlphaEnterprises]        = "APHE";
-    StockSymbols[LocationName.VolhavenSysCoreSecurities]       = "SYSC";
-    StockSymbols[LocationName.VolhavenCompuTek]                = "CTK";
-    StockSymbols[LocationName.AevumNetLinkTechnologies]        = "NTLK";
-    StockSymbols[LocationName.IshimaOmegaSoftware]             = "OMGA";
-    StockSymbols[LocationName.Sector12FoodNStuff]              = "FNS";
-
-    //Stocks for other companies
-    StockSymbols["Sigma Cosmetics"]                         = "SGC";
-    StockSymbols["Joes Guns"]                               = "JGN";
-    StockSymbols["Catalyst Ventures"]                       = "CTYS";
-    StockSymbols["Microdyne Technologies"]                  = "MDYN";
-    StockSymbols["Titan Laboratories"]                      = "TITN";
-
-    for (const key in StockSymbols) {
-        formatHelpData.longestName = key.length > formatHelpData.longestName ? key.length : formatHelpData.longestName;
-        formatHelpData.longestSymbol = StockSymbols[key].length > formatHelpData.longestSymbol ? StockSymbols[key].length : formatHelpData.longestSymbol;
-    }
-}
-
-function initStockMarket() {
+export function initStockMarket() {
     for (var stk in StockMarket) {
         if (StockMarket.hasOwnProperty(stk)) {
             delete StockMarket[stk];
@@ -387,7 +328,7 @@ function initStockMarket() {
     StockMarket.lastUpdate = 0;
 }
 
-function initSymbolToStockMap() {
+export function initSymbolToStockMap() {
     for (var name in StockSymbols) {
         if (StockSymbols.hasOwnProperty(name)) {
             var stock = StockMarket[name];
@@ -401,7 +342,7 @@ function initSymbolToStockMap() {
     }
 }
 
-function stockMarketCycle() {
+export function stockMarketCycle() {
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
@@ -415,78 +356,151 @@ function stockMarketCycle() {
     }
 }
 
-//Returns true if successful, false otherwise
-function buyStock(stock, shares) {
+/**
+ * Attempt to buy a stock in the long position
+ * @param {Stock} stock - Stock to buy
+ * @param {number} shares - Number of shares to buy
+ * @param {WorkerScript} workerScript - If this is being called through Netscript
+ * @returns {boolean} - true if successful, false otherwise
+ */
+export function buyStock(stock, shares, workerScript=null) {
+    const tixApi = (workerScript instanceof WorkerScript);
+
     // Validate arguments
     shares = Math.round(shares);
     if (shares == 0 || shares < 0) { return false; }
     if (stock == null || isNaN(shares)) {
-        dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
+        if (tixApi) {
+            workerScript.log(`ERROR: buyStock() failed due to invalid arguments`);
+        } else {
+            dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
+        }
+
         return false;
     }
 
     // Does player have enough money?
-    var totalPrice = stock.price * shares;
+    const totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
-        dialogBoxCreate("You do not have enough money to purchase this. You need " +
-                        numeralWrapper.format(totalPrice + CONSTANTS.StockMarketCommission, '($0.000a)') + ".");
+        if (tixApi) {
+            workerScript.log(`ERROR: buyStock() failed because you do not have enough money to purchase this potiion. You need ${numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission)}`);
+        } else {
+            dialogBoxCreate(`You do not have enough money to purchase this. You need ${numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission)}`);
+        }
+
         return false;
     }
 
     // Would this purchase exceed the maximum number of shares?
     if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
-        dialogBoxCreate(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ` +
-                        `${numeralWrapper.formatBigNumber(stock.maxShares)} shares.`);
+        if (tixApi) {
+            workerScript.log(`ERROR: buyStock() failed because purchasing this many shares would exceed ${stock.symbol}'s maximum number of shares`);
+        } else {
+            dialogBoxCreate(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ${numeralWrapper.formatBigNumber(stock.maxShares)} shares.`);
+        }
+
         return false;
     }
 
-    var origTotal = stock.playerShares * stock.playerAvgPx;
+    const origTotal = stock.playerShares * stock.playerAvgPx;
     Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
-    var newTotal = origTotal + totalPrice;
+    const newTotal = origTotal + totalPrice;
     stock.playerShares = Math.round(stock.playerShares + shares);
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Bought " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                    numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
-                    numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees.");
+    if (tixApi) {
+        if (workerScript.shouldLog("buyStock")) {
+            workerScript.log(
+                "Bought " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
+                numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
+            );
+        }
+    } else {
+        dialogBoxCreate(
+            "Bought " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+            numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
+            numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
+        );
+    }
+
     return true;
 }
 
-//Returns true if successful and false otherwise
-function sellStock(stock, shares) {
-    if (shares == 0) {return false;}
+/**
+ * Attempt to sell a stock in the long position
+ * @param {Stock} stock - Stock to sell
+ * @param {number} shares - Number of shares to sell
+ * @param {WorkerScript} workerScript - If this is being called through Netscript
+ * returns {boolean} - true if successfully sells given number of shares OR MAX owned, false otherwise
+ */
+export function sellStock(stock, shares, workerScript=null) {
+    const tixApi = (workerScript instanceof WorkerScript);
+
+    // Sanitize/Validate arguments
     if (stock == null || shares < 0 || isNaN(shares)) {
-        dialogBoxCreate("Failed to sell stock. This may be a bug, contact developer");
+        if (tixApi) {
+            workerScript.log(`ERROR: sellStock() failed due to invalid arguments`);
+        } else {
+            dialogBoxCreate("Failed to sell stock. This is probably due to an invalid quantity. Otherwise, this may be a bug, contact developer");
+        }
+
         return false;
     }
     shares = Math.round(shares);
     if (shares > stock.playerShares) {shares = stock.playerShares;}
     if (shares === 0) {return false;}
+
     const gains = stock.price * shares - CONSTANTS.StockMarketCommission;
-    const netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
+    let netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
+    if (isNaN(netProfit)) { netProfit = 0; }
     Player.gainMoney(gains);
     Player.recordMoneySource(netProfit, "stock");
+    if (tixApi) {
+        workerScript.scriptRef.onlineMoneyMade += netProfit;
+        Player.scriptProdSinceLastAug += netProfit;
+    }
+
     stock.playerShares = Math.round(stock.playerShares - shares);
-    if (stock.playerShares == 0) {
+    if (stock.playerShares === 0) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Sold " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                    numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                    "a total of " + numeralWrapper.format(gains, '($0.000a)') + ".");
+    if (tixApi) {
+         if (workerScript.shouldLog("sellStock")) {
+             workerScript.log(
+                 "Sold " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                 numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                 "a total of " + numeralWrapper.format(gains, '($0.000a)') + "."
+             );
+         }
+    } else {
+        dialogBoxCreate(
+            "Sold " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+            numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+            "a total of " + numeralWrapper.format(gains, '($0.000a)') + "."
+        );
+    }
+
     return true;
 }
 
-//Returns true if successful and false otherwise
-function shortStock(stock, shares, workerScript=null) {
-    var tixApi = (workerScript instanceof WorkerScript);
+/**
+ * Attempt to buy a stock in the short position
+ * @param {Stock} stock - Stock to sell
+ * @param {number} shares - Number of shares to short
+ * @param {WorkerScript} workerScript - If this is being called through Netscript
+ * @returns {boolean} - true if successful, false otherwise
+ */
+export function shortStock(stock, shares, workerScript=null) {
+    const tixApi = (workerScript instanceof WorkerScript);
 
     // Validate arguments
     shares = Math.round(shares);
     if (shares === 0 || shares < 0) { return false; }
     if (stock == null || isNaN(shares)) {
         if (tixApi) {
-            workerScript.scriptRef.log("ERROR: shortStock() failed because of invalid arguments.");
+            workerScript.log("ERROR: shortStock() failed because of invalid arguments.");
         } else {
             dialogBoxCreate("Failed to initiate a short position in a stock. This is probably " +
                             "due to an invalid quantity. Otherwise, this may be a bug,  so contact developer");
@@ -495,15 +509,15 @@ function shortStock(stock, shares, workerScript=null) {
     }
 
     // Does the player have enough money?
-    var totalPrice = stock.price * shares;
+    const totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
         if (tixApi) {
-            workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have enough " +
-                                       "money to purchase this short position. You need " +
-                                       numeralWrapper.format(totalPrice + CONSTANTS.StockMarketCommission, '($0.000a)') + ".");
+            workerScript.log("ERROR: shortStock() failed because you do not have enough " +
+                             "money to purchase this short position. You need " +
+                             numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission));
         } else {
             dialogBoxCreate("You do not have enough money to purchase this short position. You need " +
-                            numeralWrapper.format(totalPrice + CONSTANTS.StockMarketCommission, '($0.000a)') + ".");
+                            numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission));
         }
 
         return false;
@@ -512,55 +526,66 @@ function shortStock(stock, shares, workerScript=null) {
     // Would this purchase exceed the maximum number of shares?
     if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
         if (tixApi) {
-            workerScript.scriptRef.log("ERROR: shortStock() failed because purchasing this many short shares would exceed " +
-                                       `${stock.symbol}'s maximum number of shares.`);
+            workerScript.log(`ERROR: shortStock() failed because purchasing this many short shares would exceed ${stock.symbol}'s maximum number of shares.`);
         } else {
-            dialogBoxCreate(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ` +
-                            `${stock.maxShares} shares.`);
+            dialogBoxCreate(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ${stock.maxShares} shares.`);
         }
 
         return false;
     }
 
-    var origTotal = stock.playerShortShares * stock.playerAvgShortPx;
+    const origTotal = stock.playerShortShares * stock.playerAvgShortPx;
     Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
-    var newTotal = origTotal + totalPrice;
+    const newTotal = origTotal + totalPrice;
     stock.playerShortShares = Math.round(stock.playerShortShares + shares);
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.shortStock == null) {
-            workerScript.scriptRef.log("Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                                       numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
-                                       numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees.");
+            workerScript.log(
+                "Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
+                numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
+            );
         }
     } else {
-        dialogBoxCreate("Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                        numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
-                        numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees.");
+        dialogBoxCreate(
+            "Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+            numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
+            numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
+        );
     }
+
     return true;
 }
 
-//Returns true if successful and false otherwise
-function sellShort(stock, shares, workerScript=null) {
-    var tixApi = (workerScript instanceof WorkerScript);
+/**
+ * Attempt to sell a stock in the short position
+ * @param {Stock} stock - Stock to sell
+ * @param {number} shares - Number of shares to sell
+ * @param {WorkerScript} workerScript - If this is being called through Netscript
+ * @returns {boolean} true if successfully sells given amount OR max owned, false otherwise
+ */
+export function sellShort(stock, shares, workerScript=null) {
+    const tixApi = (workerScript instanceof WorkerScript);
+
     if (stock == null || isNaN(shares) || shares < 0) {
         if (tixApi) {
-            workerScript.scriptRef.log("ERROR: sellShort() failed because of invalid arguments.");
+            workerScript.log("ERROR: sellShort() failed because of invalid arguments.");
         } else {
             dialogBoxCreate("Failed to sell a short position in a stock. This is probably " +
                             "due to an invalid quantity. Otherwise, this may be a bug, so contact developer");
         }
+
         return false;
     }
     shares = Math.round(shares);
     if (shares > stock.playerShortShares) {shares = stock.playerShortShares;}
     if (shares === 0) {return false;}
 
-    var origCost = shares * stock.playerAvgShortPx;
-    var profit = ((stock.playerAvgShortPx - stock.price) * shares) - CONSTANTS.StockMarketCommission;
-    if (isNaN(profit)) {profit = 0;}
+    const origCost = shares * stock.playerAvgShortPx;
+    let profit = ((stock.playerAvgShortPx - stock.price) * shares) - CONSTANTS.StockMarketCommission;
+    if (isNaN(profit)) { profit = 0; }
     Player.gainMoney(origCost + profit);
     Player.recordMoneySource(profit, "stock");
     if (tixApi) {
@@ -574,21 +599,25 @@ function sellShort(stock, shares, workerScript=null) {
     }
     updateStockPlayerPosition(stock);
     if (tixApi) {
-        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellShort == null) {
-            workerScript.scriptRef.log("Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                                       numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                                       "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + ".");
+        if (workerScript.shouldLog("sellShort")) {
+            workerScript.log(
+                "Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + "."
+            );
         }
     } else {
-        dialogBoxCreate("Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                        numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                        "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + ".");
+        dialogBoxCreate(
+            "Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+            numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+            "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + "."
+        );
     }
 
     return true;
 }
 
-function processStockPrices(numCycles=1) {
+export function processStockPrices(numCycles=1) {
     if (StockMarket.storedCycles == null || isNaN(StockMarket.storedCycles)) { StockMarket.storedCycles = 0; }
     StockMarket.storedCycles += numCycles;
 
@@ -726,14 +755,15 @@ function processOrders(stock, orderType, posType) {
     }
 }
 
-function setStockMarketContentCreated(b) {
+export function setStockMarketContentCreated(b) {
     stockMarketContentCreated = b;
 }
 
 var stockMarketContentCreated = false;
 var stockMarketPortfolioMode = false;
 var COMM = CONSTANTS.StockMarketCommission;
-function displayStockMarketContent() {
+export function displayStockMarketContent() {
+    // Backwards compatibility
     if (Player.hasWseAccount == null)   {Player.hasWseAccount = false;}
     if (Player.hasTixApiAccess == null) {Player.hasTixApiAccess = false;}
     if (Player.has4SData == null)       {Player.has4SData = false;}
@@ -1341,9 +1371,9 @@ function setStockTickerClickHandlers() {
     }
 }
 
-//'increase' argument is a boolean indicating whether the price increased or decreased
-function updateStockTicker(stock, increase) {
-    if (!routing.isOn(Page.StockMarket)) {return;}
+// 'increase' argument is a boolean indicating whether the price increased or decreased
+export function updateStockTicker(stock, increase) {
+    if (!routing.isOn(Page.StockMarket)) { return; }
     if (!(stock instanceof Stock)) {
         console.log("Invalid stock in updateStockTicker():");
         console.log(stock);
@@ -1378,8 +1408,8 @@ function updateStockTicker(stock, increase) {
     }
 }
 
-function updateStockPlayerPosition(stock) {
-    if (!routing.isOn(Page.StockMarket)) {return;}
+export function updateStockPlayerPosition(stock) {
+    if (!routing.isOn(Page.StockMarket)) { return; }
     if (!(stock instanceof Stock)) {
         console.log("Invalid stock in updateStockPlayerPosition():");
         console.log(stock);
@@ -1395,8 +1425,8 @@ function updateStockPlayerPosition(stock) {
             removeElementById(tickerId + "-panel");
             return;
         } else {
-            //If the ticker hasn't been created, create it (handles updating)
-            //If it has been created, continue normally
+            // If the ticker hasn't been created, create it (handles updating)
+            // If it has been created, continue normally
             if (document.getElementById(tickerId + "-hdr") == null) {
                 createStockTicker(stock);
                 setStockTickerClickHandlers();
@@ -1413,7 +1443,7 @@ function updateStockPlayerPosition(stock) {
         return;
     }
 
-    //Calculate returns
+    // Calculate returns
     const totalCost = stock.playerShares * stock.playerAvgPx;
     let gains = (stock.price - stock.playerAvgPx) * stock.playerShares;
     let percentageGains = gains / totalCost;
@@ -1426,6 +1456,8 @@ function updateStockPlayerPosition(stock) {
 
     stock.posTxtEl.innerHTML =
         `Max Shares: ${numeralWrapper.format(stock.maxShares, "0.000a")}<br>` +
+        `<p class="tooltip">Ask Price: ${numeralWrapper.formatMoney(stock.getAskPrice())}<span class="tooltiptext">See Investopedia for details on what this is</span></p><br>` +
+        `<p class="tooltip">Bid Price: ${numeralWrapper.formatMoney(stock.getBidPrice())}<span class="tooltiptext">See Investopedia for details on what this is</span></p><br>` +
         "<h3 class='tooltip stock-market-position-text'>Long Position: " +
         "<span class='tooltiptext'>Shares in the long position will increase " +
         "in value if the price of the corresponding stock increases</span></h3>" +
@@ -1493,7 +1525,7 @@ function updateStockOrderList(stock) {
         }
     }
 
-    //Remove everything from list
+    // Remove everything from list
     while (orderList.firstChild) {
         orderList.removeChild(orderList.firstChild);
     }
@@ -1522,9 +1554,3 @@ function updateStockOrderList(stock) {
 
     }
 }
-
-export {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
-        initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
-        sellStock, shortStock, sellShort, processStockPrices, displayStockMarketContent,
-        updateStockTicker, updateStockPlayerPosition, loadStockMarket,
-        setStockMarketContentCreated, placeOrder, cancelOrder, Order, OrderTypes, PositionTypes};

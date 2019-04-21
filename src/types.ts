@@ -44,3 +44,25 @@ export interface IReturnStatus {
     res: boolean;
     msg?: string;
 }
+
+/**
+ * Defines the minimum and maximum values for a range.
+ * It is up to the consumer if these values are inclusive or exclusive.
+ * It is up to the implementor to ensure max > min.
+ */
+export interface IMinMaxRange {
+    /**
+     * Value by which the bounds are to be divided for the final range
+     */
+    divisor?: number;
+    
+    /**
+     * The maximum bound of the range.
+     */
+    max: number;
+
+    /**
+     * The minimum bound of the range.
+     */
+    min: number;
+}
