@@ -77,7 +77,6 @@ import {
     StockMarket,
     StockSymbols,
     SymbolToStockMap,
-    initStockMarket,
     initSymbolToStockMap,
     buyStock,
     sellStock,
@@ -1708,7 +1707,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into sellShort()");
             }
             const res = sellShort(stock, shares, workerScript);
-            
+
             return res ? stock.price : 0;
         },
         placeOrder(symbol, shares, price, type, pos) {

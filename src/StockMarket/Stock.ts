@@ -74,6 +74,11 @@ export class Stock {
     readonly cap: number;
 
     /**
+     * Stocks previous share price
+     */
+    lastPrice: number;
+
+    /**
      * Maximum number of shares that player can own (both long and short combined)
      */
     readonly maxShares: number;
@@ -113,11 +118,6 @@ export class Stock {
      * Number of shares the player owns in the SHORT position
      */
     playerShortShares: number;
-
-    /**
-     * The HTML element that displays the stock's info in the UI
-     */
-    posTxtEl: HTMLElement | null;
 
     /**
      * Stock's share price
@@ -162,6 +162,7 @@ export class Stock {
         this.name                   = p.name;
         this.symbol                 = p.symbol;
         this.price                  = toNumber(p.initPrice);
+        this.lastPrice              = this.price;
         this.playerShares           = 0;
         this.playerAvgPx            = 0;
         this.playerShortShares      = 0;
@@ -182,8 +183,11 @@ export class Stock {
         // Max Shares (Outstanding shares) is a percentage of total shares
         const outstandingSharePercentage: number = 0.15;
         this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e5) * 1e5;
+    }
 
-        this.posTxtEl           = null;
+    changePrice(newPrice: number): void {
+        this.lastPrice = this.price;
+        this.price = newPrice;
     }
 
     /**

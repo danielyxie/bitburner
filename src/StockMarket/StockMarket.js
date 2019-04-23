@@ -8,6 +8,7 @@ import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost
 } from "./StockMarketCosts";
+import { InitStockMetadata } from "./data/InitStockMetadata";
 import { StockSymbols } from "./data/StockSymbols";
 
 import { CONSTANTS } from "../Constants";
@@ -155,16 +156,6 @@ function executeOrder(order) {
 export let StockMarket = {}; // Maps full stock name -> Stock object
 export let SymbolToStockMap = {}; // Maps symbol -> Stock object
 
-let formatHelpData = {
-    longestName: 0,
-    longestSymbol: 0,
-};
-
-for (const key in StockSymbols) {
-    formatHelpData.longestName = key.length > formatHelpData.longestName ? key.length : formatHelpData.longestName;
-    formatHelpData.longestSymbol = StockSymbols[key].length > formatHelpData.longestSymbol ? StockSymbols[key].length : formatHelpData.longestSymbol;
-}
-
 export function loadStockMarket(saveString) {
     if (saveString === "") {
         StockMarket = {};
@@ -174,145 +165,16 @@ export function loadStockMarket(saveString) {
 }
 
 export function initStockMarket() {
-    for (var stk in StockMarket) {
+    for (const stk in StockMarket) {
         if (StockMarket.hasOwnProperty(stk)) {
             delete StockMarket[stk];
         }
     }
 
-    const randInt = getRandomInt;
-
-    var ecorp = LocationName.AevumECorp;
-    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 2.4e12);
-    StockMarket[ecorp] = ecorpStk;
-
-    var megacorp = LocationName.Sector12MegaCorp;
-    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 2.4e12);
-    StockMarket[megacorp] = megacorpStk;
-
-    var blade = LocationName.Sector12BladeIndustries;
-    var bladeStk = new Stock(blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 1.6e12);
-    StockMarket[blade] = bladeStk;
-
-    var clarke = LocationName.AevumClarkeIncorporated;
-    var clarkeStk = new Stock(clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 1.5e12);
-    StockMarket[clarke] = clarkeStk;
-
-    var omnitek = LocationName.VolhavenOmniTekIncorporated;
-    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 1.8e12);
-    StockMarket[omnitek] = omnitekStk;
-
-    var foursigma = LocationName.Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 2e12);
-    StockMarket[foursigma] = foursigmaStk;
-
-    var kuaigong = LocationName.ChongqingKuaiGongInternational;
-    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 1.9e12);
-    StockMarket[kuaigong] = kuaigongStk;
-
-    var fulcrum = LocationName.AevumFulcrumTechnologies;
-    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 2e12);
-    StockMarket[fulcrum] = fulcrumStk;
-
-    var storm = LocationName.IshimaStormTechnologies;
-    var stormStk = new Stock(storm, StockSymbols[storm], randInt(80, 90)/100, true, 7, randInt(20e3, 25e3), 1.2e12);
-    StockMarket[storm] = stormStk;
-
-    var defcomm = LocationName.NewTokyoDefComm;
-    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], randInt(60, 70)/100, true, 10, randInt(6e3, 19e3), 900e9);
-    StockMarket[defcomm] = defcommStk;
-
-    var helios = LocationName.VolhavenHeliosLabs;
-    var heliosStk = new Stock(helios, StockSymbols[helios], randInt(55, 65)/100, true, 9, randInt(10e3, 18e3), 825e9);
-    StockMarket[helios] = heliosStk;
-
-    var vitalife = LocationName.NewTokyoVitaLife;
-    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], randInt(70, 80)/100, true, 7, randInt(8e3, 14e3), 1e12);
-    StockMarket[vitalife] = vitalifeStk;
-
-    var icarus = LocationName.Sector12IcarusMicrosystems;
-    var icarusStk = new Stock(icarus, StockSymbols[icarus], randInt(60, 70)/100, true, 7.5, randInt(12e3, 24e3), 800e9);
-    StockMarket[icarus] = icarusStk;
-
-    var universalenergy = LocationName.Sector12UniversalEnergy;
-    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], randInt(50, 60)/100, true, 10, randInt(16e3, 29e3), 900e9);
-    StockMarket[universalenergy] = universalenergyStk;
-
-    var aerocorp = LocationName.AevumAeroCorp;
-    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], randInt(55, 65)/100, true, 6, randInt(8e3, 17e3), 640e9);
-    StockMarket[aerocorp] = aerocorpStk;
-
-    var omnia = LocationName.VolhavenOmniaCybersystems;
-    var omniaStk = new Stock(omnia, StockSymbols[omnia], randInt(65, 75)/100, true, 4.5, randInt(6e3, 15e3), 600e9);
-    StockMarket[omnia] = omniaStk;
-
-    var solaris = LocationName.ChongqingSolarisSpaceSystems;
-    var solarisStk = new Stock(solaris, StockSymbols[solaris], randInt(70, 80)/100, true, 8.5, randInt(14e3, 28e3), 705e9);
-    StockMarket[solaris] = solarisStk;
-
-    var globalpharm = LocationName.NewTokyoGlobalPharmaceuticals;
-    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], randInt(55, 65)/100, true, 10.5, randInt(12e3, 30e3), 695e9);
-    StockMarket[globalpharm] = globalpharmStk;
-
-    var nova = LocationName.IshimaNovaMedical;
-    var novaStk = new Stock(nova, StockSymbols[nova], randInt(70, 80)/100, true, 5, randInt(15e3, 27e3), 600e9);
-    StockMarket[nova] = novaStk;
-
-    var watchdog = LocationName.AevumWatchdogSecurity;
-    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], randInt(240, 260)/100, true, 1.5, randInt(4e3, 8.5e3), 450e9);
-    StockMarket[watchdog] = watchdogStk;
-
-    var lexocorp = LocationName.VolhavenLexoCorp;
-    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], randInt(115, 135)/100, true, 6, randInt(4.5e3, 8e3), 300e9);
-    StockMarket[lexocorp] = lexocorpStk;
-
-    var rho = LocationName.AevumRhoConstruction;
-    var rhoStk = new Stock(rho, StockSymbols[rho], randInt(50, 70)/100, true, 1, randInt(2e3, 7e3), 180e9);
-    StockMarket[rho] = rhoStk;
-
-    var alpha = LocationName.Sector12AlphaEnterprises;
-    var alphaStk = new Stock(alpha, StockSymbols[alpha], randInt(175, 205)/100, true, 10, randInt(4e3, 8.5e3), 240e9);
-    StockMarket[alpha] = alphaStk;
-
-    var syscore = LocationName.VolhavenSysCoreSecurities;
-    var syscoreStk = new Stock(syscore, StockSymbols[syscore], randInt(150, 170)/100, true, 3, randInt(3e3, 8e3), 200e9);
-    StockMarket[syscore] = syscoreStk;
-
-    var computek = LocationName.VolhavenCompuTek;
-    var computekStk = new Stock(computek, StockSymbols[computek], randInt(80, 100)/100, true, 4, randInt(1e3, 6e3), 185e9);
-    StockMarket[computek] = computekStk;
-
-    var netlink = LocationName.AevumNetLinkTechnologies;
-    var netlinkStk = new Stock(netlink, StockSymbols[netlink], randInt(400, 430)/100, true, 1, randInt(1e3, 5e3), 58e9);
-    StockMarket[netlink] = netlinkStk;
-
-    var omega = LocationName.IshimaOmegaSoftware;
-    var omegaStk = new Stock(omega, StockSymbols[omega], randInt(90, 110)/100, true, 0.5, randInt(1e3, 8e3), 60e9);
-    StockMarket[omega] = omegaStk;
-
-    var fns = LocationName.Sector12FoodNStuff;
-    var fnsStk = new Stock(fns, StockSymbols[fns], randInt(70, 80)/100, false, 1, randInt(500, 4.5e3), 45e9);
-    StockMarket[fns] = fnsStk;
-
-    var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], randInt(260, 300)/100, true, 0, randInt(1.5e3, 3.5e3), 30e9);
-    StockMarket[sigmacosm] = sigmacosmStk;
-
-    var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], randInt(360, 400)/100, true, 1, randInt(250, 1.5e3), 42e9);
-    StockMarket[joesguns] = joesgunsStk;
-
-    var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], randInt(120, 175)/100, true, 13.5, randInt(250, 1.5e3), 100e9);
-    StockMarket[catalyst] = catalystStk;
-
-    var microdyne = "Microdyne Technologies";
-    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], randInt(70, 80)/100, true, 8, randInt(15e3, 30e3), 360e9);
-    StockMarket[microdyne] = microdyneStk;
-
-    var titanlabs = "Titan Laboratories";
-    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], randInt(50, 70)/100, true, 11, randInt(12e3, 24e3), 420e9);
-    StockMarket[titanlabs] = titanlabsStk;
+    for (const metadata of InitStockMetadata) {
+        const name = metadata.name;
+        StockMarket[name] = new Stock(metadata);
+    }
 
     var orders = {};
     for (var name in StockMarket) {
@@ -329,14 +191,14 @@ export function initStockMarket() {
 }
 
 export function initSymbolToStockMap() {
-    for (var name in StockSymbols) {
+    for (const name in StockSymbols) {
         if (StockSymbols.hasOwnProperty(name)) {
-            var stock = StockMarket[name];
+            const stock = StockMarket[name];
             if (stock == null) {
                 console.error(`Could not find Stock for ${name}`);
                 continue;
             }
-            var symbol = StockSymbols[name];
+            const symbol = StockSymbols[name];
             SymbolToStockMap[symbol] = stock;
         }
     }
