@@ -47,8 +47,6 @@ import {
 import {
     initStockMarket,
     initSymbolToStockMap,
-    stockMarketContentCreated,
-    setStockMarketContentCreated
 } from "./StockMarket/StockMarket";
 import { Terminal, postNetburnerText } from "./Terminal";
 
@@ -163,13 +161,6 @@ function prestigeAugmentation() {
         initStockMarket();
         initSymbolToStockMap();
     }
-    setStockMarketContentCreated(false);
-    var stockMarketList = document.getElementById("stock-market-list");
-    while(stockMarketList.firstChild) {
-        stockMarketList.removeChild(stockMarketList.firstChild);
-    }
-    var watchlist = document.getElementById("stock-market-watchlist-filter");
-    watchlist.value = ""; // Reset watchlist filter
 
     // Refresh Main Menu (the 'World' menu, specifically)
     document.getElementById("world-menu-header").click();
@@ -335,11 +326,6 @@ function prestigeSourceFile() {
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
-    }
-    setStockMarketContentCreated(false);
-    var stockMarketList = document.getElementById("stock-market-list");
-    while(stockMarketList.firstChild) {
-        stockMarketList.removeChild(stockMarketList.firstChild);
     }
 
     if (Player.inGang()) { Player.gang.clearUI(); }
