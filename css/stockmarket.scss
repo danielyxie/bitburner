@@ -17,9 +17,13 @@
     }
 }
 
-#stock-market-list li {
-    button {
-        font-size: $defaultFontSize;
+#stock-market-list {
+    list-style: none;
+
+    li {
+        button {
+            font-size: $defaultFontSize;
+        }
     }
 }
 
@@ -50,11 +54,21 @@
 .stock-market-position-text {
     color: #fff;
     display: inline-block;
+
+    p {
+        color: #fff;
+        display: block;
+    }
 }
 
 .stock-market-order-list {
     overflow-y: auto;
     max-height: 100px;
+
+    li {
+        color: #fff;
+        padding: 4px;
+    }
 }
 
 .stock-market-order-cancel-btn {
