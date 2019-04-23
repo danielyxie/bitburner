@@ -91,6 +91,10 @@ export class StockTickers extends React.Component<IProps, IState> {
         for (const stockMarketProp in this.props.stockMarket) {
             const val = this.props.stockMarket[stockMarketProp];
             if (val instanceof Stock) {
+                if (this.state.watchlistSymbols.length > 0 && !this.state.watchlistSymbols.includes(val.symbol)) {
+                    continue; // Not in watchlist
+                }
+
                 let orders = this.props.stockMarket.Orders[val.symbol];
                 if (orders == null) {
                     orders = [];

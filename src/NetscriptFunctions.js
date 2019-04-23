@@ -75,19 +75,18 @@ import { SpecialServerIps } from "./Server/SpecialServerIps";
 import { Stock } from "./StockMarket/Stock";
 import {
     StockMarket,
-    StockSymbols,
     SymbolToStockMap,
     initSymbolToStockMap,
     buyStock,
     sellStock,
-    updateStockPlayerPosition,
     shortStock,
     sellShort,
-    OrderTypes,
-    PositionTypes,
     placeOrder,
     cancelOrder
 } from "./StockMarket/StockMarket";
+import { OrderTypes } from "./StockMarket/data/OrderTypes";
+import { PositionTypes } from "./StockMarket/data/PositionTypes";
+import { StockSymbols } from "./StockMarket/data/StockSymbols";
 import {
     getStockmarket4SDataCost,
     getStockMarket4STixApiCost

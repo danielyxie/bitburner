@@ -35,10 +35,11 @@ function toNumber(n: number | IMinMaxRange): number {
     let value: number;
     switch (typeof n) {
         case "number": {
-            return n;
+            return <number>n;
         }
         case "object": {
-            value = getRandomInt(n.min, n.max);
+            const range = <IMinMaxRange>n;
+            value = getRandomInt(range.min, range.max);
             break;
         }
         default:
