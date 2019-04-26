@@ -930,7 +930,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
-            if (isNaN(threads) || threads < 0) {
+            if (isNaN(threads) || threads <= 0) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
