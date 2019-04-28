@@ -3,6 +3,33 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 /**
+ * Given a stock, calculates the amount by which the stock price is multiplied
+ * for an 'upward' price movement. This does not actually increase the stock's price,
+ * just calculates the multiplier
+ * @param {Stock} stock - Stock for price movement
+ * @returns {number | null} Number by which stock's price should be multiplied. Null for invalid args
+ */
+export function calculateIncreasingPriceMovement(stock: Stock): number | null {
+    if (!(stock instanceof Stock)) { return null; }
+
+    return (1 + (stock.priceMovementPerc / 100));
+}
+
+/**
+ * Given a stock, calculates the amount by which the stock price is multiplied
+ * for a "downward" price movement. This does not actually increase the stock's price,
+ * just calculates the multiplier
+ * @param {Stock} stock - Stock for price movement
+ * @returns {number | null} Number by which stock's price should be multiplied. Null for invalid args
+ */
+export function calculateDecreasingPriceMovement(stock: Stock): number | null {
+    if (!(stock instanceof Stock)) { return null; }
+
+    return (1 - (stock.priceMovementPerc / 100));
+}
+
+
+/**
  * Calculate the total cost of a "buy" transaction. This accounts for spread,
  * price movements, and commission.
  * @param {Stock} stock - Stock being purchased
@@ -32,20 +59,26 @@ export function getBuyTransactionCost(stock: Stock, shares: number, posType: Pos
     let remainingShares = shares - stock.shareTxUntilMovement;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
+
+
     // The initial cost calculation takes care of the first "iteration"
     let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
     let totalCost = (stock.shareTxUntilMovement * currPrice);
+
+    function processPriceMovement() {
+        if (isLong) {
+            currPrice *= calculateIncreasingPriceMovement(stock)!;
+        } else {
+            currPrice *= calculateDecreasingPriceMovement(stock)!;
+        }
+    }
+
     for (let i = 1; i < numIterations; ++i) {
+        processPriceMovement();
+
         const amt = Math.min(stock.shareTxForMovement, remainingShares);
         totalCost += (amt * currPrice);
         remainingShares -= amt;
-
-        // Price movement
-        if (isLong) {
-            currPrice *= (1 + (stock.priceMovementPerc / 100));
-        } else {
-            currPrice *= (1 - (stock.priceMovementPerc / 100));
-        }
     }
 
     return totalCost + CONSTANTS.StockMarketCommission;
@@ -76,18 +109,17 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
     let remainingShares = shares - stock.shareTxUntilMovement;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
-    // The initial cost calculation takes care of the first "iteration"
-    let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
-    for (let i = 1; i < numIterations; ++i) {
-        const amt = Math.min(stock.shareTxForMovement, remainingShares);
-        remainingShares -= amt;
-
-        // Price movement
+    let currPrice = stock.price;
+    function processPriceMovement() {
         if (isLong) {
-            currPrice *= (1 + (stock.priceMovementPerc / 100));
+            currPrice *= calculateIncreasingPriceMovement(stock)!;
         } else {
-            currPrice *= (1 - (stock.priceMovementPerc / 100));
+            currPrice *= calculateDecreasingPriceMovement(stock)!;
         }
+    }
+
+    for (let i = 1; i < numIterations; ++i) {
+        processPriceMovement();
     }
 
     stock.price = currPrice;
@@ -124,7 +156,7 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
         }
     }
 
-    // Calculate how many iterations of price changes we need to accoutn for
+    // Calculate how many iterations of price changes we need to account for
     let remainingShares = shares - stock.shareTxUntilMovement;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
@@ -144,16 +176,16 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
     let currPrice = isLong ? stock.getBidPrice() : stock.getAskPrice();
     let totalGain = calculateGain(currPrice, stock.shareTxUntilMovement);
     for (let i = 1; i < numIterations; ++i) {
+        // Price movement
+        if (isLong) {
+            currPrice *= calculateDecreasingPriceMovement(stock)!;
+        } else {
+            currPrice *= calculateIncreasingPriceMovement(stock)!;
+        }
+
         const amt = Math.min(stock.shareTxForMovement, remainingShares);
         totalGain += calculateGain(currPrice, amt);
         remainingShares -= amt;
-
-        // Price movement
-        if (isLong) {
-            currPrice *= (1 - (stock.priceMovementPerc / 100));
-        } else {
-            currPrice *= (1 + (stock.priceMovementPerc / 100));
-        }
     }
 
     return totalGain - CONSTANTS.StockMarketCommission;
@@ -183,17 +215,13 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
     let remainingShares = shares - stock.shareTxUntilMovement;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
-    // The initial cost calculation takes care of the first "iteration"
-    let currPrice = isLong ? stock.getBidPrice() : stock.getAskPrice();
+    let currPrice = stock.price;
     for (let i = 1; i < numIterations; ++i) {
-        const amt = Math.min(stock.shareTxForMovement, remainingShares);
-        remainingShares -= amt;
-
         // Price movement
         if (isLong) {
-            currPrice *= (1 - (stock.priceMovementPerc / 100));
+            currPrice *= calculateDecreasingPriceMovement(stock)!;
         } else {
-            currPrice *= (1 + (stock.priceMovementPerc / 100));
+            currPrice *= calculateIncreasingPriceMovement(stock)!;
         }
     }
 
