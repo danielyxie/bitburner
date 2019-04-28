@@ -10,12 +10,18 @@ import { StockTickerTxButton } from "./StockTickerTxButton";
 
 import { Order } from "../Order";
 import { Stock } from "../Stock";
+import {
+    getBuyTransactionCost,
+    getSellTransactionGain,
+} from "../StockMarketHelpers";
 import { OrderTypes } from "../data/OrderTypes";
 import { PositionTypes } from "../data/PositionTypes";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Accordion } from "../../ui/React/Accordion";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import {
@@ -63,8 +69,11 @@ export class StockTicker extends React.Component<IProps, IState> {
             qty: "",
         }
 
+        this.getBuyTransactionCostText = this.getBuyTransactionCostText.bind(this);
+        this.getSellTransactionCostText = this.getSellTransactionCostText.bind(this);
         this.handleBuyButtonClick = this.handleBuyButtonClick.bind(this);
         this.handleBuyMaxButtonClick = this.handleBuyMaxButtonClick.bind(this);
+        this.handleHeaderClick = this.handleHeaderClick.bind(this);
         this.handleOrderTypeChange = this.handleOrderTypeChange.bind(this);
         this.handlePositionTypeChange = this.handlePositionTypeChange.bind(this);
         this.handleQuantityChange = this.handleQuantityChange.bind(this);
@@ -96,8 +105,46 @@ export class StockTicker extends React.Component<IProps, IState> {
         yesNoTxtInpBoxCreate(popupTxt);
     }
 
+    getBuyTransactionCostText(): string {
+        const stock = this.props.stock;
+        const qty: number = this.getQuantity();
+        if (isNaN(qty)) { return ""; }
+        const cost = getBuyTransactionCost(this.props.stock, qty, this.state.position);
+        if (cost == null) { return ""; }
+
+        let costTxt = `Purchasing ${numeralWrapper.formatBigNumber(qty)} shares will cost ${numeralWrapper.formatMoney(cost)}. `;
+
+        const causesMovement = qty > stock.shareTxUntilMovement;
+        if (causesMovement) {
+            costTxt += `WARNING: Purchasing this many shares will influence the stock price`;
+        }
+
+        return costTxt;
+    }
+
+    getQuantity(): number {
+        return Math.round(parseFloat(this.state.qty));
+    }
+
+    getSellTransactionCostText(): string {
+        const stock = this.props.stock;
+        const qty: number = this.getQuantity();
+        if (isNaN(qty)) { return ""; }
+        const cost = getSellTransactionGain(this.props.stock, qty, this.state.position);
+        if (cost == null) { return ""; }
+
+        let costTxt = `Selling ${numeralWrapper.formatBigNumber(qty)} shares will result in a gain of ${numeralWrapper.formatMoney(cost)}. `;
+
+        const causesMovement = qty > stock.shareTxUntilMovement;
+        if (causesMovement) {
+            costTxt += `WARNING: Selling this many shares will influence the stock price`;
+        }
+
+        return costTxt;
+    }
+
     handleBuyButtonClick() {
-        const shares = parseInt(this.state.qty);
+        const shares = this.getQuantity();
         if (isNaN(shares)) {
             dialogBoxCreate(`Invalid input for quantity (number of shares): ${this.state.qty}`);
             return;
@@ -178,6 +225,18 @@ export class StockTicker extends React.Component<IProps, IState> {
         }
     }
 
+    handleHeaderClick(e: React.MouseEvent<HTMLButtonElement>) {
+        const elem = e.currentTarget;
+        elem.classList.toggle("active");
+
+        const panel: HTMLElement = elem.nextElementSibling as HTMLElement;
+        if (panel!.style.display === "block") {
+            panel!.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    }
+
     handleOrderTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const val = e.target.value;
 
@@ -224,7 +283,7 @@ export class StockTicker extends React.Component<IProps, IState> {
     }
 
     handleSellButtonClick() {
-        const shares = parseInt(this.state.qty);
+        const shares = this.getQuantity();
         if (isNaN(shares)) {
             dialogBoxCreate(`Invalid input for quantity (number of shares): ${this.state.qty}`);
             return;
@@ -294,49 +353,68 @@ export class StockTicker extends React.Component<IProps, IState> {
     }
 
     render() {
+        // Determine if the player's intended transaction will cause a price movement
+        let causesMovement: boolean = false;
+        const qty = this.getQuantity();
+        if (!isNaN(qty)) {
+            causesMovement = qty > this.props.stock.shareTxUntilMovement;
+        }
+
         return (
             <li>
-                <button className={"accordion-header"}>
-                    <StockTickerHeaderText p={this.props.p} stock={this.props.stock} />
-                </button>
-                <div className={"accordion-panel"}>
-                    <input
-                        className={"stock-market-input"}
-                        onChange={this.handleQuantityChange}
-                        placeholder={"Quantity (Shares)"}
-                        value={this.state.qty}
-                    />
-                    <select className={"stock-market-input dropdown"} onChange={this.handlePositionTypeChange} value={this.state.position}>
-                        <option value={"Long"}>Long</option>
-                        {
-                            this.hasShortAccess() &&
-                            <option value={"Short"}>Short</option>
-                        }
-                    </select>
-                    <select className={"stock-market-input dropdown"} onChange={this.handleOrderTypeChange} value={this.state.orderType}>
-                        <option value={SelectorOrderType.Market}>{SelectorOrderType.Market}</option>
-                        {
-                            this.hasOrderAccess() &&
-                            <option value={SelectorOrderType.Limit}>{SelectorOrderType.Limit}</option>
-                        }
-                        {
-                            this.hasOrderAccess() &&
-                            <option value={SelectorOrderType.Stop}>{SelectorOrderType.Stop}</option>
-                        }
-                    </select>
+                <Accordion
+                    headerContent={
+                        <StockTickerHeaderText p={this.props.p} stock={this.props.stock} />
+                    }
+                    panelContent={
+                        <div>
+                            <input
+                                className={"stock-market-input"}
+                                onChange={this.handleQuantityChange}
+                                placeholder={"Quantity (Shares)"}
+                                value={this.state.qty}
+                            />
+                            <select className={"stock-market-input dropdown"} onChange={this.handlePositionTypeChange} value={this.state.position}>
+                                <option value={"Long"}>Long</option>
+                                {
+                                    this.hasShortAccess() &&
+                                    <option value={"Short"}>Short</option>
+                                }
+                            </select>
+                            <select className={"stock-market-input dropdown"} onChange={this.handleOrderTypeChange} value={this.state.orderType}>
+                                <option value={SelectorOrderType.Market}>{SelectorOrderType.Market}</option>
+                                {
+                                    this.hasOrderAccess() &&
+                                    <option value={SelectorOrderType.Limit}>{SelectorOrderType.Limit}</option>
+                                }
+                                {
+                                    this.hasOrderAccess() &&
+                                    <option value={SelectorOrderType.Stop}>{SelectorOrderType.Stop}</option>
+                                }
+                            </select>
 
-                    <StockTickerTxButton onClick={this.handleBuyButtonClick} text={"Buy"} />
-                    <StockTickerTxButton onClick={this.handleSellButtonClick} text={"Sell"} />
-                    <StockTickerTxButton onClick={this.handleBuyMaxButtonClick} text={"Buy MAX"} />
-                    <StockTickerTxButton onClick={this.handleSellAllButtonClick} text={"Sell ALL"} />
-                    <StockTickerPositionText p={this.props.p} stock={this.props.stock} />
-                    <StockTickerOrderList
-                        cancelOrder={this.props.cancelOrder}
-                        orders={this.props.orders}
-                        p={this.props.p}
-                        stock={this.props.stock}
-                    />
-                </div>
+                            <StockTickerTxButton onClick={this.handleBuyButtonClick} text={"Buy"} tooltip={this.getBuyTransactionCostText()} />
+                            <StockTickerTxButton onClick={this.handleSellButtonClick} text={"Sell"} tooltip={this.getSellTransactionCostText()} />
+                            <StockTickerTxButton onClick={this.handleBuyMaxButtonClick} text={"Buy MAX"} />
+                            <StockTickerTxButton onClick={this.handleSellAllButtonClick} text={"Sell ALL"} />
+                            {
+                                causesMovement &&
+                                <p className="stock-market-price-movement-warning">
+                                    WARNING: Buying/Selling {numeralWrapper.formatBigNumber(qty)} shares will affect
+                                    the stock's price. This applies during the transaction itself as well. See Investopedia
+                                    for more details. 
+                                </p>
+                            }
+                            <StockTickerPositionText p={this.props.p} stock={this.props.stock} />
+                            <StockTickerOrderList
+                                cancelOrder={this.props.cancelOrder}
+                                orders={this.props.orders}
+                                p={this.props.p}
+                                stock={this.props.stock}
+                            />
+                        </div>
+                    }
+                />
             </li>
         )
     }

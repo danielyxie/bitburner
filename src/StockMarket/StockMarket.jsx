@@ -1,14 +1,12 @@
-import {
-    Order,
-    OrderTypes,
-    PositionTypes
-} from "./Order";
+import { Order } from "./Order";
 import { Stock } from "./Stock";
 import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost
 } from "./StockMarketCosts";
 import { InitStockMetadata } from "./data/InitStockMetadata";
+import { OrderTypes } from "./data/OrderTypes";
+import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
 import { StockMarketRoot } from "./ui/Root";
 
@@ -23,7 +21,7 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Reviver } from "../../utils/JSONReviver";
 
 import React from "react";
-import ReactDOm from "react-dom";
+import ReactDOM from "react-dom";
 
 export function placeOrder(stock, shares, price, type, position, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
@@ -60,7 +58,7 @@ export function cancelOrder(params, workerScript=null) {
     if (StockMarket["Orders"] == null) {return false;}
     if (params.order && params.order instanceof Order) {
         var order = params.order;
-        //An 'Order' object is passed in
+        // An 'Order' object is passed in
         var stockOrders = StockMarket["Orders"][order.stock.symbol];
         for (var i = 0; i < stockOrders.length; ++i) {
             if (order == stockOrders[i]) {
@@ -72,7 +70,7 @@ export function cancelOrder(params, workerScript=null) {
         return false;
     } else if (params.stock && params.shares && params.price && params.type &&
                params.pos && params.stock instanceof Stock) {
-        //Order properties are passed in. Need to look for the order
+        // Order properties are passed in. Need to look for the order
         var stockOrders = StockMarket["Orders"][params.stock.symbol];
         var orderTxt = params.stock.symbol + " - " + params.shares + " @ " +
                        numeralWrapper.format(params.price, '$0.000a');
@@ -124,7 +122,7 @@ function executeOrder(order) {
             break;
     }
     if (res) {
-        //Remove order from order book
+        // Remove order from order book
         for (var i = 0; i < stockOrders.length; ++i) {
             if (order == stockOrders[i]) {
                 stockOrders.splice(i, 1);
@@ -509,14 +507,12 @@ export function processStockPrices(numCycles=1) {
                 processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long);
                 processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long);
                 processOrders(stock, OrderTypes.StopSell, PositionTypes.Short);
-                displayStockMarketContent();
             } else {
                 stock.price /= (1 + av);
                 processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long);
                 processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short);
                 processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short);
                 processOrders(stock, OrderTypes.StopSell, PositionTypes.Long);
-                displayStockMarketContent();
             }
 
             var otlkMagChange = stock.otlkMag * av;
@@ -533,9 +529,10 @@ export function processStockPrices(numCycles=1) {
                 stock.otlkMag *= -1;
                 stock.b = !stock.b;
             }
-
         }
     }
+
+    displayStockMarketContent();
 }
 
 //Checks and triggers any orders for the specified stock

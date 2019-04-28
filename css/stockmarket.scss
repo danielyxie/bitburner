@@ -7,13 +7,27 @@
     p {
         font-size: $defaultFontSize * 0.8125;
     }
+
     a {
         font-size: $defaultFontSize * 0.875;
     }
-    h2 {
+}
+
+.stock-market-info-and-purchases {
+    > h2 {
+        display: block;
         margin-top: 10px;
         margin-left: 10px;
+    }
+
+    > p {
         display: block;
+        margin-left: 10px;
+        width: 70%;
+    }
+
+    > a, > button {
+        margin: 10px;
     }
 }
 
@@ -27,19 +41,10 @@
     }
 }
 
-#stock-market-container p {
-    padding: 6px;
-    margin: 6px;
-    width: 70%;
-}
-
-#stock-market-container a {
-    margin: 10px;
-}
-
 #stock-market-watchlist-filter {
+    margin: 5px 5px 5px 10px;
+    padding: 4px;
     width: 50%;
-    margin-left: 10px;
 }
 
 .stock-market-input {
@@ -51,13 +56,25 @@
     color: var(--my-font-color);
 }
 
+.stock-market-price-movement-warning {
+    border: 1px solid white;
+    color: red;
+    margin: 2px;
+    padding: 2px;
+}
+
 .stock-market-position-text {
     color: #fff;
-    display: inline-block;
+    display: block;
 
     p {
         color: #fff;
-        display: block;
+        display: inline-block;
+        margin: 4px;
+    }
+
+    h3 {
+        margin: 4px;
     }
 }
 

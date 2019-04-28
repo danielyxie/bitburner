@@ -37,18 +37,16 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
                         Shares in the long position will increase in value if the price
                         of the corresponding stock increases
                     </span>
-                </h3>
+                </h3><br />
                 <p>
                     Shares: {numeralWrapper.format(stock.playerShares, "0,0")}
-                </p>
+                </p><br />
                 <p>
-                    Average Price: {numeralWrapper.formatMoney(stock.playerAvgPx)}
-                    (Total Cost: {numeralWrapper.formatMoney(totalCost)})
-                </p>
+                    Average Price: {numeralWrapper.formatMoney(stock.playerAvgPx)} (Total Cost: {numeralWrapper.formatMoney(totalCost)})
+                </p><br />
                 <p>
-                    Profit: {numeralWrapper.formatMoney(gains)}
-                    ({numeralWrapper.formatPercentage(percentageGains)})
-                </p>
+                    Profit: {numeralWrapper.formatMoney(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
+                </p><br />
             </div>
         )
     }
@@ -71,18 +69,16 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
                             Shares in the short position will increase in value if the
                             price of the corresponding stock decreases
                         </span>
-                    </h3>
+                    </h3><br />
                     <p>
                         Shares: {numeralWrapper.format(stock.playerShortShares, "0,0")}
-                    </p>
+                    </p><br />
                     <p>
-                        Average Price: {numeralWrapper.formatMoney(stock.playerAvgShortPx)}
-                        (Total Cost: {numeralWrapper.formatMoney(totalCost)})
-                    </p>
+                        Average Price: {numeralWrapper.formatMoney(stock.playerAvgShortPx)} (Total Cost: {numeralWrapper.formatMoney(totalCost)})
+                    </p><br />
                     <p>
-                        Profit: {numeralWrapper.formatMoney(gains)}
-                        ({numeralWrapper.formatPercentage(percentageGains)})
-                    </p>
+                        Profit: {numeralWrapper.formatMoney(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
+                    </p><br />
                 </div>
             )
         } else {
@@ -96,15 +92,16 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
         return (
             <div className={"stock-market-position-text"}>
                 <p style={blockStyleMarkup}>
-                    Max Shares: ${numeralWrapper.formatMoney(stock.maxShares)}
+                    Max Shares: {numeralWrapper.formatBigNumber(stock.maxShares)}
                 </p>
                 <p className={"tooltip"} >
                     Ask Price: {numeralWrapper.formatMoney(stock.getAskPrice())}
                     <span className={"tooltiptext"}>
                         See Investopedia for details on what this is
                     </span>
-                </p>
+                </p><br />
                 <p className={"tooltip"} >
+                    Bid Price: {numeralWrapper.formatMoney(stock.getBidPrice())}
                     <span className={"tooltiptext"}>
                         See Investopedia for details on what this is
                     </span>

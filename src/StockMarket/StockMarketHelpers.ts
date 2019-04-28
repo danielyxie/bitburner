@@ -13,6 +13,10 @@ import { CONSTANTS } from "../Constants";
 export function getBuyTransactionCost(stock: Stock, shares: number, posType: PositionTypes): number | null {
     if (isNaN(shares) || shares <= 0 || !(stock instanceof Stock)) { return null; }
 
+    // Cap the 'shares' arg at the stock's maximum shares. This'll prevent
+    // hanging in the case when a really big number is passed in
+    shares = Math.min(shares, stock.maxShares);
+
     const isLong = (posType === PositionTypes.Long);
 
     // If the number of shares doesn't trigger a price movement, its a simple calculation
@@ -57,6 +61,10 @@ export function getBuyTransactionCost(stock: Stock, shares: number, posType: Pos
  */
 export function getSellTransactionGain(stock: Stock, shares: number, posType: PositionTypes): number | null {
     if (isNaN(shares) || shares <= 0 || !(stock instanceof Stock)) { return null; }
+
+    // Cap the 'shares' arg at the stock's maximum shares. This'll prevent
+    // hanging in the case when a really big number is passed in
+    shares = Math.min(shares, stock.maxShares);
 
     const isLong = (posType === PositionTypes.Long);
 
