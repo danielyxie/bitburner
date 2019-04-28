@@ -3,17 +3,20 @@
     <head>
         <meta charset="utf-8">
         <title>Mocha Tests</title>
-        <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
+        <link href="https://unpkg.com/mocha@6.1.4/mocha.css" rel="stylesheet" />
     </head>
     <body>
         <div id="mocha"></div>
 
-        <script src="https://unpkg.com/mocha@4.0.1/mocha.js"></script>
+        <script src="https://unpkg.com/chai/chai.js"></script>
+        <script src="https://unpkg.com/mocha/mocha.js"></script>
 
-        <script>mocha.setup('bdd')</script>
-        <script type="module" src="tests.bundle.js"></script>
-        <script type="module">
+        <script class="mocha-init">
+            mocha.setup('bdd');
             mocha.checkLeaks();
+        </script>
+        <script type="module" src="tests.bundle.js"></script>
+        <script class="mocha-exec" type="module">
             mocha.run();
         </script>
     </body>
