@@ -75,6 +75,10 @@ export class StockTickers extends React.Component<IProps, IState> {
             this.setState({
                 watchlistSymbols: sanitizedWatchlist.split(","),
             });
+        } else {
+            this.setState({
+                watchlistSymbols: [],
+            });
         }
     }
 
@@ -91,8 +95,9 @@ export class StockTickers extends React.Component<IProps, IState> {
         for (const stockMarketProp in this.props.stockMarket) {
             const val = this.props.stockMarket[stockMarketProp];
             if (val instanceof Stock) {
+                // Skip if there's a filter and the stock isnt in that filter
                 if (this.state.watchlistSymbols.length > 0 && !this.state.watchlistSymbols.includes(val.symbol)) {
-                    continue; // Not in watchlist
+                    continue;
                 }
 
                 let orders = this.props.stockMarket.Orders[val.symbol];
@@ -100,11 +105,19 @@ export class StockTickers extends React.Component<IProps, IState> {
                     orders = [];
                 }
 
+                // Skip if we're in portfolio mode and the player doesnt own this or have any active orders
+                if (this.state.tickerDisplayMode === TickerDisplayMode.Portfolio) {
+                    if (val.playerShares === 0 && val.playerShortShares === 0 && orders.length === 0) {
+                        continue;
+                    }
+                }
+
                 tickers.push(
                     <StockTicker
                         buyStockLong={this.props.buyStockLong}
                         buyStockShort={this.props.buyStockShort}
                         cancelOrder={this.props.cancelOrder}
+                        key={val.symbol}
                         orders={orders}
                         p={this.props.p}
                         placeOrder={this.props.placeOrder}

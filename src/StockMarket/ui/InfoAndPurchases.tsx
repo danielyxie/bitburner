@@ -39,6 +39,16 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         this.purchase4SMarketDataTixApiAccess = this.purchase4SMarketDataTixApiAccess.bind(this);
     }
 
+    shouldComponentUpdate(nextProps: IProps) {
+        // This only need to rerender if the player has purchased something new
+        if (this.props.p.hasWseAccount !== nextProps.p.hasWseAccount) { return true; }
+        if (this.props.p.hasTixApiAccess !== nextProps.p.hasTixApiAccess) { return true; }
+        if (this.props.p.has4SData !== nextProps.p.has4SData) { return true; }
+        if (this.props.p.has4SDataTixApi !== nextProps.p.has4SDataTixApi) { return true; }
+
+        return false;
+    }
+
     handleClick4SMarketDataHelpTip() {
         dialogBoxCreate(
             "Access to the 4S Market Data feed will display two additional pieces " +
@@ -179,15 +189,19 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
     render() {
         const documentationLink = "https://bitburner.readthedocs.io/en/latest/basicgameplay/stockmarket.html";
         return (
-            <div>
-                <p>Welcome to the World Stock Exchange (WSE)!</p><br /><br />
+            <div className={"stock-market-info-and-purchases"}>
+                <p>Welcome to the World Stock Exchange (WSE)!</p>
+                <button className={"std-button"}>
+                    <a href={documentationLink} target={"_blank"}>
+                        Investopedia
+                    </a>
+                </button>
+                <br />
                 <p>
-                    To begin trading, you must first purchase an account.
+                    To begin trading, you must first purchase an account:
                 </p>
                 {this.renderPurchaseWseAccountButton()}
-                <a className={"std-button"} href={documentationLink} target={"_blank"}>
-                    Investopedia
-                </a>
+
                 <h2>Trade Information eXchange (TIX) API</h2>
                 <p>
                     TIX, short for Trade Information eXchange, is the communications protocol
@@ -208,7 +222,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
                 <p>
                     Commission Fees: Every transaction you make has
                     a {numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} commission fee.
-                </p>
+                </p><br />
                 <p>
                     WARNING: When you reset after installing Augmentations, the Stock
                     Market is reset. You will retain your WSE Account, access to the
