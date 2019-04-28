@@ -1,6 +1,12 @@
 import { Order } from "./Order";
 import { Stock } from "./Stock";
 import {
+    getBuyTransactionCost,
+    getSellTransactionGain,
+    processBuyTransactionPriceMovement,
+    processSellTransactionPriceMovement
+} from "./StockMarketHelpers";
+import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost
 } from "./StockMarketCosts";
@@ -226,8 +232,8 @@ export function buyStock(stock, shares, workerScript=null) {
     }
 
     // Does player have enough money?
-    const totalPrice = stock.price * shares;
-    if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
+    const totalPrice = getBuyTransactionCost(stock, shares, PositionTypes.Long);
+    if (Player.money.lt(totalPrice)) {
         if (tixApi) {
             workerScript.log(`ERROR: buyStock() failed because you do not have enough money to purchase this potiion. You need ${numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission)}`);
         } else {
@@ -249,25 +255,19 @@ export function buyStock(stock, shares, workerScript=null) {
     }
 
     const origTotal = stock.playerShares * stock.playerAvgPx;
-    Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
+    Player.loseMoney(totalPrice);
     const newTotal = origTotal + totalPrice;
     stock.playerShares = Math.round(stock.playerShares + shares);
     stock.playerAvgPx = newTotal / stock.playerShares;
+    processBuyTransactionPriceMovement(stock, shares, PositionTypes.Long);
     displayStockMarketContent();
+
+    const resultTxt = `Bought ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol} for ${numeralWrapper.formatMoney(totalPrice)}. ` +
+                      `Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} in commission fees.`
     if (tixApi) {
-        if (workerScript.shouldLog("buyStock")) {
-            workerScript.log(
-                "Bought " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
-                numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
-            );
-        }
+        if (workerScript.shouldLog("buyStock")) { workerScript.log(resultTxt); }
     } else {
-        dialogBoxCreate(
-            "Bought " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-            numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
-            numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
-        );
+        dialogBoxCreate(resultTxt);
     }
 
     return true;
@@ -297,8 +297,8 @@ export function sellStock(stock, shares, workerScript=null) {
     if (shares > stock.playerShares) {shares = stock.playerShares;}
     if (shares === 0) {return false;}
 
-    const gains = stock.price * shares - CONSTANTS.StockMarketCommission;
-    let netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
+    const gains = getSellTransactionGain(stock, shares, PositionTypes.Long);
+    let netProfit = gains - (stock.playerAvgPx * shares);
     if (isNaN(netProfit)) { netProfit = 0; }
     Player.gainMoney(gains);
     Player.recordMoneySource(netProfit, "stock");
@@ -311,21 +311,15 @@ export function sellStock(stock, shares, workerScript=null) {
     if (stock.playerShares === 0) {
         stock.playerAvgPx = 0;
     }
+
+    processSellTransactionPriceMovement(stock, shares, PositionTypes.Long);
     displayStockMarketContent();
+    const resultTxt = `Sold ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol}. ` +
+                      `After commissions, you gained a total of ${numeralWrapper.formatMoney(gains)}.`;
     if (tixApi) {
-         if (workerScript.shouldLog("sellStock")) {
-             workerScript.log(
-                 "Sold " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                 numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                 "a total of " + numeralWrapper.format(gains, '($0.000a)') + "."
-             );
-         }
+         if (workerScript.shouldLog("sellStock")) { workerScript.log(resultTxt); }
     } else {
-        dialogBoxCreate(
-            "Sold " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-            numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-            "a total of " + numeralWrapper.format(gains, '($0.000a)') + "."
-        );
+        dialogBoxCreate(resultTxt);
     }
 
     return true;
@@ -355,7 +349,7 @@ export function shortStock(stock, shares, workerScript=null) {
     }
 
     // Does the player have enough money?
-    const totalPrice = stock.price * shares;
+    const totalPrice = getBuyTransactionCost(stock, shares, PositionTypes.Short);
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
         if (tixApi) {
             workerScript.log("ERROR: shortStock() failed because you do not have enough " +
@@ -385,21 +379,15 @@ export function shortStock(stock, shares, workerScript=null) {
     const newTotal = origTotal + totalPrice;
     stock.playerShortShares = Math.round(stock.playerShortShares + shares);
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
+    processBuyTransactionPriceMovement(stock, shares, PositionTypes.Short);
     displayStockMarketContent();
+    const resultTxt = `Bought a short position of ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol} ` +
+                      `for ${numeralWrapper.formatMoney(totalPrice)}. Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} ` +
+                      `in commission fees.`;
     if (tixApi) {
-        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.shortStock == null) {
-            workerScript.log(
-                "Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
-                numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
-            );
-        }
+        if (workerScript.shouldLog("shortStock")) { workerScript.log(resultTxt); }
     } else {
-        dialogBoxCreate(
-            "Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-            numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
-            numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees."
-        );
+        dialogBoxCreate(resultTxt);
     }
 
     return true;
@@ -430,9 +418,19 @@ export function sellShort(stock, shares, workerScript=null) {
     if (shares === 0) {return false;}
 
     const origCost = shares * stock.playerAvgShortPx;
-    let profit = ((stock.playerAvgShortPx - stock.price) * shares) - CONSTANTS.StockMarketCommission;
+    const totalGain = getSellTransactionGain(stock, shares, PositionTypes.Short);
+    if (totalGain == null || isNaN(totalGain) || origCost == null) {
+        if (tixApi) {
+            workerScript.log(`Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug`);
+        } else {
+            dialogBoxCreate(`Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug`);
+        }
+
+        return false;
+    }
+    let profit = totalGain - origCost;
     if (isNaN(profit)) { profit = 0; }
-    Player.gainMoney(origCost + profit);
+    Player.gainMoney(totalGain);
     Player.recordMoneySource(profit, "stock");
     if (tixApi) {
         workerScript.scriptRef.onlineMoneyMade += profit;
@@ -443,21 +441,14 @@ export function sellShort(stock, shares, workerScript=null) {
     if (stock.playerShortShares === 0) {
         stock.playerAvgShortPx = 0;
     }
+    processSellTransactionPriceMovement(stock, shares, PositionTypes.Short);
     displayStockMarketContent();
+    const resultTxt = `Sold your short position of ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol}. ` +
+                      `After commissions, you gained a total of ${numeralWrapper.formatMoney(totalGain)}`;
     if (tixApi) {
-        if (workerScript.shouldLog("sellShort")) {
-            workerScript.log(
-                "Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + "."
-            );
-        }
+        if (workerScript.shouldLog("sellShort")) { workerScript.log(resultTxt); }
     } else {
-        dialogBoxCreate(
-            "Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-            numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-            "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + "."
-        );
+        dialogBoxCreate(resultTxt);
     }
 
     return true;

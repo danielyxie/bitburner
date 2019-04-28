@@ -52,6 +52,49 @@ export function getBuyTransactionCost(stock: Stock, shares: number, posType: Pos
 }
 
 /**
+ * Processes a buy transaction's resulting price movement.
+ * @param {Stock} stock - Stock being purchased
+ * @param {number} shares - Number of shares being transacted
+ * @param {PositionTypes} posType - Long or short position
+ */
+export function processBuyTransactionPriceMovement(stock: Stock, shares: number, posType: PositionTypes): void {
+    if (isNaN(shares) || shares <= 0 || !(stock instanceof Stock)) { return; }
+
+    // Cap the 'shares' arg at the stock's maximum shares. This'll prevent
+    // hanging in the case when a really big number is passed in
+    shares = Math.min(shares, stock.maxShares);
+
+    const isLong = (posType === PositionTypes.Long);
+
+    // If the number of shares doesn't trigger a price movement, just return
+    if (shares <= stock.shareTxUntilMovement) {
+        stock.shareTxUntilMovement -= shares;
+        return;
+    }
+
+    // Calculate how many iterations of price changes we need to account for
+    let remainingShares = shares - stock.shareTxUntilMovement;
+    let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
+
+    // The initial cost calculation takes care of the first "iteration"
+    let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
+    for (let i = 1; i < numIterations; ++i) {
+        const amt = Math.min(stock.shareTxForMovement, remainingShares);
+        remainingShares -= amt;
+
+        // Price movement
+        if (isLong) {
+            currPrice *= (1 + (stock.priceMovementPerc / 100));
+        } else {
+            currPrice *= (1 - (stock.priceMovementPerc / 100));
+        }
+    }
+
+    stock.price = currPrice;
+    stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
+}
+
+/**
  * Calculate the TOTAL amount of money gained from a sale (NOT net profit). This accounts
  * for spread, price movements, and commission.
  * @param {Stock} stock - Stock being sold
@@ -114,4 +157,46 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
     }
 
     return totalGain - CONSTANTS.StockMarketCommission;
+}
+
+/**
+ * Processes a sell transaction's resulting price movement
+ * @param {Stock} stock - Stock being sold
+ * @param {number} shares - Number of sharse being transacted
+ * @param {PositionTypes} posType - Long or short position
+ */
+export function processSellTransactionPriceMovement(stock: Stock, shares: number, posType: PositionTypes): void {
+    if (isNaN(shares) || shares <= 0 || !(stock instanceof Stock)) { return; }
+
+    // Cap the 'shares' arg at the stock's maximum shares. This'll prevent
+    // hanging in the case when a really big number is passed in
+    shares = Math.min(shares, stock.maxShares);
+
+    const isLong = (posType === PositionTypes.Long);
+
+    if (shares <= stock.shareTxUntilMovement) {
+        stock.shareTxUntilMovement -= shares;
+        return;
+    }
+
+    // Calculate how many iterations of price changes we need to accoutn for
+    let remainingShares = shares - stock.shareTxUntilMovement;
+    let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
+
+    // The initial cost calculation takes care of the first "iteration"
+    let currPrice = isLong ? stock.getBidPrice() : stock.getAskPrice();
+    for (let i = 1; i < numIterations; ++i) {
+        const amt = Math.min(stock.shareTxForMovement, remainingShares);
+        remainingShares -= amt;
+
+        // Price movement
+        if (isLong) {
+            currPrice *= (1 - (stock.priceMovementPerc / 100));
+        } else {
+            currPrice *= (1 + (stock.priceMovementPerc / 100));
+        }
+    }
+
+    stock.price = currPrice;
+    stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
 }
