@@ -32,7 +32,7 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
         return (
             <div>
                 <h3 className={"tooltip"}>
-                    Short Position:
+                    Long Position:
                     <span className={"tooltiptext"}>
                         Shares in the long position will increase in value if the price
                         of the corresponding stock increases
