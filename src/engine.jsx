@@ -82,9 +82,7 @@ import {
 } from "./Server/SpecialServerIps";
 import {
     StockMarket,
-    StockSymbols,
     SymbolToStockMap,
-    initStockSymbols,
     initSymbolToStockMap,
     stockMarketCycle,
     processStockPrices,
@@ -1085,7 +1083,6 @@ const Engine = {
             Engine.init();                  // Initialize buttons, work, etc.
             initAugmentations();            // Also calls Player.reapplyAllAugmentations()
             Player.reapplyAllSourceFiles();
-            initStockSymbols();
             if (Player.hasWseAccount) {
                 initSymbolToStockMap();
             }
@@ -1215,7 +1212,6 @@ const Engine = {
             initFactions();
             initAugmentations();
             initMessages();
-            initStockSymbols();
             initLiterature();
             initSingularitySFFlags();
 

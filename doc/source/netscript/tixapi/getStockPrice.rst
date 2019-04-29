@@ -6,9 +6,12 @@ getStockPrice() Netscript Function
     :param string sym: Stock symbol
     :RAM cost: 2 GB
 
-    Returns the price of a stock, given its symbol (NOT the company name). The symbol is a sequence
-    of two to four capital letters.
+    Given a stock's symbol, returns the price of that stock (the symbol is a sequence
+    of two to four capital letters, **not** the name of the company to which that stock belongs).
+
+    .. note:: The stock's price is the average of its bid and ask price.
+              See :ref:`gameplay_stock_market_spread` for details on what this means.
 
     Example::
 
-        getStockPrice("FISG");
+        getStockPrice("FSIG");

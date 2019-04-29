@@ -32,7 +32,10 @@ export interface IPlayer {
     factions: string[];
     firstTimeTraveled: boolean;
     hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
+    has4SData: boolean;
+    has4SDataTixApi: boolean;
     hashManager: HashManager;
+    hasTixApiAccess: boolean;
     hasWseAccount: boolean;
     homeComputer: string;
     hp: number;

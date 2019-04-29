@@ -15,11 +15,15 @@ access even after you 'reset' by installing Augmentations
 
 .. toctree::
     :caption: API Functions:
-    
+
     getStockSymbols() <tixapi/getStockSymbols>
     getStockPrice() <tixapi/getStockPrice>
+    getStockAskPrice() <tixapi/getStockAskPrice>
+    getStockBidPrice() <tixapi/getStockBidPrice>
     getStockPosition() <tixapi/getStockPosition>
     getStockMaxShares() <tixapi/getStockMaxShares>
+    getStockPurchaseCost() <tixapi/getStockPurchaseCost>
+    getStockSaleGain() <tixapi/getStockSaleGain>
     buyStock() <tixapi/buyStock>
     sellStock() <tixapi/sellStock>
     shortStock() <tixapi/shortStock>
