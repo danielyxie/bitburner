@@ -39,16 +39,6 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         this.purchase4SMarketDataTixApiAccess = this.purchase4SMarketDataTixApiAccess.bind(this);
     }
 
-    shouldComponentUpdate(nextProps: IProps) {
-        // This only need to rerender if the player has purchased something new
-        if (this.props.p.hasWseAccount !== nextProps.p.hasWseAccount) { return true; }
-        if (this.props.p.hasTixApiAccess !== nextProps.p.hasTixApiAccess) { return true; }
-        if (this.props.p.has4SData !== nextProps.p.has4SData) { return true; }
-        if (this.props.p.has4SDataTixApi !== nextProps.p.has4SDataTixApi) { return true; }
-
-        return false;
-    }
-
     handleClick4SMarketDataHelpTip() {
         dialogBoxCreate(
             "Access to the 4S Market Data feed will display two additional pieces " +

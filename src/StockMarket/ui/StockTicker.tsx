@@ -109,10 +109,12 @@ export class StockTicker extends React.Component<IProps, IState> {
         const stock = this.props.stock;
         const qty: number = this.getQuantity();
         if (isNaN(qty)) { return ""; }
-        const cost = getBuyTransactionCost(this.props.stock, qty, this.state.position);
+
+        const cost = getBuyTransactionCost(stock, qty, this.state.position);
         if (cost == null) { return ""; }
 
-        let costTxt = `Purchasing ${numeralWrapper.formatBigNumber(qty)} shares will cost ${numeralWrapper.formatMoney(cost)}. `;
+        let costTxt = `Purchasing ${numeralWrapper.formatBigNumber(qty)} shares (${this.state.position === PositionTypes.Long ? "Long" : "Short"}) ` +
+                      `will cost ${numeralWrapper.formatMoney(cost)}. `;
 
         const causesMovement = qty > stock.shareTxUntilMovement;
         if (causesMovement) {
@@ -130,10 +132,22 @@ export class StockTicker extends React.Component<IProps, IState> {
         const stock = this.props.stock;
         const qty: number = this.getQuantity();
         if (isNaN(qty)) { return ""; }
-        const cost = getSellTransactionGain(this.props.stock, qty, this.state.position);
+
+        if (this.state.position === PositionTypes.Long) {
+            if (qty > stock.playerShares) {
+                return `You do not have this many shares in the Long position`;
+            }
+        } else {
+            if (qty > stock.playerShortShares) {
+                return `You do not have this many shares in the Short position`;
+            }
+        }
+        
+        const cost = getSellTransactionGain(stock, qty, this.state.position);
         if (cost == null) { return ""; }
 
-        let costTxt = `Selling ${numeralWrapper.formatBigNumber(qty)} shares will result in a gain of ${numeralWrapper.formatMoney(cost)}. `;
+        let costTxt = `Selling ${numeralWrapper.formatBigNumber(qty)} shares (${this.state.position === PositionTypes.Long ? "Long" : "Short"}) ` +
+                      `will result in a gain of ${numeralWrapper.formatMoney(cost)}. `;
 
         const causesMovement = qty > stock.shareTxUntilMovement;
         if (causesMovement) {
@@ -264,7 +278,7 @@ export class StockTicker extends React.Component<IProps, IState> {
     handlePositionTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const val = e.target.value;
 
-        if (val === "Short") {
+        if (val === PositionTypes.Short) {
             this.setState({
                 position: PositionTypes.Short,
             });
@@ -369,19 +383,19 @@ export class StockTicker extends React.Component<IProps, IState> {
                     panelContent={
                         <div>
                             <input
-                                className={"stock-market-input"}
+                                className="stock-market-input"
                                 onChange={this.handleQuantityChange}
-                                placeholder={"Quantity (Shares)"}
+                                placeholder="Quantity (Shares)"
                                 value={this.state.qty}
                             />
-                            <select className={"stock-market-input dropdown"} onChange={this.handlePositionTypeChange} value={this.state.position}>
-                                <option value={"Long"}>Long</option>
+                            <select className="stock-market-input dropdown" onChange={this.handlePositionTypeChange} value={this.state.position}>
+                                <option value={PositionTypes.Long}>Long</option>
                                 {
                                     this.hasShortAccess() &&
-                                    <option value={"Short"}>Short</option>
+                                    <option value={PositionTypes.Short}>Short</option>
                                 }
                             </select>
-                            <select className={"stock-market-input dropdown"} onChange={this.handleOrderTypeChange} value={this.state.orderType}>
+                            <select className="stock-market-input dropdown" onChange={this.handleOrderTypeChange} value={this.state.orderType}>
                                 <option value={SelectorOrderType.Market}>{SelectorOrderType.Market}</option>
                                 {
                                     this.hasOrderAccess() &&
@@ -402,7 +416,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                                 <p className="stock-market-price-movement-warning">
                                     WARNING: Buying/Selling {numeralWrapper.formatBigNumber(qty)} shares will affect
                                     the stock's price. This applies during the transaction itself as well. See Investopedia
-                                    for more details. 
+                                    for more details.
                                 </p>
                             }
                             <StockTickerPositionText p={this.props.p} stock={this.props.stock} />

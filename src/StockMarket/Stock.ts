@@ -182,7 +182,7 @@ export class Stock {
         this.totalShares = Math.round(totalSharesUnrounded / 1e5) * 1e5;
 
         // Max Shares (Outstanding shares) is a percentage of total shares
-        const outstandingSharePercentage: number = 0.15;
+        const outstandingSharePercentage: number = 0.2;
         this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e5) * 1e5;
     }
 

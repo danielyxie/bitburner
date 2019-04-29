@@ -7,10 +7,14 @@ buy and sell stocks in order to make money.
 
 The WSE can be found in the 'City' tab, and is accessible in every city.
 
-Automating the Stock Market
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can write scripts to perform automatic and algorithmic trading on the Stock Market.
-See :ref:`netscript_tixapi` for more details. 
+Fundamentals
+------------
+The Stock Market is not as simple as "buy at price X and sell at price Y". The following
+are several fundamental concepts you need to understand about the stock market.
+
+.. note:: For those that have experience with finance/trading/investing, please be aware
+          that the game's stock market does not function exactly like it does in the real
+          world. So these concepts below should seem similar, but won't be exactly the same.
 
 Positions: Long vs Short
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -21,16 +25,61 @@ is the exact opposite. In a Short position you purchase shares of a stock and
 earn a profit if the price of that stock decreases. This is also called 'shorting'
 a stock.
 
-NOTE: Shorting stocks is not available immediately, and must be unlocked later in the
-game.
+.. note:: Shorting stocks is not available immediately, and must be unlocked later in the
+          game.
+
+.. _gameplay_stock_market_spread:
+
+Spread (Bid Price & Ask Price)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The **bid price** is the maximum price at which someone will buy a stock on the
+stock market.
+
+The **ask price** is the minimum price that a seller is willing to receive for a stock
+on the stock market
+
+The ask price will always be higher than the bid price (This is because if a seller
+is willing to receive less than the bid price, that transaction is guaranteed to
+happen). The difference between the bid and ask price is known as the **spread**.
+A stock's "price" will be the average of the bid and ask price.
+
+The bid and ask price are important because these are the prices at which a
+transaction actually occurs. If you purchase a stock in the long position, the cost
+of your purchase depends on that stock's ask price. If you then try to sell that
+stock (still in the long position), the price at which you sell is the stock's
+bid price. Note that this is reversed for a short position. Purchasing a stock
+in the short position will occur at the stock's bid price, and selling a stock
+in the short position will occur at the stock's ask price.
+
+.. _gameplay_stock_spread_price_movement:
+
+Transactions Influencing Stock Price
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Buying or selling a large number of shares of a stock will influence that stock's price.
+
+Buying a stock in the long position will cause that stock's price to
+increase. Selling a stock in the long position will cause the stock's price to decrease.
+The reverse occurs for the short position. The effect of this depends on how many shares
+are being transacted. More shares will have a bigger effect on the stock price. If
+only a small number of shares are being transacted, the stock price may not be affected.
+
+Note that this "influencing" of the stock price **can happen in the middle of a transaction**.
+For example, assume you are selling 1m shares of a stock. That stock's bid price
+is currently $100. However, selling 100k shares of the stock causes its price to drop
+by 1%. This means that for your transaction of 1m shares, the first 100k shares will be
+sold at $100. Then the next 100k shares will be sold at $99. Then the next 100k shares will
+be sold at $98.01, and so on.
+
+This is an important concept to keep in mind if you are trying to purchase/sell a
+large number of shares, as **it can negatively affect your profits**.
 
 Order Types
 ^^^^^^^^^^^
 There are three different types of orders you can make to buy or sell stocks on the exchange:
 Market Order, Limit Order, and Stop Order.
 
-Note that Limit Orders and Stop Orders are not available immediately, and must be unlocked
-later in the game.
+.. note:: Limit Orders and Stop Orders are not available immediately, and must be unlocked
+          later in the game.
 
 When you place a Market Order to buy or sell a stock, the order executes immediately at
 whatever the current price of the stock is. For example if you choose to short a stock
@@ -71,3 +120,8 @@ A Limit Order to sell will execute if the stock's price <= order's price
 A Stop Order to buy will execute if the stock's price <= order's price
 
 A Stop Order to sell will execute if the stock's price >= order's price.
+
+Automating the Stock Market
+---------------------------
+You can write scripts to perform automatic and algorithmic trading on the Stock Market.
+See :ref:`netscript_tixapi` for more details.

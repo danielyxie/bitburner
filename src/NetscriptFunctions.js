@@ -84,6 +84,10 @@ import {
     placeOrder,
     cancelOrder
 } from "./StockMarket/StockMarket";
+import {
+    getBuyTransactionCost,
+    getSellTransactionGain,
+} from "./StockMarket/StockMarketHelpers";
 import { OrderTypes } from "./StockMarket/data/OrderTypes";
 import { PositionTypes } from "./StockMarket/data/PositionTypes";
 import { StockSymbols } from "./StockMarket/data/StockSymbols";
@@ -278,6 +282,29 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeRejectMsg(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
         }
         return server;
+    }
+
+    /**
+     * Checks if the player has TIX API access. Throws an error if the player does not
+     */
+    const checkTixApiAccess = function(callingFn="") {
+        if (!Player.hasTixApiAccess) {
+            throw makeRuntimeRejectMsg(workerScript, `You don't have TIX API Access! Cannot use ${callingFn}()`);
+        }
+    }
+
+    /**
+     * Gets a stock, given its symbol. Throws an error if the symbol is invalid
+     * @param {string} symbol - Stock's symbol
+     * @returns {Stock} stock object
+     */
+    const getStockFromSymbol = function(symbol, callingFn="") {
+        const stock = SymbolToStockMap[symbol];
+        if (stock == null) {
+            throw makeRuntimeRejectMsg(workerScript, `Invalid stock symbol passed into ${callingFn}()`);
+        }
+
+        return stock;
     }
 
     /**
@@ -1585,9 +1612,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
             }
             updateDynamicRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockSymbols()");
-            }
+            checkTixApiAccess("getStockSymbols");
             return Object.values(StockSymbols);
         },
         getStockPrice : function(symbol) {
@@ -1595,23 +1620,37 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockPrice", CONSTANTS.ScriptGetStockRamCost);
             }
             updateDynamicRam("getStockPrice", CONSTANTS.ScriptGetStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
+            checkTixApiAccess("getStockPrice");
+            const stock = getStockFromSymbol(symbol, "getStockPrice");
+
+            return stock.price;
+        },
+        getStockAskPrice : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockAskPrice", CONSTANTS.ScriptGetStockRamCost);
             }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            updateDynamicRam("getStockAskPrice", CONSTANTS.ScriptGetStockRamCost);
+            checkTixApiAccess("getStockAskPrice");
+            const stock = getStockFromSymbol(symbol, "getStockAskPrice");
+
+            return stock.getAskPrice();
+        },
+        getStockBidPrice : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockBidPrice", CONSTANTS.ScriptGetStockRamCost);
             }
-            return parseFloat(stock.price.toFixed(3));
+            updateDynamicRam("getStockBidPrice", CONSTANTS.ScriptGetStockRamCost);
+            checkTixApiAccess("getStockBidPrice");
+            const stock = getStockFromSymbol(symbol, "getStockBidPrice");
+
+            return stock.getBidPrice();
         },
         getStockPosition : function(symbol) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getStockPosition", CONSTANTS.ScriptGetStockRamCost);
             }
             updateDynamicRam("getStockPosition", CONSTANTS.ScriptGetStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
-            }
+            checkTixApiAccess("getStockPosition");
             var stock = SymbolToStockMap[symbol];
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPosition()");
@@ -1623,29 +1662,66 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockMaxShares", CONSTANTS.ScriptGetStockRamCost);
             }
             updateDynamicRam("getStockMaxShares", CONSTANTS.ScriptGetStockRamCost);
-
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockMaxShares()");
-            }
-            const stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockMaxShares()");
-            }
+            checkTixApiAccess("getStockMaxShares");
+            const stock = getStockFromSymbol(symbol, "getStockMaxShares");
 
             return stock.maxShares;
+        },
+        getStockPurchaseCost : function(symbol, shares, posType) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockPurchaseCost", CONSTANTS.ScriptGetStockRamCost);
+            }
+            updateDynamicRam("getStockPurchaseCost", CONSTANTS.ScriptGetStockRamCost);
+            checkTixApiAccess("getStockPurchaseCost");
+            const stock = getStockFromSymbol(symbol, "getStockPurchaseCost");
+            shares = Math.round(shares);
+
+            let pos;
+            const sanitizedPosType = posType.toLowerCase();
+            if (sanitizedPosType.includes("l")) {
+                pos = PositionTypes.Long;
+            } else if (sanitizedPosType.includes("s")) {
+                pos = PositionTypes.Short;
+            } else {
+                return Infinity;
+            }
+
+            const res = getBuyTransactionCost(stock, shares, pos);
+            if (res == null) { return Infinity; }
+
+            return res;
+        },
+        getStockSaleGain : function(symbol, shares, posType) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockSaleGain", CONSTANTS.ScriptGetStockRamCost);
+            }
+            updateDynamicRam("getStockSaleGain", CONSTANTS.ScriptGetStockRamCost);
+            checkTixApiAccess("getStockSaleGain");
+            const stock = getStockFromSymbol(symbol, "getStockSaleGain");
+            shares = Math.round(shares);
+
+            let pos;
+            const sanitizedPosType = posType.toLowerCase();
+            if (sanitizedPosType.includes("l")) {
+                pos = PositionTypes.Long;
+            } else if (sanitizedPosType.includes("s")) {
+                pos = PositionTypes.Short;
+            } else {
+                return 0;
+            }
+
+            const res = getSellTransactionGain(stock, shares, pos);
+            if (res == null) { return 0; }
+
+            return res;
         },
         buyStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("buyStock", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("buyStock", CONSTANTS.ScriptBuySellStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
-            }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into buyStock()");
-            }
+            checkTixApiAccess("buyStock");
+            const stock = getStockFromSymbol(symbol, "buyStock");
             const res = buyStock(stock, shares, workerScript);
 
             return res ? stock.price : 0;
@@ -1655,77 +1731,57 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("sellStock", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("sellStock", CONSTANTS.ScriptBuySellStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
-            }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into sellStock()");
-            }
-
+            checkTixApiAccess("sellStock");
+            const stock = getStockFromSymbol(symbol, "sellStock");
             const res = sellStock(stock, shares, workerScript);
 
             return res ? stock.price : 0;
         },
-        shortStock(symbol, shares) {
+        shortStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("shortStock", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("shortStock", CONSTANTS.ScriptBuySellStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use shortStock()");
-            }
+            checkTixApiAccess("shortStock");
             if (Player.bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use shortStock(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
                 }
             }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into shortStock()");
-            }
+            const stock = getStockFromSymbol(symbol, "shortStock");
             const res = shortStock(stock, shares, workerScript);
 
             return res ? stock.price : 0;
         },
-        sellShort(symbol, shares) {
+        sellShort : function(symbol, shares) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("sellShort", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("sellShort", CONSTANTS.ScriptBuySellStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use sellShort()");
-            }
+            checkTixApiAccess("sellShort");
             if (Player.bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use sellShort(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
                 }
             }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into sellShort()");
-            }
+            const stock = getStockFromSymbol(symbol, "sellShort");
             const res = sellShort(stock, shares, workerScript);
 
             return res ? stock.price : 0;
         },
-        placeOrder(symbol, shares, price, type, pos) {
+        placeOrder : function(symbol, shares, price, type, pos) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("placeOrder", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("placeOrder", CONSTANTS.ScriptBuySellStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use placeOrder()");
-            }
+            checkTixApiAccess("placeOrder");
             if (Player.bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use placeOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
                 }
             }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into placeOrder()");
-            }
+            const stock = getStockFromSymbol(symbol, "placeOrder");
+
             var orderType, orderPos;
             type = type.toLowerCase();
             if (type.includes("limit") && type.includes("buy")) {
@@ -1751,23 +1807,18 @@ function NetscriptFunctions(workerScript) {
 
             return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
         },
-        cancelOrder(symbol, shares, price, type, pos) {
+        cancelOrder : function(symbol, shares, price, type, pos) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("cancelOrder", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("cancelOrder", CONSTANTS.ScriptBuySellStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use cancelOrder()");
-            }
+            checkTixApiAccess("cancelOrder");
             if (Player.bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use cancelOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
                 }
             }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into cancelOrder()");
-            }
+            const stock = getStockFrom(symbol, "cancelOrder");
             if (isNaN(shares) || isNaN(price)) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid shares or price argument passed into cancelOrder(). Must be numeric");
             }
@@ -1844,10 +1895,8 @@ function NetscriptFunctions(workerScript) {
             if (!Player.has4SDataTixApi) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockVolatility()");
             }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into getStockVolatility()");
-            }
+            const stock = getStockFromSymbol(symbol, "getStockVolatility");
+
             return stock.mv / 100; // Convert from percentage to decimal
         },
         getStockForecast : function(symbol) {
@@ -1858,10 +1907,8 @@ function NetscriptFunctions(workerScript) {
             if (!Player.has4SDataTixApi) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockForecast()");
             }
-            var stock = SymbolToStockMap[symbol];
-            if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into getStockForecast()");
-            }
+            const stock = getStockFromSymbol(symbol, "getStockForecast");
+
             var forecast = 50;
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
             return forecast / 100; // Convert from percentage to decimal
@@ -1871,10 +1918,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("purchase4SMarketData", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("purchase4SMarketData", CONSTANTS.ScriptBuySellStockRamCost);
-
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
-            }
+            checkTixApiAccess("purchase4SMarketData");
 
             if (Player.has4SData) {
                 if (workerScript.shouldLog("purchase4SMarketData")) {
@@ -1902,10 +1946,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("purchase4SMarketDataTixApi", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("purchase4SMarketDataTixApi", CONSTANTS.ScriptBuySellStockRamCost);
-
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketDataTixApi()");
-            }
+            checkTixApiAccess("purchase4SMarketDataTixApi");
 
             if (Player.has4SDataTixApi) {
                 if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
