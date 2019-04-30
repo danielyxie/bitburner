@@ -2,16 +2,13 @@
  * Module for handling the UI for purchasing Sleeve Augmentations
  * This UI is a popup, not a full page
  */
-import { Sleeve, findSleevePurchasableAugs } from "./Sleeve";
+import { Sleeve } from "./Sleeve";
+import { findSleevePurchasableAugs } from "./SleeveHelpers";
 
 import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-
-import { Faction } from "../../Faction/Faction";
-import { Factions } from "../../Faction/Factions";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 

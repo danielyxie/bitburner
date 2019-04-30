@@ -59,16 +59,19 @@ export class StockMarketRoot extends React.Component<IProps, IState> {
                     p={this.props.p}
                     rerender={this.rerender}
                 />
-                <StockTickers
-                    buyStockLong={this.props.buyStockLong}
-                    buyStockShort={this.props.buyStockShort}
-                    cancelOrder={this.props.cancelOrder}
-                    p={this.props.p}
-                    placeOrder={this.props.placeOrder}
-                    sellStockLong={this.props.sellStockLong}
-                    sellStockShort={this.props.sellStockShort}
-                    stockMarket={this.props.stockMarket}
-                />
+                {
+                    this.props.p.hasWseAccount &&
+                    <StockTickers
+                        buyStockLong={this.props.buyStockLong}
+                        buyStockShort={this.props.buyStockShort}
+                        cancelOrder={this.props.cancelOrder}
+                        p={this.props.p}
+                        placeOrder={this.props.placeOrder}
+                        sellStockLong={this.props.sellStockLong}
+                        sellStockShort={this.props.sellStockShort}
+                        stockMarket={this.props.stockMarket}
+                    />
+                }
             </div>
         )
     }

@@ -13,6 +13,15 @@ export function canAccessGang() {
     return (this.karma <= GangKarmaRequirement);
 }
 
+export function getGangFaction() {
+    const fac = Factions[this.gang.facName];
+    if (fac == null) {
+        throw new Error(`Gang has invalid faction name: ${this.gang.facName}`);
+    }
+
+    return fac;
+}
+
 export function getGangName() {
     return this.gang.facName;
 }

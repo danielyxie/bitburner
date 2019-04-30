@@ -11,5 +11,5 @@ getStockSaleGain() Netscript Function
 
     Calculates and returns how much you would gain from selling a given number of
     shares of a stock. This takes into account :ref:`spread <gameplay_stock_market_spread>`,
-    :ref:`large transactions influencing the price of the stock <gameplay_stock_spread_price_movement>`
+    :ref:`large transactions influencing the price of the stock <gameplay_stock_market_spread_price_movement>`
     and commission fees.

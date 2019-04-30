@@ -51,7 +51,7 @@ bid price. Note that this is reversed for a short position. Purchasing a stock
 in the short position will occur at the stock's bid price, and selling a stock
 in the short position will occur at the stock's ask price.
 
-.. _gameplay_stock_spread_price_movement:
+.. _gameplay_stock_market_spread_price_movement:
 
 Transactions Influencing Stock Price
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -72,6 +72,8 @@ be sold at $98.01, and so on.
 
 This is an important concept to keep in mind if you are trying to purchase/sell a
 large number of shares, as **it can negatively affect your profits**.
+
+.. _gameplay_stock_market_order_types:
 
 Order Types
 ^^^^^^^^^^^

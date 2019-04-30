@@ -59,17 +59,18 @@ export function getBuyTransactionCost(stock: Stock, shares: number, posType: Pos
     let remainingShares = shares - stock.shareTxUntilMovement;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
-
-
     // The initial cost calculation takes care of the first "iteration"
     let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
     let totalCost = (stock.shareTxUntilMovement * currPrice);
 
+    const increasingMvmt = calculateIncreasingPriceMovement(stock)!;
+    const decreasingMvmt = calculateDecreasingPriceMovement(stock)!;
+
     function processPriceMovement() {
         if (isLong) {
-            currPrice *= calculateIncreasingPriceMovement(stock)!;
+            currPrice *= increasingMvmt;
         } else {
-            currPrice *= calculateDecreasingPriceMovement(stock)!;
+            currPrice *= decreasingMvmt;
         }
     }
 
@@ -227,4 +228,59 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
 
     stock.price = currPrice;
     stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
+}
+
+/**
+ * Calculate the maximum number of shares of a stock that can be purchased.
+ * Handles mid-transaction price movements, both L and S positions, etc.
+ * Used for the "Buy Max" button in the UI
+ * @param {Stock} stock - Stock being purchased
+ * @param {PositionTypes} posType - Long or short position
+ * @param {number} money - Amount of money player has
+ * @returns maximum number of shares that the player can purchase
+ */
+export function calculateBuyMaxAmount(stock: Stock, posType: PositionTypes, money: number): number {
+    if (!(stock instanceof Stock)) { return 0; }
+
+    const isLong = (posType === PositionTypes.Long);
+
+    const increasingMvmt = calculateIncreasingPriceMovement(stock);
+    const decreasingMvmt = calculateDecreasingPriceMovement(stock);
+    if (increasingMvmt == null || decreasingMvmt == null) { return 0; }
+
+    let remainingMoney = money - CONSTANTS.StockMarketCommission;
+    let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
+
+    // No price movement
+    const firstIterationCost = stock.shareTxUntilMovement * currPrice;
+    if (remainingMoney < firstIterationCost) {
+        return Math.floor(remainingMoney / currPrice);
+    }
+
+    // We'll avoid any accidental infinite loops by having a hardcoded maximum number of
+    // iterations
+    let numShares = stock.shareTxUntilMovement;
+    remainingMoney -= firstIterationCost;
+    for (let i = 0; i < 10e3; ++i) {
+        if (isLong) {
+            currPrice *= increasingMvmt;
+        } else {
+            currPrice *= decreasingMvmt;
+        }
+
+        const affordableShares = Math.floor(remainingMoney / currPrice);
+        const actualShares = Math.min(stock.shareTxForMovement, affordableShares);
+
+        // Can't afford any more, so we're done
+        if (actualShares <= 0) { break; }
+
+        numShares += actualShares;
+
+        let cost = actualShares * currPrice;
+        remainingMoney -= cost;
+
+        if (remainingMoney <= 0) { break; }
+    }
+
+    return Math.floor(numShares);
 }

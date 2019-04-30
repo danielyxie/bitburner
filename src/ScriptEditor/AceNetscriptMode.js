@@ -95,6 +95,7 @@ let NetscriptFunctions =
 
     // TIX API
     "getStockPrice|getStockPosition|getStockSymbols|getStockMaxShares|"        +
+    "getStockAskPrice|getStockBidPrice|getStockPurchaseCost|getStockSaleGain|" +
     "buyStock|sellStock|shortStock|sellShort|"                                 +
     "placeOrder|cancelOrder|getOrders|getStockVolatility|getStockForecast|"    +
     "purchase4SMarketData|purchase4SMarketDataTixApi|"                         +

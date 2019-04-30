@@ -15,6 +15,8 @@ export enum TickerDisplayMode {
 type IProps = {
     changeDisplayMode: () => void;
     changeWatchlistFilter: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    collapseAllTickers: () => void;
+    expandAllTickers: () => void;
     tickerDisplayMode: TickerDisplayMode;
 }
 
@@ -47,6 +49,14 @@ export class StockTickersConfig extends React.Component<IProps, any> {
         return (
             <div>
                 {this.renderDisplayModeButton()}
+                <StdButton
+                    onClick={this.props.expandAllTickers}
+                    text="Expand Tickers"
+                />
+                <StdButton
+                    onClick={this.props.collapseAllTickers}
+                    text="Collapse Tickers"
+                />
 
                 <input
                     className="text-input"

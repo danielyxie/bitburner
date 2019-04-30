@@ -6,6 +6,7 @@ import * as React from "react";
 type IProps = {
     headerContent: React.ReactElement;
     panelContent: React.ReactElement;
+    panelInitiallyOpened?: boolean;
 }
 
 type IState = {
@@ -19,7 +20,7 @@ export class Accordion extends React.Component<IProps, IState> {
         this.handleHeaderClick = this.handleHeaderClick.bind(this);
 
         this.state = {
-            panelOpened: false,
+            panelOpened: props.panelInitiallyOpened ? true : false,
         }
     }
 
@@ -28,15 +29,16 @@ export class Accordion extends React.Component<IProps, IState> {
         elem.classList.toggle("active");
 
         const panel: HTMLElement = elem.nextElementSibling as HTMLElement;
-        if (panel!.style.display === "block") {
-            panel!.style.display = "none";
-            this.setState({
-                panelOpened: false,
-            });
-        } else {
+        const active = elem.classList.contains("active");
+        if (active) {
             panel!.style.display = "block";
             this.setState({
                 panelOpened: true,
+            });
+        } else {
+            panel!.style.display = "none";
+            this.setState({
+                panelOpened: false,
             });
         }
     }

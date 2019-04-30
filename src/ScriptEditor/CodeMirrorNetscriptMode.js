@@ -153,9 +153,13 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
 
       // Netscript TIX API
       "getStockPrice": atom,
+      "getStockAskPrice": atom,
+      "getStockBidPrice": atom,
       "getStockPosition": atom,
       "getStockSymbols": atom,
       "getStockMaxShares": atom,
+      "getStockPurchaseCost": atom,
+      "getStockSaleGain": atom,
       "buyStock": atom,
       "sellStock": atom,
       "shortStock": atom,

@@ -129,6 +129,7 @@ export interface IPlayer {
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
     getCurrentServer(): Server;
+    getGangFaction(): Faction;
     getGangName(): string;
     getHomeComputer(): Server;
     getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;

@@ -117,7 +117,7 @@ import {
 } from "./NetscriptEvaluator";
 import { NetscriptPort } from "./NetscriptPort";
 import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
-import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/Sleeve";
+import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
 
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
@@ -288,6 +288,9 @@ function NetscriptFunctions(workerScript) {
      * Checks if the player has TIX API access. Throws an error if the player does not
      */
     const checkTixApiAccess = function(callingFn="") {
+        if (!Player.hasWseAccount) {
+            throw makeRuntimeRejectMsg(workerScript, `You don't have WSE Access! Cannot use ${callingFn}()`);
+        }
         if (!Player.hasTixApiAccess) {
             throw makeRuntimeRejectMsg(workerScript, `You don't have TIX API Access! Cannot use ${callingFn}()`);
         }
@@ -977,7 +980,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
             }
-            if (isNaN(threads) || threads < 0) {
+            if (isNaN(threads) || threads <= 0) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
@@ -1002,7 +1005,7 @@ function NetscriptFunctions(workerScript) {
                 if (scriptname === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
                 }
-                if (isNaN(threads) || threads < 0) {
+                if (isNaN(threads) || threads <= 0) {
                     throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
                 }
                 var argsForNewScript = [];
@@ -1858,9 +1861,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getOrders", CONSTANTS.ScriptBuySellStockRamCost);
             }
             updateDynamicRam("getOrders", CONSTANTS.ScriptBuySellStockRamCost);
-            if (!Player.hasTixApiAccess) {
-                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getOrders()");
-            }
+            checkTixApiAccess("getOrders");
             if (Player.bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use getOrders(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
@@ -5078,7 +5079,7 @@ function NetscriptFunctions(workerScript) {
                             workChaExpGain:  sl.earningsForTask.cha,
                             workMoneyGain:   sl.earningsForTask.money,
                     },
-                    workRepGain:     sl.getRepGain(),
+                    workRepGain:     sl.getRepGain(Player),
                 }
             },
             getSleeveAugmentations : function(sleeveNumber=0) {

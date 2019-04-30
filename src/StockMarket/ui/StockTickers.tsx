@@ -37,6 +37,8 @@ type IState = {
 }
 
 export class StockTickers extends React.Component<IProps, IState> {
+    listRef: React.RefObject<HTMLUListElement>;
+
     constructor(props: IProps) {
         super(props);
 
@@ -49,6 +51,10 @@ export class StockTickers extends React.Component<IProps, IState> {
 
         this.changeDisplayMode = this.changeDisplayMode.bind(this);
         this.changeWatchlistFilter = this.changeWatchlistFilter.bind(this);
+        this.collapseAllTickers = this.collapseAllTickers.bind(this);
+        this.expandAllTickers = this.expandAllTickers.bind(this);
+
+        this.listRef = React.createRef();
     }
 
     changeDisplayMode() {
@@ -79,6 +85,38 @@ export class StockTickers extends React.Component<IProps, IState> {
             this.setState({
                 watchlistSymbols: [],
             });
+        }
+    }
+
+    collapseAllTickers() {
+        const ul = this.listRef.current;
+        if (ul == null) { return; }
+        const tickers = ul.getElementsByClassName("accordion-header");
+        for (let i = 0; i < tickers.length; ++i) {
+            const ticker = tickers[i];
+            if (!(ticker instanceof HTMLButtonElement)) {
+                continue;
+            }
+
+            if (ticker.classList.contains("active")) {
+                ticker.click();
+            }
+        }
+    }
+
+    expandAllTickers() {
+        const ul = this.listRef.current;
+        if (ul == null) { return; }
+        const tickers = ul.getElementsByClassName("accordion-header");
+        for (let i = 0; i < tickers.length; ++i) {
+            const ticker = tickers[i];
+            if (!(ticker instanceof HTMLButtonElement)) {
+                continue;
+            }
+
+            if (!ticker.classList.contains("active")) {
+                ticker.click();
+            }
         }
     }
 
@@ -134,10 +172,12 @@ export class StockTickers extends React.Component<IProps, IState> {
                 <StockTickersConfig
                     changeDisplayMode={this.changeDisplayMode}
                     changeWatchlistFilter={this.changeWatchlistFilter}
+                    collapseAllTickers={this.collapseAllTickers}
+                    expandAllTickers={this.expandAllTickers}
                     tickerDisplayMode={this.state.tickerDisplayMode}
                 />
 
-                <ul id="stock-market-list">
+                <ul id="stock-market-list" ref={this.listRef}>
                     {tickers}
                 </ul>
             </div>

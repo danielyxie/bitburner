@@ -99,14 +99,16 @@ export class HashManager {
      */
     refundUpgrade(upgName: string): void {
         const upg = HashUpgrades[upgName];
+
+        // Reduce the level first, so we get the right cost
+        --this.upgrades[upgName];
+
         const currLevel = this.upgrades[upgName];
-        if (upg == null || currLevel == null || currLevel === 0) {
+        if (upg == null || currLevel == null || currLevel < 0) {
             console.error(`Invalid Upgrade Name given to HashManager.upgrade(): ${upgName}`);
             return;
         }
 
-        // Reduce the level first, so we get the right cost
-        --this.upgrades[upgName];
         const cost = upg.getCost(currLevel);
         this.hashes += cost;
     }

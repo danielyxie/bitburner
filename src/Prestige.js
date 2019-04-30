@@ -45,6 +45,7 @@ import {
     SpecialServerNames
 } from "./Server/SpecialServerIps";
 import {
+    deleteStockMarket,
     initStockMarket,
     initSymbolToStockMap,
 } from "./StockMarket/StockMarket";
@@ -326,6 +327,8 @@ function prestigeSourceFile() {
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
+    } else {
+        deleteStockMarket();
     }
 
     if (Player.inGang()) { Player.gang.clearUI(); }

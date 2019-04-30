@@ -1,15 +1,15 @@
-import { Message }                      from "./Message";
-import { Augmentatation }               from "../Augmentation/Augmentation";
-import { Augmentations }                from "../Augmentation/Augmentations";
-import { AugmentationNames }            from "../Augmentation/data/AugmentationNames";
-import { Programs }                     from "../Programs/Programs";
-import { inMission }                    from "../Missions";
-import { Player }                       from "../Player";
-import { redPillFlag }                  from "../RedPill";
-import { GetServerByHostname }          from "../Server/ServerHelpers";
-import { Settings }                     from "../Settings/Settings";
-import { dialogBoxCreate,
-         dialogBoxOpened}               from "../../utils/DialogBox";
+import { Message } from "./Message";
+import { Augmentatation } from "../Augmentation/Augmentation";
+import { Augmentations } from "../Augmentation/Augmentations";
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { Programs } from "../Programs/Programs";
+import { inMission } from "../Missions";
+import { Player } from "../Player";
+import { redPillFlag } from "../RedPill";
+import { GetServerByHostname } from "../Server/ServerHelpers";
+import { Settings } from "../Settings/Settings";
+import { dialogBoxCreate, dialogBoxOpened} from "../../utils/DialogBox";
+import { Reviver } from "../../utils/JSONReviver";
 
 //Sends message to player, including a pop up
 function sendMessage(msg, forced=false) {
@@ -31,7 +31,7 @@ function showMessage(msg) {
 function addMessageToServer(msg, serverHostname) {
     var server = GetServerByHostname(serverHostname);
     if (server == null) {
-        console.log("WARNING: Did not locate " + serverHostname);
+        console.warn(`Could not find server ${serverHostname}`);
         return;
     }
     for (var i = 0; i < server.messages.length; ++i) {

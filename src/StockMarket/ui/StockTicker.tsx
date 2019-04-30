@@ -13,6 +13,7 @@ import { Stock } from "../Stock";
 import {
     getBuyTransactionCost,
     getSellTransactionGain,
+    calculateBuyMaxAmount,
 } from "../StockMarketHelpers";
 import { OrderTypes } from "../data/OrderTypes";
 import { PositionTypes } from "../data/PositionTypes";
@@ -142,7 +143,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                 return `You do not have this many shares in the Short position`;
             }
         }
-        
+
         const cost = getSellTransactionGain(stock, qty, this.state.position);
         if (cost == null) { return ""; }
 
@@ -202,7 +203,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         const playerMoney: number = this.props.p.money.toNumber();
 
         const stock = this.props.stock;
-        let maxShares = Math.floor((playerMoney - CONSTANTS.StockMarketCommission) / this.props.stock.price);
+        let maxShares = calculateBuyMaxAmount(stock, this.state.position, playerMoney);
         maxShares = Math.min(maxShares, Math.round(stock.maxShares - stock.playerShares - stock.playerShortShares));
 
         switch (this.state.orderType) {

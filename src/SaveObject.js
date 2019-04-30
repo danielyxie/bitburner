@@ -204,27 +204,33 @@ function loadGame(saveString) {
         try {
             loadAliases(saveObj.AliasesSave);
         } catch(e) {
+            console.warn(`Could not load Aliases from save`);
             loadAliases("");
         }
     } else {
+        console.warn(`Save file did not contain an Aliases property`);
         loadAliases("");
     }
     if (saveObj.hasOwnProperty("GlobalAliasesSave")) {
         try {
             loadGlobalAliases(saveObj.GlobalAliasesSave);
         } catch(e) {
+            console.warn(`Could not load GlobalAliases from save`);
             loadGlobalAliases("");
         }
     } else {
+        console.warn(`Save file did not contain a GlobalAliases property`);
         loadGlobalAliases("");
     }
     if (saveObj.hasOwnProperty("MessagesSave")) {
         try {
             loadMessages(saveObj.MessagesSave);
         } catch(e) {
+            console.warn(`Could not load Messages from save`);
             initMessages();
         }
     } else {
+        console.warn(`Save file did not contain a Messages property`);
         initMessages();
     }
     if (saveObj.hasOwnProperty("StockMarketSave")) {

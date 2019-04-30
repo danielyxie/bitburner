@@ -65,6 +65,11 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         this.props.initStockMarket();
         this.props.p.loseMoney(CONSTANTS.WSEAccountCost);
         this.props.rerender();
+
+        const worldHeader = document.getElementById("world-menu-header");
+        if (worldHeader instanceof HTMLElement) {
+            worldHeader.click(); worldHeader.click();
+        }
     }
 
     purchaseTixApiAccess() {
@@ -117,7 +122,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
             const cost = CONSTANTS.TIXAPICost;
             return (
                 <StdButton
-                    disabled={!this.props.p.canAfford(cost)}
+                    disabled={!this.props.p.canAfford(cost) || !this.props.p.hasWseAccount}
                     onClick={this.purchaseTixApiAccess}
                     style={blockStyleMarkup}
                     text={`Buy Trade Information eXchange (TIX) API Access - ${numeralWrapper.formatMoney(cost)}`}
@@ -138,7 +143,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
             const cost = getStockMarket4SDataCost();
             return (
                 <StdButton
-                    disabled={!this.props.p.canAfford(cost)}
+                    disabled={!this.props.p.canAfford(cost) || !this.props.p.hasWseAccount}
                     onClick={this.purchase4SMarketData}
                     text={`Buy 4S Market Data Access - ${numeralWrapper.formatMoney(cost)}`}
                     tooltip={"Lets you view additional pricing and volatility information about stocks"}

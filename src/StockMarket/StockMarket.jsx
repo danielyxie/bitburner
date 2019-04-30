@@ -154,6 +154,10 @@ export function loadStockMarket(saveString) {
     }
 }
 
+export function deleteStockMarket() {
+    StockMarket = {};
+}
+
 export function initStockMarket() {
     for (const stk in StockMarket) {
         if (StockMarket.hasOwnProperty(stk)) {
@@ -195,15 +199,13 @@ export function initSymbolToStockMap() {
 }
 
 export function stockMarketCycle() {
-    for (var name in StockMarket) {
-        if (StockMarket.hasOwnProperty(name)) {
-            var stock = StockMarket[name];
-            if (!(stock instanceof Stock)) {continue;}
-            var thresh = 0.6;
-            if (stock.b) {thresh = 0.4;}
-            if (Math.random() < thresh) {
-                stock.b = !stock.b;
-            }
+    for (const name in StockMarket) {
+        const stock = StockMarket[name];
+        if (!(stock instanceof Stock)) { continue; }
+        let thresh = 0.6;
+        if (stock.b) { thresh = 0.4; }
+        if (Math.random() < thresh) {
+            stock.b = !stock.b;
         }
     }
 }
@@ -235,9 +237,9 @@ export function buyStock(stock, shares, workerScript=null) {
     const totalPrice = getBuyTransactionCost(stock, shares, PositionTypes.Long);
     if (Player.money.lt(totalPrice)) {
         if (tixApi) {
-            workerScript.log(`ERROR: buyStock() failed because you do not have enough money to purchase this potiion. You need ${numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission)}`);
+            workerScript.log(`ERROR: buyStock() failed because you do not have enough money to purchase this potiion. You need ${numeralWrapper.formatMoney(totalPrice)}`);
         } else {
-            dialogBoxCreate(`You do not have enough money to purchase this. You need ${numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission)}`);
+            dialogBoxCreate(`You do not have enough money to purchase this. You need ${numeralWrapper.formatMoney(totalPrice)}`);
         }
 
         return false;
@@ -256,7 +258,7 @@ export function buyStock(stock, shares, workerScript=null) {
 
     const origTotal = stock.playerShares * stock.playerAvgPx;
     Player.loseMoney(totalPrice);
-    const newTotal = origTotal + totalPrice;
+    const newTotal = origTotal + totalPrice - CONSTANTS.StockMarketCommission;
     stock.playerShares = Math.round(stock.playerShares + shares);
     stock.playerAvgPx = newTotal / stock.playerShares;
     processBuyTransactionPriceMovement(stock, shares, PositionTypes.Long);
@@ -317,7 +319,7 @@ export function sellStock(stock, shares, workerScript=null) {
     const resultTxt = `Sold ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol}. ` +
                       `After commissions, you gained a total of ${numeralWrapper.formatMoney(gains)}.`;
     if (tixApi) {
-         if (workerScript.shouldLog("sellStock")) { workerScript.log(resultTxt); }
+        if (workerScript.shouldLog("sellStock")) { workerScript.log(resultTxt); }
     } else {
         dialogBoxCreate(resultTxt);
     }
@@ -350,14 +352,14 @@ export function shortStock(stock, shares, workerScript=null) {
 
     // Does the player have enough money?
     const totalPrice = getBuyTransactionCost(stock, shares, PositionTypes.Short);
-    if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
+    if (Player.money.lt(totalPrice)) {
         if (tixApi) {
             workerScript.log("ERROR: shortStock() failed because you do not have enough " +
                              "money to purchase this short position. You need " +
-                             numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission));
+                             numeralWrapper.formatMoney(totalPrice));
         } else {
             dialogBoxCreate("You do not have enough money to purchase this short position. You need " +
-                            numeralWrapper.formatMoney(totalPrice + CONSTANTS.StockMarketCommission));
+                            numeralWrapper.formatMoney(totalPrice));
         }
 
         return false;
@@ -375,8 +377,8 @@ export function shortStock(stock, shares, workerScript=null) {
     }
 
     const origTotal = stock.playerShortShares * stock.playerAvgShortPx;
-    Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
-    const newTotal = origTotal + totalPrice;
+    Player.loseMoney(totalPrice);
+    const newTotal = origTotal + totalPrice - CONSTANTS.StockMarketCommission;
     stock.playerShortShares = Math.round(stock.playerShortShares + shares);
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
     processBuyTransactionPriceMovement(stock, shares, PositionTypes.Short);
@@ -454,16 +456,17 @@ export function sellShort(stock, shares, workerScript=null) {
     return true;
 }
 
+// Stock prices updated every 6 seconds
+const msPerStockUpdate = 6e3;
+const cyclesPerStockUpdate = msPerStockUpdate / CONSTANTS.MilliPerCycle;
 export function processStockPrices(numCycles=1) {
     if (StockMarket.storedCycles == null || isNaN(StockMarket.storedCycles)) { StockMarket.storedCycles = 0; }
     StockMarket.storedCycles += numCycles;
 
-    // Stock Prices updated every 6 seconds on average. But if there are stored
-    // cycles they update 50% faster, so every 4 seconds
-    const msPerStockUpdate = 6e3;
-    const cyclesPerStockUpdate = msPerStockUpdate / CONSTANTS.MilliPerCycle;
     if (StockMarket.storedCycles < cyclesPerStockUpdate) { return; }
 
+    // We can process the update every 4 seconds as long as there are enough
+    // stored cycles. This lets us account for offline time
     const timeNow = new Date().getTime();
     if (timeNow - StockMarket.lastUpdate < 4e3) { return; }
 
@@ -471,62 +474,62 @@ export function processStockPrices(numCycles=1) {
     StockMarket.storedCycles -= cyclesPerStockUpdate;
 
     var v = Math.random();
-    for (var name in StockMarket) {
-        if (StockMarket.hasOwnProperty(name)) {
-            var stock = StockMarket[name];
-            if (!(stock instanceof Stock)) { continue; }
-            var av = (v * stock.mv) / 100;
-            if (isNaN(av)) {av = .02;}
+    for (const name in StockMarket) {
+        const stock = StockMarket[name];
+        if (!(stock instanceof Stock)) { continue; }
+        let av = (v * stock.mv) / 100;
+        if (isNaN(av)) { av = .02; }
 
-            var chc = 50;
-            if (stock.b) {
-                chc = (chc + stock.otlkMag) / 100;
-                if (isNaN(chc)) {chc = 0.5;}
-            } else {
-                chc = (chc - stock.otlkMag) / 100;
-                if (isNaN(chc)) {chc = 0.5;}
-            }
-            if (stock.price >= stock.cap) {
-                chc = 0.1; // "Soft Limit" on stock price. It could still go up but its unlikely
-                stock.b = false;
-            }
-
-            var c = Math.random();
-            if (c < chc) {
-                stock.price *= (1 + av);
-                processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Short);
-                processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long);
-                processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long);
-                processOrders(stock, OrderTypes.StopSell, PositionTypes.Short);
-            } else {
-                stock.price /= (1 + av);
-                processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long);
-                processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short);
-                processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short);
-                processOrders(stock, OrderTypes.StopSell, PositionTypes.Long);
-            }
-
-            var otlkMagChange = stock.otlkMag * av;
-            if (stock.otlkMag <= 0.1) {
-                otlkMagChange = 1;
-            }
-            if (c < 0.5) {
-                stock.otlkMag += otlkMagChange;
-            } else {
-                stock.otlkMag -= otlkMagChange;
-            }
-            if (stock.otlkMag > 50) { stock.otlkMag = 50; } // Cap so the "forecast" is between 0 and 100
-            if (stock.otlkMag < 0) {
-                stock.otlkMag *= -1;
-                stock.b = !stock.b;
-            }
+        let chc = 50;
+        if (stock.b) {
+            chc = (chc + stock.otlkMag) / 100;
+        } else {
+            chc = (chc - stock.otlkMag) / 100;
         }
+        if (stock.price >= stock.cap) {
+            chc = 0.1; // "Soft Limit" on stock price. It could still go up but its unlikely
+            stock.b = false;
+        }
+        if (isNaN(chc)) { chc = 0.5; }
+
+        const c = Math.random();
+        if (c < chc) {
+            stock.price *= (1 + av);
+            processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Short);
+            processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long);
+            processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long);
+            processOrders(stock, OrderTypes.StopSell, PositionTypes.Short);
+        } else {
+            stock.price /= (1 + av);
+            processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long);
+            processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short);
+            processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short);
+            processOrders(stock, OrderTypes.StopSell, PositionTypes.Long);
+        }
+
+        let otlkMagChange = stock.otlkMag * av;
+        if (stock.otlkMag <= 0.1) {
+            otlkMagChange = 1;
+        }
+        if (c < 0.5) {
+            stock.otlkMag += otlkMagChange;
+        } else {
+            stock.otlkMag -= otlkMagChange;
+        }
+        if (stock.otlkMag > 50) { stock.otlkMag = 50; } // Cap so the "forecast" is between 0 and 100
+        if (stock.otlkMag < 0) {
+            stock.otlkMag *= -1;
+            stock.b = !stock.b;
+        }
+
+        // Shares required for price movement gradually approaches max over time
+        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 5, stock.shareTxForMovement);
     }
 
     displayStockMarketContent();
 }
 
-//Checks and triggers any orders for the specified stock
+// Checks and triggers any orders for the specified stock
 function processOrders(stock, orderType, posType) {
     var orderBook = StockMarket["Orders"];
     if (orderBook == null) {
