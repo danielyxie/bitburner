@@ -1463,7 +1463,6 @@ function Employee(params={}) {
     this.hap    = params.happiness      ? params.happiness      : getRandomInt(50, 100);
     this.ene    = params.energy         ? params.energy         : getRandomInt(50, 100);
 
-    this.age    = params.age            ? params.age            : getRandomInt(20, 50);
     this.int    = params.intelligence   ? params.intelligence   : getRandomInt(10, 50);
     this.cha    = params.charisma       ? params.charisma       : getRandomInt(10, 50);
     this.exp    = params.experience     ? params.experience     : getRandomInt(10, 50);
@@ -1482,13 +1481,7 @@ function Employee(params={}) {
 Employee.prototype.process = function(marketCycles=1, office) {
     var gain = 0.003 * marketCycles,
         det = gain * Math.random();
-    this.age += gain;
     this.exp += gain;
-    if (this.age > 150) {
-        this.int -= det;
-        this.eff -= det;
-        this.cha -= det;
-    }
 
     // Employee salaries slowly go up over time
     this.cyclesUntilRaise -= marketCycles;
@@ -1577,7 +1570,6 @@ Employee.prototype.createUI = function(panel, corporation, industry) {
         innerHTML:"Morale: " + formatNumber(this.mor, 3) + "<br>" +
                   "Happiness: " + formatNumber(this.hap, 3) + "<br>" +
                   "Energy: " + formatNumber(this.ene, 3) + "<br>" +
-                  "Age: " + formatNumber(this.age, 3) + "<br>" +
                   "Intelligence: " + formatNumber(effInt, 3) + "<br>" +
                   "Charisma: " + formatNumber(effCha, 3) + "<br>" +
                   "Experience: " + formatNumber(this.exp, 3) + "<br>" +
