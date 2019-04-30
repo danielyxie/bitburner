@@ -284,6 +284,9 @@ export let CONSTANTS: IMap<any> = {
     ** Added getStockAskPrice(), getStockBidPrice() Netscript functions to the TIX API
     ** Added getStockPurchaseCost(), getStockSaleGain() Netscript functions to the TIX API
 
+    * Re-sleeves can no longer have the NeuroFlux Governor augmentation
+    ** This is just a temporary patch until the mechanic gets re-worked
+    
     * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
     * Bug Fix: Coding contracts should no longer generate on the w0r1d_d43m0n server
     * Bug Fix: Duplicate Sleeves now properly have access to all Augmentations if you have a gang
