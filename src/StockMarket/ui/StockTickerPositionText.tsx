@@ -25,7 +25,7 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
 
         // Caculate total returns
         const totalCost = stock.playerShares * stock.playerAvgPx;
-        const gains = (stock.price - stock.playerAvgPx) * stock.playerShares;
+        const gains = (stock.getBidPrice() - stock.playerAvgPx) * stock.playerShares;
         let percentageGains = gains / totalCost;
         if (isNaN(percentageGains)) { percentageGains = 0; }
 
@@ -56,7 +56,7 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
 
         // Caculate total returns
         const totalCost = stock.playerShortShares * stock.playerAvgShortPx;
-        const gains = (stock.playerAvgShortPx - stock.price) * stock.playerShortShares;
+        const gains = (stock.playerAvgShortPx - stock.getAskPrice()) * stock.playerShortShares;
         let percentageGains = gains / totalCost;
         if (isNaN(percentageGains)) { percentageGains = 0; }
 

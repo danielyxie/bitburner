@@ -136,6 +136,7 @@ export interface IPlayer {
     getUpgradeHomeRamCost(): number;
     gotoLocation(to: LocationName): boolean;
     hasCorporation(): boolean;
+    hasGangWith(facName: string): boolean;
     hasTorRouter(): boolean;
     inBladeburner(): boolean;
     inGang(): boolean;

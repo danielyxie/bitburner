@@ -278,7 +278,7 @@ export let CONSTANTS: IMap<any> = {
     v0.47.0
     * Stock Market changes:
     ** Implemented spread. Stock's now have bid and ask prices at which transactions occur
-    ** Large transactions will now influence a stock's price.
+    ** Large transactions will now influence a stock's price and forecast
     ** This "influencing" can take effect in the middle of a transaction
     ** See documentation for more details on these changes
     ** Added getStockAskPrice(), getStockBidPrice() Netscript functions to the TIX API
@@ -286,12 +286,16 @@ export let CONSTANTS: IMap<any> = {
 
     * Re-sleeves can no longer have the NeuroFlux Governor augmentation
     ** This is just a temporary patch until the mechanic gets re-worked
-    
+
+    * Corporation employees no longer have an "age" stat
+    * Bug Fix: Corporation employees stats should no longer become negative
     * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
     * Bug Fix: Coding contracts should no longer generate on the w0r1d_d43m0n server
     * Bug Fix: Duplicate Sleeves now properly have access to all Augmentations if you have a gang
+    * Bug Fix: getAugmentationsFromFaction() & purchaseAugmentation() functions should now work properly if you have a gang
     * Bug Fix: Fixed issue that caused messages (.msg) to be sent when refreshing/reloading the game
     * Bug Fix: Purchasing hash upgrades for Bladeburner/Corporation when you don't actually have access to those mechanics no longer gives hashes
     * Bug Fix: run(), exec(), and spawn() Netscript functions now throw if called with 0 threads
+    * Bug Fix: Faction UI should now automatically update reputation
     `
 }

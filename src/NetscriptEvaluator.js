@@ -158,14 +158,14 @@ export function makeRuntimeRejectMsg(workerScript, msg, exp=null) {
 //Run a script from inside a script using run() command
 export function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
     //Check if the script is already running
-    var runningScriptObj = findRunningScript(scriptname, args, server);
+    let runningScriptObj = findRunningScript(scriptname, args, server);
     if (runningScriptObj != null) {
         workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
         return Promise.resolve(false);
     }
 
     //'null/undefined' arguments are not allowed
-    for (var i = 0; i < args.length; ++i) {
+    for (let i = 0; i < args.length; ++i) {
         if (args[i] == null) {
             workerScript.scriptRef.log("ERROR: Cannot execute a script with null/undefined as an argument");
             return Promise.resolve(false);
@@ -191,10 +191,10 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
                 return Promise.resolve(false);
             } else {
                 //Able to run script
-                if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.exec == null && workerScript.disableLogs.run == null && workerScript.disableLogs.spawn == null) {
-                    workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + arrayToString(args) + ". May take a few seconds to start up...");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.exec == null && workerScript.disableLogs.run == null && workerScript.disableLogs.spawn == null) {
+                    workerScript.scriptRef.log(`Running script: ${scriptname} on ${server.hostname} with ${threads} threads and args: ${arrayToString(args)}. May take a few seconds to start up...`);
                 }
-                var runningScriptObj = new RunningScript(script, args);
+                let runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;
                 addWorkerScript(runningScriptObj, server);
 

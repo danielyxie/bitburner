@@ -8,8 +8,8 @@ import * as React from "react";
 interface IProps {
     intervalTime?: number;
     style?: object;
-    text: string;
-    tooltip?: string;
+    getText: () => string;
+    getTooltip?: () => string;
 }
 
 interface IState {
@@ -49,7 +49,14 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
     }
 
     render() {
-        const hasTooltip = this.props.tooltip != null && this.props.tooltip !== "";
+        let hasTooltip = this.props.getTooltip != null;
+        let tooltip: string | null;
+        if (hasTooltip) {
+            tooltip = this.props.getTooltip!();
+            if (tooltip === "") {
+                hasTooltip = false;
+            }
+        }
 
         const className = "tooltip";
 
@@ -57,13 +64,13 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
         let tooltipMarkup: IInnerHTMLMarkup | null;
         if (hasTooltip) {
             tooltipMarkup = {
-                __html: this.props.tooltip!
+                __html: tooltip!
             }
         }
 
         return (
             <p className={className} style={this.props.style}>
-                {this.props.text}
+                {this.props.getText()}
                 {
                     hasTooltip &&
                     <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>

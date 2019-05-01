@@ -23,7 +23,11 @@ export function getGangFaction() {
 }
 
 export function getGangName() {
-    return this.gang.facName;
+    return this.inGang() ? this.gang.facName : "";
+}
+
+export function hasGangWith(facName) {
+    return this.inGang() && this.gang.facName === facName;
 }
 
 export function inGang() {

@@ -205,6 +205,7 @@ export class CodingContract {
                     }
                 },
                 placeholder: "Enter Solution here",
+                width: "50%",
             }) as HTMLInputElement;
             solveBtn = createElement("a", {
                 class: "a-link-button",

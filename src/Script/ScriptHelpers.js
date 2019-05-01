@@ -424,7 +424,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
 //designated server, and false otherwise
 export function findRunningScript(filename, args, server) {
     for (var i = 0; i < server.runningScripts.length; ++i) {
-        if (server.runningScripts[i].filename == filename &&
+        if (server.runningScripts[i].filename === filename &&
             compareArrays(server.runningScripts[i].args, args)) {
             return server.runningScripts[i];
         }

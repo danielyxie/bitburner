@@ -2105,17 +2105,6 @@ function augmentationExists(name) {
     return Augmentations.hasOwnProperty(name);
 }
 
-//Used for testing balance
-function giveAllAugmentations() {
-    for (var name in Augmentations) {
-        var aug = Augmentations[name];
-        if (aug == null) {continue;}
-        var ownedAug = new PlayerOwnedAugmentation(name);
-        Player.augmentations.push(ownedAug);
-    }
-    Player.reapplyAllAugmentations();
-}
-
 function displayAugmentationsContent(contentEl) {
     removeChildrenFromElement(contentEl);
     contentEl.appendChild(createElement("h1", {

@@ -30,10 +30,24 @@ const infoStyleMarkup = {
 }
 
 export class Info extends React.Component<IProps, any> {
-    render() {
+    constructor(props: IProps) {
+        super(props);
 
-        const formattedRep = numeralWrapper.format(this.props.faction.playerReputation, "0.000a");
+        this.getFavorGainText = this.getFavorGainText.bind(this);
+        this.getReputationText = this.getReputationText.bind(this);
+    }
+
+    getFavorGainText(): string {
         const favorGain = this.props.faction.getFavorGain()[0];
+        return `You will earn ${numeralWrapper.format(favorGain, "0,0")} faction favor upon resetting after installing an Augmentation`
+    }
+
+    getReputationText(): string {
+        const formattedRep = numeralWrapper.format(this.props.faction.playerReputation, "0.000a");
+        return `Reputation: ${formattedRep}`
+    }
+
+    render() {
         const favorTooltip = "Faction favor increases the rate at which you earn reputation for " +
                              "this faction by 1% per favor. Faction favor is gained whenever you " +
                              "reset after installing an Augmentation. The amount of " +
@@ -51,8 +65,8 @@ export class Info extends React.Component<IProps, any> {
                 <p style={blockStyleMarkup}>-------------------------</p>
                 <AutoupdatingParagraph
                     intervalTime={5e3}
-                    text={`Reputation: ${formattedRep}`}
-                    tooltip={`You will earn ${numeralWrapper.format(favorGain, "0,0")} faction favor upon resetting after installing an Augmentation`}
+                    getText={this.getReputationText}
+                    getTooltip={this.getFavorGainText}
                 />
                 <p style={blockStyleMarkup}>-------------------------</p>
                 <ParagraphWithTooltip

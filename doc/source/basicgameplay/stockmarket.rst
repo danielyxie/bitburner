@@ -73,6 +73,14 @@ be sold at $98.01, and so on.
 This is an important concept to keep in mind if you are trying to purchase/sell a
 large number of shares, as **it can negatively affect your profits**.
 
+Transactions Influencing Stock Forecast
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In addition to influencing stock price, buying or selling a large number of shares
+of a stock will also influence that stock's "forecast". The forecast is the likelihood
+that the stock will increase or decrease in price. The magnitude of this effect depends
+on the number of shares being transacted. More shares will have a bigger effect on the
+stock forecast. 
+
 .. _gameplay_stock_market_order_types:
 
 Order Types

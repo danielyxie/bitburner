@@ -3692,17 +3692,26 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            if (!factionExists(facname)) {
+            const fac = Factions[facname];
+            if (!(fac instanceof Faction)) {
                 workerScript.scriptRef.log("ERROR: getAugmentationsFromFaction() failed. Invalid faction name passed in (this is case-sensitive): " + facname);
                 return [];
             }
 
-            var fac = Factions[facname];
-            var res = [];
-            for (var i = 0; i < fac.augmentations.length; ++i) {
-                res.push(fac.augmentations[i]);
+            // If player has a gang with this faction, return all factions
+            if (Player.hasGangWith(facname)) {
+                const res = [];
+                for (const augName in Augmentations) {
+                    const aug = Augmentations[augName];
+                    if (!aug.isSpecial) {
+                        res.push(augName);
+                    }
+                }
+
+                return res;
             }
-            return res;
+
+            return fac.augmentations.slice();
         },
         getAugmentationPrereq : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
@@ -3762,50 +3771,58 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            var fac = Factions[faction];
-            if (fac == null || !(fac instanceof Faction)) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid faction name: " + faction);
+            const fac = Factions[faction];
+            if (!(fac instanceof Faction)) {
+                workerScript.log("ERROR: purchaseAugmentation() failed because of invalid faction name: " + faction);
                 return false;
             }
 
-            if (!fac.augmentations.includes(name)) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because the faction " + faction + " does not contain the " + name + " augmentation");
+            let augs = [];
+            if (Player.hasGangWith(faction)) {
+                for (const augName in Augmentations) {
+                    const tempAug = Augmentations[augName];
+                    if (!tempAug.isSpecial) {
+                        augs.push(augName);
+                    }
+                }
+            } else {
+                augs = fac.augmentations;
+            }
+
+            if (!augs.includes(name)) {
+                workerScript.log("ERROR: purchaseAugmentation() failed because the faction " + faction + " does not contain the " + name + " augmentation");
                 return false;
             }
 
-            var aug = Augmentations[name];
-            if (aug == null || !(aug instanceof Augmentation)) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid augmentation name: " + name);
+            const aug = Augmentations[name];
+            if (!(aug instanceof Augmentation)) {
+                workerScript.log("ERROR: purchaseAugmentation() failed because of invalid augmentation name: " + name);
                 return false;
             }
 
-            var isNeuroflux = false;
-            if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-                isNeuroflux = true;
-            }
-
+            let isNeuroflux = (aug.name === AugmentationNames.NeuroFluxGovernor);
             if (!isNeuroflux) {
-                for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
+                for (let j = 0; j < Player.queuedAugmentations.length; ++j) {
                     if (Player.queuedAugmentations[j].name === aug.name) {
-                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        workerScript.log("ERROR: purchaseAugmentation() failed because you already have " + name);
                         return false;
                     }
                 }
-                for (var j = 0; j < Player.augmentations.length; ++j) {
+                for (let j = 0; j < Player.augmentations.length; ++j) {
                     if (Player.augmentations[j].name === aug.name) {
-                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        workerScript.log("ERROR: purchaseAugmentation() failed because you already have " + name);
                         return false;
                     }
                 }
             }
 
             if (fac.playerReputation < aug.baseRepRequirement) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you do not have enough reputation with " + fac.name);
+                workerScript.log("ERROR: purchaseAugmentation() failed because you do not have enough reputation with " + fac.name);
                 return false;
             }
 
             var res = purchaseAugmentation(aug, fac, true);
-            workerScript.scriptRef.log(res);
+            workerScript.log(res);
             if (isString(res) && res.startsWith("You purchased")) {
                 Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
                 return true;

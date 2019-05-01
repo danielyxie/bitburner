@@ -2,6 +2,9 @@ import { Stock } from "./Stock";
 import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
+// Amount by which a stock's forecast changes during each price movement
+const forecastChangePerPriceMovement = 0.4;
+
 /**
  * Given a stock, calculates the amount by which the stock price is multiplied
  * for an 'upward' price movement. This does not actually increase the stock's price,
@@ -86,7 +89,7 @@ export function getBuyTransactionCost(stock: Stock, shares: number, posType: Pos
 }
 
 /**
- * Processes a buy transaction's resulting price movement.
+ * Processes a buy transaction's resulting price AND forecast movement.
  * @param {Stock} stock - Stock being purchased
  * @param {number} shares - Number of shares being transacted
  * @param {PositionTypes} posType - Long or short position
@@ -125,6 +128,10 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
 
     stock.price = currPrice;
     stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
+
+    // Forecast always decreases in magnitude
+    const forecastChange = Math.min(5, forecastChangePerPriceMovement * numIterations);
+    stock.otlkMag -= forecastChange;
 }
 
 /**
@@ -228,6 +235,10 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
 
     stock.price = currPrice;
     stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
+
+    // Forecast always decreases in magnitude
+    const forecastChange = Math.min(5, forecastChangePerPriceMovement * numIterations);
+    stock.otlkMag -= forecastChange;
 }
 
 /**
