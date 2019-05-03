@@ -219,9 +219,17 @@ function startNetscript1Script(workerScript) {
                     name === "prompt"   || name === "run"   || name === "exec") {
                     let tempWrapper = function() {
                         let fnArgs = [];
+
+                        //All of the Object/array elements are in JSInterpreter format, so
+                        //we have to convert them back to native format to pass them to these fns
                         for (let i = 0; i < arguments.length-1; ++i) {
-                            fnArgs.push(arguments[i]);
+                            if (typeof arguments[i] === 'object' || arguments[i].constructor === Array) {
+                                fnArgs.push(int.pseudoToNative(arguments[i]));
+                            } else {
+                                fnArgs.push(arguments[i]);
+                            }
                         }
+                        console.log(fnArgs);
                         let cb = arguments[arguments.length-1];
                         let fnPromise = entry.apply(null, fnArgs);
                         fnPromise.then(function(res) {
