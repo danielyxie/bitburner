@@ -1,13 +1,39 @@
-import { AllServers }                           from "./AllServers";
-import { Server }                               from "./Server";
+import {
+    AllServers,
+    createUniqueRandomIp,
+    ipExists,
+} from "./AllServers";
+import { Server, IConstructorParams } from "./Server";
 
-import { BitNodeMultipliers }                   from "../BitNode/BitNodeMultipliers";
-import { CONSTANTS }                            from "../Constants";
-import { HacknetServer }                        from "../Hacknet/HacknetServer";
-import { IPlayer }                              from "../PersonObjects/IPlayer";
-import { Programs }                             from "../Programs/Programs";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "../Constants";
+import { HacknetServer } from "../Hacknet/HacknetServer";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { Programs } from "../Programs/Programs";
 
-import {isValidIPAddress}                       from "../../utils/helpers/isValidIPAddress";
+import { isValidIPAddress } from "../../utils/helpers/isValidIPAddress";
+
+/**
+ * Constructs a new server, while also ensuring that the new server
+ * does not have a duplicate hostname/ip.
+ */
+export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
+    if (params.ip != null && ipExists(params.ip)) {
+        params.ip = createUniqueRandomIp();
+    }
+
+    if (GetServerByHostname(params.hostname) != null) {
+        // Use a for loop to ensure that we don't get suck in an infinite loop somehow
+        let hostname: string = params.hostname;
+        for (let i = 0; i < 200; ++i) {
+            hostname = `${params.hostname}-${i}`;
+            if (GetServerByHostname(hostname) == null) { break; }
+        }
+        params.hostname = hostname;
+    }
+
+    return new Server(params);
+}
 
 // Returns the number of cycles needed to grow the specified server by the
 // specified amount. 'growth' parameter is in decimal form, not percentage

@@ -1,15 +1,18 @@
 /**
  * Server and HacknetServer-related methods for the Player class (PlayerObject)
  */
-import { IPlayer }                      from "../IPlayer";
+import { IPlayer } from "../IPlayer";
 
-import { CONSTANTS }                    from "../../Constants";
+import { CONSTANTS } from "../../Constants";
 
-import { BitNodeMultipliers }           from "../../BitNode/BitNodeMultipliers";
-import { HacknetServer }                from "../../Hacknet/HacknetServer";
-import { AddToAllServers,
-         AllServers }                   from "../../Server/AllServers";
-import { SpecialServerIps }             from "../../Server/SpecialServerIps";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { HacknetServer } from "../../Hacknet/HacknetServer";
+import {
+    AddToAllServers,
+    AllServers,
+    createUniqueRandomIp,
+} from "../../Server/AllServers";
+import { SpecialServerIps } from "../../Server/SpecialServerIps";
 
 export function hasTorRouter(this: IPlayer) {
     return SpecialServerIps.hasOwnProperty("Darkweb Server");
@@ -41,7 +44,8 @@ export function createHacknetServer(this: IPlayer): HacknetServer {
     const server = new HacknetServer({
         adminRights: true,
         hostname: name,
-        player: this,
+        ip: createUniqueRandomIp(),
+        // player: this,
     });
     this.hacknetNodes.push(server.ip);
 

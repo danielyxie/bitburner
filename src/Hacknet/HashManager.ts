@@ -6,12 +6,9 @@
  * his hashes, and contains method for grabbing the data/multipliers from
  * those upgrades
  */
-import { HacknetServer } from "./HacknetServer";
 import { HashUpgrades } from "./HashUpgrades";
 
 import { IMap } from "../types";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { AllServers } from "../Server/AllServers";
 import { Generic_fromJSON,
          Generic_toJSON,
          Reviver } from "../../utils/JSONReviver";
@@ -84,14 +81,14 @@ export class HashManager {
         return upg.getCost(currLevel);
     }
 
-    prestige(p: IPlayer): void {
+    prestige(): void {
         for (const name in HashUpgrades) {
             this.upgrades[name] = 0;
         }
         this.hashes = 0;
-        if (p != null) {
-            this.updateCapacity(p);
-        }
+
+        // When prestiging, player's hacknet nodes are always reset. So capacity = 0
+        this.updateCapacity(0);
     }
 
     /**
@@ -118,33 +115,11 @@ export class HashManager {
         this.hashes = Math.min(this.hashes, this.capacity);
     }
 
-    updateCapacity(p: IPlayer): void {
-        if (p.hacknetNodes.length <= 0) {
+    updateCapacity(newCap: number): void {
+        if (newCap < 0) {
             this.capacity = 0;
-            return;
         }
-
-        // Make sure the Player's `hacknetNodes` property actually holds Hacknet Servers
-        const ip: string = <string>p.hacknetNodes[0];
-        if (typeof ip !== "string") {
-            this.capacity = 0;
-            return;
-        }
-
-        const hserver = <HacknetServer>AllServers[ip];
-        if (!(hserver instanceof HacknetServer)) {
-            this.capacity = 0;
-            return;
-        }
-
-
-        let total: number = 0;
-        for (let i = 0; i < p.hacknetNodes.length; ++i) {
-            const h = <HacknetServer>AllServers[<string>p.hacknetNodes[i]];
-            total += h.hashCapacity;
-        }
-
-        this.capacity = total;
+        this.capacity = Math.max(newCap, 0);
     }
 
     /**

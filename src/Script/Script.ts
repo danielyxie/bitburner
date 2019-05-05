@@ -2,14 +2,14 @@
 // This does NOT represent a script that is actively running and
 // being evaluated. See RunningScript for that
 import { calculateRamUsage } from "./RamCalculations";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Page,
-         routing } from "../ui/navigationTracking";
+import { Page, routing } from "../ui/navigationTracking";
 
 import { setTimeoutRef } from "../utils/SetTimeoutRef";
-import { Generic_fromJSON,
-         Generic_toJSON,
-         Reviver } from "../../utils/JSONReviver";
+import {
+    Generic_fromJSON,
+    Generic_toJSON,
+    Reviver
+} from "../../utils/JSONReviver";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
 export class Script {
@@ -64,7 +64,7 @@ export class Script {
     }
 
     // Save a script FROM THE SCRIPT EDITOR
-    saveScript(code: string, p: IPlayer): void {
+    saveScript(code: string, currServ: string): void {
     	if (routing.isOn(Page.ScriptEditor)) {
     		//Update code and filename
     		this.code = code.replace(/^\s+|\s+$/g, '');
@@ -77,7 +77,7 @@ export class Script {
     		this.filename = filenameElem!.value;
 
     		// Server
-    		this.server = p.currentServer;
+    		this.server = currServ;
 
     		//Calculate/update ram usage, execution time, etc.
     		this.updateRamUsage();

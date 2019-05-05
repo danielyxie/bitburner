@@ -5,25 +5,42 @@ import { serverMetadata } from "./data/servers";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 
 import { IMap } from "../types";
-import { createRandomIp,
-         ipExists } from "../../utils/IPAddress";
+import { createRandomIp } from "../../utils/IPAddress";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { Reviver } from "../../utils/JSONReviver";
 
-// Map of all Servers that exist in the game
-// Key (string) = IP
-// Value = Server object
+/**
+ * Map of all Servers that exist in the game
+ *  Key (string) = IP
+ *  Value = Server object
+ */
 export let AllServers: IMap<Server | HacknetServer> = {};
+
+export function ipExists(ip: string) {
+	return (AllServers[ip] != null);
+}
+
+export function createUniqueRandomIp(): string {
+    const ip = createRandomIp();
+
+    // If the Ip already exists, recurse to create a new one
+    if (ipExists(ip)) {
+        return createRandomIp();
+    }
+
+	return ip;
+}
 
 // Saftely add a Server to the AllServers map
 export function AddToAllServers(server: Server | HacknetServer): void {
     var serverIp = server.ip;
     if (ipExists(serverIp)) {
-        console.log("IP of server that's being added: " + serverIp);
-        console.log("Hostname of the server thats being added: " + server.hostname);
-        console.log("The server that already has this IP is: " + AllServers[serverIp].hostname);
+        console.warn(`IP of server that's being added: ${serverIp}`);
+        console.warn(`Hostname of the server thats being added: ${server.hostname}`);
+        console.warn(`The server that already has this IP is: ${AllServers[serverIp].hostname}`);
         throw new Error("Error: Trying to add a server with an existing IP");
     }
+    
     AllServers[serverIp] = server;
 }
 
@@ -71,7 +88,7 @@ export function initForeignServers(homeComputer: Server) {
     for (const metadata of serverMetadata) {
         const serverParams: IServerParams = {
             hostname: metadata.hostname,
-            ip: createRandomIp(),
+            ip: createUniqueRandomIp(),
             numOpenPortsRequired: metadata.numOpenPortsRequired,
             organizationName: metadata.organizationName
         };

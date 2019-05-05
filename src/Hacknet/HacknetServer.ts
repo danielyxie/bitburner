@@ -6,15 +6,16 @@ import { CONSTANTS } from "../Constants";
 import { IHacknetNode } from "./IHacknetNode";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { BaseServer } from "../Server/BaseServer";
 import { RunningScript } from "../Script/RunningScript";
 
 import { createRandomIp } from "../../utils/IPAddress";
 
-import { Generic_fromJSON,
-         Generic_toJSON,
-         Reviver } from "../../utils/JSONReviver";
+import {
+    Generic_fromJSON,
+    Generic_toJSON,
+    Reviver
+} from "../../utils/JSONReviver";
 
 // Constants for Hacknet Server stats/production
 export const HacknetServerHashesPerLevel: number = 0.001;
@@ -46,7 +47,6 @@ interface IConstructorParams {
     isConnectedTo?: boolean;
     maxRam?: number;
     organizationName?: string;
-    player?: IPlayer;
 }
 
 export class HacknetServer extends BaseServer implements IHacknetNode {
@@ -81,10 +81,6 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
         this.maxRam = 1;
         this.updateHashCapacity();
-
-        if (params.player) {
-            this.updateHashRate(params.player);
-        }
     }
 
     calculateCacheUpgradeCost(levels: number): number {
@@ -109,7 +105,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
         return totalCost;
     }
 
-    calculateCoreUpgradeCost(levels: number, p: IPlayer): number {
+    calculateCoreUpgradeCost(levels: number, costMult: number): number {
         const sanitizedLevels = Math.round(levels);
         if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
             return 0;
@@ -127,12 +123,12 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
             ++currentCores;
         }
         totalCost *= BaseCostForHacknetServerCore;
-        totalCost *= p.hacknet_node_core_cost_mult;
+        totalCost *= costMult;
 
         return totalCost;
     }
 
-    calculateLevelUpgradeCost(levels: number, p: IPlayer): number {
+    calculateLevelUpgradeCost(levels: number, costMult: number): number {
         const sanitizedLevels = Math.round(levels);
         if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
             return 0;
@@ -150,10 +146,10 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
             ++currLevel;
         }
 
-        return 10 * BaseCostForHacknetServer * totalMultiplier * p.hacknet_node_level_cost_mult;
+        return 10 * BaseCostForHacknetServer * totalMultiplier * costMult;
     }
 
-    calculateRamUpgradeCost(levels: number, p: IPlayer): number {
+    calculateRamUpgradeCost(levels: number, costMult: number): number {
         const sanitizedLevels = Math.round(levels);
         if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
             return 0;
@@ -175,7 +171,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
             currentRam *= 2;
             ++numUpgrades;
         }
-        totalCost *= p.hacknet_node_ram_cost_mult;
+        totalCost *= costMult;
 
         return totalCost;
     }
@@ -189,124 +185,30 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     }
 
     // Returns a boolean indicating whether the cache was successfully upgraded
-    purchaseCacheUpgrade(levels: number, p: IPlayer): boolean {
-        const sanitizedLevels = Math.round(levels);
-        const cost = this.calculateCacheUpgradeCost(levels);
-        if (isNaN(cost) || cost <= 0 || sanitizedLevels <= 0) {
-            return false;
-        }
-
-        if (this.cache >= HacknetServerMaxCache) {
-            return false;
-        }
-
-        // If the specified number of upgrades would exceed the max, try to purchase
-        // the maximum possible
-        if (this.cache + levels > HacknetServerMaxCache) {
-            const diff = Math.max(0, HacknetServerMaxCache - this.cache);
-            return this.purchaseCacheUpgrade(diff, p);
-        }
-
-        if (!p.canAfford(cost)) {
-            return false;
-        }
-
-        p.loseMoney(cost);
-        this.cache = Math.round(this.cache + sanitizedLevels);
+    upgradeCache(levels: number): void {
+        this.cache = Math.min(HacknetServerMaxCache, Math.round(this.cache + levels));
         this.updateHashCapacity();
-
-        return true;
     }
 
     // Returns a boolean indicating whether the number of cores was successfully upgraded
-    purchaseCoreUpgrade(levels: number, p: IPlayer): boolean {
-        const sanitizedLevels = Math.round(levels);
-        const cost = this.calculateCoreUpgradeCost(sanitizedLevels, p);
-        if (isNaN(cost) || cost <= 0 || sanitizedLevels <= 0) {
-            return false;
-        }
-
-        if (this.cores >= HacknetServerMaxCores) {
-            return false;
-        }
-
-        // If the specified number of upgrades would exceed the max, try to purchase
-        // the maximum possible
-        if (this.cores + sanitizedLevels > HacknetServerMaxCores) {
-            const diff = Math.max(0, HacknetServerMaxCores - this.cores);
-            return this.purchaseCoreUpgrade(diff, p);
-        }
-
-        if (!p.canAfford(cost)) {
-            return false;
-        }
-
-        p.loseMoney(cost);
-        this.cores = Math.round(this.cores + sanitizedLevels);
-        this.updateHashRate(p);
-
-        return true;
+    upgradeCore(levels: number, prodMult: number): void {
+        this.cores = Math.min(HacknetServerMaxCores, Math.round(this.cores + levels));
+        this.updateHashRate(prodMult);
     }
 
     // Returns a boolean indicating whether the level was successfully upgraded
-    purchaseLevelUpgrade(levels: number, p: IPlayer): boolean {
-        const sanitizedLevels = Math.round(levels);
-        const cost = this.calculateLevelUpgradeCost(sanitizedLevels, p);
-        if (isNaN(cost) || cost <= 0 || sanitizedLevels <= 0) {
-            return false;
-        }
-
-        if (this.level >= HacknetServerMaxLevel) {
-            return false;
-        }
-
-        // If the specified number of upgrades would exceed the max, try to purchase the
-        // maximum possible
-        if (this.level + sanitizedLevels > HacknetServerMaxLevel) {
-            const diff = Math.max(0, HacknetServerMaxLevel - this.level);
-            return this.purchaseLevelUpgrade(diff, p);
-        }
-
-        if (!p.canAfford(cost)) {
-            return false;
-        }
-
-        p.loseMoney(cost);
-        this.level = Math.round(this.level + sanitizedLevels);
-        this.updateHashRate(p);
-
-        return true;
+    upgradeLevel(levels: number, prodMult: number): void {
+        this.level = Math.min(HacknetServerMaxLevel, Math.round(this.level + levels));
+        this.updateHashRate(prodMult);
     }
 
     // Returns a boolean indicating whether the RAM was successfully upgraded
-    purchaseRamUpgrade(levels: number, p: IPlayer): boolean {
-        const sanitizedLevels = Math.round(levels);
-        const cost = this.calculateRamUpgradeCost(sanitizedLevels, p);
-        if(isNaN(cost) || cost <= 0 || sanitizedLevels <= 0) {
-            return false;
-        }
-
-        if (this.maxRam >= HacknetServerMaxRam) {
-            return false;
-        }
-
-        // If the specified number of upgrades would exceed the max, try to purchase
-        // just the maximum possible
-        if (this.maxRam * Math.pow(2, sanitizedLevels) > HacknetServerMaxRam) {
-            const diff = Math.max(0, Math.log2(Math.round(HacknetServerMaxRam / this.maxRam)));
-            return this.purchaseRamUpgrade(diff, p);
-        }
-
-        if (!p.canAfford(cost)) {
-            return false;
-        }
-
-        p.loseMoney(cost);
-        for (let i = 0; i < sanitizedLevels; ++i) {
+    upgradeRam(levels: number, prodMult: number): boolean {
+        for (let i = 0; i < levels; ++i) {
             this.maxRam *= 2;
         }
-        this.maxRam = Math.round(this.maxRam);
-        this.updateHashRate(p);
+        this.maxRam = Math.min(HacknetServerMaxRam, Math.round(this.maxRam));
+        this.updateHashRate(prodMult);
 
         return true;
     }
@@ -314,10 +216,10 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     /**
      * Whenever a script is run, we must update this server's hash rate
      */
-    runScript(script: RunningScript, p?: IPlayer): void {
+    runScript(script: RunningScript, prodMult?: number): void {
         super.runScript(script);
-        if (p) {
-            this.updateHashRate(p);
+        if (prodMult != null && typeof prodMult === "number") {
+            this.updateHashRate(prodMult);
         }
     }
 
@@ -325,7 +227,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
         this.hashCapacity = 32 * Math.pow(2, this.cache);
     }
 
-    updateHashRate(p: IPlayer): void {
+    updateHashRate(prodMult: number): void {
         const baseGain = HacknetServerHashesPerLevel * this.level;
         const ramMultiplier = Math.pow(1.07, Math.log2(this.maxRam));
         const coreMultiplier = 1 + (this.cores - 1) / 5;
@@ -333,7 +235,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
         const hashRate = baseGain * ramMultiplier * coreMultiplier * ramRatio;
 
-        this.hashRate = hashRate * p.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney;
+        this.hashRate = hashRate * prodMult * BitNodeMultipliers.HacknetNodeMoney;
 
         if (isNaN(this.hashRate)) {
             this.hashRate = 0;

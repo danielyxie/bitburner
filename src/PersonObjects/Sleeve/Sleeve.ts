@@ -14,8 +14,6 @@ import { Person,
          createTaskTracker } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 

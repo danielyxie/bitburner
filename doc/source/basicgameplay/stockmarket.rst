@@ -73,13 +73,16 @@ be sold at $98.01, and so on.
 This is an important concept to keep in mind if you are trying to purchase/sell a
 large number of shares, as **it can negatively affect your profits**.
 
+.. note:: On the Stock Market UI, the displayed profit of a position does not take
+          this "influencing" into account.
+
 Transactions Influencing Stock Forecast
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In addition to influencing stock price, buying or selling a large number of shares
 of a stock will also influence that stock's "forecast". The forecast is the likelihood
 that the stock will increase or decrease in price. The magnitude of this effect depends
 on the number of shares being transacted. More shares will have a bigger effect on the
-stock forecast. 
+stock forecast.
 
 .. _gameplay_stock_market_order_types:
 
@@ -131,7 +134,36 @@ A Stop Order to buy will execute if the stock's price <= order's price
 
 A Stop Order to sell will execute if the stock's price >= order's price.
 
+.. note:: Limit and Stop orders do **not** take into account the fact that
+          transactions can influence a stock's price. If a stock's price
+          changes mid-transaction, a limit/stop order will continue to execute
+          even if its conditions are no longer met. 
+
 Automating the Stock Market
 ---------------------------
 You can write scripts to perform automatic and algorithmic trading on the Stock Market.
 See :ref:`netscript_tixapi` for more details.
+
+Under the Hood
+--------------
+Stock prices are updated very ~6 seconds.
+
+Whether a stock's price moves up or down is determined by RNG. However,
+stocks have properties that can influence the way their price moves. These properties
+are hidden, although some of them can be made visible by purchasing the
+Four Sigma (4S) Market Data upgrade. Some examples of these properties are:
+
+* Volatility
+* Likelihood of increasing or decreasing
+* How easily a stock's price/forecast is influenced by transactions
+* Spread percentage
+* Maximum price (not a real maximum, more of a "soft cap")
+
+Each stock has its own unique values for these properties.
+
+Offline Progression
+-------------------
+The Stock Market does not change or process anything while the game has closed.
+However, it does accumulate time when offline. This accumulated time allows
+the stock market to run 50% faster when the game is opened again. This means
+that stock prices will update every ~4 seconds instead of 6.

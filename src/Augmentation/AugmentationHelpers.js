@@ -7,7 +7,6 @@ import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers"
 import { CONSTANTS }                        from "../Constants";
 import { Factions,
          factionExists }                    from "../Faction/Factions";
-import { hasBladeburnerSF }                 from "../NetscriptFunctions";
 import { addWorkerScript }                  from "../NetscriptWorker";
 import { Player }                           from "../Player";
 import { prestigeAugmentation }             from "../Prestige";
@@ -2094,7 +2093,7 @@ function installAugmentations(cbScript=null) {
                 }
                 var runningScriptObj = new RunningScript(script, []); //No args
                 runningScriptObj.threads = 1; //Only 1 thread
-                home.runScript(runningScriptObj, Player);
+                home.runScript(runningScriptObj, Player.hacknet_node_money_mult);
                 addWorkerScript(runningScriptObj, home);
             }
         }

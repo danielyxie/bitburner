@@ -18,7 +18,6 @@ type IProps = {
 
 export function StockTickerHeaderText(props: IProps): React.ReactElement {
     const stock = props.stock;
-    const p = props.p;
 
     const stockPriceFormat = numeralWrapper.formatMoney(stock.price);
 

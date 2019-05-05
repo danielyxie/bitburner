@@ -2,15 +2,19 @@
  * Implements functions for purchasing servers or purchasing more RAM for
  * the home computer
  */
-import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers";
-import { CONSTANTS }                        from "../Constants";
-import { IPlayer }                          from "../PersonObjects/IPlayer";
-import { AddToAllServers }                  from "../Server/AllServers";
-import { Server }                           from "../Server/Server";
-import { dialogBoxCreate }                  from "../../utils/DialogBox";
-import { createRandomIp }                   from "../../utils/IPAddress";
-import { yesNoTxtInpBoxGetInput }           from "../../utils/YesNoBox";
-import { isPowerOfTwo }                     from "../../utils/helpers/isPowerOfTwo";
+import {
+    AddToAllServers,
+    createUniqueRandomIp,
+} from "./AllServers";
+import { safetlyCreateUniqueServer } from "./ServerHelpers";
+
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "../Constants";
+import { IPlayer } from "../PersonObjects/IPlayer";
+
+import { dialogBoxCreate } from "../../utils/DialogBox";
+import { yesNoTxtInpBoxGetInput } from "../../utils/YesNoBox";
+import { isPowerOfTwo } from "../../utils/helpers/isPowerOfTwo";
 
 // Returns the cost of purchasing a server with the given RAM
 // Returns Infinity for invalid 'ram' arguments
@@ -66,17 +70,22 @@ export function purchaseServer(ram: number, p: IPlayer) {
         return;
     }
 
-    //Create server
-    var newServ = new Server({
-        ip:createRandomIp(), hostname:hostname, organizationName:"",
-        isConnectedTo:false, adminRights:true, purchasedByPlayer:true, maxRam:ram
+    // Create server
+    const newServ = safetlyCreateUniqueServer({
+        adminRights: true,
+        hostname: hostname,
+        ip: createUniqueRandomIp(),
+        isConnectedTo: false,
+        maxRam:ram,
+        organizationName: "",
+        purchasedByPlayer: true,
     });
     AddToAllServers(newServ);
 
-    //Add to Player's purchasedServers array
+    // Add to Player's purchasedServers array
     p.purchasedServers.push(newServ.ip);
 
-    //Connect new server to home computer
+    // Connect new server to home computer
     var homeComputer = p.getHomeComputer();
     homeComputer.serversOnNetwork.push(newServ.ip);
     newServ.serversOnNetwork.push(homeComputer.ip);

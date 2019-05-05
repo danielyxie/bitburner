@@ -1,9 +1,6 @@
 // Class representing a single hackable Server
 import { BaseServer } from "./BaseServer";
 
-// TODO This import is a circular import. Try to fix it in the future
-import { GetServerByHostname } from "./ServerHelpers";
-
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 import { createRandomString } from "../utils/helpers/createRandomString";
@@ -12,7 +9,7 @@ import { Generic_fromJSON,
          Generic_toJSON,
          Reviver } from "../../utils/JSONReviver";
 
-interface IConstructorParams {
+export interface IConstructorParams {
     adminRights?: boolean;
     hackDifficulty?: number;
     hostname: string;
@@ -75,17 +72,6 @@ export class Server extends BaseServer {
         // "hacknet-node-X" hostnames are reserved for Hacknet Servers
         if (this.hostname.startsWith("hacknet-node-")) {
             this.hostname = createRandomString(10);
-        }
-
-        // Validate hostname by ensuring there are no repeats
-        if (GetServerByHostname(this.hostname) != null) {
-            // Use a for loop to ensure that we don't get suck in an infinite loop somehow
-            let hostname: string = this.hostname;
-            for (let i = 0; i < 200; ++i) {
-                hostname = `${this.hostname}-${i}`;
-                if (GetServerByHostname(hostname) == null) { break; }
-            }
-            this.hostname = hostname;
         }
 
         this.purchasedByPlayer  =    params.purchasedByPlayer != null ? params.purchasedByPlayer  : false;

@@ -18,7 +18,6 @@ import {
 import { OrderTypes } from "../data/OrderTypes";
 import { PositionTypes } from "../data/PositionTypes";
 
-import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -58,6 +57,7 @@ type IState = {
     orderType: SelectorOrderType;
     position: PositionTypes;
     qty: string;
+    rerenderFlag: boolean;
 }
 
 export class StockTicker extends React.Component<IProps, IState> {
@@ -68,6 +68,7 @@ export class StockTicker extends React.Component<IProps, IState> {
             orderType: SelectorOrderType.Market,
             position: PositionTypes.Long,
             qty: "",
+            rerenderFlag: false,
         }
 
         this.getBuyTransactionCostText = this.getBuyTransactionCostText.bind(this);
@@ -80,6 +81,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         this.handleQuantityChange = this.handleQuantityChange.bind(this);
         this.handleSellButtonClick = this.handleSellButtonClick.bind(this);
         this.handleSellAllButtonClick = this.handleSellAllButtonClick.bind(this);
+        this.rerender = this.rerender.bind(this);
     }
 
     createPlaceOrderPopupBox(yesTxt: string, popupTxt: string, yesBtnCb: (price: number) => void) {
@@ -172,6 +174,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                 } else {
                     this.props.buyStockLong(this.props.stock, shares);
                 }
+                this.rerender();
                 break;
             }
             case SelectorOrderType.Limit: {
@@ -213,30 +216,13 @@ export class StockTicker extends React.Component<IProps, IState> {
                 } else {
                     this.props.buyStockLong(stock, maxShares);
                 }
+                this.rerender();
                 break;
             }
-            case SelectorOrderType.Limit: {
-                this.createPlaceOrderPopupBox(
-                    "Place Buy Limit Order",
-                    "Enter the price for your Limit Order",
-                    (price: number) => {
-                        this.props.placeOrder(stock, maxShares, price, OrderTypes.LimitBuy, this.state.position);
-                    }
-                );
+            default: {
+                dialogBoxCreate(`ERROR: 'Buy Max' only works for Market Orders`);
                 break;
             }
-            case SelectorOrderType.Stop: {
-                this.createPlaceOrderPopupBox(
-                    "Place Buy Stop Order",
-                    "Enter the price for your Stop Order",
-                    (price: number) => {
-                        this.props.placeOrder(stock, maxShares, price, OrderTypes.StopBuy, this.state.position);
-                    }
-                )
-                break;
-            }
-            default:
-                break;
         }
     }
 
@@ -311,6 +297,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                 } else {
                     this.props.sellStockLong(this.props.stock, shares);
                 }
+                this.rerender();
                 break;
             }
             case SelectorOrderType.Limit: {
@@ -348,6 +335,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                 } else {
                     this.props.sellStockLong(stock, stock.playerShares);
                 }
+                this.rerender();
                 break;
             }
             default: {
@@ -365,6 +353,14 @@ export class StockTicker extends React.Component<IProps, IState> {
     // Whether the player has access to shorting stocks
     hasShortAccess(): boolean {
         return (this.props.p.bitNodeN === 8 || (SourceFileFlags[8] >= 2));
+    }
+
+    rerender(): void {
+        this.setState((prevState) => {
+            return {
+                rerenderFlag: !prevState.rerenderFlag,
+            }
+        });
     }
 
     render() {

@@ -51,6 +51,7 @@ export interface IPlayer {
     purchasedServers: any[];
     queuedAugmentations: IPlayerOwnedAugmentation[];
     resleeves: Resleeve[];
+    scriptProdSinceLastAug: number;
     sleeves: Sleeve[];
     sleevesFromCovenant: number;
     sourceFiles: IPlayerOwnedSourceFile[];

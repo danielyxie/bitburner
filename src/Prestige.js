@@ -16,14 +16,10 @@ import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { deleteGangDisplayContent } from "./Gang";
+import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
 import { Message } from "./Message/Message";
 import { initMessages, Messages } from "./Message/MessageHelpers";
-import { initSingularitySFFlags, hasWallStreetSF } from "./NetscriptFunctions";
-import {
-    WorkerScript,
-    workerScripts,
-    prestigeWorkerScripts
-} from "./NetscriptWorker";
+import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 
 import {
@@ -152,7 +148,7 @@ function prestigeAugmentation() {
 
     // BitNode 8: Ghost of Wall Street
     if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
-    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+    if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
     }
@@ -257,9 +253,6 @@ function prestigeSourceFile() {
     Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
 
-    // Reinitialize Bit Node flags
-    initSingularitySFFlags();
-
     // BitNode 3: Corporatocracy
     if (Player.bitNodeN === 3) {
         homeComp.messages.push("corporation-management-handbook.lit");
@@ -313,7 +306,7 @@ function prestigeSourceFile() {
 
     // BitNode 8: Ghost of Wall Street
     if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
-    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+    if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
     }
@@ -345,7 +338,7 @@ function prestigeSourceFile() {
         hserver.cache = 5;
         hserver.updateHashRate(Player);
         hserver.updateHashCapacity();
-        Player.hashManager.updateCapacity(Player);
+        updateHashManagerCapacity();
     }
 
     // Refresh Main Menu (the 'World' menu, specifically)

@@ -3,7 +3,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-const forecastChangePerPriceMovement = 0.4;
+export const forecastChangePerPriceMovement = 0.4;
 
 /**
  * Given a stock, calculates the amount by which the stock price is multiplied
@@ -103,16 +103,6 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
 
     const isLong = (posType === PositionTypes.Long);
 
-    // If the number of shares doesn't trigger a price movement, just return
-    if (shares <= stock.shareTxUntilMovement) {
-        stock.shareTxUntilMovement -= shares;
-        return;
-    }
-
-    // Calculate how many iterations of price changes we need to account for
-    let remainingShares = shares - stock.shareTxUntilMovement;
-    let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
-
     let currPrice = stock.price;
     function processPriceMovement() {
         if (isLong) {
@@ -122,15 +112,38 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
         }
     }
 
+    // No price/forecast movement
+    if (shares <= stock.shareTxUntilMovement) {
+        stock.shareTxUntilMovement -= shares;
+        if (stock.shareTxUntilMovement <= 0) {
+            stock.shareTxUntilMovement = stock.shareTxForMovement;
+            processPriceMovement();
+            stock.price = currPrice;
+            stock.otlkMag -= (forecastChangePerPriceMovement);
+        }
+
+        return;
+    }
+
+    // Calculate how many iterations of price changes we need to account for
+    let remainingShares = shares - stock.shareTxUntilMovement;
+    let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
+
     for (let i = 1; i < numIterations; ++i) {
         processPriceMovement();
     }
 
-    stock.price = currPrice;
     stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
+    if (stock.shareTxUntilMovement === stock.shareTxForMovement || stock.shareTxUntilMovement <= 0) {
+        // The shareTxUntilMovement ended up at 0 at the end of the "processing"
+        ++numIterations;
+        stock.shareTxUntilMovement = stock.shareTxForMovement;
+        processPriceMovement();
+    }
+    stock.price = currPrice;
 
     // Forecast always decreases in magnitude
-    const forecastChange = Math.min(5, forecastChangePerPriceMovement * numIterations);
+    const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
     stock.otlkMag -= forecastChange;
 }
 
@@ -214,18 +227,8 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
 
     const isLong = (posType === PositionTypes.Long);
 
-    if (shares <= stock.shareTxUntilMovement) {
-        stock.shareTxUntilMovement -= shares;
-        return;
-    }
-
-    // Calculate how many iterations of price changes we need to accoutn for
-    let remainingShares = shares - stock.shareTxUntilMovement;
-    let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
-
     let currPrice = stock.price;
-    for (let i = 1; i < numIterations; ++i) {
-        // Price movement
+    function processPriceMovement() {
         if (isLong) {
             currPrice *= calculateDecreasingPriceMovement(stock)!;
         } else {
@@ -233,11 +236,37 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
         }
     }
 
-    stock.price = currPrice;
+    // No price/forecast movement
+    if (shares <= stock.shareTxUntilMovement) {
+        stock.shareTxUntilMovement -= shares;
+        if (stock.shareTxUntilMovement <= 0) {
+            stock.shareTxUntilMovement = stock.shareTxForMovement;
+            processPriceMovement();
+            stock.price = currPrice;
+            stock.otlkMag -= (forecastChangePerPriceMovement);
+        }
+
+        return;
+    }
+
+    // Calculate how many iterations of price changes we need to account for
+    let remainingShares = shares - stock.shareTxUntilMovement;
+    let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
+
+    for (let i = 1; i < numIterations; ++i) {
+        processPriceMovement();
+    }
+
     stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
+    if (stock.shareTxUntilMovement === stock.shareTxForMovement || stock.shareTxUntilMovement <= 0) {
+        ++numIterations;
+        stock.shareTxUntilMovement = stock.shareTxForMovement;
+        processPriceMovement();
+    }
+    stock.price = currPrice;
 
     // Forecast always decreases in magnitude
-    const forecastChange = Math.min(5, forecastChangePerPriceMovement * numIterations);
+    const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
     stock.otlkMag -= forecastChange;
 }
 

@@ -38,60 +38,6 @@ export let CONSTANTS: IMap<any> = {
     // NeuroFlux Governor Augmentation cost multiplier
     NeuroFluxGovernorLevelMult: 1.14,
 
-    // RAM Costs for Netscript functions
-    ScriptBaseRamCost: 1.6,
-    ScriptDomRamCost: 25,
-    ScriptWhileRamCost: 0,
-    ScriptForRamCost: 0,
-    ScriptIfRamCost: 0,
-    ScriptHackRamCost: 0.1,
-    ScriptHackAnalyzeRamCost: 1,
-    ScriptGrowRamCost: 0.15,
-    ScriptGrowthAnalyzeRamCost: 1,
-    ScriptWeakenRamCost: 0.15,
-    ScriptScanRamCost: 0.2,
-    ScriptPortProgramRamCost: 0.05,
-    ScriptRunRamCost: 1.0,
-    ScriptExecRamCost: 1.3,
-    ScriptSpawnRamCost: 2.0,
-    ScriptScpRamCost: 0.6,
-    ScriptKillRamCost: 0.5,
-    ScriptHasRootAccessRamCost: 0.05,
-    ScriptGetHostnameRamCost: 0.05,
-    ScriptGetHackingLevelRamCost: 0.05,
-    ScriptGetMultipliersRamCost: 4.0,
-    ScriptGetServerRamCost: 0.1,
-    ScriptFileExistsRamCost: 0.1,
-    ScriptIsRunningRamCost: 0.1,
-    ScriptHacknetNodesRamCost: 4.0,
-    ScriptHNUpgLevelRamCost: 0.4,
-    ScriptHNUpgRamRamCost: 0.6,
-    ScriptHNUpgCoreRamCost: 0.8,
-    ScriptGetStockRamCost: 2.0,
-    ScriptBuySellStockRamCost: 2.5,
-    ScriptGetPurchaseServerRamCost: 0.25,
-    ScriptPurchaseServerRamCost: 2.25,
-    ScriptGetPurchasedServerLimit: 0.05,
-    ScriptGetPurchasedServerMaxRam: 0.05,
-    ScriptRoundRamCost: 0.05,
-    ScriptReadWriteRamCost: 1.0,
-    ScriptArbScriptRamCost: 1.0,
-    ScriptGetScriptRamCost: 0.1,
-    ScriptGetHackTimeRamCost: 0.05,
-    ScriptGetFavorToDonate: 0.10,
-    ScriptCodingContractBaseRamCost: 10,
-    ScriptSleeveBaseRamCost: 4,
-
-    ScriptSingularityFn1RamCost: 1,
-    ScriptSingularityFn2RamCost: 2,
-    ScriptSingularityFn3RamCost: 3,
-
-    ScriptSingularityFnRamMult: 2,      // Multiplier for RAM cost outside of BN-4
-
-    ScriptGangApiBaseRamCost: 4,
-
-    ScriptBladeburnerApiBaseRamCost: 4,
-
     NumNetscriptPorts: 20,
 
     // Server-related constants
@@ -287,6 +233,8 @@ export let CONSTANTS: IMap<any> = {
     * Re-sleeves can no longer have the NeuroFlux Governor augmentation
     ** This is just a temporary patch until the mechanic gets re-worked
 
+    * Adjusted RAM costs of Netscript Singularity functions (mostly increased)
+    * Netscript Singularity functions no longer cost extra RAM outside of BitNode-4
     * Corporation employees no longer have an "age" stat
     * Bug Fix: Corporation employees stats should no longer become negative
     * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
