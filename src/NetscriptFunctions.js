@@ -1145,8 +1145,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             // Create new script if it does not already exist
-            var newScript = new Script();
-            newScript.filename = scriptname;
+            var newScript = new Script(scriptname);
             newScript.code = sourceScript.code;
             newScript.ramUsage = sourceScript.ramUsage;
             newScript.server = destServer.ip;
@@ -1932,12 +1931,12 @@ function NetscriptFunctions(workerScript) {
                     let script = workerScript.getScriptOnServer(fn);
                     if (script == null) {
                         // Create a new script
-                        script = new Script(fn, data, server.ip);
+                        script = new Script(fn, data, server.ip, server.scripts);
                         server.scripts.push(script);
                         return true;
                     }
                     mode === "w" ? script.code = data : script.code += data;
-                    script.updateRamUsage();
+                    script.updateRamUsage(server.scripts);
                 } else {
                     // Write to text file
                     let txtFile = getTextFile(fn, server);

@@ -1,5 +1,5 @@
 // Calculate a script's RAM usage
-const walk = require("acorn/dist/walk"); // Importing this doesn't work for some reason.
+import * as walk from "acorn-walk";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { parse, Node } from "../../utils/acorn";
@@ -16,7 +16,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
 // Calcluates the amount of RAM a script uses. Uses parsing and AST walking only,
 // rather than NetscriptEvaluator. This is useful because NetscriptJS code does
 // not work under NetscriptEvaluator.
-async function parseOnlyRamCalculate(server, code, workerScript) {
+async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
     try {
         // Maps dependent identifiers to their dependencies.
         //
@@ -74,11 +74,25 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                     return -1;
                 }
             } else {
-                const script = server.getScript(nextModule.startsWith("./") ? nextModule.slice(2) : nextModule);
-                if (!script) {
+                if (!Array.isArray(otherScripts)) {
+                    console.warn(`parseOnlyRamCalculate() not called with array of scripts`);
+                    return -1;
+                }
+
+                let script = null;
+                let fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
+                for (const s of otherScripts) {
+                    if (s.filename === fn) {
+                        script = s;
+                        break;
+                    }
+                }
+
+                if (script == null) {
                     console.warn("Invalid script");
                     return -1;  // No such script on the server.
                 }
+
                 code = script.code;
             }
 
@@ -251,36 +265,6 @@ function parseOnlyCalculateDeps(code, currentModule) {
         }
     }
 
-    //Spread syntax not supported in Edge yet, use Object.assign
-    /*
-    walk.recursive(ast, {key: globalKey}, {
-        ImportDeclaration: (node, st, walkDeeper) => {
-            const importModuleName = node.source.value;
-            additionalModules.push(importModuleName);
-
-            // This module's global scope refers to that module's global scope, no matter how we
-            // import it.
-            dependencyMap[st.key].add(importModuleName + memCheckGlobalKey);
-
-            for (let i = 0; i < node.specifiers.length; ++i) {
-                const spec = node.specifiers[i];
-                if (spec.imported !== undefined && spec.local !== undefined) {
-                    // We depend on specific things.
-                    internalToExternal[spec.local.name] = importModuleName + "." + spec.imported.name;
-                } else {
-                    // We depend on everything.
-                    dependencyMap[st.key].add(importModuleName + ".*");
-                }
-            }
-        },
-        FunctionDeclaration: (node, st, walkDeeper) => {
-            // Don't use walkDeeper, because we are changing the visitor set.
-            const key = currentModule + "." + node.id.name;
-            walk.recursive(node, {key: key}, commonVisitors());
-        },
-        ...commonVisitors()
-    });
-    */
     walk.recursive(ast, {key: globalKey}, Object.assign({
         ImportDeclaration: (node, st, walkDeeper) => {
             const importModuleName = node.source.value;
@@ -311,19 +295,18 @@ function parseOnlyCalculateDeps(code, currentModule) {
     return {dependencyMap: dependencyMap, additionalModules: additionalModules};
 }
 
-export async function calculateRamUsage(codeCopy) {
+export async function calculateRamUsage(codeCopy, otherScripts) {
     // We don't need a real WorkerScript for this. Just an object that keeps
     // track of whatever's needed for RAM calculations
     const workerScript = {
         loadedFns: {},
-        serverIp: currServ.ip,
         env: {
             vars: RamCosts,
         }
     }
 
     try {
-        return await parseOnlyRamCalculate(currServ, codeCopy, workerScript);
+        return await parseOnlyRamCalculate(otherScripts, codeCopy, workerScript);
 	} catch (e) {
         console.error(`Failed to parse script for RAM calculations:`);
         console.error(e);

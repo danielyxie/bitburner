@@ -20,6 +20,8 @@ import {
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
 import { NetscriptPort } from "./NetscriptPort";
+import { Player } from "./Player";
+import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import {
     findRunningScript,

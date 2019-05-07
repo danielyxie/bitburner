@@ -189,7 +189,7 @@ export async function updateScriptEditorContent() {
     }
 
     var codeCopy = code.repeat(1);
-    var ramUsage = await calculateRamUsage(codeCopy);
+    var ramUsage = await calculateRamUsage(codeCopy, Player.getCurrentServer().scripts);
     if (ramUsage !== -1) {
         scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
@@ -236,15 +236,15 @@ function saveAndCloseScriptEditor() {
         let s = Player.getCurrentServer();
         for (var i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
-                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer);
+                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
                 Engine.loadTerminalContent();
                 return iTutorialNextStep();
             }
         }
 
-        //If the current script does NOT exist, create a new one
+        // If the current script does NOT exist, create a new one
         let script = new Script();
-        script.saveScript(getCurrentEditor().getCode(), Player.currentServer);
+        script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
         s.scripts.push(script);
 
         return iTutorialNextStep();
@@ -272,7 +272,7 @@ function saveAndCloseScriptEditor() {
         //If the current script already exists on the server, overwrite it
         for (var i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
-                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer);
+                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
                 Engine.loadTerminalContent();
                 return;
             }
@@ -280,7 +280,7 @@ function saveAndCloseScriptEditor() {
 
         //If the current script does NOT exist, create a new one
         const script = new Script();
-        script.saveScript(getCurrentEditor().getCode(), Player.currentServer);
+        script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
         s.scripts.push(script);
     } else if (filename.endsWith(".txt")) {
         for (var i = 0; i < s.textFiles.length; ++i) {

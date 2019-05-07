@@ -41,16 +41,24 @@ export let SymbolToStockMap = {}; // Maps symbol -> Stock object
 
 export function placeOrder(stock, shares, price, type, position, workerScript=null) {
     const tixApi = (workerScript instanceof WorkerScript);
+    if (!(stock instanceof Stock)) {
+        if (tixApi) {
+            workerScript.log(`ERROR: Invalid stock passed to placeOrder() function`);
+        } else {
+            dialogBoxCreate(`ERROR: Invalid stock passed to placeOrder() function`);
+        }
+        return false;
+    }
     if (typeof shares !== "number" || typeof price !== "number") {
         if (tixApi) {
-            workerScript.scriptRef.log("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
+            workerScript.log("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
         } else {
             dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
         }
         return false;
     }
 
-    const order = new Order(stock, shares, price, type, position);
+    const order = new Order(stock.symbol, shares, price, type, position);
     if (StockMarket["Orders"] == null) {
         const orders = {};
         for (const name in StockMarket) {
@@ -66,8 +74,9 @@ export function placeOrder(stock, shares, price, type, position, workerScript=nu
     const processOrderRefs = {
         rerenderFn: displayStockMarketContent,
         stockMarket: StockMarket,
+        symbolToStockMap: SymbolToStockMap,
     }
-    processOrders(order.stock, order.type, order.pos, processOrderRefs);
+    processOrders(stock, order.type, order.pos, processOrderRefs);
     displayStockMarketContent();
 
     return true;
@@ -78,9 +87,9 @@ export function cancelOrder(params, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
     if (StockMarket["Orders"] == null) {return false;}
     if (params.order && params.order instanceof Order) {
-        var order = params.order;
+        const order = params.order;
         // An 'Order' object is passed in
-        var stockOrders = StockMarket["Orders"][order.stock.symbol];
+        var stockOrders = StockMarket["Orders"][order.stockSymbol];
         for (var i = 0; i < stockOrders.length; ++i) {
             if (order == stockOrders[i]) {
                 stockOrders.splice(i, 1);
@@ -122,6 +131,24 @@ export function loadStockMarket(saveString) {
         StockMarket = {};
     } else {
         StockMarket = JSON.parse(saveString, Reviver);
+
+        // Backwards compatibility for v0.47.0
+        const orderBook = StockMarket["Orders"];
+        if (orderBook != null) {
+            // For each order, set its 'stockSymbol' property equal to the
+            // symbol of its 'stock' property
+            for (const stockSymbol in orderBook) {
+                const ordersForStock = orderBook[stockSymbol];
+                if (Array.isArray(ordersForStock)) {
+                    for (const order of ordersForStock) {
+                        if (order instanceof Order && order.stock instanceof Stock) {
+                            order.stockSymbol = order.stock.symbol;
+                        }
+                    }
+                }
+            }
+            console.log(`Converted Stock Market order book to v0.47.0 format`);
+        }
     }
 }
 
@@ -175,7 +202,7 @@ export function stockMarketCycle() {
         if (stock.b) { thresh = 0.4; }
         if (Math.random() < thresh) {
             stock.b = !stock.b;
-            if (stock.otlkMag < 10) { stock.otlkMag += 0.4; }
+            if (stock.otlkMag < 10) { stock.otlkMag += 0.2; }
         }
     }
 }
@@ -220,15 +247,16 @@ export function processStockPrices(numCycles=1) {
         const processOrderRefs = {
             rerenderFn: displayStockMarketContent,
             stockMarket: StockMarket,
+            symbolToStockMap: SymbolToStockMap,
         }
         if (c < chc) {
-            stock.price *= (1 + av);
+            stock.changePrice(stock.price * (1 + av));
             processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Short, processOrderRefs);
             processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long, processOrderRefs);
             processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long, processOrderRefs);
             processOrders(stock, OrderTypes.StopSell, PositionTypes.Short, processOrderRefs);
         } else {
-            stock.price /= (1 + av);
+            stock.changePrice(stock.price / (1 + av));
             processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long, processOrderRefs);
             processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short, processOrderRefs);
             processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short, processOrderRefs);

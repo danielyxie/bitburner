@@ -2,14 +2,13 @@
  * Represents a Limit or Buy Order on the stock market. Does not represent
  * a Market Order since those are just executed immediately
  */
-import { Stock } from "./Stock";
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
 
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../../utils/JSONReviver";
 
 export class Order {
@@ -23,10 +22,10 @@ export class Order {
     readonly pos: PositionTypes;
     readonly price: number;
     shares: number;
-    readonly stock: Stock;
+    readonly stockSymbol: string;
     readonly type: OrderTypes;
 
-    constructor(stk: Stock = new Stock(), shares: number=0, price: number=0, typ: OrderTypes=OrderTypes.LimitBuy, pos: PositionTypes=PositionTypes.Long) {
+    constructor(stockSymbol: string="", shares: number=0, price: number=0, typ: OrderTypes=OrderTypes.LimitBuy, pos: PositionTypes=PositionTypes.Long) {
         // Validate arguments
         let invalidArgs: boolean = false;
         if (typeof shares !== "number" || typeof price !== "number") {
@@ -35,14 +34,14 @@ export class Order {
         if (isNaN(shares) || isNaN(price)) {
             invalidArgs = true;
         }
-        if (!(stk instanceof Stock)) {
+        if (typeof stockSymbol !== "string") {
             invalidArgs = true;
         }
         if (invalidArgs) {
             throw new Error(`Invalid constructor paramters for Order`);
         }
 
-        this.stock = stk;
+        this.stockSymbol = stockSymbol;
         this.shares = shares;
         this.price = price;
         this.type = typ;

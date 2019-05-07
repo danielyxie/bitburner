@@ -3,7 +3,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-export const forecastChangePerPriceMovement = 0.4;
+export const forecastChangePerPriceMovement = 0.1;
 
 /**
  * Given a stock, calculates the amount by which the stock price is multiplied
@@ -118,7 +118,7 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
         if (stock.shareTxUntilMovement <= 0) {
             stock.shareTxUntilMovement = stock.shareTxForMovement;
             processPriceMovement();
-            stock.price = currPrice;
+            stock.changePrice(currPrice);
             stock.otlkMag -= (forecastChangePerPriceMovement);
         }
 
@@ -140,11 +140,15 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
         stock.shareTxUntilMovement = stock.shareTxForMovement;
         processPriceMovement();
     }
-    stock.price = currPrice;
+    stock.changePrice(currPrice);
 
     // Forecast always decreases in magnitude
     const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
     stock.otlkMag -= forecastChange;
+    if (stock.otlkMag < 0) {
+        stock.b = !stock.b;
+        stock.otlkMag = Math.abs(stock.otlkMag);
+    }
 }
 
 /**
@@ -242,7 +246,7 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
         if (stock.shareTxUntilMovement <= 0) {
             stock.shareTxUntilMovement = stock.shareTxForMovement;
             processPriceMovement();
-            stock.price = currPrice;
+            stock.changePrice(currPrice);
             stock.otlkMag -= (forecastChangePerPriceMovement);
         }
 
@@ -263,11 +267,15 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
         stock.shareTxUntilMovement = stock.shareTxForMovement;
         processPriceMovement();
     }
-    stock.price = currPrice;
+    stock.changePrice(currPrice);
 
     // Forecast always decreases in magnitude
     const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
     stock.otlkMag -= forecastChange;
+    if (stock.otlkMag < 0) {
+        stock.b = !stock.b;
+        stock.otlkMag = Math.abs(stock.otlkMag);
+    }
 }
 
 /**

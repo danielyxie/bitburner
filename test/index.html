@@ -8,15 +8,16 @@
     <body>
         <div id="mocha"></div>
 
-        <script src="https://unpkg.com/chai/chai.js"></script>
-        <script src="https://unpkg.com/mocha/mocha.js"></script>
+        <script defer src="https://unpkg.com/chai/chai.js"></script>
+        <script defer src="https://unpkg.com/mocha/mocha.js"></script>
 
-        <script class="mocha-init">
+        <script type="module" class="mocha-init">
             mocha.setup('bdd');
             mocha.checkLeaks();
         </script>
         <script type="module" src="tests.bundle.js"></script>
         <script class="mocha-exec" type="module">
+            console.log("Running Tests");
             mocha.run();
         </script>
     </body>

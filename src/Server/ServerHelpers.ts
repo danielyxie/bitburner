@@ -107,7 +107,7 @@ export function prestigeHomeComputer(homeComp: Server) {
 
     //Update RAM usage on all scripts
     homeComp.scripts.forEach(function(script) {
-        script.updateRamUsage();
+        script.updateRamUsage(homeComp.scripts);
     });
 
     homeComp.messages.length = 0; //Remove .lit and .msg files

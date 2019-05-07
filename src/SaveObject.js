@@ -18,8 +18,8 @@ import {
     processHacknetEarnings
 } from "./Hacknet/HacknetHelpers";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
+import { loadAllRunningScripts } from "./NetscriptWorker";
 import { Player, loadPlayer } from "./Player";
-import { loadAllRunningScripts } from "./Script/ScriptHelpers";
 import { AllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import {

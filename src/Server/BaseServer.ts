@@ -231,7 +231,7 @@ export class BaseServer {
             if (fn === this.scripts[i].filename) {
                 let script = this.scripts[i];
                 script.code = code;
-                script.updateRamUsage();
+                script.updateRamUsage(this.scripts);
                 script.module = "";
                 ret.overwritten = true;
                 ret.success = true;
@@ -240,11 +240,7 @@ export class BaseServer {
         }
 
         //Otherwise, create a new script
-        const newScript = new Script();
-        newScript.filename = fn;
-        newScript.code = code;
-        newScript.updateRamUsage();
-        newScript.server = this.ip;
+        const newScript = new Script(fn, code, this.ip, this.scripts);
         this.scripts.push(newScript);
         ret.success = true;
         return ret;

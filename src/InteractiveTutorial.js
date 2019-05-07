@@ -321,7 +321,7 @@ function iTutorialEvaluateStep() {
         Engine.loadActiveScriptsContent();
         iTutorialSetText("This page displays stats/information about all of your scripts that are " +
                          "running across every existing server. You can use this to gauge how well " +
-                         "your scripts are doing. Let's go back to the Terminal now using the 'Terminal'" +
+                         "your scripts are doing. Let's go back to the Terminal now using the 'Terminal' " +
                          "link.");
         nextBtn.style.display = "none";
 

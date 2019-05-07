@@ -9,7 +9,6 @@ import { IHacknetNode } from "./IHacknetNode";
 import { CONSTANTS } from "../Constants";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Generic_fromJSON,

@@ -61,7 +61,7 @@ export function purchaseHacknet() {
         }
     }
     /* END INTERACTIVE TUTORIAL */
-
+    
     const numOwned = Player.hacknetNodes.length;
     if (hasHacknetServers()) {
         const cost = getCostOfNextHacknetServer();

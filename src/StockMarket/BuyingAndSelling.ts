@@ -41,11 +41,11 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
 
     // Validate arguments
     shares = Math.round(shares);
-    if (shares == 0 || shares < 0) { return false; }
+    if (shares <= 0) { return false; }
     if (stock == null || isNaN(shares)) {
         if (tixApi) {
             workerScript!.log(`ERROR: buyStock() failed due to invalid arguments`);
-        } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+        } else if (opts.suppressDialog !== true) {
             dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
         }
 
@@ -58,7 +58,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
     if (Player.money.lt(totalPrice)) {
         if (tixApi) {
             workerScript!.log(`ERROR: buyStock() failed because you do not have enough money to purchase this potiion. You need ${numeralWrapper.formatMoney(totalPrice)}`);
-        } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+        } else if (opts.suppressDialog !== true) {
             dialogBoxCreate(`You do not have enough money to purchase this. You need ${numeralWrapper.formatMoney(totalPrice)}`);
         }
 
@@ -69,7 +69,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
     if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
         if (tixApi) {
             workerScript!.log(`ERROR: buyStock() failed because purchasing this many shares would exceed ${stock.symbol}'s maximum number of shares`);
-        } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+        } else if (opts.suppressDialog !== true) {
             dialogBoxCreate(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ${numeralWrapper.formatBigNumber(stock.maxShares)} shares.`);
         }
 
@@ -90,7 +90,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
                       `Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} in commission fees.`
     if (tixApi) {
         if (workerScript!.shouldLog("buyStock")) { workerScript!.log(resultTxt); }
-    } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+    } else if (opts.suppressDialog !== true) {
         dialogBoxCreate(resultTxt);
     }
 
@@ -112,15 +112,15 @@ export function sellStock(stock: Stock, shares: number, workerScript: WorkerScri
     if (stock == null || shares < 0 || isNaN(shares)) {
         if (tixApi) {
             workerScript!.log(`ERROR: sellStock() failed due to invalid arguments`);
-        } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+        } else if (opts.suppressDialog !== true) {
             dialogBoxCreate("Failed to sell stock. This is probably due to an invalid quantity. Otherwise, this may be a bug, contact developer");
         }
 
         return false;
     }
     shares = Math.round(shares);
-    if (shares > stock.playerShares) {shares = stock.playerShares;}
-    if (shares === 0) {return false;}
+    if (shares > stock.playerShares) { shares = stock.playerShares; }
+    if (shares === 0) { return false; }
 
     const gains = getSellTransactionGain(stock, shares, PositionTypes.Long);
     if (gains == null) { return false; }
@@ -148,7 +148,7 @@ export function sellStock(stock: Stock, shares: number, workerScript: WorkerScri
                       `After commissions, you gained a total of ${numeralWrapper.formatMoney(gains)}.`;
     if (tixApi) {
         if (workerScript!.shouldLog("sellStock")) { workerScript!.log(resultTxt); }
-    } else if (opts.suppressDialog != null && !opts.suppressDialog)  {
+    } else if (opts.suppressDialog !== true)  {
         dialogBoxCreate(resultTxt);
     }
 
@@ -168,11 +168,11 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
 
     // Validate arguments
     shares = Math.round(shares);
-    if (shares === 0 || shares < 0) { return false; }
+    if (shares <= 0) { return false; }
     if (stock == null || isNaN(shares)) {
         if (tixApi) {
             workerScript!.log("ERROR: shortStock() failed because of invalid arguments.");
-        } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+        } else if (opts.suppressDialog !== true) {
             dialogBoxCreate("Failed to initiate a short position in a stock. This is probably " +
                             "due to an invalid quantity. Otherwise, this may be a bug,  so contact developer");
         }
@@ -187,7 +187,7 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
             workerScript!.log("ERROR: shortStock() failed because you do not have enough " +
                              "money to purchase this short position. You need " +
                              numeralWrapper.formatMoney(totalPrice));
-        } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+        } else if (opts.suppressDialog !== true) {
             dialogBoxCreate("You do not have enough money to purchase this short position. You need " +
                             numeralWrapper.formatMoney(totalPrice));
         }
@@ -199,7 +199,7 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
     if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
         if (tixApi) {
             workerScript!.log(`ERROR: shortStock() failed because purchasing this many short shares would exceed ${stock.symbol}'s maximum number of shares.`);
-        } else if (opts.suppressDialog != null && !opts.suppressDialog) {
+        } else if (opts.suppressDialog !== true) {
             dialogBoxCreate(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ${stock.maxShares} shares.`);
         }
 
