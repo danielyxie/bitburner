@@ -4346,7 +4346,7 @@ function NetscriptFunctions(workerScript) {
                 if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "getStats() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
-                updateDynamicRam("workoutAtGym", getRamCost("sleeve", "getSleeveStats"));
+                updateDynamicRam("getSleeveStats", getRamCost("sleeve", "getSleeveStats"));
                 if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
                     workerScript.log(`ERROR: sleeve.workoutAtGym(${sleeveNumber}) failed because it is an invalid sleeve number.`);
                     return false;

@@ -76,7 +76,7 @@ export class WorkerScript {
     output: string = "";
 
     /**
-     * Script's RAM usage. Equivalent to underlying script's RAM usage
+     * Script's Static RAM usage. Equivalent to underlying script's RAM usage
      */
     ramUsage: number = 0;
 

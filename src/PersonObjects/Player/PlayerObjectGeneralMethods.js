@@ -359,21 +359,24 @@ export function hasProgram(programName) {
 
 export function setMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.setMoney()"); return;
+        console.error("NaN passed into Player.setMoney()");
+        return;
     }
-    this.money = money;
+    this.money = new Decimal(money);
 }
 
 export function gainMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.gainMoney()"); return;
+        console.error("NaN passed into Player.gainMoney()");
+        return;
     }
 	this.money = this.money.plus(money);
 }
 
 export function loseMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.loseMoney()"); return;
+        console.error("NaN passed into Player.loseMoney()");
+        return;
     }
     this.money = this.money.minus(money);
 }

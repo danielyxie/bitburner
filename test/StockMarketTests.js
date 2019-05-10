@@ -1,4 +1,11 @@
 import { CONSTANTS } from "../src/Constants";
+import { Player } from "../src/Player";
+import {
+    buyStock,
+    sellStock,
+    shortStock,
+    sellShort,
+} from "../src/StockMarket/BuyingAndSelling";
 import { Order } from "../src/StockMarket/Order";
 import { processOrders } from "../src/StockMarket/OrderProcessing";
 import { Stock } from "../src/StockMarket/Stock";
@@ -7,6 +14,7 @@ import {
     initStockMarket,
     initSymbolToStockMap,
     loadStockMarket,
+    processStockPrices,
     StockMarket,
     SymbolToStockMap,
 } from "../src/StockMarket/StockMarket";
@@ -22,8 +30,6 @@ import {
 import { OrderTypes } from "../src/StockMarket/data/OrderTypes"
 import { PositionTypes } from "../src/StockMarket/data/PositionTypes";
 
-//const assert = chai.assert;
-//const expect = chai.expect;
 import { expect } from "chai";
 
 console.log("Beginning Stock Market Tests");
@@ -192,7 +198,9 @@ describe("Stock Market Tests", function() {
 
             it("should have properties for managing game cycles", function() {
                 expect(StockMarket).to.have.property("storedCycles");
+                expect(StockMarket["storedCycles"]).to.equal(0);
                 expect(StockMarket).to.have.property("lastUpdate");
+                expect(StockMarket["lastUpdate"]).to.equal(0);
             });
         });
 
@@ -206,15 +214,59 @@ describe("Stock Market Tests", function() {
             });
         });
 
-        // Reset stock market for each test
-        beforeEach(function() {
+        describe("processStockPrices()", function() {
+            before(function() {
+                deleteStockMarket();
+                initStockMarket();
+                initSymbolToStockMap();
+            });
+
+            it("should store cycles until it actually processes", function() {
+                expect(StockMarket["storedCycles"]).to.equal(0);
+                processStockPrices(10);
+                expect(StockMarket["storedCycles"]).to.equal(10);
+            });
+
+            it("should trigger a price update when it has enough cycles", function() {
+                // Get the initial prices
+                const initialValues = {};
+                for (const stockName in StockMarket) {
+                    const stock = StockMarket[stockName];
+                    if (!(stock instanceof Stock)) { continue; }
+                    initialValues[stock.symbol] = {
+                        price: stock.price,
+                        otlkMag: stock.otlkMag,
+                    }
+                }
+
+                // Don't know or care how many exact cycles are required
+                processStockPrices(1e9);
+
+                // Both price and 'otlkMag' should be different
+                for (const stockName in StockMarket) {
+                    const stock = StockMarket[stockName];
+                    if (!(stock instanceof Stock)) { continue; }
+                    expect(initialValues[stock.symbol].price).to.not.equal(stock.price);
+                    expect(initialValues[stock.symbol].otlkMag).to.not.equal(stock.otlkMag);
+                }
+            });
+        });
+    });
+
+    describe("StockToSymbolMap", function() {
+        before(function() {
             deleteStockMarket();
             initStockMarket();
             initSymbolToStockMap();
         });
 
-        it("should properly initialize", function() {
+        it("should map stock symbols to their corresponding Stock Objects", function() {
+            for (const stockName in StockMarket) {
+                const stock = StockMarket[stockName];
+                if (!(stock instanceof Stock)) { continue; }
 
+                expect(SymbolToStockMap[stock.symbol]).to.equal(stock);
+            }
         });
     });
 
@@ -633,6 +685,190 @@ describe("Stock Market Tests", function() {
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+            });
+        });
+    });
+
+    describe("Transaction (Buy/Sell) Functions", function() {
+        const suppressDialogOpt = { suppressDialog: true };
+
+        describe("buyStock()", function() {
+            it("should fail for invalid arguments", function() {
+                expect(buyStock({}, 1, null, suppressDialogOpt)).to.equal(false);
+                expect(buyStock(stock, 0, null, suppressDialogOpt)).to.equal(false);
+                expect(buyStock(stock, -1, null, suppressDialogOpt)).to.equal(false);
+                expect(buyStock(stock, NaN, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should fail if player doesn't have enough money", function() {
+                Player.setMoney(0);
+                expect(buyStock(stock, 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should not allow for transactions that exceed the maximum shares", function() {
+                const maxShares = stock.maxShares;
+                expect(buyStock(stock, maxShares + 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should return true and properly update stock properties for successful transactions", function() {
+                const shares = 1e3;
+                const cost = getBuyTransactionCost(stock, shares, PositionTypes.Long);
+                Player.setMoney(cost);
+
+                expect(buyStock(stock, shares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShares).to.equal(shares);
+                expect(stock.playerAvgPx).to.be.above(0);
+                expect(Player.money.toNumber()).to.equal(0);
+            });
+        });
+
+        describe("sellStock()", function() {
+            it("should fail for invalid arguments", function() {
+                expect(sellStock({}, 1, null, suppressDialogOpt)).to.equal(false);
+                expect(sellStock(stock, 0, null, suppressDialogOpt)).to.equal(false);
+                expect(sellStock(stock, -1, null, suppressDialogOpt)).to.equal(false);
+                expect(sellStock(stock, NaN, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should fail if player doesn't have any shares", function() {
+                Player.setMoney(0);
+                expect(sellStock(stock, 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should not allow for transactions that exceed the maximum shares", function() {
+                const maxShares = stock.maxShares;
+                expect(sellStock(stock, maxShares + 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should return true and properly update stock properties for successful transactions", function() {
+                const shares = 1e3;
+                stock.playerShares = shares;
+                stock.playerAvgPx = stock.price;
+                const gain = getSellTransactionGain(stock, shares, PositionTypes.Long);
+                Player.setMoney(0);
+
+                expect(sellStock(stock, shares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShares).to.equal(0);
+                expect(stock.playerAvgPx).to.equal(0);
+                expect(Player.money.toNumber()).to.equal(gain);
+            });
+
+            it("should cap the number of sharse sold to however many the player owns", function() {
+                const attemptedShares = 2e3;
+                const actualShares = 1e3;
+                stock.playerShares = actualShares;
+                stock.playerAvgPx = stock.price;
+                const gain = getSellTransactionGain(stock, actualShares, PositionTypes.Long);
+                Player.setMoney(0);
+
+                expect(sellStock(stock, attemptedShares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShares).to.equal(0);
+                expect(stock.playerAvgPx).to.equal(0);
+                expect(Player.money.toNumber()).to.equal(gain);
+            });
+
+            it("should properly update stock properties for partial transactions", function() {
+                const shares = 1e3;
+                const origPrice = stock.price;
+                stock.playerShares = 2 * shares;
+                stock.playerAvgPx = origPrice;
+                const gain = getSellTransactionGain(stock, shares, PositionTypes.Long);
+                Player.setMoney(0);
+
+                expect(sellStock(stock, shares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShares).to.equal(shares);
+                expect(stock.playerAvgPx).to.equal(origPrice);
+                expect(Player.money.toNumber()).to.equal(gain);
+            });
+        });
+
+        describe("shortStock()", function() {
+            it("should fail for invalid arguments", function() {
+                expect(shortStock({}, 1, null, suppressDialogOpt)).to.equal(false);
+                expect(shortStock(stock, 0, null, suppressDialogOpt)).to.equal(false);
+                expect(shortStock(stock, -1, null, suppressDialogOpt)).to.equal(false);
+                expect(shortStock(stock, NaN, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should fail if player doesn't have enough money", function() {
+                Player.setMoney(0);
+                expect(shortStock(stock, 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should not allow for transactions that exceed the maximum shares", function() {
+                const maxShares = stock.maxShares;
+                expect(shortStock(stock, maxShares + 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should return true and properly update stock properties for successful transactions", function() {
+                const shares = 1e3;
+                const cost = getBuyTransactionCost(stock, shares, PositionTypes.Short);
+                Player.setMoney(cost);
+
+                expect(shortStock(stock, shares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShortShares).to.equal(shares);
+                expect(stock.playerAvgShortPx).to.be.above(0);
+                expect(Player.money.toNumber()).to.equal(0);
+            });
+        });
+
+        describe("sellShort()", function() {
+            it("should fail for invalid arguments", function() {
+                expect(sellShort({}, 1, null, suppressDialogOpt)).to.equal(false);
+                expect(sellShort(stock, 0, null, suppressDialogOpt)).to.equal(false);
+                expect(sellShort(stock, -1, null, suppressDialogOpt)).to.equal(false);
+                expect(sellShort(stock, NaN, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should fail if player doesn't have any shares", function() {
+                Player.setMoney(0);
+                expect(sellShort(stock, 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should not allow for transactions that exceed the maximum shares", function() {
+                const maxShares = stock.maxShares;
+                expect(sellShort(stock, maxShares + 1, null, suppressDialogOpt)).to.equal(false);
+            });
+
+            it("should return true and properly update stock properties for successful transactions", function() {
+                const shares = 1e3;
+                stock.playerShortShares = shares;
+                stock.playerAvgShortPx = stock.price;
+                const gain = getSellTransactionGain(stock, shares, PositionTypes.Short);
+                Player.setMoney(0);
+
+                expect(sellShort(stock, shares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShortShares).to.equal(0);
+                expect(stock.playerAvgShortPx).to.equal(0);
+                expect(Player.money.toNumber()).to.equal(gain);
+            });
+
+            it("should cap the number of sharse sold to however many the player owns", function() {
+                const attemptedShares = 2e3;
+                const actualShares = 1e3;
+                stock.playerShortShares = actualShares;
+                stock.playerAvgShortPx = stock.price;
+                const gain = getSellTransactionGain(stock, actualShares, PositionTypes.Short);
+                Player.setMoney(0);
+
+                expect(sellShort(stock, attemptedShares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShortShares).to.equal(0);
+                expect(stock.playerAvgShortPx).to.equal(0);
+                expect(Player.money.toNumber()).to.equal(gain);
+            });
+
+            it("should properly update stock properties for partial transactions", function() {
+                const shares = 1e3;
+                const origPrice = stock.price;
+                stock.playerShortShares = 2 * shares;
+                stock.playerAvgShortPx = origPrice;
+                const gain = getSellTransactionGain(stock, shares, PositionTypes.Short);
+                Player.setMoney(0);
+
+                expect(sellShort(stock, shares, null, suppressDialogOpt)).to.equal(true);
+                expect(stock.playerShortShares).to.equal(shares);
+                expect(stock.playerAvgShortPx).to.equal(origPrice);
+                expect(Player.money.toNumber()).to.equal(gain);
             });
         });
     });

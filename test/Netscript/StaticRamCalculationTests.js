@@ -10,7 +10,7 @@ const HacknetNamespaceCost = RamCostConstants.ScriptHacknetNodesRamCost;
 describe("Netscript Static RAM Calculation/Generation Tests", function() {
     // Tests numeric equality, allowing for floating point imprecision
     function testEquality(val, expected) {
-        expect(val).to.be.within(expected - 10 * Number.EPSILON, expected + 10 * Number.EPSILON);
+        expect(val).to.be.within(expected - 100 * Number.EPSILON, expected + 100 * Number.EPSILON);
     }
 
     /**

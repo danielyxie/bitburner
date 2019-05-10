@@ -97,7 +97,7 @@ function prestigeAugmentation() {
     }
     if (augmentationExists(AugmentationNames.CashRoot) &&
         Augmentations[AugmentationNames.CashRoot].owned) {
-        Player.setMoney(new Decimal(1000000));
+        Player.setMoney(1e6);
         homeComp.programs.push(Programs.BruteSSHProgram.name);
     }
 
