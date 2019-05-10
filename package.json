@@ -109,6 +109,7 @@
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
+    "build:test": "webpack --config webpack.config-test.js",
     "lint": "npm run lint:typescript & npm run lint:javascript & npm run lint:style",
     "lint:javascript": "eslint *.js ./src/**/*.js ./tests/**/*.js ./utils/**/*.js",
     "lint:style": "stylelint ./css/*",

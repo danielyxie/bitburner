@@ -1,3 +1,6 @@
+/**
+ * Webpack configuration for building unit tests
+ */
 var path = require('path');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -30,8 +33,13 @@ module.exports = (env, argv) => {
                 $: "jquery"
             }),
         ],
+        entry: "./test/index.js",
         target: "web",
         devtool: "source-map",
+        output: {
+            path: path.resolve(__dirname, "./"),
+            filename: "test/test.bundle.js",
+        },
         module: {
             rules: [
                 {
