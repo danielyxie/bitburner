@@ -20,18 +20,15 @@ module.exports = (env, argv) => {
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': "\"development\""
             }),
-            // http://stackoverflow.com/questions/29080148/expose-jquery-to-real-window-object-with-webpack
             new webpack.ProvidePlugin({
                 // Automtically detect jQuery and $ as free var in modules
                 // and inject the jquery library
                 // This is required by many jquery plugins
+                // http://stackoverflow.com/questions/29080148/expose-jquery-to-real-window-object-with-webpack
                 jquery: "jquery",
                 jQuery: "jquery",
                 $: "jquery"
             }),
-            new MiniCssExtractPlugin({
-                filename: "[name].css"
-            })
         ],
         target: "web",
         devtool: "source-map",
@@ -51,11 +48,7 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.s?css$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        "css-loader",
-                        "sass-loader"
-                    ]
+                    loader: 'null-loader',
                 },
             ]
         },

@@ -9,6 +9,7 @@ module.exports = (env, argv) => {
     const outputDirectory = isDevServer ? "dist-dev" : "dist";
     const entries = {};
     entries[`${outputDirectory}/engine`] = "./src/engine.jsx";
+    entries[`${outputDirectory}/engineStyle`] = "./src/engineStyle.js";
 
     const statsConfig = {
         builtAt: true,

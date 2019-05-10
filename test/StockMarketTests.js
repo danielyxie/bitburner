@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../src/Constants";
 import { Order } from "../src/StockMarket/Order";
-// import { processOrders } from "../src/StockMarket/OrderProcessing";
+import { processOrders } from "../src/StockMarket/OrderProcessing";
 import { Stock } from "../src/StockMarket/Stock";
 import {
     deleteStockMarket,
@@ -157,8 +157,6 @@ describe("Stock Market Tests", function() {
         });
     });
 
-    /*
-    // TODO These tests fail due to circular dependency errors
     describe("StockMarket object", function() {
         describe("Initialization", function() {
             // Keeps track of initialized stocks. Contains their symbols
@@ -219,7 +217,6 @@ describe("Stock Market Tests", function() {
 
         });
     });
-    */
 
     describe("Transaction Cost Calculator Functions", function() {
         describe("getBuyTransactionCost()", function() {
