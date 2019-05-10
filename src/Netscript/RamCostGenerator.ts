@@ -260,7 +260,7 @@ export const RamCosts: IMap<any> = {
         getStamina: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
         joinBladeburnerFaction: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
         joinBladeburnerDivision: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-        getBonusTime: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+        getBonusTime: () => 0,
     },
 
     // Coding Contract API
@@ -327,6 +327,6 @@ export function getRamCost(...args: string[]): number {
         return curr;
     }
 
-    console.warn(`Expected type: ${currType}`);
+    console.warn(`Unexpected type (${currType}) for value [${args}]`);
     return 0;
 }

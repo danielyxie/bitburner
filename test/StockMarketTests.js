@@ -1,8 +1,7 @@
 import { CONSTANTS } from "../src/Constants";
 import { Order } from "../src/StockMarket/Order";
-//import { processOrders } from "../src/StockMarket/OrderProcessing";
+// import { processOrders } from "../src/StockMarket/OrderProcessing";
 import { Stock } from "../src/StockMarket/Stock";
-/*
 import {
     deleteStockMarket,
     initStockMarket,
@@ -11,7 +10,6 @@ import {
     StockMarket,
     SymbolToStockMap,
 } from "../src/StockMarket/StockMarket";
-*/
 import {
     calculateIncreasingPriceMovement,
     calculateDecreasingPriceMovement,
@@ -24,8 +22,9 @@ import {
 import { OrderTypes } from "../src/StockMarket/data/OrderTypes"
 import { PositionTypes } from "../src/StockMarket/data/PositionTypes";
 
-const assert = chai.assert;
-const expect = chai.expect;
+//const assert = chai.assert;
+//const expect = chai.expect;
+import { expect } from "chai";
 
 console.log("Beginning Stock Market Tests");
 

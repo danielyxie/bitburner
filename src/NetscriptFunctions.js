@@ -107,7 +107,7 @@ import { OrderTypes } from "./StockMarket/data/OrderTypes";
 import { PositionTypes } from "./StockMarket/data/PositionTypes";
 import { StockSymbols } from "./StockMarket/data/StockSymbols";
 import {
-    getStockmarket4SDataCost,
+    getStockMarket4SDataCost,
     getStockMarket4STixApiCost
 } from "./StockMarket/StockMarketCosts";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
