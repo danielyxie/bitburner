@@ -168,9 +168,17 @@ function startNetscript1Script(workerScript) {
                     name === "prompt"   || name === "run"   || name === "exec") {
                     let tempWrapper = function() {
                         let fnArgs = [];
+
+                        //All of the Object/array elements are in JSInterpreter format, so
+                        //we have to convert them back to native format to pass them to these fns
                         for (let i = 0; i < arguments.length-1; ++i) {
-                            fnArgs.push(arguments[i]);
+                            if (typeof arguments[i] === 'object' || arguments[i].constructor === Array) {
+                                fnArgs.push(int.pseudoToNative(arguments[i]));
+                            } else {
+                                fnArgs.push(arguments[i]);
+                            }
                         }
+                        console.log(fnArgs);
                         let cb = arguments[arguments.length-1];
                         let fnPromise = entry.apply(null, fnArgs);
                         fnPromise.then(function(res) {
@@ -633,7 +641,7 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
     }
 
     //Check if the script exists and if it does run it
-    for (var i = 0; i < server.scripts.length; ++i) {
+    for (let i = 0; i < server.scripts.length; ++i) {
         if (server.scripts[i].filename == scriptname) {
             //Check for admin rights and that there is enough RAM availble to run
             var script = server.scripts[i];

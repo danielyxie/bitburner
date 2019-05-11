@@ -127,6 +127,7 @@ import {
 import {
     makeRuntimeRejectMsg,
     netscriptDelay,
+    resolveNetscriptRequestedThreads,
 } from "./NetscriptEvaluator";
 import { NetscriptPort } from "./NetscriptPort";
 import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
@@ -438,14 +439,13 @@ function NetscriptFunctions(workerScript) {
             }
             return out;
         },
-        hack : function(ip){
+        hack : function(ip, { threads: requestedThreads } = {}){
             updateDynamicRam("hack", getRamCost("hack"));
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
             }
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
-            var server = getServer(ip);
+            const threads = resolveNetscriptRequestedThreads(workerScript, "hack", requestedThreads);
+            const server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
                 throw makeRuntimeRejectMsg(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
@@ -555,10 +555,9 @@ function NetscriptFunctions(workerScript) {
                 return Promise.resolve(true);
             });
         },
-        grow : function(ip){
+        grow : function(ip, { threads: requestedThreads } = {}){
             updateDynamicRam("grow", getRamCost("grow"));
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
+            const threads = resolveNetscriptRequestedThreads(workerScript, "grow", requestedThreads);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "grow() call has incorrect number of arguments. Takes 1 argument");
             }
@@ -611,10 +610,9 @@ function NetscriptFunctions(workerScript) {
 
             return numCycleForGrowth(server, Number(growth), Player);
         },
-        weaken : function(ip) {
+        weaken : function(ip, { threads: requestedThreads } = {}) {
             updateDynamicRam("weaken", getRamCost("weaken"));
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
+            var threads = resolveNetscriptRequestedThreads(workerScript, "weaken", requestedThreads)
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "weaken() call has incorrect number of arguments. Takes 1 argument");
             }

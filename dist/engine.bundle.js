@@ -695,14 +695,15 @@ exports.generateRandomString = generateRandomString;
 /*!***********************************!*\
   !*** ./src/NetscriptEvaluator.js ***!
   \***********************************/
-/*! exports provided: killNetscriptDelay, netscriptDelay, makeRuntimeRejectMsg, getErrorLineNumber, isScriptErrorMessage */
-/*! exports used: isScriptErrorMessage, killNetscriptDelay, makeRuntimeRejectMsg, netscriptDelay */
+/*! exports provided: killNetscriptDelay, netscriptDelay, makeRuntimeRejectMsg, resolveNetscriptRequestedThreads, getErrorLineNumber, isScriptErrorMessage */
+/*! exports used: isScriptErrorMessage, killNetscriptDelay, makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return killNetscriptDelay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return netscriptDelay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return makeRuntimeRejectMsg; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return resolveNetscriptRequestedThreads; });
 /* unused harmony export getErrorLineNumber */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isScriptErrorMessage; });
 /* harmony import */ var _Netscript_WorkerScript__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Netscript/WorkerScript */ 102);
@@ -753,6 +754,22 @@ function makeRuntimeRejectMsg(workerScript, msg, exp=null) {
     }
     return "|"+workerScript.serverIp+"|"+workerScript.name+"|" + msg + lineNum;
 }
+
+function resolveNetscriptRequestedThreads(workerScript, functionName, requestedThreads) {
+    const threads = workerScript.scriptRef.threads;
+    if (!requestedThreads) {
+        return (isNaN(threads) || threads < 1) ? 1 : threads;
+    }
+    const requestedThreadsAsInt = requestedThreads|0;
+    if (isNaN(requestedThreads) || requestedThreadsAsInt < 1) {
+        throw makeRuntimeRejectMsg(workerScript, `Invalid thread count passed to ${functionName}: ${requestedThreads}. Threads must be a positive number.`);
+    }
+    if (requestedThreads > threads) {
+        throw makeRuntimeRejectMsg(workerScript, `Too many threads requested by ${functionName}. Requested: ${requestedThreads}. Has: ${threads}.`);
+    }
+    return requestedThreadsAsInt;
+}
+
 
 function getErrorLineNumber(exp, workerScript) {
     var code = workerScript.scriptRef.codeCode();
@@ -13447,9 +13464,17 @@ function startNetscript1Script(workerScript) {
                     name === "prompt"   || name === "run"   || name === "exec") {
                     let tempWrapper = function() {
                         let fnArgs = [];
+
+                        //All of the Object/array elements are in JSInterpreter format, so
+                        //we have to convert them back to native format to pass them to these fns
                         for (let i = 0; i < arguments.length-1; ++i) {
-                            fnArgs.push(arguments[i]);
+                            if (typeof arguments[i] === 'object' || arguments[i].constructor === Array) {
+                                fnArgs.push(int.pseudoToNative(arguments[i]));
+                            } else {
+                                fnArgs.push(arguments[i]);
+                            }
                         }
+                        console.log(fnArgs);
                         let cb = arguments[arguments.length-1];
                         let fnPromise = entry.apply(null, fnArgs);
                         fnPromise.then(function(res) {
@@ -13912,7 +13937,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
     }
 
     //Check if the script exists and if it does run it
-    for (var i = 0; i < server.scripts.length; ++i) {
+    for (let i = 0; i < server.scripts.length; ++i) {
         if (server.scripts[i].filename == scriptname) {
             //Check for admin rights and that there is enough RAM availble to run
             var script = server.scripts[i];
@@ -32367,7 +32392,7 @@ class WorkerScript {
          */
         this.output = "";
         /**
-         * Script's RAM usage. Equivalent to underlying script's RAM usage
+         * Script's Static RAM usage. Equivalent to underlying script's RAM usage
          */
         this.ramUsage = 0;
         /**
@@ -36410,14 +36435,13 @@ function NetscriptFunctions(workerScript) {
             }
             return out;
         },
-        hack : function(ip){
+        hack : function(ip, { threads: requestedThreads } = {}){
             updateDynamicRam("hack", Object(_Netscript_RamCostGenerator__WEBPACK_IMPORTED_MODULE_0__["getRamCost"])("hack"));
             if (ip === undefined) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* makeRuntimeRejectMsg */ "c"])(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
             }
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
-            var server = Object(_Server_ServerHelpers__WEBPACK_IMPORTED_MODULE_36__["getServer"])(ip);
+            const threads = Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* resolveNetscriptRequestedThreads */ "e"])(workerScript, "hack", requestedThreads);
+            const server = Object(_Server_ServerHelpers__WEBPACK_IMPORTED_MODULE_36__["getServer"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* makeRuntimeRejectMsg */ "c"])(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
@@ -36527,10 +36551,9 @@ function NetscriptFunctions(workerScript) {
                 return Promise.resolve(true);
             });
         },
-        grow : function(ip){
+        grow : function(ip, { threads: requestedThreads } = {}){
             updateDynamicRam("grow", Object(_Netscript_RamCostGenerator__WEBPACK_IMPORTED_MODULE_0__["getRamCost"])("grow"));
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
+            const threads = Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* resolveNetscriptRequestedThreads */ "e"])(workerScript, "grow", requestedThreads);
             if (ip === undefined) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* makeRuntimeRejectMsg */ "c"])(workerScript, "grow() call has incorrect number of arguments. Takes 1 argument");
             }
@@ -36583,10 +36606,9 @@ function NetscriptFunctions(workerScript) {
 
             return Object(_Server_ServerHelpers__WEBPACK_IMPORTED_MODULE_36__["numCycleForGrowth"])(server, Number(growth), _Player__WEBPACK_IMPORTED_MODULE_29__["Player"]);
         },
-        weaken : function(ip) {
+        weaken : function(ip, { threads: requestedThreads } = {}) {
             updateDynamicRam("weaken", Object(_Netscript_RamCostGenerator__WEBPACK_IMPORTED_MODULE_0__["getRamCost"])("weaken"));
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
+            var threads = Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* resolveNetscriptRequestedThreads */ "e"])(workerScript, "weaken", requestedThreads)
             if (ip === undefined) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* makeRuntimeRejectMsg */ "c"])(workerScript, "weaken() call has incorrect number of arguments. Takes 1 argument");
             }
@@ -40318,7 +40340,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_29__["Player"].bitNodeN !== 10 && !_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_40__["SourceFileFlags"][10]) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_53__[/* makeRuntimeRejectMsg */ "c"])(workerScript, "getStats() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
-                updateDynamicRam("workoutAtGym", Object(_Netscript_RamCostGenerator__WEBPACK_IMPORTED_MODULE_0__["getRamCost"])("sleeve", "getSleeveStats"));
+                updateDynamicRam("getSleeveStats", Object(_Netscript_RamCostGenerator__WEBPACK_IMPORTED_MODULE_0__["getRamCost"])("sleeve", "getSleeveStats"));
                 if (sleeveNumber >= _Player__WEBPACK_IMPORTED_MODULE_29__["Player"].sleeves.length || sleeveNumber < 0) {
                     workerScript.log(`ERROR: sleeve.workoutAtGym(${sleeveNumber}) failed because it is an invalid sleeve number.`);
                     return false;
@@ -42286,7 +42308,7 @@ function prestigeAugmentation() {
     }
     if (Object(_Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_2__[/* augmentationExists */ "b"])(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__["AugmentationNames"].CashRoot) &&
         _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__["Augmentations"][_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__["AugmentationNames"].CashRoot].owned) {
-        _Player__WEBPACK_IMPORTED_MODULE_19__["Player"].setMoney(new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](1000000));
+        _Player__WEBPACK_IMPORTED_MODULE_19__["Player"].setMoney(1e6);
         homeComp.programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_9__["Programs"].BruteSSHProgram.name);
     }
 
@@ -53896,21 +53918,24 @@ function hasProgram(programName) {
 
 function setMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.setMoney()"); return;
+        console.error("NaN passed into Player.setMoney()");
+        return;
     }
-    this.money = money;
+    this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_36__[/* default */ "a"](money);
 }
 
 function gainMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.gainMoney()"); return;
+        console.error("NaN passed into Player.gainMoney()");
+        return;
     }
 	this.money = this.money.plus(money);
 }
 
 function loseMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.loseMoney()"); return;
+        console.error("NaN passed into Player.loseMoney()");
+        return;
     }
     this.money = this.money.minus(money);
 }
