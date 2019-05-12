@@ -252,5 +252,6 @@ export let CONSTANTS: IMap<any> = {
     * Bug Fix: Netscript1.0 now works properly for multiple 'namespace' imports (import * as namespace from "script")
     * Bug Fix: Terminal 'wget' command now correctly evaluates directory paths
     * Bug Fix: wget(), write(), and scp() Netscript functions now fail if an invalid filepath is passed in
+    * Bug Fix: Having Corporation warehouses at full capacity should no longer freeze game in certain conditions
     `
 }

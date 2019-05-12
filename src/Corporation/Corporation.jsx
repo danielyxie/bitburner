@@ -521,15 +521,18 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
     }
 
     // Process production, purchase, and import/export of materials
-    var res = this.processMaterials(marketCycles, company);
-    this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-    this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+    let res = this.processMaterials(marketCycles, company);
+    if (Array.isArray(res)) {
+        this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
+        this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+    }
 
     // Process creation, production & sale of products
     res = this.processProducts(marketCycles, company);
-    this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-    this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
-
+    if (Array.isArray(res)) {
+        this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
+        this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+    }
 }
 
 // Process change in demand and competition for this industry's materials
@@ -846,7 +849,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     sellAmt = (sellAmt * SecsPerMarketCycle * marketCycles);
                     sellAmt = Math.min(mat.qty, sellAmt);
                     if (sellAmt < 0) {
-                        console.log("sellAmt calculated to be negative");
+                        console.warn(`sellAmt calculated to be negative for ${matName} in ${city}`);
                         mat.sll = 0;
                         continue;
                     }
@@ -899,9 +902,11 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                         break;
                                     }
 
-                                    //Make sure theres enough space in warehouse
+                                    // Make sure theres enough space in warehouse
                                     if (expWarehouse.sizeUsed >= expWarehouse.size) {
-                                        return; //Warehouse at capacity
+                                        // Warehouse at capacity. Exporting doesnt
+                                        // affect revenue so just return 0's
+                                        return [0, 0];
                                     } else {
                                         var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / MaterialSizes[matName]);
                                         amt = Math.min(maxAmt, amt);
