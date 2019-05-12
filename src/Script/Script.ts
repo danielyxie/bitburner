@@ -89,7 +89,7 @@ export class Script {
     // Updates the script's RAM usage based on its code
     async updateRamUsage(otherScripts: Script[]) {
         var res = await calculateRamUsage(this.code, otherScripts);
-        if (res !== -1) {
+        if (res > 0) {
             this.ramUsage = roundToTwo(res);
         }
     }

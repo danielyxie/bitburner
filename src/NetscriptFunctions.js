@@ -110,6 +110,7 @@ import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost
 } from "./StockMarket/StockMarketCosts";
+import { isValidFilePath } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
 import {
@@ -1013,8 +1014,14 @@ function NetscriptFunctions(workerScript) {
                 });
                 return res;
             }
-            if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) &&
-                !scriptname.endsWith("txt")) {
+
+            // Invalid file type
+            if (!isValidFilePath(scriptname)) {
+                throw makeRuntimeRejectMsg(workerScript, `Error: scp() failed due to invalid filename: ${scriptname}`);
+            }
+
+            // Invalid file name
+            if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith("txt")) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
             }
 
@@ -1724,6 +1731,7 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.shouldLog("purchase4SMarketData")) {
                 workerScript.log("Purchased 4S Market Data");
             }
+            displayStockMarketContent();
             return true;
         },
         purchase4SMarketDataTixApi : function() {
@@ -1749,6 +1757,7 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                 workerScript.log("Purchased 4S Market Data TIX API");
             }
+            displayStockMarketContent();
             return true;
         },
         getPurchasedServerLimit : function() {
@@ -1919,8 +1928,12 @@ function NetscriptFunctions(workerScript) {
                 }
                 return port.write(data);
             } else if (isString(port)) { // Write to script or text file
-                var fn = port;
-                var server = workerScript.getServer();
+                const fn = port;
+                if (!isValidFilePath(fn)) {
+                    throw makeRuntimeRejectMsg(workerScript, `write() failed due to invalid filepath: ${fn}`);
+                }
+
+                const server = workerScript.getServer();
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
                 }
@@ -2251,7 +2264,7 @@ function NetscriptFunctions(workerScript) {
         },
         wget: async function(url, target, ip=workerScript.serverIp) {
             if (!isScriptFilename(target) && !target.endsWith(".txt")) {
-                workerSript.log(`ERROR: wget() failed because of an invalid target file: ${target}. Target file must be a script or text file`);
+                workerScript.log(`ERROR: wget() failed because of an invalid target file: ${target}. Target file must be a script or text file`);
                 return Promise.resolve(false);
             }
             var s = safeGetServer(ip, "wget");

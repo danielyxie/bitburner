@@ -682,21 +682,25 @@ GangMember.prototype.calculateRespectGain = function(gang) {
 
 GangMember.prototype.calculateWantedLevelGain = function(gang) {
     const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
+    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) { return 0; }
+    let statWeight = (task.hackWeight / 100) * this.hack +
+                     (task.strWeight / 100) * this.str +
+                     (task.defWeight / 100) * this.def +
+                     (task.dexWeight / 100) * this.dex +
+                     (task.agiWeight / 100) * this.agi +
+                     (task.chaWeight / 100) * this.cha;
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) { return 0; }
     const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
     if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
     if (task.baseWanted < 0) {
-        return 0.5 * task.baseWanted * statWeight * territoryMult;
+        return 0.4 * task.baseWanted * statWeight * territoryMult;
     } else {
-        return 7 * task.baseWanted / (Math.pow(3 * statWeight * territoryMult, 0.8));
+        const calc = 7 * task.baseWanted / (Math.pow(3 * statWeight * territoryMult, 0.8));
+
+        // Put an arbitrary cap on this to prevent wanted level from rising too fast if the
+        // denominator is very small. Might want to rethink formula later
+        return Math.max(100, calc);
     }
 }
 

@@ -5,6 +5,7 @@ import { CodingContract } from "../CodingContracts";
 import { Message } from "../Message/Message";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
+import { isValidFilePath } from "../Terminal/DirectoryHelpers";
 import { TextFile } from "../TextFile";
 import { IReturnStatus } from "../types";
 
@@ -223,10 +224,10 @@ export class BaseServer {
      * Overwrites existing files. Creates new files if the script does not eixst
      */
     writeToScriptFile(fn: string, code: string) {
-        var ret = {success: false, overwritten: false};
-        if (!isScriptFilename(fn)) { return ret; }
+        var ret = { success: false, overwritten: false };
+        if (!isValidFilePath(fn) || !isScriptFilename(fn)) { return ret; }
 
-        //Check if the script already exists, and overwrite it if it does
+        // Check if the script already exists, and overwrite it if it does
         for (let i = 0; i < this.scripts.length; ++i) {
             if (fn === this.scripts[i].filename) {
                 let script = this.scripts[i];
@@ -239,7 +240,7 @@ export class BaseServer {
             }
         }
 
-        //Otherwise, create a new script
+        // Otherwise, create a new script
         const newScript = new Script(fn, code, this.ip, this.scripts);
         this.scripts.push(newScript);
         ret.success = true;
@@ -250,9 +251,9 @@ export class BaseServer {
     // Overwrites existing files. Creates new files if the text file does not exist
     writeToTextFile(fn: string, txt: string) {
         var ret = { success: false, overwritten: false };
-        if (!fn.endsWith("txt")) { return ret; }
+        if (!isValidFilePath(fn) || !fn.endsWith("txt")) { return ret; }
 
-        //Check if the text file already exists, and overwrite if it does
+        // Check if the text file already exists, and overwrite if it does
         for (let i = 0; i < this.textFiles.length; ++i) {
             if (this.textFiles[i].fn === fn) {
                 ret.overwritten = true;
@@ -262,7 +263,7 @@ export class BaseServer {
             }
         }
 
-        //Otherwise create a new text file
+        // Otherwise create a new text file
         var newFile = new TextFile(fn, txt);
         this.textFiles.push(newFile);
         ret.success = true;

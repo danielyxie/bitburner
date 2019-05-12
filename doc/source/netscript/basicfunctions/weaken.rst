@@ -1,9 +1,14 @@
 weaken() Netscript Function
 ===========================
 
-.. js:function:: weaken(hostname/ip)
+.. js:function:: weaken(hostname/ip, options={})
 
     :param string hostname/ip: IP or hostname of the target server to weaken
+    :param object options: Optional parameters for configuring function behavior. Properties:
+
+        * threads (*number*) - Number of threads to use for this function.
+          Must be less than or equal to the number of threads the script is running with.
+
     :returns: The amount by which the target server's security level was decreased. This is equivalent to 0.05 multiplied
               by the number of script threads
     :RAM cost: 0.15 GB
@@ -18,3 +23,4 @@ weaken() Netscript Function
     Example::
 
         weaken("foodnstuff");
+        weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken

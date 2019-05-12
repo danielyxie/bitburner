@@ -1,5 +1,6 @@
 import { Script } from "./Script";
 
+import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 import { calculateRamUsage } from "./RamCalculations";
 import { isScriptFilename } from "./ScriptHelpersTS";
 
@@ -190,10 +191,22 @@ export async function updateScriptEditorContent() {
 
     var codeCopy = code.repeat(1);
     var ramUsage = await calculateRamUsage(codeCopy, Player.getCurrentServer().scripts);
-    if (ramUsage !== -1) {
+    if (ramUsage > 0) {
         scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
-        scriptEditorRamText.innerText = "RAM: Syntax Error";
+        switch (ramUsage) {
+            case RamCalculationErrorCode.ImportError:
+                scriptEditorRamText.innerText = "RAM: Import Error";
+                break;
+            case RamCalculationErrorCode.URLImportError:
+                scriptEditorRamText.innerText = "RAM: HTTP Import Error";
+                break;
+            case RamCalculationErrorCode.SyntaxError:
+            default:
+                scriptEditorRamText.innerText = "RAM: Syntax Error";
+                break;
+        }
+
     }
 }
 

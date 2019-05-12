@@ -5,7 +5,7 @@ workForFaction() Netscript Function
 
     :param string factionName: Name of faction to work for. CASE-SENSITIVE
     :param string workType:
-        Type of work to perform for the faction
+        Type of work to perform for the faction:
 
         * hacking/hacking contracts/hackingcontracts
         * field/fieldwork/field work

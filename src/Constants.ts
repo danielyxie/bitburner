@@ -233,9 +233,12 @@ export let CONSTANTS: IMap<any> = {
     * Re-sleeves can no longer have the NeuroFlux Governor augmentation
     ** This is just a temporary patch until the mechanic gets re-worked
 
+    * hack(), grow(), and weaken() functions now take optional arguments for number of threads to use (by MasonD)
+
     * Adjusted RAM costs of Netscript Singularity functions (mostly increased)
     * Netscript Singularity functions no longer cost extra RAM outside of BitNode-4
     * Corporation employees no longer have an "age" stat
+    * Gang Wanted level gain rate capped at 100 (per employee)
     * Bug Fix: Corporation employees stats should no longer become negative
     * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
     * Bug Fix: Coding contracts should no longer generate on the w0r1d_d43m0n server
@@ -245,5 +248,9 @@ export let CONSTANTS: IMap<any> = {
     * Bug Fix: Purchasing hash upgrades for Bladeburner/Corporation when you don't actually have access to those mechanics no longer gives hashes
     * Bug Fix: run(), exec(), and spawn() Netscript functions now throw if called with 0 threads
     * Bug Fix: Faction UI should now automatically update reputation
+    * Bug Fix: Fixed purchase4SMarketData()
+    * Bug Fix: Netscript1.0 now works properly for multiple 'namespace' imports (import * as namespace from "script")
+    * Bug Fix: Terminal 'wget' command now correctly evaluates directory paths
+    * Bug Fix: wget(), write(), and scp() Netscript functions now fail if an invalid filepath is passed in
     `
 }

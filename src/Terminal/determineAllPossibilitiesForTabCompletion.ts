@@ -1,8 +1,8 @@
 import {
     evaluateDirectoryPath,
     getAllParentDirectories,
-    getSubdirectories,
 } from "./DirectoryHelpers";
+import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import {
     Aliases,

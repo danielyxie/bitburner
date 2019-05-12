@@ -1,6 +1,8 @@
 // Calculate a script's RAM usage
 import * as walk from "acorn-walk";
 
+import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
+
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { parse, Node } from "../../utils/acorn";
 
@@ -71,12 +73,12 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                     }
                 } catch(e) {
                     console.error(`Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`);
-                    return -1;
+                    return RamCalculationErrorCode.URLImportError;
                 }
             } else {
                 if (!Array.isArray(otherScripts)) {
                     console.warn(`parseOnlyRamCalculate() not called with array of scripts`);
-                    return -1;
+                    return RamCalculationErrorCode.ImportError;
                 }
 
                 let script = null;
@@ -89,8 +91,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                 }
 
                 if (script == null) {
-                    console.warn("Invalid script");
-                    return -1;  // No such script on the server.
+                    return RamCalculationErrorCode.ImportError;  // No such script on the server
                 }
 
                 code = script.code;
@@ -191,7 +192,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
         // console.info("parse or eval error: ", error);
         // This is not unexpected. The user may be editing a script, and it may be in
         // a transitory invalid state.
-        return -1;
+        return RamCalculationErrorCode.SyntaxError;
     }
 }
 
@@ -310,8 +311,8 @@ export async function calculateRamUsage(codeCopy, otherScripts) {
 	} catch (e) {
         console.error(`Failed to parse script for RAM calculations:`);
         console.error(e);
-        return -1;
+        return RamCalculationErrorCode.SyntaxError;
 	}
 
-    return -1;
+    return RamCalculationErrorCode.SyntaxError;
 }

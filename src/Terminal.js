@@ -1475,7 +1475,7 @@ let Terminal = {
                 }
 
                 let url = commandArray[1];
-                let target = commandArray[2];
+                let target = Terminal.getFilepath(commandArray[2]);
                 if (!isScriptFilename(target) && !target.endsWith(".txt")) {
                     return post(`wget failed: Invalid target file. Target file must be script or text file`);
                 }

@@ -6,7 +6,6 @@
  */
 import { IReturnStatus } from "../types";
 
-//import { HacknetServer }    from "../Hacknet/HacknetServer";
 import { IPlayer }          from "../PersonObjects/IPlayer";
 import { Server }           from "../Server/Server";
 

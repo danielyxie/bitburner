@@ -134,10 +134,15 @@ A Stop Order to buy will execute if the stock's price <= order's price
 
 A Stop Order to sell will execute if the stock's price >= order's price.
 
-.. note:: Limit and Stop orders do **not** take into account the fact that
-          transactions can influence a stock's price. If a stock's price
-          changes mid-transaction, a limit/stop order will continue to execute
-          even if its conditions are no longer met. 
+.. note:: Stop Orders do **not** take into account the fact that transactions can
+          influence a stock's price. Limit Orders, however, do take this into account.
+
+          For example, assume you have a Limit Order set to purchase a stock at
+          $5. Then, the stock's price drops to $5 and your Limit Order executes.
+          However, the transaction causes the stock's price to increase before
+          the order finishes executing all of the shares. Your Limit Order will
+          stop executing, and will continue only when the stock's price drops back to
+          $5 or below. 
 
 Automating the Stock Market
 ---------------------------

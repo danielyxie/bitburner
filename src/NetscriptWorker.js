@@ -178,7 +178,6 @@ function startNetscript1Script(workerScript) {
                                 fnArgs.push(arguments[i]);
                             }
                         }
-                        console.log(fnArgs);
                         let cb = arguments[arguments.length-1];
                         let fnPromise = entry.apply(null, fnArgs);
                         fnPromise.then(function(res) {
@@ -289,7 +288,7 @@ function startNetscript1Script(workerScript) {
 */
 function processNetscript1Imports(code, workerScript) {
     //allowReserved prevents 'import' from throwing error in ES5
-    var ast = parse(code, {ecmaVersion:6, allowReserved:true, sourceType:"module"});
+    const ast = parse(code, { ecmaVersion: 6, allowReserved: true, sourceType: "module" });
 
     var server = workerScript.getServer();
     if (server == null) {
@@ -305,10 +304,10 @@ function processNetscript1Imports(code, workerScript) {
         return null;
     }
 
-    var generatedCode = ""; //Generated Javascript Code
-    var hasImports = false;
+    let generatedCode = ""; // Generated Javascript Code
+    let hasImports = false;
 
-    //Walk over the tree and process ImportDeclaration nodes
+    // Walk over the tree and process ImportDeclaration nodes
     walk.simple(ast, {
         ImportDeclaration: (node) => {
             hasImports = true;
@@ -323,7 +322,7 @@ function processNetscript1Imports(code, workerScript) {
             let scriptAst = parse(script.code, {ecmaVersion:5, allowReserved:true, sourceType:"module"});
 
             if (node.specifiers.length === 1 && node.specifiers[0].type === "ImportNamespaceSpecifier") {
-                //import * as namespace from script
+                // import * as namespace from script
                 let namespace = node.specifiers[0].local.name;
                 let fnNames         = []; //Names only
                 let fnDeclarations  = []; //FunctionDeclaration Node objects
@@ -335,7 +334,7 @@ function processNetscript1Imports(code, workerScript) {
                 });
 
                 //Now we have to generate the code that would create the namespace
-                generatedCode =
+                generatedCode +=
                     "var " + namespace + ";\n" +
                     "(function (namespace) {\n";
 
@@ -406,6 +405,7 @@ function processNetscript1Imports(code, workerScript) {
 
     //Add the imported code and re-generate in ES5 (JS Interpreter for NS1 only supports ES5);
     code = generatedCode + code;
+
     var res = {
         code:       code,
         lineOffset: lineOffset
