@@ -68,9 +68,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             while (Math.sqrt(n) > fac-1) {
                 while (n % fac === 0) {
                     n = Math.round(n / fac);
-                } else {
-                    ++fac;
                 }
+                ++fac;
             }
 
             return (n===1?(fac-1):n) === parseInt(ans, 10);
