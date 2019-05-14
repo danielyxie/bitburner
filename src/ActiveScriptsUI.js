@@ -242,7 +242,6 @@ function updateActiveScriptsItems(maxTasks=150) {
         }
     }
 
-    if (!routing.isOn(Page.ActiveScripts)) { return; }
     let total = 0;
     for (var i = 0; i < workerScripts.length; ++i) {
         try {
@@ -252,6 +251,7 @@ function updateActiveScriptsItems(maxTasks=150) {
         }
     }
 
+    if (!routing.isOn(Page.ActiveScripts)) { return total; }
     getElementById("active-scripts-total-production-active").innerText = numeralWrapper.formatMoney(total);
     getElementById("active-scripts-total-prod-aug-total").innerText = numeralWrapper.formatMoney(Player.scriptProdSinceLastAug);
     getElementById("active-scripts-total-prod-aug-avg").innerText = numeralWrapper.formatMoney(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000));

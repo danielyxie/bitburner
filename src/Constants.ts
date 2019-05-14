@@ -244,6 +244,7 @@ export let CONSTANTS: IMap<any> = {
     * getHackTime(), getGrowTime(), and getWeakenTime() now return Infinity if called on a Hacknet Server
     * Money/Income tracker now displays money lost from hospitalizations
     * Exported saves now have a unique filename based on current BitNode and timestamp
+    * Maximum number of Hacknet Servers decreased from 25 to 20
     * Bug Fix: Corporation employees stats should no longer become negative
     * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
     * Bug Fix: Coding contracts should no longer generate on the w0r1d_d43m0n server
@@ -260,5 +261,7 @@ export let CONSTANTS: IMap<any> = {
     * Bug Fix: Having Corporation warehouses at full capacity should no longer freeze game in certain conditions
     * Bug Fix: Prevented an exploit that allows you to buy multiple copies of an Augmentation by holding the 'Enter' button
     * Bug Fix: gang.getOtherGangInformation() now properly returns a deep copy
+    * Bug Fix: Fixed getScriptIncome() returning an undefined value
+    * Bug Fix: Fixed an issue with Hacknet Server hash rate not always updating
     `
 }

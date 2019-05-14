@@ -3,7 +3,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-export const forecastChangePerPriceMovement = 0.1;
+export const forecastChangePerPriceMovement = 0.05;
 
 /**
  * Given a stock, calculates the amount by which the stock price is multiplied
@@ -30,7 +30,6 @@ export function calculateDecreasingPriceMovement(stock: Stock): number | null {
 
     return (1 - (stock.priceMovementPerc / 100));
 }
-
 
 /**
  * Calculate the total cost of a "buy" transaction. This accounts for spread,

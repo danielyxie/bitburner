@@ -2164,10 +2164,17 @@ function NetscriptFunctions(workerScript) {
         getScriptIncome: function(scriptname, ip) {
             updateDynamicRam("getScriptIncome", getRamCost("getScriptIncome"));
             if (arguments.length === 0) {
-                // Get total script income
                 var res = [];
-                res.push(updateActiveScriptsItems());
-                res.push(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000));
+
+                // First element is total income of all currently running scripts
+                let total = 0;
+                for (const script of workerScripts) {
+                    total += (script.scriptRef.onlineMoneyMade / script.scriptRef.onlineRunningTime);
+                }
+                res.push(total);
+
+                // Second element is total income you've earned from scripts since you installed Augs
+                res.push(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug / 1000));
                 return res;
             } else {
                 // Get income for a particular script

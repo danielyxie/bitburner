@@ -277,8 +277,8 @@ const Engine = {
     loadActiveScriptsContent: function() {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
-        updateActiveScriptsItems();
         routing.navigateTo(Page.ActiveScripts);
+        updateActiveScriptsItems();
         MainMenuLinks.ActiveScripts.classList.add("active");
     },
 

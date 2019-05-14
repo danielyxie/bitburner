@@ -426,7 +426,10 @@ function processAllHacknetServerEarnings(numCycles) {
 
     let hashes = 0;
     for (let i = 0; i < Player.hacknetNodes.length; ++i) {
-        const hserver = AllServers[Player.hacknetNodes[i]]; // hacknetNodes array only contains the IP addresses
+        // hacknetNodes array only contains the IP addresses of the servers.
+        // Also, update the hash rate before processing
+        const hserver = AllServers[Player.hacknetNodes[i]];
+        hserver.updateHashRate(Player.hacknet_node_money_mult);
         hashes += hserver.process(numCycles);
     }
 

@@ -202,7 +202,7 @@ export function stockMarketCycle() {
         if (stock.b) { thresh = 0.4; }
         if (Math.random() < thresh) {
             stock.b = !stock.b;
-            if (stock.otlkMag < 10) { stock.otlkMag += 0.2; }
+            if (stock.otlkMag < 10) { stock.otlkMag += 0.15; }
         }
     }
 }

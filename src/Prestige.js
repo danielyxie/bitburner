@@ -336,7 +336,7 @@ function prestigeSourceFile() {
         hserver.level = 100;
         hserver.cores = 10;
         hserver.cache = 5;
-        hserver.updateHashRate(Player);
+        hserver.updateHashRate(Player.hacknet_node_money_mult);
         hserver.updateHashCapacity();
         updateHashManagerCapacity();
     }

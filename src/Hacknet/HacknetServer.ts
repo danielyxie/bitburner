@@ -32,7 +32,7 @@ export const HacknetServerUpgradeRamMult: number = 1.4;     // Multiplier for co
 export const HacknetServerUpgradeCoreMult: number = 1.55;   // Multiplier for cost when buying another core
 export const HacknetServerUpgradeCacheMult: number = 1.85;  // Multiplier for cost when upgrading cache
 
-export const MaxNumberHacknetServers: number = 25;          // Max number of Hacknet Servers you can own
+export const MaxNumberHacknetServers: number = 20;          // Max number of Hacknet Servers you can own
 
 // Constants for max upgrade levels for Hacknet Server
 export const HacknetServerMaxLevel: number = 300;
