@@ -219,6 +219,11 @@ export function prestigeSourceFile() {
         }
     }
 
+    const characterMenuHeader = document.getElementById("character-menu-header");
+    if (characterMenuHeader instanceof HTMLElement) {
+        characterMenuHeader.click(); characterMenuHeader.click();
+    }
+
     this.isWorking = false;
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
@@ -1567,7 +1572,9 @@ export function hospitalize() {
         );
     }
 
-    this.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
+    const cost = this.max_hp * CONSTANTS.HospitalCostPerHp
+    this.loseMoney(cost);
+    this.recordMoneySource(-1 * cost, "hospitalization");
     this.hp = this.max_hp;
 }
 

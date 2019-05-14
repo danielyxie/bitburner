@@ -1179,6 +1179,7 @@ const Engine = {
             initAugmentations();
             initMessages();
             initLiterature();
+            updateSourceFileFlags(Player);
 
             // Open main menu accordions for new game
             const hackingHdr      = document.getElementById("hacking-menu-header");

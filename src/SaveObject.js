@@ -26,6 +26,7 @@ import {
     loadSpecialServerIps,
     SpecialServerIps
 } from "./Server/SpecialServerIps";
+import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
 import { createStatusText } from "./ui/createStatusText";
@@ -541,23 +542,12 @@ function loadImportedGame(saveObj, saveString) {
 }
 
 BitburnerSaveObject.prototype.exportGame = function() {
-    this.PlayerSave                 = JSON.stringify(Player);
-    this.AllServersSave             = JSON.stringify(AllServers);
-    this.CompaniesSave              = JSON.stringify(Companies);
-    this.FactionsSave               = JSON.stringify(Factions);
-    this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
-    this.AliasesSave                = JSON.stringify(Aliases);
-    this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
-    this.MessagesSave               = JSON.stringify(Messages);
-    this.StockMarketSave            = JSON.stringify(StockMarket);
-    this.SettingsSave               = JSON.stringify(Settings);
-    this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    if (Player.inGang()) {
-        this.AllGangsSave           = JSON.stringify(AllGangs);
-    }
+    const saveString = this.getSaveString();
 
-    var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-    var filename = "bitburnerSave.json";
+    // Save file name is based on current timestamp and BitNode
+    const epochTime = Math.round(Date.now() / 1000);
+    const bn = Player.bitNodeN;
+    const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
     var file = new Blob([saveString], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
@@ -565,7 +555,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
         var a = document.createElement("a"),
                 url = URL.createObjectURL(file);
         a.href = url;
-        a.download = "bitburnerSave.json";
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         setTimeoutRef(function() {

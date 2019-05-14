@@ -2142,29 +2142,23 @@ function NetscriptFunctions(workerScript) {
         },
         getHackTime: function(ip, hack, int) {
             updateDynamicRam("getHackTime", getRamCost("getHackTime"));
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
-            }
+            const server = safeGetServer(ip, "getHackTime");
+            if (failOnHacknetServer(server, "getHackTime")) { return Infinity; }
+
             return calculateHackingTime(server, hack, int); // Returns seconds
         },
         getGrowTime: function(ip, hack, int) {
             updateDynamicRam("getGrowTime", getRamCost("getGrowTime"));
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
-            }
+            const server = safeGetServer(ip, "getGrowTime");
+            if (failOnHacknetServer(server, "getGrowTime")) { return Infinity; }
+
             return calculateGrowTime(server, hack, int); // Returns seconds
         },
         getWeakenTime: function(ip, hack, int) {
             updateDynamicRam("getWeakenTime", getRamCost("getWeakenTime"));
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
-            }
+            const server = safeGetServer(ip, "getWeakenTime");
+            if (failOnHacknetServer(server, "getWeakenTime")) { return Infinity; }
+
             return calculateWeakenTime(server, hack, int); // Returns seconds
         },
         getScriptIncome: function(scriptname, ip) {
@@ -3453,7 +3447,13 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "getOtherGangInformation");
 
                 try {
-                    return Object.assign(AllGangs);
+                    // We have to make a deep copy
+                    const cpy = {};
+                    for (const gang in AllGangs) {
+                        cpy[gang] = Object.assign({}, AllGangs[gang]);
+                    }
+
+                    return cpy;
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getOtherGangInformation", e));
                 }
@@ -4137,7 +4137,7 @@ function NetscriptFunctions(workerScript) {
 
         // Coding Contract API
         codingcontract: {
-            attempt: function(answer, fn, ip=workerScript.serverIp) {
+            attempt: function(answer, fn, ip=workerScript.serverIp, { returnReward } = {}) {
                 updateDynamicRam("attempt", getRamCost("codingcontract", "attempt"));
                 const contract = getCodingContract(fn, ip);
                 if (contract == null) {
@@ -4163,7 +4163,7 @@ function NetscriptFunctions(workerScript) {
                     const reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
                     workerScript.log(`Successfully completed Coding Contract ${fn}. Reward: ${reward}`);
                     serv.removeContract(fn);
-                    return true;
+                    return returnReward ? reward : true;
                 } else {
                     ++contract.tries;
                     if (contract.tries >= contract.getMaxNumTries()) {
@@ -4172,7 +4172,8 @@ function NetscriptFunctions(workerScript) {
                     } else {
                         workerScript.log(`Coding Contract ${fn} failed. ${contract.getMaxNumTries() - contract.tries} attempts remaining`);
                     }
-                    return false;
+
+                    return returnReward ? "" : false;
                 }
             },
             getContractType: function(fn, ip=workerScript.serverIp) {

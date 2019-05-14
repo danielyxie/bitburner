@@ -17,9 +17,6 @@ import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
-
-
-
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
 /* Represents different types of problems that a Coding Contract can have */

@@ -2311,6 +2311,13 @@ function displaySourceFiles(listElement, sourceFiles) {
     }
 }
 
+export function isRepeatableAug(aug) {
+    const augName = (aug instanceof Augmentation) ? aug.name : aug;
+
+    if (augName === AugmentationNames.NeuroFluxGovernor) { return true; }
+
+    return false;
+}
 
 export {installAugmentations,
         initAugmentations, applyAugmentation, augmentationExists,

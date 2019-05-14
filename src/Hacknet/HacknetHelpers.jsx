@@ -61,7 +61,7 @@ export function purchaseHacknet() {
         }
     }
     /* END INTERACTIVE TUTORIAL */
-    
+
     const numOwned = Player.hacknetNodes.length;
     if (hasHacknetServers()) {
         const cost = getCostOfNextHacknetServer();
@@ -350,7 +350,7 @@ export function purchaseCoreUpgrade(node, levels=1) {
 
 export function purchaseCacheUpgrade(node, levels=1) {
     const sanitizedLevels = Math.round(levels);
-    const cost = node.calculateCoreUpgradeCost(sanitizedLevels);
+    const cost = node.calculateCacheUpgradeCost(sanitizedLevels);
     if (isNaN(cost) || cost <= 0 || sanitizedLevels < 0) {
         return false;
     }

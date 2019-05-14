@@ -700,7 +700,7 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
 
         // Put an arbitrary cap on this to prevent wanted level from rising too fast if the
         // denominator is very small. Might want to rethink formula later
-        return Math.max(100, calc);
+        return Math.min(100, calc);
     }
 }
 

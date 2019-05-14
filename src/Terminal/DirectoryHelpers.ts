@@ -37,8 +37,8 @@ export function removeTrailingSlash(s: string): string {
  */
 export function isValidFilename(filename: string): boolean {
     // Allows alphanumerics, hyphens, underscores.
-    // Must have a file exntesion
-    const regex = /^[.a-zA-Z0-9_-]+[.][.a-zA-Z0-9_-]+$/;
+    // Must have a file extension
+    const regex = /^[.a-zA-Z0-9_-]+[.][.a-zA-Z0-9]+$/;
 
 	// match() returns null if no match is found
     return filename.match(regex) != null;
@@ -98,6 +98,7 @@ export function isValidDirectoryPath(path: string): boolean {
  * proper formatting. It dose NOT check if the file actually exists on Terminal
  */
 export function isValidFilePath(path: string): boolean {
+    if (path == null || typeof path !== "string") { return false; }
     let t_path = path;
 
     // Impossible for filename to have less than length of 3

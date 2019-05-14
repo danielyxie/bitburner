@@ -413,34 +413,34 @@ function processNetscript1Imports(code, workerScript) {
     return res;
 }
 
-//Loop through workerScripts and run every script that is not currently running
+// Loop through workerScripts and run every script that is not currently running
 export function runScriptsLoop() {
-    var scriptDeleted = false;
+    let scriptDeleted = false;
 
-    //Delete any scripts that finished or have been killed. Loop backwards bc removing items screws up indexing
-    for (var i = workerScripts.length - 1; i >= 0; i--) {
+    // Delete any scripts that finished or have been killed. Loop backwards bc removing items screws up indexing
+    for (let i = workerScripts.length - 1; i >= 0; i--) {
         if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
             scriptDeleted = true;
-            //Delete script from the runningScripts array on its host serverIp
-            var ip = workerScripts[i].serverIp;
-            var name = workerScripts[i].name;
+            // Delete script from the runningScripts array on its host serverIp
+            const ip = workerScripts[i].serverIp;
+            const name = workerScripts[i].name;
 
-            //recalculate ram used
+            // Recalculate ram used
             AllServers[ip].ramUsed = 0;
-            for(let j = 0; j < workerScripts.length; j++) {
-                if(workerScripts[j].serverIp !== ip) {
-                    continue
+            for (let j = 0; j < workerScripts.length; j++) {
+                if (workerScripts[j].serverIp !== ip) {
+                    continue;
                 }
-                if(j === i) { // not this one
-                    continue
+                if (j === i) { // not this one
+                    continue;
                 }
                 AllServers[ip].ramUsed += workerScripts[j].ramUsage;
             }
 
-            //Delete script from Active Scripts
+            // Delete script from Active Scripts
             deleteActiveScriptsItem(workerScripts[i]);
 
-            for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
+            for (let j = 0; j < AllServers[ip].runningScripts.length; j++) {
                 if (AllServers[ip].runningScripts[j].filename == name &&
                     compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
                     AllServers[ip].runningScripts.splice(j, 1);
@@ -448,16 +448,16 @@ export function runScriptsLoop() {
                 }
             }
 
-            //Delete script from workerScripts
+            // Delete script from workerScripts
             workerScripts.splice(i, 1);
         }
     }
-    if (scriptDeleted) {updateActiveScriptsItems();} //Force Update
+    if (scriptDeleted) { updateActiveScriptsItems(); } // Force Update
 
 
-	//Run any scripts that haven't been started
-	for (var i = 0; i < workerScripts.length; i++) {
-		//If it isn't running, start the script
+	// Run any scripts that haven't been started
+	for (let i = 0; i < workerScripts.length; i++) {
+		// If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
             let p = null;  // p is the script's result promise.
             if (workerScripts[i].name.endsWith(".js") || workerScripts[i].name.endsWith(".ns")) {
@@ -467,8 +467,8 @@ export function runScriptsLoop() {
                 if (!(p instanceof Promise)) { continue; }
             }
 
-			//Once the code finishes (either resolved or rejected, doesnt matter), set its
-			//running status to false
+			// Once the code finishes (either resolved or rejected, doesnt matter), set its
+			// running status to false
 			p.then(function(w) {
 				console.log("Stopping script " + w.name + " because it finished running naturally");
 				w.running = false;
@@ -480,9 +480,9 @@ export function runScriptsLoop() {
 					console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
                     return;
                 } else if (w.constructor === Array && w.length === 2 && w[0] === "RETURNSTATEMENT") {
-                    //Script ends with a return statement
+                    // Script ends with a return statement
                     console.log("Script returning with value: " + w[1]);
-                    //TODO maybe do something with this in the future
+                    // TODO maybe do something with this in the future
                     return;
                 } else if (w instanceof WorkerScript) {
                     if (isScriptErrorMessage(w.errorMessage)) {
@@ -517,7 +517,7 @@ export function runScriptsLoop() {
 		}
 	}
 
-	setTimeoutRef(runScriptsLoop, 6000);
+	setTimeoutRef(runScriptsLoop, 3e3);
 }
 
 /**

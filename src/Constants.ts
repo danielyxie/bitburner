@@ -234,11 +234,16 @@ export let CONSTANTS: IMap<any> = {
     ** This is just a temporary patch until the mechanic gets re-worked
 
     * hack(), grow(), and weaken() functions now take optional arguments for number of threads to use (by MasonD)
-
+    * codingcontract.attempt() now takes an optional argument that allows you to configure the function to return a contract's reward
     * Adjusted RAM costs of Netscript Singularity functions (mostly increased)
+    * Adjusted RAM cost of codingcontract.getNumTriesRemaining() Netscript function
     * Netscript Singularity functions no longer cost extra RAM outside of BitNode-4
     * Corporation employees no longer have an "age" stat
     * Gang Wanted level gain rate capped at 100 (per employee)
+    * Script startup/kill is now processed every 3 seconds, instead of 6 seconds
+    * getHackTime(), getGrowTime(), and getWeakenTime() now return Infinity if called on a Hacknet Server
+    * Money/Income tracker now displays money lost from hospitalizations
+    * Exported saves now have a unique filename based on current BitNode and timestamp
     * Bug Fix: Corporation employees stats should no longer become negative
     * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
     * Bug Fix: Coding contracts should no longer generate on the w0r1d_d43m0n server
@@ -253,5 +258,7 @@ export let CONSTANTS: IMap<any> = {
     * Bug Fix: Terminal 'wget' command now correctly evaluates directory paths
     * Bug Fix: wget(), write(), and scp() Netscript functions now fail if an invalid filepath is passed in
     * Bug Fix: Having Corporation warehouses at full capacity should no longer freeze game in certain conditions
+    * Bug Fix: Prevented an exploit that allows you to buy multiple copies of an Augmentation by holding the 'Enter' button
+    * Bug Fix: gang.getOtherGangInformation() now properly returns a deep copy
     `
 }

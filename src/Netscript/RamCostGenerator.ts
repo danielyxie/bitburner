@@ -269,7 +269,7 @@ export const RamCosts: IMap<any> = {
         getContractType: () => RamCostConstants.ScriptCodingContractBaseRamCost / 2,
         getData: () => RamCostConstants.ScriptCodingContractBaseRamCost / 2,
         getDescription: () => RamCostConstants.ScriptCodingContractBaseRamCost / 2,
-        getNumTriesRemaining: () => RamCostConstants.ScriptCodingContractBaseRamCost / 2,
+        getNumTriesRemaining: () => RamCostConstants.ScriptCodingContractBaseRamCost / 5,
     },
 
     // Duplicate Sleeve API

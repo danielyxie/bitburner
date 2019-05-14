@@ -1,10 +1,10 @@
 hack() Netscript Function
 =========================
 
-.. js:function:: hack(hostname/ip)
+.. js:function:: hack(hostname/ip[, opts={}])
 
     :param string hostname/ip: IP or hostname of the target server to hack
-    :param object options: Optional parameters for configuring function behavior. Properties:
+    :param object opts: Optional parameters for configuring function behavior. Properties:
 
         * threads (*number*) - Number of threads to use for this function.
           Must be less than or equal to the number of threads the script is running with.

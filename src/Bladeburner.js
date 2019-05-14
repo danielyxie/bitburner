@@ -4173,7 +4173,7 @@ function initBladeburner() {
              "results would be catastrophic.<br><br>" +
              "We do not have the power or jurisdiction to shutdown this down " +
              "through legal or political means, so we must resort to a covert " +
-             "operation. Your goal is to destroy this technology and eliminate" +
+             "operation. Your goal is to destroy this technology and eliminate " +
              "anyone who was involved in its creation.",
         baseDifficulty:15e3, reqdRank:30e3,
         rankGain:750, rankLoss:60, hpLoss:1000,
