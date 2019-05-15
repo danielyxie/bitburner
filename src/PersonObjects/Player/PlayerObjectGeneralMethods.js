@@ -36,7 +36,8 @@ import {
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
 import { Settings } from "../../Settings/Settings";
 import { SpecialServerIps, SpecialServerNames } from "../../Server/SpecialServerIps";
-import { SourceFiles, applySourceFile } from "../../SourceFile";
+import { applySourceFile } from "../../SourceFile/applySourceFile";
+import { SourceFiles } from "../../SourceFile/SourceFiles";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 import Decimal from "decimal.js";

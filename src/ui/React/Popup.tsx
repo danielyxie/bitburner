@@ -13,12 +13,10 @@ interface IProps {
     props: object;
 }
 
-export class Popup extends React.Component<IProps, any> {
-    render() {
-        return (
-            <div className={"popup-box-content"} id={`${this.props.id}-content`}>
-                {React.createElement(this.props.content, this.props.props)}
-            </div>
-        )
-    }
+export function Popup(props: IProps): React.ReactElement {
+    return (
+        <div className={"popup-box-content"} id={`${props.id}-content`}>
+            {React.createElement(props.content, props.props)}
+        </div>
+    )
 }

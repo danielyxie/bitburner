@@ -17,7 +17,6 @@ import { Server }                           from "../Server/Server";
 import { OwnedAugmentationsOrderSetting }   from "../Settings/SettingEnums";
 import { Settings }                         from "../Settings/Settings";
 
-import { SourceFiles }                      from "../SourceFile";
 import { dialogBoxCreate }                  from "../../utils/DialogBox";
 import { createAccordionElement }           from "../../utils/uiHelpers/createAccordionElement";
 import { Reviver, Generic_toJSON,
@@ -2040,17 +2039,6 @@ function applyAugmentation(aug, reapply=false) {
             }
         }
     }
-
-    /*
-    if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-        for (var i = 0; i < Player.augmentations.length; ++i) {
-            if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-                //Already have this aug, just upgrade the level
-                return;
-            }
-        }
-    }
-    */
 
     // Push onto Player's Augmentation list
     if (!reapply) {

@@ -185,19 +185,6 @@
     width: 70%;
 }
 
-#faction-donate-amount-txt,
-#faction-donate-input {
-    padding: 6px;
-    margin: 6px;
-    display: inline-block;
-    color: var(--my-font-color);
-    background-color: #000;
-}
-
-#faction-donate-amount-txt {
-    width: 50%;
-}
-
 #faction-container p,
 #faction-container pre {
     padding: 4px 6px;
@@ -213,43 +200,10 @@
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-/* Faction Augmentations */
-#faction-augmentations-container {
-    position: fixed;
-    padding-top: 10px;
-
-    p, a, ul, h1 {
-        margin: 8px;
-        padding: 4px;
-    }
-}
-
 /* World */
 #world-container li {
     margin: 0 0 15px 0;
     list-style-type: none;
-}
-
-/* Augmentations */
-#augmentations-container {
-    position: fixed;
-    padding-top: 10px;
-}
-
-.augmentations-list {
-    button,
-    div {
-        color: var(--my-font-color);
-        text-decoration: none;
-    }
-
-    button {
-        padding: 2px 5px;
-    }
-
-    div {
-        padding: 6px;
-    }
 }
 
 /* Tutorial */
