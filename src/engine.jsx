@@ -1,27 +1,22 @@
 import {
-    formatNumber,
     convertTimeMsToTimeElapsedString,
     replaceAt
 } from "../utils/StringHelperFunctions";
-import { loxBoxCreate, logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
+import { logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
 import { updateActiveScriptsItems } from "./ActiveScriptsUI";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
-    installAugmentations,
     initAugmentations,
     displayAugmentationsContent,
-    PlayerOwnedAugmentation
 } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import {
-    BitNodes,
     initBitNodeMultipliers
 } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner";
 import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
 import { cinematicTextFlag } from "./CinematicText";
 import { generateRandomContract } from "./CodingContractGenerator";
-import { CompanyPositions } from "./Company/CompanyPositions";
 import { initCompanies } from "./Company/Companies";
 import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
@@ -53,7 +48,6 @@ import {
 } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
-import { Programs } from "./Programs/Programs";
 import {
     displayCreateProgramContent,
     getNumAvailableCreateProgram,
@@ -66,16 +60,11 @@ import {
     scriptEditorInit,
     updateScriptEditorContent
 } from "./Script/ScriptHelpers";
-import { AllServers, initForeignServers } from "./Server/AllServers";
+import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
+import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import {
-    SpecialServerIps,
-    initSpecialServerIps
-} from "./Server/SpecialServerIps";
-import {
-    StockMarket,
-    SymbolToStockMap,
     initSymbolToStockMap,
     stockMarketCycle,
     processStockPrices,
@@ -103,9 +92,7 @@ import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
-import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
