@@ -4,9 +4,11 @@
  */
 import * as React from "react";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { Player } from "../../Player";
+import { InstalledAugmentationsAndSourceFiles } from "./InstalledAugmentationsAndSourceFiles";
+import { PlayerMultipliers } from "./PlayerMultipliers";
+import { PurchasedAugmentations } from "./PurchasedAugmentations";
 
+import { Player } from "../../Player";
 import { StdButton } from "../../ui/React/StdButton";
 
 type IProps = {
@@ -25,7 +27,7 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <div>
+            <div id="augmentations-content">
                 <h1>Purchased Augmentations</h1>
                 <p>
                     Below is a list of all Augmentations you have purchased but not
@@ -34,14 +36,14 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
                 <p>
                     WARNING: Installing your Augmentations resets most of your progress,
                     including:
-                </p>
+                </p><br />
                 <p>- Stats/Skill levels and Experience</p>
                 <p>- Money</p>
                 <p>- Scripts on every computer but your home computer</p>
                 <p>- Purchased servers</p>
                 <p>- Hacknet Nodes</p>
                 <p>- Faction/Company reputation</p>
-                <p>- Stocks</p>
+                <p>- Stocks</p><br />
                 <p>
                     Installing Augmentations lets you start over with the perks and
                     benefits granted by all of the Augmentations you have ever
@@ -62,10 +64,19 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
                     text="Backup Save (Export)"
                     tooltip="It's always a good idea to backup/export your save!"
                 />
+                <PurchasedAugmentations />
 
-                <ul className="augmentations-list">
+                <h1>Installed Augmentations</h1>
+                <p>
+                    {
+                        `List of all Augmentations ${Player.sourceFiles.length > 0 ? "and Source Files " : ""} ` +
+                        `that have been installed. You have gained the effects of these.`
+                    }
+                </p>
+                <InstalledAugmentationsAndSourceFiles />
 
-                </ul>
+                <br /> <br />
+                <PlayerMultipliers />
             </div>
         )
     }

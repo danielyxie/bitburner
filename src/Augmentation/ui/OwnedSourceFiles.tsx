@@ -5,36 +5,37 @@
 import * as React from "react";
 
 import { Player } from "../../Player";
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Settings } from "../../Settings/Settings";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
+import { SourceFiles } from "../../SourceFile/SourceFiles";
 
-import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
+import { SourceFileAccordion } from "../../ui/React/SourceFileAccordion";
 
 export function OwnedSourceFiles(): React.ReactElement {
-    const sourceAugs = Player.augmentations.slice();
+    const sourceSfs = Player.sourceFiles.slice();
 
     if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
-        sourceAugs.sort((aug1, aug2) => {
-            return aug1.name <= aug2.name ? -1 : 1;
+        sourceSfs.sort((sf1, sf2) => {
+            return sf1.n - sf2.n;
         });
     }
 
-    const augs = sourceAugs.map((e) => {
-        const aug = Augmentations[e.name];
-
-        let level = null;
-        if (e.name === AugmentationNames.NeuroFluxGovernor) {
-            level = e.level;
+    const sfs = sourceSfs.map((e) => {
+        const srcFileKey = "SourceFile" + e.n;
+        const sfObj = SourceFiles[srcFileKey];
+        if (sfObj == null) {
+            console.error(`Invalid source file number: ${e.n}`);
+            return null;
         }
 
         return (
-            <AugmentationAccordion aug={aug} key={e.name} level={level} />
+            <li key={e.n}>
+                <SourceFileAccordion level={e.lvl} sf={sfObj} />
+            </li>
         )
     });
 
     return (
-        <ul>{augs}</ul>
-    )
+        <>{sfs}</>
+    );
 }

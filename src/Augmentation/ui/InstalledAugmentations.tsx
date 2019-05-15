@@ -30,11 +30,13 @@ export function InstalledAugmentations(): React.ReactElement {
         }
 
         return (
-            <AugmentationAccordion aug={aug} key={e.name} level={level} />
+            <li key={e.name}>
+                <AugmentationAccordion aug={aug} level={level} />
+            </li>
         )
     });
 
     return (
-        <ul>{augs}</ul>
+        <>{augs}</>
     )
 }

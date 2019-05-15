@@ -1,32 +1,39 @@
-import { Augmentation }                     from "./Augmentation";
-import { Augmentations }                    from "./Augmentations";
-import { PlayerOwnedAugmentation }          from "./PlayerOwnedAugmentation";
-import { AugmentationNames }                from "./data/AugmentationNames";
+import { Augmentation } from "./Augmentation";
+import { Augmentations } from "./Augmentations";
+import { PlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
+import { AugmentationNames } from "./data/AugmentationNames";
 
-import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers";
-import { CONSTANTS }                        from "../Constants";
-import { Factions,
-         factionExists }                    from "../Faction/Factions";
-import { addWorkerScript }                  from "../NetscriptWorker";
-import { Player }                           from "../Player";
-import { prestigeAugmentation }             from "../Prestige";
-import { saveObject }                       from "../SaveObject";
-import { RunningScript }                    from "../Script/RunningScript";
-import { Script }                           from "../Script/Script";
-import { Server }                           from "../Server/Server";
-import { OwnedAugmentationsOrderSetting }   from "../Settings/SettingEnums";
-import { Settings }                         from "../Settings/Settings";
+import { AugmentationsRoot } from "./ui/Root";
 
-import { dialogBoxCreate }                  from "../../utils/DialogBox";
-import { createAccordionElement }           from "../../utils/uiHelpers/createAccordionElement";
-import { Reviver, Generic_toJSON,
-         Generic_fromJSON }                 from "../../utils/JSONReviver";
-import { formatNumber }                     from "../../utils/StringHelperFunctions";
-import { clearObject }                      from "../../utils/helpers/clearObject";
-import { createElement }                    from "../../utils/uiHelpers/createElement";
-import { isString }                         from "../../utils/helpers/isString";
-import { removeChildrenFromElement }        from "../../utils/uiHelpers/removeChildrenFromElement";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "../Constants";
+import { Factions, factionExists } from "../Faction/Factions";
+import { addWorkerScript } from "../NetscriptWorker";
+import { Player } from "../Player";
+import { prestigeAugmentation } from "../Prestige";
+import { saveObject } from "../SaveObject";
+import { RunningScript } from "../Script/RunningScript";
+import { Script } from "../Script/Script";
+import { Server } from "../Server/Server";
+import { OwnedAugmentationsOrderSetting } from "../Settings/SettingEnums";
+import { Settings } from "../Settings/Settings";
+import { Page, routing } from "../ui/navigationTracking";
 
+import { dialogBoxCreate } from "../../utils/DialogBox";
+import { createAccordionElement } from "../../utils/uiHelpers/createAccordionElement";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON
+} from "../../utils/JSONReviver";
+import { formatNumber } from "../../utils/StringHelperFunctions";
+import { clearObject } from "../../utils/helpers/clearObject";
+import { createElement } from "../../utils/uiHelpers/createElement";
+import { isString } from "../../utils/helpers/isString";
+import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
+
+import React from "react";
+import ReactDOM from "react-dom";
 
 function AddToAugmentations(aug) {
     var name = aug.name;
@@ -2092,211 +2099,17 @@ function augmentationExists(name) {
     return Augmentations.hasOwnProperty(name);
 }
 
-function displayAugmentationsContent(contentEl) {
-    removeChildrenFromElement(contentEl);
-    contentEl.appendChild(createElement("h1", {
-        innerText:"Purchased Augmentations",
-    }));
+export function displayAugmentationsContent(contentEl) {
+    if (!routing.isOn(Page.Augmentations)) { return; }
+    if (!(contentEl instanceof HTMLElement)) { return; }
 
-    contentEl.appendChild(createElement("pre", {
-        width:"70%", whiteSpace:"pre-wrap", display:"block",
-        innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
-                  "WARNING: Installing your Augmentations resets most of your progress, including:\n\n" +
-                  "Stats/Skill levels and Experience\n" +
-                  "Money\n" +
-                  "Scripts on every computer but your home computer\n" +
-                  "Purchased servers\n" +
-                  "Hacknet Nodes\n" +
-                  "Faction/Company reputation\n" +
-                  "Stocks\n" +
-                  "Installing Augmentations lets you start over with the perks and benefits granted by all " +
-                  "of the Augmentations you have ever installed. Also, you will keep any scripts and RAM/Core upgrades " +
-                  "on your home computer (but you will lose all programs besides NUKE.exe)."
-    }));
-
-    //Install Augmentations button
-    contentEl.appendChild(createElement("a", {
-        class:"a-link-button", innerText:"Install Augmentations",
-        tooltip:"'I never asked for this'",
-        clickListener:()=>{
-            installAugmentations();
-            return false;
-        }
-    }));
-
-    //Backup button
-    contentEl.appendChild(createElement("a", {
-        class:"a-link-button flashing-button", innerText:"Backup Save (Export)",
-        tooltip:"It's always a good idea to backup/export your save!",
-        clickListener:()=>{
-            saveObject.exportGame();
-            return false;
-        }
-    }));
-
-    //Purchased/queued augmentations list
-    var queuedAugmentationsList = createElement("ul", {class:"augmentations-list"});
-
-    for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
-        var augName = Player.queuedAugmentations[i].name;
-        var aug = Augmentations[augName];
-
-        var displayName = augName;
-        if (augName === AugmentationNames.NeuroFluxGovernor) {
-            displayName += " - Level " + (Player.queuedAugmentations[i].level);
-        }
-
-        var accordion = createAccordionElement({hdrText:displayName, panelText:aug.info});
-        queuedAugmentationsList.appendChild(accordion[0]);
-    }
-    contentEl.appendChild(queuedAugmentationsList);
-
-    //Installed augmentations list
-    contentEl.appendChild(createElement("h1", {
-        innerText:"Installed Augmentations", marginTop:"8px",
-    }));
-    contentEl.appendChild(createElement("p", {
-        width:"70%", whiteSpace:"pre-wrap",
-        innerText:"List of all Augmentations (including Source Files) that have been " +
-                  "installed. You have gained the effects of these Augmentations."
-    }));
-
-    var augmentationsList = createElement("ul", {class:"augmentations-list"});
-
-    //Expand/Collapse All buttons
-    contentEl.appendChild(createElement("a", {
-        class:"a-link-button", fontSize:"14px", innerText:"Expand All", display:"inline-block",
-        clickListener:()=>{
-            var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
-            for (var i = 0; i < allHeaders.length; ++i) {
-                if (!allHeaders[i].classList.contains("active")) {allHeaders[i].click();}
-            }
-        }
-    }));
-    contentEl.appendChild(createElement("a", {
-        class:"a-link-button", fontSize:"14px", innerText:"Collapse All", display:"inline-block",
-        clickListener:()=>{
-            var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
-            for (var i = 0; i < allHeaders.length; ++i) {
-                if (allHeaders[i].classList.contains("active")) {allHeaders[i].click();}
-            }
-        }
-    }));
-
-    //Sort Buttons
-    const sortInOrderButton = createElement("a", {
-        class:"a-link-button", fontSize:"14px", innerText:"Sort in Order",
-        tooltip:"Sorts the Augmentations alphabetically and Source Files in numerical order (1, 2, 3,...)",
-        clickListener:()=>{
-            removeChildrenFromElement(augmentationsList);
-
-            //Create a copy of Player's Source Files and augs array and sort them
-            var sourceFiles = Player.sourceFiles.slice();
-            var augs = Player.augmentations.slice();
-            sourceFiles.sort((sf1, sf2)=>{
-                return sf1.n - sf2.n;
-            });
-            augs.sort((aug1, aug2)=>{
-                return aug1.name <= aug2.name ? -1 : 1;
-            });
-            displaySourceFiles(augmentationsList, sourceFiles);
-            displayAugmentations(augmentationsList, augs);
-
-            Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.Alphabetically;
-        }
-    });
-    contentEl.appendChild(sortInOrderButton);
-
-    const sortByAcquirementTimeButton = createElement("a", {
-        class:"a-link-button", fontSize:"14px", innerText:"Sort by Acquirement Time",
-        tooltip:"Sorts the Augmentations and Source Files based on when you acquired them (same as default)",
-        clickListener:()=>{
-            removeChildrenFromElement(augmentationsList);
-            displaySourceFiles(augmentationsList, Player.sourceFiles);
-            displayAugmentations(augmentationsList, Player.augmentations);
-
-            Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.AcquirementTime;
-        }
-    });
-    contentEl.appendChild(sortByAcquirementTimeButton);
-
-    if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
-        sortInOrderButton.click();
-    } else {
-        sortByAcquirementTimeButton.click();
-    }
-    contentEl.appendChild(augmentationsList);
-
-    // Display multiplier information at the bottom
-    contentEl.appendChild(createElement("p", {
-        display: "block",
-        innerHTML:
-            `<br><br><strong><u>Total Multipliers:</u></strong><br>` +
-            'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
-            'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
-            'Hacking Money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br>' +
-            'Hacking Growth multiplier: ' + formatNumber(Player.hacking_grow_mult * 100, 2) + '%<br><br>' +
-            'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
-            'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' +
-            'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' +
-            'Strength Experience multiplier: ' + formatNumber(Player.strength_exp_mult * 100, 2) + '%<br><br>' +
-            'Defense Level multiplier:      ' + formatNumber(Player.defense_mult * 100, 2) + '%<br>' +
-            'Defense Experience multiplier: ' + formatNumber(Player.defense_exp_mult * 100, 2) + '%<br><br>' +
-            'Dexterity Level multiplier:      ' + formatNumber(Player.dexterity_mult * 100, 2) + '%<br>' +
-            'Dexterity Experience multiplier: ' + formatNumber(Player.dexterity_exp_mult * 100, 2) + '%<br><br>' +
-            'Agility Level multiplier:      ' + formatNumber(Player.agility_mult * 100, 2) + '%<br>' +
-            'Agility Experience multiplier: ' + formatNumber(Player.agility_exp_mult * 100, 2) + '%<br><br>' +
-            'Charisma Level multiplier:      ' + formatNumber(Player.charisma_mult * 100, 2) + '%<br>' +
-            'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' +
-            'Hacknet Node production multiplier:         ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
-            'Hacknet Node purchase cost multiplier:      ' + formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
-            'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' +
-            'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' +
-            'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' +
-            'Crime success multiplier: ' + formatNumber(Player.crime_success_mult * 100, 2) + '%<br>' +
-            'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>',
-    }))
-}
-
-//Creates the accordion elements to display Augmentations
-//  @listElement - List DOM element to append accordion elements to
-//  @augs - Array of Augmentation objects
-function displayAugmentations(listElement, augs) {
-    for (var i = 0; i < augs.length; ++i) {
-        var augName = augs[i].name;
-        var aug = Augmentations[augName];
-
-        var displayName = augName;
-        if (augName === AugmentationNames.NeuroFluxGovernor) {
-            displayName += " - Level " + (augs[i].level);
-        }
-        var accordion = createAccordionElement({hdrText:displayName, panelText:aug.info});
-        listElement.appendChild(accordion[0]);
-    }
-}
-
-//Creates the accordion elements to display Source Files
-//  @listElement - List DOM element to append accordion elements to
-//  @sourceFiles - Array of Source File objects
-function displaySourceFiles(listElement, sourceFiles) {
-    for (var i = 0; i < sourceFiles.length; ++i) {
-        var srcFileKey = "SourceFile" + sourceFiles[i].n;
-        var sourceFileObject = SourceFiles[srcFileKey];
-        if (sourceFileObject == null) {
-            console.log("ERROR: Invalid source file number: " + sourceFiles[i].n);
-            continue;
-        }
-        const maxLevel = sourceFiles[i].n == 12 ? "∞" : "3";
-        var accordion = createAccordionElement({
-            hdrText:sourceFileObject.name + "<br>" + "Level " + (sourceFiles[i].lvl) + " / "+maxLevel,
-            panelText:sourceFileObject.info
-        });
-
-        listElement.appendChild(accordion[0]);
-    }
+    ReactDOM.render(
+        <AugmentationsRoot
+            exportGameFn={saveObject.exportGame.bind(saveObject)}
+            installAugmentationsFn={installAugmentations}
+        />,
+        contentEl
+    );
 }
 
 export function isRepeatableAug(aug) {
@@ -2307,6 +2120,9 @@ export function isRepeatableAug(aug) {
     return false;
 }
 
-export {installAugmentations,
-        initAugmentations, applyAugmentation, augmentationExists,
-        displayAugmentationsContent};
+export {
+    installAugmentations,
+    initAugmentations,
+    applyAugmentation,
+    augmentationExists,
+};
