@@ -45,12 +45,12 @@ export class Accordion extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <div>
-                <button className={"accordion-header"} onClick={this.handleHeaderClick}>
-                    {this.props.headerContent}
-                </button>
-                <AccordionPanel opened={this.state.panelOpened} panelContent={this.props.panelContent} />
-            </div>
+            <>
+            <button className={"accordion-header"} onClick={this.handleHeaderClick}>
+                {this.props.headerContent}
+            </button>
+            <AccordionPanel opened={this.state.panelOpened} panelContent={this.props.panelContent} />
+            </>
         )
     }
 }

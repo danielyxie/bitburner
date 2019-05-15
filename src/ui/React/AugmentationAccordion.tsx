@@ -2,7 +2,7 @@
  * React Component for displaying a single Augmentation as an accordion.
  *
  * The header of the accordion contains the Augmentation's name (and level, if
- * applicable), and the accordion's panel contains the Augmentation's level.
+ * applicable), and the accordion's panel contains the Augmentation's description.
  */
 import * as React from "react";
 
@@ -26,8 +26,8 @@ export function AugmentationAccordion(props: IProps): React.ReactElement {
 
     return (
         <Accordion
-            headerContent={<p>{displayName}</p>}
-            panelContent={<p>{props.aug.info}</p>}
+            headerContent={<>{displayName}</>}
+            panelContent={<p dangerouslySetInnerHTML={{__html: props.aug.info}}></p>}
         />
     )
 }

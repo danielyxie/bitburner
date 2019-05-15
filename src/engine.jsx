@@ -15,7 +15,6 @@ import {
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import {
     BitNodes,
-    initBitNodes,
     initBitNodeMultipliers
 } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner";
@@ -310,8 +309,8 @@ const Engine = {
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
-        displayAugmentationsContent(Engine.Display.augmentationsContent);
         routing.navigateTo(Page.Augmentations);
+        displayAugmentationsContent(Engine.Display.augmentationsContent);
         MainMenuLinks.Augmentations.classList.add("active");
     },
 
@@ -488,13 +487,20 @@ const Engine = {
         Engine.Display.activeScriptsContent.style.display = "none";
         clearHacknetNodesUI();
         Engine.Display.createProgramContent.style.display = "none";
+
         Engine.Display.factionsContent.style.display = "none";
-        ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
+
         Engine.Display.factionContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
+
         Engine.Display.augmentationsContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.augmentationsContent);
+
         Engine.Display.tutorialContent.style.display = "none";
+
         Engine.Display.locationContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
+
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
         Engine.Display.cinematicTextContent.style.display = "none";
@@ -1038,7 +1044,6 @@ const Engine = {
 
         // Load game from save or create new game
         if (loadGame(saveString)) {
-            initBitNodes();
             initBitNodeMultipliers(Player);
             Engine.setDisplayElements();    // Sets variables for important DOM elements
             Engine.init();                  // Initialize buttons, work, etc.
@@ -1160,7 +1165,6 @@ const Engine = {
         } else {
             // No save found, start new game
             console.log("Initializing new game");
-            initBitNodes();
             initBitNodeMultipliers(Player);
             initSpecialServerIps();
             Engine.setDisplayElements(); // Sets variables for important DOM elements

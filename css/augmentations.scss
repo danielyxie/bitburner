@@ -10,6 +10,13 @@
     padding-top: 10px;
 }
 
+#augmentations-content {
+    > p {
+        font-size: $defaultFontSize * 0.875;
+        width: 70%;
+    }
+}
+
 .augmentations-list {
     button,
     div {
@@ -18,10 +25,7 @@
     }
 
     button {
-        padding: 2px 5px;
+        padding: 4px;
     }
 
-    div {
-        padding: 6px;
-    }
 }
