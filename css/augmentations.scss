@@ -1,0 +1,27 @@
+/**
+ * Styling for the Augmentations UI. This is the page that displays all of the
+ * player's owned and purchased Augmentations and Source-Files. It also allows
+ * the player to install Augmentations
+ */
+@import "theme";
+
+#augmentations-container {
+    position: fixed;
+    padding-top: 10px;
+}
+
+.augmentations-list {
+    button,
+    div {
+        color: var(--my-font-color);
+        text-decoration: none;
+    }
+
+    button {
+        padding: 2px 5px;
+    }
+
+    div {
+        padding: 6px;
+    }
+}

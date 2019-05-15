@@ -5,6 +5,7 @@
 import * as React from "react";
 
 interface IStdButtonProps {
+    addClasses?: string;
     disabled?: boolean;
     id?: string;
     onClick?: (e: React.MouseEvent<HTMLElement>) => any;
@@ -17,30 +18,32 @@ type IInnerHTMLMarkup = {
     __html: string;
 }
 
-export class StdButton extends React.Component<IStdButtonProps, any> {
-    render() {
-        const hasTooltip = this.props.tooltip != null && this.props.tooltip !== "";
-        let className = this.props.disabled ? "std-button-disabled" : "std-button";
-        if (hasTooltip) {
-            className += " tooltip";
-        }
-
-        // Tooltip will be set using inner HTML
-        let tooltipMarkup: IInnerHTMLMarkup | null;
-        if (hasTooltip) {
-            tooltipMarkup = {
-                __html: this.props.tooltip!
-            }
-        }
-
-        return (
-            <button className={className} id={this.props.id} onClick={this.props.onClick} style={this.props.style}>
-                {this.props.text}
-                {
-                    hasTooltip &&
-                    <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
-                }
-            </button>
-        )
+export function StdButton(props: IStdButtonProps): React.ReactElement {
+    const hasTooltip = props.tooltip != null && props.tooltip !== "";
+    let className = props.disabled ? "std-button-disabled" : "std-button";
+    if (hasTooltip) {
+        className += " tooltip";
     }
+
+    if (typeof props.addClasses === "string") {
+        className += ` ${props.addClasses}`;
+    }
+
+    // Tooltip will be set using inner HTML
+    let tooltipMarkup: IInnerHTMLMarkup | null;
+    if (hasTooltip) {
+        tooltipMarkup = {
+            __html: props.tooltip!
+        }
+    }
+
+    return (
+        <button className={className} id={props.id} onClick={props.onClick} style={props.style}>
+            {props.text}
+            {
+                hasTooltip &&
+                <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
+            }
+        </button>
+    )
 }

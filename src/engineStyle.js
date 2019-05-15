@@ -11,6 +11,7 @@ import "../css/scripteditor.scss";
 import "../css/codemirror-overrides.scss";
 import "../css/hacknetnodes.scss";
 import "../css/menupages.scss";
+import "../css/augmentations.scss";
 import "../css/redpill.scss";
 import "../css/stockmarket.scss";
 import "../css/workinprogress.scss";

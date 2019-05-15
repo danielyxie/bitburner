@@ -13,7 +13,6 @@ import {
     PlayerOwnedAugmentation
 } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-
 import {
     BitNodes,
     initBitNodes,
@@ -54,14 +53,14 @@ import {
     updateOnlineScriptTimes,
 } from "./NetscriptWorker";
 import { Player } from "./Player";
-import { prestigeAugmentation, prestigeSourceFile } from "./Prestige";
+import { prestigeAugmentation } from "./Prestige";
 import { Programs } from "./Programs/Programs";
 import {
     displayCreateProgramContent,
     getNumAvailableCreateProgram,
     initCreateProgramButtons
 } from "./Programs/ProgramHelpers";
-import { redPillFlag, hackWorldDaemon } from "./RedPill";
+import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
 import {
     getCurrentEditor,
@@ -69,10 +68,7 @@ import {
     updateScriptEditorContent
 } from "./Script/ScriptHelpers";
 import { AllServers, initForeignServers } from "./Server/AllServers";
-
-import { Server } from "./Server/Server";
 import { Settings } from "./Settings/Settings";
-import { initSourceFiles, SourceFiles } from "./SourceFile";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import {
     SpecialServerIps,
@@ -87,7 +83,6 @@ import {
     displayStockMarketContent
 } from "./StockMarket/StockMarket";
 import { Terminal, postNetburnerText } from "./Terminal";
-
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import {
     clearSleevesPage,
@@ -1045,7 +1040,6 @@ const Engine = {
         if (loadGame(saveString)) {
             initBitNodes();
             initBitNodeMultipliers(Player);
-            initSourceFiles();
             Engine.setDisplayElements();    // Sets variables for important DOM elements
             Engine.init();                  // Initialize buttons, work, etc.
             initAugmentations();            // Also calls Player.reapplyAllAugmentations()
@@ -1168,7 +1162,6 @@ const Engine = {
             console.log("Initializing new game");
             initBitNodes();
             initBitNodeMultipliers(Player);
-            initSourceFiles();
             initSpecialServerIps();
             Engine.setDisplayElements(); // Sets variables for important DOM elements
             Engine.start(); // Run main game loop and Scripts loop
