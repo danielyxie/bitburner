@@ -4,7 +4,9 @@
 import * as React from "react";
 
 type IProps = {
+    headerClass?: string; // Override default class
     headerContent: React.ReactElement;
+    panelClass?: string; // Override default class
     panelContent: React.ReactElement;
     panelInitiallyOpened?: boolean;
 }
@@ -44,12 +46,21 @@ export class Accordion extends React.Component<IProps, IState> {
     }
 
     render() {
+        let className = "accordion-header";
+        if (typeof this.props.headerClass === "string") {
+            className = this.props.headerClass;
+        }
+
         return (
             <>
-            <button className={"accordion-header"} onClick={this.handleHeaderClick}>
+            <button className={className} onClick={this.handleHeaderClick}>
                 {this.props.headerContent}
             </button>
-            <AccordionPanel opened={this.state.panelOpened} panelContent={this.props.panelContent} />
+            <AccordionPanel
+                opened={this.state.panelOpened}
+                panelClass={this.props.panelClass}
+                panelContent={this.props.panelContent}
+            />
             </>
         )
     }
@@ -57,6 +68,7 @@ export class Accordion extends React.Component<IProps, IState> {
 
 type IPanelProps = {
     opened: boolean;
+    panelClass?: string; // Override default class
     panelContent: React.ReactElement;
 }
 
@@ -66,8 +78,13 @@ class AccordionPanel extends React.Component<IPanelProps, any> {
     }
 
     render() {
+        let className = "accordion-panel"
+        if (typeof this.props.panelClass === "string") {
+            className = this.props.panelClass;
+        }
+
         return (
-            <div className={"accordion-panel"}>
+            <div className={className}>
                 {this.props.panelContent}
             </div>
         )

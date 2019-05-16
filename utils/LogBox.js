@@ -1,6 +1,6 @@
-import {killWorkerScript}    from "../src/NetscriptWorker";
-import {clearEventListeners} from "./uiHelpers/clearEventListeners";
-import {arrayToString}       from "./helpers/arrayToString";
+import { killWorkerScript } from "../src/Netscript/killWorkerScript";
+import { clearEventListeners } from "./uiHelpers/clearEventListeners";
+import { arrayToString } from "./helpers/arrayToString";
 
 $(document).keydown(function(event) {
     if (logBoxOpened && event.keyCode == 27) {

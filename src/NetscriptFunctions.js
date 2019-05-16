@@ -120,11 +120,11 @@ import {
 } from "./NetscriptBladeburner";
 import * as nsGang from "./NetscriptGang";
 import {
-    workerScripts,
-    killWorkerScript,
     NetscriptPorts,
     runScriptFromScript,
 } from "./NetscriptWorker";
+import { killWorkerScript } from "./Netscript/killWorkerScript";
+import { workerScripts } from "./Netscript/WorkerScripts";
 import {
     makeRuntimeRejectMsg,
     netscriptDelay,

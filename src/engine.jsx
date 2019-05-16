@@ -1,3 +1,8 @@
+/**
+ * Game engine. Handles the main game loop as well as the main UI pages
+ *
+ * TODO: Separate UI functionality into its own component
+ */
 import {
     convertTimeMsToTimeElapsedString,
     replaceAt

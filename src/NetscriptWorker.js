@@ -3,6 +3,7 @@
  * that allows for scripts to run
  */
 import { WorkerScript } from "./Netscript/WorkerScript";
+import { workerScripts } from "./Netscript/WorkerScripts";
 
 import {
     addActiveScriptsItem,
@@ -15,7 +16,6 @@ import { Interpreter } from "./JSInterpreter";
 import {
     isScriptErrorMessage,
     makeRuntimeRejectMsg,
-    killNetscriptDelay
 } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
@@ -29,6 +29,7 @@ import {
 } from "./Script/ScriptHelpers";
 import { AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
+import { EventEmitter } from "./utils/EventEmitter";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { generate } from "escodegen";
@@ -42,13 +43,14 @@ import { isString } from "../utils/StringHelperFunctions";
 
 const walk  = require("acorn/dist/walk");
 
-//Array containing all scripts that are running across all servers, to easily run them all
-export const workerScripts = [];
-
+// Netscript Ports are instantiated here
 export const NetscriptPorts = [];
 for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
     NetscriptPorts.push(new NetscriptPort());
 }
+
+// WorkerScript-related event emitter. Used for the UI
+export const WorkerScriptEventEmitter = new EventEmitter();
 
 export function prestigeWorkerScripts() {
     for (var i = 0; i < workerScripts.length; ++i) {
@@ -415,46 +417,6 @@ function processNetscript1Imports(code, workerScript) {
 
 // Loop through workerScripts and run every script that is not currently running
 export function runScriptsLoop() {
-    let scriptDeleted = false;
-
-    // Delete any scripts that finished or have been killed. Loop backwards bc removing items screws up indexing
-    for (let i = workerScripts.length - 1; i >= 0; i--) {
-        if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
-            scriptDeleted = true;
-            // Delete script from the runningScripts array on its host serverIp
-            const ip = workerScripts[i].serverIp;
-            const name = workerScripts[i].name;
-
-            // Recalculate ram used
-            AllServers[ip].ramUsed = 0;
-            for (let j = 0; j < workerScripts.length; j++) {
-                if (workerScripts[j].serverIp !== ip) {
-                    continue;
-                }
-                if (j === i) { // not this one
-                    continue;
-                }
-                AllServers[ip].ramUsed += workerScripts[j].ramUsage;
-            }
-
-            // Delete script from Active Scripts
-            deleteActiveScriptsItem(workerScripts[i]);
-
-            for (let j = 0; j < AllServers[ip].runningScripts.length; j++) {
-                if (AllServers[ip].runningScripts[j].filename == name &&
-                    compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
-                    AllServers[ip].runningScripts.splice(j, 1);
-                    break;
-                }
-            }
-
-            // Delete script from workerScripts
-            workerScripts.splice(i, 1);
-        }
-    }
-    if (scriptDeleted) { updateActiveScriptsItems(); } // Force Update
-
-
 	// Run any scripts that haven't been started
 	for (let i = 0; i < workerScripts.length; i++) {
 		// If it isn't running, start the script
@@ -518,24 +480,6 @@ export function runScriptsLoop() {
 	}
 
 	setTimeoutRef(runScriptsLoop, 3e3);
-}
-
-/**
- * Queues a script to be killed by setting its stop flag to true. This
- * kills and timed/blocking Netscript functions (like hack(), sleep(), etc.) and
- * prevents any further execution of Netscript functions.
- * The runScriptsLoop() handles the actual deletion of the WorkerScript
- */
-export function killWorkerScript(runningScriptObj, serverIp) {
-	for (var i = 0; i < workerScripts.length; i++) {
-		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
-            compareArrays(workerScripts[i].args, runningScriptObj.args)) {
-			workerScripts[i].env.stopFlag = true;
-            killNetscriptDelay(workerScripts[i]);
-            return true;
-		}
-	}
-    return false;
 }
 
 /**
