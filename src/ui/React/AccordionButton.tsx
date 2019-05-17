@@ -1,10 +1,11 @@
 /**
- * Basic stateless button
- * Uses the 'std-button' css class
+ * Basic stateless button that uses the 'accordion-button' css class.
+ * This class has a black background so that it does not clash with the default
+ * accordion coloring
  */
 import * as React from "react";
 
-interface IStdButtonProps {
+interface IProps {
     addClasses?: string;
     disabled?: boolean;
     id?: string;
@@ -18,9 +19,11 @@ type IInnerHTMLMarkup = {
     __html: string;
 }
 
-export function StdButton(props: IStdButtonProps): React.ReactElement {
+export function AccordionButton(props: IProps): React.ReactElement {
     const hasTooltip = props.tooltip != null && props.tooltip !== "";
-    let className = props.disabled ? "std-button-disabled" : "std-button";
+
+    // TODO Add a disabled class for accordion buttons?
+    let className = "accordion-button";
     if (hasTooltip) {
         className += " tooltip";
     }

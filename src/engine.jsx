@@ -1,29 +1,26 @@
+/**
+ * Game engine. Handles the main game loop as well as the main UI pages
+ *
+ * TODO: Separate UI functionality into its own component
+ */
 import {
-    formatNumber,
     convertTimeMsToTimeElapsedString,
     replaceAt
 } from "../utils/StringHelperFunctions";
-import { loxBoxCreate, logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
-import { updateActiveScriptsItems } from "./ActiveScriptsUI";
+import { logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
-    installAugmentations,
     initAugmentations,
     displayAugmentationsContent,
-    PlayerOwnedAugmentation
 } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-
 import {
-    BitNodes,
-    initBitNodes,
     initBitNodeMultipliers
 } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner";
 import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
 import { cinematicTextFlag } from "./CinematicText";
 import { generateRandomContract } from "./CodingContractGenerator";
-import { CompanyPositions } from "./Company/CompanyPositions";
 import { initCompanies } from "./Company/Companies";
 import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
@@ -48,46 +45,36 @@ import { LocationName } from "./Locations/data/LocationNames";
 import { LocationRoot } from "./Locations/ui/Root";
 import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
 import { inMission, currMission } from "./Missions";
+import { workerScripts } from "./Netscript/WorkerScripts";
 import {
     loadAllRunningScripts,
-    runScriptsLoop,
     updateOnlineScriptTimes,
 } from "./NetscriptWorker";
 import { Player } from "./Player";
-import { prestigeAugmentation, prestigeSourceFile } from "./Prestige";
-import { Programs } from "./Programs/Programs";
+import { prestigeAugmentation } from "./Prestige";
 import {
     displayCreateProgramContent,
     getNumAvailableCreateProgram,
     initCreateProgramButtons
 } from "./Programs/ProgramHelpers";
-import { redPillFlag, hackWorldDaemon } from "./RedPill";
+import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
 import {
     getCurrentEditor,
     scriptEditorInit,
     updateScriptEditorContent
 } from "./Script/ScriptHelpers";
-import { AllServers, initForeignServers } from "./Server/AllServers";
-
-import { Server } from "./Server/Server";
+import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { initSourceFiles, SourceFiles } from "./SourceFile";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
+import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import {
-    SpecialServerIps,
-    initSpecialServerIps
-} from "./Server/SpecialServerIps";
-import {
-    StockMarket,
-    SymbolToStockMap,
     initSymbolToStockMap,
     stockMarketCycle,
     processStockPrices,
     displayStockMarketContent
 } from "./StockMarket/StockMarket";
 import { Terminal, postNetburnerText } from "./Terminal";
-
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import {
     clearSleevesPage,
@@ -104,14 +91,14 @@ import { displayCharacterInfo } from "./ui/displayCharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { setSettingsLabels } from "./ui/setSettingsLabels";
+
+import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
 import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
-import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
@@ -278,7 +265,10 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
         routing.navigateTo(Page.ActiveScripts);
-        updateActiveScriptsItems();
+        ReactDOM.render(
+            <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
+            Engine.Display.activeScriptsContent
+        )
         MainMenuLinks.ActiveScripts.classList.add("active");
     },
 
@@ -315,8 +305,8 @@ const Engine = {
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
-        displayAugmentationsContent(Engine.Display.augmentationsContent);
         routing.navigateTo(Page.Augmentations);
+        displayAugmentationsContent(Engine.Display.augmentationsContent);
         MainMenuLinks.Augmentations.classList.add("active");
     },
 
@@ -490,16 +480,26 @@ const Engine = {
         Engine.Display.terminalContent.style.display = "none";
         Engine.Display.characterContent.style.display = "none";
         Engine.Display.scriptEditorContent.style.display = "none";
+
         Engine.Display.activeScriptsContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);
+
         clearHacknetNodesUI();
         Engine.Display.createProgramContent.style.display = "none";
+
         Engine.Display.factionsContent.style.display = "none";
-        ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
+
         Engine.Display.factionContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
+
         Engine.Display.augmentationsContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.augmentationsContent);
+
         Engine.Display.tutorialContent.style.display = "none";
+
         Engine.Display.locationContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
+
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
         Engine.Display.cinematicTextContent.style.display = "none";
@@ -814,13 +814,14 @@ const Engine = {
         }
 
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
-            // Always update, but make the interval longer if the page isn't active
-            updateActiveScriptsItems();
             if (routing.isOn(Page.ActiveScripts)) {
-                Engine.Counters.updateActiveScriptsDisplay = 5;
-            } else {
-                Engine.Counters.updateActiveScriptsDisplay = 10;
+                ReactDOM.render(
+                    <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
+                    Engine.Display.activeScriptsContent
+                )
             }
+
+            Engine.Counters.updateActiveScriptsDisplay = 5;
         }
 
         if (Engine.Counters.updateDisplays <= 0) {
@@ -1043,9 +1044,7 @@ const Engine = {
 
         // Load game from save or create new game
         if (loadGame(saveString)) {
-            initBitNodes();
             initBitNodeMultipliers(Player);
-            initSourceFiles();
             Engine.setDisplayElements();    // Sets variables for important DOM elements
             Engine.init();                  // Initialize buttons, work, etc.
             initAugmentations();            // Also calls Player.reapplyAllAugmentations()
@@ -1166,9 +1165,7 @@ const Engine = {
         } else {
             // No save found, start new game
             console.log("Initializing new game");
-            initBitNodes();
             initBitNodeMultipliers(Player);
-            initSourceFiles();
             initSpecialServerIps();
             Engine.setDisplayElements(); // Sets variables for important DOM elements
             Engine.start(); // Run main game loop and Scripts loop
@@ -1531,9 +1528,6 @@ const Engine = {
     start: function() {
         // Run main loop
         Engine.idleTimer();
-
-        // Script-processing loop
-        runScriptsLoop();
     }
 };
 

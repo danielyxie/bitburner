@@ -5,7 +5,7 @@ import { BitNodes } from "./BitNode/BitNode";
 import { Engine } from "./engine";
 import { Player } from "./Player";
 import { prestigeSourceFile } from "./Prestige";
-import { SourceFiles, SourceFile } from "./SourceFile";
+import { SourceFiles } from "./SourceFile/SourceFiles";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { Terminal } from "./Terminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
@@ -19,9 +19,6 @@ import {
 } from "../utils/YesNoBox";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
-
-
-
 
 // Returns promise
 function writeRedPillLine(line) {

@@ -1,5 +1,7 @@
-// Class representing a Script instance that is actively running.
-// A Script can have multiple active instances
+/**
+ * Class representing a Script instance that is actively running.
+ * A Script can have multiple active instances
+ */
 import { Script } from "./Script";
 import { FconfSettings } from "../Fconf/FconfSettings";
 import { Settings } from "../Settings/Settings";
@@ -22,10 +24,8 @@ export class RunningScript {
     // Script arguments
     args: any[] = [];
 
-    // Holds a map of servers hacked, where server = key and the value for each
-    // server is an array of four numbers. The four numbers represent:
-    //  [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-    // This data is used for offline progress
+    // Map of [key: server ip] -> Hacking data. Used for offline progress calculations.
+    // Hacking data format: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
     dataMap: IMap<number[]> = {};
 
     // Script filename

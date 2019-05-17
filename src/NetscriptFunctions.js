@@ -3,7 +3,6 @@ const vsprintf = require("sprintf-js").vsprintf;
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
 
-import { updateActiveScriptsItems } from "./ActiveScriptsUI";
 import { Augmentation } from "./Augmentation/Augmentation";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
@@ -120,11 +119,11 @@ import {
 } from "./NetscriptBladeburner";
 import * as nsGang from "./NetscriptGang";
 import {
-    workerScripts,
-    killWorkerScript,
     NetscriptPorts,
     runScriptFromScript,
 } from "./NetscriptWorker";
+import { killWorkerScript } from "./Netscript/killWorkerScript";
+import { workerScripts } from "./Netscript/WorkerScripts";
 import {
     makeRuntimeRejectMsg,
     netscriptDelay,
