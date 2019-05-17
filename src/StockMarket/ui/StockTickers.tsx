@@ -53,6 +53,7 @@ export class StockTickers extends React.Component<IProps, IState> {
         this.changeWatchlistFilter = this.changeWatchlistFilter.bind(this);
         this.collapseAllTickers = this.collapseAllTickers.bind(this);
         this.expandAllTickers = this.expandAllTickers.bind(this);
+        this.rerender = this.rerender.bind(this);
 
         this.listRef = React.createRef();
     }
@@ -159,6 +160,7 @@ export class StockTickers extends React.Component<IProps, IState> {
                         orders={orders}
                         p={this.props.p}
                         placeOrder={this.props.placeOrder}
+                        rerenderAllTickers={this.rerender}
                         sellStockLong={this.props.sellStockLong}
                         sellStockShort={this.props.sellStockShort}
                         stock={val}

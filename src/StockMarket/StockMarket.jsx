@@ -202,7 +202,7 @@ export function stockMarketCycle() {
         if (stock.b) { thresh = 0.4; }
         if (Math.random() < thresh) {
             stock.b = !stock.b;
-            if (stock.otlkMag < 10) { stock.otlkMag += 0.15; }
+            if (stock.otlkMag < 8) { stock.otlkMag += 0.1; }
         }
     }
 }
@@ -279,7 +279,8 @@ export function processStockPrices(numCycles=1) {
         }
 
         // Shares required for price movement gradually approaches max over time
-        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 5, stock.shareTxForMovement);
+        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovementUp + 5, stock.shareTxForMovement);
+        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovementDown + 5, stock.shareTxForMovement);
     }
 
     displayStockMarketContent();

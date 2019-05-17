@@ -125,7 +125,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
 
             // We only execute limit orders until the price fails to match the order condition
             const isLong = (order.pos === PositionTypes.Long);
-            const firstShares = Math.min(order.shares, stock.shareTxUntilMovement);
+            const firstShares = Math.min(order.shares, isLong ? stock.shareTxUntilMovementUp : stock.shareTxUntilMovementDown);
 
             // First transaction to trigger movement
             let res = (isLong ? buyStock(stock, firstShares, null, opts) : shortStock(stock, firstShares, null, opts));
@@ -173,7 +173,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
             if (totalShares === 0) {
                 return; // Player has no shares
             }
-            const firstShares = Math.min(totalShares, stock.shareTxUntilMovement);
+            const firstShares = Math.min(totalShares, isLong ? stock.shareTxUntilMovementDown : stock.shareTxUntilMovementUp);
 
             // First transaction to trigger movement
             if (isLong ? sellStock(stock, firstShares, null, opts) : sellShort(stock, firstShares, null, opts)) {
