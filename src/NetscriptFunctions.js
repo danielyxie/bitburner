@@ -3,7 +3,6 @@ const vsprintf = require("sprintf-js").vsprintf;
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
 
-import { updateActiveScriptsItems } from "./ActiveScriptsUI";
 import { Augmentation } from "./Augmentation/Augmentation";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {

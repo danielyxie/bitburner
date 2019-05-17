@@ -1,5 +1,5 @@
 /**
- * Function that stops an active script (represented by a WorkerScript object)
+ * Stops an actively-running script (represented by a WorkerScript object)
  * and removes it from the global pool of active scripts.
  */
 import { WorkerScript } from "./WorkerScript";
@@ -34,6 +34,8 @@ export function killWorkerScript(script: RunningScript | WorkerScript, serverIp?
 
         return false;
     } else {
+        console.error(`killWorkerScript() called with invalid argument:`);
+        console.error(script);
         return false;
     }
 }

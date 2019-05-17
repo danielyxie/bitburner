@@ -4,9 +4,14 @@
  */
 import * as React from "react";
 
+import { ScriptProduction } from "./ScriptProduction";
+import { ServerAccordions } from "./ServerAccordions";
+
 import { WorkerScript } from "../../Netscript/WorkerScript";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 type IProps = {
+    p: IPlayer;
     workerScripts: WorkerScript[];
 }
 
@@ -25,6 +30,8 @@ export class ActiveScriptsRoot extends React.Component<IProps, any> {
                     the servers on which they are running.
                 </p>
 
+                <ScriptProduction {...this.props} />
+                <ServerAccordions {...this.props} />
             </>
         )
     }

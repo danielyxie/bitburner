@@ -8,7 +8,6 @@ import {
     replaceAt
 } from "../utils/StringHelperFunctions";
 import { logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
-import { updateActiveScriptsItems } from "./ActiveScriptsUI";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
     initAugmentations,
@@ -48,7 +47,6 @@ import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
 import { inMission, currMission } from "./Missions";
 import {
     loadAllRunningScripts,
-    runScriptsLoop,
     updateOnlineScriptTimes,
 } from "./NetscriptWorker";
 import { Player } from "./Player";
@@ -1520,9 +1518,6 @@ const Engine = {
     start: function() {
         // Run main loop
         Engine.idleTimer();
-
-        // Script-processing loop
-        runScriptsLoop();
     }
 };
 
