@@ -57,7 +57,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
     if (totalPrice == null) { return false; }
     if (Player.money.lt(totalPrice)) {
         if (tixApi) {
-            workerScript!.log(`ERROR: buyStock() failed because you do not have enough money to purchase this potiion. You need ${numeralWrapper.formatMoney(totalPrice)}`);
+            workerScript!.log(`ERROR: buyStock() failed because you do not have enough money to purchase this position. You need ${numeralWrapper.formatMoney(totalPrice)}`);
         } else if (opts.suppressDialog !== true) {
             dialogBoxCreate(`You do not have enough money to purchase this. You need ${numeralWrapper.formatMoney(totalPrice)}`);
         }

@@ -4,7 +4,7 @@ getStockSaleGain() Netscript Function
 .. js:function:: getStockSaleGain(sym, shares, posType)
 
     :param string sym: Stock symbol
-    :param number shares: Number of shares to purchase
+    :param number shares: Number of shares to sell
     :param string posType: Specifies whether the order is a "Long" or "Short" position.
                            The values "L" or "S" can also be used.
     :RAM cost: 2 GB

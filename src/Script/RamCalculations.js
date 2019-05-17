@@ -1,4 +1,10 @@
-// Calculate a script's RAM usage
+/**
+ * Implements RAM Calculation functionality.
+ *
+ * Uses the acorn.js library to parse a script's code into an AST and
+ * recursively walk through that AST, calculating RAM usage along
+ * the way
+ */
 import * as walk from "acorn-walk";
 
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
@@ -15,19 +21,26 @@ const specialReferenceWHILE = "__SPECIAL_referenceWhile";
 // The global scope of a script is registered under this key during parsing.
 const memCheckGlobalKey = ".__GLOBAL__";
 
-// Calcluates the amount of RAM a script uses. Uses parsing and AST walking only,
-// rather than NetscriptEvaluator. This is useful because NetscriptJS code does
-// not work under NetscriptEvaluator.
+/**
+ * Parses code into an AST and walks through it recursively to calculate
+ * RAM usage. Also accounts for imported modules.
+ * @param {Script[]} otherScripts - All other scripts on the server. Used to account for imported scripts
+ * @param {string} codeCopy - The code being parsed
+ * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
+ *                                      keep track of what functions have/havent been accounted for
+ */
 async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
     try {
-        // Maps dependent identifiers to their dependencies.
-        //
-        // The initial identifier is __SPECIAL_INITIAL_MODULE__.__GLOBAL__.
-        // It depends on all the functions declared in the module, all the global scopes
-        // of its imports, and any identifiers referenced in this global scope. Each
-        // function depends on all the identifiers referenced internally.
-        // We walk the dependency graph to calculate RAM usage, given that some identifiers
-        // reference Netscript functions which have a RAM cost.
+        /**
+         * Maps dependent identifiers to their dependencies.
+         *
+         * The initial identifier is __SPECIAL_INITIAL_MODULE__.__GLOBAL__.
+         * It depends on all the functions declared in the module, all the global scopes
+         * of its imports, and any identifiers referenced in this global scope. Each
+         * function depends on all the identifiers referenced internally.
+         * We walk the dependency graph to calculate RAM usage, given that some identifiers
+         * reference Netscript functions which have a RAM cost.
+         */
         let dependencyMap = {};
 
         // Scripts we've parsed.
@@ -48,19 +61,20 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                 }
             }
 
-            // Splice all the references in.
-            //Spread syntax not supported in edge, use Object.assign instead
-            //dependencyMap = {...dependencyMap, ...result.dependencyMap};
+            // Splice all the references in
             dependencyMap = Object.assign(dependencyMap, result.dependencyMap);
         }
 
+        // Parse the initial module, which is the "main" script that is being run
         const initialModule = "__SPECIAL_INITIAL_MODULE__";
         parseCode(code, initialModule);
 
+        // Process additional modules, which occurs if the "main" script has any imports
         while (parseQueue.length > 0) {
-            // Get the code from the server.
             const nextModule = parseQueue.shift();
 
+            // Additional modules can either be imported from the web (in which case we use
+            // a dynamic import), or from other in-game scripts
             let code;
             if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) {
                 try {
@@ -91,7 +105,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                 }
 
                 if (script == null) {
-                    return RamCalculationErrorCode.ImportError;  // No such script on the server
+                    return RamCalculationErrorCode.ImportError; // No such script on the server
                 }
 
                 code = script.code;
@@ -136,10 +150,8 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                 }
             }
 
-            // Check if this identifier is a function in the workerscript env.
+            // Check if this identifier is a function in the workerScript environment.
             // If it is, then we need to get its RAM cost.
-            //
-            // TODO it would be simpler to just reference a dictionary.
             try {
                 function applyFuncRam(func) {
                     if (typeof func === "function") {
@@ -170,7 +182,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                     workerScript.loadedFns[ref] = true;
                 }
 
-                // This accounts for namespaces (Bladeburner, CodingCOntract)
+                // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
                 let func;
                 if (ref in workerScript.env.vars.bladeburner) {
                     func = workerScript.env.vars.bladeburner[ref];
@@ -196,9 +208,12 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
     }
 }
 
-// Parses one script and calculates its ram usage, for the global scope and each function.
-// Returns a cost map and a dependencyMap for the module. Returns a reference map to be joined
-// onto the main reference map, and a list of modules that need to be parsed.
+/**
+ * Helper function that parses a single script. It returns a map of all dependencies,
+ * which are items in the code's AST that potentially need to be evaluated
+ * for RAM usage calculations. It also returns an array of additional modules
+ * that need to be parsed (i.e. are 'import'ed scripts).
+ */
 function parseOnlyCalculateDeps(code, currentModule) {
     const ast = parse(code, {sourceType:"module", ecmaVersion: 8});
 
@@ -296,6 +311,12 @@ function parseOnlyCalculateDeps(code, currentModule) {
     return {dependencyMap: dependencyMap, additionalModules: additionalModules};
 }
 
+/**
+ * Calculate's a scripts RAM Usage
+ * @param {string} codeCopy - The script's code
+ * @param {Script[]} otherScripts - All other scripts on the server.
+ *                                  Used to account for imported scripts
+ */
 export async function calculateRamUsage(codeCopy, otherScripts) {
     // We don't need a real WorkerScript for this. Just an object that keeps
     // track of whatever's needed for RAM calculations

@@ -1,3 +1,13 @@
+/**
+ * Generic helper/utility functions for the Hacknet mechanic:
+ *  - Purchase nodes/upgrades
+ *  - Calculating maximum number of upgrades
+ *  - Processing Hacknet earnings
+ *  - Updating Hash Manager capacity
+ *  - Purchasing hash upgrades
+ *
+ * TODO Should probably split the different types of functions into their own modules
+ */
 import {
     HacknetNode,
     BaseCostForHacknetNode,
@@ -26,7 +36,7 @@ import {
     ITutorial
 } from "../InteractiveTutorial";
 import { Player } from "../Player";
-import { AddToAllServers, AllServers } from "../Server/AllServers";
+import { AllServers } from "../Server/AllServers";
 import { GetServerByHostname } from "../Server/ServerHelpers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { Page, routing } from "../ui/navigationTracking";
@@ -115,7 +125,7 @@ export function getCostOfNextHacknetServer() {
     return BaseCostForHacknetServer * Math.pow(mult, numOwned) * Player.hacknet_node_purchase_cost_mult;
 }
 
-//Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node
+// Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's level
 export function getMaxNumberLevelUpgrades(nodeObj, maxLevel) {
     if (maxLevel == null) {
         throw new Error(`getMaxNumberLevelUpgrades() called without maxLevel arg`);
@@ -149,6 +159,7 @@ export function getMaxNumberLevelUpgrades(nodeObj, maxLevel) {
     return 0;
 }
 
+// Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's RAM
 export function getMaxNumberRamUpgrades(nodeObj, maxLevel) {
     if (maxLevel == null) {
         throw new Error(`getMaxNumberRamUpgrades() called without maxLevel arg`);
@@ -177,6 +188,7 @@ export function getMaxNumberRamUpgrades(nodeObj, maxLevel) {
     return 0;
 }
 
+// Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's cores
 export function getMaxNumberCoreUpgrades(nodeObj, maxLevel) {
     if (maxLevel == null) {
         throw new Error(`getMaxNumberCoreUpgrades() called without maxLevel arg`);
@@ -193,7 +205,7 @@ export function getMaxNumberCoreUpgrades(nodeObj, maxLevel) {
         return levelsToMax;
     }
 
-    //Use a binary search to find the max possible number of upgrades
+    // Use a binary search to find the max possible number of upgrades
     while (min <= max) {
         let curr = (min + max) / 2 | 0;
         if (curr != maxLevel &&
@@ -212,6 +224,7 @@ export function getMaxNumberCoreUpgrades(nodeObj, maxLevel) {
     return 0;
 }
 
+// Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's cache
 export function getMaxNumberCacheUpgrades(nodeObj, maxLevel) {
     if (maxLevel == null) {
         throw new Error(`getMaxNumberCacheUpgrades() called without maxLevel arg`);

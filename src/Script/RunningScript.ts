@@ -69,22 +69,20 @@ export class RunningScript {
         if (script == null) { return; }
         this.filename   = script.filename;
         this.args       = args;
-
-        this.server     = script.server;    //IP Address only
+        this.server     = script.server;
         this.ramUsage   = script.ramUsage;
     }
 
     log(txt: string): void {
         if (this.logs.length > Settings.MaxLogCapacity) {
-            //Delete first element and add new log entry to the end.
-            //TODO Eventually it might be better to replace this with circular array
-            //to improve performance
             this.logs.shift();
         }
+
         let logEntry = txt;
         if (FconfSettings.ENABLE_TIMESTAMPS) {
             logEntry = "[" + getTimestamp() + "] " + logEntry;
         }
+
         this.logs.push(logEntry);
         this.logUpd = true;
     }

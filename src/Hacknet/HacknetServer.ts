@@ -176,33 +176,28 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
         return totalCost;
     }
 
-    // Process this Hacknet Server in the game loop.
-    // Returns the number of hashes generated
+    // Process this Hacknet Server in the game loop. Returns the number of hashes generated
     process(numCycles: number=1): number {
         const seconds = numCycles * CONSTANTS.MilliPerCycle / 1000;
 
         return this.hashRate * seconds;
     }
 
-    // Returns a boolean indicating whether the cache was successfully upgraded
     upgradeCache(levels: number): void {
         this.cache = Math.min(HacknetServerMaxCache, Math.round(this.cache + levels));
         this.updateHashCapacity();
     }
 
-    // Returns a boolean indicating whether the number of cores was successfully upgraded
     upgradeCore(levels: number, prodMult: number): void {
         this.cores = Math.min(HacknetServerMaxCores, Math.round(this.cores + levels));
         this.updateHashRate(prodMult);
     }
 
-    // Returns a boolean indicating whether the level was successfully upgraded
     upgradeLevel(levels: number, prodMult: number): void {
         this.level = Math.min(HacknetServerMaxLevel, Math.round(this.level + levels));
         this.updateHashRate(prodMult);
     }
 
-    // Returns a boolean indicating whether the RAM was successfully upgraded
     upgradeRam(levels: number, prodMult: number): boolean {
         for (let i = 0; i < levels; ++i) {
             this.maxRam *= 2;
@@ -212,10 +207,8 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
         return true;
     }
-
-    /**
-     * Whenever a script is run, we must update this server's hash rate
-     */
+    
+    // Whenever a script is run, we must update this server's hash rate
     runScript(script: RunningScript, prodMult?: number): void {
         super.runScript(script);
         if (prodMult != null && typeof prodMult === "number") {
