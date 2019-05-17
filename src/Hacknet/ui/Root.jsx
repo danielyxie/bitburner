@@ -39,6 +39,8 @@ export class HacknetRoot extends React.Component {
         }
 
         this.createHashUpgradesPopup = this.createHashUpgradesPopup.bind(this);
+        this.handlePurchaseButtonClick = this.handlePurchaseButtonClick.bind(this);
+        this.recalculateTotalProduction = this.recalculateTotalProduction.bind(this);
     }
 
     componentDidMount() {
@@ -48,6 +50,12 @@ export class HacknetRoot extends React.Component {
     createHashUpgradesPopup() {
         const id = "hacknet-server-hash-upgrades-popup";
         createPopup(id, HashUpgradePopup, { popupId: id, rerender: this.createHashUpgradesPopup });
+    }
+
+    handlePurchaseButtonClick() {
+        if (purchaseHacknet() >= 0) {
+            this.recalculateTotalProduction();
+        }
     }
 
     recalculateTotalProduction() {
@@ -85,13 +93,6 @@ export class HacknetRoot extends React.Component {
             purchaseCost = getCostOfNextHacknetNode();
         }
 
-        // onClick event handler for purchase button
-        const purchaseOnClick = () => {
-            if (purchaseHacknet() >= 0) {
-                this.recalculateTotalProduction();
-            }
-        }
-
         // onClick event handlers for purchase multiplier buttons
         const purchaseMultiplierOnClicks = [
             this.setPurchaseMultiplier.bind(this, PurchaseMultipliers.x1),
@@ -112,7 +113,7 @@ export class HacknetRoot extends React.Component {
                         key={hserver.hostname}
                         node={hserver}
                         purchaseMultiplier={this.state.purchaseMultiplier}
-                        recalculate={this.recalculateTotalProduction.bind(this)}
+                        recalculate={this.recalculateTotalProduction}
                     />
                 )
             } else {
@@ -121,7 +122,7 @@ export class HacknetRoot extends React.Component {
                         key={node.name}
                         node={node}
                         purchaseMultiplier={this.state.purchaseMultiplier}
-                        recalculate={this.recalculateTotalProduction.bind(this)}
+                        recalculate={this.recalculateTotalProduction}
                     />
                 )
             }
@@ -132,7 +133,7 @@ export class HacknetRoot extends React.Component {
                 <h1>Hacknet Nodes</h1>
                 <GeneralInfo />
 
-                <PurchaseButton cost={purchaseCost} multiplier={this.state.purchaseMultiplier} onClick={purchaseOnClick} />
+                <PurchaseButton cost={purchaseCost} multiplier={this.state.purchaseMultiplier} onClick={this.handlePurchaseButtonClick} />
 
                 <br />
                 <div id={"hacknet-nodes-money-multipliers-div"}>

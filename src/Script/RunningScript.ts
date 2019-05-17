@@ -1,16 +1,17 @@
 // Class representing a Script instance that is actively running.
 // A Script can have multiple active instances
-import { Script }           from "./Script";
-import { FconfSettings }    from "../Fconf/FconfSettings";
-import { AllServers }       from "../Server/AllServers";
-import { Settings }         from "../Settings/Settings";
-import { IMap }             from "../types";
-import { post }             from "../ui/postToTerminal";
+import { Script } from "./Script";
+import { FconfSettings } from "../Fconf/FconfSettings";
+import { Settings } from "../Settings/Settings";
+import { IMap } from "../types";
+import { post } from "../ui/postToTerminal";
 
-import { Generic_fromJSON,
-         Generic_toJSON,
-         Reviver }          from "../../utils/JSONReviver";
-import { getTimestamp }     from "../../utils/helpers/getTimestamp";
+import {
+    Generic_fromJSON,
+    Generic_toJSON,
+    Reviver
+} from "../../utils/JSONReviver";
+import { getTimestamp } from "../../utils/helpers/getTimestamp";
 
 export class RunningScript {
     // Initializes a RunningScript Object from a JSON save state
@@ -71,35 +72,6 @@ export class RunningScript {
 
         this.server     = script.server;    //IP Address only
         this.ramUsage   = script.ramUsage;
-    }
-
-    getCode(): string {
-        const server = AllServers[this.server];
-        if (server == null) { return ""; }
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === this.filename) {
-                return server.scripts[i].code;
-            }
-        }
-
-        return "";
-    }
-
-    getRamUsage(): number {
-        if (this.ramUsage != null && this.ramUsage > 0) { return this.ramUsage; } // Use cached value
-
-        const server = AllServers[this.server];
-        if (server == null) { return 0; }
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === this.filename) {
-                // Cache the ram usage for the next call
-                this.ramUsage = server.scripts[i].ramUsage;
-                return this.ramUsage;
-            }
-        }
-
-
-        return 0;
     }
 
     log(txt: string): void {

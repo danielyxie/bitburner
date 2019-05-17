@@ -101,9 +101,12 @@ export function generateResleeves(): Resleeve[] {
             // Get a random aug
             const randIndex: number = getRandomInt(0, augKeys.length - 1)
             const randKey: string = augKeys[randIndex];
-            if (randKey === AugmentationNames.TheRedPill) {
-                continue; // A sleeve can't have The Red Pill
+
+            // Forbidden augmentations
+            if (randKey === AugmentationNames.TheRedPill || randKey === AugmentationNames.NeuroFluxGovernor) {
+                continue;
             }
+            
             const randAug: Augmentation | null = Augmentations[randKey];
             r.augmentations.push({name: randAug!.name, level: 1});
             r.applyAugmentation(Augmentations[randKey]);

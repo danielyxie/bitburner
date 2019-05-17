@@ -14,8 +14,6 @@ import { Person,
          createTaskTracker } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
@@ -882,34 +880,6 @@ export class Sleeve extends Person {
     toJSON(): any {
         return Generic_toJSON("Sleeve", this);
     }
-}
-
-export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
-    // You can only purchase Augmentations that are actually available from
-    // your factions. I.e. you must be in a faction that has the Augmentation
-    // and you must also have enough rep in that faction in order to purchase it.
-
-    const ownedAugNames: string[] = sleeve.augmentations.map((e) => {return e.name});
-    const availableAugs: Augmentation[] = [];
-
-    for (const facName of p.factions) {
-        if (facName === "Bladeburners") { continue; }
-        if (facName === "Netburners") { continue; }
-        const fac: Faction | null = Factions[facName];
-        if (fac == null) { continue; }
-
-        for (const augName of fac.augmentations) {
-            if (augName === AugmentationNames.NeuroFluxGovernor) { continue; }
-            if (ownedAugNames.includes(augName)) { continue; }
-            const aug: Augmentation | null = Augmentations[augName];
-
-            if (fac.playerReputation > aug.baseRepRequirement && !availableAugs.includes(aug)) {
-                availableAugs.push(aug);
-            }
-        }
-    }
-
-    return availableAugs;
 }
 
 Reviver.constructors.Sleeve = Sleeve;

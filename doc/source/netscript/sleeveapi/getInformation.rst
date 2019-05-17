@@ -61,5 +61,5 @@ getInformation() Netscript Function
                 workChaExpGain:  charisma exp gained from work,
                 workMoneyGain:   money gained from work,
         },
-        workRepGain:     sl.getRepGain(),
+        workRepGain: Reputation gain rate when working for factions or companies
     }

@@ -14,7 +14,7 @@ export let yesNoBoxOpen: boolean = false;
 const yesNoBoxContainer: HTMLElement | null = document.getElementById("yes-no-box-container");
 const yesNoBoxTextElement: HTMLElement | null = document.getElementById("yes-no-box-text");
 
-export function yesNoBoxHotkeyHandler(e: KeyboardEvent) {
+function yesNoBoxHotkeyHandler(e: KeyboardEvent) {
     if (e.keyCode === KEY.ESC) {
         yesNoBoxClose();
     } else if (e.keyCode === KEY.ENTER) {

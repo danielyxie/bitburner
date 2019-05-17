@@ -2,14 +2,14 @@
 // This does NOT represent a script that is actively running and
 // being evaluated. See RunningScript for that
 import { calculateRamUsage } from "./RamCalculations";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Page,
-         routing } from "../ui/navigationTracking";
+import { Page, routing } from "../ui/navigationTracking";
 
 import { setTimeoutRef } from "../utils/SetTimeoutRef";
-import { Generic_fromJSON,
-         Generic_toJSON,
-         Reviver } from "../../utils/JSONReviver";
+import {
+    Generic_fromJSON,
+    Generic_toJSON,
+    Reviver
+} from "../../utils/JSONReviver";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
 export class Script {
@@ -35,13 +35,13 @@ export class Script {
 	server: string = "";
 
 
-    constructor(fn: string = "", code: string = "", server: string = "") {
+    constructor(fn: string="", code: string="", server: string="", otherScripts: Script[]=[]) {
     	this.filename 	= fn;
         this.code       = code;
         this.ramUsage   = 0;
     	this.server 	= server; // IP of server this script is on
         this.module     = "";
-        if (this.code !== "") {this.updateRamUsage();}
+        if (this.code !== "") { this.updateRamUsage(otherScripts); }
     };
 
     download(): void {
@@ -64,7 +64,7 @@ export class Script {
     }
 
     // Save a script FROM THE SCRIPT EDITOR
-    saveScript(code: string, p: IPlayer): void {
+    saveScript(code: string, serverIp: string, otherScripts: Script[]): void {
     	if (routing.isOn(Page.ScriptEditor)) {
     		//Update code and filename
     		this.code = code.replace(/^\s+|\s+$/g, '');
@@ -77,22 +77,19 @@ export class Script {
     		this.filename = filenameElem!.value;
 
     		// Server
-    		this.server = p.currentServer;
+    		this.server = serverIp;
 
     		//Calculate/update ram usage, execution time, etc.
-    		this.updateRamUsage();
+    		this.updateRamUsage(otherScripts);
 
             this.module = "";
     	}
     }
 
     // Updates the script's RAM usage based on its code
-    async updateRamUsage() {
-        // TODO Commented this out because I think its unnecessary
-        // DOuble check/Test
-        // var codeCopy = this.code.repeat(1);
-        var res = await calculateRamUsage(this.code);
-        if (res !== -1) {
+    async updateRamUsage(otherScripts: Script[]) {
+        var res = await calculateRamUsage(this.code, otherScripts);
+        if (res > 0) {
             this.ramUsage = roundToTwo(res);
         }
     }

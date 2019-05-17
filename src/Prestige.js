@@ -16,14 +16,10 @@ import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { deleteGangDisplayContent } from "./Gang";
+import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
 import { Message } from "./Message/Message";
 import { initMessages, Messages } from "./Message/MessageHelpers";
-import { initSingularitySFFlags, hasWallStreetSF } from "./NetscriptFunctions";
-import {
-    WorkerScript,
-    workerScripts,
-    prestigeWorkerScripts
-} from "./NetscriptWorker";
+import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 
 import {
@@ -45,10 +41,9 @@ import {
     SpecialServerNames
 } from "./Server/SpecialServerIps";
 import {
+    deleteStockMarket,
     initStockMarket,
     initSymbolToStockMap,
-    stockMarketContentCreated,
-    setStockMarketContentCreated
 } from "./StockMarket/StockMarket";
 import { Terminal, postNetburnerText } from "./Terminal";
 
@@ -102,7 +97,7 @@ function prestigeAugmentation() {
     }
     if (augmentationExists(AugmentationNames.CashRoot) &&
         Augmentations[AugmentationNames.CashRoot].owned) {
-        Player.setMoney(new Decimal(1000000));
+        Player.setMoney(1e6);
         homeComp.programs.push(Programs.BruteSSHProgram.name);
     }
 
@@ -153,7 +148,7 @@ function prestigeAugmentation() {
 
     // BitNode 8: Ghost of Wall Street
     if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
-    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+    if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
     }
@@ -163,13 +158,6 @@ function prestigeAugmentation() {
         initStockMarket();
         initSymbolToStockMap();
     }
-    setStockMarketContentCreated(false);
-    var stockMarketList = document.getElementById("stock-market-list");
-    while(stockMarketList.firstChild) {
-        stockMarketList.removeChild(stockMarketList.firstChild);
-    }
-    var watchlist = document.getElementById("stock-market-watchlist-filter");
-    watchlist.value = ""; // Reset watchlist filter
 
     // Refresh Main Menu (the 'World' menu, specifically)
     document.getElementById("world-menu-header").click();
@@ -265,9 +253,6 @@ function prestigeSourceFile() {
     Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
 
-    // Reinitialize Bit Node flags
-    initSingularitySFFlags();
-
     // BitNode 3: Corporatocracy
     if (Player.bitNodeN === 3) {
         homeComp.messages.push("corporation-management-handbook.lit");
@@ -321,7 +306,7 @@ function prestigeSourceFile() {
 
     // BitNode 8: Ghost of Wall Street
     if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
-    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+    if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
     }
@@ -335,11 +320,8 @@ function prestigeSourceFile() {
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
-    }
-    setStockMarketContentCreated(false);
-    var stockMarketList = document.getElementById("stock-market-list");
-    while(stockMarketList.firstChild) {
-        stockMarketList.removeChild(stockMarketList.firstChild);
+    } else {
+        deleteStockMarket();
     }
 
     if (Player.inGang()) { Player.gang.clearUI(); }
@@ -354,9 +336,9 @@ function prestigeSourceFile() {
         hserver.level = 100;
         hserver.cores = 10;
         hserver.cache = 5;
-        hserver.updateHashRate(Player);
+        hserver.updateHashRate(Player.hacknet_node_money_mult);
         hserver.updateHashCapacity();
-        Player.hashManager.updateCapacity(Player);
+        updateHashManagerCapacity();
     }
 
     // Refresh Main Menu (the 'World' menu, specifically)

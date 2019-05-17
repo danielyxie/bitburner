@@ -1,3 +1,4 @@
+import * as augmentationMethods from "./PlayerObjectAugmentationMethods";
 import * as bladeburnerMethods from "./PlayerObjectBladeburnerMethods";
 import * as corporationMethods from "./PlayerObjectCorporationMethods";
 import * as gangMethods from "./PlayerObjectGangMethods";
@@ -209,7 +210,8 @@ Object.assign(
     serverMethods,
     bladeburnerMethods,
     corporationMethods,
-    gangMethods
+    gangMethods,
+    augmentationMethods
 );
 
 PlayerObject.prototype.toJSON = function() {

@@ -4,14 +4,23 @@
  */
 import React from "react";
 
-import { HacknetServerMaxLevel,
-         HacknetServerMaxRam,
-         HacknetServerMaxCores,
-         HacknetServerMaxCache } from "../HacknetServer";
-import { getMaxNumberLevelUpgrades,
-         getMaxNumberRamUpgrades,
-         getMaxNumberCoreUpgrades,
-         getMaxNumberCacheUpgrades } from "../HacknetHelpers";
+import {
+    HacknetServerMaxLevel,
+    HacknetServerMaxRam,
+    HacknetServerMaxCores,
+    HacknetServerMaxCache
+} from "../HacknetServer";
+import {
+    getMaxNumberLevelUpgrades,
+    getMaxNumberRamUpgrades,
+    getMaxNumberCoreUpgrades,
+    getMaxNumberCacheUpgrades,
+    purchaseLevelUpgrade,
+    purchaseRamUpgrade,
+    purchaseCoreUpgrade,
+    purchaseCacheUpgrade,
+    updateHashManagerCapacity,
+} from "../HacknetHelpers";
 
 import { Player } from "../../Player";
 
@@ -37,7 +46,7 @@ export class HacknetServer extends React.Component {
                 multiplier = Math.min(levelsToMax, purchaseMult);
             }
 
-            const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, Player);
+            const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, Player.hacknet_node_level_cost_mult);
             upgradeLevelText = `Upgrade x${multiplier} - ${numeralWrapper.formatMoney(upgradeLevelCost)}`;
             if (Player.money.lt(upgradeLevelCost)) {
                 upgradeLevelClass = "std-button-disabled";
@@ -50,7 +59,7 @@ export class HacknetServer extends React.Component {
             if (purchaseMult === "MAX") {
                 numUpgrades = getMaxNumberLevelUpgrades(node, HacknetServerMaxLevel);
             }
-            node.purchaseLevelUpgrade(numUpgrades, Player);
+            purchaseLevelUpgrade(node, numUpgrades);
             recalculate();
             return false;
         }
@@ -69,7 +78,7 @@ export class HacknetServer extends React.Component {
                 multiplier = Math.min(levelsToMax, purchaseMult);
             }
 
-            const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, Player);
+            const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, Player.hacknet_node_ram_cost_mult);
             upgradeRamText = `Upgrade x${multiplier} - ${numeralWrapper.formatMoney(upgradeRamCost)}`;
             if (Player.money.lt(upgradeRamCost)) {
                 upgradeRamClass = "std-button-disabled";
@@ -82,7 +91,7 @@ export class HacknetServer extends React.Component {
             if (purchaseMult === "MAX") {
                 numUpgrades = getMaxNumberRamUpgrades(node, HacknetServerMaxRam);
             }
-            node.purchaseRamUpgrade(numUpgrades, Player);
+            purchaseRamUpgrade(node, numUpgrades);
             recalculate();
             return false;
         }
@@ -101,7 +110,7 @@ export class HacknetServer extends React.Component {
                 multiplier = Math.min(levelsToMax, purchaseMult);
             }
 
-            const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, Player);
+            const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, Player.hacknet_node_core_cost_mult);
             upgradeCoresText = `Upgrade x${multiplier} - ${numeralWrapper.formatMoney(upgradeCoreCost)}`;
             if (Player.money.lt(upgradeCoreCost)) {
                 upgradeCoresClass = "std-button-disabled";
@@ -114,7 +123,7 @@ export class HacknetServer extends React.Component {
             if (purchaseMult === "MAX") {
                 numUpgrades = getMaxNumberCoreUpgrades(node, HacknetServerMaxCores);
             }
-            node.purchaseCoreUpgrade(numUpgrades, Player);
+            purchaseCoreUpgrade(node, numUpgrades);
             recalculate();
             return false;
         }
@@ -146,9 +155,9 @@ export class HacknetServer extends React.Component {
             if (purchaseMult === "MAX") {
                 numUpgrades = getMaxNumberCacheUpgrades(node, HacknetServerMaxCache);
             }
-            node.purchaseCacheUpgrade(numUpgrades, Player);
+            purchaseCacheUpgrade(node, numUpgrades);
             recalculate();
-            Player.hashManager.updateCapacity(Player);
+            updateHashManagerCapacity();
             return false;
         }
 

@@ -495,8 +495,6 @@ export class IndustryOffice extends BaseReactComponent {
                             <br />
                             Energy: {numeralWrapper.format(this.state.employee.ene, nf)}
                             <br />
-                            Age: {numeralWrapper.format(this.state.employee.age, nf)}
-                            <br />
                             Intelligence: {numeralWrapper.format(effInt, nf)}
                             <br />
                             Charisma: {numeralWrapper.format(effCha, nf)}

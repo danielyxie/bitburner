@@ -1,6 +1,6 @@
 /**
  * This is an object that is used to keep track of where all of the player's
- * money is coming from
+ * money is coming from (or going to)
  */
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
@@ -17,6 +17,7 @@ export class MoneySourceTracker {
     gang: number = 0;
     hacking: number = 0;
     hacknetnode: number = 0;
+    hospitalization: number = 0;
     infiltration: number = 0;
     stock: number = 0;
     total: number = 0;

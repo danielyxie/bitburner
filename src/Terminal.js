@@ -57,6 +57,7 @@ import { killWorkerScript, addWorkerScript } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";
+import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import { findRunningScript } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
 import { AllServers } from "./Server/AllServers";
@@ -1447,7 +1448,7 @@ let Terminal = {
 					let spacesThread = Array(numSpacesThread+1).join(" ");
 
 					// Calculate and transform RAM usage
-					let ramUsage = numeralWrapper.format(script.getRamUsage() * script.threads, '0.00') + " GB";
+					let ramUsage = numeralWrapper.format(getRamUsageFromRunningScript(script) * script.threads, '0.00') + " GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					post(entry.join(""));
@@ -1474,7 +1475,7 @@ let Terminal = {
                 }
 
                 let url = commandArray[1];
-                let target = commandArray[2];
+                let target = Terminal.getFilepath(commandArray[2]);
                 if (!isScriptFilename(target) && !target.endsWith(".txt")) {
                     return post(`wget failed: Invalid target file. Target file must be script or text file`);
                 }
@@ -2268,7 +2269,7 @@ let Terminal = {
 
                     // This has to come after addWorkerScript() because that fn
                     // updates the RAM usage. This kinda sucks, address if possible
-                    server.runScript(runningScriptObj, Player);
+                    server.runScript(runningScriptObj, Player.hacknet_node_money_mult);
 					return;
 				}
 			}

@@ -521,15 +521,18 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
     }
 
     // Process production, purchase, and import/export of materials
-    var res = this.processMaterials(marketCycles, company);
-    this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-    this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+    let res = this.processMaterials(marketCycles, company);
+    if (Array.isArray(res)) {
+        this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
+        this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+    }
 
     // Process creation, production & sale of products
     res = this.processProducts(marketCycles, company);
-    this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-    this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
-
+    if (Array.isArray(res)) {
+        this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
+        this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+    }
 }
 
 // Process change in demand and competition for this industry's materials
@@ -846,7 +849,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     sellAmt = (sellAmt * SecsPerMarketCycle * marketCycles);
                     sellAmt = Math.min(mat.qty, sellAmt);
                     if (sellAmt < 0) {
-                        console.log("sellAmt calculated to be negative");
+                        console.warn(`sellAmt calculated to be negative for ${matName} in ${city}`);
                         mat.sll = 0;
                         continue;
                     }
@@ -899,9 +902,11 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                         break;
                                     }
 
-                                    //Make sure theres enough space in warehouse
+                                    // Make sure theres enough space in warehouse
                                     if (expWarehouse.sizeUsed >= expWarehouse.size) {
-                                        return; //Warehouse at capacity
+                                        // Warehouse at capacity. Exporting doesnt
+                                        // affect revenue so just return 0's
+                                        return [0, 0];
                                     } else {
                                         var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / MaterialSizes[matName]);
                                         amt = Math.min(maxAmt, amt);
@@ -1463,7 +1468,6 @@ function Employee(params={}) {
     this.hap    = params.happiness      ? params.happiness      : getRandomInt(50, 100);
     this.ene    = params.energy         ? params.energy         : getRandomInt(50, 100);
 
-    this.age    = params.age            ? params.age            : getRandomInt(20, 50);
     this.int    = params.intelligence   ? params.intelligence   : getRandomInt(10, 50);
     this.cha    = params.charisma       ? params.charisma       : getRandomInt(10, 50);
     this.exp    = params.experience     ? params.experience     : getRandomInt(10, 50);
@@ -1482,13 +1486,7 @@ function Employee(params={}) {
 Employee.prototype.process = function(marketCycles=1, office) {
     var gain = 0.003 * marketCycles,
         det = gain * Math.random();
-    this.age += gain;
     this.exp += gain;
-    if (this.age > 150) {
-        this.int -= det;
-        this.eff -= det;
-        this.cha -= det;
-    }
 
     // Employee salaries slowly go up over time
     this.cyclesUntilRaise -= marketCycles;
@@ -1577,7 +1575,6 @@ Employee.prototype.createUI = function(panel, corporation, industry) {
         innerHTML:"Morale: " + formatNumber(this.mor, 3) + "<br>" +
                   "Happiness: " + formatNumber(this.hap, 3) + "<br>" +
                   "Energy: " + formatNumber(this.ene, 3) + "<br>" +
-                  "Age: " + formatNumber(this.age, 3) + "<br>" +
                   "Intelligence: " + formatNumber(effInt, 3) + "<br>" +
                   "Charisma: " + formatNumber(effCha, 3) + "<br>" +
                   "Experience: " + formatNumber(this.exp, 3) + "<br>" +

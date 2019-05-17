@@ -4,7 +4,7 @@
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
-export const SourceFileFlags: number[] = Array(CONSTANTS.TotalNumBitNodes + 1); // Skip 0
+export const SourceFileFlags: number[] = Array(CONSTANTS.TotalNumBitNodes + 1); // Skip index 0
 
 export function updateSourceFileFlags(p: IPlayer) {
     for (let i = 0; i < SourceFileFlags.length; ++i) {

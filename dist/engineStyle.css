@@ -1,48 +1,5 @@
 /* COLORS */
 /* Attributes */
-/**
- * Customized styling for the Code Mirror editor
- */
-#codemirror-form-wrapper {
-  height: 80%;
-  margin: 10px 0px 0px 6px; }
-
-.CodeMirror {
-  height: 100%;
-  width: 100%;
-  border: 2px solid var(--my-highlight-color);
-  z-index: 1;
-  font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman";
-  font-size: 16px; }
-
-/**
- * Highlight matches
- */
-.cm-matchhighlight {
-  background-color: #8F908A; }
-
-.CodeMirror-selection-highlight-scrollbar {
-  background-color: #8F908A; }
-
-/**
- * Show Invisibles
- */
-.cm-whitespace::before {
-  position: absolute;
-  pointer-events: none;
-  color: #404F7D; }
-
-/**
- * Vim command display
- */
-#codemirror-vim-command-display-wrapper {
-  background-color: white;
-  font-size: 13px;
-  height: 30px;
-  margin-left: 6px; }
-
-/* COLORS */
-/* Attributes */
 /* COLORS */
 /* Attributes */
 * {
@@ -936,6 +893,49 @@ button {
 /* COLORS */
 /* Attributes */
 /**
+ * Customized styling for the Code Mirror editor
+ */
+#codemirror-form-wrapper {
+  height: 80%;
+  margin: 10px 0px 0px 6px; }
+
+.CodeMirror {
+  height: 100%;
+  width: 100%;
+  border: 2px solid var(--my-highlight-color);
+  z-index: 1;
+  font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman";
+  font-size: 16px; }
+
+/**
+ * Highlight matches
+ */
+.cm-matchhighlight {
+  background-color: #8F908A; }
+
+.CodeMirror-selection-highlight-scrollbar {
+  background-color: #8F908A; }
+
+/**
+ * Show Invisibles
+ */
+.cm-whitespace::before {
+  position: absolute;
+  pointer-events: none;
+  color: #404F7D; }
+
+/**
+ * Vim command display
+ */
+#codemirror-vim-command-display-wrapper {
+  background-color: white;
+  font-size: 13px;
+  height: 30px;
+  margin-left: 6px; }
+
+/* COLORS */
+/* Attributes */
+/**
  * Styling for the Hacknet Nodes UI Page
  */
 #hacknet-nodes-container {
@@ -1313,25 +1313,30 @@ button {
     font-size: 13px; }
   #stock-market-container a {
     font-size: 14px; }
-  #stock-market-container h2 {
-    margin-top: 10px;
-    margin-left: 10px;
-    display: block; }
 
-#stock-market-list li button {
-  font-size: 16px; }
+.stock-market-info-and-purchases > h2 {
+  display: block;
+  margin-top: 10px;
+  margin-left: 10px; }
 
-#stock-market-container p {
-  padding: 6px;
-  margin: 6px;
+.stock-market-info-and-purchases > p {
+  display: block;
+  margin-left: 10px;
   width: 70%; }
 
-#stock-market-container a {
+.stock-market-info-and-purchases > a, .stock-market-info-and-purchases > button {
   margin: 10px; }
 
+#stock-market-list {
+  list-style: none; }
+  #stock-market-list li button {
+    font-size: 16px; }
+
 #stock-market-watchlist-filter {
-  width: 50%;
-  margin-left: 10px; }
+  display: block;
+  margin: 5px 5px 5px 10px;
+  padding: 4px;
+  width: 50%; }
 
 .stock-market-input {
   display: inline-block;
@@ -1341,13 +1346,28 @@ button {
   border: 1px solid #fff;
   color: var(--my-font-color); }
 
+.stock-market-price-movement-warning {
+  border: 1px solid white;
+  color: red;
+  margin: 2px;
+  padding: 2px; }
+
 .stock-market-position-text {
   color: #fff;
-  display: inline-block; }
+  display: block; }
+  .stock-market-position-text p {
+    color: #fff;
+    display: inline-block;
+    margin: 4px; }
+  .stock-market-position-text h3 {
+    margin: 4px; }
 
 .stock-market-order-list {
   overflow-y: auto;
   max-height: 100px; }
+  .stock-market-order-list li {
+    color: #fff;
+    padding: 4px; }
 
 .stock-market-order-cancel-btn {
   background-color: #000;
@@ -4866,4 +4886,4 @@ html {
   margin-right: 0px; }
 
 
-/*# sourceMappingURL=engine.css.map*/
+/*# sourceMappingURL=engineStyle.css.map*/

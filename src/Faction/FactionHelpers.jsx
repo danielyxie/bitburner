@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { FactionRoot } from "./ui/Root";
 
 import { Augmentations } from "../Augmentation/Augmentations";
+import { isRepeatableAug } from "../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -93,7 +94,12 @@ export function purchaseAugmentationBoxCreate(aug, fac) {
     const yesBtn = yesNoBoxGetYesButton();
     yesBtn.innerHTML = "Purchase";
     yesBtn.addEventListener("click", function() {
+        if (!isRepeatableAug(aug) && Player.hasAugmentation(aug)) {
+            return;
+        }
+
         purchaseAugmentation(aug, fac);
+        yesNoBoxClose();
     });
 
     const noBtn = yesNoBoxGetNoButton();
@@ -204,7 +210,6 @@ export function purchaseAugmentation(aug, fac, sing=false) {
                         "Please report this to the game developer with an explanation of how to " +
                         "reproduce this.");
     }
-    yesNoBoxClose();
 }
 
 export function getNextNeurofluxLevel() {

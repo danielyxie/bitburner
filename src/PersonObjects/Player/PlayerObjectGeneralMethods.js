@@ -1,60 +1,69 @@
-import { Augmentations }                        from "../../Augmentation/Augmentations";
-import { applyAugmentation }                    from "../../Augmentation/AugmentationHelpers";
-import { PlayerOwnedAugmentation }              from "../../Augmentation/PlayerOwnedAugmentation";
-import { AugmentationNames }                    from "../../Augmentation/data/AugmentationNames";
-import { BitNodeMultipliers }                   from "../../BitNode/BitNodeMultipliers";
-import { Bladeburner }                          from "../../Bladeburner";
-import { CodingContractRewardType }             from "../../CodingContracts";
-import { Company }                              from "../../Company/Company";
-import { Companies }                            from "../../Company/Companies";
-import { getNextCompanyPositionHelper }         from "../../Company/GetNextCompanyPosition";
-import { getJobRequirementText }                from "../../Company/GetJobRequirementText";
-import { CompanyPositions }                     from "../../Company/CompanyPositions";
-import * as posNames                            from "../../Company/data/companypositionnames";
-import {CONSTANTS}                              from "../../Constants";
-import { Corporation }                          from "../../Corporation/Corporation";
-import { Programs }                             from "../../Programs/Programs";
-import { determineCrimeSuccess }                from "../../Crime/CrimeHelpers";
-import { Crimes }                               from "../../Crime/Crimes";
-import {Engine}                                 from "../../engine";
-import { Faction }                              from "../../Faction/Faction";
-import { Factions }                             from "../../Faction/Factions";
-import { displayFactionContent }                from "../../Faction/FactionHelpers";
-import { resetGangs }                           from "../../Gang";
-import { hasHacknetServers }                    from "../../Hacknet/HacknetHelpers";
-import { HashManager }                          from "../../Hacknet/HashManager";
-import { Cities }                               from "../../Locations/Cities";
-import { Locations }                            from "../../Locations/Locations";
-import { CityName }                             from "../../Locations/data/CityNames";
-import { LocationName }                         from "../../Locations/data/LocationNames";
-import {hasBn11SF, hasWallStreetSF,hasAISF}     from "../../NetscriptFunctions";
-import { Sleeve }                               from "../../PersonObjects/Sleeve/Sleeve";
-import { AllServers,
-         AddToAllServers }                      from "../../Server/AllServers";
-import { Server }                               from "../../Server/Server";
-import {Settings}                               from "../../Settings/Settings";
-import {SpecialServerIps, SpecialServerNames}   from "../../Server/SpecialServerIps";
-import {SourceFiles, applySourceFile}           from "../../SourceFile";
-import { SourceFileFlags }                      from "../../SourceFile/SourceFileFlags";
+import { Augmentations } from "../../Augmentation/Augmentations";
+import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
+import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { Bladeburner } from "../../Bladeburner";
+import { CodingContractRewardType } from "../../CodingContracts";
+import { Company } from "../../Company/Company";
+import { Companies } from "../../Company/Companies";
+import { getNextCompanyPositionHelper } from "../../Company/GetNextCompanyPosition";
+import { getJobRequirementText } from "../../Company/GetJobRequirementText";
+import { CompanyPositions } from "../../Company/CompanyPositions";
+import * as posNames from "../../Company/data/companypositionnames";
+import {CONSTANTS} from "../../Constants";
+import { Corporation } from "../../Corporation/Corporation";
+import { Programs } from "../../Programs/Programs";
+import { determineCrimeSuccess } from "../../Crime/CrimeHelpers";
+import { Crimes } from "../../Crime/Crimes";
+import { Engine } from "../../engine";
+import { Faction } from "../../Faction/Faction";
+import { Factions } from "../../Faction/Factions";
+import { displayFactionContent } from "../../Faction/FactionHelpers";
+import { resetGangs } from "../../Gang";
+import { hasHacknetServers } from "../../Hacknet/HacknetHelpers";
+import { HashManager } from "../../Hacknet/HashManager";
+import { Cities } from "../../Locations/Cities";
+import { Locations } from "../../Locations/Locations";
+import { CityName } from "../../Locations/data/CityNames";
+import { LocationName } from "../../Locations/data/LocationNames";
+import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
+import {
+    AllServers,
+    AddToAllServers,
+    createUniqueRandomIp,
+} from "../../Server/AllServers";
+import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
+import { Settings } from "../../Settings/Settings";
+import { SpecialServerIps, SpecialServerNames } from "../../Server/SpecialServerIps";
+import { SourceFiles, applySourceFile } from "../../SourceFile";
+import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
-import Decimal                                  from "decimal.js";
+import Decimal from "decimal.js";
 
-import {numeralWrapper}                         from "../../ui/numeralFormat";
-import { MoneySourceTracker }                   from "../../utils/MoneySourceTracker";
-import {dialogBoxCreate}                        from "../../../utils/DialogBox";
-import {clearEventListeners}                    from "../../../utils/uiHelpers/clearEventListeners";
-import {createRandomIp}                         from "../../../utils/IPAddress";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../../../utils/JSONReviver";
-import {convertTimeMsToTimeElapsedString}       from "../../../utils/StringHelperFunctions";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
+import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON,
+} from "../../../utils/JSONReviver";
+import {convertTimeMsToTimeElapsedString} from "../../../utils/StringHelperFunctions";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
 export function init() {
     /* Initialize Player's home computer */
-    var t_homeComp = new Server({
-        ip:createRandomIp(), hostname:"home", organizationName:"Home PC",
-        isConnectedTo:true, adminRights:true, purchasedByPlayer:true, maxRam:8
+    var t_homeComp = safetlyCreateUniqueServer({
+        adminRights: true,
+        hostname: "home",
+        ip: createUniqueRandomIp(),
+        isConnectedTo: true,
+        maxRam: 8,
+        organizationName: "Home PC",
+        purchasedByPlayer: true,
     });
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
@@ -150,7 +159,7 @@ export function prestigeAugmentation() {
     this.moneySourceA.reset();
 
     this.hacknetNodes.length = 0;
-    this.hashManager.prestige(this);
+    this.hashManager.prestige();
 
     // Re-calculate skills and reset HP
     this.updateSkillLevels();
@@ -210,6 +219,11 @@ export function prestigeSourceFile() {
         }
     }
 
+    const characterMenuHeader = document.getElementById("character-menu-header");
+    if (characterMenuHeader instanceof HTMLElement) {
+        characterMenuHeader.click(); characterMenuHeader.click();
+    }
+
     this.isWorking = false;
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
@@ -240,7 +254,7 @@ export function prestigeSourceFile() {
     this.lastUpdate = new Date().getTime();
 
     this.hacknetNodes.length = 0;
-    this.hashManager.prestige(this);
+    this.hashManager.prestige();
 
     // Gang
     this.gang = null;
@@ -350,21 +364,24 @@ export function hasProgram(programName) {
 
 export function setMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.setMoney()"); return;
+        console.error("NaN passed into Player.setMoney()");
+        return;
     }
-    this.money = money;
+    this.money = new Decimal(money);
 }
 
 export function gainMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.gainMoney()"); return;
+        console.error("NaN passed into Player.gainMoney()");
+        return;
     }
 	this.money = this.money.plus(money);
 }
 
 export function loseMoney(money) {
     if (isNaN(money)) {
-        console.log("ERR: NaN passed into Player.loseMoney()"); return;
+        console.error("NaN passed into Player.loseMoney()");
+        return;
     }
     this.money = this.money.minus(money);
 }
@@ -454,7 +471,7 @@ export function gainIntelligenceExp(exp) {
     if (isNaN(exp)) {
         console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
     }
-    if (hasAISF || this.intelligence > 0) {
+    if (SourceFileFlags[5] > 0 || this.intelligence > 0) {
         this.intelligence_exp += exp;
     }
 }
@@ -943,7 +960,7 @@ export function getWorkMoneyGain() {
     // If player has SF-11, calculate salary multiplier from favor
     let bn11Mult = 1;
     const company = Companies[this.companyName];
-    if (hasBn11SF) { bn11Mult = 1 + (company.favor / 100); }
+    if (SourceFileFlags[11] > 0) { bn11Mult = 1 + (company.favor / 100); }
 
     // Get base salary
     const companyPositionName = this.jobs[this.companyName];
@@ -1555,7 +1572,9 @@ export function hospitalize() {
         );
     }
 
-    this.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
+    const cost = this.max_hp * CONSTANTS.HospitalCostPerHp
+    this.loseMoney(cost);
+    this.recordMoneySource(-1 * cost, "hospitalization");
     this.hp = this.max_hp;
 }
 

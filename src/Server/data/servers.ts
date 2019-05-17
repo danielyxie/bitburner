@@ -1,23 +1,7 @@
 // tslint:disable:max-file-line-count
 
 // This could actually be a JSON file as it should be constant metadata to be imported...
-
-/**
- * Defines the minimum and maximum values for a range.
- * It is up to the consumer if these values are inclusive or exclusive.
- * It is up to the implementor to ensure max > min.
- */
-interface IMinMaxRange {
-    /**
-     * The maximum bound of the range.
-     */
-    max: number;
-
-    /**
-     * The minimum bound of the range.
-     */
-    min: number;
-}
+import { IMinMaxRange } from "../../types";
 
 /**
  * The metadata describing the base state of servers on the network.

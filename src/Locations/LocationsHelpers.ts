@@ -2,37 +2,42 @@
  * Location and traveling-related helper functions.
  * Mostly used for UI
  */
-import { CONSTANTS }                        from "../Constants";
+import { CONSTANTS } from "../Constants";
 
-import { CityName }                         from "./data/CityNames";
+import { CityName } from "./data/CityNames";
 
-import { IPlayer }                          from "../PersonObjects/IPlayer";
-import { AllServers,
-         AddToAllServers }                  from "../Server/AllServers";
-import { Server }                           from "../Server/Server";
-import { getPurchaseServerCost,
-         purchaseRamForHomeComputer,
-         purchaseServer }                   from "../Server/ServerPurchases";
-import { SpecialServerIps }                 from "../Server/SpecialServerIps";
-import { Settings }                         from "../Settings/Settings";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import {
+    AddToAllServers,
+    createUniqueRandomIp,
+} from "../Server/AllServers";
+import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
+import {
+    getPurchaseServerCost,
+    purchaseRamForHomeComputer,
+    purchaseServer
+} from "../Server/ServerPurchases";
+import { SpecialServerIps } from "../Server/SpecialServerIps";
+import { Settings } from "../Settings/Settings";
 
-import { numeralWrapper }                   from "../ui/numeralFormat";
+import { numeralWrapper } from "../ui/numeralFormat";
 
-import { dialogBoxCreate }                  from "../../utils/DialogBox";
-import { createRandomIp }                   from "../../utils/IPAddress";
-import { yesNoBoxGetYesButton,
-         yesNoBoxGetNoButton,
-         yesNoBoxClose,
-         yesNoBoxCreate,
-         yesNoTxtInpBoxGetYesButton,
-         yesNoTxtInpBoxGetNoButton,
-         yesNoTxtInpBoxClose,
-         yesNoTxtInpBoxCreate }             from "../../utils/YesNoBox";
+import { dialogBoxCreate } from "../../utils/DialogBox";
+import {
+    yesNoBoxGetYesButton,
+    yesNoBoxGetNoButton,
+    yesNoBoxClose,
+    yesNoBoxCreate,
+    yesNoTxtInpBoxGetYesButton,
+    yesNoTxtInpBoxGetNoButton,
+    yesNoTxtInpBoxClose,
+    yesNoTxtInpBoxCreate
+} from "../../utils/YesNoBox";
 
-import { createElement }                    from "../../utils/uiHelpers/createElement";
-import { createPopup }                      from "../../utils/uiHelpers/createPopup";
-import { createPopupCloseButton }           from "../../utils/uiHelpers/createPopupCloseButton";
-import { removeElementById }                from "../../utils/uiHelpers/removeElementById";
+import { createElement } from "../../utils/uiHelpers/createElement";
+import { createPopup } from "../../utils/uiHelpers/createPopup";
+import { createPopupCloseButton } from "../../utils/uiHelpers/createPopupCloseButton";
+import { removeElementById } from "../../utils/uiHelpers/removeElementById";
 
 /**
  * Create a pop-up box that lets the player confirm traveling to a different city
@@ -271,8 +276,8 @@ export function purchaseTorRouter(p: IPlayer) {
     }
     p.loseMoney(CONSTANTS.TorRouterCost);
 
-    const darkweb = new Server({
-        ip: createRandomIp(), hostname:"darkweb", organizationName:"",
+    const darkweb = safetlyCreateUniqueServer({
+        ip: createUniqueRandomIp(), hostname:"darkweb", organizationName:"",
         isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1
     });
     AddToAllServers(darkweb);

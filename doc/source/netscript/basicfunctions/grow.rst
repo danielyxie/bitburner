@@ -1,9 +1,14 @@
 grow() Netscript Function
 =========================
 
-.. js:function:: grow(hostname/ip)
+.. js:function:: grow(hostname/ip[, opts={}])
 
     :param string hostname/ip: IP or hostname of the target server to grow
+    :param object opts: Optional parameters for configuring function behavior. Properties:
+
+        * threads (*number*) - Number of threads to use for this function.
+          Must be less than or equal to the number of threads the script is running with.
+
     :returns: The number by which the money on the server was multiplied for the growth
     :RAM cost: 0.15 GB
 
@@ -19,3 +24,4 @@ grow() Netscript Function
     Example::
 
         grow("foodnstuff");
+        grow("foodnstuff", { threads: 5 }); // Only use 5 threads to grow

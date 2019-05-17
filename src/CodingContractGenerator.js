@@ -7,6 +7,7 @@ import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
 import { AllServers } from "./Server/AllServers";
 import { GetServerByHostname } from "./Server/ServerHelpers";
+import { SpecialServerNames } from "./Server/SpecialServerIps";
 
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 
@@ -162,7 +163,9 @@ function getRandomServer() {
     // An infinite loop shouldn't ever happen, but to be safe we'll use
     // a for loop with a limited number of tries
     for (let i = 0; i < 200; ++i) {
-        if (randServer.purchasedByPlayer === false) { break; }
+        if (!randServer.purchasedByPlayer && randServer.hostname !== SpecialServerNames.WorldDaemon) {
+            break;
+        }
         randIndex = getRandomInt(0, servers.length - 1);
         randServer = AllServers[servers[randIndex]];
     }

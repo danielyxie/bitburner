@@ -21,4 +21,13 @@ hackAnalyzeThreads() Netscript Function
     If this function returns 50, this means that if your next `hack()` call
     is run on a script with 50 threads, it will steal $1m from the `foodnstuff` server.
 
-    **Warning**: The value returned by this function isn't necessarily a whole number.
+    .. warning:: The value returned by this function isn't necessarily a whole number.
+    .. warning:: It is possible for this function to return :code:`Infinity` or :code:`NaN` in
+                 certain uncommon scenarios. This is because in JavaScript:
+
+                 * :code:`0 / 0 = NaN`
+                 * :code:`N / 0 = Infinity` for 0 < N < Infinity.
+
+                 For example, if a server has no money available and you want to hack some positive
+                 amount from it, then the function would return :code:`Infinity` because
+                 this would be impossible.

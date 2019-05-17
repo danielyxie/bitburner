@@ -27,6 +27,7 @@ secrets that you've been searching for.
     Script Editors <scripteditors>
     Game Frozen or Stuck? <gamefrozen>
     Guides & Tips <guidesandtips>
+    Tools & Resources <toolsandresources>
     Changelog <changelog>
     Donate <https://paypal.me/danielyxie>
 

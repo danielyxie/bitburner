@@ -25,7 +25,7 @@
       ga('create', 'UA-100157497-1', 'auto');
       ga('send', 'pageview');
     </script>
-<link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="dist/engine.css" rel="stylesheet"></head>
+<link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="dist/engineStyle.css" rel="stylesheet"></head>
 <body>
     <div id="entire-game-container" style="visibility:hidden;">
     <div id="mainmenu-container">
@@ -277,53 +277,7 @@
     </div>
 
     <div id="stock-market-container" class="generic-menupage-container">
-        <p>
-            Welcome to the World Stock Exchange (WSE)! <br/><br/>
-
-            To begin trading, you must first purchase an account. WSE accounts will persist
-            after you 'reset' by installing Augmentations.
-        </p>
-        <a id="stock-market-buy-account" class="a-link-button-inactive"> Buy WSE Account </a>
-        <a id="stock-market-investopedia" class="a-link-button">Investopedia</a>
-
-        <h2> Trade Information eXchange (TIX) API </h2>
-        <p>
-            TIX, short for Trade Information eXchange, is the communications protocol supported by the WSE.
-            Purchasing access to the TIX API lets you write code to create your own algorithmic/automated
-            trading strategies.
-            <br/><br/>
-            If you purchase access to the TIX API, you will retain that access even after
-            you 'reset' by installing Augmentations.
-        </p>
-        <a id="stock-market-buy-tix-api" class="a-link-button-inactive">Buy Trade Information eXchange (TIX) API Access</a>
-
-        <h2> Four Sigma (4S) Market Data Feed </h2>
-        <p>
-            Four Sigma's (4S) Market Data Feed provides information about stocks
-            that will help your trading strategies.
-            <br/><br/>
-            If you purchase access to 4S Market Data and/or the 4S TIX API, you will
-            retain that access even after you 'reset' by installing Augmentations.
-        </p>
-
-        <a id="stock-market-buy-4s-data" class="a-link-button-inactive tooltip">
-            Buy 4S Market Data Feed
-        </a>
-        <div class="help-tip-big" id="stock-market-4s-data-help-tip">?</div>
-
-        <a id="stock-market-buy-4s-tix-api" class="a-link-button-inactive tooltip">
-            Buy 4S Market Data TIX API Access
-        </a>
-
-        <p id="stock-market-commission"> </p>
-        <a id="stock-market-mode" class="a-link-button tooltip"></a>
-        <a id="stock-market-expand-tickers" class="a-link-button tooltip">Expand tickers</a>
-        <a id="stock-market-collapse-tickers" class="a-link-button tooltip">Collapse tickers</a>
-        <br/><br/>
-        <input id="stock-market-watchlist-filter" class="text-input" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"/>
-        <a id="stock-market-watchlist-filter-update" class="a-link-button"> Update Watchlist </a>
-        <ul id="stock-market-list" style="list-style:none;">
-		</ul>
+        <!-- React Component -->
     </div>
 
     <!-- Log Box -->
@@ -634,7 +588,7 @@
             <p>If the game fails to load, consider <a href="?noScripts">killing all scripts</a></p>
         </div>
     </div>
-<script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="dist/engine.bundle.js"></script></body>
+<script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="dist/engine.bundle.js"></script><script type="text/javascript" src="dist/engineStyle.bundle.js"></script></body>
 
 <!-- Misc Scripts -->
 <script src="src/ThirdParty/raphael.min.js"></script>

@@ -1,11 +1,10 @@
 // Calculate a script's RAM usage
-const walk = require("acorn/dist/walk"); // Importing this doesn't work for some reason.
+import * as walk from "acorn-walk";
 
-import { CONSTANTS }                            from "../Constants";
-import {evaluateImport}                         from "../NetscriptEvaluator";
-import { WorkerScript }                         from "../NetscriptWorker";
-import { Player }                               from "../Player";
-import {parse, Node}                            from "../../utils/acorn";
+import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
+
+import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
+import { parse, Node } from "../../utils/acorn";
 
 // These special strings are used to reference the presence of a given logical
 // construct within a user script.
@@ -19,7 +18,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
 // Calcluates the amount of RAM a script uses. Uses parsing and AST walking only,
 // rather than NetscriptEvaluator. This is useful because NetscriptJS code does
 // not work under NetscriptEvaluator.
-async function parseOnlyRamCalculate(server, code, workerScript) {
+async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
     try {
         // Maps dependent identifiers to their dependencies.
         //
@@ -74,14 +73,27 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                     }
                 } catch(e) {
                     console.error(`Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`);
-                    return -1;
+                    return RamCalculationErrorCode.URLImportError;
                 }
             } else {
-                const script = server.getScript(nextModule.startsWith("./") ? nextModule.slice(2) : nextModule);
-                if (!script) {
-                    console.warn("Invalid script");
-                    return -1;  // No such script on the server.
+                if (!Array.isArray(otherScripts)) {
+                    console.warn(`parseOnlyRamCalculate() not called with array of scripts`);
+                    return RamCalculationErrorCode.ImportError;
                 }
+
+                let script = null;
+                let fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
+                for (const s of otherScripts) {
+                    if (s.filename === fn) {
+                        script = s;
+                        break;
+                    }
+                }
+
+                if (script == null) {
+                    return RamCalculationErrorCode.ImportError;  // No such script on the server
+                }
+
                 code = script.code;
             }
 
@@ -90,7 +102,7 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
 
         // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
         // are those that start with __SPECIAL_INITIAL_MODULE__.
-        let ram = CONSTANTS.ScriptBaseRamCost;
+        let ram = RamCostConstants.ScriptBaseRamCost;
         const unresolvedRefs = Object.keys(dependencyMap).filter(s => s.startsWith(initialModule));
         const resolvedRefs = new Set();
         while (unresolvedRefs.length > 0) {
@@ -98,13 +110,13 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
 
             // Check if this is one of the special keys, and add the appropriate ram cost if so.
             if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
-                ram += CONSTANTS.ScriptHacknetNodesRamCost;
+                ram += RamCostConstants.ScriptHacknetNodesRamCost;
             }
             if (ref === "document" && !resolvedRefs.has("document")) {
-                ram += CONSTANTS.ScriptDomRamCost;
+                ram += RamCostConstants.ScriptDomRamCost;
             }
             if (ref === "window" && !resolvedRefs.has("window")) {
-                ram += CONSTANTS.ScriptDomRamCost;
+                ram += RamCostConstants.ScriptDomRamCost;
             }
 
             resolvedRefs.add(ref);
@@ -124,9 +136,8 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                 }
             }
 
-            // Check if this ident is a function in the workerscript env. If it is, then we need to
-            // get its RAM cost. We do this by calling it, which works because the running script
-            // is in checkingRam mode.
+            // Check if this identifier is a function in the workerscript env.
+            // If it is, then we need to get its RAM cost.
             //
             // TODO it would be simpler to just reference a dictionary.
             try {
@@ -152,8 +163,15 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                     }
                 }
 
-                //Special logic for namespaces (Bladeburner, CodingCOntract)
-                var func;
+                // Only count each function once
+                if (workerScript.loadedFns[ref]) {
+                    continue;
+                } else {
+                    workerScript.loadedFns[ref] = true;
+                }
+
+                // This accounts for namespaces (Bladeburner, CodingCOntract)
+                let func;
                 if (ref in workerScript.env.vars.bladeburner) {
                     func = workerScript.env.vars.bladeburner[ref];
                 } else if (ref in workerScript.env.vars.codingcontract) {
@@ -163,7 +181,7 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                 } else if (ref in workerScript.env.vars.sleeve) {
                     func = workerScript.env.vars.sleeve[ref];
                 } else {
-                    func = workerScript.env.get(ref);
+                    func = workerScript.env.vars[ref];
                 }
                 ram += applyFuncRam(func);
             } catch (error) {continue;}
@@ -174,7 +192,7 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
         // console.info("parse or eval error: ", error);
         // This is not unexpected. The user may be editing a script, and it may be in
         // a transitory invalid state.
-        return -1;
+        return RamCalculationErrorCode.SyntaxError;
     }
 }
 
@@ -248,36 +266,6 @@ function parseOnlyCalculateDeps(code, currentModule) {
         }
     }
 
-    //Spread syntax not supported in Edge yet, use Object.assign
-    /*
-    walk.recursive(ast, {key: globalKey}, {
-        ImportDeclaration: (node, st, walkDeeper) => {
-            const importModuleName = node.source.value;
-            additionalModules.push(importModuleName);
-
-            // This module's global scope refers to that module's global scope, no matter how we
-            // import it.
-            dependencyMap[st.key].add(importModuleName + memCheckGlobalKey);
-
-            for (let i = 0; i < node.specifiers.length; ++i) {
-                const spec = node.specifiers[i];
-                if (spec.imported !== undefined && spec.local !== undefined) {
-                    // We depend on specific things.
-                    internalToExternal[spec.local.name] = importModuleName + "." + spec.imported.name;
-                } else {
-                    // We depend on everything.
-                    dependencyMap[st.key].add(importModuleName + ".*");
-                }
-            }
-        },
-        FunctionDeclaration: (node, st, walkDeeper) => {
-            // Don't use walkDeeper, because we are changing the visitor set.
-            const key = currentModule + "." + node.id.name;
-            walk.recursive(node, {key: key}, commonVisitors());
-        },
-        ...commonVisitors()
-    });
-    */
     walk.recursive(ast, {key: globalKey}, Object.assign({
         ImportDeclaration: (node, st, walkDeeper) => {
             const importModuleName = node.source.value;
@@ -308,104 +296,23 @@ function parseOnlyCalculateDeps(code, currentModule) {
     return {dependencyMap: dependencyMap, additionalModules: additionalModules};
 }
 
-export async function calculateRamUsage(codeCopy) {
-    //Create a temporary/mock WorkerScript and an AST from the code
-    var currServ = Player.getCurrentServer();
-    var workerScript = new WorkerScript({
-        filename:"foo",
-        scriptRef: {code:""},
-        args:[],
-        getCode: function() { return ""; }
-    });
-    workerScript.checkingRam = true; //Netscript functions will return RAM usage
-    workerScript.serverIp = currServ.ip;
+export async function calculateRamUsage(codeCopy, otherScripts) {
+    // We don't need a real WorkerScript for this. Just an object that keeps
+    // track of whatever's needed for RAM calculations
+    const workerScript = {
+        loadedFns: {},
+        env: {
+            vars: RamCosts,
+        }
+    }
 
     try {
-        return await parseOnlyRamCalculate(currServ, codeCopy, workerScript);
+        return await parseOnlyRamCalculate(otherScripts, codeCopy, workerScript);
 	} catch (e) {
-        console.log("Failed to parse ram using new method. Falling back.", e);
+        console.error(`Failed to parse script for RAM calculations:`);
+        console.error(e);
+        return RamCalculationErrorCode.SyntaxError;
 	}
 
-    // Try the old way.
-
-    try {
-        var ast = parse(codeCopy, {sourceType:"module"});
-    } catch(e) {
-        return -1;
-    }
-
-    //Search through AST, scanning for any 'Identifier' nodes for functions, or While/For/If nodes
-    var queue = [], ramUsage = CONSTANTS.ScriptBaseRamCost;
-    var whileUsed = false, forUsed = false, ifUsed = false;
-    queue.push(ast);
-    while (queue.length != 0) {
-        var exp = queue.shift();
-        switch (exp.type) {
-            case "ImportDeclaration":
-                //Gets an array of all imported functions as AST expressions
-                //and pushes them on the queue.
-                var res = evaluateImport(exp, workerScript, true);
-                for (var i = 0; i < res.length; ++i) {
-                    queue.push(res[i]);
-                }
-                break;
-            case "BlockStatement":
-            case "Program":
-                for (var i = 0; i < exp.body.length; ++i) {
-                    if (exp.body[i] instanceof Node) {
-                        queue.push(exp.body[i]);
-                    }
-                }
-                break;
-            case "WhileStatement":
-                if (!whileUsed) {
-                    ramUsage += CONSTANTS.ScriptWhileRamCost;
-                    whileUsed = true;
-                }
-                break;
-            case "ForStatement":
-                if (!forUsed) {
-                    ramUsage += CONSTANTS.ScriptForRamCost;
-                    forUsed = true;
-                }
-                break;
-            case "IfStatement":
-                if (!ifUsed) {
-                    ramUsage += CONSTANTS.ScriptIfRamCost;
-                    ifUsed = true;
-                }
-                break;
-            case "Identifier":
-                if (exp.name in workerScript.env.vars) {
-                    var func = workerScript.env.get(exp.name);
-                    if (typeof func === "function") {
-                        try {
-                            var res = func.apply(null, []);
-                            if (typeof res === "number") {
-                                ramUsage += res;
-                            }
-                        } catch(e) {
-                            console.log("ERROR applying function: " + e);
-                        }
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
-        for (var prop in exp) {
-            if (exp.hasOwnProperty(prop)) {
-                if (exp[prop] instanceof Node) {
-                    queue.push(exp[prop]);
-                }
-            }
-        }
-    }
-
-    //Special case: hacknetnodes array
-    if (codeCopy.includes("hacknet")) {
-        ramUsage += CONSTANTS.ScriptHacknetNodesRamCost;
-    }
-    return ramUsage;
+    return RamCalculationErrorCode.SyntaxError;
 }

@@ -6,7 +6,11 @@ getOrders() Netscript Function
     :RAM cost: 2.5 GB
 
     Returns your order book for the stock market. This is an object containing information
-    for all the Limit and Stop Orders you have in the stock market.
+    for all the :ref:`Limit and Stop Orders <gameplay_stock_market_order_types>`
+    you have in the stock market.
+
+    .. note:: This function isn't accessible until you have unlocked the ability to use
+              Limit and Stop Orders.
 
     The object has the following structure::
 

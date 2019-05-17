@@ -9,8 +9,17 @@ module.exports = (env, argv) => {
     const outputDirectory = isDevServer ? "dist-dev" : "dist";
     const entries = {};
     entries[`${outputDirectory}/engine`] = "./src/engine.jsx";
-    if (!isDevServer) {
-        entries["tests/tests"] = "./tests/index.js";
+    entries[`${outputDirectory}/engineStyle`] = "./src/engineStyle.js";
+
+    const statsConfig = {
+        builtAt: true,
+        children: false,
+        chunks: false,
+        chunkGroups: false,
+        chunkModules: false,
+        chunkOrigins: false,
+        colors: true,
+        entrypoints: true,
     }
 
     return {
@@ -62,9 +71,6 @@ module.exports = (env, argv) => {
                     sortClassName: false,
                     useShortDoctype: false
                 },
-                excludeChunks: [
-                    "tests/tests"
-                ]
             }),
             new MiniCssExtractPlugin({
                 filename: "[name].css"
@@ -128,6 +134,7 @@ module.exports = (env, argv) => {
         devServer: {
             port: 8000,
             publicPath: `/`,
+            stats: statsConfig,
         },
         resolve: {
             extensions: [
@@ -136,6 +143,7 @@ module.exports = (env, argv) => {
                 ".js",
                 ".jsx",
             ]
-        }
+        },
+        stats: statsConfig,
     };
 };

@@ -17,9 +17,6 @@ import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
-
-
-
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
 /* Represents different types of problems that a Coding Contract can have */
@@ -205,6 +202,7 @@ export class CodingContract {
                     }
                 },
                 placeholder: "Enter Solution here",
+                width: "50%",
             }) as HTMLInputElement;
             solveBtn = createElement("a", {
                 class: "a-link-button",

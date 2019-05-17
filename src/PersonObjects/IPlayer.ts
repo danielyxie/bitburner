@@ -32,7 +32,10 @@ export interface IPlayer {
     factions: string[];
     firstTimeTraveled: boolean;
     hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
+    has4SData: boolean;
+    has4SDataTixApi: boolean;
     hashManager: HashManager;
+    hasTixApiAccess: boolean;
     hasWseAccount: boolean;
     homeComputer: string;
     hp: number;
@@ -48,6 +51,7 @@ export interface IPlayer {
     purchasedServers: any[];
     queuedAugmentations: IPlayerOwnedAugmentation[];
     resleeves: Resleeve[];
+    scriptProdSinceLastAug: number;
     sleeves: Sleeve[];
     sleevesFromCovenant: number;
     sourceFiles: IPlayerOwnedSourceFile[];
@@ -126,12 +130,14 @@ export interface IPlayer {
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
     getCurrentServer(): Server;
+    getGangFaction(): Faction;
     getGangName(): string;
     getHomeComputer(): Server;
     getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
     getUpgradeHomeRamCost(): number;
     gotoLocation(to: LocationName): boolean;
     hasCorporation(): boolean;
+    hasGangWith(facName: string): boolean;
     hasTorRouter(): boolean;
     inBladeburner(): boolean;
     inGang(): boolean;

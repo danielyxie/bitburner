@@ -1,33 +1,39 @@
-import { Script }                               from "./Script";
+import { Script } from "./Script";
 
-import { calculateRamUsage }                    from "./RamCalculations";
-import { isScriptFilename }                     from "./ScriptHelpersTS";
+import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
+import { calculateRamUsage } from "./RamCalculations";
+import { isScriptFilename } from "./ScriptHelpersTS";
 
-import {CONSTANTS}                              from "../Constants";
-import {Engine}                                 from "../engine";
-import { parseFconfSettings }                   from "../Fconf/Fconf";
-import { FconfSettings }                        from "../Fconf/FconfSettings";
-import {iTutorialSteps, iTutorialNextStep,
-        ITutorial}                              from "../InteractiveTutorial";
-import { addWorkerScript }                      from "../NetscriptWorker";
-import { Player }                               from "../Player";
-import { AceEditor }                            from "../ScriptEditor/Ace";
-import { CodeMirrorEditor }                     from "../ScriptEditor/CodeMirror";
-import { AllServers }                           from "../Server/AllServers";
-import { processSingleServerGrowth }            from "../Server/ServerHelpers";
-import { Settings }                             from "../Settings/Settings";
-import { EditorSetting }                        from "../Settings/SettingEnums";
-import { isValidFilePath }                      from "../Terminal/DirectoryHelpers";
-import {TextFile}                               from "../TextFile";
+import {CONSTANTS} from "../Constants";
+import {Engine} from "../engine";
+import { parseFconfSettings } from "../Fconf/Fconf";
+import { FconfSettings } from "../Fconf/FconfSettings";
+import {
+    iTutorialSteps,
+    iTutorialNextStep,
+    ITutorial
+} from "../InteractiveTutorial";
+import { Player } from "../Player";
+import { AceEditor } from "../ScriptEditor/Ace";
+import { CodeMirrorEditor } from "../ScriptEditor/CodeMirror";
+import { AllServers } from "../Server/AllServers";
+import { processSingleServerGrowth } from "../Server/ServerHelpers";
+import { Settings } from "../Settings/Settings";
+import { EditorSetting } from "../Settings/SettingEnums";
+import { isValidFilePath } from "../Terminal/DirectoryHelpers";
+import { TextFile } from "../TextFile";
 
-import {Page, routing}                          from "../ui/navigationTracking";
-import {numeralWrapper}                         from "../ui/numeralFormat";
+import { Page, routing } from "../ui/navigationTracking";
+import { numeralWrapper } from "../ui/numeralFormat";
 
-import {dialogBoxCreate}                        from "../../utils/DialogBox";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../../utils/JSONReviver";
-import {compareArrays}                          from "../../utils/helpers/compareArrays";
-import {createElement}                          from "../../utils/uiHelpers/createElement";
+import { dialogBoxCreate } from "../../utils/DialogBox";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON
+} from "../../utils/JSONReviver";
+import { compareArrays } from "../../utils/helpers/compareArrays";
+import { createElement } from "../../utils/uiHelpers/createElement";
 
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
 export function scriptEditorInit() {
@@ -127,20 +133,22 @@ export function scriptEditorInit() {
     editorSelector.onchange = () => {
         const opt = editorSelector.value;
         switch (opt) {
-            case EditorSetting.Ace:
+            case EditorSetting.Ace: {
                 const codeMirrorCode = CodeMirrorEditor.getCode();
                 const codeMirrorFn = CodeMirrorEditor.getFilename();
                 AceEditor.create();
                 CodeMirrorEditor.setInvisible();
                 AceEditor.openScript(codeMirrorFn, codeMirrorCode);
                 break;
-            case EditorSetting.CodeMirror:
+            }
+            case EditorSetting.CodeMirror: {
                 const aceCode = AceEditor.getCode();
                 const aceFn = AceEditor.getFilename();
                 CodeMirrorEditor.create();
                 AceEditor.setInvisible();
                 CodeMirrorEditor.openScript(aceFn, aceCode);
                 break;
+            }
             default:
                 console.error(`Unrecognized Editor Setting: ${opt}`);
                 return;
@@ -182,11 +190,23 @@ export async function updateScriptEditorContent() {
     }
 
     var codeCopy = code.repeat(1);
-    var ramUsage = await calculateRamUsage(codeCopy);
-    if (ramUsage !== -1) {
+    var ramUsage = await calculateRamUsage(codeCopy, Player.getCurrentServer().scripts);
+    if (ramUsage > 0) {
         scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
-        scriptEditorRamText.innerText = "RAM: Syntax Error";
+        switch (ramUsage) {
+            case RamCalculationErrorCode.ImportError:
+                scriptEditorRamText.innerText = "RAM: Import Error";
+                break;
+            case RamCalculationErrorCode.URLImportError:
+                scriptEditorRamText.innerText = "RAM: HTTP Import Error";
+                break;
+            case RamCalculationErrorCode.SyntaxError:
+            default:
+                scriptEditorRamText.innerText = "RAM: Syntax Error";
+                break;
+        }
+
     }
 }
 
@@ -229,15 +249,15 @@ function saveAndCloseScriptEditor() {
         let s = Player.getCurrentServer();
         for (var i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
-                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player);
+                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
                 Engine.loadTerminalContent();
                 return iTutorialNextStep();
             }
         }
 
-        //If the current script does NOT exist, create a new one
+        // If the current script does NOT exist, create a new one
         let script = new Script();
-        script.saveScript(getCurrentEditor().getCode(), Player);
+        script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
         s.scripts.push(script);
 
         return iTutorialNextStep();
@@ -265,7 +285,7 @@ function saveAndCloseScriptEditor() {
         //If the current script already exists on the server, overwrite it
         for (var i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
-                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player);
+                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
                 Engine.loadTerminalContent();
                 return;
             }
@@ -273,7 +293,7 @@ function saveAndCloseScriptEditor() {
 
         //If the current script does NOT exist, create a new one
         const script = new Script();
-        script.saveScript(getCurrentEditor().getCode(), Player);
+        script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
         s.scripts.push(script);
     } else if (filename.endsWith(".txt")) {
         for (var i = 0; i < s.textFiles.length; ++i) {
@@ -293,42 +313,7 @@ function saveAndCloseScriptEditor() {
     Engine.loadTerminalContent();
 }
 
-//Called when the game is loaded. Loads all running scripts (from all servers)
-//into worker scripts so that they will start running
-export function loadAllRunningScripts() {
-    var total = 0;
-    let skipScriptLoad = (window.location.href.toLowerCase().indexOf("?noscripts") !== -1);
-    if (skipScriptLoad) { console.info("Skipping the load of any scripts during startup"); }
-	for (var property in AllServers) {
-		if (AllServers.hasOwnProperty(property)) {
-			var server = AllServers[property];
-
-			//Reset each server's RAM usage to 0
-			server.ramUsed = 0;
-
-            //Reset modules on all scripts
-            for (var i = 0; i < server.scripts.length; ++i) {
-                server.scripts[i].module = "";
-            }
-
-            if (skipScriptLoad) {
-                //Start game with no scripts
-                server.runningScripts.length = 0;
-            } else {
-                for (var j = 0; j < server.runningScripts.length; ++j) {
-    				addWorkerScript(server.runningScripts[j], server);
-
-    				//Offline production
-    				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
-    			}
-            }
-		}
-	}
-
-    return total;
-}
-
-function scriptCalculateOfflineProduction(runningScriptObj) {
+export function scriptCalculateOfflineProduction(runningScriptObj) {
 	//The Player object stores the last update time from when we were online
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = Player.lastUpdate;
@@ -424,7 +409,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
 //designated server, and false otherwise
 export function findRunningScript(filename, args, server) {
     for (var i = 0; i < server.runningScripts.length; ++i) {
-        if (server.runningScripts[i].filename == filename &&
+        if (server.runningScripts[i].filename === filename &&
             compareArrays(server.runningScripts[i].args, args)) {
             return server.runningScripts[i];
         }

@@ -60,8 +60,6 @@ import 'codemirror/theme/xq-light.css';
 import 'codemirror/theme/yeti.css';
 import 'codemirror/theme/zenburn.css';
 
-import "../../css/codemirror-overrides.scss";
-
 import CodeMirror from "codemirror/lib/codemirror.js";
 import "codemirror/mode/javascript/javascript.js";
 import "./CodeMirrorNetscriptMode";

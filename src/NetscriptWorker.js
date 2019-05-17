@@ -1,3 +1,9 @@
+/**
+ * Functions for handling WorkerScripts, which are the underlying mechanism
+ * that allows for scripts to run
+ */
+import { WorkerScript } from "./Netscript/WorkerScript";
+
 import {
     addActiveScriptsItem,
     deleteActiveScriptsItem,
@@ -6,9 +12,7 @@ import {
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Interpreter } from "./JSInterpreter";
-import { Environment } from "./NetscriptEnvironment";
 import {
-    evaluate,
     isScriptErrorMessage,
     makeRuntimeRejectMsg,
     killNetscriptDelay
@@ -16,6 +20,13 @@ import {
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
 import { NetscriptPort } from "./NetscriptPort";
+import { Player } from "./Player";
+import { RunningScript } from "./Script/RunningScript";
+import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
+import {
+    findRunningScript,
+    scriptCalculateOfflineProduction,
+} from "./Script/ScriptHelpers";
 import { AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
@@ -29,79 +40,17 @@ import { arrayToString } from "../utils/helpers/arrayToString";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { isString } from "../utils/StringHelperFunctions";
 
-
 const walk  = require("acorn/dist/walk");
 
-function WorkerScript(runningScriptObj) {
-	this.name 			= runningScriptObj.filename;
-	this.running 		= false;
-	this.serverIp 		= runningScriptObj.server;
-	this.code 			= runningScriptObj.getCode();
-	this.env 			= new Environment(this);
-    this.env.set("args", runningScriptObj.args.slice());
-	this.output			= "";
-	this.ramUsage		= 0;
-	this.scriptRef		= runningScriptObj;
-    this.errorMessage   = "";
-    this.args           = runningScriptObj.args.slice();
-    this.delay          = null;
-    this.fnWorker       = null; //Workerscript for a function call
-    this.checkingRam    = false;
-    this.loadedFns      = {}; //Stores names of fns that are "loaded" by this script, thus using RAM. Used for static RAM evaluation
-    this.disableLogs    = {}; //Stores names of fns that should have logs disabled
-
-    //Properties used for dynamic RAM evaluation
-    this.dynamicRamUsage = CONSTANTS.ScriptBaseRamCost;
-    this.dynamicLoadedFns = {};
-}
-
-//Returns the server on which the workerScript is running
-WorkerScript.prototype.getServer = function() {
-	return AllServers[this.serverIp];
-}
-
-//Returns the Script object for the underlying script
-WorkerScript.prototype.getScript = function() {
-    let server = this.getServer();
-    for (let i = 0; i < server.scripts.length; ++i) {
-        if (server.scripts[i].filename === this.name) {
-            return server.scripts[i];
-        }
-    }
-    console.log("ERROR: Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong");
-    return null;
-}
-
-//Returns the Script object for the specified script
-WorkerScript.prototype.getScriptOnServer = function(fn, server) {
-    if (server == null) {
-        server = this.getServer();
-    }
-    for (let i = 0; i < server.scripts.length; ++i) {
-        if (server.scripts[i].filename === fn) {
-            return server.scripts[i];
-        }
-    }
-    return null;
-}
-
-WorkerScript.prototype.shouldLog = function(fn) {
-    return (this.disableLogs.ALL == null && this.disableLogs[fn] == null);
-}
-
-WorkerScript.prototype.log = function(txt) {
-    this.scriptRef.log(txt);
-}
-
 //Array containing all scripts that are running across all servers, to easily run them all
-let workerScripts 			= [];
+export const workerScripts = [];
 
-var NetscriptPorts = [];
+export const NetscriptPorts = [];
 for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
     NetscriptPorts.push(new NetscriptPort());
 }
 
-function prestigeWorkerScripts() {
+export function prestigeWorkerScripts() {
     for (var i = 0; i < workerScripts.length; ++i) {
         deleteActiveScriptsItem(workerScripts[i]);
         workerScripts[i].env.stopFlag = true;
@@ -219,8 +168,15 @@ function startNetscript1Script(workerScript) {
                     name === "prompt"   || name === "run"   || name === "exec") {
                     let tempWrapper = function() {
                         let fnArgs = [];
+
+                        //All of the Object/array elements are in JSInterpreter format, so
+                        //we have to convert them back to native format to pass them to these fns
                         for (let i = 0; i < arguments.length-1; ++i) {
-                            fnArgs.push(arguments[i]);
+                            if (typeof arguments[i] === 'object' || arguments[i].constructor === Array) {
+                                fnArgs.push(int.pseudoToNative(arguments[i]));
+                            } else {
+                                fnArgs.push(arguments[i]);
+                            }
                         }
                         let cb = arguments[arguments.length-1];
                         let fnPromise = entry.apply(null, fnArgs);
@@ -332,7 +288,7 @@ function startNetscript1Script(workerScript) {
 */
 function processNetscript1Imports(code, workerScript) {
     //allowReserved prevents 'import' from throwing error in ES5
-    var ast = parse(code, {ecmaVersion:6, allowReserved:true, sourceType:"module"});
+    const ast = parse(code, { ecmaVersion: 6, allowReserved: true, sourceType: "module" });
 
     var server = workerScript.getServer();
     if (server == null) {
@@ -348,10 +304,10 @@ function processNetscript1Imports(code, workerScript) {
         return null;
     }
 
-    var generatedCode = ""; //Generated Javascript Code
-    var hasImports = false;
+    let generatedCode = ""; // Generated Javascript Code
+    let hasImports = false;
 
-    //Walk over the tree and process ImportDeclaration nodes
+    // Walk over the tree and process ImportDeclaration nodes
     walk.simple(ast, {
         ImportDeclaration: (node) => {
             hasImports = true;
@@ -366,7 +322,7 @@ function processNetscript1Imports(code, workerScript) {
             let scriptAst = parse(script.code, {ecmaVersion:5, allowReserved:true, sourceType:"module"});
 
             if (node.specifiers.length === 1 && node.specifiers[0].type === "ImportNamespaceSpecifier") {
-                //import * as namespace from script
+                // import * as namespace from script
                 let namespace = node.specifiers[0].local.name;
                 let fnNames         = []; //Names only
                 let fnDeclarations  = []; //FunctionDeclaration Node objects
@@ -378,7 +334,7 @@ function processNetscript1Imports(code, workerScript) {
                 });
 
                 //Now we have to generate the code that would create the namespace
-                generatedCode =
+                generatedCode +=
                     "var " + namespace + ";\n" +
                     "(function (namespace) {\n";
 
@@ -449,6 +405,7 @@ function processNetscript1Imports(code, workerScript) {
 
     //Add the imported code and re-generate in ES5 (JS Interpreter for NS1 only supports ES5);
     code = generatedCode + code;
+
     var res = {
         code:       code,
         lineOffset: lineOffset
@@ -456,34 +413,34 @@ function processNetscript1Imports(code, workerScript) {
     return res;
 }
 
-//Loop through workerScripts and run every script that is not currently running
-function runScriptsLoop() {
-    var scriptDeleted = false;
+// Loop through workerScripts and run every script that is not currently running
+export function runScriptsLoop() {
+    let scriptDeleted = false;
 
-    //Delete any scripts that finished or have been killed. Loop backwards bc removing items screws up indexing
-    for (var i = workerScripts.length - 1; i >= 0; i--) {
+    // Delete any scripts that finished or have been killed. Loop backwards bc removing items screws up indexing
+    for (let i = workerScripts.length - 1; i >= 0; i--) {
         if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
             scriptDeleted = true;
-            //Delete script from the runningScripts array on its host serverIp
-            var ip = workerScripts[i].serverIp;
-            var name = workerScripts[i].name;
+            // Delete script from the runningScripts array on its host serverIp
+            const ip = workerScripts[i].serverIp;
+            const name = workerScripts[i].name;
 
-            //recalculate ram used
+            // Recalculate ram used
             AllServers[ip].ramUsed = 0;
-            for(let j = 0; j < workerScripts.length; j++) {
-                if(workerScripts[j].serverIp !== ip) {
-                    continue
+            for (let j = 0; j < workerScripts.length; j++) {
+                if (workerScripts[j].serverIp !== ip) {
+                    continue;
                 }
-                if(j === i) { // not this one
-                    continue
+                if (j === i) { // not this one
+                    continue;
                 }
                 AllServers[ip].ramUsed += workerScripts[j].ramUsage;
             }
 
-            //Delete script from Active Scripts
+            // Delete script from Active Scripts
             deleteActiveScriptsItem(workerScripts[i]);
 
-            for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
+            for (let j = 0; j < AllServers[ip].runningScripts.length; j++) {
                 if (AllServers[ip].runningScripts[j].filename == name &&
                     compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
                     AllServers[ip].runningScripts.splice(j, 1);
@@ -491,16 +448,16 @@ function runScriptsLoop() {
                 }
             }
 
-            //Delete script from workerScripts
+            // Delete script from workerScripts
             workerScripts.splice(i, 1);
         }
     }
-    if (scriptDeleted) {updateActiveScriptsItems();} //Force Update
+    if (scriptDeleted) { updateActiveScriptsItems(); } // Force Update
 
 
-	//Run any scripts that haven't been started
-	for (var i = 0; i < workerScripts.length; i++) {
-		//If it isn't running, start the script
+	// Run any scripts that haven't been started
+	for (let i = 0; i < workerScripts.length; i++) {
+		// If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
             let p = null;  // p is the script's result promise.
             if (workerScripts[i].name.endsWith(".js") || workerScripts[i].name.endsWith(".ns")) {
@@ -510,8 +467,8 @@ function runScriptsLoop() {
                 if (!(p instanceof Promise)) { continue; }
             }
 
-			//Once the code finishes (either resolved or rejected, doesnt matter), set its
-			//running status to false
+			// Once the code finishes (either resolved or rejected, doesnt matter), set its
+			// running status to false
 			p.then(function(w) {
 				console.log("Stopping script " + w.name + " because it finished running naturally");
 				w.running = false;
@@ -523,9 +480,9 @@ function runScriptsLoop() {
 					console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
                     return;
                 } else if (w.constructor === Array && w.length === 2 && w[0] === "RETURNSTATEMENT") {
-                    //Script ends with a return statement
+                    // Script ends with a return statement
                     console.log("Script returning with value: " + w[1]);
-                    //TODO maybe do something with this in the future
+                    // TODO maybe do something with this in the future
                     return;
                 } else if (w instanceof WorkerScript) {
                     if (isScriptErrorMessage(w.errorMessage)) {
@@ -560,33 +517,31 @@ function runScriptsLoop() {
 		}
 	}
 
-	setTimeoutRef(runScriptsLoop, 6000);
+	setTimeoutRef(runScriptsLoop, 3e3);
 }
 
-//Queues a script to be killed by settings its stop flag to true. Then, the code will reject
-//all of its promises recursively, and when it does so it will no longer be running.
-//The runScriptsLoop() will then delete the script from worker scripts
-function killWorkerScript(runningScriptObj, serverIp) {
+/**
+ * Queues a script to be killed by setting its stop flag to true. This
+ * kills and timed/blocking Netscript functions (like hack(), sleep(), etc.) and
+ * prevents any further execution of Netscript functions.
+ * The runScriptsLoop() handles the actual deletion of the WorkerScript
+ */
+export function killWorkerScript(runningScriptObj, serverIp) {
 	for (var i = 0; i < workerScripts.length; i++) {
 		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
             compareArrays(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
             killNetscriptDelay(workerScripts[i]);
-            //Recursively kill all functions
-            var curr = workerScripts[i];
-            while (curr.fnWorker) {
-                curr.fnWorker.env.stopFlag = true;
-                killNetscriptDelay(curr.fnWorker);
-                curr = curr.fnWorker;
-            }
             return true;
 		}
 	}
     return false;
 }
 
-//Queues a script to be run
-function addWorkerScript(runningScriptObj, server) {
+/**
+ * Given a RunningScript object, queues that script to be run
+ */
+export function addWorkerScript(runningScriptObj, server) {
 	var filename = runningScriptObj.filename;
 
 	//Update server's ram usage
@@ -596,7 +551,7 @@ function addWorkerScript(runningScriptObj, server) {
     } else {
         runningScriptObj.threads = 1;
     }
-    var ramUsage = roundToTwo(runningScriptObj.getRamUsage() * threads);
+    var ramUsage = roundToTwo(getRamUsageFromRunningScript(runningScriptObj) * threads);
     var ramAvailable = server.maxRam - server.ramUsed;
     if (ramUsage > ramAvailable) {
         dialogBoxCreate("Not enough RAM to run script " + runningScriptObj.filename + " with args " +
@@ -608,7 +563,7 @@ function addWorkerScript(runningScriptObj, server) {
 	server.ramUsed = roundToTwo(server.ramUsed + ramUsage);
 
 	//Create the WorkerScript
-	var s = new WorkerScript(runningScriptObj);
+	var s = new WorkerScript(runningScriptObj, NetscriptFunctions);
 	s.ramUsage 	= ramUsage;
 
 	//Add the WorkerScript to the Active Scripts list
@@ -619,14 +574,105 @@ function addWorkerScript(runningScriptObj, server) {
 	return;
 }
 
-//Updates the online running time stat of all running scripts
-function updateOnlineScriptTimes(numCycles = 1) {
+/**
+ * Updates the online running time stat of all running scripts
+ */
+export function updateOnlineScriptTimes(numCycles = 1) {
 	var time = (numCycles * Engine._idleSpeed) / 1000; //seconds
 	for (var i = 0; i < workerScripts.length; ++i) {
 		workerScripts[i].scriptRef.onlineRunningTime += time;
 	}
 }
 
-export {WorkerScript, workerScripts, NetscriptPorts, runScriptsLoop,
-        killWorkerScript, addWorkerScript, updateOnlineScriptTimes,
-        prestigeWorkerScripts};
+/**
+ * Called when the game is loaded. Loads all running scripts (from all servers)
+ * into worker scripts so that they will start running
+ */
+export function loadAllRunningScripts() {
+    var total = 0;
+    let skipScriptLoad = (window.location.href.toLowerCase().indexOf("?noscripts") !== -1);
+    if (skipScriptLoad) { console.info("Skipping the load of any scripts during startup"); }
+	for (const property in AllServers) {
+		if (AllServers.hasOwnProperty(property)) {
+			const server = AllServers[property];
+
+			// Reset each server's RAM usage to 0
+			server.ramUsed = 0;
+
+            // Reset modules on all scripts
+            for (let i = 0; i < server.scripts.length; ++i) {
+                server.scripts[i].module = "";
+            }
+
+            if (skipScriptLoad) {
+                // Start game with no scripts
+                server.runningScripts.length = 0;
+            } else {
+                for (let j = 0; j < server.runningScripts.length; ++j) {
+    				addWorkerScript(server.runningScripts[j], server);
+
+    				// Offline production
+    				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
+    			}
+            }
+		}
+	}
+
+    return total;
+}
+
+/**
+ * Run a script from inside another script (run(), exec(), spawn(), etc.)
+ */
+export function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
+    //Check if the script is already running
+    let runningScriptObj = findRunningScript(scriptname, args, server);
+    if (runningScriptObj != null) {
+        workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
+        return Promise.resolve(false);
+    }
+
+    //'null/undefined' arguments are not allowed
+    for (let i = 0; i < args.length; ++i) {
+        if (args[i] == null) {
+            workerScript.scriptRef.log("ERROR: Cannot execute a script with null/undefined as an argument");
+            return Promise.resolve(false);
+        }
+    }
+
+    //Check if the script exists and if it does run it
+    for (let i = 0; i < server.scripts.length; ++i) {
+        if (server.scripts[i].filename == scriptname) {
+            //Check for admin rights and that there is enough RAM availble to run
+            var script = server.scripts[i];
+            var ramUsage = script.ramUsage;
+            threads = Math.round(Number(threads)); //Convert to number and round
+            if (threads === 0) { return Promise.resolve(false); }
+            ramUsage = ramUsage * threads;
+            var ramAvailable = server.maxRam - server.ramUsed;
+
+            if (server.hasAdminRights == false) {
+                workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because you do not have root access!");
+                return Promise.resolve(false);
+            } else if (ramUsage > ramAvailable){
+                workerScript.scriptRef.log("Cannot run script " + scriptname + "(t=" + threads + ") on " + server.hostname + " because there is not enough available RAM!");
+                return Promise.resolve(false);
+            } else {
+                //Able to run script
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.exec == null && workerScript.disableLogs.run == null && workerScript.disableLogs.spawn == null) {
+                    workerScript.scriptRef.log(`Running script: ${scriptname} on ${server.hostname} with ${threads} threads and args: ${arrayToString(args)}. May take a few seconds to start up...`);
+                }
+                let runningScriptObj = new RunningScript(script, args);
+                runningScriptObj.threads = threads;
+                addWorkerScript(runningScriptObj, server);
+
+                // Push onto runningScripts.
+                // This has to come after addWorkerScript() because that fn updates RAM usage
+                server.runScript(runningScriptObj, Player.hacknet_node_money_mult);
+                return Promise.resolve(true);
+            }
+        }
+    }
+    workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
+    return Promise.resolve(false);
+}

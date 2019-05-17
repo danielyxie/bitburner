@@ -7,7 +7,6 @@ import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers"
 import { CONSTANTS }                        from "../Constants";
 import { Factions,
          factionExists }                    from "../Faction/Factions";
-import { hasBladeburnerSF }                 from "../NetscriptFunctions";
 import { addWorkerScript }                  from "../NetscriptWorker";
 import { Player }                           from "../Player";
 import { prestigeAugmentation }             from "../Prestige";
@@ -2094,7 +2093,7 @@ function installAugmentations(cbScript=null) {
                 }
                 var runningScriptObj = new RunningScript(script, []); //No args
                 runningScriptObj.threads = 1; //Only 1 thread
-                home.runScript(runningScriptObj, Player);
+                home.runScript(runningScriptObj, Player.hacknet_node_money_mult);
                 addWorkerScript(runningScriptObj, home);
             }
         }
@@ -2103,17 +2102,6 @@ function installAugmentations(cbScript=null) {
 
 function augmentationExists(name) {
     return Augmentations.hasOwnProperty(name);
-}
-
-//Used for testing balance
-function giveAllAugmentations() {
-    for (var name in Augmentations) {
-        var aug = Augmentations[name];
-        if (aug == null) {continue;}
-        var ownedAug = new PlayerOwnedAugmentation(name);
-        Player.augmentations.push(ownedAug);
-    }
-    Player.reapplyAllAugmentations();
 }
 
 function displayAugmentationsContent(contentEl) {
@@ -2323,6 +2311,13 @@ function displaySourceFiles(listElement, sourceFiles) {
     }
 }
 
+export function isRepeatableAug(aug) {
+    const augName = (aug instanceof Augmentation) ? aug.name : aug;
+
+    if (augName === AugmentationNames.NeuroFluxGovernor) { return true; }
+
+    return false;
+}
 
 export {installAugmentations,
         initAugmentations, applyAugmentation, augmentationExists,

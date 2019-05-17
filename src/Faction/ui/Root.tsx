@@ -279,7 +279,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
                 {
                     canPurchaseSleeves &&
                     <Option
-                        buttonText={"Purchase Duplicate Sleeves"}
+                        buttonText={"Purchase & Upgrade Duplicate Sleeves"}
                         infoText={sleevePurchasesInfo}
                         onClick={this.sleevePurchases}
                     />

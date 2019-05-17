@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.46.3",
+    Version:                "0.47.0",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -37,60 +37,6 @@ export let CONSTANTS: IMap<any> = {
 
     // NeuroFlux Governor Augmentation cost multiplier
     NeuroFluxGovernorLevelMult: 1.14,
-
-    // RAM Costs for Netscript functions
-    ScriptBaseRamCost: 1.6,
-    ScriptDomRamCost: 25,
-    ScriptWhileRamCost: 0,
-    ScriptForRamCost: 0,
-    ScriptIfRamCost: 0,
-    ScriptHackRamCost: 0.1,
-    ScriptHackAnalyzeRamCost: 1,
-    ScriptGrowRamCost: 0.15,
-    ScriptGrowthAnalyzeRamCost: 1,
-    ScriptWeakenRamCost: 0.15,
-    ScriptScanRamCost: 0.2,
-    ScriptPortProgramRamCost: 0.05,
-    ScriptRunRamCost: 1.0,
-    ScriptExecRamCost: 1.3,
-    ScriptSpawnRamCost: 2.0,
-    ScriptScpRamCost: 0.6,
-    ScriptKillRamCost: 0.5,
-    ScriptHasRootAccessRamCost: 0.05,
-    ScriptGetHostnameRamCost: 0.05,
-    ScriptGetHackingLevelRamCost: 0.05,
-    ScriptGetMultipliersRamCost: 4.0,
-    ScriptGetServerRamCost: 0.1,
-    ScriptFileExistsRamCost: 0.1,
-    ScriptIsRunningRamCost: 0.1,
-    ScriptHacknetNodesRamCost: 4.0,
-    ScriptHNUpgLevelRamCost: 0.4,
-    ScriptHNUpgRamRamCost: 0.6,
-    ScriptHNUpgCoreRamCost: 0.8,
-    ScriptGetStockRamCost: 2.0,
-    ScriptBuySellStockRamCost: 2.5,
-    ScriptGetPurchaseServerRamCost: 0.25,
-    ScriptPurchaseServerRamCost: 2.25,
-    ScriptGetPurchasedServerLimit: 0.05,
-    ScriptGetPurchasedServerMaxRam: 0.05,
-    ScriptRoundRamCost: 0.05,
-    ScriptReadWriteRamCost: 1.0,
-    ScriptArbScriptRamCost: 1.0,
-    ScriptGetScriptRamCost: 0.1,
-    ScriptGetHackTimeRamCost: 0.05,
-    ScriptGetFavorToDonate: 0.10,
-    ScriptCodingContractBaseRamCost: 10,
-    ScriptSleeveBaseRamCost: 4,
-
-    ScriptSingularityFn1RamCost: 1,
-    ScriptSingularityFn2RamCost: 2,
-    ScriptSingularityFn3RamCost: 3,
-
-    ScriptSingularityFnRamMult: 2,      // Multiplier for RAM cost outside of BN-4
-
-    ScriptGangApiBaseRamCost: 4,
-
-    ScriptBladeburnerApiBaseRamCost: 4,
 
     NumNetscriptPorts: 20,
 
@@ -275,35 +221,47 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.46.3
-    * Added a new Augmentation: The Shadow's Simulacrum
-    * Improved tab autocompletion feature in Terminal so that it works better with directories
-    * Bug Fix: Tech vendor location UI now properly refreshed when purchasing a TOR router
-    * Bug Fix: Fixed UI issue with faction donations
-    * Bug Fix: The money statistics & breakdown should now properly track money earned from Hacknet Server (hashes -> money)
-    * Bug Fix: Fixed issue with changing input in 'Minimum Path Sum in a Triangle' coding contract problem
-    * Fixed several typos in various places
+    v0.47.0
+    * Stock Market changes:
+    ** Implemented spread. Stock's now have bid and ask prices at which transactions occur
+    ** Large transactions will now influence a stock's price and forecast
+    ** This "influencing" can take effect in the middle of a transaction
+    ** See documentation for more details on these changes
+    ** Added getStockAskPrice(), getStockBidPrice() Netscript functions to the TIX API
+    ** Added getStockPurchaseCost(), getStockSaleGain() Netscript functions to the TIX API
 
-    v0.46.2
-    * Source-File 2 now allows you to form gangs in other BitNodes when your karma reaches a very large negative value
-    ** (Karma is a hidden stat and is lowered by committing crimes)
-    * Gang changes:
-    ** Bug Fix: Gangs can no longer clash with themselve
-    ** Bug Fix: Winning against another gang should properly reduce their power
+    * Re-sleeves can no longer have the NeuroFlux Governor augmentation
+    ** This is just a temporary patch until the mechanic gets re-worked
 
-    * Bug Fix: Terminal 'wget' command now works properly
-    * Bug Fix: Hacknet Server Hash upgrades now properly reset upon installing Augs/switching BitNodes
-    * Bug Fix: Fixed button for creating Corporations
-
-    v0.46.1
-    * Added a very rudimentary directory system to the Terminal
-    ** Details here: https://bitburner.readthedocs.io/en/latest/basicgameplay/terminal.html#filesystem-directories
-    * Added numHashes(), hashCost(), and spendHashes() functions to the Netscript Hacknet Node API
-    * 'Generate Coding Contract' hash upgrade is now more expensive
-    * 'Generate Coding Contract' hash upgrade now generates the contract randomly on the server, rather than on home computer
-    * The cost of selling hashes for money no longer increases each time
-    * Selling hashes for money now costs 4 hashes (in exchange for $1m)
-    * Bug Fix: Hacknet Node earnings should work properly when game is inactive/offline
-    * Bug Fix: Duplicate Sleeve augmentations are now properly reset when switching to a new BitNode
+    * hack(), grow(), and weaken() functions now take optional arguments for number of threads to use (by MasonD)
+    * codingcontract.attempt() now takes an optional argument that allows you to configure the function to return a contract's reward
+    * Adjusted RAM costs of Netscript Singularity functions (mostly increased)
+    * Adjusted RAM cost of codingcontract.getNumTriesRemaining() Netscript function
+    * Netscript Singularity functions no longer cost extra RAM outside of BitNode-4
+    * Corporation employees no longer have an "age" stat
+    * Gang Wanted level gain rate capped at 100 (per employee)
+    * Script startup/kill is now processed every 3 seconds, instead of 6 seconds
+    * getHackTime(), getGrowTime(), and getWeakenTime() now return Infinity if called on a Hacknet Server
+    * Money/Income tracker now displays money lost from hospitalizations
+    * Exported saves now have a unique filename based on current BitNode and timestamp
+    * Maximum number of Hacknet Servers decreased from 25 to 20
+    * Bug Fix: Corporation employees stats should no longer become negative
+    * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
+    * Bug Fix: Coding contracts should no longer generate on the w0r1d_d43m0n server
+    * Bug Fix: Duplicate Sleeves now properly have access to all Augmentations if you have a gang
+    * Bug Fix: getAugmentationsFromFaction() & purchaseAugmentation() functions should now work properly if you have a gang
+    * Bug Fix: Fixed issue that caused messages (.msg) to be sent when refreshing/reloading the game
+    * Bug Fix: Purchasing hash upgrades for Bladeburner/Corporation when you don't actually have access to those mechanics no longer gives hashes
+    * Bug Fix: run(), exec(), and spawn() Netscript functions now throw if called with 0 threads
+    * Bug Fix: Faction UI should now automatically update reputation
+    * Bug Fix: Fixed purchase4SMarketData()
+    * Bug Fix: Netscript1.0 now works properly for multiple 'namespace' imports (import * as namespace from "script")
+    * Bug Fix: Terminal 'wget' command now correctly evaluates directory paths
+    * Bug Fix: wget(), write(), and scp() Netscript functions now fail if an invalid filepath is passed in
+    * Bug Fix: Having Corporation warehouses at full capacity should no longer freeze game in certain conditions
+    * Bug Fix: Prevented an exploit that allows you to buy multiple copies of an Augmentation by holding the 'Enter' button
+    * Bug Fix: gang.getOtherGangInformation() now properly returns a deep copy
+    * Bug Fix: Fixed getScriptIncome() returning an undefined value
+    * Bug Fix: Fixed an issue with Hacknet Server hash rate not always updating
     `
 }

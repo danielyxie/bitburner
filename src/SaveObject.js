@@ -18,14 +18,15 @@ import {
     processHacknetEarnings
 } from "./Hacknet/HacknetHelpers";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
+import { loadAllRunningScripts } from "./NetscriptWorker";
 import { Player, loadPlayer } from "./Player";
-import { loadAllRunningScripts } from "./Script/ScriptHelpers";
 import { AllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import {
     loadSpecialServerIps,
     SpecialServerIps
 } from "./Server/SpecialServerIps";
+import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
 import { createStatusText } from "./ui/createStatusText";
@@ -204,27 +205,33 @@ function loadGame(saveString) {
         try {
             loadAliases(saveObj.AliasesSave);
         } catch(e) {
+            console.warn(`Could not load Aliases from save`);
             loadAliases("");
         }
     } else {
+        console.warn(`Save file did not contain an Aliases property`);
         loadAliases("");
     }
     if (saveObj.hasOwnProperty("GlobalAliasesSave")) {
         try {
             loadGlobalAliases(saveObj.GlobalAliasesSave);
         } catch(e) {
+            console.warn(`Could not load GlobalAliases from save`);
             loadGlobalAliases("");
         }
     } else {
+        console.warn(`Save file did not contain a GlobalAliases property`);
         loadGlobalAliases("");
     }
     if (saveObj.hasOwnProperty("MessagesSave")) {
         try {
             loadMessages(saveObj.MessagesSave);
         } catch(e) {
+            console.warn(`Could not load Messages from save`);
             initMessages();
         }
     } else {
+        console.warn(`Save file did not contain a Messages property`);
         initMessages();
     }
     if (saveObj.hasOwnProperty("StockMarketSave")) {
@@ -535,23 +542,12 @@ function loadImportedGame(saveObj, saveString) {
 }
 
 BitburnerSaveObject.prototype.exportGame = function() {
-    this.PlayerSave                 = JSON.stringify(Player);
-    this.AllServersSave             = JSON.stringify(AllServers);
-    this.CompaniesSave              = JSON.stringify(Companies);
-    this.FactionsSave               = JSON.stringify(Factions);
-    this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
-    this.AliasesSave                = JSON.stringify(Aliases);
-    this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
-    this.MessagesSave               = JSON.stringify(Messages);
-    this.StockMarketSave            = JSON.stringify(StockMarket);
-    this.SettingsSave               = JSON.stringify(Settings);
-    this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    if (Player.inGang()) {
-        this.AllGangsSave           = JSON.stringify(AllGangs);
-    }
+    const saveString = this.getSaveString();
 
-    var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-    var filename = "bitburnerSave.json";
+    // Save file name is based on current timestamp and BitNode
+    const epochTime = Math.round(Date.now() / 1000);
+    const bn = Player.bitNodeN;
+    const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
     var file = new Blob([saveString], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
@@ -559,7 +555,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
         var a = document.createElement("a"),
                 url = URL.createObjectURL(file);
         a.href = url;
-        a.download = "bitburnerSave.json";
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         setTimeoutRef(function() {

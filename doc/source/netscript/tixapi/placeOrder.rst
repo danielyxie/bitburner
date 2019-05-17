@@ -19,8 +19,10 @@ placeOrder() Netscript Function
         NOT case-sensitive.
     :RAM cost: 2.5 GB
 
-    Places an order on the stock market. This function only works for `Limit and Stop Orders <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.
-
-    The ability to place limit and stop orders is **not** immediately available to the player and must be unlocked later on in the game.
+    Places an order on the stock market. This function only works
+    for :ref:`Limit and Stop Orders <gameplay_stock_market_order_types>`.
 
     Returns true if the order is successfully placed, and false otherwise.
+
+    .. note:: The ability to place limit and stop orders is **not** immediately available to
+              the player and must be unlocked later on in the game.
