@@ -8,8 +8,7 @@ later in the game
 
 .. warning:: This page contains spoilers for the game
 
-The Gang API is unlocked in BitNode-2. Currently, BitNode-2 is the only location
-where the Gang mechanic is accessible. This may change in the future
+The Gang mechanic and the Gang API are unlocked in BitNode-2. 
 
 **Gang API functions must be accessed through the 'gang' namespace**
 
