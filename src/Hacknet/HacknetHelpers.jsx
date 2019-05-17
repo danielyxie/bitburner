@@ -72,7 +72,7 @@ export function purchaseHacknet() {
         if (!Player.canAfford(cost)) { return -1; }
         Player.loseMoney(cost);
         const server = Player.createHacknetServer();
-        Player.hashManager.updateCapacity(Player.hacknetNodes);
+        updateHashManagerCapacity();
 
         return numOwned;
     } else {
@@ -372,6 +372,8 @@ export function purchaseCacheUpgrade(node, levels=1) {
 
     Player.loseMoney(cost);
     node.upgradeCache(sanitizedLevels);
+
+    return true;
 }
 
 // Create/Refresh Hacknet Nodes UI

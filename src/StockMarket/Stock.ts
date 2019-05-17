@@ -138,8 +138,10 @@ export class Stock {
 
     /**
      * How many share transactions remaining until a price movement occurs
+     * (separately tracked for upward and downward movements)
      */
-    shareTxUntilMovement: number;
+    shareTxUntilMovementDown: number;
+    shareTxUntilMovementUp: number;
 
     /**
      * Spread percentage. The bid/ask prices for this stock are N% above or below
@@ -160,22 +162,23 @@ export class Stock {
     readonly totalShares: number;
 
     constructor(p: IConstructorParams = defaultConstructorParams) {
-        this.name                   = p.name;
-        this.symbol                 = p.symbol;
-        this.price                  = toNumber(p.initPrice);
-        this.lastPrice              = this.price;
-        this.playerShares           = 0;
-        this.playerAvgPx            = 0;
-        this.playerShortShares      = 0;
-        this.playerAvgShortPx       = 0;
-        this.mv                     = toNumber(p.mv);
-        this.b                      = p.b;
-        this.otlkMag                = p.otlkMag;
-        this.cap                    = getRandomInt(this.price * 1e3, this.price * 25e3);
-        this.spreadPerc             = toNumber(p.spreadPerc);
-        this.priceMovementPerc      = this.spreadPerc / (getRandomInt(10, 30) / 10);
-        this.shareTxForMovement     = toNumber(p.shareTxForMovement);
-        this.shareTxUntilMovement   = this.shareTxForMovement;
+        this.name                       = p.name;
+        this.symbol                     = p.symbol;
+        this.price                      = toNumber(p.initPrice);
+        this.lastPrice                  = this.price;
+        this.playerShares               = 0;
+        this.playerAvgPx                = 0;
+        this.playerShortShares          = 0;
+        this.playerAvgShortPx           = 0;
+        this.mv                         = toNumber(p.mv);
+        this.b                          = p.b;
+        this.otlkMag                    = p.otlkMag;
+        this.cap                        = getRandomInt(this.price * 1e3, this.price * 25e3);
+        this.spreadPerc                 = toNumber(p.spreadPerc);
+        this.priceMovementPerc          = this.spreadPerc / (getRandomInt(10, 30) / 10);
+        this.shareTxForMovement         = toNumber(p.shareTxForMovement);
+        this.shareTxUntilMovementDown   = this.shareTxForMovement;
+        this.shareTxUntilMovementUp     = this.shareTxForMovement;
 
         // Total shares is determined by market cap, and is rounded to nearest 100k
         let totalSharesUnrounded: number = (p.marketCap / this.price);

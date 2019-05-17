@@ -3,7 +3,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-export const forecastChangePerPriceMovement = 0.05;
+export const forecastChangePerPriceMovement = 0.1;
 
 /**
  * Given a stock, calculates the amount by which the stock price is multiplied
@@ -49,21 +49,24 @@ export function getBuyTransactionCost(stock: Stock, shares: number, posType: Pos
     const isLong = (posType === PositionTypes.Long);
 
     // If the number of shares doesn't trigger a price movement, its a simple calculation
-    if (shares <= stock.shareTxUntilMovement) {
-        if (isLong) {
+    if (isLong) {
+        if (shares <= stock.shareTxUntilMovementUp) {
             return (shares * stock.getAskPrice()) + CONSTANTS.StockMarketCommission;
-        } else {
+        }
+    } else {
+        if (shares <= stock.shareTxUntilMovementDown) {
             return (shares * stock.getBidPrice()) + CONSTANTS.StockMarketCommission;
         }
     }
 
     // Calculate how many iterations of price changes we need to account for
-    let remainingShares = shares - stock.shareTxUntilMovement;
+    const firstShares = isLong ? stock.shareTxUntilMovementUp : stock.shareTxUntilMovementDown;
+    let remainingShares = shares - firstShares;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
     // The initial cost calculation takes care of the first "iteration"
     let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
-    let totalCost = (stock.shareTxUntilMovement * currPrice);
+    let totalCost = (firstShares * currPrice);
 
     const increasingMvmt = calculateIncreasingPriceMovement(stock)!;
     const decreasingMvmt = calculateDecreasingPriceMovement(stock)!;
@@ -111,42 +114,66 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
         }
     }
 
-    // No price/forecast movement
-    if (shares <= stock.shareTxUntilMovement) {
-        stock.shareTxUntilMovement -= shares;
-        if (stock.shareTxUntilMovement <= 0) {
-            stock.shareTxUntilMovement = stock.shareTxForMovement;
+    // If there's only going to be one iteration
+    const firstShares = isLong ? stock.shareTxUntilMovementUp : stock.shareTxUntilMovementDown;
+    if (shares <= firstShares) {
+        function triggerMovement() {
             processPriceMovement();
             stock.changePrice(currPrice);
             stock.otlkMag -= (forecastChangePerPriceMovement);
+        }
+
+        if (isLong) {
+            stock.shareTxUntilMovementUp -= shares;
+            if (stock.shareTxUntilMovementUp <= 0) {
+                stock.shareTxUntilMovementUp = stock.shareTxForMovement;
+                triggerMovement();
+            }
+        } else {
+            stock.shareTxUntilMovementDown -= shares;
+            if (stock.shareTxUntilMovementDown <= 0) {
+                stock.shareTxUntilMovementDown = stock.shareTxForMovement;
+                triggerMovement();
+            }
         }
 
         return;
     }
 
     // Calculate how many iterations of price changes we need to account for
-    let remainingShares = shares - stock.shareTxUntilMovement;
+    let remainingShares = shares - firstShares;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
     for (let i = 1; i < numIterations; ++i) {
         processPriceMovement();
     }
 
-    stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
-    if (stock.shareTxUntilMovement === stock.shareTxForMovement || stock.shareTxUntilMovement <= 0) {
-        // The shareTxUntilMovement ended up at 0 at the end of the "processing"
-        ++numIterations;
-        stock.shareTxUntilMovement = stock.shareTxForMovement;
-        processPriceMovement();
+    // If on the offchance we end up perfectly at the next price movement
+    if (isLong) {
+        stock.shareTxUntilMovementUp = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovementUp) % stock.shareTxForMovement);
+        if (stock.shareTxUntilMovementUp === stock.shareTxForMovement || stock.shareTxUntilMovementUp <= 0) {
+            // The shareTxUntilMovementUp ended up at 0 at the end of the "processing"
+            ++numIterations;
+            stock.shareTxUntilMovementUp = stock.shareTxForMovement;
+            processPriceMovement();
+        }
+    } else {
+        stock.shareTxUntilMovementDown = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovementDown) % stock.shareTxForMovement);
+        if (stock.shareTxUntilMovementDown === stock.shareTxForMovement || stock.shareTxUntilMovementDown <= 0) {
+            // The shareTxUntilMovementDown ended up at 0 at the end of the "processing"
+            ++numIterations;
+            stock.shareTxUntilMovementDown = stock.shareTxForMovement;
+            processPriceMovement();
+        }
     }
+
     stock.changePrice(currPrice);
 
     // Forecast always decreases in magnitude
     const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
     stock.otlkMag -= forecastChange;
-    if (stock.otlkMag < 0) {
-        stock.b = !stock.b;
-        stock.otlkMag = Math.abs(stock.otlkMag);
+    if (stock.otlkMag < 0.1) {
+        stock.otlkMag = 0.1;
     }
 }
 
@@ -166,9 +193,10 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
     shares = Math.min(shares, stock.maxShares);
 
     const isLong = (posType === PositionTypes.Long);
+    const firstShares = isLong ? stock.shareTxUntilMovementDown : stock.shareTxUntilMovementUp;
 
     // If the number of shares doesn't trigger a price mvoement, its a simple calculation
-    if (shares <= stock.shareTxUntilMovement) {
+    if (shares <= firstShares) {
         if (isLong) {
             return (shares * stock.getBidPrice()) - CONSTANTS.StockMarketCommission;
         } else {
@@ -181,7 +209,7 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
     }
 
     // Calculate how many iterations of price changes we need to account for
-    let remainingShares = shares - stock.shareTxUntilMovement;
+    let remainingShares = shares - firstShares;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
     // Helper function to calculate gain for a single iteration
@@ -198,7 +226,7 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
 
     // The initial cost calculation takes care of the first "iteration"
     let currPrice = isLong ? stock.getBidPrice() : stock.getAskPrice();
-    let totalGain = calculateGain(currPrice, stock.shareTxUntilMovement);
+    let totalGain = calculateGain(currPrice, firstShares);
     for (let i = 1; i < numIterations; ++i) {
         // Price movement
         if (isLong) {
@@ -229,6 +257,7 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
     shares = Math.min(shares, stock.maxShares);
 
     const isLong = (posType === PositionTypes.Long);
+    const firstShares = isLong ? stock.shareTxUntilMovementDown : stock.shareTxUntilMovementUp;
 
     let currPrice = stock.price;
     function processPriceMovement() {
@@ -239,41 +268,64 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
         }
     }
 
-    // No price/forecast movement
-    if (shares <= stock.shareTxUntilMovement) {
-        stock.shareTxUntilMovement -= shares;
-        if (stock.shareTxUntilMovement <= 0) {
-            stock.shareTxUntilMovement = stock.shareTxForMovement;
+    // If there's only going to be one iteration at most
+    if (shares <= firstShares) {
+        function triggerPriceMovement() {
             processPriceMovement();
             stock.changePrice(currPrice);
             stock.otlkMag -= (forecastChangePerPriceMovement);
         }
 
+        if (isLong) {
+            stock.shareTxUntilMovementDown -= shares;
+            if (stock.shareTxUntilMovementDown <= 0) {
+                stock.shareTxUntilMovementDown = stock.shareTxForMovement;
+                triggerPriceMovement();
+            }
+        } else {
+            stock.shareTxUntilMovementUp -= shares;
+            if (stock.shareTxUntilMovementUp <= 0) {
+                stock.shareTxUntilMovementUp = stock.shareTxForMovement;
+                triggerPriceMovement();
+            }
+        }
+
+
         return;
     }
 
     // Calculate how many iterations of price changes we need to account for
-    let remainingShares = shares - stock.shareTxUntilMovement;
+    let remainingShares = shares - firstShares;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
     for (let i = 1; i < numIterations; ++i) {
         processPriceMovement();
     }
 
-    stock.shareTxUntilMovement = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
-    if (stock.shareTxUntilMovement === stock.shareTxForMovement || stock.shareTxUntilMovement <= 0) {
-        ++numIterations;
-        stock.shareTxUntilMovement = stock.shareTxForMovement;
-        processPriceMovement();
+    // If on the offchance we end up perfectly at the next price movement
+    if (isLong) {
+        stock.shareTxUntilMovementDown = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovementDown) % stock.shareTxForMovement);
+        if (stock.shareTxUntilMovementDown === stock.shareTxForMovement || stock.shareTxUntilMovementDown <= 0) {
+            ++numIterations;
+            stock.shareTxUntilMovementDown = stock.shareTxForMovement;
+            processPriceMovement();
+        }
+    } else {
+        stock.shareTxUntilMovementUp = stock.shareTxForMovement - ((shares - stock.shareTxUntilMovementUp) % stock.shareTxForMovement);
+        if (stock.shareTxUntilMovementUp === stock.shareTxForMovement || stock.shareTxUntilMovementUp <= 0) {
+            ++numIterations;
+            stock.shareTxUntilMovementUp = stock.shareTxForMovement;
+            processPriceMovement();
+        }
     }
+
     stock.changePrice(currPrice);
 
     // Forecast always decreases in magnitude
     const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
     stock.otlkMag -= forecastChange;
-    if (stock.otlkMag < 0) {
-        stock.b = !stock.b;
-        stock.otlkMag = Math.abs(stock.otlkMag);
+    if (stock.otlkMag < 0.1) {
+        stock.otlkMag = 0.1;
     }
 }
 
@@ -299,14 +351,15 @@ export function calculateBuyMaxAmount(stock: Stock, posType: PositionTypes, mone
     let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
 
     // No price movement
-    const firstIterationCost = stock.shareTxUntilMovement * currPrice;
+    const firstShares = isLong ? stock.shareTxUntilMovementUp : stock.shareTxUntilMovementDown;
+    const firstIterationCost = firstShares * currPrice;
     if (remainingMoney < firstIterationCost) {
         return Math.floor(remainingMoney / currPrice);
     }
 
     // We'll avoid any accidental infinite loops by having a hardcoded maximum number of
     // iterations
-    let numShares = stock.shareTxUntilMovement;
+    let numShares = firstShares;
     remainingMoney -= firstIterationCost;
     for (let i = 0; i < 10e3; ++i) {
         if (isLong) {

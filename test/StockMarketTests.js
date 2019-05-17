@@ -79,7 +79,8 @@ describe("Stock Market Tests", function() {
                 expect(stock.b).to.equal(ctorParams.b);
                 expect(stock.mv).to.equal(ctorParams.mv);
                 expect(stock.shareTxForMovement).to.equal(ctorParams.shareTxForMovement);
-                expect(stock.shareTxUntilMovement).to.equal(ctorParams.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(ctorParams.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(ctorParams.shareTxForMovement);
                 expect(stock.maxShares).to.be.below(stock.totalShares);
                 expect(stock.spreadPerc).to.equal(ctorParams.spreadPerc);
                 expect(stock.priceMovementPerc).to.be.a("number");
@@ -436,24 +437,24 @@ describe("Stock Market Tests", function() {
 
             it("should do nothing on invalid 'stock' argument", function() {
                 const oldPrice = stock.price;
-                const oldTracker = stock.shareTxUntilMovement;
+                const oldTracker = stock.shareTxUntilMovementUp;
 
                 processBuyTransactionPriceMovement({}, mvmtShares, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
-                expect(stock.shareTxUntilMovement).to.equal(oldTracker);
+                expect(stock.shareTxUntilMovementUp).to.equal(oldTracker);
             });
 
             it("should do nothing on invalid 'shares' arg", function() {
                 const oldPrice = stock.price;
-                const oldTracker = stock.shareTxUntilMovement;
+                const oldTracker = stock.shareTxUntilMovementUp;
 
                 processBuyTransactionPriceMovement(stock, NaN, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
-                expect(stock.shareTxUntilMovement).to.equal(oldTracker);
+                expect(stock.shareTxUntilMovementUp).to.equal(oldTracker);
 
                 processBuyTransactionPriceMovement(stock, -1, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
-                expect(stock.shareTxUntilMovement).to.equal(oldTracker);
+                expect(stock.shareTxUntilMovementUp).to.equal(oldTracker);
             });
 
             it("should properly evaluate a LONG transaction that doesn't trigger a price movement", function() {
@@ -463,7 +464,8 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, noMvmtShares, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
                 expect(stock.otlkMag).to.equal(oldForecast);
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate a SHORT transaction that doesn't trigger a price movement", function() {
@@ -473,7 +475,8 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, noMvmtShares, PositionTypes.Short);
                 expect(stock.price).to.equal(oldPrice);
                 expect(stock.otlkMag).to.equal(oldForecast);
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that trigger price movements", function() {
@@ -483,7 +486,7 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, mvmtShares, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement - noMvmtShares);
             });
 
             it("should properly evaluate SHORT transactions that trigger price movements", function() {
@@ -493,7 +496,7 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, mvmtShares, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement - noMvmtShares);
             });
 
             it("should properly evaluate LONG transactions of exactly 'shareTxForMovement' shares", function() {
@@ -503,7 +506,8 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, stock.shareTxForMovement, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that total to 'shareTxForMovement' shares", function() {
@@ -511,10 +515,11 @@ describe("Stock Market Tests", function() {
                 const oldForecast = stock.otlkMag;
 
                 processBuyTransactionPriceMovement(stock, Math.round(stock.shareTxForMovement / 2), PositionTypes.Long);
-                processBuyTransactionPriceMovement(stock, stock.shareTxUntilMovement, PositionTypes.Long);
+                processBuyTransactionPriceMovement(stock, stock.shareTxUntilMovementUp, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that are a multiple of 'shareTxForMovement' shares", function() {
@@ -524,7 +529,8 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, 3 * stock.shareTxForMovement, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions of exactly 'shareTxForMovement' shares", function() {
@@ -534,7 +540,8 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, stock.shareTxForMovement, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions that total to 'shareTxForMovement' shares", function() {
@@ -542,10 +549,11 @@ describe("Stock Market Tests", function() {
                 const oldForecast = stock.otlkMag;
 
                 processBuyTransactionPriceMovement(stock, Math.round(stock.shareTxForMovement / 2), PositionTypes.Short);
-                processBuyTransactionPriceMovement(stock, stock.shareTxUntilMovement, PositionTypes.Short);
+                expect(stock.shareTxUntilMovementDown).to.be.below(stock.shareTxForMovement);
+                processBuyTransactionPriceMovement(stock, stock.shareTxUntilMovementDown, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions that are a multiple of 'shareTxForMovement' shares", function() {
@@ -555,7 +563,7 @@ describe("Stock Market Tests", function() {
                 processBuyTransactionPriceMovement(stock, 3 * stock.shareTxForMovement, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
         });
 
@@ -565,24 +573,24 @@ describe("Stock Market Tests", function() {
 
             it("should do nothing on invalid 'stock' argument", function() {
                 const oldPrice = stock.price;
-                const oldTracker = stock.shareTxUntilMovement;
+                const oldTracker = stock.shareTxUntilMovementDown;
 
                 processSellTransactionPriceMovement({}, mvmtShares, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
-                expect(stock.shareTxUntilMovement).to.equal(oldTracker);
+                expect(stock.shareTxUntilMovementDown).to.equal(oldTracker);
             });
 
             it("should do nothing on invalid 'shares' arg", function() {
                 const oldPrice = stock.price;
-                const oldTracker = stock.shareTxUntilMovement;
+                const oldTracker = stock.shareTxUntilMovementDown;
 
                 processSellTransactionPriceMovement(stock, NaN, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
-                expect(stock.shareTxUntilMovement).to.equal(oldTracker);
+                expect(stock.shareTxUntilMovementDown).to.equal(oldTracker);
 
                 processSellTransactionPriceMovement(stock, -1, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
-                expect(stock.shareTxUntilMovement).to.equal(oldTracker);
+                expect(stock.shareTxUntilMovementDown).to.equal(oldTracker);
             });
 
             it("should properly evaluate a LONG transaction that doesn't trigger a price movement", function() {
@@ -592,7 +600,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, noMvmtShares, PositionTypes.Long);
                 expect(stock.price).to.equal(oldPrice);
                 expect(stock.otlkMag).to.equal(oldForecast);
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate a SHORT transaction that doesn't trigger a price movement", function() {
@@ -602,7 +611,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, noMvmtShares, PositionTypes.Short);
                 expect(stock.price).to.equal(oldPrice);
                 expect(stock.otlkMag).to.equal(oldForecast);
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that trigger price movements", function() {
@@ -612,7 +622,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, mvmtShares, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions that trigger price movements", function() {
@@ -622,7 +633,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, mvmtShares, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement - noMvmtShares);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions of exactly 'shareTxForMovement' shares", function() {
@@ -632,7 +644,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, stock.shareTxForMovement, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that total to 'shareTxForMovement' shares", function() {
@@ -640,10 +653,12 @@ describe("Stock Market Tests", function() {
                 const oldForecast = stock.otlkMag;
 
                 processSellTransactionPriceMovement(stock, Math.round(stock.shareTxForMovement / 2), PositionTypes.Long);
-                processSellTransactionPriceMovement(stock, stock.shareTxUntilMovement, PositionTypes.Long);
+                expect(stock.shareTxUntilMovementDown).to.be.below(stock.shareTxForMovement);
+                processSellTransactionPriceMovement(stock, stock.shareTxUntilMovementDown, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that are a multiple of 'shareTxForMovement' shares", function() {
@@ -653,7 +668,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, 3 * stock.shareTxForMovement, PositionTypes.Long);
                 expect(stock.price).to.equal(getNthPriceDecreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions of exactly 'shareTxForMovement' shares", function() {
@@ -663,7 +679,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, stock.shareTxForMovement, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions that total to 'shareTxForMovement' shares", function() {
@@ -671,10 +688,13 @@ describe("Stock Market Tests", function() {
                 const oldForecast = stock.otlkMag;
 
                 processSellTransactionPriceMovement(stock, Math.round(stock.shareTxForMovement / 2), PositionTypes.Short);
-                processSellTransactionPriceMovement(stock, stock.shareTxUntilMovement, PositionTypes.Short);
+                expect(stock.shareTxUntilMovementUp).to.be.below(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
+                processSellTransactionPriceMovement(stock, stock.shareTxUntilMovementUp, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 2));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions that are a multiple of 'shareTxForMovement' shares", function() {
@@ -684,7 +704,8 @@ describe("Stock Market Tests", function() {
                 processSellTransactionPriceMovement(stock, 3 * stock.shareTxForMovement, PositionTypes.Short);
                 expect(stock.price).to.equal(getNthPriceIncreasing(oldPrice, 4));
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
-                expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementUp).to.equal(stock.shareTxForMovement);
+                expect(stock.shareTxUntilMovementDown).to.equal(stock.shareTxForMovement);
             });
         });
     });

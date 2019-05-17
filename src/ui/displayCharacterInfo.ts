@@ -52,16 +52,17 @@ export function displayCharacterInfo(elem: HTMLElement, p: IPlayer) {
 
     function convertMoneySourceTrackerToString(src: MoneySourceTracker): string {
         let parts: string[] = [`Total: ${numeralWrapper.formatMoney(src.total)}`];
-        if (src.bladeburner)    { parts.push(`Bladeburner: ${numeralWrapper.formatMoney(src.bladeburner)}`) };
-        if (src.codingcontract) { parts.push(`Coding Contracts: ${numeralWrapper.formatMoney(src.codingcontract)}`) };
-        if (src.work)           { parts.push(`Company Work: ${numeralWrapper.formatMoney(src.work)}`) };
-        if (src.corporation)    { parts.push(`Corporation: ${numeralWrapper.formatMoney(src.corporation)}`) };
-        if (src.crime)          { parts.push(`Crimes: ${numeralWrapper.formatMoney(src.crime)}`) };
-        if (src.gang)           { parts.push(`Gang: ${numeralWrapper.formatMoney(src.gang)}`) };
-        if (src.hacking)        { parts.push(`Hacking: ${numeralWrapper.formatMoney(src.hacking)}`) };
-        if (src.hacknetnode)    { parts.push(`Hacknet Nodes: ${numeralWrapper.formatMoney(src.hacknetnode)}`) };
-        if (src.infiltration)   { parts.push(`Infiltration: ${numeralWrapper.formatMoney(src.infiltration)}`) };
-        if (src.stock)          { parts.push(`Stock Market: ${numeralWrapper.formatMoney(src.stock)}`) };
+        if (src.bladeburner)     { parts.push(`Bladeburner: ${numeralWrapper.formatMoney(src.bladeburner)}`) };
+        if (src.codingcontract)  { parts.push(`Coding Contracts: ${numeralWrapper.formatMoney(src.codingcontract)}`) };
+        if (src.work)            { parts.push(`Company Work: ${numeralWrapper.formatMoney(src.work)}`) };
+        if (src.corporation)     { parts.push(`Corporation: ${numeralWrapper.formatMoney(src.corporation)}`) };
+        if (src.crime)           { parts.push(`Crimes: ${numeralWrapper.formatMoney(src.crime)}`) };
+        if (src.gang)            { parts.push(`Gang: ${numeralWrapper.formatMoney(src.gang)}`) };
+        if (src.hacking)         { parts.push(`Hacking: ${numeralWrapper.formatMoney(src.hacking)}`) };
+        if (src.hacknetnode)     { parts.push(`Hacknet Nodes: ${numeralWrapper.formatMoney(src.hacknetnode)}`) };
+        if (src.hospitalization) { parts.push(`Hospitalization: ${numeralWrapper.formatMoney(src.hospitalization)}`) };
+        if (src.infiltration)    { parts.push(`Infiltration: ${numeralWrapper.formatMoney(src.infiltration)}`) };
+        if (src.stock)           { parts.push(`Stock Market: ${numeralWrapper.formatMoney(src.stock)}`) };
 
         return parts.join("<br>");
     }

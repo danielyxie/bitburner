@@ -86,8 +86,11 @@ Sleeve memory dictates what a sleeve's synchronization will be when its reset by
 switching BitNodes. For example, if a sleeve has a memory of 10, then when you
 switch BitNodes its synchronization will initially be set to 10, rather than 1.
 
-Memory can only be increased by purchasing upgrades from The Covenant.
-It is a persistent stat, meaning it never gets reset back to 1.
+Memory can only be increased by purchasing upgrades from The Covenant. Just like
+the ability to purchase additional sleeves, this is only available in BitNodes-10
+and above, and is only available after defeating BitNode-10 at least once.
+
+Memory is a persistent stat, meaning it never gets reset back to 1.
 The maximum possible value for a sleeve's memory is 100.
 
 Re-sleeving

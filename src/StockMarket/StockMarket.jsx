@@ -279,7 +279,8 @@ export function processStockPrices(numCycles=1) {
         }
 
         // Shares required for price movement gradually approaches max over time
-        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 5, stock.shareTxForMovement);
+        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovementUp + 5, stock.shareTxForMovement);
+        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovementDown + 5, stock.shareTxForMovement);
     }
 
     displayStockMarketContent();
