@@ -53,7 +53,8 @@ import {
 import { showLiterature } from "./Literature";
 import { Message } from "./Message/Message";
 import { showMessage } from "./Message/MessageHelpers";
-import { killWorkerScript, addWorkerScript } from "./NetscriptWorker";
+import { addWorkerScript } from "./NetscriptWorker";
+import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";

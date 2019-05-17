@@ -1,20 +1,8 @@
-import { WorkerScript } from "./Netscript/WorkerScript";
-import { getServer } from "./Server/ServerHelpers";
-
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { parse, Node } from "../utils/acorn";
 
 import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 import { isString } from "../utils/helpers/isString";
-
-export function killNetscriptDelay(workerScript) {
-    if (workerScript instanceof WorkerScript) {
-        if (workerScript.delay) {
-            clearTimeout(workerScript.delay);
-            workerScript.delayResolve();
-        }
-    }
-}
 
 export function netscriptDelay(time, workerScript) {
     return new Promise(function(resolve, reject) {

@@ -1,9 +1,13 @@
+/**
+ * Game engine. Handles the main game loop as well as the main UI pages
+ *
+ * TODO: Separate UI functionality into its own component
+ */
 import {
     convertTimeMsToTimeElapsedString,
     replaceAt
 } from "../utils/StringHelperFunctions";
 import { logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
-import { updateActiveScriptsItems } from "./ActiveScriptsUI";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
     initAugmentations,
@@ -41,9 +45,9 @@ import { LocationName } from "./Locations/data/LocationNames";
 import { LocationRoot } from "./Locations/ui/Root";
 import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
 import { inMission, currMission } from "./Missions";
+import { workerScripts } from "./Netscript/WorkerScripts";
 import {
     loadAllRunningScripts,
-    runScriptsLoop,
     updateOnlineScriptTimes,
 } from "./NetscriptWorker";
 import { Player } from "./Player";
@@ -87,6 +91,8 @@ import { displayCharacterInfo } from "./ui/displayCharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { setSettingsLabels } from "./ui/setSettingsLabels";
+
+import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
 import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
 
@@ -259,7 +265,10 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
         routing.navigateTo(Page.ActiveScripts);
-        updateActiveScriptsItems();
+        ReactDOM.render(
+            <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
+            Engine.Display.activeScriptsContent
+        )
         MainMenuLinks.ActiveScripts.classList.add("active");
     },
 
@@ -471,7 +480,10 @@ const Engine = {
         Engine.Display.terminalContent.style.display = "none";
         Engine.Display.characterContent.style.display = "none";
         Engine.Display.scriptEditorContent.style.display = "none";
+
         Engine.Display.activeScriptsContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);
+
         clearHacknetNodesUI();
         Engine.Display.createProgramContent.style.display = "none";
 
@@ -802,13 +814,14 @@ const Engine = {
         }
 
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
-            // Always update, but make the interval longer if the page isn't active
-            updateActiveScriptsItems();
             if (routing.isOn(Page.ActiveScripts)) {
-                Engine.Counters.updateActiveScriptsDisplay = 5;
-            } else {
-                Engine.Counters.updateActiveScriptsDisplay = 10;
+                ReactDOM.render(
+                    <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
+                    Engine.Display.activeScriptsContent
+                )
             }
+
+            Engine.Counters.updateActiveScriptsDisplay = 5;
         }
 
         if (Engine.Counters.updateDisplays <= 0) {
@@ -1515,9 +1528,6 @@ const Engine = {
     start: function() {
         // Run main loop
         Engine.idleTimer();
-
-        // Script-processing loop
-        runScriptsLoop();
     }
 };
 

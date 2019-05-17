@@ -2,20 +2,17 @@
  * Functions for handling WorkerScripts, which are the underlying mechanism
  * that allows for scripts to run
  */
+import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { WorkerScript } from "./Netscript/WorkerScript";
+import { workerScripts } from "./Netscript/WorkerScripts";
+import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 
-import {
-    addActiveScriptsItem,
-    deleteActiveScriptsItem,
-    updateActiveScriptsItems
-} from "./ActiveScriptsUI";
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Interpreter } from "./JSInterpreter";
 import {
     isScriptErrorMessage,
     makeRuntimeRejectMsg,
-    killNetscriptDelay
 } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
@@ -42,9 +39,7 @@ import { isString } from "../utils/StringHelperFunctions";
 
 const walk  = require("acorn/dist/walk");
 
-//Array containing all scripts that are running across all servers, to easily run them all
-export const workerScripts = [];
-
+// Netscript Ports are instantiated here
 export const NetscriptPorts = [];
 for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
     NetscriptPorts.push(new NetscriptPort());
@@ -52,10 +47,9 @@ for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
 
 export function prestigeWorkerScripts() {
     for (var i = 0; i < workerScripts.length; ++i) {
-        deleteActiveScriptsItem(workerScripts[i]);
+        // TODO Signal event emitter
         workerScripts[i].env.stopFlag = true;
     }
-    updateActiveScriptsItems(5000); //Force UI to update
     workerScripts.length = 0;
 }
 
@@ -141,7 +135,7 @@ function startNetscript2Script(workerScript) {
 }
 
 function startNetscript1Script(workerScript) {
-    var code = workerScript.code;
+    const code = workerScript.code;
     workerScript.running = true;
 
     //Process imports
@@ -413,164 +407,103 @@ function processNetscript1Imports(code, workerScript) {
     return res;
 }
 
-// Loop through workerScripts and run every script that is not currently running
-export function runScriptsLoop() {
-    let scriptDeleted = false;
-
-    // Delete any scripts that finished or have been killed. Loop backwards bc removing items screws up indexing
-    for (let i = workerScripts.length - 1; i >= 0; i--) {
-        if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
-            scriptDeleted = true;
-            // Delete script from the runningScripts array on its host serverIp
-            const ip = workerScripts[i].serverIp;
-            const name = workerScripts[i].name;
-
-            // Recalculate ram used
-            AllServers[ip].ramUsed = 0;
-            for (let j = 0; j < workerScripts.length; j++) {
-                if (workerScripts[j].serverIp !== ip) {
-                    continue;
-                }
-                if (j === i) { // not this one
-                    continue;
-                }
-                AllServers[ip].ramUsed += workerScripts[j].ramUsage;
-            }
-
-            // Delete script from Active Scripts
-            deleteActiveScriptsItem(workerScripts[i]);
-
-            for (let j = 0; j < AllServers[ip].runningScripts.length; j++) {
-                if (AllServers[ip].runningScripts[j].filename == name &&
-                    compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
-                    AllServers[ip].runningScripts.splice(j, 1);
-                    break;
-                }
-            }
-
-            // Delete script from workerScripts
-            workerScripts.splice(i, 1);
-        }
-    }
-    if (scriptDeleted) { updateActiveScriptsItems(); } // Force Update
-
-
-	// Run any scripts that haven't been started
-	for (let i = 0; i < workerScripts.length; i++) {
-		// If it isn't running, start the script
-		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
-            let p = null;  // p is the script's result promise.
-            if (workerScripts[i].name.endsWith(".js") || workerScripts[i].name.endsWith(".ns")) {
-                p = startNetscript2Script(workerScripts[i]);
-            } else {
-                p = startNetscript1Script(workerScripts[i]);
-                if (!(p instanceof Promise)) { continue; }
-            }
-
-			// Once the code finishes (either resolved or rejected, doesnt matter), set its
-			// running status to false
-			p.then(function(w) {
-				console.log("Stopping script " + w.name + " because it finished running naturally");
-				w.running = false;
-				w.env.stopFlag = true;
-                w.scriptRef.log("Script finished running");
-			}).catch(function(w) {
-				if (w instanceof Error) {
-                    dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-					console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
-                    return;
-                } else if (w.constructor === Array && w.length === 2 && w[0] === "RETURNSTATEMENT") {
-                    // Script ends with a return statement
-                    console.log("Script returning with value: " + w[1]);
-                    // TODO maybe do something with this in the future
-                    return;
-                } else if (w instanceof WorkerScript) {
-                    if (isScriptErrorMessage(w.errorMessage)) {
-                        var errorTextArray = w.errorMessage.split("|");
-                        if (errorTextArray.length != 4) {
-                            console.log("ERROR: Something wrong with Error text in evaluator...");
-                            console.log("Error text: " + errorText);
-                            return;
-                        }
-                        var serverIp = errorTextArray[1];
-                        var scriptName = errorTextArray[2];
-                        var errorMsg = errorTextArray[3];
-
-                        dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp +
-                                        "<br>Script name: " + scriptName +
-                                        "<br>Args:" + arrayToString(w.args) + "<br>" + errorMsg);
-                        w.scriptRef.log("Script crashed with runtime error");
-                    } else {
-                        w.scriptRef.log("Script killed");
-                    }
-					w.running = false;
-					w.env.stopFlag = true;
-				} else if (isScriptErrorMessage(w)) {
-                    dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
-                    return;
-                } else {
-                    dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-                    console.log(w);
-                }
-			});
-		}
-	}
-
-	setTimeoutRef(runScriptsLoop, 3e3);
-}
-
 /**
- * Queues a script to be killed by setting its stop flag to true. This
- * kills and timed/blocking Netscript functions (like hack(), sleep(), etc.) and
- * prevents any further execution of Netscript functions.
- * The runScriptsLoop() handles the actual deletion of the WorkerScript
- */
-export function killWorkerScript(runningScriptObj, serverIp) {
-	for (var i = 0; i < workerScripts.length; i++) {
-		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
-            compareArrays(workerScripts[i].args, runningScriptObj.args)) {
-			workerScripts[i].env.stopFlag = true;
-            killNetscriptDelay(workerScripts[i]);
-            return true;
-		}
-	}
-    return false;
-}
-
-/**
- * Given a RunningScript object, queues that script to be run
+ * Start a script
+ *
+ * Given a RunningScript object, constructs a corresponding WorkerScript,
+ * adds it to the global 'workerScripts' pool, and begins executing it.
+ * @param {RunningScript} runningScriptObj - Script that's being run
+ * @param {Server} server - Server on which the script is to be run
  */
 export function addWorkerScript(runningScriptObj, server) {
-	var filename = runningScriptObj.filename;
+	const filename = runningScriptObj.filename;
 
-	//Update server's ram usage
-    var threads = 1;
+	// Update server's ram usage
+    let threads = 1;
     if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
         threads = runningScriptObj.threads;
     } else {
         runningScriptObj.threads = 1;
     }
-    var ramUsage = roundToTwo(getRamUsageFromRunningScript(runningScriptObj) * threads);
-    var ramAvailable = server.maxRam - server.ramUsed;
+    const ramUsage = roundToTwo(getRamUsageFromRunningScript(runningScriptObj) * threads);
+    const ramAvailable = server.maxRam - server.ramUsed;
     if (ramUsage > ramAvailable) {
-        dialogBoxCreate("Not enough RAM to run script " + runningScriptObj.filename + " with args " +
-                        arrayToString(runningScriptObj.args) + ". This likely occurred because you re-loaded " +
-                        "the game and the script's RAM usage increased (either because of an update to the game or " +
-                        "your changes to the script.)");
+        dialogBoxCreate(
+            `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
+            `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
+            `the game and the script's RAM usage increased (either because of an update to the game or ` +
+            `your changes to the script.)`
+        );
         return;
     }
 	server.ramUsed = roundToTwo(server.ramUsed + ramUsage);
 
-	//Create the WorkerScript
-	var s = new WorkerScript(runningScriptObj, NetscriptFunctions);
+	// Create the WorkerScript
+	const s = new WorkerScript(runningScriptObj, NetscriptFunctions);
 	s.ramUsage 	= ramUsage;
 
-	//Add the WorkerScript to the Active Scripts list
-	addActiveScriptsItem(s);
+    // Start the script's execution
+    let p = null;  // Script's resulting promise
+    if (s.name.endsWith(".js") || s.name.endsWith(".ns")) {
+        p = startNetscript2Script(s);
+    } else {
+        p = startNetscript1Script(s);
+        if (!(p instanceof Promise)) { return; }
+    }
 
-	//Add the WorkerScript
-	workerScripts.push(s);
+    // Once the code finishes (either resolved or rejected, doesnt matter), set its
+    // running status to false
+    p.then(function(w) {
+        console.log("Stopping script " + w.name + " because it finished running naturally");
+        killWorkerScript(s);
+        w.scriptRef.log("Script finished running");
+    }).catch(function(w) {
+        if (w instanceof Error) {
+            dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+            console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
+            return;
+        } else if (w.constructor === Array && w.length === 2 && w[0] === "RETURNSTATEMENT") {
+            // Script ends with a return statement
+            console.log("Script returning with value: " + w[1]);
+            // TODO maybe do something with this in the future
+            return;
+        } else if (w instanceof WorkerScript) {
+            if (isScriptErrorMessage(w.errorMessage)) {
+                var errorTextArray = w.errorMessage.split("|");
+                if (errorTextArray.length != 4) {
+                    console.log("ERROR: Something wrong with Error text in evaluator...");
+                    console.log("Error text: " + errorText);
+                    return;
+                }
+                var serverIp = errorTextArray[1];
+                var scriptName = errorTextArray[2];
+                var errorMsg = errorTextArray[3];
+
+                dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp +
+                                "<br>Script name: " + scriptName +
+                                "<br>Args:" + arrayToString(w.args) + "<br>" + errorMsg);
+                w.scriptRef.log("Script crashed with runtime error");
+            } else {
+                w.scriptRef.log("Script killed");
+                return; // Already killed, so stop here
+            }
+            w.running = false;
+            w.env.stopFlag = true;
+        } else if (isScriptErrorMessage(w)) {
+            dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+            console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
+            return;
+        } else {
+            dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
+            console.log(w);
+        }
+
+        killWorkerScript(s);
+    });
+
+    // Add the WorkerScript to the global pool
+    workerScripts.push(s);
+    WorkerScriptStartStopEventEmitter.emitEvent();
 	return;
 }
 

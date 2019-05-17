@@ -33,6 +33,11 @@ export class WorkerScript {
     delay: number | null = null;
 
     /**
+     * Holds the Promise resolve() function for when the script is "blocked" by an async op
+     */
+    delayResolve?: () => void;
+
+    /**
      * Stores names of all functions that have logging disabled
      */
     disableLogs: IMap<string> = {};

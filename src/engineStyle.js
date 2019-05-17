@@ -9,6 +9,7 @@ import "../css/characteroverview.scss";
 import "../css/terminal.scss";
 import "../css/scripteditor.scss";
 import "../css/codemirror-overrides.scss";
+import "../css/activescripts.scss";
 import "../css/hacknetnodes.scss";
 import "../css/menupages.scss";
 import "../css/augmentations.scss";

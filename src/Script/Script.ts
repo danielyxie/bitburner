@@ -1,6 +1,9 @@
-// Class representing a script file
-// This does NOT represent a script that is actively running and
-// being evaluated. See RunningScript for that
+/**
+ * Class representing a script file.
+ *
+ * This does NOT represent a script that is actively running and
+ * being evaluated. See RunningScript for that
+ */
 import { calculateRamUsage } from "./RamCalculations";
 import { Page, routing } from "../ui/navigationTracking";
 
@@ -34,7 +37,6 @@ export class Script {
     // IP of server that this script is on.
 	server: string = "";
 
-
     constructor(fn: string="", code: string="", server: string="", otherScripts: Script[]=[]) {
     	this.filename 	= fn;
         this.code       = code;
@@ -44,6 +46,9 @@ export class Script {
         if (this.code !== "") { this.updateRamUsage(otherScripts); }
     };
 
+    /**
+     * Download the script as a file
+     */
     download(): void {
         const filename = this.filename + ".js";
         const file = new Blob([this.code], {type: 'text/plain'});
@@ -63,10 +68,14 @@ export class Script {
         }
     }
 
-    // Save a script FROM THE SCRIPT EDITOR
+    /**
+     * Save a script from the script editor
+     * @param {string} code - The new contents of the script
+     * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
+     */
     saveScript(code: string, serverIp: string, otherScripts: Script[]): void {
     	if (routing.isOn(Page.ScriptEditor)) {
-    		//Update code and filename
+    		// Update code and filename
     		this.code = code.replace(/^\s+|\s+$/g, '');
 
             const filenameElem: HTMLInputElement | null = document.getElementById("script-editor-filename") as HTMLInputElement;
@@ -75,18 +84,16 @@ export class Script {
                 return;
             }
     		this.filename = filenameElem!.value;
-
-    		// Server
     		this.server = serverIp;
-
-    		//Calculate/update ram usage, execution time, etc.
     		this.updateRamUsage(otherScripts);
-
             this.module = "";
     	}
     }
 
-    // Updates the script's RAM usage based on its code
+    /**
+     * Calculates and updates the script's RAM usage based on its code
+     * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
+     */
     async updateRamUsage(otherScripts: Script[]) {
         var res = await calculateRamUsage(this.code, otherScripts);
         if (res > 0) {
