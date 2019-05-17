@@ -13,6 +13,12 @@
         margin: 6px;
         padding: 4px;
     }
+
+    .accordion-header {
+        > pre {
+            color: white;
+        }
+    }
 }
 
 .active-scripts-server-header {
@@ -26,31 +32,32 @@
     text-align: left;
     border: none;
     outline: none;
+
+    &:after {
+        content: '\02795'; /* "plus" sign (+) */
+        font-size: $defaultFontSize * 0.8125;
+        color: #fff;
+        float: right;
+        margin-left: 5px;
+    }
+
+    &.active, &:hover {
+        background-color: #555;
+    }
 }
 
-.active-scripts-server-header.active,
-.active-scripts-server-header:hover {
-    background-color: #555;
-}
+.active-scripts-server-header.active {
+    &:after {
+        content: "\2796"; /* "minus" sign (-) */
+        font-size: $defaultFontSize * 0.8125;
+        color: #fff;
+        float: right;
+        margin-left: 5px;
+    }
 
-.active-scripts-server-header.active:hover {
-    background-color: #666;
-}
-
-.active-scripts-server-header:after {
-    content: '\02795'; /* "plus" sign (+) */
-    font-size: $defaultFontSize * 0.8125;
-    color: #fff;
-    float: right;
-    margin-left: 5px;
-}
-
-.active-scripts-server-header.active:after {
-    content: "\2796"; /* "minus" sign (-) */
-    font-size: $defaultFontSize * 0.8125;
-    color: #fff;
-    float: right;
-    margin-left: 5px;
+    &:hover {
+        background-color: #666;
+    }
 }
 
 .active-scripts-server-panel {
@@ -59,24 +66,23 @@
     width: 55%;
     margin-left: 5%;
     display: none;
-}
 
-.active-scripts-server-panel div,
-.active-scripts-server-panel ul,
-.active-scripts-server-panel ul > li {
-    background-color: #555;
+    div, ul, ul > li {
+        background-color: #555;
+    }
 }
 
 .active-scripts-script-header {
     background-color: #555;
-    color: var(--my-font-color);
-    padding: 4px 25px 4px 10px;
-    cursor: pointer;
-    width: auto;
-    text-align: left;
     border: none;
+    color: var(--my-font-color);
+    cursor: pointer;
+    display: block;
     outline: none;
+    padding: 4px 25px 4px 10px;
     position: relative;
+    text-align: left;
+    width: auto;
 
     &:after {
         content: '\02795'; /* "plus" sign (+) */
@@ -104,13 +110,14 @@
 }
 
 .active-scripts-script-panel {
-    padding: 0 18px;
     background-color: #555;
-    width: auto;
     display: none;
+    font-size: 14px;
     margin-bottom: 6px;
+    padding: 0 18px;
+    width: auto;
 
-    p, h2, ul, li {
+    pre, h2, ul, li {
         background-color: #555;
         width: auto;
         color: #fff;

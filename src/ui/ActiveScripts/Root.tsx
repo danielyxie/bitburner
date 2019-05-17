@@ -15,7 +15,7 @@ type IProps = {
     workerScripts: WorkerScript[];
 }
 
-export class ActiveScriptsRoot extends React.Component<IProps, any> {
+export class ActiveScriptsRoot extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
     }

@@ -9,6 +9,7 @@ type IProps = {
     panelClass?: string; // Override default class
     panelContent: React.ReactElement;
     panelInitiallyOpened?: boolean;
+    style?: string;
 }
 
 type IState = {

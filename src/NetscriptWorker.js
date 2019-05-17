@@ -5,6 +5,7 @@
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
+import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
@@ -25,7 +26,6 @@ import {
 } from "./Script/ScriptHelpers";
 import { AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { EventEmitter } from "./utils/EventEmitter";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { generate } from "escodegen";
@@ -44,9 +44,6 @@ export const NetscriptPorts = [];
 for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
     NetscriptPorts.push(new NetscriptPort());
 }
-
-// WorkerScript-related event emitter. Used for the UI
-export const WorkerScriptEventEmitter = new EventEmitter();
 
 export function prestigeWorkerScripts() {
     for (var i = 0; i < workerScripts.length; ++i) {
@@ -138,7 +135,7 @@ function startNetscript2Script(workerScript) {
 }
 
 function startNetscript1Script(workerScript) {
-    var code = workerScript.code;
+    const code = workerScript.code;
     workerScript.running = true;
 
     //Process imports
@@ -448,9 +445,9 @@ export function addWorkerScript(runningScriptObj, server) {
     // Start the script's execution
     let p = null;  // Script's resulting promise
     if (s.name.endsWith(".js") || s.name.endsWith(".ns")) {
-        p = startNetscript2Script(workerScripts[i]);
+        p = startNetscript2Script(s);
     } else {
-        p = startNetscript1Script(workerScripts[i]);
+        p = startNetscript1Script(s);
         if (!(p instanceof Promise)) { return; }
     }
 
@@ -488,6 +485,7 @@ export function addWorkerScript(runningScriptObj, server) {
                 w.scriptRef.log("Script crashed with runtime error");
             } else {
                 w.scriptRef.log("Script killed");
+                return; // Already killed, so stop here
             }
             w.running = false;
             w.env.stopFlag = true;
@@ -505,6 +503,7 @@ export function addWorkerScript(runningScriptObj, server) {
 
     // Add the WorkerScript to the global pool
     workerScripts.push(s);
+    WorkerScriptStartStopEventEmitter.emitEvent();
 	return;
 }
 

@@ -35,6 +35,7 @@ export function ScriptProduction(props: IProps): React.ReactElement {
             <span id="active-scripts-total-prod-aug-total" className="money-gold">
                 {numeralWrapper.formatMoney(props.p.scriptProdSinceLastAug)}
             </span>
+            
             (<span className="money-gold">
                 <span id="active-scripts-total-prod-aug-avg" className="money-gold">
                     {numeralWrapper.formatMoney(prodRateSinceLastAug)}

@@ -28,7 +28,7 @@ export function ServerAccordion(props: IProps): React.ReactElement {
         progress: server.ramUsed / server.maxRam,
         totalTicks: 30
     };
-    const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`.replace(/\s/g, '&nbsp;');
+    const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`;
 
     const scripts = props.workerScripts.map((ws) => {
         return (
@@ -39,7 +39,7 @@ export function ServerAccordion(props: IProps): React.ReactElement {
     return (
         <Accordion
             headerContent={
-                <p>{headerTxt}</p>
+                <pre>{headerTxt}</pre>
             }
             panelContent={
                 <ul>{scripts}</ul>

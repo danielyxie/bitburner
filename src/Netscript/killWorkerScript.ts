@@ -4,6 +4,7 @@
  */
 import { WorkerScript } from "./WorkerScript";
 import { workerScripts } from "./WorkerScripts";
+import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventEmitter";
 
 import { RunningScript } from "../Script/RunningScript";
 import { AllServers } from "../Server/AllServers";
@@ -106,6 +107,7 @@ function removeWorkerScript(id: WorkerScript | number): void {
 
     // Delete script from global pool (workerScripts)
     workerScripts.splice(<number>index, 1);
+    WorkerScriptStartStopEventEmitter.emitEvent();
 }
 
 /**

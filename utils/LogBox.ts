@@ -23,7 +23,6 @@ function logBoxInit(): void {
         console.error(`Could not find LogBox's close button`);
         return;
     }
-    logBoxClose();
 
     closeButton.addEventListener("click", function() {
         logBoxClose();
@@ -39,6 +38,8 @@ function logBoxInit(): void {
     // Initialize references to other DOM elements
     logBoxContainer = document.getElementById("log-box-container");
     logText = document.getElementById("log-box-text");
+
+    logBoxClose();
 
     document.removeEventListener("DOMContentLoaded", logBoxInit);
 };

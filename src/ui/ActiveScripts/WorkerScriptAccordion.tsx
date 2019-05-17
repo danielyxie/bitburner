@@ -12,6 +12,7 @@ import { AccordionButton } from "../React/AccordionButton";
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 
+import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { logBoxCreate } from "../../../utils/LogBox";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { arrayToString } from "../../../utils/helpers/arrayToString";
@@ -24,8 +25,14 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
     const workerScript = props.workerScript;
     const scriptRef = workerScript.scriptRef;
 
+
     const logClickHandler = logBoxCreate.bind(null, scriptRef);
-    const killScriptButton = killWorkerScript.bind(null, scriptRef, scriptRef.server);
+    const killScript = killWorkerScript.bind(null, scriptRef, scriptRef.server);
+
+    function killScriptClickHandler() {
+        killScript();
+        dialogBoxCreate("Killing script");
+    }
 
     // Calculations for script stats
     const onlineMps = scriptRef.onlineMoneyMade / scriptRef.onlineRunningTime;
@@ -37,31 +44,30 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
         <Accordion
             headerClass="active-scripts-script-header"
             headerContent={
-                <>
-                </>
+                <>{props.workerScript.name}</>
             }
             panelClass="active-scripts-script-panel"
             panelContent={
                 <>
-                <p>Threads: {props.workerScript.scriptRef.threads}</p>
-                <p>Args: {arrayToString(props.workerScript.args)}</p>
-                <p>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</p>
-                <p>Offline Time: {convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</p>
-                <p>Total online production: {numeralWrapper.formatMoney(scriptRef.onlineMoneyMade)}</p>
-                <p>{(Array(26).join(" ") + numeralWrapper.formatBigNumber(scriptRef.onlineExpGained) + " hacking exp").replace( / /g, "&nbsp;")}</p>
-                <p>Online production rate: {numeralWrapper.formatMoney(onlineMps)} / second</p>
-                <p>{(Array(25).join(" ") + numeralWrapper.formatBigNumber(onlineEps) + " hacking exp / second").replace( / /g, "&nbsp;")}</p>
-                <p>Total offline production: {numeralWrapper.formatMoney(scriptRef.offlineMoneyMade)}</p>
-                <p>{(Array(27).join(" ") + numeralWrapper.formatBigNumber(scriptRef.offlineExpGained) + " hacking exp").replace( / /g, "&nbsp;")}</p>
-                <p>Offline production rate: {numeralWrapper.formatMoney(offlineMps)} / second</p>
-                <p>{(Array(26).join(" ") + numeralWrapper.formatBigNumber(offlineEps) +  " hacking exp / second").replace( / /g, "&nbsp;")}</p>
+                <pre>Threads: {props.workerScript.scriptRef.threads}</pre>
+                <pre>Args: {arrayToString(props.workerScript.args)}</pre>
+                <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
+                <pre>Offline Time: {convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</pre>
+                <pre>Total online production: {numeralWrapper.formatMoney(scriptRef.onlineMoneyMade)}</pre>
+                <pre>{(Array(26).join(" ") + numeralWrapper.formatBigNumber(scriptRef.onlineExpGained) + " hacking exp")}</pre>
+                <pre>Online production rate: {numeralWrapper.formatMoney(onlineMps)} / second</pre>
+                <pre>{(Array(25).join(" ") + numeralWrapper.formatBigNumber(onlineEps) + " hacking exp / second")}</pre>
+                <pre>Total offline production: {numeralWrapper.formatMoney(scriptRef.offlineMoneyMade)}</pre>
+                <pre>{(Array(27).join(" ") + numeralWrapper.formatBigNumber(scriptRef.offlineExpGained) + " hacking exp")}</pre>
+                <pre>Offline production rate: {numeralWrapper.formatMoney(offlineMps)} / second</pre>
+                <pre>{(Array(26).join(" ") + numeralWrapper.formatBigNumber(offlineEps) +  " hacking exp / second")}</pre>
 
                 <AccordionButton
                     onClick={logClickHandler}
                     text="Log"
                 />
                 <AccordionButton
-                    onClick={killScriptButton}
+                    onClick={killScriptClickHandler}
                     text="Kill Script"
                 />
                 </>

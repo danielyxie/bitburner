@@ -6,9 +6,10 @@ import * as React from "react";
 
 import { ServerAccordion } from "./ServerAccordion";
 
+import { WorkerScript } from "../../Netscript/WorkerScript";
+import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 import { getServer } from "../../Server/ServerHelpers";
 import { BaseServer } from "../../Server/BaseServer";
-import { WorkerScript } from "../../Netscript/WorkerScript";
 
 // Map of server hostname -> all workerscripts on that server for all active scripts
 interface IServerData {
@@ -24,17 +25,37 @@ type IProps = {
     workerScripts: WorkerScript[];
 };
 
-export class ServerAccordions extends React.Component<IProps> {
+type IState = {
+    rerenderFlag: boolean;
+}
+
+
+const subscriberId = "ActiveScriptsUI";
+
+export class ServerAccordions extends React.Component<IProps, IState> {
     serverToScriptMap: IServerToScriptsMap = {};
 
     constructor(props: IProps) {
         super(props);
 
+        this.state = {
+            rerenderFlag: false,
+        }
+
         this.updateServerToScriptsMap();
 
-        // TODO
-        // We subscribe to an event emitter that publishes whenever a script is
-        // started/stopped. This allows us to only update the map when necessary
+        this.rerender = this.rerender.bind(this);
+    }
+
+    componentDidMount() {
+        WorkerScriptStartStopEventEmitter.addSubscriber({
+            cb: this.rerender,
+            id: subscriberId,
+        })
+    }
+
+    componentWillUnmount() {
+        WorkerScriptStartStopEventEmitter.removeSubscriber(subscriberId);
     }
 
     updateServerToScriptsMap(): void {
@@ -58,6 +79,13 @@ export class ServerAccordions extends React.Component<IProps> {
         }
 
         this.serverToScriptMap = map;
+    }
+
+    rerender() {
+        this.updateServerToScriptsMap();
+        this.setState((prevState) => {
+            return { rerenderFlag: !prevState.rerenderFlag }
+        });
     }
 
     render() {
