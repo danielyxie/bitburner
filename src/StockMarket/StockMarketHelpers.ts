@@ -3,7 +3,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-export const forecastChangePerPriceMovement = 0.1;
+export const forecastChangePerPriceMovement = 0.01;
 
 /**
  * Given a stock, calculates the amount by which the stock price is multiplied
