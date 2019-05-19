@@ -65,14 +65,14 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         solver: (data: number, ans: string) => {
             let fac: number = 2;
             let n: number = data;
-            while (Math.sqrt(n) > fac-1) {
+            while (n > ((fac-1) * (fac-1))) {
                 while (n % fac === 0) {
                     n = Math.round(n / fac);
                 }
                 ++fac;
             }
 
-            return (n===1?(fac-1):n) === parseInt(ans, 10);
+            return (n===1 ? (fac-1) : n) === parseInt(ans, 10);
         },
     },
     {
