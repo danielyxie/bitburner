@@ -3,7 +3,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-export const forecastChangePerPriceMovement = 0.01;
+export const forecastChangePerPriceMovement = 0.005;
 
 /**
  * Given a stock, calculates the amount by which the stock price is multiplied
@@ -171,9 +171,8 @@ export function processBuyTransactionPriceMovement(stock: Stock, shares: number,
 
     // Forecast always decreases in magnitude
     const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
-    stock.otlkMag -= forecastChange;
-    if (stock.otlkMag < 0.1) {
-        stock.otlkMag = 0.1;
+    if (stock.otlkMag > 10) {
+        stock.otlkMag -= forecastChange;
     }
 }
 
@@ -323,9 +322,8 @@ export function processSellTransactionPriceMovement(stock: Stock, shares: number
 
     // Forecast always decreases in magnitude
     const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
-    stock.otlkMag -= forecastChange;
-    if (stock.otlkMag < 0.1) {
-        stock.otlkMag = 0.1;
+    if (stock.otlkMag > 10) {
+        stock.otlkMag -= forecastChange;
     }
 }
 
