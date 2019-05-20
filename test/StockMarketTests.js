@@ -45,7 +45,7 @@ describe("Stock Market Tests", function() {
         marketCap: 5e9,
         mv: 1,
         name: "MockStock",
-        otlkMag: 10,
+        otlkMag: 20,
         spreadPerc: 1,
         shareTxForMovement: 5e3,
         symbol: "mock",
