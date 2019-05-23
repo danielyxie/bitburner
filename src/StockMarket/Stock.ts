@@ -101,6 +101,12 @@ export class Stock {
     otlkMag: number;
 
     /**
+     * Forecast of outlook magnitude. Essentially a second-order forecast.
+     * Unlike 'otlkMag', this number is on an absolute scale from 0-100 (rather than 0-50)
+     */
+    otlkMagForecast: number;
+
+    /**
      * Average price of stocks that the player owns in the LONG position
      */
     playerAvgPx: number;
@@ -173,6 +179,7 @@ export class Stock {
         this.mv                         = toNumber(p.mv);
         this.b                          = p.b;
         this.otlkMag                    = p.otlkMag;
+        this.otlkMagForecast            = this.getAbsoluteForecast();
         this.cap                        = getRandomInt(this.price * 1e3, this.price * 25e3);
         this.spreadPerc                 = toNumber(p.spreadPerc);
         this.priceMovementPerc          = this.spreadPerc / (getRandomInt(10, 30) / 10);
@@ -189,9 +196,60 @@ export class Stock {
         this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e5) * 1e5;
     }
 
+    /**
+     * Set the stock to a new price. Also updates the stock's previous price tracker
+     */
     changePrice(newPrice: number): void {
         this.lastPrice = this.price;
         this.price = newPrice;
+    }
+
+    /**
+     * Change the stock's forecast during a stock market 'tick'.
+     * The way a stock's forecast changes depends on various internal properties,
+     * but is ultimately determined by RNG
+     */
+    cycleForecast(changeAmt: number=0.1): void {
+        const increaseChance = this.getForecastIncreaseChance();
+
+        if (Math.random() < increaseChance) {
+            // Forecast increases
+            if (this.b) {
+                this.otlkMag += changeAmt;
+            } else {
+                this.otlkMag -= changeAmt;
+            }
+        } else {
+            // Forecast decreases
+            if (this.b) {
+                this.otlkMag -= changeAmt;
+            } else {
+                this.otlkMag += changeAmt;
+            }
+        }
+
+        this.otlkMag = Math.min(this.otlkMag, 50);
+        if (this.otlkMag < 0) {
+            this.otlkMag *= -1;
+            this.b = !this.b;
+        }
+    }
+
+    /**
+     * "Flip" the stock's second-order forecast. This can occur during a
+     * stock market "cycle" (determined by RNG). It is used to simulate
+     * RL stock market cycles and introduce volatility
+     */
+    flipForecastForecast(): void {
+        const diff = this.otlkMagForecast - 50;
+        this.otlkMagForecast = 50 + (-1 * diff);
+    }
+
+    /**
+     * Returns the stock's absolute forecast, which is a number between 0-100
+     */
+    getAbsoluteForecast(): number {
+        return this.b ? 50 + this.otlkMag : 50 - this.otlkMag;
     }
 
     /**
@@ -206,6 +264,15 @@ export class Stock {
      */
     getBidPrice(): number {
         return this.price * (1 - (this.spreadPerc / 100));
+    }
+
+    /**
+     * Returns the chance (0-1 decimal) that a stock has of having its forecast increase
+     */
+    getForecastIncreaseChance(): number {
+        const diff = this.otlkMagForecast - this.getAbsoluteForecast();
+
+        return (50 + Math.min(Math.max(diff, -45), 45)) / 100;
     }
 
     /**

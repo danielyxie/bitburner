@@ -200,9 +200,15 @@ export function stockMarketCycle() {
         if (!(stock instanceof Stock)) { continue; }
         let thresh = 0.6;
         if (stock.b) { thresh = 0.4; }
-        if (Math.random() < thresh) {
-            stock.b = !stock.b;
-            if (stock.otlkMag < 5) { stock.otlkMag += 0.1; }
+        const roll = Math.random();
+        if (roll < 0.4) {
+            stock.flipForecastForecast();
+        } else if (roll < 0.6) {
+            stock.otlkMagForecast += 0.5;
+            stock.otlkMagForecast = Math.min(stock.otlkMagForecast * 1.02, 50);
+        } else if (roll < 0.8) {
+            stock.otlkMagForecast -= 0.5;
+            stock.otlkMagForecast = otlkMagForecast * (1 / 1.02);
         }
     }
 }
@@ -264,23 +270,14 @@ export function processStockPrices(numCycles=1) {
         }
 
         let otlkMagChange = stock.otlkMag * av;
-        if (stock.otlkMag <= 0.1) {
+        if (stock.otlkMag < 1) {
             otlkMagChange = 1;
         }
-        if (c < 0.5) {
-            stock.otlkMag += otlkMagChange;
-        } else {
-            stock.otlkMag -= otlkMagChange;
-        }
-        if (stock.otlkMag > 50) { stock.otlkMag = 50; } // Cap so the "forecast" is between 0 and 100
-        if (stock.otlkMag < 0) {
-            stock.otlkMag *= -1;
-            stock.b = !stock.b;
-        }
+        stock.cycleForecast(otlkMagChange);
 
         // Shares required for price movement gradually approaches max over time
-        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovementUp + 5, stock.shareTxForMovement);
-        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovementDown + 5, stock.shareTxForMovement);
+        stock.shareTxUntilMovementUp = Math.min(stock.shareTxUntilMovementUp + 5, stock.shareTxForMovement);
+        stock.shareTxUntilMovementDown = Math.min(stock.shareTxUntilMovementDown + 5, stock.shareTxForMovement);
     }
 
     displayStockMarketContent();

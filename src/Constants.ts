@@ -222,6 +222,10 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.47.0
+    * 
+    * Scripts now start/stop instantly
+
+    v0.47.0
     * Stock Market changes:
     ** Implemented spread. Stock's now have bid and ask prices at which transactions occur
     ** Large transactions will now influence a stock's price and forecast
