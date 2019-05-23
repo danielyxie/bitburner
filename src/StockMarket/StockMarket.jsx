@@ -8,12 +8,6 @@ import { Order } from "./Order";
 import { processOrders } from "./OrderProcessing";
 import { Stock } from "./Stock";
 import {
-    getBuyTransactionCost,
-    getSellTransactionGain,
-    processBuyTransactionPriceMovement,
-    processSellTransactionPriceMovement
-} from "./StockMarketHelpers";
-import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost
 } from "./StockMarketCosts";
@@ -205,10 +199,10 @@ export function stockMarketCycle() {
             stock.flipForecastForecast();
         } else if (roll < 0.6) {
             stock.otlkMagForecast += 0.5;
-            stock.otlkMagForecast = Math.min(stock.otlkMagForecast * 1.02, 50);
+            stock.otlkMagForecast = Math.min(stock.otlkMagForecast * 1.02, 100);
         } else if (roll < 0.8) {
             stock.otlkMagForecast -= 0.5;
-            stock.otlkMagForecast = otlkMagForecast * (1 / 1.02);
+            stock.otlkMagForecast = stock.otlkMagForecast * (1 / 1.02);
         }
     }
 }
@@ -276,8 +270,7 @@ export function processStockPrices(numCycles=1) {
         stock.cycleForecast(otlkMagChange);
 
         // Shares required for price movement gradually approaches max over time
-        stock.shareTxUntilMovementUp = Math.min(stock.shareTxUntilMovementUp + 5, stock.shareTxForMovement);
-        stock.shareTxUntilMovementDown = Math.min(stock.shareTxUntilMovementDown + 5, stock.shareTxForMovement);
+        stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 10, stock.shareTxForMovement);
     }
 
     displayStockMarketContent();

@@ -6,8 +6,7 @@ import { Stock } from "./Stock";
 import {
     getBuyTransactionCost,
     getSellTransactionGain,
-    processBuyTransactionPriceMovement,
-    processSellTransactionPriceMovement
+    processTransactionForecastMovement,
 } from "./StockMarketHelpers";
 
 import { PositionTypes } from "./data/PositionTypes";
@@ -81,7 +80,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
     const newTotal = origTotal + totalPrice - CONSTANTS.StockMarketCommission;
     stock.playerShares = Math.round(stock.playerShares + shares);
     stock.playerAvgPx = newTotal / stock.playerShares;
-    processBuyTransactionPriceMovement(stock, shares, PositionTypes.Long);
+    processTransactionForecastMovement(stock, shares);
     if (opts.rerenderFn != null && typeof opts.rerenderFn === "function") {
         opts.rerenderFn();
     }
@@ -138,7 +137,7 @@ export function sellStock(stock: Stock, shares: number, workerScript: WorkerScri
         stock.playerAvgPx = 0;
     }
 
-    processSellTransactionPriceMovement(stock, shares, PositionTypes.Long);
+    processTransactionForecastMovement(stock, shares);
 
     if (opts.rerenderFn != null && typeof opts.rerenderFn === "function") {
         opts.rerenderFn();
@@ -211,7 +210,7 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
     const newTotal = origTotal + totalPrice - CONSTANTS.StockMarketCommission;
     stock.playerShortShares = Math.round(stock.playerShortShares + shares);
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
-    processBuyTransactionPriceMovement(stock, shares, PositionTypes.Short);
+    processTransactionForecastMovement(stock, shares);
 
     if (opts.rerenderFn != null && typeof opts.rerenderFn === "function") {
         opts.rerenderFn();
@@ -278,7 +277,7 @@ export function sellShort(stock: Stock, shares: number, workerScript: WorkerScri
     if (stock.playerShortShares === 0) {
         stock.playerAvgShortPx = 0;
     }
-    processSellTransactionPriceMovement(stock, shares, PositionTypes.Short);
+    processTransactionForecastMovement(stock, shares);
 
     if (opts.rerenderFn != null && typeof opts.rerenderFn === "function") {
         opts.rerenderFn();

@@ -98,10 +98,6 @@ import {
     cancelOrder,
     displayStockMarketContent,
 } from "./StockMarket/StockMarket";
-import {
-    getBuyTransactionCost,
-    getSellTransactionGain,
-} from "./StockMarket/StockMarketHelpers";
 import { OrderTypes } from "./StockMarket/data/OrderTypes";
 import { PositionTypes } from "./StockMarket/data/PositionTypes";
 import { StockSymbols } from "./StockMarket/data/StockSymbols";
@@ -1495,48 +1491,6 @@ function NetscriptFunctions(workerScript) {
             const stock = getStockFromSymbol(symbol, "getStockMaxShares");
 
             return stock.maxShares;
-        },
-        getStockPurchaseCost: function(symbol, shares, posType) {
-            updateDynamicRam("getStockPurchaseCost", getRamCost("getStockPurchaseCost"));
-            checkTixApiAccess("getStockPurchaseCost");
-            const stock = getStockFromSymbol(symbol, "getStockPurchaseCost");
-            shares = Math.round(shares);
-
-            let pos;
-            const sanitizedPosType = posType.toLowerCase();
-            if (sanitizedPosType.includes("l")) {
-                pos = PositionTypes.Long;
-            } else if (sanitizedPosType.includes("s")) {
-                pos = PositionTypes.Short;
-            } else {
-                return Infinity;
-            }
-
-            const res = getBuyTransactionCost(stock, shares, pos);
-            if (res == null) { return Infinity; }
-
-            return res;
-        },
-        getStockSaleGain: function(symbol, shares, posType) {
-            updateDynamicRam("getStockSaleGain", getRamCost("getStockSaleGain"));
-            checkTixApiAccess("getStockSaleGain");
-            const stock = getStockFromSymbol(symbol, "getStockSaleGain");
-            shares = Math.round(shares);
-
-            let pos;
-            const sanitizedPosType = posType.toLowerCase();
-            if (sanitizedPosType.includes("l")) {
-                pos = PositionTypes.Long;
-            } else if (sanitizedPosType.includes("s")) {
-                pos = PositionTypes.Short;
-            } else {
-                return 0;
-            }
-
-            const res = getSellTransactionGain(stock, shares, pos);
-            if (res == null) { return 0; }
-
-            return res;
         },
         buyStock: function(symbol, shares) {
             updateDynamicRam("buyStock", getRamCost("buyStock"));

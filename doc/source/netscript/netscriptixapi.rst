@@ -22,8 +22,6 @@ access even after you 'reset' by installing Augmentations
     getStockBidPrice() <tixapi/getStockBidPrice>
     getStockPosition() <tixapi/getStockPosition>
     getStockMaxShares() <tixapi/getStockMaxShares>
-    getStockPurchaseCost() <tixapi/getStockPurchaseCost>
-    getStockSaleGain() <tixapi/getStockSaleGain>
     buyStock() <tixapi/buyStock>
     sellStock() <tixapi/sellStock>
     shortStock() <tixapi/shortStock>

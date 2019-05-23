@@ -132,12 +132,6 @@ export class Stock {
     price: number;
 
     /**
-     * Percentage by which the stock's price changes for a transaction-induced
-     * price movement.
-     */
-    readonly priceMovementPerc: number;
-
-    /**
      * How many shares need to be transacted in order to trigger a price movement
      */
     readonly shareTxForMovement: number;
@@ -146,8 +140,7 @@ export class Stock {
      * How many share transactions remaining until a price movement occurs
      * (separately tracked for upward and downward movements)
      */
-    shareTxUntilMovementDown: number;
-    shareTxUntilMovementUp: number;
+    shareTxUntilMovement: number;
 
     /**
      * Spread percentage. The bid/ask prices for this stock are N% above or below
@@ -182,10 +175,8 @@ export class Stock {
         this.otlkMagForecast            = this.getAbsoluteForecast();
         this.cap                        = getRandomInt(this.price * 1e3, this.price * 25e3);
         this.spreadPerc                 = toNumber(p.spreadPerc);
-        this.priceMovementPerc          = this.spreadPerc / (getRandomInt(10, 30) / 10);
         this.shareTxForMovement         = toNumber(p.shareTxForMovement);
-        this.shareTxUntilMovementDown   = this.shareTxForMovement;
-        this.shareTxUntilMovementUp     = this.shareTxForMovement;
+        this.shareTxUntilMovement       = this.shareTxForMovement;
 
         // Total shares is determined by market cap, and is rounded to nearest 100k
         let totalSharesUnrounded: number = (p.marketCap / this.price);

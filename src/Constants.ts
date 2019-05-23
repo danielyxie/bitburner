@@ -222,7 +222,11 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.47.0
-    * 
+    * Stock Market changes:
+    ** Transactions no longer influence stock prices (but they still influence forecast)
+    ** Removed getStockPurchaseCost() and getStockSaleGain() Netscript functions
+    **
+
     * Scripts now start/stop instantly
 
     v0.47.0
