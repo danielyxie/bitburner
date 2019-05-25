@@ -26,9 +26,9 @@ export async function executeJSScript(scripts = [], workerScript) {
         // load fully dynamic content. So we hide the import from webpack
         // by placing it inside an eval call.
         urlStack = _getScriptUrls(script, scripts, []);
-        script.module = await eval('import(urlStack[urlStack.length - 1])');
+        script.module = new Promise(resolve => resolve(eval('import(urlStack[urlStack.length - 1])')));
     }
-    loadedModule = script.module;
+    loadedModule = await script.module;
 
     let ns      = workerScript.env.vars;
 
