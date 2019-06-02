@@ -1,0 +1,72 @@
+@import "theme";
+
+#terminal-container {
+    position: fixed;
+    margin-left: 10%;
+    height: 100%;
+    width: 99%;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+#terminal {
+    padding-top: 10px;
+    padding-left: 10px;
+    height: auto;
+    width: 70%;
+    font-size: $defaultFontSize;
+    overflow: auto;
+    overflow-y: scroll;
+    background-color: var(--my-background-color);
+    table-layout: fixed;
+
+    .prompt {
+        color: var(--my-prompt-color);
+        margin: 0;
+        padding: 0;
+    }
+}
+
+#terminal-input {
+    background-color: var(--my-background-color);
+    color: var(--my-font-color);
+    transition: height 1s;
+}
+
+.terminal-input {
+    display: inline-block;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0;
+    background-color: var(--my-background-color);
+    font-size: $defaultFontSize;
+    outline: none;
+    color: var(--my-font-color);
+}
+
+.terminal-line {
+    width: 70%;
+    word-wrap: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
+#terminal-input-td {
+    display: flex;
+}
+
+#terminal-input-td textarea {
+    overflow: hidden;
+    resize: none;
+    height: auto;
+}
+
+#terminal-input-header {
+    white-space: pre;
+}
+
+#terminal-input-text-box {
+    margin-left: 2px;
+    flex: 1 1 auto;
+}

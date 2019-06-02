@@ -1,63 +1,102 @@
-import {CONSTANTS}                                  from "./Constants.js";
-import {Engine}                                     from "./engine.js";
-import {Faction, Factions, factionExists,
-        joinFaction, displayFactionContent}         from "./Faction.js";
-import {Locations}                                  from "./Location.js";
-import {Player}                                     from "./Player.js";
-import {hackWorldDaemon}                            from "./RedPill.js";
-import {KEY}                                        from "./Terminal.js";
+import { Augmentations } from "./Augmentation/Augmentations";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "./Constants";
+import { Engine } from "./engine";
+import { Faction } from "./Faction/Faction";
+import { Factions, factionExists } from "./Faction/Factions";
+import { joinFaction, displayFactionContent } from "./Faction/FactionHelpers";
+import { Player } from "./Player";
+import { hackWorldDaemon, redPillFlag } from "./RedPill";
 
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
-import {getRandomInt, addOffset, clearObject,
-        createElement, removeChildrenFromElement,
-        exceptionAlert, createPopup, appendLineBreaks,
-        removeElementById, removeElement,
-        createProgressBarText}                      from "../utils/HelperFunctions.js";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                           from "../utils/JSONReviver.js";
-import numeral                                      from "../utils/numeral.min.js";
-import {formatNumber}                               from "../utils/StringHelperFunctions.js";
+import { Page, routing } from "./ui/navigationTracking";
+import { numeralWrapper } from "./ui/numeralFormat";
+
+import { dialogBoxCreate } from "../utils/DialogBox";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON
+} from "../utils/JSONReviver";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
+import { formatNumber } from "../utils/StringHelperFunctions";
+
+import { addOffset } from "../utils/helpers/addOffset";
+import { clearObject } from "../utils/helpers/clearObject";
+import { createProgressBarText } from "../utils/helpers/createProgressBarText";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { getTimestamp } from "../utils/helpers/getTimestamp";
+import { KEY } from "../utils/helpers/keyCodes";
+
+import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
+import { appendLineBreaks } from "../utils/uiHelpers/appendLineBreaks";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { createPopup } from "../utils/uiHelpers/createPopup";
+import { removeElement } from "../utils/uiHelpers/removeElement";
+import { removeElementById } from "../utils/uiHelpers/removeElementById";
+
+const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 166 132"  style="fill:#adff2f;"><g><path d="M132.658-0.18l-24.321,24.321c-7.915-2.71-16.342-4.392-25.087-4.392c-45.84,0-83,46-83,46   s14.1,17.44,35.635,30.844L12.32,120.158l12.021,12.021L144.68,11.841L132.658-0.18z M52.033,80.445   c-2.104-4.458-3.283-9.438-3.283-14.695c0-19.054,15.446-34.5,34.5-34.5c5.258,0,10.237,1.179,14.695,3.284L52.033,80.445z"/><path d="M134.865,37.656l-18.482,18.482c0.884,3.052,1.367,6.275,1.367,9.612c0,19.055-15.446,34.5-34.5,34.5   c-3.337,0-6.56-0.483-9.611-1.367l-10.124,10.124c6.326,1.725,12.934,2.743,19.735,2.743c45.84,0,83-46,83-46   S153.987,50.575,134.865,37.656z"/></g></svg>&nbsp;`
+const killIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="-22 0 511 511.99561" style="fill:#adff2f;"><path d="m.496094 466.242188 39.902344-39.902344 45.753906 45.753906-39.898438 39.902344zm0 0"/><path d="m468.421875 89.832031-1.675781-89.832031-300.265625 300.265625 45.753906 45.753906zm0 0"/><path d="m95.210938 316.785156 16.84375 16.847656h.003906l83.65625 83.65625 22.753906-22.753906-100.503906-100.503906zm0 0"/><path d="m101.445312 365.300781-39.902343 39.902344 45.753906 45.753906 39.902344-39.902343-39.90625-39.902344zm0 0"/></svg>`
+
+const CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
+
+const CyclesPerSecond = 5; // Game cycle is 200 ms
+
+const StaminaGainPerSecond = 0.0085;
+const BaseStaminaLoss = 0.285; // Base stamina loss per action. Increased based on difficulty
+const MaxStaminaToGainFactor = 70000; // Max Stamina is divided by this to get bonus stamina gain
+
+const DifficultyToTimeFactor = 10; // Action Difficulty divided by this to get base action time
+
+/**
+ * The difficulty multiplier affects stamina loss and hp loss of an action. Also affects
+ * experience gain. Its formula is:
+ * difficulty ^ exponentialFactor + difficulty / linearFactor
+ */
+const DiffMultExponentialFactor = 0.28;
+const DiffMultLinearFactor = 650;
+
+/**
+ * These factors are used to calculate action time.
+ * They affect how much action time is reduced based on your agility and dexterity
+ */
+const EffAgiLinearFactor = 10e3;
+const EffDexLinearFactor = 10e3;
+const EffAgiExponentialFactor = 0.04;
+const EffDexExponentialFactor = 0.035;
+
+const BaseRecruitmentTimeNeeded = 300; // Base time needed (s) to complete a Recruitment action
+
+const PopulationThreshold = 1e9; // Population which determines baseline success rate
+const PopulationExponent = 0.7; // Exponent that influences how different populations affect success rate
+const ChaosThreshold = 50; // City chaos level after which it starts making tasks harder
+
+const BaseStatGain = 1; // Base stat gain per second
+const BaseIntGain = 0.001; // Base intelligence stat gain
+
+const ActionCountGrowthPeriod = 480; // Time (s) it takes for action count to grow by its specified value
+
+const RankToFactionRepFactor = 2; // Delta Faction Rep = this * Delta Rank
+const RankNeededForFaction = 25;
+
+const ContractSuccessesPerLevel = 3; // How many successes you need to level up a contract
+const OperationSuccessesPerLevel = 2.5; // How many successes you need to level up an op
+
+const RanksPerSkillPoint = 3; // How many ranks needed to get 1 Skill Point
+
+const ContractBaseMoneyGain = 250e3; // Base Money Gained per contract
+
+const HrcHpGain = 2; // HP Gained from Hyperbolic Regeneration chamber
+const HrcStaminaGain = 1; // Percentage Stamina gained from Hyperbolic Regeneration Chamber
+
+// DOM related variables
+const ActiveActionCssClass = "bladeburner-active-action";
 
 
-var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
-
-var CyclesPerSecond             = 5;   //Game cycle is 200 ms
-
-var StaminaGainPerSecond        = 0.0085;
-var BaseStaminaLoss             = 0.285;   //Base stamina loss per action. Increased based on difficulty
-var MaxStaminaToGainFactor      = 70000; //Max Stamina is divided by this to get bonus stamina gain
-
-var DifficultyToTimeFactor      = 10;  //Action Difficulty divided by this to get base action time
-
-//The difficulty multiplier affects stamina loss and hp loss of an action. Its formula is:
-//difficulty ^ exponentialFactor + difficulty / linearFactor
-var DiffMultExponentialFactor   = 0.28;
-var DiffMultLinearFactor        = 670;
-
-var BaseRecruitmentTimeNeeded   = 300; //Base time needed (s) to complete a Recruitment action
-
-var PopulationThreshold         = 1e9; //Population at which success rates start being affected
-var ChaosThreshold              = 50; //City chaos level after which it starts making tasks harder
-
-var BaseStatGain                = 1;     //Base stat gain per second
-var BaseIntGain                 = 0.001; //Base intelligence stat gain
-
-var ActionCountGrowthPeriod     = 300; //Time (s) it takes for action count to grow by its specified value
-
-var RankToFactionRepFactor      = 2; //Delta Faction Rep = this * Delta Rank
-
-var ContractSuccessesPerLevel   = 15; //How many successes you need to level up a contract
-var OperationSuccessesPerLevel  = 10;  //How many successes you need to level up an op
-
-var RanksPerSkillPoint          = 4;  //How many ranks needed to get 1 Skill Point
-
-//DOM related variables
-var ActiveActionCssClass        = "bladeburner-active-action";
-
-//Console related stuff
-var consoleHistory = []; //Console command history
-var consoleHistoryIndex = 0;
-var consoleHelpText = {
+// Console related stuff
+let consoleHistoryIndex = 0;
+const consoleHelpText = {
     helpList:"Use 'help [command]' to get more information about a particular Bladeburner console command.<br><br>" +
          "automate [var] [val] [hi/low] Configure simple automation for Bladeburner tasks<br>" +
          "clear/cls                     Clear the console<br>" +
@@ -126,16 +165,12 @@ var consoleHelpText = {
          "Stop your current action and go idle",
 }
 
-//Keypresses for Console
+// Keypresses for Console
 $(document).keydown(function(event) {
-    if (Engine.currentPage === Engine.Page.Bladeburner) {
-        //if (DomElems.consoleInput && !event.ctrlKey && !event.shiftKey && !event.altKey) {
-        //    DomElems.consoleInput.focus();
-        //}
+    if (routing.isOn(Page.Bladeburner)) {
+        if (!(Player.bladeburner instanceof Bladeburner)) { return; }
+        let consoleHistory = Player.bladeburner.consoleHistory;
 
-        if (!(Player.bladeburner instanceof Bladeburner)) {return;}
-
-        //NOTE: Keycodes imported from Terminal.js
         if (event.keyCode === KEY.ENTER) {
             event.preventDefault();
             var command = DomElems.consoleInput.value;
@@ -162,7 +197,7 @@ $(document).keydown(function(event) {
 
             var prevCommand = consoleHistory[consoleHistoryIndex];
             DomElems.consoleInput.value = prevCommand;
-            setTimeout(function(){DomElems.consoleInput.selectionStart = DomElems.consoleInput.selectionEnd = 10000; }, 0);
+            setTimeoutRef(function(){DomElems.consoleInput.selectionStart = DomElems.consoleInput.selectionEnd = 10000; }, 0);
         }
 
         if (event.keyCode === KEY.DOWNARROW) {
@@ -175,7 +210,7 @@ $(document).keydown(function(event) {
                 consoleHistoryIndex = len;
             }
 
-            //Latest command, put nothing
+            // Latest command, put nothing
             if (i == len || i == len-1) {
                 consoleHistoryIndex = len;
                 DomElems.consoleInput.value = "";
@@ -189,15 +224,15 @@ $(document).keydown(function(event) {
 });
 
 function City(params={}) {
-    this.name = params.name ? params.name : Locations.Sector12;
+    this.name = params.name ? params.name : CityNames[2]; // Sector-12
 
-    //Synthoid population and estimate
-    this.pop    = params.pop ? params.pop : getRandomInt(800e6, 1.2*PopulationThreshold);
+    // Synthoid population and estimate
+    this.pop    = params.pop ? params.pop : getRandomInt(PopulationThreshold, 1.5 * PopulationThreshold);
     this.popEst = this.pop * (Math.random() + 0.5);
 
-    //Number of Synthoid communities population and estimate
-    this.comms          = params.comms  ? params.comms  : getRandomInt(1, 40);
-    this.commsEst       = this.comms + getRandomInt(-2, 2);
+    // Number of Synthoid communities population and estimate
+    this.comms          = params.comms  ? params.comms  : getRandomInt(5, 150);
+    this.commsEst       = this.comms + getRandomInt(-5, 5);
     if (this.commsEst < 0) {this.commsEst = 0;}
     this.chaos          = 0;
 }
@@ -213,12 +248,12 @@ City.prototype.improvePopulationEstimateByCount = function(n) {
     }
 }
 
-//@p is the percentage, not the multiplier. e.g. pass in p = 5 for 5%
+// @p is the percentage, not the multiplier. e.g. pass in p = 5 for 5%
 City.prototype.improvePopulationEstimateByPercentage = function(p, skillMult=1) {
     p = p*skillMult;
     if (isNaN(p)) {throw new Error("NaN passed into City.improvePopulationEstimateByPercentage()");}
     if (this.popEst < this.pop) {
-        ++this.popEst; //In case estimate is 0
+        ++this.popEst; // In case estimate is 0
         this.popEst *= (1 + (p/100));
         if (this.popEst > this.pop) {this.popEst = this.pop;}
     } else if (this.popEst > this.pop) {
@@ -238,9 +273,11 @@ City.prototype.improveCommunityEstimate = function(n=1) {
     }
 }
 
-//@params options:
-//  estChange(int): How much the estimate should change by
-//  estOffset(int): Add offset to estimate (offset by percentage)
+/**
+ * @params options:
+ *  estChange(int): How much the estimate should change by
+ *  estOffset(int): Add offset to estimate (offset by percentage)
+ */
 City.prototype.changePopulationByCount = function(n, params={}) {
     if (isNaN(n)) {throw new Error("NaN passed into City.changePopulationByCount()");}
     this.pop += n;
@@ -251,16 +288,18 @@ City.prototype.changePopulationByCount = function(n, params={}) {
     this.popEst = Math.max(this.popEst, 0);
 }
 
-//@p is the percentage, not the multiplier. e.g. pass in p = 5 for 5%
-//@params options:
-//  changeEstEqually(bool) - Change the population estimate by an equal amount
-//  nonZero (bool)         - Set to true to ensure that population always changes by at least 1
+/**
+ * @p is the percentage, not the multiplier. e.g. pass in p = 5 for 5%
+ * @params options:
+ *  changeEstEqually(bool) - Change the population estimate by an equal amount
+ *  nonZero (bool)         - Set to true to ensure that population always changes by at least 1
+ */
 City.prototype.changePopulationByPercentage = function(p, params={}) {
     if (isNaN(p)) {throw new Error("NaN passed into City.changePopulationByPercentage()");}
     if (p === 0) {return;}
     var change = Math.round(this.pop * (p/100));
 
-    //Population always changes by at least 1
+    // Population always changes by at least 1
     if (params.nonZero && change === 0) {
         p > 0 ? change = 1 : change = -1;
     }
@@ -280,7 +319,7 @@ City.prototype.changeChaosByCount = function(n) {
     if (this.chaos < 0) {this.chaos = 0;}
 }
 
-//@p is the percentage, not the multiplier (e.g. pass in p = 5 for 5%)
+// @p is the percentage, not the multiplier (e.g. pass in p = 5 for 5%)
 City.prototype.changeChaosByPercentage = function(p) {
     if (isNaN(p)) {throw new Error("NaN passed into City.chaosChaosByPercentage()");}
     if (p === 0) {return;}
@@ -308,21 +347,25 @@ function Skill(params={name:"foo", desc:"foo"}) {
     } else {
         throw new Error("Failed to initialize Bladeburner Skills. No desc was specified in ctor");
     }
-    this.baseCost       = params.baseCost   ? params.baseCost   : 1; //Cost is in Skill Points
-    this.costInc        = params.costInc    ? params.costInc    : 1; //Additive cost increase per level
+    this.baseCost       = params.baseCost   ? params.baseCost   : 1; // Cost is in Skill Points
+    this.costInc        = params.costInc    ? params.costInc    : 1; // Additive cost increase per level
 
     if (params.maxLvl) {this.maxLvl = params.maxLvl;}
 
-    //These benefits are additive. So total multiplier will be level (handled externally) times the
-    //effects below
+    /**
+     * These benefits are additive. So total multiplier will be level (handled externally) times the
+     * effects below
+     */
     if (params.successChanceAll)            {this.successChanceAll          = params.successChanceAll;}
     if (params.successChanceStealth)        {this.successChanceStealth      = params.successChanceStealth;}
     if (params.successChanceKill)           {this.successChanceKill         = params.successChanceKill;}
     if (params.successChanceContract)       {this.successChanceContract     = params.successChanceContract;}
     if (params.successChanceOperation)      {this.successChanceOperation    = params.successChanceOperation;}
 
-    //This multiplier affects everything that increases synthoid population/community estimate
-    //e.g. Field analysis, Investigation Op, Undercover Op
+    /**
+     * This multiplier affects everything that increases synthoid population/community estimate
+     * e.g. Field analysis, Investigation Op, Undercover Op
+     */
     if (params.successChanceEstimate)       {this.successChanceEstimate     = params.successChanceEstimate;}
 
     if (params.actionTime)                  {this.actionTime                = params.actionTime;}
@@ -334,49 +377,54 @@ function Skill(params={name:"foo", desc:"foo"}) {
     if (params.effCha)                      {this.effCha                    = params.effCha;}
 
     if (params.stamina)                     {this.stamina                   = params.stamina;}
+    if (params.money)                       {this.money                     = params.money;}
+    if (params.expGain)                     {this.expGain                   = params.expGain;}
 
     //Equipment
     if (params.weaponAbility)       {this.weaponAbility     = params.weaponAbility;}
     if (params.gunAbility)          {this.gunAbility        = params.gunAbility;}
 }
-var Skills = {};
-var SkillNames = {
+
+Skill.prototype.calculateCost = function(currentLevel) {
+    return Math.floor((this.baseCost + (currentLevel * this.costInc)) * BitNodeMultipliers.BladeburnerSkillCost);
+}
+const Skills = {};
+const SkillNames = {
     BladesIntuition:    "Blade's Intuition",
-    Reaper:             "Reaper",
     Cloak:              "Cloak",
     Marksman:           "Marksman",
     WeaponProficiency:  "Weapon Proficiency",
-    Overclock:          "Overclock",
-    EvasiveSystem:      "Evasive System",
     ShortCircuit:       "Short-Circuit",
     DigitalObserver:    "Digital Observer",
-    Datamancer:         "Datamancer",
     Tracer:             "Tracer",
-    CybersEdge:         "Cyber's Edge"
+    Overclock:          "Overclock",
+    Reaper:             "Reaper",
+    EvasiveSystem:      "Evasive System",
+    Datamancer:         "Datamancer",
+    CybersEdge:         "Cyber's Edge",
+    HandsOfMidas:       "Hands of Midas",
+    Hyperdrive:         "Hyperdrive",
 }
 
-//Base Class for Contracts, Operations, and BlackOps
+// Base Class for Contracts, Operations, and BlackOps
 function Action(params={}) {
     this.name           = params.name       ? params.name       : "";
     this.desc           = params.desc       ? params.desc       : "";
 
-    //Difficulty scales with level
-    //Exact formula is not set in stone
-    //Initial design: baseDifficulty * (difficultyFac ^ level)?
-    //difficulty Fac is slightly greater than 1
+    // Difficulty scales with level. See getDifficulty() method
     this.level          = 1;
     this.maxLevel       = 1;
     this.autoLevel      = true;
     this.baseDifficulty = params.baseDifficulty ? addOffset(params.baseDifficulty, 10) : 100;
     this.difficultyFac  = params.difficultyFac  ? params.difficultyFac  : 1.01;
 
-    //Rank increase/decrease is affected by this exponent
+    // Rank increase/decrease is affected by this exponent
     this.rewardFac      = params.rewardFac ? params.rewardFac : 1.02;
 
     this.successes      = 0;
     this.failures       = 0;
 
-    //All of these scale with level/difficulty
+    // All of these scale with level/difficulty
     this.rankGain = params.rankGain ? params.rankGain   : 0;
     if (params.rankLoss) {this.rankLoss = params.rankLoss;}
     if (params.hpLoss) {
@@ -384,22 +432,24 @@ function Action(params={}) {
         this.hpLost = 0;
     }
 
-    //Action Category. Current categories are stealth and kill
+    // Action Category. Current categories are stealth and kill
     this.isStealth  = params.isStealth ? true : false;
     this.isKill     = params.isKill ? true : false;
 
-    //Number of this contract remaining, and its growth rate
-    //Growth rate is an integer and the count will increase by that integer every "cycle"
+    /**
+     * Number of this contract remaining, and its growth rate
+     * Growth rate is an integer and the count will increase by that integer every "cycle"
+     */
     this.count          = params.count          ? params.count          : getRandomInt(1e3, 25e3);
     this.countGrowth    = params.countGrowth    ? params.countGrowth    : getRandomInt(1, 5);
 
-    //Weighting of each stat in determining action success rate
+    // Weighting of each stat in determining action success rate
     var defaultWeights = {hack:1/7,str:1/7,def:1/7,dex:1/7,agi:1/7,cha:1/7,int:1/7};
     this.weights       = params.weights    ? params.weights    : defaultWeights;
 
-    //Check to make sure weights are summed properly
-    var sum = 0;
-    for (var weight in this.weights) {
+    // Check to make sure weights are summed properly
+    let sum = 0;
+    for (const weight in this.weights) {
         if (this.weights.hasOwnProperty(weight)) {
             sum += this.weights[weight];
         }
@@ -409,10 +459,10 @@ function Action(params={}) {
                         ". The weights should sum up to 1. They sum up to :" + 1);
     }
 
-    //Diminishing returns of stats (stat ^ decay where 0 <= decay <= 1)
-    var defaultDecays = {hack:0.9,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.9,int:0.9};
-    this.decays       = params.decays     ? params.decays     : defaultDecays;
-    for (var decay in this.decays) {
+    // Diminishing returns of stats (stat ^ decay where 0 <= decay <= 1)
+    const defaultDecays = { hack: 0.9, str: 0.9, def: 0.9, dex: 0.9, agi: 0.9, cha: 0.9, int: 0.9 };
+    this.decays = params.decays ? params.decays : defaultDecays;
+    for (const decay in this.decays) {
         if (this.decays.hasOwnProperty(decay)) {
             if (this.decays[decay] > 1) {
                 throw new Error("Invalid decays when constructing " +
@@ -429,9 +479,11 @@ Action.prototype.getDifficulty = function() {
     return difficulty;
 }
 
-//@inst - Bladeburner Object
-//@params - options:
-//  est (bool): Get success chance estimate instead of real success chance
+/**
+ * @inst - Bladeburner Object
+ * @params - options:
+ *  est (bool): Get success chance estimate instead of real success chance
+ */
 Action.prototype.getSuccessChance = function(inst, params={}) {
     if (inst == null) {throw new Error("Invalid Bladeburner instance passed into Action.getSuccessChance");}
     var difficulty = this.getDifficulty();
@@ -450,7 +502,7 @@ Action.prototype.getSuccessChance = function(inst, params={}) {
     }
     competence *= inst.calculateStaminaPenalty();
 
-    //For Operations, factor in team members
+    // For Operations, factor in team members
     if (this instanceof Operation || this instanceof BlackOperation) {
         if (this.teamCount && this.teamCount > 0) {
             this.teamCount = Math.min(this.teamCount, inst.teamSize);
@@ -459,29 +511,29 @@ Action.prototype.getSuccessChance = function(inst, params={}) {
         }
     }
 
-    //Lower city population results in lower chances
+    // Lower city population results in lower chances
     if (!(this instanceof BlackOperation)) {
         var city = inst.getCurrentCity();
         if (params.est) {
-            competence *= (city.popEst / PopulationThreshold);
+            competence *= Math.pow((city.popEst / PopulationThreshold), PopulationExponent);
         } else {
-            competence *= (city.pop / PopulationThreshold);
+            competence *= Math.pow((city.pop / PopulationThreshold), PopulationExponent);
         }
 
-        //Too high of a chaos results in lower chances
+        // Too high of a chaos results in lower chances
         if (city.chaos > ChaosThreshold) {
             var diff = 1 + (city.chaos - ChaosThreshold);
             var mult = Math.pow(diff, 0.1);
             difficulty *= mult;
         }
 
-        //For Raid Operations, no communities = fail
+        // For Raid Operations, no communities = fail
         if (this instanceof Operation && this.name === "Raid") {
             if (city.comms <= 0) {return 0;}
         }
     }
 
-    //Factor skill multipliers into success chance
+    // Factor skill multipliers into success chance
     competence *= inst.skillMultipliers.successChanceAll;
     if (this instanceof Operation || this instanceof BlackOperation) {
         competence *= inst.skillMultipliers.successChanceOperation;
@@ -496,29 +548,32 @@ Action.prototype.getSuccessChance = function(inst, params={}) {
         competence *= inst.skillMultipliers.successChanceKill;
     }
 
-    //Augmentation multiplier
+    // Augmentation multiplier
     competence *= Player.bladeburner_success_chance_mult;
 
     if (isNaN(competence)) {throw new Error("Competence calculated as NaN in Action.getSuccessChance()");}
     return Math.min(1, competence / difficulty);
 }
 
-//Tests for success. Should be called when an action has completed
-//  @inst - Bladeburner Object
+/**
+ * Tests for success. Should be called when an action has completed
+ * @param inst {Bladeburner} - Bladeburner instance
+ */
 Action.prototype.attempt = function(inst) {
-    console.log("Current City Pop: " + inst.getCurrentCity().pop);
-    console.log("Action.attempt success chance: " + this.getSuccessChance(inst));
     return (Math.random() < this.getSuccessChance(inst));
 }
 
 Action.prototype.getActionTime = function(inst) {
     var difficulty = this.getDifficulty();
     var baseTime = difficulty / DifficultyToTimeFactor;
-    var skillFac = inst.skillMultipliers.actionTime; //Always < 1
+    var skillFac = inst.skillMultipliers.actionTime; // Always < 1
 
     var effAgility      = Player.agility * inst.skillMultipliers.effAgi;
     var effDexterity    = Player.dexterity * inst.skillMultipliers.effDex;
-    var statFac = 0.5 * (Math.pow(effAgility, 0.03) + Math.pow(effDexterity, 0.03)); //Always > 1
+    var statFac = 0.5 * (Math.pow(effAgility, EffAgiExponentialFactor) +
+                         Math.pow(effDexterity, EffDexExponentialFactor) +
+                         (effAgility / EffAgiLinearFactor) +
+                         (effDexterity / EffDexLinearFactor)); // Always > 1
 
     baseTime = Math.max(1, baseTime * skillFac / statFac);
 
@@ -533,6 +588,16 @@ Action.prototype.getActionTime = function(inst) {
     }
 }
 
+Action.prototype.getSuccessesNeededForNextLevel = function(baseSuccessesPerLevel) {
+    return Math.ceil((0.5) * (this.maxLevel) * (2 * baseSuccessesPerLevel + (this.maxLevel-1)));
+}
+
+Action.prototype.setMaxLevel = function(baseSuccessesPerLevel) {
+    if (this.successes >= this.getSuccessesNeededForNextLevel(baseSuccessesPerLevel)) {
+        ++this.maxLevel;
+    }
+}
+
 Action.prototype.toJSON = function() {
     return Generic_toJSON("Action", this);
 }
@@ -540,99 +605,118 @@ Action.fromJSON = function(value) {
     return Generic_fromJSON(Action, value.data);
 }
 Reviver.constructors.Action = Action;
-var GeneralActions = {}; //Training, Field Analysis, Recruitment, etc.
+const GeneralActions = {}; // Training, Field Analysis, Recruitment, etc.
 
-//Action Identifier
-var ActionTypes = Object.freeze({
-    "Idle":             1,
-    "Contract":         2,
-    "Operation":        3,
-    "BlackOp":          4,
-    "BlackOperation":   4,
-    "Training":         5,
-    "Recruitment":      6,
-    "FieldAnalysis":    7,
-    "Field Analysis":   7
+// Action Identifier enum
+const ActionTypes = Object.freeze({
+    "Idle":                             1,
+    "Contract":                         2,
+    "Operation":                        3,
+    "BlackOp":                          4,
+    "BlackOperation":                   4,
+    "Training":                         5,
+    "Recruitment":                      6,
+    "FieldAnalysis":                    7,
+    "Field Analysis":                   7,
+    "Diplomacy":                        8,
+    "Hyperbolic Regeneration Chamber":  9,
 });
+
 function ActionIdentifier(params={}) {
     if (params.name) {this.name = params.name;}
     if (params.type) {this.type = params.type;}
 }
+
 ActionIdentifier.prototype.toJSON = function() {
     return Generic_toJSON("ActionIdentifier", this);
 }
+
 ActionIdentifier.fromJSON = function(value) {
     return Generic_fromJSON(ActionIdentifier, value.data);
 }
+
 Reviver.constructors.ActionIdentifier = ActionIdentifier;
 
-//Contracts
+// Contracts
 function Contract(params={}) {
     Action.call(this, params);
 }
+
 Contract.prototype = Object.create(Action.prototype);
+
 Contract.prototype.toJSON = function() {
     return Generic_toJSON("Contract", this);
 }
+
 Contract.fromJSON = function(value) {
     return Generic_fromJSON(Contract, value.data);
 }
+
 Reviver.constructors.Contract = Contract;
 
-//Operations
+// Operations
 function Operation(params={}) {
     Action.call(this, params);
     this.reqdRank   = params.reqdRank   ? params.reqdRank : 100;
     this.teamCount  = params.teamCount  ? params.teamCount : 0; //# of team members to use
 }
+
 Operation.prototype = Object.create(Action.prototype);
+
 Operation.prototype.toJSON = function() {
     return Generic_toJSON("Operation", this);
 }
+
 Operation.fromJSON = function(value) {
     return Generic_fromJSON(Operation, value.data);
 }
+
 Reviver.constructors.Operation = Operation;
 
-//Black Operations
+// Black Operations
 function BlackOperation(params={}) {
     Operation.call(this, params);
 
-    //Black ops are one time missions
+    // Black ops are one time missions
     this.count = 1;
     this.countGrowth = 0;
 }
+
 BlackOperation.prototype = Object.create(Action.prototype);
+
 BlackOperation.prototype.toJSON = function() {
     return Generic_toJSON("BlackOperation", this);
 }
+
 BlackOperation.fromJSON = function(value) {
     return Generic_fromJSON(BlackOperation, value.data);
 }
+
 Reviver.constructors.BlackOperation = BlackOperation;
-var BlackOperations = {};
+
+const BlackOperations = {};
 
 function Bladeburner(params={}) {
-    this.numHosp        = 0; //Number of hospitalizations
-    this.moneyLost      = 0; //Money lost due to hospitalizations
+    this.numHosp        = 0; // Number of hospitalizations
+    this.moneyLost      = 0; // Money lost due to hospitalizations
     this.rank           = 0;
-    this.maxRank        = 0; //Used to determine skill points
+    this.maxRank        = 0; // Used to determine skill points
 
     this.skillPoints        = 0;
     this.totalSkillPoints   = 0;
 
-    this.teamSize       = 0; //Number of team members
-    this.teamLost       = 0; //Number of team members lost
+    this.teamSize       = 0; // Number of team members
+    this.teamLost       = 0; // Number of team members lost
 
     this.storedCycles   = 0;
 
-    this.randomEventCounter = getRandomInt(300, 600); //5-10 minutes
+    this.randomEventCounter = getRandomInt(240, 600); // 4-10 minutes
 
-    //These times are in seconds
-    this.actionTimeToComplete   = 0; //0 or -1 is an infinite running action (like training)
+    // These times are in seconds
+    this.actionTimeToComplete   = 0; // 0 or -1 is an infinite running action (like training)
     this.actionTimeCurrent      = 0;
 
-    //ActionIdentifier Object
+    // ActionIdentifier Object
     var idleActionType = ActionTypes["Idle"];
     this.action = new ActionIdentifier({type:idleActionType});
 
@@ -640,29 +724,31 @@ function Bladeburner(params={}) {
     for (var i = 0; i < CityNames.length; ++i) {
         this.cities[CityNames[i]] =  new City({name:CityNames[i]});
     }
-    this.city = Locations.Sector12;
+    this.city = CityNames[2]; // Sector-12
 
-    //Map of SkillNames -> level
+    // Map of SkillNames -> level
     this.skills = {};
     this.skillMultipliers = {};
-    this.updateSkillMultipliers(); //Calls resetSkillMultipliers()
+    this.updateSkillMultipliers(); // Calls resetSkillMultipliers()
 
-    //Max Stamina is based on stats and Bladeburner-specific bonuses
-    this.staminaBonus   = 0;    //Gained from training
+    // Max Stamina is based on stats and Bladeburner-specific bonuses
+    this.staminaBonus   = 0;    // Gained from training
     this.maxStamina     = 0;
     this.calculateMaxStamina();
     this.stamina        = this.maxStamina;
 
-    //Contracts and Operations objects. These objects have unique
-    //properties because they are randomized in each instance and have stats like
-    //successes/failures, so they need to be saved/loaded by the game.
+    /**
+     * Contracts and Operations objects. These objects have unique
+     * properties because they are randomized in each instance and have stats like
+     * successes/failures, so they need to be saved/loaded by the game.
+     */
     this.contracts = {};
     this.operations = {};
 
-    //Object that contains name of all Black Operations that have been completed
+    // Object that contains name of all Black Operations that have been completed
     this.blackops = {};
 
-    //Flags for whether these actions should be logged to console
+    // Flags for whether these actions should be logged to console
     this.logging = {
         general:true,
         contracts:true,
@@ -671,17 +757,29 @@ function Bladeburner(params={}) {
         events:true,
     }
 
-    //Simple automation values
+    // Simple automation values
     this.automateEnabled = false;
     this.automateActionHigh = 0;
     this.automateThreshHigh = 0; //Stamina Threshold
     this.automateActionLow = 0;
     this.automateThreshLow = 0; //Stamina Threshold
 
-    //Initialization
+    // Console command history
+    this.consoleHistory = [];
+    this.consoleLogs = [];
+
+    // Initialization
     initBladeburner();
     this.initializeDomElementRefs();
     if (params.new) {this.create();}
+}
+
+Bladeburner.prototype.prestige = function() {
+    this.resetAction();
+    var bladeburnerFac = Factions["Bladeburners"];
+    if (this.rank >= RankNeededForFaction) {
+        joinFaction(bladeburnerFac);
+    }
 }
 
 Bladeburner.prototype.create = function() {
@@ -693,7 +791,7 @@ Bladeburner.prototype.create = function() {
              "whatever city you are currently in.",
         baseDifficulty:125,difficultyFac:1.02,rewardFac:1.041,
         rankGain:0.3, hpLoss:0.5,
-        count:getRandomInt(300, 800), countGrowth:getRandomInt(1, 5),
+        count:getRandomInt(25, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.05,def:0.05,dex:0.35,agi:0.35,cha:0.1, int:0.05},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.9, int:1},
         isStealth:true
@@ -705,7 +803,7 @@ Bladeburner.prototype.create = function() {
              "current city, and will also increase its chaos level.",
         baseDifficulty:250, difficultyFac:1.04,rewardFac:1.085,
         rankGain:0.9, hpLoss:1,
-        count:getRandomInt(200, 750), countGrowth:getRandomInt(1, 3),
+        count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.15,def:0.15,dex:0.25,agi:0.25,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -713,11 +811,11 @@ Bladeburner.prototype.create = function() {
     this.contracts["Retirement"] = new Contract({
         name:"Retirement",
         desc:"Hunt down and retire (kill) rogue Synthoids.<br><br>" +
-             "Successfully copmleting a Retirement contract will lower the population in your current " +
+             "Successfully completing a Retirement contract will lower the population in your current " +
              "city, and will also increase its chaos level.",
         baseDifficulty:200, difficultyFac:1.03, rewardFac:1.065,
         rankGain:0.6, hpLoss:1,
-        count:getRandomInt(300, 900), countGrowth:getRandomInt(1,4),
+        count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -731,8 +829,8 @@ Bladeburner.prototype.create = function() {
              "synthoid data.<br><br>" +
              "You will NOT lose HP from failed Investigation ops.",
         baseDifficulty:400, difficultyFac:1.03,rewardFac:1.07,reqdRank:25,
-        rankGain:2, rankLoss:0.2,
-        count:getRandomInt(50, 400), countGrowth:1,
+        rankGain:2.2, rankLoss:0.2,
+        count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.2,agi:0.1,cha:0.25, int:0.1},
         decays:{hack:0.85,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -744,8 +842,8 @@ Bladeburner.prototype.create = function() {
              "Successful Undercover ops will increase the accuracy of your synthoid " +
              "data.",
         baseDifficulty:500, difficultyFac:1.04, rewardFac:1.09, reqdRank:100,
-        rankGain:4, rankLoss:0.4, hpLoss:2,
-        count:getRandomInt(50, 300), countGrowth:1,
+        rankGain:4.4, rankLoss:0.4, hpLoss:2,
+        count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.2,str:0.05,def:0.05,dex:0.2,agi:0.2,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -755,8 +853,8 @@ Bladeburner.prototype.create = function() {
         desc:"Conduct a sting operation to bait and capture particularly " +
              "notorious Synthoid criminals.",
         baseDifficulty:650, difficultyFac:1.04, rewardFac:1.095, reqdRank:500,
-        rankGain:5, rankLoss:0.5, hpLoss:2.5,
-        count:getRandomInt(25,400), countGrowth:0.75,
+        rankGain:5.5, rankLoss:0.5, hpLoss:2.5,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(3, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.25,agi:0.1,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.85,def:0.85,dex:0.85,agi:0.85,cha:0.7, int:0.9},
         isStealth:true
@@ -767,8 +865,8 @@ Bladeburner.prototype.create = function() {
              "there must be an existing Synthoid community in your current city " +
              "in order for this Operation to be successful",
         baseDifficulty:800, difficultyFac:1.045, rewardFac:1.1, reqdRank:3000,
-        rankGain:50,rankLoss:2.5,hpLoss:50,
-        count:getRandomInt(25, 150), countGrowth:0.2,
+        rankGain:55,rankLoss:2.5,hpLoss:50,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(2, 40)/10,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isKill:true
@@ -779,8 +877,8 @@ Bladeburner.prototype.create = function() {
              "objective is to complete the task without " +
              "drawing any attention. Stealth and discretion are key.",
         baseDifficulty:1000, difficultyFac:1.05, rewardFac:1.11, reqdRank:20e3,
-        rankGain:20, rankLoss:2, hpLoss:10,
-        count:getRandomInt(25, 250), countGrowth:0.1,
+        rankGain:22, rankLoss:2, hpLoss:10,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isStealth:true, isKill:true
@@ -791,8 +889,8 @@ Bladeburner.prototype.create = function() {
              "important, high-profile social and political leaders " +
              "in the Synthoid communities.",
         baseDifficulty:1500, difficultyFac:1.06, rewardFac:1.14, reqdRank:50e3,
-        rankGain:40, rankLoss:4, hpLoss:5,
-        count:getRandomInt(25, 200), countGrowth:0.1,
+        rankGain:44, rankLoss:4, hpLoss:5,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.8},
         isStealth:true, isKill:true
@@ -804,27 +902,42 @@ Bladeburner.prototype.storeCycles = function(numCycles=1) {
 }
 
 Bladeburner.prototype.process = function() {
-    //If the Player starts doing some other actions, set action to idle and alert
-    if (Player.isWorking) {
+    // Edge case condition...if Operation Daedalus is complete trigger the BitNode
+    if (redPillFlag === false && this.blackops.hasOwnProperty("Operation Daedalus")) {
+        return hackWorldDaemon(Player.bitNodeN);
+    }
+
+    // If the Player starts doing some other actions, set action to idle and alert
+    if (Augmentations[AugmentationNames.BladesSimulacrum].owned === false && Player.isWorking) {
         if (this.action.type !== ActionTypes["Idle"]) {
-            dialogBoxCreate("Your Bladeburner action was cancelled because you started " +
-                            "doing something else");
+            let msg = "Your Bladeburner action was cancelled because you started doing something else.";
+            if (this.automateEnabled) {
+                msg += `<br><br>Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`
+                this.automateEnabled = false;
+            }
+            dialogBoxCreate(msg);
         }
         this.resetAction();
     }
 
-    //A 'tick' for this mechanic is one second (= 5 game cycles)
+    // If the Player has no Stamina, set action to idle
+    if (this.stamina <= 0) {
+        this.log("Your Bladeburner action was cancelled because your stamina hit 0");
+        this.resetAction();
+    }
+
+    // A 'tick' for this mechanic is one second (= 5 game cycles)
     if (this.storedCycles >= CyclesPerSecond) {
         var seconds = Math.floor(this.storedCycles / CyclesPerSecond);
-        seconds = Math.min(seconds, 5); //Max of 5 'ticks'
+        seconds = Math.min(seconds, 5); // Max of 5 'ticks'
         this.storedCycles -= seconds * CyclesPerSecond;
 
-        //Stamina
+        // Stamina
         this.calculateMaxStamina();
         this.stamina += (this.calculateStaminaGainPerSecond() * seconds);
         this.stamina = Math.min(this.maxStamina, this.stamina);
 
-        //Count increase for contracts/operations
+        // Count increase for contracts/operations
         for (var contractName in this.contracts) {
             if (this.contracts.hasOwnProperty(contractName)) {
                 var contract = this.contracts[contractName];
@@ -838,7 +951,7 @@ Bladeburner.prototype.process = function() {
             }
         }
 
-        //Chaos goes down very slowly
+        // Chaos goes down very slowly
         for (var i = 0; i < CityNames.length; ++i) {
             var city = this.cities[CityNames[i]];
             if (!(city instanceof City)) {throw new Error("Invalid City object when processing passive chaos reduction in Bladeburner.process");}
@@ -846,31 +959,32 @@ Bladeburner.prototype.process = function() {
             city.chaos = Math.max(0, city.chaos);
         }
 
-        //Random Events
+        // Random Events
         this.randomEventCounter -= seconds;
         if (this.randomEventCounter <= 0) {
             this.randomEvent();
-            this.randomEventCounter = getRandomInt(300, 600);
+            this.randomEventCounter = getRandomInt(240, 600);
         }
 
         this.processAction(seconds);
 
-        //Automation
+        // Automation
         if (this.automateEnabled) {
+            // Note: Do NOT set this.action = this.automateActionHigh/Low since it creates a reference
             if (this.stamina <= this.automateThreshLow) {
                 if (this.action.name !== this.automateActionLow.name || this.action.type !== this.automateActionLow.type) {
-                    this.action = this.automateActionLow;
+                    this.action = new ActionIdentifier({type: this.automateActionLow.type, name: this.automateActionLow.name});
                     this.startAction(this.action);
                 }
             } else if (this.stamina >= this.automateThreshHigh) {
                 if (this.action.name !== this.automateActionHigh.name || this.action.type !== this.automateActionHigh.type) {
-                    this.action = this.automateActionHigh;
+                    this.action = new ActionIdentifier({type: this.automateActionHigh.type, name: this.automateActionHigh.name});
                     this.startAction(this.action);
                 }
             }
         }
 
-        if (Engine.currentPage === Engine.Page.Bladeburner) {
+        if (routing.isOn(Page.Bladeburner)) {
             this.updateContent();
         }
     }
@@ -909,14 +1023,15 @@ Bladeburner.prototype.changeRank = function(change) {
             throw new Error("Could not properly get Bladeburner Faction object in Bladeburner UI Overview Faction button");
         }
         if (bladeburnerFac.isMember) {
-            bladeburnerFac.playerReputation += (RankToFactionRepFactor * change * Player.faction_rep_mult);
+            var favorBonus = 1 + (bladeburnerFac.favor / 100);
+            bladeburnerFac.playerReputation += (RankToFactionRepFactor * change * Player.faction_rep_mult * favorBonus);
         }
     }
 
-    //Gain skill points. You get 1 every 4 ranks
+    // Gain skill points
     var rankNeededForSp = (this.totalSkillPoints+1) * RanksPerSkillPoint;
     if (this.maxRank >= rankNeededForSp) {
-        //Calculate how many skill points to gain
+        // Calculate how many skill points to gain
         var gainedSkillPoints = Math.floor((this.maxRank - rankNeededForSp) / RanksPerSkillPoint + 1);
         this.skillPoints += gainedSkillPoints;
         this.totalSkillPoints += gainedSkillPoints;
@@ -933,23 +1048,25 @@ Bladeburner.prototype.getCurrentCity = function() {
 
 Bladeburner.prototype.resetSkillMultipliers = function() {
     this.skillMultipliers = {
-        successChanceAll:1,
-        successChanceStealth:1,
-        successChanceKill:1,
-        successChanceContract:1,
-        successChanceOperation:1,
-        successChanceEstimate:1,
-        actionTime:1,
-        effHack:1,
-        effStr:1,
-        effDef:1,
-        effDex:1,
-        effAgi:1,
-        effCha:1,
-        effInt:1,
-        stamina:1,
-        weaponAbility:1,
-        gunAbility:1,
+        successChanceAll: 1,
+        successChanceStealth: 1,
+        successChanceKill: 1,
+        successChanceContract: 1,
+        successChanceOperation: 1,
+        successChanceEstimate: 1,
+        actionTime: 1,
+        effHack: 1,
+        effStr: 1,
+        effDef: 1,
+        effDex: 1,
+        effAgi: 1,
+        effCha: 1,
+        effInt: 1,
+        stamina: 1,
+        money: 1,
+        expGain: 1,
+        weaponAbility: 1,
+        gunAbility: 1,
     };
 }
 
@@ -981,7 +1098,7 @@ Bladeburner.prototype.updateSkillMultipliers = function() {
 }
 
 Bladeburner.prototype.upgradeSkill = function(skill) {
-    //This does NOT handle deduction of skill points
+    // This does NOT handle deduction of skill points
     var skillName = skill.name;
     if (this.skills[skillName]) {
         ++this.skills[skillName];
@@ -995,32 +1112,36 @@ Bladeburner.prototype.upgradeSkill = function(skill) {
 }
 
 Bladeburner.prototype.getActionObject = function(actionId) {
-    //Given an ActionIdentifier object, returns the corresponding
-    //Contract, Operation, or BlackOperation object
+    /**
+     * Given an ActionIdentifier object, returns the corresponding
+     * GeneralAction, Contract, Operation, or BlackOperation object
+     */
     switch (actionId.type) {
         case ActionTypes["Contract"]:
             return this.contracts[actionId.name];
-            break;
         case ActionTypes["Operation"]:
             return this.operations[actionId.name];
-            break;
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             return BlackOperations[actionId.name];
-            break;
+        case ActionTypes["Training"]:
+            return GeneralActions["Training"];
+        case ActionTypes["Field Analysis"]:
+            return GeneralActions["Field Analysis"];
+        case ActionTypes["Recruitment"]:
+            return GeneralActions["Recruitment"];
         default:
             return null;
-            console.log("WARNING: Bladeburner.getActionObject() called with an unexpected " +
-                        "ActionIdentifier type: " + actionId.type);
     }
 }
 
-//Sets the player to the "IDLE" action
+// Sets the player to the "IDLE" action
 Bladeburner.prototype.resetAction = function() {
     this.action = new ActionIdentifier({type:ActionTypes.Idle});
 }
 
 Bladeburner.prototype.startAction = function(actionId) {
+    if (actionId == null) {return;}
     this.action = actionId;
     this.actionTimeCurrent = 0;
     switch (actionId.type) {
@@ -1046,6 +1167,7 @@ Bladeburner.prototype.startAction = function(actionId) {
                     throw new Error ("Failed to get Operation Object for: " + actionId.name);
                 }
                 if (action.count < 1) {return this.resetAction();}
+                if (actionId.name === "Raid" && this.getCurrentCity().commsEst === 0) {return this.resetAction();}
                 this.actionTimeToComplete = action.getActionTime(this);
             } catch(e) {
                 exceptionAlert(e);
@@ -1054,6 +1176,13 @@ Bladeburner.prototype.startAction = function(actionId) {
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             try {
+                // Safety measure - don't repeat BlackOps that are already done
+                if (this.blackops[actionId.name] != null) {
+                    this.resetAction();
+                    this.log("Error: Tried to start a Black Operation that had already been completed");
+                    break;
+                }
+
                 var action = this.getActionObject(actionId);
                 if (action == null) {
                     throw new Error("Failed to get BlackOperation object for: " + actionId.name);
@@ -1063,18 +1192,17 @@ Bladeburner.prototype.startAction = function(actionId) {
                 exceptionAlert(e);
             }
             break;
-        case ActionTypes["Training"]:
-            this.actionTimeToComplete = 30;
-            break;
         case ActionTypes["Recruitment"]:
-            var effCharisma = Player.charisma * this.skillMultipliers.effCha;
-            var charismaFactor = Math.pow(effCharisma, 0.8) + effCharisma / 90;
-            var time = Math.max(10, Math.round(BaseRecruitmentTimeNeeded - charismaFactor));
-            this.actionTimeToComplete = time;
+            this.actionTimeToComplete = this.getRecruitmentTime();
             break;
+        case ActionTypes["Training"]:
         case ActionTypes["FieldAnalysis"]:
         case ActionTypes["Field Analysis"]:
             this.actionTimeToComplete = 30;
+            break;
+        case ActionTypes["Diplomacy"]:
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            this.actionTimeToComplete = 60;
             break;
         default:
             throw new Error("Invalid Action Type in Bladeburner.startAction(): " + actionId.type);
@@ -1112,28 +1240,36 @@ Bladeburner.prototype.completeAction = function() {
                 var difficultyMultiplier = Math.pow(difficulty, DiffMultExponentialFactor) + difficulty / DiffMultLinearFactor;
                 var rewardMultiplier = Math.pow(action.rewardFac, action.level-1);
 
-                //Stamina loss is based on difficulty
+                // Stamina loss is based on difficulty
                 this.stamina -= (BaseStaminaLoss * difficultyMultiplier);
                 if (this.stamina < 0) {this.stamina = 0;}
 
-                //Process Contract/Operation success/failure
+                // Process Contract/Operation success/failure
                 if (action.attempt(this)) {
                     this.gainActionStats(action, true);
                     ++action.successes;
                     --action.count;
 
+                    // Earn money for contracts
+                    var moneyGain = 0;
+                    if (!isOperation) {
+                        moneyGain = ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
+                        Player.gainMoney(moneyGain);
+                        Player.recordMoneySource(moneyGain, "bladeburner");
+                    }
+
                     if (isOperation) {
-                        action.maxLevel = Math.floor(action.successes / OperationSuccessesPerLevel) + 1;
+                        action.setMaxLevel(OperationSuccessesPerLevel);
                     } else {
-                        action.maxLevel = Math.floor(action.successes / ContractSuccessesPerLevel) + 1;
+                        action.setMaxLevel(ContractSuccessesPerLevel);
                     }
                     if (action.rankGain) {
-                        var gain = addOffset(action.rankGain * rewardMultiplier, 10);
+                        var gain = addOffset(action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank, 10);
                         this.changeRank(gain);
                         if (isOperation && this.logging.ops) {
                             this.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
                         } else if (!isOperation && this.logging.contracts) {
-                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank");
+                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeralWrapper.format(moneyGain, "$0.000a"));
                         }
                     }
                     isOperation ? this.completeOperation(true) : this.completeContract(true);
@@ -1164,8 +1300,8 @@ Bladeburner.prototype.completeAction = function() {
                     }
                     isOperation ? this.completeOperation(false) : this.completeContract(false);
                 }
-                if (action.autoLevel) {action.level = action.maxLevel;} //Autolevel
-                this.startAction(this.action); //Repeat action
+                if (action.autoLevel) {action.level = action.maxLevel;} // Autolevel
+                this.startAction(this.action); // Repeat action
             } catch(e) {
                 exceptionAlert(e);
             }
@@ -1180,11 +1316,11 @@ Bladeburner.prototype.completeAction = function() {
                 var difficulty = action.getDifficulty();
                 var difficultyMultiplier = Math.pow(difficulty, DiffMultExponentialFactor) + difficulty / DiffMultLinearFactor;
 
-                //Stamina loss is based on difficulty
+                // Stamina loss is based on difficulty
                 this.stamina -= (BaseStaminaLoss * difficultyMultiplier);
                 if (this.stamina < 0) {this.stamina = 0;}
 
-                //Team loss variables
+                // Team loss variables
                 var teamCount = action.teamCount, teamLossMax;
 
                 if (action.attempt(this)) {
@@ -1193,18 +1329,20 @@ Bladeburner.prototype.completeAction = function() {
                     this.blackops[action.name] = true;
                     var rankGain = 0;
                     if (action.rankGain) {
-                        rankGain = addOffset(action.rankGain, 10);
+                        rankGain = addOffset(action.rankGain * BitNodeMultipliers.BladeburnerRank, 10);
                         this.changeRank(rankGain);
                     }
                     teamLossMax = Math.ceil(teamCount/2);
 
-                    //Operation Daedalus
+                    // Operation Daedalus
                     if (action.name === "Operation Daedalus") {
                         this.resetAction();
                         return hackWorldDaemon(Player.bitNodeN);
                     }
 
-                    this.createActionAndSkillsContent();
+                    if (routing.isOn(Page.Bladeburner)) {
+                        this.createActionAndSkillsContent();
+                    }
 
                     if (this.logging.blackops) {
                         this.log(action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank");
@@ -1227,13 +1365,13 @@ Bladeburner.prototype.completeAction = function() {
                     teamLossMax = Math.floor(teamCount);
 
                     if (this.logging.blackops) {
-                        this.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took" + formatNumber(damage, 0) + " damage");
+                        this.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took " + formatNumber(damage, 0) + " damage");
                     }
                 }
 
-                this.resetAction(); //Stop regardless of success or fail
+                this.resetAction(); // Stop regardless of success or fail
 
-                //Calculate team lossses
+                // Calculate team lossses
                 if (teamCount >= 1) {
                     var losses = getRandomInt(1, teamLossMax);
                     this.teamSize -= losses;
@@ -1266,11 +1404,11 @@ Bladeburner.prototype.completeAction = function() {
                          formatNumber(agiExpGain, 1) + " agi exp, " +
                          formatNumber(staminaGain, 3) + " max stamina");
             }
-            this.startAction(this.action); //Repeat action
+            this.startAction(this.action); // Repeat action
             break;
         case ActionTypes["FieldAnalysis"]:
         case ActionTypes["Field Analysis"]:
-            //Does not use stamina. Effectiveness depends on hacking, int, and cha
+            // Does not use stamina. Effectiveness depends on hacking, int, and cha
             var eff = 0.04 * Math.pow(Player.hacking_skill, 0.3) +
                       0.04 * Math.pow(Player.intelligence, 0.9) +
                       0.02 * Math.pow(Player.charisma, 0.3);
@@ -1283,16 +1421,15 @@ Bladeburner.prototype.completeAction = function() {
             Player.gainHackingExp(hackingExpGain);
             Player.gainIntelligenceExp(BaseIntGain);
             Player.gainCharismaExp(charismaExpGain);
-            console.log("DEBUG: Field Analysis effectiveness is " + (eff * this.skillMultipliers.successChanceEstimate));
+            this.changeRank(0.1 * BitNodeMultipliers.BladeburnerRank);
             this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
             if (this.logging.general) {
-                this.log("Field analysis completed. Gained " + formatNumber(hackingExpGain, 1) + " hacking exp and " + formatNumber(charismaExpGain, 1) + " charisma exp");
+                this.log("Field analysis completed. Gained 0.1 rank, " + formatNumber(hackingExpGain, 1) + " hacking exp, and " + formatNumber(charismaExpGain, 1) + " charisma exp");
             }
-            this.startAction(this.action); //Repeat action
+            this.startAction(this.action); // Repeat action
             break;
         case ActionTypes["Recruitment"]:
-            var successChance = Math.pow(Player.charisma, 0.45) / (this.teamSize + 1);
-            console.log("Bladeburner recruitment success chance: " + successChance);
+            var successChance = this.getRecruitmentSuccessChance();
             if (Math.random() < successChance) {
                 var expGain = 2 * BaseStatGain * this.actionTimeToComplete;
                 Player.gainCharismaExp(expGain);
@@ -1307,9 +1444,30 @@ Bladeburner.prototype.completeAction = function() {
                     this.log("Failed to recruit a team member. Gained " + formatNumber(expGain, 1) + " charisma exp");
                 }
             }
-            this.startAction(this.action); //Repeat action
+            this.startAction(this.action); // Repeat action
             break;
+        case ActionTypes["Diplomacy"]:
+            var eff = this.getDiplomacyEffectiveness();
+            this.getCurrentCity().chaos *= eff;
+            if (this.getCurrentCity().chaos < 0) { this.getCurrentCity().chaos = 0; }
+            if (this.logging.general) {
+                this.log(`Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(1 - eff)}`);
+            }
+            this.startAction(this.action); // Repeat Action
+            break;
+        case ActionTypes["Hyperbolic Regeneration Chamber"]: {
+            Player.regenerateHp(HrcHpGain);
+
+            const staminaGain = this.maxStamina * (HrcStaminaGain / 100);
+            this.stamina = Math.min(this.maxStamina, this.stamina + staminaGain);
+            this.startAction(this.action);
+            if (this.logging.general) {
+                this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${HrcHpGain} HP and gained ${numeralWrapper.format(staminaGain, "0.0")} stamina`);
+            }
+            break;
+        }
         default:
+            console.error(`Bladeburner.completeAction() called for invalid action: ${this.action.type}`);
             break;
     }
 }
@@ -1322,7 +1480,7 @@ Bladeburner.prototype.completeContract = function(success) {
     if (success) {
         switch (this.action.name) {
             case "Tracking":
-                //Increase estimate accuracy by a relatively small amount
+                // Increase estimate accuracy by a relatively small amount
                 city.improvePopulationEstimateByCount(getRandomInt(100, 1e3));
                 break;
             case "Bounty Hunter":
@@ -1348,7 +1506,7 @@ Bladeburner.prototype.completeOperation = function(success) {
         throw new Error("Failed to get Contract/Operation Object for: " + this.action.name);
     }
 
-    //Calculate team losses
+    // Calculate team losses
     var teamCount = action.teamCount, max;
     if (teamCount >= 1) {
         if (success) {
@@ -1365,13 +1523,6 @@ Bladeburner.prototype.completeOperation = function(success) {
     }
 
     var city = this.getCurrentCity();
-    if (this.logging.ops) {
-        if (success) {
-            this.log(action.name + " completed successfully! ")
-        } else {
-
-        }
-    }
     switch (action.name) {
         case "Investigation":
             if (success) {
@@ -1405,7 +1556,7 @@ Bladeburner.prototype.completeOperation = function(success) {
                 --city.comms;
                 --city.commsEst;
             } else {
-                var change = getRandomInt(-3, -1);
+                var change = getRandomInt(-10, -5) / 10;
                 city.changePopulationByPercentage(change, {nonZero:true});
             }
             city.changeChaosByPercentage(getRandomInt(1, 5));
@@ -1427,34 +1578,58 @@ Bladeburner.prototype.completeOperation = function(success) {
     }
 }
 
-//Process stat gains from Contracts, Operations, and Black Operations
-//@action(Action obj) - Derived action class
-//@success(bool) - Whether action was successful
+Bladeburner.prototype.getRecruitmentTime = function() {
+    var effCharisma = Player.charisma * this.skillMultipliers.effCha;
+    var charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
+    return Math.max(10, Math.round(BaseRecruitmentTimeNeeded - charismaFactor));
+}
+
+Bladeburner.prototype.getRecruitmentSuccessChance = function() {
+    return Math.pow(Player.charisma, 0.45) / (this.teamSize + 1);
+}
+
+Bladeburner.prototype.getDiplomacyEffectiveness = function() {
+    // Returns a decimal by which the city's chaos level should be multiplied (e.g. 0.98)
+    const CharismaLinearFactor = 1e3;
+    const CharismaExponentialFactor = 0.045;
+
+    const charismaEff = Math.pow(Player.charisma, CharismaExponentialFactor) + Player.charisma / CharismaLinearFactor;
+    return (100 - charismaEff) / 100;
+}
+
+/**
+ * Process stat gains from Contracts, Operations, and Black Operations
+ * @param action(Action obj) - Derived action class
+ * @param success(bool) - Whether action was successful
+ */
 Bladeburner.prototype.gainActionStats = function(action, success) {
     var difficulty = action.getDifficulty();
 
-    //Gain multiplier based on difficulty. If this changes then the
-    //same variable calculated in completeAction() needs to change too
-    var difficultyMult = Math.pow(difficulty, 0.21);
+    /**
+     * Gain multiplier based on difficulty. If this changes then the
+     * same variable calculated in completeAction() needs to change too
+     */
+    var difficultyMult = Math.pow(difficulty, DiffMultExponentialFactor) + difficulty / DiffMultLinearFactor;
 
     var time = this.actionTimeToComplete;
     var successMult = success ? 1 : 0.5;
 
     var unweightedGain = time * BaseStatGain * successMult * difficultyMult;
     var unweightedIntGain = time * BaseIntGain * successMult * difficultyMult;
-    Player.gainHackingExp(unweightedGain    * action.weights.hack * Player.hacking_exp_mult);
-    Player.gainStrengthExp(unweightedGain   * action.weights.str  * Player.strength_exp_mult);
-    Player.gainDefenseExp(unweightedGain    * action.weights.def  * Player.defense_exp_mult);
-    Player.gainDexterityExp(unweightedGain  * action.weights.dex  * Player.dexterity_exp_mult);
-    Player.gainAgilityExp(unweightedGain    * action.weights.agi  * Player.agility_exp_mult);
-    Player.gainCharismaExp(unweightedGain   * action.weights.cha  * Player.charisma_exp_mult);
-    Player.gainIntelligenceExp(unweightedIntGain * action.weights.int);
+    const skillMult = this.skillMultipliers.expGain;
+    Player.gainHackingExp(unweightedGain    * action.weights.hack * Player.hacking_exp_mult * skillMult);
+    Player.gainStrengthExp(unweightedGain   * action.weights.str  * Player.strength_exp_mult * skillMult);
+    Player.gainDefenseExp(unweightedGain    * action.weights.def  * Player.defense_exp_mult * skillMult);
+    Player.gainDexterityExp(unweightedGain  * action.weights.dex  * Player.dexterity_exp_mult * skillMult);
+    Player.gainAgilityExp(unweightedGain    * action.weights.agi  * Player.agility_exp_mult * skillMult);
+    Player.gainCharismaExp(unweightedGain   * action.weights.cha  * Player.charisma_exp_mult * skillMult);
+    Player.gainIntelligenceExp(unweightedIntGain * action.weights.int * skillMult);
 }
 
 Bladeburner.prototype.randomEvent = function() {
     var chance = Math.random();
 
-    //Choose random source/destination city for events
+    // Choose random source/destination city for events
     var sourceCityName = CityNames[getRandomInt(0, 5)];
     var sourceCity = this.cities[sourceCityName];
     if (!(sourceCity instanceof City)) {
@@ -1468,11 +1643,11 @@ Bladeburner.prototype.randomEvent = function() {
     var destCity = this.cities[destCityName];
 
     if (!(sourceCity instanceof City) || !(destCity instanceof City)) {
-        throw new Error("sourceCity was not a City object in Bladeburner.randomEvent()");
+        throw new Error("sourceCity/destCity was not a City object in Bladeburner.randomEvent()");
     }
 
     if (chance <= 0.05) {
-        //New Synthoid Community, 5%
+        // New Synthoid Community, 5%
         ++sourceCity.comms;
         var percentage = getRandomInt(10, 20) / 100;
         var count = Math.round(sourceCity.pop * percentage);
@@ -1481,9 +1656,9 @@ Bladeburner.prototype.randomEvent = function() {
             this.log("Intelligence indicates that a new Synthoid community was formed in a city");
         }
     } else if (chance <= 0.1) {
-        //Synthoid Community Migration, 5%
+        // Synthoid Community Migration, 5%
         if (sourceCity.comms <= 0) {
-            //If no comms in source city, then instead trigger a new Synthoid community event
+            // If no comms in source city, then instead trigger a new Synthoid community event
             ++sourceCity.comms;
             var percentage = getRandomInt(10, 20) / 100;
             var count = Math.round(sourceCity.pop * percentage);
@@ -1495,7 +1670,7 @@ Bladeburner.prototype.randomEvent = function() {
             --sourceCity.comms;
             ++destCity.comms;
 
-            //Change pop
+            // Change pop
             var percentage = getRandomInt(10, 20) / 100;
             var count = Math.round(sourceCity.pop * percentage);
             sourceCity.pop -= count;
@@ -1506,7 +1681,7 @@ Bladeburner.prototype.randomEvent = function() {
             }
         }
     } else if  (chance <= 0.3) {
-        //New Synthoids (non community), 20%
+        // New Synthoids (non community), 20%
         var percentage = getRandomInt(8, 24) / 100;
         var count = Math.round(sourceCity.pop * percentage);
         sourceCity.pop += count;
@@ -1514,28 +1689,28 @@ Bladeburner.prototype.randomEvent = function() {
             this.log("Intelligence indicates that the Synthoid population of " + sourceCityName + " just changed significantly");
         }
     } else if (chance <= 0.5) {
-        //Synthoid migration (non community) 20%
+        // Synthoid migration (non community) 20%
         this.triggerMigration(sourceCityName);
         if (this.logging.events) {
             this.log("Intelligence indicates that a large number of Synthoids migrated from " + sourceCityName + " to some other city");
         }
     } else if (chance <= 0.7) {
-        //Synthoid Riots (+chaos), 20%
+        // Synthoid Riots (+chaos), 20%
         sourceCity.chaos += 1;
-        sourceCity.chaos *= (1 + getRandomInt(5, 10) / 100);
+        sourceCity.chaos *= (1 + getRandomInt(5, 20) / 100);
         if (this.logging.events) {
             this.log("Tensions between Synthoids and humans lead to riots in " + sourceCityName + "! Chaos increased");
         }
     } else if (chance <= 0.9) {
-        //Less Synthoids, 20%
-        var percentage = getRandomInt(5, 20) / 100;
+        // Less Synthoids, 20%
+        var percentage = getRandomInt(8, 20) / 100;
         var count = Math.round(sourceCity.pop * percentage);
         sourceCity.pop -= count;
         if (this.logging.events) {
             this.log("Intelligence indicates that the Synthoid population of " + sourceCityName + " just changed significantly");
         }
     }
-    //20% chance of nothing happening
+    // 10% chance of nothing happening
 }
 
 Bladeburner.prototype.triggerPotentialMigration = function(sourceCityName, chance) {
@@ -1558,8 +1733,8 @@ Bladeburner.prototype.triggerMigration = function(sourceCityName) {
     }
     var rand = Math.random(), percentage = getRandomInt(3, 15) / 100;
 
-    if (rand < 0.05 && sourceCity.comms > 0) { //5% chance for community migration
-        percentage *= getRandomInt(2, 4); //Migration increases population change
+    if (rand < 0.05 && sourceCity.comms > 0) { // 5% chance for community migration
+        percentage *= getRandomInt(2, 4); // Migration increases population change
         --sourceCity.comms;
         ++destCity.comms;
     }
@@ -1568,49 +1743,51 @@ Bladeburner.prototype.triggerMigration = function(sourceCityName) {
     destCity.pop += count;
 }
 
-var DomElems = {};
+let DomElems = {};
 
 Bladeburner.prototype.initializeDomElementRefs = function() {
     DomElems = {
         bladeburnerDiv:     null,
 
-        //Main Divs
+        // Main Divs
         overviewConsoleParentDiv:  null,
 
-        overviewDiv:        null, //Overview of stats that stays fixed on left
-        actionAndSkillsDiv: null, //Panel for different sections (contracts, ops, skills)
-        currentTab:         null, //Contracts, Operations, Black Ops, Skills
+        overviewDiv:        null, // Overview of stats that stays fixed on left
+        actionAndSkillsDiv: null, // Panel for different sections (contracts, ops, skills)
+        currentTab:         null, // Contracts, Operations, Black Ops, Skills
 
         consoleDiv:         null,
         consoleTable:       null,
-        consoleInputRow:    null, //tr
-        consoleInputCell:   null, //td
-        consoleInputHeader: null, //"> "
-        consoleInput:       null, //Actual input element
+        consoleInputRow:    null, // tr
+        consoleInputCell:   null, // td
+        consoleInputHeader: null, // "> "
+        consoleInput:       null, // Actual input element
 
-        //Overview Content
+        // Overview Content
         overviewRank:               null,
         overviewStamina:            null,
         overviewStaminaHelpTip:     null,
-        overviewGen1:               null, //Stamina Penalty, Team, Hospitalized stats, current city
+        overviewGen1:               null, // Stamina Penalty, Team, Hospitalized stats, current city
         overviewEstPop:             null,
         overviewEstPopHelpTip:      null,
         overviewEstComms:           null,
         overviewChaos:              null,
         overviewSkillPoints:        null,
+        overviewBonusTime:          null,
         overviewAugSuccessMult:     null,
         overviewAugMaxStaminaMult:  null,
         overviewAugStaminaGainMult: null,
         overviewAugAnalysisMult:    null,
 
-        //Actions and Skills Content
+        // Actions and Skills Content
         actionsAndSkillsDesc:   null,
-        actionsAndSkillsList:   null, //ul element of all UI elements in this panel
+        actionsAndSkillsList:   null, // ul element of all UI elements in this panel
         generalActions:     {},
         contracts:          {},
         operations:         {},
         blackops:           {},
         skills:             {},
+        skillPointsDisplay: null,
     };
 }
 
@@ -1619,12 +1796,12 @@ Bladeburner.prototype.createContent = function() {
         id:"bladeburner-container", position:"fixed", class:"generic-menupage-container",
     });
 
-    //Parent Div for Overview and Console
+    // Parent Div for Overview and Console
     DomElems.overviewConsoleParentDiv = createElement("div", {
         height:"60%", display:"block", position:"relative",
     });
 
-    //Overview and Action/Skill pane
+    // Overview and Action/Skill pane
     DomElems.overviewDiv = createElement("div", {
         width:"30%", display:"inline-block", border:"1px solid white",
     });
@@ -1639,7 +1816,7 @@ Bladeburner.prototype.createContent = function() {
     this.createOverviewContent();
     this.createActionAndSkillsContent();
 
-    //Console
+    // Console
     DomElems.consoleDiv          = createElement("div", {
         class:"bladeburner-console-div",
         clickListener:()=>{
@@ -1669,9 +1846,23 @@ Bladeburner.prototype.createContent = function() {
     DomElems.bladeburnerDiv.appendChild(DomElems.overviewConsoleParentDiv);
     DomElems.bladeburnerDiv.appendChild(DomElems.actionAndSkillsDiv);
 
+
+    // legend
+    const legend = createElement("div")
+    legend.innerHTML = `<span class="text">${stealthIcon}= This action requires stealth, ${killIcon} = This action involves retirement</span>`
+    DomElems.bladeburnerDiv.appendChild(legend);
+
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
-    this.postToConsole("Bladeburner Console BETA");
+    if (this.consoleLogs.length === 0) {
+        this.postToConsole("Bladeburner Console BETA");
+        this.postToConsole("Type 'help' to see console commands");
+    } else {
+        for (let i = 0; i < this.consoleLogs.length; ++i) {
+            this.postToConsole(this.consoleLogs[i], false);
+        }
+    }
+
     DomElems.consoleInput.focus();
 }
 
@@ -1700,8 +1891,9 @@ Bladeburner.prototype.createOverviewContent = function() {
     });
 
     DomElems.overviewStaminaHelpTip = createElement("div", {
-        innerText:"?", class:"help-tip",
-        clickListener:()=>{
+        class:"help-tip",
+        innerText:"?",
+        clickListener: ()=> {
             dialogBoxCreate("Performing actions will use up your stamina.<br><br>" +
                             "Your max stamina is determined primarily by your agility stat.<br><br>" +
                             "Your stamina gain rate is determined by both your agility and your " +
@@ -1713,7 +1905,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                             "your success rate would be multipled by 85% (100 - 15).<br><br>" +
                             "Your max stamina and stamina gain rate can also be increased by " +
                             "training, or through skills and Augmentation upgrades.");
-        }
+        },
     });
 
     DomElems.overviewGen1 = createElement("p", {
@@ -1759,7 +1951,14 @@ Bladeburner.prototype.createOverviewContent = function() {
                 "Having too high of a chaos level can make contracts and operations harder."
     });
 
+    DomElems.overviewBonusTime = createElement("p", {
+      innerText: "Bonus time: ",
+      display: "inline-block",
+      tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
+               "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
+    });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
+
 
     DomElems.overviewAugSuccessMult = createElement("p", {display:"block"});
     DomElems.overviewAugMaxStaminaMult = createElement("p", {display:"block"});
@@ -1779,6 +1978,7 @@ Bladeburner.prototype.createOverviewContent = function() {
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(DomElems.overviewChaos);
     appendLineBreaks(DomElems.overviewDiv, 2);
+    DomElems.overviewDiv.appendChild(DomElems.overviewBonusTime);
     DomElems.overviewDiv.appendChild(DomElems.overviewSkillPoints);
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(DomElems.overviewAugSuccessMult);
@@ -1786,20 +1986,20 @@ Bladeburner.prototype.createOverviewContent = function() {
     DomElems.overviewDiv.appendChild(DomElems.overviewAugStaminaGainMult);
     DomElems.overviewDiv.appendChild(DomElems.overviewAugAnalysisMult);
 
-    //Travel to new city button
+    // Travel to new city button
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(createElement("a", {
         innerHTML:"Travel", class:"a-link-button", display:"inline-block",
         clickListener:()=>{
             var popupId = "bladeburner-travel-popup-cancel-btn";
             var popupArguments = [];
-            popupArguments.push(createElement("a", { //Cancel Button
+            popupArguments.push(createElement("a", { // Cancel Button
                 innerText:"Cancel", class:"a-link-button",
                 clickListener:()=>{
                     removeElementById(popupId); return false;
                 }
             }))
-            popupArguments.push(createElement("p", { //Info Text
+            popupArguments.push(createElement("p", { // Info Text
                 innerText:"Travel to a different city for your Bladeburner " +
                           "activities. This does not cost any money. The city you are " +
                           "in for your Bladeburner duties does not affect " +
@@ -1808,8 +2008,10 @@ Bladeburner.prototype.createOverviewContent = function() {
             for (var i = 0; i < CityNames.length; ++i) {
             (function(inst, i) {
                 popupArguments.push(createElement("div", {
-                    //Reusing this css class...it adds a border and makes it
-                    //so that background color changes when you hover
+                    /**
+                     * Reusing this css class...it adds a border and makes it
+                     * so that background color changes when you hover
+                     */
                     class:"cmpy-mgmt-find-employee-option",
                     innerText:CityNames[i],
                     clickListener:()=>{
@@ -1825,8 +2027,8 @@ Bladeburner.prototype.createOverviewContent = function() {
         }
     }));
 
-    //Faction button
-    var bladeburnersFactionName = "Bladeburners";
+    // Faction button
+    const bladeburnersFactionName = "Bladeburners";
     if (factionExists(bladeburnersFactionName)) {
         var bladeburnerFac = Factions[bladeburnersFactionName];
         if (!(bladeburnerFac instanceof Faction)) {
@@ -1840,7 +2042,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                     Engine.loadFactionContent();
                     displayFactionContent(bladeburnersFactionName);
                 } else {
-                    if (this.rank >= 25) {
+                    if (this.rank >= RankNeededForFaction) {
                         joinFaction(bladeburnerFac);
                         dialogBoxCreate("Congratulations! You were accepted into the Bladeburners faction");
                         removeChildrenFromElement(DomElems.overviewDiv);
@@ -1888,12 +2090,12 @@ Bladeburner.prototype.createActionAndSkillsContent = function() {
         }) (buttons, i, this, currTab);
     }
 
-    //General info/description for each action
+    // General info/description for each action
     DomElems.actionsAndSkillsDesc = createElement("p", {
         display:"block", margin:"4px", padding:"4px"
     });
 
-    //List for actions/skills
+    // List for actions/skills
     removeChildrenFromElement(DomElems.actionsAndSkillsList);
     DomElems.actionsAndSkillsList = createElement("ul");
 
@@ -1949,10 +2151,10 @@ Bladeburner.prototype.createContractsContent = function() {
     }
 
     DomElems.actionsAndSkillsDesc.innerHTML =
-        "Complete contracts in order to increase your Bitburner rank. " +
+        "Complete contracts in order to increase your Bladeburner rank and earn money. " +
         "Failing a contract will cause you to lose HP, which can lead to hospitalization.<br><br>" +
         "You can unlock higher-level contracts by successfully completing them. " +
-        "Higher-level contracts are more difficult, but grant more rank and experience.";
+        "Higher-level contracts are more difficult, but grant more rank, experience, and money.";
 
     for (var contractName in this.contracts) {
         if (this.contracts.hasOwnProperty(contractName)) {
@@ -2003,10 +2205,12 @@ Bladeburner.prototype.createBlackOpsContent = function() {
         "Black Operations (Black Ops) are special, one-time covert operations. " +
         "Each Black Op must be unlocked successively by completing " +
         "the one before it.<br><br>" +
+        "<b>Your ultimate goal to climb through the ranks of Bladeburners is to complete " +
+        "all of the Black Ops.</b><br><br>" +
         "Like normal operations, you may use a team for Black Ops. Failing " +
         "a black op will incur heavy HP and rank losses.";
 
-    //Put Black Operations in sequence of required rank
+    // Put Black Operations in sequence of required rank
     var blackops = [];
     for (var blackopName in BlackOperations) {
         if (BlackOperations.hasOwnProperty(blackopName)) {
@@ -2017,12 +2221,12 @@ Bladeburner.prototype.createBlackOpsContent = function() {
         return (a.reqdRank - b.reqdRank);
     });
 
-    for (var i = 0; i < blackops.length; ++i) {
+    for (var i = blackops.length-1; i >= 0 ; --i) {
+      if (this.blackops[[blackops[i].name]] == null && i !== 0 && this.blackops[[blackops[i-1].name]] == null) {continue;} // If this one nor the next are completed then this isn't unlocked yet.
         DomElems.blackops[blackops[i].name] = createElement("div", {
             class:"bladeburner-action", name:blackops[i].name
         });
         DomElems.actionsAndSkillsList.appendChild(DomElems.blackops[blackops[i].name]);
-        if (this.blackops[[blackops[i].name]] == null) {break;} //Can't be found in completed blackops
     }
 }
 
@@ -2032,7 +2236,7 @@ Bladeburner.prototype.createSkillsContent = function() {
                         "DomElems.actionsAndSkillsList or DomElems.actionsAndSkillsDesc = null");
     }
 
-    //Display Current multipliers
+    // Display Current multipliers
     DomElems.actionsAndSkillsDesc.innerHTML =
         "You will gain one skill point every " + RanksPerSkillPoint + " ranks.<br><br>" +
         "Note that when upgrading a skill, the benefit for that skill is additive. " +
@@ -2088,11 +2292,17 @@ Bladeburner.prototype.createSkillsContent = function() {
                 case "stamina":
                     DomElems.actionsAndSkillsDesc.innerHTML += "Stamina: x" + mult + "<br>";
                     break;
+                case "money":
+                    DomElems.actionsAndSkillsDesc.innerHTML += "Contract Money: x" + mult + "<br>";
+                    break;
+                case "expGain":
+                    DomElems.actionsAndSkillsDesc.innerHTML += "Exp Gain: x" + mult + "<br>";
+                    break;
                 case "weaponAbility":
-                    //DomElems.actionsAndSkillsDesc.innerHTML +=
+                    // TODO in the future if items are ever implemented
                     break;
                 case "gunAbility":
-                    //DomElems.actionsAndSkillsDesc.innerHTML
+                    // TODO in the future if items are ever implemented
                     break;
                 default:
                     console.log("Warning: Unrecognized SkillMult Key: " + multKeys[i]);
@@ -2101,12 +2311,13 @@ Bladeburner.prototype.createSkillsContent = function() {
         }
     }
 
-    //Skill Points
-    DomElems.actionAndSkillsDiv.appendChild(createElement("p", {
+    // Skill Points
+    DomElems.skillPointsDisplay = createElement("p", {
         innerHTML:"<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>"
-    }));
+    });
+    DomElems.actionAndSkillsDiv.appendChild(DomElems.skillPointsDisplay);
 
-    //UI Element for each skill
+    // UI Element for each skill
     for (var skillName in Skills) {
         if (Skills.hasOwnProperty(skillName)) {
             DomElems.skills[skillName] = createElement("div", {
@@ -2123,7 +2334,7 @@ Bladeburner.prototype.updateContent = function() {
 }
 
 Bladeburner.prototype.updateOverviewContent = function() {
-    if (Engine.currentPage !== Engine.Page.Bladeburner) {return;}
+    if (!routing.isOn(Page.Bladeburner)) {return;}
     DomElems.overviewRank.childNodes[0].nodeValue = "Rank: " + formatNumber(this.rank, 2);
     DomElems.overviewStamina.innerText = "Stamina: " + formatNumber(this.stamina, 3) + " / " + formatNumber(this.maxStamina, 3);
     DomElems.overviewGen1.innerHTML =
@@ -2131,13 +2342,14 @@ Bladeburner.prototype.updateOverviewContent = function() {
         "Team Size: "   + formatNumber(this.teamSize, 0)  + "<br>" +
         "Team Members Lost: " + formatNumber(this.teamLost, 0) + "<br><br>" +
         "Num Times Hospitalized: " + this.numHosp + "<br>" +
-        "Money Lost From Hospitalizations: " + numeral(this.moneyLost).format("$0.000a") + "<br><br>" +
+        "Money Lost From Hospitalizations: " + numeralWrapper.format(this.moneyLost, "$0.000a") + "<br><br>" +
         "Current City: " + this.city + "<br>";
 
-    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + numeral(this.getCurrentCity().popEst).format("0.000a");
+    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + numeralWrapper.format(this.getCurrentCity().popEst, "0.000a");
     DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + formatNumber(this.getCurrentCity().comms, 0);
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);
+    DomElems.overviewBonusTime.childNodes[0].nodeValue = "Bonus time: " + this.storedCycles/CyclesPerSecond;
     DomElems.overviewAugSuccessMult.innerText = "Aug. Success Chance Mult: " + formatNumber(Player.bladeburner_success_chance_mult*100, 1) + "%";
     DomElems.overviewAugMaxStaminaMult.innerText = "Aug. Max Stamina Mult: " + formatNumber(Player.bladeburner_max_stamina_mult*100, 1) + "%";
     DomElems.overviewAugStaminaGainMult.innerText = "Aug. Stamina Gain Mult: " + formatNumber(Player.bladeburner_stamina_gain_mult*100, 1) + "%";
@@ -2216,6 +2428,8 @@ Bladeburner.prototype.updateActionAndSkillsContent = function() {
             }
             break;
         case "skills":
+            DomElems.skillPointsDisplay.innerHTML = "<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>";
+
             var skillElems = Object.keys(DomElems.skills);
             for (var i = 0; i < skillElems.length; ++i) {
                 var skillElem = DomElems.skills[skillElems[i]];
@@ -2236,7 +2450,7 @@ Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
     removeChildrenFromElement(el);
     var isActive = el.classList.contains(ActiveActionCssClass);
 
-    el.appendChild(createElement("h2", { //Header
+    el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
                              formatNumber(this.actionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
@@ -2244,14 +2458,14 @@ Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
         display:"inline-block",
     }));
 
-    if (isActive) { //Progress bar if its active
+    if (isActive) { // Progress bar if its active
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress})
         }));
     } else {
-        //Start button
+        // Start button
         el.appendChild(createElement("a", {
             innerText:"Start", class: "a-link-button",
             margin:"3px", padding:"3px",
@@ -2266,7 +2480,7 @@ Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
     }
 
     appendLineBreaks(el, 2);
-    el.appendChild(createElement("pre", { //Info
+    el.appendChild(createElement("pre", { // Info
         innerHTML:action.desc, display:"inline-block"
     }));
 
@@ -2278,7 +2492,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
     var isActive = el.classList.contains(ActiveActionCssClass);
     var estimatedSuccessChance = action.getSuccessChance(this, {est:true});
 
-    el.appendChild(createElement("h2", { //Header
+    el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
                              formatNumber(this.actionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
@@ -2286,13 +2500,13 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline-block"
     }));
 
-    if (isActive) { //Progress bar if its active
+    if (isActive) { // Progress bar if its active
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress})
         }));
-    } else { //Start button
+    } else { // Start button
         el.appendChild(createElement("a", {
             innerText:"Start", class: "a-link-button",
             padding:"3px", margin:"3px",
@@ -2306,12 +2520,14 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         }));
     }
 
-    //Level and buttons to change level
+    // Level and buttons to change level
     var maxLevel = (action.level >= action.maxLevel);
     appendLineBreaks(el, 2);
     el.appendChild(createElement("pre", {
         display:"inline-block",
-        innerText:"Level: " + action.level + " / " + action.maxLevel
+        innerText:"Level: " + action.level + " / " + action.maxLevel,
+        tooltip:action.getSuccessesNeededForNextLevel(ContractSuccessesPerLevel) + " successes " +
+                "needed for next level"
     }));
     el.appendChild(createElement("a", {
         class: maxLevel ? "a-link-button-inactive" : "a-link-button", innerHTML:"&uarr;",
@@ -2320,7 +2536,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline",
         clickListener:()=>{
             ++action.level;
-            if (isActive) {this.startAction(this.action);} //Restart Action
+            if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateContractsUIElement(el, action);
             return false;
         }
@@ -2332,7 +2548,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline",
         clickListener:()=>{
             --action.level;
-            if (isActive) {this.startAction(this.action);} //Restart Action
+            if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateContractsUIElement(el, action);
             return false;
         }
@@ -2340,38 +2556,46 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
 
     var actionTime = action.getActionTime(this);
     appendLineBreaks(el, 2);
-    el.appendChild(createElement("pre", { //Info
+    el.appendChild(createElement("pre", { // Info
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
-                  "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
+                  `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
+
                   "Time Required (s): " + formatNumber(actionTime, 0) + "\n" +
                   "Contracts remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
     }));
 
-    //Autolevel Checkbox
+    // Autolevel Checkbox
     el.appendChild(createElement("br"));
     var autolevelCheckboxId = "bladeburner-" + action.name + "-autolevel-checkbox";
     el.appendChild(createElement("label", {
         for:autolevelCheckboxId, innerText:"Autolevel",color:"white",
         tooltip:"Automatically increase contract level when possible"
     }));
-    var autolevelCheckbox = createElement("input", {
-        type:"checkbox", id:autolevelCheckboxId, margin:"4px",
-        checked:action.autoLevel,
-        changeListener:()=>{
-            action.autoLevel = autolevelCheckbox.checked;
-        }
+
+    const checkboxDiv = createElement("div", { class: "bbcheckbox" });
+    const checkboxInput = createElement("input", {
+      type:"checkbox",
+      id: autolevelCheckboxId,
+      checked: action.autoLevel,
+      changeListener: () => {
+        action.autoLevel = checkboxInput.checked;
+      },
     });
-    el.appendChild(autolevelCheckbox);
+    const checkmarkLabel = createElement("label", { for: autolevelCheckboxId });
+    checkboxDiv.appendChild(checkboxInput);
+    checkboxDiv.appendChild(checkmarkLabel);
+
+    el.appendChild(checkboxDiv);
 }
 
 Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     removeChildrenFromElement(el);
     var isActive = el.classList.contains(ActiveActionCssClass);
     var estimatedSuccessChance = action.getSuccessChance(this, {est:true});
-    el.appendChild(createElement("h2", { //Header
+    el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
                              formatNumber(this.actionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
@@ -2379,13 +2603,13 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         display:"inline-block"
     }));
 
-    if (isActive) { //Progress bar if its active
+    if (isActive) { // Progress bar if its active
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress})
         }));
-    } else { //Start button and set Team Size button
+    } else { // Start button and set Team Size button
         el.appendChild(createElement("a", {
             innerText:"Start", class: "a-link-button",
             margin:"3px", padding:"3px",
@@ -2438,12 +2662,14 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         }));
     }
 
-    //Level and buttons to change level
+    // Level and buttons to change level
     var maxLevel = (action.level >= action.maxLevel);
     appendLineBreaks(el, 2);
     el.appendChild(createElement("pre", {
         display:"inline-block",
-        innerText:"Level: " + action.level + " / " + action.maxLevel
+        innerText:"Level: " + action.level + " / " + action.maxLevel,
+        tooltip:action.getSuccessesNeededForNextLevel(OperationSuccessesPerLevel) + " successes " +
+                "needed for next level"
     }));
     el.appendChild(createElement("a", {
         class: maxLevel ? "a-link-button-inactive" : "a-link-button", innerHTML:"&uarr;",
@@ -2452,7 +2678,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         display:"inline",
         clickListener:()=>{
             ++action.level;
-            if (isActive) {this.startAction(this.action);} //Restart Action
+            if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateOperationsUIElement(el, action);
             return false;
         }
@@ -2464,41 +2690,48 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         display:"inline",
         clickListener:()=>{
             --action.level;
-            if (isActive) {this.startAction(this.action);} //Restart Action
+            if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateOperationsUIElement(el, action);
             return false;
         }
     }));
 
-    //General Info
+    // General Info
     var difficulty = action.getDifficulty();
     var actionTime = action.getActionTime(this);
     appendLineBreaks(el, 2);
     el.appendChild(createElement("pre", {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
-                  "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
-                  "Time Required(s): " + formatNumber(actionTime, 1) + "\n" +
+                  `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
+                  "Time Required(s): " + formatNumber(actionTime, 0) + "\n" +
                   "Operations remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
     }));
 
-    //Autolevel Checkbox
+    // Autolevel Checkbox
     el.appendChild(createElement("br"));
     var autolevelCheckboxId = "bladeburner-" + action.name + "-autolevel-checkbox";
     el.appendChild(createElement("label", {
         for:autolevelCheckboxId, innerText:"Autolevel",color:"white",
         tooltip:"Automatically increase operation level when possible"
     }));
-    var autolevelCheckbox = createElement("input", {
-        type:"checkbox", id:autolevelCheckboxId, margin:"4px",
-        checked:action.autoLevel,
-        changeListener:()=>{
-            action.autoLevel = autolevelCheckbox.checked;
-        }
+
+    const checkboxDiv = createElement("div", { class: "bbcheckbox" });
+    const checkboxInput = createElement("input", {
+      type:"checkbox",
+      id: autolevelCheckboxId,
+      checked: action.autoLevel,
+      changeListener: () => {
+        action.autoLevel = checkboxInput.checked;
+      },
     });
-    el.appendChild(autolevelCheckbox);
+    const checkmarkLabel = createElement("label", { for: autolevelCheckboxId });
+    checkboxDiv.appendChild(checkboxInput);
+    checkboxDiv.appendChild(checkmarkLabel);
+
+    el.appendChild(checkboxDiv);
 }
 
 Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
@@ -2510,7 +2743,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     var actionTime = action.getActionTime(this);
     var hasReqdRank = this.rank >= action.reqdRank;
 
-    //UI for Completed Black Op
+    // UI for Completed Black Op
     if (isCompleted) {
         el.appendChild(createElement("h2", {
             innerText:action.name + " (COMPLETED)", display:"block",
@@ -2518,7 +2751,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
         return;
     }
 
-    el.appendChild(createElement("h2", { //Header
+    el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
                              formatNumber(this.actionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
@@ -2526,14 +2759,14 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
         display:"inline-block",
     }));
 
-    if (isActive) { //Progress bar if its active
+    if (isActive) { // Progress bar if its active
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress})
         }));
     } else {
-        el.appendChild(createElement("a", { //Start button
+        el.appendChild(createElement("a", { // Start button
             innerText:"Start", margin:"3px", padding:"3px",
             class:hasReqdRank ? "a-link-button" : "a-link-button-inactive",
             clickListener:()=>{
@@ -2544,7 +2777,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                 return false;
             }
         }));
-        el.appendChild(createElement("a", { //Set Team Size Button
+        el.appendChild(createElement("a", { // Set Team Size Button
             innerText:"Set Team Size (Curr Size: " + formatNumber(action.teamCount, 0) + ")", class:"a-link-button",
             margin:"3px", padding:"3px",
             clickListener:()=>{
@@ -2585,7 +2818,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
         }));
     }
 
-    //Info
+    // Info
     appendLineBreaks(el, 2);
     el.appendChild(createElement("p", {
         display:"inline-block",
@@ -2597,8 +2830,8 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     }));
     el.appendChild(createElement("p", {
         display:"inline-block",
-        innerHTML:"Estimated Success Chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
-                  "Time Required(s): " + formatNumber(actionTime, 1),
+        innerHTML:`Estimated Success Chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
+                  "Time Required(s): " + formatNumber(actionTime, 0),
     }))
 }
 
@@ -2609,19 +2842,20 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
     if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
         currentLevel = this.skills[skillName];
     }
-    var pointCost = skill.baseCost + (currentLevel * skill.costInc);
+    var pointCost = skill.calculateCost(currentLevel);
 
-    el.appendChild(createElement("h2", { //Header
+    el.appendChild(createElement("h2", { // Header
         innerText:skill.name + " (Lvl " + currentLevel + ")", display:"inline-block"
     }));
 
     var canLevel = this.skillPoints >= pointCost;
     var maxLvl = skill.maxLvl ? currentLevel >= skill.maxLvl : false;
-    el.appendChild(createElement("a", { //Level up button
+    el.appendChild(createElement("a", { // Level up button
         innerText:"Level", display:"inline-block",
         class: canLevel && !maxLvl ? "a-link-button" : "a-link-button-inactive",
         margin:"3px", padding:"3px",
         clickListener:()=>{
+            if (this.skillPoints < pointCost) {return;}
             this.skillPoints -= pointCost;
             this.upgradeSkill(skill);
             this.createActionAndSkillsContent();
@@ -2640,18 +2874,28 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
             innerText:"Skill Points required: " + formatNumber(pointCost, 0),
         }));
     }
-    el.appendChild(createElement("p", { //Info/Description
+    el.appendChild(createElement("p", { // Info/Description
         innerHTML:skill.desc, display:"inline-block",
     }));
 }
 
-//Bladeburner Console Window
-Bladeburner.prototype.postToConsole = function(input) {
+// Bladeburner Console Window
+Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
+    const MaxConsoleEntries = 100;
+    if (saveToLogs === true) {
+        this.consoleLogs.push(input);
+        if (this.consoleLogs.length > MaxConsoleEntries) {
+            this.consoleLogs.shift();
+        }
+    }
+
     if (input == null || DomElems.consoleDiv == null) {return;}
     $("#bladeubrner-console-input-row").before('<tr><td class="bladeburner-console-line" style="color: var(--my-font-color); white-space:pre-wrap;">' + input + '</td></tr>');
-    if (DomElems.consoleTable.childNodes.length > 200) {
+
+    if (DomElems.consoleTable.childNodes.length > MaxConsoleEntries) {
         DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
     }
+
 	this.updateConsoleScroll();
 }
 
@@ -2667,26 +2911,26 @@ Bladeburner.prototype.clearConsole = function() {
     while (DomElems.consoleTable.childNodes.length > 1) {
         DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
     }
+
+    this.consoleLogs.length = 0;
 }
 
 Bladeburner.prototype.log = function(input) {
-    //Adds a timestamp and then just calls postToConsole
-    var d = new Date();
-    var timestamp = d.getMonth() + "/" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes();
-    this.postToConsole("[" + timestamp + "] " + input);
+    // Adds a timestamp and then just calls postToConsole
+    this.postToConsole(`[${getTimestamp()}] ${input}`);
 }
 
-//Handles a potential series of commands (comm1; comm2; comm3;)
+// Handles a potential series of commands (comm1; comm2; comm3;)
 Bladeburner.prototype.executeConsoleCommands = function(commands) {
     try {
-        //Console History
-        if (consoleHistory[consoleHistory.length-1] != commands) {
-            consoleHistory.push(commands);
-            if (consoleHistory.length > 50) {
-                consoleHistory.splice(0, 1);
+        // Console History
+        if (this.consoleHistory[this.consoleHistory.length-1] != commands) {
+            this.consoleHistory.push(commands);
+            if (this.consoleHistory.length > 50) {
+                this.consoleHistory.splice(0, 1);
             }
         }
-        consoleHistoryIndex = consoleHistory.length;
+        consoleHistoryIndex = this.consoleHistory.length;
 
         var arrayOfCommands = commands.split(";");
         for (var i = 0; i < arrayOfCommands.length; ++i) {
@@ -2697,13 +2941,13 @@ Bladeburner.prototype.executeConsoleCommands = function(commands) {
     }
 }
 
-//A single command
+// Execute a single console command
 Bladeburner.prototype.executeConsoleCommand = function(command) {
     command = command.trim();
-    command = command.replace(/\s\s+/g, ' '); //Replace all whitespace w/ a single space
+    command = command.replace(/\s\s+/g, ' '); // Replace all whitespace w/ a single space
 
     var args = this.parseCommandArguments(command);
-    if (args.length <= 0) {return;} //Log an error?
+    if (args.length <= 0) {return;} // Log an error?
 
     switch(args[0].toLowerCase()) {
         case "automate":
@@ -2735,21 +2979,34 @@ Bladeburner.prototype.executeConsoleCommand = function(command) {
 }
 
 Bladeburner.prototype.parseCommandArguments = function(command) {
-    //Returns an array with command and its arguments in each index.
-    //e.g. skill "blade's intuition" foo returns [skill, blade's intuition, foo]
-    //The input to this fn will be trimmed and will have all whitespace replaced w/ a single space
-    var args = [];
-    var start = 0, i = 0;
+    /**
+     * Returns an array with command and its arguments in each index.
+     * e.g. skill "blade's intuition" foo returns [skill, blade's intuition, foo]
+     * The input to this fn will be trimmed and will have all whitespace replaced w/ a single space
+     */
+    const args = [];
+    let start = 0, i = 0;
     while (i < command.length) {
-        var c = command.charAt(i);
-        if (c === '"') {
-            var endQuote = command.indexOf('"', i+1);
+        const c = command.charAt(i);
+        if (c === '"') { // Double quotes
+            const endQuote = command.indexOf('"', i+1);
             if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
                 args.push(command.substr(i+1, (endQuote - i - 1)));
                 if (endQuote === command.length-1) {
                     start = i = endQuote+1;
                 } else {
-                    start = i = endQuote+2; //Skip the space
+                    start = i = endQuote+2; // Skip the space
+                }
+                continue;
+            }
+        } else if (c === "'") { // Single quotes, same thing as above
+            const endQuote = command.indexOf("'", i+1);
+            if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
+                args.push(command.substr(i+1, (endQuote - i - 1)));
+                if (endQuote === command.length-1) {
+                    start = i = endQuote+1;
+                } else {
+                    start = i = endQuote+2; // Skip the space
                 }
                 continue;
             }
@@ -2760,7 +3017,7 @@ Bladeburner.prototype.parseCommandArguments = function(command) {
         ++i;
     }
     if (start !== i) {args.push(command.substr(start, i-start));}
-    console.log("Bladeburner.parseCommandArguments returned: " + args);
+    console.log("Bladeburner console command parsing returned: " + args);
     return args;
 }
 
@@ -2770,7 +3027,7 @@ Bladeburner.prototype.executeAutomateConsoleCommand = function(args) {
         return;
     }
 
-    //Enable/Disable
+    // Enable/Disable
     if (args.length === 2) {
         var flag = args[1];
         if (flag.toLowerCase() === "status") {
@@ -2799,11 +3056,11 @@ Bladeburner.prototype.executeAutomateConsoleCommand = function(args) {
         return;
     }
 
-    //Set variables
+    // Set variables
     if (args.length === 4) {
         var variable = args[1], val = args[2];
 
-        var highLow = false; //True for high, false for low
+        var highLow = false; // True for high, false for low
         if (args[3].toLowerCase().includes("hi")) {highLow = true;}
 
         switch (variable) {
@@ -2899,7 +3156,7 @@ Bladeburner.prototype.executeLogConsoleCommand = function(args) {
     }
 
     var flag = true;
-    if (args[1].toLowerCase().includes("d")) {flag = false;} //d for disable
+    if (args[1].toLowerCase().includes("d")) {flag = false;} // d for disable
 
     switch (args[2].toLowerCase()) {
         case "general":
@@ -2949,13 +3206,13 @@ Bladeburner.prototype.executeLogConsoleCommand = function(args) {
 Bladeburner.prototype.executeSkillConsoleCommand = function(args) {
     switch (args.length) {
         case 1:
-            //Display Skill Help Command
+            // Display Skill Help Command
             this.postToConsole("Invalid usage of 'skill' console command: skill [action] [name]");
             this.postToConsole("Use 'help skill' for more info");
             break;
         case 2:
             if (args[1].toLowerCase() === "list") {
-                //List all skills and their level
+                // List all skills and their level
                 this.postToConsole("Skills: ");
                 var skillNames = Object.keys(Skills);
                 for(var i = 0; i < skillNames.length; ++i) {
@@ -3018,10 +3275,10 @@ Bladeburner.prototype.executeSkillConsoleCommand = function(args) {
                                 this.postToConsole("Stamina: x" + mult);
                                 break;
                             case "weaponAbility":
-                                //DomElems.actionsAndSkillsDesc.innerHTML +=
+                                // TODO if items are ever implemented
                                 break;
                             case "gunAbility":
-                                //DomElems.actionsAndSkillsDesc.innerHTML
+                                // TODO if items are ever implemented
                                 break;
                             default:
                                 console.log("Warning: Unrecognized SkillMult Key: " + multKeys[i]);
@@ -3047,7 +3304,7 @@ Bladeburner.prototype.executeSkillConsoleCommand = function(args) {
                 if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
                     currentLevel = this.skills[skillName];
                 }
-                var pointCost = skill.baseCost + (currentLevel * skill.costInc);
+                var pointCost = skill.calculateCost(currentLevel);
                 if (this.skillPoints >= pointCost) {
                     this.skillPoints -= pointCost;
                     this.upgradeSkill(skill);
@@ -3132,6 +3389,501 @@ Bladeburner.prototype.executeStartConsoleCommand = function(args) {
     }
 }
 
+Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
+    if (type === "" || name === "") {return null;}
+    var action = new ActionIdentifier();
+    var convertedType = type.toLowerCase().trim();
+    var convertedName = name.toLowerCase().trim();
+    switch (convertedType) {
+        case "contract":
+        case "contracts":
+        case "contr":
+            action.type = ActionTypes["Contract"];
+            if (this.contracts.hasOwnProperty(name)) {
+                action.name = name;
+                return action;
+            } else {
+                return null;
+            }
+            break;
+        case "operation":
+        case "operations":
+        case "op":
+        case "ops":
+            action.type = ActionTypes["Operation"];
+            if (this.operations.hasOwnProperty(name)) {
+                action.name = name;
+                return action;
+            } else {
+                return null;
+            }
+            break;
+        case "blackoperation":
+        case "black operation":
+        case "black operations":
+        case "black op":
+        case "black ops":
+        case "blackop":
+        case "blackops":
+            action.type = ActionTypes["BlackOp"];
+            if (BlackOperations.hasOwnProperty(name)) {
+                action.name = name;
+                return action;
+            } else {
+                return null;
+            }
+            break;
+        case "general":
+        case "general action":
+        case "gen":
+            break;
+        default:
+            return null;
+    }
+
+    if (convertedType.startsWith("gen")) {
+        switch (convertedName) {
+            case "training":
+                action.type = ActionTypes["Training"];
+                action.name = "Training";
+                break;
+            case "recruitment":
+            case "recruit":
+                action.type = ActionTypes["Recruitment"];
+                action.name = "Recruitment";
+                break;
+            case "field analysis":
+            case "fieldanalysis":
+                action.type = ActionTypes["Field Analysis"];
+                action.name = "Field Analysis";
+                break;
+            case "diplomacy":
+                action.type = ActionTypes["Diplomacy"];
+                action.name = "Diplomacy";
+                break;
+            case "hyperbolic regeneration chamber":
+                action.type = ActionTypes["Hyperbolic Regeneration Chamber"];
+                action.name = "Hyperbolic Regeneration Chamber";
+                break;
+            default:
+                return null;
+        }
+        return action;
+    }
+}
+
+Bladeburner.prototype.getTypeAndNameFromActionId = function(actionId) {
+    var res = {};
+    let types = Object.keys(ActionTypes);
+    for (let i = 0; i < types.length; ++i) {
+        if (actionId.type === ActionTypes[types[i]]) {
+            res.type = types[i];
+            break;
+        }
+    }
+    if (res.type == null) {res.type = "Idle";}
+
+    res.name = actionId.name != null ? actionId.name : "Idle";
+    return res;
+}
+
+Bladeburner.prototype.getContractNamesNetscriptFn = function() {
+    return Object.keys(this.contracts);
+}
+
+Bladeburner.prototype.getOperationNamesNetscriptFn = function() {
+    return Object.keys(this.operations);
+}
+
+Bladeburner.prototype.getBlackOpNamesNetscriptFn = function() {
+    return Object.keys(BlackOperations);
+}
+
+Bladeburner.prototype.getGeneralActionNamesNetscriptFn = function() {
+    return Object.keys(GeneralActions);
+}
+
+Bladeburner.prototype.getSkillNamesNetscriptFn = function() {
+    return Object.keys(Skills);
+}
+
+Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript) {
+    var errorLogText = "ERROR: bladeburner.startAction() failed due to an invalid action specified. " +
+                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
+                       "name of the operation is case-sensitive.";
+    var actionId = this.getActionIdFromTypeAndName(type, name);
+    if (actionId == null) {
+        workerScript.log(errorLogText);
+        return false;
+    }
+
+    // Special logic for Black Ops
+    if (actionId.type === ActionTypes["BlackOp"]) {
+        // Can't start a BlackOp if you don't have the required rank
+        let action = this.getActionObject(actionId);
+        if (action.reqdRank > this.rank) {
+            workerScript.log(`Failed to start Black Op ${actionId.name} due to insufficient rank`);
+            return false;
+        }
+
+        // Can't start a BlackOp if its already been done
+        if (this.blackops[actionId.name] != null) {
+            workerScript.log(`Failed to start Black Op ${actionId.name} because its already been completed`);
+            return false;
+        }
+
+        // Can't start a BlackOp if you haven't done the one before it
+        var blackops = [];
+        for (const nm in BlackOperations) {
+            if (BlackOperations.hasOwnProperty(nm)) {
+                blackops.push(nm);
+            }
+        }
+        blackops.sort(function(a, b) {
+            return (BlackOperations[a].reqdRank - BlackOperations[b].reqdRank); // Sort black ops in intended order
+        });
+
+        let i = blackops.indexOf(actionId.name);
+        if (i === -1) {
+            workerScript.log("ERROR: Invalid Black Operation name passed into bladeburner.startAction(). Note that this name is case-sensitive & whitespace-sensitive");
+            return false;
+        }
+
+        if (i > 0 && this.blackops[blackops[i-1]] == null) {
+            workerScript.log(`ERROR: Cannot attempt Black Operation ${actionId.name} because you have not done the preceding one`);
+            return false;
+        }
+    }
+
+    try {
+        this.startAction(actionId);
+        if (workerScript.shouldLog("startAction")) {
+            workerScript.log("Starting bladeburner action with type " + type + " and name " + name);
+        }
+        return true;
+    } catch(e) {
+        this.resetAction();
+        workerScript.log("ERROR: bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
+                                   "Note that this name is case-sensitive and whitespace-sensitive");
+        return false;
+    }
+}
+
+Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScript) {
+    var errorLogText = "ERROR: bladeburner.getActionTime() failed due to an invalid action specified. " +
+                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
+                       "name of the operation is case-sensitive.";
+    var actionId = this.getActionIdFromTypeAndName(type, name);
+    if (actionId == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    var actionObj = this.getActionObject(actionId);
+    if (actionObj == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    switch (actionId.type) {
+        case ActionTypes["Contract"]:
+        case ActionTypes["Operation"]:
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]:
+            return actionObj.getActionTime(this);
+        case ActionTypes["Training"]:
+        case ActionTypes["Field Analysis"]:
+        case ActionTypes["FieldAnalysis"]:
+            return 30;
+        case ActionTypes["Recruitment"]:
+            return this.getRecruitmentTime();
+        default:
+            workerScript.log(errorLogText);
+            return -1;
+    }
+}
+
+Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type, name, workerScript) {
+    var errorLogText = "ERROR: bladeburner.getActionEstimatedSuccessChance() failed due to an invalid action specified. " +
+                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
+                       "name of the operation is case-sensitive.";
+    var actionId = this.getActionIdFromTypeAndName(type, name);
+    if (actionId == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    var actionObj = this.getActionObject(actionId);
+    if (actionObj == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    switch (actionId.type) {
+        case ActionTypes["Contract"]:
+        case ActionTypes["Operation"]:
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]:
+            return actionObj.getSuccessChance(this, {est:true});
+        case ActionTypes["Training"]:
+        case ActionTypes["Field Analysis"]:
+        case ActionTypes["FieldAnalysis"]:
+            return 1;
+        case ActionTypes["Recruitment"]:
+            return this.getRecruitmentSuccessChance();
+        default:
+            workerScript.log(errorLogText);
+            return -1;
+    }
+}
+
+Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, workerScript) {
+    var errorLogText = "ERROR: bladeburner.getActionCountRemaining() failed due to an invalid action specified. " +
+                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
+                       "name of the operation is case-sensitive.";
+    var actionId = this.getActionIdFromTypeAndName(type, name);
+    if (actionId == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    var actionObj = this.getActionObject(actionId);
+    if (actionObj == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    switch (actionId.type) {
+        case ActionTypes["Contract"]:
+        case ActionTypes["Operation"]:
+            return Math.floor( actionObj.count );
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]:
+            if (this.blackops[name] != null) {
+                return 0;
+            } else {
+                return 1;
+            }
+        case ActionTypes["Training"]:
+        case ActionTypes["Field Analysis"]:
+        case ActionTypes["FieldAnalysis"]:
+            return Infinity;
+        default:
+            workerScript.log(errorLogText);
+            return -1;
+    }
+}
+
+Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScript) {
+    var errorLogText = "ERROR: bladeburner.getSkillLevel() failed due to an invalid skill specified: " +
+                       skillName + ". Note that the name of the skill is case-sensitive";
+
+    if (skillName === "") {
+        return -1;
+    }
+
+    if (!Skills.hasOwnProperty(skillName)) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    if (this.skills[skillName] == null) {
+        return 0;
+    } else {
+        return this.skills[skillName];
+    }
+}
+
+Bladeburner.prototype.getSkillUpgradeCostNetscriptFn = function(skillName, workerScript) {
+    var errorLogText = "ERROR: bladeburner.getSkillUpgradeCostNetscriptFn() failed due to an invalid skill specified: " +
+                       skillName + ". Note that the name of the skill is case-sensitive";
+
+    if (skillName === "") {
+        return -1;
+    }
+
+    if (!Skills.hasOwnProperty(skillName)) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    var skill = Skills[skillName];
+    if (this.skills[skillName] == null) {
+        return skill.calculateCost(0);
+    } else {
+        return skill.calculateCost(this.skills[skillName]);
+    }
+}
+
+Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript) {
+    var errorLogText = "ERROR: bladeburner.upgradeSkill() failed due to an invalid skill specified: " +
+                       skillName + ". Note that the name of the skill is case-sensitive";
+    if (!Skills.hasOwnProperty(skillName)) {
+        workerScript.log(errorLogText);
+        return false;
+    }
+
+    var skill = Skills[skillName];
+    var currentLevel = 0;
+    if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
+        currentLevel = this.skills[skillName];
+    }
+    var cost = skill.calculateCost(currentLevel);
+
+    if(skill.maxLvl && currentLevel >= skill.maxLvl) {
+      if (workerScript.shouldLog("upgradeSkill")) {
+        workerScript.log(`bladeburner.upgradeSkill() failed because ${skillName} is already maxed`);
+      }
+      return false;
+    }
+
+    if (this.skillPoints < cost) {
+        if (workerScript.shouldLog("upgradeSkill")) {
+            workerScript.log("bladeburner.upgradeSkill() failed because you do not have enough " +
+                             "skill points to upgrade " + skillName + " (You have " +
+                            this.skillPoints + ", you need " + cost + ")");
+        }
+        return false;
+    }
+
+    this.skillPoints -= cost;
+    this.upgradeSkill(skill);
+    if (routing.isOn(Page.Bladeburner) && DomElems.currentTab.toLowerCase() === "skills") {
+        this.createActionAndSkillsContent();
+    }
+    if (workerScript.shouldLog("upgradeSkill")) {
+        workerScript.log(skillName + " successfully upgraded to level " + this.skills[skillName]);
+    }
+    return true;
+}
+
+Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript) {
+    if (type === "" && name === "") {
+        return this.teamSize;
+    }
+
+    var errorLogText = "ERROR: bladeburner.getTeamSize() failed due to an invalid action specified. " +
+                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
+                       "name of the operation is case-sensitive.";
+
+    var actionId = this.getActionIdFromTypeAndName(type, name);
+    if (actionId == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    var actionObj = this.getActionObject(actionId);
+    if (actionObj == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    if (actionId.type === ActionTypes["Operation"] ||
+        actionId.type === ActionTypes["BlackOp"]   ||
+        actionId.type === ActionTypes["BlackOperation"]) {
+        return actionObj.teamCount;
+    } else {
+        return 0;
+    }
+}
+
+Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, workerScript) {
+    var errorLogText = "ERROR: bladeburner.setTeamSize() failed due to an invalid action specified. " +
+                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
+                       "name of the operation is case-sensitive.";
+    var actionId = this.getActionIdFromTypeAndName(type, name);
+    if (actionId == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    if (actionId.type !== ActionTypes["Operation"] &&
+        actionId.type !== ActionTypes["BlackOp"]   &&
+        actionId.type !== ActionTypes["BlackOperation"]) {
+        workerScript.log("ERROR: bladeburner.setTeamSize() failed. This function " +
+                         "only works for Operations and BlackOps");
+        return -1;
+    }
+
+    var actionObj = this.getActionObject(actionId);
+    if (actionObj == null) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    var sanitizedSize = Math.round(size);
+    if (isNaN(sanitizedSize)) {
+        workerScript.log("ERROR: bladeburner.setTeamSize() failed due to an invalid 'size' argument: " + size);
+        return -1;
+    }
+    if (this.teamSize < sanitizedSize) {sanitizedSize = this.teamSize;}
+    actionObj.teamCount = sanitizedSize;
+    if (workerScript.shouldLog("setTeamSize")) {
+        workerScript.log("Team size for " + name + " set to " + sanitizedSize);
+    }
+    return sanitizedSize;
+}
+
+Bladeburner.prototype.getCityEstimatedPopulationNetscriptFn = function(cityName, workerScript) {
+    if (!this.cities.hasOwnProperty(cityName)) {
+        workerScript.log("ERROR: bladeburner.getCityEstimatedPopulation() failed because the specified " +
+                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
+        return -1;
+    }
+    return this.cities[cityName].popEst;
+}
+
+Bladeburner.prototype.getCityEstimatedCommunitiesNetscriptFn = function(cityName, workerScript) {
+    if (!this.cities.hasOwnProperty(cityName)) {
+        workerScript.log("ERROR: bladeburner.getCityEstimatedCommunities() failed because the specified " +
+                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
+        return -1;
+    }
+    return this.cities[cityName].commsEst;
+}
+
+Bladeburner.prototype.getCityChaosNetscriptFn = function(cityName, workerScript) {
+    if (!this.cities.hasOwnProperty(cityName)) {
+        workerScript.log("ERROR: bladeburner.getCityChaos() failed because the specified " +
+                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
+        return -1;
+    }
+    return this.cities[cityName].chaos;
+}
+
+Bladeburner.prototype.switchCityNetscriptFn = function(cityName, workerScript) {
+    if (!this.cities.hasOwnProperty(cityName)) {
+        workerScript.log("ERROR: bladeburner.switchCity() failed because the specified " +
+                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
+        return false;
+    }
+    this.city = cityName;
+    return true;
+}
+
+Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript) {
+    var bladeburnerFac = Factions["Bladeburners"];
+    if (bladeburnerFac.isMember) {
+        return true;
+    } else if (this.rank >= RankNeededForFaction) {
+        joinFaction(bladeburnerFac);
+        if (workerScript.shouldLog("joinBladeburnerFaction")) {
+            workerScript.log("Joined Bladeburners Faction");
+        }
+        if (routing.isOn(Page.Bladeburner)) {
+            removeChildrenFromElement(DomElems.overviewDiv);
+            this.createOverviewContent();
+        }
+        return true;
+    } else {
+        if (workerScript.shouldLog("joinBladeburnerFaction")) {
+            workerScript.log("Failed to join Bladeburners Faction because " +
+                             "you do not have the required " + RankNeededForFaction + " rank");
+        }
+        return false;
+    }
+}
+
 Bladeburner.prototype.toJSON = function() {
     return Generic_toJSON("Bladeburner", this);
 }
@@ -3140,64 +3892,72 @@ Bladeburner.fromJSON = function(value) {
 }
 Reviver.constructors.Bladeburner = Bladeburner;
 
-//This initialized Bladeburner-related data that is NOT saved/loaded
-//      eg: Skill Objects, BLack Operations
-//Any data that is saved/loaded should go in Bladeburner object
-//      eg: contracts, operations
+/**
+ * This initialized Bladeburner-related data that is NOT saved/loaded
+ *  eg: Skill Objects, BLack Operations
+ * Any data that is saved/loaded should go in Bladeburner object
+ *  eg: contracts, operations
+ */
 function initBladeburner() {
-    //Skills
+    // Skills
     Skills[SkillNames.BladesIntuition] = new Skill({
         name:SkillNames.BladesIntuition,
         desc:"Each level of this skill increases your success chance " +
-             "for all contracts and operations by 3%",
-        baseCost:5, costInc:2,
+             "for all Contracts, Operations, and BlackOps by 3%",
+        baseCost: 3, costInc: 2.1,
         successChanceAll:3
-    });
-    Skills[SkillNames.Reaper] = new Skill({
-        name:SkillNames.Reaper,
-        desc:"Each level of this skill increases your " +
-             "effective combat stats for Bladeburner actions by 3%",
-        baseCost:3, costInc:2,
-        effStr:3, effDef:3, effDex:3, effAgi:3
     });
     Skills[SkillNames.Cloak] = new Skill({
         name:SkillNames.Cloak,
         desc:"Each level of this skill increases your " +
-             "success chance in stealth-related contracts and operations by 5.5%",
-        baseCost:3, costInc:1,
+             "success chance in stealth-related Contracts, Operations, and BlackOps by 5.5%",
+        baseCost: 2, costInc: 1.1,
         successChanceStealth:5.5
     });
 
-    //TODO Marksman
-    //TODO Weapon Proficiency
+    // TODO Marksman - If items are ever implemented
+    // TODO Weapon Proficiency - If items are ever implemented
 
-    Skills[SkillNames.Overclock] = new Skill({
-        name:SkillNames.Overclock,
-        desc:"Each level of this skill decreases the time it takes " +
-             "to attempt a contract or operation by 1% (Max Level: 99)",
-        baseCost:5, costInc:1, maxLvl:95,
-        actionTime:1
-    });
-    Skills[SkillNames.EvasiveSystem] = new Skill({
-        name:SkillNames.EvasiveSystem,
-        desc:"Each level of this skill increases your effective " +
-             "dexterity and agility for Bladeburner actions by 5%",
-        baseCost:2, costInc: 1,
-        effDex:5, effAgi:5
-    });
     Skills[SkillNames.ShortCircuit] = new Skill({
         name:SkillNames.ShortCircuit,
         desc:"Each level of this skill increases your success chance " +
-             "in contracts and operations that involve retirement by 5.5%",
-        baseCost:3, costInc:2,
+             "in Contracts, Operations, and BlackOps that involve retirement by 5.5%",
+        baseCost: 2, costInc: 2.1,
         successChanceKill:5.5
     });
     Skills[SkillNames.DigitalObserver] = new Skill({
         name:SkillNames.DigitalObserver,
         desc:"Each level of this skill increases your success chance in " +
-             "all operations by 4%",
-        baseCost:5, costInc:2,
+             "all Operations and BlackOps by 4%",
+        baseCost: 2, costInc: 2.1,
         successChanceOperation:4
+    });
+    Skills[SkillNames.Tracer] = new Skill({
+        name:SkillNames.Tracer,
+        desc:"Each level of this skill increases your success chance in " +
+             "all Contracts by 4%",
+        baseCost: 2, costInc: 2.1,
+        successChanceContract:4
+    });
+    Skills[SkillNames.Overclock] = new Skill({
+        name:SkillNames.Overclock,
+        desc:"Each level of this skill decreases the time it takes " +
+             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 90)",
+        baseCost: 3, costInc: 1.4, maxLvl: 90,
+        actionTime:1
+    });
+    Skills[SkillNames.Reaper] = new Skill({
+        name: SkillNames.Reaper,
+        desc: "Each level of this skill increases your effective combat stats for Bladeburner actions by 2%",
+        baseCost: 2, costInc: 2.1,
+        effStr: 2, effDef: 2, effDex: 2, effAgi: 2
+    });
+    Skills[SkillNames.EvasiveSystem] = new Skill({
+        name:SkillNames.EvasiveSystem,
+        desc:"Each level of this skill increases your effective " +
+             "dexterity and agility for Bladeburner actions by 4%",
+        baseCost: 2, costInc: 2.1,
+        effDex: 4, effAgi: 4
     });
     Skills[SkillNames.Datamancer] = new Skill({
         name:SkillNames.Datamancer,
@@ -3205,26 +3965,31 @@ function initBladeburner() {
              "synthoid population analysis and investigation by 5%. " +
              "This affects all actions that can potentially increase " +
             "the accuracy of your synthoid population/community estimates.",
-        baseCost:3,costInc:1,
+        baseCost:3, costInc:1,
         successChanceEstimate:5
-    });
-    Skills[SkillNames.Tracer] = new Skill({
-        name:SkillNames.Tracer,
-        desc:"Each level of this skill increases your success chance in " +
-             "all contracts by 4%",
-        baseCost:3, costInc:2,
-        successChanceContract:4
     });
     Skills[SkillNames.CybersEdge] = new Skill({
         name:SkillNames.CybersEdge,
-        desc:"Each level of this skill increases your max " +
-             "stamina by 2%",
+        desc:"Each level of this skill increases your max stamina by 2%",
         baseCost:1, costInc:3,
         stamina:2
     });
+    Skills[SkillNames.HandsOfMidas] = new Skill({
+        name: SkillNames.HandsOfMidas,
+        desc: "Each level of this skill increases the amount of money you receive from Contracts by 10%",
+        baseCost: 2, costInc: 2.5,
+        money: 10,
+    });
+    Skills[SkillNames.Hyperdrive] = new Skill({
+        name: SkillNames.Hyperdrive,
+        desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 10%",
+        baseCost: 1, costInc: 2.5,
+        expGain: 10,
+    });
 
-    //General Actions
-    var actionName = "Training";
+    // General Actions
+    let actionName;
+    actionName = "Training";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Improve your abilities at the Bladeburner unit's specialized training " +
@@ -3232,7 +3997,7 @@ function initBladeburner() {
              "increases your max stamina."
     });
 
-    var actionName = "Field Analysis";
+    actionName = "Field Analysis";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Mine and analyze Synthoid-related data. This improve the " +
@@ -3242,7 +4007,7 @@ function initBladeburner() {
              "Does NOT require stamina."
     });
 
-    var actionName = "Recruitment";
+    actionName = "Recruitment";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Attempt to recruit members for your Bladeburner team. These members " +
@@ -3250,7 +4015,22 @@ function initBladeburner() {
              "Does NOT require stamina."
     });
 
-    //Black Operations
+    actionName = "Diplomacy";
+    GeneralActions[actionName] = new Action({
+        name: actionName,
+        desc: "Improve diplomatic relations with the Synthoid population. " +
+              "Completing this action will reduce the Chaos level in your current city.<br><br>" +
+              "Does NOT require stamina."
+    });
+
+    actionName = "Hyperbolic Regeneration Chamber";
+    GeneralActions[actionName] = new Action({
+        name: actionName,
+        desc: "Enter cryogenic stasis using the Bladeburner division's hi-tech Regeneration Chamber. " +
+              "This will slowly heal your wounds and slightly increase your stamina.<br><br>",
+    });
+
+    // Black Operations
     BlackOperations["Operation Typhoon"] = new BlackOperation({
         name:"Operation Typhoon",
         desc:"Obadiah Zenyatta is the leader of a RedWater PMC. It has long " +
@@ -3260,7 +4040,7 @@ function initBladeburner() {
              "Zenyatta and RedWater by any means necessary. After the task " +
              "is completed, the actions must be covered up from the general public.",
         baseDifficulty:2000, reqdRank:2.5e3,
-        rankGain:25, rankLoss:10, hpLoss:100,
+        rankGain:50, rankLoss:10, hpLoss:100,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true
@@ -3277,7 +4057,7 @@ function initBladeburner() {
              "fabricated as a last resort. Be warned that AeroCorp has some of " +
              "the most advanced security measures in the world.",
         baseDifficulty:2500, reqdRank:5e3,
-        rankGain:30, rankLoss:15, hpLoss:50,
+        rankGain:60, rankLoss:15, hpLoss:50,
         weights:{hack:0.2,str:0.15,def:0.15,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isStealth:true
@@ -3296,7 +4076,7 @@ function initBladeburner() {
              "investigate the sewer systems, and eliminate Samizdat. They must " +
              "never publish anything again.",
         baseDifficulty:3000, reqdRank:7.5e3,
-        rankGain:30, rankLoss:15, hpLoss:100,
+        rankGain:75, rankLoss:15, hpLoss:100,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true
@@ -3314,7 +4094,7 @@ function initBladeburner() {
              "also to destroy any information or research at the facility that " +
              "is relevant to the Synthoids and their goals.",
         baseDifficulty:4000, reqdRank:10e3,
-        rankGain:40, rankLoss:20, hpLoss:100,
+        rankGain:100, rankLoss:20, hpLoss:100,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true
@@ -3328,7 +4108,7 @@ function initBladeburner() {
              "that this deal does not happen.<br><br>" +
              "Your task is to intercept the deal. Leave no survivors.",
         baseDifficulty:5000, reqdRank:12.5e3,
-        rankGain:40, rankLoss:20, hpLoss:200,
+        rankGain:125, rankLoss:20, hpLoss:200,
         weights:{hack:0,str:0.25,def:0.25,dex:0.25,agi:0.25,cha:0, int:0},
         decays:{hack:0,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true
@@ -3343,7 +4123,7 @@ function initBladeburner() {
              "the Red Rabbit brothel. Try to limit the number of other casualties, " +
              "but do what you must to complete the mission.",
         baseDifficulty:7500, reqdRank:15e3,
-        rankGain:50, rankLoss:20, hpLoss:25,
+        rankGain:200, rankLoss:20, hpLoss:25,
         weights:{hack:0,str:0.2,def:0.2,dex:0.3,agi:0.3,cha:0, int:0},
         decays:{hack:0,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true,
@@ -3360,7 +4140,7 @@ function initBladeburner() {
              "have thus enlisted our help.<br><br>" +
              "Your mission is to eradicate Juggernaut and his followers.",
         baseDifficulty:10e3, reqdRank:20e3,
-        rankGain:75, rankLoss:40, hpLoss:300,
+        rankGain:300, rankLoss:40, hpLoss:300,
         weights:{hack:0,str:0.25,def:0.25,dex:0.25,agi:0.25,cha:0, int:0},
         decays:{hack:0,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true,
@@ -3376,7 +4156,7 @@ function initBladeburner() {
              "in Los Angeles. Intelligence tells us that their base houses " +
              "one of their Synthoid manufacturing units.",
         baseDifficulty:12.5e3, reqdRank:25e3,
-        rankGain:100, rankLoss:50, hpLoss:500,
+        rankGain:500, rankLoss:50, hpLoss:500,
         weights:{hack:0.05,str:0.2,def:0.2,dex:0.25,agi:0.25,cha:0, int:0.05},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true,
@@ -3393,10 +4173,10 @@ function initBladeburner() {
              "results would be catastrophic.<br><br>" +
              "We do not have the power or jurisdiction to shutdown this down " +
              "through legal or political means, so we must resort to a covert " +
-             "operation. Your goal is to destroy this technology and eliminate" +
+             "operation. Your goal is to destroy this technology and eliminate " +
              "anyone who was involved in its creation.",
         baseDifficulty:15e3, reqdRank:30e3,
-        rankGain:120, rankLoss:60, hpLoss:1000,
+        rankGain:750, rankLoss:60, hpLoss:1000,
         weights:{hack:0.05,str:0.2,def:0.2,dex:0.25,agi:0.25,cha:0, int:0.05},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true
@@ -3411,7 +4191,7 @@ function initBladeburner() {
              "The goal of Operation Deckard is to hunt down these Synthoids and retire " +
              "them. I don't need to tell you how critical this mission is.",
         baseDifficulty:20e3, reqdRank:40e3,
-        rankGain:150, rankLoss:75, hpLoss:200,
+        rankGain:1e3, rankLoss:75, hpLoss:200,
         weights:{hack:0,str:0.24,def:0.24,dex:0.24,agi:0.24,cha:0, int:0.04},
         decays:{hack:0,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true,
@@ -3427,7 +4207,7 @@ function initBladeburner() {
              "with Augmentations. Your task is to hunt down the associated Dark Army " +
              "members and eliminate them.",
          baseDifficulty:25e3, reqdRank:50e3,
-         rankGain:200, rankLoss:100, hpLoss:500,
+         rankGain:1.5e3, rankLoss:100, hpLoss:500,
          weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
          decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
          isKill:true,
@@ -3446,7 +4226,7 @@ function initBladeburner() {
              "The goal of Operation Wallace is to destroy the Dark Army and " +
              "Syndicate factions in Aevum immediately. Leave no survivors.",
          baseDifficulty:30e3, reqdRank:75e3,
-         rankGain:500, rankLoss:150, hpLoss:1500,
+         rankGain:2e3, rankLoss:150, hpLoss:1500,
          weights:{hack:0,str:0.24,def:0.24,dex:0.24,agi:0.24,cha:0, int:0.04},
          decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
          isKill:true
@@ -3462,7 +4242,7 @@ function initBladeburner() {
              "successfully return. In the event of failure, all of the operation's " +
              "team members must not let themselves be captured alive.",
         baseDifficulty:35e3, reqdRank:100e3,
-        rankGain:1e3, rankLoss:500, hpLoss:1500,
+        rankGain:2.5e3, rankLoss:500, hpLoss:1500,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isStealth:true
@@ -3484,7 +4264,7 @@ function initBladeburner() {
              "Infiltrate the compound, delete and destroy the work, and then find and kill the " +
              "project lead.",
         baseDifficulty:40e3, reqdRank:125e3,
-        rankGain:2e3, rankLoss:1e3, hpLoss:500,
+        rankGain:3e3, rankLoss:1e3, hpLoss:500,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true
@@ -3501,7 +4281,7 @@ function initBladeburner() {
              "The mission is to destroy this broadcast tower. Speed and " +
              "stealth are of the upmost important for this.",
         baseDifficulty:45e3, reqdRank:150e3,
-        rankGain:5e3, rankLoss:1e3, hpLoss:100,
+        rankGain:4e3, rankLoss:1e3, hpLoss:100,
         weights:{hack:0.05,str:0.15,def:0.15,dex:0.3,agi:0.3,cha:0, int:0.05},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isStealth:true
@@ -3530,7 +4310,7 @@ function initBladeburner() {
              "'The Covenant'. We have no prior intelligence about this " +
              "organization, so you are going in blind.",
         baseDifficulty:55e3, reqdRank:200e3,
-        rankGain:5e3, rankLoss:1e3, hpLoss:10e3,
+        rankGain:7.5e3, rankLoss:1e3, hpLoss:10e3,
         weights:{hack:0,str:0.24,def:0.24,dex:0.24,agi:0.24,cha:0, int:0.04},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
         isKill:true
@@ -3591,4 +4371,4 @@ function initBladeburner() {
     });
 }
 
-export {Bladeburner};
+export { Bladeburner };

@@ -1,8 +1,9 @@
-import {dialogBoxCreate} from "../utils/DialogBox.js";
-
-/* Literature.js
- *  Lore / world building literature that can be found on servers
+/**
+ * Lore / world building literature files that can be found on servers.
+ * These files can be read by the player
  */
+import { dialogBoxCreate } from "../utils/DialogBox";
+
 function Literature(title, filename, txt) {
     this.title      = title;
     this.fn         = filename;
@@ -10,10 +11,9 @@ function Literature(title, filename, txt) {
 }
 
 function showLiterature(fn) {
-    var litObj = Literatures[fn];
-    if (litObj == null) {return;}
-    var txt = "<i>" + litObj.title + "</i><br><br>" +
-              litObj.txt;
+    const litObj = Literatures[fn];
+    if (litObj == null) { return; }
+    const txt = `<i>${litObj.title}</i><br><br>${litObj.txt}`;
     dialogBoxCreate(txt);
 }
 
@@ -23,7 +23,11 @@ function initLiterature() {
     var title, fn, txt;
     title   = "The Beginner's Guide to Hacking";
     fn      = "hackers-starting-handbook.lit";
-    txt     = "When starting out, hacking is the most profitable way to earn money and progress. This " +
+    txt     = "Some resources:<br><br>"  +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript/netscriptlearntoprogram.html' target='_blank' style='margin:4px'>Learn to Program</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html' target='_blank' style='margin:4px'>For Experienced JavaScript Developers: NetscriptJS</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript.html' target='_blank' style='margin:4px'>Netscript Documentation</a><br><br>" +
+              "When starting out, hacking is the most profitable way to earn money and progress. This " +
               "is a brief collection of tips/pointers on how to make the most out of your hacking scripts.<br><br>" +
               "-hack() and grow() both work by percentages. hack() steals a certain percentage of the " +
               "money on a server, and grow() increases the amount of money on a server by some percentage (multiplicatively)<br><br>" +
@@ -74,6 +78,7 @@ function initLiterature() {
                 "find investors. Instead, your Corporation will be publicly traded and its stock price will change based on how well "  +
                 "it's performing financially. You can then sell your stock shares in order to make money.<br><br>" +
                 "<u>Tips/Pointers</u><br>" +
+                "-The 'Smart Supply' upgrade is extremely useful. Consider purchasing it as soon as possible.<br><br>" +
                 "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
                 "The effects of these depend on what industry you are in.<br><br>" +
                 "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +
@@ -425,7 +430,10 @@ function initLiterature() {
     fn      = "the-secret-war.lit";
     txt     = ""
     Literatures[fn] = new Literature(title, fn, txt);
-
 }
 
-export {Literatures, initLiterature, showLiterature};
+export {
+    Literatures,
+    initLiterature,
+    showLiterature
+};

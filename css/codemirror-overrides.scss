@@ -1,0 +1,49 @@
+@import "theme";
+
+/**
+ * Customized styling for the Code Mirror editor
+ */
+
+#codemirror-form-wrapper {
+    height: 80%;
+    margin: 10px 0px 0px 6px;
+}
+
+.CodeMirror {
+    height: 100%;
+    width: 100%;
+    border: 2px solid var(--my-highlight-color);
+    z-index: 1;
+    font-family: $fontFamily;
+    font-size: $defaultFontSize;
+}
+
+/**
+ * Highlight matches
+ */
+.cm-matchhighlight {
+    background-color: #8F908A;
+}
+
+.CodeMirror-selection-highlight-scrollbar {
+    background-color: #8F908A;
+}
+
+/**
+ * Show Invisibles
+ */
+.cm-whitespace::before {
+    position: absolute;
+    pointer-events: none;
+    color: #404F7D;
+}
+
+/**
+ * Vim command display
+ */
+#codemirror-vim-command-display-wrapper {
+    background-color: white;
+    font-size: 13px;
+    height: 30px;
+    margin-left: 6px;
+}

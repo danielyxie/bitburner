@@ -1,0 +1,22 @@
+@import "theme";
+
+/**
+ * Styling for the Red Pill screen (the BitNode selection UI)
+ */
+#red-pill-container {
+    position: fixed;
+}
+
+
+.bitnode {
+    color: #00f;
+}
+
+.bitnode-destroyed {
+    color: #f00;
+}
+
+.bitnode:hover,
+.bitnode-destroyed:hover {
+    color: #fff;
+}

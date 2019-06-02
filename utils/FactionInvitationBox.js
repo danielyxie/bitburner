@@ -1,7 +1,8 @@
-import {Faction, joinFaction}       from "../src/Faction.js";
-import {Engine}                     from "../src/engine.js";
-import {Player}                     from "../src/Player.js";
-import {clearEventListeners}        from "./HelperFunctions.js";
+import {joinFaction}                from "../src/Faction/FactionHelpers";
+import {Engine}                     from "../src/engine";
+import {Player}                     from "../src/Player";
+import {clearEventListeners}        from "./uiHelpers/clearEventListeners";
+import {Page, routing}              from "../src/ui/navigationTracking";
 
 /* Faction Invitation Pop-up box */
 function factionInvitationBoxClose() {
@@ -11,7 +12,7 @@ function factionInvitationBoxClose() {
 
 function factionInvitationBoxOpen() {
     var factionInvitationBox = document.getElementById("faction-invitation-box-container");
-    factionInvitationBox.style.display = "block";
+    factionInvitationBox.style.display = "flex";
 }
 
 function factionInvitationSetText(txt) {
@@ -30,7 +31,7 @@ function factionInvitationBoxCreate(faction) {
     faction.alreadyInvited = true;
     Player.factionInvitations.push(faction.name);
 
-    if (Engine.currentPage === Engine.Page.Factions) {
+    if (routing.isOn(Page.Factions)) {
         Engine.loadFactionsContent();
     }
 
@@ -39,13 +40,13 @@ function factionInvitationBoxCreate(faction) {
         //Remove from invited factions
         var i = Player.factionInvitations.findIndex((facName)=>{return facName === faction.name});
         if (i === -1) {
-            console.log("ERROR: Could not find faction in Player.factionInvitations");
+            console.error("Could not find faction in Player.factionInvitations");
         } else {
             Player.factionInvitations.splice(i, 1);
         }
         joinFaction(faction);
         factionInvitationBoxClose();
-        if (Engine.currentPage === Engine.Page.Factions) {
+        if (routing.isOn(Page.Factions)) {
             Engine.loadFactionsContent();
         }
         return false;

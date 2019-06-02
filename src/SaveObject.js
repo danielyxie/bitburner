@@ -1,30 +1,53 @@
-import {loadAliases, loadGlobalAliases,
-        Aliases, GlobalAliases}                 from "./Alias.js";
-import {loadCompanies, Companies,
-        CompanyPositions}                       from "./Company.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
-import {loadFactions, Factions,
-        processPassiveFactionRepGain}           from "./Faction.js";
-import {FconfSettings, loadFconf}               from "./Fconf.js";
-import {loadAllGangs, AllGangs}                 from "./Gang.js";
-import {processAllHacknetNodeEarnings}          from "./HacknetNode.js";
-import {loadMessages, initMessages, Messages}   from "./Message.js";
-import {Player, loadPlayer}                     from "./Player.js";
-import {loadAllRunningScripts}                  from "./Script.js";
-import {AllServers, loadAllServers}             from "./Server.js";
-import {loadSettings, initSettings, Settings}   from "./Settings.js";
-import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps.js";
-import {loadStockMarket, StockMarket}           from "./StockMarket.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {gameOptionsBoxClose}                    from "../utils/GameOptions.js";
-import {clearEventListeners, createElement,
-        createPopup, removeElementById}         from "../utils/HelperFunctions.js";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {
+    loadAliases,
+    loadGlobalAliases,
+    Aliases,
+    GlobalAliases
+} from "./Alias";
+import { Companies, loadCompanies } from "./Company/Companies";
+import { CompanyPosition } from "./Company/CompanyPosition";
+import { CONSTANTS } from "./Constants";
+import { Engine } from "./engine";
+import { Factions, loadFactions } from "./Faction/Factions";
+import { processPassiveFactionRepGain } from "./Faction/FactionHelpers";
+import { loadFconf } from "./Fconf/Fconf";
+import { FconfSettings } from "./Fconf/FconfSettings";
+import { loadAllGangs, AllGangs } from "./Gang";
+import {
+    hasHacknetServers,
+    processHacknetEarnings
+} from "./Hacknet/HacknetHelpers";
+import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
+import { loadAllRunningScripts } from "./NetscriptWorker";
+import { Player, loadPlayer } from "./Player";
+import { AllServers, loadAllServers } from "./Server/AllServers";
+import { Settings } from "./Settings/Settings";
+import {
+    loadSpecialServerIps,
+    SpecialServerIps
+} from "./Server/SpecialServerIps";
+import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
+import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
-import Decimal                                  from '../utils/decimal.js';
+import { createStatusText } from "./ui/createStatusText";
+import { numeralWrapper } from "./ui/numeralFormat";
+
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
+
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { gameOptionsBoxClose } from "../utils/GameOptions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON
+} from "../utils/JSONReviver";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { createPopup } from "../utils/uiHelpers/createPopup";
+import { removeElementById } from "../utils/uiHelpers/removeElementById";
+
+import Decimal from "decimal.js";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -32,25 +55,25 @@ import Decimal                                  from '../utils/decimal.js';
 let saveObject = new BitburnerSaveObject();
 
 function BitburnerSaveObject() {
-    this.PlayerSave                 = "";
-    this.AllServersSave             = "";
-    this.CompaniesSave              = "";
-    this.FactionsSave               = "";
-    this.SpecialServerIpsSave       = "";
-    this.AliasesSave                = "";
-    this.GlobalAliasesSave          = "";
-    this.MessagesSave               = "";
-    this.StockMarketSave            = "";
-    this.SettingsSave               = "";
-    this.FconfSettingsSave          = "";
-    this.VersionSave                = "";
-    this.AllGangsSave               = "";
+    this.PlayerSave                     = "";
+    this.AllServersSave                 = "";
+    this.CompaniesSave                  = "";
+    this.FactionsSave                   = "";
+    this.SpecialServerIpsSave           = "";
+    this.AliasesSave                    = "";
+    this.GlobalAliasesSave              = "";
+    this.MessagesSave                   = "";
+    this.StockMarketSave                = "";
+    this.SettingsSave                   = "";
+    this.FconfSettingsSave              = "";
+    this.VersionSave                    = "";
+    this.AllGangsSave                   = "";
 }
 
-BitburnerSaveObject.prototype.saveGame = function(db) {
+BitburnerSaveObject.prototype.getSaveString = function() {
     this.PlayerSave                 = JSON.stringify(Player);
 
-    //Delete all logs from all running scripts
+    // Delete all logs from all running scripts
     var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
     for (var ip in TempAllServers) {
         var server = TempAllServers[ip];
@@ -73,12 +96,18 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     this.SettingsSave               = JSON.stringify(Settings);
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    if (Player.bitNodeN == 2 && Player.inGang()) {
+    if (Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
 
-    //We'll save to both localstorage and indexedDb
+    return saveString;
+}
+
+BitburnerSaveObject.prototype.saveGame = function(db) {
+    var saveString = this.getSaveString();
+
+    // We'll save to both localstorage and indexedDb
     var objectStore = db.transaction(["savestring"], "readwrite").objectStore("savestring");
     var request = objectStore.put(saveString, "save");
 
@@ -87,15 +116,14 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     }
 
     request.onsuccess = function(e) {
-        //console.log("Saved game to IndexedDB!");
+        // TODO anything here?
     }
 
     try {
         window.localStorage.setItem("bitburnerSave", saveString);
-        //console.log("Saved game to LocalStorage!");
     } catch(e) {
         if (e.code == 22) {
-            Engine.createStatusText("Save failed for localStorage! Check console(F12)");
+            createStatusText("Save failed for localStorage! Check console(F12)");
             console.log("Failed to save game to localStorage because the size of the save file " +
                         "is too large. However, the game will still be saved to IndexedDb if your browser " +
                         "supports it. If you would like to save to localStorage as well, then " +
@@ -104,7 +132,52 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         }
     }
 
-    Engine.createStatusText("Game saved!");
+    createStatusText("Game saved!");
+}
+
+// Makes necessary changes to the loaded/imported data to ensure
+// the game stills works with new versions
+function evaluateVersionCompatibility(ver) {
+    // This version refactored the Company/job-related code
+    if (ver <= "0.41.2") {
+        // Player's company position is now a string
+        if (Player.companyPosition != null && typeof Player.companyPosition !== "string") {
+            console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
+            Player.companyPosition = Player.companyPosition.data.positionName;
+            if (Player.companyPosition == null) {
+                Player.companyPosition = "";
+            }
+        }
+
+        // The "companyName" property of all Companies is renamed to "name"
+        for (var companyName in Companies) {
+            const company = Companies[companyName];
+            if ((company.name == null || company.name === 0 || company.name === "") && company.companyName != null) {
+                console.log("Changed company name property to be compatible with v0.41.2");
+                company.name = company.companyName;
+            }
+
+            if (company.companyPositions instanceof Array) {
+                console.log("Changed company companyPositions property to be compatible with v0.41.2");
+                const pos = {};
+
+                for (let i = 0; i < company.companyPositions.length; ++i) {
+                    pos[company.companyPositions[i]] = true;
+                }
+                company.companyPositions = pos;
+            }
+        }
+    }
+
+    // This version allowed players to hold multiple jobs
+    if (ver < "0.43.0") {
+        if (Player.companyName !== "" && Player.companyPosition != null && Player.companyPosition !== "") {
+            console.log("Copied player's companyName and companyPosition properties to the Player.jobs map for v0.43.0");
+            Player.jobs[Player.companyName] = Player.companyPosition;
+        }
+
+        delete Player.companyPosition;
+    }
 }
 
 function loadGame(saveString) {
@@ -132,27 +205,33 @@ function loadGame(saveString) {
         try {
             loadAliases(saveObj.AliasesSave);
         } catch(e) {
+            console.warn(`Could not load Aliases from save`);
             loadAliases("");
         }
     } else {
+        console.warn(`Save file did not contain an Aliases property`);
         loadAliases("");
     }
     if (saveObj.hasOwnProperty("GlobalAliasesSave")) {
         try {
             loadGlobalAliases(saveObj.GlobalAliasesSave);
         } catch(e) {
+            console.warn(`Could not load GlobalAliases from save`);
             loadGlobalAliases("");
         }
     } else {
+        console.warn(`Save file did not contain a GlobalAliases property`);
         loadGlobalAliases("");
     }
     if (saveObj.hasOwnProperty("MessagesSave")) {
         try {
             loadMessages(saveObj.MessagesSave);
         } catch(e) {
+            console.warn(`Could not load Messages from save`);
             initMessages();
         }
     } else {
+        console.warn(`Save file did not contain a Messages property`);
         initMessages();
     }
     if (saveObj.hasOwnProperty("StockMarketSave")) {
@@ -166,13 +245,13 @@ function loadGame(saveString) {
     }
     if (saveObj.hasOwnProperty("SettingsSave")) {
         try {
-            loadSettings(saveObj.SettingsSave);
+            Settings.load(saveObj.SettingsSave);
         } catch(e) {
             console.log("ERROR: Failed to parse Settings. Re-initing default values");
-            initSettings();
+            Settings.init();
         }
     } else {
-        initSettings();
+        Settings.init();
     }
     if (saveObj.hasOwnProperty("FconfSettingsSave")) {
         try {
@@ -184,33 +263,12 @@ function loadGame(saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (Player.bitNodeN == null || Player.bitNodeN === 0) {
-                Player.setBitNodeNumber(1);
-            }
-            if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
-                console.log("Evaluating changes needed for version compatibility");
-                if (Player.augmentations.length > 0 || Player.queuedAugmentations.length > 0 ||
-                    Player.sourceFiles.length > 0) {
-                    //If you have already purchased an Aug...you are far enough in the game
-                    //that everything should be available
-                    Player.firstFacInvRecvd = true;
-                    Player.firstAugPurchased = true;
-                    Player.firstJobRecvd = true;
-                    Player.firstTimeTraveled = true;
-                    Player.firstProgramAvailable = true;
-                } else  {
-                    if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
-                        Player.firstFacInvRecvd = true;
-                    }
-                    if (Player.companyName !== "" || Player.companyPosition !== "") {
-                        Player.firstJobRecvd = true;
-                    }
-                    if (Player.hacking_skill >= 25) {
-                        Player.firstScriptAvailable = true;
-                    }
-                }
-            }
-            if (ver != CONSTANTS.Version) {
+            evaluateVersionCompatibility(ver);
+
+            if (window.location.href.toLowerCase().includes("bitburner-beta")) {
+                // Beta branch, always show changes
+                createBetaUpdateText();
+            } else if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
         } catch(e) {
@@ -219,7 +277,7 @@ function loadGame(saveString) {
     } else {
         createNewUpdateText();
     }
-    if (Player.bitNodeN == 2 && Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+    if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
         try {
             loadAllGangs(saveObj.AllGangsSave);
         } catch(e) {
@@ -242,9 +300,10 @@ function loadImportedGame(saveObj, saveString) {
     var tempMessages = null;
     var tempStockMarket = null;
     var tempAllGangs = null;
+    let tempCorporationResearchTrees = null;
 
-    //Check to see if the imported save file can be parsed. If any
-    //errors are caught it will fail
+    // Check to see if the imported save file can be parsed. If any
+    // errors are caught it will fail
     try {
         var decodedSaveString = decodeURIComponent(escape(atob(saveString)));
         tempSaveObj = new BitburnerSaveObject();
@@ -252,10 +311,8 @@ function loadImportedGame(saveObj, saveString) {
 
         tempPlayer = JSON.parse(tempSaveObj.PlayerSave, Reviver);
 
-        //Parse Decimal.js objects
+        // Parse Decimal.js objects
         tempPlayer.money = new Decimal(tempPlayer.money);
-        tempPlayer.total_money = new Decimal(tempPlayer.total_money);
-        tempPlayer.lifetime_money = new Decimal(tempPlayer.lifetime_money);
 
         tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, Reviver);
         tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, Reviver);
@@ -304,29 +361,18 @@ function loadImportedGame(saveObj, saveString) {
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
                 var ver = JSON.parse(tempSaveObj.VersionSave, Reviver);
-                if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
-                    if (tempPlayer.bitNodeN == null || tempPlayer.bitNodeN == 0) {
-                        tempPlayer.bitNodeN = 1;
-                    }
-                    if (tempPlayer.sourceFiles == null) {
-                        tempPlayer.sourceFiles = [];
-                    }
-                }
-                if (ver != CONSTANTS.Version) {
-                    //createNewUpdateText();
-                }
+                evaluateVersionCompatibility(ver);
             } catch(e) {
-                console.log("Parsing Version save failed: " + e);
-                //createNewUpdateText();
+                console.error("Parsing Version save failed: " + e);
             }
         } else {
-            //createNewUpdateText();
         }
-        if (tempPlayer.bitNodeN == 2 && tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
+        if (tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
             try {
                 loadAllGangs(tempSaveObj.AllGangsSave);
             } catch(e) {
-                console.log("ERROR: Failed to parse AllGangsSave: " + e);
+                console.error(`Failed to parse AllGangsSave: {e}`);
+                throw e;
             }
         }
     } catch(e) {
@@ -334,7 +380,7 @@ function loadImportedGame(saveObj, saveString) {
         return false;
     }
 
-    //Since the save file is valid, load everything for real
+    // Since the save file is valid, load everything for real
     saveString = decodeURIComponent(escape(atob(saveString)));
     saveObj = JSON.parse(saveString, Reviver);
 
@@ -382,12 +428,12 @@ function loadImportedGame(saveObj, saveString) {
     }
     if (saveObj.hasOwnProperty("SettingsSave")) {
         try {
-            loadSettings(saveObj.SettingsSave);
+            Settings.load(saveObj.SettingsSave);
         } catch(e) {
-            initSettings();
+            Settings.init();
         }
     } else {
-        initSettings();
+        Settings.init();
     }
     if (saveObj.hasOwnProperty("FconfSettingsSave")) {
         try {
@@ -399,33 +445,8 @@ function loadImportedGame(saveObj, saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (Player.bitNodeN == null || Player.bitNodeN == 0) {
-                Player.setBitNodeNumber(1);
+            evaluateVersionCompatibility(ver);
 
-            }
-            if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
-                console.log("Evaluating changes needed for version compatibility");
-                if (Player.augmentations.length > 0 || Player.queuedAugmentations.length > 0 ||
-                    Player.sourceFiles.length > 0) {
-                    //If you have already purchased an Aug...you are far enough in the game
-                    //that everything should be available
-                    Player.firstFacInvRecvd = true;
-                    Player.firstAugPurchased = true;
-                    Player.firstJobRecvd = true;
-                    Player.firstTimeTraveled = true;
-                    Player.firstProgramAvailable = true;
-                } else  {
-                    if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
-                        Player.firstFacInvRecvd = true;
-                    }
-                    if (Player.companyName !== "" || Player.companyPosition !== "") {
-                        Player.firstJobRecvd = true;
-                    }
-                    if (Player.hacking_skill >= 25) {
-                        Player.firstScriptAvailable = true;
-                    }
-                }
-            }
             if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
@@ -435,7 +456,7 @@ function loadImportedGame(saveObj, saveString) {
     } else {
         createNewUpdateText();
     }
-    if (Player.bitNodeN == 2 && Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+    if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
         try {
             loadAllGangs(saveObj.AllGangsSave);
         } catch(e) {
@@ -445,7 +466,7 @@ function loadImportedGame(saveObj, saveString) {
 
     var popupId = "import-game-restart-game-notice";
     var txt = createElement("p", {
-        innerText:"Imported game! I would suggest saving the game and then reloading the page " +
+        innerText:"Imported game! You need to SAVE the game and then RELOAD the page " +
                  "to make sure everything runs smoothly"
     });
     var gotitBtn = createElement("a", {
@@ -457,19 +478,18 @@ function loadImportedGame(saveObj, saveString) {
     createPopup(popupId, [txt, gotitBtn]);
     gameOptionsBoxClose();
 
-    //Re-start game
+    // Re-start game
     console.log("Importing game");
-    Engine.setDisplayElements();    //Sets variables for important DOM elements
-    Engine.init();                  //Initialize buttons, work, etc.
-    CompanyPositions.init();
+    Engine.setDisplayElements();    // Sets variables for important DOM elements
+    Engine.init();                  // Initialize buttons, work, etc.
 
-    //Calculate the number of cycles have elapsed while offline
+    // Calculate the number of cycles have elapsed while offline
     Engine._lastUpdate = new Date().getTime();
     var lastUpdate = Player.lastUpdate;
     var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
 
-    /* Process offline progress */
-    var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
+    // Process offline progress
+    var offlineProductionFromScripts = loadAllRunningScripts();    // This also takes care of offline production for those scripts
     if (Player.isWorking) {
         console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
         if (Player.workType == CONSTANTS.WorkTypeFaction) {
@@ -487,51 +507,47 @@ function loadImportedGame(saveObj, saveString) {
         }
     }
 
-    //Hacknet Nodes offline progress
-    var offlineProductionFromHacknetNodes = processAllHacknetNodeEarnings(numCyclesOffline);
+    // Hacknet Nodes offline progress
+    var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
+    const hacknetProdInfo = hasHacknetServers() ?
+                            `${numeralWrapper.format(offlineProductionFromHacknetNodes, "0.000a")} hashes` :
+                            `${numeralWrapper.formatMoney(offlineProductionFromHacknetNodes)}`;
 
-    //Passive faction rep gain offline
+    // Passive faction rep gain offline
     processPassiveFactionRepGain(numCyclesOffline);
 
-    //Update total playtime
+    // Update total playtime
     var time = numCyclesOffline * Engine._idleSpeed;
     if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
     if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
+    if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
     Player.totalPlaytime += time;
     Player.playtimeSinceLastAug += time;
+    Player.playtimeSinceLastBitnode += time;
 
-    //Re-apply augmentations
+    // Re-apply augmentations
     Player.reapplyAllAugmentations();
 
-    //Clear terminal
+    // Clear terminal
     $("#terminal tr:not(:last)").remove();
 
     Player.lastUpdate = Engine._lastUpdate;
-    Engine.start();                 //Run main game loop and Scripts loop
-    dialogBoxCreate("While you were offline, your scripts generated $" +
-                    formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
-                    formatNumber(offlineProductionFromHacknetNodes, 2));
+    Engine.start(); // Run main game loop and Scripts loop
+    const timeOfflineString = convertTimeMsToTimeElapsedString(time);
+    dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
+                    "generated <span class='money-gold'>" +
+                    numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> " +
+                    "and your Hacknet Nodes generated <span class='money-gold'>" + hacknetProdInfo + "</span>");
     return true;
 }
 
 BitburnerSaveObject.prototype.exportGame = function() {
-    this.PlayerSave                 = JSON.stringify(Player);
-    this.AllServersSave             = JSON.stringify(AllServers);
-    this.CompaniesSave              = JSON.stringify(Companies);
-    this.FactionsSave               = JSON.stringify(Factions);
-    this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
-    this.AliasesSave                = JSON.stringify(Aliases);
-    this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
-    this.MessagesSave               = JSON.stringify(Messages);
-    this.StockMarketSave            = JSON.stringify(StockMarket);
-    this.SettingsSave               = JSON.stringify(Settings);
-    this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    if (Player.bitNodeN == 2 && Player.inGang()) {
-        this.AllGangsSave           = JSON.stringify(AllGangs);
-    }
+    const saveString = this.getSaveString();
 
-    var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-    var filename = "bitburnerSave.json";
+    // Save file name is based on current timestamp and BitNode
+    const epochTime = Math.round(Date.now() / 1000);
+    const bn = Player.bitNodeN;
+    const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
     var file = new Blob([saveString], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
@@ -539,10 +555,10 @@ BitburnerSaveObject.prototype.exportGame = function() {
         var a = document.createElement("a"),
                 url = URL.createObjectURL(file);
         a.href = url;
-        a.download = "bitburnerSave.json";
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
-        setTimeout(function() {
+        setTimeoutRef(function() {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
         }, 0);
@@ -561,12 +577,12 @@ BitburnerSaveObject.prototype.importGame = function() {
 }
 
 BitburnerSaveObject.prototype.deleteGame = function(db) {
-    //Delete from local storage
+    // Delete from local storage
     if (window.localStorage.getItem("bitburnerSave")) {
         window.localStorage.removeItem("bitburnerSave");
     }
 
-    //Delete from indexedDB
+    // Delete from indexedDB
     var request = db.transaction(["savestring"], "readwrite").objectStore("savestring").delete("save");
     request.onsuccess = function(e) {
         console.log("Successfully deleted save from indexedDb");
@@ -574,12 +590,20 @@ BitburnerSaveObject.prototype.deleteGame = function(db) {
     request.onerror = function(e) {
         console.log("Failed to delete save from indexedDb: " + e);
     }
-    Engine.createStatusText("Game deleted!");
+    createStatusText("Game deleted!");
 }
 
 function createNewUpdateText() {
     dialogBoxCreate("New update!<br>" +
                     "Please report any bugs/issues through the github repository " +
+                    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+                    CONSTANTS.LatestUpdate);
+}
+
+function createBetaUpdateText() {
+    dialogBoxCreate("You are playing on the beta environment! This branch of the game " +
+                    "features the latest developments in the game. This version may be unstable.<br>" +
+                    "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
                     "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
                     CONSTANTS.LatestUpdate);
 }
@@ -594,8 +618,6 @@ BitburnerSaveObject.fromJSON = function(value) {
 }
 
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;
-
-//Import game
 
 function openImportFileHandler(evt) {
     var file = evt.target.files[0];

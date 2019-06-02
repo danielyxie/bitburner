@@ -1,29 +1,12 @@
-import {BitNodeMultipliers}                     from "./BitNode.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
-import {Player}                                 from "./Player.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
-import {infiltrationBoxCreate}                  from "../utils/InfiltrationBox.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
-
-/* Infiltration.js
- *
- * Kill
- * Knockout (nonlethal)
- * Stealth Knockout (nonlethal)
- * Assassinate
- *
- * Hack Security
- * Destroy Security
- * Sneak past Security
- *
- * Pick the locked door
- *
- * Bribe security
- *
- * Escape
- */
+import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "./Constants";
+import { Engine } from "./engine";
+import { Player } from "./Player";
+import { dialogBoxCreate } from "../utils/DialogBox";
+import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { infiltrationBoxCreate } from "../utils/InfiltrationBox";
+import { formatNumber } from "../utils/StringHelperFunctions";
 
 let InfiltrationScenarios = {
     Guards: "You see an armed security guard patrolling the area.",
@@ -34,21 +17,26 @@ let InfiltrationScenarios = {
 }
 
 function InfiltrationInstance(companyName, startLevel, val, maxClearance, diff) {
-    this.companyName        = companyName;
-    this.clearanceLevel     = 0;
-    this.maxClearanceLevel  = maxClearance;
-    this.securityLevel      = startLevel;
-    this.difficulty         = diff; //Affects how much security level increases. Represents a percentage
-    this.baseValue          = val; //Base value of company secrets
-    this.secretsStolen      = [];  //Numbers representing value of stolen secrets
+    this.companyName = companyName;
+    this.clearanceLevel = 0;
+    this.maxClearanceLevel = maxClearance;
+    this.securityLevel = startLevel;
+    this.difficulty = diff; // Affects how much security level increases. Represents a percentage
+    this.baseValue = val; // Base value of company secrets
+    this.secretsStolen = []; // Numbers representing value of stolen secrets
 
-    this.hackingExpGained   = 0;
-    this.strExpGained       = 0;
-    this.defExpGained       = 0;
-    this.dexExpGained       = 0;
-    this.agiExpGained       = 0;
-    this.chaExpGained       = 0;
-    this.intExpGained       = 0;
+    this.hackingExpGained = 0;
+    this.strExpGained = 0;
+    this.defExpGained = 0;
+    this.dexExpGained = 0;
+    this.agiExpGained = 0;
+    this.chaExpGained = 0;
+    this.intExpGained = 0;
+}
+
+InfiltrationInstance.prototype.expMultiplier = function() {
+    if (!this.clearanceLevel || isNaN(this.clearanceLevel) || !this.maxClearanceLevel ||isNaN(this.maxClearanceLevel)) return 1;
+    return 2.5 * this.clearanceLevel / this.maxClearanceLevel;
 }
 
 InfiltrationInstance.prototype.gainHackingExp = function(amt) {
@@ -56,9 +44,19 @@ InfiltrationInstance.prototype.gainHackingExp = function(amt) {
     this.hackingExpGained   += amt;
 }
 
+InfiltrationInstance.prototype.calcGainedHackingExp = function() {
+    if(!this.hackingExpGained || isNaN(this.hackingExpGained)) return 0;
+    return Math.pow(this.hackingExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+}
+
 InfiltrationInstance.prototype.gainStrengthExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.strExpGained       += amt;
+}
+
+InfiltrationInstance.prototype.calcGainedStrengthExp = function() {
+    if (!this.strExpGained || isNaN(this.strExpGained)) return 0;
+    return Math.pow(this.strExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainDefenseExp = function(amt) {
@@ -66,9 +64,19 @@ InfiltrationInstance.prototype.gainDefenseExp = function(amt) {
     this.defExpGained       += amt;
 }
 
+InfiltrationInstance.prototype.calcGainedDefenseExp = function() {
+    if (!this.defExpGained || isNaN(this.defExpGained)) return 0;
+    return Math.pow(this.defExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+}
+
 InfiltrationInstance.prototype.gainDexterityExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.dexExpGained       += amt;
+}
+
+InfiltrationInstance.prototype.calcGainedDexterityExp = function() {
+    if (!this.dexExpGained || isNaN(this.dexExpGained)) return 0;
+    return Math.pow(this.dexExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainAgilityExp = function(amt) {
@@ -76,14 +84,29 @@ InfiltrationInstance.prototype.gainAgilityExp = function(amt) {
     this.agiExpGained       += amt;
 }
 
+InfiltrationInstance.prototype.calcGainedAgilityExp = function() {
+    if (!this.agiExpGained || isNaN(this.agiExpGained)) return 0;
+    return Math.pow(this.agiExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+}
+
 InfiltrationInstance.prototype.gainCharismaExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.chaExpGained       += amt;
 }
 
+InfiltrationInstance.prototype.calcGainedCharismaExp = function() {
+    if (!this.chaExpGained || isNaN(this.chaExpGained)) return 0;
+    return Math.pow(this.chaExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+}
+
 InfiltrationInstance.prototype.gainIntelligenceExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.intExpGained       += amt;
+}
+
+InfiltrationInstance.prototype.calcGainedIntelligenceExp = function() {
+    if(!this.intExpGained || isNaN(this.intExpGained)) return 0;
+    return Math.pow(this.intExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 function beginInfiltration(companyName, startLevel, val, maxClearance, diff) {
@@ -106,7 +129,7 @@ function endInfiltration(inst, success) {
     clearEventListeners("infiltration-bribe");
     clearEventListeners("infiltration-escape");
 
-    Engine.loadWorldContent();
+    Engine.loadLocationContent();
 }
 
 function nextInfiltrationLevel(inst) {
@@ -136,7 +159,7 @@ function nextInfiltrationLevel(inst) {
     bribeButton.style.display = "none";
     escapeButton.style.display = "none";
 
-    var rand = getRandomInt(0, 5);  //This needs to change if more scenarios are added
+    var rand = getRandomInt(0, 5);  // This needs to change if more scenarios are added
     var scenario = null;
     switch (rand) {
         case 1:
@@ -157,10 +180,11 @@ function nextInfiltrationLevel(inst) {
         case 3:
             scenario = InfiltrationScenarios.Bots;
             killButton.style.display = "block";
-            killButton.addEventListener("click", function() {
+            killButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationKill(inst);
                 if (res[0]) {
-                    writeInfiltrationStatusText("You SUCCESSFULLY killed the security bots! Unfortunately you alerted the " +
+                    writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> killed the security bots! Unfortunately you alerted the " +
                                                 "rest of the facility's security. The facility's security " +
                                                 "level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
                     Player.karma -= 1;
@@ -168,7 +192,7 @@ function nextInfiltrationLevel(inst) {
                     return false;
                 } else {
                     var dmgTaken = Math.max(1, Math.round(1.5 * inst.securityLevel / Player.defense));
-                    writeInfiltrationStatusText("You FAILED to kill the security bots. The bots fight back " +
+                    writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to kill the security bots. The bots fight back " +
                                                 "and raise the alarm! You take " + dmgTaken + " damage and " +
                                                 "the facility's security level increases by " +
                                                 formatNumber((res[1]*100)-100, 2).toString() + "%");
@@ -180,15 +204,16 @@ function nextInfiltrationLevel(inst) {
                 updateInfiltrationLevelText(inst);
             });
             assassinateButton.style.display = "block";
-            assassinateButton.addEventListener("click", function() {
+            assassinateButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationAssassinate(inst);
                 if (res[0]) {
-                    writeInfiltrationStatusText("You SUCCESSFULLY assassinated the security bots without being detected!");
+                    writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> assassinated the security bots without being detected!");
                     Player.karma -= 1;
                     endInfiltrationLevel(inst);
                     return false;
                 } else {
-                    writeInfiltrationStatusText("You FAILED to assassinate the security bots. The bots have not detected " +
+                    writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to assassinate the security bots. The bots have not detected " +
                                                 "you but are now more alert for an intruder. The facility's security level " +
                                                 "has increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
                 }
@@ -202,10 +227,11 @@ function nextInfiltrationLevel(inst) {
         default:    //0, 4-5
             scenario = InfiltrationScenarios.Guards;
             killButton.style.display = "block";
-            killButton.addEventListener("click", function() {
+            killButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationKill(inst);
                 if (res[0]) {
-                    writeInfiltrationStatusText("You SUCCESSFULLY killed the security guard! Unfortunately you alerted the " +
+                    writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> killed the security guard! Unfortunately you alerted the " +
                                                 "rest of the facility's security. The facility's security " +
                                                 "level has increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
                     Player.karma -= 3;
@@ -214,7 +240,7 @@ function nextInfiltrationLevel(inst) {
                     return false;
                 } else {
                     var dmgTaken = Math.max(1, Math.round(inst.securityLevel / Player.defense));
-                    writeInfiltrationStatusText("You FAILED to kill the security guard. The guard fights back " +
+                    writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to kill the security guard. The guard fights back " +
                                                 "and raises the alarm! You take " + dmgTaken + " damage and " +
                                                 "the facility's security level has increased by " +
                                                 formatNumber((res[1]*100)-100, 2).toString() + "%");
@@ -228,16 +254,17 @@ function nextInfiltrationLevel(inst) {
             knockoutButton.style.display = "block";
             stealthKnockoutButton.style.display = "block";
             assassinateButton.style.display = "block";
-            assassinateButton.addEventListener("click", function() {
+            assassinateButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationAssassinate(inst);
                 if (res[0]) {
-                    writeInfiltrationStatusText("You SUCCESSFULLY assassinated the security guard without being detected!");
+                    writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> assassinated the security guard without being detected!");
                     Player.karma -= 3;
                     ++Player.numPeopleKilled;
                     endInfiltrationLevel(inst);
                     return false;
                 } else {
-                    writeInfiltrationStatusText("You FAILED to assassinate the security guard. The guard has not detected " +
+                    writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to assassinate the security guard. The guard has not detected " +
                                                 "you but is now more alert for an intruder. The facility's security level " +
                                                 "has increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
                 }
@@ -250,17 +277,18 @@ function nextInfiltrationLevel(inst) {
             break;
     }
 
-    knockoutButton.addEventListener("click", function() {
+    knockoutButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationKnockout(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY knocked out the security guard! " +
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> knocked out the security guard! " +
                                         "Unfortunately you made a lot of noise and alerted other security.");
             writeInfiltrationStatusText("The facility's security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
             endInfiltrationLevel(inst);
             return false;
         } else {
             var dmgTaken = Math.max(1, Math.round(inst.securityLevel / Player.defense));
-            writeInfiltrationStatusText("You FAILED to knockout the security guard. The guard " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to knockout the security guard. The guard " +
                                         "raises the alarm and fights back! You take " + dmgTaken + " damage and " +
                                         "the facility's security level increases by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
             if (Player.takeDamage(dmgTaken)) {
@@ -272,16 +300,17 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    stealthKnockoutButton.addEventListener("click", function() {
+    stealthKnockoutButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationStealthKnockout(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY knocked out the security guard without making " +
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> knocked out the security guard without making " +
                                         "any noise!");
             endInfiltrationLevel(inst);
             return false;
         } else {
             var dmgTaken = Math.max(1, Math.round(inst.securityLevel / Player.defense));
-            writeInfiltrationStatusText("You FAILED to stealthily knockout the security guard. The guard " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to stealthily knockout the security guard. The guard " +
                                         "raises the alarm and fights back! You take " + dmgTaken + " damage and " +
                                         "the facility's security level increases by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
             if (Player.takeDamage(dmgTaken)) {
@@ -293,15 +322,16 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    hackSecurityButton.addEventListener("click", function() {
+    hackSecurityButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationHack(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY hacked and disabled the security system!");
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> hacked and disabled the security system!");
             writeInfiltrationStatusText("The facility's security level increased by " + ((res[1]*100) - 100).toString() + "%");
             endInfiltrationLevel(inst);
             return false;
         } else {
-            writeInfiltrationStatusText("You FAILED to hack the security system. The facility's " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to hack the security system. The facility's " +
                                         "security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
         }
         updateInfiltrationButtons(inst, scenario);
@@ -309,15 +339,16 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    destroySecurityButton.addEventListener("click", function() {
+    destroySecurityButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationDestroySecurity(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY and violently destroy the security system!");
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> and violently destroy the security system!");
             writeInfiltrationStatusText("The facility's security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
             endInfiltrationLevel(inst);
             return false;
         } else {
-            writeInfiltrationStatusText("You FAILED to destroy the security system. The facility's " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to destroy the security system. The facility's " +
                                         "security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
         }
         updateInfiltrationButtons(inst, scenario);
@@ -325,14 +356,15 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    sneakButton.addEventListener("click", function() {
+    sneakButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationSneak(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY sneak past the security undetected!");
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> sneak past the security undetected!");
             endInfiltrationLevel(inst);
             return false;
         } else {
-            writeInfiltrationStatusText("You FAILED and were detected while trying to sneak past security! The facility's " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> and were detected while trying to sneak past security! The facility's " +
                                         "security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
         }
         updateInfiltrationButtons(inst, scenario);
@@ -340,15 +372,16 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    pickdoorButton.addEventListener("click", function() {
+    pickdoorButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationPickLockedDoor(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY pick the locked door!");
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> pick the locked door!");
             writeInfiltrationStatusText("The facility's security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
             endInfiltrationLevel(inst);
             return false;
         } else {
-            writeInfiltrationStatusText("You FAILED to pick the locked door. The facility's security level " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to pick the locked door. The facility's security level " +
                                         "increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
         }
         updateInfiltrationButtons(inst, scenario);
@@ -356,7 +389,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    bribeButton.addEventListener("click", function() {
+    bribeButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var bribeAmt = CONSTANTS.InfiltrationBribeBaseAmount * inst.clearanceLevel;
         if (Player.money.lt(bribeAmt)) {
             writeInfiltrationStatusText("You do not have enough money to bribe the guard. " +
@@ -365,13 +399,13 @@ function nextInfiltrationLevel(inst) {
         }
         var res = attemptInfiltrationBribe(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY bribed a guard to let you through " +
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> bribed a guard to let you through " +
                                         "to the next clearance level for $" + bribeAmt);
             Player.loseMoney(bribeAmt);
             endInfiltrationLevel(inst);
             return false;
         } else {
-            writeInfiltrationStatusText("You FAILED to bribe a guard! The guard is alerting " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to bribe a guard! The guard is alerting " +
                                         "other security guards about your presence! The facility's " +
                                         "security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
         }
@@ -380,15 +414,16 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    escapeButton.addEventListener("click", function() {
+    escapeButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationEscape(inst);
         if (res[0]) {
-            writeInfiltrationStatusText("You SUCCESSFULLY escape from the facility with the stolen classified " +
+            writeInfiltrationStatusText("You <span class='success'>SUCCESSFULLY</span> escape from the facility with the stolen classified " +
                                         "documents and company secrets!");
             endInfiltration(inst, true);
             return false;
         } else {
-            writeInfiltrationStatusText("You FAILED to escape from the facility. You took 1 damage. The facility's " +
+            writeInfiltrationStatusText("You <span class='failure'>FAILED</span> to escape from the facility. You took 1 damage. The facility's " +
                                         "security level increased by " + formatNumber((res[1]*100)-100, 2).toString() + "%");
             if (Player.takeDamage(1)) {
                 endInfiltration(inst, false);
@@ -407,7 +442,7 @@ function nextInfiltrationLevel(inst) {
 
 
 function endInfiltrationLevel(inst) {
-    //Check if you gained any secrets
+    // Check if you gained any secrets
     if (inst.clearanceLevel % 5 == 0) {
         var baseSecretValue = inst.baseValue * inst.clearanceLevel / 2;
         var secretValue = baseSecretValue * Player.faction_rep_mult *
@@ -416,17 +451,17 @@ function endInfiltrationLevel(inst) {
                                BitNodeMultipliers.InfiltrationMoney;
         inst.secretsStolen.push(baseSecretValue);
         dialogBoxCreate("You found and stole a set of classified documents from the company. " +
-                        "These classified secrets could probably be sold for money ($" +
-                        formatNumber(secretMoneyValue, 2) + "), or they " +
-                        "could be given to factions for reputation (" + formatNumber(secretValue, 3) + " rep)");
+                        "These classified secrets could probably be sold for money (<span class='money-gold'>$" +
+                        formatNumber(secretMoneyValue, 2) + "</span>), or they " +
+                        "could be given to factions for reputation (<span class='light-yellow'>" + formatNumber(secretValue, 3) + " rep</span>)");
     }
 
-    //Increase security level based on difficulty
+    // Increase security level based on difficulty
     inst.securityLevel *=  (1 + (inst.difficulty / 100));
     writeInfiltrationStatusText("You move on to the facility's next clearance level. This " +
                                 "clearance level has " + inst.difficulty + "% higher security");
 
-    //If this is max level, force endInfiltration
+    // If this is max level, force endInfiltration
     if (inst.clearanceLevel >= inst.maxClearanceLevel) {
         endInfiltration(inst, true);
     } else {
@@ -455,18 +490,22 @@ function updateInfiltrationLevelText(inst) {
     }
 
     var expMultiplier = 2 * inst.clearanceLevel / inst.maxClearanceLevel;
+    // TODO: fix this to not rely on <pre> and whitespace for formatting...
+    /* eslint-disable no-irregular-whitespace */
     document.getElementById("infiltration-level-text").innerHTML =
-        "Facility name: " + inst.companyName + "<br>" +
-        "Clearance Level: " + inst.clearanceLevel + "<br>" +
-        "Security Level: " + formatNumber(inst.securityLevel, 3) + "<br><br>" +
-        "Total reputation value of secrets stolen: " + formatNumber(totalValue, 3) + "<br>" +
-        "Total monetary value of secrets stolen: $" + formatNumber(totalMoneyValue, 2) + "<br><br>" +
-        "Hack exp gained: " + formatNumber(inst.hackingExpGained * expMultiplier, 3) + "<br>" +
-        "Str exp gained: " + formatNumber(inst.strExpGained * expMultiplier, 3) + "<br>" +
-        "Def exp gained: " + formatNumber(inst.defExpGained * expMultiplier, 3) + "<br>" +
-        "Dex exp gained: " + formatNumber(inst.dexExpGained * expMultiplier, 3) + "<br>" +
-        "Agi exp gained: " + formatNumber(inst.agiExpGained * expMultiplier, 3) + "<br>" +
-        "Cha exp gained: " + formatNumber(inst.chaExpGained * expMultiplier, 3);
+        "Facility name:    " + inst.companyName + "<br>" +
+        "Clearance Level:  " + inst.clearanceLevel + "<br>" +
+        "Security Level:   " + formatNumber(inst.securityLevel, 3) + "<br><br>" +
+        "Total value of stolen secrets<br>" +
+        "Reputation:       <span class='light-yellow'>" + formatNumber(totalValue, 3) + "</span><br>" +
+        "Money:           <span class='money-gold'>$" + formatNumber(totalMoneyValue, 2) + "</span><br><br>" +
+        "Hack exp gained:  " + formatNumber(inst.calcGainedHackingExp(), 3) + "<br>" +
+        "Str exp gained:   " + formatNumber(inst.calcGainedStrengthExp(), 3) + "<br>" +
+        "Def exp gained:   " + formatNumber(inst.calcGainedDefenseExp(), 3) + "<br>" +
+        "Dex exp gained:   " + formatNumber(inst.calcGainedDexterityExp(), 3) + "<br>" +
+        "Agi exp gained:   " + formatNumber(inst.calcGainedAgilityExp(), 3) + "<br>" +
+        "Cha exp gained:   " + formatNumber(inst.calcGainedCharismaExp(), 3);
+    /* eslint-enable no-irregular-whitespace */
 }
 
 function updateInfiltrationButtons(inst, scenario) {
@@ -590,14 +629,14 @@ function updateInfiltrationButtons(inst, scenario) {
 
 let intWgt = CONSTANTS.IntelligenceInfiltrationWeight;
 
-//Kill
-//Success: 5%, Failure 10%, -Karma
+// Kill
+// Success: 5%, Failure 10%, -Karma
 function attemptInfiltrationKill(inst) {
     var chance = getInfiltrationKillChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 85) * Player.strength_exp_mult;
-    inst.gainDefenseExp(inst.securityLevel / 85) * Player.defense_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 85) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 85) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 75) * Player.strength_exp_mult;
+    inst.gainDefenseExp(inst.securityLevel / 75) * Player.defense_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 75) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 75) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.05;
         return [true, 1.05];
@@ -616,14 +655,14 @@ function getInfiltrationKillChance(inst) {
 }
 
 
-//Knockout
-//Success: 3%, Failure: 10%
+// Knockout
+// Success: 3%, Failure: 10%
 function attemptInfiltrationKnockout(inst) {
     var chance = getInfiltrationKnockoutChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 80) * Player.strength_exp_mult;
-    inst.gainDefenseExp(inst.securityLevel / 80) * Player.defense_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 80) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 80) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 70) * Player.strength_exp_mult;
+    inst.gainDefenseExp(inst.securityLevel / 70) * Player.defense_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 70) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 70) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.03;
         return [true, 1.03];
@@ -641,13 +680,13 @@ function getInfiltrationKnockoutChance(inst) {
             Player.agility) / (1.7 * lvl));
 }
 
-//Stealth knockout
-//Success: 0%, Failure: 10%
+// Stealth knockout
+// Success: 0%, Failure: 10%
 function attemptInfiltrationStealthKnockout(inst) {
     var chance = getInfiltrationStealthKnockoutChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 85) * Player.strength_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 65) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 65) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 75) * Player.strength_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 60) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 60) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -665,13 +704,13 @@ function getInfiltrationStealthKnockoutChance(inst) {
             intWgt * Player.intelligence) / (3 * lvl));
 }
 
-//Assassination
-//Success: 0%, Failure: 5%, -Karma
+// Assassination
+// Success: 0%, Failure: 5%, -Karma
 function attemptInfiltrationAssassinate(inst) {
     var chance = getInfiltrationAssassinateChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 85) * Player.strength_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 65) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 65) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 75) * Player.strength_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 55) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 55) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -689,14 +728,14 @@ function getInfiltrationAssassinateChance(inst) {
 }
 
 
-//Destroy security
-//Success: 5%, Failure: 10%
+// Destroy security
+// Success: 5%, Failure: 10%
 function attemptInfiltrationDestroySecurity(inst) {
     var chance = getInfiltrationDestroySecurityChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 85) * Player.strength_exp_mult;
-    inst.gainDefenseExp(inst.securityLevel / 85) * Player.defense_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 85) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 85) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 75) * Player.strength_exp_mult;
+    inst.gainDefenseExp(inst.securityLevel / 75) * Player.defense_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 75) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 75) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.05;
         return [true, 1.05];
@@ -716,12 +755,12 @@ function getInfiltrationDestroySecurityChance(inst) {
 }
 
 
-//Hack security
-//Success: 3%, Failure: 5%
+// Hack security
+// Success: 3%, Failure: 5%
 function attemptInfiltrationHack(inst) {
     var chance = getInfiltrationHackChance(inst);
-    inst.gainHackingExp(inst.securityLevel / 40) * Player.hacking_exp_mult;
-    inst.gainIntelligenceExp(inst.securityLevel / 690);
+    inst.gainHackingExp(inst.securityLevel / 30) * Player.hacking_exp_mult;
+    inst.gainIntelligenceExp(inst.securityLevel / 680);
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.03;
         return [true, 1.03];
@@ -739,11 +778,11 @@ function getInfiltrationHackChance(inst) {
                    (intWgt * Player.intelligence)) / lvl);
 }
 
-//Sneak past security
-//Success: 0%, Failure: 8%
+// Sneak past security
+// Success: 0%, Failure: 8%
 function attemptInfiltrationSneak(inst) {
     var chance = getInfiltrationSneakChance(inst);
-    inst.gainAgilityExp(inst.securityLevel / 40) * Player.agility_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 30) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -760,11 +799,11 @@ function getInfiltrationSneakChance(inst) {
              intWgt * Player.intelligence) / (2 * lvl));
 }
 
-//Pick locked door
-//Success: 1%, Failure: 3%
+// Pick locked door
+// Success: 1%, Failure: 3%
 function attemptInfiltrationPickLockedDoor(inst) {
     var chance = getInfiltrationPickLockedDoorChance(inst);
-    inst.gainDexterityExp(inst.securityLevel / 30) * Player.dexterity_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 25) * Player.dexterity_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.01;
         return [true, 1.01];
@@ -781,11 +820,11 @@ function getInfiltrationPickLockedDoorChance(inst) {
             intWgt * Player.intelligence) / lvl);
 }
 
-//Bribe
-//Success: 0%, Failure: 15%,
+// Bribe
+// Success: 0%, Failure: 15%,
 function attemptInfiltrationBribe(inst) {
     var chance = getInfiltrationBribeChance(inst);
-    inst.gainCharismaExp(inst.securityLevel / 10) * Player.charisma_exp_mult;
+    inst.gainCharismaExp(inst.securityLevel / 8) * Player.charisma_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -800,12 +839,12 @@ function getInfiltrationBribeChance(inst) {
           (Player.charisma) / lvl);
 }
 
-//Escape
-//Failure: 5%
+// Escape
+// Failure: 5%
 function attemptInfiltrationEscape(inst) {
     var chance = getInfiltrationEscapeChance(inst);
-    inst.gainAgilityExp(inst.securityLevel / 35) * Player.agility_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 35) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 30) * Player.agility_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 30) * Player.dexterity_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {

@@ -1,0 +1,98 @@
+@import "theme";
+
+#stock-market-container {
+    position: fixed;
+    padding: 6px;
+
+    p {
+        font-size: $defaultFontSize * 0.8125;
+    }
+
+    a {
+        font-size: $defaultFontSize * 0.875;
+    }
+}
+
+.stock-market-info-and-purchases {
+    > h2 {
+        display: block;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    > p {
+        display: block;
+        margin-left: 10px;
+        width: 70%;
+    }
+
+    > a, > button {
+        margin: 10px;
+    }
+}
+
+#stock-market-list {
+    list-style: none;
+
+    li {
+        button {
+            font-size: $defaultFontSize;
+        }
+    }
+}
+
+#stock-market-watchlist-filter {
+    display: block;
+    margin: 5px 5px 5px 10px;
+    padding: 4px;
+    width: 50%;
+}
+
+.stock-market-input {
+    display: inline-block;
+    padding: 4px;
+    margin: 2px;
+    background-color: #000;
+    border: 1px solid #fff;
+    color: var(--my-font-color);
+}
+
+.stock-market-price-movement-warning {
+    border: 1px solid white;
+    color: red;
+    margin: 2px;
+    padding: 2px;
+}
+
+.stock-market-position-text {
+    color: #fff;
+    display: block;
+
+    p {
+        color: #fff;
+        display: inline-block;
+        margin: 4px;
+    }
+
+    h3 {
+        margin: 4px;
+    }
+}
+
+.stock-market-order-list {
+    overflow-y: auto;
+    max-height: 100px;
+
+    li {
+        color: #fff;
+        padding: 4px;
+    }
+}
+
+.stock-market-order-cancel-btn {
+    background-color: #000;
+    border: 1px solid #fff;
+    color: var(--my-font-color);
+    margin: 2px;
+    padding: 0;
+}

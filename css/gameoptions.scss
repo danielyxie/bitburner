@@ -1,0 +1,19 @@
+/* Styling for the game options/settings
+ *
+ *  Styling for the actual Game Options popup box can be found in popupboxes.scss
+ *  This stylesheet is for everything inside the Game Options pop-up box
+ */
+
+@import "theme";
+
+#game-options-right-panel {
+    a {
+        display: block;
+        width: 46%;
+    }
+
+    button {
+        display: inline-block;
+        width: 46%;
+    }
+}

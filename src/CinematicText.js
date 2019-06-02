@@ -1,27 +1,35 @@
-import {Engine}                             from "./engine.js";
 
-import {removeChildrenFromElement,
-        createElement, exceptionAlert}      from "../utils/HelperFunctions.js";
-import {isString}                           from "../utils/StringHelperFunctions.js";
+import { Engine } from "./engine";
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
-var cinematicTextFlag = false;
+import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
+import { createElement } from "../utils/uiHelpers/createElement";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { isString } from "../utils/helpers/isString";
 
-//Lines must be an array of strings
-function writeCinematicText(lines) {
+export let cinematicTextFlag = false;
+
+/**
+ * Print a message using a hacking-style "typing" effect.
+ * Note that this clears the UI so that the text from this is the only thing visible.
+ * 
+ * @param lines {string[]} Array of strings to print, where each element is a separate line
+ */
+export function writeCinematicText(lines) {
     cinematicTextFlag = true;
 
     if (lines.constructor !== Array) {
         throw new Error("Invalid non-array argument passed into writeCinematicText()");
     }
 
-    //We'll reuse the 'Red Pill' content
+    // Reuse the 'Red Pill' content
     Engine.loadCinematicTextContent();
-    var container = document.getElementById("cinematic-text-container");
+    const container = document.getElementById("cinematic-text-container");
     container.style.width = "75%";
     if (container == null) {throw new Error("Could not find cinematic-text-container for writeCinematicText()");}
     removeChildrenFromElement(container);
 
-    for (var i = 0; i < lines.length; ++i) {
+    for (let i = 0; i < lines.length; ++i) {
         if (!isString(lines[i])) {
             throw new Error("Invalid non-string element in 'lines' argument. writeCinematicText() failed");
         }
@@ -43,11 +51,11 @@ function writeCinematicTextRecurse(lines, lineNumber=0) {
 
 function writeCinematicTextLine(line) {
     return new Promise(function(resolve, reject) {
-        var container = document.getElementById("cinematic-text-container");
-        var pElem = document.createElement("p");
+        const container = document.getElementById("cinematic-text-container");
+        const pElem = document.createElement("p");
         container.appendChild(pElem);
 
-        var promise = writeCinematicTextLetter(pElem, line, 0);
+        const promise = writeCinematicTextLetter(pElem, line, 0);
         promise.then(function(res) {
             resolve(res);
         }, function(e) {
@@ -58,15 +66,16 @@ function writeCinematicTextLine(line) {
 
 function writeCinematicTextLetter(pElem, line, i=0) {
     return new Promise(function(resolve, reject) {
-        setTimeout(function() {
+        setTimeoutRef(function() {
+            const textToShow = line.substring(0, i);
+
             if (i >= line.length) {
-                var textToShow = line.substring(0, i);
                 pElem.innerHTML = textToShow;
                 return resolve(true);
             }
-            var textToShow = line.substring(0, i);
+
             pElem.innerHTML = textToShow + "<span class='typed-cursor'> &#9608; </span>";
-            var promise = writeCinematicTextLetter(pElem, line, i+1);
+            const promise = writeCinematicTextLetter(pElem, line, i+1);
             promise.then(function(res) {
                 resolve(res);
             }, function(e) {
@@ -94,5 +103,3 @@ function cinematicTextEnd() {
         }));
     });
 }
-
-export {cinematicTextFlag, writeCinematicText};

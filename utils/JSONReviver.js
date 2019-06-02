@@ -11,10 +11,19 @@ function Reviver(key, value) {
         console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
         return 0;
     }
+
 	if (typeof value === "object" &&
 		typeof value.ctor === "string" &&
 		typeof value.data !== "undefined") {
+			// Compatibility for version v0.43.1
+			// TODO Remove this eventually
+			if (value.ctor === "AllServersMap") {
+				console.log('Converting AllServersMap for v0.43.1');
+				return value.data;
+			}
+
 			ctor = Reviver.constructors[value.ctor] || window[value.ctor];
+
 			if (typeof ctor === "function" &&
 				typeof ctor.fromJSON === "function") {
 
@@ -44,7 +53,7 @@ function Generic_toJSON(ctorName, obj, keys) {
   }
 
   data = {};
-  for (index = 0; index < keys.length; ++index) {
+  for (let index = 0; index < keys.length; ++index) {
     key = keys[index];
     data[key] = obj[key];
   }
