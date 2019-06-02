@@ -1139,7 +1139,7 @@ function NetscriptFunctions(workerScript) {
                     var oldScript = destServer.scripts[i];
                     oldScript.code = sourceScript.code;
                     oldScript.ramUsage = sourceScript.ramUsage;
-                    oldScript.module = "";
+                    oldScript.markUpdated();;
                     return true;
                 }
             }
@@ -1901,6 +1901,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     mode === "w" ? script.code = data : script.code += data;
                     script.updateRamUsage(server.scripts);
+                    script.markUpdated();
                 } else {
                     // Write to text file
                     let txtFile = getTextFile(fn, server);
