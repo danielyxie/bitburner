@@ -228,6 +228,8 @@ export let CONSTANTS: IMap<any> = {
     * Scripts now start/stop instantly
     * Improved performance when starting up many copies of a new script (by Ornedan)
     * Dialog boxes can now be closed with the ESC key (by jaguilar)
+    * NetscriptJS scripts should now be "re-compiled" if their dependencies change (by jaguilar)
+    * write() function should now properly cause NetscriptJS scripts to "re-compile" (by jaguilar)
 
     v0.47.0
     * Stock Market changes:
