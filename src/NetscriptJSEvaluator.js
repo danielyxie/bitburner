@@ -74,7 +74,7 @@ function shouldCompile(script, scripts) {
         // compilation errors.
         if (!depScript) return true;
 
-        const depIsMoreRecent = depScript.updateTimestamp > script.updateTimestamp
+        const depIsMoreRecent = depScript.moduleSequenceNumber > script.moduleSequenceNumber
         return depIsMoreRecent;
     });
 }
