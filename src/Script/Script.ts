@@ -105,7 +105,7 @@ export class Script {
     		this.filename = filenameElem!.value;
     		this.server = serverIp;
     		this.updateRamUsage(otherScripts);
-        this.markUpdated();
+            this.markUpdated();
     	}
     }
 
