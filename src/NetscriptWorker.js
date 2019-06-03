@@ -534,7 +534,7 @@ export function loadAllRunningScripts() {
 
             // Reset modules on all scripts
             for (let i = 0; i < server.scripts.length; ++i) {
-                server.scripts[i].module = "";
+                server.scripts[i].markUpdated();
             }
 
             if (skipScriptLoad) {
