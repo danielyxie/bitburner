@@ -15,6 +15,8 @@ import {
 } from "../../utils/JSONReviver";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
+let globalModuleSequenceNumber = 0;
+
 export class Script {
     // Initializes a Script Object from a JSON save state
     static fromJSON(value: any): Script {
@@ -31,6 +33,14 @@ export class Script {
     // This is only applicable for NetscriptJS
     module: any = "";
 
+    // The timestamp when when the script was last updated.
+    moduleSequenceNumber: number;
+
+    // Only used with NS2 scripts; the list of dependency script filenames. This is constructed
+    // whenever the script is first evaluated, and therefore may be out of date if the script
+    // has been updated since it was last run.
+    dependencies: string[] = [];
+
     // Amount of RAM this Script requres to run
     ramUsage: number = 0;
 
@@ -43,6 +53,7 @@ export class Script {
         this.ramUsage   = 0;
     	this.server 	= server; // IP of server this script is on
         this.module     = "";
+        this.moduleSequenceNumber = ++globalModuleSequenceNumber;
         if (this.code !== "") { this.updateRamUsage(otherScripts); }
     };
 
@@ -85,9 +96,15 @@ export class Script {
             }
     		this.filename = filenameElem!.value;
     		this.server = serverIp;
-    		this.updateRamUsage(otherScripts);
-            this.module = "";
+            this.updateRamUsage(otherScripts);
+            this.markUpdated();
     	}
+    }
+
+    // Marks that this script has been updated. Causes recompilation of NS2 modules.
+    markUpdated() {
+        this.module = "";
+        this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     }
 
     /**
