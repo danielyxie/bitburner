@@ -80,6 +80,14 @@ export class Script {
     }
 
     /**
+     * Marks this script as having been updated. It will be recompiled next time something tries
+     * to exec it.
+     */
+    markUpdated() {
+        this.module = "";
+    }
+
+    /**
      * Save a script from the script editor
      * @param {string} code - The new contents of the script
      * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
@@ -96,7 +104,7 @@ export class Script {
             }
     		this.filename = filenameElem!.value;
     		this.server = serverIp;
-            this.updateRamUsage(otherScripts);
+    		this.updateRamUsage(otherScripts);
             this.markUpdated();
     	}
     }

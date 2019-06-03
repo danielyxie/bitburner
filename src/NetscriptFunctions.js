@@ -1901,6 +1901,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     mode === "w" ? script.code = data : script.code += data;
                     script.updateRamUsage(server.scripts);
+                    script.markUpdated();
                 } else {
                     // Write to text file
                     let txtFile = getTextFile(fn, server);
