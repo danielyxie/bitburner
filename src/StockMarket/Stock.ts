@@ -227,6 +227,18 @@ export class Stock {
     }
 
     /**
+     * Change's the stock's second-order forecast during a stock market 'tick'.
+     * The change for the second-order forecast to increase is 50/50
+     */
+    cycleForecastForecast(changeAmt: number=0.1): void {
+        if (Math.random() < 0.5) {
+            this.otlkMagForecast = Math.min(this.otlkMagForecast + changeAmt, 100);
+        } else {
+            this.otlkMagForecast = Math.max(this.otlkMagForecast - changeAmt, 0);
+        }
+    }
+
+    /**
      * "Flip" the stock's second-order forecast. This can occur during a
      * stock market "cycle" (determined by RNG). It is used to simulate
      * RL stock market cycles and introduce volatility

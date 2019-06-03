@@ -70,7 +70,6 @@ import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import {
     initSymbolToStockMap,
-    stockMarketCycle,
     processStockPrices,
     displayStockMarketContent
 } from "./StockMarket/StockMarket";
@@ -778,7 +777,6 @@ const Engine = {
         checkFactionInvitations: 100,
         passiveFactionGrowth: 600,
         messages: 150,
-        sCr: 1500,
         mechanicProcess: 5, // Processes certain mechanics (Corporation, Bladeburner)
         contractGeneration: 3000, // Generate Coding Contracts
     },
@@ -899,13 +897,6 @@ const Engine = {
             } else {
                 Engine.Counters.messages = 150;
             }
-        }
-
-        if (Engine.Counters.sCr <= 0) {
-            if (Player.hasWseAccount) {
-                stockMarketCycle();
-            }
-            Engine.Counters.sCr = 1500;
         }
 
         if (Engine.Counters.mechanicProcess <= 0) {

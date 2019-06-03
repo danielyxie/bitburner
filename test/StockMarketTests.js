@@ -308,6 +308,8 @@ describe("Stock Market Tests", function() {
                 expect(StockMarket["storedCycles"]).to.equal(0);
                 expect(StockMarket).to.have.property("lastUpdate");
                 expect(StockMarket["lastUpdate"]).to.equal(0);
+                expect(StockMarket).to.have.property("ticksUntilCycle");
+                expect(StockMarket["ticksUntilCycle"]).to.be.a("number");
             });
         });
 

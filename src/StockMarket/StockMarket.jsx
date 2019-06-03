@@ -7,6 +7,7 @@ import {
 import { Order } from "./Order";
 import { processOrders } from "./OrderProcessing";
 import { Stock } from "./Stock";
+import { TicksPerCycle } from "./StockMarketConstants";
 import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost
@@ -172,6 +173,7 @@ export function initStockMarket() {
 
     StockMarket.storedCycles = 0;
     StockMarket.lastUpdate = 0;
+    StockMarket.ticksUntilCycle = TicksPerCycle;
 }
 
 export function initSymbolToStockMap() {
@@ -192,18 +194,11 @@ export function stockMarketCycle() {
     for (const name in StockMarket) {
         const stock = StockMarket[name];
         if (!(stock instanceof Stock)) { continue; }
-        let thresh = 0.6;
-        if (stock.b) { thresh = 0.4; }
+
         const roll = Math.random();
         if (roll < 0.4) {
             stock.flipForecastForecast();
-        } else if (roll < 0.6) {
-            stock.otlkMagForecast += 0.5;
-            stock.otlkMagForecast = Math.min(stock.otlkMagForecast * 1.02, 100);
-        } else if (roll < 0.8) {
-            stock.otlkMagForecast -= 0.5;
-            stock.otlkMagForecast = stock.otlkMagForecast * (1 / 1.02);
-        } else if (roll < 0.9) {
+        } else if (roll < 0.55) {
             stock.b = !stock.b;
             stock.flipForecastForecast();
         }
@@ -226,6 +221,13 @@ export function processStockPrices(numCycles=1) {
 
     StockMarket.lastUpdate = timeNow;
     StockMarket.storedCycles -= cyclesPerStockUpdate;
+
+    // Cycle
+    --StockMarket.ticksUntilCycle;
+    if (StockMarket.ticksUntilCycle <= 0) {
+        stockMarketCycle();
+        StockMarket.ticksUntilCycle = TicksPerCycle;
+    }
 
     var v = Math.random();
     for (const name in StockMarket) {
@@ -271,6 +273,7 @@ export function processStockPrices(numCycles=1) {
             otlkMagChange = 1;
         }
         stock.cycleForecast(otlkMagChange);
+        stock.cycleForecastForecast(otlkMagChange / 2);
 
         // Shares required for price movement gradually approaches max over time
         stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 10, stock.shareTxForMovement);

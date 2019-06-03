@@ -85,6 +85,7 @@ export class Script {
      */
     markUpdated() {
         this.module = "";
+        this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     }
 
     /**
@@ -107,12 +108,6 @@ export class Script {
     		this.updateRamUsage(otherScripts);
             this.markUpdated();
     	}
-    }
-
-    // Marks that this script has been updated. Causes recompilation of NS2 modules.
-    markUpdated() {
-        this.module = "";
-        this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     }
 
     /**
