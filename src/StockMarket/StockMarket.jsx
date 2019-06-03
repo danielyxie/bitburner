@@ -203,6 +203,9 @@ export function stockMarketCycle() {
         } else if (roll < 0.8) {
             stock.otlkMagForecast -= 0.5;
             stock.otlkMagForecast = stock.otlkMagForecast * (1 / 1.02);
+        } else if (roll < 0.9) {
+            stock.b = !stock.b;
+            stock.flipForecastForecast();
         }
     }
 }
