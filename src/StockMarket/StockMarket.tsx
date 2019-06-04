@@ -4,14 +4,12 @@ import {
     shortStock,
     sellShort,
 } from "./BuyingAndSelling";
+import { IOrderBook } from "./IOrderBook";
+import { IStockMarket } from "./IStockMarket";
 import { Order } from "./Order";
 import { processOrders } from "./OrderProcessing";
 import { Stock } from "./Stock";
 import { TicksPerCycle } from "./StockMarketConstants";
-import {
-    getStockMarket4SDataCost,
-    getStockMarket4STixApiCost
-} from "./StockMarketCosts";
 import { InitStockMetadata } from "./data/InitStockMetadata";
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
@@ -21,6 +19,7 @@ import { StockMarketRoot } from "./ui/Root";
 import { CONSTANTS } from "../Constants";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { Player } from "../Player";
+import { IMap } from "../types";
 
 import { Page, routing } from ".././ui/navigationTracking";
 import { numeralWrapper } from ".././ui/numeralFormat";
@@ -28,17 +27,17 @@ import { numeralWrapper } from ".././ui/numeralFormat";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Reviver } from "../../utils/JSONReviver";
 
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
-export let StockMarket = {}; // Maps full stock name -> Stock object
-export let SymbolToStockMap = {}; // Maps symbol -> Stock object
+export let StockMarket: IStockMarket | IMap<any> = {}; // Maps full stock name -> Stock object
+export let SymbolToStockMap: IMap<Stock> = {}; // Maps symbol -> Stock object
 
-export function placeOrder(stock, shares, price, type, position, workerScript=null) {
+export function placeOrder(stock: Stock, shares: number, price: number, type: OrderTypes, position: PositionTypes, workerScript: WorkerScript | null=null) {
     const tixApi = (workerScript instanceof WorkerScript);
     if (!(stock instanceof Stock)) {
         if (tixApi) {
-            workerScript.log(`ERROR: Invalid stock passed to placeOrder() function`);
+            workerScript!.log(`ERROR: Invalid stock passed to placeOrder() function`);
         } else {
             dialogBoxCreate(`ERROR: Invalid stock passed to placeOrder() function`);
         }
@@ -46,7 +45,7 @@ export function placeOrder(stock, shares, price, type, position, workerScript=nu
     }
     if (typeof shares !== "number" || typeof price !== "number") {
         if (tixApi) {
-            workerScript.log("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
+            workerScript!.log("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
         } else {
             dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
         }
@@ -55,7 +54,7 @@ export function placeOrder(stock, shares, price, type, position, workerScript=nu
 
     const order = new Order(stock.symbol, shares, price, type, position);
     if (StockMarket["Orders"] == null) {
-        const orders = {};
+        const orders: IOrderBook = {};
         for (const name in StockMarket) {
             const stk = StockMarket[name];
             if (!(stk instanceof Stock)) { continue; }
@@ -68,7 +67,7 @@ export function placeOrder(stock, shares, price, type, position, workerScript=nu
     // Process to see if it should be executed immediately
     const processOrderRefs = {
         rerenderFn: displayStockMarketContent,
-        stockMarket: StockMarket,
+        stockMarket: StockMarket as IStockMarket,
         symbolToStockMap: SymbolToStockMap,
     }
     processOrders(stock, order.type, order.pos, processOrderRefs);
@@ -78,7 +77,15 @@ export function placeOrder(stock, shares, price, type, position, workerScript=nu
 }
 
 // Returns true if successfully cancels an order, false otherwise
-export function cancelOrder(params, workerScript=null) {
+interface ICancelOrderParams {
+    order?: Order;
+    pos?: PositionTypes;
+    price?: number;
+    shares?: number;
+    stock?: Stock;
+    type?: OrderTypes;
+}
+export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScript | null=null) {
     var tixApi = (workerScript instanceof WorkerScript);
     if (StockMarket["Orders"] == null) {return false;}
     if (params.order && params.order instanceof Order) {
@@ -108,42 +115,24 @@ export function cancelOrder(params, workerScript=null) {
                 stockOrders.splice(i, 1);
                 displayStockMarketContent();
                 if (tixApi) {
-                    workerScript.scriptRef.log("Successfully cancelled order: " + orderTxt);
+                    workerScript!.scriptRef.log("Successfully cancelled order: " + orderTxt);
                 }
                 return true;
             }
         }
         if (tixApi) {
-            workerScript.scriptRef.log("Failed to cancel order: " + orderTxt);
+            workerScript!.scriptRef.log("Failed to cancel order: " + orderTxt);
         }
         return false;
     }
     return false;
 }
 
-export function loadStockMarket(saveString) {
+export function loadStockMarket(saveString: string) {
     if (saveString === "") {
         StockMarket = {};
     } else {
         StockMarket = JSON.parse(saveString, Reviver);
-
-        // Backwards compatibility for v0.47.0
-        const orderBook = StockMarket["Orders"];
-        if (orderBook != null) {
-            // For each order, set its 'stockSymbol' property equal to the
-            // symbol of its 'stock' property
-            for (const stockSymbol in orderBook) {
-                const ordersForStock = orderBook[stockSymbol];
-                if (Array.isArray(ordersForStock)) {
-                    for (const order of ordersForStock) {
-                        if (order instanceof Order && order.stock instanceof Stock) {
-                            order.stockSymbol = order.stock.symbol;
-                        }
-                    }
-                }
-            }
-            console.log(`Converted Stock Market order book to v0.47.0 format`);
-        }
     }
 }
 
@@ -163,7 +152,7 @@ export function initStockMarket() {
         StockMarket[name] = new Stock(metadata);
     }
 
-    const orders = {};
+    const orders: IOrderBook = {};
     for (const name in StockMarket) {
         const stock = StockMarket[name];
         if (!(stock instanceof Stock)) { continue; }
@@ -196,11 +185,13 @@ export function stockMarketCycle() {
         if (!(stock instanceof Stock)) { continue; }
 
         const roll = Math.random();
-        if (roll < 0.4) {
+        if (roll < 0.2) {
             stock.flipForecastForecast();
-        } else if (roll < 0.55) {
+            StockMarket.ticksUntilCycle = 4 * TicksPerCycle;
+        } else if (roll < 0.65) {
             stock.b = !stock.b;
             stock.flipForecastForecast();
+            StockMarket.ticksUntilCycle = TicksPerCycle;
         }
     }
 }
@@ -226,7 +217,6 @@ export function processStockPrices(numCycles=1) {
     --StockMarket.ticksUntilCycle;
     if (StockMarket.ticksUntilCycle <= 0) {
         stockMarketCycle();
-        StockMarket.ticksUntilCycle = TicksPerCycle;
     }
 
     var v = Math.random();
@@ -251,7 +241,7 @@ export function processStockPrices(numCycles=1) {
         const c = Math.random();
         const processOrderRefs = {
             rerenderFn: displayStockMarketContent,
-            stockMarket: StockMarket,
+            stockMarket: StockMarket as IStockMarket,
             symbolToStockMap: SymbolToStockMap,
         }
         if (c < chc) {
@@ -282,7 +272,7 @@ export function processStockPrices(numCycles=1) {
     displayStockMarketContent();
 }
 
-let stockMarketContainer = null;
+let stockMarketContainer: HTMLElement | null = null;
 function setStockMarketContainer() {
     stockMarketContainer = document.getElementById("stock-market-container");
     document.removeEventListener("DOMContentLoaded", setStockMarketContainer);
@@ -301,6 +291,7 @@ export function displayStockMarketContent() {
     }
 
     if (stockMarketContainer instanceof HTMLElement) {
+        const castedStockMarket = StockMarket as IStockMarket;
         ReactDOM.render(
             <StockMarketRoot
                 buyStockLong={buyStock}
@@ -311,7 +302,7 @@ export function displayStockMarketContent() {
                 placeOrder={placeOrder}
                 sellStockLong={sellStock}
                 sellStockShort={sellShort}
-                stockMarket={StockMarket}
+                stockMarket={castedStockMarket}
             />,
             stockMarketContainer
         )

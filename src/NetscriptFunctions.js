@@ -90,6 +90,10 @@ import {
     shortStock,
     sellShort,
 } from "./StockMarket/BuyingAndSelling";
+import {
+    influenceStockThroughServerHack,
+    influenceStockThroughServerGrow,
+} from "./StockMarket/PlayerInfluencing";
 import { Stock } from "./StockMarket/Stock";
 import {
     StockMarket,
@@ -439,7 +443,7 @@ function NetscriptFunctions(workerScript) {
             }
             return out;
         },
-        hack : function(ip, { threads: requestedThreads } = {}){
+        hack : function(ip, { threads: requestedThreads, stock } = {}){
             updateDynamicRam("hack", getRamCost("hack"));
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
@@ -501,6 +505,9 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
                     }
                     server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
+                    if (stock) {
+                        influenceStockThroughServerHack(server, moneyGained);
+                    }
                     return Promise.resolve(moneyGained);
                 } else {
                     // Player only gains 25% exp for failure?
@@ -555,7 +562,7 @@ function NetscriptFunctions(workerScript) {
                 return Promise.resolve(true);
             });
         },
-        grow : function(ip, { threads: requestedThreads } = {}){
+        grow : function(ip, { threads: requestedThreads, stock } = {}){
             updateDynamicRam("grow", getRamCost("grow"));
             const threads = resolveNetscriptRequestedThreads(workerScript, "grow", requestedThreads);
             if (ip === undefined) {
@@ -596,6 +603,9 @@ function NetscriptFunctions(workerScript) {
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
+                if (stock) {
+                    influenceStockThroughServerGrow(server, moneyAfter - moneyBefore);
+                }
                 return Promise.resolve(moneyAfter/moneyBefore);
             });
         },

@@ -188,6 +188,18 @@ export class Stock {
     }
 
     /**
+     * Safely set the stock's second-order forecast to a new value
+     */
+    changeForecastForecast(newff: number): void {
+        this.otlkMagForecast = newff;
+        if (this.otlkMagForecast > 100) {
+            this.otlkMagForecast = 100;
+        } else if (this.otlkMagForecast < 0) {
+            this.otlkMagForecast = 0;
+        }
+    }
+
+    /**
      * Set the stock to a new price. Also updates the stock's previous price tracker
      */
     changePrice(newPrice: number): void {
@@ -232,9 +244,9 @@ export class Stock {
      */
     cycleForecastForecast(changeAmt: number=0.1): void {
         if (Math.random() < 0.5) {
-            this.otlkMagForecast = Math.min(this.otlkMagForecast + changeAmt, 100);
+            this.changeForecastForecast(this.otlkMagForecast + changeAmt);
         } else {
-            this.otlkMagForecast = Math.max(this.otlkMagForecast - changeAmt, 0);
+            this.changeForecastForecast(this.otlkMagForecast - changeAmt);
         }
     }
 

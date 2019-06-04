@@ -6,7 +6,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-export const forecastChangePerPriceMovement = 0.005;
+export const forecastChangePerPriceMovement = 0.01;
 
 /**
  * Calculate the total cost of a "buy" transaction. This accounts for spread and commission.
@@ -97,10 +97,8 @@ export function processTransactionForecastMovement(stock: Stock, shares: number)
 
 
     // Forecast always decreases in magnitude
-    const forecastChange = Math.min(5, forecastChangePerPriceMovement * (numIterations - 1));
-    if (stock.otlkMag > 10) {
-        stock.otlkMag -= forecastChange;
-    }
+    const forecastChange = forecastChangePerPriceMovement * (numIterations - 1);
+    stock.otlkMag = Math.max(6, stock.otlkMag - forecastChange);
 }
 
 /**

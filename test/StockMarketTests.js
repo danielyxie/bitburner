@@ -128,6 +128,22 @@ describe("Stock Market Tests", function() {
             });
         });
 
+        describe("#changeForecastForecast()", function() {
+            it("should get the stock's second-order forecast property", function() {
+                stock.changeForecastForecast(99);
+                expect(stock.otlkMagForecast).to.equal(99);
+                stock.changeForecastForecast(1);
+                expect(stock.otlkMagForecast).to.equal(1);
+            });
+
+            it("should prevent values outside of 0-100", function() {
+                stock.changeForecastForecast(101);
+                expect(stock.otlkMagForecast).to.equal(100);
+                stock.changeForecastForecast(-1);
+                expect(stock.otlkMagForecast).to.equal(0);
+            });
+        });
+
         describe("#changePrice()", function() {
             it("should set both the last price and current price properties", function() {
                 const newPrice = 20e3;
@@ -139,7 +155,28 @@ describe("Stock Market Tests", function() {
 
         describe("#cycleForecast()", function() {
             it("should appropriately change the otlkMag by the given amount when b=true", function() {
+                stock.getForecastIncreaseChance = () => { return 1; }
+                stock.cycleForecast(5);
+                expect(stock.otlkMag).to.equal(ctorParams.otlkMag + 5);
 
+                stock.getForecastIncreaseChance = () => { return 0; }
+                stock.cycleForecast(10);
+                expect(stock.otlkMag).to.equal(ctorParams.otlkMag - 5);
+            });
+
+            it("should NOT(!) the stock's 'b' property if it causes 'otlkMag' to go below 0", function() {
+                stock.getForecastIncreaseChance = () => { return 0; }
+                stock.cycleForecast(25);
+                expect(stock.otlkMag).to.equal(5);
+                expect(stock.b).to.equal(false);
+            });
+        });
+
+        describe("#cycleForecastForecast()", function() {
+            it("should increase the stock's second-order forecast by a given amount", function() {
+                const expected = [65, 75];
+                stock.cycleForecastForecast(5);
+                expect(stock.otlkMagForecast).to.be.oneOf(expected);
             });
         });
 
@@ -266,6 +303,10 @@ describe("Stock Market Tests", function() {
                 stock.otlkMagForecast = 50;
                 stock.otlkMag = 0;
                 expect(stock.getForecastIncreaseChance()).to.equal(0.5);
+
+                stock.otlkMagForecast = 25;
+                stock.otlkMag = 5; // Asolute forecast of 45
+                expect(stock.getForecastIncreaseChance()).to.equal(0.3);
             });
         });
     });
@@ -343,12 +384,14 @@ describe("Stock Market Tests", function() {
                     const stock = StockMarket[stockName];
                     if (!(stock instanceof Stock)) { continue; }
                     initialValues[stock.symbol] = {
-                        price: stock.price,
+                        b: stock.b,
                         otlkMag: stock.otlkMag,
+                        price: stock.price,
                     }
                 }
 
                 // Don't know or care how many exact cycles are required
+                StockMarket.lastUpdate = new Date().getTime() - 5e3;
                 processStockPrices(1e9);
 
                 // Both price and 'otlkMag' should be different
@@ -356,7 +399,14 @@ describe("Stock Market Tests", function() {
                     const stock = StockMarket[stockName];
                     if (!(stock instanceof Stock)) { continue; }
                     expect(initialValues[stock.symbol].price).to.not.equal(stock.price);
-                    expect(initialValues[stock.symbol].otlkMag).to.not.equal(stock.otlkMag);
+                    // expect(initialValues[stock.symbol].otlkMag).to.not.equal(stock.otlkMag);
+                    expect(initialValues[stock.symbol]).to.satisfy(function(initValue) {
+                        if ((initValue.otlkMag !== stock.otlkMag) || (initValue.b !== stock.b)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
                 }
             });
         });
@@ -882,6 +932,10 @@ describe("Stock Market Tests", function() {
     });
 
     describe("Order Processing", function() {
+        // TODO
+    });
 
+    describe("Player Influencing", function() {
+        // TODO
     });
 });
