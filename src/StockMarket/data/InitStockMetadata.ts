@@ -672,8 +672,8 @@ export const InitStockMetadata: IConstructorParams[] = [
         marketCap: 58e9,
         mv: {
             divisor: 100,
-            max: 430,
-            min: 400,
+            max: 400,
+            min: 200,
         },
         name: LocationName.AevumNetLinkTechnologies,
         otlkMag: 1,
@@ -750,8 +750,8 @@ export const InitStockMetadata: IConstructorParams[] = [
         marketCap: 30e9,
         mv: {
             divisor: 100,
-            max: 300,
-            min: 260,
+            max: 275,
+            min: 100,
         },
         name: "Sigma Cosmetics",
         otlkMag: 0,
@@ -776,8 +776,8 @@ export const InitStockMetadata: IConstructorParams[] = [
         marketCap: 42e9,
         mv: {
             divisor: 100,
-            max: 400,
-            min: 360,
+            max: 350,
+            min: 200,
         },
         name: "Joes Guns",
         otlkMag: 1,

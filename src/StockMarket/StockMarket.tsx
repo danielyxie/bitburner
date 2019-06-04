@@ -185,10 +185,10 @@ export function stockMarketCycle() {
         if (!(stock instanceof Stock)) { continue; }
 
         const roll = Math.random();
-        if (roll < 0.2) {
+        if (roll < 0.1) {
             stock.flipForecastForecast();
             StockMarket.ticksUntilCycle = 4 * TicksPerCycle;
-        } else if (roll < 0.65) {
+        } else if (roll < 0.55) {
             stock.b = !stock.b;
             stock.flipForecastForecast();
             StockMarket.ticksUntilCycle = TicksPerCycle;
@@ -214,6 +214,9 @@ export function processStockPrices(numCycles=1) {
     StockMarket.storedCycles -= cyclesPerStockUpdate;
 
     // Cycle
+    if (StockMarket.ticksUntilCycle == null || typeof StockMarket.ticksUntilCycle !== "number") {
+        StockMarket.ticksUntilCycle = TicksPerCycle;
+    }
     --StockMarket.ticksUntilCycle;
     if (StockMarket.ticksUntilCycle <= 0) {
         stockMarketCycle();

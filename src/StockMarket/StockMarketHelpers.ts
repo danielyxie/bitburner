@@ -98,7 +98,10 @@ export function processTransactionForecastMovement(stock: Stock, shares: number)
 
     // Forecast always decreases in magnitude
     const forecastChange = forecastChangePerPriceMovement * (numIterations - 1);
-    stock.otlkMag = Math.max(6, stock.otlkMag - forecastChange);
+    const changeLimit = 6;
+    if (stock.otlkMag > changeLimit) {
+        stock.otlkMag = Math.max(changeLimit, stock.otlkMag - forecastChange);
+    }
 }
 
 /**

@@ -51,31 +51,6 @@ bid price. Note that this is reversed for a short position. Purchasing a stock
 in the short position will occur at the stock's bid price, and selling a stock
 in the short position will occur at the stock's ask price.
 
-.. _gameplay_stock_market_spread_price_movement:
-
-Transactions Influencing Stock Price
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Buying or selling a large number of shares of a stock will influence that stock's price.
-
-Buying a stock in the long position will cause that stock's price to
-increase. Selling a stock in the long position will cause the stock's price to decrease.
-The reverse occurs for the short position. The effect of this depends on how many shares
-are being transacted. More shares will have a bigger effect on the stock price. If
-only a small number of shares are being transacted, the stock price may not be affected.
-
-Note that this "influencing" of the stock price **can happen in the middle of a transaction**.
-For example, assume you are selling 1m shares of a stock. That stock's bid price
-is currently $100. However, selling 100k shares of the stock causes its price to drop
-by 1%. This means that for your transaction of 1m shares, the first 100k shares will be
-sold at $100. Then the next 100k shares will be sold at $99. Then the next 100k shares will
-be sold at $98.01, and so on.
-
-This is an important concept to keep in mind if you are trying to purchase/sell a
-large number of shares, as **it can negatively affect your profits**.
-
-.. note:: On the Stock Market UI, the displayed profit of a position does not take
-          this "influencing" into account.
-
 Transactions Influencing Stock Forecast
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In addition to influencing stock price, buying or selling a large number of shares
@@ -142,7 +117,49 @@ A Stop Order to sell will execute if the stock's price >= order's price.
           However, the transaction causes the stock's price to increase before
           the order finishes executing all of the shares. Your Limit Order will
           stop executing, and will continue only when the stock's price drops back to
-          $5 or below. 
+          $5 or below.
+
+.. _gameplay_stock_market_player_actions_influencing_stock:
+
+Player Actions Influencing Stocks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+It is possible for your actions elsewhere in the game to influence the stock market.
+
+Hacking
+    If a server has a corresponding stock (e.g. *foodnstuff* server -> FoodNStuff
+    stock), then hacking that server can
+    cause the corresponding stock's forecast to trend downwards in value
+    over time.
+
+    This effect only occurs if you set the *stock* option to
+    true when calling the :js:func:`hack` function. The chance that hacking a
+    server will cause this effect is based on what percentage of the
+    server's total money you steal.
+
+    A single hack will have a minor
+    effect, but continuously hacking a server for lots of money over time
+    will have a noticeable effect in making the stock's forecast trend downwards.
+
+Growing
+    If a server has a corresponding stock (e.g. *foodnstuff* server -> FoodNStuff
+    stock), then growing that server's money can cause the corresponding stock's
+    forecast to trend upwards in value over time.
+
+    This effect only occurs if you set the *stock* option to true when calling the
+    :js:func:`grow` function. The chance that growing a server will cause this
+    effect is based on what percentage of the server's total money to add to it.
+
+    A single grow operation will have a minor effect, but continuously growing
+    a server for lots of money over time will have a noticeable effect in making
+    the stock's forecast trend upwards.
+
+Working for a Company
+    If a company has a corresponding stock, then working for that company will
+    cause the corresponding stock's forecast to (slowly) trend upwards in value
+    over time.
+
+    The potency of this effect is based on how "effective" you are when you work
+    (i.e. its based on your stats).
 
 Automating the Stock Market
 ---------------------------
@@ -159,7 +176,8 @@ are hidden, although some of them can be made visible by purchasing the
 Four Sigma (4S) Market Data upgrade. Some examples of these properties are:
 
 * Volatility
-* Likelihood of increasing or decreasing
+* Likelihood of increasing or decreasing (i.e. the stock's forecast)
+* Likelihood of forecast increasing or decreasing (i.e. the stock's second-order forecast)
 * How easily a stock's price/forecast is influenced by transactions
 * Spread percentage
 * Maximum price (not a real maximum, more of a "soft cap")

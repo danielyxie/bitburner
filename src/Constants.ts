@@ -229,7 +229,7 @@ export let CONSTANTS: IMap<any> = {
     ** Working for a company positively affects the way the corresponding stock's forecast changes
 
     * Scripts now start/stop instantly
-    * Improved performance when starting up many copies of a new script (by Ornedan)
+    * Improved performance when starting up many copies of a new NetscriptJS script (by Ornedan)
     * Dialog boxes can now be closed with the ESC key (by jaguilar)
     * NetscriptJS scripts should now be "re-compiled" if their dependencies change (by jaguilar)
     * write() function should now properly cause NetscriptJS scripts to "re-compile" (by jaguilar)
