@@ -27,7 +27,7 @@ export function StockTickerHeaderText(props: IProps): React.ReactElement {
         let plusOrMinus = stock.b; // True for "+", false for "-"
         if (stock.otlkMag < 0) { plusOrMinus = !plusOrMinus }
         hdrText += (plusOrMinus ? "+" : "-").repeat(Math.floor(Math.abs(stock.otlkMag) / 10) + 1);
-        hdrText += ` - ${stock.getAbsoluteForecast()} / ${stock.otlkMagForecast}`;
+        // hdrText += ` - ${stock.getAbsoluteForecast()} / ${stock.otlkMagForecast}`;
     }
 
     let styleMarkup = {
