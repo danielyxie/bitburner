@@ -6,6 +6,8 @@ import {
 } from "../../utils/JSONReviver";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
+export const StockForecastInfluenceLimit = 5;
+
 export interface IConstructorParams {
     b: boolean;
     initPrice: number | IMinMaxRange;
@@ -288,6 +290,32 @@ export class Stock {
         const diff = this.otlkMagForecast - this.getAbsoluteForecast();
 
         return (50 + Math.min(Math.max(diff, -45), 45)) / 100;
+    }
+
+    /**
+     * Changes a stock's forecast. This is used when the stock is influenced
+     * by a transaction. The stock's forecast always goes towards 50, but the
+     * movement is capped by a certain threshold/limit
+     */
+    influenceForecast(change: number): void {
+        if (this.otlkMag > StockForecastInfluenceLimit) {
+            this.otlkMag = Math.max(StockForecastInfluenceLimit, this.otlkMag - change);
+        }
+    }
+
+    /**
+     * Changes a stock's second-order forecast. This is used when the stock is
+     * influenced by a transaction. The stock's second-order forecast always
+     * goes towards 50.
+     */
+    influenceForecastForecast(change: number): void {
+        if (this.otlkMagForecast > 50) {
+            this.otlkMagForecast -= change;
+            this.otlkMagForecast = Math.max(50, this.otlkMagForecast);
+        } else if (this.otlkMagForecast < 50) {
+            this.otlkMagForecast += change;
+            this.otlkMagForecast = Math.min(50, this.otlkMagForecast);
+        }
     }
 
     /**

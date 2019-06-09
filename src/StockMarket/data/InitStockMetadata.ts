@@ -761,8 +761,8 @@ export const InitStockMetadata: IConstructorParams[] = [
             min: 6,
         },
         shareTxForMovement: {
-            max: 84e3,
-            min: 24e3,
+            max: 70e3,
+            min: 20e3,
         },
         symbol: StockSymbols["Sigma Cosmetics"],
     },
@@ -787,8 +787,8 @@ export const InitStockMetadata: IConstructorParams[] = [
             min: 6,
         },
         shareTxForMovement: {
-            max: 64e3,
-            min: 18e3,
+            max: 52e3,
+            min: 15e3,
         },
         symbol: StockSymbols["Joes Guns"],
     },

@@ -96,7 +96,7 @@ export function processOrders(stock: Stock, orderType: OrderTypes, posType: Posi
 /**
  * Execute a Stop or Limit Order.
  * @param {Order} order - Order being executed
- * @param {IStockMarket} stockMarket - Reference to StockMarket object
+ * @param {IProcessOrderRefs} refs - References to objects/functions that are required for this function
  */
 function executeOrder(order: Order, refs: IProcessOrderRefs) {
     const stock = refs.symbolToStockMap[order.stockSymbol];

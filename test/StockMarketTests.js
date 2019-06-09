@@ -8,7 +8,7 @@ import {
 } from "../src/StockMarket/BuyingAndSelling";
 import { Order } from "../src/StockMarket/Order";
 import { processOrders } from "../src/StockMarket/OrderProcessing";
-import { Stock } from "../src/StockMarket/Stock";
+import { Stock , StockForecastInfluenceLimit } from "../src/StockMarket/Stock";
 import {
     deleteStockMarket,
     initStockMarket,
@@ -40,7 +40,7 @@ describe("Stock Market Tests", function() {
         b: true,
         initPrice: 10e3,
         marketCap: 5e9,
-        mv: 1,
+        mv: 2,
         name: "MockStock",
         otlkMag: 20,
         spreadPerc: 1,
@@ -309,6 +309,57 @@ describe("Stock Market Tests", function() {
                 expect(stock.getForecastIncreaseChance()).to.equal(0.3);
             });
         });
+
+        describe("#influenceForecast()", function() {
+            beforeEach(function() {
+                stock.otlkMag = 10;
+            });
+
+            it("should change the forecast's value towards 50", function() {
+                stock.influenceForecast(2);
+                expect(stock.otlkMag).to.equal(8);
+            });
+
+            it("should not care about whether the stock is in bull or bear mode", function() {
+                stock.b = true;
+                stock.influenceForecast(1);
+                expect(stock.otlkMag).to.equal(9);
+
+                stock.b = false;
+                stock.influenceForecast(2);
+                expect(stock.otlkMag).to.equal(7);
+            });
+
+            it("should not influence the forecast beyond the limit", function() {
+                stock.influenceForecast(10);
+                expect(stock.otlkMag).to.equal(StockForecastInfluenceLimit);
+
+                stock.influenceForecast(10);
+                expect(stock.otlkMag).to.equal(StockForecastInfluenceLimit);
+            });
+        });
+
+        describe("#influenceForecastForecast()", function() {
+            it("should change the second-order forecast's value towards 50", function() {
+                stock.otlkMagForecast = 75;
+                stock.influenceForecastForecast(15);
+                expect(stock.otlkMagForecast).to.equal(60);
+
+                stock.otlkMagForecast = 25;
+                stock.influenceForecastForecast(15);
+                expect(stock.otlkMagForecast).to.equal(40);
+            });
+
+            it("should not change the second-order forecast past 50", function() {
+                stock.otlkMagForecast = 40;
+                stock.influenceForecastForecast(20);
+                expect(stock.otlkMagForecast).to.equal(50);
+
+                stock.otlkMagForecast = 60;
+                stock.influenceForecastForecast(20);
+                expect(stock.otlkMagForecast).to.equal(50);
+            });
+        });
     });
 
     describe("StockMarket object", function() {
@@ -508,6 +559,16 @@ describe("Stock Market Tests", function() {
             return origForecast - forecastChangePerPriceMovement * (n - 1);
         }
 
+        function getNthForecastForecast(origForecastForecast, n) {
+            if (stock.otlkMagForecast > 50) {
+                const expected = origForecastForecast - (forecastChangePerPriceMovement * (n - 1) * (stock.mv / 100));
+                return expected < 50 ? 50 : expected;
+            } else if (stock.otlkMagForecast < 50) {
+                const expected = origForecastForecast + (forecastChangePerPriceMovement * (n - 1) * (stock.mv / 100));
+                return expected > 50 ? 50 : expected;
+            }
+        }
+
         describe("processTransactionForecastMovement() for buy transactions", function() {
             const noMvmtShares = Math.round(ctorParams.shareTxForMovement / 2.2);
             const mvmtShares = ctorParams.shareTxForMovement * 3 + noMvmtShares;
@@ -547,69 +608,85 @@ describe("Stock Market Tests", function() {
 
             it("should properly evaluate LONG transactions that triggers forecast movements", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, mvmtShares, PositionTypes.Long);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 4));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
             });
 
             it("should properly evaluate SHORT transactions that triggers forecast movements", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, mvmtShares, PositionTypes.Short);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 4));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement - noMvmtShares);
             });
 
             it("should properly evaluate LONG transactions of exactly 'shareTxForMovement' shares", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, stock.shareTxForMovement, PositionTypes.Long);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 2));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that total to 'shareTxForMovement' shares", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, Math.round(stock.shareTxForMovement / 2), PositionTypes.Long);
                 expect(stock.shareTxUntilMovement).to.be.below(stock.shareTxForMovement);
                 processTransactionForecastMovement(stock, stock.shareTxUntilMovement, PositionTypes.Long);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 2));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate LONG transactions that are a multiple of 'shareTxForMovement' shares", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, 3 * stock.shareTxForMovement, PositionTypes.Long);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 4));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions of exactly 'shareTxForMovement' shares", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, stock.shareTxForMovement, PositionTypes.Short);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 2));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions that total to 'shareTxForMovement' shares", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, Math.round(stock.shareTxForMovement / 2), PositionTypes.Short);
                 expect(stock.shareTxUntilMovement).to.be.below(stock.shareTxForMovement);
                 processTransactionForecastMovement(stock, stock.shareTxUntilMovement, PositionTypes.Short);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 2));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 2));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
             });
 
             it("should properly evaluate SHORT transactions that are a multiple of 'shareTxForMovement' shares", function() {
                 const oldForecast = stock.otlkMag;
+                const oldForecastForecast = stock.otlkMagForecast;
 
                 processTransactionForecastMovement(stock, 3 * stock.shareTxForMovement, PositionTypes.Short);
                 expect(stock.otlkMag).to.equal(getNthForecast(oldForecast, 4));
+                expect(stock.otlkMagForecast).to.equal(getNthForecastForecast(oldForecastForecast, 4));
                 expect(stock.shareTxUntilMovement).to.equal(stock.shareTxForMovement);
             });
         });
@@ -932,7 +1009,15 @@ describe("Stock Market Tests", function() {
     });
 
     describe("Order Processing", function() {
-        // TODO
+        before(function() {
+            expect(initStockMarket).to.not.throw();
+            expect(initSymbolToStockMap).to.not.throw();
+        });
+        
+        describe()
+        describe("executeOrder()", function() {
+
+        });
     });
 
     describe("Player Influencing", function() {

@@ -6,7 +6,7 @@ import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
 
 // Amount by which a stock's forecast changes during each price movement
-export const forecastChangePerPriceMovement = 0.01;
+export const forecastChangePerPriceMovement = 0.006;
 
 /**
  * Calculate the total cost of a "buy" transaction. This accounts for spread and commission.
@@ -60,7 +60,8 @@ export function getSellTransactionGain(stock: Stock, shares: number, posType: Po
 }
 
 /**
- * Processes a stock's change in forecast whenever it is transacted
+ * Processes a stock's change in forecast & second-order forecast
+ * whenever it is transacted
  * @param {Stock} stock - Stock being sold
  * @param {number} shares - Number of sharse being transacted
  * @param {PositionTypes} posType - Long or short position
@@ -78,7 +79,8 @@ export function processTransactionForecastMovement(stock: Stock, shares: number)
         stock.shareTxUntilMovement -= shares;
         if (stock.shareTxUntilMovement <= 0) {
             stock.shareTxUntilMovement = stock.shareTxForMovement;
-            stock.otlkMag -= (forecastChangePerPriceMovement);
+            stock.influenceForecast(forecastChangePerPriceMovement);
+            stock.influenceForecastForecast(forecastChangePerPriceMovement * (stock.mv / 100));
         }
 
         return;
@@ -95,13 +97,11 @@ export function processTransactionForecastMovement(stock: Stock, shares: number)
         stock.shareTxUntilMovement = stock.shareTxForMovement;
     }
 
-
     // Forecast always decreases in magnitude
     const forecastChange = forecastChangePerPriceMovement * (numIterations - 1);
-    const changeLimit = 6;
-    if (stock.otlkMag > changeLimit) {
-        stock.otlkMag = Math.max(changeLimit, stock.otlkMag - forecastChange);
-    }
+    const forecastForecastChange = forecastChange * (stock.mv / 100);
+    stock.influenceForecast(forecastChange);
+    stock.influenceForecastForecast(forecastForecastChange);
 }
 
 /**

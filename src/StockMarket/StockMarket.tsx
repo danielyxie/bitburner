@@ -187,12 +187,12 @@ export function stockMarketCycle() {
         const roll = Math.random();
         if (roll < 0.1) {
             stock.flipForecastForecast();
-            StockMarket.ticksUntilCycle = 4 * TicksPerCycle;
         } else if (roll < 0.55) {
             stock.b = !stock.b;
             stock.flipForecastForecast();
-            StockMarket.ticksUntilCycle = TicksPerCycle;
         }
+
+        StockMarket.ticksUntilCycle = TicksPerCycle;
     }
 }
 
@@ -262,8 +262,8 @@ export function processStockPrices(numCycles=1) {
         }
 
         let otlkMagChange = stock.otlkMag * av;
-        if (stock.otlkMag < 1) {
-            otlkMagChange = 1;
+        if (stock.otlkMag < 5) {
+            otlkMagChange *= 10;
         }
         stock.cycleForecast(otlkMagChange);
         stock.cycleForecastForecast(otlkMagChange / 2);
