@@ -33,7 +33,7 @@ import * as ReactDOM from "react-dom";
 export let StockMarket: IStockMarket | IMap<any> = {}; // Maps full stock name -> Stock object
 export let SymbolToStockMap: IMap<Stock> = {}; // Maps symbol -> Stock object
 
-export function placeOrder(stock: Stock, shares: number, price: number, type: OrderTypes, position: PositionTypes, workerScript: WorkerScript | null=null) {
+export function placeOrder(stock: Stock, shares: number, price: number, type: OrderTypes, position: PositionTypes, workerScript: WorkerScript | null=null): boolean {
     const tixApi = (workerScript instanceof WorkerScript);
     if (!(stock instanceof Stock)) {
         if (tixApi) {
@@ -85,7 +85,7 @@ interface ICancelOrderParams {
     stock?: Stock;
     type?: OrderTypes;
 }
-export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScript | null=null) {
+export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScript | null=null): boolean {
     var tixApi = (workerScript instanceof WorkerScript);
     if (StockMarket["Orders"] == null) {return false;}
     if (params.order && params.order instanceof Order) {
@@ -263,7 +263,11 @@ export function processStockPrices(numCycles=1) {
 
         let otlkMagChange = stock.otlkMag * av;
         if (stock.otlkMag < 5) {
-            otlkMagChange *= 10;
+            if (stock.otlkMag <= 1) {
+                otlkMagChange = 1;
+            } else {
+                otlkMagChange *= 10;
+            }
         }
         stock.cycleForecast(otlkMagChange);
         stock.cycleForecastForecast(otlkMagChange / 2);
