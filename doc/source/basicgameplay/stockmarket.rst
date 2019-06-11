@@ -28,6 +28,27 @@ a stock.
 .. note:: Shorting stocks is not available immediately, and must be unlocked later in the
           game.
 
+Forecast & Second-Order Forecast
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A stock's forecast is its likelihood of increasing or decreasing in value. The
+forecast is typically represented by its probability of increasing in either
+a decimal or percentage form. For example, a forecast of 70% means the stock
+has a 70% chance of increasing and a 30% chance of decreasing.
+
+A stock's second-order forecast is the target value that its forecast trends towards.
+For example, if a stock has a forecast of 60% and a second-order forecast of 70%,
+then the stock's forecast should slowly trend towards 70% over time. However, this is
+determined by RNG so there is a chance that it may never reach 70%.
+
+Both the forecast and the second-order forecast change over time.
+
+A stock's forecast can be viewed after purchasing Four Sigma (4S) Market Data
+access. This lets you see the forecast info on the Stock Market UI. If you also
+purchase access to the 4S Market Data TIX API, then you can view a stock's forecast
+using the :js:func:`getStockForecast` function.
+
+A stock's second-order forecast is always hidden.
+
 .. _gameplay_stock_market_spread:
 
 Spread (Bid Price & Ask Price)
@@ -53,11 +74,14 @@ in the short position will occur at the stock's ask price.
 
 Transactions Influencing Stock Forecast
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In addition to influencing stock price, buying or selling a large number of shares
-of a stock will also influence that stock's "forecast". The forecast is the likelihood
-that the stock will increase or decrease in price. The magnitude of this effect depends
-on the number of shares being transacted. More shares will have a bigger effect on the
-stock forecast.
+Buying or selling a large number of shares
+of a stock will influence that stock's forecast & second-order forecast.
+The forecast is the likelihood that the stock will increase or decrease in price.
+The magnitude of this effect depends on the number of shares being transacted.
+More shares will have a bigger effect.
+
+The effect that transactions have on a stock's second-order forecast is
+significantly smaller than the effect on its forecast.
 
 .. _gameplay_stock_market_order_types:
 
@@ -109,16 +133,6 @@ A Stop Order to buy will execute if the stock's price <= order's price
 
 A Stop Order to sell will execute if the stock's price >= order's price.
 
-.. note:: Stop Orders do **not** take into account the fact that transactions can
-          influence a stock's price. Limit Orders, however, do take this into account.
-
-          For example, assume you have a Limit Order set to purchase a stock at
-          $5. Then, the stock's price drops to $5 and your Limit Order executes.
-          However, the transaction causes the stock's price to increase before
-          the order finishes executing all of the shares. Your Limit Order will
-          stop executing, and will continue only when the stock's price drops back to
-          $5 or below.
-
 .. _gameplay_stock_market_player_actions_influencing_stock:
 
 Player Actions Influencing Stocks
@@ -127,8 +141,8 @@ It is possible for your actions elsewhere in the game to influence the stock mar
 
 Hacking
     If a server has a corresponding stock (e.g. *foodnstuff* server -> FoodNStuff
-    stock), then hacking that server can
-    cause the corresponding stock's forecast to trend downwards in value
+    stock), then hacking that server can decrease the stock's second-order
+    forecast. This causes the corresponding stock's forecast to trend downwards in value
     over time.
 
     This effect only occurs if you set the *stock* option to
@@ -142,7 +156,8 @@ Hacking
 
 Growing
     If a server has a corresponding stock (e.g. *foodnstuff* server -> FoodNStuff
-    stock), then growing that server's money can cause the corresponding stock's
+    stock), then growing that server's money can increase the stock's
+    second-order forecast. This causes the corresponding stock's
     forecast to trend upwards in value over time.
 
     This effect only occurs if you set the *stock* option to true when calling the
@@ -155,11 +170,12 @@ Growing
 
 Working for a Company
     If a company has a corresponding stock, then working for that company will
-    cause the corresponding stock's forecast to (slowly) trend upwards in value
+    increase the corresponding stock's second-order forecast. This will
+    cause the stock's forecast to (slowly) trend upwards in value
     over time.
 
     The potency of this effect is based on how "effective" you are when you work
-    (i.e. its based on your stats).
+    (i.e. its based on your stats and multipliers).
 
 Automating the Stock Market
 ---------------------------

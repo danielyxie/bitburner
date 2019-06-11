@@ -1293,7 +1293,7 @@ describe("Stock Market Tests", function() {
 
                 // Use 1e3 for numCycles to force a change
                 // (This may break later if numbers are rebalanced);
-                influenceStockThroughCompanyWork(company, 1, 1e3);
+                influenceStockThroughCompanyWork(company, 1, 500);
                 expect(stock.otlkMagForecast).to.equal(oldSecondOrderForecast + forecastForecastChangeFromCompanyWork);
             });
 

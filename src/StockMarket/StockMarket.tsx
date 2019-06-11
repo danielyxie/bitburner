@@ -185,9 +185,7 @@ export function stockMarketCycle() {
         if (!(stock instanceof Stock)) { continue; }
 
         const roll = Math.random();
-        if (roll < 0.1) {
-            stock.flipForecastForecast();
-        } else if (roll < 0.55) {
+        if (roll < 0.45) {
             stock.b = !stock.b;
             stock.flipForecastForecast();
         }

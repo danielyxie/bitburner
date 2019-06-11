@@ -71,7 +71,7 @@ export function influenceStockThroughCompanyWork(company: Company, performanceMu
     }
     if (!(stock instanceof Stock)) { return; }
 
-    if (Math.random() < 0.001 * cyclesOfWork) {
+    if (Math.random() < 0.002 * cyclesOfWork) {
         const change = forecastForecastChangeFromCompanyWork * performanceMult;
         stock.changeForecastForecast(stock.otlkMagForecast + change);
     }
