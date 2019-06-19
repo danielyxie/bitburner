@@ -408,6 +408,42 @@ function processNetscript1Imports(code, workerScript) {
 }
 
 /**
+ *
+ */
+let pidCounter = 1;
+function generateNextPid() {
+    let tempCounter = pidCounter;
+
+    // Cap the number of search iterations at some arbitrary value to avoid
+    // infinite loops. We'll assume that players wont have 1mil+ running scripts
+    let found = false;
+    for (let i = 0; i < 1e6;) {
+        if (!workerScripts.has(tempCounter + i)) {
+            found = true;
+            tempCounter = tempCounter + i;
+            break;
+        }
+
+        if (i === Number.MAX_SAFE_INTEGER - 1) {
+            i = 1;
+        } else {
+            ++i;
+        }
+    }
+
+    if (found) {
+        pidCounter = tempCounter + 1;
+        if (pidCounter >= Number.MAX_SAFE_INTEGER) {
+            pidCounter = 1;
+        }
+
+        return tempCounter;
+    } else {
+        return -1;
+    }
+}
+
+/**
  * Start a script
  *
  * Given a RunningScript object, constructs a corresponding WorkerScript,
@@ -438,8 +474,17 @@ export function addWorkerScript(runningScriptObj, server) {
     }
 	server.ramUsed = roundToTwo(server.ramUsed + ramUsage);
 
+    // Get the pid
+    const pid = getNextPid();
+    if (pid === -1) {
+        throw new Error(
+            `Failed to start script because could not find available PID. This is most ` +
+            `because you have too many scripts running.`
+        );
+    }
+
 	// Create the WorkerScript
-	const s = new WorkerScript(runningScriptObj, NetscriptFunctions);
+	const s = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
 	s.ramUsage 	= ramUsage;
 
     // Start the script's execution

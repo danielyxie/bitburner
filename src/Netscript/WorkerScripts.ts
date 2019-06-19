@@ -3,4 +3,4 @@
  */
 import { WorkerScript } from "./WorkerScript";
 
-export const workerScripts: WorkerScript[] = [];
+export const workerScripts: Map<number, WorkerScript> = new Map();

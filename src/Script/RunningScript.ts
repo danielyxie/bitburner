@@ -56,6 +56,9 @@ export class RunningScript {
     // Number of seconds that this script has been running online
     onlineRunningTime: number = 0.01;
 
+    // Process ID. Must be an integer and equals the PID of corresponding WorkerScript
+    pid: number = -1;
+
     // How much RAM this script uses for ONE thread
     ramUsage: number = 0;
 
