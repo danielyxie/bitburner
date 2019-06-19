@@ -14,31 +14,53 @@ import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
 export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
-export function killWorkerScript(script: RunningScript | WorkerScript, serverIp?: string): boolean {
+export function killWorkerScript(pid: number): boolean;
+export function killWorkerScript(script: RunningScript | WorkerScript | number, serverIp?: string): boolean {
     if (script instanceof WorkerScript) {
-        script.env.stopFlag = true;
-        killNetscriptDelay(script);
-        removeWorkerScript(script);
+        stopAndCleanUpWorkerScript(script);
 
         return true;
     } else if (script instanceof RunningScript && typeof serverIp === "string") {
-        for (let i = 0; i < workerScripts.length; i++) {
-    		if (workerScripts[i].name == script.filename && workerScripts[i].serverIp == serverIp &&
-                compareArrays(workerScripts[i].args, script.args)) {
-    			workerScripts[i].env.stopFlag = true;
-                killNetscriptDelay(workerScripts[i]);
-                removeWorkerScript(workerScripts[i]);
+        // Try to kill by PID
+        const res = killWorkerScriptByPid(script.pid);
+        if (res) { return res; }
+
+        // If for some reason that doesn't work, we'll try the old way
+        for (const ws of workerScripts.values()) {
+            if (ws.name == script.filename && ws.serverIp == serverIp &&
+                    compareArrays(ws.args, script.args)) {
+
+    			stopAndCleanUpWorkerScript(ws);
 
                 return true;
     		}
-    	}
+        }
 
         return false;
+    } else if (typeof script === "number") {
+        return killWorkerScriptByPid(script);
     } else {
         console.error(`killWorkerScript() called with invalid argument:`);
         console.error(script);
         return false;
     }
+}
+
+function stopAndCleanUpWorkerScript(workerScript: WorkerScript): void {
+    workerScript.env.stopFlag = true;
+    killNetscriptDelay(workerScript);
+    removeWorkerScript(workerScript);
+}
+
+function killWorkerScriptByPid(pid: number): boolean {
+    const ws = workerScripts.get(pid);
+    if (ws instanceof WorkerScript) {
+        stopAndCleanUpWorkerScript(ws);
+    
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -48,66 +70,47 @@ export function killWorkerScript(script: RunningScript | WorkerScript, serverIp?
  * @param {WorkerScript | number} - Identifier for WorkerScript. Either the object itself, or
  *                                  its index in the global workerScripts array
  */
-function removeWorkerScript(id: WorkerScript | number): void {
-    // Get a reference to the WorkerScript and its index in the global pool
-    let workerScript: WorkerScript;
-    let index: number | null = null;
+function removeWorkerScript(workerScript: WorkerScript): void {
+    if (workerScript instanceof WorkerScript) {
+        const ip = workerScript.serverIp;
+        const name = workerScript.name;
 
-    if (typeof id === "number") {
-        if (id < 0 || id >= workerScripts.length) {
-            console.error(`Too high of an index passed into removeWorkerScript(): ${id}`);
+        // Get the server on which the script runs
+        const server = AllServers[ip];
+        if (server == null) {
+            console.error(`Could not find server on which this script is running: ${ip}`);
             return;
         }
 
-        workerScript = workerScripts[id];
-        index = id;
-    } else if (id instanceof WorkerScript) {
-        workerScript = id;
-        for (let i = 0; i < workerScripts.length; ++i) {
-            if (workerScripts[i] == id) {
-                index = i;
+        // Recalculate ram used on that server
+        server.ramUsed = roundToTwo(server.ramUsed - workerScript.ramUsage);
+        if (server.ramUsed < 0) {
+            console.warn(`Server RAM usage went negative (if it's due to floating pt imprecision, it's okay): ${server.ramUsed}`);
+            server.ramUsed = 0;
+        }
+
+        // Delete the RunningScript object from that server
+        for (let i = 0; i < server.runningScripts.length; ++i) {
+            const runningScript = server.runningScripts[i];
+            if (runningScript.filename === name && compareArrays(runningScript.args, workerScript.args)) {
+                server.runningScripts.splice(i, 1);
                 break;
             }
         }
 
-        if (index == null) {
-            console.error(`Could not find WorkerScript in global pool:`);
-            console.error(workerScript);
+        // Delete script from global pool (workerScripts)
+        const res = workerScripts.delete(workerScript.pid);
+        if (!res) {
+            console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
+            console.warn(workerScript);
         }
+
+        WorkerScriptStartStopEventEmitter.emitEvent();
     } else {
-        console.error(`Invalid argument passed into removeWorkerScript(): ${id}`);
+        console.error(`Invalid argument passed into removeWorkerScript():`);
+        console.error(workerScript);
         return;
     }
-
-    const ip = workerScript.serverIp;
-    const name = workerScript.name;
-
-    // Get the server on which the script runs
-    const server = AllServers[ip];
-    if (server == null) {
-        console.error(`Could not find server on which this script is running: ${ip}`);
-        return;
-    }
-
-    // Recalculate ram used on that server
-    server.ramUsed = roundToTwo(server.ramUsed - workerScript.ramUsage);
-    if (server.ramUsed < 0) {
-        console.warn(`Server RAM usage went negative (if it's due to floating pt imprecision, it's okay): ${server.ramUsed}`);
-        server.ramUsed = 0;
-    }
-
-    // Delete the RunningScript object from that server
-    for (let i = 0; i < server.runningScripts.length; ++i) {
-        const runningScript = server.runningScripts[i];
-        if (runningScript.filename === name && compareArrays(runningScript.args, workerScript.args)) {
-            server.runningScripts.splice(i, 1);
-            break;
-        }
-    }
-
-    // Delete script from global pool (workerScripts)
-    workerScripts.splice(<number>index, 1);
-    WorkerScriptStartStopEventEmitter.emitEvent();
 }
 
 /**

@@ -22,7 +22,7 @@ interface IServerToScriptsMap {
 }
 
 type IProps = {
-    workerScripts: WorkerScript[];
+    workerScripts: Map<number, WorkerScript>;
 };
 
 type IState = {
@@ -61,7 +61,7 @@ export class ServerAccordions extends React.Component<IProps, IState> {
     updateServerToScriptsMap(): void {
         const map: IServerToScriptsMap = {};
 
-        for (const ws of this.props.workerScripts) {
+        for (const ws of this.props.workerScripts.values()) {
             const server = getServer(ws.serverIp);
             if (server == null) {
                 console.warn(`WorkerScript has invalid IP address: ${ws.serverIp}`);

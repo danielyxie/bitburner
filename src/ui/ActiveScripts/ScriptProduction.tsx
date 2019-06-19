@@ -11,14 +11,14 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 
 type IProps = {
     p: IPlayer;
-    workerScripts: WorkerScript[];
+    workerScripts: Map<number, WorkerScript>;
 }
 
 export function ScriptProduction(props: IProps): React.ReactElement {
     const prodRateSinceLastAug = props.p.scriptProdSinceLastAug / (props.p.playtimeSinceLastAug / 1000);
 
     let onlineProduction = 0;
-    for (const ws of props.workerScripts) {
+    for (const ws of props.workerScripts.values()) {
         onlineProduction += (ws.scriptRef.onlineMoneyMade / ws.scriptRef.onlineRunningTime);
     }
 
@@ -35,7 +35,7 @@ export function ScriptProduction(props: IProps): React.ReactElement {
             <span id="active-scripts-total-prod-aug-total" className="money-gold">
                 {numeralWrapper.formatMoney(props.p.scriptProdSinceLastAug)}
             </span>
-            
+
             (<span className="money-gold">
                 <span id="active-scripts-total-prod-aug-avg" className="money-gold">
                     {numeralWrapper.formatMoney(prodRateSinceLastAug)}

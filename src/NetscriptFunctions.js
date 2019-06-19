@@ -2178,7 +2178,7 @@ function NetscriptFunctions(workerScript) {
 
                 // First element is total income of all currently running scripts
                 let total = 0;
-                for (const script of workerScripts) {
+                for (const script of workerScripts.values()) {
                     total += (script.scriptRef.onlineMoneyMade / script.scriptRef.onlineRunningTime);
                 }
                 res.push(total);
@@ -2209,8 +2209,8 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getScriptExpGain", getRamCost("getScriptExpGain"));
             if (arguments.length === 0) {
                 var total = 0;
-                for (var i = 0; i < workerScripts.length; ++i) {
-                    total += (workerScripts[i].scriptRef.onlineExpGained / workerScripts[i].scriptRef.onlineRunningTime);
+                for (const ws of workerScripts.values()) {
+                    total += (ws.scriptRef.onlineExpGained / ws.scriptRef.onlineRunningTime);
                 }
                 return total;
             } else {
