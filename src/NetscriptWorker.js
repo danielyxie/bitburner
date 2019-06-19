@@ -46,11 +46,12 @@ for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
 }
 
 export function prestigeWorkerScripts() {
-    for (var i = 0; i < workerScripts.length; ++i) {
-        // TODO Signal event emitter
-        workerScripts[i].env.stopFlag = true;
+    for (const ws of workerScripts.values()) {
+        ws.env.stopFlag = true;
     }
-    workerScripts.length = 0;
+
+    WorkerScriptStartStopEventEmitter.emitEvent();
+    workerScripts.clear();
 }
 
 // JS script promises need a little massaging to have the same guarantees as netscript
@@ -475,7 +476,7 @@ export function addWorkerScript(runningScriptObj, server) {
 	server.ramUsed = roundToTwo(server.ramUsed + ramUsage);
 
     // Get the pid
-    const pid = getNextPid();
+    const pid = generateNextPid();
     if (pid === -1) {
         throw new Error(
             `Failed to start script because could not find available PID. This is most ` +
@@ -483,7 +484,8 @@ export function addWorkerScript(runningScriptObj, server) {
         );
     }
 
-	// Create the WorkerScript
+	// Create the WorkerScript. NOTE: WorkerScript ctor will set the underlying
+    // RunningScript's PID as well
 	const s = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
 	s.ramUsage 	= ramUsage;
 
@@ -547,7 +549,7 @@ export function addWorkerScript(runningScriptObj, server) {
     });
 
     // Add the WorkerScript to the global pool
-    workerScripts.push(s);
+    workerScripts.set(pid, s);
     WorkerScriptStartStopEventEmitter.emitEvent();
 	return;
 }
@@ -557,9 +559,9 @@ export function addWorkerScript(runningScriptObj, server) {
  */
 export function updateOnlineScriptTimes(numCycles = 1) {
 	var time = (numCycles * Engine._idleSpeed) / 1000; //seconds
-	for (var i = 0; i < workerScripts.length; ++i) {
-		workerScripts[i].scriptRef.onlineRunningTime += time;
-	}
+    for (const ws of workerScripts.values()) {
+        ws.scriptRef.onlineRunningTime += time;
+    }
 }
 
 /**

@@ -12,7 +12,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 
 type IProps = {
     p: IPlayer;
-    workerScripts: WorkerScript[];
+    workerScripts: Map<number, WorkerScript>;
 }
 
 export class ActiveScriptsRoot extends React.Component<IProps> {
