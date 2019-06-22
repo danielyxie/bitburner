@@ -74,7 +74,7 @@ export function logBoxCreate(script: RunningScript) {
     }
 
     killScriptBtn.addEventListener("click", () => {
-        killWorkerScript(script, script.server);
+        killWorkerScript(script, script.server, true);
         return false;
     });
 
