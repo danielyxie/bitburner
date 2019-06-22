@@ -12,17 +12,21 @@ import { AllServers } from "../Server/AllServers";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
-export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string): boolean;
+export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string, rerenderUi: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
 export function killWorkerScript(pid: number): boolean;
-export function killWorkerScript(script: RunningScript | WorkerScript | number, serverIp?: string): boolean {
+export function killWorkerScript(script: RunningScript | WorkerScript | number, serverIp?: string, rerenderUi?: boolean): boolean {
+    if (rerenderUi == null || typeof rerenderUi !== "boolean") {
+        rerenderUi = true;
+    }
+
     if (script instanceof WorkerScript) {
         stopAndCleanUpWorkerScript(script);
 
         return true;
     } else if (script instanceof RunningScript && typeof serverIp === "string") {
         // Try to kill by PID
-        const res = killWorkerScriptByPid(script.pid);
+        const res = killWorkerScriptByPid(script.pid, rerenderUi);
         if (res) { return res; }
 
         // If for some reason that doesn't work, we'll try the old way
@@ -30,7 +34,7 @@ export function killWorkerScript(script: RunningScript | WorkerScript | number, 
             if (ws.name == script.filename && ws.serverIp == serverIp &&
                     compareArrays(ws.args, script.args)) {
 
-    			stopAndCleanUpWorkerScript(ws);
+    			stopAndCleanUpWorkerScript(ws, rerenderUi);
 
                 return true;
     		}
@@ -38,7 +42,7 @@ export function killWorkerScript(script: RunningScript | WorkerScript | number, 
 
         return false;
     } else if (typeof script === "number") {
-        return killWorkerScriptByPid(script);
+        return killWorkerScriptByPid(script, rerenderUi);
     } else {
         console.error(`killWorkerScript() called with invalid argument:`);
         console.error(script);
@@ -46,21 +50,21 @@ export function killWorkerScript(script: RunningScript | WorkerScript | number, 
     }
 }
 
-function stopAndCleanUpWorkerScript(workerScript: WorkerScript): void {
-    workerScript.env.stopFlag = true;
-    killNetscriptDelay(workerScript);
-    removeWorkerScript(workerScript);
-}
-
-function killWorkerScriptByPid(pid: number): boolean {
+function killWorkerScriptByPid(pid: number, rerenderUi: boolean=true): boolean {
     const ws = workerScripts.get(pid);
     if (ws instanceof WorkerScript) {
-        stopAndCleanUpWorkerScript(ws);
-    
+        stopAndCleanUpWorkerScript(ws, rerenderUi);
+
         return true;
     }
 
     return false;
+}
+
+function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true): void {
+    workerScript.env.stopFlag = true;
+    killNetscriptDelay(workerScript);
+    removeWorkerScript(workerScript, rerenderUi);
 }
 
 /**
@@ -70,7 +74,7 @@ function killWorkerScriptByPid(pid: number): boolean {
  * @param {WorkerScript | number} - Identifier for WorkerScript. Either the object itself, or
  *                                  its index in the global workerScripts array
  */
-function removeWorkerScript(workerScript: WorkerScript): void {
+function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true): void {
     if (workerScript instanceof WorkerScript) {
         const ip = workerScript.serverIp;
         const name = workerScript.name;
@@ -105,7 +109,9 @@ function removeWorkerScript(workerScript: WorkerScript): void {
             console.warn(workerScript);
         }
 
-        WorkerScriptStartStopEventEmitter.emitEvent();
+        if (rerenderUi) {
+            WorkerScriptStartStopEventEmitter.emitEvent();
+        }
     } else {
         console.error(`Invalid argument passed into removeWorkerScript():`);
         console.error(workerScript);
