@@ -16,7 +16,7 @@ there is plenty of documentation on Javascript available on the web.
 
 Browser compatibility
 ---------------------
-As of the time of writing this, Mozilla Firefox and a few other browsers do not support `dynamic import <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import>`_ functionality and therefore cannot run NetscriptJS scripts. These browsers will thus only be capable of using Netscript 1.0.
+As of the time of writing this, a few browsers do not support `dynamic import <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import>`_ functionality and therefore cannot run NetscriptJS scripts. These browsers will thus only be capable of using Netscript 1.0.
 
 How to use NetscriptJS
 ----------------------
