@@ -409,7 +409,7 @@ function processNetscript1Imports(code, workerScript) {
 }
 
 /**
- *
+ * Find and return the next availble PID for a script
  */
 let pidCounter = 1;
 function generateNextPid() {
