@@ -261,8 +261,8 @@ a:visited {
 /* Accordion menus (Header with collapsible panel) */
 .accordion-header {
   background-color: #444;
-  font-size: 20px;
   color: #fff;
+  font-size: 20px;
   margin: 6px 6px 0 6px;
   padding: 4px 6px;
   cursor: pointer;
@@ -935,6 +935,104 @@ button {
 
 /* COLORS */
 /* Attributes */
+.active-scripts-list {
+  list-style-type: none; }
+
+#active-scripts-container {
+  position: fixed;
+  padding-top: 10px; }
+  #active-scripts-container > p {
+    width: 70%;
+    margin: 6px;
+    padding: 4px; }
+  #active-scripts-container .accordion-header > pre {
+    color: white; }
+
+.active-scripts-server-header {
+  background-color: #444;
+  font-size: 20px;
+  color: #fff;
+  margin: 6px 6px 0 6px;
+  padding: 6px;
+  cursor: pointer;
+  width: 60%;
+  text-align: left;
+  border: none;
+  outline: none; }
+  .active-scripts-server-header:after {
+    content: '\2795';
+    /* "plus" sign (+) */
+    font-size: 13px;
+    color: #fff;
+    float: right;
+    margin-left: 5px; }
+  .active-scripts-server-header.active, .active-scripts-server-header:hover {
+    background-color: #555; }
+
+.active-scripts-server-header.active:after {
+  content: "\2796";
+  /* "minus" sign (-) */
+  font-size: 13px;
+  color: #fff;
+  float: right;
+  margin-left: 5px; }
+
+.active-scripts-server-header.active:hover {
+  background-color: #666; }
+
+.active-scripts-server-panel {
+  margin: 0 6px 6px 6px;
+  padding: 0 6px 6px 6px;
+  width: 55%;
+  margin-left: 5%;
+  display: none; }
+  .active-scripts-server-panel div, .active-scripts-server-panel ul, .active-scripts-server-panel ul > li {
+    background-color: #555; }
+
+.active-scripts-script-header {
+  background-color: #555;
+  border: none;
+  color: var(--my-font-color);
+  cursor: pointer;
+  display: block;
+  outline: none;
+  padding: 4px 25px 4px 10px;
+  position: relative;
+  text-align: left;
+  width: auto; }
+  .active-scripts-script-header:after {
+    content: '\2795';
+    /* "plus" sign (+) */
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+    color: transparent;
+    text-shadow: 0 0 0 var(--my-font-color);
+    position: absolute;
+    bottom: 4px; }
+  .active-scripts-script-header.active:after {
+    content: "\2796";
+    /* "minus" sign (-) */ }
+  .active-scripts-script-header:hover, .active-scripts-script-header.active:hover {
+    background-color: #666; }
+  .active-scripts-script-header.active {
+    background-color: #555; }
+
+.active-scripts-script-panel {
+  background-color: #555;
+  display: none;
+  font-size: 14px;
+  margin-bottom: 6px;
+  padding: 0 18px;
+  width: auto; }
+  .active-scripts-script-panel pre, .active-scripts-script-panel h2, .active-scripts-script-panel ul, .active-scripts-script-panel li {
+    background-color: #555;
+    width: auto;
+    color: #fff;
+    margin-left: 5%; }
+
+/* COLORS */
+/* Attributes */
 /**
  * Styling for the Hacknet Nodes UI Page
  */
@@ -1007,107 +1105,6 @@ button {
   padding-top: 10px;
   position: fixed; }
 
-/* Active scripts */
-.active-scripts-list {
-  list-style-type: none; }
-
-#active-scripts-container {
-  position: fixed;
-  padding-top: 10px; }
-
-#active-scripts-text,
-#active-scripts-total-prod {
-  width: 70%;
-  margin: 6px;
-  padding: 4px; }
-
-.active-scripts-server-header {
-  background-color: #444;
-  font-size: 20px;
-  color: #fff;
-  margin: 6px 6px 0 6px;
-  padding: 6px;
-  cursor: pointer;
-  width: 60%;
-  text-align: left;
-  border: none;
-  outline: none; }
-
-.active-scripts-server-header.active,
-.active-scripts-server-header:hover {
-  background-color: #555; }
-
-.active-scripts-server-header.active:hover {
-  background-color: #666; }
-
-.active-scripts-server-header:after {
-  content: '\2795';
-  /* "plus" sign (+) */
-  font-size: 13px;
-  color: #fff;
-  float: right;
-  margin-left: 5px; }
-
-.active-scripts-server-header.active:after {
-  content: "\2796";
-  /* "minus" sign (-) */
-  font-size: 13px;
-  color: #fff;
-  float: right;
-  margin-left: 5px; }
-
-.active-scripts-server-panel {
-  margin: 0 6px 6px 6px;
-  padding: 0 6px 6px 6px;
-  width: 55%;
-  margin-left: 5%;
-  display: none; }
-
-.active-scripts-server-panel div,
-.active-scripts-server-panel ul,
-.active-scripts-server-panel ul > li {
-  background-color: #555; }
-
-.active-scripts-script-header {
-  background-color: #555;
-  color: var(--my-font-color);
-  padding: 4px 25px 4px 10px;
-  cursor: pointer;
-  width: auto;
-  text-align: left;
-  border: none;
-  outline: none;
-  position: relative; }
-  .active-scripts-script-header:after {
-    content: '\2795';
-    /* "plus" sign (+) */
-    font-size: 13px;
-    float: right;
-    margin-left: 5px;
-    color: transparent;
-    text-shadow: 0 0 0 var(--my-font-color);
-    position: absolute;
-    bottom: 4px; }
-  .active-scripts-script-header.active:after {
-    content: "\2796";
-    /* "minus" sign (-) */ }
-  .active-scripts-script-header:hover, .active-scripts-script-header.active:hover {
-    background-color: #666; }
-  .active-scripts-script-header.active {
-    background-color: #555; }
-
-.active-scripts-script-panel {
-  padding: 0 18px;
-  background-color: #555;
-  width: auto;
-  display: none;
-  margin-bottom: 6px; }
-  .active-scripts-script-panel p, .active-scripts-script-panel h2, .active-scripts-script-panel ul, .active-scripts-script-panel li {
-    background-color: #555;
-    width: auto;
-    color: #fff;
-    margin-left: 5%; }
-
 /* World */
 #world-container {
   position: fixed;
@@ -1147,17 +1144,6 @@ button {
   margin: 6px;
   width: 70%; }
 
-#faction-donate-amount-txt,
-#faction-donate-input {
-  padding: 6px;
-  margin: 6px;
-  display: inline-block;
-  color: var(--my-font-color);
-  background-color: #000; }
-
-#faction-donate-amount-txt {
-  width: 50%; }
-
 #faction-container p,
 #faction-container pre {
   padding: 4px 6px;
@@ -1176,34 +1162,10 @@ button {
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */ }
 
-/* Faction Augmentations */
-#faction-augmentations-container {
-  position: fixed;
-  padding-top: 10px; }
-  #faction-augmentations-container p, #faction-augmentations-container a, #faction-augmentations-container ul, #faction-augmentations-container h1 {
-    margin: 8px;
-    padding: 4px; }
-
 /* World */
 #world-container li {
   margin: 0 0 15px 0;
   list-style-type: none; }
-
-/* Augmentations */
-#augmentations-container {
-  position: fixed;
-  padding-top: 10px; }
-
-.augmentations-list button,
-.augmentations-list div {
-  color: var(--my-font-color);
-  text-decoration: none; }
-
-.augmentations-list button {
-  padding: 2px 5px; }
-
-.augmentations-list div {
-  padding: 6px; }
 
 /* Tutorial */
 #tutorial-container {
@@ -1285,6 +1247,29 @@ button {
 #infiltration-buttons .a-link-button {
   display: inline;
   width: 25%; }
+
+/**
+ * Styling for the Augmentations UI. This is the page that displays all of the
+ * player's owned and purchased Augmentations and Source-Files. It also allows
+ * the player to install Augmentations
+ */
+/* COLORS */
+/* Attributes */
+#augmentations-container {
+  position: fixed;
+  padding-top: 10px; }
+
+#augmentations-content > p {
+  font-size: 14px;
+  width: 70%; }
+
+.augmentations-list button,
+.augmentations-list div {
+  color: var(--my-font-color);
+  text-decoration: none; }
+
+.augmentations-list button {
+  padding: 4px; }
 
 /* COLORS */
 /* Attributes */

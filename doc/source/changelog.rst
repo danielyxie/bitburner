@@ -6,10 +6,10 @@ Changelog
 v0.47.1 - 6/27/2019
 -------------------
 * Stock Market changes:
-** Transactions no longer influence stock prices (but they still influence forecast)
-** Changed the way stocks behave, particularly with regard to how the stock forecast occasionally "flips"
-** Hacking & growing a server can potentially affect the way the corresponding stock's forecast changes
-** Working for a company positively affects the way the corresponding stock's forecast changes
+    * Transactions no longer influence stock prices (but they still influence forecast)
+    * Changed the way stocks behave, particularly with regard to how the stock forecast occasionally "flips"
+    * Hacking & growing a server can potentially affect the way the corresponding stock's forecast changes
+    * Working for a company positively affects the way the corresponding stock's forecast changes
 
 * Scripts now start/stop instantly
 * Improved performance when starting up many copies of a new NetscriptJS script (by Ornedan)
