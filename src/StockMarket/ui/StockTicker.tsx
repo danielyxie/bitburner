@@ -117,12 +117,6 @@ export class StockTicker extends React.Component<IProps, IState> {
         let costTxt = `Purchasing ${numeralWrapper.formatBigNumber(qty)} shares (${this.state.position === PositionTypes.Long ? "Long" : "Short"}) ` +
                       `will cost ${numeralWrapper.formatMoney(cost)}. `;
 
-        const amtNeededForMovement = this.state.position === PositionTypes.Long ? stock.shareTxUntilMovementUp : stock.shareTxUntilMovementDown;
-        const causesMovement = qty > amtNeededForMovement;
-        if (causesMovement) {
-            costTxt += `WARNING: Purchasing this many shares will influence the stock price`;
-        }
-
         return costTxt;
     }
 
@@ -150,12 +144,6 @@ export class StockTicker extends React.Component<IProps, IState> {
 
         let costTxt = `Selling ${numeralWrapper.formatBigNumber(qty)} shares (${this.state.position === PositionTypes.Long ? "Long" : "Short"}) ` +
                       `will result in a gain of ${numeralWrapper.formatMoney(cost)}. `;
-
-        const amtNeededForMovement = this.state.position === PositionTypes.Long ? stock.shareTxUntilMovementDown : stock.shareTxUntilMovementUp;
-        const causesMovement = qty > amtNeededForMovement;
-        if (causesMovement) {
-            costTxt += `WARNING: Selling this many shares will influence the stock price`;
-        }
 
         return costTxt;
     }
@@ -357,11 +345,7 @@ export class StockTicker extends React.Component<IProps, IState> {
 
     render() {
         // Determine if the player's intended transaction will cause a price movement
-        let causesMovement: boolean = false;
         const qty = this.getQuantity();
-        if (!isNaN(qty)) {
-            causesMovement = qty > this.props.stock.shareTxForMovement;
-        }
 
         return (
             <li>
@@ -400,14 +384,6 @@ export class StockTicker extends React.Component<IProps, IState> {
                             <StockTickerTxButton onClick={this.handleSellButtonClick} text={"Sell"} tooltip={this.getSellTransactionCostText()} />
                             <StockTickerTxButton onClick={this.handleBuyMaxButtonClick} text={"Buy MAX"} />
                             <StockTickerTxButton onClick={this.handleSellAllButtonClick} text={"Sell ALL"} />
-                            {
-                                causesMovement &&
-                                <p className="stock-market-price-movement-warning">
-                                    WARNING: Buying/Selling {numeralWrapper.formatBigNumber(qty)} shares may affect
-                                    the stock's price. This applies during the transaction itself as well. See Investopedia
-                                    for more details.
-                                </p>
-                            }
                             <StockTickerPositionText p={this.props.p} stock={this.props.stock} />
                             <StockTickerOrderList
                                 cancelOrder={this.props.cancelOrder}

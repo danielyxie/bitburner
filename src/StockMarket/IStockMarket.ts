@@ -5,6 +5,7 @@ export type IStockMarket = {
     [key: string]: Stock;
 } & {
     lastUpdate: number;
-    storedCycles: number;
     Orders: IOrderBook;
-}
+    storedCycles: number;
+    ticksUntilCycle: number;
+};

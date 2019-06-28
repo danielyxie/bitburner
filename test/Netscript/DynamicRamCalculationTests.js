@@ -593,16 +593,6 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
             await testNonzeroDynamicRamCost(f);
         });
 
-        it("getStockPurchaseCost()", async function() {
-            const f = ["getStockPurchaseCost"];
-            await testNonzeroDynamicRamCost(f);
-        });
-
-        it("getStockSaleGain()", async function() {
-            const f = ["getStockSaleGain"];
-            await testNonzeroDynamicRamCost(f);
-        });
-
         it("buyStock()", async function() {
             const f = ["buyStock"];
             await testNonzeroDynamicRamCost(f);

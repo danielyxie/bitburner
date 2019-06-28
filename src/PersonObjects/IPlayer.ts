@@ -101,6 +101,10 @@ export interface IPlayer {
     work_money_mult: number;
     crime_success_mult: number;
     crime_money_mult: number;
+    bladeburner_max_stamina_mult: number;
+    bladeburner_stamina_gain_mult: number;
+    bladeburner_analysis_mult: number;
+    bladeburner_success_chance_mult: number;
 
     // Methods
     applyForAgentJob(sing?: boolean): boolean | void;
@@ -147,6 +151,7 @@ export interface IPlayer {
     reapplyAllSourceFiles(): void;
     regenerateHp(amt: number): void;
     recordMoneySource(amt: number, source: string): void;
+    setMoney(amt: number): void;
     startBladeburner(p: object): void;
     startClass(costMult: number, expMult: number, className: string): void;
     startCorporation(corpName: string, additionalShares?: number): void;

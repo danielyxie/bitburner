@@ -33,6 +33,11 @@ export class WorkerScript {
     delay: number | null = null;
 
     /**
+     * Holds the Promise resolve() function for when the script is "blocked" by an async op
+     */
+    delayResolve?: () => void;
+
+    /**
      * Stores names of all functions that have logging disabled
      */
     disableLogs: IMap<string> = {};
@@ -76,6 +81,12 @@ export class WorkerScript {
     output: string = "";
 
     /**
+     * Process ID. Must be an integer. Used for efficient script
+     * killing and removal.
+     */
+    pid: number;
+
+    /**
      * Script's Static RAM usage. Equivalent to underlying script's RAM usage
      */
     ramUsage: number = 0;
@@ -95,9 +106,16 @@ export class WorkerScript {
      */
     serverIp: string;
 
-    constructor(runningScriptObj: RunningScript, nsFuncsGenerator?: (ws: WorkerScript) => object) {
+    constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => object) {
         this.name 			= runningScriptObj.filename;
     	this.serverIp 		= runningScriptObj.server;
+
+        const sanitizedPid = Math.round(pid);
+        if (typeof sanitizedPid !== "number" || isNaN(sanitizedPid)) {
+            throw new Error(`Invalid PID when constructing WorkerScript: ${pid}`);
+        }
+        this.pid = sanitizedPid;
+        runningScriptObj.pid = sanitizedPid;
 
         // Get the underlying script's code
         const server = AllServers[this.serverIp];

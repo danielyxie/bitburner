@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.47.0",
+    Version:                "0.47.1",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -221,47 +221,18 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.47.0
+    v0.47.1
     * Stock Market changes:
-    ** Implemented spread. Stock's now have bid and ask prices at which transactions occur
-    ** Large transactions will now influence a stock's price and forecast
-    ** This "influencing" can take effect in the middle of a transaction
-    ** See documentation for more details on these changes
-    ** Added getStockAskPrice(), getStockBidPrice() Netscript functions to the TIX API
-    ** Added getStockPurchaseCost(), getStockSaleGain() Netscript functions to the TIX API
+    ** Transactions no longer influence stock prices (but they still influence forecast)
+    ** Changed the way stocks behave, particularly with regard to how the stock forecast occasionally "flips"
+    ** Hacking & growing a server can potentially affect the way the corresponding stock's forecast changes
+    ** Working for a company positively affects the way the corresponding stock's forecast changes
 
-    * Re-sleeves can no longer have the NeuroFlux Governor augmentation
-    ** This is just a temporary patch until the mechanic gets re-worked
-
-    * hack(), grow(), and weaken() functions now take optional arguments for number of threads to use (by MasonD)
-    * codingcontract.attempt() now takes an optional argument that allows you to configure the function to return a contract's reward
-    * Adjusted RAM costs of Netscript Singularity functions (mostly increased)
-    * Adjusted RAM cost of codingcontract.getNumTriesRemaining() Netscript function
-    * Netscript Singularity functions no longer cost extra RAM outside of BitNode-4
-    * Corporation employees no longer have an "age" stat
-    * Gang Wanted level gain rate capped at 100 (per employee)
-    * Script startup/kill is now processed every 3 seconds, instead of 6 seconds
-    * getHackTime(), getGrowTime(), and getWeakenTime() now return Infinity if called on a Hacknet Server
-    * Money/Income tracker now displays money lost from hospitalizations
-    * Exported saves now have a unique filename based on current BitNode and timestamp
-    * Maximum number of Hacknet Servers decreased from 25 to 20
-    * Bug Fix: Corporation employees stats should no longer become negative
-    * Bug Fix: Fixed sleeve.getInformation() throwing error in certain scenarios
-    * Bug Fix: Coding contracts should no longer generate on the w0r1d_d43m0n server
-    * Bug Fix: Duplicate Sleeves now properly have access to all Augmentations if you have a gang
-    * Bug Fix: getAugmentationsFromFaction() & purchaseAugmentation() functions should now work properly if you have a gang
-    * Bug Fix: Fixed issue that caused messages (.msg) to be sent when refreshing/reloading the game
-    * Bug Fix: Purchasing hash upgrades for Bladeburner/Corporation when you don't actually have access to those mechanics no longer gives hashes
-    * Bug Fix: run(), exec(), and spawn() Netscript functions now throw if called with 0 threads
-    * Bug Fix: Faction UI should now automatically update reputation
-    * Bug Fix: Fixed purchase4SMarketData()
-    * Bug Fix: Netscript1.0 now works properly for multiple 'namespace' imports (import * as namespace from "script")
-    * Bug Fix: Terminal 'wget' command now correctly evaluates directory paths
-    * Bug Fix: wget(), write(), and scp() Netscript functions now fail if an invalid filepath is passed in
-    * Bug Fix: Having Corporation warehouses at full capacity should no longer freeze game in certain conditions
-    * Bug Fix: Prevented an exploit that allows you to buy multiple copies of an Augmentation by holding the 'Enter' button
-    * Bug Fix: gang.getOtherGangInformation() now properly returns a deep copy
-    * Bug Fix: Fixed getScriptIncome() returning an undefined value
-    * Bug Fix: Fixed an issue with Hacknet Server hash rate not always updating
+    * Scripts now start/stop instantly
+    * Improved performance when starting up many copies of a new NetscriptJS script (by Ornedan)
+    * Improved performance when killing scripts
+    * Dialog boxes can now be closed with the ESC key (by jaguilar)
+    * NetscriptJS scripts should now be "re-compiled" if their dependencies change (by jaguilar)
+    * write() function should now properly cause NetscriptJS scripts to "re-compile" (by jaguilar)
     `
 }

@@ -36,8 +36,10 @@ import {
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
 import { Settings } from "../../Settings/Settings";
 import { SpecialServerIps, SpecialServerNames } from "../../Server/SpecialServerIps";
-import { SourceFiles, applySourceFile } from "../../SourceFile";
+import { applySourceFile } from "../../SourceFile/applySourceFile";
+import { SourceFiles } from "../../SourceFile/SourceFiles";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
+import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
 
 import Decimal from "decimal.js";
 
@@ -579,8 +581,8 @@ export function startWork(companyName) {
 }
 
 export function work(numCycles) {
-    //Cap the number of cycles being processed to whatever would put you at
-    //the work time limit (8 hours)
+    // Cap the number of cycles being processed to whatever would put you at
+    // the work time limit (8 hours)
     var overMax = false;
     if (this.timeWorked + (Engine._idleSpeed * numCycles) >= CONSTANTS.MillisecondsPer8Hours) {
         overMax = true;
@@ -588,20 +590,23 @@ export function work(numCycles) {
     }
     this.timeWorked += Engine._idleSpeed * numCycles;
 
-    this.workRepGainRate    = this.getWorkRepGain();
+    this.workRepGainRate = this.getWorkRepGain();
     this.processWorkEarnings(numCycles);
 
-    //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
+    // If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
     if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
         return this.finishWork(false);
     }
 
-    var comp = Companies[this.companyName], companyRep = "0";
+    const comp = Companies[this.companyName];
+    let companyRep = "0";
     if (comp == null || !(comp instanceof Company)) {
         console.error(`Could not find Company: ${this.companyName}`);
     } else {
         companyRep = comp.playerReputation;
     }
+
+    influenceStockThroughCompanyWork(comp, this.workRepGainRate, numCycles);
 
     const position = this.jobs[this.companyName];
 

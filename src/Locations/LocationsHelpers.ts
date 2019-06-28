@@ -40,13 +40,15 @@ import { createPopupCloseButton } from "../../utils/uiHelpers/createPopupCloseBu
 import { removeElementById } from "../../utils/uiHelpers/removeElementById";
 
 /**
- * Create a pop-up box that lets the player confirm traveling to a different city
- * If settings are configured to suppress this popup, just instantly travel
+ * Create a pop-up box that lets the player confirm traveling to a different city.
+ * If settings are configured to suppress this popup, just instantly travel.
  * The actual "Travel" implementation is implemented in the UI, and is passed in
- * as an argument
+ * as an argument.
+ * @param {CityName} destination - City that the player is traveling to
+ * @param {Function} travelFn - Function that changes the player's state for traveling
  */
 type TravelFunction = (to: CityName) => void;
-export function createTravelPopup(destination: CityName, travelFn: TravelFunction) {
+export function createTravelPopup(destination: CityName, travelFn: TravelFunction): void {
     const cost = CONSTANTS.TravelCost;
 
     if (Settings.SuppressTravelConfirmation) {
@@ -80,10 +82,10 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
 
 /**
  * Create a pop-up box that lets the player purchase a server.
- * @param ram - Amount of RAM (GB) on server
- * @param p - Player object
+ * @param {number} ram - Amount of RAM (GB) on server
+ * @param {IPlayer} p - Player object
  */
-export function createPurchaseServerPopup(ram: number, p: IPlayer) {
+export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
     const cost = getPurchaseServerCost(ram);
     if (cost === Infinity) {
         dialogBoxCreate("Something went wrong when trying to purchase this server. Please contact developer");
@@ -111,6 +113,7 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer) {
 
 /**
  * Create a popup that lets the player start a Corporation
+ * @param {IPlayer} p - Player object
  */
 export function createStartCorporationPopup(p: IPlayer) {
     if (!p.canAccessCorporation() || p.hasCorporation()) { return; }
@@ -172,8 +175,10 @@ export function createStartCorporationPopup(p: IPlayer) {
             if (worldHeader instanceof HTMLElement) {
                 worldHeader.click(); worldHeader.click();
             }
-            dialogBoxCreate("Congratulations! You just started your own corporation with government seed money. " +
-                            "You can visit and manage your company in the City");
+            dialogBoxCreate(
+                "Congratulations! You just started your own corporation with government seed money. " +
+                "You can visit and manage your company in the City"
+            );
             removeElementById(popupId);
             return false;
         }
@@ -187,21 +192,23 @@ export function createStartCorporationPopup(p: IPlayer) {
 
 /**
  * Create a popup that lets the player upgrade the cores on his/her home computer
- * @param p - Player object
+ * @param {IPlayer} p - Player object
  */
 export function createUpgradeHomeCoresPopup(p: IPlayer) {
     const currentCores = p.getHomeComputer().cpuCores;
     if (currentCores >= 8) { return; } // Max of 8 cores
 
-    //Cost of purchasing another cost is found by indexing this array with number of current cores
-    const allCosts = [0,
-                      10e9,     // 1->2 Cores - 10 bn
-                      250e9,    // 2->3 Cores - 250 bn
-                      5e12,     // 3->4 Cores - 5 trillion
-                      100e12,   // 4->5 Cores - 100 trillion
-                      1e15,     // 5->6 Cores - 1 quadrillion
-                      20e15,    // 6->7 Cores - 20 quadrillion
-                      200e15];  // 7->8 Cores - 200 quadrillion
+    // Cost of purchasing another cost is found by indexing this array with number of current cores
+    const allCosts = [
+        0,
+        10e9,
+        250e9,
+        5e12,
+        100e12,
+        1e15,
+        20e15,
+        200e15
+    ];
     const cost: number = allCosts[currentCores];
 
     const yesBtn = yesNoBoxGetYesButton();
@@ -215,8 +222,10 @@ export function createUpgradeHomeCoresPopup(p: IPlayer) {
         } else {
             p.loseMoney(cost);
             p.getHomeComputer().cpuCores++;
-            dialogBoxCreate("You purchased an additional CPU Core for your home computer! It now has " +
-                            p.getHomeComputer().cpuCores +  " cores.");
+            dialogBoxCreate(
+                "You purchased an additional CPU Core for your home computer! It now has " +
+                p.getHomeComputer().cpuCores +  " cores."
+            );
         }
         yesNoBoxClose();
     });
@@ -226,15 +235,17 @@ export function createUpgradeHomeCoresPopup(p: IPlayer) {
         yesNoBoxClose();
     });
 
-    yesNoBoxCreate("Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
-                   "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
-                   "Purchasing an additional core (for a total of " + (p.getHomeComputer().cpuCores + 1) + ") will " +
-                   "cost " + numeralWrapper.formatMoney(cost));
+    yesNoBoxCreate(
+        "Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
+        "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
+        "Purchasing an additional core (for a total of " + (p.getHomeComputer().cpuCores + 1) + ") will " +
+        "cost " + numeralWrapper.formatMoney(cost)
+    );
 }
 
 /**
  * Create a popup that lets the player upgrade the RAM on his/her home computer
- * @param p - Player object
+ * @param {IPlayer} p - Player object
  */
 export function createUpgradeHomeRamPopup(p: IPlayer) {
     const cost: number = p.getUpgradeHomeRamCost();
@@ -255,15 +266,17 @@ export function createUpgradeHomeRamPopup(p: IPlayer) {
         yesNoBoxClose();
     });
 
-    yesNoBoxCreate("Would you like to purchase additional RAM for your home computer? <br><br>" +
-                   "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
-                   "This will cost " + numeralWrapper.format(cost, '$0.000a'));
+    yesNoBoxCreate(
+        "Would you like to purchase additional RAM for your home computer? <br><br>" +
+        "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
+        "This will cost " + numeralWrapper.format(cost, '$0.000a')
+    );
 }
 
 
 /**
  * Attempt to purchase a TOR router
- * @param p - Player object
+ * @param {IPlayer} p - Player object
  */
 export function purchaseTorRouter(p: IPlayer) {
     if (p.hasTorRouter()) {
@@ -285,7 +298,9 @@ export function purchaseTorRouter(p: IPlayer) {
 
     p.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     darkweb.serversOnNetwork.push(p.getHomeComputer().ip);
-    dialogBoxCreate("You have purchased a Tor router!<br>" +
-                    "You now have access to the dark web from your home computer<br>" +
-                    "Use the scan/scan-analyze commands to search for the dark web connection.");
+    dialogBoxCreate(
+        "You have purchased a Tor router!<br>" +
+        "You now have access to the dark web from your home computer<br>" +
+        "Use the scan/scan-analyze commands to search for the dark web connection."
+    );
 }

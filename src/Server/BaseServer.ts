@@ -233,7 +233,7 @@ export class BaseServer {
                 let script = this.scripts[i];
                 script.code = code;
                 script.updateRamUsage(this.scripts);
-                script.module = "";
+                script.markUpdated();
                 ret.overwritten = true;
                 ret.success = true;
                 return ret;

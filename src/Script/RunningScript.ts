@@ -1,5 +1,7 @@
-// Class representing a Script instance that is actively running.
-// A Script can have multiple active instances
+/**
+ * Class representing a Script instance that is actively running.
+ * A Script can have multiple active instances
+ */
 import { Script } from "./Script";
 import { FconfSettings } from "../Fconf/FconfSettings";
 import { Settings } from "../Settings/Settings";
@@ -22,10 +24,8 @@ export class RunningScript {
     // Script arguments
     args: any[] = [];
 
-    // Holds a map of servers hacked, where server = key and the value for each
-    // server is an array of four numbers. The four numbers represent:
-    //  [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-    // This data is used for offline progress
+    // Map of [key: server ip] -> Hacking data. Used for offline progress calculations.
+    // Hacking data format: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
     dataMap: IMap<number[]> = {};
 
     // Script filename
@@ -56,6 +56,9 @@ export class RunningScript {
     // Number of seconds that this script has been running online
     onlineRunningTime: number = 0.01;
 
+    // Process ID. Must be an integer and equals the PID of corresponding WorkerScript
+    pid: number = -1;
+
     // How much RAM this script uses for ONE thread
     ramUsage: number = 0;
 
@@ -69,22 +72,20 @@ export class RunningScript {
         if (script == null) { return; }
         this.filename   = script.filename;
         this.args       = args;
-
-        this.server     = script.server;    //IP Address only
+        this.server     = script.server;
         this.ramUsage   = script.ramUsage;
     }
 
     log(txt: string): void {
         if (this.logs.length > Settings.MaxLogCapacity) {
-            //Delete first element and add new log entry to the end.
-            //TODO Eventually it might be better to replace this with circular array
-            //to improve performance
             this.logs.shift();
         }
+
         let logEntry = txt;
         if (FconfSettings.ENABLE_TIMESTAMPS) {
             logEntry = "[" + getTimestamp() + "] " + logEntry;
         }
+
         this.logs.push(logEntry);
         this.logUpd = true;
     }

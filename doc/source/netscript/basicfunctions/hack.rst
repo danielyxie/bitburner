@@ -8,6 +8,8 @@ hack() Netscript Function
 
         * threads (*number*) - Number of threads to use for this function.
           Must be less than or equal to the number of threads the script is running with.
+        * stock (*boolean*) - If true, the function can affect the stock market. See
+          :ref:`gameplay_stock_market_player_actions_influencing_stock`
 
     :returns: The amount of money stolen if the hack is successful, and zero otherwise
     :RAM cost: 0.1 GB

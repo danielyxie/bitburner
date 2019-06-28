@@ -22,7 +22,7 @@ import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 
-interface IProcessOrderRefs {
+export interface IProcessOrderRefs {
     rerenderFn: () => void;
     stockMarket: IStockMarket;
     symbolToStockMap: IMap<Stock>;
@@ -49,7 +49,7 @@ export function processOrders(stock: Stock, orderType: OrderTypes, posType: Posi
     }
     let stockOrders = orderBook[stock.symbol];
     if (stockOrders == null || !(stockOrders.constructor === Array)) {
-        console.error(`Invalid Order book for ${stock.symbol} in processOrders()`);
+        console.error(`Invalid Order book for ${stock.symbol} in processOrders(): ${stockOrders}`);
         stockOrders = [];
         return;
     }
@@ -96,7 +96,7 @@ export function processOrders(stock: Stock, orderType: OrderTypes, posType: Posi
 /**
  * Execute a Stop or Limit Order.
  * @param {Order} order - Order being executed
- * @param {IStockMarket} stockMarket - Reference to StockMarket object
+ * @param {IProcessOrderRefs} refs - References to objects/functions that are required for this function
  */
 function executeOrder(order: Order, refs: IProcessOrderRefs) {
     const stock = refs.symbolToStockMap[order.stockSymbol];
@@ -107,8 +107,6 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
     const stockMarket = refs.stockMarket;
     const orderBook = stockMarket["Orders"];
     const stockOrders = orderBook[stock.symbol];
-    const isLimit = (order.type === OrderTypes.LimitBuy || order.type === OrderTypes.LimitSell);
-    let sharesTransacted = 0;
 
     // When orders are executed, the buying and selling functions shouldn't
     // emit popup dialog boxes. This options object configures the functions for that
@@ -120,106 +118,26 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
     let res = true;
     let isBuy = false;
     switch (order.type) {
-        case OrderTypes.LimitBuy: {
+        case OrderTypes.LimitBuy:
+        case OrderTypes.StopBuy:
             isBuy = true;
-
-            // We only execute limit orders until the price fails to match the order condition
-            const isLong = (order.pos === PositionTypes.Long);
-            const firstShares = Math.min(order.shares, isLong ? stock.shareTxUntilMovementUp : stock.shareTxUntilMovementDown);
-
-            // First transaction to trigger movement
-            let res = (isLong ? buyStock(stock, firstShares, null, opts) : shortStock(stock, firstShares, null, opts));
-            if (res) {
-                sharesTransacted = firstShares;
-            } else {
-                break;
-            }
-
-            let remainingShares = order.shares - firstShares;
-            let remainingIterations = Math.ceil(remainingShares / stock.shareTxForMovement);
-            for (let i = 0; i < remainingIterations; ++i) {
-                if (isLong && stock.price > order.price) {
-                    break;
-                } else if (!isLong && stock.price < order.price) {
-                    break;
-                }
-
-                const shares = Math.min(remainingShares, stock.shareTxForMovement);
-                let res = (isLong ? buyStock(stock, shares, null, opts) : shortStock(stock, shares, null, opts));
-                if (res) {
-                    sharesTransacted += shares;
-                    remainingShares -= shares;
-                } else {
-                    break;
-                }
-            }
-            break;
-        }
-        case OrderTypes.StopBuy: {
-            isBuy = true;
-            sharesTransacted = order.shares;
             if (order.pos === PositionTypes.Long) {
                 res = buyStock(stock, order.shares, null, opts) && res;
             } else if (order.pos === PositionTypes.Short) {
                 res = shortStock(stock, order.shares, null, opts) && res;
             }
             break;
-        }
-        case OrderTypes.LimitSell: {
-            // TODO need to account for player's shares here
-            // We only execute limit orders until the price fails to match the order condition
-            const isLong = (order.pos === PositionTypes.Long);
-            const totalShares = Math.min((isLong ? stock.playerShares : stock.playerShortShares), order.shares);
-            if (totalShares === 0) {
-                return; // Player has no shares
-            }
-            const firstShares = Math.min(totalShares, isLong ? stock.shareTxUntilMovementDown : stock.shareTxUntilMovementUp);
-
-            // First transaction to trigger movement
-            if (isLong ? sellStock(stock, firstShares, null, opts) : sellShort(stock, firstShares, null, opts)) {
-                sharesTransacted = firstShares;
-            } else {
-                break;
-            }
-
-            let remainingShares = totalShares - firstShares;
-            let remainingIterations = Math.ceil(remainingShares / stock.shareTxForMovement);
-            for (let i = 0; i < remainingIterations; ++i) {
-                if (isLong && stock.price < order.price) {
-                    break;
-                } else if (!isLong && stock.price > order.price) {
-                    break;
-                }
-
-                const shares = Math.min(remainingShares, stock.shareTxForMovement);
-                if (isLong ? sellStock(stock, shares, null, opts) : sellShort(stock, shares, null, opts)) {
-                    sharesTransacted += shares;
-                    remainingShares -= shares;
-                } else {
-                    break;
-                }
-            }
-            break;
-        }
-        case OrderTypes.StopSell: {
+        case OrderTypes.LimitSell:
+        case OrderTypes.StopSell:
             if (order.pos === PositionTypes.Long) {
-                sharesTransacted = Math.min(stock.playerShares, order.shares);
-                if (sharesTransacted <= 0) { return; }
-                res = sellStock(stock, sharesTransacted, null, opts) && res;
+                res = sellStock(stock, order.shares, null, opts) && res;
             } else if (order.pos === PositionTypes.Short) {
-                sharesTransacted = Math.min(stock.playerShortShares, order.shares);
-                if (sharesTransacted <= 0) { return; }
-                res = sellShort(stock, sharesTransacted, null, opts) && res;
+                res = sellShort(stock, order.shares, null, opts) && res;
             }
             break;
-        }
         default:
             console.warn(`Invalid order type: ${order.type}`);
             return;
-    }
-
-    if (isLimit) {
-        res = (sharesTransacted > 0);
     }
 
     // Position type, for logging/message purposes
@@ -228,16 +146,9 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
     if (res) {
         for (let i = 0; i < stockOrders.length; ++i) {
             if (order == stockOrders[i]) {
-                // Limit orders might only transact a certain # of shares, so we have the adjust the order qty.
-                stockOrders[i].shares -= sharesTransacted;
-                if (stockOrders[i].shares <= 0) {
-                    stockOrders.splice(i, 1);
-                    dialogBoxCreate(`${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}) was filled ` +
-                                    `(${numeralWrapper.formatBigNumber(Math.round(sharesTransacted))} share)`);
-                } else {
-                    dialogBoxCreate(`${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}) was partially filled ` +
-                                    `(${numeralWrapper.formatBigNumber(Math.round(sharesTransacted))} shares transacted, ${stockOrders[i].shares} shares remaining`);
-                }
+                stockOrders.splice(i, 1);
+                dialogBoxCreate(`${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}) was filled ` +
+                                `(${numeralWrapper.formatBigNumber(Math.round(order.shares))} shares)`);
                 refs.rerenderFn();
                 return;
             }
@@ -249,9 +160,6 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
         if (isBuy) {
             dialogBoxCreate(`Failed to execute ${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}). ` +
                             `This is most likely because you do not have enough money or the order would exceed the stock's maximum number of shares`);
-        } else {
-            dialogBoxCreate(`Failed to execute ${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}). ` +
-                            `This may be a bug, please report to game developer with details.`);
         }
     }
 }

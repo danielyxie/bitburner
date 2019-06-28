@@ -53,7 +53,9 @@ import {
 import { showLiterature } from "./Literature";
 import { Message } from "./Message/Message";
 import { showMessage } from "./Message/MessageHelpers";
-import { killWorkerScript, addWorkerScript } from "./NetscriptWorker";
+import { addWorkerScript } from "./NetscriptWorker";
+import { killWorkerScript } from "./Netscript/killWorkerScript";
+import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";
@@ -1145,8 +1147,9 @@ let Terminal = {
             }
             case "killall": {
                 for (let i = s.runningScripts.length - 1; i >= 0; --i) {
-                    killWorkerScript(s.runningScripts[i], s.ip);
+                    killWorkerScript(s.runningScripts[i], s.ip, false);
                 }
+                WorkerScriptStartStopEventEmitter.emitEvent();
                 post("Killing all running scripts. May take up to a few minutes for the scripts to die...");
                 break;
             }
@@ -1249,7 +1252,7 @@ let Terminal = {
 				}
 				for (let i = 0; i < s.runningScripts.length; i++) {
                     let rsObj = s.runningScripts[i];
-                    let res = rsObj.filename;
+                    let res = `(PID - ${rsObj.pid}) ${rsObj.filename}`;
                     for (let j = 0; j < rsObj.args.length; ++j) {
                         res += (" " + rsObj.args[j].toString());
                     }
@@ -1431,7 +1434,23 @@ let Terminal = {
                     return;
 				}
 
-				post("Script                          Threads         RAM Usage");
+                // Headers
+                const scriptWidth = 40;
+                const pidWidth = 10;
+                const threadsWidth = 16;
+
+                const scriptTxt = "Script";
+                const pidTxt = "PID";
+                const threadsTxt = "Threads";
+                const ramTxt = "RAM Usage";
+
+                const spacesAfterScriptTxt = " ".repeat(scriptWidth - scriptTxt.length);
+                const spacesAfterPidTxt = " ".repeat(pidWidth - pidTxt.length);
+                const spacesAfterThreadsTxt = " ".repeat(threadsWidth - threadsTxt.length);
+
+                const headers = `${scriptTxt}${spacesAfterScriptTxt}${pidTxt}${spacesAfterPidTxt}${threadsTxt}${spacesAfterThreadsTxt}${ramTxt}`;
+
+				post(headers);
 
 				let currRunningScripts = s.runningScripts;
 				// Iterate through scripts on current server
@@ -1439,19 +1458,30 @@ let Terminal = {
 					let script = currRunningScripts[i];
 
 					// Calculate name padding
-					let numSpacesScript = 32 - script.filename.length; // 26 -> width of name column
-                    if (numSpacesScript < 0) {numSpacesScript = 0;}
-					let spacesScript = Array(numSpacesScript+1).join(" ");
+					const numSpacesScript = Math.max(0, scriptWidth - script.filename.length);
+                    const spacesScript = " ".repeat(numSpacesScript);
+
+                    // Calculate PID padding
+                    const numSpacesPid = Math.max(0, pidWidth - (script.pid + "").length);
+                    const spacesPid = " ".repeat(numSpacesPid);
 
 					// Calculate thread padding
-					let numSpacesThread = 16 - (script.threads + "").length; // 16 -> width of thread column
-					let spacesThread = Array(numSpacesThread+1).join(" ");
+					const numSpacesThread = Math.max(0, threadsWidth - (script.threads + "").length);
+                    const spacesThread = " ".repeat(numSpacesThread);
 
 					// Calculate and transform RAM usage
-					let ramUsage = numeralWrapper.format(getRamUsageFromRunningScript(script) * script.threads, '0.00') + " GB";
+					const ramUsage = numeralWrapper.format(getRamUsageFromRunningScript(script) * script.threads, '0.00') + " GB";
 
-					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
-					post(entry.join(""));
+					const entry = [
+                        script.filename,
+                        spacesScript,
+                        script.pid,
+                        spacesPid,
+                        script.threads,
+                        spacesThread,
+                        ramUsage
+                    ].join("");
+					post(entry);
 				}
 				break;
             }

@@ -1,7 +1,7 @@
 getStockPurchaseCost() Netscript Function
 =========================================
 
-.. js:function:: getStockPurchaseCost(sym, shares, posType)
+ .. js:function:: getStockPurchaseCost(sym, shares, posType)
 
     :param string sym: Stock symbol
     :param number shares: Number of shares to purchase
@@ -10,6 +10,5 @@ getStockPurchaseCost() Netscript Function
     :RAM cost: 2 GB
 
     Calculates and returns how much it would cost to buy a given number of
-    shares of a stock. This takes into account :ref:`spread <gameplay_stock_market_spread>`,
-    :ref:`large transactions influencing the price of the stock <gameplay_stock_market_spread_price_movement>`
+    shares of a stock. This takes into account :ref:`spread <gameplay_stock_market_spread>`
     and commission fees.
