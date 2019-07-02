@@ -222,6 +222,7 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.47.2
-    * 
+    * Added 'Solarized Dark' theme to CodeMirror editor
+    * Bug fix: Stock Market UI should no longer crash for certain locale settings
     `
 }
