@@ -841,6 +841,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "The data provided by this problem is an array with two elements. The first element",
                     "is the string of digits, while the second element is the target number:\n\n",
                     `["${digits}", ${target}]\n\n`,
+                    "NOTE: Numbers in the expression cannot have leading 0's. In other words,",
+                    `"1+01" is not a valid expression`,
                     "Examples:\n\n",
                     `Input: digits = "123", target = 6\n`,
                     `Output: ["1+2+3", "1*2*3"]\n\n`,
