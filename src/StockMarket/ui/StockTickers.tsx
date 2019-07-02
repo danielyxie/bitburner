@@ -14,6 +14,9 @@ import { OrderTypes } from "../data/OrderTypes";
 import { PositionTypes } from "../data/PositionTypes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { EventEmitter } from "../../utils/EventEmitter";
+
+import { ErrorBoundary } from "../../ui/React/ErrorBoundary";
 
 export type txFn = (stock: Stock, shares: number) => boolean;
 export type placeOrderFn = (stock: Stock, shares: number, price: number, ordType: OrderTypes, posType: PositionTypes) => boolean;
@@ -22,6 +25,7 @@ type IProps = {
     buyStockLong: txFn;
     buyStockShort: txFn;
     cancelOrder: (params: object) => void;
+    eventEmitterForReset?: EventEmitter;
     p: IPlayer;
     placeOrder: placeOrderFn;
     sellStockLong: txFn;
@@ -169,8 +173,13 @@ export class StockTickers extends React.Component<IProps, IState> {
             }
         }
 
+        const errorBoundaryProps = {
+            eventEmitterForReset: this.props.eventEmitterForReset,
+            id: "StockTickersErrorBoundary",
+        }
+
         return (
-            <div>
+            <ErrorBoundary {...errorBoundaryProps}>
                 <StockTickersConfig
                     changeDisplayMode={this.changeDisplayMode}
                     changeWatchlistFilter={this.changeWatchlistFilter}
@@ -182,7 +191,7 @@ export class StockTickers extends React.Component<IProps, IState> {
                 <ul id="stock-market-list" ref={this.listRef}>
                     {tickers}
                 </ul>
-            </div>
+            </ErrorBoundary>
         )
     }
 }
