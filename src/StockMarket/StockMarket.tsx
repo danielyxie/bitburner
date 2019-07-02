@@ -20,6 +20,7 @@ import { CONSTANTS } from "../Constants";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { Player } from "../Player";
 import { IMap } from "../types";
+import { EventEmitter } from "../utils/EventEmitter";
 
 import { Page, routing } from ".././ui/navigationTracking";
 import { numeralWrapper } from ".././ui/numeralFormat";
@@ -290,10 +291,14 @@ function initStockMarketFnForReact() {
     initSymbolToStockMap();
 }
 
+const eventEmitterForUiReset = new EventEmitter();
+
 export function displayStockMarketContent() {
     if (!routing.isOn(Page.StockMarket)) {
         return;
     }
+
+    eventEmitterForUiReset.emitEvent();
 
     if (stockMarketContainer instanceof HTMLElement) {
         const castedStockMarket = StockMarket as IStockMarket;
@@ -302,6 +307,7 @@ export function displayStockMarketContent() {
                 buyStockLong={buyStock}
                 buyStockShort={shortStock}
                 cancelOrder={cancelOrder}
+                eventEmitterForReset={eventEmitterForUiReset}
                 initStockMarket={initStockMarketFnForReact}
                 p={Player}
                 placeOrder={placeOrder}

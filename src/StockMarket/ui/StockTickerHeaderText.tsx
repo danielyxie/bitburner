@@ -9,6 +9,7 @@ import { Stock } from "../Stock";
 import { TickerHeaderFormatData } from "../data/TickerHeaderFormatData";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 type IProps = {
@@ -16,12 +17,22 @@ type IProps = {
     stock: Stock;
 }
 
+const localesWithLongPriceFormat = [
+    "cs",
+    "lv",
+    "pl",
+    "ru",
+];
+
 export function StockTickerHeaderText(props: IProps): React.ReactElement {
     const stock = props.stock;
 
     const stockPriceFormat = numeralWrapper.formatMoney(stock.price);
+    const spacesAllottedForStockPrice = localesWithLongPriceFormat.includes(Settings.Locale) ? 15 : 12;
+    const spacesAfterStockName = " ".repeat(1 + TickerHeaderFormatData.longestName - stock.name.length + (TickerHeaderFormatData.longestSymbol - stock.symbol.length));
+    const spacesBeforePrice = " ".repeat(spacesAllottedForStockPrice - stockPriceFormat.length);
 
-    let hdrText = `${stock.name}${" ".repeat(1 + TickerHeaderFormatData.longestName - stock.name.length + (TickerHeaderFormatData.longestSymbol - stock.symbol.length))}${stock.symbol} -${" ".repeat(10 - stockPriceFormat.length)}${stockPriceFormat}`;
+    let hdrText = `${stock.name}${spacesAfterStockName}${stock.symbol} -${spacesBeforePrice}${stockPriceFormat}`;
     if (props.p.has4SData) {
         hdrText += ` - Volatility: ${numeralWrapper.format(stock.mv, '0,0.00')}% - Price Forecast: `;
         let plusOrMinus = stock.b; // True for "+", false for "-"
