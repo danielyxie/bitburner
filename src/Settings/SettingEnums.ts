@@ -67,6 +67,7 @@ export enum CodeMirrorThemeSetting {
     Seti = "seti",
     Shadowfox = "shadowfox",
     Solarized = "solarized",
+    SolarizedDark = "solarized dark",
     ssms = "ssms",
     The_matrix = "the-matrix",
     Tomorrow_night_bright = "tomorrow-night-bright",
