@@ -41,7 +41,6 @@ function getNumAvailableCreateProgram() {
 
     if (Player.firstProgramAvailable === false && count > 0) {
         Player.firstProgramAvailable = true;
-        document.getElementById("create-program-tab").style.display = "list-item";
         document.getElementById("hacking-menu-header").click();
         document.getElementById("hacking-menu-header").click();
     }

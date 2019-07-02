@@ -66,6 +66,8 @@ export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boole
             const createProgram: HTMLElement    = safeGetElement("create-program-tab");
             const createProgramNot: HTMLElement = safeGetElement("create-program-notification");
 
+            createProgram.style.display = p.firstProgramAvailable ? "list-item" : "none";
+
             this.classList.toggle("opened");
 
             const elems: HTMLElement[] = [terminal, createScript, activeScripts, createProgram];
@@ -87,7 +89,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boole
             const sleeves: HTMLElement          = safeGetElement("sleeves-tab");
 
             sleeves.style.display = p.sleeves.length > 0 ? "list-item" : "none";
-            
+
             this.classList.toggle("opened");
 
             const elems: HTMLElement[] = [stats, factions, augmentations, hacknetnodes, sleeves];
