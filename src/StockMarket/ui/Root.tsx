@@ -12,6 +12,7 @@ import { OrderTypes } from "../data/OrderTypes";
 import { PositionTypes } from "../data/PositionTypes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { EventEmitter } from "../../utils/EventEmitter";
 
 type txFn = (stock: Stock, shares: number) => boolean;
 export type placeOrderFn = (stock: Stock, shares: number, price: number, ordType: OrderTypes, posType: PositionTypes) => boolean;
@@ -20,6 +21,7 @@ type IProps = {
     buyStockLong: txFn;
     buyStockShort: txFn;
     cancelOrder: (params: object) => void;
+    eventEmitterForReset?: EventEmitter;
     initStockMarket: () => void;
     p: IPlayer;
     placeOrder: placeOrderFn;
@@ -65,6 +67,7 @@ export class StockMarketRoot extends React.Component<IProps, IState> {
                         buyStockLong={this.props.buyStockLong}
                         buyStockShort={this.props.buyStockShort}
                         cancelOrder={this.props.cancelOrder}
+                        eventEmitterForReset={this.props.eventEmitterForReset}
                         p={this.props.p}
                         placeOrder={this.props.placeOrder}
                         sellStockLong={this.props.sellStockLong}
