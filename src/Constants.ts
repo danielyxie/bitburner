@@ -222,9 +222,17 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.47.2
+    -------
+
+    Netscript Changes
     * Added tail() Netscript function
-    * Added 'Solarized Dark' theme to CodeMirror editor
-    * Bug fix: Stock Market UI should no longer crash for certain locale settings
+    * hacknet.getNodeStats() function now returns an additional property for Hacknet Servers: hashCapacity
     * Bug fix: workForFaction() function now properly accounts for disabled logs
+    * When writing to a file, the write() function now casts the data being written to a string (using String())
+
+    Misc Changes
+    * Added 'Solarized Dark' theme to CodeMirror editor
+    * After Infiltration, you will now return to the company page rather than the city page
+    * Bug fix: Stock Market UI should no longer crash for certain locale settings
     `
 }

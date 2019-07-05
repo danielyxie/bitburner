@@ -15,6 +15,7 @@ getNodeStats() Netscript Function
             ram:                Node's RAM,
             cores:              Node's number of cores,
             cache:              Cache level. Only applicable for Hacknet Servers
+            hashCapacity:       Hash Capacity provided by this Node. Only applicable for Hacknet Servers
             production:         Node's production per second
             timeOnline:         Number of seconds since Node has been purchased,
             totalProduction:    Total amount that the Node has produced

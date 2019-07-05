@@ -76,37 +76,46 @@ export class UniversityLocation extends React.Component<IProps, any> {
         const managementCost = CONSTANTS.ClassManagementBaseCost * costMult;
         const leadershipCost = CONSTANTS.ClassLeadershipBaseCost * costMult;
 
+        const earnHackingExpTooltip = `Gain hacking experience!`
+        const earnCharismaExpTooltip = `Gain charisma experience!`;
+
         return (
             <div>
                 <StdButton
                     onClick={this.study}
                     style={this.btnStyle}
                     text={`Study Computer Science (free)`}
+                    tooltip={earnHackingExpTooltip}
                 />
                 <StdButton
                     onClick={this.dataStructures}
                     style={this.btnStyle}
                     text={`Take Data Structures course (${numeralWrapper.formatMoney(dataStructuresCost)} / sec)`}
+                    tooltip={earnHackingExpTooltip}
                 />
                 <StdButton
                     onClick={this.networks}
                     style={this.btnStyle}
                     text={`Take Networks course (${numeralWrapper.formatMoney(networksCost)} / sec)`}
+                    tooltip={earnHackingExpTooltip}
                 />
                 <StdButton
                     onClick={this.algorithms}
                     style={this.btnStyle}
                     text={`Take Algorithms course (${numeralWrapper.formatMoney(algorithmsCost)} / sec)`}
+                    tooltip={earnHackingExpTooltip}
                 />
                 <StdButton
                     onClick={this.management}
                     style={this.btnStyle}
                     text={`Take Management course (${numeralWrapper.formatMoney(managementCost)} / sec)`}
+                    tooltip={earnCharismaExpTooltip}
                 />
                 <StdButton
                     onClick={this.leadership}
                     style={this.btnStyle}
                     text={`Take Leadership course (${numeralWrapper.formatMoney(leadershipCost)} / sec)`}
+                    tooltip={earnCharismaExpTooltip}
                 />
             </div>
         )
