@@ -310,7 +310,7 @@ function NetscriptFunctions(workerScript) {
      * @param {any[]} scriptArgs - Running script's arguments
      * @returns {string} Error message to print to logs
      */
-    const getNoSuchRunningScriptErrorMessage = function(fn, ip, scriptArgs) {
+    const getCannotFindRunningScriptErrorMessage = function(fn, ip, scriptArgs) {
         if (!Array.isArray(scriptArgs)) {
             scriptArgs = [];
         }
@@ -756,7 +756,7 @@ function NetscriptFunctions(workerScript) {
         getScriptLogs: function(fn, ip, ...scriptArgs) {
             const runningScriptObj = getRunningScript(fn, ip, "getScriptLogs", scriptArgs);
             if (runningScriptObj == null) {
-                workerScript.log(`getScriptLogs() failed. ${getNoSuchRunningScriptErrorMessage(fn, ip, scriptArgs)}`);
+                workerScript.log(`getScriptLogs() failed. ${getCannotFindRunningScriptErrorMessage(fn, ip, scriptArgs)}`);
                 return "";
             }
 
@@ -765,7 +765,7 @@ function NetscriptFunctions(workerScript) {
         tail: function(fn, ip, ...scriptArgs) {
             const runningScriptObj = getRunningScript(fn, ip, "tail", scriptArgs);
             if (runningScriptObj == null) {
-                workerScript.log(`tail() failed. ${getNoSuchRunningScriptErrorMessage(fn, ip, scriptArgs)} `);
+                workerScript.log(`tail() failed. ${getCannotFindRunningScriptErrorMessage(fn, ip, scriptArgs)} `);
                 return;
             }
 
