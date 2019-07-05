@@ -405,7 +405,7 @@ function NetscriptFunctions(workerScript) {
                 const node = getHacknetNode(i);
                 const hasUpgraded = hasHacknetServers();
                 const res = {
-                    name:               node.name,
+                    name:               hasUpgraded ? node.hostname : node.name,
                     level:              node.level,
                     ram:                hasUpgraded ? node.maxRam : node.ram,
                     cores:              node.cores,
@@ -416,6 +416,7 @@ function NetscriptFunctions(workerScript) {
 
                 if (hasUpgraded) {
                     res.cache = node.cache;
+                    res.hashCapacity = node.hashCapacity;
                 }
 
                 return res;
@@ -1991,6 +1992,13 @@ function NetscriptFunctions(workerScript) {
                 const fn = port;
                 if (!isValidFilePath(fn)) {
                     throw makeRuntimeRejectMsg(workerScript, `write() failed due to invalid filepath: ${fn}`);
+                }
+
+                // Coerce 'data' to be a string
+                try {
+                    data = String(data);
+                } catch (e) {
+                    throw makeRuntimeRejectMsg(workerScript, `write() failed because of invalid data (${e}). Data being written must be convertible to a string`);
                 }
 
                 const server = workerScript.getServer();

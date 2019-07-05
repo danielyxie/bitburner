@@ -129,7 +129,7 @@ function endInfiltration(inst, success) {
     clearEventListeners("infiltration-bribe");
     clearEventListeners("infiltration-escape");
 
-    Engine.loadLocationContent();
+    Engine.loadLocationContent(false);
 }
 
 function nextInfiltrationLevel(inst) {
