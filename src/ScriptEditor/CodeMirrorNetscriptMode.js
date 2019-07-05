@@ -58,6 +58,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "enableLog": atom,
       "isLogEnabled": atom,
       "getScriptLogs": atom,
+      "tail": atom,
       "relaysmtp": atom,
       "httpworm": atom,
       "sqlinject": atom,

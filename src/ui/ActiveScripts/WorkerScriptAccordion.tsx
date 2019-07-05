@@ -25,7 +25,6 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
     const workerScript = props.workerScript;
     const scriptRef = workerScript.scriptRef;
 
-
     const logClickHandler = logBoxCreate.bind(null, scriptRef);
     const killScript = killWorkerScript.bind(null, scriptRef, scriptRef.server);
 

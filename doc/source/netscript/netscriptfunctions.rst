@@ -24,6 +24,7 @@ This includes information such as function signatures, what they do, and their r
     enableLog() <basicfunctions/enableLog>
     isLogEnabled() <basicfunctions/isLogEnabled>
     getScriptLogs() <basicfunctions/getScriptLogs>
+    tail() <basicfunctions/tail>
     scan() <basicfunctions/scan>
     nuke() <basicfunctions/nuke>
     brutessh() <basicfunctions/brutessh>

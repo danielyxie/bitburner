@@ -62,7 +62,7 @@ let NetscriptFunctions =
     "hack|hackAnalyzeThreads|hackAnalyzePercent|hackChance|"                   +
     "sleep|grow|weaken|growthAnalyze|print|tprint|scan|nuke|brutessh|"         +
     "ftpcrack|"                                                                +
-    "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|"                +
+    "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|tail|"           +
     "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
     "scp|ls|ps|hasRootAccess|"                                                 +
     "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
