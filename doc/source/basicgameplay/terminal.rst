@@ -403,7 +403,7 @@ to convert from script to text file, or vice versa.
 This function can also be used to rename files.
 
 .. note:: Unlike the Linux :code:`mv` command, the *destination* argument must be the
-          full filepath. It cannot be a directory. 
+          full filepath. It cannot be a directory.
 
 Examples::
 
@@ -510,6 +510,8 @@ sudov
 ^^^^^
 
 Prints whether or not you have root access to the current server.
+
+.. _tail_terminal_command:
 
 tail
 ^^^^
