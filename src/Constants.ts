@@ -222,7 +222,9 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.47.2
+    * Added tail() Netscript function
     * Added 'Solarized Dark' theme to CodeMirror editor
     * Bug fix: Stock Market UI should no longer crash for certain locale settings
+    * Bug fix: workForFaction() function now properly accounts for disabled logs
     `
 }

@@ -3047,8 +3047,8 @@ function NetscriptFunctions(workerScript) {
 
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForFaction == null) {
-                    workerScript.scriptRef.log(txt);
+                if (workerScript.shouldLog("workForFaction")) {
+                    workerScript.log(txt);
                 }
             }
 
@@ -3079,34 +3079,40 @@ function NetscriptFunctions(workerScript) {
                 case "hacking contracts":
                 case "hackingcontracts":
                     if (!hackAvailable.includes(fac.name)) {
-                        workerScript.scriptRef.log("ERROR: Cannot carry out hacking contracts for " + fac.name + ". workForFaction() failed");
+                        workerScript.log("ERROR: Cannot carry out hacking contracts for " + fac.name + ". workForFaction() failed");
                         return false;
                     }
                     Player.startFactionHackWork(fac);
-                    workerScript.scriptRef.log("Started carrying out hacking contracts for " + fac.name);
+                    if (workerScript.shouldLog("workForFaction")) {
+                        workerScript.log("Started carrying out hacking contracts for " + fac.name);
+                    }
                     return true;
                 case "field":
                 case "fieldwork":
                 case "field work":
                     if (!fdWkAvailable.includes(fac.name)) {
-                        workerScript.scriptRef.log("ERROR: Cannot carry out field missions for " + fac.name + ". workForFaction() failed");
+                        workerScript.log("ERROR: Cannot carry out field missions for " + fac.name + ". workForFaction() failed");
                         return false;
                     }
                     Player.startFactionFieldWork(fac);
-                    workerScript.scriptRef.log("Started carrying out field missions for " + fac.name);
+                    if (workerScript.shouldLog("workForFaction")) {
+                        workerScript.log("Started carrying out field missions for " + fac.name);
+                    }
                     return true;
                 case "security":
                 case "securitywork":
                 case "security work":
                     if (!scWkAvailable.includes(fac.name)) {
-                        workerScript.scriptRef.log("ERROR: Cannot serve as security detail for " + fac.name + ". workForFaction() failed");
+                        workerScript.log("ERROR: Cannot serve as security detail for " + fac.name + ". workForFaction() failed");
                         return false;
                     }
                     Player.startFactionSecurityWork(fac);
-                    workerScript.scriptRef.log("Started serving as security details for " + fac.name);
+                    if (workerScript.shouldLog("workForFaction")) {
+                        workerScript.log("Started serving as security details for " + fac.name);
+                    }
                     return true;
                 default:
-                    workerScript.scriptRef.log("ERROR: Invalid work type passed into workForFaction(): " + type);
+                    workerScript.log("ERROR: Invalid work type passed into workForFaction(): " + type);
             }
             return true;
         },
