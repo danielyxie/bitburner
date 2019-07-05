@@ -145,9 +145,10 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
-import { arrayToString } from "../utils/helpers/arrayToString";
 import { formatNumber, isHTML } from "../utils/StringHelperFunctions";
+import { logBoxCreate } from "../utils/LogBox";
+import { arrayToString } from "../utils/helpers/arrayToString";
+import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
 import { isString } from "../utils/helpers/isString";
 
 import { createElement } from "../utils/uiHelpers/createElement";
@@ -251,7 +252,7 @@ function NetscriptFunctions(workerScript) {
     /**
      * Gets the Server for a specific hostname/ip, throwing an error
      * if the server doesn't exist.
-     * @param {string} Hostname or IP of the server
+     * @param {string} ip - Hostname or IP of the server
      * @param {string} callingFnName - Name of calling function. For logging purposes
      * @returns {Server} The specified Server
      */
@@ -262,6 +263,59 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeRejectMsg(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
         }
         return server;
+    }
+
+    /**
+     * Searches for and returns the RunningScript object for the specified script.
+     * If the 'fn' argument is not specified, this returns the current RunningScript.
+     * @param {string} fn - Filename of script
+     * @param {string} ip - Hostname/ip of the server on which the script resides
+     * @param {any[]} scriptArgs - Running script's arguments
+     * @returns {RunningScript}
+     *      Running script identified by the parameters, or null if no such script
+     *      exists, or the current running script if the first argument 'fn'
+     *      is not specified.
+     */
+    const getRunningScript = function(fn, ip, callingFnName, scriptArgs) {
+        // Sanitize arguments
+        if (typeof callingFnName !== "string" || callingFnName === "") {
+            callingFnName = "getRunningScript";
+        }
+
+        if (!Array.isArray(scriptArgs)) {
+            throw makeRuntimeRejectMsg(
+                workerScript,
+                `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
+                `This is probably a bug. Please report to game developer`
+            );
+        }
+
+        if (fn != null && typeof fn === "string") {
+            // Get Logs of another script
+            if (ip == null) { ip = workerScript.serverIp; }
+            const server = getServer(ip, callingFnName);
+
+            return findRunningScript(fn, scriptArgs, server);
+        }
+
+        // If no arguments are specified, return the current RunningScript
+        return workerScript.scriptRef;
+    }
+
+    /**
+     * Helper function for getting the error log message when the user specifies
+     * a nonexistent running script
+     * @param {string} fn - Filename of script
+     * @param {string} ip - Hostname/ip of the server on which the script resides
+     * @param {any[]} scriptArgs - Running script's arguments
+     * @returns {string} Error message to print to logs
+     */
+    const getNoSuchRunningScriptErrorMessage = function(fn, ip, scriptArgs) {
+        if (!Array.isArray(scriptArgs)) {
+            scriptArgs = [];
+        }
+
+        return `Cannot find running script ${fn} on server ${ip} with args: ${arrayToString(scriptArgs)}`;
     }
 
     /**
@@ -699,29 +753,23 @@ function NetscriptFunctions(workerScript) {
             }
             return workerScript.disableLogs[fn] ? false : true;
         },
-        getScriptLogs: function(fn, ip) {
-            if (fn != null && typeof fn === 'string') {
-                // Get Logs of another script
-                if (ip == null) { ip = workerScript.serverIp; }
-                const server = getServer(ip);
-                if (server == null) {
-                    workerScript.log(`getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
-                    throw makeRuntimeRejectMsg(workerScript, `getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
-                }
-
-                let argsForTarget = [];
-                for (let i = 2; i < arguments.length; ++i) {
-                    argsForTarget.push(arguments[i]);
-                }
-                const runningScriptObj = findRunningScript(fn, argsForTarget, server);
-                if (runningScriptObj == null) {
-                    workerScript.scriptRef.log(`getScriptLogs() failed. No such script ${fn} on ${server.hostname} with args: ${arrayToString(argsForTarget)}`);
-                    return "";
-                }
-                return runningScriptObj.logs.slice();
+        getScriptLogs: function(fn, ip, ...scriptArgs) {
+            const runningScriptObj = getRunningScript(fn, ip, "getScriptLogs", scriptArgs);
+            if (runningScriptObj == null) {
+                workerScript.log(`getScriptLogs() failed. ${getNoSuchRunningScriptErrorMessage(fn, ip, scriptArgs)}`);
+                return "";
             }
 
-            return workerScript.scriptRef.logs.slice();
+            return runningScriptObj.logs.slice();
+        },
+        tail: function(fn, ip, ...scriptArgs) {
+            const runningScriptObj = getRunningScript(fn, ip, "tail", scriptArgs);
+            if (runningScriptObj == null) {
+                workerScript.log(`tail() failed. ${getNoSuchRunningScriptErrorMessage(fn, ip, scriptArgs)} `);
+                return;
+            }
+
+            logBoxCreate(runningScriptObj);
         },
         nuke: function(ip){
             updateDynamicRam("nuke", getRamCost("nuke"));
