@@ -7,16 +7,28 @@
     position: fixed;
 }
 
-
 .bitnode {
-    color: #00f;
-}
+    &.level-0 {
+        color: red;
+    }
 
-.bitnode-destroyed {
-    color: #f00;
-}
+    &.level-1 {
+        color: yellow;
+    }
 
-.bitnode:hover,
-.bitnode-destroyed:hover {
-    color: #fff;
+    &.level-2 {
+        color: 	#48D1CC;
+    }
+
+    &.level-3 {
+        color: blue;
+    }
+
+    &.unimplemented {
+        color: gray;
+    }
+
+    &:hover {
+        color: #fff;
+    }
 }

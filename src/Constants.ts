@@ -229,6 +229,7 @@ export let CONSTANTS: IMap<any> = {
     * hacknet.getNodeStats() function now returns an additional property for Hacknet Servers: hashCapacity
     * Bug fix: workForFaction() function now properly accounts for disabled logs
     * When writing to a file, the write() function now casts the data being written to a string (using String())
+    * BitNode-selection page now shows what Source-File level you have for each BitNode
 
     Misc Changes
     * Added 'Solarized Dark' theme to CodeMirror editor
