@@ -605,42 +605,53 @@ export function loadAllRunningScripts() {
  * Run a script from inside another script (run(), exec(), spawn(), etc.)
  */
 export function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
-    //Check if the script is already running
-    let runningScriptObj = findRunningScript(scriptname, args, server);
-    if (runningScriptObj != null) {
-        workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
-        return Promise.resolve(false);
+    // Sanitize arguments
+    if (!(workerScript instanceof WorkerScript)) {
+        return 0;
     }
 
-    //'null/undefined' arguments are not allowed
+    if (typeof scriptname !== "string" || !Array.isArray(args)) {
+        workerScript.log(`ERROR: runScriptFromScript() failed due to invalid arguments`);
+        console.error(`runScriptFromScript() failed due to invalid arguments`);
+        return 0;
+    }
+
+    // Check if the script is already running
+    let runningScriptObj = server.getRunningScript(scriptname, args);
+    if (runningScriptObj != null) {
+        workerScript.log(`${scriptname} is already running on ${server.hostname}`);
+        return 0;
+    }
+
+    // 'null/undefined' arguments are not allowed
     for (let i = 0; i < args.length; ++i) {
         if (args[i] == null) {
-            workerScript.scriptRef.log("ERROR: Cannot execute a script with null/undefined as an argument");
-            return Promise.resolve(false);
+            workerScript.log("ERROR: Cannot execute a script with null/undefined as an argument");
+            return 0;
         }
     }
 
-    //Check if the script exists and if it does run it
+    // Check if the script exists and if it does run it
     for (let i = 0; i < server.scripts.length; ++i) {
-        if (server.scripts[i].filename == scriptname) {
-            //Check for admin rights and that there is enough RAM availble to run
-            var script = server.scripts[i];
-            var ramUsage = script.ramUsage;
-            threads = Math.round(Number(threads)); //Convert to number and round
-            if (threads === 0) { return Promise.resolve(false); }
+        if (server.scripts[i].filename === scriptname) {
+            // Check for admin rights and that there is enough RAM availble to run
+            const script = server.scripts[i];
+            let ramUsage = script.ramUsage;
+            threads = Math.round(Number(threads));
+            if (threads === 0) { return 0; }
             ramUsage = ramUsage * threads;
-            var ramAvailable = server.maxRam - server.ramUsed;
+            const ramAvailable = server.maxRam - server.ramUsed;
 
             if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because you do not have root access!");
-                return Promise.resolve(false);
+                workerScript.log(`Cannot run script ${scriptname} on ${server.hostname} because you do not have root access!`);
+                return 0;
             } else if (ramUsage > ramAvailable){
-                workerScript.scriptRef.log("Cannot run script " + scriptname + "(t=" + threads + ") on " + server.hostname + " because there is not enough available RAM!");
-                return Promise.resolve(false);
+                workerScript.log(`Cannot run script ${scriptname} (t=${threads}) on ${server.hostname} because there is not enough available RAM!`);
+                return 0;
             } else {
-                //Able to run script
+                // Able to run script
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.exec == null && workerScript.disableLogs.run == null && workerScript.disableLogs.spawn == null) {
-                    workerScript.scriptRef.log(`Running script: ${scriptname} on ${server.hostname} with ${threads} threads and args: ${arrayToString(args)}. May take a few seconds to start up...`);
+                    workerScript.log(`Running script: ${scriptname} on ${server.hostname} with ${threads} threads and args: ${arrayToString(args)}.`);
                 }
                 let runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;
@@ -649,10 +660,14 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
                 // Push onto runningScripts.
                 // This has to come after addWorkerScript() because that fn updates RAM usage
                 server.runScript(runningScriptObj, Player.hacknet_node_money_mult);
-                return Promise.resolve(true);
+
+                // Once the WorkerScript is constructed in addWorkerScript(), the RunningScript
+                // object should have a PID assigned to it, so we return that
+                return runningScriptObj.pid;
             }
         }
     }
-    workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
-    return Promise.resolve(false);
+    
+    workerScript.log(`Could not find script ${scriptname} on ${server.hostname}`);
+    return 0;
 }

@@ -51,8 +51,6 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
     * grow
     * weaken
     * sleep
-    * run
-    * exec
     * prompt
     * wget
 

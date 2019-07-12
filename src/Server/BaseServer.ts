@@ -12,6 +12,7 @@ import { IReturnStatus } from "../types";
 import { isScriptFilename } from "../Script/ScriptHelpersTS";
 
 import { createRandomIp } from "../../utils/IPAddress";
+import { compareArrays } from "../../utils/helpers/compareArrays";
 
 interface IConstructorParams {
     adminRights?: boolean;
@@ -113,8 +114,27 @@ export class BaseServer {
         return null;
     }
 
-    // Given the name of the script, returns the corresponding
-    // script object on the server (if it exists)
+    /**
+     * Find an actively running script on this server
+     * @param scriptName - Filename of script to search for
+     * @param scriptArgs - Arguments that script is being run with
+     * @returns RunningScript for the specified active script
+     *          Returns null if no such script can be found
+     */
+    getRunningScript(scriptName: string, scriptArgs: any[]): RunningScript | null {
+        for (let rs of this.runningScripts) {
+            if (rs.filename === scriptName && compareArrays(rs.args, scriptArgs)) {
+                return rs;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Given the name of the script, returns the corresponding
+     * Script object on the server (if it exists)
+     */
     getScript(scriptName: string): Script | null {
         for (let i = 0; i < this.scripts.length; i++) {
             if (this.scripts[i].filename === scriptName) {
@@ -129,7 +149,6 @@ export class BaseServer {
      * Returns boolean indicating whether the given script is running on this server
      */
     isRunning(fn: string): boolean {
-        // Check that the script isnt currently running
         for (const runningScriptObj of this.runningScripts) {
             if (runningScriptObj.filename === fn) {
                 return true;
@@ -157,7 +176,7 @@ export class BaseServer {
      * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
      */
     removeFile(fn: string): IReturnStatus {
-        if (fn.endsWith(".exe")) {
+        if (fn.endsWith(".exe") || fn.match(/^.+\.exe-\d+(?:\.\d*)?%-INC$/) != null) {
             for (let i = 0; i < this.programs.length; ++i) {
                 if (this.programs[i] === fn) {
                    this.programs.splice(i, 1);

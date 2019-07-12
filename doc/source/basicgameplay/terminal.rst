@@ -312,9 +312,12 @@ kill
 ^^^^
 
     $ kill [script name] [args...]
+    $ kill [pid]
 
-Kill the script specified by the script name and arguments. Each argument must
-be separated by a space. Remember that a running script is uniquely identified
+Kill the script specified by the script filename and arguments OR by its PID.
+
+If you are killing the script using its filename and arguments, then each argument
+must be separated by a space. Remember that a running script is uniquely identified
 by both its name and the arguments that are used to start it. So, if a script
 was ran with the following arguments::
 
@@ -324,8 +327,7 @@ Then to kill this script the same arguments would have to be used::
 
     $ kill foo.script 50e3 sigma-cosmetics
 
-Note that after issuing the 'kill' command for a script, it may take a few seconds for
-the script to actually stop running.
+If you are killing the script using its PID, then the PID argument must be numeric. 
 
 killall
 ^^^^^^^

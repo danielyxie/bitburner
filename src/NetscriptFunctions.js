@@ -293,7 +293,7 @@ function NetscriptFunctions(workerScript) {
         if (fn != null && typeof fn === "string") {
             // Get Logs of another script
             if (ip == null) { ip = workerScript.serverIp; }
-            const server = getServer(ip, callingFnName);
+            const server = safeGetServer(ip, callingFnName);
 
             return findRunningScript(fn, scriptArgs, server);
         }
@@ -973,6 +973,8 @@ function NetscriptFunctions(workerScript) {
             if (scriptname == null || threads == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
+
+            const spawnDelay = 10;
             setTimeoutRef(() => {
                 if (scriptname === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
@@ -990,40 +992,52 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
-            }, 20e3);
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.spawn == null) {
-                workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
+            }, spawnDelay * 1e3);
+            if (workerScript.shouldLog("spawn")) {
+                workerScript.scriptRef.log(`spawn() will execute ${scriptname} in ${spawnDelay} seconds`);
             }
             NetscriptFunctions(workerScript).exit();
         },
-        kill: function(filename, ip) {
+        kill: function(filename, ip, ...scriptArgs) {
             updateDynamicRam("kill", getRamCost("kill"));
-            if (filename === undefined || ip === undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)");
+
+            let res;
+            const killByPid = (typeof filename === "number");
+            if (killByPid) {
+                // Kill by pid
+                res = killWorkerScript(filename);
+            } else {
+                // Kill by filename/ip
+                if (filename === undefined || ip === undefined) {
+                    throw makeRuntimeRejectMsg(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)");
+                }
+
+                const server = safeGetServer(ip);
+                const runningScriptObj = getRunningScript(filename, ip, "kill", scriptArgs);
+                if (runningScriptObj == null) {
+                    workerScript.log(`tail() failed. ${getCannotFindRunningScriptErrorMessage(filename, ip, scriptArgs)}`)
+                    return false;
+                }
+
+                res = killWorkerScript(runningScriptObj, server.ip);
             }
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "kill() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            var argsForKillTarget = [];
-            for (var i = 2; i < arguments.length; ++i) {
-                argsForKillTarget.push(arguments[i]);
-            }
-            var runningScriptObj = findRunningScript(filename, argsForKillTarget, server);
-            if (runningScriptObj == null) {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget));
-                return false;
-            }
-            var res = killWorkerScript(runningScriptObj, server.ip);
+
             if (res) {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                if (workerScript.shouldLog("kill")) {
+                    if (killByPid) {
+                        workerScript.log(`Killing script with PID ${filename}`);
+                    } else {
+                        workerScript.log(`Killing ${filename} on ${ip} with args: ${arrayToString(scriptArgs)}.`);
+                    }
                 }
                 return true;
             } else {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget));
+                if (workerScript.shouldLog("kill")) {
+                    if (killByPid) {
+                        workerScript.log(`kill() failed. No such script with PID ${filename}`);
+                    } else {
+                        workerScript.log(`kill() failed. No such script ${filename} on ${ip} with args: ${arrayToString(scriptArgs)}`);
+                    }
                 }
                 return false;
             }
