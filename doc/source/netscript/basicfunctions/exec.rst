@@ -14,10 +14,15 @@ exec() Netscript Function
     Run a script as a separate process on a specified server. This is similar to the *run* function except
     that it can be used to run a script on any server, instead of just the current server.
 
-    Returns true if the script is successfully started, and false otherwise.
+    If the script was successfully started, then this functions returns the PID
+    of that script. Otherwise, it returns 0.
 
-    Running this function with a *numThreads* argument of 0 will return false without running the script.
-    However, running this function with a negative *numThreads* argument will cause a runtime error.
+    .. note:: PID stands for Process ID. The PID is a unique identifier for each script.
+              The PID will always be a positive integer.
+
+    .. warning:: Running this function with a *numThreads* argument of 0 will return 0 without
+                 running the script. However, running this function with a negative *numThreads*
+                 argument will cause a runtime error.
 
     The simplest way to use the *exec* command is to call it with just the script name and the target server.
     The following example will try to run *generic-hack.script* on the *foodnstuff* server::

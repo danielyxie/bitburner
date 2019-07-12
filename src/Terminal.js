@@ -1150,7 +1150,7 @@ let Terminal = {
                     killWorkerScript(s.runningScripts[i], s.ip, false);
                 }
                 WorkerScriptStartStopEventEmitter.emitEvent();
-                post("Killing all running scripts. May take up to a few minutes for the scripts to die...");
+                post("Killing all running scripts");
                 break;
             }
 			case "ls": {
@@ -1573,19 +1573,32 @@ let Terminal = {
                 return;
             }
 
+            // Kill by PID
+            if (typeof commandArray[1] === "number") {
+                const pid = commandArray[1];
+                const res = killWorkerScript(pid);
+                if (res) {
+                    post(`Killing script with PID ${pid}`);
+                } else {
+                    post(`Failed to kill script with PID ${pid}. No such script exists`);
+                }
+
+                return;
+            }
+
             const s = Player.getCurrentServer();
             const scriptName = Terminal.getFilepath(commandArray[1]);
             const args = [];
             for (let i = 2; i < commandArray.length; ++i) {
                 args.push(commandArray[i]);
             }
-            const runningScript = findRunningScript(scriptName, args, s);
+            const runningScript = s.getRunningScript(scriptName, args);
             if (runningScript == null) {
                 postError("No such script is running. Nothing to kill");
                 return;
             }
             killWorkerScript(runningScript, s.ip);
-            post(`Killing ${scriptName}. May take up to a few seconds for the scripts to die...`);
+            post(`Killing ${scriptName}`);
         } catch(e) {
             Terminal.postThrownError(e);
         }
@@ -2291,7 +2304,6 @@ let Terminal = {
 				} else {
 					// Able to run script
 					post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
-                    post("May take a few seconds to start up the process...");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;
 

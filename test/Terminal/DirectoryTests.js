@@ -67,6 +67,10 @@ describe("Terminal Directory Tests", function() {
             expect(isValidFilename("_foo.lit")).to.equal(true);
             expect(isValidFilename("mult.periods.script")).to.equal(true);
             expect(isValidFilename("mult.per-iods.again.script")).to.equal(true);
+            expect(isValidFilename("BruteSSH.exe-50%-INC")).to.equal(true);
+            expect(isValidFilename("DeepscanV1.exe-1.01%-INC")).to.equal(true);
+            expect(isValidFilename("DeepscanV2.exe-1.00%-INC")).to.equal(true);
+            expect(isValidFilename("AutoLink.exe-1.%-INC")).to.equal(true);
         });
 
         it("should return false for invalid filenames", function() {
@@ -79,6 +83,10 @@ describe("Terminal Directory Tests", function() {
             expect(isValidFilename("foo._script")).to.equal(false);
             expect(isValidFilename("foo.hyphened-ext")).to.equal(false);
             expect(isValidFilename("")).to.equal(false);
+            expect(isValidFilename("AutoLink-1.%-INC.exe")).to.equal(false);
+            expect(isValidFilename("AutoLink.exe-1.%-INC.exe")).to.equal(false);
+            expect(isValidFilename("foo%.exe")).to.equal(false);
+            expect(isValidFilename("-1.00%-INC")).to.equal(false);
         });
     });
 

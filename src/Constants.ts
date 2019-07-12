@@ -230,10 +230,17 @@ export let CONSTANTS: IMap<any> = {
     * Bug fix: workForFaction() function now properly accounts for disabled logs
     * When writing to a file, the write() function now casts the data being written to a string (using String())
     * BitNode-selection page now shows what Source-File level you have for each BitNode
+    * Overloaded kill() function so that you can kill a script by its PID
+    * spawn() now only takes 10 seconds to run (decreased from 20 seconds)
+    * run() and exec() now return the PID of the newly-executed scripts, rather than a boolean
+    ** (A PID is just a positive integer)
+    * run(), exec(), and spawn() no longer need to be await-ed in NetscriptJS
 
     Misc Changes
+    * The 'kill' Terminal command can now kill a script by its PID
     * Added 'Solarized Dark' theme to CodeMirror editor
     * After Infiltration, you will now return to the company page rather than the city page
     * Bug fix: Stock Market UI should no longer crash for certain locale settings
+    * Bug fix: You can now properly remove unfinished programs (the *.exe-N%-INC files)
     `
 }

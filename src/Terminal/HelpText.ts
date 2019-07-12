@@ -20,7 +20,7 @@ export const TerminalHelpText: string =
     "home                           Connect to home computer<br>" +
     "hostname                       Displays the hostname of the machine<br>" +
     "ifconfig                       Displays the IP address of the machine<br>" +
-    "kill [script] [args...]        Stops the specified script on the current server <br>" +
+    "kill [script/pid] [args...]    Stops the specified script on the current server <br>" +
     "killall                        Stops all running scripts on the current machine<br>" +
     "ls [dir] [| grep pattern]      Displays all files on the machine<br>" +
     "lscpu                          Displays the number of CPU cores on the machine<br>" +
@@ -128,15 +128,16 @@ export const HelpTexts: IMap<string> = {
     ifconfig:       "ipconfig<br>" +
                     "Prints the IP address of the current server",
     kill:           "kill [script name] [args...]<br>" +
-                    "Kill the script specified by the script name and arguments. Each argument must be separated by " +
-                    "a space. Remember that a running script is uniquely identified by " +
-                    "both its name and the arguments that are used to start it. So, if a script was ran with the following arguments:<br><br>" +
+                    "kill [pid]<br>" +
+                    "Kill the script specified by the script name and arguments OR by its PID.<br><br>" +
+                    "If you are killing the script using its filename and arguments, then each " +
+                    "argument must be separated by a space. Remember that a running script is " +
+                    "uniquely identified by both its name and the arguments that are used to start " +
+                    "it. So, if a script was ran with the following arguments:<br><br>" +
                     "run foo.script 1 sigma-cosmetics<br><br>" +
                     "Then to kill this script the same arguments would have to be used:<br><br>" +
                     "kill foo.script 1 sigma-cosmetics<br><br>" +
-                    "Note that after issuing the 'kill' command for a script, it may take a while for the script to actually stop running. " +
-                    "This will happen if the script is in the middle of a command such as grow() or weaken() that takes time to execute. " +
-                    "The script will not be stopped/killed until after that time has elapsed.",
+                    "If you are killing the script using its PID, then the PID argument must be numeric",
     killall:        "killall<br>" +
                     "Kills all scripts on the current server. " +
                     "Note that after the 'kill' command is issued for a script, it may take a while for the script to actually stop running. " +
@@ -168,7 +169,7 @@ export const HelpTexts: IMap<string> = {
                     "Move the source file to the specified destination. This can also be used to rename files. " +
                     "This command only works for scripts and text files (.txt). This command CANNOT be used to " +
                     "convert to different file types<br><br>" +
-                    "Note that, unlike the Linux 'mv' command, the destination argument must be the " + 
+                    "Note that, unlike the Linux 'mv' command, the destination argument must be the " +
                     "full filepath. " +
                     "Examples: <br><br>" +
                     "mv hacking-controller.script scripts/hacking-controller.script<br>" +

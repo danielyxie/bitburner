@@ -13,10 +13,15 @@ run() Netscript Function
     Run a script as a separate process. This function can only be used to run scripts located on the current server (the server
     running the script that calls this function).
 
-    Returns true if the script is successfully started, and false otherwise.
+    If the script was successfully started, then this functions returns the PID
+    of that script. Otherwise, it returns 0.
 
-    Running this function with a *numThreads* argument of 0 will return false without running the script.
-    However, running this function with a negative *numThreads* argument will cause a runtime error.
+    .. note:: PID stands for Process ID. The PID is a unique identifier for each script.
+              The PID will always be a positive integer.
+
+    .. warning:: Running this function with a *numThreads* argument of 0 will return 0 without
+                 running the script. However, running this function with a negative *numThreads*
+                 argument will cause a runtime error.
 
     The simplest way to use the *run* command is to call it with just the script name. The following example will run
     'foo.script' single-threaded with no arguments::
