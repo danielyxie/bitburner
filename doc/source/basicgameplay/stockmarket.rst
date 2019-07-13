@@ -184,7 +184,7 @@ See :ref:`netscript_tixapi` for more details.
 
 Under the Hood
 --------------
-Stock prices are updated very ~6 seconds.
+Stock prices are updated every ~6 seconds.
 
 Whether a stock's price moves up or down is determined by RNG. However,
 stocks have properties that can influence the way their price moves. These properties
