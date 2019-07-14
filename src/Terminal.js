@@ -53,7 +53,7 @@ import {
 import { showLiterature } from "./Literature";
 import { Message } from "./Message/Message";
 import { showMessage } from "./Message/MessageHelpers";
-import { addWorkerScript } from "./NetscriptWorker";
+import { startWorkerScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 import { Player } from "./Player";
@@ -2303,20 +2303,18 @@ let Terminal = {
 					return;
 				} else {
 					// Able to run script
-					post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;
 
-					addWorkerScript(runningScriptObj, server);
-
-                    // This has to come after addWorkerScript() because that fn
-                    // updates the RAM usage. This kinda sucks, address if possible
-                    server.runScript(runningScriptObj, Player.hacknet_node_money_mult);
-					return;
+                    if (startWorkerScript(runningScriptObj, server)) {
+                        post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
+                    } else {
+                        postError(`Failed to start script`);
+                    }
+                    return;
 				}
 			}
 		}
-
 
 		post("ERROR: No such script");
 	},

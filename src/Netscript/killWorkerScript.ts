@@ -89,7 +89,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true
         // Recalculate ram used on that server
         server.ramUsed = roundToTwo(server.ramUsed - workerScript.ramUsage);
         if (server.ramUsed < 0) {
-            console.warn(`Server RAM usage went negative (if it's due to floating pt imprecision, it's okay): ${server.ramUsed}`);
+            console.warn(`Server (${server.hostname}) RAM usage went negative (if it's due to floating pt imprecision, it's okay): ${server.ramUsed}`);
             server.ramUsed = 0;
         }
 

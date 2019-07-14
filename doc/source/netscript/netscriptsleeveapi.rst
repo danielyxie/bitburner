@@ -63,17 +63,17 @@ Examples
 **Basic example usage**::
 
     for (var i = 0; i < sleeve.getNumSleeves(); i++) {
-        sleeve.shockRecovery(i);
+        sleeve.setToShockRecovery(i);
+    }
+
+    sleep(10 * 60 * 60); // wait 10h
+
+    for (var i = 0; i < sleeve.getNumSleeves(); i++) {
+        sleeve.setToSynchronize(i);
     }
 
     sleep(10*60*60); // wait 10h
 
     for (var i = 0; i < sleeve.getNumSleeves(); i++) {
-        sleeve.synchronize(i);
-    }
-
-    sleep(10*60*60); // wait 10h
-
-    for (var i = 0; i < sleeve.getNumSleeves(); i++) {
-        sleeve.commitCrime(i, 'shoplift');
+        sleeve.setToCommitCrime(i, 'shoplift');
     }

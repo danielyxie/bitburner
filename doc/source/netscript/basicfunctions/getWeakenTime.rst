@@ -11,3 +11,6 @@ getWeakenTime() Netscript Function
 
     The function takes in an optional *hackLvl* parameter that can be specified
     to see what the weaken time would be at different hacking levels.
+
+    .. note:: For Hacknet Servers (the upgraded version of a Hacknet Node), this function will
+              return :code:`Infinity`. 
