@@ -611,8 +611,8 @@ function NetscriptFunctions(workerScript) {
             if (time === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
             }
-            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sleep == null) {
-                workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
+            if (workerScript.shouldLog("sleep")) {
+                workerScript.log(`Sleeping for ${time} milliseconds`);
             }
             return netscriptDelay(time, workerScript).then(function() {
                 return Promise.resolve(true);
@@ -652,10 +652,10 @@ function NetscriptFunctions(workerScript) {
                 if (growthPercentage == 1) {
                     expGain = 0;
                 }
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
-                    workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " +
-                                                formatNumber((moneyAfter/moneyBefore)*100 - 100, 6) + "%. Gained " +
-                                                formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");
+                if (workerScript.shouldLog("grow")) {
+                    workerScript.log("Available money on " + server.hostname + " grown by " +
+                                     formatNumber((moneyAfter/moneyBefore)*100 - 100, 6) + "%. Gained " +
+                                     formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
@@ -670,8 +670,8 @@ function NetscriptFunctions(workerScript) {
 
             // Check argument validity
             const server = safeGetServer(ip, 'growthAnalyze');
-            if (isNaN(growth)) {
-                throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into growthAnalyze: ${growth}. Must be numeric`);
+            if (typeof growth !== "number" || isNaN(growth) || growth < 1) {
+                throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into growthAnalyze: ${growth}. Must be numeric and >= 1`);
             }
 
             return numCycleForGrowth(server, Number(growth), Player);
@@ -993,10 +993,15 @@ function NetscriptFunctions(workerScript) {
 
                 return runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
             }, spawnDelay * 1e3);
+
             if (workerScript.shouldLog("spawn")) {
-                workerScript.scriptRef.log(`spawn() will execute ${scriptname} in ${spawnDelay} seconds`);
+                workerScript.log(`spawn() will execute ${scriptname} in ${spawnDelay} seconds`);
             }
-            NetscriptFunctions(workerScript).exit();
+
+            workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
+            if (killWorkerScript(workerScript)) {
+                workerScript.log("Exiting...");
+            }
         },
         kill: function(filename, ip, ...scriptArgs) {
             updateDynamicRam("kill", getRamCost("kill"));
@@ -1015,7 +1020,7 @@ function NetscriptFunctions(workerScript) {
                 const server = safeGetServer(ip);
                 const runningScriptObj = getRunningScript(filename, ip, "kill", scriptArgs);
                 if (runningScriptObj == null) {
-                    workerScript.log(`tail() failed. ${getCannotFindRunningScriptErrorMessage(filename, ip, scriptArgs)}`)
+                    workerScript.log(`kill() failed. ${getCannotFindRunningScriptErrorMessage(filename, ip, scriptArgs)}`)
                     return false;
                 }
 
@@ -1064,14 +1069,11 @@ function NetscriptFunctions(workerScript) {
             return scriptsRunning;
         },
         exit : function() {
-            var server = getServer(workerScript.serverIp);
-            if (server == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in exit(). This is a bug please contact game dev");
-            }
-            if (killWorkerScript(workerScript.scriptRef, server.ip)) {
-                workerScript.scriptRef.log("Exiting...");
+            workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
+            if (killWorkerScript(workerScript)) {
+                workerScript.log("Exiting...");
             } else {
-                workerScript.scriptRef.log("Exit failed(). This is a bug please contact game developer");
+                workerScript.log("Exit failed(). This is a bug please contact game developer");
             }
         },
         scp: function(scriptname, ip1, ip2) {
@@ -3495,9 +3497,13 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
-            installAugmentations(cbScript);
-            return true;
+            workerScript.log("Installing Augmentations. This will cause this script to be killed");
+            setTimeoutRef(() => {
+                installAugmentations(cbScript);
+            }, 0);
+
+            workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
+            killWorkerScript(workerScript);
         },
 
         // Gang API

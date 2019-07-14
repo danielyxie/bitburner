@@ -11,6 +11,7 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Programs } from "../Programs/Programs";
 
+import { isValidNumber } from "../utils/helpers/isValidNumber";
 import { isValidIPAddress } from "../../utils/helpers/isValidIPAddress";
 
 /**
@@ -35,11 +36,17 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
     return new Server(params);
 }
 
-// Returns the number of cycles needed to grow the specified server by the
-// specified amount. 'growth' parameter is in decimal form, not percentage
+/**
+ * Returns the number of "growth cycles" needed to grow the specified server by the
+ * specified amount.
+ * @param server - Server being grown
+ * @param growth - How much the server is being grown by, in DECIMAL form (e.g. 1.5 rather than 50)
+ * @param p - Reference to Player object
+ * @returns Number of "growth cycles" needed
+ */
 export function numCycleForGrowth(server: Server, growth: number, p: IPlayer) {
     let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
-    if(ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
+    if (ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
         ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
     }
 
@@ -75,12 +82,12 @@ export function processSingleServerGrowth(server: Server, numCycles: number, p: 
     server.moneyAvailable *= serverGrowth;
 
     // in case of data corruption
-    if (server.moneyMax && isNaN(server.moneyAvailable)) {
+    if (isValidNumber(server.moneyMax) && isNaN(server.moneyAvailable)) {
         server.moneyAvailable = server.moneyMax;
     }
 
     // cap at max
-    if (server.moneyMax && server.moneyAvailable > server.moneyMax) {
+    if (isValidNumber(server.moneyMax) && server.moneyAvailable > server.moneyMax) {
         server.moneyAvailable = server.moneyMax;
     }
 

@@ -4,7 +4,7 @@ growthAnalyze() Netscript Function
 .. js:function:: growthAnalyze(hostname/ip, growthAmount)
 
     :param string hostname/ip: IP or hostname of server to analyze
-    :param number growthAmount: Multiplicative factor by which the server is grown. Decimal form.
+    :param number growthAmount: Multiplicative factor by which the server is grown. Decimal form. Must be >= 1.
     :returns: The amount of grow() calls needed to grow the specified server by the specified amount
     :RAM cost: 1 GB
 

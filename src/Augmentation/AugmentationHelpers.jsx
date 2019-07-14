@@ -8,7 +8,7 @@ import { AugmentationsRoot } from "./ui/Root";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
-import { addWorkerScript } from "../NetscriptWorker";
+import { startWorkerScript } from "../NetscriptWorker";
 import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
 import { saveObject } from "../SaveObject";
@@ -2078,18 +2078,17 @@ function installAugmentations(cbScript=null) {
     //Run a script after prestiging
     if (cbScript && isString(cbScript)) {
         var home = Player.getHomeComputer();
-        for (var i = 0; i < home.scripts.length; ++i) {
-            if (home.scripts[i].filename === cbScript) {
-                var script = home.scripts[i];
-                var ramUsage = script.ramUsage;
-                var ramAvailable = home.maxRam - home.ramUsed;
+        for (const script of home.scripts) {
+            if (script.filename === cbScript) {
+                const ramUsage = script.ramUsage;
+                const ramAvailable = home.maxRam - home.ramUsed;
                 if (ramUsage > ramAvailable) {
-                    return; //Not enough RAM
+                    return; // Not enough RAM
                 }
-                var runningScriptObj = new RunningScript(script, []); //No args
-                runningScriptObj.threads = 1; //Only 1 thread
-                home.runScript(runningScriptObj, Player.hacknet_node_money_mult);
-                addWorkerScript(runningScriptObj, home);
+                const runningScriptObj = new RunningScript(script, []); // No args
+                runningScriptObj.threads = 1; // Only 1 thread
+
+                startWorkerScript(runningScriptObj, home);
             }
         }
     }

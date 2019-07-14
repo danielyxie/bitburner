@@ -6,7 +6,7 @@ clear() Netscript Function
     :param string/number port/fn: Port or text file to clear
     :RAM cost: 1 GB
 
-    This function is used to clear data in a `Netscript Ports <http://bitburner.wikia.com/wiki/Netscript_Ports>`_ or a text file.
+    This function is used to clear data in a :ref:`Netscript Port <netscript_ports>` or a text file.
 
     If the *port/fn* argument is a number between 1 and 20, then it specifies a port and will clear it (deleting all data from the underlying queue).
 
