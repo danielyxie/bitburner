@@ -2752,7 +2752,7 @@ function NetscriptFunctions(workerScript) {
                     return;
                 }
             }
-            return Player.isWorking;
+            return Player.isWorking || inMission;
         },
         stopAction: function() {
             updateDynamicRam("stopAction", getRamCost("stopAction"));

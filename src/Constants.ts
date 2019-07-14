@@ -234,6 +234,9 @@ export let CONSTANTS: IMap<any> = {
     * run() and exec() now return the PID of the newly-executed scripts, rather than a boolean
     ** (A PID is just a positive integer)
     * run(), exec(), and spawn() no longer need to be await-ed in NetscriptJS
+    * Script parsing and RAM calculations now support ES9
+    * installAugmentations() no longer has a return value since it causes all scripts to die
+    * isBusy() now returns true if you are in a Hacking Mission
     * Bug fix: workForFaction() function now properly accounts for disabled logs
     * Bug fix: RAM should now be properly calculated when running a callback script with installAugmentations()
     * Bug fix: Fixed bug that caused scripts killed by exit()/spawn() to "clean up" twice

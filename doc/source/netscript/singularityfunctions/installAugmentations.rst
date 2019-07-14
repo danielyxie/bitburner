@@ -11,4 +11,7 @@ installAugmentations() Netscript Function
 
     This function will automatically install your Augmentations, resetting the game as usual.
 
-    It will return true if successful, and false otherwise.
+    This function will return false if it was not able to install Augmentations.
+
+    If this function successfully installs Augmentations, then it has no return value because
+    all scripts are immediately terminated.
