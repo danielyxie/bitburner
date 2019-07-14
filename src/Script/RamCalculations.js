@@ -6,11 +6,11 @@
  * the way
  */
 import * as walk from "acorn-walk";
+import { parse, Node } from "acorn";
 
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
-import { parse, Node } from "../../utils/acorn";
 
 // These special strings are used to reference the presence of a given logical
 // construct within a user script.
@@ -215,7 +215,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
  * that need to be parsed (i.e. are 'import'ed scripts).
  */
 function parseOnlyCalculateDeps(code, currentModule) {
-    const ast = parse(code, {sourceType:"module", ecmaVersion: 8});
+    const ast = parse(code, {sourceType:"module", ecmaVersion: 9});
 
     // Everything from the global scope goes in ".". Everything else goes in ".function", where only
     // the outermost layer of functions counts.

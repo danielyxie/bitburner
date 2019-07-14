@@ -1,6 +1,6 @@
 import { FconfSettings }                        from "./FconfSettings";
 
-import { parse, Node }                          from "../../utils/acorn";
+import { parse, Node }                          from "acorn";
 import { dialogBoxCreate }                      from "../../utils/DialogBox";
 
 var FconfComments = {

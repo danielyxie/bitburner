@@ -30,14 +30,14 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { generate } from "escodegen";
 
-import { parse, Node } from "../utils/acorn";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { isString } from "../utils/StringHelperFunctions";
 
-const walk  = require("acorn/dist/walk");
+import { parse, Node } from "acorn";
+const walk = require("acorn-walk");
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts = [];
@@ -288,7 +288,7 @@ function startNetscript1Script(workerScript) {
 */
 function processNetscript1Imports(code, workerScript) {
     //allowReserved prevents 'import' from throwing error in ES5
-    const ast = parse(code, { ecmaVersion: 6, allowReserved: true, sourceType: "module" });
+    const ast = parse(code, { ecmaVersion: 9, allowReserved: true, sourceType: "module" });
 
     var server = workerScript.getServer();
     if (server == null) {
@@ -319,7 +319,7 @@ function processNetscript1Imports(code, workerScript) {
             if (script == null) {
                 throw new Error("'Import' failed due to invalid script: " + scriptName);
             }
-            let scriptAst = parse(script.code, {ecmaVersion:5, allowReserved:true, sourceType:"module"});
+            let scriptAst = parse(script.code, { ecmaVersion:9, allowReserved:true, sourceType:"module" });
 
             if (node.specifiers.length === 1 && node.specifiers[0].type === "ImportNamespaceSpecifier") {
                 // import * as namespace from script
@@ -535,7 +535,7 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
         // already stopped somewhere else (maybe by something like exit()). This prevents
         // the script from being cleaned up twice
         if (!w.running) { return; }
-        
+
         console.log("Stopping script " + w.name + " because it finished running naturally");
         killWorkerScript(s);
         w.log("Script finished running");
