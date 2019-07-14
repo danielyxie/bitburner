@@ -1,4 +1,4 @@
-import * as acorn from "../utils/acorn";
+import * as acorn from "acorn";
 /**
  * @license
  * JavaScript Interpreter

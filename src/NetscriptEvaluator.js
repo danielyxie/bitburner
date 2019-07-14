@@ -1,5 +1,4 @@
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
-import { parse, Node } from "../utils/acorn";
 
 import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 import { isString } from "../utils/helpers/isString";
