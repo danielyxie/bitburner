@@ -1211,6 +1211,8 @@ export function startClass(costMult, expMult, className) {
 
     var gameCPS = 1000 / Engine._idleSpeed;
 
+    const baseGymExp                  = 1;
+
     //Find cost and exp gain per game cycle
     var cost = 0;
     var hackExp = 0, strExp = 0, defExp = 0, dexExp = 0, agiExp = 0, chaExp = 0;
