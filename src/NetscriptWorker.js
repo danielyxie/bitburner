@@ -49,7 +49,6 @@ export function prestigeWorkerScripts() {
     for (const ws of workerScripts.values()) {
         ws.env.stopFlag = true;
         killWorkerScript(ws);
-        console.log(`Killing ${ws.name}`);
     }
 
     WorkerScriptStartStopEventEmitter.emitEvent();

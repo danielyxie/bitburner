@@ -707,6 +707,11 @@ let Terminal = {
     },
 
 	executeCommand : function(command) {
+        if (Terminal.hackFlag || Terminal.analyzeFlag) {
+            postError(`Cannot execute command (${command}) while an action is in progress`);
+            return;
+        }
+
         // Process any aliases
         command = substituteAliases(command);
 

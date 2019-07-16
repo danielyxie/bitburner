@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.47.1",
+    Version:                "v0.47.2",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -197,6 +197,13 @@ export let CONSTANTS: IMap<any> = {
     ClassLeadershipBaseCost: 320,
     ClassGymBaseCost: 120,
 
+    ClassStudyComputerScienceBaseExp: 0.5,
+    ClassDataStructuresBaseExp: 1,
+    ClassNetworksBaseExp: 2,
+    ClassAlgorithmsBaseExp: 4,
+    ClassManagementBaseExp: 2,
+    ClassLeadershipBaseExp: 4,
+
     CrimeShoplift: "shoplift",
     CrimeRobStore: "rob a store",
     CrimeMug: "mug someone",
@@ -249,5 +256,7 @@ export let CONSTANTS: IMap<any> = {
     * Bug fix: You can now properly remove unfinished programs (the *.exe-N%-INC files)
     * Bug fix: Fixed an issue that allowed you to increase money on servers with a 'maxMoney' of 0 (like CSEC)
     * Bug fix: Scripts no longer persist if they were started with syntax/import errors
+    * Bug fix: 'hack' and 'analyze' Terminal commands are now blocking
+    * Bug fix: Exp earned by duplicate sleeves at universities/gyms now takes hash upgrades into account
     `
 }

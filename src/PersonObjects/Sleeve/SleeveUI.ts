@@ -566,6 +566,11 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
             // First selector has class type
             for (let i = 0; i < universitySelectorOptions.length; ++i) {
                 elems.taskDetailsSelector!.add(createOptionElement(universitySelectorOptions[i]));
+
+                // Set initial value
+                if (sleeve.className === universitySelectorOptions[i]) {
+                    elems.taskDetailsSelector!.selectedIndex = i;
+                }
             }
 
             // Second selector has which university

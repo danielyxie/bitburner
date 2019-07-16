@@ -9,9 +9,11 @@
 import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 
 import { IPlayer } from "../IPlayer";
-import { Person,
-         ITaskTracker,
-         createTaskTracker } from "../Person";
+import {
+    Person,
+    ITaskTracker,
+    createTaskTracker
+} from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 
@@ -43,6 +45,11 @@ export class Sleeve extends Person {
     static fromJSON(value: any): Sleeve {
         return Generic_fromJSON(Sleeve, value.data);
     }
+
+    /**
+     * Stores the name of the class that the player is currently taking
+     */
+    className: string = "";
 
     /**
      * Stores the type of crime the sleeve is currently attempting
@@ -493,6 +500,7 @@ export class Sleeve extends Person {
                 break;
             case SleeveTaskType.Class:
             case SleeveTaskType.Gym:
+                this.updateTaskGainRates(p);
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
                 break;
@@ -560,6 +568,7 @@ export class Sleeve extends Person {
         this.crimeType = "";
         this.currentTaskLocation = "";
         this.gymStatType = "";
+        this.className = "";
     }
 
     shockRecovery(p: IPlayer): boolean {
@@ -597,67 +606,50 @@ export class Sleeve extends Person {
         // Set exp/money multipliers based on which university.
         // Also check that the sleeve is in the right city
         let costMult: number = 1;
-        let expMult: number = 1;
         switch (universityName.toLowerCase()) {
             case LocationName.AevumSummitUniversity.toLowerCase():
                 if (this.city !== CityName.Aevum) { return false; }
                 this.currentTaskLocation = LocationName.AevumSummitUniversity;
                 costMult = 4;
-                expMult = 3;
                 break;
             case LocationName.Sector12RothmanUniversity.toLowerCase():
                 if (this.city !== CityName.Sector12) { return false; }
                 this.currentTaskLocation = LocationName.Sector12RothmanUniversity;
                 costMult = 3;
-                expMult = 2;
                 break;
             case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
                 if (this.city !== CityName.Volhaven) { return false; }
                 this.currentTaskLocation = LocationName.VolhavenZBInstituteOfTechnology;
                 costMult = 5;
-                expMult = 4;
                 break;
             default:
                 return false;
         }
 
         // Set experience/money gains based on class
-        // TODO Refactor University Courses into its own class or something
-        const baseStudyComputerScienceExp: number   = 0.5;
-        const baseDataStructuresExp: number         = 1;
-        const baseNetworksExp: number               = 2;
-        const baseAlgorithmsExp: number             = 4;
-        const baseManagementExp: number             = 2;
-        const baseLeadershipExp: number             = 4;
-
         switch (className.toLowerCase()) {
             case "study computer science":
-                this.gainRatesForTask.hack = (baseStudyComputerScienceExp * expMult * this.hacking_exp_mult);
                 break;
             case "data structures":
-                this.gainRatesForTask.hack = (baseDataStructuresExp * expMult * this.hacking_exp_mult);
                 this.gainRatesForTask.money = -1 * (CONSTANTS.ClassDataStructuresBaseCost * costMult);
                 break;
             case "networks":
-                this.gainRatesForTask.hack = (baseNetworksExp * expMult * this.hacking_exp_mult);
                 this.gainRatesForTask.money = -1 * (CONSTANTS.ClassNetworksBaseCost * costMult);
                 break;
             case "algorithms":
-                this.gainRatesForTask.hack = (baseAlgorithmsExp * expMult * this.hacking_exp_mult);
-                this.gainRatesForTask.money = -1 *  (CONSTANTS.ClassAlgorithmsBaseCost * costMult);
+                this.gainRatesForTask.money = -1 * (CONSTANTS.ClassAlgorithmsBaseCost * costMult);
                 break;
             case "management":
-                this.gainRatesForTask.cha = (baseManagementExp * expMult * this.charisma_exp_mult);
                 this.gainRatesForTask.money = -1 * (CONSTANTS.ClassManagementBaseCost * costMult);
                 break;
             case "leadership":
-                this.gainRatesForTask.cha = (baseLeadershipExp * expMult * this.charisma_exp_mult);
                 this.gainRatesForTask.money = -1 * (CONSTANTS.ClassLeadershipBaseCost * costMult);
                 break;
             default:
                 return false;
         }
 
+        this.className = className;
         this.currentTask = SleeveTaskType.Class;
         return true;
     }
@@ -670,6 +662,112 @@ export class Sleeve extends Person {
         this.city = newCity;
 
         return true;
+    }
+
+    tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
+        if (!p.canAfford(aug.startingCost)) {
+            return false;
+        }
+
+        p.loseMoney(aug.startingCost);
+        this.installAugmentation(aug);
+        return true;
+    }
+
+    updateTaskGainRates(p: IPlayer): void {
+        if (this.currentTask === SleeveTaskType.Class) {
+            let expMult: number = 1;
+            switch (this.currentTaskLocation.toLowerCase()) {
+                case LocationName.AevumSummitUniversity.toLowerCase():
+                    expMult = 3;
+                    break;
+                case LocationName.Sector12RothmanUniversity.toLowerCase():
+                    expMult = 2;
+                    break;
+                case LocationName.VolhavenZBInstituteOfTechnology.toLowerCase():
+                    expMult = 4;
+                    break;
+                default:
+                    return;
+            }
+
+            const totalExpMult = expMult * p.hashManager.getStudyMult();
+            switch (this.className.toLowerCase()) {
+                case "study computer science":
+                    this.gainRatesForTask.hack = (CONSTANTS.ClassStudyComputerScienceBaseExp * totalExpMult * this.hacking_exp_mult);
+                    break;
+                case "data structures":
+                    this.gainRatesForTask.hack = (CONSTANTS.ClassDataStructuresBaseExp * totalExpMult * this.hacking_exp_mult);
+                    break;
+                case "networks":
+                    this.gainRatesForTask.hack = (CONSTANTS.ClassNetworksBaseExp * totalExpMult * this.hacking_exp_mult);
+                    break;
+                case "algorithms":
+                    this.gainRatesForTask.hack = (CONSTANTS.ClassAlgorithmsBaseExp * totalExpMult * this.hacking_exp_mult);
+                    break;
+                case "management":
+                    this.gainRatesForTask.cha = (CONSTANTS.ClassManagementBaseExp * totalExpMult * this.charisma_exp_mult);
+                    break;
+                case "leadership":
+                    this.gainRatesForTask.cha = (CONSTANTS.ClassLeadershipBaseExp * totalExpMult * this.charisma_exp_mult);
+                    break;
+                default:
+                    break;
+            }
+
+            return;
+        }
+
+        if (this.currentTask === SleeveTaskType.Gym) {
+            // Get gym exp multiplier
+            let expMult: number = 1;
+            switch (this.currentTaskLocation.toLowerCase()) {
+                case LocationName.AevumCrushFitnessGym.toLowerCase():
+                    expMult = 2;
+                    break;
+                case LocationName.AevumSnapFitnessGym.toLowerCase():
+                    expMult = 5;
+                    break;
+                case LocationName.Sector12IronGym.toLowerCase():
+                    expMult = 1;
+                    break;
+                case LocationName.Sector12PowerhouseGym.toLowerCase():
+                    expMult = 10;
+                    break;
+                case LocationName.VolhavenMilleniumFitnessGym:
+                    expMult = 4;
+                    break;
+                default:
+                    return;
+            }
+
+            // Set stat gain rate
+            const baseGymExp: number = 1;
+            const totalExpMultiplier = p.hashManager.getTrainingMult() * expMult;
+            const sanitizedStat: string = this.gymStatType.toLowerCase();
+            if (sanitizedStat.includes("str")) {
+                this.gainRatesForTask.str = (baseGymExp * totalExpMultiplier * this.strength_exp_mult);
+            } else if (sanitizedStat.includes("def")) {
+                this.gainRatesForTask.def = (baseGymExp * totalExpMultiplier * this.defense_exp_mult);
+            } else if (sanitizedStat.includes("dex")) {
+                this.gainRatesForTask.dex = (baseGymExp * totalExpMultiplier * this.dexterity_exp_mult);
+            } else if (sanitizedStat.includes("agi")) {
+                this.gainRatesForTask.agi = (baseGymExp * totalExpMultiplier * this.agility_exp_mult);
+            }
+
+            return;
+        }
+
+        console.warn(`Sleeve.updateTaskGainRates() called for unexpected task type ${this.currentTask}`);
+    }
+
+    upgradeMemory(n: number): void {
+        if (n < 0) {
+            console.warn(`Sleeve.upgradeMemory() called with negative value: ${n}`);
+            return;
+        }
+
+        this.memory = Math.min(100, Math.round(this.memory + n));
     }
 
     /**
@@ -698,27 +796,27 @@ export class Sleeve extends Person {
         this.gainRatesForTask.hack = companyPosition.hackingExpGain *
                                      company.expMultiplier *
                                      this.hacking_exp_mult *
-                                     BitNodeMultipliers.FactionWorkExpGain;
+                                     BitNodeMultipliers.CompanyWorkExpGain;
         this.gainRatesForTask.str = companyPosition.strengthExpGain *
                                     company.expMultiplier *
                                     this.strength_exp_mult *
-                                    BitNodeMultipliers.FactionWorkExpGain;
+                                    BitNodeMultipliers.CompanyWorkExpGain;
         this.gainRatesForTask.def = companyPosition.defenseExpGain *
                                     company.expMultiplier *
                                     this.defense_exp_mult *
-                                    BitNodeMultipliers.FactionWorkExpGain;
+                                    BitNodeMultipliers.CompanyWorkExpGain;
         this.gainRatesForTask.dex = companyPosition.dexterityExpGain *
                                     company.expMultiplier *
                                     this.dexterity_exp_mult *
-                                    BitNodeMultipliers.FactionWorkExpGain;
+                                    BitNodeMultipliers.CompanyWorkExpGain;
         this.gainRatesForTask.agi = companyPosition.agilityExpGain *
                                     company.expMultiplier *
                                     this.agility_exp_mult *
-                                    BitNodeMultipliers.FactionWorkExpGain;
+                                    BitNodeMultipliers.CompanyWorkExpGain;
         this.gainRatesForTask.cha = companyPosition.charismaExpGain *
                                     company.expMultiplier *
                                     this.charisma_exp_mult *
-                                    BitNodeMultipliers.FactionWorkExpGain;
+                                    BitNodeMultipliers.CompanyWorkExpGain;
 
         this.currentTaskLocation = companyName;
         this.currentTask = SleeveTaskType.Company;
@@ -792,60 +890,48 @@ export class Sleeve extends Person {
         // Set exp/money multipliers based on which university.
         // Also check that the sleeve is in the right city
         let costMult: number = 1;
-        let expMult: number = 1;
         switch (gymName.toLowerCase()) {
             case LocationName.AevumCrushFitnessGym.toLowerCase():
                 if (this.city != CityName.Aevum) { return false; }
                 this.currentTaskLocation = LocationName.AevumCrushFitnessGym;
                 costMult = 3;
-                expMult = 2;
                 break;
             case LocationName.AevumSnapFitnessGym.toLowerCase():
                 if (this.city != CityName.Aevum) { return false; }
                 this.currentTaskLocation = LocationName.AevumSnapFitnessGym;
                 costMult = 10;
-                expMult = 5;
                 break;
             case LocationName.Sector12IronGym.toLowerCase():
                 if (this.city != CityName.Sector12) { return false; }
                 this.currentTaskLocation = LocationName.Sector12IronGym;
                 costMult = 1;
-                expMult = 1;
                 break;
             case LocationName.Sector12PowerhouseGym.toLowerCase():
                 if (this.city != CityName.Sector12) { return false; }
                 this.currentTaskLocation = LocationName.Sector12PowerhouseGym;
                 costMult = 20;
-                expMult = 10;
                 break;
             case LocationName.VolhavenMilleniumFitnessGym:
                 if (this.city != CityName.Volhaven) { return false; }
                 this.currentTaskLocation = LocationName.VolhavenMilleniumFitnessGym;
                 costMult = 7;
-                expMult = 4;
                 break;
             default:
                 return false;
         }
 
         // Set experience/money gains based on class
-        // TODO Refactor University Courses into its own class or something
-        const baseGymExp: number = 1;
         const sanitizedStat: string = stat.toLowerCase();
 
         // Set cost
         this.gainRatesForTask.money = -1 * (CONSTANTS.ClassGymBaseCost * costMult);
 
-        // Set stat gain rate
-        if (sanitizedStat.includes("str")) {
-            this.gainRatesForTask.str = (baseGymExp * expMult);
-        } else if (sanitizedStat.includes("def")) {
-            this.gainRatesForTask.def = (baseGymExp * expMult);
-        } else if (sanitizedStat.includes("dex")) {
-            this.gainRatesForTask.dex = (baseGymExp * expMult);
-        } else if (sanitizedStat.includes("agi")) {
-            this.gainRatesForTask.agi = (baseGymExp * expMult);
-        } else {
+        // Validate "stat" argument
+        if (!sanitizedStat.includes("str")
+            && !sanitizedStat.includes("def")
+            && !sanitizedStat.includes("dex")
+            && !sanitizedStat.includes("agi")) {
+
             return false;
         }
 
@@ -853,25 +939,6 @@ export class Sleeve extends Person {
         this.currentTask = SleeveTaskType.Gym;
 
         return true;
-    }
-
-    tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
-        if (!p.canAfford(aug.startingCost)) {
-            return false;
-        }
-
-        p.loseMoney(aug.startingCost);
-        this.installAugmentation(aug);
-        return true;
-    }
-
-    upgradeMemory(n: number): void {
-        if (n < 0) {
-            console.warn(`Sleeve.upgradeMemory() called with negative value: ${n}`);
-            return;
-        }
-
-        this.memory = Math.min(100, Math.round(this.memory + n));
     }
 
     /**

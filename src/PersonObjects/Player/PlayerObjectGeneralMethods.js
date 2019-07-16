@@ -1211,42 +1211,33 @@ export function startClass(costMult, expMult, className) {
 
     var gameCPS = 1000 / Engine._idleSpeed;
 
-    //Base exp gains per second
-    var baseStudyComputerScienceExp = 0.5;
-    var baseDataStructuresExp       = 1;
-    var baseNetworksExp             = 2;
-    var baseAlgorithmsExp           = 4;
-    var baseManagementExp           = 2;
-    var baseLeadershipExp           = 4;
-    var baseGymExp                  = 1;
-
     //Find cost and exp gain per game cycle
     var cost = 0;
     var hackExp = 0, strExp = 0, defExp = 0, dexExp = 0, agiExp = 0, chaExp = 0;
     const hashManager = this.hashManager;
     switch (className) {
         case CONSTANTS.ClassStudyComputerScience:
-            hackExp = baseStudyComputerScienceExp * expMult / gameCPS * hashManager.getStudyMult();
+            hackExp = CONSTANTS.ClassStudyComputerScienceBaseExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassDataStructures:
             cost = CONSTANTS.ClassDataStructuresBaseCost * costMult / gameCPS;
-            hackExp = baseDataStructuresExp * expMult / gameCPS * hashManager.getStudyMult();
+            hackExp = CONSTANTS.ClassDataStructuresBaseExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassNetworks:
             cost = CONSTANTS.ClassNetworksBaseCost * costMult / gameCPS;
-            hackExp = baseNetworksExp * expMult / gameCPS  * hashManager.getStudyMult();
+            hackExp = CONSTANTS.ClassNetworksBaseExp * expMult / gameCPS  * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassAlgorithms:
             cost = CONSTANTS.ClassAlgorithmsBaseCost * costMult / gameCPS;
-            hackExp = baseAlgorithmsExp * expMult / gameCPS * hashManager.getStudyMult();
+            hackExp = CONSTANTS.ClassAlgorithmsBaseExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassManagement:
             cost = CONSTANTS.ClassManagementBaseCost * costMult / gameCPS;
-            chaExp = baseManagementExp * expMult / gameCPS * hashManager.getStudyMult();
+            chaExp = CONSTANTS.ClassManagementBaseExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassLeadership:
             cost = CONSTANTS.ClassLeadershipBaseCost * costMult / gameCPS;
-            chaExp = baseLeadershipExp * expMult / gameCPS * hashManager.getStudyMult();
+            chaExp = CONSTANTS.ClassLeadershipBaseExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassGymStrength:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
