@@ -1279,14 +1279,22 @@ button {
 #red-pill-container {
   position: fixed; }
 
-.bitnode {
-  color: #00f; }
+.bitnode.level-0 {
+  color: red; }
 
-.bitnode-destroyed {
-  color: #f00; }
+.bitnode.level-1 {
+  color: yellow; }
 
-.bitnode:hover,
-.bitnode-destroyed:hover {
+.bitnode.level-2 {
+  color: #48D1CC; }
+
+.bitnode.level-3 {
+  color: blue; }
+
+.bitnode.unimplemented {
+  color: gray; }
+
+.bitnode:hover {
   color: #fff; }
 
 /* COLORS */
