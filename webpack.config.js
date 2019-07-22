@@ -145,5 +145,6 @@ module.exports = (env, argv) => {
             ]
         },
         stats: statsConfig,
+        externals: ["fs"],
     };
 };
