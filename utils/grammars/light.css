@@ -1,0 +1,484 @@
+/*
+ * This file contains all default CSS rules for the light vscode them, used for various diagrams and graphs.
+ * Use the "antlr4.customcss" setting in vscode to specify your own file, if you like to override some rules.
+ *
+ * Most of the appearance is defined here, while only some adjustments for the dark theme exist in dark.css.
+ * This style sheet is also used for exported svg files.
+ */
+
+ body {
+    padding-left: 20px;
+}
+
+svg {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+
+/* ATN graphs */
+
+.transition {
+    fill: none;
+    stroke: #AAA;
+    stroke-width: 2px;
+}
+
+.marker {
+    fill: #999;
+    stroke: none;
+}
+
+.stateLabel {
+    font: bold 11pt "Helvetica Neue", Arial, sans-serif;
+    fill: white;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.stateTypeLabel {
+    font: bold 7pt monospace;
+    fill: #EEE;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.linkLabel {
+    font: bold 9pt "Helvetica Neue", Arial, sans-serif;
+    fill: #606060;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.state {
+    stroke: #505050;
+    stroke-width: 3px;
+    cursor: move;
+    pointer-events: all;
+    /*filter: url(#black-glow);*/
+}
+
+.state.BASIC {
+    fill: #AAA;
+}
+
+.state.START {
+    fill: #36bde0;
+}
+
+.state.BSTART {
+    fill: #f39900;
+}
+
+.state.PBSTART {
+    fill: #98c000;
+}
+
+.state.SBSTART {
+    fill: #607dbd;
+}
+
+.state.TSTART {
+    fill: #ffd300;
+}
+
+.state.STOP {
+    fill: #2baa5b;
+}
+
+.state.BEND {
+    fill: #c2c269;
+}
+
+.state.SLBACK {
+    fill: #608b4e;
+}
+
+.state.SLENTRY {
+    fill: #a260cb;
+}
+
+.state.PLBACK {
+    fill: #517979;
+}
+
+.state.LEND {
+    fill: #9b90c3;
+}
+
+.state.RULE {
+    fill: #b73645;
+}
+
+.state.RULE.recursive {
+    fill: #36bde0;
+}
+
+
+/* Railroad diagrams */
+
+svg.railroad-diagram path {
+    /* The connection lines. */
+    stroke-width: 2;
+    stroke: darkgray;
+    fill: rgba(0, 0, 0, 0);
+}
+
+svg.railroad-diagram text {
+    /* All text except comments. */
+    font: bold 12px Hack, "Source Code Pro", monospace;
+    text-anchor: middle;
+    fill: #404040;
+    /* Use fill instead of color for svg text. */
+}
+
+svg.railroad-diagram text.comment {
+    /* Comment text */
+    font: italic 10px Hack, "Source Code Pro", monospace;
+    fill: #404040;
+}
+
+svg.railroad-diagram g.non-terminal rect {
+    /* The non-terminal boxes. */
+    stroke-width: 2;
+    stroke: #404040;
+    fill: rgba(255, 255, 255, 1);
+}
+
+svg.railroad-diagram g.terminal rect {
+    /* The terminal boxes. */
+    stroke-width: 2;
+    stroke: #404040;
+    fill: rgba(0, 0, 0, 0.1);
+}
+
+svg.railroad-diagram text.diagram-text {
+    /* Multiple choice text, not working atm. */
+    font-size: 12px Hack, "Source Code Pro", monospace;
+    fill: red;
+}
+
+svg.railroad-diagram path.diagram-text {
+    /* Multiple choice text, not working atm. */
+    stroke-width: 1;
+    stroke: red;
+    fill: red;
+    cursor: help;
+}
+
+svg.railroad-diagram g.diagram-text:hover path.diagram-text {
+    /* Multiple choice text, not working atm. */
+    fill: #f00;
+}
+
+
+/* Call graphs */
+
+.node {
+    font: 200 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.link {
+    stroke: #000;
+    stroke-opacity: .2;
+    fill: none;
+    pointer-events: none;
+    animation: fadeIn 0.25s ease-out 0.2s 1 normal backwards;
+}
+
+.module-1 {
+    fill: #0ca9fd;
+}
+
+.module-2 {
+    fill: #63bf8d;
+}
+
+.module-3 {
+    fill: #ff8801;
+}
+
+.module-4 {
+    fill: #b9fc34;
+}
+
+.module-5 {
+    fill: #90e0e0;
+}
+
+.module-6 {
+    fill: #b4a3f5;
+}
+
+.module-7 {
+    fill: #f92672;
+}
+
+.module-8 {
+    fill: #e9e901;
+}
+
+.module-9 {
+    fill: #83be69;
+}
+
+.module-10 {
+    fill: #f1d18c;
+}
+
+.node:hover {
+    fill: #000;
+}
+
+.node:hover,
+.node-source,
+.node-target {
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    cursor: pointer;
+}
+
+.node-source {
+    fill: #ff5711;
+}
+
+.node-target {
+    fill: #45aa73;
+}
+
+.link-source,
+.link-target {
+    stroke-opacity: 1;
+    stroke-width: 2px;
+    animation: none;
+}
+
+.link-source {
+    stroke: #3dcd92;
+}
+
+.link-target {
+    stroke: #ff5711;
+}
+
+@keyframes fadeOut {
+    0% {
+        stroke-opacity: 0.2;
+    }
+    100% {
+        stroke-opacity: 0.075;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        stroke-opacity: 0.075;
+    }
+    100% {
+        stroke-opacity: 0.2;
+    }
+}
+
+.link-dimmed {
+    stroke-opacity: 0.075;
+    animation: fadeOut 0.25s ease-out 0.1s 1 normal backwards;
+}
+
+
+/* Parse trees */
+.tree-node {
+    stroke-width: 2;
+    stroke: #C0C0C0;
+    fill: rgba(255, 255, 255, 1);
+}
+
+.tree-root {
+    stroke-width: 2;
+    fill: #7db6dd;
+    stroke: #7db6dd;
+}
+
+.tree-leaf {
+    cursor: default;
+    stroke-width: 2;
+    fill: rgba(160, 171, 136, 1);
+    stroke: rgba(117, 119, 91, 1);
+}
+
+.tree-error {
+    stroke-width: 2;
+    fill: #dd8f7d;
+    stroke: rgba(188, 106, 122, 1);
+}
+
+.tree-node text {
+    cursor: default;
+    font: 16px "Helvetica Neue", sans-serif;
+    fill: rgba(41, 41, 41, 1);
+    stroke: none;
+}
+
+.tree-leaf text,
+.tree-root text,
+.tree-error text {
+    font: 16px "Helvetica Neue", sans-serif;
+    fill: #ffffff;
+    stroke: none;
+}
+
+.tree-link {
+    stroke-width: 2px;
+    fill: none;
+    stroke: rgba(128, 128, 128, 1);
+}
+
+g .token-value {
+    fill: #404040;
+    stroke: none;
+    font: 14pt "Source Code Pro", "Hack", "Consolas", "Andale Mono", monospace;
+}
+
+g .token-range {
+    fill: rgba(0, 77, 98, 1);
+    stroke: none;
+    font: 8pt "Source Code Pro", "Hack", "Consolas", "Andale Mono", monospace;
+}
+
+/* Internal elements, only used in vscode */
+
+.header {
+    font-size: 12pt;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    background-color: var(--background-color);
+    cursor: default;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.graph-initial {
+    font-size: 30pt;
+    font-weight: 800;
+    vertical-align: middle;
+}
+
+.rule-index {
+    font-size: 8pt;
+}
+
+#container {
+    margin-top: 45px;
+}
+
+.action-box {
+    font: 10pt monospace;
+    margin-left: 15px;
+    padding: 5px;
+    border: dotted 1px #606060;
+    cursor: default;
+}
+
+.atn-graph-color {
+    color: rgba(206, 11, 70, 1);
+}
+
+.atn-graph-save-image {
+    background: rgba(206, 11, 70, 1) url('../misc/save.png');
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.rrd-color {
+    color: rgba(10, 188, 80, 1);
+}
+
+.rrd-save-image {
+    background: rgba(10, 188, 80, 1) url('../misc/save.png');
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.call-graph-color {
+    color: rgba(255, 191, 15, 1);
+}
+
+.call-graph-save-image {
+    background: rgba(255, 191, 15, 1) url('../misc/save.png');
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.parse-tree-color {
+    color: rgba(49, 112, 212, 1);
+}
+
+.parse-tree-save-image {
+    background: rgba(49, 112, 212, 1) url('../misc/save.png');
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.switch label {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+}
+
+.switch input {
+	display: none;
+}
+
+.switch > span {
+    display: inline-block;
+    top: 3px;
+	transition: left 0.2s;
+}
+
+.switch-border {
+	height: 12px;
+	width: 24px;
+	position: relative;
+    border: 1px solid rgba(49, 112, 212, 0.75);
+    background-color: rgba(49, 112, 212, 0.75);
+	border-radius: 3.5em;
+}
+
+.switch-handle-top {
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 4;
+	background-color: white;
+	border-radius: 2.5em;
+	transition: left 0.2s;
+}
+
+.switch input:checked~.switch-handle-top  {
+    top: 0px;
+    left: 12px;
+}
