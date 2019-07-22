@@ -56,12 +56,57 @@ TerminalListener.prototype.exitCommandArg = function(ctx) {
 };
 
 
-// Enter a parse tree produced by TerminalParser#value.
-TerminalListener.prototype.enterValue = function(ctx) {
+// Enter a parse tree produced by TerminalParser#DQString.
+TerminalListener.prototype.enterDQString = function(ctx) {
 };
 
-// Exit a parse tree produced by TerminalParser#value.
-TerminalListener.prototype.exitValue = function(ctx) {
+// Exit a parse tree produced by TerminalParser#DQString.
+TerminalListener.prototype.exitDQString = function(ctx) {
+};
+
+
+// Enter a parse tree produced by TerminalParser#SQString.
+TerminalListener.prototype.enterSQString = function(ctx) {
+};
+
+// Exit a parse tree produced by TerminalParser#SQString.
+TerminalListener.prototype.exitSQString = function(ctx) {
+};
+
+
+// Enter a parse tree produced by TerminalParser#LongFlag.
+TerminalListener.prototype.enterLongFlag = function(ctx) {
+};
+
+// Exit a parse tree produced by TerminalParser#LongFlag.
+TerminalListener.prototype.exitLongFlag = function(ctx) {
+};
+
+
+// Enter a parse tree produced by TerminalParser#ShortFlag.
+TerminalListener.prototype.enterShortFlag = function(ctx) {
+};
+
+// Exit a parse tree produced by TerminalParser#ShortFlag.
+TerminalListener.prototype.exitShortFlag = function(ctx) {
+};
+
+
+// Enter a parse tree produced by TerminalParser#Number.
+TerminalListener.prototype.enterNumber = function(ctx) {
+};
+
+// Exit a parse tree produced by TerminalParser#Number.
+TerminalListener.prototype.exitNumber = function(ctx) {
+};
+
+
+// Enter a parse tree produced by TerminalParser#Word.
+TerminalListener.prototype.enterWord = function(ctx) {
+};
+
+// Exit a parse tree produced by TerminalParser#Word.
+TerminalListener.prototype.exitWord = function(ctx) {
 };
 
 

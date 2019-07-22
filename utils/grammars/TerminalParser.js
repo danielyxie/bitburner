@@ -6,39 +6,43 @@ var grammarFileName = "Terminal.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u00109\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003\u0010?\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0003\u0002\u0003\u0002\u0005\u0002\u0015\n\u0002",
     "\u0003\u0002\u0003\u0002\u0003\u0002\u0003\u0002\u0005\u0002\u001b\n",
     "\u0002\u0003\u0003\u0003\u0003\u0005\u0003\u001f\n\u0003\u0003\u0004",
     "\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
     "\u0007\u0005(\n\u0005\f\u0005\u000e\u0005+\u000b\u0005\u0003\u0006\u0003",
-    "\u0006\u0005\u0006/\n\u0006\u0003\u0007\u0003\u0007\u0003\b\u0003\b",
+    "\u0006\u0005\u0006/\n\u0006\u0003\u0007\u0003\u0007\u0003\u0007\u0003",
+    "\u0007\u0003\u0007\u0003\u0007\u0005\u00077\n\u0007\u0003\b\u0003\b",
     "\u0003\b\u0003\b\u0003\t\u0003\t\u0003\t\u0002\u0003\b\n\u0002\u0004",
-    "\u0006\b\n\f\u000e\u0010\u0002\u0003\u0004\u0002\u0005\u0006\f\u000f",
-    "\u00025\u0002\u001a\u0003\u0002\u0002\u0002\u0004\u001c\u0003\u0002",
-    "\u0002\u0002\u0006 \u0003\u0002\u0002\u0002\b\"\u0003\u0002\u0002\u0002",
-    "\n.\u0003\u0002\u0002\u0002\f0\u0003\u0002\u0002\u0002\u000e2\u0003",
-    "\u0002\u0002\u0002\u00106\u0003\u0002\u0002\u0002\u0012\u0014\u0005",
-    "\u0004\u0003\u0002\u0013\u0015\u0007\u0003\u0002\u0002\u0014\u0013\u0003",
-    "\u0002\u0002\u0002\u0014\u0015\u0003\u0002\u0002\u0002\u0015\u001b\u0003",
-    "\u0002\u0002\u0002\u0016\u0017\u0005\u0004\u0003\u0002\u0017\u0018\u0007",
-    "\u0003\u0002\u0002\u0018\u0019\u0005\u0002\u0002\u0002\u0019\u001b\u0003",
-    "\u0002\u0002\u0002\u001a\u0012\u0003\u0002\u0002\u0002\u001a\u0016\u0003",
-    "\u0002\u0002\u0002\u001b\u0003\u0003\u0002\u0002\u0002\u001c\u001e\u0005",
-    "\u0006\u0004\u0002\u001d\u001f\u0005\b\u0005\u0002\u001e\u001d\u0003",
-    "\u0002\u0002\u0002\u001e\u001f\u0003\u0002\u0002\u0002\u001f\u0005\u0003",
-    "\u0002\u0002\u0002 !\u0007\u000f\u0002\u0002!\u0007\u0003\u0002\u0002",
-    "\u0002\"#\b\u0005\u0001\u0002#$\u0005\n\u0006\u0002$)\u0003\u0002\u0002",
-    "\u0002%&\f\u0003\u0002\u0002&(\u0005\n\u0006\u0002\'%\u0003\u0002\u0002",
-    "\u0002(+\u0003\u0002\u0002\u0002)\'\u0003\u0002\u0002\u0002)*\u0003",
-    "\u0002\u0002\u0002*\t\u0003\u0002\u0002\u0002+)\u0003\u0002\u0002\u0002",
-    ",/\u0005\f\u0007\u0002-/\u0005\u000e\b\u0002.,\u0003\u0002\u0002\u0002",
-    ".-\u0003\u0002\u0002\u0002/\u000b\u0003\u0002\u0002\u000201\t\u0002",
-    "\u0002\u00021\r\u0003\u0002\u0002\u000223\u0005\u0010\t\u000234\u0007",
-    "\u0004\u0002\u000245\u0005\f\u0007\u00025\u000f\u0003\u0002\u0002\u0002",
-    "67\u0007\u000f\u0002\u00027\u0011\u0003\u0002\u0002\u0002\u0007\u0014",
-    "\u001a\u001e)."].join("");
+    "\u0006\b\n\f\u000e\u0010\u0002\u0002\u0002@\u0002\u001a\u0003\u0002",
+    "\u0002\u0002\u0004\u001c\u0003\u0002\u0002\u0002\u0006 \u0003\u0002",
+    "\u0002\u0002\b\"\u0003\u0002\u0002\u0002\n.\u0003\u0002\u0002\u0002",
+    "\f6\u0003\u0002\u0002\u0002\u000e8\u0003\u0002\u0002\u0002\u0010<\u0003",
+    "\u0002\u0002\u0002\u0012\u0014\u0005\u0004\u0003\u0002\u0013\u0015\u0007",
+    "\u0003\u0002\u0002\u0014\u0013\u0003\u0002\u0002\u0002\u0014\u0015\u0003",
+    "\u0002\u0002\u0002\u0015\u001b\u0003\u0002\u0002\u0002\u0016\u0017\u0005",
+    "\u0004\u0003\u0002\u0017\u0018\u0007\u0003\u0002\u0002\u0018\u0019\u0005",
+    "\u0002\u0002\u0002\u0019\u001b\u0003\u0002\u0002\u0002\u001a\u0012\u0003",
+    "\u0002\u0002\u0002\u001a\u0016\u0003\u0002\u0002\u0002\u001b\u0003\u0003",
+    "\u0002\u0002\u0002\u001c\u001e\u0005\u0006\u0004\u0002\u001d\u001f\u0005",
+    "\b\u0005\u0002\u001e\u001d\u0003\u0002\u0002\u0002\u001e\u001f\u0003",
+    "\u0002\u0002\u0002\u001f\u0005\u0003\u0002\u0002\u0002 !\u0007\u000f",
+    "\u0002\u0002!\u0007\u0003\u0002\u0002\u0002\"#\b\u0005\u0001\u0002#",
+    "$\u0005\n\u0006\u0002$)\u0003\u0002\u0002\u0002%&\f\u0003\u0002\u0002",
+    "&(\u0005\n\u0006\u0002\'%\u0003\u0002\u0002\u0002(+\u0003\u0002\u0002",
+    "\u0002)\'\u0003\u0002\u0002\u0002)*\u0003\u0002\u0002\u0002*\t\u0003",
+    "\u0002\u0002\u0002+)\u0003\u0002\u0002\u0002,/\u0005\f\u0007\u0002-",
+    "/\u0005\u000e\b\u0002.,\u0003\u0002\u0002\u0002.-\u0003\u0002\u0002",
+    "\u0002/\u000b\u0003\u0002\u0002\u000207\u0007\f\u0002\u000217\u0007",
+    "\r\u0002\u000227\u0007\u0006\u0002\u000237\u0007\u0005\u0002\u00024",
+    "7\u0007\u000e\u0002\u000257\u0007\u000f\u0002\u000260\u0003\u0002\u0002",
+    "\u000261\u0003\u0002\u0002\u000262\u0003\u0002\u0002\u000263\u0003\u0002",
+    "\u0002\u000264\u0003\u0002\u0002\u000265\u0003\u0002\u0002\u00027\r",
+    "\u0003\u0002\u0002\u000289\u0005\u0010\t\u00029:\u0007\u0004\u0002\u0002",
+    ":;\u0005\f\u0007\u0002;\u000f\u0003\u0002\u0002\u0002<=\u0007\u000f",
+    "\u0002\u0002=\u0011\u0003\u0002\u0002\u0002\b\u0014\u001a\u001e).6"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -206,6 +210,8 @@ function CommandContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = TerminalParser.RULE_command;
+    this.name = null; // CommandNameContext
+    this.args = null; // CommandArgListContext
     return this;
 }
 
@@ -245,13 +251,13 @@ TerminalParser.prototype.command = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 26;
-        this.commandName();
+        localctx.name = this.commandName();
         this.state = 28;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << TerminalParser.SHORTFLAG) | (1 << TerminalParser.LONGFLAG) | (1 << TerminalParser.DQSTRING) | (1 << TerminalParser.SQSTRING) | (1 << TerminalParser.NUMBER) | (1 << TerminalParser.WORD))) !== 0)) {
             this.state = 27;
-            this.commandArgList(0);
+            localctx.args = this.commandArgList(0);
         }
 
     } catch (re) {
@@ -514,42 +520,173 @@ function ValueContext(parser, parent, invokingState) {
 ValueContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 ValueContext.prototype.constructor = ValueContext;
 
-ValueContext.prototype.DQSTRING = function() {
-    return this.getToken(TerminalParser.DQSTRING, 0);
+
+ 
+ValueContext.prototype.copyFrom = function(ctx) {
+    antlr4.ParserRuleContext.prototype.copyFrom.call(this, ctx);
 };
 
-ValueContext.prototype.SQSTRING = function() {
-    return this.getToken(TerminalParser.SQSTRING, 0);
-};
 
-ValueContext.prototype.LONGFLAG = function() {
-    return this.getToken(TerminalParser.LONGFLAG, 0);
-};
+function ShortFlagContext(parser, ctx) {
+	ValueContext.call(this, parser);
+    ValueContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
 
-ValueContext.prototype.SHORTFLAG = function() {
+ShortFlagContext.prototype = Object.create(ValueContext.prototype);
+ShortFlagContext.prototype.constructor = ShortFlagContext;
+
+TerminalParser.ShortFlagContext = ShortFlagContext;
+
+ShortFlagContext.prototype.SHORTFLAG = function() {
     return this.getToken(TerminalParser.SHORTFLAG, 0);
 };
-
-ValueContext.prototype.NUMBER = function() {
-    return this.getToken(TerminalParser.NUMBER, 0);
+ShortFlagContext.prototype.enterRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.enterShortFlag(this);
+	}
 };
 
-ValueContext.prototype.WORD = function() {
+ShortFlagContext.prototype.exitRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.exitShortFlag(this);
+	}
+};
+
+
+function WordContext(parser, ctx) {
+	ValueContext.call(this, parser);
+    ValueContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+WordContext.prototype = Object.create(ValueContext.prototype);
+WordContext.prototype.constructor = WordContext;
+
+TerminalParser.WordContext = WordContext;
+
+WordContext.prototype.WORD = function() {
     return this.getToken(TerminalParser.WORD, 0);
 };
-
-ValueContext.prototype.enterRule = function(listener) {
+WordContext.prototype.enterRule = function(listener) {
     if(listener instanceof TerminalListener ) {
-        listener.enterValue(this);
+        listener.enterWord(this);
 	}
 };
 
-ValueContext.prototype.exitRule = function(listener) {
+WordContext.prototype.exitRule = function(listener) {
     if(listener instanceof TerminalListener ) {
-        listener.exitValue(this);
+        listener.exitWord(this);
 	}
 };
 
+
+function NumberContext(parser, ctx) {
+	ValueContext.call(this, parser);
+    ValueContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+NumberContext.prototype = Object.create(ValueContext.prototype);
+NumberContext.prototype.constructor = NumberContext;
+
+TerminalParser.NumberContext = NumberContext;
+
+NumberContext.prototype.NUMBER = function() {
+    return this.getToken(TerminalParser.NUMBER, 0);
+};
+NumberContext.prototype.enterRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.enterNumber(this);
+	}
+};
+
+NumberContext.prototype.exitRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.exitNumber(this);
+	}
+};
+
+
+function LongFlagContext(parser, ctx) {
+	ValueContext.call(this, parser);
+    ValueContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+LongFlagContext.prototype = Object.create(ValueContext.prototype);
+LongFlagContext.prototype.constructor = LongFlagContext;
+
+TerminalParser.LongFlagContext = LongFlagContext;
+
+LongFlagContext.prototype.LONGFLAG = function() {
+    return this.getToken(TerminalParser.LONGFLAG, 0);
+};
+LongFlagContext.prototype.enterRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.enterLongFlag(this);
+	}
+};
+
+LongFlagContext.prototype.exitRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.exitLongFlag(this);
+	}
+};
+
+
+function SQStringContext(parser, ctx) {
+	ValueContext.call(this, parser);
+    ValueContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+SQStringContext.prototype = Object.create(ValueContext.prototype);
+SQStringContext.prototype.constructor = SQStringContext;
+
+TerminalParser.SQStringContext = SQStringContext;
+
+SQStringContext.prototype.SQSTRING = function() {
+    return this.getToken(TerminalParser.SQSTRING, 0);
+};
+SQStringContext.prototype.enterRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.enterSQString(this);
+	}
+};
+
+SQStringContext.prototype.exitRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.exitSQString(this);
+	}
+};
+
+
+function DQStringContext(parser, ctx) {
+	ValueContext.call(this, parser);
+    ValueContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+DQStringContext.prototype = Object.create(ValueContext.prototype);
+DQStringContext.prototype.constructor = DQStringContext;
+
+TerminalParser.DQStringContext = DQStringContext;
+
+DQStringContext.prototype.DQSTRING = function() {
+    return this.getToken(TerminalParser.DQSTRING, 0);
+};
+DQStringContext.prototype.enterRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.enterDQString(this);
+	}
+};
+
+DQStringContext.prototype.exitRule = function(listener) {
+    if(listener instanceof TerminalListener ) {
+        listener.exitDQString(this);
+	}
+};
 
 
 
@@ -559,17 +696,48 @@ TerminalParser.prototype.value = function() {
 
     var localctx = new ValueContext(this, this._ctx, this.state);
     this.enterRule(localctx, 10, TerminalParser.RULE_value);
-    var _la = 0; // Token type
     try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 46;
-        _la = this._input.LA(1);
-        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << TerminalParser.SHORTFLAG) | (1 << TerminalParser.LONGFLAG) | (1 << TerminalParser.DQSTRING) | (1 << TerminalParser.SQSTRING) | (1 << TerminalParser.NUMBER) | (1 << TerminalParser.WORD))) !== 0))) {
-        this._errHandler.recoverInline(this);
-        }
-        else {
-        	this._errHandler.reportMatch(this);
-            this.consume();
+        this.state = 52;
+        this._errHandler.sync(this);
+        switch(this._input.LA(1)) {
+        case TerminalParser.DQSTRING:
+            localctx = new DQStringContext(this, localctx);
+            this.enterOuterAlt(localctx, 1);
+            this.state = 46;
+            this.match(TerminalParser.DQSTRING);
+            break;
+        case TerminalParser.SQSTRING:
+            localctx = new SQStringContext(this, localctx);
+            this.enterOuterAlt(localctx, 2);
+            this.state = 47;
+            this.match(TerminalParser.SQSTRING);
+            break;
+        case TerminalParser.LONGFLAG:
+            localctx = new LongFlagContext(this, localctx);
+            this.enterOuterAlt(localctx, 3);
+            this.state = 48;
+            this.match(TerminalParser.LONGFLAG);
+            break;
+        case TerminalParser.SHORTFLAG:
+            localctx = new ShortFlagContext(this, localctx);
+            this.enterOuterAlt(localctx, 4);
+            this.state = 49;
+            this.match(TerminalParser.SHORTFLAG);
+            break;
+        case TerminalParser.NUMBER:
+            localctx = new NumberContext(this, localctx);
+            this.enterOuterAlt(localctx, 5);
+            this.state = 50;
+            this.match(TerminalParser.NUMBER);
+            break;
+        case TerminalParser.WORD:
+            localctx = new WordContext(this, localctx);
+            this.enterOuterAlt(localctx, 6);
+            this.state = 51;
+            this.match(TerminalParser.WORD);
+            break;
+        default:
+            throw new antlr4.error.NoViableAltException(this);
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -596,18 +764,20 @@ function KeyvalueContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = TerminalParser.RULE_keyvalue;
+    this.k = null; // KeyContext
+    this.v = null; // ValueContext
     return this;
 }
 
 KeyvalueContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 KeyvalueContext.prototype.constructor = KeyvalueContext;
 
-KeyvalueContext.prototype.key = function() {
-    return this.getTypedRuleContext(KeyContext,0);
-};
-
 KeyvalueContext.prototype.ASSIGN = function() {
     return this.getToken(TerminalParser.ASSIGN, 0);
+};
+
+KeyvalueContext.prototype.key = function() {
+    return this.getTypedRuleContext(KeyContext,0);
 };
 
 KeyvalueContext.prototype.value = function() {
@@ -637,12 +807,12 @@ TerminalParser.prototype.keyvalue = function() {
     this.enterRule(localctx, 12, TerminalParser.RULE_keyvalue);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 48;
-        this.key();
-        this.state = 49;
+        this.state = 54;
+        localctx.k = this.key();
+        this.state = 55;
         this.match(TerminalParser.ASSIGN);
-        this.state = 50;
-        this.value();
+        this.state = 56;
+        localctx.v = this.value();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -701,7 +871,7 @@ TerminalParser.prototype.key = function() {
     this.enterRule(localctx, 14, TerminalParser.RULE_key);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 52;
+        this.state = 58;
         this.match(TerminalParser.WORD);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {

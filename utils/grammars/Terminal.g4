@@ -6,11 +6,11 @@ commandSequence
     ;
 
 command 
-    : commandName commandArgList? // sycbskreuy "afbu'a" 'test' -e h3h3 --uheueheu ./hshshh12!ncu.exe;
+    : name=commandName args=commandArgList? // sycbskreuy "afbu'a" 'test' -e h3h3 --uheueheu ./hshshh12!ncu.exe;
     ;
 
 commandName
-    : WORD
+    : WORD      
     ;
 
 commandArgList
@@ -19,25 +19,25 @@ commandArgList
     ;
 
 commandArg
-    : value
-    | keyvalue
+    : value     // val
+    | keyvalue  // a=b
     ;
 
 value
-    : DQSTRING      // "string"
-    | SQSTRING      // 'string'
-    | LONGFLAG      // --flag
-    | SHORTFLAG     // -f
-    | NUMBER        // [0-9]+('.'[0-9]+)
-    | WORD          // dd2783diag3g,.\'dnejsi ...
+    : DQSTRING    #DQString  // "string"
+    | SQSTRING    #SQString  // 'string'
+    | LONGFLAG    #LongFlag  // --flag
+    | SHORTFLAG   #ShortFlag  // -f
+    | NUMBER      #Number  // [0-9]+('.'[0-9]+)
+    | WORD        #Word  // dd2783diag3g,.\'dnejsi ...
     ;
 
 keyvalue
-    : key ASSIGN value
+    : k=key ASSIGN v=value  //a=b
     ;
 
 key
-    : WORD
+    : WORD        
     ;
 
 
@@ -60,7 +60,7 @@ fragment
 DIGIT: [0-9];
 
 fragment
-SPECIAL: ~([ \t\r\n0-9a-zA-Z]| '=');
+SPECIAL: ~([ \t\r\n0-9a-zA-Z]|'\''|'"'|'='|';');
 
 ESCAPECHAR : '\\';
 ESCAPEDSQCHAR : ESCAPECHAR '\'';
