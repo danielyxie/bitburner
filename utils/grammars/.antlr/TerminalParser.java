@@ -88,7 +88,7 @@ public class TerminalParser extends Parser {
 		public CommandContext command() {
 			return getRuleContext(CommandContext.class,0);
 		}
-		public TerminalNode ENDOFCOMMAND() { return getToken(TerminalParser.ENDOFCOMMAND, 0); }
+		public TerminalNode EOF() { return getToken(TerminalParser.EOF, 0); }
 		public CommandSequenceContext commandSequence() {
 			return getRuleContext(CommandSequenceContext.class,0);
 		}
@@ -99,40 +99,61 @@ public class TerminalParser extends Parser {
 	}
 
 	public final CommandSequenceContext commandSequence() throws RecognitionException {
-		CommandSequenceContext _localctx = new CommandSequenceContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_commandSequence);
+		return commandSequence(0);
+	}
+
+	private CommandSequenceContext commandSequence(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		CommandSequenceContext _localctx = new CommandSequenceContext(_ctx, _parentState);
+		CommandSequenceContext _prevctx = _localctx;
+		int _startState = 0;
+		enterRecursionRule(_localctx, 0, RULE_commandSequence, _p);
 		try {
-			setState(24);
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(19);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
+			switch (_input.LA(1)) {
+			case WORD:
 				{
-				setState(16);
+				setState(17);
 				command();
+				}
+				break;
+			case EOF:
+				{
 				setState(18);
-				_errHandler.sync(this);
-				switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
-				case 1:
+				match(EOF);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(25);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
 					{
-					setState(17);
-					match(ENDOFCOMMAND);
+					{
+					_localctx = new CommandSequenceContext(_parentctx, _parentState);
+					pushNewRecursionContext(_localctx, _startState, RULE_commandSequence);
+					setState(21);
+					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+					setState(22);
+					command();
 					}
-					break;
+					} 
 				}
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(20);
-				command();
-				setState(21);
-				match(ENDOFCOMMAND);
-				setState(22);
-				commandSequence();
-				}
-				break;
+				setState(27);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -141,7 +162,7 @@ public class TerminalParser extends Parser {
 			_errHandler.recover(this, re);
 		}
 		finally {
-			exitRule();
+			unrollRecursionContexts(_parentctx);
 		}
 		return _localctx;
 	}
@@ -149,6 +170,7 @@ public class TerminalParser extends Parser {
 	public static class CommandContext extends ParserRuleContext {
 		public CommandNameContext name;
 		public CommandArgListContext args;
+		public TerminalNode ENDOFCOMMAND() { return getToken(TerminalParser.ENDOFCOMMAND, 0); }
 		public CommandNameContext commandName() {
 			return getRuleContext(CommandNameContext.class,0);
 		}
@@ -168,18 +190,20 @@ public class TerminalParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(26);
-			((CommandContext)_localctx).name = commandName();
 			setState(28);
+			((CommandContext)_localctx).name = commandName();
+			setState(30);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SHORTFLAG) | (1L << LONGFLAG) | (1L << DQSTRING) | (1L << SQSTRING) | (1L << NUMBER) | (1L << WORD))) != 0)) {
 				{
-				setState(27);
+				setState(29);
 				((CommandContext)_localctx).args = commandArgList(0);
 				}
 			}
 
+			setState(32);
+			match(ENDOFCOMMAND);
 			}
 		}
 		catch (RecognitionException re) {
@@ -207,7 +231,7 @@ public class TerminalParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(30);
+			setState(34);
 			match(WORD);
 			}
 		}
@@ -251,11 +275,11 @@ public class TerminalParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(33);
+			setState(37);
 			commandArg();
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(39);
+			setState(43);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -266,14 +290,14 @@ public class TerminalParser extends Parser {
 					{
 					_localctx = new CommandArgListContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_commandArgList);
-					setState(35);
+					setState(39);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-					setState(36);
+					setState(40);
 					commandArg();
 					}
 					} 
 				}
-				setState(41);
+				setState(45);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
@@ -291,36 +315,49 @@ public class TerminalParser extends Parser {
 	}
 
 	public static class CommandArgContext extends ParserRuleContext {
-		public ValueContext value() {
-			return getRuleContext(ValueContext.class,0);
-		}
-		public KeyvalueContext keyvalue() {
-			return getRuleContext(KeyvalueContext.class,0);
-		}
 		public CommandArgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_commandArg; }
+	 
+		public CommandArgContext() { }
+		public void copyFrom(CommandArgContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class KwargContext extends CommandArgContext {
+		public KeyvalueContext keyvalue() {
+			return getRuleContext(KeyvalueContext.class,0);
+		}
+		public KwargContext(CommandArgContext ctx) { copyFrom(ctx); }
+	}
+	public static class ArgContext extends CommandArgContext {
+		public ValueContext value() {
+			return getRuleContext(ValueContext.class,0);
+		}
+		public ArgContext(CommandArgContext ctx) { copyFrom(ctx); }
 	}
 
 	public final CommandArgContext commandArg() throws RecognitionException {
 		CommandArgContext _localctx = new CommandArgContext(_ctx, getState());
 		enterRule(_localctx, 8, RULE_commandArg);
 		try {
-			setState(44);
+			setState(48);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
+				_localctx = new ArgContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(42);
+				setState(46);
 				value();
 				}
 				break;
 			case 2:
+				_localctx = new KwargContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(43);
+				setState(47);
 				keyvalue();
 				}
 				break;
@@ -377,14 +414,14 @@ public class TerminalParser extends Parser {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_value);
 		try {
-			setState(52);
+			setState(56);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case DQSTRING:
 				_localctx = new DQStringContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(46);
+				setState(50);
 				match(DQSTRING);
 				}
 				break;
@@ -392,7 +429,7 @@ public class TerminalParser extends Parser {
 				_localctx = new SQStringContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(47);
+				setState(51);
 				match(SQSTRING);
 				}
 				break;
@@ -400,7 +437,7 @@ public class TerminalParser extends Parser {
 				_localctx = new LongFlagContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(48);
+				setState(52);
 				match(LONGFLAG);
 				}
 				break;
@@ -408,7 +445,7 @@ public class TerminalParser extends Parser {
 				_localctx = new ShortFlagContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(49);
+				setState(53);
 				match(SHORTFLAG);
 				}
 				break;
@@ -416,7 +453,7 @@ public class TerminalParser extends Parser {
 				_localctx = new NumberContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(50);
+				setState(54);
 				match(NUMBER);
 				}
 				break;
@@ -424,7 +461,7 @@ public class TerminalParser extends Parser {
 				_localctx = new WordContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(51);
+				setState(55);
 				match(WORD);
 				}
 				break;
@@ -465,11 +502,11 @@ public class TerminalParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(54);
+			setState(58);
 			((KeyvalueContext)_localctx).k = key();
-			setState(55);
+			setState(59);
 			match(ASSIGN);
-			setState(56);
+			setState(60);
 			((KeyvalueContext)_localctx).v = value();
 			}
 		}
@@ -498,7 +535,7 @@ public class TerminalParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
+			setState(62);
 			match(WORD);
 			}
 		}
@@ -515,37 +552,46 @@ public class TerminalParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
+		case 0:
+			return commandSequence_sempred((CommandSequenceContext)_localctx, predIndex);
 		case 3:
 			return commandArgList_sempred((CommandArgListContext)_localctx, predIndex);
 		}
 		return true;
 	}
-	private boolean commandArgList_sempred(CommandArgListContext _localctx, int predIndex) {
+	private boolean commandSequence_sempred(CommandSequenceContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
+			return precpred(_ctx, 2);
+		}
+		return true;
+	}
+	private boolean commandArgList_sempred(CommandArgListContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 1:
 			return precpred(_ctx, 1);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20?\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\5\2\25\n\2"+
-		"\3\2\3\2\3\2\3\2\5\2\33\n\2\3\3\3\3\5\3\37\n\3\3\4\3\4\3\5\3\5\3\5\3\5"+
-		"\3\5\7\5(\n\5\f\5\16\5+\13\5\3\6\3\6\5\6/\n\6\3\7\3\7\3\7\3\7\3\7\3\7"+
-		"\5\7\67\n\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\2\3\b\n\2\4\6\b\n\f\16\20\2\2"+
-		"\2@\2\32\3\2\2\2\4\34\3\2\2\2\6 \3\2\2\2\b\"\3\2\2\2\n.\3\2\2\2\f\66\3"+
-		"\2\2\2\168\3\2\2\2\20<\3\2\2\2\22\24\5\4\3\2\23\25\7\3\2\2\24\23\3\2\2"+
-		"\2\24\25\3\2\2\2\25\33\3\2\2\2\26\27\5\4\3\2\27\30\7\3\2\2\30\31\5\2\2"+
-		"\2\31\33\3\2\2\2\32\22\3\2\2\2\32\26\3\2\2\2\33\3\3\2\2\2\34\36\5\6\4"+
-		"\2\35\37\5\b\5\2\36\35\3\2\2\2\36\37\3\2\2\2\37\5\3\2\2\2 !\7\17\2\2!"+
-		"\7\3\2\2\2\"#\b\5\1\2#$\5\n\6\2$)\3\2\2\2%&\f\3\2\2&(\5\n\6\2\'%\3\2\2"+
-		"\2(+\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\t\3\2\2\2+)\3\2\2\2,/\5\f\7\2-/\5\16"+
-		"\b\2.,\3\2\2\2.-\3\2\2\2/\13\3\2\2\2\60\67\7\f\2\2\61\67\7\r\2\2\62\67"+
-		"\7\6\2\2\63\67\7\5\2\2\64\67\7\16\2\2\65\67\7\17\2\2\66\60\3\2\2\2\66"+
-		"\61\3\2\2\2\66\62\3\2\2\2\66\63\3\2\2\2\66\64\3\2\2\2\66\65\3\2\2\2\67"+
-		"\r\3\2\2\289\5\20\t\29:\7\4\2\2:;\5\f\7\2;\17\3\2\2\2<=\7\17\2\2=\21\3"+
-		"\2\2\2\b\24\32\36).\66";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20C\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\5\2\26"+
+		"\n\2\3\2\3\2\7\2\32\n\2\f\2\16\2\35\13\2\3\3\3\3\5\3!\n\3\3\3\3\3\3\4"+
+		"\3\4\3\5\3\5\3\5\3\5\3\5\7\5,\n\5\f\5\16\5/\13\5\3\6\3\6\5\6\63\n\6\3"+
+		"\7\3\7\3\7\3\7\3\7\3\7\5\7;\n\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\2\4\2\b\n"+
+		"\2\4\6\b\n\f\16\20\2\2\2D\2\25\3\2\2\2\4\36\3\2\2\2\6$\3\2\2\2\b&\3\2"+
+		"\2\2\n\62\3\2\2\2\f:\3\2\2\2\16<\3\2\2\2\20@\3\2\2\2\22\23\b\2\1\2\23"+
+		"\26\5\4\3\2\24\26\7\2\2\3\25\22\3\2\2\2\25\24\3\2\2\2\26\33\3\2\2\2\27"+
+		"\30\f\4\2\2\30\32\5\4\3\2\31\27\3\2\2\2\32\35\3\2\2\2\33\31\3\2\2\2\33"+
+		"\34\3\2\2\2\34\3\3\2\2\2\35\33\3\2\2\2\36 \5\6\4\2\37!\5\b\5\2 \37\3\2"+
+		"\2\2 !\3\2\2\2!\"\3\2\2\2\"#\7\3\2\2#\5\3\2\2\2$%\7\17\2\2%\7\3\2\2\2"+
+		"&\'\b\5\1\2\'(\5\n\6\2(-\3\2\2\2)*\f\3\2\2*,\5\n\6\2+)\3\2\2\2,/\3\2\2"+
+		"\2-+\3\2\2\2-.\3\2\2\2.\t\3\2\2\2/-\3\2\2\2\60\63\5\f\7\2\61\63\5\16\b"+
+		"\2\62\60\3\2\2\2\62\61\3\2\2\2\63\13\3\2\2\2\64;\7\f\2\2\65;\7\r\2\2\66"+
+		";\7\6\2\2\67;\7\5\2\28;\7\16\2\29;\7\17\2\2:\64\3\2\2\2:\65\3\2\2\2:\66"+
+		"\3\2\2\2:\67\3\2\2\2:8\3\2\2\2:9\3\2\2\2;\r\3\2\2\2<=\5\20\t\2=>\7\4\2"+
+		"\2>?\5\f\7\2?\17\3\2\2\2@A\7\17\2\2A\21\3\2\2\2\b\25\33 -\62:";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

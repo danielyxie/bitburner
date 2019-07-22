@@ -102,6 +102,12 @@ import autosize from "autosize";
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 
+const antlr4 = require('antlr4');
+const TerminalLexer = require('../utils/grammars/TerminalLexer').TerminalLexer;
+const TerminalParser = require('../utils/grammars/TerminalParser').TerminalParser;
+const CommandListener = require('../utils/grammars/CommandListener').CommandListener;
+
+
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
@@ -608,12 +614,24 @@ let Terminal = {
             }
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
-
-        // Split commands and execute sequentially
-        commands = commands.split(";");
+        // Real parser, the splitting breaks aliasing multiple commands.
+        var chars = new antlr4.InputStream(commands); // text 
+        var lexer = new TerminalLexer(chars);   // text to symbols 
+        var tokens = new antlr4.CommonTokenStream(lexer); // symbols
+        var parser = new TerminalParser(tokens); // symbols to ast
+        parser.buildParseTrees = true;
+        console.log(`Parsing "${commands}"...`) 
+        var tree = parser.commandSequence();
+        var commandListener = new CommandListener();
+        antlr4.tree.ParseTreeWalker.DEFAULT.walk(commandListener, tree);
+        
+        commands = commandListener.parsedCommands;
+        // Execute sequentially
         for (let i = 0; i < commands.length; i++) {
-            if(commands[i].match(/^\s*$/)) { continue; } // Don't run commands that only have whitespace
-            Terminal.executeCommand(commands[i].trim());
+            // the parser automatically removes empty statements.
+            // we just have to execute them now.
+            Terminal.executeCommand(commands[i].string);
+            console.log(`Executed command > ${commands[i].string}`);
         }
     },
 
@@ -714,7 +732,7 @@ let Terminal = {
 
         // Process any aliases
         command = substituteAliases(command);
-
+        
         // Allow usage of ./
         if (command.startsWith("./")) {
             command = "run " + command.slice(2);
