@@ -1,4 +1,4 @@
-// Generated from Terminal.g4 by ANTLR 4.7.2
+// Generated from utils/grammars/Terminal.g4 by ANTLR 4.7.2
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 
@@ -47,12 +47,21 @@ TerminalListener.prototype.exitCommandArgList = function(ctx) {
 };
 
 
-// Enter a parse tree produced by TerminalParser#commandArg.
-TerminalListener.prototype.enterCommandArg = function(ctx) {
+// Enter a parse tree produced by TerminalParser#arg.
+TerminalListener.prototype.enterArg = function(ctx) {
 };
 
-// Exit a parse tree produced by TerminalParser#commandArg.
-TerminalListener.prototype.exitCommandArg = function(ctx) {
+// Exit a parse tree produced by TerminalParser#arg.
+TerminalListener.prototype.exitArg = function(ctx) {
+};
+
+
+// Enter a parse tree produced by TerminalParser#kwarg.
+TerminalListener.prototype.enterKwarg = function(ctx) {
+};
+
+// Exit a parse tree produced by TerminalParser#kwarg.
+TerminalListener.prototype.exitKwarg = function(ctx) {
 };
 
 

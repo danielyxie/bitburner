@@ -1,12 +1,13 @@
 grammar Terminal;
 
 commandSequence
-    :   command ENDOFCOMMAND?
-    |   command ENDOFCOMMAND commandSequence
+    :   command 
+    |   commandSequence command
+    |   EOF
     ;
 
 command 
-    : name=commandName args=commandArgList? // sycbskreuy "afbu'a" 'test' -e h3h3 --uheueheu ./hshshh12!ncu.exe;
+    : name=commandName args=commandArgList? ENDOFCOMMAND// sycbskreuy "afbu'a" 'test' -e h3h3 --uheueheu ./hshshh12!ncu.exe;
     ;
 
 commandName
@@ -14,13 +15,13 @@ commandName
     ;
 
 commandArgList
-    : commandArg
-    | commandArgList commandArg
+    : commandArg 
+    | commandArgList commandArg 
     ;
 
 commandArg
-    : value     // val
-    | keyvalue  // a=b
+    : value     #arg// val
+    | keyvalue  #kwarg // a=b
     ;
 
 value
@@ -41,7 +42,7 @@ key
     ;
 
 
-ENDOFCOMMAND: (';'|'\r'? '\n')+;
+ENDOFCOMMAND: (';'|'\r'? '\n')+|EOF;
 
 // from https://stackoverflow.com/questions/2821043/allowed-characters-in-linux-environment-variable-names
 

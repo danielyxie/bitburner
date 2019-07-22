@@ -1,21 +1,32 @@
-
+import {TerminalListener} from "./TerminalListener.js";
 // CUSTOM LISTENER READING AND BUILDING COMMANDS FROM THE AST.
-class CommandListener extends TerminalListener{
+export class CommandListener extends TerminalListener{
 
 	constructor(){
 		super();
-		this.commands = [];
-		this.currentCommand = [];
+		this.parsedCommands = [];
+		this.currentCommand = {};
 	}
 
 	enterCommand(ctx){
-		this.currentCommand = [];
+		this.currentCommand = { name:ctx.name.getText(), args:[], kwargs:{}, orderedArgs:[] };
 	}
+
+    enterArg(ctx){
+        this.currentCommand.args.push(ctx.getChild(0).getText());
+        this.currentCommand.orderedArgs.push(ctx.getChild(0).getText());
+    }
+
+    enterKeyvalue(ctx){
+        let key = ctx.k.getText();
+        let value = ctx.v.getText();
+        this.currentCommand.kwargs[key] = value;
+        this.currentCommand.orderedArgs.push( `${key}=${value}`);
+    }
 
 	exitCommand(ctx){
-		this.commands.push(this.currentCommand);
-		this.currentCommand = [];
+        this.currentCommand.string = `${this.currentCommand.name} ${this.currentCommand.orderedArgs.join(" ")}`;
+        this.parsedCommands.push(this.currentCommand);
+        //console.log(`Parsed command ${this.currentCommand.name}: args=${JSON.stringify(this.currentCommand.args)}, namedArgs=${JSON.stringify(this.currentCommand.kwargs)}`);
 	}
 }
-
-exports.CommandListener = CommandListener;
