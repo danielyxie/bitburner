@@ -6,3 +6,4 @@ Netburner.txt
 /test/*.map
 /test/*.bundle.*
 /test/*.css
+.vscode/launch.json

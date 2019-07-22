@@ -614,7 +614,9 @@ let Terminal = {
             }
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
-        // Real parser, the splitting breaks aliasing multiple commands.
+        // Process any aliases
+        commands = substituteAliases(commands);
+
         var chars = new antlr4.InputStream(commands); // text 
         var lexer = new TerminalLexer(chars);   // text to symbols 
         var tokens = new antlr4.CommonTokenStream(lexer); // symbols
@@ -631,7 +633,7 @@ let Terminal = {
             // the parser automatically removes empty statements.
             // we just have to execute them now.
             Terminal.executeCommand(commands[i].string);
-            console.log(`Executed command > ${commands[i].string}`);
+            
         }
     },
 
@@ -730,9 +732,8 @@ let Terminal = {
             return;
         }
 
-        // Process any aliases
-        command = substituteAliases(command);
         
+        console.log(`Executed command > ${command}`);
         // Allow usage of ./
         if (command.startsWith("./")) {
             command = "run " + command.slice(2);
