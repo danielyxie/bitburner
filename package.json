@@ -30,6 +30,7 @@
     "jszip": "^3.1.5",
     "loader-runner": "^2.3.0",
     "loader-utils": "^1.1.0",
+    "memfs": "^2.15.5",
     "memory-fs": "~0.4.1",
     "normalize.css": "^8.0.0",
     "numeral": "2.0.6",

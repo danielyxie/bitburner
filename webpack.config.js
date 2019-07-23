@@ -142,7 +142,10 @@ module.exports = (env, argv) => {
                 ".ts",
                 ".js",
                 ".jsx",
-            ]
+            ],
+            alias: {
+                'fs' : 'memfs'
+            }
         },
         stats: statsConfig,
     };
