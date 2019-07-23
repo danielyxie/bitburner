@@ -14,6 +14,8 @@ import { isScriptFilename } from "../Script/ScriptHelpersTS";
 import { createRandomIp } from "../../utils/IPAddress";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 
+import { createFsFromVolume, Volume } from 'memfs';
+
 interface IConstructorParams {
     adminRights?: boolean;
     hostname: string;
@@ -74,6 +76,10 @@ export class BaseServer {
     // Script files on this Server
     scripts: Script[] = [];
 
+    // Filesystem of this server
+    vol:any;
+    fs:any;
+
     // Contains the IP Addresses of all servers that are immediately
     // reachable from this one
     serversOnNetwork: string[] = [];
@@ -90,7 +96,11 @@ export class BaseServer {
     // Text files on this server
     textFiles: TextFile[] = [];
 
-    constructor(params: IConstructorParams={ hostname: "", ip: createRandomIp() }) {
+    constructor(params: IConstructorParams={ hostname: "", ip: createRandomIp() }) {    
+        // Filesystem of this server
+        this.vol = Volume.fromJSON({});
+        this.fs = createFsFromVolume(this.vol);
+
         this.ip = params.ip ? params.ip : createRandomIp();
 
         this.hostname           =     params.hostname;
@@ -176,6 +186,10 @@ export class BaseServer {
      * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
      */
     removeFile(fn: string): IReturnStatus {
+        console.log(`Does the file exists on the server? ${this.fs.existsSync(fn)}`);
+        this.fs.unlinkSync(fn)
+        console.log(`Does the file still exists on the server? ${this.fs.existsSync(fn)}`);
+
         if (fn.endsWith(".exe") || fn.match(/^.+\.exe-\d+(?:\.\d*)?%-INC$/) != null) {
             for (let i = 0; i < this.programs.length; ++i) {
                 if (this.programs[i] === fn) {
@@ -243,6 +257,9 @@ export class BaseServer {
      * Overwrites existing files. Creates new files if the script does not eixst
      */
     writeToScriptFile(fn: string, code: string) {
+        console.warn(`Writing into file ${fn}`);
+        this.fs.writeFileSync(fn, code);
+
         var ret = { success: false, overwritten: false };
         if (!isValidFilePath(fn) || !isScriptFilename(fn)) { return ret; }
 
@@ -269,6 +286,9 @@ export class BaseServer {
     // Write to a text file
     // Overwrites existing files. Creates new files if the text file does not exist
     writeToTextFile(fn: string, txt: string) {
+        console.warn(`Writing into file ${fn}`);
+        this.fs.writeFileSync(fn, txt);
+
         var ret = { success: false, overwritten: false };
         if (!isValidFilePath(fn) || !fn.endsWith("txt")) { return ret; }
 
