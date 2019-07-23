@@ -103,8 +103,8 @@ export class Script {
                 console.error(`Failed to get Script filename DOM element`);
                 return;
             }
-    		this.filename = filenameElem!.value;
-    		this.server = serverIp;
+            this.filename = filenameElem!.value;
+            this.server = serverIp;
     		this.updateRamUsage(otherScripts);
             this.markUpdated();
     	}

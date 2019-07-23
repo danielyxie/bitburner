@@ -1034,8 +1034,9 @@ const Engine = {
         const dev               = document.getElementById("dev-tab");
 
         // Load game from save or create new game
-        
+        //load literature data before any potential migration
         initLiterature();
+        
         if (loadGame(saveString)) {
             initBitNodeMultipliers(Player);
             Engine.setDisplayElements();    // Sets variables for important DOM elements
