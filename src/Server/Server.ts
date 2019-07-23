@@ -9,6 +9,10 @@ import { Generic_fromJSON,
          Generic_toJSON,
          Reviver } from "../../utils/JSONReviver";
 
+import { createFsFromVolume, Volume } from 'memfs';
+
+import { Literatures } from "../Literature";
+
 export interface IConstructorParams {
     adminRights?: boolean;
     hackDifficulty?: number;
@@ -27,8 +31,59 @@ export interface IConstructorParams {
 export class Server extends BaseServer {
     // Initializes a Server Object from a JSON save state
     static fromJSON(value: any): Server {
-        return Generic_fromJSON(Server, value.data);
+        let server = Generic_fromJSON(Server, value.data);
+        
+        // Filesystem of this server was reverted to JSON, we rebuild the fs from it.
+        //console.log(`Loading server ${server.hostname} files: ${JSON.stringify(server.volJSON)}`);
+        server.vol = Volume.fromJSON(server.volJSON);
+        server.fs = createFsFromVolume(server.vol);
+
+        //console.log(`Migrating old file system to the new file system...`)
+        // MIGRATION FROM THE OLD PROPERTY SEPARATED SYSTEM.
+        //console.log(`Migrating scripts`);
+        for(let i = 0; i< server.scripts.length; i++){ // migrating scripts.
+            let script = server.scripts[i];
+            let filename = script.filename;
+            let data = script.code;
+            server.fs.writeFileSync(filename, data);
+        }
+        //console.log(`Migrating Text files`);
+        for(let i = 0; i< server.textFiles.length; i++){ // migrating text files
+            let textFile = server.textFiles[i];
+            let filename = textFile.fn;
+            let data = textFile.text;
+            server.fs.writeFileSync(filename, data);
+        }
+        //console.log(`Migrating Messages `);
+        for(let i = 0; i< server.messages.length; i++){ // migrating litterature/message files
+            let msg = server.messages[i];
+            let filename = "";
+            let data = "";
+            if (typeof msg === "string"){ // then the message is a file name only. litterature files. we fetch their content.
+                
+                filename = msg;
+                data = `Obj: ${Literatures[msg].title}\n\n${Literatures[msg].txt}`;
+            } 
+            else{ // the message is a Message. 
+                filename = msg.filename;
+                data = msg.msg;
+            }
+            server.fs.writeFileSync(filename, data);
+        }
+        //console.log(`Migrating Programs`);
+        for(let i = 0; i< server.programs.length; i++){ // migrating program files
+            let filename = server.programs[i];
+            let data = ""; //TODO find a content to add to those programs source code.
+            server.fs.writeFileSync(filename, data);
+        }
+        server.volJSON = server.vol.toJSON();
+        console.log(`Loaded server ${server.hostname} files: ${JSON.stringify(server.volJSON)}`);
+
+        return server;
     }
+
+    // JSON save state of the server Volume, used as a serializable data format for its file system.
+    volJSON: Record<string, string | null>;
 
     // Initial server security level
     // (i.e. security level when the server was created)
@@ -92,6 +147,11 @@ export class Server extends BaseServer {
 
         //Port information, required for porthacking servers to get admin rights
         this.numOpenPortsRequired = params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
+
+        // file system, contains the server local files
+
+        this.volJSON = this.vol.toJSON();
+
     };
 
     /**
@@ -155,6 +215,9 @@ export class Server extends BaseServer {
      * Serialize the current object to a JSON save state
      */
     toJSON(): any {
+        // we changes the volume to its JSON conterpart for serialization.
+        this.volJSON = this.vol.toJSON();
+
         return Generic_toJSON("Server", this);
     }
 }
