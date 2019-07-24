@@ -170,6 +170,10 @@ export class BaseServer {
     }
 
     resolvePath( filepath:string, cwd:string){
+        //TODO using another arguments like a kind of $PATH, and using ...PATH in the path.resolve could allow using a global import environment
+        // this could allow moving system executables in a sys folder and importing the system functions as dependencies directly.
+        // Also, adding the server object to any running script environment could  allow direct file system manipulation instead of the ns.func one.
+        // RAM calculations could still be possible with this system, only using fs.func instead of ns.func for the detection.
         let resolvedPath = path.resolve(path.dirname(cwd), filepath );
         console.log(`resolving path from file ${cwd} (${path.dirname(cwd)}) to file ${filepath} => ${resolvedPath}`)
         return resolvedPath;
