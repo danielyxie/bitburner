@@ -32,11 +32,6 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {Server} server - Server where the scripts are supposed to be, used to import scripts.
  */
 async function parseOnlyRamCalculate(codepath, code, workerScript, server) {
-    
-    if (!server) {
-        console.error(`No server passed in argument.`);
-        return RamCalculationErrorCode.SyntaxError;
-    }
     try {
         /**
          * Maps dependent identifiers to their dependencies.
@@ -309,11 +304,6 @@ function parseOnlyCalculateDeps(code, currentModule) {
  * @param {Server} server - The server where the script and its dependencies are supposed to be.
  */
 export async function calculateRamUsage(codepath, codeCopy, server) {
-    if (!server) {
-        console.error(`No server passed in argument.`);
-        return RamCalculationErrorCode.SyntaxError;
-    }
-
     // We don't need a real WorkerScript for this. Just an object that keeps
     // track of whatever's needed for RAM calculations
     const workerScript = {
