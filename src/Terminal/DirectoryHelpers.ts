@@ -164,7 +164,7 @@ export function evaluateDirectoryPath(server: any, path: string, currPath?: stri
     // If the path begins with a slash, then its an absolute path. Otherwise its relative
     // For relative paths, we need to prepend the current directory
     if (!t_path.startsWith("/") && currPath != null) {
-        t_path = currPath + (currPath.endsWith("/") ? "" : "/") + t_path;
+        t_path = currPath + (currPath.endsWith("/") ? "" : "/") + t_path + (t_path.endsWith("/") ? "" : "/");
     }
     console.log(`1. Current temporary path = ${JSON.stringify(t_path)}`);
 
