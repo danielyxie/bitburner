@@ -102,6 +102,7 @@ import { mkdir } from "./Server/lib/mkdir";
 import { rm } from "./Server/lib/rm";
 import { ls } from "./Server/lib/ls";
 import { tree } from "./Server/lib/tree";
+import { fs } from 'memfs';
 
 import autosize from "autosize";
 import * as JSZip from "jszip";
@@ -1561,10 +1562,27 @@ let Terminal = {
                     mkdir(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
                     break;
                 
-                default:
+                default: {
+
                     let path = Terminal.getFilepath(commandArray[0]);
-                    if(Player.getCurrentServer().isDir(path)) post(`${path} is a directory.`);
+                    if(Player.getCurrentServer().exists(path)) {
+                        // if it's an existing path, check if it is a directory or an executable
+                        try{
+                            if (Player.getCurrentServer().isDir(path)) post(`${path} is a directory.`);
+                            else {
+                                Player.getCurrentServer().fs.accessSync(path, fs.constants.X_OK); // if it works, it is an executable file
+                                // we launch a run path command.
+                                post(`${path} is an executable. # auto running executables has yet to be implemented, use run for now.`);
+                            }
+                        }catch(e){
+                            // this is not an executable file nor a directory.
+                            // we display some informations on the nature of the file.
+                            post(`${path} is a file.`);
+                        }
+                    }
                     else postError(`${commandArray[0]} not found`);
+                    break;
+                }
             }
         }catch(e){
             Terminal.postThrownError(e);
