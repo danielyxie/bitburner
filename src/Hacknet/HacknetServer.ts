@@ -6,15 +6,15 @@ import { CONSTANTS } from "../Constants";
 import { IHacknetNode } from "./IHacknetNode";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { BaseServer } from "../Server/BaseServer";
 import { RunningScript } from "../Script/RunningScript";
+import { BaseServer } from "../Server/BaseServer";
 
 import { createRandomIp } from "../../utils/IPAddress";
 
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../../utils/JSONReviver";
 
 // Constants for Hacknet Server stats/production
@@ -76,7 +76,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     // Total number of hashes earned by this
     totalHashesGenerated: number = 0;
 
-    constructor(params: IConstructorParams={ hostname: "", ip: createRandomIp() }) {
+    constructor(params: IConstructorParams= { hostname: "", ip: createRandomIp() }) {
         super(params);
 
         this.maxRam = 1;
@@ -119,7 +119,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
         let totalCost = 0;
         let currentCores = this.cores;
         for (let i = 0; i < sanitizedLevels; ++i) {
-            totalCost += Math.pow(mult, currentCores-1);
+            totalCost += Math.pow(mult, currentCores - 1);
             ++currentCores;
         }
         totalCost *= BaseCostForHacknetServerCore;
@@ -163,8 +163,8 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
         let numUpgrades = Math.round(Math.log2(this.maxRam));
         let currentRam = this.maxRam;
         for (let i = 0; i < sanitizedLevels; ++i) {
-            let baseCost = currentRam * BaseCostFor1GBHacknetServerRam;
-            let mult = Math.pow(HacknetServerUpgradeRamMult, numUpgrades);
+            const baseCost = currentRam * BaseCostFor1GBHacknetServerRam;
+            const mult = Math.pow(HacknetServerUpgradeRamMult, numUpgrades);
 
             totalCost += (baseCost * mult);
 
@@ -177,7 +177,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     }
 
     // Process this Hacknet Server in the game loop. Returns the number of hashes generated
-    process(numCycles: number=1): number {
+    process(numCycles: number= 1): number {
         const seconds = numCycles * CONSTANTS.MilliPerCycle / 1000;
 
         return this.hashRate * seconds;
@@ -207,7 +207,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
         return true;
     }
-    
+
     // Whenever a script is run, we must update this server's hash rate
     runScript(script: RunningScript, prodMult?: number): void {
         super.runScript(script);
@@ -232,7 +232,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
         if (isNaN(this.hashRate)) {
             this.hashRate = 0;
-            console.error(`Error calculating Hacknet Server hash production. This is a bug. Please report to game dev`, false);
+            console.error("Error calculating Hacknet Server hash production. This is a bug. Please report to game dev", false);
         }
     }
 

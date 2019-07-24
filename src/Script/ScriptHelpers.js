@@ -269,7 +269,11 @@ function saveAndCloseScriptEditor() {
     }
 
     if (filename !== ".fconf" && !isValidFilePath(filename)) {
-        dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
+        dialogBoxCreate(`<ul>
+        <li> A file or directory name allows everything except ':', '"', '<', '>', '/', '|', '\\', '?' or '*'</li>
+        <li> The name must not start nor end with a space</li>
+        <li> The name must not end with a period</li>
+        </ul>"`);
         return;
     }
 
@@ -281,7 +285,13 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate(`Invalid .fconf file: ${e}`);
             return;
         }
-    } else if (isScriptFilename(filename)) {
+    } else {
+        s.writeFile(filename, getCurrentEditor().getCode(), true);
+    }
+    
+    Engine.loadTerminalContent();
+    /*
+    if (isScriptFilename(filename)) {
         //If the current script already exists on the server, overwrite it
         for (var i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
@@ -310,7 +320,7 @@ function saveAndCloseScriptEditor() {
                         " or text file (.txt)")
         return;
     }
-    Engine.loadTerminalContent();
+    */
 }
 
 export function scriptCalculateOfflineProduction(runningScriptObj) {

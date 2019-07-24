@@ -4,9 +4,9 @@
  */
 import { IPlayer } from "../IPlayer";
 
-import { CovenantPurchasesRoot } from "./ui/CovenantPurchasesRoot";
 import { createPopup,
          removePopup } from "../../ui/React/createPopup";
+import { CovenantPurchasesRoot } from "./ui/CovenantPurchasesRoot";
 
 export const MaxSleevesFromCovenant: number = 5;
 export const BaseCostPerSleeve: number = 10e12;
@@ -14,5 +14,5 @@ export const PopupId: string = "covenant-sleeve-purchases-popup";
 
 export function createSleevePurchasesFromCovenantPopup(p: IPlayer) {
     const removePopupFn = removePopup.bind(null, PopupId);
-    createPopup(PopupId, CovenantPurchasesRoot, { p: p, closeFn: removePopupFn });
+    createPopup(PopupId, CovenantPurchasesRoot, { p, closeFn: removePopupFn });
 }

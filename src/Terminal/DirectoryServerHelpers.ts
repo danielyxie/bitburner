@@ -7,12 +7,12 @@
  * Functions that deal with the string manipulation can be found in
  * ./DirectoryHelpers.ts
  */
-import {
-    isValidDirectoryPath,
-    isInRootDirectory,
-    getFirstParentDirectory,
-} from "./DirectoryHelpers";
 import { BaseServer } from "../Server/BaseServer";
+import {
+    getFirstParentDirectory,
+    isInRootDirectory,
+    isValidDirectoryPath,
+} from "./DirectoryHelpers";
 
 /**
  * Given a directory (by the full directory path) and a server, returns all

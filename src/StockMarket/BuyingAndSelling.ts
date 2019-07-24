@@ -23,7 +23,7 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 * Each function takes an optional config object as its last argument
 */
 interface IOptions {
-    rerenderFn?: () => void;
+    rerenderFn?(): void;
     suppressDialog?: boolean;
 }
 
@@ -35,7 +35,7 @@ interface IOptions {
  * @param opts - Optional configuration for this function's behavior. See top of file
  * @returns {boolean} - true if successful, false otherwise
  */
-export function buyStock(stock: Stock, shares: number, workerScript: WorkerScript | null=null, opts: IOptions={}): boolean {
+export function buyStock(stock: Stock, shares: number, workerScript: WorkerScript | null= null, opts: IOptions= {}): boolean {
     const tixApi = (workerScript instanceof WorkerScript);
 
     // Validate arguments
@@ -43,7 +43,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
     if (shares <= 0) { return false; }
     if (stock == null || isNaN(shares)) {
         if (tixApi) {
-            workerScript!.log(`ERROR: buyStock() failed due to invalid arguments`);
+            workerScript!.log("ERROR: buyStock() failed due to invalid arguments");
         } else if (opts.suppressDialog !== true) {
             dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
         }
@@ -85,8 +85,8 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
         opts.rerenderFn();
     }
 
-    const resultTxt = `Bought ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol} for ${numeralWrapper.formatMoney(totalPrice)}. ` +
-                      `Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} in commission fees.`
+    const resultTxt = `Bought ${numeralWrapper.format(shares, "0,0")} shares of ${stock.symbol} for ${numeralWrapper.formatMoney(totalPrice)}. ` +
+                      `Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} in commission fees.`;
     if (tixApi) {
         if (workerScript!.shouldLog("buyStock")) { workerScript!.log(resultTxt); }
     } else if (opts.suppressDialog !== true) {
@@ -104,13 +104,13 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
  * @param opts - Optional configuration for this function's behavior. See top of file
  * returns {boolean} - true if successfully sells given number of shares OR MAX owned, false otherwise
  */
-export function sellStock(stock: Stock, shares: number, workerScript: WorkerScript | null=null, opts: IOptions={}): boolean {
+export function sellStock(stock: Stock, shares: number, workerScript: WorkerScript | null= null, opts: IOptions= {}): boolean {
     const tixApi = (workerScript instanceof WorkerScript);
 
     // Sanitize/Validate arguments
     if (stock == null || shares < 0 || isNaN(shares)) {
         if (tixApi) {
-            workerScript!.log(`ERROR: sellStock() failed due to invalid arguments`);
+            workerScript!.log("ERROR: sellStock() failed due to invalid arguments");
         } else if (opts.suppressDialog !== true) {
             dialogBoxCreate("Failed to sell stock. This is probably due to an invalid quantity. Otherwise, this may be a bug, contact developer");
         }
@@ -143,7 +143,7 @@ export function sellStock(stock: Stock, shares: number, workerScript: WorkerScri
         opts.rerenderFn();
     }
 
-    const resultTxt = `Sold ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol}. ` +
+    const resultTxt = `Sold ${numeralWrapper.format(shares, "0,0")} shares of ${stock.symbol}. ` +
                       `After commissions, you gained a total of ${numeralWrapper.formatMoney(gains)}.`;
     if (tixApi) {
         if (workerScript!.shouldLog("sellStock")) { workerScript!.log(resultTxt); }
@@ -162,7 +162,7 @@ export function sellStock(stock: Stock, shares: number, workerScript: WorkerScri
  * @param opts - Optional configuration for this function's behavior. See top of file
  * @returns {boolean} - true if successful, false otherwise
  */
-export function shortStock(stock: Stock, shares: number, workerScript: WorkerScript | null=null, opts: IOptions={}): boolean {
+export function shortStock(stock: Stock, shares: number, workerScript: WorkerScript | null= null, opts: IOptions= {}): boolean {
     const tixApi = (workerScript instanceof WorkerScript);
 
     // Validate arguments
@@ -216,9 +216,9 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
         opts.rerenderFn();
     }
 
-    const resultTxt = `Bought a short position of ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol} ` +
+    const resultTxt = `Bought a short position of ${numeralWrapper.format(shares, "0,0")} shares of ${stock.symbol} ` +
                       `for ${numeralWrapper.formatMoney(totalPrice)}. Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} ` +
-                      `in commission fees.`;
+                      "in commission fees.";
     if (tixApi) {
         if (workerScript!.shouldLog("shortStock")) { workerScript!.log(resultTxt); }
     } else if (!opts.suppressDialog) {
@@ -236,7 +236,7 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
  * @param opts - Optional configuration for this function's behavior. See top of file
  * @returns {boolean} true if successfully sells given amount OR max owned, false otherwise
  */
-export function sellShort(stock: Stock, shares: number, workerScript: WorkerScript | null=null, opts: IOptions={}): boolean {
+export function sellShort(stock: Stock, shares: number, workerScript: WorkerScript | null= null, opts: IOptions= {}): boolean {
     const tixApi = (workerScript instanceof WorkerScript);
 
     if (stock == null || isNaN(shares) || shares < 0) {
@@ -250,16 +250,16 @@ export function sellShort(stock: Stock, shares: number, workerScript: WorkerScri
         return false;
     }
     shares = Math.round(shares);
-    if (shares > stock.playerShortShares) {shares = stock.playerShortShares;}
-    if (shares === 0) {return false;}
+    if (shares > stock.playerShortShares) {shares = stock.playerShortShares; }
+    if (shares === 0) {return false; }
 
     const origCost = shares * stock.playerAvgShortPx;
     const totalGain = getSellTransactionGain(stock, shares, PositionTypes.Short);
     if (totalGain == null || isNaN(totalGain) || origCost == null) {
         if (tixApi) {
-            workerScript!.log(`Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug`);
+            workerScript!.log("Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug");
         } else if (!opts.suppressDialog) {
-            dialogBoxCreate(`Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug`);
+            dialogBoxCreate("Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug");
         }
 
         return false;
@@ -283,7 +283,7 @@ export function sellShort(stock: Stock, shares: number, workerScript: WorkerScri
         opts.rerenderFn();
     }
 
-    const resultTxt = `Sold your short position of ${numeralWrapper.format(shares, '0,0')} shares of ${stock.symbol}. ` +
+    const resultTxt = `Sold your short position of ${numeralWrapper.format(shares, "0,0")} shares of ${stock.symbol}. ` +
                       `After commissions, you gained a total of ${numeralWrapper.formatMoney(totalGain)}`;
     if (tixApi) {
         if (workerScript!.shouldLog("sellShort")) { workerScript!.log(resultTxt); }

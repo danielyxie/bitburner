@@ -34,7 +34,7 @@ export function createPopupCloseButton(popup: Element | string, options: ICreate
                     if (popupEl instanceof Element) {
                         removeElement(popupEl);
                     }
-                } catch(e) {
+                } catch (e) {
                     console.error(`createPopupCloseButton() threw: ${e}`);
                 }
             }

@@ -12,7 +12,7 @@ export let CONSTANTS: IMap<any> = {
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
      * the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
      */
-	MaxSkillLevel: 			975,
+	   MaxSkillLevel: 			975,
 
     // Milliseconds per game cycle
     MilliPerCycle: 200,
@@ -22,7 +22,7 @@ export let CONSTANTS: IMap<any> = {
 
     // Base RAM costs
     BaseCostFor1GBOfRamHome: 32000,
-    BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
+    BaseCostFor1GBOfRamServer: 55000, // 1 GB of RAM
 
     // Cost to travel to another city
     TravelCost: 200e3,
@@ -59,9 +59,9 @@ export let CONSTANTS: IMap<any> = {
     TorRouterCost: 200e3,
 
     // Infiltration
-    InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
-    InfiltrationMoneyValue: 5e3,            //Convert "secret" value to money
-    InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
+    InfiltrationBribeBaseAmount: 100e3,    // Amount per clearance level
+    InfiltrationMoneyValue: 5e3,            // Convert "secret" value to money
+    InfiltrationRepValue: 1.4,             // Convert "secret" value to faction reputation
     InfiltrationExpPow: 0.8,
 
     // Stock market
@@ -258,5 +258,5 @@ export let CONSTANTS: IMap<any> = {
     * Bug fix: Scripts no longer persist if they were started with syntax/import errors
     * Bug fix: 'hack' and 'analyze' Terminal commands are now blocking
     * Bug fix: Exp earned by duplicate sleeves at universities/gyms now takes hash upgrades into account
-    `
-}
+    `,
+};

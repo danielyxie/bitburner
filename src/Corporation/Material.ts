@@ -78,7 +78,7 @@ export class Material {
     }
 
     init(): void {
-        switch(this.name) {
+        switch (this.name) {
             case "Water":
                 this.dmd = 75; this.dmdR = [65, 85];
                 this.cmp = 50; this.cmpR = [40, 60];
@@ -112,7 +112,7 @@ export class Material {
             case "Hardware":
                 this.dmd = 85; this.dmdR = [80, 90];
                 this.cmp = 80; this.cmpR = [65, 95];
-                this.bCost = 8e3; this.mv = 0.5; //Less mv bc its processed twice
+                this.bCost = 8e3; this.mv = 0.5; // Less mv bc its processed twice
                 this.mku = 1;
                 break;
             case "Chemicals":
@@ -124,7 +124,7 @@ export class Material {
             case "Real Estate":
                 this.dmd = 50; this.dmdR = [5, 99];
                 this.cmp = 50; this.cmpR = [25, 75];
-                this.bCost = 80e3; this.mv = 1.5; //Less mv bc its processed twice
+                this.bCost = 80e3; this.mv = 1.5; // Less mv bc its processed twice
                 this.mku = 1.5;
                 break;
             case "Drugs":
@@ -136,13 +136,13 @@ export class Material {
             case "Robots":
                 this.dmd = 90; this.dmdR = [80, 9];
                 this.cmp = 90; this.cmpR = [80, 9];
-                this.bCost = 75e3; this.mv = 0.5; //Less mv bc its processed twice
+                this.bCost = 75e3; this.mv = 0.5; // Less mv bc its processed twice
                 this.mku = 1;
                 break;
             case "AI Cores":
                 this.dmd = 90; this.dmdR = [80, 99];
                 this.cmp = 90; this.cmpR = [80, 9];
-                this.bCost = 15e3; this.mv = 0.8; //Less mv bc its processed twice
+                this.bCost = 15e3; this.mv = 0.8; // Less mv bc its processed twice
                 this.mku = 0.5;
                 break;
             case "Scientific Research":
@@ -161,16 +161,16 @@ export class Material {
         const priceVolatility: number = (Math.random() * this.mv) / 300;
         const priceChange: number = 1 + priceVolatility;
 
-        //This 1st random check determines whether competition increases or decreases
+        // This 1st random check determines whether competition increases or decreases
         const compVolatility: number = (Math.random() * this.mv) / 100;
         const compChange: number = 1 + compVolatility;
         if (Math.random() < 0.5) {
             this.cmp *= compChange;
-            if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]};
+            if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]; }
             this.bCost *= (1 / priceChange); // Competition increases, so price goes down
         } else {
             this.cmp *= (1 / compChange);
-            if (this.cmp < this.cmpR[0]) {this.cmp = this.cmpR[0];}
+            if (this.cmp < this.cmpR[0]) {this.cmp = this.cmpR[0]; }
             this.bCost *= priceChange; // Competition decreases, so price goes up
         }
 
@@ -179,11 +179,11 @@ export class Material {
         const dmdChange: number = 1 + dmdVolatility;
         if (Math.random() < 0.5) {
             this.dmd *= dmdChange;
-            if (this.dmd > this.dmdR[1]) {this.dmd = this.dmdR[1];}
+            if (this.dmd > this.dmdR[1]) {this.dmd = this.dmdR[1]; }
             this.bCost *= priceChange; // Demand increases, so price goes up
         } else {
             this.dmd *= (1 / dmdChange);
-            if (this.dmd < this.dmdR[0]) {this.dmd = this.dmdR[0];}
+            if (this.dmd < this.dmdR[0]) {this.dmd = this.dmdR[0]; }
             this.bCost *= (1 / priceChange);
         }
     }

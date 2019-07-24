@@ -1,10 +1,8 @@
-import { ResearchTree } from "./ResearchTree";
 import { getBaseResearchTreeCopy,
          getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
+import { ResearchTree } from "./ResearchTree";
 
 import { numeralWrapper } from "../ui/numeralFormat";
-
-import { Reviver } from "../../utils/JSONReviver";
 
 interface IIndustryMap<T> {
     Energy: T;
@@ -39,7 +37,7 @@ export const Industries: IIndustryMap<string> = {
     Software: "Software",
     Healthcare: "Healthcare",
     RealEstate: "RealEstate",
-}
+};
 
 // Map of how much money it takes to start each industry
 export const IndustryStartingCosts: IIndustryMap<number> = {
@@ -57,7 +55,7 @@ export const IndustryStartingCosts: IIndustryMap<number> = {
     Software: 25e9,
     Healthcare: 750e9,
     RealEstate: 600e9,
-}
+};
 
 // Map of description for each industry
 export const IndustryDescriptions: IIndustryMap<string> = {
@@ -103,7 +101,7 @@ export const IndustryDescriptions: IIndustryMap<string> = {
     RealEstate: "Develop and manage real estate properties.<br><br>" +
                 "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.RealEstate, "$0.000a") + "<br>" +
                 "Recommended starting Industry: NO",
-}
+};
 
 // Map of available Research for each Industry. This data is held in a
 // ResearchTree object
@@ -122,7 +120,7 @@ export let IndustryResearchTrees: IIndustryMap<ResearchTree> = {
     Software: getProductIndustryResearchTreeCopy(),
     Healthcare: getProductIndustryResearchTreeCopy(),
     RealEstate: getProductIndustryResearchTreeCopy(),
-}
+};
 
 export function resetIndustryResearchTrees() {
     IndustryResearchTrees.Energy         = getBaseResearchTreeCopy();

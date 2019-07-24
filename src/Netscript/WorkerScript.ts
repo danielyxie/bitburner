@@ -73,7 +73,7 @@ export class WorkerScript {
     /**
      * Filename of script
      */
-	name: string;
+	   name: string;
 
     /**
      * Script's output/return value. Currently not used or implemented
@@ -108,7 +108,7 @@ export class WorkerScript {
 
     constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => object) {
         this.name 			= runningScriptObj.filename;
-    	this.serverIp 		= runningScriptObj.server;
+    	   this.serverIp 		= runningScriptObj.server;
 
         const sanitizedPid = Math.round(pid);
         if (typeof sanitizedPid !== "number" || isNaN(sanitizedPid)) {
@@ -118,28 +118,23 @@ export class WorkerScript {
         runningScriptObj.pid = sanitizedPid;
 
         // Get the underlying script's code
-        const server = AllServers[this.serverIp];
+        const server = this.getServer();
         if (server == null) {
             throw new Error(`WorkerScript constructed with invalid server ip: ${this.serverIp}`);
         }
-        let found = false;
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === this.name) {
-                found = true;
-                this.code = server.scripts[i].code;
-            }
-        }
-        if (!found) {
+        this.code = server.readFile(this.name);
+
+        if (!this.code) {
             throw new Error(`WorkerScript constructed with invalid script filename: ${this.name}`);
         }
 
-    	this.env 			= new Environment(null);
+    	   this.env 			= new Environment(null);
         if (typeof nsFuncsGenerator === "function") {
             this.env.vars       = nsFuncsGenerator(this);
         }
         this.env.set("args", runningScriptObj.args.slice());
 
-    	this.scriptRef		= runningScriptObj;
+    	   this.scriptRef		= runningScriptObj;
         this.args           = runningScriptObj.args.slice();
     }
 
@@ -155,7 +150,7 @@ export class WorkerScript {
      * Returns null if it cannot be found (which would be a bug)
      */
     getScript(): Script | null {
-        let server = this.getServer();
+        const server = this.getServer();
         for (let i = 0; i < server.scripts.length; ++i) {
             if (server.scripts[i].filename === this.name) {
                 return server.scripts[i];

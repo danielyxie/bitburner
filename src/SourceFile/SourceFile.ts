@@ -7,7 +7,7 @@ export class SourceFile {
     name: string;
     owned: boolean = false;
 
-    constructor(number: number, info: string="") {
+    constructor(number: number, info: string= "") {
         const bitnodeKey = "BitNode" + number;
         const bitnode = BitNodes[bitnodeKey];
         if (bitnode == null) {
@@ -15,7 +15,7 @@ export class SourceFile {
         }
 
         this.n = number;
-        this.name = `Source-File ${number}: ${bitnode.name}`
+        this.name = `Source-File ${number}: ${bitnode.name}`;
         this.info = info;
     }
 }

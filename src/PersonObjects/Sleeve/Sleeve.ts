@@ -10,9 +10,9 @@ import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 
 import { IPlayer } from "../IPlayer";
 import {
-    Person,
+    createTaskTracker,
     ITaskTracker,
-    createTaskTracker
+    Person,
 } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
@@ -198,7 +198,7 @@ export class Sleeve extends Person {
                     // Success
                     const successGainRates: ITaskTracker = createTaskTracker();
 
-                    const keysForIteration: (keyof ITaskTracker)[] = (<(keyof ITaskTracker)[]>Object.keys(successGainRates));
+                    const keysForIteration: Array<keyof ITaskTracker> = (Object.keys(successGainRates) as Array<keyof ITaskTracker>);
                     for (let i = 0; i < keysForIteration.length; ++i) {
                         const key = keysForIteration[i];
                         successGainRates[key] = this.gainRatesForTask[key] * 2;
@@ -228,7 +228,7 @@ export class Sleeve extends Person {
      * Earn experience for any stats (supports multiple)
      * This function also handles experience propogating to Player and other sleeves
      */
-    gainExperience(p: IPlayer, exp: ITaskTracker, numCycles: number=1, fromOtherSleeve: boolean=false): ITaskTracker {
+    gainExperience(p: IPlayer, exp: ITaskTracker, numCycles: number= 1, fromOtherSleeve: boolean= false): ITaskTracker {
         // If the experience is coming from another sleeve, it is not multiplied by anything.
         // Also the player does not earn anything
         if (fromOtherSleeve) {
@@ -329,13 +329,13 @@ export class Sleeve extends Person {
             agi: pAgiExp * (this.sync / 100),
             cha: pChaExp * (this.sync / 100),
             money: 0,
-        }
+        };
     }
 
     /**
      * Earn money for player
      */
-    gainMoney(p: IPlayer, task: ITaskTracker, numCycles: number=1): void {
+    gainMoney(p: IPlayer, task: ITaskTracker, numCycles: number= 1): void {
         const gain: number = (task.money * numCycles);
         this.earningsForTask.money += gain;
         this.earningsForPlayer.money += gain;
@@ -358,7 +358,7 @@ export class Sleeve extends Person {
         const mult = 1.02;
         const baseCost = 1e12;
         let currCost = 0;
-        let currMemory = this.memory-1;
+        let currMemory = this.memory - 1;
         for (let i = 0; i < n; ++i) {
             currCost += (Math.pow(mult, currMemory));
             ++currMemory;
@@ -376,7 +376,7 @@ export class Sleeve extends Person {
             let favorMult: number = 1;
             const fac: Faction | null = Factions[this.currentTaskLocation];
             if (fac != null) {
-                favorMult = 1 + (fac!.favor / 100);
+                favorMult = 1 + (fac.favor / 100);
             }
 
             switch (this.factionWorkType) {
@@ -404,10 +404,10 @@ export class Sleeve extends Person {
                 return 0;
             }
 
-            const jobPerformance: number = companyPosition!.calculateJobPerformance(this.hacking_skill, this.strength,
+            const jobPerformance: number = companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
                                                                                    this.defense, this.dexterity,
                                                                                    this.agility, this.charisma);
-            const favorMult = 1 + (company!.favor / 100);
+            const favorMult = 1 + (company.favor / 100);
 
             return jobPerformance * this.company_rep_mult * favorMult;
         } else {
@@ -471,7 +471,7 @@ export class Sleeve extends Person {
      * Returns an object containing the amount of experience that should be
      * transferred to all other sleeves
      */
-    process(p: IPlayer, numCycles: number=1): ITaskTracker | null {
+    process(p: IPlayer, numCycles: number= 1): ITaskTracker | null {
         // Only process once every second (5 cycles)
         const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
         this.storedCycles += numCycles;
@@ -484,7 +484,7 @@ export class Sleeve extends Person {
             cyclesUsed = Math.floor(time / CONSTANTS.MilliPerCycle);
 
             if (time < 0 || cyclesUsed < 0) {
-                console.warn(`Sleeve.process() calculated negative cycle usage`);
+                console.warn("Sleeve.process() calculated negative cycle usage");
                 time = 0;
                 cyclesUsed = 0;
             }
@@ -527,7 +527,7 @@ export class Sleeve extends Person {
                     break;
                 }
 
-                company!.playerReputation += (this.getRepGain(p) * cyclesUsed);
+                company.playerReputation += (this.getRepGain(p) * cyclesUsed);
                 break;
             case SleeveTaskType.Recovery:
                 this.shock = Math.min(100, this.shock + (0.0002 * cyclesUsed));

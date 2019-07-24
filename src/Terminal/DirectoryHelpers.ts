@@ -8,7 +8,7 @@
  * found in ./DirectoryServerHelpers.ts
  */
 
-/**
+ /**
  * Removes leading forward slash ("/") from a string.
  */
 export function removeLeadingSlash(s: string): string {
@@ -36,9 +36,11 @@ export function removeTrailingSlash(s: string): string {
  * not the entire filepath
  */
 export function isValidFilename(filename: string): boolean {
-    // Allows alphanumerics, hyphens, underscores, and percentage signs
-    // Must have a file extension
-    const regex = /^[.a-zA-Z0-9_-]+[.][a-zA-Z0-9]+(?:-\d+(?:\.\d*)?%-INC)?$/;
+    // * Allows everything except : " < > / | \ ? *
+    // * The name must not end with a space or a period
+    // * The name must not start with a space
+    // see https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions
+    const regex = /^[^"<>/\\|?* ][^"<>/\\|?*]*[^"<>/\\|?*. ]$/;
 
 	// match() returns null if no match is found
     return filename.match(regex) != null;
@@ -49,9 +51,11 @@ export function isValidFilename(filename: string): boolean {
  * not an entire path
  */
 export function isValidDirectoryName(name: string): boolean {
-    // Allows alphanumerics, hyphens, underscores, and percentage signs.
-    // Name can begin with a single period, but otherwise cannot have any
-    const regex = /^.?[a-zA-Z0-9_-]+$/;
+    // * Allows everything except : " < > / | \ ? *
+    // * The name must not end with a space or a period
+    // * The name must not start with a space
+    // see https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions
+    const regex = /^[^"<>/\\|?* ][^"<>/\\|?*]+[^"<>/\\|?*. ]$/;
 
 	// match() returns null if no match is found
     return name.match(regex) != null;
@@ -70,16 +74,9 @@ export function isValidDirectoryPath(path: string): boolean {
         return t_path === "/";
     }
 
-    // A full path must have a leading slash, but we'll ignore it for the checks
-    if (t_path.startsWith("/")) {
-        t_path = t_path.slice(1);
-    } else {
-        return false;
-    }
-
-    // Trailing slash does not matter
+    // Trimming slashes from both sides does not matter
     t_path = removeTrailingSlash(t_path);
-
+    t_path = (t_path.startsWith("/"))? t_path.slice(1): t_path;
     // Check that every section of the path is a valid directory name
     const dirs = t_path.split("/");
     for (const dir of dirs) {
@@ -99,24 +96,16 @@ export function isValidDirectoryPath(path: string): boolean {
  */
 export function isValidFilePath(path: string): boolean {
     if (path == null || typeof path !== "string") { return false; }
-    let t_path = path;
-
-    // Impossible for filename to have less than length of 3
-    if (t_path.length < 3) { return false; }
-
+    const t_path = path;
     // Full filepath can't end with trailing slash because it must be a file
     if (t_path.endsWith("/")) { return false; }
 
     // Everything after the last forward slash is the filename. Everything before
     // it is the file path
     const fnSeparator = t_path.lastIndexOf("/");
-    if (fnSeparator === -1) {
-        return isValidFilename(t_path);
-    }
-
+    
     const fn = t_path.slice(fnSeparator + 1);
-    const dirPath = t_path.slice(0, fnSeparator + 1);
-
+    const dirPath = t_path.slice(0, fnSeparator+1);
     return isValidDirectoryPath(dirPath) && isValidFilename(fn);
 }
 
@@ -132,7 +121,7 @@ export function getFirstParentDirectory(path: string): string {
 
     if (t_path.lastIndexOf("/") === -1) { return "/"; }
 
-    let dirs = t_path.split("/");
+    const dirs = t_path.split("/");
     if (dirs.length === 0) { return "/"; }
 
     return dirs[0] + "/";
@@ -146,7 +135,7 @@ export function getFirstParentDirectory(path: string): string {
  * If there are no parent directories, it returns the empty string
  */
 export function getAllParentDirectories(path: string): string {
-    let t_path = path;
+    const t_path = path;
     const lastSlash = t_path.lastIndexOf("/");
     if (lastSlash === -1) { return ""; }
 
@@ -167,25 +156,33 @@ export function isInRootDirectory(path: string): boolean {
  * Evaluates a directory path, including the processing of linux dots.
  * Returns the full, proper path, or null if an invalid path is passed in
  */
-export function evaluateDirectoryPath(path: string, currPath?: string): string | null {
+export function evaluateDirectoryPath(server: any, path: string, currPath?: string): string | undefined {
     let t_path = path;
-
+    console.log(`Current server=  ${JSON.stringify(server)}`);
+    console.log(`Evaluate Directory Path ${JSON.stringify(path)}`);
+    console.log(`Current Path = ${JSON.stringify(currPath)}`);
     // If the path begins with a slash, then its an absolute path. Otherwise its relative
     // For relative paths, we need to prepend the current directory
     if (!t_path.startsWith("/") && currPath != null) {
         t_path = currPath + (currPath.endsWith("/") ? "" : "/") + t_path;
     }
+    console.log(`1. Current temporary path = ${JSON.stringify(t_path)}`);
 
-    if (!isValidDirectoryPath(t_path)) { return null; }
+    if (!server.isDir(t_path)) { return ; }
 
     // Trim leading/trailing slashes
     t_path = removeLeadingSlash(t_path);
+    console.log(`2. Current temporary path = ${JSON.stringify(t_path)}`);
+
     t_path = removeTrailingSlash(t_path);
+    console.log(`3. Current temporary path = ${JSON.stringify(t_path)}`);
 
     const dirs = t_path.split("/");
+    console.log(`4. Current directories = ${JSON.stringify(dirs)}`);
     const reconstructedPath: string[] = [];
 
     for (const dir of dirs) {
+        console.log(`5. Current reconstructed path = ${JSON.stringify(reconstructedPath)}:`);
         if (dir === ".") {
             // Current directory, do nothing
             continue;
@@ -193,14 +190,15 @@ export function evaluateDirectoryPath(path: string, currPath?: string): string |
             // Parent directory
             const res = reconstructedPath.pop();
             if (res == null) {
-                return null; // Array was empty, invalid path
+                return ; // Array was empty, invalid path
             }
         } else {
             reconstructedPath.push(dir);
         }
     }
-
-    return "/" + reconstructedPath.join("/");
+    const result = "/" + reconstructedPath.join("/");
+    console.log(`5. result path = ${JSON.stringify(result)}:`);
+    return result;
 }
 
 /**

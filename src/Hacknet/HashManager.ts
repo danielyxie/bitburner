@@ -8,10 +8,10 @@
  */
 import { HashUpgrades } from "./HashUpgrades";
 
-import { IMap } from "../types";
 import { Generic_fromJSON,
          Generic_toJSON,
          Reviver } from "../../utils/JSONReviver";
+import { IMap } from "../types";
 
 export class HashManager {
     // Initiatizes a HashManager object from a JSON save state.
@@ -42,7 +42,7 @@ export class HashManager {
         const upg = HashUpgrades[upgName];
         const currLevel = this.upgrades[upgName];
         if (upg == null || currLevel == null) {
-            console.error(`Could not find Hash Study upgrade`);
+            console.error("Could not find Hash Study upgrade");
             return 1;
         }
 
@@ -145,7 +145,7 @@ export class HashManager {
         return true;
     }
 
-    //Serialize the current object to a JSON save state.
+    // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("HashManager", this);
     }

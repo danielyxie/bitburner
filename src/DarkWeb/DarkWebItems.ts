@@ -1,6 +1,6 @@
-import { DarkWebItem } from "./DarkWebItem";
-import { IMap } from "../types";
 import { Programs } from "../Programs/Programs";
+import { IMap } from "../types";
+import { DarkWebItem } from "./DarkWebItem";
 
 export const DarkWebItems: IMap<DarkWebItem> = {
     BruteSSHProgram:        new DarkWebItem(Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports"),

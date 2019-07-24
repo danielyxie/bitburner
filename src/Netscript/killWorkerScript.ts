@@ -36,7 +36,7 @@ export function killWorkerScript(script: RunningScript | WorkerScript | number, 
 
     			stopAndCleanUpWorkerScript(ws, rerenderUi);
 
-                return true;
+       return true;
     		}
         }
 
@@ -44,13 +44,13 @@ export function killWorkerScript(script: RunningScript | WorkerScript | number, 
     } else if (typeof script === "number") {
         return killWorkerScriptByPid(script, rerenderUi);
     } else {
-        console.error(`killWorkerScript() called with invalid argument:`);
+        console.error("killWorkerScript() called with invalid argument:");
         console.error(script);
         return false;
     }
 }
 
-function killWorkerScriptByPid(pid: number, rerenderUi: boolean=true): boolean {
+function killWorkerScriptByPid(pid: number, rerenderUi: boolean= true): boolean {
     const ws = workerScripts.get(pid);
     if (ws instanceof WorkerScript) {
         stopAndCleanUpWorkerScript(ws, rerenderUi);
@@ -61,7 +61,7 @@ function killWorkerScriptByPid(pid: number, rerenderUi: boolean=true): boolean {
     return false;
 }
 
-function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true): void {
+function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi: boolean= true): void {
     workerScript.env.stopFlag = true;
     killNetscriptDelay(workerScript);
     removeWorkerScript(workerScript, rerenderUi);
@@ -74,7 +74,7 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi: bool
  * @param {WorkerScript | number} - Identifier for WorkerScript. Either the object itself, or
  *                                  its index in the global workerScripts array
  */
-function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true): void {
+function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean= true): void {
     if (workerScript instanceof WorkerScript) {
         const ip = workerScript.serverIp;
         const name = workerScript.name;
@@ -105,7 +105,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true
         // Delete script from global pool (workerScripts)
         const res = workerScripts.delete(workerScript.pid);
         if (!res) {
-            console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
+            console.warn("removeWorkerScript() called with WorkerScript that wasn't in the global map:");
             console.warn(workerScript);
         }
 
@@ -113,7 +113,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true
             WorkerScriptStartStopEventEmitter.emitEvent();
         }
     } else {
-        console.error(`Invalid argument passed into removeWorkerScript():`);
+        console.error("Invalid argument passed into removeWorkerScript():");
         console.error(workerScript);
         return;
     }

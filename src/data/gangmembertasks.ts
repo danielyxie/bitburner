@@ -146,9 +146,9 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
             territory: {
                 money: 1.6,
                 respect: 1.1,
-                wanted: 1.5
-            }
-        }
+                wanted: 1.5,
+            },
+        },
     },
     {
         desc: "Assign this gang member to run cons<br><br>Earns money - Increases respect - Increases wanted level",
@@ -212,8 +212,8 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
                 money: 1.5,
                 respect: 1.5,
                 wanted: 1.6,
-            }
-        }
+            },
+        },
     },
     {
         desc: "Assign this gang member to commit acts of terrorism<br><br>Greatly increases respect - Greatly increases wanted level - Scales heavily with territory",
@@ -254,7 +254,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         name: "Train Combat",
         params: {
             strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 25,
-            difficulty: 5
+            difficulty: 5,
         },
     },
     {
@@ -278,7 +278,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         name: "Territory Warfare",
         params: {
             hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20, chaWeight: 5,
-            difficulty: 5
+            difficulty: 5,
         },
     },
 ];

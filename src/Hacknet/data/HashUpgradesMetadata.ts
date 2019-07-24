@@ -71,4 +71,4 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
         name: "Generate Coding Contract",
         value: 1,
     },
-]
+];

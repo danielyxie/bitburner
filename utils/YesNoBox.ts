@@ -6,8 +6,8 @@
  *  1. Just a Yes/No response from player
  *  2. Popup also includes a text input field in addition to the Yes/No response
  */
-import { clearEventListeners } from "./uiHelpers/clearEventListeners";
 import { KEY } from "./helpers/keyCodes";
+import { clearEventListeners } from "./uiHelpers/clearEventListeners";
 
 export let yesNoBoxOpen: boolean = false;
 
@@ -22,7 +22,7 @@ function yesNoBoxHotkeyHandler(e: KeyboardEvent) {
         if (yesBtn) {
             yesBtn.click();
         } else {
-            console.error(`Could not find YesNoBox Yes button DOM element`)
+            console.error("Could not find YesNoBox Yes button DOM element");
         }
     }
 }
@@ -38,7 +38,7 @@ export function yesNoBoxClose(): boolean {
     // Remove hotkey handler
     document.removeEventListener("keydown", yesNoBoxHotkeyHandler);
 
-    return false; //So that 'return yesNoBoxClose()' is return false in event listeners
+    return false; // So that 'return yesNoBoxClose()' is return false in event listeners
 }
 
 export function yesNoBoxGetYesButton() {
@@ -50,13 +50,13 @@ export function yesNoBoxGetNoButton() {
 }
 
 export function yesNoBoxCreate(txt: string) {
-    if (yesNoBoxOpen) { return false; }   //Already open
+    if (yesNoBoxOpen) { return false; }   // Already open
     yesNoBoxOpen = true;
 
     if (yesNoBoxTextElement) {
         yesNoBoxTextElement.innerHTML = txt;
     } else {
-        console.error(`Text element not found for YesNoBox`);
+        console.error("Text element not found for YesNoBox");
     }
 
     if (yesNoBoxContainer) {
@@ -86,7 +86,7 @@ export function yesNoTxtInpBoxHotkeyHandler(e: KeyboardEvent) {
         if (yesBtn) {
             yesBtn.click();
         } else {
-            console.error(`Could not find YesNoTxtInputBox Yes button DOM element`)
+            console.error("Could not find YesNoTxtInputBox Yes button DOM element");
         }
     }
 }
@@ -120,8 +120,8 @@ export function yesNoTxtInpBoxGetInput(): string {
         console.error("Could not find YesNoTextInputBox input element");
         return "";
     }
-    let val: string = yesNoTextInputBoxInput!.value;
-    val = val.replace(/\s+/g, '');
+    let val: string = yesNoTextInputBoxInput.value;
+    val = val.replace(/\s+/g, "");
     return val;
 }
 

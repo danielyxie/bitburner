@@ -1,3 +1,3 @@
 import { Script } from "./Script";
-
-export declare function calculateRamUsage(codeCopy: string, otherScripts: Script[]): number;
+import { BaseServer } from "../Server/BaseServer";
+export declare function calculateRamUsage(codeCopy: string, server: BaseServer): number;

@@ -2,18 +2,18 @@
  * Class representing a Script instance that is actively running.
  * A Script can have multiple active instances
  */
-import { Script } from "./Script";
 import { FconfSettings } from "../Fconf/FconfSettings";
 import { Settings } from "../Settings/Settings";
 import { IMap } from "../types";
 import { post } from "../ui/postToTerminal";
+import { Script } from "./Script";
 
+import { getTimestamp } from "../../utils/helpers/getTimestamp";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../../utils/JSONReviver";
-import { getTimestamp } from "../../utils/helpers/getTimestamp";
 
 export class RunningScript {
     // Initializes a RunningScript Object from a JSON save state
@@ -91,7 +91,7 @@ export class RunningScript {
     }
 
     displayLog(): void {
-        for (var i = 0; i < this.logs.length; ++i) {
+        for (let i = 0; i < this.logs.length; ++i) {
             post(this.logs[i]);
         }
     }
@@ -101,7 +101,7 @@ export class RunningScript {
     }
 
     // Update the moneyStolen and numTimesHack maps when hacking
-    recordHack(serverIp: string, moneyGained: number, n: number=1) {
+    recordHack(serverIp: string, moneyGained: number, n: number= 1) {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -110,7 +110,7 @@ export class RunningScript {
     }
 
     // Update the grow map when calling grow()
-    recordGrow(serverIp: string, n: number=1) {
+    recordGrow(serverIp: string, n: number= 1) {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -118,7 +118,7 @@ export class RunningScript {
     }
 
     // Update the weaken map when calling weaken() {
-    recordWeaken(serverIp: string, n: number=1) {
+    recordWeaken(serverIp: string, n: number= 1) {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }

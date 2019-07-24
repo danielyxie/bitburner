@@ -21,7 +21,7 @@ import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
     // Array of all owned Augmentations. Names only
-    const ownedAugNames: string[] = sleeve.augmentations.map((e) => {return e.name});
+    const ownedAugNames: string[] = sleeve.augmentations.map((e) => e.name);
 
     // You can only purchase Augmentations that are actually available from
     // your factions. I.e. you must be in a faction that has the Augmentation
@@ -57,7 +57,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             class: "gang-owned-upgrade", // Reusing a class from the Gang UI
             innerText: ownedAug,
             tooltip: aug.info,
-        }))
+        }));
     }
     popupElems.push(ownedAugsDiv);
 
@@ -65,12 +65,12 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
     const info = createElement("p", {
         innerHTML:
         [
-            `You can purchase Augmentations for your Duplicate Sleeves. These Augmentations`,
-            `have the same effect as they would for you. You can only purchase Augmentations`,
-            `that you have unlocked through Factions.<br><br>`,
-            `When purchasing an Augmentation for a Duplicate Sleeve, they are immediately`,
-            `installed. This means that the Duplicate Sleeve will immediately lose all of`,
-            `its stat experience.`
+            "You can purchase Augmentations for your Duplicate Sleeves. These Augmentations",
+            "have the same effect as they would for you. You can only purchase Augmentations",
+            "that you have unlocked through Factions.<br><br>",
+            "When purchasing an Augmentation for a Duplicate Sleeve, they are immediately",
+            "installed. This means that the Duplicate Sleeve will immediately lose all of",
+            "its stat experience.",
         ].join(" "),
     });
 
@@ -87,7 +87,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             [
                 `<h2>${aug.name}</h2><br>`,
                 `Cost: ${numeralWrapper.formatMoney(aug.startingCost)}<br><br>`,
-                `${aug.info}`
+                `${aug.info}`,
             ].join(" "),
             padding: "2px",
             clickListener: () => {
@@ -98,7 +98,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
                 } else {
                     dialogBoxCreate(`You cannot afford ${aug.name}`, false);
                 }
-            }
+            },
         }));
 
         popupElems.push(div);

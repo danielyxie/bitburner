@@ -13,7 +13,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
     // your factions. I.e. you must be in a faction that has the Augmentation
     // and you must also have enough rep in that faction in order to purchase it.
 
-    const ownedAugNames: string[] = sleeve.augmentations.map((e) => {return e.name});
+    const ownedAugNames: string[] = sleeve.augmentations.map((e) => e.name);
     const availableAugs: Augmentation[] = [];
 
     // Helper function that helps filter out augs that are already owned

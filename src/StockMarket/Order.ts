@@ -25,7 +25,7 @@ export class Order {
     readonly stockSymbol: string;
     readonly type: OrderTypes;
 
-    constructor(stockSymbol: string="", shares: number=0, price: number=0, typ: OrderTypes=OrderTypes.LimitBuy, pos: PositionTypes=PositionTypes.Long) {
+    constructor(stockSymbol: string= "", shares: number= 0, price: number= 0, typ: OrderTypes= OrderTypes.LimitBuy, pos: PositionTypes= PositionTypes.Long) {
         // Validate arguments
         let invalidArgs: boolean = false;
         if (typeof shares !== "number" || typeof price !== "number") {
@@ -38,7 +38,7 @@ export class Order {
             invalidArgs = true;
         }
         if (invalidArgs) {
-            throw new Error(`Invalid constructor paramters for Order`);
+            throw new Error("Invalid constructor paramters for Order");
         }
 
         this.stockSymbol = stockSymbol;

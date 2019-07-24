@@ -29,7 +29,7 @@ export class Resleeve extends Person {
         const NumAugsExponent: number = 1.2;
 
         // Get total exp in this re-sleeve
-        let totalExp: number = this.hacking_exp +
+        const totalExp: number = this.hacking_exp +
                                this.strength_exp +
                                this.defense_exp +
                                this.dexterity_exp +
@@ -44,7 +44,7 @@ export class Resleeve extends Person {
                 console.error(`Could not find Augmentation ${this.augmentations[i].name}`);
                 continue;
             }
-            totalAugmentationCost += aug!.startingCost;
+            totalAugmentationCost += aug.startingCost;
         }
 
         return (totalExp * CostPerExp) + (totalAugmentationCost * Math.pow(NumAugsExponent, this.augmentations.length));

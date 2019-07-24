@@ -9,7 +9,7 @@ interface IOfficeSpace {
 
 interface IDivision {
     name: string;
-    offices: IMap<IOfficeSpace>
+    offices: IMap<IOfficeSpace>;
 }
 
 interface ICorporation {
@@ -23,7 +23,7 @@ export class CorporationRouting {
     private currentPage: string = overviewPage;
 
     // Stores a reference to the Corporation instance
-    private corp: ICorporation;
+    private readonly corp: ICorporation;
 
     // Stores a reference to the Division instance that the routing is currently on
     // This will be null if routing is on the overview page
@@ -69,14 +69,13 @@ export class CorporationRouting {
     routeTo(page: string): void {
         if (!this.isValidPage(page)) { return; }
 
-
         this.currentDivision = null;
         if (page !== overviewPage) {
             // Iterate through Corporation data to get a reference to the current division
             for (let i = 0; i < this.corp.divisions.length; ++i) {
                 if (this.corp.divisions[i].name === page) {
                     this.currentDivision = this.corp.divisions[i];
-                };
+                }
             }
 
             // 'currentDivision' should not be null, since the routing is either on

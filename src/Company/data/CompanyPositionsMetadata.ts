@@ -599,4 +599,4 @@ export const companyPositionMetadata: IConstructorParams[] = [
         charismaExpGain: 0.03,
         repMultiplier: 1,
     },
-]
+];

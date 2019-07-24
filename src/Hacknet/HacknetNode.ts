@@ -28,7 +28,7 @@ export const HacknetNodeUpgradeRamMult: number = 1.28;      // Multiplier for co
 export const HacknetNodeUpgradeCoreMult: number = 1.48;     // Multiplier for cost when buying another core
 
 // Constants for max upgrade levels for Hacknet Nodes
-export const HacknetNodeMaxLevel:  number = 200;
+export const HacknetNodeMaxLevel: number = 200;
 export const HacknetNodeMaxRam: number = 64;
 export const HacknetNodeMaxCores: number = 16;
 
@@ -61,14 +61,14 @@ export class HacknetNode implements IHacknetNode {
     // Total money earned by this Node
     totalMoneyGenerated: number = 0;
 
-    constructor(name: string="", prodMult: number=1) {
+    constructor(name: string= "", prodMult: number= 1) {
         this.name       = name;
 
         this.updateMoneyGainRate(prodMult);
     }
 
     // Get the cost to upgrade this Node's number of cores
-    calculateCoreUpgradeCost(levels: number=1, costMult: number): number {
+    calculateCoreUpgradeCost(levels: number= 1, costMult: number): number {
         const sanitizedLevels = Math.round(levels);
         if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
             return 0;
@@ -83,7 +83,7 @@ export class HacknetNode implements IHacknetNode {
         let totalCost       = 0;
         let currentCores    = this.cores;
         for (let i = 0; i < sanitizedLevels; ++i) {
-            totalCost += (coreBaseCost * Math.pow(mult, currentCores-1));
+            totalCost += (coreBaseCost * Math.pow(mult, currentCores - 1));
             ++currentCores;
         }
 
@@ -93,7 +93,7 @@ export class HacknetNode implements IHacknetNode {
     }
 
     // Get the cost to upgrade this Node's level
-    calculateLevelUpgradeCost(levels: number=1, costMult: number): number {
+    calculateLevelUpgradeCost(levels: number= 1, costMult: number): number {
         const sanitizedLevels = Math.round(levels);
         if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
             return 0;
@@ -115,7 +115,7 @@ export class HacknetNode implements IHacknetNode {
     }
 
     // Get the cost to upgrade this Node's RAM
-    calculateRamUpgradeCost(levels: number=1, costMult: number): number {
+    calculateRamUpgradeCost(levels: number= 1, costMult: number): number {
         const sanitizedLevels = Math.round(levels);
         if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
             return 0;
@@ -130,8 +130,8 @@ export class HacknetNode implements IHacknetNode {
         let currentRam = this.ram;
 
         for (let i = 0; i < sanitizedLevels; ++i) {
-            let baseCost = currentRam * BaseCostFor1GBOfRamHacknetNode;
-            let mult = Math.pow(HacknetNodeUpgradeRamMult, numUpgrades);
+            const baseCost = currentRam * BaseCostFor1GBOfRamHacknetNode;
+            const mult = Math.pow(HacknetNodeUpgradeRamMult, numUpgrades);
 
             totalCost += (baseCost * mult);
 
@@ -146,7 +146,7 @@ export class HacknetNode implements IHacknetNode {
 
     // Process this Hacknet Node in the game loop.
     // Returns the amount of money generated
-    process(numCycles: number=1): number {
+    process(numCycles: number= 1): number {
         const seconds = numCycles * CONSTANTS.MilliPerCycle / 1000;
         let gain = this.moneyGainRatePerSecond * seconds;
         if (isNaN(gain)) {
@@ -162,21 +162,21 @@ export class HacknetNode implements IHacknetNode {
 
     // Upgrade this Node's number of cores, if possible
     // Returns a boolean indicating whether new cores were successfully bought
-    upgradeCore(levels: number=1, prodMult: number): void {
+    upgradeCore(levels: number= 1, prodMult: number): void {
         this.cores = Math.min(HacknetNodeMaxCores, Math.round(this.cores + levels));
         this.updateMoneyGainRate(prodMult);
     }
 
     // Upgrade this Node's level, if possible
     // Returns a boolean indicating whether the level was successfully updated
-    upgradeLevel(levels: number=1, prodMult: number): void {
+    upgradeLevel(levels: number= 1, prodMult: number): void {
         this.level = Math.min(HacknetNodeMaxLevel, Math.round(this.level + levels));
         this.updateMoneyGainRate(prodMult);
     }
 
     // Upgrade this Node's RAM, if possible
     // Returns a boolean indicating whether the RAM was successfully upgraded
-    upgradeRam(levels: number=1, prodMult: number): void {
+    upgradeRam(levels: number= 1, prodMult: number): void {
         for (let i = 0; i < levels; ++i) {
             this.ram *= 2; // Ram is always doubled
         }
@@ -186,8 +186,8 @@ export class HacknetNode implements IHacknetNode {
 
     // Re-calculate this Node's production and update the moneyGainRatePerSecond prop
     updateMoneyGainRate(prodMult: number): void {
-        //How much extra $/s is gained per level
-        var gainPerLevel = HacknetNodeMoneyGainPerLevel;
+        // How much extra $/s is gained per level
+        const gainPerLevel = HacknetNodeMoneyGainPerLevel;
 
         this.moneyGainRatePerSecond = (this.level * gainPerLevel) *
                                       Math.pow(1.035, this.ram - 1) *

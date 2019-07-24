@@ -55,7 +55,7 @@ export interface IMinMaxRange {
      * Value by which the bounds are to be divided for the final range
      */
     divisor?: number;
-    
+
     /**
      * The maximum bound of the range.
      */

@@ -7,9 +7,9 @@
 // off to that `fromJSON` fuunction, passing in the value.
 function Reviver(key, value) {
 	var ctor;
-    if (value == null) {
-        console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
-        return 0;
+    if (value == null) { // Used as a serialization value by the fs Volume format.
+        //console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
+        return null;
     }
 
 	if (typeof value === "object" &&

@@ -15,4 +15,4 @@ export const MaterialSizes: IMap<number> = {
     RealEstate:     0,
     "Real Estate":  0,
     "AI Cores":     0,
-}
+};

@@ -1034,7 +1034,7 @@ const Engine = {
         const dev               = document.getElementById("dev-tab");
 
         // Load game from save or create new game
-        //load literature data before any potential migration
+        // load literature data before any potential file migration
         initLiterature();
         
         if (loadGame(saveString)) {
@@ -1168,7 +1168,6 @@ const Engine = {
             initFactions();
             initAugmentations();
             initMessages();
-            initLiterature();
             updateSourceFileFlags(Player);
 
             // Open main menu accordions for new game

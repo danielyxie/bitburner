@@ -27,14 +27,14 @@ export function getHomeComputer(this: IPlayer) {
 }
 
 export function getUpgradeHomeRamCost(this: IPlayer) {
-    //Calculate how many times ram has been upgraded (doubled)
+    // Calculate how many times ram has been upgraded (doubled)
     const currentRam = this.getHomeComputer().maxRam;
     const numUpgrades = Math.log2(currentRam);
 
-    //Calculate cost
-    //Have cost increase by some percentage each time RAM has been upgraded
+    // Calculate cost
+    // Have cost increase by some percentage each time RAM has been upgraded
     const mult = Math.pow(1.58, numUpgrades);
-    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
+    const cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
     return cost;
 }
 

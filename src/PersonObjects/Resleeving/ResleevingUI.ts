@@ -10,9 +10,9 @@ import { IPlayer } from "../IPlayer";
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { Page,
          routing } from "../../ui/navigationTracking";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
@@ -25,25 +25,25 @@ import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildr
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
 
 interface IResleeveUIElems {
-    container:          HTMLElement | null;
-    statsPanel:         HTMLElement | null;
-    stats:              HTMLElement | null;
-    multipliersButton:  HTMLElement | null;
-    augPanel:           HTMLElement | null;
-    augSelector:        HTMLSelectElement | null;
-    augDescription:     HTMLElement | null;
-    costPanel:          HTMLElement | null;
-    costText:           HTMLElement | null;
-    buyButton:          HTMLElement | null;
+    container: HTMLElement | null;
+    statsPanel: HTMLElement | null;
+    stats: HTMLElement | null;
+    multipliersButton: HTMLElement | null;
+    augPanel: HTMLElement | null;
+    augSelector: HTMLSelectElement | null;
+    augDescription: HTMLElement | null;
+    costPanel: HTMLElement | null;
+    costText: HTMLElement | null;
+    buyButton: HTMLElement | null;
 }
 
 interface IPageUIElems {
-    container:      HTMLElement | null;
-    info:           HTMLElement | null;
-    sortTag:        HTMLElement | null;
-    sortSelector:   HTMLSelectElement | null;
-    resleeveList:   HTMLElement | null;
-    resleeves:      IResleeveUIElems[] | null;
+    container: HTMLElement | null;
+    info: HTMLElement | null;
+    sortTag: HTMLElement | null;
+    sortSelector: HTMLSelectElement | null;
+    resleeveList: HTMLElement | null;
+    resleeves: IResleeveUIElems[] | null;
 }
 
 const UIElems: IPageUIElems = {
@@ -53,7 +53,7 @@ const UIElems: IPageUIElems = {
     sortSelector: null,
     resleeveList: null,
     resleeves: null,
-}
+};
 
 let playerRef: IPlayer | null;
 
@@ -94,7 +94,7 @@ export function createResleevesPage(p: IPlayer) {
         // Create a selector for sorting the list of Resleeves
         UIElems.sortTag = createElement("p", {
             display: "inline-block",
-            innerText: "Sort By: "
+            innerText: "Sort By: ",
         });
         UIElems.sortSelector = createElement("select", { class: "dropdown" }) as HTMLSelectElement;
 
@@ -111,19 +111,19 @@ export function createResleevesPage(p: IPlayer) {
             TotalNumAugmentations = "TotalNumAugmentations",
         }
 
-        UIElems.sortSelector!.add(createOptionElement("Cost", SortOption.Cost));
-        UIElems.sortSelector!.add(createOptionElement("Hacking Level", SortOption.Hacking));
-        UIElems.sortSelector!.add(createOptionElement("Strength Level", SortOption.Strength));
-        UIElems.sortSelector!.add(createOptionElement("Defense Level", SortOption.Defense));
-        UIElems.sortSelector!.add(createOptionElement("Dexterity Level", SortOption.Dexterity));
-        UIElems.sortSelector!.add(createOptionElement("Agility Level", SortOption.Agility));
-        UIElems.sortSelector!.add(createOptionElement("Charisma Level", SortOption.Charisma));
-        UIElems.sortSelector!.add(createOptionElement("Average Combat Stats", SortOption.AverageCombatStats));
-        UIElems.sortSelector!.add(createOptionElement("Average Stats", SortOption.AverageAllStats));
-        UIElems.sortSelector!.add(createOptionElement("Number of Augmentations", SortOption.TotalNumAugmentations));
+        UIElems.sortSelector.add(createOptionElement("Cost", SortOption.Cost));
+        UIElems.sortSelector.add(createOptionElement("Hacking Level", SortOption.Hacking));
+        UIElems.sortSelector.add(createOptionElement("Strength Level", SortOption.Strength));
+        UIElems.sortSelector.add(createOptionElement("Defense Level", SortOption.Defense));
+        UIElems.sortSelector.add(createOptionElement("Dexterity Level", SortOption.Dexterity));
+        UIElems.sortSelector.add(createOptionElement("Agility Level", SortOption.Agility));
+        UIElems.sortSelector.add(createOptionElement("Charisma Level", SortOption.Charisma));
+        UIElems.sortSelector.add(createOptionElement("Average Combat Stats", SortOption.AverageCombatStats));
+        UIElems.sortSelector.add(createOptionElement("Average Stats", SortOption.AverageAllStats));
+        UIElems.sortSelector.add(createOptionElement("Number of Augmentations", SortOption.TotalNumAugmentations));
 
         UIElems.resleeveList = createElement("ul");
-        UIElems.sortSelector!.onchange = () => {
+        UIElems.sortSelector.onchange = () => {
             removeChildrenFromElement(UIElems.resleeveList);
             UIElems.resleeves = [];
 
@@ -140,61 +140,53 @@ export function createResleevesPage(p: IPlayer) {
             const sortOpt = getSelectValue(UIElems.sortSelector!);
             switch (sortOpt) {
                 case SortOption.Hacking:
-                    p.resleeves.sort((a, b) => {
-                        return a.hacking_skill - b.hacking_skill;
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.hacking_skill - b.hacking_skill);
                     break;
                 case SortOption.Strength:
-                    p.resleeves.sort((a, b) => {
-                        return a.strength - b.strength;
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.strength - b.strength);
                     break;
                 case SortOption.Defense:
-                    p.resleeves.sort((a, b) => {
-                        return a.defense - b.defense;
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.defense - b.defense);
                     break;
                 case SortOption.Dexterity:
-                    p.resleeves.sort((a, b) => {
-                        return a.dexterity - b.dexterity;
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.dexterity - b.dexterity);
                     break;
                 case SortOption.Agility:
-                    p.resleeves.sort((a, b) => {
-                        return a.agility - b.agility;
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.agility - b.agility);
                     break;
                 case SortOption.Charisma:
-                    p.resleeves.sort((a, b) => {
-                        return a.charisma - b.charisma;
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.charisma - b.charisma);
                     break;
                 case SortOption.AverageCombatStats:
                     p.resleeves.sort((a, b) => {
-                        let aAvg = getAverage(a.strength, a.defense, a.dexterity, a.agility);
-                        let bAvg = getAverage(b.strength, b.defense, b.dexterity, b.agility);
+                        const aAvg = getAverage(a.strength, a.defense, a.dexterity, a.agility);
+                        const bAvg = getAverage(b.strength, b.defense, b.dexterity, b.agility);
 
                         return aAvg - bAvg;
                     });
                     break;
                 case SortOption.AverageAllStats:
                     p.resleeves.sort((a, b) => {
-                        let aAvg = getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma);
-                        let bAvg = getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma);
+                        const aAvg = getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma);
+                        const bAvg = getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma);
 
                         return aAvg - bAvg;
                     });
                     break;
                 case SortOption.TotalNumAugmentations:
-                    p.resleeves.sort((a, b) => {
-                        return a.augmentations.length - b.augmentations.length;
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.augmentations.length - b.augmentations.length);
                     break;
                 case SortOption.Cost:
                 default:
-                    p.resleeves.sort((a, b) => {
-                        return a.getCost() - b.getCost();
-                    });
+                    p.resleeves.sort((a, b) =>
+                        a.getCost() - b.getCost());
                     break;
             }
 
@@ -202,10 +194,10 @@ export function createResleevesPage(p: IPlayer) {
             for (const resleeve of p.resleeves) {
                 const resleeveUi = createResleeveUi(resleeve);
                 UIElems.resleeveList!.appendChild(resleeveUi.container!);
-                UIElems.resleeves!.push(resleeveUi);
+                UIElems.resleeves.push(resleeveUi);
             }
-        }
-        UIElems.sortSelector!.dispatchEvent(new Event('change')); // Force onchange event
+        };
+        UIElems.sortSelector.dispatchEvent(new Event("change")); // Force onchange event
 
         UIElems.container.appendChild(UIElems.info);
         UIElems.container.appendChild(createElement("br"));
@@ -214,7 +206,7 @@ export function createResleevesPage(p: IPlayer) {
         UIElems.container.appendChild(UIElems.resleeveList);
 
         document.getElementById("entire-game-container")!.appendChild(UIElems.container);
-    } catch(e) {
+    } catch (e) {
         exceptionAlert(e);
     }
 }
@@ -225,7 +217,7 @@ export function clearResleevesPage() {
     }
 
     for (const prop in UIElems) {
-        (<any>UIElems)[prop] = null;
+        (UIElems as any)[prop] = null;
     }
 
     playerRef = null;
@@ -300,10 +292,10 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
                     `Bladeburner Max Stamina multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_max_stamina_mult)}`,
                     `Bladeburner Stamina Gain multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_stamina_gain_mult)}`,
                     `Bladeburner Field Analysis multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_analysis_mult)}`,
-                    `Bladeburner Success Chance multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_success_chance_mult)}`
-                ].join("<br>"), false
-            )
-        }
+                    `Bladeburner Success Chance multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_success_chance_mult)}`,
+                ].join("<br>"), false,
+            );
+        },
     });
     elems.statsPanel.appendChild(elems.stats);
     elems.statsPanel.appendChild(elems.multipliersButton);
@@ -313,11 +305,11 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     elems.augDescription = createElement("p");
     for (let i = 0; i < resleeve.augmentations.length; ++i) {
         elems.augSelector.add(createOptionElement(resleeve.augmentations[i].name));
-    };
+    }
     elems.augSelector.addEventListener("change", () => {
         updateAugDescription(elems);
     });
-    elems.augSelector.dispatchEvent(new Event('change')); // Set inital description by manually triggering change event
+    elems.augSelector.dispatchEvent(new Event("change")); // Set inital description by manually triggering change event
     elems.augPanel.appendChild(elems.augSelector);
     elems.augPanel.appendChild(elems.augDescription);
 
@@ -325,7 +317,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     elems.costPanel = createElement("div", { class: "resleeve-panel", width: "20%" });
     elems.costText = createElement("p", {
         innerText: `It costs ${numeralWrapper.formatMoney(cost)} ` +
-                   `to purchase this Sleeve.`,
+                   "to purchase this Sleeve.",
     });
     elems.buyButton = createElement("button", {
         class: "std-button",
@@ -334,9 +326,9 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
             if (purchaseResleeve(resleeve, playerRef!)) {
                 dialogBoxCreate(`You re-sleeved for ${numeralWrapper.formatMoney(cost)}!`, false);
             } else {
-                dialogBoxCreate(`You cannot afford to re-sleeve into this body`, false);
+                dialogBoxCreate("You cannot afford to re-sleeve into this body", false);
             }
-        }
+        },
     });
     elems.costPanel.appendChild(elems.costText);
     elems.costPanel.appendChild(elems.buyButton);
@@ -356,5 +348,5 @@ function updateAugDescription(elems: IResleeveUIElems) {
         return;
     }
 
-    elems.augDescription!.innerHTML = aug!.info;
+    elems.augDescription!.innerHTML = aug.info;
 }
