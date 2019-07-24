@@ -172,9 +172,10 @@ export class BaseServer {
         try {
             if (this.exists(path)) { this.fs.readdirSync(path); }
         } catch (e) {
-            if (e.code == "ENOTDIR") { return true; } else { throw e; }
+            console.log(`not a directory: "${path}"; error code ${e.code}`);
+            if (e.code == "ENOTDIR") { return false; } else { throw e; }
         }
-        return false;
+        return true;
     }
 
     /* /**
