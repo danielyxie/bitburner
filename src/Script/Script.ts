@@ -126,7 +126,7 @@ export class Script {
      * Calculates and updates the script's RAM usage based on its code
      */
     async updateRamUsage() {
-        const res = await calculateRamUsage(this.getSource(), this.getServer());
+        const res = await calculateRamUsage(this.filename, this.getSource(), this.getServer());
         if (res > 0) {
             this.ramUsage = roundToTwo(res);
         }

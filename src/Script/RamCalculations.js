@@ -31,7 +31,12 @@ const memCheckGlobalKey = ".__GLOBAL__";
  *                                      keep track of what functions have/havent been accounted for
  * @param {Server} server - Server where the scripts are supposed to be, used to import scripts.
  */
-async function parseOnlyRamCalculate(code, workerScript, server) {
+async function parseOnlyRamCalculate(codepath, code, workerScript, server) {
+    
+    if (!server) {
+        console.error(`No server passed in argument.`);
+        return RamCalculationErrorCode.SyntaxError;
+    }
     try {
         /**
          * Maps dependent identifiers to their dependencies.
@@ -92,7 +97,7 @@ async function parseOnlyRamCalculate(code, workerScript, server) {
                     return RamCalculationErrorCode.URLImportError;
                 }
             } else {
-                code = server.readFile(nextModule);
+                code = server.readFile(server.resolvePath(nextModule, codepath));
                 if (code == null) {
                     return RamCalculationErrorCode.ImportError; // No such script on the server
                 }
@@ -303,7 +308,12 @@ function parseOnlyCalculateDeps(code, currentModule) {
  * @param {string} codeCopy - The script's code
  * @param {Server} server - The server where the script and its dependencies are supposed to be.
  */
-export async function calculateRamUsage(codeCopy, server) {
+export async function calculateRamUsage(codepath, codeCopy, server) {
+    if (!server) {
+        console.error(`No server passed in argument.`);
+        return RamCalculationErrorCode.SyntaxError;
+    }
+
     // We don't need a real WorkerScript for this. Just an object that keeps
     // track of whatever's needed for RAM calculations
     const workerScript = {
@@ -314,7 +324,7 @@ export async function calculateRamUsage(codeCopy, server) {
     }
 
     try {
-        return await parseOnlyRamCalculate(codeCopy, workerScript, server);
+        return await parseOnlyRamCalculate(codepath, codeCopy, workerScript, server);
 	} catch (e) {
         console.error(`Failed to parse script for RAM calculations:`);
         console.error(e);

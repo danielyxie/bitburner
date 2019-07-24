@@ -190,7 +190,7 @@ export async function updateScriptEditorContent() {
     }
 
     var codeCopy = code.repeat(1);
-    var ramUsage = await calculateRamUsage(codeCopy, Player.getCurrentServer().scripts);
+    var ramUsage = await calculateRamUsage(filename, codeCopy, Player.getCurrentServer());
     if (ramUsage > 0) {
         scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
