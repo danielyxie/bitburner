@@ -102,6 +102,12 @@ import { mkdir } from "./Server/lib/mkdir";
 import { rm } from "./Server/lib/rm";
 import { ls } from "./Server/lib/ls";
 import { tree } from "./Server/lib/tree";
+import { nuke } from "./Server/lib/nuke";
+import { FTPCrack } from "./Server/lib/FTPCrack";
+import { bruteSSH } from "./Server/lib/bruteSSH";
+import { HTTPWorm } from "./Server/lib/HTTPWorm";
+import { relaySMTP } from "./Server/lib/relaySMTP";
+import { SQLInject } from "./Server/lib/SQLInject";
 import { fs } from 'memfs';
 
 import autosize from "autosize";
@@ -2051,71 +2057,12 @@ let Terminal = {
          * @type {Object.<string, ProgramHandler}
          */
         const programHandlers = {};
-        programHandlers[Programs.NukeProgram.name] = (server) => {
-            if (server.hasAdminRights) {
-                post("You already have root access to this computer. There is no reason to run NUKE.exe");
-                return;
-            }
-
-            if (server.openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
-                server.hasAdminRights = true;
-                post("NUKE successful! Gained root access to " + Player.getCurrentServer().hostname);
-                // TODO: Make this take time rather than be instant
-                return;
-            }
-
-            post("NUKE unsuccessful. Not enough ports have been opened");
-        };
-        programHandlers[Programs.BruteSSHProgram.name] = (server) => {
-            if (server.sshPortOpen) {
-                post("SSH Port (22) is already open!");
-                return;
-            }
-
-            server.sshPortOpen = true;
-            post("Opened SSH Port(22)!")
-            server.openPortCount++;
-        };
-        programHandlers[Programs.FTPCrackProgram.name] = (server) => {
-            if (server.ftpPortOpen) {
-                post("FTP Port (21) is already open!");
-                return;
-            }
-
-            server.ftpPortOpen = true;
-            post("Opened FTP Port (21)!");
-            server.openPortCount++;
-        };
-        programHandlers[Programs.RelaySMTPProgram.name] = (server) => {
-            if (server.smtpPortOpen) {
-                post("SMTP Port (25) is already open!");
-                return;
-            }
-
-            server.smtpPortOpen = true;
-            post("Opened SMTP Port (25)!");
-            server.openPortCount++;
-        };
-        programHandlers[Programs.HTTPWormProgram.name] = (server) => {
-            if (server.httpPortOpen) {
-                post("HTTP Port (80) is already open!");
-                return;
-            }
-
-            server.httpPortOpen = true;
-            post("Opened HTTP Port (80)!");
-            server.openPortCount++;
-        };
-        programHandlers[Programs.SQLInjectProgram.name] = (server) => {
-            if (server.sqlPortOpen) {
-                post("SQL Port (1433) is already open!");
-                return;
-            }
-
-            server.sqlPortOpen = true;
-            post("Opened SQL Port (1433)!");
-            server.openPortCount++;
-        };
+        programHandlers[Programs.NukeProgram.name] = (post, server) => nuke(post, server);
+        programHandlers[Programs.BruteSSHProgram.name] = (post, server) => bruteSSH(post, server);
+        programHandlers[Programs.FTPCrackProgram.name] = (post, server) => FTPCrack(post, server);
+        programHandlers[Programs.RelaySMTPProgram.name] = (post, server) => relaySMTP(post, server);
+        programHandlers[Programs.HTTPWormProgram.name] = (post, server) => HTTPWorm(post, server);
+        programHandlers[Programs.SQLInjectProgram.name] = (post, server) => SQLInject(post, server);
         programHandlers[Programs.ServerProfiler.name] = (server, args) => {
             if (args.length !== 2) {
                 post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
