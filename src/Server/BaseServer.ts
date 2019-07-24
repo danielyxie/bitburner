@@ -16,6 +16,7 @@ import { createRandomIp } from "../../utils/IPAddress";
 import { createFsFromVolume, Volume } from "memfs";
 import { Literatures } from "../Literature";
 
+
 import * as path from "path";
 
 interface IConstructorParams {
@@ -168,6 +169,12 @@ export class BaseServer {
         console.log(`${this.hostname} file system restored.`);
     }
 
+    resolvePath( filepath:string, cwd:string){
+        let resolvedPath = path.resolve(path.dirname(cwd), filepath );
+        console.log(`resolving path from file ${cwd} (${path.dirname(cwd)}) to file ${filepath} => ${resolvedPath}`)
+        return resolvedPath;
+    }
+
     isDir(path: string) {
         try {
             if (this.exists(path)) { this.fs.readdirSync(path); }
@@ -178,92 +185,6 @@ export class BaseServer {
         return true;
     }
 
-    /* /**
-     *
-     */
-    /*ls(dirpath: string, options = { types: false, depth: 2 }): string {
-
-        const SCOPE: string = "│  ";
-        const BRANCH: string = "├──";
-        const LAST: string = "└──";
-
-        class TreeNode {
-            name: string = "";
-            fileType: string = "";
-            childrens: TreeNode[] = [];
-            depth: number = 0;
-            constructor(name: string, fileType: string) {
-                this.name = name;
-                this.fileType = fileType;
-                this.childrens = [];
-            };
-            toString(isLast = false, types = false): string {
-                let localResults: string[] = [];
-                localResults.push([SCOPE.repeat(Math.max(0, this.depth - 1)), ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""), this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
-                if (this.childrens.length > 0) {
-                    for (let i = 0; i < this.childrens.length; i++) {
-                        localResults.push(this.childrens[i].toString(i == (this.childrens.length - 1)));
-                    }
-                }
-                console.log(`${localResults.join("\n")}`)
-                return localResults.join("\n");
-            };
-            addChild(node: TreeNode) {
-                node.depth = this.depth + 1;
-                this.childrens.push(node);
-            }
-        }
-
-        console.log(`Processing the tree of ${dirpath}.`)
-        let ignoredCounter = 0;
-        let rootNode = new TreeNode(dirpath, "DIR");
-        let toBeProcessed: TreeNode[] = [rootNode];
-        let processed: Set<string> = new Set<string>();
-
-        let nodeLimit = 100;
-        let childrenLimit = 100;
-
-        for (let n = 0; n < toBeProcessed.length; n++) {
-            nodeLimit--;
-            if (nodeLimit == 0) {
-                console.log("node limit reached");
-                break;
-            }
-            let node: TreeNode = toBeProcessed[0];
-            toBeProcessed.shift();
-            processed.add(node.name);
-            console.log(`Node: ${node.name}; type = ${node.fileType} `)
-
-            let dirContent = this.readdir(node.name, true);
-            if (!dirContent) return `An error occured when parsing the content of the ${node.name} directory.`
-            for (let c = 0; c < Math.min(dirContent.length, childrenLimit); c++) {
-                childrenLimit--;
-                let fileInfo = dirContent[c];
-                let filetype = detectFileType(fileInfo)
-                if (processed.has(fileInfo.name)) {
-                    console.log("children limit reached");
-                    break;
-                }
-
-                if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
-                    let childrenNode = new TreeNode(fileInfo.name, detectFileType(fileInfo));
-                    node.addChild(childrenNode);
-                    if (fileInfo.isDirectory() && node.depth < options.depth) {
-                        toBeProcessed.push(childrenNode);
-                    }
-                }
-                else {
-                    ignoredCounter++;
-                }
-            }
-            console.log(`${ignoredCounter}'Diverse' file types ignored. `);
-            console.log(`${node.name} have ${node.childrens.length} childrens.`)
-
-        }
-        //console.log(JSON.stringify(rootNode));
-        return rootNode.toString(true, options.types);
-    }
-    */
 
     readdir(dirpath: string, withFileTypes = false) {
         return this.fs.readdirSync(dirpath, { withFileTypes });
