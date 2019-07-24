@@ -22,7 +22,7 @@ export function ls(server: BaseServer, term:any, args:string[], targetDir:string
     let cwd:string = term.currDir;
     depth = 2;
     nodeLimit = 50;
-    console.log(`@ ${server.hostname} > ${cwd} ] Log called with the following arguments : ${JSON.stringify(args)}`);
+    console.log(`@ ${server.hostname} > ${cwd} ] ls called with the following arguments : ${JSON.stringify(args)}`);
     while (args.length > 0) {
         console.log(`args stack left: ${JSON.stringify(args)}`);
         const arg = args.shift();
@@ -55,16 +55,14 @@ export function ls(server: BaseServer, term:any, args:string[], targetDir:string
 
 
     console.log(`Processing the tree of ${targetDir}.`);
-    const rootNode = new TreeNode(targetDir, "DIR");
+    const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
     const toBeProcessed: TreeNode[] = [rootNode];
     const processed: Set<string> = new Set<string>();
 
     while (toBeProcessed.length > 0) {
         const node:TreeNode = toBeProcessed.pop() as TreeNode;
-        processed.add(node.name);
-        console.log(`Node: ${node.name}; type = ${node.fileType} `);
-
-        const dirContent = server.readdir(node.name, true);
+        processed.add(node.path+node.name);
+        const dirContent = server.readdir(node.path+node.name, true);
         if (!dirContent) { return `An error occured when parsing the content of the ${node.name} directory.`; }
         for (let c = 0; c < Math.min(dirContent.length, nodeLimit); c++) {
             nodeLimit--;
@@ -96,6 +94,7 @@ const LAST: string      = "└──";
 
 class TreeNode {
     name: string = "";
+    path:string = "";
     fileType: string = "";
     childrens: TreeNode[] = [];
     depth: number = 0;
@@ -117,6 +116,7 @@ class TreeNode {
     }
     addChild(node: TreeNode) {
         node.depth = this.depth + 1;
+        node.path = this.path+this.name + ((this.name.endsWith("/"))?"":"/");
         this.childrens.push(node);
     }
 }

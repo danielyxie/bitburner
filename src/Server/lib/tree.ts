@@ -61,10 +61,8 @@ export function tree(server: BaseServer, term:any, args:string[], targetDir:stri
 
     while (toBeProcessed.length > 0) {
         const node:TreeNode = toBeProcessed.pop() as TreeNode;
-        processed.add(node.name);
-        console.log(`Node: ${node.name}; type = ${node.fileType} `);
-
-        const dirContent = server.readdir(node.name, true);
+        processed.add(node.path+node.name);
+        const dirContent = server.readdir(node.path+node.name, true);
         if (!dirContent) { return `An error occured when parsing the content of the ${node.name} directory.`; }
         for (let c = 0; c < Math.min(dirContent.length, nodeLimit); c++) {
             nodeLimit--;
@@ -96,6 +94,7 @@ const LAST: string      = "└──";
 
 class TreeNode {
     name: string = "";
+    path:string = "";
     fileType: string = "";
     childrens: TreeNode[] = [];
     depth: number = 0;
@@ -117,6 +116,7 @@ class TreeNode {
     }
     addChild(node: TreeNode) {
         node.depth = this.depth + 1;
+        node.path = this.path+this.name + ((this.name.endsWith("/"))?"":"/");
         this.childrens.push(node);
     }
 }
