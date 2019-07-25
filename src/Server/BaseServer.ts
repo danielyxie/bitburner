@@ -16,6 +16,13 @@ import { createRandomIp } from "../../utils/IPAddress";
 import { createFsFromVolume, Volume } from "memfs";
 import { Literatures } from "../Literature";
 
+import {
+    post,
+    postContent,
+    postError,
+    hackProgressBarPost,
+    hackProgressPost
+} from "../ui/postToTerminal";
 
 import * as path from "path";
 
@@ -193,33 +200,54 @@ export class BaseServer {
     }
 
 
-    readdir(dirpath: string, withFileTypes = false) {
+    readdir(dirpath: string, withFileTypes = false, verbose:boolean=false) {
+        if(verbose) post(`Reading content of directory ${dirpath}`);
         return this.fs.readdirSync(dirpath, { withFileTypes });
     }
 
-    mkdir(dirpath: string, recursive = true) {
+    mkdir(dirpath: string,  recursive:boolean = true, verbose:boolean=false) {
+        if(verbose) post(`Creating directory ${dirpath}`);
         this.fs.mkdirSync(dirpath, { recursive });
     }
 
-    writeFile(filename: string, data: string, recursive = true): void {
+    writeFile(filename: string, data: string,  recursive:boolean = true, verbose:boolean=false): void {
         if (recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
+        if(verbose) post(`Writing to file ${filename}`);
         this.fs.writeFileSync(filename, data);
         this.volJSON = this.vol.toJSON();
     }
 
-    appendFile(filename: string, data: string, recursive = true){
+    appendFile(filename: string, data: string, recursive:boolean = true, verbose:boolean=false){
         if (recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
+        if(verbose) post(`Appending to file ${filename}`);
         this.fs.appendFileSync(filename, data);
         this.volJSON = this.vol.toJSON();
     }
 
-    readFile(filename: string): string {
+    readFile(filename: string, verbose:boolean=false): string {
+        if(verbose) post(`Reading file ${filename}`);
         return this.fs.readFileSync(filename, "utf8");
     }
 
-    copyFile(src: string, target: string, recursive = true) {
+    copyFile(src: string, target: string, recursive:boolean = true, verbose:boolean = false) {
+        if(verbose && src == target) {
+            postError(`Cannot copy file ${src} to ${target}`);
+            return;
+        }
+        if(verbose) post(`Copying file ${src} to ${target}`);
         this.writeFile(target, this.readFile(src), recursive);
     }
+
+    moveFile(src: string, target:string, recursive:boolean = true, verbose:boolean = false){
+        if(verbose && src == target) {
+            postError(`Cannot move ${src} to itself`);
+            return;
+        }
+        this.writeFile(target, this.readFile(src), recursive);
+        this.removeFile(src);
+        if(verbose) post(`'${src}' -> '${target}'`);
+    }
+
 
     /**
      * Returns if a file exists at the specified path.
