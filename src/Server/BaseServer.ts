@@ -198,23 +198,27 @@ export class BaseServer {
         return this.fs.readdirSync(dirpath, { withFileTypes });
     }
 
-    mkdir(dirpath: string, recursive = false) {
+    mkdir(dirpath: string, recursive = true) {
         this.fs.mkdirSync(dirpath, { recursive });
     }
 
-    writeFile(filename: string, data: string, recursive = false): void {
-        console.log(`Writing to file ${filename}`);
+    writeFile(filename: string, data: string, recursive = true): void {
         if (recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
         this.fs.writeFileSync(filename, data);
         this.volJSON = this.vol.toJSON();
     }
 
+    appendFile(filename: string, data: string, recursive = true){
+        if (recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
+        this.fs.appendFileSync(filename, data);
+        this.volJSON = this.vol.toJSON();
+    }
+
     readFile(filename: string): string {
-        console.log(`${this.hostname} : reading file ${filename}`);
         return this.fs.readFileSync(filename, "utf8");
     }
 
-    copyFile(src: string, target: string, recursive = false) {
+    copyFile(src: string, target: string, recursive = true) {
         this.writeFile(target, this.readFile(src), recursive);
     }
 
@@ -305,56 +309,13 @@ export class BaseServer {
      * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
      */
     removeFile(fn: string): IReturnStatus {
-        console.log(`Does the file exists on the server? ${this.fs.existsSync(fn)}`);
-        this.fs.unlinkSync(fn);
-        console.log(`Does the file still exists on the server? ${this.fs.existsSync(fn)}`);
-
-        if (fn.endsWith(".exe") || fn.match(/^.+\.exe-\d+(?:\.\d*)?%-INC$/) != null) {
-            for (let i = 0; i < this.programs.length; ++i) {
-                if (this.programs[i] === fn) {
-                    this.programs.splice(i, 1);
-                    return { res: true };
-                }
-            }
-        } else if (isScriptFilename(fn)) {
-            for (let i = 0; i < this.scripts.length; ++i) {
-                if (this.scripts[i].filename === fn) {
-                    if (this.isRunning(fn)) {
-                        return {
-                            res: false,
-                            msg: "Cannot delete a script that is currently running!",
-                        };
-                    }
-
-                    this.scripts.splice(i, 1);
-                    return { res: true };
-                }
-            }
-        } else if (fn.endsWith(".lit")) {
-            for (let i = 0; i < this.messages.length; ++i) {
-                const f = this.messages[i];
-                if (typeof f === "string" && f === fn) {
-                    this.messages.splice(i, 1);
-                    return { res: true };
-                }
-            }
-        } else if (fn.endsWith(".txt")) {
-            for (let i = 0; i < this.textFiles.length; ++i) {
-                if (this.textFiles[i].fn === fn) {
-                    this.textFiles.splice(i, 1);
-                    return { res: true };
-                }
-            }
-        } else if (fn.endsWith(".cct")) {
-            for (let i = 0; i < this.contracts.length; ++i) {
-                if (this.contracts[i].fn === fn) {
-                    this.contracts.splice(i, 1);
-                    return { res: true };
-                }
-            }
-        }
-
-        return { res: false, msg: "No such file exists" };
+        if(!this.exists(fn))
+            return { res: false, msg: "No such file exists" };
+        else if (this.isRunning(fn)) 
+            return { res: false, msg: "Cannot delete a script that is currently running!" };
+        else 
+            this.fs.unlinkSync(fn);
+        return { res:true };
     }
 
     /**
