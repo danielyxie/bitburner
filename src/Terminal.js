@@ -97,7 +97,10 @@ import {
     hackProgressBarPost,
     hackProgressPost
 } from "./ui/postToTerminal";
-
+import {
+    calculateRamUsage
+} from "./Script/RamCalculations";
+import{ Script } from "./Script/Script";
 import { mkdir } from "./Server/lib/mkdir";
 import { rm } from "./Server/lib/rm";
 import { ls } from "./Server/lib/ls";
@@ -108,6 +111,8 @@ import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
 import { relaySMTP } from "./Server/lib/relaySMTP";
 import { SQLInject } from "./Server/lib/SQLInject";
+import { ps } from "./Server/lib/ps";
+
 import { fs } from 'memfs';
 
 import autosize from "autosize";
@@ -1278,18 +1283,7 @@ let Terminal = {
                     Terminal.executeNanoCommand(commandArray);
                     break;
                 case "ps":
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect usage of ps command. Usage: ps");
-                        return;
-                    }
-                    for (let i = 0; i < s.runningScripts.length; i++) {
-                        let rsObj = s.runningScripts[i];
-                        let res = `(PID - ${rsObj.pid}) ${rsObj.filename}`;
-                        for (let j = 0; j < rsObj.args.length; ++j) {
-                            res += (" " + rsObj.args[j].toString());
-                        }
-                        post(res);
-                    }
+                    ps(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
                     break;
                 case "rm": {
                     rm(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
@@ -1602,18 +1596,12 @@ let Terminal = {
                     let path = Terminal.getFilepath(commandArray[0]);
                     if(Player.getCurrentServer().exists(path)) {
                         // if it's an existing path, check if it is a directory or an executable
-                        try{
-                            if (Player.getCurrentServer().isDir(path)) post(`${path} is a directory.`);
-                            else {
-                                Player.getCurrentServer().fs.accessSync(path, fs.constants.X_OK); // if it works, it is an executable file
-                                // we launch a run path command.
-                                post(`${path} is an executable. # auto running executables has yet to be implemented, use run for now.`);
-                            }
-                        }catch(e){
-                            // this is not an executable file nor a directory.
-                            // we display some informations on the nature of the file.
+                        if (Player.getCurrentServer().isDir(path)) 
+                            post(`${path} is a directory.`);
+                        else if (Player.getCurrentServer().isExecutable(path)) //for now every file is executable.
+                            post(`${path} is an executable. # auto running executables has yet to be implemented, use run for now.`);
+                        else
                             post(`${path} is a file.`);
-                        }
                     }
                     else postError(`${commandArray[0]} not found`);
                     break;
@@ -2293,6 +2281,7 @@ let Terminal = {
         const args = [];
         const scriptName = Terminal.getFilepath(commandArray[1]);
 
+        console.log(`Trying to run script "${scriptName}"`);
         if (commandArray.length > 2) {
             if (commandArray.length >= 4 && commandArray[2] == "-t") {
                 numThreads = Math.round(parseFloat(commandArray[3]));
@@ -2310,44 +2299,53 @@ let Terminal = {
             }
         }
 
-
         // Check if this script is already running
         if (findRunningScript(scriptName, args, server) != null) {
             post("ERROR: This script is already running. Cannot run multiple instances");
             return;
         }
-
-		// Check if the script exists and if it does run it
-		for (var i = 0; i < server.scripts.length; i++) {
-			if (server.scripts[i].filename === scriptName) {
-				// Check for admin rights and that there is enough RAM availble to run
-                var script = server.scripts[i];
-				var ramUsage = script.ramUsage * numThreads;
-				var ramAvailable = server.maxRam - server.ramUsed;
-
-				if (server.hasAdminRights == false) {
-					post("Need root access to run script");
-					return;
-				} else if (ramUsage > ramAvailable){
-					post("This machine does not have enough RAM to run this script with " +
-                         numThreads + " threads. Script requires " + ramUsage + "GB of RAM");
-					return;
-				} else {
-					// Able to run script
-                    var runningScriptObj = new RunningScript(script, args);
-                    runningScriptObj.threads = numThreads;
-
-                    if (startWorkerScript(runningScriptObj, server)) {
-                        post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
-                    } else {
-                        postError(`Failed to start script`);
-                    }
-                    return;
-				}
-			}
-		}
-
-		post("ERROR: No such script");
+        console.log(`Has Admin rights? ${server.hasAdminRights}`);
+        if(!server.hasAdminRights) {
+            postError(`ERROR: Need root access to run script`);
+            return;
+        }
+        console.log(`Exists? ${server.exists(scriptName)}`);
+        if(!server.exists(scriptName)) {
+            postError(`ERROR: No such script`);
+            return;
+        }        
+        console.log(`is Executable? ${server.isExecutable(scriptName)}`);
+        if(!server.isExecutable(scriptName)) {
+            postError(`ERROR: Not an executable`);
+            return;
+        }
+        let script = server.scriptsMap[scriptName];
+        if(!script || isNaN(script.ramUsage)){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?) 
+            //TODO maybe add a "loading time" for those? where the Ram calculation is ran before running the script, asynchronously.
+            postError(`ERROR: Static RAM Usage unknown, please open the script with nano first!`);
+            if (!script){
+                script = new Script(scriptName, server.ip);
+                server.scriptsMap[scriptName] = script;
+                script.updateRamUsage();
+                script.markUpdated();
+            }
+            return;
+        }
+        let ramUsage = script.ramUsage * numThreads;
+        let ramAvailable = server.maxRam - server.ramUsed;
+        console.log(`RAM needed [t=${numThreads}]${ramUsage} / ${ramAvailable}; enough? ${ramUsage <= ramAvailable}`)
+        if(ramUsage > ramAvailable){
+            postError(`This machine does not have enough RAM to run this script with ${numThreads} threads. Script requires ${ramUsage} GB of RAM`);
+            return;
+        }
+        // Able to run script
+        var runningScriptObj = new RunningScript(script, args);
+        runningScriptObj.threads = numThreads;
+        if (startWorkerScript(runningScriptObj, server)) {
+            post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
+        } else {
+            postError(`Failed to start script`);
+        }
 	},
 
     runContract: async function(contractName) {
