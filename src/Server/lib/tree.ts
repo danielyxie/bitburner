@@ -1,6 +1,7 @@
 import { BaseServer } from "../BaseServer";
 import { detectFileType, FileType } from "./FileType";
 import { Terminal } from "../../Terminal";
+import { post, postError } from "../../ui/postToTerminal";
 import * as path from 'path';
 /**
  *This function builds a string representation of the file tree from the target directory on the specified server and outputs it as a graphical tree.
@@ -22,9 +23,9 @@ export function tree(server: BaseServer, term:any, args:string[], targetDir:stri
     let cwd:string = term.currDir;
     depth = 2;
     nodeLimit = 50;
-    console.log(`@ ${server.hostname} > ${cwd} ] Log called with the following arguments : ${JSON.stringify(args)}`);
+    //console.log(`@ ${server.hostname} > ${cwd} ] Log called with the following arguments : ${JSON.stringify(args)}`);
     while (args.length > 0) {
-        console.log(`args stack left: ${JSON.stringify(args)}`);
+        //console.log(`args stack left: ${JSON.stringify(args)}`);
         const arg = args.shift();
         switch (arg) {
             case "-h":
@@ -32,13 +33,13 @@ export function tree(server: BaseServer, term:any, args:string[], targetDir:stri
                 throw HELP_MESSAGE;
             case "-l":
             case "--limit":
-                console.log(`limit flag detected, args stack left: ${JSON.stringify(args)}`);
+                //console.log(`limit flag detected, args stack left: ${JSON.stringify(args)}`);
                 if (args.length > 0) nodeLimit = parseInt(args.shift() as string);
                 else throw HELP_MESSAGE; 
                 break;
             case "-d": 
             case "--depth":
-                console.log(`depth flag detected, args stack left: ${JSON.stringify(args)}`);
+                //console.log(`depth flag detected, args stack left: ${JSON.stringify(args)}`);
                 if (args.length > 0) depth = parseInt(args.shift() as string);
                 else throw HELP_MESSAGE; 
                 break;
@@ -48,13 +49,13 @@ export function tree(server: BaseServer, term:any, args:string[], targetDir:stri
         }
     }
     if (!targetDir) targetDir = cwd;
-    console.log(`Resolving targetDir path from cwd '${cwd}' and targetDir '${targetDir}' => ${path.resolve(cwd, targetDir)}`);
+    //console.log(`Resolving targetDir path from cwd '${cwd}' and targetDir '${targetDir}' => ${path.resolve(cwd, targetDir)}`);
     targetDir = path.resolve(cwd, targetDir);
     
     if (!targetDir) { throw HELP_MESSAGE; }
 
 
-    console.log(`Processing the tree of ${targetDir}.`);
+    //console.log(`Processing the tree of ${targetDir}.`);
     const rootNode = new TreeNode(targetDir, "DIR");
     const toBeProcessed: TreeNode[] = [rootNode];
     const processed: Set<string> = new Set<string>();
@@ -63,13 +64,10 @@ export function tree(server: BaseServer, term:any, args:string[], targetDir:stri
         const node:TreeNode = toBeProcessed.pop() as TreeNode;
         processed.add(node.path+node.name);
         const dirContent = server.readdir(node.path+node.name, true);
-        if (!dirContent) { return `An error occured when parsing the content of the ${node.name} directory.`; }
+        if (!dirContent) { throw `An error occured when parsing the content of the ${node.name} directory.`; }
         for (let c = 0; c < Math.min(dirContent.length, nodeLimit); c++) {
-            nodeLimit--;
             const fileInfo = dirContent[c];
             if (processed.has(fileInfo.name)) { break; } // avoid circular dependencies due to symlinks
-
-
             const filetype = detectFileType(fileInfo);
             if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
                 const childrenNode = new TreeNode(fileInfo.name, detectFileType(fileInfo));
@@ -78,11 +76,6 @@ export function tree(server: BaseServer, term:any, args:string[], targetDir:stri
                     toBeProcessed.push(childrenNode);
                 }
             }
-        }
-        // node limit in case of enormous repositories.
-        if (nodeLimit == 0) {
-            console.log("node limit reached");
-            return "ERROR: Too much nodes to discover.";
         }
     }
     return rootNode.toString(true);
@@ -111,7 +104,6 @@ class TreeNode {
                 localResults.push(this.childrens[i].toString(i == (this.childrens.length - 1)));
             }
         }
-        console.log(`${localResults.join("\n")}`);
         return localResults.join("\n");
     }
     addChild(node: TreeNode) {
