@@ -92,7 +92,7 @@ async function parseOnlyRamCalculate(codepath, code, workerScript, server) {
                     return RamCalculationErrorCode.URLImportError;
                 }
             } else {
-                code = server.readFile(server.resolvePath(nextModule, codepath));
+                code = server.readFile(server.resolvePath(codepath, nextModule));
                 if (code == null) {
                     return RamCalculationErrorCode.ImportError; // No such script on the server
                 }
