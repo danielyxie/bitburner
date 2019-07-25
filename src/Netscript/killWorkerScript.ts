@@ -7,7 +7,7 @@ import { workerScripts } from "./WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventEmitter";
 
 import { RunningScript } from "../Script/RunningScript";
-import { AllServers, getServer } from "../Server/AllServers";
+import { getServer } from "../Server/AllServers";
 
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
