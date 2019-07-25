@@ -119,7 +119,6 @@ export class BaseServer {
     }
 
     restoreFileSystem(volJSON = {}) {
-        for (const file in volJSON) { console.log(`-${file}`); }
         this.vol = Volume.fromJSON(volJSON);
         this.fs = createFsFromVolume(this.vol);
 
@@ -131,6 +130,7 @@ export class BaseServer {
             if (this.fs.existsSync(filename)) { continue; }
             const data = script.code;
             this.writeFile(filename, data);
+            this.scriptsMap[filename] = script;
         }
         for (let i = 0; i < this.textFiles.length; i++) { // migrating text files
             const textFile = this.textFiles[i];
@@ -173,13 +173,13 @@ export class BaseServer {
         } 
     }
 
-    resolvePath( filepath:string, cwd:string){
+    resolvePath( src:string, target:string){
         //TODO using another arguments like a kind of $PATH, and using ...PATH in the path.resolve could allow using a global import environment
         // this could allow moving system executables in a sys folder and importing the system functions as dependencies directly.
         // Also, adding the server object to any running script environment could  allow direct file system manipulation instead of the ns.func one.
         // RAM calculations could still be possible with this system, only using fs.func instead of ns.func for the detection.
-        let resolvedPath = path.resolve(path.dirname(cwd), filepath );
-        console.log(`resolving path from file ${cwd} (${path.dirname(cwd)}) to file ${filepath} => ${resolvedPath}`)
+        let srcDir = ( this.isDir(src) ) ? src : path.dirname(src);
+        let resolvedPath = path.resolve(srcDir , target);
         return resolvedPath;
     }
 
@@ -187,7 +187,6 @@ export class BaseServer {
         try {
             if (this.exists(path)) { this.fs.readdirSync(path); }
         } catch (e) {
-            console.log(`not a directory: "${path}"; error code ${e.code}`);
             if (e.code == "ENOTDIR") { return false; } else { throw e; }
         }
         return true;
