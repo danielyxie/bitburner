@@ -103,6 +103,7 @@ import {
 import{ Script } from "./Script/Script";
 import { mkdir } from "./Server/lib/mkdir";
 import { rm } from "./Server/lib/rm";
+import { mv } from "./Server/lib/mv";
 import { ls } from "./Server/lib/ls";
 import { tree } from "./Server/lib/tree";
 import { nuke } from "./Server/lib/nuke";
@@ -1189,14 +1190,16 @@ let Terminal = {
                     break;
                 }
                 case "mv": {
+                    mv(Player.getCurrentServer(), Terminal, commandArray.slice(1));
+                    break;
                     if (commandArray.length !== 3) {
                         postError(`Incorrect number of arguments. Usage: mv [src] [dest]`);
                         return;
                     }
 
                     try {
-                        const source = Terminal.getFilePath(commandArray[1]);
-                        const dest = Terminal.getFilePath(commandArray[2]);
+                        const source = Terminal.getFilepath(commandArray[1]);
+                        const dest = Terminal.getFilepath(commandArray[2]);
                         const server = Player.getCurrentServer();
                         if (!server.exists(source)) {
                             postError(`${source} does not exist `);
