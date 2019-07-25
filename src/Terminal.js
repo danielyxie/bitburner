@@ -1829,7 +1829,7 @@ let Terminal = {
             const filename = commandArray[1];
             const server = Player.getCurrentServer();
             server.touch(filename);
-            const content = Terminal.getFileContent(filename);
+            var content = Terminal.getFileContent(filename);
             const filepath = Terminal.getFilepath(filename);
             if (filename === ".fconf" && content === ""){
                     content = createFconf();
@@ -2322,7 +2322,7 @@ let Terminal = {
         let script = server.scriptsMap[scriptName];
         if(!script || isNaN(script.ramUsage)){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?) 
             //TODO maybe add a "loading time" for those? where the Ram calculation is ran before running the script, asynchronously.
-            postError(`ERROR: Static RAM Usage unknown, please open the script with nano first!`);
+            postError(`ERROR: Script RAM usage not calculated yet! Please open the script with nano first, or try again in a few seconds.`);
             if (!script){
                 script = new Script(scriptName, server.ip);
                 server.scriptsMap[scriptName] = script;
