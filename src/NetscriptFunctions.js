@@ -115,7 +115,6 @@ import {
     getStockMarket4STixApiCost
 } from "./StockMarket/StockMarketCosts";
 import { isValidFilePath } from "./Terminal/DirectoryHelpers";
-import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
 import {
     unknownBladeburnerActionErrorMessage,
@@ -1494,27 +1493,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "fileExists() failed. Invalid IP or hostname passed in: " + ip);
             }
-            for (var i = 0; i < server.scripts.length; ++i) {
-                if (filename == server.scripts[i].filename) {
-                    return true;
-                }
-            }
-            for (var i = 0; i < server.programs.length; ++i) {
-                if (filename.toLowerCase() == server.programs[i].toLowerCase()) {
-                    return true;
-                }
-            }
-            for (var i = 0; i < server.messages.length; ++i) {
-                if (!(server.messages[i] instanceof Message) &&
-                    filename.toLowerCase() === server.messages[i]) {
-                    return true;
-                }
-            }
-            var txtFile = getTextFile(filename, server);
-            if (txtFile != null) {
-              return true;
-            }
-            return false;
+            return server.exists(filename);
         },
         isRunning: function(filename,ip) {
             updateDynamicRam("isRunning", getRamCost("isRunning"));
@@ -2021,31 +2000,17 @@ function NetscriptFunctions(workerScript) {
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
                 }
-                if (isScriptFilename(fn)) {
-                    // Write to script
-                    let script = workerScript.getScriptOnServer(fn);
-                    if (script == null) {
-                        // Create a new script
-                        script = new Script(fn, data, server.ip, server.scripts);
-                        server.scripts.push(script);
-                        return true;
-                    }
-                    mode === "w" ? script.code = data : script.code += data;
-                    script.updateRamUsage(server.scripts);
-                    script.markUpdated();
-                } else {
-                    // Write to text file
-                    let txtFile = getTextFile(fn, server);
-                    if (txtFile == null) {
-                        txtFile = createTextFile(fn, data, server);
-                        return true;
-                    }
-                    if (mode === "w") {
-                        txtFile.write(data);
-                    } else {
-                        txtFile.append(data);
-                    }
+                let script = workerScript.getScriptOnServer(fn);
+                if (script == null) {
+                    // Create a new script
+                    script = new Script(fn, server.ip);
+                    server.scriptsMap[fn]=script;
+                    return true;
                 }
+                
+                mode === "w" ? server.writeFile(fn, data) : server.appendFile(fn, data);
+                script.updateRamUsage(server.scripts);
+                script.markUpdated();
                 return true;
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for write: " + port);
@@ -2086,22 +2051,7 @@ function NetscriptFunctions(workerScript) {
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
                 }
-                if (isScriptFilename(fn)) {
-                    // Read from script
-                    let script = workerScript.getScriptOnServer(fn);
-                    if (script == null) {
-                        return "";
-                    }
-                    return script.code;
-                } else {
-                    // Read from text file
-                    let txtFile = getTextFile(fn, server);
-                    if (txtFile !== null) {
-                        return txtFile.text;
-                    } else {
-                        return "";
-                    }
-                }
+                return server.readFile(fn) || "";
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for read(): " + port);
             }
@@ -2139,10 +2089,7 @@ function NetscriptFunctions(workerScript) {
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
                 }
-                var txtFile = getTextFile(fn, server);
-                if (txtFile != null) {
-                    txtFile.write("");
-                }
+                server.writeFile(fn, "");
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for clear(): " + port);
             }
@@ -2185,12 +2132,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
             }
-            for (var i = 0; i < server.runningScripts.length; ++i) {
-                if (server.runningScripts[i].filename == scriptname) {
-                    return true;
-                }
-            }
-            return false;
+            return server.isRunning(fn);
         },
         scriptKill: function(scriptname, ip) {
             updateDynamicRam("scriptKill", getRamCost("scriptKill"));
@@ -2349,19 +2291,15 @@ function NetscriptFunctions(workerScript) {
             });
         },
         wget: async function(url, target, ip=workerScript.serverIp) {
-            if (!isScriptFilename(target) && !target.endsWith(".txt")) {
-                workerScript.log(`ERROR: wget() failed because of an invalid target file: ${target}. Target file must be a script or text file`);
-                return Promise.resolve(false);
-            }
             var s = safeGetServer(ip, "wget");
             return new Promise(function(resolve, reject) {
                 $.get(url, function(data) {
-                    let res;
-                    if (isScriptFilename(target)) {
-                        res = s.writeToScriptFile(target, data);
-                    } else {
-                        res = s.writeToTextFile(target, data);
-                    }
+                    let res = { success: false, overwritten : false};
+                    if(s.exists(target) && !s.isDir(target)) res.overwritten = true
+                    
+                    s.writeFile(target, data);
+                    res.success = true;
+
                     if (!res.success) {
                         workerScript.log("ERROR: wget() failed");
                         return resolve(false);
