@@ -118,7 +118,7 @@ import { fs } from 'memfs';
 import autosize from "autosize";
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
-
+import * as path from 'path';
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
@@ -904,30 +904,16 @@ let Terminal = {
                             return;
                         }
                         const filename = Terminal.getFilepath(commandArray[1]);
-                        if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt")) {
-                            postError("Only .msg, .txt, and .lit files are viewable with cat (filename must end with .msg, .txt, or .lit)");
-                            return;
+                        let server = Player.getCurrentServer();
+                        let popup = false;
+                        if(server.exists(filename) && !server.isDir(filename)){
+                            if (popup)
+                                dialogBoxCreate(`${filename}<br /><br />${server.readFile(filename)}`, true);
+                            else
+                                post(server.readFile(filename));
                         }
-
-                        if (filename.endsWith(".msg") || filename.endsWith(".lit")) {
-                            for (let i = 0; i < s.messages.length; ++i) {
-                                if (filename.endsWith(".lit") && s.messages[i] === filename) {
-                                    showLiterature(s.messages[i]);
-                                    return;
-                                } else if (filename.endsWith(".msg") && s.messages[i].filename === filename) {
-                                    showMessage(s.messages[i]);
-                                    return;
-                                }
-                            }
-                        } else if (filename.endsWith(".txt")) {
-                            const txt = Terminal.getTextFile(filename);
-                            if (txt != null) {
-                                txt.show();
-                                return;
-                            }
-                        }
-
-                        postError(`No such file ${filename}`);
+                        else 
+                            postError(`No such file ${filename}`);
                     } catch(e) {
                         Terminal.postThrownError(e);
                     }
@@ -953,7 +939,7 @@ let Terminal = {
                             }
                         }
 
-                        Terminal.currDir = evaledDir;
+                        Terminal.currDir = evaledDir + ((evaledDir.endsWith("/"))?"":"/");
 
                         // Reset input to update current directory on UI
                         Terminal.resetTerminalInput();
@@ -1209,20 +1195,17 @@ let Terminal = {
                     }
 
                     try {
-                        const source = commandArray[1];
-                        const dest = commandArray[2];
-
-                        if (!isScriptFilename(source) && !source.endsWith(".txt")) {
-                            postError(`'mv' can only be used on scripts and text files (.txt)`);
+                        const source = Terminal.getFilePath(commandArray[1]);
+                        const dest = Terminal.getFilePath(commandArray[2]);
+                        const server = Player.getCurrentServer();
+                        if (!server.exists(source)) {
+                            postError(`${source} does not exist `);
                             return;
                         }
-
-                        const srcFile = Terminal.getFile(source);
-                        if (srcFile == null) {
-                            postError(`Source file ${source} does not exist`);
-                            return;
+                        const overwrite = false;
+                        if(!overwrite && server.exists(dest)) {
+                            postError(`${dest} already exists, use the -f flag to force the overwriting.`);
                         }
-
                         const sourcePath = Terminal.getFilepath(source);
                         const destPath = Terminal.getFilepath(dest);
 
@@ -2177,8 +2160,9 @@ let Terminal = {
         //if (isInRootDirectory(path)) {
         //    return removeLeadingSlash(path);
         //}
-
-        return Terminal.currDir+filename;
+        let result = path.resolve( Terminal.currDir+filename)
+        //console.log(`result = ${result}, server result: ${Player.getCurrentServer().resolvePath(Terminal.currDir, filename)}`);
+        return result;
     },
 
     /**
