@@ -295,12 +295,7 @@ function processNetscript1Imports(code, workerScript) {
     }
 
     function getScript(scriptName) {
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === scriptName) {
-                return server.scripts[i];
-            }
-        }
-        return null;
+        return server.scriptsMap[scriptName];
     }
 
     let generatedCode = ""; // Generated Javascript Code
@@ -520,7 +515,7 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
 
     // Start the script's execution
     let p = null;  // Script's resulting promise
-    if (s.name.endsWith(".js") || s.name.endsWith(".ns")) {
+    if (!s.name.endsWith(".script")) {
         p = startNetscript2Script(s);
     } else {
         p = startNetscript1Script(s);

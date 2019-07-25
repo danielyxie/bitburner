@@ -11,7 +11,7 @@ import { RamCostConstants } from "./RamCostGenerator";
 
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
-import { AllServers } from "../Server/AllServers";
+import * as Servers from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
 import { IMap } from "../types";
 
@@ -142,7 +142,7 @@ export class WorkerScript {
      * Returns the Server on which this script is running
      */
     getServer() {
-    	return AllServers[this.serverIp];
+    	return Servers.getServer(this.serverIp);
     }
 
     /**
@@ -151,12 +151,8 @@ export class WorkerScript {
      */
     getScript(): Script | null {
         const server = this.getServer();
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === this.name) {
-                return server.scripts[i];
-            }
-        }
-
+        if (server.scriptsMap[this.name]) return server.scriptsMap[this.name];
+        
         console.error("Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong");
         return null;
     }
@@ -169,13 +165,7 @@ export class WorkerScript {
         if (server == null) {
             server = this.getServer();
         }
-
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === fn) {
-                return server.scripts[i];
-            }
-        }
-
+        if (!server.scriptsMap[this.name]) return server.scriptsMap[this.name];
         return null;
     }
 
