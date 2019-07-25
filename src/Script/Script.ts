@@ -108,10 +108,13 @@ export class Script {
             this.filename = filenameElem.value;
             this.server = serverIp;
             this.getServer().writeFile(this.filename, code);
-    		      this.updateRamUsage();
+    		this.updateRamUsage();
             this.markUpdated();
+            this.getServer().scriptsMap[this.filename] = this;
     	}
     }
+
+    
 
     getServer() {
         if (!getServer(this.server)) { console.error(`Script ${this.filename} server has not been loaded.`); }
