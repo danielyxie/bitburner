@@ -129,10 +129,9 @@ export class BaseServer {
             const script = this.scripts[i];
             const filename = script.filename;
             if (this.fs.existsSync(filename)) { continue; }
-            console.log(JSON.stringify(this.scripts));
             const data = script.code;
             this.writeFile(filename, data);
-            console.log(`${filename} migrated.`);
+            //console.log(`${filename} migrated.`);
         }
         for (let i = 0; i < this.textFiles.length; i++) { // migrating text files
             const textFile = this.textFiles[i];
@@ -140,7 +139,7 @@ export class BaseServer {
             if (this.fs.existsSync(filename)) { continue; }
             const data = textFile.text;
             this.writeFile(filename, data);
-            console.log(`${filename} migrated.`);
+            //console.log(`${filename} migrated.`);
         }
 
         for (let i = 0; i < this.messages.length; i++) { // migrating litterature/message files
@@ -156,17 +155,16 @@ export class BaseServer {
             }
             if (this.fs.existsSync(filename)) { continue; }
             this.writeFile(filename, data);
-            console.log(`${filename} migrated.`);
+            //console.log(`${filename} migrated.`);
         }
         for (let i = 0; i < this.programs.length; i++) { // migrating program files
             const filename = this.programs[i];
             if (this.fs.existsSync(filename)) { continue; }
             const data = ""; // TODO find a content to add to those programs source code.
             this.writeFile(filename, data);
-            console.log(`${filename} migrated.`);
+            //console.log(`${filename} migrated.`);
         }
         this.volJSON = this.vol.toJSON();
-        console.log(`${this.hostname} file system restored.`);
     }
 
     resolvePath( filepath:string, cwd:string){
