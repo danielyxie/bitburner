@@ -1599,7 +1599,6 @@ let Terminal = {
                     break;
                 }
                 default: {
-
                     let path = Terminal.getFilepath(commandArray[0]);
                     if(Player.getCurrentServer().exists(path)) {
                         // if it's an existing path, check if it is a directory or an executable
