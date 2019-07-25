@@ -6,7 +6,7 @@ import { Message } from "../Message/Message";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { TextFile } from "../TextFile";
-import { IReturnStatus } from "../types";
+import { IReturnStatus, IMap} from "../types";
 
 import { isScriptFilename } from "../Script/ScriptHelpersTS";
 
@@ -79,7 +79,7 @@ export class BaseServer {
 
     // Script files on this Server
     scripts: Script[] = [];
-
+    scriptsMap: IMap<Script> = {};
     // Filesystem of this server
     vol: any;
     fs: any;
@@ -161,6 +161,16 @@ export class BaseServer {
             this.writeFile(filename, data);
         }
         this.volJSON = this.vol.toJSON();
+    }
+
+    isExecutable(path:string):boolean
+    {
+        try{
+            this.fs.accessSync(path, this.fs.constants.X_OK); // if it works, it is an executable file
+            return true;
+        }catch(e){
+            return false;
+        } 
     }
 
     resolvePath( filepath:string, cwd:string){
