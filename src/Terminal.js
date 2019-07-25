@@ -1564,10 +1564,40 @@ let Terminal = {
                     })
                     break;
                 }
-                case "mkdir":
+                case "mkdir": {
                     mkdir(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
                     break;
-                
+                }
+                case "nuke": {//TODO FINALISE COMMAND CALLING FORMAT TO REGROUP EVERY COMMAND INTO A SINGLE MAPPING SYSTEM.
+                    //TODO CHECK PERMISSION
+                    nuke(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    break;
+                }
+                case "bruteSSH": {
+                    //TODO CHECK PERMISSION
+                    bruteSSH(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    break;
+                }
+                case "FTPCrack": {
+                    //TODO CHECK PERMISSION
+                    FTPCrack(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    break;
+                }
+                case "SQLInject": {
+                    //TODO CHECK PERMISSION
+                    SQLInject(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    break;
+                }
+                case "HTTPWorm": {
+                    //TODO CHECK PERMISSION
+                    HTTPWorm(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    break;
+                }
+                case "relaySMTP": {
+                    //TODO CHECK PERMISSION
+                    relaySMTP(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    break;
+                }
                 default: {
 
                     let path = Terminal.getFilepath(commandArray[0]);
