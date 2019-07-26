@@ -1,8 +1,6 @@
+import * as path from "path";
 import { BaseServer } from "../BaseServer";
 import { detectFileType, FileType } from "./FileType";
-import { Terminal } from "../../Terminal";
-import { post, postError } from "../../ui/postToTerminal";
-import * as path from 'path';
 /**
  *This function builds a string representation of the file tree from the target directory on the specified server and outputs it as a graphical tree.
  *
@@ -15,56 +13,55 @@ import * as path from 'path';
  * @param {number} [nodeLimit=50] The limit of files to parse, in order to avoid problems with large repositories. Set to -1 to disable.
  * @returns {string} The String representation of the file tree in a graphical manner.
  */
-export function tree(server: BaseServer, term:any, args:string[], targetDir:string|undefined=undefined, depth: number= 2, nodeLimit= 50): string {
+export function tree(server: BaseServer, term: any, args: string[], targetDir: string | undefined= undefined, depth: number= 2, nodeLimit= 50): string {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const HELP_MESSAGE: string = "Incorrect usage of ls command. Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
     let error: string;
-    let cwd:string = term.currDir;
+    const cwd: string = term.currDir;
     depth = 2;
     nodeLimit = 50;
-    //console.log(`@ ${server.hostname} > ${cwd} ] Log called with the following arguments : ${JSON.stringify(args)}`);
+    // console.log(`@ ${server.hostname} > ${cwd} ] Log called with the following arguments : ${JSON.stringify(args)}`);
     while (args.length > 0) {
-        //console.log(`args stack left: ${JSON.stringify(args)}`);
+        // console.log(`args stack left: ${JSON.stringify(args)}`);
         const arg = args.shift();
         switch (arg) {
             case "-h":
-            case "--help": 
+            case "--help":
                 throw HELP_MESSAGE;
             case "-l":
             case "--limit":
-                //console.log(`limit flag detected, args stack left: ${JSON.stringify(args)}`);
-                if (args.length > 0) nodeLimit = parseInt(args.shift() as string);
-                else throw HELP_MESSAGE; 
+                // console.log(`limit flag detected, args stack left: ${JSON.stringify(args)}`);
+                if (args.length > 0) { nodeLimit = parseInt(args.shift() as string); }
+                else { throw HELP_MESSAGE; }
                 break;
-            case "-d": 
+            case "-d":
             case "--depth":
-                //console.log(`depth flag detected, args stack left: ${JSON.stringify(args)}`);
-                if (args.length > 0) depth = parseInt(args.shift() as string);
-                else throw HELP_MESSAGE; 
+                // console.log(`depth flag detected, args stack left: ${JSON.stringify(args)}`);
+                if (args.length > 0) { depth = parseInt(args.shift() as string); }
+                else { throw HELP_MESSAGE; }
                 break;
             default:
                 if (!targetDir) { targetDir = arg; } else { throw TOO_MANY_ARGUMENTS_ERROR + HELP_MESSAGE; }
                 break;
         }
     }
-    if (!targetDir) targetDir = cwd;
-    //console.log(`Resolving targetDir path from cwd '${cwd}' and targetDir '${targetDir}' => ${path.resolve(cwd, targetDir)}`);
+    if (!targetDir) { targetDir = cwd; }
+    // console.log(`Resolving targetDir path from cwd '${cwd}' and targetDir '${targetDir}' => ${path.resolve(cwd, targetDir)}`);
     targetDir = path.resolve(cwd, targetDir);
-    
+
     if (!targetDir) { throw HELP_MESSAGE; }
 
-
-    //console.log(`Processing the tree of ${targetDir}.`);
+    // console.log(`Processing the tree of ${targetDir}.`);
     const rootNode = new TreeNode(targetDir, "DIR");
     const toBeProcessed: TreeNode[] = [rootNode];
     const processed: Set<string> = new Set<string>();
 
     while (toBeProcessed.length > 0) {
-        const node:TreeNode = toBeProcessed.pop() as TreeNode;
-        processed.add(node.path+node.name);
-        const dirContent = server.readdir(node.path+node.name, true);
-        if (!dirContent) { throw `An error occured when parsing the content of the ${node.name} directory.`; }
+        const node: TreeNode = toBeProcessed.pop() as TreeNode;
+        processed.add(node.path + node.name);
+        const dirContent = server.readdir(node.path + node.name, true);
+        if (!dirContent) { throw new Error(`An error occured when parsing the content of the ${node.name} directory.`); }
         for (let c = 0; c < Math.min(dirContent.length, nodeLimit); c++) {
             const fileInfo = dirContent[c];
             if (processed.has(fileInfo.name)) { break; } // avoid circular dependencies due to symlinks
@@ -87,7 +84,7 @@ const LAST: string      = "└──";
 
 class TreeNode {
     name: string = "";
-    path:string = "";
+    path: string = "";
     fileType: string = "";
     childrens: TreeNode[] = [];
     depth: number = 0;
@@ -108,7 +105,7 @@ class TreeNode {
     }
     addChild(node: TreeNode) {
         node.depth = this.depth + 1;
-        node.path = this.path+this.name + ((this.name.endsWith("/"))?"":"/");
+        node.path = this.path + this.name + ((this.name.endsWith("/")) ? "" : "/");
         this.childrens.push(node);
     }
 }

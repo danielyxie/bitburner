@@ -151,8 +151,8 @@ export class WorkerScript {
      */
     getScript(): Script | null {
         const server = this.getServer();
-        if (server.scriptsMap[this.name]) return server.scriptsMap[this.name];
-        
+        if (server.scriptsMap[this.name]) { return server.scriptsMap[this.name]; }
+
         console.error("Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong");
         return null;
     }
@@ -165,7 +165,7 @@ export class WorkerScript {
         if (server == null) {
             server = this.getServer();
         }
-        if (!server.scriptsMap[this.name]) return server.scriptsMap[this.name];
+        if (!server.scriptsMap[this.name]) { return server.scriptsMap[this.name]; }
         return null;
     }
 

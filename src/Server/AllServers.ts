@@ -15,13 +15,13 @@ import { IMap } from "../types";
  *  Value = Server object
  */
 export let AllServers: IMap<Server | HacknetServer> = {};
-export let hostname2Ip: IMap<string> = {}; 
+export let hostname2Ip: IMap<string> = {};
 
 export function ipExists(ip: string) {
 	return (AllServers[ip] != null);
 }
 
-export function hostnameExists(hostname:string){
+export function hostnameExists(hostname: string) {
     return (hostname2Ip[hostname] != null);
 }
 
@@ -47,7 +47,7 @@ export function AddToAllServers(server: Server | HacknetServer): void {
     }
 
     AllServers[serverIp] = server;
-    if(server.hasOwnProperty("hostname")) hostname2Ip[server.hostname] = serverIp;
+    if (server.hasOwnProperty("hostname")) { hostname2Ip[server.hostname] = serverIp; }
 }
 
 interface IServerParams {
@@ -157,10 +157,11 @@ export let SERVERS_INITIALIZED = false;
 
 export function loadAllServers(saveString: string) {
     AllServers = JSON.parse(saveString, Reviver);
-    for( let ip in AllServers){
-        let server = AllServers[ip];
-        if(server.hasOwnProperty("hostname")) 
-            hostname2Ip[server.hostname] = server.ip; 
+    for (const ip in AllServers) {
+        const server = AllServers[ip];
+        if (server.hasOwnProperty("hostname")) {
+            hostname2Ip[server.hostname] = server.ip;
+        }
     }
     SERVERS_INITIALIZED = true;
 }
@@ -169,12 +170,11 @@ function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-
 export function getServer(serverReference: string) { // can be an ip or a hostname.
     if (!SERVERS_INITIALIZED) { throw new Error("Servers not initialized yet!"); }
     if (hostname2Ip[serverReference]) {
-        console.log(`${serverReference} reference to ip ${hostname2Ip[serverReference]} detected`)
-        return AllServers[hostname2Ip[serverReference]] // if its a reference
+        console.log(`${serverReference} reference to ip ${hostname2Ip[serverReference]} detected`);
+        return AllServers[hostname2Ip[serverReference]]; // if its a reference
     }
-    return AllServers[serverReference];    //else its an IP.
+    return AllServers[serverReference];    // else its an IP.
 }

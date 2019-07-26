@@ -10,8 +10,8 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
         console.error(`Invalid source file number: ${srcFile.n}`);
         return;
     }
-    let mult:number;
-    let incMult:number;
+    let mult: number;
+    let incMult: number;
     switch (srcFile.n) {
         case 1: // The Source Genesis
             mult = 0;

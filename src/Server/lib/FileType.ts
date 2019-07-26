@@ -5,8 +5,8 @@
  * @param {*} dirent The directory entry type object to detect.
  * @returns The actual type of the directory entry.
  */
-export function detectFileType(dirent: any){ // actual type fs.Dirent; couldn't get it to compile with it though.
-    if(dirent.isBlockDevice()) {
+export function detectFileType(dirent: any) { // actual type fs.Dirent; couldn't get it to compile with it though.
+    if (dirent.isBlockDevice()) {
         return FileType.BLOCK_DEVICE;
     }
     if (dirent.isCharacterDevice()) {
@@ -44,5 +44,5 @@ export enum FileType {
     FILE = "FILE",
     SOCKET = "SOCKET",
     SYMBOLIC_LINK = "SYMBOLIC_LINK",
-    UNKNOWN = "UNKNOWN"
+    UNKNOWN = "UNKNOWN",
 }

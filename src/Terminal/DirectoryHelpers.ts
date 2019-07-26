@@ -1,4 +1,4 @@
-import * as path from 'path'; 
+import * as path from "path";
 
 /**
  * Helper functions that implement "directory" functionality in the Terminal.
@@ -69,10 +69,11 @@ export function isValidDirectoryName(name: string): boolean {
  * if the directories actually exist on Terminal
  */
 export function isValidDirectoryPath(dirpath: string): boolean {
-    try{
-        if(path.resolve(dirpath))
+    try {
+        if (path.resolve(dirpath)) {
             return true;
-    }catch(e){
+        }
+    } catch (e) {
         return false;
     }
     return false;
@@ -91,9 +92,9 @@ export function isValidFilePath(path: string): boolean {
     // Everything after the last forward slash is the filename. Everything before
     // it is the file path
     const fnSeparator = t_path.lastIndexOf("/");
-    
+
     const fn = t_path.slice(fnSeparator + 1);
-    const dirPath = t_path.slice(0, fnSeparator+1);
+    const dirPath = t_path.slice(0, fnSeparator + 1);
     return isValidDirectoryPath(dirPath) && isValidFilename(fn);
 }
 

@@ -1,6 +1,4 @@
 import { BaseServer } from "../BaseServer";
-import { evaluateDirectoryPath } from "../../Terminal/DirectoryHelpers";
-import { Terminal } from "../../Terminal";
 /**
  * This command allows to create directories, recursively or not.
  *
@@ -12,11 +10,11 @@ import { Terminal } from "../../Terminal";
  * @param {boolean} [recursive=false] If 'true' and the target is in an unexistant directory, this option will recursively create the necessary directories before creating the target directory.
  * @returns
  */
-export function mkdir(server: BaseServer, term: any, args: string[], path: string | undefined=undefined, recursive:boolean=false) {
+export function mkdir(server: BaseServer, term: any, args: string[], path: string | undefined= undefined, recursive: boolean= false) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const HELP_MESSAGE: string = "Incorrect usage of mkdir command. Usage: mkdir <-r> [target dir]";
-    
-    let cwd:string = term.currDir;
+
+    const cwd: string = term.currDir;
     let error: string;
 
     while (args.length > 0) {

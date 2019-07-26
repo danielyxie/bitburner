@@ -1,7 +1,6 @@
+import * as path from "path";
 import { BaseServer } from "../BaseServer";
 import { detectFileType, FileType } from "./FileType";
-import { Terminal } from "../../Terminal";
-import * as path from 'path';
 /**
  * This function builds a string representation of the file tree from the target directory on the specified server and outputs it as a list of detailed records.
  *
@@ -14,12 +13,12 @@ import * as path from 'path';
  * @param {number} [nodeLimit=50] The limit of files to parse, in order to avoid problems with large repositories. Set to -1 to disable.
  * @returns {string} The String representation of the file tree in a record manner.
  */
-export function ls(server: BaseServer, term:any, args:string[], targetDir:string|undefined=undefined, depth: number= 2): string {
+export function ls(server: BaseServer, term: any, args: string[], targetDir: string | undefined= undefined, depth: number= 2): string {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const HELP_MESSAGE: string = "Incorrect usage of ls command. Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
     let error: string;
-    let cwd:string = term.currDir;
+    const cwd: string = term.currDir;
     depth = 2;
     console.log(`@ ${server.hostname} > ${cwd} ] ls called with the following arguments : ${JSON.stringify(args)}`);
     while (args.length > 0) {
@@ -27,25 +26,24 @@ export function ls(server: BaseServer, term:any, args:string[], targetDir:string
         const arg = args.shift();
         switch (arg) {
             case "-h":
-            case "--help": 
+            case "--help":
                 throw HELP_MESSAGE;
-            case "-d": 
+            case "-d":
             case "--depth":
                 console.log(`depth flag detected, args stack left: ${JSON.stringify(args)}`);
-                if (args.length > 0) depth = parseInt(args.shift() as string);
-                else throw HELP_MESSAGE; 
+                if (args.length > 0) { depth = parseInt(args.shift() as string); }
+                else { throw HELP_MESSAGE; }
                 break;
             default:
                 if (!targetDir) { targetDir = arg; } else { throw TOO_MANY_ARGUMENTS_ERROR + HELP_MESSAGE; }
                 break;
         }
     }
-    if (!targetDir) targetDir = cwd;
+    if (!targetDir) { targetDir = cwd; }
     console.log(`Resolving targetDir path from cwd '${cwd}' and targetDir '${targetDir}' => ${path.resolve(cwd, targetDir)}`);
     targetDir = path.resolve(cwd, targetDir);
-    
-    if (!targetDir) { throw HELP_MESSAGE; }
 
+    if (!targetDir) { throw HELP_MESSAGE; }
 
     console.log(`Processing the tree of ${targetDir}.`);
     const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
@@ -53,9 +51,9 @@ export function ls(server: BaseServer, term:any, args:string[], targetDir:string
     const processed: Set<string> = new Set<string>();
 
     while (toBeProcessed.length > 0) {
-        const node:TreeNode = toBeProcessed.pop() as TreeNode;
-        processed.add(node.path+node.name);
-        const dirContent = server.readdir(node.path+node.name, true);
+        const node: TreeNode = toBeProcessed.pop() as TreeNode;
+        processed.add(node.path + node.name);
+        const dirContent = server.readdir(node.path + node.name, true);
         if (!dirContent) { return `An error occured when parsing the content of the ${node.name} directory.`; }
         for (let c = 0; c < dirContent.length; c++) {
             const fileInfo = dirContent[c];
@@ -79,7 +77,7 @@ const LAST: string      = "└──";
 
 class TreeNode {
     name: string = "";
-    path:string = "";
+    path: string = "";
     fileType: string = "";
     childrens: TreeNode[] = [];
     depth: number = 0;
@@ -101,7 +99,7 @@ class TreeNode {
     }
     addChild(node: TreeNode) {
         node.depth = this.depth + 1;
-        node.path = this.path+this.name + ((this.name.endsWith("/"))?"":"/");
+        node.path = this.path + this.name + ((this.name.endsWith("/")) ? "" : "/");
         this.childrens.push(node);
     }
 }
