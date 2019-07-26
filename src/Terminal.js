@@ -729,7 +729,6 @@ let Terminal = {
             postError(`Cannot execute command (${command}) while an action is in progress`);
             return;
         }
-
         // Process any aliases
         command = substituteAliases(command);
 
@@ -741,6 +740,7 @@ let Terminal = {
         // Only split the first space
 		var commandArray = Terminal.parseCommandArguments(command);
 		if (commandArray.length == 0) { return; }
+        let server = Player.getCurrentServer();
 
         /****************** Interactive Tutorial Terminal Commands ******************/
         if (ITutorial.isRunning) {
@@ -899,25 +899,7 @@ let Terminal = {
                     }
                     break;
                 case "cat": {
-                    try {
-                        if (commandArray.length !== 2) {
-                            postError("Incorrect usage of cat command. Usage: cat [file]");
-                            return;
-                        }
-                        const filename = Terminal.getFilepath(commandArray[1]);
-                        let server = Player.getCurrentServer();
-                        let popup = false;
-                        if(server.exists(filename) && !server.isDir(filename)){
-                            if (popup)
-                                dialogBoxCreate(`${filename}<br /><br />${server.readFile(filename)}`, true);
-                            else
-                                post(server.readFile(filename));
-                        }
-                        else 
-                            postError(`No such file ${filename}`);
-                    } catch(e) {
-                        Terminal.postThrownError(e);
-                    }
+                    cat(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "cd": {
@@ -1164,21 +1146,11 @@ let Terminal = {
                     break;
                 }
                 case "ls": {
-                    try{
-                        post(ls(Player.getCurrentServer(), Terminal, commandArray.splice(1)));
-                    }catch(e){
-                        postError(e)
-                    }
-                    
+                    ls(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "tree": {
-                    try{
-                        post(tree(Player.getCurrentServer(), Terminal, commandArray.splice(1)));
-                    }catch(e){
-                        postError(e)
-                    }
-                    
+                    tree(server, Terminal, post, postError,commandArray.splice(1));
                     break;
                 }
                 case "lscpu": {
@@ -1190,17 +1162,17 @@ let Terminal = {
                     break;
                 }
                 case "mv": {
-                    mv(Player.getCurrentServer(), Terminal, commandArray.slice(1));
+                    mv(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "nano":
                     Terminal.executeNanoCommand(commandArray);
                     break;
                 case "ps":
-                    ps(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    ps(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 case "rm": {
-                    rm(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    rm(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                     /*
                     if (commandArray.length !== 2) {
@@ -1473,46 +1445,46 @@ let Terminal = {
                     break;
                 }
                 case "mkdir": {
-                    mkdir(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    mkdir(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "nuke": {//TODO FINALISE COMMAND CALLING FORMAT TO REGROUP EVERY COMMAND INTO A SINGLE MAPPING SYSTEM.
                     //TODO CHECK PERMISSION
-                    nuke(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    nuke(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "bruteSSH": {
                     //TODO CHECK PERMISSION
-                    bruteSSH(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    bruteSSH(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "FTPCrack": {
                     //TODO CHECK PERMISSION
-                    FTPCrack(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    FTPCrack(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "SQLInject": {
                     //TODO CHECK PERMISSION
-                    SQLInject(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    SQLInject(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "HTTPWorm": {
                     //TODO CHECK PERMISSION
-                    HTTPWorm(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    HTTPWorm(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "relaySMTP": {
                     //TODO CHECK PERMISSION
-                    relaySMTP(Player.getCurrentServer(), Terminal.currDir, commandArray.slice(1));
+                    relaySMTP(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 default: {
                     let path = Terminal.getFilepath(commandArray[0]);
-                    if(Player.getCurrentServer().exists(path)) {
+                    if(server.exists(path)) {
                         // if it's an existing path, check if it is a directory or an executable
-                        if (Player.getCurrentServer().isDir(path)) 
+                        if (server.isDir(path))
                             post(`${path} is a directory.`);
-                        else if (Player.getCurrentServer().isExecutable(path)) //for now every file is executable.
+                        else if (server.isExecutable(path)) //for now every file is executable.
                             post(`${path} is an executable. # auto running executables has yet to be implemented, use run for now.`);
                         else
                             post(`${path} is a file.`);
@@ -1747,11 +1719,11 @@ let Terminal = {
             const filepath = Terminal.getFilepath(filename);
             if (filename === ".fconf" && content === ""){
                     content = createFconf();
-            } 
-            
+            }
+
             Engine.loadScriptEditorContent(filepath, content);
-            
-        } catch(e) {            
+
+        } catch(e) {
             const filename = commandArray[1];
             console.log(`Error: ${filename} @ ${e}`);
             Terminal.postThrownError(e);
@@ -2228,14 +2200,14 @@ let Terminal = {
         if(!server.exists(scriptName)) {
             postError(`ERROR: No such script`);
             return;
-        }        
+        }
         console.log(`is Executable? ${server.isExecutable(scriptName)}`);
         if(!server.isExecutable(scriptName)) {
             postError(`ERROR: Not an executable`);
             return;
         }
         let script = server.scriptsMap[scriptName];
-        if(!script || isNaN(script.ramUsage)){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?) 
+        if(!script || isNaN(script.ramUsage)){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?)
             //TODO maybe add a "loading time" for those? where the Ram calculation is ran before running the script, asynchronously.
             postError(`ERROR: Script RAM usage not calculated yet! Please open the script with nano first, or try again in a few seconds.`);
             if (!script){
