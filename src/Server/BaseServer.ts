@@ -202,11 +202,11 @@ export class BaseServer {
 
     readdir(dirpath: string, options:any={withFileTypes:false, verbose:false}) {
         if (options.verbose) { post(`Reading content of directory ${dirpath}`); }
-        return this.fs.readdirSync(dirpath, { withFileTypes:options.withFileTypes });
+        return this.fs.readdirSync(dirpath, options);
     }
 
     mkdir(dirpath: string, options:any={recursive:true, verbose:false}) {
-        this.fs.mkdirSync(dirpath, { recursive:options.recursive });
+        this.fs.mkdirSync(dirpath, options);
         if (options.verbose) { post(`${dirpath} created.`); }
     }
 
