@@ -21,28 +21,36 @@ export function loadGlobalAliases(saveString: string): void {
 }
 
 // Prints all aliases to terminal
-export function printAliases(): void {
+export function printAliases(): string {
+    let result = []
     for (const name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
-            post("alias " + name + "=" + Aliases[name]);
+            result.push("alias " + name + "=" + Aliases[name]);
         }
     }
     for (const name in GlobalAliases) {
         if (GlobalAliases.hasOwnProperty(name)) {
-            post("global alias " + name + "=" + GlobalAliases[name]);
+            result.push("global alias " + name + "=" + GlobalAliases[name]);
         }
     }
+    return result.join("\n");
 }
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global: boolean= false) {
-    const re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
+    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))=(".+")$/;
     const matches = dec.match(re);
-    if (matches == null || matches.length != 3) {return false; }
+    if (matches == null) {return false; }
+    // values:
+    // 0 : full expression
+    // 1 : alias name
+    // 2 : alias name if more than 1 character
+    // 3 : alias name if only 1 character
+    // 4 : command string
     if (global) {
-        addGlobalAlias(matches[1], matches[2]);
+        addGlobalAlias(matches[1], matches[4]);
     } else {
-        addAlias(matches[1], matches[2]);
+        addAlias(matches[1], matches[4]);
     }
     return true;
 }
@@ -118,3 +126,17 @@ export function substituteAliases(origCommand: string): string {
     }
     return commandArray.join(" ");
 }
+
+export function resetAliases(){
+    Aliases = {}
+}
+
+export function resetGlobalAliases(){
+    GlobalAliases = {}
+}
+
+export function resetAllAliases(){
+    resetAliases();
+    resetGlobalAliases();
+}
+
