@@ -1,3 +1,5 @@
+import * as path from 'path'; 
+
 /**
  * Helper functions that implement "directory" functionality in the Terminal.
  * These aren't "real" directories, it's more of a pseudo-directory implementation
@@ -40,7 +42,7 @@ export function isValidFilename(filename: string): boolean {
     // * The name must not end with a space or a period
     // * The name must not start with a space
     // see https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions
-    const regex = /^[^"<>/\\|?* ][^"<>/\\|?*]*[^"<>/\\|?*. ]$/;
+    const regex = /(^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ]$)|(^[^"<>/\\|?*:. ]$)/;
 
 	// match() returns null if no match is found
     return filename.match(regex) != null;
@@ -55,7 +57,7 @@ export function isValidDirectoryName(name: string): boolean {
     // * The name must not end with a space or a period
     // * The name must not start with a space
     // see https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions
-    const regex = /^[^"<>/\\|?* ][^"<>/\\|?*]+[^"<>/\\|?*. ]$/;
+    const regex = /(^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ]$)|(^[^"<>/\\|?*:. ]$)/;
 
 	// match() returns null if no match is found
     return name.match(regex) != null;
@@ -66,28 +68,14 @@ export function isValidDirectoryName(name: string): boolean {
  * This only checks if it has the proper formatting. It does NOT check
  * if the directories actually exist on Terminal
  */
-export function isValidDirectoryPath(path: string): boolean {
-    let t_path: string = path;
-
-    if (t_path.length === 0) { return false; }
-    if (t_path.length === 1) {
-        return t_path === "/";
+export function isValidDirectoryPath(dirpath: string): boolean {
+    try{
+        if(path.resolve(dirpath))
+            return true;
+    }catch(e){
+        return false;
     }
-
-    // Trimming slashes from both sides does not matter
-    t_path = removeTrailingSlash(t_path);
-    t_path = (t_path.startsWith("/"))? t_path.slice(1): t_path;
-    // Check that every section of the path is a valid directory name
-    const dirs = t_path.split("/");
-    for (const dir of dirs) {
-        // Special case, "." and ".." are valid for path
-        if (dir === "." || dir === "..") { continue; }
-        if (!isValidDirectoryName(dir)) {
-            return false;
-        }
-    }
-
-    return true;
+    return false;
 }
 
 /**
@@ -145,11 +133,10 @@ export function getAllParentDirectories(path: string): string {
 /**
  * Checks if a file path refers to a file in the root directory.
  */
-export function isInRootDirectory(path: string): boolean {
-    if (!isValidFilePath(path)) { return false; }
-    if (path == null || path.length === 0) { return false; }
-
-    return (path.lastIndexOf("/") <= 0);
+export function isInRootDirectory(filepath: string): boolean {
+    if (!isValidFilePath(filepath)) { return false; }
+    if (filepath == null || filepath.length === 0) { return false; }
+    return (path.dirname(path.resolve(filepath)) == "/");
 }
 
 /**

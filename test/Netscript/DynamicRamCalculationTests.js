@@ -1,10 +1,11 @@
 import { NetscriptFunctions } from "../../src/NetscriptFunctions";
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
+import { calculateRamUsage} from "../../src/Script/RamCalculations";
 import { Environment } from "../../src/Netscript/Environment";
 import { RunningScript } from "../../src/Script/RunningScript";
 import { Script } from "../../src/Script/Script";
 import { SourceFileFlags } from "../../src/SourceFile/SourceFileFlags";
-
+import { BaseServer } from "../../src/Server/BaseServer";
 import { expect } from "chai";
 
 console.log("Beginning Netscript Dynamic RAM Calculation/Generation Tests");
@@ -17,8 +18,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
     // Creates a mock RunningScript object
     async function createRunningScript(code) {
         const script = new Script();
+        
+        const codePath = "testfile";
+        const server = new BaseServer();
+        server.writeFile(codePath, code);
+
         script.code = code;
-        await script.updateRamUsage([]);
+        script.ramUsage = await calculateRamUsage(codePath, code, server);
 
         const runningScript = new RunningScript(script);
 
@@ -51,8 +57,9 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         const expected = getRamCost(...fnDesc);
         expect(expected).to.be.above(0);
 
-        const code = `${fnDesc.join(".")}();`
-
+        const code = `${fnDesc.join(".")}();`;
+        
+        const codePath = "testfile";
         const runningScript = await createRunningScript(code);
 
         // We don't need a real WorkerScript
