@@ -2,6 +2,7 @@ import { expect } from "chai";
 import {BaseServer} from "../../src/Server/BaseServer";
 import {ls} from "../../src/Server/lib/ls";
 import {cp} from "../../src/Server/lib/cp";
+import {cat} from "../../src/Server/lib/cat";
 import {Terminal} from "../../src/Terminal";
 import {rm} from "../../src/Server/lib/rm";
 import {mkdir} from "../../src/Server/lib/mkdir";
@@ -267,6 +268,29 @@ describe("BaseServer file system core library tests", function() {
                 expect(server.exists("/d0")).to.equal(true);
                 expect(()=>rm(server, fakeTerm, (msg)=>{console.log(msg)}, err, ["/d0", "-r"])).to.not.throw();
                 expect(server.exists("/d0")).to.equal(false);
+            });
+        });
+        describe("cat", function(){
+            it("Can print an existing file" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+                let result = "";
+
+                expect(()=>cat(server, fakeTerm, (msg)=>{result+=msg;}, err, ["/f1"])).to.not.throw();
+                expect(result).to.equal(server.readFile("/f1"))
+            });
+            it("Can print multiple files of a single directory excluding its subdirectories" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+                let result = "";
+
+                expect(()=>cat(server, fakeTerm, (msg)=>{result+=msg;}, err, ["/dA"])).to.not.throw();
+                expect(result).to.equal(server.readFile("/dA/f3")+server.readFile("/dA/f2"));
+            });
+            it("Can print multiple files of a single directory including its subdirectories if using the recursive flag" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+                let result = "";
+
+                expect(()=>cat(server, fakeTerm, (msg)=>{result+=msg;}, err, ["/dA", "-r"])).to.not.throw();
+                expect(result).to.equal([server.readFile("/dA/f3"),server.readFile("/dA/f2"),server.readFile("/dA/dB/f4")].join(""));
             });
         });
     });
