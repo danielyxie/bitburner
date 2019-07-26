@@ -1,11 +1,12 @@
+
 import * as path from "path";
 import { BaseServer } from "../BaseServer";
-
 import {OverwriteStrategy} from "./OverwriteStrategy";
 import {VersioningStrategy} from "./VersioningStrategy";
+import { getServer } from "../AllServers";
 
-export function cp(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~"}) {
-    const HELP_MESSAGE: string = "Usage: cp <-f --force> <-u --update> <-v --verbose> <-n --no-clobber> <--help> <-S --suffix suffix> <-b --backup numbered,simple,existing,none> <-t --target-directory=DIRECTORY> <-r --recursive> <-T --no-target-directory> SOURCE... DEST";
+export function scp(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:undefined}) {
+    const HELP_MESSAGE: string = "Usage: scp <-f --force> <-u --update> <-v --verbose> <-n --no-clobber> <--help> <-S --suffix suffix> <-b --backup numbered,simple,existing,none> <-t --target-directory=DIRECTORY> <-r --recursive> <-T --no-target-directory> --to=SERVER SOURCE... DEST";
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const NO_PATHS_PROVIDED: string = "No paths provided";
@@ -26,6 +27,10 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
             case "-v":
             case "--verbose": {
                 options.verbose = true;
+                break;
+            }
+            case "--to": {
+                if (args.length > 0) { options.to = args.shift() as string; } else { throw HELP_MESSAGE; }
                 break;
             }
             case "-f":
@@ -112,9 +117,19 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
     if(!options.targetAsDirectory && (srcs.length > 1 || server.isDir(srcs[0]))) {
         throw "Cannot copy multiple files into a single filename.";
     }
-    if(server.exists(dest)){
-        if(server.isDir(dest) && !options.targetAsDirectory) {err(`${dest} already exists as a directory. `)}
-        else if(!server.isDir(dest) && options.targetAsDirectory) {err(`${dest} already exists as a file. `)}
+    if (!options.to){
+        throw "You must provide a target server using the --to SERVER argument";
+    }
+    if(!options.destServer){ // check for testing purposes when testing without the game being loaded.
+        options.destServer = getServer(options.to);
+    }
+
+    if(!options.destServer){ // this one is the real null check though.
+        throw `Unknown server ${options.to}`;
+    }
+    if(options.destServer.exists(dest)){
+        if(options.destServer.isDir(dest) && !options.targetAsDirectory) {err(`${dest} already exists as a directory. `)}
+        else if(!options.destServer.isDir(dest) && options.targetAsDirectory) {err(`${dest} already exists as a file. `)}
     }
     dest = path.resolve(dest) + ((options.targetAsDirectory)?"/":"");
     const processed = new Set<string>();
@@ -150,7 +165,7 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
             }
             let fileSuffix = options.suffix;
             // would it overwrite something?
-            if (server.exists(destFilename)) { // if so we first determine the versionning suffix.
+            if (options.destServer.exists(destFilename)) { // if so we first determine the versionning suffix.
                 let version: number = 1;
                 // here we verify the versioning naming scheme of the new file to be replaced.
                 switch (options.backup) {
@@ -160,17 +175,17 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
                     case VersioningStrategy.SIMPLE:
                         break;
                     case VersioningStrategy.NUMBERED:
-                        while (server.exists(destFilename + fileSuffix + version)) { version ++; }// find the first available version number.
+                        while (options.destServer.exists(destFilename + fileSuffix + version)) { version ++; }// find the first available version number.
                         fileSuffix += version;
                         break;
                     case VersioningStrategy.EXISTING:
-                        while (server.exists(destFilename + fileSuffix + version)) { version ++; }
+                        while (options.destServer.exists(destFilename + fileSuffix + version)) { version ++; }
                         if (version > 1) { fileSuffix = version.toString(); }// if it is numbered, the version will be > 1, else it's a simple versionning mode.
                         break;
                 }
                 destFilename += fileSuffix;
             }
-            if (server.exists(destFilename)) { // this is called if no versioning control is applied or another backup already exists in SIMPLE backup mode.
+            if (options.destServer.exists(destFilename)) { // this is called if no versioning control is applied or another backup already exists in SIMPLE backup mode.
                 // here we either continue to modify the file, or we skip the file altogether.
                 switch (options.overwriteStrategy) {
                     case OverwriteStrategy.INTERACTIVE: {
@@ -194,7 +209,7 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
                 }
             }
 
-            server.writeFile(destFilename, server.readFile(src), options);
+            options.destServer.writeFile(destFilename, server.readFile(src), options);
             out(`'${src}' -> '${destFilename}'`);
             // => is there a directory with this name? if so fail
             // => is it a file? If so depending on the overwriting strategy:
@@ -206,3 +221,4 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
     }
     return ;
 }
+

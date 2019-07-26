@@ -1,5 +1,8 @@
 import * as path from "path";
 import { BaseServer } from "../BaseServer";
+
+import {OverwriteStrategy} from "./OverwriteStrategy";
+import {VersioningStrategy} from "./VersioningStrategy";
 /**
  *This function builds a string representation of the file tree from the target directory on the specified server and outputs it as a graphical tree.
  *
@@ -214,18 +217,4 @@ export function mv(server: BaseServer, term: any, out:Function, err:Function, ar
         }
         return ;
     } catch (e) {err(e); }
-}
-
-export enum OverwriteStrategy {
-    FORCE = 1, // overwrite
-    INTERACTIVE, // asks the user for permission, currently impossible due to having no access to user input from a running program.
-    NO_CLOBBER, // do not copy if a file exists with the same name.
-    UPDATE, // copy only if the copied file is more recent. TIMING TO DO, check stats with fs.access or something like that, theres a modified date system integrated with fs.
-}
-
-export enum VersioningStrategy {
-    NONE = 1,
-    EXISTING,
-    NUMBERED,
-    SIMPLE,
 }

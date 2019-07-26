@@ -2,6 +2,7 @@ import { expect } from "chai";
 import {BaseServer} from "../../src/Server/BaseServer";
 import {ls} from "../../src/Server/lib/ls";
 import {cp} from "../../src/Server/lib/cp";
+import {scp} from "../../src/Server/lib/scp";
 import {cat} from "../../src/Server/lib/cat";
 import {Terminal} from "../../src/Terminal";
 import {rm} from "../../src/Server/lib/rm";
@@ -11,6 +12,11 @@ import {tree} from "../../src/Server/lib/tree";
 import {alias} from "../../src/Server/lib/alias";
 import {tail} from "../../src/Server/lib/tail";
 import {mem} from "../../src/Server/lib/mem";
+
+import {OverwriteStrategy} from "../../src/Server/lib/OverwriteStrategy";
+import {VersioningStrategy} from "../../src/Server/lib/VersioningStrategy";
+
+
 import {resetAllAliases} from "../../src/Alias";
 import {Script} from "../../src/Script/Script";
 import {RunningScript} from "../../src/Script/RunningScript";
@@ -42,11 +48,19 @@ describe("BaseServer file system core library tests", function() {
     }
 
 
+    let destServer = new BaseServer();
+    destServer.restoreFileSystem(testingVolJSON);
 
     function resetEnv(options={servInitType:ServerInitType.NORMAL}){
         switch(options.servInitType){
             case ServerInitType.NORMAL:
                 server.restoreFileSystem({
+                    "/f1":"/f1",
+                    "/dA/f2":"/dA/f2",
+                    "/dA/f3":"/dA/f3",
+                    "/dA/dB/f4":"/dA/dB/f4",
+                });
+                destServer.restoreFileSystem({
                     "/f1":"/f1",
                     "/dA/f2":"/dA/f2",
                     "/dA/f3":"/dA/f3",
@@ -59,15 +73,32 @@ describe("BaseServer file system core library tests", function() {
                     "/dA/f3":"/dA/f3",
                     "/dA/dB/f4":"/dA/dB/f4",
                 });
+                destServer.restoreFileSystem({
+                    "/f1":"/f1",
+                    "/dA/f2":"/dA/f2",
+                    "/dA/f3":"/dA/f3",
+                    "/dA/dB/f4":"/dA/dB/f4",
+                });
                 server.removeFile("/dA/f2", {force:true});
                 server.removeFile("/dA/f3",{force:true});
                 server.removeFile("/dA/dB/f4",{force:true});
                 server.removeFile("/dev/null",{force:true});
+                destServer.removeFile("/dA/f2", {force:true});
+                destServer.removeFile("/dA/f3",{force:true});
+                destServer.removeFile("/dA/dB/f4",{force:true});
+                destServer.removeFile("/dev/null",{force:true});
                 break;
             case ServerInitType.EMPTY:
                 server.restoreFileSystem({ });
+                destServer.restoreFileSystem({ });
                 break;
         };
+        destServer.restoreFileSystem({
+            "/f1":"/f1",
+            "/dA/f2":"/dA/f2",
+            "/dA/f3":"/dA/f3",
+            "/dA/dB/f4":"/dA/dB/f4",
+        });
 
         resetAllAliases();
         fakeTerm.currDir = "/";
@@ -521,6 +552,45 @@ describe("BaseServer file system core library tests", function() {
                 expect(()=>tail(server, fakeTerm, out, err, ["-p","1"])).to.not.throw();
                 expect(result.join("\n")).to.equal(["testboup"].join("\n"));
             });
+        });
+
+        describe("scp", function(){
+
+            it("Can copy an existing file in an existing directory if a filename is specified" ,function(){
+                resetEnv();
+
+
+                expect(()=>scp(server, fakeTerm, out, err, ["/f1", "/dA/f1", "-T", "--to", "destServer"], {recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:destServer})).to.not.throw();
+                expect(destServer.readFile("/dA/f1")).to.equal("/f1");
+            });
+            it("Can copy an existing file in an existing directory if a directory is specified" ,function(){
+                resetEnv();
+
+                expect(()=>scp(server, fakeTerm, out, err, ["/f1", "/dA", "--to", "destServer"], {recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:destServer})).to.not.throw();
+                expect(destServer.readFile("/dA/f1")).to.equal("/f1");
+            });
+            it("Cannot copy an existing file as itself" ,function(){
+                resetEnv();
+
+                expect(()=>scp(server, fakeTerm, out, err, ["/f1", "/f1", "--to", "destServer"], {recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:destServer})).to.throw();
+            });
+            it("Can copy an existing file into an NON existing directory if asked to create them on the fly AND we specify to treat the target as a directory" ,function(){
+                resetEnv();
+
+                expect(()=>scp(server, fakeTerm, out, err, ["/f1", "/d0", "-r", "--to", "destServer"], {recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:destServer})).to.not.throw();
+                expect(destServer.readFile("/d0/f1")).to.equal("/f1");
+            });
+            it("Can copy an existing file into an NON existing directory if asked to create them on the fly AND we specify a directory separator at the end of the target" ,function(){
+                resetEnv();
+
+                expect(()=>scp(server, fakeTerm, out, err, ["/f1", "/d0/","-r", "--to", "destServer"], {recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:destServer})).to.not.throw();
+                expect(destServer.readFile("/d0/f1")).to.equal("/f1");
+            });
+            it("Can NOT copy multiple files into a single existing file" ,function(){
+                resetEnv();
+
+                expect(()=>scp(server, fakeTerm, out, err, [ "/d0/", "/f1", "-r", "--to", "destServer"], {recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:destServer})).to.throw();
+            });//TODO versioning tests
         });
     });
 })
