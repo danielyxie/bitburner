@@ -293,14 +293,27 @@ export class BaseServer {
      * @returns RunningScript for the specified active script
      *          Returns null if no such script can be found
      */
-    getRunningScript(scriptName: string, scriptArgs: any[]): RunningScript | null {
+    getRunningScript(scriptName: string, scriptArgs: any[]): RunningScript | undefined {
         for (const rs of this.runningScripts) {
             if (rs.filename === scriptName && compareArrays(rs.args, scriptArgs)) {
                 return rs;
             }
         }
+    }
 
-        return null;
+    /**
+     * Find an actively running script on this server
+     * @param pid - pid of the script to search for
+     * @returns RunningScript for the specified active script
+     *          Returns null if no such script can be found
+     */
+    getRunningScriptByPID(pid: number): RunningScript | undefined {
+        for (const rs of this.runningScripts) {
+            if (rs.pid === pid) {
+                return rs;
+            }
+        }
+
     }
 
     /**
@@ -388,6 +401,7 @@ export class BaseServer {
      */
     runScript(script: RunningScript): void {
         this.runningScripts.push(script);
+
     }
 
     setMaxRam(ram: number): void {

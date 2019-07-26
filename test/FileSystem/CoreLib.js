@@ -9,9 +9,11 @@ import {mkdir} from "../../src/Server/lib/mkdir";
 import {mv} from "../../src/Server/lib/mv";
 import {tree} from "../../src/Server/lib/tree";
 import {alias} from "../../src/Server/lib/alias";
+import {tail} from "../../src/Server/lib/tail";
 import {mem} from "../../src/Server/lib/mem";
 import {resetAllAliases} from "../../src/Alias";
 import {Script} from "../../src/Script/Script";
+import {RunningScript} from "../../src/Script/RunningScript";
 
 describe("BaseServer file system core library tests", function() {
     /**
@@ -73,10 +75,6 @@ describe("BaseServer file system core library tests", function() {
         err = (msg) => {throw msg};
     };
 
-    function serverWithDirectoriesOnly(){
-
-
-    }
 
     function addScriptsToServer(){
         const minimalScript = `
@@ -109,13 +107,28 @@ describe("BaseServer file system core library tests", function() {
         expect(()=>server.writeFile("/dA/dB/heavyScript", heavyScript)).to.not.throw();
 
 
-        expect(()=>server.readFile("/minimalScript", minimalScript)).to.not.throw();
-        expect(()=>server.readFile("/dA/littleScript", littleScript)).to.not.throw();
-        expect(()=>server.readFile("/dA/dB/heavyScript", heavyScript)).to.not.throw();
+        expect(()=>server.readFile("/minimalScript")).to.not.throw();
+        expect(()=>server.readFile("/dA/littleScript")).to.not.throw();
+        expect(()=>server.readFile("/dA/dB/heavyScript")).to.not.throw();
         // mock values for the sake of testing correct ram usage detection with mem.
         server.scriptsMap["/minimalScript"].ramUsage = 1.6;
         server.scriptsMap["/dA/littleScript"].ramUsage = 1.7;
         server.scriptsMap["/dA/dB/heavyScript"].ramUsage = 26.6;
+
+    }
+
+    function addRunningScriptsToServer(scriptsTemplates){
+        let pid = 0;
+        for(let script of scriptsTemplates){
+            pid++;
+            expect(()=>server.writeFile(script.filename, "data", {recursive:true})).to.not.throw();
+            expect(()=>server.readFile(script.filename)).to.not.throw();
+
+            let runningScript = new RunningScript(script, script.args);
+            runningScript.pid = pid;
+            runningScript.logs = script.logs;
+            server.runScript(runningScript);
+        }
 
     }
 
@@ -472,6 +485,42 @@ describe("BaseServer file system core library tests", function() {
                     "/dA/littleScript requires 1.70 GB of RAM to run for 1 thread(s)" ,
                     "/dA/dB/heavyScript requires 26.60 GB of RAM to run for 1 thread(s)"].join("\n"));
                 });
+        });
+
+        describe("tail", function(){
+            it("Can detect a running script by name and arguments", function (){
+                resetEnv();
+                addRunningScriptsToServer([
+                    {
+                        filename:"/boup",
+                        args:["test"],
+                        server:server.ip,
+                        ramUsage:1,
+                        logs:["testboup"]
+                    }]);
+
+                let result = [];
+                out = (msg)=>{result=msg};
+
+                expect(()=>tail(server, fakeTerm, out, err, ["/boup", "test"])).to.not.throw();
+                expect(result.join("\n")).to.equal(["testboup"].join("\n"));
+            });
+            it("Can detect a running script by PID", function (){
+                resetEnv();
+                addRunningScriptsToServer([
+                    {
+                        filename:"/boup",
+                        args:["test"],
+                        server:server.ip,
+                        ramUsage:1,
+                        logs:["testboup"]
+                    }]);
+
+                let result = [];
+                out = (msg)=>{result=msg};
+                expect(()=>tail(server, fakeTerm, out, err, ["-p","1"])).to.not.throw();
+                expect(result.join("\n")).to.equal(["testboup"].join("\n"));
+            });
         });
     });
 })

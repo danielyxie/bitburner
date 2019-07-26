@@ -115,6 +115,7 @@ import { relaySMTP } from "./Server/lib/relaySMTP";
 import { SQLInject } from "./Server/lib/SQLInject";
 import { alias } from "./Server/lib/alias";
 import { ps } from "./Server/lib/ps";
+import { tail } from "./Server/lib/tail";
 
 import { fs } from 'memfs';
 
@@ -1252,34 +1253,7 @@ let Terminal = {
                     }
                     break;
                 case "tail": {
-                    try {
-                        if (commandArray.length < 2) {
-                            postError("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
-                        } else {
-                            const scriptName = Terminal.getFilepath(commandArray[1]);
-                            if (!isScriptFilename(scriptName)) {
-                                postError("tail can only be called on .script files (filename must end with .script)");
-                                return;
-                            }
-
-                            // Get script arguments
-                            const args = [];
-                            for (let i = 2; i < commandArray.length; ++i) {
-                                args.push(commandArray[i]);
-                            }
-
-                            // Check that the script exists on this machine
-                            const runningScript = findRunningScript(scriptName, args, s);
-                            if (runningScript == null) {
-                                postError("No such script exists");
-                                return;
-                            }
-                            logBoxCreate(runningScript);
-                        }
-                    } catch(e) {
-                        Terminal.postThrownError(e);
-                    }
-
+                    tail(server, Terminal, out, err, commandArray.splice(1));
                     break;
                 }
                 case "theme": {
