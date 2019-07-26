@@ -206,8 +206,8 @@ export class BaseServer {
     }
 
     mkdir(dirpath: string, options:any={recursive:true, verbose:false}) {
-        if (options.verbose) { post(`Creating directory ${dirpath}`); }
         this.fs.mkdirSync(dirpath, { recursive:options.recursive });
+        if (options.verbose) { post(`${dirpath} created.`); }
     }
 
     writeFile(filename: string, data: string,  options:any={recursive:true, verbose:false}): void {
