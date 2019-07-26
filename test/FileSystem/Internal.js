@@ -50,85 +50,115 @@ describe("BaseServer file system internal tests", function() {
         });
         describe("writeFile()", function() {
             it("Can write in an existing file", function(){
-                let old = server.readFile("/f1")
-                server.writeFile("/f1", WRITTEN_CONTENT)
+                server.restoreFileSystem(testingVolJSON);
+                expect(()=>server.writeFile("/f1", WRITTEN_CONTENT)).to.not.throw();
                 expect(server.readFile("/f1")).to.equal(WRITTEN_CONTENT);
-                server.writeFile("/f1", old);
 
             });
             it("Can write in an inexisting file", function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.writeFile("/fX", WRITTEN_CONTENT)).to.not.throw();
-                server.removeFile("/fX")
             });
             it("Can write in an inexisting file in a new directory if asked to create them on the fly", function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.writeFile("/d0/fX", WRITTEN_CONTENT, {recursive:true})).to.not.throw();
-                server.removeDir("/d0", {recursive:true, force:true});
             });
             it("Can write in an inexisting file in an inexistent directory if asked NOT to create them on the fly", function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.writeFile("/d0/fX", WRITTEN_CONTENT, {recursive:false})).to.throw();
             });
         });
         describe("copyFile()", function(){
             it("Can copy an existing file in an existing directory if a filename is specified" ,function(){
-                server.copyFile("/f1", "/dA/");
+                server.restoreFileSystem(testingVolJSON);
+
+                expect(()=>server.copyFile("/f1", "/dA/f1", {targetAsDirectory:false})).to.not.throw();
                 expect(server.readFile("/dA/f1")).to.equal("/f1");
-                server.removeFile("/dA/f1", {force:true});
             });
             it("Can copy an existing file in an existing directory if a directory is specified" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.copyFile("/f1", "/dA")).to.not.throw();
-                server.removeFile("/dA/f1", {force:true});
+                expect(server.readFile("/dA/f1")).to.equal("/f1");
             });
             it("Cannot copy an existing file as itself" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.copyFile("/f1", "/f1")).to.throw();
             });
             it("Can copy an existing file into an NON existing directory if asked to create them on the fly AND we specify to treat the target as a directory" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.copyFile("/f1", "/d0", {recursive:true, targetAsDirectory:true})).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
-                server.removeDir("/d0", {recursive:true, force:true});
             });
             it("Can copy an existing file into an NON existing directory if asked to create them on the fly AND we specify a directory separator at the end of the target" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.copyFile("/f1", "/d0/",  {recursive:true})).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
-                server.removeDir("/d0", {recursive:true, force:true});
             });
         });
         describe("moveFile()", function(){
             it("Can move an existing file into an existing directory if a filename is specified" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.moveFile("/f1", "/dA/f1")).to.not.throw();
-                server.moveFile("/dA/f1", "/f1");
+                expect(server.readFile("/dA/f1")).to.equal("/f1");
+                expect(()=>server.moveFile("/dA/f1", "/f1")).to.not.throw();
             });
             it("Can move an existing file into an existing directory if a directory is specified" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.moveFile("/f1", "/dA/")).to.not.throw();
-                server.moveFile("/dA/f1", "/f1");
+                expect(server.readFile("/dA/f1")).to.equal("/f1");
+                expect(()=>server.moveFile("/dA/f1", "/f1")).to.not.throw();
             });
             it("Can rename an existing file" ,function(){
-                server.moveFile("/f1", "/fX");
+                server.restoreFileSystem(testingVolJSON);
+
+                expect(()=>server.moveFile("/f1", "/fX")).to.not.throw();
                 expect(server.readFile("/fX")).to.equal("/f1");
-                server.moveFile("/fX", "/f1");
             });
             it("Can move an existing file into an inexisting directory if asked to create them on the fly" ,function(){
-                server.moveFile("/f1", "/d0/", {recursive:true});
+                server.restoreFileSystem(testingVolJSON);
+
+                expect(()=>server.moveFile("/f1", "/d0/", {recursive:true})).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
-                server.moveFile("/d0/f1", "/f1");
-                server.removeDir("/d0", {recursive:true, force:true});
             });
             it("Cannot move an existing file into an inexisting directory if asked NOT to create them on the fly" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.moveFile("/f1", "/d0/", {recursive:false})).to.throw();
             });
         });
         describe("mkdir()", function(){
             it("Can create a new directory if none exists at the specified name" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                expect(server.isDir("/d0")).to.equal(false);
                 expect(()=>server.mkdir("/d0")).to.not.throw();
-                server.removeDir("/d0");
+                expect(server.isDir("/d0")).to.equal(true);
             });
             it("Can create a new directory if one already exists at the specified name (no op)" ,function(){
-                expect(()=>server.mkdir("/dA")).to.not.throw();
+                server.restoreFileSystem(testingVolJSON);
+
+                expect(server.isDir("/dA")).to.equal(true);
+                expect(()=>server.mkdir("/dA/")).to.not.throw();
             });
             it("Can create a chain of subdirectories if asked to create them recursively" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                expect(server.isDir("/d0/d0/d0/")).to.equal(false);
                 expect(()=>server.mkdir("/d0/d0/d0/", {recursive:true})).to.not.throw();
-                server.removeDir("/d0", {recursive:true});
+                expect(server.isDir("/d0/d0/d0/")).to.equal(true);
             });
             it("Can NOT  create a chain of subdirectories if NOT asked to create them recursively" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
                 expect(()=>server.mkdir("/d0/d0/d0/", {recursive:false})).to.throw();
             });
         });
