@@ -1,5 +1,4 @@
 import * as path from "path";
-import { post, postError } from "../../ui/postToTerminal";
 import { BaseServer } from "../BaseServer";
 /**
  *This function builds a string representation of the file tree from the target directory on the specified server and outputs it as a graphical tree.
