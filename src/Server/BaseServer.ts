@@ -1,14 +1,9 @@
-/**
- * Abstract Base Class for any Server object
- */
 import { CodingContract } from "../CodingContracts";
 import { Message } from "../Message/Message";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { TextFile } from "../TextFile";
-import { IReturnStatus, IMap} from "../types";
-
-import { isScriptFilename } from "../Script/ScriptHelpersTS";
+import { IMap, IReturnStatus } from "../types";
 
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { createRandomIp } from "../../utils/IPAddress";
@@ -18,10 +13,7 @@ import { Literatures } from "../Literature";
 
 import {
     post,
-    postContent,
     postError,
-    hackProgressBarPost,
-    hackProgressPost
 } from "../ui/postToTerminal";
 
 import * as path from "path";
@@ -35,9 +27,14 @@ interface IConstructorParams {
     organizationName?: string;
 }
 
+/**
+ * Abstract Base Class for any Server object
+ */
 export class BaseServer {
 
-    // Coding Contract files on this server
+    /**
+     * Coding Contract files on this server
+     */
     contracts: CodingContract[] = [];
 
     // How many CPU cores this server has. Maximum of 8.
@@ -125,10 +122,12 @@ export class BaseServer {
 
     }
 
-    restoreFileSystem(volJSON = {}) {
+    restoreFileSystem(volJSON=this.volJSON) {
         this.vol = Volume.fromJSON(volJSON);
         this.fs = createFsFromVolume(this.vol);
-
+        if(!this.fs.existsSync("/dev/")) this.fs.mkdirSync("/dev"); // easter egg, what is the meaning of /dev/null ?
+        if(!this.fs.existsSync("/dev/null")) this.fs.writeFileSync("/dev/null", "O1hiQkRmI2ZoIS5JZiB5b3UncmUgcmVhZGluZyB0aGlzLCB5b3UndmUgYmVaVzRnYVc0Z1lTQmpiMjFoSUE9PSBmb3IgYWxtb3N0IDIwIHllYXJzIG5vdy4gV2UncmUgdHJ5aW5nIGEgbmV3IHRlY2huaXF1ZS4gV2UgZG9uJ3Qga25vdyB3aGVyZSB0aGFYTWdiV1Z6YzJGblpTQjNhV3hzSUdWdVpDQjFjQ0JwYmlCNWIzVnlJR1J5WldGdCwgYnV0IGQyVT0gaG9wZSBpdCB3b3Jrcy4gUGxlYXNlIGQyRnJaU0IxY0N3Z2QyVWdiV2x6Y3c9PSB5b3UuLmdkZj9najtFb0Y=");
+        if(!this.fs.existsSync("/~trash/")) this.fs.mkdirSync("/~trash");
         // console.log(`Migrating old file system to the new file system...`)
         // MIGRATION FROM THE OLD PROPERTY SEPARATED SYSTEM.
         for (let i = 0; i < this.scripts.length; i++) { // migrating scripts.
@@ -170,84 +169,96 @@ export class BaseServer {
         this.volJSON = this.vol.toJSON();
     }
 
-    isExecutable(path:string):boolean
-    {
-        try{
+    isExecutable(path: string): boolean {
+        try {
             this.fs.accessSync(path, this.fs.constants.X_OK); // if it works, it is an executable file
             return true;
-        }catch(e){
+        } catch (e) {
             return false;
-        } 
+        }
     }
 
-    resolvePath( src:string, target:string){
-        //TODO using another arguments like a kind of $PATH, and using ...PATH in the path.resolve could allow using a global import environment
+    resolvePath(src: string, target: string) {
+        // TODO using another arguments like a kind of $PATH, and using ...PATH in the path.resolve could allow using a global import environment
         // this could allow moving system executables in a sys folder and importing the system functions as dependencies directly.
         // Also, adding the server object to any running script environment could  allow direct file system manipulation instead of the ns.func one.
         // RAM calculations could still be possible with this system, only using fs.func instead of ns.func for the detection.
-        let srcDir = ( this.isDir(src) ) ? src : path.dirname(src);
-        let resolvedPath = path.resolve(srcDir , target);
+        const srcDir = (this.isDir(src)) ? src : path.dirname(src);
+        const resolvedPath = path.resolve(srcDir , target);
         return resolvedPath;
     }
 
     isDir(path: string) {
         try {
-            if (this.exists(path)) { this.fs.readdirSync(path); }
+            if (this.exists(path)) {
+                this.fs.readdirSync(path);
+                return true;
+            }
         } catch (e) {
-            if (e.code == "ENOTDIR") { return false; } else { throw e; }
+            if (e.code != "ENOTDIR") { console.warn(e) }
         }
-        return true;
+        return false;
     }
 
-
-    readdir(dirpath: string, withFileTypes = false, verbose:boolean=false) {
-        if(verbose) post(`Reading content of directory ${dirpath}`);
-        return this.fs.readdirSync(dirpath, { withFileTypes });
+    readdir(dirpath: string, options:any={withFileTypes:false, verbose:false}) {
+        if (options.verbose) { post(`Reading content of directory ${dirpath}`); }
+        return this.fs.readdirSync(dirpath, { withFileTypes:options.withFileTypes });
     }
 
-    mkdir(dirpath: string,  recursive:boolean = true, verbose:boolean=false) {
-        if(verbose) post(`Creating directory ${dirpath}`);
-        this.fs.mkdirSync(dirpath, { recursive });
+    mkdir(dirpath: string, options:any={recursive:true, verbose:false}) {
+        if (options.verbose) { post(`Creating directory ${dirpath}`); }
+        this.fs.mkdirSync(dirpath, { recursive:options.recursive });
     }
 
-    writeFile(filename: string, data: string,  recursive:boolean = true, verbose:boolean=false): void {
-        if (recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
-        if(verbose) post(`Writing to file ${filename}`);
+    writeFile(filename: string, data: string,  options:any={recursive:true, verbose:false}): void {
+        if (options.recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
+        if (options.verbose) { post(`Writing to file ${filename}`); }
+        if (filename == "/dev/null") return;
         this.fs.writeFileSync(filename, data);
         this.volJSON = this.vol.toJSON();
     }
 
-    appendFile(filename: string, data: string, recursive:boolean = true, verbose:boolean=false){
-        if (recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
-        if(verbose) post(`Appending to file ${filename}`);
+    appendFile(filename: string, data: string, options:any={recursive:true, verbose: false}) {
+        if (options.recursive) { this.fs.mkdirSync(path.dirname(filename), { recursive: true }); }
+        if (options.verbose) { post(`Appending to file ${filename}`); }
+        if (filename == "/dev/null") return;
         this.fs.appendFileSync(filename, data);
         this.volJSON = this.vol.toJSON();
     }
 
-    readFile(filename: string, verbose:boolean=false): string {
-        if(verbose) post(`Reading file ${filename}`);
+    readFile(filename: string, options:any={ verbose: false }): string {
+        if (options.verbose) { post(`Reading file ${filename}`); }
+        if (filename == "/dev/null") return "";
         return this.fs.readFileSync(filename, "utf8");
     }
 
-    copyFile(src: string, target: string, recursive:boolean = true, verbose:boolean = false) {
-        if(verbose && src == target) {
-            postError(`Cannot copy file ${src} to ${target}`);
-            return;
+    copyFile(src: string, target: string, options:any={recursive:true, verbose:false, targetAsDirectory:false}) {
+        if (src === target) {
+            if(options.verbose) {
+                postError(`Cannot copy file ${src} to itself`);
+            }
+
+            throw `Cannot copy file ${src} to itself`;
         }
-        if(verbose) post(`Copying file ${src} to ${target}`);
-        this.writeFile(target, this.readFile(src), recursive);
+        if( (this.exists(target) && this.isDir(target)) || options.targetAsDirectory || target.endsWith("/")){
+            target = target + ((target.endsWith("/"))?"":"/") + src;
+        }
+        this.writeFile(target, this.readFile(src), options);
+        if (options.verbose) {
+            post(`'${src}' -> '${target}'`);
+        }
     }
 
-    moveFile(src: string, target:string, recursive:boolean = true, verbose:boolean = false){
-        if(verbose && src == target) {
-            postError(`Cannot move ${src} to itself`);
-            return;
+    moveFile(src: string, target: string, options:any={recursive:true, verbose:false, targetAsDirectory:false}) {
+        if (src === target) {
+            if (options.verbose) postError(`Cannot move ${src} to itself`);
+            throw `Cannot move ${src} to itself`;
         }
-        this.writeFile(target, this.readFile(src), recursive);
-        this.removeFile(src);
-        if(verbose) post(`'${src}' -> '${target}'`);
-    }
 
+        this.copyFile(src, target, options);
+        this.removeFile(src, {force:true});
+        if (options.verbose) { post(`'${src}' -> '${target}'`); }
+    }
 
     /**
      * Returns if a file exists at the specified path.
@@ -335,14 +346,45 @@ export class BaseServer {
      * @param fn {string} Name of file to be deleted
      * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
      */
-    removeFile(fn: string): IReturnStatus {
-        if(!this.exists(fn))
+    removeFile(fn: string, options:any={force:false}): IReturnStatus {
+        if (!this.exists(fn)) {
             return { res: false, msg: "No such file exists" };
-        else if (this.isRunning(fn)) 
+        } else if (this.isRunning(fn)) {
             return { res: false, msg: "Cannot delete a script that is currently running!" };
-        else 
-            this.fs.unlinkSync(fn);
-        return { res:true };
+        } else {
+            if (options.force) { this.fs.unlinkSync(fn); }
+            else{ this.copyFile(fn, "/~trash/" +  fn, true); }
+        }
+
+        return { res: true };
+    }
+
+    /**
+     *
+     */
+    removeDir(fn: string, options:any={recursive:true, verbose:false}){
+        try {
+            if (!options.recursive) { // if the recursive option is not activated, the directory is not scanned
+                return this.fs.rmdirSync(fn);
+            }
+        } catch (e1) {
+            return true
+        }
+        fn = fn + ((fn.endsWith("/"))?"":"/");
+        // we scan the wanted directory before anything else.
+        const dirContent = this.fs.readdirSync(fn, {withFileTypes: true}) ;
+        for (let i = 0; i < dirContent.length; i++) {
+            const object = dirContent[i];
+            if (object.isDirectory()) {
+                this.removeDir(fn + object.name, options);
+            } else if (object.isFile()) {
+                this.removeFile(fn + object.name, options);
+            } else {
+                throw new Error(`ERRTYPE: Type unimplemented, cannot remove ${JSON.stringify(fn + object.name)}`);
+            }
+        }
+        this.fs.rmdirSync(fn);
+        return false
     }
 
     /**
