@@ -106,6 +106,7 @@ import { rm } from "./Server/lib/rm";
 import { mv } from "./Server/lib/mv";
 import { ls } from "./Server/lib/ls";
 import { tree } from "./Server/lib/tree";
+import { mem } from "./Server/lib/mem";
 import { nuke } from "./Server/lib/nuke";
 import { FTPCrack } from "./Server/lib/FTPCrack";
 import { bruteSSH } from "./Server/lib/bruteSSH";
@@ -1141,7 +1142,7 @@ let Terminal = {
                     break;
                 }
                 case "mem": {
-                    Terminal.executeMemCommand(commandArray);
+                    mem(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 case "mv": {
@@ -1653,38 +1654,6 @@ let Terminal = {
 
         for (const file of allFiles) {
             postContent(file);
-        }
-    },
-
-    executeMemCommand: function(commandArray) {
-        try {
-            if (commandArray.length !== 2 && commandArray.length !== 4) {
-                postError("Incorrect usage of mem command. usage: mem [scriptname] [-t] [number threads]");
-                return;
-            }
-
-            const s = Player.getCurrentServer();
-            const scriptName = commandArray[1];
-            let numThreads = 1;
-            if (commandArray.length === 4 && commandArray[2] === "-t") {
-                numThreads = Math.round(parseInt(commandArray[3]));
-                if (isNaN(numThreads) || numThreads < 1) {
-                    postError("Invalid number of threads specified. Number of threads must be greater than 1");
-                    return;
-                }
-            }
-
-            const script = Terminal.getScript(scriptName);
-            if (script == null) {
-                postError("No such script exists!");
-                return;
-            }
-
-            const ramUsage = script.ramUsage * numThreads;
-
-            post(`This script requires ${numeralWrapper.format(ramUsage, '0.00')} GB of RAM to run for ${numThreads} thread(s)`);
-        } catch(e) {
-            Terminal.postThrownError(e);
         }
     },
 

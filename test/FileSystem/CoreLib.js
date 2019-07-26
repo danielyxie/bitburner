@@ -9,7 +9,9 @@ import {mkdir} from "../../src/Server/lib/mkdir";
 import {mv} from "../../src/Server/lib/mv";
 import {tree} from "../../src/Server/lib/tree";
 import {alias} from "../../src/Server/lib/alias";
+import {mem} from "../../src/Server/lib/mem";
 import {resetAllAliases} from "../../src/Alias";
+import {Script} from "../../src/Script/Script";
 
 describe("BaseServer file system core library tests", function() {
     /**
@@ -26,21 +28,96 @@ describe("BaseServer file system core library tests", function() {
     const WRITTEN_CONTENT = "written content";
     const server = new BaseServer();
     server.restoreFileSystem(testingVolJSON);
+
     let out = (msg) => {}; // null stream
     let err = (msg) => {throw msg}; // exception callback
     let fakeTerm = Terminal;
     fakeTerm.currDir = "/";
-    fakeTerm.out = out;
-    fakeTerm.err = err;
-    fakeTerm.post = out;
-    fakeTerm.postError = err;
+    const ServerInitType = {
+        NORMAL: 1,
+        EMPTY : 2,
+        DIRECTORIES_ONLY : 3
+    }
 
 
 
-    function resetEnv(){
-        server.restoreFileSystem(testingVolJSON);
+    function resetEnv(options={servInitType:ServerInitType.NORMAL}){
+        switch(options.servInitType){
+            case ServerInitType.NORMAL:
+                server.restoreFileSystem({
+                    "/f1":"/f1",
+                    "/dA/f2":"/dA/f2",
+                    "/dA/f3":"/dA/f3",
+                    "/dA/dB/f4":"/dA/dB/f4",
+                });
+                break;
+            case ServerInitType.DIRECTORIES_ONLY:
+                server.restoreFileSystem({
+                    "/dA/f2":"/dA/f2",
+                    "/dA/f3":"/dA/f3",
+                    "/dA/dB/f4":"/dA/dB/f4",
+                });
+                server.removeFile("/dA/f2", {force:true});
+                server.removeFile("/dA/f3",{force:true});
+                server.removeFile("/dA/dB/f4",{force:true});
+                server.removeFile("/dev/null",{force:true});
+                break;
+            case ServerInitType.EMPTY:
+                server.restoreFileSystem({ });
+                break;
+        };
+
         resetAllAliases();
+        fakeTerm.currDir = "/";
+        out = (msg) => {};
+        err = (msg) => {throw msg};
     };
+
+    function serverWithDirectoriesOnly(){
+
+
+    }
+
+    function addScriptsToServer(){
+        const minimalScript = `
+        export function main(ns){
+            return;
+        }
+        `;
+
+        const littleScript = `
+            export async function main(ns){
+                return await ns.hack();
+            }
+            `;
+        const heavyScript = `
+            export async function main(ns){
+                window;
+                return;
+            }
+            `;
+        server.scriptsMap["/minimalScript"] = new Script();
+        server.scriptsMap["/dA/littleScript"] = new Script();
+        server.scriptsMap["/dA/dB/heavyScript"] = new Script();
+
+        server.scriptsMap["/minimalScript"].getServer = ()=>{return server};
+        server.scriptsMap["/dA/littleScript"].getServer = ()=>{return server};
+        server.scriptsMap["/dA/dB/heavyScript"].getServer = ()=>{return server};
+
+        expect(()=>server.writeFile("/minimalScript", minimalScript)).to.not.throw();
+        expect(()=>server.writeFile("/dA/littleScript", littleScript)).to.not.throw();
+        expect(()=>server.writeFile("/dA/dB/heavyScript", heavyScript)).to.not.throw();
+
+
+        expect(()=>server.readFile("/minimalScript", minimalScript)).to.not.throw();
+        expect(()=>server.readFile("/dA/littleScript", littleScript)).to.not.throw();
+        expect(()=>server.readFile("/dA/dB/heavyScript", heavyScript)).to.not.throw();
+        // mock values for the sake of testing correct ram usage detection with mem.
+        server.scriptsMap["/minimalScript"].ramUsage = 1.6;
+        server.scriptsMap["/dA/littleScript"].ramUsage = 1.7;
+        server.scriptsMap["/dA/dB/heavyScript"].ramUsage = 26.6;
+
+    }
 
     describe("File operations", function (){
         describe("cp", function(){
@@ -342,5 +419,60 @@ describe("BaseServer file system core library tests", function() {
                 expect(()=>alias(server, fakeTerm, out, err, ["_a.=\"invalidalias"])).to.throw();
             });
         });
+
+        describe("mem", function(){
+            it("Can detect an existing script.", function(){
+                resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
+                addScriptsToServer()
+
+                expect(()=>mem(server, fakeTerm, out, err, ["/minimalScript"])).to.not.throw();
+                expect(()=>mem(server, fakeTerm, out, err, ["/dA/littleScript"])).to.not.throw();
+                expect(()=>mem(server, fakeTerm, out, err, ["/dA/dB/heavyScript"])).to.not.throw();
+            });
+
+            it("Can read the actual ram usage of an existing script.", function(){
+                resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
+                addScriptsToServer()
+
+                let result = "";
+                out = (msg)=>{result = msg};
+
+                expect(()=>mem(server, fakeTerm, out, err, ["/minimalScript"])).to.not.throw();
+                expect(result).to.equal("/minimalScript requires 1.60 GB of RAM to run for 1 thread(s)");
+                result = "";
+                expect(()=>mem(server, fakeTerm, out, err, ["/dA/littleScript"])).to.not.throw();
+                expect(result).to.equal("/dA/littleScript requires 1.70 GB of RAM to run for 1 thread(s)");
+                result = "";
+                expect(()=>mem(server, fakeTerm, out, err, ["/dA/dB/heavyScript"])).to.not.throw();
+                expect(result).to.equal("/dA/dB/heavyScript requires 26.60 GB of RAM to run for 1 thread(s)");
+                result = "";
+            });
+
+            it("Can read the ram usage of multiple specified scripts from a directory excluding its subdirectories.", function(){
+                resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
+                addScriptsToServer()
+
+                let result = [];
+                out = (msg)=>{result.push(msg)};
+
+                expect(()=>mem(server, fakeTerm, out, err, ["/"])).to.not.throw();
+                expect(result.join("\n")).to.equal(
+                    "/minimalScript requires 1.60 GB of RAM to run for 1 thread(s)");
+                });
+
+            it("Can read the ram usage of multiple specified scripts from a directory and its subdirectories if the recursive flag is used.", function(){
+                resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
+                addScriptsToServer()
+
+                let result = [];
+                out = (msg)=>{result.push(msg)};
+                expect(()=>mem(server, fakeTerm, out, err, ["/", "-r"])).to.not.throw();
+                expect(result.join("\n")).to.equal(
+                    ["/minimalScript requires 1.60 GB of RAM to run for 1 thread(s)",
+                    "/dA/littleScript requires 1.70 GB of RAM to run for 1 thread(s)" ,
+                    "/dA/dB/heavyScript requires 26.60 GB of RAM to run for 1 thread(s)"].join("\n"));
+                });
+        });
     });
 })
+
