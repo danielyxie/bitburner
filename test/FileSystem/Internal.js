@@ -1,7 +1,8 @@
 import { expect } from "chai";
 import {BaseServer} from "../../src/Server/BaseServer";
+import {ls} from "../../src/Server/lib/ls";
 
-describe("Base Server file system internal tests", function() {
+describe("BaseServer file system internal tests", function() {
     /**
      * In the following tests, every directory will be prefixed by a 'd', and every file by a 'f'.
      * existing files and directories will be suffixed with a number (f1,f2...) and a letter (dA, dB,...) respectively.
@@ -17,6 +18,10 @@ describe("Base Server file system internal tests", function() {
     const server = new BaseServer();
     server.restoreFileSystem(testingVolJSON);
 
+    let fakeTerm = {currDir:"/", out:[], err:[]};
+    fakeTerm.post = (msg) => {fakeTerm.out.push(msg)};
+    fakeTerm.postError = (msg) => {fakeTerm.err.push(msg)};
+    fakeTerm.clear = () => {fakeTerm.err.clear(); fakeTerm.out.clear()};
 
     describe("File operations", function (){
         describe("exists()", function(){
@@ -127,22 +132,5 @@ describe("Base Server file system internal tests", function() {
                 expect(()=>server.mkdir("/d0/d0/d0/", {recursive:false})).to.throw();
             });
         });
-        describe("mkdir()", function(){
-            it("Can create a new directory if none exists at the specified name" ,function(){
-                expect(()=>server.mkdir("/d0")).to.not.throw();
-                server.removeDir("/d0");
-            });
-            it("Can create a new directory if one already exists at the specified name (no op)" ,function(){
-                expect(()=>server.mkdir("/dA")).to.not.throw();
-            });
-            it("Can create a chain of subdirectories if asked to create them recursively" ,function(){
-                expect(()=>server.mkdir("/d0/d0/d0/", {recursive:true})).to.not.throw();
-                server.removeDir("/d0", {recursive:true});
-            });
-            it("Can NOT  create a chain of subdirectories if NOT asked to create them recursively" ,function(){
-                expect(()=>server.mkdir("/d0/d0/d0/", {recursive:false})).to.throw();
-            });
-        });
-
     });
 })
