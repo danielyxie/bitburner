@@ -6,7 +6,7 @@ import {Terminal} from "../../src/Terminal";
 import {rm} from "../../src/Server/lib/rm";
 import {mkdir} from "../../src/Server/lib/mkdir";
 import {mv} from "../../src/Server/lib/mv";
-//import {tree} from "../../src/Server/lib/tree";
+import {tree} from "../../src/Server/lib/tree";
 
 describe("BaseServer file system core library tests", function() {
     /**
@@ -106,27 +106,114 @@ describe("BaseServer file system core library tests", function() {
                 expect(()=>mv(server, fakeTerm, out, err, [ "/dA/", "/f1", "-r", "-T"])).to.throw();
             });//TODO versioning tests
         });
-        describe("ls()", function(){
+        describe("ls", function(){
             it("Can list the cwd files and subdirectories with a depth of 0" ,function(){
                 server.restoreFileSystem(testingVolJSON);
 
                 let expected = ["/dA/","/dA/dB/", "/dA/f2","/dA/f3"].join("\n")
                 fakeTerm.currDir = "/dA";
-                expect(ls(server, fakeTerm, ["-d", "0"])).to.equal(expected);
+                expect(ls(server, fakeTerm, out, err, ["-d", "0"])).to.equal(expected);
             });
             it("Can list the cwd files and subdirectories with a depth of n" ,function(){
                 server.restoreFileSystem(testingVolJSON);
 
                 let expected = ["/dA/","/dA/dB/","/dA/dB/f4", "/dA/f2","/dA/f3" ].join("\n")
                 fakeTerm.currDir = "/dA";
-                expect(ls(server, fakeTerm, ["-d", "5"])).to.equal(expected);
+                expect(ls(server, fakeTerm, out, err,["-d", "5"])).to.equal(expected);
             });
             it("Can list a specified directory with a depth of n" ,function(){
                 server.restoreFileSystem(testingVolJSON);
 
                 let expected = ["/dA/","/dA/dB/","/dA/dB/f4" , "/dA/f2","/dA/f3"].join("\n")
                 fakeTerm.currDir = "/";
-                expect(ls(server, fakeTerm, ["/dA", "-d", "5"])).to.equal(expected);
+                expect(ls(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.equal(expected);
+            });
+            it("Can list multiple distant specified directory with a depth of n" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/dB/","/dA/dB/f4"].join("\n")
+                fakeTerm.currDir = "/";
+                expect(ls(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.equal(expected);
+            });
+            it("Can list multiple combined specified directory with a depth of n" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/","/dA/dB/","/dA/f2", "/dA/f3", ].join("\n")
+                fakeTerm.currDir = "/";
+                expect(ls(server, fakeTerm, out, err, ["/","/dA/", "-d", "0"])).to.equal(expected);
+            });
+        });
+
+        describe("tree", function(){
+            it("Can list the cwd files and subdirectories with a depth of 0" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                let expected = [
+                    "/dA/",
+                    "├──dB/",
+                    "├──f2",
+                    "└──f3"
+                    ].join("\n")
+                fakeTerm.currDir = "/dA";
+                expect(tree(server, fakeTerm, out, err, ["-d", "0"])).to.equal(expected);
+            });
+            it("Can list the cwd files and subdirectories with a depth of n" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                let expected = [
+                    "/dA/",
+                    "├──dB/",
+                    "│  └──f4",
+                    "├──f2",
+                    "└──f3"
+                    ].join("\n")
+                fakeTerm.currDir = "/dA";
+                expect(tree(server, fakeTerm, out, err,["-d", "5"])).to.equal(expected);
+            });
+            it("Can list a specified directory with a depth of n" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                let expected = [
+                    "/dA/",
+                    "├──dB/",
+                    "│  └──f4" ,
+                    "├──f2",
+                    "└──f3"
+                    ].join("\n")
+                fakeTerm.currDir = "/";
+                expect(tree(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.equal(expected);
+            });
+            it("Can list multiple distant specified directory with a depth of n" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                let expected = [
+                    "/",
+                    "├──dA/",
+                    "├──dev/",
+                    "├──f1",
+                    "└──~trash/",
+                    "/dA/dB/",
+                    "└──f4"
+                    ].join("\n")
+                fakeTerm.currDir = "/";
+                expect(tree(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.equal(expected);
+            });
+            it("Can list multiple combined specified directory with a depth of n" ,function(){
+                server.restoreFileSystem(testingVolJSON);
+
+                let expected = [
+                    "/",
+                    "├──dA/",
+                    "├──dev/",
+                    "├──f1",
+                    "└──~trash/",
+                    "/dA/",
+                    "├──dB/",
+                    "├──f2",
+                    "└──f3",
+                    ].join("\n")
+                fakeTerm.currDir = "/";
+                expect(tree(server, fakeTerm,out, err, ["/","/dA/", "-d", "0"])).to.equal(expected);
             });
         });
 
@@ -157,7 +244,7 @@ describe("BaseServer file system core library tests", function() {
                 server.restoreFileSystem(testingVolJSON);
 
                 expect(server.exists("/f1")).to.equal(true);
-                expect(()=>rm(server, fakeTerm, (msg)=>{console.log(msg)}, err, ["/f1"])).to.not.throw();
+                expect(()=>rm(server, fakeTerm, out, err, ["/f1"])).to.not.throw();
                 expect(server.exists("/f1")).to.equal(false);
             });
             it("Can remove an empty directory" ,function(){

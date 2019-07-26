@@ -13,71 +13,69 @@ import { detectFileType, FileType } from "./FileType";
  * @param {number} [nodeLimit=50] The limit of files to parse, in order to avoid problems with large repositories. Set to -1 to disable.
  * @returns {string} The String representation of the file tree in a graphical manner.
  */
-export function tree(server: BaseServer, term: any, args: string[], targetDir: string | undefined= undefined, depth: number= 2, nodeLimit= 50): string {
+export function tree(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={depth:2}): string {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const HELP_MESSAGE: string = "Incorrect usage of ls command. Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
     let error: string;
     const cwd: string = term.currDir;
-    depth = 2;
-    nodeLimit = 50;
-    // console.log(`@ ${server.hostname} > ${cwd} ] Log called with the following arguments : ${JSON.stringify(args)}`);
+    let roots: string[] = [];
     while (args.length > 0) {
-        // console.log(`args stack left: ${JSON.stringify(args)}`);
-        const arg = args.shift();
+        const arg = args.shift() as string;
         switch (arg) {
             case "-h":
             case "--help":
                 throw HELP_MESSAGE;
-            case "-l":
-            case "--limit":
-                // console.log(`limit flag detected, args stack left: ${JSON.stringify(args)}`);
-                if (args.length > 0) { nodeLimit = parseInt(args.shift() as string); }
-                else { throw HELP_MESSAGE; }
-                break;
             case "-d":
             case "--depth":
-                // console.log(`depth flag detected, args stack left: ${JSON.stringify(args)}`);
-                if (args.length > 0) { depth = parseInt(args.shift() as string); }
+                if (args.length > 0) { options.depth = parseInt(args.shift() as string); }
                 else { throw HELP_MESSAGE; }
                 break;
             default:
-                if (!targetDir) { targetDir = arg; } else { throw TOO_MANY_ARGUMENTS_ERROR + HELP_MESSAGE; }
+                roots.push(arg);
                 break;
         }
     }
-    if (!targetDir) { targetDir = cwd; }
-    // console.log(`Resolving targetDir path from cwd '${cwd}' and targetDir '${targetDir}' => ${path.resolve(cwd, targetDir)}`);
-    targetDir = path.resolve(cwd, targetDir);
-
-    if (!targetDir) { throw HELP_MESSAGE; }
-
-    // console.log(`Processing the tree of ${targetDir}.`);
-    const rootNode = new TreeNode(targetDir, "DIR");
-    const toBeProcessed: TreeNode[] = [rootNode];
+    if (roots.length==0) { roots = [cwd]; }
+    const toBeProcessed: TreeNode[] = [];
+    var treeRoots:TreeNode[] = []
     const processed: Set<string> = new Set<string>();
+    for(let root of roots){
+        let targetDir:any = path.resolve(cwd, root);
+        if (!targetDir) { err(INVALID_PATH_ERROR); }
+        else{
+            const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
+            toBeProcessed.push(rootNode);
+            treeRoots.push(rootNode);
+        }
+    }
+
 
     while (toBeProcessed.length > 0) {
-        const node: TreeNode = toBeProcessed.pop() as TreeNode;
+        const node: TreeNode = toBeProcessed.shift() as TreeNode;
         processed.add(node.path + node.name);
         const dirContent = server.readdir(node.path + node.name, {withFileTypes:true});
-        if (!dirContent) { throw new Error(`An error occured when parsing the content of the ${node.name} directory.`); }
-        for (let c = 0; c < Math.min(dirContent.length, nodeLimit); c++) {
+        if (!dirContent) { return `An error occured when parsing the content of the ${node.name} directory.`; }
+        for (let c = 0; c < dirContent.length; c++) {
             const fileInfo = dirContent[c];
-            if (processed.has(fileInfo.name)) { break; } // avoid circular dependencies due to symlinks
-            const filetype = detectFileType(fileInfo);
-            if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
-                const childrenNode = new TreeNode(fileInfo.name, filetype);
-                node.addChild(childrenNode);
-                if (fileInfo.isDirectory() && node.depth < depth) {
-                    toBeProcessed.push(childrenNode);
+            if (processed.has(node.path +node.name+ fileInfo.name)) {
+                continue;
+            }else{
+                const filetype = detectFileType(fileInfo);
+                if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
+                    const childrenNode = new TreeNode(fileInfo.name, filetype);
+                    node.addChild(childrenNode);
+                    if (fileInfo.isDirectory() && node.depth < options.depth) {
+                        toBeProcessed.push(childrenNode);
+                    }
                 }
             }
         }
     }
-    return rootNode.toString(true);
+    treeRoots.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
+    return treeRoots.map((root)=>{return root.toString(true);}).join("\n");
 }
-
+const EMPTY:string      = "   ";
 const SCOPE: string     = "│  ";
 const BRANCH: string    = "├──";
 const LAST: string      = "└──";
@@ -93,14 +91,19 @@ class TreeNode {
         this.fileType = fileType;
         this.childrens = [];
     }
-    toString(isLast = false): string {
+    toString(isLast = false, emptyScope=0): string {
         const localResults: string[] = [];
-        localResults.push([SCOPE.repeat(Math.max(0, this.depth - 1)), ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""), this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
+        localResults.push([SCOPE.repeat(Math.max(0, this.depth - 1 - emptyScope)),EMPTY.repeat(Math.max(0, emptyScope -1)), ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""), this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
 
         if (this.childrens.length > 0) {
             this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
             for (let i = 0; i < this.childrens.length; i++) {
-                localResults.push(this.childrens[i].toString(i == (this.childrens.length - 1)));
+                if( i == (this.childrens.length - 1) ){
+                    // then its the last children
+                    localResults.push(this.childrens[i].toString(true, 0));
+                }else{
+                    localResults.push(this.childrens[i].toString(false, emptyScope+1));
+                }
             }
         }
         return localResults.join("\n");
