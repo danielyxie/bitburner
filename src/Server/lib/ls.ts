@@ -20,9 +20,7 @@ export function ls(server: BaseServer, term: any, args: string[], targetDir: str
     let error: string;
     const cwd: string = term.currDir;
     depth = 2;
-    console.log(`@ ${server.hostname} > ${cwd} ] ls called with the following arguments : ${JSON.stringify(args)}`);
     while (args.length > 0) {
-        console.log(`args stack left: ${JSON.stringify(args)}`);
         const arg = args.shift();
         switch (arg) {
             case "-h":
@@ -30,7 +28,6 @@ export function ls(server: BaseServer, term: any, args: string[], targetDir: str
                 throw HELP_MESSAGE;
             case "-d":
             case "--depth":
-                console.log(`depth flag detected, args stack left: ${JSON.stringify(args)}`);
                 if (args.length > 0) { depth = parseInt(args.shift() as string); }
                 else { throw HELP_MESSAGE; }
                 break;
@@ -40,12 +37,10 @@ export function ls(server: BaseServer, term: any, args: string[], targetDir: str
         }
     }
     if (!targetDir) { targetDir = cwd; }
-    console.log(`Resolving targetDir path from cwd '${cwd}' and targetDir '${targetDir}' => ${path.resolve(cwd, targetDir)}`);
     targetDir = path.resolve(cwd, targetDir);
 
     if (!targetDir) { throw HELP_MESSAGE; }
 
-    console.log(`Processing the tree of ${targetDir}.`);
     const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
     const toBeProcessed: TreeNode[] = [rootNode];
     const processed: Set<string> = new Set<string>();
@@ -53,14 +48,14 @@ export function ls(server: BaseServer, term: any, args: string[], targetDir: str
     while (toBeProcessed.length > 0) {
         const node: TreeNode = toBeProcessed.pop() as TreeNode;
         processed.add(node.path + node.name);
-        const dirContent = server.readdir(node.path + node.name, true);
+        const dirContent = server.readdir(node.path + node.name, {withFileTypes:true});
         if (!dirContent) { return `An error occured when parsing the content of the ${node.name} directory.`; }
         for (let c = 0; c < dirContent.length; c++) {
             const fileInfo = dirContent[c];
             if (processed.has(fileInfo.name)) { break; } // avoid circular dependencies due to symlinks
             const filetype = detectFileType(fileInfo);
             if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
-                const childrenNode = new TreeNode(fileInfo.name, detectFileType(fileInfo));
+                const childrenNode = new TreeNode(fileInfo.name, filetype);
                 node.addChild(childrenNode);
                 if (fileInfo.isDirectory() && node.depth < depth) {
                     toBeProcessed.push(childrenNode);
@@ -90,11 +85,11 @@ class TreeNode {
         const localResults: string[] = [];
         localResults.push([this.path, this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
         if (this.childrens.length > 0) {
+            this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
             for (let i = 0; i < this.childrens.length; i++) {
                 localResults.push(this.childrens[i].toString(i == (this.childrens.length - 1)));
             }
         }
-        console.log(`${localResults.join("\n")}`);
         return localResults.join("\n");
     }
     addChild(node: TreeNode) {

@@ -10,29 +10,40 @@ import { BaseServer } from "../BaseServer";
  * @param {boolean} [recursive=false] If 'true' and the target is in an unexistant directory, this option will recursively create the necessary directories before creating the target directory.
  * @returns
  */
-export function mkdir(server: BaseServer, term: any, args: string[], path: string | undefined= undefined, recursive: boolean= false) {
+export function mkdir(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={ path:undefined, recursive:false, verbose:false}) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
-    const HELP_MESSAGE: string = "Incorrect usage of mkdir command. Usage: mkdir <-r> [target dir]";
+    const HELP_MESSAGE: string = "Incorrect usage of mkdir command. Usage: mkdir <-r --recursive> <-v --verbose> DIRECTORY...";
 
     const cwd: string = term.currDir;
     let error: string;
-
+    let paths: string[] = [];
     while (args.length > 0) {
-        const arg = args.shift();
+        const arg = args.shift() as string;
         switch (arg) {
             case "-h":
                 throw HELP_MESSAGE;
             case "-r":
-                recursive = true;
+            case "--recursive":
+                options.recursive = true;
+                break;
+            case "-v":
+            case "--verbose":
+                options.verbose = true;
                 break;
             default:
-                if (!path) { path = arg; } else { throw TOO_MANY_ARGUMENTS_ERROR + HELP_MESSAGE; }
+                paths.push(arg);
                 break;
         }
     }
-    if (!path) { throw HELP_MESSAGE; } else {
-        server.fs.mkdirSync(path, { recursive });
-        console.log(`mkdir: directory ${path} created!`);
+    if (paths.length==0) { throw HELP_MESSAGE; } else {
+        paths.forEach( function (path) {
+            try{
+                server.fs.mkdirSync(path, { recursive:options.recursive });
+                if(options.verbose) out(`${path} created`);
+            }catch(e){
+                err(e);
+            }
+        })
         return 1;
     }
 }

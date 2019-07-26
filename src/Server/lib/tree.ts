@@ -60,14 +60,14 @@ export function tree(server: BaseServer, term: any, args: string[], targetDir: s
     while (toBeProcessed.length > 0) {
         const node: TreeNode = toBeProcessed.pop() as TreeNode;
         processed.add(node.path + node.name);
-        const dirContent = server.readdir(node.path + node.name, true);
+        const dirContent = server.readdir(node.path + node.name, {withFileTypes:true});
         if (!dirContent) { throw new Error(`An error occured when parsing the content of the ${node.name} directory.`); }
         for (let c = 0; c < Math.min(dirContent.length, nodeLimit); c++) {
             const fileInfo = dirContent[c];
             if (processed.has(fileInfo.name)) { break; } // avoid circular dependencies due to symlinks
             const filetype = detectFileType(fileInfo);
             if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
-                const childrenNode = new TreeNode(fileInfo.name, detectFileType(fileInfo));
+                const childrenNode = new TreeNode(fileInfo.name, filetype);
                 node.addChild(childrenNode);
                 if (fileInfo.isDirectory() && node.depth < depth) {
                     toBeProcessed.push(childrenNode);
@@ -96,7 +96,9 @@ class TreeNode {
     toString(isLast = false): string {
         const localResults: string[] = [];
         localResults.push([SCOPE.repeat(Math.max(0, this.depth - 1)), ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""), this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
+
         if (this.childrens.length > 0) {
+            this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
             for (let i = 0; i < this.childrens.length; i++) {
                 localResults.push(this.childrens[i].toString(i == (this.childrens.length - 1)));
             }

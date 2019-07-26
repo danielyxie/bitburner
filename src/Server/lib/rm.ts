@@ -39,26 +39,21 @@ export function rm(server: BaseServer, term: any, args: string[], targetPath: st
     if (!targetPath) { throw HELP_MESSAGE; } else {
         targetPath = evaluateDirectoryPath(server, targetPath, cwd);
         if (!targetPath) { throw INVALID_PATH_ERROR; } else {
-            console.log(`rm: passed path = ${targetPath}; recursive=${recursive}; f=${force}`);
             remove(server, targetPath, { force, recursive });
-            console.log(`rm: directory ${targetPath} removed!`);
             return 1;
         }
     }
 }
 
 function removeFile(server: BaseServer, targetPath: string, options: any) {
-    if (!options.force) { // if the force option is not activated, the suppressed files will be copied into the bin. Else, we erase it directly.
-        server.copyFile(targetPath, "/~trash/" + targetPath, true);
-    }
-    server.fs.unlinkSync(targetPath);
+    server.removeFile(targetPath, options);
 }
 
 function remove(server: BaseServer,  targetPath: string, options: any) {
 
     try {
         if (!options.recursive) { // if the recursive option is not activated, the directory is not scanned
-            return server.fs.rmdirSync(targetPath);
+            return server.removeDir(targetPath, options);
         }
     } catch (e1) {
         try {
@@ -69,7 +64,7 @@ function remove(server: BaseServer,  targetPath: string, options: any) {
     }
 
     // we scan the wanted directory before anything else.
-    const dirContent = server.fs.readdirSync(targetPath, {withFileTypes: true}) ;
+    const dirContent = server.readdir(targetPath, {withFileTypes: true}) ;
     for (let i = 0; i < dirContent.length; i++) {
         const object = dirContent[i];
         if (object.isDirectory()) {
@@ -81,6 +76,6 @@ function remove(server: BaseServer,  targetPath: string, options: any) {
              }
     }
     console.log(`Removing directory ${JSON.stringify(targetPath)}`);
-    server.fs.rmdirSync(targetPath);
+    server.removeDir(targetPath, options);
 
 }
