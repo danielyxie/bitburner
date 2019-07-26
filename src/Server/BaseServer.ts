@@ -308,13 +308,7 @@ export class BaseServer {
      * Script object on the server (if it exists)
      */
     getScript(scriptName: string): Script | null {
-        for (let i = 0; i < this.scripts.length; i++) {
-            if (this.scripts[i].filename === scriptName) {
-                return this.scripts[i];
-            }
-        }
-
-        return null;
+        return this.scriptsMap[scriptName];
     }
 
     /**
