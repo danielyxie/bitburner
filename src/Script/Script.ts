@@ -106,12 +106,16 @@ export class Script {
                 return;
             }
             this.filename = filenameElem.value;
-            this.server = serverIp;
-            this.getServer().writeFile(this.filename, code);
-    		      this.updateRamUsage();
-            this.markUpdated();
-            this.getServer().scriptsMap[this.filename] = this;
-    	}
+
+        }
+        this.server = serverIp;
+        this.getServer().writeFile(this.filename, code);
+    }
+
+    update(){
+        this.updateRamUsage();
+        this.markUpdated();
+        this.getServer().scriptsMap[this.filename] = this;
     }
 
     getServer() {
