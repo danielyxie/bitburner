@@ -8,6 +8,8 @@ import {rm} from "../../src/Server/lib/rm";
 import {mkdir} from "../../src/Server/lib/mkdir";
 import {mv} from "../../src/Server/lib/mv";
 import {tree} from "../../src/Server/lib/tree";
+import {alias} from "../../src/Server/lib/alias";
+import {resetAllAliases} from "../../src/Alias";
 
 describe("BaseServer file system core library tests", function() {
     /**
@@ -30,114 +32,120 @@ describe("BaseServer file system core library tests", function() {
     fakeTerm.currDir = "/";
     fakeTerm.out = out;
     fakeTerm.err = err;
-    fakeTerm.post =out;
+    fakeTerm.post = out;
     fakeTerm.postError = err;
 
+
+
+    function resetEnv(){
+        server.restoreFileSystem(testingVolJSON);
+        resetAllAliases();
+    };
 
     describe("File operations", function (){
         describe("cp", function(){
 
             it("Can copy an existing file in an existing directory if a filename is specified" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
                 expect(()=>cp(server, fakeTerm, out, err, ["/f1", "/dA/f1", "-T"])).to.not.throw();
                 expect(server.readFile("/dA/f1")).to.equal("/f1");
             });
             it("Can copy an existing file in an existing directory if a directory is specified" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>cp(server, fakeTerm, out, err, ["/f1", "/dA"])).to.not.throw();
                 expect(server.readFile("/dA/f1")).to.equal("/f1");
             });
             it("Cannot copy an existing file as itself" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>cp(server, fakeTerm, out, err, ["/f1", "/f1"])).to.throw();
             });
             it("Can copy an existing file into an NON existing directory if asked to create them on the fly AND we specify to treat the target as a directory" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>cp(server, fakeTerm, out, err, ["/f1", "/d0", "-r"])).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
             });
             it("Can copy an existing file into an NON existing directory if asked to create them on the fly AND we specify a directory separator at the end of the target" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>cp(server, fakeTerm, out, err, ["/f1", "/d0/","-r"])).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
             });
             it("Can NOT copy multiple files into a single existing file" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>cp(server, fakeTerm, out, err, [ "/d0/", "/f1", "-r"])).to.throw();
             });//TODO versioning tests
         });
         describe("mv", function(){
             it("Can move an existing file in an existing directory if a filename is specified" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mv(server, fakeTerm, out, err, ["/f1", "/dA/f1", "-T"])).to.not.throw();
                 expect(server.readFile("/dA/f1")).to.equal("/f1");
             });
             it("Can move an existing file in an existing directory if a directory is specified" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mv(server, fakeTerm, out, err, ["/f1", "/dA"])).to.not.throw();
                 expect(server.readFile("/dA/f1")).to.equal("/f1");
             });
             it("Cannot move an existing file as itself" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mv(server, fakeTerm, out, err, ["/f1", "/f1", "-T"])).to.throw();
             });
             it("Can move an existing file into an NON existing directory if asked to create them on the fly AND we specify to treat the target as a directory" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mv(server, fakeTerm, out, err, ["/f1", "/d0", "-r"])).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
             });
             it("Can move an existing file into an NON existing directory if asked to create them on the fly AND we specify a directory separator at the end of the target" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mv(server, fakeTerm, out, err, ["/f1", "/d0/","-r"])).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
             });
             it("Can NOT move multiple files into a single existing file" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mv(server, fakeTerm, out, err, [ "/dA/", "/f1", "-r", "-T"])).to.throw();
             });//TODO versioning tests
         });
         describe("ls", function(){
             it("Can list the cwd files and subdirectories with a depth of 0" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = ["/dA/","/dA/dB/", "/dA/f2","/dA/f3"].join("\n")
                 fakeTerm.currDir = "/dA";
                 expect(ls(server, fakeTerm, out, err, ["-d", "0"])).to.equal(expected);
             });
             it("Can list the cwd files and subdirectories with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = ["/dA/","/dA/dB/","/dA/dB/f4", "/dA/f2","/dA/f3" ].join("\n")
                 fakeTerm.currDir = "/dA";
                 expect(ls(server, fakeTerm, out, err,["-d", "5"])).to.equal(expected);
             });
             it("Can list a specified directory with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = ["/dA/","/dA/dB/","/dA/dB/f4" , "/dA/f2","/dA/f3"].join("\n")
                 fakeTerm.currDir = "/";
                 expect(ls(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.equal(expected);
             });
             it("Can list multiple distant specified directory with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/dB/","/dA/dB/f4"].join("\n")
                 fakeTerm.currDir = "/";
                 expect(ls(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.equal(expected);
             });
             it("Can list multiple combined specified directory with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/","/dA/dB/","/dA/f2", "/dA/f3", ].join("\n")
                 fakeTerm.currDir = "/";
@@ -147,7 +155,7 @@ describe("BaseServer file system core library tests", function() {
 
         describe("tree", function(){
             it("Can list the cwd files and subdirectories with a depth of 0" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = [
                     "/dA/",
@@ -159,7 +167,7 @@ describe("BaseServer file system core library tests", function() {
                 expect(tree(server, fakeTerm, out, err, ["-d", "0"])).to.equal(expected);
             });
             it("Can list the cwd files and subdirectories with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = [
                     "/dA/",
@@ -172,7 +180,7 @@ describe("BaseServer file system core library tests", function() {
                 expect(tree(server, fakeTerm, out, err,["-d", "5"])).to.equal(expected);
             });
             it("Can list a specified directory with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = [
                     "/dA/",
@@ -185,7 +193,7 @@ describe("BaseServer file system core library tests", function() {
                 expect(tree(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.equal(expected);
             });
             it("Can list multiple distant specified directory with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = [
                     "/",
@@ -200,7 +208,7 @@ describe("BaseServer file system core library tests", function() {
                 expect(tree(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.equal(expected);
             });
             it("Can list multiple combined specified directory with a depth of n" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 let expected = [
                     "/",
@@ -220,48 +228,48 @@ describe("BaseServer file system core library tests", function() {
 
         describe("mkdir", function(){
             it("Can create a new directory if none exists at the specified name" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mkdir(server, fakeTerm, out, err,["/d0"])).to.not.throw();
             });
             it("Cannot create a new directory if one already exists at the specified name" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mkdir(server, fakeTerm, out, err,["/dA"])).to.throw();
             });
             it("Can create a chain of subdirectories if asked to create them recursively" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mkdir(server, fakeTerm, out, err,["/d0/d0/d0/", "-r"])).to.not.throw();
             });
             it("Can NOT  create a chain of subdirectories if NOT asked to create them recursively" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mkdir(server, fakeTerm, out, err, ["/d0/d0/d0/"])).to.throw();
             });
         });
         describe("rm", function(){
             it("Can remove an existing file" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(server.exists("/f1")).to.equal(true);
                 expect(()=>rm(server, fakeTerm, out, err, ["/f1"])).to.not.throw();
                 expect(server.exists("/f1")).to.equal(false);
             });
             it("Can remove an empty directory" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>mkdir(server, fakeTerm, out, err, ["/d0"])).to.not.throw();
                 expect(()=>rm(server, fakeTerm, out, err, ["/d0"])).to.not.throw();
                 expect(server.exists("/d0")).to.equal(false);
             });
             it("Can NOT remove an unexisting directory" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>rm(server, fakeTerm, out, err, ["/d0"])).to.throw();
             });
             it("Can remove a directory having files only with the recursive flag" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
 
                 expect(()=>cp(server, fakeTerm, out, err, ["/f1", "/d0/f1", "-T", "-r"])).to.not.throw();
                 expect(()=>rm(server, fakeTerm, out, err, ["/d0"])).to.throw();
@@ -272,25 +280,66 @@ describe("BaseServer file system core library tests", function() {
         });
         describe("cat", function(){
             it("Can print an existing file" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
                 let result = "";
 
                 expect(()=>cat(server, fakeTerm, (msg)=>{result+=msg;}, err, ["/f1"])).to.not.throw();
                 expect(result).to.equal(server.readFile("/f1"))
             });
             it("Can print multiple files of a single directory excluding its subdirectories" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
                 let result = "";
 
                 expect(()=>cat(server, fakeTerm, (msg)=>{result+=msg;}, err, ["/dA"])).to.not.throw();
                 expect(result).to.equal(server.readFile("/dA/f3")+server.readFile("/dA/f2"));
             });
             it("Can print multiple files of a single directory including its subdirectories if using the recursive flag" ,function(){
-                server.restoreFileSystem(testingVolJSON);
+                resetEnv();
                 let result = "";
 
                 expect(()=>cat(server, fakeTerm, (msg)=>{result+=msg;}, err, ["/dA", "-r"])).to.not.throw();
                 expect(result).to.equal([server.readFile("/dA/f3"),server.readFile("/dA/f2"),server.readFile("/dA/dB/f4")].join(""));
+            });
+        });
+        describe("alias", function(){
+            it("Can register a new alias and print it" ,function(){
+                resetEnv();
+
+                let result = "";
+                expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
+                expect(result).to.equal("alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"");
+            });
+            it("Can register a new global alias and print it" ,function(){
+                resetEnv();
+
+                let result = "";
+                expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["-g", "a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
+                expect(result).to.equal("global alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"");
+            });
+            it("Can register multiple new aliases" ,function(){
+                resetEnv();
+
+                let result = "";
+                expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["wat=\"wowie\"", "a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
+                expect(result).to.equal([
+                    "alias wat=\"wowie\"",
+                    "alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\""].join('\n'));
+            });
+            it("Can replace an older alias" ,function(){
+                resetEnv();
+
+                let result = "";
+                expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
+                expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"wowie\"", "-p"])).to.not.throw();
+                expect(result).to.equal([
+                    "alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"",
+                    "alias a=\"wowie\""].join(""));
+            });
+            it("Can NOT register invalid aliases" ,function(){
+                resetEnv();
+
+                expect(()=>alias(server, fakeTerm, out, err, ["_a.=\"invalidalias\""])).to.throw();
+                expect(()=>alias(server, fakeTerm, out, err, ["_a.=\"invalidalias"])).to.throw();
             });
         });
     });
