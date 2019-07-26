@@ -1,8 +1,8 @@
 import * as path from "path";
 import { BaseServer } from "../BaseServer";
 
-export function cp(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={recursive:true, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~"}) {
-    const HELP_MESSAGE: string = "Incorrect usage of cp command. Usage: cp <-f --force> <-u --update> <-v --verbose> <-n --no-clobber> <--help> <-S --suffix suffix> <-b --backup numbered,simple,existing,none> <-t --target-directory=DIRECTORY> <-r --recursive> <-T --no-target-directory> SOURCE... DEST";
+export function cp(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~"}) {
+    const HELP_MESSAGE: string = "Usage: cp <-f --force> <-u --update> <-v --verbose> <-n --no-clobber> <--help> <-S --suffix suffix> <-b --backup numbered,simple,existing,none> <-t --target-directory=DIRECTORY> <-r --recursive> <-T --no-target-directory> SOURCE... DEST";
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const NO_PATHS_PROVIDED: string = "No paths provided";
@@ -109,6 +109,10 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
     if(!options.targetAsDirectory && (srcs.length > 1 || server.isDir(srcs[0]))) {
         throw "Cannot copy multiple files into a single filename.";
     }
+    if(server.exists(dest)){
+        if(server.isDir(dest) && !options.targetAsDirectory) {err(`${dest} already exists as a directory. `)}
+        else if(!server.isDir(dest) && options.targetAsDirectory) {err(`${dest} already exists as a file. `)}
+    }
     dest = path.resolve(dest) + ((options.targetAsDirectory)?"/":"");
     const processed = new Set<string>();
     processed.add(dest);
@@ -133,7 +137,6 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
                 }
             }
         } else { // it's a file, we copy it.
-
             let destFilename = "";
             if(options.targetAsDirectory) destFilename = path.resolve(dest + src);
             else destFilename = path.resolve(dest);
