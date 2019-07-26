@@ -112,6 +112,7 @@ import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
 import { relaySMTP } from "./Server/lib/relaySMTP";
 import { SQLInject } from "./Server/lib/SQLInject";
+import { alias } from "./Server/lib/alias";
 import { ps } from "./Server/lib/ps";
 
 import { fs } from 'memfs';
@@ -864,25 +865,7 @@ let Terminal = {
         try{
             switch (commandArray[0].toLowerCase()) {
                 case "alias":
-                    if (commandArray.length === 1) {
-                        printAliases();
-                        return;
-                    }
-                    if (commandArray.length === 2) {
-                        if (parseAliasDeclaration(commandArray[1])) {
-                            post(`Set alias ${commandArray[1]}`);
-                            return;
-                        }
-                    }
-                    if (commandArray.length === 3) {
-                        if (commandArray[1] === "-g") {
-                            if (parseAliasDeclaration(commandArray[2], true)) {
-                                post(`Set global alias ${commandArray[1]}`);
-                                return;
-                            }
-                        }
-                    }
-                    postError('Incorrect usage of alias command. Usage: alias [-g] [aliasname="value"]');
+                    alias(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 case "analyze":
                     if (commandArray.length !== 1) {
