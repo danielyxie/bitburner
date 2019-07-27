@@ -5,6 +5,7 @@ import {cp} from "../../src/Server/lib/cp";
 import {scp} from "../../src/Server/lib/scp";
 import {cat} from "../../src/Server/lib/cat";
 import {wget} from "../../src/Server/lib/wget";
+import {buy} from "../../src/Server/lib/buy";
 import {Terminal} from "../../src/Terminal";
 import {rm} from "../../src/Server/lib/rm";
 import {mkdir} from "../../src/Server/lib/mkdir";
@@ -17,6 +18,11 @@ import {mem} from "../../src/Server/lib/mem";
 import {OverwriteStrategy} from "../../src/Server/lib/OverwriteStrategy";
 import {VersioningStrategy} from "../../src/Server/lib/VersioningStrategy";
 
+import { Player } from "../../src/Player";
+
+import { PlayerObject } from "../../src/PersonObjects/Player/PlayerObject";
+
+import { SpecialServerIps, SpecialServerIpsMap } from "../../src/Server/SpecialServerIps";
 
 import {resetAllAliases} from "../../src/Alias";
 import {Script} from "../../src/Script/Script";
@@ -47,7 +53,8 @@ describe("BaseServer file system core library tests", function() {
         EMPTY : 2,
         DIRECTORIES_ONLY : 3
     }
-
+    var Player = new PlayerObject();
+    var SpecialServerIps = new SpecialServerIpsMap();
 
     let destServer = new BaseServer();
     destServer.restoreFileSystem(testingVolJSON);
@@ -105,6 +112,10 @@ describe("BaseServer file system core library tests", function() {
         fakeTerm.currDir = "/";
         out = (msg) => {};
         err = (msg) => {throw msg};
+
+        Player = new PlayerObject();
+        Player.getHomeComputer = ()=>{return server};
+        SpecialServerIps = new SpecialServerIpsMap()
     };
 
 
@@ -609,6 +620,29 @@ describe("BaseServer file system core library tests", function() {
 //            })
 
 //        })
+        describe("buy", function(){
+            it("Can buy programs from the dark web if connected to it and enough money", function(){
+                resetEnv();
+                Player.gainMoney(10000000);
+                SpecialServerIps["Darkweb Server"] = true;
+                expect(()=>buy(server, fakeTerm, out, err, ["AutoLink.exe"], {Player:Player, SpecialServerIps:SpecialServerIps})).to.not.throw();
+            });
+            it("Can NOT buy programs from the dark web if NOT connected to it", function(){
+                resetEnv();
+                expect(()=>buy(server, fakeTerm, out, err, ["AutoLink.exe"], {Player:Player, SpecialServerIps:SpecialServerIps})).to.throw();
+            });
+            it("Can NOT buy programs from the dark web if NOT enough money", function(){
+                resetEnv();
+                SpecialServerIps["Darkweb Server"] = true;
+                expect(()=>buy(server, fakeTerm, out, err, ["AutoLink.exe"], {Player:Player, SpecialServerIps:SpecialServerIps})).to.throw();
+            });
+            it("Can NOT buy programs from the dark web if the name doesnt exist", function(){
+                resetEnv();
+                Player.gainMoney(10000000);
+                SpecialServerIps["Darkweb Server"] = true;
+                expect(()=>buy(server, fakeTerm, out, err, ["Aut@Link.exe"], {Player:Player, SpecialServerIps:SpecialServerIps})).to.throw();
+            });
+        });
     });
 })
 

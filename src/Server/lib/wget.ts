@@ -2,7 +2,6 @@ import * as path from "path";
 import { BaseServer } from "../BaseServer";
 import {OverwriteStrategy} from "./OverwriteStrategy";
 import {VersioningStrategy} from "./VersioningStrategy";
-const fetch = require('node-fetch');
 
 export function wget(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={recursive:false, verbose:false,targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~"}) {
     const HELP_MESSAGE: string = "Usage: wget <-f --force> <-u --update> <-n --no-clobber> <--help> <-S --suffix suffix> <-b --backup numbered,simple,existing,none> <-r --recursive> --from URL --to DEST";

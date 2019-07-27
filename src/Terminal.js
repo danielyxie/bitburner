@@ -877,11 +877,7 @@ let Terminal = {
                     Terminal.startAnalyze();
                     break;
                 case "buy":
-                    if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-                        executeDarkwebTerminalCommand(commandArray);
-                    } else {
-                        postError("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
-                    }
+                    buy(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 case "cat": {
                     cat(server, Terminal, post, postError, commandArray.splice(1));
