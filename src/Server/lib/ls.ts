@@ -44,8 +44,6 @@ export function ls(server: BaseServer, term: any, out:Function, err:Function, ar
         let targetDir:any = path.resolve(cwd, root);
         if (!targetDir) { err(INVALID_PATH_ERROR); }
         else{
-            out(`'${targetDir}' registered as root!`);
-
             const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
             toBeProcessed.push(rootNode);
             treeRoots.push(rootNode);
@@ -67,7 +65,7 @@ export function ls(server: BaseServer, term: any, out:Function, err:Function, ar
                 if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
                     const childrenNode = new TreeNode(fileInfo.name, filetype);
                     node.addChild(childrenNode);
-                    if (fileInfo.isDirectory() && node.depth < options.depth) {
+                    if (fileInfo.isDirectory() && (node.depth < options.depth || options.depth < 0)) {
                         toBeProcessed.push(childrenNode);
                     }
                 }
@@ -75,7 +73,9 @@ export function ls(server: BaseServer, term: any, out:Function, err:Function, ar
         }
     }
     treeRoots.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
-    return treeRoots.map((root)=>{return root.toString(true);}).join("\n");
+    let result = treeRoots.map((root)=>{return root.toString(true);}).join("\n");
+    out(result);
+    return result;
 }
 
 const SCOPE: string     = "│  ";
@@ -95,7 +95,6 @@ class TreeNode {
     }
     toString(isLast = false): string {
         const localResults: string[] = [];
-
         localResults.push([this.path, this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
         if (this.childrens.length > 0) {
             this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
@@ -103,7 +102,6 @@ class TreeNode {
                 localResults.push(this.childrens[i].toString(i == (this.childrens.length - 1)));
             }
         }
-        console.log(`node ${this.path+this.name} => ${localResults.join("\n")}`);
         return localResults.join("\n");
     }
     addChild(node: TreeNode,treeMerge=false) {
