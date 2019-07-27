@@ -111,6 +111,7 @@ import { FTPCrack } from "./Server/lib/FTPCrack";
 import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
 import { relaySMTP } from "./Server/lib/relaySMTP";
+import { check } from "./Server/lib/check";
 import { SQLInject } from "./Server/lib/SQLInject";
 import { alias } from "./Server/lib/alias";
 import { ps } from "./Server/lib/ps";
@@ -910,35 +911,7 @@ let Terminal = {
                     break;
                 }
                 case "check": {
-                    try {
-                        if (commandArray.length < 2) {
-                            postError("Incorrect number of arguments. Usage: check [script] [arg1] [arg2]...");
-                        } else {
-                            const scriptName = Terminal.getFilepath(commandArray[1]);
-                            // Can only tail script files
-                            if (!isScriptFilename(scriptName)) {
-                                postError("tail can only be called on .script files (filename must end with .script)");
-                                return;
-                            }
-
-                            // Get args
-                            let args = [];
-                            for (var i = 2; i < commandArray.length; ++i) {
-                                args.push(commandArray[i]);
-                            }
-
-                            // Check that the script exists on this machine
-                            var runningScript = findRunningScript(scriptName, args, s);
-                            if (runningScript == null) {
-                                postError("No such script exists");
-                                return;
-                            }
-                            runningScript.displayLog();
-                        }
-                    } catch(e) {
-                        Terminal.postThrownError(e);
-                    }
-
+                    check(server, Terminal, out, err, commandArray.splice(1));
                     break;
                 }
                 case "clear":

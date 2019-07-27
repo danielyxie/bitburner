@@ -5,6 +5,7 @@ import {cp} from "../../src/Server/lib/cp";
 import {scp} from "../../src/Server/lib/scp";
 import {cat} from "../../src/Server/lib/cat";
 import {wget} from "../../src/Server/lib/wget";
+import {check} from "../../src/Server/lib/check";
 import {buy} from "../../src/Server/lib/buy";
 import {Terminal} from "../../src/Terminal";
 import {rm} from "../../src/Server/lib/rm";
@@ -562,6 +563,42 @@ describe("BaseServer file system core library tests", function() {
                 let result = [];
                 out = (msg)=>{result=msg};
                 expect(()=>tail(server, fakeTerm, out, err, ["-p","1"])).to.not.throw();
+                expect(result.join("\n")).to.equal(["testboup"].join("\n"));
+            });
+        });
+
+        describe("check", function(){
+            it("Can detect a running script by name and arguments", function (){
+                resetEnv();
+                addRunningScriptsToServer([
+                    {
+                        filename:"/boup",
+                        args:["test"],
+                        server:server.ip,
+                        ramUsage:1,
+                        logs:["testboup"]
+                    }]);
+
+                let result = [];
+                out = (msg)=>{result=msg};
+
+                expect(()=>check(server, fakeTerm, out, err, ["/boup", "test"])).to.not.throw();
+                expect(result.join("\n")).to.equal(["testboup"].join("\n"));
+            });
+            it("Can detect a running script by PID", function (){
+                resetEnv();
+                addRunningScriptsToServer([
+                    {
+                        filename:"/boup",
+                        args:["test"],
+                        server:server.ip,
+                        ramUsage:1,
+                        logs:["testboup"]
+                    }]);
+
+                let result = [];
+                out = (msg)=>{result=msg};
+                expect(()=>check(server, fakeTerm, out, err, ["-p","1"])).to.not.throw();
                 expect(result.join("\n")).to.equal(["testboup"].join("\n"));
             });
         });
