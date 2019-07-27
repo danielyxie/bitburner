@@ -955,8 +955,6 @@ let Terminal = {
                 case "free":
                     free(server, Terminal, post, postError, commandArray.splice(1));
                     break;
-                    Terminal.executeFreeCommand(commandArray);
-                    break;
                 case "hack": {
                     if (commandArray.length !== 1) {
                         postError("Incorrect usage of hack command. Usage: hack");

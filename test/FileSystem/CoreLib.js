@@ -14,6 +14,7 @@ import {expr} from "../../src/Server/lib/expr";
 import {mv} from "../../src/Server/lib/mv";
 import {tree} from "../../src/Server/lib/tree";
 import {download} from "../../src/Server/lib/download";
+import {free} from "../../src/Server/lib/free";
 import {alias} from "../../src/Server/lib/alias";
 import {tail} from "../../src/Server/lib/tail";
 import {mem} from "../../src/Server/lib/mem";
@@ -755,9 +756,31 @@ describe("BaseServer file system core library tests", function() {
             });
         });
         describe("free", function(){
+            it("Can display the current server RAM info", function(){
+                resetEnv();
 
+                let expected = ["Available: 0.00 GB", "Total:     0.00 GB", "Used:      0.00 GB (0.00%)"];
+                let results = [];
 
-        })
+                out = (msg)=>{results.push(msg); };
+                expect(()=>free(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                results.sort();
+                expect(results.join("\n")).to.equal(expected.join("\n"));
+
+                server.maxRam = 32;
+                expected = ["Available: 32.00 GB", "Total:     32.00 GB", "Used:       0.00 GB (0.00%)"];
+                results = [];
+
+                out = (msg)=>{results.push(msg); };
+                expect(()=>free(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                results.sort();
+                expect(results.join("\n")).to.equal(expected.join("\n"));
+
+            })
+
+        });
 
     });
 })
