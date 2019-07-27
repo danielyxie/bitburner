@@ -4,6 +4,7 @@ import {ls} from "../../src/Server/lib/ls";
 import {cp} from "../../src/Server/lib/cp";
 import {scp} from "../../src/Server/lib/scp";
 import {cat} from "../../src/Server/lib/cat";
+import {wget} from "../../src/Server/lib/wget";
 import {Terminal} from "../../src/Terminal";
 import {rm} from "../../src/Server/lib/rm";
 import {mkdir} from "../../src/Server/lib/mkdir";
@@ -592,6 +593,22 @@ describe("BaseServer file system core library tests", function() {
                 expect(()=>scp(server, fakeTerm, out, err, [ "/d0/", "/f1", "-r", "--to", "destServer"], {recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:destServer})).to.throw();
             });//TODO versioning tests
         });
+        let URL = "https://support.oneskyapp.com/hc/en-us/article_attachments/202761627/example_1.json";
+        let content = {
+            "fruit": "Apple",
+            "size": "Large",
+            "color": "Red"
+        }
+        describe("wget", function(){
+
+            it("can retrieve files from an URL into a file", async function(){
+                resetEnv();
+                let promise = wget(server, fakeTerm, out, err, [ "--from", URL, "--to", "/fX"])
+                expect(async ()=>{await promise}).to.not.throw();
+                expect(JSON.parse(server.readFile("/fX"))).equals(content);
+            })
+
+        })
     });
 })
 
