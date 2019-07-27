@@ -29,7 +29,6 @@ import {
 import { CONSTANTS } from "./Constants";
 import { Programs } from "./Programs/Programs";
 import {
-    executeDarkwebTerminalCommand,
     checkIfConnectedToDarkweb
 } from "./DarkWeb/DarkWeb";
 import { DarkWebItems } from "./DarkWeb/DarkWebItems";

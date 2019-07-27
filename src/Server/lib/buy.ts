@@ -11,6 +11,8 @@ import { Player }                               from "../../Player";
 
 export function buy(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={}){
     const HELP = "Usage: buy <-l --list> ITEMNAME";
+    // TODO : why not passing the wanted vendor ip/hostname to determine which of multiple marketplace to buy from?
+
     if(!options.SpecialServerIps){// not testing mode
         options.SpecialServerIps= SpecialServerIps;
     }
