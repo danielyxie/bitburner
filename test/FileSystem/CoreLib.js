@@ -10,8 +10,10 @@ import {buy} from "../../src/Server/lib/buy";
 import {Terminal} from "../../src/Terminal";
 import {rm} from "../../src/Server/lib/rm";
 import {mkdir} from "../../src/Server/lib/mkdir";
+import {expr} from "../../src/Server/lib/expr";
 import {mv} from "../../src/Server/lib/mv";
 import {tree} from "../../src/Server/lib/tree";
+import {download} from "../../src/Server/lib/download";
 import {alias} from "../../src/Server/lib/alias";
 import {tail} from "../../src/Server/lib/tail";
 import {mem} from "../../src/Server/lib/mem";
@@ -175,6 +177,13 @@ describe("BaseServer file system core library tests", function() {
         }
 
     }
+
+    function expectResultFromExpr(expression, expected){
+        let result;
+        let out = (msg) => {result = msg.toString();};
+        expect(()=>expr(server, fakeTerm, out, err, [expression])).not.to.throw();
+        expect(result).to.equal(expected);
+    };
 
     describe("File operations", function (){
         describe("cp", function(){
@@ -680,6 +689,76 @@ describe("BaseServer file system core library tests", function() {
                 expect(()=>buy(server, fakeTerm, out, err, ["Aut@Link.exe"], {Player:Player, SpecialServerIps:SpecialServerIps})).to.throw();
             });
         });
+
+        describe("download", function(){
+            it("Can download programs at the root", function(){
+                resetEnv();
+                let expected = ["Zipping up /f1.."];
+                let results = [];
+
+                out = (msg)=>{results.push(msg)};
+
+                expect(()=>download(server, fakeTerm, out, err, ["/f*"], {testing:true})).to.not.throw();
+                expected.sort();
+                results.sort();
+                expect(results.join("\n")).to.equal(expected.join("\n"));
+            });
+            it("Can download any matching programs", function(){
+                resetEnv();
+                let expected =     [
+                    "Zipping up /dA/dB/f4..",
+                    "Zipping up /dA/f2..",
+                    "Zipping up /dA/f3..",
+                    "Zipping up /f1.."
+                ];
+                let results = [];
+
+                out = (msg)=>{results.push(msg)};
+
+                expect(()=>download(server, fakeTerm, out, err, ["**/f*"],{testing:true})).to.not.throw();
+                expected.sort();
+                results.sort();
+                expect(results.join("\n")).to.equal(expected.join("\n"));
+            });
+
+        });
+
+
+
+        describe("expr", function(){
+            it("can process simple calculus", function(){
+                expectResultFromExpr('12 / (2.3 + 0.7)', "4"); // calculus
+                expectResultFromExpr(`((18 * 2)-(2/(4+8-4)))^2`, "1278.0625"); //calculus
+
+                expectResultFromExpr('9 / 3 + 2i', "3 + 2i");//imaginary numbers
+
+                expectResultFromExpr(`simplify("2x + x")`, "3 * x");//algebra, equation simplification
+                expectResultFromExpr(`derivative("2x^2 + 3x + 4", "x")`, "4 * x + 3"); // equation derivation
+            });
+            it("can process matrix calculus", function(){
+
+                expectResultFromExpr('det([-1, 2; 3, 1])', "-7"); // matrix calculus
+
+                expectResultFromExpr('9 / 3 + 2i', "3 + 2i");//imaginary numbers
+
+                expectResultFromExpr(`simplify("2x + x")`, "3 * x");//algebra, equation simplification
+                expectResultFromExpr(`derivative("2x^2 + 3x + 4", "x")`, "4 * x + 3"); // equation derivation
+            });
+            it("can process imaginary numbers", function(){
+
+                expectResultFromExpr('9 / 3 + 2i', "3 + 2i");//imaginary numbers
+
+            });
+            it("can process linear algebra", function(){
+                expectResultFromExpr(`simplify("2x + x")`, "3 * x");//algebra, equation simplification
+                expectResultFromExpr(`derivative("2x^2 + 3x + 4", "x")`, "4 * x + 3"); // equation derivation
+            });
+        });
+        describe("free", function(){
+
+
+        })
+
     });
 })
 

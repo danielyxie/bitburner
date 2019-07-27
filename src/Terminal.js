@@ -111,6 +111,8 @@ import { FTPCrack } from "./Server/lib/FTPCrack";
 import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
 import { relaySMTP } from "./Server/lib/relaySMTP";
+import { download } from "./Server/lib/download";
+import { expr } from "./Server/lib/expr";
 import { check } from "./Server/lib/check";
 import { SQLInject } from "./Server/lib/SQLInject";
 import { alias } from "./Server/lib/alias";
@@ -911,7 +913,7 @@ let Terminal = {
                     break;
                 }
                 case "check": {
-                    check(server, Terminal, out, err, commandArray.splice(1));
+                    check(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "clear":
@@ -943,84 +945,16 @@ let Terminal = {
                     break;
                 }
                 case "download": {
-                    try {
-                        if (commandArray.length !== 2) {
-                            postError("Incorrect usage of download command. Usage: download [script/text file]");
-                            return;
-                        }
-                        const fn = commandArray[1];
-                        if (fn === "*" || fn === "*.script" || fn === "*.txt") {
-                            // Download all scripts as a zip
-                            var zip = new JSZip();
-                            if (fn === "*" || fn === "*.script") {
-                                for (var i = 0; i < s.scripts.length; ++i) {
-                                    var file = new Blob([s.scripts[i].code], {type:"text/plain"});
-                                    zip.file(s.scripts[i].filename + ".js", file);
-                                }
-                            }
-                            if (fn === "*" || fn === "*.txt") {
-                                for (var i = 0; i < s.textFiles.length; ++i) {
-                                    var file = new Blob([s.textFiles[i].text], {type:"text/plain"});
-                                    zip.file(s.textFiles[i].fn, file);
-                                }
-                            }
-
-                            let zipFn;
-                            switch (fn) {
-                                case "*.script":
-                                    zipFn = "bitburnerScripts.zip"; break;
-                                case "*.txt":
-                                    zipFn = "bitburnerTexts.zip"; break;
-                                default:
-                                    zipFn = "bitburnerFiles.zip"; break;
-                            }
-
-                            zip.generateAsync({type:"blob"}).then(function(content) {
-                                FileSaver.saveAs(content, zipFn);
-                            });
-                            return;
-                        } else if (isScriptFilename(fn)) {
-                            // Download a single script
-                            const script = Terminal.getScript(fn);
-                            if (script != null) {
-                                return script.download();
-                            }
-                        } else if (fn.endsWith(".txt")) {
-                            // Download a single text file
-                            const txt = Terminal.getTextFile(fn);
-                            if (txt != null) {
-                                return txt.download();
-                            }
-                        } else {
-                            postError(`Cannot download this filetype`);
-                            return;
-                        }
-                        postError(`${fn} does not exist`);
-                    } catch(e) {
-                        Terminal.postThrownError(e);
-                    }
+                    download(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "expr": {
-                    if (commandArray.length <= 1) {
-                        postError("Incorrect usage of expr command. Usage: expr [math expression]");
-                        return;
-                    }
-                    let expr = commandArray.slice(1).join("");
-
-                    // Sanitize the math expression
-                    let sanitizedExpr = expr.replace(/s+/g, '').replace(/[^-()\d/*+.]/g, '');
-                    let result;
-                    try {
-                        result = eval(sanitizedExpr);
-                    } catch(e) {
-                        postError(`Could not evaluate expression: ${sanitizedExpr}`);
-                        return;
-                    }
-                    post(result);
+                    expr(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "free":
+                    free(server, Terminal, post, postError, commandArray.splice(1));
+                    break;
                     Terminal.executeFreeCommand(commandArray);
                     break;
                 case "hack": {
@@ -1221,7 +1155,7 @@ let Terminal = {
                     }
                     break;
                 case "tail": {
-                    tail(server, Terminal, out, err, commandArray.splice(1));
+                    tail(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "theme": {
