@@ -1,8 +1,8 @@
 
 import * as path from "path";
 import { BaseServer } from "../BaseServer";
-import {OverwriteStrategy} from "./OverwriteStrategy";
-import {VersioningStrategy} from "./VersioningStrategy";
+import {OverwriteStrategy, acceptOverwrite} from "./OverwriteStrategy";
+import {VersioningStrategy, getVersionCheck} from "./VersioningStrategy";
 import { getServer } from "../AllServers";
 
 export function scp(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={recursive:false, verbose:false, targetAsDirectory:true, targetDir:undefined, backup:VersioningStrategy.EXISTING, overwriteStrategy:OverwriteStrategy.NO_CLOBBER, suffix:"~", to:undefined, destServer:undefined}) {
@@ -70,17 +70,6 @@ export function scp(server: BaseServer, term: any, out:Function, err:Function, a
             }
             case "-b":
             case "--backup": {
-                // should be in the format optiona,optionb,optionc
-                // where options are :
-                //
-                // none
-                //   never make backups (even if --backup is given)
-                // numbered
-                //   make numbered backups
-                // existing
-                //   numbered if numbered backups exist, simple otherwise
-                // simple
-                //   always make simple backups
                 let value: string;
                 if (args.length > 0) { value = args.shift() as string; } else { throw HELP_MESSAGE; }
                 switch (value) {
@@ -163,62 +152,12 @@ export function scp(server: BaseServer, term: any, out:Function, err:Function, a
                 err(src + SOURCE_IS_RUNNING);
                 return;
             }
-            let fileSuffix = options.suffix;
-            // would it overwrite something?
-            if (options.destServer.exists(destFilename)) { // if so we first determine the versionning suffix.
-                let version: number = 1;
-                // here we verify the versioning naming scheme of the new file to be replaced.
-                switch (options.backup) {
-                    case VersioningStrategy.NONE:
-                        fileSuffix = "";
-                        break;
-                    case VersioningStrategy.SIMPLE:
-                        break;
-                    case VersioningStrategy.NUMBERED:
-                        while (options.destServer.exists(destFilename + fileSuffix + version)) { version ++; }// find the first available version number.
-                        fileSuffix += version;
-                        break;
-                    case VersioningStrategy.EXISTING:
-                        while (options.destServer.exists(destFilename + fileSuffix + version)) { version ++; }
-                        if (version > 1) { fileSuffix = version.toString(); }// if it is numbered, the version will be > 1, else it's a simple versionning mode.
-                        break;
-                }
-                destFilename += fileSuffix;
-            }
-            if (options.destServer.exists(destFilename)) { // this is called if no versioning control is applied or another backup already exists in SIMPLE backup mode.
-                // here we either continue to modify the file, or we skip the file altogether.
-                switch (options.overwriteStrategy) {
-                    case OverwriteStrategy.INTERACTIVE: {
-                        // TODO needs a way to get user input from the terminal.
-                        err("Interactive strategy is not implemented yet.");
-                        return;
-                    }
-                    case OverwriteStrategy.NO_CLOBBER: {
-                        if (options.verbose) { out(`A file named ${destFilename} already exists.`); }
-                        continue;
-                    }
-                    case OverwriteStrategy.UPDATE: {
-                        // TODO needs a way to determine the date of each file.
-                        err("Update strategy is not implemented yet.");
-                        return;
-                    }
-                    case OverwriteStrategy.FORCE: {
-                        if (options.verbose) { out(`Overwriting ${destFilename}`); }
-                        break;
-                    }
-                }
-            }
 
-            options.destServer.writeFile(destFilename, server.readFile(src), options);
-            out(`'${src}' -> '${destFilename}'`);
-            // => is there a directory with this name? if so fail
-            // => is it a file? If so depending on the overwriting strategy:
-            // FORCE > overwrite
-            // INTERACTIVE > TODO asks the user for permission, currently impossible due to having no access to user input from a running program.
-            // NO_CLUBBER > do not copy if a file exists with the same name.
-            // UPDATE > copy only if the copied file is more recent.
+            destFilename = getVersionCheck(options.destServer, out, err, destFilename, options)
+            if (acceptOverwrite(options.destServer, out, err, destFilename, options)){
+                options.destServer.writeFile(destFilename, server.readFile(src), options);
+            }
         }
     }
-    return ;
 }
 
