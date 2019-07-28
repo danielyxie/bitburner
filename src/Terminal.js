@@ -111,7 +111,9 @@ import { FTPCrack } from "./Server/lib/FTPCrack";
 import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
 import { relaySMTP } from "./Server/lib/relaySMTP";
+import { help } from "./Server/lib/help";
 import { download } from "./Server/lib/download";
+import { cp } from "./Server/lib/cp";
 import { expr } from "./Server/lib/expr";
 import { check } from "./Server/lib/check";
 import { SQLInject } from "./Server/lib/SQLInject";
@@ -976,21 +978,7 @@ let Terminal = {
                     break;
                 }
                 case "help":
-                    if (commandArray.length !== 1 && commandArray.length !== 2) {
-                        postError("Incorrect usage of help command. Usage: help");
-                        return;
-                    }
-                    if (commandArray.length === 1) {
-                        post(TerminalHelpText);
-                    } else {
-                        var cmd = commandArray[1];
-                        var txt = HelpTexts[cmd];
-                        if (txt == null) {
-                            postError("No help topics match '" + cmd + "'");
-                            return;
-                        }
-                        post(txt);
-                    }
+                    help(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 case "home":
                     if (commandArray.length !== 1) {
@@ -1055,6 +1043,9 @@ let Terminal = {
                     break;
                 case "ps":
                     ps(server, Terminal, post, postError, commandArray.slice(1));
+                    break;
+                case "cp":
+                    cp(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 case "rm": {
                     rm(server, Terminal, post, postError, commandArray.slice(1));

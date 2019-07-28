@@ -24,11 +24,14 @@ export function rm(server: BaseServer, term: any, out:Function, err:Function, ar
         const arg = args.shift();
         switch (arg) {
             case "-h":
+            case "--help":
                 throw HELP_MESSAGE;
             case "-r":
+            case "--recursive":
                     options.recursive = true;
                 break;
             case "-f":
+            case "--force":
                     options.force = true;
                 break;
             default:
@@ -96,3 +99,29 @@ function remove(server: BaseServer, term: any, out:Function, err:Function,  targ
     server.fs.rmdirSync(targetPath);
     if(options.verbose) out(`'${targetPath}' -> '/dev/null'`)
 }
+import {registerExecutable, ManualEntry} from "./sys";
+const MANUAL = new ManualEntry(
+`rm - concatenate files and print on the standard output `,
+`rm [OPTIONS] FILES...
+rm -r DIRECTORY`,
+`Removes all specified files from the current server.
+Removed files are sent to the /~trash/ on suppression,
+however using the --force flag DO NOT.
+
+/~trash/ files are NOT backed up if another file with the exact
+same path is sent to the trash next.
+
+Removing files is PERMANENT and CANNOT BE UNDONE.
+
+WARNING: using the command 'rm -r -f /' is STRONGLY ADVISED AGAINST.
+
+-f, --force
+    Remove PERMANENTLY the specified files. Use with caution.
+
+-r, --recursive
+    Remove every subfolders of a directory recursively. Use with caution
+
+--help
+    display this help and exit
+`)
+registerExecutable("rm", rm, MANUAL);

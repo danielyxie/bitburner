@@ -59,3 +59,13 @@ export function cat(server: BaseServer, term: any, out:Function, err:Function, a
     }
     return ;
 }
+import {registerExecutable, ManualEntry} from "./sys";
+const MANUAL = new ManualEntry(
+`cat - concatenate files and print on the standard output `,
+`cat [OPTION]... FILE... `,
+`Concatenate FILE(s) to standard output.
+
+--help
+    display this help and exit
+`)
+registerExecutable("cat", cat, MANUAL);

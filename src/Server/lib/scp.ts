@@ -161,3 +161,58 @@ export function scp(server: BaseServer, term: any, out:Function, err:Function, a
     }
 }
 
+import {registerExecutable, ManualEntry} from "./sys";
+const MANUAL = new ManualEntry(
+`scp - copies the specified files from the current server to the target server.`,
+`scp [OPTION]... --to=SERVER FILE... `,
+`Copies the specified files from the current server to the target server SERVER.
+
+--to=SERVER
+    The hostname or IP of the target server.
+
+-b, --backup[=CONTROL]
+    make a backup of each existing destination file
+
+-f, --force
+    if an existing destination file cannot be opened, remove it
+    and try again (this option is ignored when the -n option is
+    also used)
+
+-n, --no-clobber
+    do not overwrite an existing file (overrides a previous -i
+    option)
+
+-r, --recursive
+    copy directories recursively
+
+-S, --suffix=SUFFIX
+    override the usual backup suffix
+
+-t, --target-directory=DIRECTORY
+    copy all SOURCE arguments into DIRECTORY
+
+-T, --no-target-directory
+    treat DEST as a normal file
+
+-v, --verbose
+    explain what is being done
+
+--help display this help and exit
+
+The backup suffix is '~', unless set with --suffix or
+SIMPLE_BACKUP_SUFFIX.  The version control method may be selected via
+the --backup option or through the VERSION_CONTROL environment
+variable.  Here are the values:
+
+none
+    never make backups (even if --backup is given)
+
+numbered
+    make numbered backups
+
+existing
+    numbered if numbered backups exist, simple otherwise
+
+simple
+    always make simple backups`)
+registerExecutable("scp", scp, MANUAL);

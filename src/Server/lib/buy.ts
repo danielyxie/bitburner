@@ -88,3 +88,28 @@ export function buy(server: BaseServer, term: any, out:Function, err:Function, a
     out('You have purchased the ' + item.program + ' program. The new program can be found on your home computer.');
 }
 
+
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`buy - Purchase a program through the Dark Web.`,
+`buy -l
+buy PROGRAM`,
+`Purchase a program through the Dark Web and download the purchased
+executable at the root of your home computer. Requires a TOR router.
+
+If this command is ran with the '-l' flag, it will display a list of
+all programs that can be bought through the dark web to the Terminal,
+as well as their costs.
+
+Otherwise, the name of the program must be passed in as a parameter.
+This is name is NOT case-sensitive.
+
+
+--help
+    display this help and exit
+
+-l
+    lists all available programs on the Dark Web market.
+`)
+registerExecutable("buy", buy, MANUAL);

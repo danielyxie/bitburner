@@ -112,3 +112,69 @@ export function wget(server: BaseServer, term: any, out:Function, err:Function, 
                 err("wget failed: " + JSON.stringify(e))});
     }
 }
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`wget - Retrieves data from a URL and downloads it to a file on the current server.`,
+`wget [OPTIONS] --from URL --to FILEPATH`,
+`Retrieves data from a URL and downloads it to a file on the current server.
+If the file already exists, this command will behave like a mv command.
+
+Note that it will not be possible to download data from many websites because
+they do not allow cross-origin resource sharing (CORS).
+
+Example:
+    wget https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md game_readme.txt
+
+--from=URL
+    the source URL where the file will be downloaded from the internet.
+
+--to=FILEPATH
+    the FILEPATH where the data will be downloaded on the local server.
+
+-b, --backup[=CONTROL]
+    make a backup of each existing destination file
+
+-f, --force
+    if an existing destination file cannot be opened, remove it
+    and try again (this option is ignored when the -n option is
+    also used)
+
+-n, --no-clobber
+    do not overwrite an existing file (overrides a previous -i
+    option)
+
+-r, --recursive
+    copy directories recursively
+
+-S, --suffix=SUFFIX
+    override the usual backup suffix
+
+-t, --target-directory=DIRECTORY
+    copy all SOURCE arguments into DIRECTORY
+
+-T, --no-target-directory
+    treat DEST as a normal file
+
+-v, --verbose
+    explain what is being done
+
+--help display this help and exit
+
+The backup suffix is '~', unless set with --suffix or
+SIMPLE_BACKUP_SUFFIX.  The version control method may be selected via
+the --backup option or through the VERSION_CONTROL environment
+variable.  Here are the values:
+
+none
+    never make backups (even if --backup is given)
+
+numbered
+    make numbered backups
+
+existing
+    numbered if numbered backups exist, simple otherwise
+
+simple
+    always make simple backups`)
+registerExecutable("wget", wget, MANUAL);

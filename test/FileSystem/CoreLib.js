@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import {BaseServer} from "../../src/Server/BaseServer";
+import {HacknetServer} from "../../src/Hacknet/HacknetServer";
 import {ls} from "../../src/Server/lib/ls";
 import {cp} from "../../src/Server/lib/cp";
 import {scp} from "../../src/Server/lib/scp";
@@ -17,6 +18,7 @@ import {download} from "../../src/Server/lib/download";
 import {free} from "../../src/Server/lib/free";
 import {alias} from "../../src/Server/lib/alias";
 import {tail} from "../../src/Server/lib/tail";
+import {hack} from "../../src/Server/lib/hack";
 import {mem} from "../../src/Server/lib/mem";
 
 import {OverwriteStrategy} from "../../src/Server/lib/OverwriteStrategy";
@@ -781,7 +783,52 @@ describe("BaseServer file system core library tests", function() {
             })
 
         });
-
+        describe("hack", function(){
+            it("Can NOT hack a BaseServer purchased by the player", function(){
+                resetEnv();
+                destServer.purchasedByPlayer = true;
+                let result = false;
+                fakeTerm.startHack = ()=>{result = true};
+                expect(()=>hack(server, fakeTerm, out, err, [], {Player:Player})).to.throw();
+                expect(result).to.equal(false);
+            });
+            it("Can NOT hack a BaseServer if the player doesn't have root access", function(){
+                resetEnv();
+                server.hasAdminRights = false;
+                let result = false;
+                fakeTerm.startHack = ()=>{result = true};
+                expect(()=>hack(server, fakeTerm, out, err, [], {Player:Player})).to.throw();
+                expect(result).to.equal(false);
+            });
+            it("Can NOT hack a BaseServer if the player doesn't have the server required hacking level", function(){
+                resetEnv();
+                server.requiredHackingSkill = 100;
+                Player.hacking_skill = 0;
+                let result = false;
+                fakeTerm.startHack = ()=>{result = true};
+                expect(()=>hack(server, fakeTerm, out, err, [], {Player:Player})).to.throw();
+                expect(result).to.equal(false);
+            });
+            it("Can NOT hack a HacknetServer", function(){
+                resetEnv();
+                let hacknetServer = new HacknetServer();
+                let result = false;
+                fakeTerm.startHack = ()=>{result = true};
+                expect(()=>hack(hacknetServer, fakeTerm, out, err, [], {Player:Player})).to.throw();
+                expect(result).to.equal(false);
+            });
+            it("Can hack any BaseServer where the player is not the owner but have both root access and the required hack level", function(){
+                resetEnv();
+                server.purchasedByPlayer = false;
+                server.requiredHackingSkill = 0;
+                Player.hacking_skill = 1;
+                server.hasAdminRights = true;
+                let result = false;
+                fakeTerm.startHack = ()=>{result = true};
+                expect(()=>hack(server, fakeTerm, out, err, [], {Player:Player})).not.to.throw();
+                expect(result).to.equal(true);
+            });
+        })
     });
 })
 

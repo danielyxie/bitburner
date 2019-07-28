@@ -15,3 +15,12 @@ export function free( server:BaseServer, term:any, out:Function, err:Function, a
 
 }
 
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`free - display's the memory usage on the current machine`,
+`free`,
+`Display's the memory usage on the current machine. Print
+the amount of RAM that is available on the current server
+as well as how much of it is being used.`)
+registerExecutable("free", free, MANUAL);

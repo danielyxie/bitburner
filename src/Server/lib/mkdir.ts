@@ -47,3 +47,22 @@ export function mkdir(server: BaseServer, term: any, out:Function, err:Function,
         return 1;
     }
 }
+
+
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`mkdir -  mkdir - make directories `,
+`mkdir [OPTION]... DIRECTORY... `,
+`Create the DIRECTORY(ies), if they do not already exist.
+
+-r, --recursive
+    no error if not existing, make parent directories as needed
+
+-v, --verbose
+    print a message for each created directory
+
+--help
+    display this help and exit
+`)
+registerExecutable("mkdir", mkdir, MANUAL);

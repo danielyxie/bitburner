@@ -114,3 +114,20 @@ class TreeNode {
         this.childrens.push(node);
     }
 }
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`tree - prints all matching files and directories to the standard output as a graphical tree`,
+`tree [OPTIONS] DIRECTORY...
+tree [OPTIONS]`,
+`Prints all matching files and directories on the current server's
+directory to the standard output as a graphical tree. The files will
+be displayed in alphabetical order.
+
+-d, --depth=DEPTH
+    limits the pattern matching to DEPTH subdirectories.
+
+--help
+    display this help and exit
+`)
+registerExecutable("tree", tree, MANUAL);

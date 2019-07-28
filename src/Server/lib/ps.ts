@@ -13,3 +13,9 @@ export function ps(server: BaseServer, term: any, args: string[], target: string
     }
     return ReturnCode.SUCCESS;
 }
+import {registerExecutable, ManualEntry} from "./sys";
+const MANUAL = new ManualEntry(
+`ps - prints running processes`,
+`ps`,
+`Prints all scripts that are running on the current server`)
+registerExecutable("ps", ps, MANUAL);

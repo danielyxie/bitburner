@@ -60,3 +60,32 @@ export function tail(server: BaseServer, term: any, out:Function, err:Function, 
         out(target.logs);
     }
 }
+
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`tail - output the last part of files`,
+`tail RUNNINGSCRIPT [ARGS]...
+tail -p|--pid PID`,
+`Print the last lines of RUNNINGSCRIPT logs to standard output. Each argument
+must be separated by a space. Remember that a running script is uniquely
+identified by both its name and the arguments that were used to run it.
+So, if a script was ran with the following arguments:
+
+    run foo.script 10 50000
+
+Then in order to check its logs with 'tail' the same arguments must be used:
+
+    tail foo.script 10 50000
+
+--help
+    display this help and exit
+
+-p, --pid=PID
+    uses the PID to identify the process
+
+-l, --log-box
+    display the logs in a new log box instead of the standard output
+
+`)
+registerExecutable("tail", tail, MANUAL);

@@ -39,3 +39,18 @@ export function download(server: BaseServer, term: any, out:Function, err:Functi
         out(`${zipFn} ready to be downloaded!`);
     });
 }
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`download - Downloads a script or text file to your real computer.`,
+`download FILE...`,
+`Downloads a script or text file to your real computer.
+
+You can also download all of your scripts/text files as a zip file
+using the following command:
+    download *
+
+--help
+    display this help and exit
+`)
+registerExecutable("download", download, MANUAL);

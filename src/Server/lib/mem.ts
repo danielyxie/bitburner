@@ -77,3 +77,22 @@ export function mem(server: BaseServer, term: any, out:Function, err:Function, a
         }
     }
 }
+import {registerExecutable, ManualEntry} from "./sys";
+
+const MANUAL = new ManualEntry(
+`mem - Displays the amount of RAM needed to run the specified script`,
+`mem [-t|--threads=THREADS] SCRIPTNAME `,
+`Displays the amount of RAM needed to run the specified script with a
+single thread.
+
+The command can also be used to print the amount of RAM
+needed to run a script with THREADS threads using the '-t' flag.
+
+
+-t,--threads=THREADS
+    calculate the amount of RAM needed for THREADS threads
+
+--help
+    display this help and exit
+`)
+registerExecutable("mem", mem, MANUAL);

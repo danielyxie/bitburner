@@ -1,6 +1,7 @@
 import * as path from "path";
 import { BaseServer } from "../BaseServer";
 
+import {registerExecutable, ManualEntry} from "./sys";
 import {OverwriteStrategy, acceptOverwrite} from "./OverwriteStrategy";
 import {VersioningStrategy, getVersionCheck} from "./VersioningStrategy";
 
@@ -145,3 +146,60 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
         }
     }
 }
+
+const MANUAL = new ManualEntry(
+`cp - copy files and directories`,
+`cp [OPTION]... [-T] SOURCE DEST
+cp [OPTION]... SOURCE... DIRECTORY
+cp [OPTION]... -t DIRECTORY SOURCE...`,
+`Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.
+
+Mandatory arguments to long options are mandatory for short options
+too.
+
+-b, --backup[=CONTROL]
+        make a backup of each existing destination file
+
+-f, --force
+        if an existing destination file cannot be opened, remove it
+        and try again (this option is ignored when the -n option is
+        also used)
+
+-n, --no-clobber
+        do not overwrite an existing file (overrides a previous -i
+        option)
+
+-r, --recursive
+        copy directories recursively
+
+-S, --suffix=SUFFIX
+        override the usual backup suffix
+
+-t, --target-directory=DIRECTORY
+        copy all SOURCE arguments into DIRECTORY
+
+-T, --no-target-directory
+        treat DEST as a normal file
+
+-v, --verbose
+        explain what is being done
+
+--help display this help and exit
+
+The backup suffix is '~', unless set with --suffix or
+SIMPLE_BACKUP_SUFFIX.  The version control method may be selected via
+the --backup option or through the VERSION_CONTROL environment
+variable.  Here are the values:
+
+none
+        never make backups (even if --backup is given)
+
+numbered
+        make numbered backups
+
+existing
+        numbered if numbered backups exist, simple otherwise
+
+simple
+        always make simple backups`)
+registerExecutable("cp", cp, MANUAL);
