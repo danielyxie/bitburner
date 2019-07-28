@@ -8,7 +8,7 @@ export function analyze(server: BaseServer, term: any, out:Function, err:Functio
 import {registerExecutable, ManualEntry} from "./sys";
 
 const MANUAL = new ManualEntry(
-`analyze - prints details and statistics about the current server.`,
+`analyze - prints details and statistics about the current server`,
 `analyze`,
 `Prints details and statistics about the local server.
 The information that is printed includes basic server

@@ -106,9 +106,11 @@ import { mv } from "./Server/lib/mv";
 import { ls } from "./Server/lib/ls";
 import { nano } from "./Server/lib/nano";
 import { tree } from "./Server/lib/tree";
+import { scan } from "./Server/lib/scan";
 import { mem } from "./Server/lib/mem";
 import { cd } from "./Server/lib/cd";
 import { cls } from "./Server/lib/cls";
+import { sudov } from "./Server/lib/sudov";
 import { clear } from "./Server/lib/clear";
 import { nuke } from "./Server/lib/nuke";
 import { analyze } from "./Server/lib/analyze";
@@ -386,7 +388,7 @@ let Terminal = {
     // Excludes the trailing forward slash
     currDir:            "/",
     reset: function(){ // called when connecting to a server
-        resetTerminalInput();
+        this.resetTerminalInput();
 
     },
 
@@ -1025,7 +1027,7 @@ let Terminal = {
                     }
                     break;
                 case "scan":
-                    Terminal.executeScanCommand(commandArray);
+                    scan(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 case "scan-analyze":
                     scan_analyze(server, Terminal, post, postError, commandArray.splice(1));
@@ -1036,16 +1038,7 @@ let Terminal = {
                     break;
                 /* eslint-enable no-case-declarations */
                 case "sudov":
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect number of arguments. Usage: sudov");
-                        return;
-                    }
-
-                    if (s.hasAdminRights) {
-                        post("You have ROOT access to this machine");
-                    } else {
-                        post("You do NOT have root access to this machine");
-                    }
+                    sudov(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 case "tail": {
                     tail(server, Terminal, post, postError, commandArray.splice(1));
@@ -1226,400 +1219,6 @@ let Terminal = {
         }
 	},
 
-    connectToServer: function(ip) {
-        var serv = getServer(ip);
-        if (serv == null) {
-            post("Invalid server. Connection failed.");
-            return;
-        }
-        Player.getCurrentServer().isConnectedTo = false;
-        Player.currentServer = serv.ip;
-        Player.getCurrentServer().isConnectedTo = true;
-        post("Connected to " + serv.hostname);
-        Terminal.currDir = "/";
-        if (Player.getCurrentServer().hostname == "darkweb") {
-            checkIfConnectedToDarkweb(); // Posts a 'help' message if connecting to dark web
-        }
-        Terminal.resetTerminalInput();
-    },
-
-    executeFreeCommand: function(commandArray) {
-        if (commandArray.length !== 1) {
-            postError("Incorrect usage of free command. Usage: free");
-            return;
-        }
-        const ram = numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00');
-        const used = numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00');
-        const avail = numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00');
-        const maxLength = Math.max(ram.length, Math.max(used.length, avail.length));
-        const usedPercent = numeralWrapper.format(Player.getCurrentServer().ramUsed/Player.getCurrentServer().maxRam*100, '0.00');
-
-        post(`Total:     ${" ".repeat(maxLength-ram.length)}${ram} GB`);
-        post(`Used:      ${" ".repeat(maxLength-used.length)}${used} GB (${usedPercent}%)`);
-        post(`Available: ${" ".repeat(maxLength-avail.length)}${avail} GB`);
-    },
-
-    executeKillCommand: function(commandArray) {
-        try {
-            if (commandArray.length < 2) {
-                postError("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]...");
-                return;
-            }
-
-            // Kill by PID
-            if (typeof commandArray[1] === "number") {
-                const pid = commandArray[1];
-                const res = killWorkerScript(pid);
-                if (res) {
-                    post(`Killing script with PID ${pid}`);
-                } else {
-                    post(`Failed to kill script with PID ${pid}. No such script exists`);
-                }
-
-                return;
-            }
-
-            const s = Player.getCurrentServer();
-            const scriptName = Terminal.getFilepath(commandArray[1]);
-            const args = [];
-            for (let i = 2; i < commandArray.length; ++i) {
-                args.push(commandArray[i]);
-            }
-            const runningScript = s.getRunningScript(scriptName, args);
-            if (runningScript == null) {
-                postError("No such script is running. Nothing to kill");
-                return;
-            }
-            killWorkerScript(runningScript, s.ip);
-            post(`Killing ${scriptName}`);
-        } catch(e) {
-            Terminal.postThrownError(e);
-        }
-    },
-
-    executeListCommand: function(commandArray) {
-        const numArgs = commandArray.length;
-        function incorrectUsage() {
-            postError("Incorrect usage of ls command. Usage: ls [dir] [| grep pattern]");
-        }
-
-        if (numArgs <= 0 || numArgs > 5 || numArgs === 3) {
-            return incorrectUsage();
-        }
-
-        // Grep
-        let filter = null; // Grep
-
-        // Directory path
-        let prefix = Terminal.currDir;
-        if (!prefix.endsWith("/")) {
-            prefix += "/";
-        }
-
-        // If there are 4+ arguments, then the last 3 must be for grep
-        if (numArgs >= 4) {
-            if (commandArray[numArgs - 2] !== "grep" || commandArray[numArgs - 3] !== "|") {
-                return incorrectUsage();
-            }
-            filter = commandArray[numArgs - 1];
-        }
-
-        // If the second argument is not a pipe, then it must be for listing a directory
-        if (numArgs >= 2 && commandArray[1] !== "|") {
-            prefix = evaluateDirectoryPath(commandArray[1], Terminal.currDir);
-            if (prefix != null) {
-                if (!prefix.endsWith("/")) {
-                    prefix += "/";
-                }
-                if (!isValidDirectoryPath(prefix)) {
-                    return incorrectUsage();
-                }
-            }
-        }
-
-        // Root directory, which is the same as no 'prefix' at all
-        if (prefix === "/") {
-            prefix = null;
-        }
-
-        // Display all programs and scripts
-        let allFiles = [];
-        let folders = [];
-
-        function handleFn(fn) {
-            let parsedFn = fn;
-            if (prefix) {
-                if (!fn.startsWith(prefix)) {
-                    return;
-                } else {
-                    parsedFn = fn.slice(prefix.length, fn.length);
-                }
-            }
-
-            if (filter && !parsedFn.includes(filter)) {
-                return;
-            }
-
-            // If the fn includes a forward slash, it must be in a subdirectory.
-            // Therefore, we only list the "first" directory in its path
-            if (parsedFn.includes("/")) {
-                const firstParentDir = getFirstParentDirectory(parsedFn);
-                if (filter && !firstParentDir.includes(filter)) {
-                    return;
-                }
-
-                if (!folders.includes(firstParentDir)) {
-                    folders.push(firstParentDir);
-                }
-
-                return;
-            }
-
-            allFiles.push(parsedFn);
-        }
-
-        // Get all of the programs and scripts on the machine into one temporary array
-        const s = Player.getCurrentServer();
-        for (const program of s.programs) handleFn(program);
-        for (const script of s.scripts) handleFn(script.filename);
-        for (const txt of s.textFiles) handleFn(txt.fn);
-        for (const contract of s.contracts) handleFn(contract.fn);
-        for (const msgOrLit of s.messages) (msgOrLit instanceof Message) ? handleFn(msgOrLit.filename) : handleFn(msgOrLit);
-
-        // Sort the files/folders alphabetically then print each
-        allFiles.sort();
-        folders.sort();
-
-        const config = { color: "#0000FF" };
-        for (const dir of folders) {
-            postContent(dir, config);
-        }
-
-        for (const file of allFiles) {
-            postContent(file);
-        }
-    },
-
-    executeNanoCommand: function(commandArray) {
-        if (commandArray.length !== 2) {
-            postError("Incorrect usage of nano command. Usage: nano [scriptname]");
-            return;
-        }
-
-        try {
-            const filename = commandArray[1];
-            const server = Player.getCurrentServer();
-            server.touch(filename);
-            var content = Terminal.getFileContent(filename);
-            const filepath = Terminal.getFilepath(filename);
-            if (filename === ".fconf" && content === ""){
-                    content = createFconf();
-            }
-
-            Engine.loadScriptEditorContent(filepath, content);
-
-        } catch(e) {
-            const filename = commandArray[1];
-            console.log(`Error: ${filename} @ ${e}`);
-            Terminal.postThrownError(e);
-        }
-    },
-
-    executeScanCommand: function(commandArray) {
-        if (commandArray.length !== 1) {
-            postError("Incorrect usage of netstat/scan command. Usage: netstat/scan");
-            return;
-        }
-
-        // Displays available network connections using TCP
-        const currServ = Player.getCurrentServer();
-        post("Hostname             IP                   Root Access");
-        for (let i = 0; i < currServ.serversOnNetwork.length; i++) {
-            // Add hostname
-            let entry = getServerOnNetwork(currServ, i);
-            if (entry == null) { continue; }
-            entry = entry.hostname;
-
-            // Calculate padding and add IP
-            let numSpaces = 21 - entry.length;
-            let spaces = Array(numSpaces+1).join(" ");
-            entry += spaces;
-            entry += getServerOnNetwork(currServ, i).ip;
-
-            // Calculate padding and add root access info
-            let hasRoot;
-            if (getServerOnNetwork(currServ, i).hasAdminRights) {
-                hasRoot = 'Y';
-            } else {
-                hasRoot = 'N';
-            }
-            numSpaces = 21 - getServerOnNetwork(currServ, i).ip.length;
-            spaces = Array(numSpaces+1).join(" ");
-            entry += spaces;
-            entry += hasRoot;
-            post(entry);
-        }
-    },
-
-    executeScanAnalyzeCommand: function(depth=1, all=false) {
-        // TODO Using array as stack for now, can make more efficient
-        post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
-        post(" ");
-
-        // Map of all servers to keep track of which have been visited
-        var visited = {};
-        for (const ip in AllServers) {
-            visited[ip] = 0;
-        }
-
-        const stack = [];
-        const depthQueue = [0];
-        const currServ = Player.getCurrentServer();
-        stack.push(currServ);
-        while(stack.length != 0) {
-            const s = stack.pop();
-            const d = depthQueue.pop();
-            const isHacknet = s instanceof HacknetServer;
-            if (!all && s.purchasedByPlayer && s.hostname != "home") {
-                continue; // Purchased server
-            } else if (visited[s.ip] || d > depth) {
-                continue; // Already visited or out-of-depth
-            } else if (!all && isHacknet) {
-                continue; // Hacknet Server
-            } else {
-                visited[s.ip] = 1;
-            }
-            for (var i = s.serversOnNetwork.length-1; i >= 0; --i) {
-                stack.push(getServerOnNetwork(s, i));
-                depthQueue.push(d+1);
-            }
-            if (d == 0) {continue;} // Don't print current server
-            var titleDashes = Array((d-1) * 4 + 1).join("-");
-            if (Player.hasProgram(Programs.AutoLink.name)) {
-                post("<strong>" +  titleDashes + "> <a class='scan-analyze-link'>"  + s.hostname + "</a></strong>", false);
-            } else {
-                post("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
-            }
-
-            var dashes = titleDashes + "--";
-            var c = "NO";
-            if (s.hasAdminRights) {c = "YES";}
-            post(`${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
-            if (!isHacknet) { post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired); }
-            post(dashes + "RAM: " + s.maxRam);
-            post(" ");
-        }
-
-        var links = document.getElementsByClassName("scan-analyze-link");
-        for (let i = 0; i < links.length; ++i) {
-            (function() {
-            var hostname = links[i].innerHTML.toString();
-            links[i].onclick = function() {
-                if (Terminal.analyzeFlag || Terminal.hackFlag) {return;}
-                Terminal.connectToServer(hostname);
-            }
-            }());// Immediate invocation
-        }
-    },
-
-    executeScpCommand(commandArray) {
-        try {
-            if (commandArray.length !== 3) {
-                postError("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
-                return;
-            }
-            const scriptname = Terminal.getFilepath(commandArray[1]);
-            if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith(".txt")) {
-                postError("scp only works for scripts, text files (.txt), and literature files (.lit)");
-                return;
-            }
-
-            const destServer = getServer(commandArray[2]);
-            if (destServer == null) {
-                postError(`Invalid destination. ${commandArray[2]} not found`);
-                return;
-            }
-            const ip = destServer.ip;
-            const currServ = Player.getCurrentServer();
-
-            // Scp for lit files
-            if (scriptname.endsWith(".lit")) {
-                var found = false;
-                for (var i = 0; i < currServ.messages.length; ++i) {
-                    if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) { return postError("No such file exists!"); }
-
-                for (var i = 0; i < destServer.messages.length; ++i) {
-                    if (destServer.messages[i] === scriptname) {
-                        post(scriptname + " copied over to " + destServer.hostname);
-                        return; // Already exists
-                    }
-                }
-                destServer.messages.push(scriptname);
-                return post(scriptname + " copied over to " + destServer.hostname);
-            }
-
-            // Scp for txt files
-            if (scriptname.endsWith(".txt")) {
-                var found = false, txtFile;
-                for (var i = 0; i < currServ.textFiles.length; ++i) {
-                    if (currServ.textFiles[i].fn === scriptname) {
-                        found = true;
-                        txtFile = currServ.textFiles[i];
-                        break;
-                    }
-                }
-
-                if (!found) { return postError("No such file exists!"); }
-
-                let tRes = destServer.writeToTextFile(txtFile.fn, txtFile.text);
-                if (!tRes.success) {
-                    postError("scp failed");
-                    return;
-                }
-                if (tRes.overwritten) {
-                    post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
-                    post(`${scriptname} overwritten on ${destServer.hostname}`);
-                    return;
-                }
-                post(`${scriptname} copied over to ${destServer.hostname}`);
-                return;
-            }
-
-            // Get the current script
-            let sourceScript = null;
-            for (let i = 0; i < currServ.scripts.length; ++i) {
-                if (scriptname == currServ.scripts[i].filename) {
-                    sourceScript = currServ.scripts[i];
-                    break;
-                }
-            }
-            if (sourceScript == null) {
-                postError("scp() failed. No such script exists");
-                return;
-            }
-
-            let sRes = destServer.writeToScriptFile(scriptname, sourceScript.code);
-            if (!sRes.success) {
-                postError(`scp failed`);
-                return;
-            }
-            if (sRes.overwritten) {
-                post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
-                post(`${scriptname} overwritten on ${destServer.hostname}`);
-                return;
-            }
-            post(`${scriptname} copied over to ${destServer.hostname}`);
-        } catch(e) {
-            Terminal.postThrownError(e);
-        }
-    },
-
 	// First called when the "run [program]" command is called. Checks to see if you
 	// have the executable and, if you do, calls the executeProgram() function
 	runProgram: function(commandArray) {
@@ -1763,40 +1362,8 @@ let Terminal = {
         return result;
     },
 
-    /**
-     * Given a filename, searches and returns that file. File-type agnostic
-     */
-    getFile: function (filename) {
-        if (isScriptFilename(filename)) {
-            return Terminal.getScript(filename);
-        }
 
-        if (filename.endsWith(".lit")) {
-            return Terminal.getLitFile(filename);
-        }
 
-        if (filename.endsWith(".txt")) {
-            return Terminal.getTextFile(filename);
-        }
-
-        return null;
-    },
-
-    /**
-     * Processes a file path referring to a literature file, taking into account the terminal's
-     * current directory + server. Returns the lit file if it exists, and null otherwise
-     */
-    getLitFile: function(filename) {
-        const s = Player.getCurrentServer();
-        const filepath = Terminal.getFilepath(filename);
-        for (const lit of s.messages) {
-            if (typeof lit === "string" && filepath === lit) {
-                return lit;
-            }
-        }
-
-        return null;
-    },
 
     /**
      * Processes a file path referring to a script, taking into account the terminal's
@@ -1807,37 +1374,7 @@ let Terminal = {
         return Player.getCurrentServer().readFile(Terminal.getFilepath(filename));
     },
 
-    /**
-     * Processes a file path referring to a script, taking into account the terminal's
-     * current directory + server. Returns the script if it exists, and null otherwise.
-     */
-    getScript: function(filename) {
-        const s = Player.getCurrentServer();
-        const filepath = Terminal.getFilepath(filename);
-        for (const script of s.scripts) {
-            if (filepath === script.filename) {
-                return script;
-            }
-        }
 
-        return null;
-    },
-
-    /**
-     * Processes a file path referring to a text file, taking into account the terminal's
-     * current directory + server. Returns the text file if it exists, and null otherwise.
-     */
-    getTextFile: function(filename) {
-        const s = Player.getCurrentServer();
-        const filepath = Terminal.getFilepath(filename);
-        for (const txt of s.textFiles) {
-            if (filepath === txt.fn) {
-                return txt;
-            }
-        }
-
-        return null;
-    },
 
     postThrownError: function(e) {
         if (e instanceof Error) {
