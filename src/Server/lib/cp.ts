@@ -1,7 +1,6 @@
 import * as path from "path";
 import { BaseServer } from "../BaseServer";
 
-import {registerExecutable, ManualEntry} from "./sys";
 import {OverwriteStrategy, acceptOverwrite} from "./OverwriteStrategy";
 import {VersioningStrategy, getVersionCheck} from "./VersioningStrategy";
 
@@ -146,6 +145,7 @@ export function cp(server: BaseServer, term: any, out:Function, err:Function, ar
         }
     }
 }
+import {registerExecutable, ManualEntry} from "./sys";
 
 const MANUAL = new ManualEntry(
 `cp - copy files and directories`,
