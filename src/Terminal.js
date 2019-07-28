@@ -106,6 +106,9 @@ import { mv } from "./Server/lib/mv";
 import { ls } from "./Server/lib/ls";
 import { tree } from "./Server/lib/tree";
 import { mem } from "./Server/lib/mem";
+import { cd } from "./Server/lib/cd";
+import { cls } from "./Server/lib/cls";
+import { clear } from "./Server/lib/clear";
 import { nuke } from "./Server/lib/nuke";
 import { analyze } from "./Server/lib/analyze";
 import { FTPCrack } from "./Server/lib/FTPCrack";
@@ -384,6 +387,11 @@ let Terminal = {
     reset: function(){ // called when connecting to a server
         resetTerminalInput();
 
+    },
+
+    clearOutput(){
+        $("#terminal tr:not(:last)").remove();
+        postNetburnerText();
     },
 
     resetTerminalInput: function() {
@@ -901,30 +909,7 @@ let Terminal = {
                     break;
                 }
                 case "cd": {
-                    if (commandArray.length !== 2) {
-                        postError("Incorrect number of arguments. Usage: cd [dir]");
-                    } else {
-                        let dir = commandArray[1];
-
-                        let evaledDir;
-                        if (dir === "/") {
-                            evaledDir = "/";
-                        } else {
-                            // Ignore trailing slashes
-                            dir = removeTrailingSlash(dir);
-
-                            evaledDir = evaluateDirectoryPath(Player.getCurrentServer(), dir, Terminal.currDir);
-                            if (evaledDir == null || evaledDir === "") {
-                                postError("Invalid path. Failed to change directories");
-                                return;
-                            }
-                        }
-
-                        Terminal.currDir = evaledDir + ((evaledDir.endsWith("/"))?"":"/");
-
-                        // Reset input to update current directory on UI
-                        Terminal.resetTerminalInput();
-                    }
+                    cd(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "check": {
@@ -932,13 +917,10 @@ let Terminal = {
                     break;
                 }
                 case "clear":
+                    clear(server, Terminal, post, postError, commandArray.splice(1));
+                    break;
                 case "cls":
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect usage of clear/cls command. Usage: clear/cls");
-                        return;
-                    }
-                    $("#terminal tr:not(:last)").remove();
-                    postNetburnerText();
+                    cls(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 case "connect": {
                     connect(server, Terminal, post, postError, commandArray.splice(1));
