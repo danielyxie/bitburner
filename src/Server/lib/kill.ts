@@ -1,13 +1,11 @@
-
-import * as path from "path";
 import { BaseServer } from "../BaseServer";
+import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { Script} from "../../Script/Script";
 import { RunningScript} from "../../Script/RunningScript";
 import {registerExecutable, ManualEntry, fetchUsage} from "./sys";
 
-import { logBoxCreate } from "../../../utils/LogBox";
-
-export function tail(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={target:undefined, logBox:false, args:[], PID:false}) {
+export function kill(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
+    const HELP_MESSAGE: string = fetchUsage("kill") as string;
     const INVALID_PATH_ERROR: string = "Invalid path";
     const NO_PATHS_PROVIDED: string = "No target provided";
     const INCORRECT_PATH: string = "Incorrect path provided ";
@@ -19,17 +17,12 @@ export function tail(server: BaseServer, term: any, out:Function, err:Function, 
         switch (arg) {
             case "-h":
             case "--help":
-                out(fetchUsage("tail"));
+                out(HELP_MESSAGE);
                 return;
             case "-p":
             case "--pid": {
                 if (args.length > 0) { options.PID = parseInt(args.shift() as string); }
-                else { throw fetchUsage("tail"); }
-                break;
-            }
-            case "-l":
-            case "--log-box": {
-                options.logBox = true;
+                else { throw HELP_MESSAGE; }
                 break;
             }
             default:
@@ -54,37 +47,32 @@ export function tail(server: BaseServer, term: any, out:Function, err:Function, 
         err("No such script is running.");
         return;
     }
-    if ( options.logBox )
-        logBoxCreate(target);
-    else {
-        out(target.logs);
-    }
+    killWorkerScript(target.pid);
+    out(`Killing (PID=${target.pid}) ${target.filename} ${JSON.stringify(target.args)}`);
+
 }
 
 
 const MANUAL = new ManualEntry(
-`tail - output the last part of files`,
-`tail RUNNINGSCRIPT [ARGS]...
-tail -p|--pid PID`,
-`Print the last lines of RUNNINGSCRIPT logs to standard output. Each argument
-must be separated by a space. Remember that a running script is uniquely
-identified by both its name and the arguments that were used to run it.
-So, if a script was ran with the following arguments:
+`kill - kill the specified script`,
+`kill RUNNINGSCRIPT [ARGS]...
+kill -p|--pid PID`,
+`kill the specified RUNNINGSCRIPT. Each argument must be separated by a space.
+Remember that a running script is uniquely identified by both its name and the
+arguments that were used to run it. So, if a script was ran with the following
+arguments:
 
     run foo.script 10 50000
 
-Then in order to check its logs with 'tail' the same arguments must be used:
+Then in order to kill its process with 'kill' the same arguments must be used:
 
-    tail foo.script 10 50000
+    kill foo.script 10 50000
 
 --help
     display this help and exit
 
 -p, --pid=PID
     uses the PID to identify the process
-
--l, --log-box
-    display the logs in a new log box instead of the standard output
-
 `)
-registerExecutable("tail", tail, MANUAL);
+
+registerExecutable("kill", kill, MANUAL);

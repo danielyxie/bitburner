@@ -33,6 +33,21 @@ export function fetchHelp(name:string){
     return helpRegistry.get(name);
 }
 
+export function fetchName(name:string){
+    let help = helpRegistry.get(name);
+    if (help) return help.name;
+}
+
+export function fetchUsage(name:string){
+    let help = helpRegistry.get(name);
+    if (help) return help.synopsis;
+}
+
+export function fetchOptions(name:string){
+    let help = helpRegistry.get(name);
+    if (help) return help.options;
+}
+
 export function fetchHelpIndex(){
     let names:string[] = [];
     for(let k of helpRegistry.keys()){

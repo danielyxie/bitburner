@@ -118,6 +118,8 @@ import { scp } from "./Server/lib/scp";
 import { expr } from "./Server/lib/expr";
 import { check } from "./Server/lib/check";
 import { SQLInject } from "./Server/lib/SQLInject";
+import { kill } from "./Server/lib/kill";
+import { killall } from "./Server/lib/killall";
 import { wget } from "./Server/lib/wget";
 import { hack } from "./Server/lib/hack";
 import { alias } from "./Server/lib/alias";
@@ -994,15 +996,11 @@ let Terminal = {
                     post(Player.getCurrentServer().ip);
                     break;
                 case "kill": {
-                    Terminal.executeKillCommand(commandArray);
+                    kill(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 }
                 case "killall": {
-                    for (let i = s.runningScripts.length - 1; i >= 0; --i) {
-                        killWorkerScript(s.runningScripts[i], s.ip, false);
-                    }
-                    WorkerScriptStartStopEventEmitter.emitEvent();
-                    post("Killing all running scripts");
+                    killall(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 }
                 case "ls": {
