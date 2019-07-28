@@ -107,6 +107,7 @@ import { ls } from "./Server/lib/ls";
 import { tree } from "./Server/lib/tree";
 import { mem } from "./Server/lib/mem";
 import { nuke } from "./Server/lib/nuke";
+import { analyze } from "./Server/lib/analyze";
 import { FTPCrack } from "./Server/lib/FTPCrack";
 import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
@@ -890,11 +891,7 @@ let Terminal = {
                     alias(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 case "analyze":
-                    if (commandArray.length !== 1) {
-                        post("Incorrect usage of analyze command. Usage: analyze");
-                        return;
-                    }
-                    Terminal.startAnalyze();
+                    analyze(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 case "buy":
                     buy(server, Terminal, post, postError, commandArray.slice(1));
