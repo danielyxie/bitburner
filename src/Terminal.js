@@ -104,6 +104,7 @@ import { mkdir } from "./Server/lib/mkdir";
 import { rm } from "./Server/lib/rm";
 import { mv } from "./Server/lib/mv";
 import { ls } from "./Server/lib/ls";
+import { nano } from "./Server/lib/nano";
 import { tree } from "./Server/lib/tree";
 import { mem } from "./Server/lib/mem";
 import { cd } from "./Server/lib/cd";
@@ -988,7 +989,7 @@ let Terminal = {
                     break;
                 }
                 case "nano":
-                    Terminal.executeNanoCommand(commandArray);
+                    nano(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 case "ps":
                     ps(server, Terminal, post, postError, commandArray.slice(1));
