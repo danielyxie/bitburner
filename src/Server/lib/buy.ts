@@ -84,7 +84,7 @@ export function buy(server: BaseServer, term: any, out:Function, err:Function, a
 
     // buy and push
     options.Player.loseMoney(item.price); //TODO perhaps change the saving location to another special fs?
-    options.Player.getHomeComputer().writeFile("/"+item.program, ""); // TODO determine the content of programs.
+    options.Player.getHomeComputer().programs.push(item.program); // TODO determine the content of programs.
     out('You have purchased the ' + item.program + ' program. The new program can be found on your home computer.');
 }
 
