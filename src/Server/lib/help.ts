@@ -31,7 +31,7 @@ associated with each of these arguments is then found and displayed.
 
 A manual page consists of several sections.
 
-Conventional  section  names  include  NAME,  SYNOPSIS and OPTIONS.
+Conventional  section  names  include  NAME,  SYNOPSIS and DESCRIPTION.
 
 The following conventions apply to the SYNOPSIS section and can be used
 as a guide in other sections.

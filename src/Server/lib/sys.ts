@@ -15,7 +15,7 @@ export class ManualEntry{
                 this.name,
                 "SYNOPSIS",
                 this.synopsis,
-                "OPTIONS",
+                "DESCRIPTION",
                 this.options].join("\n");
     }
 }

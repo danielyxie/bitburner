@@ -110,6 +110,12 @@ import { nuke } from "./Server/lib/nuke";
 import { FTPCrack } from "./Server/lib/FTPCrack";
 import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
+import { lscpu } from "./Server/lib/lscpu";
+import { hostname } from "./Server/lib/hostname";
+import { home } from "./Server/lib/home";
+import { connect } from "./Server/lib/connect";
+import { ifconfig } from "./Server/lib/ifconfig";
+import { scan_analyze } from "./Server/lib/scan_analyze";
 import { relaySMTP } from "./Server/lib/relaySMTP";
 import { help } from "./Server/lib/help";
 import { download } from "./Server/lib/download";
@@ -124,6 +130,7 @@ import { wget } from "./Server/lib/wget";
 import { hack } from "./Server/lib/hack";
 import { alias } from "./Server/lib/alias";
 import { ps } from "./Server/lib/ps";
+import { buy } from "./Server/lib/buy";
 import { tail } from "./Server/lib/tail";
 
 import { fs } from 'memfs';
@@ -373,6 +380,10 @@ let Terminal = {
     // Full Path of current directory
     // Excludes the trailing forward slash
     currDir:            "/",
+    reset: function(){ // called when connecting to a server
+        resetTerminalInput();
+
+    },
 
     resetTerminalInput: function() {
         const dir = Terminal.currDir;
@@ -933,22 +944,7 @@ let Terminal = {
                     postNetburnerText();
                     break;
                 case "connect": {
-                    // Disconnect from current server in terminal and connect to new one
-                    if (commandArray.length !== 2) {
-                        postError("Incorrect usage of connect command. Usage: connect [ip/hostname]");
-                        return;
-                    }
-
-                    let ip = commandArray[1];
-
-                    for (let i = 0; i < s.serversOnNetwork.length; i++) {
-                        if (getServerOnNetwork(s, i).ip == ip || getServerOnNetwork(s, i).hostname == ip) {
-                            Terminal.connectToServer(ip);
-                            return;
-                        }
-                    }
-
-                    postError("Host not found");
+                    connect(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "download": {
@@ -970,30 +966,19 @@ let Terminal = {
                     help(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 case "home":
+                    home(server, Terminal, post, postError, commandArray.splice(1))
+                    break;
                     if (commandArray.length !== 1) {
                         postError("Incorrect usage of home command. Usage: home");
                         return;
                     }
-                    Player.getCurrentServer().isConnectedTo = false;
-                    Player.currentServer = Player.getHomeComputer().ip;
-                    Player.getCurrentServer().isConnectedTo = true;
-                    post("Connected to home");
-                    Terminal.currDir = "/";
-                    Terminal.resetTerminalInput();
+
                     break;
                 case "hostname":
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect usage of hostname command. Usage: hostname");
-                        return;
-                    }
-                    post(Player.getCurrentServer().hostname);
+                    hostname(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 case "ifconfig":
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect usage of ifconfig command. Usage: ifconfig");
-                        return;
-                    }
-                    post(Player.getCurrentServer().ip);
+                    ifconfig(server, Terminal, post, postError, commandArray.splice(1))
                     break;
                 case "kill": {
                     kill(server, Terminal, post, postError, commandArray.splice(1))
@@ -1012,7 +997,7 @@ let Terminal = {
                     break;
                 }
                 case "lscpu": {
-                    post(Player.getCurrentServer().cpuCores + " Core(s)");
+                    lscpu(server, Terminal, post, postError,commandArray.splice(1));
                     break;
                 }
                 case "mem": {
@@ -1063,38 +1048,7 @@ let Terminal = {
                     Terminal.executeScanCommand(commandArray);
                     break;
                 case "scan-analyze":
-                    if (commandArray.length === 1) {
-                        Terminal.executeScanAnalyzeCommand(1);
-                    } else {
-                        // # of args must be 2 or 3
-                        if (commandArray.length > 3) {
-                            postError("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
-                            return;
-                        }
-                        let all = false;
-                        if (commandArray.length === 3 && commandArray[2] === "-a") {
-                            all = true;
-                        }
-
-                        let depth = parseInt(commandArray[1]);
-
-                        if (isNaN(depth) || depth < 0) {
-                            postError("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
-                            return;
-                        }
-                        if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1.name) &&
-                            !Player.hasProgram(Programs.DeepscanV2.name)) {
-                            postError("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
-                            return;
-                        } else if (depth > 5 && !Player.hasProgram(Programs.DeepscanV2.name)) {
-                            postError("You cannot scan-analyze with that high of a depth. Maximum depth is 5");
-                            return;
-                        } else if (depth > 10) {
-                            postError("You cannot scan-analyze with that high of a depth. Maximum depth is 10");
-                            return;
-                        }
-                        Terminal.executeScanAnalyzeCommand(depth, all);
-                    }
+                    scan_analyze(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 /* eslint-disable no-case-declarations */
                 case "scp":
