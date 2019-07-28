@@ -13,7 +13,7 @@ import { detectFileType, FileType } from "./FileType";
  * @param {number} [nodeLimit=50] The limit of files to parse, in order to avoid problems with large repositories. Set to -1 to disable.
  * @returns {string} The String representation of the file tree in a graphical manner.
  */
-export function tree(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={depth:2}): string {
+export function tree(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={depth:2}) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const HELP_MESSAGE: string = "Incorrect usage of ls command. Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
@@ -73,7 +73,8 @@ export function tree(server: BaseServer, term: any, out:Function, err:Function, 
         }
     }
     treeRoots.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
-    return treeRoots.map((root)=>{return root.toString(true);}).join("\n");
+
+    treeRoots.map((root)=>{root.reconstructAndOutput(true, 0, out);});
 }
 const EMPTY:string      = "   ";
 const SCOPE: string     = "│  ";
@@ -91,22 +92,19 @@ class TreeNode {
         this.fileType = fileType;
         this.childrens = [];
     }
-    toString(isLast = false, emptyScope=0): string {
-        const localResults: string[] = [];
-        localResults.push([SCOPE.repeat(Math.max(0, this.depth - 1 - emptyScope)),EMPTY.repeat(Math.max(0, emptyScope -1)), ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""), this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
-
+    reconstructAndOutput(isLast = false, emptyScope=0, out:Function){
+        out([SCOPE.repeat(Math.max(0, this.depth - 1 - emptyScope)),EMPTY.repeat(Math.max(0, emptyScope -1)), ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""), this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
         if (this.childrens.length > 0) {
             this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
             for (let i = 0; i < this.childrens.length; i++) {
                 if( i == (this.childrens.length - 1) ){
                     // then its the last children
-                    localResults.push(this.childrens[i].toString(true, 0));
+                    this.childrens[i].reconstructAndOutput(true, 0, out);
                 }else{
-                    localResults.push(this.childrens[i].toString(false, emptyScope+1));
+                    this.childrens[i].reconstructAndOutput(false, emptyScope+1, out);
                 }
             }
         }
-        return localResults.join("\n");
     }
     addChild(node: TreeNode) {
         node.depth = this.depth + 1;

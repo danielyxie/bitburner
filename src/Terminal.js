@@ -114,9 +114,12 @@ import { relaySMTP } from "./Server/lib/relaySMTP";
 import { help } from "./Server/lib/help";
 import { download } from "./Server/lib/download";
 import { cp } from "./Server/lib/cp";
+import { scp } from "./Server/lib/scp";
 import { expr } from "./Server/lib/expr";
 import { check } from "./Server/lib/check";
 import { SQLInject } from "./Server/lib/SQLInject";
+import { wget } from "./Server/lib/wget";
+import { hack } from "./Server/lib/hack";
 import { alias } from "./Server/lib/alias";
 import { ps } from "./Server/lib/ps";
 import { tail } from "./Server/lib/tail";
@@ -958,23 +961,7 @@ let Terminal = {
                     free(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 case "hack": {
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect usage of hack command. Usage: hack");
-                        return;
-                    }
-                    // Hack the current PC (usually for money)
-                    // You can't hack your home pc or servers you purchased
-                    if (s.purchasedByPlayer) {
-                        postError("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
-                    } else if (s.hasAdminRights == false ) {
-                        postError("You do not have admin rights for this machine! Cannot hack");
-                    } else if (s.requiredHackingSkill > Player.hacking_skill) {
-                        postError("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
-                    } else if (s instanceof HacknetServer) {
-                        postError("Cannot hack this type of Server")
-                    } else {
-                        Terminal.startHack();
-                    }
+                    hack(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "help":
@@ -1050,21 +1037,6 @@ let Terminal = {
                 case "rm": {
                     rm(server, Terminal, post, postError, commandArray.slice(1));
                     break;
-                    /*
-                    if (commandArray.length !== 2) {
-                        postError("Incorrect number of arguments. Usage: rm [program/script]");
-                        return;
-                    }
-
-                    // Check programs
-                    let delTarget = Terminal.getFilepath(commandArray[1]);
-
-                    const status = s.removeFile(delTarget);
-                    if (!status.res) {
-                        postError(status.msg);
-                    }
-                    break;
-                    */
                 }
                 case "run":
                     // Run a program or a script
@@ -1128,7 +1100,7 @@ let Terminal = {
                     break;
                 /* eslint-disable no-case-declarations */
                 case "scp":
-                    Terminal.executeScpCommand(commandArray);
+                    scp(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 /* eslint-enable no-case-declarations */
                 case "sudov":
@@ -1264,33 +1236,7 @@ let Terminal = {
                     break;
                 }
                 case "wget": {
-                    if (commandArray.length !== 3) {
-                        postError("Incorrect usage of wget command. Usage: wget [url] [target file]");
-                        return;
-                    }
-
-                    let url = commandArray[1];
-                    let target = Terminal.getFilepath(commandArray[2]);
-                    if (!isScriptFilename(target) && !target.endsWith(".txt")) {
-                        return post(`wget failed: Invalid target file. Target file must be script or text file`);
-                    }
-                    $.get(url, function(data) {
-                        let res;
-                        if (isScriptFilename(target)) {
-                            res = s.writeToScriptFile(target, data);
-                        } else {
-                            res = s.writeToTextFile(target, data);
-                        }
-                        if (!res.success) {
-                            return post("wget failed");
-                        }
-                        if (res.overwritten) {
-                            return post(`wget successfully retrieved content and overwrote ${target}`);
-                        }
-                        return post(`wget successfully retrieved content to new file ${target}`);
-                    }, 'text').fail(function(e) {
-                        return postError("wget failed: " + JSON.stringify(e));
-                    })
+                    wget(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "mkdir": {

@@ -1,6 +1,8 @@
 import * as path from "path";
 import { BaseServer } from "../BaseServer";
 import { detectFileType, FileType } from "./FileType";
+const micromatch = require('micromatch');
+
 /**
  * This function builds a string representation of the file tree from the target directory on the specified server and outputs it as a list of detailed records.
  *
@@ -13,13 +15,14 @@ import { detectFileType, FileType } from "./FileType";
  * @param {number} [nodeLimit=50] The limit of files to parse, in order to avoid problems with large repositories. Set to -1 to disable.
  * @returns {string} The String representation of the file tree in a record manner.
  */
-export function ls(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={ depth:2}): string {
+export function ls(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={ depth:2}) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const HELP_MESSAGE: string = "Incorrect usage of ls command. Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
     let error: string;
     const cwd: string = term.currDir;
     let roots: string[] = [];
+    let patterns: string[] = [];
     while (args.length > 0) {
         const arg = args.shift() as string;
         switch (arg) {
@@ -42,15 +45,25 @@ export function ls(server: BaseServer, term: any, out:Function, err:Function, ar
     const processed: Set<string> = new Set<string>();
     for(let root of roots){
         let targetDir:any = path.resolve(cwd, root);
-        if (!targetDir) { err(INVALID_PATH_ERROR); }
+        if (!targetDir) { patterns.push(root); }
         else{
-            const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
-            toBeProcessed.push(rootNode);
-            treeRoots.push(rootNode);
+            if(server.isDir(root)){
+                const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
+                toBeProcessed.push(rootNode);
+                treeRoots.push(rootNode);
+            }
+            else{
+                patterns.push(root);
+            }
         }
     }
-
-
+    //if everything was patterns
+    if(treeRoots.length==0){
+        // we add the cwd to it
+        const rootNode = new TreeNode(cwd, FileType.DIRECTORY);
+        toBeProcessed.push(rootNode);
+        treeRoots.push(rootNode);
+    };
     while (toBeProcessed.length > 0) {
         const node: TreeNode = toBeProcessed.shift() as TreeNode;
         processed.add(node.path + node.name);
@@ -72,10 +85,20 @@ export function ls(server: BaseServer, term: any, out:Function, err:Function, ar
             }
         }
     }
-    treeRoots.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
-    let result = treeRoots.map((root)=>{return root.toString(true);}).join("\n");
-    out(result);
-    return result;
+
+    treeRoots
+        .sort( function (a:TreeNode, b:TreeNode):number {
+            return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));
+        });
+
+    let results:string[] = [];
+    treeRoots.forEach((root)=>{
+        let paths = root.toStringArray(true, patterns);
+        results.push(...paths);
+    })
+    results.map( (path) => {
+            out(path);
+        } )
 }
 
 const SCOPE: string     = "│  ";
@@ -93,17 +116,22 @@ class TreeNode {
         this.fileType = fileType;
         this.childrens = [];
     }
-    toString(isLast = false): string {
+
+    toStringArray(isLast=false, patterns:string[]):string[]{
         const localResults: string[] = [];
-        localResults.push([this.path, this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
+        let path = this.getFullName()
+        if (patterns.length==0 || (patterns.length>0 && micromatch.isMatch(path, patterns))){
+            localResults.push(path);
+        }
         if (this.childrens.length > 0) {
             this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
-            for (let i = 0; i < this.childrens.length; i++) {
-                localResults.push(this.childrens[i].toString(i == (this.childrens.length - 1)));
+            for (let i:number = 0; i < this.childrens.length; i++) {
+                localResults.push(...this.childrens[i].toStringArray(i == (this.childrens.length - 1), patterns));
             }
         }
-        return localResults.join("\n");
+        return localResults;
     }
+
     addChild(node: TreeNode,treeMerge=false) {
         node.depth = this.depth + 1;
         if(treeMerge){
@@ -113,6 +141,10 @@ class TreeNode {
             node.path = this.path + this.name + ((this.name.endsWith("/")) ? "" : "/");
         }
         this.childrens.push(node);
+    }
+
+    getFullName(){
+        return [this.path, this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join("")
     }
 }
 import {registerExecutable, ManualEntry} from "./sys";

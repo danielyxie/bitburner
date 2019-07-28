@@ -265,37 +265,82 @@ describe("BaseServer file system core library tests", function() {
             it("Can list the cwd files and subdirectories with a depth of 0" ,function(){
                 resetEnv();
 
-                let expected = ["/dA/","/dA/dB/", "/dA/f2","/dA/f3"].join("\n")
+                let expected = ["/dA/","/dA/dB/", "/dA/f2","/dA/f3"];
+                let result = [];
+                out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/dA";
-                expect(ls(server, fakeTerm, out, err, ["-d", "0"])).to.equal(expected);
+                expect(()=>ls(server, fakeTerm, out, err, ["-d", "0"])).to.not.throw();
+                expected.sort()
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"))
             });
             it("Can list the cwd files and subdirectories with a depth of n" ,function(){
                 resetEnv();
 
-                let expected = ["/dA/","/dA/dB/","/dA/dB/f4", "/dA/f2","/dA/f3" ].join("\n")
+                let expected = ["/dA/","/dA/dB/","/dA/dB/f4", "/dA/f2","/dA/f3" ]
+                let result = [];
+                out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/dA";
-                expect(ls(server, fakeTerm, out, err,["-d", "5"])).to.equal(expected);
+                expect(()=>ls(server, fakeTerm, out, err,["-d", "5"])).to.not.throw();
+                expected.sort()
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"))
             });
             it("Can list a specified directory with a depth of n" ,function(){
                 resetEnv();
 
-                let expected = ["/dA/","/dA/dB/","/dA/dB/f4" , "/dA/f2","/dA/f3"].join("\n")
+                let expected = ["/dA/","/dA/dB/","/dA/dB/f4" , "/dA/f2","/dA/f3"]
+                let result = [];
+                out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/";
-                expect(ls(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.equal(expected);
+                expect(()=>ls(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.not.throw();
+                expected.sort()
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"))
+            });
+            it("Can list files using bash patterns with a depth of n" ,function(){
+                resetEnv();
+
+                let expected = ["/dA/dB/f4" , "/dA/f2","/dA/f3"]
+                let result = [];
+                out = (msg) => {result.push(msg)};
+                fakeTerm.currDir = "/";
+                expect(()=>ls(server, fakeTerm, out, err, ["/**/f*", "-d", "5"])).to.not.throw();
+                expected.sort()
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"))
+
+                expected = ["/f1","/dA/dB/f4" , "/dA/f2","/dA/f3"]
+                result = [];
+                fakeTerm.currDir = "/";
+                expect(()=>ls(server, fakeTerm, out, err, ["**/f*", "-d", "5"])).to.not.throw();
+                expected.sort()
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"))
             });
             it("Can list multiple distant specified directory with a depth of n" ,function(){
                 resetEnv();
 
-                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/dB/","/dA/dB/f4"].join("\n")
+                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/dB/","/dA/dB/f4"]
+                let result = [];
+                out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/";
-                expect(ls(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.equal(expected);
+                expect(()=>ls(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.not.throw();
+                expected.sort()
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"))
             });
             it("Can list multiple combined specified directory with a depth of n" ,function(){
                 resetEnv();
 
-                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/","/dA/dB/","/dA/f2", "/dA/f3", ].join("\n")
+                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/","/dA/dB/","/dA/f2", "/dA/f3", ]
+                let result = [];
+                out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/";
-                expect(ls(server, fakeTerm, out, err, ["/","/dA/", "-d", "0"])).to.equal(expected);
+                expect(()=>ls(server, fakeTerm, out, err, ["/","/dA/", "-d", "0"])).to.not.throw();
+                expected.sort()
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"))
             });
         });
 
@@ -308,9 +353,12 @@ describe("BaseServer file system core library tests", function() {
                     "├──dB/",
                     "├──f2",
                     "└──f3"
-                    ].join("\n")
+                    ].join("\n");
+                let result = [];
+                out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/dA";
-                expect(tree(server, fakeTerm, out, err, ["-d", "0"])).to.equal(expected);
+                expect(()=>tree(server, fakeTerm, out, err, ["-d", "0"])).to.not.throw();
+                expect(result.join("\n")).to.equal(expected)
             });
             it("Can list the cwd files and subdirectories with a depth of n" ,function(){
                 resetEnv();
@@ -323,7 +371,10 @@ describe("BaseServer file system core library tests", function() {
                     "└──f3"
                     ].join("\n")
                 fakeTerm.currDir = "/dA";
-                expect(tree(server, fakeTerm, out, err,["-d", "5"])).to.equal(expected);
+                let result = [];
+                out = (msg) => {result.push(msg)};
+                expect(()=>tree(server, fakeTerm, out, err,["-d", "5"])).to.not.throw();
+                expect(result.join("\n")).to.equal(expected)
             });
             it("Can list a specified directory with a depth of n" ,function(){
                 resetEnv();
@@ -336,7 +387,10 @@ describe("BaseServer file system core library tests", function() {
                     "└──f3"
                     ].join("\n")
                 fakeTerm.currDir = "/";
-                expect(tree(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.equal(expected);
+                let result = [];
+                out = (msg) => {result.push(msg)};
+                expect(()=>tree(server, fakeTerm, out, err, ["/dA", "-d", "5"])).to.not.throw();
+                expect(result.join("\n")).to.equal(expected)
             });
             it("Can list multiple distant specified directory with a depth of n" ,function(){
                 resetEnv();
@@ -351,7 +405,10 @@ describe("BaseServer file system core library tests", function() {
                     "└──f4"
                     ].join("\n")
                 fakeTerm.currDir = "/";
-                expect(tree(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.equal(expected);
+                let result = [];
+                out = (msg) => {result.push(msg)};
+                expect(()=>tree(server, fakeTerm, out, err, ["/","/dA/dB/", "-d", "0"])).to.not.throw();
+                expect(result.join("\n")).to.equal(expected)
             });
             it("Can list multiple combined specified directory with a depth of n" ,function(){
                 resetEnv();
@@ -368,7 +425,10 @@ describe("BaseServer file system core library tests", function() {
                     "└──f3",
                     ].join("\n")
                 fakeTerm.currDir = "/";
-                expect(tree(server, fakeTerm,out, err, ["/","/dA/", "-d", "0"])).to.equal(expected);
+                let result = [];
+                out = (msg) => {result.push(msg)};
+                expect(()=>tree(server, fakeTerm,out, err, ["/","/dA/", "-d", "0"])).to.not.throw();
+                expect(result.join("\n")).to.equal(expected)
             });
         });
 
