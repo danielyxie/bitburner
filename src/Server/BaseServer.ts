@@ -4,6 +4,7 @@ import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { TextFile } from "../TextFile";
 import { IMap, IReturnStatus } from "../types";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { createRandomIp } from "../../utils/IPAddress";
@@ -20,11 +21,17 @@ import * as path from "path";
 
 interface IConstructorParams {
     adminRights?: boolean;
+    hackDifficulty?: number;
     hostname: string;
     ip?: string;
     isConnectedTo?: boolean;
     maxRam?: number;
+    moneyAvailable?: number;
+    numOpenPortsRequired?: number;
     organizationName?: string;
+    purchasedByPlayer?: boolean;
+    requiredHackingSkill?: number;
+    serverGrowth?: number;
 }
 
 /**
@@ -106,6 +113,43 @@ export class BaseServer {
     // Text files on this server
     textFiles: TextFile[] = [];
 
+
+    // Initial server security level
+    // (i.e. security level when the server was created)
+    baseDifficulty: number = 1;
+
+    // Server Security Level
+    hackDifficulty: number = 1;
+
+    // Flag indicating whether this server has been manually hacked (ie.
+    // hacked through Terminal) by the player
+    manuallyHacked: boolean = false;
+
+    // Minimum server security level that this server can be weakened to
+    minDifficulty: number = 1;
+
+    // How much money currently resides on the server and can be hacked
+    moneyAvailable: number = 0;
+
+    // Maximum amount of money that this server can hold
+    moneyMax: number = 0;
+
+    // Number of open ports required in order to gain admin/root access
+    numOpenPortsRequired: number = 5;
+
+    // How many ports are currently opened on the server
+    openPortCount: number = 0;
+
+    // Flag indicating wehther this is a purchased server
+    purchasedByPlayer: boolean = false;
+
+    // Hacking level required to hack this server
+    requiredHackingSkill: number = 1;
+
+    // Parameter that affects how effectively this server's money can
+    // be increased using the grow() Netscript function
+    serverGrowth: number = 1;
+
     constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
 
         this.ip = params.ip ? params.ip : createRandomIp();
@@ -118,6 +162,26 @@ export class BaseServer {
         this.hasAdminRights = params.adminRights != null ? params.adminRights : false;
         // file system, contains the server local files
         this.restoreFileSystem(this.volJSON);
+
+
+        this.purchasedByPlayer  =    params.purchasedByPlayer != null ? params.purchasedByPlayer  : false;
+
+        // RAM, CPU speed and Scripts
+        this.maxRam     = params.maxRam != null ? params.maxRam : 0;  // GB
+
+        /* Hacking information (only valid for "foreign" aka non-purchased servers) */
+        this.requiredHackingSkill   = params.requiredHackingSkill != null ? params.requiredHackingSkill : 1;
+        this.moneyAvailable         = params.moneyAvailable != null       ? params.moneyAvailable * BitNodeMultipliers.ServerStartingMoney : 0;
+        this.moneyMax               = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
+
+        // Hack Difficulty is synonymous with server security. Base Difficulty = Starting difficulty
+        this.hackDifficulty         = params.hackDifficulty != null ? params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity : 1;
+        this.baseDifficulty         = this.hackDifficulty;
+        this.minDifficulty          = Math.max(1, Math.round(this.hackDifficulty / 3));
+        this.serverGrowth           = params.serverGrowth != null   ? params.serverGrowth : 1; // Integer from 0 to 100. Affects money increase from grow()
+
+        // Port information, required for porthacking servers to get admin rights
+        this.numOpenPortsRequired = params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
 
     }
 
