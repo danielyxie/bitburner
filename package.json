@@ -117,6 +117,7 @@
     "lint:typescript": "tslint --project . --exclude **/*.d.ts --format stylish src/**/*.ts utils/**/*.ts",
     "preinstall": "node ./scripts/engines-check.js",
     "test": "mochapack --webpack-config webpack.config-test.js -r jsdom-global/register ./test/index.js",
+    "test:file": "mochapack --webpack-config webpack.config-test.js -r jsdom-global/register",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development"
   },

@@ -7,6 +7,8 @@ import {
 
 import { IMap } from "./types";
 
+import { is2DArray } from "./utils/helpers/is2DArray";
+
 import {
     Generic_fromJSON,
     Generic_toJSON,
@@ -114,6 +116,20 @@ export class CodingContract {
      */
     static fromJSON(value: any): CodingContract {
         return Generic_fromJSON(CodingContract, value.data);
+    }
+
+    static parseAnswerFromInput(value: string): string {
+        const parsedValue = JSON.parse(value);
+        if (is2DArray(parsedValue)) {
+            let answerComponents = [];
+            for (let i = 0; i < parsedValue.length; ++i) {
+                answerComponents.push(["[", parsedValue[i].toString(), "]"].join(""));
+            }
+
+            return answerComponents.join(",");
+        } else {
+            return String(parsedValue);
+        }
     }
 
     /* Relevant data for the contract's problem */
