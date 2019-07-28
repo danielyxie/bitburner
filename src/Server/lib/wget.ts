@@ -115,7 +115,7 @@ export function wget(server: BaseServer, term: any, out:Function, err:Function, 
 import {registerExecutable, ManualEntry} from "./sys";
 
 const MANUAL = new ManualEntry(
-`wget - Retrieves data from a URL and downloads it to a file on the current server.`,
+`wget - Retrieves data from a URL and downloads it to a file.`,
 `wget [OPTIONS] --from URL --to FILEPATH`,
 `Retrieves data from a URL and downloads it to a file on the current server.
 If the file already exists, this command will behave like a mv command.

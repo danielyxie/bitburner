@@ -163,7 +163,7 @@ export function scp(server: BaseServer, term: any, out:Function, err:Function, a
 
 import {registerExecutable, ManualEntry} from "./sys";
 const MANUAL = new ManualEntry(
-`scp - copies the specified files from the current server to the target server.`,
+`scp - copies the specified files to the target server.`,
 `scp [OPTION]... --to=SERVER FILE... `,
 `Copies the specified files from the current server to the target server SERVER.
 

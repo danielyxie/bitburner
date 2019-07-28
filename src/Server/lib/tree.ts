@@ -115,7 +115,7 @@ class TreeNode {
 import {registerExecutable, ManualEntry} from "./sys";
 
 const MANUAL = new ManualEntry(
-`tree - prints all matching files and directories to the standard output as a graphical tree`,
+`tree - prints files and directories to the standard output as a tree`,
 `tree [OPTIONS] DIRECTORY...
 tree [OPTIONS]`,
 `Prints all matching files and directories on the current server's
