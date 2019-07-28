@@ -319,7 +319,7 @@ export class BaseServer {
         }
 
         this.copyFile(src, target, options);
-        this.removeFile(src, {force:true});
+        this.removeFile(src);
         if (options.verbose) { post(`'${src}' -> '${target}'`); }
     }
 
@@ -416,14 +416,13 @@ export class BaseServer {
      * @param fn {string} Name of file to be deleted
      * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
      */
-    removeFile(fn: string, options:any={force:false}): IReturnStatus {
+    removeFile(fn: string): IReturnStatus {
         if (!this.exists(fn)) {
-            return { res: false, msg: "No such file exists" };
+            return { res: true };
         } else if (this.isRunning(fn)) {
             return { res: false, msg: "Cannot delete a script that is currently running!" };
         } else {
-            if (options.force) { this.fs.unlinkSync(fn); }
-            else{ this.copyFile(fn, "/~trash/" +  fn, true); }
+            this.fs.unlinkSync(fn);
         }
 
         return { res: true };
@@ -448,7 +447,7 @@ export class BaseServer {
             if (object.isDirectory()) {
                 this.removeDir(fn + object.name, options);
             } else if (object.isFile()) {
-                this.removeFile(fn + object.name, options);
+                this.removeFile(fn + object.name);
             } else {
                 throw new Error(`ERRTYPE: Type unimplemented, cannot remove ${JSON.stringify(fn + object.name)}`);
             }

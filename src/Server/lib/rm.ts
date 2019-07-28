@@ -1,8 +1,7 @@
 import { BaseServer } from "../BaseServer";
 import { detectFileType } from "./FileType";
 /**
- * This function allows removing files and folders alike, recursively or not. By default, suppressed files are moved into the trash bin (/~trash/) with no safety against overwrites.
- * The force option allows to remove files without keeping a copy, use it at your own risk!
+ * This function allows removing files and folders alike, recursively or not.
  *
  * @export
  * @param {BaseServer} server The server on which we want to build the file tree.
@@ -10,10 +9,9 @@ import { detectFileType } from "./FileType";
  * @param {string[]} args The command args used by the Player in the terminal
  * @param {(string|undefined)} [targetPath=undefined] The path of the file or directory to remove.
  * @param {boolean} [recursive=false] If 'true' and the target is a folder, this option will recursively suppress every file and subsequent folder before suppressing the target.
- * @param {boolean} [force=false] If 'true' this option will destroy the target directly, instead of moving it into the trash bin (/~trash/).
  * @returns
  */
-export function rm(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={targetPath:undefined, recursive:false, force:false}) {
+export function rm(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={targetPath:undefined, recursive:false}) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const HELP_MESSAGE: string = "Incorrect usage of rm command. Usage: rm <-rf> [target]";
@@ -29,10 +27,6 @@ export function rm(server: BaseServer, term: any, out:Function, err:Function, ar
             case "-r":
             case "--recursive":
                     options.recursive = true;
-                break;
-            case "-f":
-            case "--force":
-                    options.force = true;
                 break;
             default:
                 paths.push(arg as string);
@@ -56,14 +50,8 @@ function removeFile(server: BaseServer, term: any, out:Function, err:Function, t
     } else if (server.isRunning(targetPath)) {
         throw "Cannot delete a script that is currently running!";
     } else {
-        if (options.force) {
-            out(`Removing ${targetPath}`); server.fs.unlinkSync(targetPath);
-            if(options.verbose) out(`'${targetPath}' -> '/dev/null'`)
-        }
-        else{
-            server.moveFile(targetPath, "/~trash/" +  targetPath, {recursive:true});
-            if(options.verbose) out(`'${targetPath}' -> '${"/~trash/"+targetPath}'`)
-        };
+        out(`Removing ${targetPath}`); server.fs.unlinkSync(targetPath);
+        if(options.verbose) out(`Removed '${targetPath}'`)
     }
 }
 
@@ -105,18 +93,10 @@ const MANUAL = new ManualEntry(
 `rm [OPTIONS] FILES...
 rm -r DIRECTORY`,
 `Removes all specified files from the current server.
-Removed files are sent to the /~trash/ on suppression,
-however using the --force flag DO NOT.
-
-/~trash/ files are NOT backed up if another file with the exact
-same path is sent to the trash next.
 
 Removing files is PERMANENT and CANNOT BE UNDONE.
 
-WARNING: using the command 'rm -r -f /' is STRONGLY ADVISED AGAINST.
-
--f, --force
-    Remove PERMANENTLY the specified files. Use with caution.
+WARNING: using the command 'rm -r /' is STRONGLY ADVISED AGAINST.
 
 -r, --recursive
     Remove every subfolders of a directory recursively. Use with caution
