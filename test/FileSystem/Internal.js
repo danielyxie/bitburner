@@ -41,10 +41,10 @@ describe("BaseServer file system internal tests", function() {
             it("Can read the content of valid files.", function(){
                 expect(()=>server.readFile("/f1")).to.not.throw();
             });
-            it("Can read the content of directories", function(){
+            it("Can NOT read the content of directories", function(){
                 expect(()=>server.readFile("/dA")).to.throw();
             });
-            it("Can read the content of inexistent paths", function(){
+            it("Can NOT read the content of inexistent paths", function(){
                 expect(()=>server.readFile("/f2")).to.throw();
             });
         });
@@ -65,7 +65,7 @@ describe("BaseServer file system internal tests", function() {
 
                 expect(()=>server.writeFile("/d0/fX", WRITTEN_CONTENT, {recursive:true})).to.not.throw();
             });
-            it("Can write in an inexisting file in an inexistent directory if asked NOT to create them on the fly", function(){
+            it("Can NOT write in an inexisting file in an inexistent directory if asked NOT to create them on the fly", function(){
                 server.restoreFileSystem(testingVolJSON);
 
                 expect(()=>server.writeFile("/d0/fX", WRITTEN_CONTENT, {recursive:false})).to.throw();
@@ -84,7 +84,7 @@ describe("BaseServer file system internal tests", function() {
                 expect(()=>server.copyFile("/f1", "/dA")).to.not.throw();
                 expect(server.readFile("/dA/f1")).to.equal("/f1");
             });
-            it("Cannot copy an existing file as itself" ,function(){
+            it("Can NOT copy an existing file as itself" ,function(){
                 server.restoreFileSystem(testingVolJSON);
 
                 expect(()=>server.copyFile("/f1", "/f1")).to.throw();
@@ -129,7 +129,7 @@ describe("BaseServer file system internal tests", function() {
                 expect(()=>server.moveFile("/f1", "/d0/", {recursive:true})).to.not.throw();
                 expect(server.readFile("/d0/f1")).to.equal("/f1");
             });
-            it("Cannot move an existing file into an inexisting directory if asked NOT to create them on the fly" ,function(){
+            it("Can NOT move an existing file into an inexisting directory if asked NOT to create them on the fly" ,function(){
                 server.restoreFileSystem(testingVolJSON);
 
                 expect(()=>server.moveFile("/f1", "/d0/", {recursive:false})).to.throw();
@@ -156,7 +156,7 @@ describe("BaseServer file system internal tests", function() {
                 expect(()=>server.mkdir("/d0/d0/d0/", {recursive:true})).to.not.throw();
                 expect(server.isDir("/d0/d0/d0/")).to.equal(true);
             });
-            it("Can NOT  create a chain of subdirectories if NOT asked to create them recursively" ,function(){
+            it("Can NOT create a chain of subdirectories if NOT asked to create them recursively" ,function(){
                 server.restoreFileSystem(testingVolJSON);
 
                 expect(()=>server.mkdir("/d0/d0/d0/", {recursive:false})).to.throw();
