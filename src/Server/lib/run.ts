@@ -12,11 +12,28 @@ export async function run(server:BaseServer, term:any, out:Function, err:Functio
     // functions like getContractReward and such as part of the Player type definition, couldn't get
     // it to register the functions. so I disabled the checking with any for those calls.
     const cwd:string = term.currDir;
+    let player:any;
+    if(!options.Player) player = Player;
+    else player = options.Player;//testing.
+
     if (args.length < 1) {
         err("You must specify an executable.");
     } else {
         // [executableName, ...args] -> executableName, [...args]
         var executableName = args.shift() as string;
+
+        if(executableName.endsWith(".exe")){
+            let executable = fetchExecutable(executableName) // the owning check is already included here.
+            if(executable) {
+                executable(server, term, out, err, args);
+                return;
+            }
+            else{
+                err(`${executableName} not found`)
+                return;
+            }
+        }
+
         if(!server.isExecutable(executableName)){ // is it using relative pathing?
             let temp_path = path.resolve(cwd+"/"+executableName);
             if(server.isExecutable(temp_path)){// if so, yes it was a relative path.
@@ -37,13 +54,6 @@ export async function run(server:BaseServer, term:any, out:Function, err:Functio
         else if (executableName.endsWith(".cct")){
             return _runContract(server, term, out, err, executableName).catch((e)=>{err(e)});
 
-        }
-        else if((Player as any).hasProgram(executableName)){
-            let executable = fetchExecutable(executableName)
-            if(executable) {
-                executable(server, term, out, err, args);
-                return;
-            }
         }
 
 

@@ -61,11 +61,14 @@ import { fl1ght } from "../../src/Server/lib/fl1ght";
 import { b1t_flum3 } from "../../src/Server/lib/b1t_flum3";
 import { free } from "../../src/Server/lib/free";
 
+
+import * as sys from "../../src/Server/lib/sys";
+
 import {Terminal} from "../../src/Terminal";
 import {OverwriteStrategy} from "../../src/Server/lib/OverwriteStrategy";
 import {VersioningStrategy} from "../../src/Server/lib/VersioningStrategy";
 
-import { Player } from "../../src/Player";
+import Player from "../../src/Player";
 
 import { PlayerObject } from "../../src/PersonObjects/Player/PlayerObject";
 
@@ -81,6 +84,9 @@ describe("BaseServer file system core library tests", function() {
      * existing files and directories will be suffixed with a number (f1,f2...) and a letter (dA, dB,...) respectively.
      * non existent ones will see this suffix inverted, files will be suffixed with letters (fX, fZ...) and directories with numbers (d0, d1, d2...);
      */
+
+
+
     const testingVolJSON = {
         "/f1":"/f1",
         "/dA/f2":"/dA/f2",
@@ -89,6 +95,9 @@ describe("BaseServer file system core library tests", function() {
     };
     const WRITTEN_CONTENT = "written content";
     const server = new Server();
+    server.hasAdminRights=true;
+    server.purchasedByThePlauer=true;
+    server.hostname = "home";
     server.restoreFileSystem(testingVolJSON);
 
     let out = (msg) => {}; // null stream
@@ -103,13 +112,22 @@ describe("BaseServer file system core library tests", function() {
     var Player = new PlayerObject();
     var SpecialServerIps = new SpecialServerIpsMap();
 
-    let destServer = new Server();
+    const destServer = new Server();
     destServer.restoreFileSystem(testingVolJSON);
     AllServers.AddToAllServers(server);
     AllServers.AddToAllServers(destServer);
     AllServers.SERVERS_INITIALIZED = true;
 
     function resetEnv(options={servInitType:ServerInitType.NORMAL}){
+
+        server.hasAdminRights = true;
+        server.purchasedByPlayer = true;
+        server.maxRam = 64;
+        server.requiredHackingSkill = 100;
+        server.programs = [];
+        Player.hacking_skill = 1;
+        Player.setMoney(0);
+
         switch(options.servInitType){
             case ServerInitType.NORMAL:
                 server.restoreFileSystem({
@@ -784,6 +802,7 @@ describe("BaseServer file system core library tests", function() {
                 Player.gainMoney(10000000);
                 SpecialServerIps["Darkweb Server"] = true;
                 expect(()=>buy(server, fakeTerm, out, err, ["AutoLink.exe"], {Player:Player, SpecialServerIps:SpecialServerIps})).to.not.throw();
+                expect(Player.hasProgram("AutoLink.exe")).to.equal(true);
             });
             it("Can NOT buy programs from the dark web if NOT connected to it", function(){
                 resetEnv();
@@ -869,6 +888,7 @@ describe("BaseServer file system core library tests", function() {
         describe("free", function(){
             it("Can display the current server RAM info", function(){
                 resetEnv();
+                server.maxRam = 0;
 
                 let expected = ["Available: 0.00 GB", "Total:     0.00 GB", "Used:      0.00 GB (0.00%)"];
                 let results = [];
@@ -895,7 +915,7 @@ describe("BaseServer file system core library tests", function() {
         describe("hack", function(){
             it("Can NOT hack a BaseServer purchased by the player", function(){
                 resetEnv();
-                destServer.purchasedByPlayer = true;
+                server.purchasedByPlayer = true;
                 let result = false;
                 fakeTerm.startHack = ()=>{result = true};
                 expect(()=>hack(server, fakeTerm, out, err, [], {Player:Player})).to.throw();
@@ -970,7 +990,7 @@ describe("BaseServer file system core library tests", function() {
                 addScriptsToServer(run_scripts);
                 err = (msg)=>{console.log(msg)};
                 //absolute pathing
-                expect(run(server, fakeTerm, out, err, ["/dir1/script1"])).to.eventually.be.fulfilled;
+                await expect(run(server, fakeTerm, out, err, ["/dir1/script1"], {Player:Player})).to.eventually.be.fulfilled;
                 expect(()=>killall(server, fakeTerm, out, err, [])).not.to.throw();
 
             });
@@ -979,7 +999,7 @@ describe("BaseServer file system core library tests", function() {
                 addScriptsToServer(run_scripts);
                 //relative pathing
                 fakeTerm.currDir = "/dir1/";
-                expect(run(server, fakeTerm, out, err, ["script1"])).to.eventually.be.fulfilled;
+                await expect(run(server, fakeTerm, out, err, ["script1"], {Player:Player})).to.eventually.be.fulfilled;
                 expect(()=>killall(server, fakeTerm, out, err, [])).not.to.throw();
 
             });
@@ -987,7 +1007,7 @@ describe("BaseServer file system core library tests", function() {
                 resetEnv();
                 addScriptsToServer(run_scripts);
 
-                expect(run(server, fakeTerm, out, err, ["/dir1/script3"], {Player:Player})).to.eventually.be.rejected;
+                await expect(run(server, fakeTerm, out, err, ["/dir1/script3"], {Player:Player})).to.eventually.be.rejected;
 
             });
             it("Can NOT run an invalid script using relative pathing", async function(){
@@ -995,31 +1015,43 @@ describe("BaseServer file system core library tests", function() {
                 addScriptsToServer(run_scripts);
 
                 fakeTerm.currDir = "/dir1/";
-                expect(run(server, fakeTerm, out, err, ["script3"], {Player:Player})).to.eventually.be.rejected;
+                await expect(run(server, fakeTerm, out, err, ["script3"], {Player:Player})).to.eventually.be.rejected;
 
             });
-            it("Can run an existing coding contract", function(){
+            it("TODO Can run an existing coding contract", function(){
                 resetEnv();
+                expect(false).to.equal(true);
                 //server.addContract() //TODO
                 //expect(()=>run(server, fakeTerm, out, err, ["/dir1/script1"], {Player:Player})).to.throw();
                 //fakeTerm.currDir = "/dir1/";
                 //expect(()=>run(server, fakeTerm, out, err, ["script1"], {Player:Player})).to.throw();
 
             });
-            it("Can NOT run an inexisting coding contract", function(){
+            it("TODO Can NOT run an inexisting coding contract", function(){
                 resetEnv();
+                expect(false).to.equal(true);
+
 
             });
-            it("Can run an owned executable", function(){
+            it("Can run an owned executable", async function(){
                 resetEnv();
 
+                sys.revealExecutable("AutoLink.exe");
+                expect(sys.fetchExecutable("AutoLink.exe")).to.not.equal(undefined);
+                await expect(run(server, fakeTerm, out, err, ["AutoLink.exe"], {Player:Player})).to.eventually.be.fulfilled;
+                sys.hideExecutable("AutoLink.exe");
             });
-            it("Can NOT run an unowned executable", function(){
+
+            it("Can NOT run an unowned executable", async function(){
                 resetEnv();
 
+                out = (msg)=>{console.log(msg)};
+                await expect(run(server, fakeTerm, out, err, ["AutoLink.exe"], {Player:Player})).to.eventually.be.rejected;
+
             });
-            it("Can NOT run an inexisting file, executable or coding contract", function(){
+            it("Can NOT run an inexisting file, executable or coding contract", async function(){
                 resetEnv();
+                await expect(run(server, fakeTerm, out, err, ["wow it didnt work!"], {Player:Player})).to.eventually.be.rejected;
 
             });
         });
