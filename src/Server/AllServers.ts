@@ -143,6 +143,8 @@ export function initForeignServers(homeComputer: Server) {
     for (let i = 1; i < networkLayers.length; i++) {
         linkNetworkLayers(networkLayers[i], () => getRandomArrayItem(networkLayers[i - 1]));
     }
+
+    SERVERS_INITIALIZED = true;
 }
 
 export function prestigeAllServers() {
