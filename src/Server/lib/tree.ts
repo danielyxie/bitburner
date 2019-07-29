@@ -93,15 +93,21 @@ class TreeNode {
         this.childrens = [];
     }
     reconstructAndOutput(isLast = false, emptyScope=0, out:Function){
-        out([SCOPE.repeat(Math.max(0, this.depth - 1 - emptyScope)),EMPTY.repeat(Math.max(0, emptyScope -1)), ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""), this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join(""));
+        out([SCOPE.repeat(Math.max(0, this.depth - 1 - emptyScope ) ),
+            EMPTY.repeat(Math.max(0, emptyScope - ( (isLast)?1:0) )),
+            ((this.depth > 0) ? ((isLast) ? LAST : BRANCH) : ""),
+            this.name,
+            (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""]
+            .join(""));
+
         if (this.childrens.length > 0) {
             this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
             for (let i = 0; i < this.childrens.length; i++) {
-                if( i == (this.childrens.length - 1) ){
+                if( i == (this.childrens.length - 1)){
                     // then its the last children
-                    this.childrens[i].reconstructAndOutput(true, 0, out);
+                    this.childrens[i].reconstructAndOutput(true, emptyScope + ( (isLast) ? 1 : 0 ), out);
                 }else{
-                    this.childrens[i].reconstructAndOutput(false, emptyScope+1, out);
+                    this.childrens[i].reconstructAndOutput(false, emptyScope, out);
                 }
             }
         }
