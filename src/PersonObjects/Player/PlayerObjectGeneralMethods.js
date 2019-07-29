@@ -54,6 +54,8 @@ import {
 } from "../../../utils/JSONReviver";
 import {convertTimeMsToTimeElapsedString} from "../../../utils/StringHelperFunctions";
 
+import {DEFAULT_THEME, MUTED_THEME, SOLARIZED_THEME} from "../../Terminal/themes";
+
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
 export function init() {
@@ -70,8 +72,18 @@ export function init() {
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
+    const defaultFileSystem = {
+        "/themes/default.fconf" : DEFAULT_THEME,
+        "/themes/muted.fconf" : MUTED_THEME,
+        "/themes/solarized.fconf" : SOLARIZED_THEME,
+        "/.fconf" : DEFAULT_THEME,
+    }
+    this.getHomeComputer().restoreFileSystem(defaultFileSystem)
 
     this.getHomeComputer().programs.push(Programs.NukeProgram.name);
+    // add default files to the filesystem.
+
+
 }
 
 export function prestigeAugmentation() {

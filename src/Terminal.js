@@ -139,6 +139,7 @@ import { wget } from "./Server/lib/wget";
 import { hack } from "./Server/lib/hack";
 import { alias } from "./Server/lib/alias";
 import { unalias } from "./Server/lib/unalias";
+import { theme } from "./Server/lib/theme";
 import { ps } from "./Server/lib/ps";
 import { buy } from "./Server/lib/buy";
 import { tail } from "./Server/lib/tail";
@@ -1022,6 +1023,8 @@ let Terminal = {
                     break;
                 }
                 case "theme": {
+                    theme(server, Terminal, post, postError, commandArray.splice(1));
+                    break;
                     let args = commandArray.slice(1);
                     if (args.length !== 1 && args.length !== 3) {
                         postError("Incorrect number of arguments.");

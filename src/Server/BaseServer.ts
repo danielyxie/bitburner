@@ -190,7 +190,6 @@ export class BaseServer {
         this.fs = createFsFromVolume(this.vol);
         if(!this.fs.existsSync("/dev/")) this.fs.mkdirSync("/dev"); // easter egg, what is the meaning of /dev/null ?
         if(!this.fs.existsSync("/dev/null")) this.fs.writeFileSync("/dev/null", "O1hiQkRmI2ZoIS5JZiB5b3UncmUgcmVhZGluZyB0aGlzLCB5b3UndmUgYmVaVzRnYVc0Z1lTQmpiMjFoSUE9PSBmb3IgYWxtb3N0IDIwIHllYXJzIG5vdy4gV2UncmUgdHJ5aW5nIGEgbmV3IHRlY2huaXF1ZS4gV2UgZG9uJ3Qga25vdyB3aGVyZSB0aGFYTWdiV1Z6YzJGblpTQjNhV3hzSUdWdVpDQjFjQ0JwYmlCNWIzVnlJR1J5WldGdCwgYnV0IGQyVT0gaG9wZSBpdCB3b3Jrcy4gUGxlYXNlIGQyRnJaU0IxY0N3Z2QyVWdiV2x6Y3c9PSB5b3UuLmdkZj9najtFb0Y=");
-        if(!this.fs.existsSync("/~trash/")) this.fs.mkdirSync("/~trash");
         // console.log(`Migrating old file system to the new file system...`)
         // MIGRATION FROM THE OLD PROPERTY SEPARATED SYSTEM.
         for (let i = 0; i < this.scripts.length; i++) { // migrating scripts.
