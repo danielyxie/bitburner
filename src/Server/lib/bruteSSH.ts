@@ -1,43 +1,42 @@
 import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { post, postError } from "../../ui/postToTerminal";
 import { getServer } from "../AllServers";
 import { BaseServer } from "../BaseServer";
 import { Server } from "../Server";
-import { CLIErrorType } from "./CLIErrorType";
-import { ReturnCode } from "./ReturnCode";
+import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
 
-export function bruteSSH(server: BaseServer, term: any, args: string[], target: string | undefined= undefined): ReturnCode {
-    const HELP_MESSAGE: string = "Incorrect usage of bruteSSH command. Usage: bruteSSH [target ip/hostname]";
-
-    while (args.length > 0) {
-        const arg = args.shift();
-        switch (arg) {
-            case "-h":
-                post(HELP_MESSAGE);
-                return ReturnCode.FAILURE;
-            default:
-                if (!target) { target = arg; } else {
-                    postError(CLIErrorType.TOO_MANY_ARGUMENTS_ERROR);
-                    post(HELP_MESSAGE);
-                    return ReturnCode.FAILURE;
-                }
-                break;
-        }
+export function bruteSSH(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
+    var targetServer: Server | HacknetServer | undefined;
+    var target:string;
+    if(args.length == 0){
+        targetServer = server as Server|HacknetServer;
+        target = targetServer.ip;
     }
-    if (!target) { throw HELP_MESSAGE; }
-    const targetServer: Server | HacknetServer = getServer(target);
-    if (!targetServer) { throw new Error(`${target} does not exists!`); }
+    else{
+        target = args[0];
+        targetServer = getServer(target);
+    }
+    if (!targetServer) { err(`${target} does not exists!`); return;}
     if (targetServer instanceof Server) {
         if (targetServer.sshPortOpen) {
-            post("SSH Port (22) is already open!");
-            return ReturnCode.SUCCESS;
+            out("SSH Port (22) is already open!");
+            return ;
         }
 
         targetServer.sshPortOpen = true;
-        post("Opened SSH Port(22)!");
+        out("Opened SSH Port(22)!");
         targetServer.openPortCount++;
-        return ReturnCode.SUCCESS;
+        return ;
     } else {
-        throw new Error(`${target} is not hackable!`);
+        err(`${target} is not hackable!`);
     }
 }
+const MANUAL = new ManualEntry(
+`bruteSSH.exe - open a port using a SSH brute force attack`,
+`bruteSSH.exe [SERVER]`,
+`Open a port on SERVER using a SSH brute force attack.
+
+Require the bruteSSH.exe program available for purchase in
+some shady n3tw0rk5 or, with a sufficent hacking level,
+available for creation.`)
+
+registerExecutable("bruteSSH.exe", bruteSSH, MANUAL, true);

@@ -1,43 +1,43 @@
 import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { post, postError } from "../../ui/postToTerminal";
 import { getServer } from "../AllServers";
 import { BaseServer } from "../BaseServer";
 import { Server } from "../Server";
-import { CLIErrorType } from "./CLIErrorType";
-import { ReturnCode } from "./ReturnCode";
+import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
 
-export function FTPCrack(server: BaseServer, term: any, args: string[], target: string | undefined= undefined): ReturnCode {
-    const HELP_MESSAGE: string = "Incorrect usage of FTPCrack command. Usage: FTPCrack [target ip/hostname]";
-
-    while (args.length > 0) {
-        const arg = args.shift();
-        switch (arg) {
-            case "-h":
-                post(HELP_MESSAGE);
-                return ReturnCode.FAILURE;
-            default:
-                if (!target) { target = arg; } else {
-                    postError(CLIErrorType.TOO_MANY_ARGUMENTS_ERROR);
-                    post(HELP_MESSAGE);
-                    return ReturnCode.FAILURE;
-                }
-                break;
-        }
+export function FTPCrack(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
+    var targetServer: Server | HacknetServer | undefined;
+    var target:string;
+    if(args.length == 0){
+        targetServer = server as Server|HacknetServer;
+        target = targetServer.ip;
     }
-    if (!target) { throw HELP_MESSAGE; }
-    const targetServer: Server | HacknetServer = getServer(target);
-    if (!targetServer) { throw new Error(`${target} does not exists!`); }
+    else{
+        target = args[0];
+        targetServer = getServer(target);
+    }
+    if (!targetServer) { err(`${target} does not exists!`); return;}
     if (targetServer instanceof Server) {
         if (targetServer.ftpPortOpen) {
-            post("FTP Port (21) is already open!");
-            return ReturnCode.SUCCESS;
+            out("FTP Port (21) is already open!");
+            return ;
         }
 
         targetServer.ftpPortOpen = true;
-        post("Opened FTP Port (21)!");
+        out("Opened FTP Port (21)!");
         targetServer.openPortCount++;
-        return ReturnCode.SUCCESS;
+        return ;
     } else {
-        throw new Error(`${target} is not hackable!`);
+        err(`${target} is not hackable!`);
     }
 }
+
+const MANUAL = new ManualEntry(
+`FTPCrack.exe - open a port using a FTP crack attack`,
+`FTPCrack.exe [SERVER]`,
+`Open a port on SERVER using a FTP crack attack.
+
+Require the FTPCrack.exe program available for purchase in
+some shady n3tw0rk5 or, with a sufficent hacking level,
+available for creation.`)
+
+registerExecutable("FTPCrack.exe", FTPCrack, MANUAL, true);
