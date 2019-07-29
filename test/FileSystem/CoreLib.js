@@ -135,6 +135,12 @@ describe("BaseServer file system core library tests", function() {
         server.cpuCores = 1;
         server.programs = [];
         server.runningScripts = [];
+        invisibleServer.sqlPortOpen = false;
+        invisibleServer.smtpPortOpen = false;
+        invisibleServer.sshPortOpen = false;
+        invisibleServer.httpPortOpen = false;
+        invisibleServer.ftpPortOpen = false;
+        invisibleServer.hasAdminRights = false;
         Player.hacking_skill = 1;
         Player.setMoney(0);
 
@@ -1357,6 +1363,51 @@ describe("BaseServer file system core library tests", function() {
                 expect(result.join("\n")).to.equal(expected.join("\n"));
             });
         });
+        describe("SQLInject.exe", function(){
+            it("Can unlock the sql port of any existing server", function(){
+                resetEnv();
+
+                expect(invisibleServer.sqlPortOpen).to.equal(false);
+                expect(()=>SQLInject(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.not.throw();
+                expect(invisibleServer.sqlPortOpen).to.equal(true);
+            })
+        })
+        describe("relaySMTP.exe", function(){
+            it("Can unlock the smtp port of any existing server", function(){
+                resetEnv();
+
+                expect(invisibleServer.smtpPortOpen).to.equal(false);
+                expect(()=>relaySMTP(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.not.throw();
+                expect(invisibleServer.smtpPortOpen).to.equal(true);
+            })
+        })
+        describe("bruteSSH.exe", function(){
+            it("Can unlock the ssh port of any existing server", function(){
+                resetEnv();
+
+                expect(invisibleServer.sshPortOpen).to.equal(false);
+                expect(()=>bruteSSH(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.not.throw();
+                expect(invisibleServer.sshPortOpen).to.equal(true);
+            })
+        })
+        describe("FTPCrack.exe", function(){
+            it("Can unlock the ftp port of any existing server", function(){
+                resetEnv();
+
+                expect(invisibleServer.ftpPortOpen).to.equal(false);
+                expect(()=>FTPCrack(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.not.throw();
+                expect(invisibleServer.ftpPortOpen).to.equal(true);
+            })
+        })
+        describe("HTTPWorm.exe", function(){
+            it("Can unlock the http port of any existing server", function(){
+                resetEnv();
+
+                expect(invisibleServer.httpPortOpen).to.equal(false);
+                expect(()=>HTTPWorm(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.not.throw();
+                expect(invisibleServer.httpPortOpen).to.equal(true);
+            })
+        })
     });
 })
 
