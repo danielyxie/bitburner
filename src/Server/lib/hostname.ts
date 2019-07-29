@@ -2,7 +2,7 @@ import { BaseServer } from "../BaseServer";
 import {registerExecutable, ManualEntry, fetchUsage} from "./sys";
 
 export function hostname(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
-    out(server.hostname + " Core(s)");
+    out(server.hostname);
 }
 
 const MANUAL = new ManualEntry(
