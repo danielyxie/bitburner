@@ -5,17 +5,24 @@ import { RunningScript } from "../../Script/RunningScript";
 import{ Script } from "../../Script/Script";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
-
+import * as path from 'path';
 
 export async function run(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
     //TODO change the Player as any to Player, but this requires registering various
     // functions like getContractReward and such as part of the Player type definition, couldn't get
     // it to register the functions. so I disabled the checking with any for those calls.
+    const cwd:string = term.currDir;
     if (args.length < 1) {
         err("You must specify an executable.");
     } else {
         // [executableName, ...args] -> executableName, [...args]
         var executableName = args.shift() as string;
+        if(!server.isExecutable(executableName)){ // is it using relative pathing?
+            let temp_path = path.resolve(cwd+"/"+executableName);
+            if(server.isExecutable(temp_path)){// if so, yes it was a relative path.
+                executableName = temp_path;
+            }//else it was either a program or a contract.
+        }
 
         // Secret Music player!
         if (executableName === "musicplayer") {
@@ -23,22 +30,22 @@ export async function run(server:BaseServer, term:any, out:Function, err:Functio
             return;
         }
 
-        // Check if its a script or just a program/executable
-        if((Player as any).hasProgram(executableName)){
+        if(server.exists(executableName)){//is it a script? (search is in O(1))
+            return _runScript(server, term, out, err, executableName, args).catch((e)=>{err(e)});
+
+        }// Check if its a script or just a program/executable
+        else if (executableName.endsWith(".cct")){
+            return _runContract(server, term, out, err, executableName).catch((e)=>{err(e)});
+
+        }
+        else if((Player as any).hasProgram(executableName)){
             let executable = fetchExecutable(executableName)
             if(executable) {
                 executable(server, term, out, err, args);
                 return;
             }
         }
-        else if (executableName.endsWith(".cct")){
-            await _runContract(server, term, out, err, executableName);
-            return;
-        }
-        else if(server.exists(executableName)){
-            _runScript(server, term, out, err, executableName, args);
-            return;
-        }
+
 
         err(`${executableName} not found`)
         return;
@@ -54,17 +61,20 @@ import {
 async function _runContract(server:BaseServer, term:any, out:Function, err:Function, contractName:string){
     // There's already an opened contract
     if (term.contractOpen) {
-        return err("ERROR: There's already a Coding Contract in Progress");
+        err("There's already a Coding Contract in Progress");
+        return;
     }
 
     const serv = server;
     const contract = serv.getContract(contractName);
     if (contract == null) {
-        return err("ERROR: No such contract");
+        err("No such contract");
+        return;
     }
 
     term.contractOpen = true;
-    const res = await contract.prompt();
+
+    let res = await contract.prompt();
 
     switch (res) {
         case CodingContractResult.Success:
@@ -87,13 +97,13 @@ async function _runContract(server:BaseServer, term:any, out:Function, err:Funct
             break;
     }
     term.contractOpen = false;
+
 }
 
-function _runScript(server:BaseServer, term:any, out:Function, err:Function, scriptName:string, args:string[]){
+async function _runScript(server:BaseServer, term:any, out:Function, err:Function, scriptName:string, args:string[]){
     let numThreads = 1;
-    const Scriptargs = [];
+    const Scriptargs:string[] = [];
 
-    console.log(`Trying to run script "${scriptName}"`);
     if (args.length > 1) {
         if (args.length >= 3 && args[1] == "-t") {
             numThreads = Math.round(parseFloat(args[2]));
@@ -113,39 +123,35 @@ function _runScript(server:BaseServer, term:any, out:Function, err:Function, scr
 
     // Check if this script is already running
     if (findRunningScript(scriptName, Scriptargs, server) != null) {
-        err("ERROR: This script is already running. Cannot run multiple instances");
+        err("This script is already running. Cannot run multiple instances");
         return;
     }
-    console.log(`Has Admin rights? ${server.hasAdminRights}`);
     if(!server.hasAdminRights) {
-        err(`ERROR: Need root access to run script`);
+        err(`Need root access to run script`);
         return;
     }
-    console.log(`Exists? ${server.exists(scriptName)}`);
     if(!server.exists(scriptName)) {
-        err(`ERROR: No such script`);
+        err(`No such script`);
         return;
     }
-    console.log(`is Executable? ${server.isExecutable(scriptName)}`);
     if(!server.isExecutable(scriptName)) {
-        err(`ERROR: Not an executable`);
+        err(`Not an executable`);
         return;
     }
     let script = server.scriptsMap[scriptName];
-    if(!script || isNaN(script.ramUsage)){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?)
-        //TODO maybe add a "loading time" for those? where the Ram calculation is ran before running the script, asynchronously.
-        err(`ERROR: Script RAM usage not calculated yet! Please open the script with nano first, or try again in a few seconds.`);
-        if (!script){
-            script = new Script(scriptName, server.ip);
-            server.scriptsMap[scriptName] = script;
-            script.updateRamUsage();
-            script.markUpdated();
-        }
+    if(!script){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?)
+        script = new Script(scriptName, server.ip);
+        server.scriptsMap[scriptName] = script;
+    }
+
+    await script.updateRamUsage()
+    if( isNaN(script.ramUsage) ){
+        //inccorect syntax or something like that
+        err(`RAM usage calculation impossible, check ${scriptName} for any syntax errors.`);
         return;
     }
     let ramUsage = script.ramUsage * numThreads;
     let ramAvailable = server.maxRam - server.ramUsed;
-    console.log(`RAM needed [t=${numThreads}]${ramUsage} / ${ramAvailable}; enough? ${ramUsage <= ramAvailable}`)
     if(ramUsage > ramAvailable){
         err(`This machine does not have enough RAM to run this script with ${numThreads} threads. Script requires ${ramUsage} GB of RAM`);
         return;

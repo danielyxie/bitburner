@@ -1,26 +1,67 @@
-import { expect } from "chai";
-import {BaseServer} from "../../src/Server/BaseServer";
-import {HacknetServer} from "../../src/Hacknet/HacknetServer";
-import {ls} from "../../src/Server/lib/ls";
-import {cp} from "../../src/Server/lib/cp";
-import {scp} from "../../src/Server/lib/scp";
-import {cat} from "../../src/Server/lib/cat";
-import {wget} from "../../src/Server/lib/wget";
-import {check} from "../../src/Server/lib/check";
-import {buy} from "../../src/Server/lib/buy";
-import {Terminal} from "../../src/Terminal";
-import {rm} from "../../src/Server/lib/rm";
-import {mkdir} from "../../src/Server/lib/mkdir";
-import {expr} from "../../src/Server/lib/expr";
-import {mv} from "../../src/Server/lib/mv";
-import {tree} from "../../src/Server/lib/tree";
-import {download} from "../../src/Server/lib/download";
-import {free} from "../../src/Server/lib/free";
-import {alias} from "../../src/Server/lib/alias";
-import {tail} from "../../src/Server/lib/tail";
-import {hack} from "../../src/Server/lib/hack";
-import {mem} from "../../src/Server/lib/mem";
+var chai = require("chai");
+var expect = chai.expect
+var chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
 
+import {BaseServer} from "../../src/Server/BaseServer";
+import {Server} from "../../src/Server/Server";
+import {HacknetServer} from "../../src/Hacknet/HacknetServer";
+//////////////////////////////////////////////////////////////////////////////
+// Here we import every existing function to let them initialize themselves //
+//////////////////////////////////////////////////////////////////////////////
+import { mkdir } from "../../src/Server/lib/mkdir";
+import { rm } from "../../src/Server/lib/rm";
+import { mv } from "../../src/Server/lib/mv";
+import { ls } from "../../src/Server/lib/ls";
+import { nano } from "../../src/Server/lib/nano";
+import { tree } from "../../src/Server/lib/tree";
+import { top } from "../../src/Server/lib/top";
+import { scan } from "../../src/Server/lib/scan";
+import { mem } from "../../src/Server/lib/mem";
+import { cd } from "../../src/Server/lib/cd";
+import { cls } from "../../src/Server/lib/cls";
+import { sudov } from "../../src/Server/lib/sudov";
+import { clear } from "../../src/Server/lib/clear";
+import { nuke } from "../../src/Server/lib/nuke";
+import { analyze } from "../../src/Server/lib/analyze";
+import { run } from "../../src/Server/lib/run";
+import { FTPCrack } from "../../src/Server/lib/FTPCrack";
+import { bruteSSH } from "../../src/Server/lib/bruteSSH";
+import { HTTPWorm } from "../../src/Server/lib/HTTPWorm";
+import { lscpu } from "../../src/Server/lib/lscpu";
+import { hostname } from "../../src/Server/lib/hostname";
+import { home } from "../../src/Server/lib/home";
+import { connect } from "../../src/Server/lib/connect";
+import { ifconfig } from "../../src/Server/lib/ifconfig";
+import { scan_analyze } from "../../src/Server/lib/scan_analyze";
+import { relaySMTP } from "../../src/Server/lib/relaySMTP";
+import { help } from "../../src/Server/lib/help";
+import { download } from "../../src/Server/lib/download";
+import { cp } from "../../src/Server/lib/cp";
+import { scp } from "../../src/Server/lib/scp";
+import { expr } from "../../src/Server/lib/expr";
+import { check } from "../../src/Server/lib/check";
+import { SQLInject } from "../../src/Server/lib/SQLInject";
+import { kill } from "../../src/Server/lib/kill";
+import { killall } from "../../src/Server/lib/killall";
+import { wget } from "../../src/Server/lib/wget";
+import { hack } from "../../src/Server/lib/hack";
+import { alias } from "../../src/Server/lib/alias";
+import { cat } from "../../src/Server/lib/cat";
+import { unalias } from "../../src/Server/lib/unalias";
+import { theme } from "../../src/Server/lib/theme";
+import { ps } from "../../src/Server/lib/ps";
+import { buy } from "../../src/Server/lib/buy";
+import { tail } from "../../src/Server/lib/tail";
+import { ServerProfiler } from "../../src/Server/lib/ServerProfiler";
+import { AutoLink } from "../../src/Server/lib/AutoLink";
+import { DeepscanV2 } from "../../src/Server/lib/DeepscanV2";
+import { DeepscanV1 } from "../../src/Server/lib/DeepscanV1";
+import { fl1ght } from "../../src/Server/lib/fl1ght";
+import { b1t_flum3 } from "../../src/Server/lib/b1t_flum3";
+import { free } from "../../src/Server/lib/free";
+
+import {Terminal} from "../../src/Terminal";
 import {OverwriteStrategy} from "../../src/Server/lib/OverwriteStrategy";
 import {VersioningStrategy} from "../../src/Server/lib/VersioningStrategy";
 
@@ -29,7 +70,7 @@ import { Player } from "../../src/Player";
 import { PlayerObject } from "../../src/PersonObjects/Player/PlayerObject";
 
 import { SpecialServerIps, SpecialServerIpsMap } from "../../src/Server/SpecialServerIps";
-
+import * as AllServers from "../../src/Server/AllServers";
 import {resetAllAliases} from "../../src/Alias";
 import {Script} from "../../src/Script/Script";
 import {RunningScript} from "../../src/Script/RunningScript";
@@ -47,7 +88,7 @@ describe("BaseServer file system core library tests", function() {
         "/dA/dB/f4":"/dA/dB/f4",
     };
     const WRITTEN_CONTENT = "written content";
-    const server = new BaseServer();
+    const server = new Server();
     server.restoreFileSystem(testingVolJSON);
 
     let out = (msg) => {}; // null stream
@@ -62,8 +103,11 @@ describe("BaseServer file system core library tests", function() {
     var Player = new PlayerObject();
     var SpecialServerIps = new SpecialServerIpsMap();
 
-    let destServer = new BaseServer();
+    let destServer = new Server();
     destServer.restoreFileSystem(testingVolJSON);
+    AllServers.AddToAllServers(server);
+    AllServers.AddToAllServers(destServer);
+    AllServers.SERVERS_INITIALIZED = true;
 
     function resetEnv(options={servInitType:ServerInitType.NORMAL}){
         switch(options.servInitType){
@@ -125,45 +169,14 @@ describe("BaseServer file system core library tests", function() {
     };
 
 
-    function addScriptsToServer(){
-        const minimalScript = `
-        export function main(ns){
-            return;
+    function addScriptsToServer(scripts){
+        for(let script of scripts){
+            server.scriptsMap[script.path] = new Script(script.path, script.ip);
+            server.scriptsMap[script.path].getServer = ()=>{return server};
+            expect(()=>server.writeFile(script.path, script.content)).to.not.throw();
+            expect(()=>server.readFile(script.path)).to.not.throw();
+            server.scriptsMap[script.path].ramUsage = script.ramUsage;
         }
-        `;
-
-        const littleScript = `
-            export async function main(ns){
-                return await ns.hack();
-            }
-            `;
-        const heavyScript = `
-            export async function main(ns){
-                window;
-                return;
-            }
-            `;
-        server.scriptsMap["/minimalScript"] = new Script();
-        server.scriptsMap["/dA/littleScript"] = new Script();
-        server.scriptsMap["/dA/dB/heavyScript"] = new Script();
-
-        server.scriptsMap["/minimalScript"].getServer = ()=>{return server};
-        server.scriptsMap["/dA/littleScript"].getServer = ()=>{return server};
-        server.scriptsMap["/dA/dB/heavyScript"].getServer = ()=>{return server};
-
-        expect(()=>server.writeFile("/minimalScript", minimalScript)).to.not.throw();
-        expect(()=>server.writeFile("/dA/littleScript", littleScript)).to.not.throw();
-        expect(()=>server.writeFile("/dA/dB/heavyScript", heavyScript)).to.not.throw();
-
-
-        expect(()=>server.readFile("/minimalScript")).to.not.throw();
-        expect(()=>server.readFile("/dA/littleScript")).to.not.throw();
-        expect(()=>server.readFile("/dA/dB/heavyScript")).to.not.throw();
-        // mock values for the sake of testing correct ram usage detection with mem.
-        server.scriptsMap["/minimalScript"].ramUsage = 1.6;
-        server.scriptsMap["/dA/littleScript"].ramUsage = 1.7;
-        server.scriptsMap["/dA/dB/heavyScript"].ramUsage = 26.6;
-
     }
 
     function addRunningScriptsToServer(scriptsTemplates){
@@ -547,10 +560,48 @@ describe("BaseServer file system core library tests", function() {
             });
         });
 
+        const minimalScript = `
+        export function main(ns){
+            return;
+        }
+        `;
+
+        const littleScript = `
+            export async function main(ns){
+                return await ns.hack();
+            }
+            `;
+        const heavyScript = `
+            export async function main(ns){
+                window;
+                return;
+            }
+            `;
+
+        const memScripts = [
+            {
+                path:"/minimalScript",
+                ramUsage:1.6,
+                content:minimalScript,
+                ip: server.ip
+            },
+            {
+                path:"/dA/littleScript",
+                ramUsage:1.7,
+                content:littleScript,
+                ip: server.ip
+            },
+            {
+                path:"/dA/dB/heavyScript",
+                ramUsage:26.6,
+                content:heavyScript,
+                ip: server.ip
+            },
+        ]
         describe("mem", function(){
             it("Can detect an existing script.", function(){
                 resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
-                addScriptsToServer()
+                addScriptsToServer(memScripts)
 
                 expect(()=>mem(server, fakeTerm, out, err, ["/minimalScript"])).to.not.throw();
                 expect(()=>mem(server, fakeTerm, out, err, ["/dA/littleScript"])).to.not.throw();
@@ -559,7 +610,7 @@ describe("BaseServer file system core library tests", function() {
 
             it("Can read the actual ram usage of an existing script.", function(){
                 resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
-                addScriptsToServer()
+                addScriptsToServer(memScripts)
 
                 let result = "";
                 out = (msg)=>{result = msg};
@@ -577,7 +628,7 @@ describe("BaseServer file system core library tests", function() {
 
             it("Can read the ram usage of multiple specified scripts from a directory excluding its subdirectories.", function(){
                 resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
-                addScriptsToServer()
+                addScriptsToServer(memScripts)
 
                 let result = [];
                 out = (msg)=>{result.push(msg)};
@@ -589,7 +640,7 @@ describe("BaseServer file system core library tests", function() {
 
             it("Can read the ram usage of multiple specified scripts from a directory and its subdirectories if the recursive flag is used.", function(){
                 resetEnv({servInitType:ServerInitType.DIRECTORIES_ONLY})
-                addScriptsToServer()
+                addScriptsToServer(memScripts)
 
                 let result = [];
                 out = (msg)=>{result.push(msg)};
@@ -886,7 +937,92 @@ describe("BaseServer file system core library tests", function() {
                 expect(()=>hack(server, fakeTerm, out, err, [], {Player:Player})).not.to.throw();
                 expect(result).to.equal(true);
             });
-        })
+        });
+
+        const notWorkingScript = `export function main(ns){ return await ns.sleep(1); }`;
+        const workingScript = "import {r2d} from './dir2/script2'; export function main(ns){ return r2d(2); }";
+        const workingSubscript = "export function r2d(x){return x;}";
+
+        const run_scripts = [
+            {
+                path:"/dir1/script1",
+                ramUsage: NaN,
+                content: workingScript,
+                ip: server.ip
+            },
+            {
+                path:"/dir1/dir2/script2",
+                ramUsage: 1.6,
+                content: workingSubscript,
+                ip: server.ip
+            },
+            {
+                path:"/dir1/script3",
+                ramUsage: NaN,
+                content: notWorkingScript,
+                ip: server.ip
+            }
+        ]
+
+        describe("run", function(){
+            it("Can run a valid script using absolute pathing", async function(){
+                resetEnv();
+                addScriptsToServer(run_scripts);
+                err = (msg)=>{console.log(msg)};
+                //absolute pathing
+                expect(run(server, fakeTerm, out, err, ["/dir1/script1"])).to.eventually.be.fulfilled;
+                expect(()=>killall(server, fakeTerm, out, err, [])).not.to.throw();
+
+            });
+            it("Can run a valid script using relative pathing", async function(){
+                resetEnv();
+                addScriptsToServer(run_scripts);
+                //relative pathing
+                fakeTerm.currDir = "/dir1/";
+                expect(run(server, fakeTerm, out, err, ["script1"])).to.eventually.be.fulfilled;
+                expect(()=>killall(server, fakeTerm, out, err, [])).not.to.throw();
+
+            });
+            it("Can NOT run an invalid script using absolute pathing", async function(){
+                resetEnv();
+                addScriptsToServer(run_scripts);
+
+                expect(run(server, fakeTerm, out, err, ["/dir1/script3"], {Player:Player})).to.eventually.be.rejected;
+
+            });
+            it("Can NOT run an invalid script using relative pathing", async function(){
+                resetEnv();
+                addScriptsToServer(run_scripts);
+
+                fakeTerm.currDir = "/dir1/";
+                expect(run(server, fakeTerm, out, err, ["script3"], {Player:Player})).to.eventually.be.rejected;
+
+            });
+            it("Can run an existing coding contract", function(){
+                resetEnv();
+                //server.addContract() //TODO
+                //expect(()=>run(server, fakeTerm, out, err, ["/dir1/script1"], {Player:Player})).to.throw();
+                //fakeTerm.currDir = "/dir1/";
+                //expect(()=>run(server, fakeTerm, out, err, ["script1"], {Player:Player})).to.throw();
+
+            });
+            it("Can NOT run an inexisting coding contract", function(){
+                resetEnv();
+
+            });
+            it("Can run an owned executable", function(){
+                resetEnv();
+
+            });
+            it("Can NOT run an unowned executable", function(){
+                resetEnv();
+
+            });
+            it("Can NOT run an inexisting file, executable or coding contract", function(){
+                resetEnv();
+
+            });
+        });
     });
 })
 
