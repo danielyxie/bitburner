@@ -224,7 +224,7 @@ export class BaseServer {
         }
         for (let i = 0; i < this.programs.length; i++) { // migrating program files
             const filename = this.programs[i];
-            if (this.fs.existsSync(filename)) { continue; }
+           if (this.fs.existsSync(filename)) { continue; }
             const data = ""; // TODO find a content to add to those programs source code.
             this.writeFile(filename, data);
         }

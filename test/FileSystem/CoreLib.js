@@ -94,15 +94,18 @@ describe("BaseServer file system core library tests", function() {
         "/dA/dB/f4":"/dA/dB/f4",
     };
     const WRITTEN_CONTENT = "written content";
-    const server = new Server();
+    const server = new Server({hostname:"home", ip:"127.0.0.1"});
     server.hasAdminRights=true;
-    server.purchasedByThePlauer=true;
+    server.purchasedByThePlayer=true;
     server.hostname = "home";
     server.restoreFileSystem(testingVolJSON);
-
+    server.serversOnNetwork.push()
     let out = (msg) => {}; // null stream
     let err = (msg) => {throw msg}; // exception callback
     let fakeTerm = Terminal;
+    fakeTerm.output = [];
+    fakeTerm.clearOutput = ()=>{fakeTerm.output=[];};
+    fakeTerm.resetTerminalInput = ()=>{};
     fakeTerm.currDir = "/";
     const ServerInitType = {
         NORMAL: 1,
@@ -112,9 +115,14 @@ describe("BaseServer file system core library tests", function() {
     var Player = new PlayerObject();
     var SpecialServerIps = new SpecialServerIpsMap();
 
-    const destServer = new Server();
+    const destServer = new Server({hostname:"???", ip:"666.666.666.669"});
+    const invisibleServer = new Server({hostname:"Drax the destructor", ip:"xxx.xxx.xxx.xxx"})
+    server.serversOnNetwork.push(destServer.ip)
+    server.serversOnNetwork.push(server.ip)
+
     destServer.restoreFileSystem(testingVolJSON);
     AllServers.AddToAllServers(server);
+    AllServers.AddToAllServers(invisibleServer);
     AllServers.AddToAllServers(destServer);
     AllServers.SERVERS_INITIALIZED = true;
 
@@ -124,6 +132,7 @@ describe("BaseServer file system core library tests", function() {
         server.purchasedByPlayer = true;
         server.maxRam = 64;
         server.requiredHackingSkill = 100;
+        server.cpuCores = 1;
         server.programs = [];
         Player.hacking_skill = 1;
         Player.setMoney(0);
@@ -988,7 +997,6 @@ describe("BaseServer file system core library tests", function() {
             it("Can run a valid script using absolute pathing", async function(){
                 resetEnv();
                 addScriptsToServer(run_scripts);
-                err = (msg)=>{console.log(msg)};
                 //absolute pathing
                 await expect(run(server, fakeTerm, out, err, ["/dir1/script1"], {Player:Player})).to.eventually.be.fulfilled;
                 expect(()=>killall(server, fakeTerm, out, err, [])).not.to.throw();
@@ -1018,21 +1026,21 @@ describe("BaseServer file system core library tests", function() {
                 await expect(run(server, fakeTerm, out, err, ["script3"], {Player:Player})).to.eventually.be.rejected;
 
             });
-            it("TODO Can run an existing coding contract", function(){
-                resetEnv();
-                expect(false).to.equal(true);
+            //it("TODO Can run an existing coding contract", function(){
+            //    resetEnv();
+            //    expect(false).to.equal(true);
                 //server.addContract() //TODO
                 //expect(()=>run(server, fakeTerm, out, err, ["/dir1/script1"], {Player:Player})).to.throw();
                 //fakeTerm.currDir = "/dir1/";
                 //expect(()=>run(server, fakeTerm, out, err, ["script1"], {Player:Player})).to.throw();
 
-            });
-            it("TODO Can NOT run an inexisting coding contract", function(){
-                resetEnv();
-                expect(false).to.equal(true);
+            //});
+            //it("TODO Can NOT run an inexisting coding contract", function(){
+            //    resetEnv();
+            //    expect(false).to.equal(true);
 
 
-            });
+            //});
             it("Can run an owned executable", async function(){
                 resetEnv();
 
@@ -1053,6 +1061,167 @@ describe("BaseServer file system core library tests", function() {
                 resetEnv();
                 await expect(run(server, fakeTerm, out, err, ["wow it didnt work!"], {Player:Player})).to.eventually.be.rejected;
 
+            });
+        });
+
+        describe("sudov", function(){
+            it("Can detect admin rights", function(){
+                resetEnv();
+                server.hasAdminRights = true;
+                let result = "";
+                out = (msg) => {result = msg};
+                let expected = "You have root access to this machine.";
+                expect(()=>sudov(server, fakeTerm, out, err, [])).not.to.throw();
+                expect(result).to.equal(expected)
+            });
+            it("Can detect NO admin rights", function(){
+                resetEnv();
+                server.hasAdminRights = false;
+                let result = "";
+                out = (msg) => {result = msg};
+                let expected = "You DO NOT have root access to this machine.";
+                expect(()=>sudov(server, fakeTerm, out, err, [])).not.to.throw();
+                expect(result).to.equal(expected)
+            });
+        });
+
+        describe("cd", function(){
+            it("Can change cwd to an existing absolute path", function(){
+                resetEnv();
+                let expected = "/dA/dB";
+                expect(()=>cd(server, fakeTerm, out, err, ["/dA/dB"])).not.to.throw();
+                expect(fakeTerm.currDir).to.equal(expected)
+            });
+            it("Can change cwd to an existing relative path", function(){
+                resetEnv();
+                fakeTerm.currDir = "/dA/dB";
+                let expected = "/dA";
+                expect(()=>cd(server, fakeTerm, out, err, [".."])).not.to.throw();
+                expect(fakeTerm.currDir).to.equal(expected)
+            });
+            it("Can NOT change cwd to an inexisting absolute path", function(){
+                resetEnv();
+                let expected = "/";
+                expect(()=>cd(server, fakeTerm, out, err, ["/dZ"])).to.throw();
+                expect(fakeTerm.currDir).to.equal(expected)
+            });
+            it("Can NOT change cwd to an inexisting relative path", function(){
+                resetEnv();
+                fakeTerm.currDir = "/dA/dB";
+                let expected = "/dA/dB";
+                expect(()=>cd(server, fakeTerm, out, err, ["../dC"])).to.throw();
+                expect(fakeTerm.currDir).to.equal(expected)
+            });
+        });
+
+        describe("scan", function(){
+            it("Can scan neighbouring servers", function(){
+                resetEnv();
+                let result = [];
+                let expected = [
+                    "Hostname             IP                   Root Access",
+                    "???                  666.666.666.669      N",
+                    "home                 127.0.0.1            Y"
+                    ];
+                out = (msg) => { result.push(msg);}
+
+                expect(()=>scan(server, fakeTerm, out, err, [])).not.to.throw();
+                result.sort();
+                expected.sort();
+                expect(result.join("\n")).to.equal(expected.join("\n"));
+            });
+        });
+
+        describe("hostname", function(){
+            it("Can display the hostname of the current server", function(){
+                resetEnv();
+                let result = "";
+                let expected = "home";
+                out = (msg) => { result += msg;}
+
+                expect(()=>hostname(server, fakeTerm, out, err, [])).not.to.throw();
+                expect(result).to.equal(expected);
+            });
+        });
+
+        describe("ifconfig", function(){
+            it("Can display the ip of the current server", function(){
+                resetEnv();
+                let result = "";
+                let expected = server.ip;
+                out = (msg) => { result += msg;}
+
+                expect(()=>ifconfig(server, fakeTerm, out, err, [])).not.to.throw();
+                expect(result).to.equal(expected);
+            });
+        });
+
+        describe("lscpu", function(){
+            it("Can display the amount of cores of the current server", function(){
+                resetEnv();
+                let result = "";
+                server.cpuCores = 1;
+                let expected = "1 Core(s)";
+                out = (msg) => { result += msg;}
+
+                expect(()=>lscpu(server, fakeTerm, out, err, [])).not.to.throw();
+                expect(result).to.equal(expected);
+            });
+        });
+
+        describe("connect", function(){
+            it("Can connect to a neighbouring server", function(){
+                resetEnv();
+                let result = "";
+                let expected = "Connected to ???";
+                out = (msg) => { result += msg;}
+
+                expect(()=>connect(server, fakeTerm, out, err, ["???"])).not.to.throw();
+                expect(result).to.equal(expected);
+                expect(()=>connect(server, fakeTerm, out, err, ["home"])).not.to.throw();
+
+            });
+            it("Can NOT connect to a NON neighbouring server", function(){
+                resetEnv();
+                let result = "";
+                let expected = "xxx.xxx.xxx.xxx out of reach";
+                err = (msg) => { result += msg; throw msg};
+
+                expect(()=>connect(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.throw();
+                expect(result).to.equal(expected);
+            });
+            it("Can connect to a NON neighbouring server using AutoLink", function(){
+                resetEnv();
+                let result = "";
+                let expected = "Connected to xxx.xxx.xxx.xxx";
+                out = (msg) => { result += msg;};
+
+                expect(()=>connect(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"], {autolink:true})).to.not.throw();
+                expect(result).to.equal(expected);
+                expect(()=>connect(server, fakeTerm, out, err, ["home"], {autolink:true})).not.to.throw();
+            });
+        });
+        describe("home", function(){
+            it("Can go home from a neighbouring server", function(){
+                resetEnv();
+                let result = "";
+                let expected = "Connected to home";
+
+                expect(()=>connect(server, fakeTerm, out, err, ["???"])).not.to.throw();
+                out = (msg) => { result += msg;}
+                expect(()=>home(server, fakeTerm, out, err, [])).not.to.throw();
+                expect(result).to.equal(expected);
+
+            });
+            it("Can go home from a NON neighbouring server", function(){
+                resetEnv();
+                let result = "";
+                let expected = "Connected to home";
+
+                expect(()=>connect(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"], {autolink:true})).to.not.throw();
+                out = (msg) => { result += msg;}
+                expect(()=>home(server, fakeTerm, out, err, [])).not.to.throw();
+                expect(result).to.equal(expected);
             });
         });
     });
