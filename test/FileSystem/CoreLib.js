@@ -1139,6 +1139,28 @@ describe("BaseServer file system core library tests", function() {
             });
         });
 
+        describe("scan-analyze", function(){
+            it("Can scan and analyze neighbouring servers", function(){
+                resetEnv();
+                let result = [];
+                let expected = [
+                    "~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~",
+                    "<strong>>???</strong>",
+                    " ",
+                    "--Root Access: NO, Required hacking skill: 1",
+                    "--Number of open ports required to NUKE: 5",
+                    "--RAM: 0",
+                    " "
+                    ];
+                out = (msg) => { result.push(msg);}
+
+                expect(()=>scan_analyze(server, fakeTerm, out, err, [])).not.to.throw();
+                result.sort();
+                expected.sort();
+                expect(result.join("\n")).to.equal(expected.join("\n"));
+            });
+        });
+
         describe("hostname", function(){
             it("Can display the hostname of the current server", function(){
                 resetEnv();
