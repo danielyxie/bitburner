@@ -134,6 +134,7 @@ describe("BaseServer file system core library tests", function() {
         server.requiredHackingSkill = 100;
         server.cpuCores = 1;
         server.programs = [];
+        server.runningScripts = [];
         Player.hacking_skill = 1;
         Player.setMoney(0);
 
@@ -1222,6 +1223,138 @@ describe("BaseServer file system core library tests", function() {
                 out = (msg) => { result += msg;}
                 expect(()=>home(server, fakeTerm, out, err, [])).not.to.throw();
                 expect(result).to.equal(expected);
+            });
+        });
+
+        describe("top", function(){
+            it("Can display the list of running script, their ram usage and amount of threads", function (){
+                resetEnv();
+                addRunningScriptsToServer([
+                    {
+                        filename:"/f1",
+                        args:["test"],
+                        server:server.ip,
+                        ramUsage:1,
+                        logs:["testboup"]
+                    },
+                    {
+                        filename:"/f1",
+                        args:["david"],
+                        server:server.ip,
+                        ramUsage:3,
+                        logs:["wowie"]
+                    },]);
+
+                let result = [];
+                out = (msg)=>{result.push(msg)};
+                let expected = [
+                    "Script                                  PID       Threads         RAM Usage",
+                    "/f1                                     2         1               3.00 GB",
+                    "/f1                                     1         1               1.00 GB"];
+
+                expect(()=>top(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"));
+            });
+        });
+
+        describe("kill", function(){
+            it("Can kill a running script by arguments or PID", function (){
+                resetEnv();
+                addRunningScriptsToServer([
+                    {
+                        filename:"/f1",
+                        args:["test"],
+                        server:server.ip,
+                        ramUsage:1,
+                        logs:["testboup"]
+                    },
+                    {
+                        filename:"/f1",
+                        args:["david"],
+                        server:server.ip,
+                        ramUsage:3,
+                        logs:["wowie"]
+                    },]);
+
+                let result = [];
+                out = (msg)=>{result.push(msg);};
+                let expected = [
+                    "Script                                  PID       Threads         RAM Usage",
+                    "/f1                                     2         1               3.00 GB",
+                    "/f1                                     1         1               1.00 GB"];
+
+                expect(()=>top(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"));
+                // both scripts are now running.
+                // test 1: killing by arguments
+                expect(()=>kill(server, fakeTerm, out, err, ["/f1", "test"], {testing:true})).to.not.throw();
+
+                result = [];
+                expected = [
+                    "Script                                  PID       Threads         RAM Usage",
+                    "/f1                                     2         1               3.00 GB"];
+
+                expect(()=>top(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"));
+                //test 2: killing by PID
+                expect(()=>kill(server, fakeTerm, out, err, ["-p","2"],{testing:true})).to.not.throw();
+
+                result = [];
+                expected = [ "Script                                  PID       Threads         RAM Usage"];
+
+                expect(()=>top(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"));
+            });
+        });
+
+        describe("killall", function(){
+            it("Can kill every running scripts", function (){
+                resetEnv();
+                addRunningScriptsToServer([
+                    {
+                        filename:"/f1",
+                        args:["test"],
+                        server:server.ip,
+                        ramUsage:1,
+                        logs:["testboup"]
+                    },
+                    {
+                        filename:"/f1",
+                        args:["david"],
+                        server:server.ip,
+                        ramUsage:3,
+                        logs:["wowie"]
+                    },]);
+
+                let result = [];
+                out = (msg)=>{result.push(msg);};
+                let expected = [
+                    "Script                                  PID       Threads         RAM Usage",
+                    "/f1                                     2         1               3.00 GB",
+                    "/f1                                     1         1               1.00 GB"];
+
+                expect(()=>top(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"));
+                // both scripts are now running.
+                expect(()=>killall(server, fakeTerm, out, err, [], {testing:true})).to.not.throw();
+
+                result = [];
+                expected = [ "Script                                  PID       Threads         RAM Usage"];
+
+                expect(()=>top(server, fakeTerm, out, err, [])).to.not.throw();
+                expected.sort();
+                result.sort()
+                expect(result.join("\n")).to.equal(expected.join("\n"));
             });
         });
     });

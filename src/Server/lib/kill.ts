@@ -47,7 +47,12 @@ export function kill(server:BaseServer, term:any, out:Function, err:Function, ar
         err("No such script is running.");
         return;
     }
-    killWorkerScript(target.pid);
+
+    if(options.testing){
+        server.stopScript(target);
+    }else{
+        killWorkerScript(target.pid);
+    }
     out(`Killing (PID=${target.pid}) ${target.filename} ${JSON.stringify(target.args)}`);
 
 }

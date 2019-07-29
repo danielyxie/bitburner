@@ -5,9 +5,11 @@ import {registerExecutable, ManualEntry, fetchUsage} from "./sys";
 import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 
 export function killall(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
-    for(let runningScript of server.runningScripts){
-        killWorkerScript(runningScript.pid);
-        out(`Killing (PID=${runningScript.pid}) ${runningScript.filename} ${JSON.stringify(runningScript.args)}`);
+    for(let i = server.runningScripts.length - 1; i >= 0; i--){
+        out(`Killing (PID=${server.runningScripts[i].pid}) ${server.runningScripts[i].filename} ${JSON.stringify(server.runningScripts[i].args)}`);
+        if(options.testing) server.stopScript(server.runningScripts[i]);
+        else killWorkerScript(server.runningScripts[i].pid);
+
     }
     WorkerScriptStartStopEventEmitter.emitEvent();
 }

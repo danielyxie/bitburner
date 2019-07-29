@@ -466,6 +466,15 @@ export class BaseServer {
 
     }
 
+    stopScript(script: RunningScript):void{
+        for(let i = 0 ; i < this.runningScripts.length; i++){
+            if(this.runningScripts[i].pid == script.pid){
+                this.runningScripts.splice(i, 1);
+                return;
+            }
+        }
+    }
+
     setMaxRam(ram: number): void {
         this.maxRam = ram;
     }
