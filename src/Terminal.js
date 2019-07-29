@@ -106,6 +106,7 @@ import { mv } from "./Server/lib/mv";
 import { ls } from "./Server/lib/ls";
 import { nano } from "./Server/lib/nano";
 import { tree } from "./Server/lib/tree";
+import { top } from "./Server/lib/top";
 import { scan } from "./Server/lib/scan";
 import { mem } from "./Server/lib/mem";
 import { cd } from "./Server/lib/cd";
@@ -137,6 +138,7 @@ import { killall } from "./Server/lib/killall";
 import { wget } from "./Server/lib/wget";
 import { hack } from "./Server/lib/hack";
 import { alias } from "./Server/lib/alias";
+import { unalias } from "./Server/lib/unalias";
 import { ps } from "./Server/lib/ps";
 import { buy } from "./Server/lib/buy";
 import { tail } from "./Server/lib/tail";
@@ -951,12 +953,6 @@ let Terminal = {
                 case "home":
                     home(server, Terminal, post, postError, commandArray.splice(1))
                     break;
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect usage of home command. Usage: home");
-                        return;
-                    }
-
-                    break;
                 case "hostname":
                     hostname(server, Terminal, post, postError, commandArray.splice(1))
                     break;
@@ -1006,28 +1002,6 @@ let Terminal = {
                 }
                 case "run":
                     run(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                    // Run a program or a script
-                    if (commandArray.length < 2) {
-                        postError("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
-                    } else {
-                        var executableName = commandArray[1];
-
-                        // Secret Music player!
-                        if (executableName === "musicplayer") {
-                            post('<iframe src="https://open.spotify.com/embed/user/danielyxie/playlist/1ORnnL6YNvXOracUaUV2kh" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', false);
-                            return;
-                        }
-
-                        // Check if its a script or just a program/executable
-                        if (isScriptFilename(executableName)) {
-                            Terminal.runScript(commandArray);
-                        } else if (executableName.endsWith(".cct")) {
-                            Terminal.runContract(executableName);
-                        } else {
-                            Terminal.runProgram(commandArray);
-                        }
-                    }
                     break;
                 case "scan":
                     scan(server, Terminal, post, postError, commandArray.splice(1));
@@ -1094,73 +1068,11 @@ let Terminal = {
                     break;
                 }
                 case "top": {
-                    if (commandArray.length !== 1) {
-                        postError("Incorrect usage of top command. Usage: top");
-                        return;
-                    }
-
-                    // Headers
-                    const scriptWidth = 40;
-                    const pidWidth = 10;
-                    const threadsWidth = 16;
-
-                    const scriptTxt = "Script";
-                    const pidTxt = "PID";
-                    const threadsTxt = "Threads";
-                    const ramTxt = "RAM Usage";
-
-                    const spacesAfterScriptTxt = " ".repeat(scriptWidth - scriptTxt.length);
-                    const spacesAfterPidTxt = " ".repeat(pidWidth - pidTxt.length);
-                    const spacesAfterThreadsTxt = " ".repeat(threadsWidth - threadsTxt.length);
-
-                    const headers = `${scriptTxt}${spacesAfterScriptTxt}${pidTxt}${spacesAfterPidTxt}${threadsTxt}${spacesAfterThreadsTxt}${ramTxt}`;
-
-                    post(headers);
-
-                    let currRunningScripts = s.runningScripts;
-                    // Iterate through scripts on current server
-                    for (let i = 0; i < currRunningScripts.length; i++) {
-                        let script = currRunningScripts[i];
-
-                        // Calculate name padding
-                        const numSpacesScript = Math.max(0, scriptWidth - script.filename.length);
-                        const spacesScript = " ".repeat(numSpacesScript);
-
-                        // Calculate PID padding
-                        const numSpacesPid = Math.max(0, pidWidth - (script.pid + "").length);
-                        const spacesPid = " ".repeat(numSpacesPid);
-
-                        // Calculate thread padding
-                        const numSpacesThread = Math.max(0, threadsWidth - (script.threads + "").length);
-                        const spacesThread = " ".repeat(numSpacesThread);
-
-                        // Calculate and transform RAM usage
-                        const ramUsage = numeralWrapper.format(getRamUsageFromRunningScript(script) * script.threads, '0.00') + " GB";
-
-                        const entry = [
-                            script.filename,
-                            spacesScript,
-                            script.pid,
-                            spacesPid,
-                            script.threads,
-                            spacesThread,
-                            ramUsage
-                        ].join("");
-                        post(entry);
-                    }
+                    top(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "unalias": {
-                    if (commandArray.length !== 2) {
-                        postError('Incorrect usage of unalias name. Usage: unalias [alias]');
-                        return;
-                    } else {
-                        if (removeAlias(commandArray[1])) {
-                            post(`Removed alias ${commandArray[1]}`);
-                        } else {
-                            postError(`No such alias exists: ${commandArray[1]}`);
-                        }
-                    }
+                    unalias(server, Terminal, post, postError, commandArray.splice(1));
                     break;
                 }
                 case "wget": {
@@ -1169,36 +1081,6 @@ let Terminal = {
                 }
                 case "mkdir": {
                     mkdir(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "nuke": {//TODO FINALISE COMMAND CALLING FORMAT TO REGROUP EVERY COMMAND INTO A SINGLE MAPPING SYSTEM.
-                    //TODO CHECK PERMISSION
-                    nuke(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "bruteSSH": {
-                    //TODO CHECK PERMISSION
-                    bruteSSH(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "FTPCrack": {
-                    //TODO CHECK PERMISSION
-                    FTPCrack(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "SQLInject": {
-                    //TODO CHECK PERMISSION
-                    SQLInject(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "HTTPWorm": {
-                    //TODO CHECK PERMISSION
-                    HTTPWorm(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "relaySMTP": {
-                    //TODO CHECK PERMISSION
-                    relaySMTP(server, Terminal, post, postError, commandArray.slice(1));
                     break;
                 }
                 default: {
