@@ -100,6 +100,10 @@ import {
     calculateRamUsage
 } from "./Script/RamCalculations";
 import{ Script } from "./Script/Script";
+import * as sys from "./Server/lib/sys";
+//////////////////////////////////////////////////////////////////////////////
+// Here we import every existing function to let them initialize themselves //
+//////////////////////////////////////////////////////////////////////////////
 import { mkdir } from "./Server/lib/mkdir";
 import { rm } from "./Server/lib/rm";
 import { mv } from "./Server/lib/mv";
@@ -143,6 +147,14 @@ import { theme } from "./Server/lib/theme";
 import { ps } from "./Server/lib/ps";
 import { buy } from "./Server/lib/buy";
 import { tail } from "./Server/lib/tail";
+import { ServerProfiler } from "./Server/lib/ServerProfiler";
+import { AutoLink } from "./Server/lib/AutoLink";
+import { DeepscanV2 } from "./Server/lib/DeepscanV2";
+import { DeepscanV1 } from "./Server/lib/DeepscanV1";
+import { fl1ght } from "./Server/lib/fl1ght";
+import { b1t_flum3 } from "./Server/lib/b1t_flum3";
+
+
 
 import { fs } from 'memfs';
 
@@ -779,7 +791,6 @@ let Terminal = {
         // Only split the first space
 		var commandArray = Terminal.parseCommandArguments(command);
 		if (commandArray.length == 0) { return; }
-        let server = Player.getCurrentServer();
 
         /****************** Interactive Tutorial Terminal Commands ******************/
         if (ITutorial.isRunning) {
@@ -899,228 +910,23 @@ let Terminal = {
         /****************** END INTERACTIVE TUTORIAL ******************/
 
         /* Command parser */
-        var s = Player.getCurrentServer();
-        try{
-            switch (commandArray[0].toLowerCase()) {
-                case "alias":
-                    alias(server, Terminal, post, postError, commandArray.splice(1))
-                    break;
-                case "analyze":
-                    analyze(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                case "buy":
-                    buy(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                case "cat": {
-                    cat(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "cd": {
-                    cd(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "check": {
-                    check(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "clear":
-                    clear(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                case "cls":
-                    cls(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                case "connect": {
-                    connect(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "download": {
-                    download(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "expr": {
-                    expr(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "free":
-                    free(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                case "hack": {
-                    hack(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "help":
-                    help(server, Terminal, post, postError, commandArray.splice(1))
-                    break;
-                case "home":
-                    home(server, Terminal, post, postError, commandArray.splice(1))
-                    break;
-                case "hostname":
-                    hostname(server, Terminal, post, postError, commandArray.splice(1))
-                    break;
-                case "ifconfig":
-                    ifconfig(server, Terminal, post, postError, commandArray.splice(1))
-                    break;
-                case "kill": {
-                    kill(server, Terminal, post, postError, commandArray.splice(1))
-                    break;
-                }
-                case "killall": {
-                    killall(server, Terminal, post, postError, commandArray.splice(1))
-                    break;
-                }
-                case "ls": {
-                    ls(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "tree": {
-                    tree(server, Terminal, post, postError,commandArray.splice(1));
-                    break;
-                }
-                case "lscpu": {
-                    lscpu(server, Terminal, post, postError,commandArray.splice(1));
-                    break;
-                }
-                case "mem": {
-                    mem(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "mv": {
-                    mv(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "nano":
-                    nano(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                case "ps":
-                    ps(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                case "cp":
-                    cp(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                case "rm": {
-                    rm(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                case "run":
-                    run(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                case "scan":
-                    scan(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                case "scan-analyze":
-                    scan_analyze(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                /* eslint-disable no-case-declarations */
-                case "scp":
-                    scp(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                /* eslint-enable no-case-declarations */
-                case "sudov":
-                    sudov(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                case "tail": {
-                    tail(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "theme": {
-                    theme(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                    let args = commandArray.slice(1);
-                    if (args.length !== 1 && args.length !== 3) {
-                        postError("Incorrect number of arguments.");
-                        postError("Usage: theme [default|muted|solarized] | #[background color hex] #[text color hex] #[highlight color hex]");
-                    } else if(args.length === 1){
-                        var themeName = args[0];
-                        if (themeName == "default"){
-                            document.body.style.setProperty('--my-highlight-color',"#ffffff");
-                            document.body.style.setProperty('--my-font-color',"#66ff33");
-                            document.body.style.setProperty('--my-background-color',"#000000");
-                            document.body.style.setProperty('--my-prompt-color', "#f92672");
-                        } else if (themeName == "muted"){
-                            document.body.style.setProperty('--my-highlight-color',"#ffffff");
-                            document.body.style.setProperty('--my-font-color',"#66ff33");
-                            document.body.style.setProperty('--my-background-color',"#252527");
-                        } else if (themeName == "solarized"){
-                            document.body.style.setProperty('--my-highlight-color',"#6c71c4");
-                            document.body.style.setProperty('--my-font-color',"#839496");
-                            document.body.style.setProperty('--my-background-color',"#002b36");
-                        } else {
-                            return postError("Theme not found");
-                        }
-                        FconfSettings.THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
-                        FconfSettings.THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
-                        FconfSettings.THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
-                        FconfSettings.THEME_PROMPT_COLOR = document.body.style.getPropertyValue("--my-prompt-color");
-                    } else {
-                        var inputBackgroundHex = args[0];
-                        var inputTextHex = args[1];
-                        var inputHighlightHex = args[2];
-                        if (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputBackgroundHex) &&
-                        /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputTextHex) &&
-                        /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputHighlightHex)){
-                            document.body.style.setProperty('--my-highlight-color',inputHighlightHex);
-                            document.body.style.setProperty('--my-font-color',inputTextHex);
-                            document.body.style.setProperty('--my-background-color',inputBackgroundHex);
-                            FconfSettings.THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
-                            FconfSettings.THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
-                            FconfSettings.THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
-                        } else {
-                            return postError("Invalid Hex Input for theme");
-                        }
-                    }
-                    break;
-                }
-                case "top": {
-                    top(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "unalias": {
-                    unalias(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "wget": {
-                    wget(server, Terminal, post, postError, commandArray.splice(1));
-                    break;
-                }
-                case "mkdir": {
-                    mkdir(server, Terminal, post, postError, commandArray.slice(1));
-                    break;
-                }
-                default: {
-                    let path = commandArray[0];
-                    if(server.exists(path)) {
-                        // if it's an existing path, check if it is a directory or an executable
-                        if (server.isDir(path))
-                            post(`${path} is a directory.`);
-                        else if (server.isExecutable(path)) //for now every file is executable.
-                            run(server, Terminal, post, postError, commandArray)//post(`${path} is an executable. # auto running executables has yet to be implemented, use run for now.`);
-                        else
-                            post(`${path} is a file.`);
-                    }
-                    else postError(`${commandArray[0]} not found`);
-                    break;
-                }
+        var server = Player.getCurrentServer();
+        var executable = sys.fetchExecutable(commandArray[0]);
+        if (!executable){
+            let path = commandArray[0];
+            if(server.exists(path)) {
+                // if it's an existing path, check if it is a directory or an executable
+                if (server.isDir(path))
+                    post(`${path} is a directory.`);
+                else if (server.isExecutable(path))
+                    run(server, Terminal, post, postError, commandArray)
+                else
+                    post(`${path} is a file.`);
             }
-        }catch(e){
-            Terminal.postThrownError(e);
-            throw e;
+            else postError(`${commandArray[0]} not found`);
+        }else{
+            executable(server, Terminal, post, postError, commandArray.splice(1));
         }
-	},
-
-	// First called when the "run [program]" command is called. Checks to see if you
-	// have the executable and, if you do, calls the executeProgram() function
-	runProgram: function(commandArray) {
-        if (commandArray.length < 2) { return; }
-
-		// Check if you have the program on your computer. If you do, execute it, otherwise
-		// display an error message
-        const programName = commandArray[1];
-
-        if (Player.hasProgram(programName)) {
-            Terminal.executeProgram(commandArray);
-            return;
-        }
-		post("ERROR: No such executable on home computer (Only programs that exist on your home computer can be run)");
 	},
 
 	// Contains the implementations of all possible programs
@@ -1148,81 +954,12 @@ let Terminal = {
         programHandlers[Programs.RelaySMTPProgram.name] = relaySMTP;
         programHandlers[Programs.HTTPWormProgram.name] = HTTPWorm;
         programHandlers[Programs.SQLInjectProgram.name] = SQLInject;
-        programHandlers[Programs.ServerProfiler.name] = (server, args) => {
-            if (args.length !== 2) {
-                post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
-                return;
-            }
-
-            const targetServer = getServer(args[1]);
-            if (targetServer == null) {
-                post("Invalid server IP/hostname");
-                return;
-            }
-            post(targetServer.hostname + ":");
-            post("Server base security level: " + targetServer.baseDifficulty);
-            post("Server current security level: " + targetServer.hackDifficulty);
-            post("Server growth rate: " + targetServer.serverGrowth);
-            post("Netscript hack() execution time: " + numeralWrapper.format(calculateHackingTime(targetServer), '0.0') + "s");
-            post("Netscript grow() execution time: " + numeralWrapper.format(calculateGrowTime(targetServer), '0.0') + "s");
-            post("Netscript weaken() execution time: " + numeralWrapper.format(calculateWeakenTime(targetServer), '0.0') + "s");
-        };
-        programHandlers[Programs.AutoLink.name] = () => {
-            post("This executable cannot be run.");
-            post("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
-            post("When using scan-analyze, click on a server's hostname to connect to it.");
-        };
-        programHandlers[Programs.DeepscanV1.name] = () => {
-            post("This executable cannot be run.");
-            post("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
-        };
-        programHandlers[Programs.DeepscanV2.name] = () => {
-            post("This executable cannot be run.");
-            post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
-        };
-        programHandlers[Programs.Flight.name] = () => {
-            const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement*30)
-            const fulfilled = Player.augmentations.length >= numAugReq &&
-                Player.money.gt(1e11) &&
-                ((Player.hacking_skill >= 2500)||
-                (Player.strength >= 1500 &&
-                Player.defense >= 1500 &&
-                Player.dexterity >= 1500 &&
-                Player.agility >= 1500));
-            if(!fulfilled) {
-                post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
-
-                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / ${numeralWrapper.format(1e11, '($0.000a)')}`);
-                post("One path below must be fulfilled...");
-                post("----------HACKING PATH----------");
-                post(`Hacking skill: ${Player.hacking_skill} / 2500`);
-                post("----------COMBAT PATH----------");
-                post(`Strength: ${Player.strength} / 1500`);
-                post(`Defense: ${Player.defense} / 1500`);
-                post(`Dexterity: ${Player.dexterity} / 1500`);
-                post(`Agility: ${Player.agility} / 1500`);
-                return;
-            }
-
-            post("We will contact you.");
-            post("-- Daedalus --");
-        };
-        programHandlers[Programs.BitFlume.name] = () => {
-            const yesBtn = yesNoBoxGetYesButton();
-            const noBtn = yesNoBoxGetNoButton();
-            yesBtn.innerHTML = "Travel to BitNode Nexus";
-            noBtn.innerHTML = "Cancel";
-            yesBtn.addEventListener("click", function() {
-                hackWorldDaemon(Player.bitNodeN, true);
-                return yesNoBoxClose();
-            });
-            noBtn.addEventListener("click", function() {
-                return yesNoBoxClose();
-            });
-            yesNoBoxCreate("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
-                            "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
-                            "and select a new one.");
-        };
+        programHandlers[Programs.ServerProfiler.name] = ServerProfiler;
+        programHandlers[Programs.AutoLink.name] = AutoLink;
+        programHandlers[Programs.DeepscanV1.name] = DeepscanV1;
+        programHandlers[Programs.DeepscanV2.name] = DeepscanV2;
+        programHandlers[Programs.Flight.name] = Flight;
+        programHandlers[Programs.BitFlume.name] = BitFlume;
 
         if (!programHandlers.hasOwnProperty(programName)){
             post("Invalid executable. Cannot be run");

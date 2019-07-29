@@ -2,7 +2,6 @@ const helpRegistry:Map<string, ManualEntry> = new Map<string, ManualEntry>();
 const executableRegistry:Map<string, Function> = new Map<string, Function>();
 const hiddenExecutables:Set<string> = new Set<string>();
 import {Player} from "../../Player";
-
 export class ManualEntry{
     name:string;
     synopsis:string;
@@ -82,3 +81,4 @@ export function fetchHelpIndex(){
 export function isExecutableHidden(name:string){
     return hiddenExecutables.has(name) && !(Player as any).hasProgram(name)
 }
+
