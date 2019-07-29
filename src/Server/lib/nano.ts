@@ -9,7 +9,10 @@ export function nano(server: BaseServer, term: any, out:Function, err:Function, 
     }
 
     const filename = args[0];
-
+    if (filename.endsWith(".exe")){
+        err("An error seem to have occured. Permission not granted");
+        return;
+    }
     try {
         server.touch(filename);
         var content = term.getFileContent(filename);

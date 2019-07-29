@@ -268,6 +268,11 @@ function saveAndCloseScriptEditor() {
         return;
     }
 
+    if( filename.toLowerCase().endsWith(".exe")){
+        dialogBoxCreate("An error seem to have occured. Permission not granted");
+        return;
+    }
+
     if (filename !== ".fconf" && !isValidFilePath(filename)) {
         dialogBoxCreate(`<ul>
         <li> A file or directory name allows everything except ':', '"', '<', '>', '/', '|', '\\', '?' or '*'</li>
@@ -288,7 +293,7 @@ function saveAndCloseScriptEditor() {
     } else {
         s.writeFile(filename, getCurrentEditor().getCode(), true);
     }
-    
+
     Engine.loadTerminalContent();
     /*
     if (isScriptFilename(filename)) {
