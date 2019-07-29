@@ -34,7 +34,7 @@ export function connect(server:BaseServer, term:any, out:Function, err:Function,
             }
         }
         if(!found){
-            err(`Server ${address} not found`)
+            err(`${address} out of reach`)
         }
     }
 }
