@@ -321,7 +321,7 @@ describe("BaseServer file system core library tests", function() {
             it("Can list multiple distant specified directory with a depth of n" ,function(){
                 resetEnv();
 
-                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/dB/","/dA/dB/f4"]
+                let expected = ["/","/dA/", "/dev/","/f1", "/dA/dB/","/dA/dB/f4"]
                 let result = [];
                 out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/";
@@ -333,7 +333,7 @@ describe("BaseServer file system core library tests", function() {
             it("Can list multiple combined specified directory with a depth of n" ,function(){
                 resetEnv();
 
-                let expected = ["/","/dA/", "/dev/","/f1","/~trash/", "/dA/","/dA/dB/","/dA/f2", "/dA/f3", ]
+                let expected = ["/","/dA/", "/dev/","/f1", "/dA/","/dA/dB/","/dA/f2", "/dA/f3", ]
                 let result = [];
                 out = (msg) => {result.push(msg)};
                 fakeTerm.currDir = "/";
@@ -399,8 +399,7 @@ describe("BaseServer file system core library tests", function() {
                     "/",
                     "├──dA/",
                     "├──dev/",
-                    "├──f1",
-                    "└──~trash/",
+                    "└──f1",
                     "/dA/dB/",
                     "└──f4"
                     ].join("\n")
@@ -417,8 +416,7 @@ describe("BaseServer file system core library tests", function() {
                     "/",
                     "├──dA/",
                     "├──dev/",
-                    "├──f1",
-                    "└──~trash/",
+                    "└──f1",
                     "/dA/",
                     "├──dB/",
                     "├──f2",
