@@ -1,34 +1,25 @@
 import { BaseServer } from "../BaseServer";
-import {
-    evaluateDirectoryPath,
-    removeTrailingSlash
-} from "../../Terminal/DirectoryHelpers";
+import * as path from 'path';
 
 export function cd(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={}){
     if (args.length < 1) {
         return;
-    } else {
-        let dir = args[0];
-
-        let evaledDir;
-        if (dir === "/") {
-            evaledDir = "/";
-        } else {
-            // Ignore trailing slashes
-            dir = removeTrailingSlash(dir);
-
-            evaledDir = evaluateDirectoryPath(server, dir, term.currDir);
-            if (evaledDir == null || evaledDir === "") {
-                err(`${dir} doesn't exists.`);
-                return;
-            }
-        }
-
-        term.currDir = evaledDir + ((evaledDir.endsWith("/"))?"":"/");
-
-        // Reset input to update current directory on UI
-        term.resetTerminalInput();
     }
+
+    let dir = path.resolve(term.currDir+"/"+args[0]);
+
+
+    // Ignore trailing slashes
+    if (!server.exists(dir)) {
+        err(`${dir} doesn't exists.`);
+        return;
+    }
+
+
+    term.currDir = dir;
+
+    // Reset input to update current directory on UI
+    term.resetTerminalInput();
 }
 
 
