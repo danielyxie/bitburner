@@ -114,6 +114,7 @@ import { sudov } from "./Server/lib/sudov";
 import { clear } from "./Server/lib/clear";
 import { nuke } from "./Server/lib/nuke";
 import { analyze } from "./Server/lib/analyze";
+import { run } from "./Server/lib/run";
 import { FTPCrack } from "./Server/lib/FTPCrack";
 import { bruteSSH } from "./Server/lib/bruteSSH";
 import { HTTPWorm } from "./Server/lib/HTTPWorm";
@@ -1004,6 +1005,8 @@ let Terminal = {
                     break;
                 }
                 case "run":
+                    run(server, Terminal, post, postError, commandArray.slice(1));
+                    break;
                     // Run a program or a script
                     if (commandArray.length < 2) {
                         postError("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
@@ -1199,13 +1202,13 @@ let Terminal = {
                     break;
                 }
                 default: {
-                    let path = Terminal.getFilepath(commandArray[0]);
+                    let path = commandArray[0];
                     if(server.exists(path)) {
                         // if it's an existing path, check if it is a directory or an executable
                         if (server.isDir(path))
                             post(`${path} is a directory.`);
                         else if (server.isExecutable(path)) //for now every file is executable.
-                            post(`${path} is an executable. # auto running executables has yet to be implemented, use run for now.`);
+                            run(server, Terminal, post, postError, commandArray)//post(`${path} is an executable. # auto running executables has yet to be implemented, use run for now.`);
                         else
                             post(`${path} is a file.`);
                     }
@@ -1254,12 +1257,12 @@ let Terminal = {
          * @type {Object.<string, ProgramHandler}
          */
         const programHandlers = {};
-        programHandlers[Programs.NukeProgram.name] = (post, server) => nuke(post, server);
-        programHandlers[Programs.BruteSSHProgram.name] = (post, server) => bruteSSH(post, server);
-        programHandlers[Programs.FTPCrackProgram.name] = (post, server) => FTPCrack(post, server);
-        programHandlers[Programs.RelaySMTPProgram.name] = (post, server) => relaySMTP(post, server);
-        programHandlers[Programs.HTTPWormProgram.name] = (post, server) => HTTPWorm(post, server);
-        programHandlers[Programs.SQLInjectProgram.name] = (post, server) => SQLInject(post, server);
+        programHandlers[Programs.NukeProgram.name] = nuke;
+        programHandlers[Programs.BruteSSHProgram.name] = bruteSSH;
+        programHandlers[Programs.FTPCrackProgram.name] = FTPCrack;
+        programHandlers[Programs.RelaySMTPProgram.name] = relaySMTP;
+        programHandlers[Programs.HTTPWormProgram.name] = HTTPWorm;
+        programHandlers[Programs.SQLInjectProgram.name] = SQLInject;
         programHandlers[Programs.ServerProfiler.name] = (server, args) => {
             if (args.length !== 2) {
                 post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
@@ -1362,9 +1365,6 @@ let Terminal = {
         return result;
     },
 
-
-
-
     /**
      * Processes a file path referring to a script, taking into account the terminal's
      * current directory + server. Returns the script if it exists, and null otherwise.
@@ -1373,8 +1373,6 @@ let Terminal = {
         //console.log(`filename ${filename}; path ${Terminal.getFilepath(filename)}`);
         return Player.getCurrentServer().readFile(Terminal.getFilepath(filename));
     },
-
-
 
     postThrownError: function(e) {
         if (e instanceof Error) {
@@ -1388,122 +1386,6 @@ let Terminal = {
         }
     },
 
-	runScript: function(commandArray) {
-        if (commandArray.length < 2) {
-            dialogBoxCreate(`Bug encountered with Terminal.runScript(). Command array has a length of less than 2: ${commandArray}`);
-            return;
-        }
-
-		const server = Player.getCurrentServer();
-
-        let numThreads = 1;
-        const args = [];
-        const scriptName = Terminal.getFilepath(commandArray[1]);
-
-        console.log(`Trying to run script "${scriptName}"`);
-        if (commandArray.length > 2) {
-            if (commandArray.length >= 4 && commandArray[2] == "-t") {
-                numThreads = Math.round(parseFloat(commandArray[3]));
-                if (isNaN(numThreads) || numThreads < 1) {
-                    postError("Invalid number of threads specified. Number of threads must be greater than 0");
-                    return;
-                }
-                for (let i = 4; i < commandArray.length; ++i) {
-                    args.push(commandArray[i]);
-                }
-            } else {
-                for (let i = 2; i < commandArray.length; ++i) {
-                    args.push(commandArray[i])
-                }
-            }
-        }
-
-        // Check if this script is already running
-        if (findRunningScript(scriptName, args, server) != null) {
-            post("ERROR: This script is already running. Cannot run multiple instances");
-            return;
-        }
-        console.log(`Has Admin rights? ${server.hasAdminRights}`);
-        if(!server.hasAdminRights) {
-            postError(`ERROR: Need root access to run script`);
-            return;
-        }
-        console.log(`Exists? ${server.exists(scriptName)}`);
-        if(!server.exists(scriptName)) {
-            postError(`ERROR: No such script`);
-            return;
-        }
-        console.log(`is Executable? ${server.isExecutable(scriptName)}`);
-        if(!server.isExecutable(scriptName)) {
-            postError(`ERROR: Not an executable`);
-            return;
-        }
-        let script = server.scriptsMap[scriptName];
-        if(!script || isNaN(script.ramUsage)){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?)
-            //TODO maybe add a "loading time" for those? where the Ram calculation is ran before running the script, asynchronously.
-            postError(`ERROR: Script RAM usage not calculated yet! Please open the script with nano first, or try again in a few seconds.`);
-            if (!script){
-                script = new Script(scriptName, server.ip);
-                server.scriptsMap[scriptName] = script;
-                script.updateRamUsage();
-                script.markUpdated();
-            }
-            return;
-        }
-        let ramUsage = script.ramUsage * numThreads;
-        let ramAvailable = server.maxRam - server.ramUsed;
-        console.log(`RAM needed [t=${numThreads}]${ramUsage} / ${ramAvailable}; enough? ${ramUsage <= ramAvailable}`)
-        if(ramUsage > ramAvailable){
-            postError(`This machine does not have enough RAM to run this script with ${numThreads} threads. Script requires ${ramUsage} GB of RAM`);
-            return;
-        }
-        // Able to run script
-        var runningScriptObj = new RunningScript(script, args);
-        runningScriptObj.threads = numThreads;
-        if (startWorkerScript(runningScriptObj, server)) {
-            post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
-        } else {
-            postError(`Failed to start script`);
-        }
-	},
-
-    runContract: async function(contractName) {
-        // There's already an opened contract
-        if (Terminal.contractOpen) {
-            return post("ERROR: There's already a Coding Contract in Progress");
-        }
-
-        const serv = Player.getCurrentServer();
-        const contract = serv.getContract(contractName);
-        if (contract == null) {
-            return post("ERROR: No such contract");
-        }
-
-        Terminal.contractOpen = true;
-        const res = await contract.prompt();
-
-        switch (res) {
-            case CodingContractResult.Success:
-                var reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
-                post(`Contract SUCCESS - ${reward}`);
-                serv.removeContract(contract);
-                break;
-            case CodingContractResult.Failure:
-                ++contract.tries;
-                if (contract.tries >= contract.getMaxNumTries()) {
-                    post("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
-                    serv.removeContract(contract);
-                } else {
-                    post(`Contract <p style='color:red;display:inline'>FAILED</p> - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
-                }
-                break;
-            case CodingContractResult.Cancelled:
-            default:
-                post("Contract cancelled");
-                break;
-        }
-        Terminal.contractOpen = false;
-    },
 };
 
 export {postNetburnerText, Terminal};
