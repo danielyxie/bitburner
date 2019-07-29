@@ -783,11 +783,6 @@ let Terminal = {
         // Process any aliases
         command = substituteAliases(command);
 
-        // Allow usage of ./
-        if (command.startsWith("./")) {
-            command = "run " + command.slice(2);
-        }
-
         // Only split the first space
 		var commandArray = Terminal.parseCommandArguments(command);
 		if (commandArray.length == 0) { return; }
@@ -929,61 +924,12 @@ let Terminal = {
         }
 	},
 
-	// Contains the implementations of all possible programs
-	executeProgram: function(commandArray) {
-        if (commandArray.length < 2) { return; }
-
-        var s = Player.getCurrentServer();
-        const programName = commandArray[1];
-        const splitArgs = commandArray.slice(1);
-
-        // TODO: refactor this/these out of Terminal. This logic could reside closer to the Programs themselves.
-        /**
-         * @typedef {function (server=, args=)} ProgramHandler
-         * @param {Server} server The current server the program is being executed against
-         * @param {string[]} args The command line arguments passed in to the program
-         * @returns {void}
-         */
-        /**
-         * @type {Object.<string, ProgramHandler}
-         */
-        const programHandlers = {};
-        programHandlers[Programs.NukeProgram.name] = nuke;
-        programHandlers[Programs.BruteSSHProgram.name] = bruteSSH;
-        programHandlers[Programs.FTPCrackProgram.name] = FTPCrack;
-        programHandlers[Programs.RelaySMTPProgram.name] = relaySMTP;
-        programHandlers[Programs.HTTPWormProgram.name] = HTTPWorm;
-        programHandlers[Programs.SQLInjectProgram.name] = SQLInject;
-        programHandlers[Programs.ServerProfiler.name] = ServerProfiler;
-        programHandlers[Programs.AutoLink.name] = AutoLink;
-        programHandlers[Programs.DeepscanV1.name] = DeepscanV1;
-        programHandlers[Programs.DeepscanV2.name] = DeepscanV2;
-        programHandlers[Programs.Flight.name] = Flight;
-        programHandlers[Programs.BitFlume.name] = BitFlume;
-
-        if (!programHandlers.hasOwnProperty(programName)){
-            post("Invalid executable. Cannot be run");
-            return;
-        }
-
-        programHandlers[programName](s, splitArgs);
-	},
-
     /**
      * Given a filename, returns that file's full path. This takes into account
      * the Terminal's current directory.
      */
     getFilepath : function(filename) {
-        //const path = evaluateFilePath(filename, Terminal.currDir, Player.getCurrentServer() );
-        //if (path == null) {
-        //    throw new Error(`Invalid file path specified: ${filename}`);
-        //}
-
-        //if (isInRootDirectory(path)) {
-        //    return removeLeadingSlash(path);
-        //}
         let result = path.resolve( Terminal.currDir+filename)
-        //console.log(`result = ${result}, server result: ${Player.getCurrentServer().resolvePath(Terminal.currDir, filename)}`);
         return result;
     },
 
@@ -992,22 +938,8 @@ let Terminal = {
      * current directory + server. Returns the script if it exists, and null otherwise.
      */
     getFileContent: function(filename){
-        //console.log(`filename ${filename}; path ${Terminal.getFilepath(filename)}`);
         return Player.getCurrentServer().readFile(Terminal.getFilepath(filename));
     },
-
-    postThrownError: function(e) {
-        if (e instanceof Error) {
-            const errorLabel = "Error: ";
-            const errorString = e.toString();
-            if (errorString.startsWith(errorLabel)) {
-                postError(errorString.slice(errorLabel.length));
-            } else {
-                postError(errorString);
-            }
-        }
-    },
-
 };
 
 export {postNetburnerText, Terminal};
