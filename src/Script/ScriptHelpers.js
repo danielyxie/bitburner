@@ -295,37 +295,6 @@ function saveAndCloseScriptEditor() {
     }
 
     Engine.loadTerminalContent();
-    /*
-    if (isScriptFilename(filename)) {
-        //If the current script already exists on the server, overwrite it
-        for (var i = 0; i < s.scripts.length; i++) {
-            if (filename == s.scripts[i].filename) {
-                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
-                Engine.loadTerminalContent();
-                return;
-            }
-        }
-
-        //If the current script does NOT exist, create a new one
-        const script = new Script();
-        script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
-        s.scripts.push(script);
-    } else if (filename.endsWith(".txt")) {
-        for (var i = 0; i < s.textFiles.length; ++i) {
-            if (s.textFiles[i].fn === filename) {
-                s.textFiles[i].write(code);
-                Engine.loadTerminalContent();
-                return;
-            }
-        }
-        var textFile = new TextFile(filename, code);
-        s.textFiles.push(textFile);
-    } else {
-        dialogBoxCreate("Invalid filename. Must be either a script (.script) or " +
-                        " or text file (.txt)")
-        return;
-    }
-    */
 }
 
 export function scriptCalculateOfflineProduction(runningScriptObj) {
