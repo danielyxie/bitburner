@@ -110,12 +110,14 @@ export class Script {
         }
         this.server = serverIp;
         this.getServer().writeFile(this.filename, code);
+        this.getServer().scriptsMap[this.filename] = this;
+
     }
 
     update(){
         this.updateRamUsage();
         this.markUpdated();
-        this.getServer().scriptsMap[this.filename] = this;
+        this.getServer().scriptsMap[this.filename] = this; //TODO fix the serialization problem.
     }
 
     getServer() {
