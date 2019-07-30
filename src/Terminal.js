@@ -388,7 +388,7 @@ $(document).keyup(function(e) {
         }
 	}
 });
-
+//TODO allow some multiplayer mechanics?
 let Terminal = {
     // Flags to determine whether the player is currently running a hack or an analyze
     hackFlag:           false,
@@ -910,15 +910,18 @@ let Terminal = {
         var server = Player.getCurrentServer();
         var executable = sys.fetchExecutable(commandArray[0]);
         if (!executable){
-            let path = commandArray[0];
-            if(server.exists(path)) {
+            let filepath = commandArray[0];
+            // this triggers if the file is in relative pathing format.
+            if(!server.exists(filepath) & server.exists(path.resolve(this.currDir+"/"+filepath))) filepath = path.resolve(this.currDir+"/"+filepath);
+
+            if(server.exists(filepath)) {
                 // if it's an existing path, check if it is a directory or an executable
-                if (server.isDir(path))
-                    post(`${path} is a directory.`);
-                else if (server.isExecutable(path))
+                if (server.isDir(filepath))
+                    post(`${filepath} is a directory.`);
+                else if (server.isExecutable(filepath))
                     run(server, Terminal, post, postError, commandArray)
                 else
-                    post(`${path} is a file.`);
+                    post(`${filepath} is a file.`);
             }
             else postError(`${commandArray[0]} not found`);
         }else{
