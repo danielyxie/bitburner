@@ -780,151 +780,81 @@ function NetscriptFunctions(workerScript) {
         },
         nuke: function(ip){
             updateDynamicRam("nuke", getRamCost("nuke"));
-            if (ip === undefined) {
-                err( "Program call has incorrect number of arguments. Takes 1 argument");
-            }
-            let output = [];
             let out = (msg)=>{if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) workerScript.scriptRef.log(msg);};//output.push(msg)};
             let exec = sys.fetchExecutable("NUKE.exe");
             if(!exec){
-                err("You do not have the NUKE.exe virus!");
+                err("You do not have the NUKE.exe program!");
                 return false;
             }
             else{
                 exec(workerScript.getServer(), {}, out, err, [ip]);
                 return true;
-            }
+            };
         },
         brutessh: function(ip){
             updateDynamicRam("brutessh", getRamCost("brutessh"));
-            if (ip === undefined) {
-                err( "Program call has incorrect number of arguments. Takes 1 argument");
+            let out = (msg)=>{if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) workerScript.scriptRef.log(msg);};
+            let exec = sys.fetchExecutable("bruteSSH.exe");
+            if(!exec){
+                err("You do not have the bruteSSH.exe program!");
+                return false;
             }
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
-                err( "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!Player.hasProgram(Programs.BruteSSHProgram.name)) {
-                workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
-                err( "You do not have the BruteSSH.exe program!");
-            }
-            if (!server.sshPortOpen) {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) {
-                    workerScript.scriptRef.log("Executed BruteSSH.exe on " + server.hostname + " to open SSH port (22)");
-                }
-                server.sshPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) {
-                    workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
-                }
-            }
-            return true;
+            else{
+                exec(workerScript.getServer(), {}, out, err, [ip]);
+                return true;
+            };
         },
         ftpcrack: function(ip) {
             updateDynamicRam("ftpcrack", getRamCost("ftpcrack"));
-            if (ip === undefined) {
-                err( "Program call has incorrect number of arguments. Takes 1 argument");
+            let out = (msg)=>{if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) workerScript.scriptRef.log(msg);};
+            let exec = sys.fetchExecutable("FTPCrack.exe");
+            if(!exec){
+                err("You do not have the FTPCrack.exe program!");
+                return false;
             }
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
-                err( "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!Player.hasProgram(Programs.FTPCrackProgram.name)) {
-                err( "You do not have the FTPCrack.exe program!");
-            }
-            if (!server.ftpPortOpen) {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) {
-                    workerScript.scriptRef.log("Executed FTPCrack.exe on " + server.hostname + " to open FTP port (21)");
-                }
-                server.ftpPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) {
-                    workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
-                }
-            }
-            return true;
+            else{
+                exec(workerScript.getServer(), {}, out, err, [ip]);
+                return true;
+            };
         },
         relaysmtp: function(ip) {
             updateDynamicRam("relaysmtp", getRamCost("relaysmtp"));
-            if (ip === undefined) {
-                err( "Program call has incorrect number of arguments. Takes 1 argument");
+            let out = (msg)=>{if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) workerScript.scriptRef.log(msg);};
+            let exec = sys.fetchExecutable("relaySMTP.exe");
+            if(!exec){
+                err("You do not have the relaySMTP.exe program!");
+                return false;
             }
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
-                err( "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!Player.hasProgram(Programs.RelaySMTPProgram.name)) {
-                err( "You do not have the relaySMTP.exe program!");
-            }
-            if (!server.smtpPortOpen) {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) {
-                    workerScript.scriptRef.log("Executed relaySMTP.exe on " + server.hostname + " to open SMTP port (25)");
-                }
-                server.smtpPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) {
-                    workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
-                }
-            }
-            return true;
+            else{
+                exec(workerScript.getServer(), {}, out, err, [ip]);
+                return true;
+            };
         },
         httpworm: function(ip) {
             updateDynamicRam("httpworm", getRamCost("httpworm"));
-            if (ip === undefined) {
-                err( "Program call has incorrect number of arguments. Takes 1 argument");
+            let out = (msg)=>{if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) workerScript.scriptRef.log(msg);};
+            let exec = sys.fetchExecutable("HTTPWorm.exe");
+            if(!exec){
+                err("You do not have the HTTPWorm.exe program!");
+                return false;
             }
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
-                err( "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!Player.hasProgram(Programs.HTTPWormProgram.name)) {
-                err( "You do not have the HTTPWorm.exe program!");
-            }
-            if (!server.httpPortOpen) {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) {
-                    workerScript.scriptRef.log("Executed HTTPWorm.exe on " + server.hostname + " to open HTTP port (80)");
-                }
-                server.httpPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) {
-                    workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
-                }
-            }
-            return true;
+            else{
+                exec(workerScript.getServer(), {}, out, err, [ip]);
+                return true;
+            };
         },
         sqlinject: function(ip) {
             updateDynamicRam("sqlinject", getRamCost("sqlinject"));
-            if (ip === undefined) {
-                err( "Program call has incorrect number of arguments. Takes 1 argument");
+            let out = (msg)=>{if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) workerScript.scriptRef.log(msg);};
+            let exec = sys.fetchExecutable("SQLInject.exe");
+            if(!exec){
+                err("You do not have the SQLInject.exe program!");
+                return false;
             }
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
-                err( "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!Player.hasProgram(Programs.SQLInjectProgram.name)) {
-                err( "You do not have the SQLInject.exe program!");
-            }
-            if (!server.sqlPortOpen) {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) {
-                    workerScript.scriptRef.log("Executed SQLInject.exe on " + server.hostname + " to open SQL port (1433)");
-                }
-                server.sqlPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) {
-                    workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
-                }
-            }
-            return true;
+            else{
+                exec(workerScript.getServer(), {}, out, err, [ip]);
+                return true;
+            };
         },
         run: function(scriptname,threads = 1) {
             updateDynamicRam("run", getRamCost("run"));
