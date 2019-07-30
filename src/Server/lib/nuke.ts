@@ -1,10 +1,8 @@
 import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { post, postError } from "../../ui/postToTerminal";
 import { getServer } from "../AllServers";
 import { BaseServer } from "../BaseServer";
 import { Server } from "../Server";
-import { CLIErrorType } from "./CLIErrorType";
-import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
+import {registerExecutable, ManualEntry} from "./sys";
 
 export function nuke(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
     var targetServer: Server | HacknetServer | undefined;
@@ -21,12 +19,14 @@ export function nuke(server:BaseServer, term:any, out:Function, err:Function, ar
 
     if (targetServer instanceof Server) {
         if (targetServer.hasAdminRights) {
+
             out("You already have root access to this computer.");
             return;
         }
         // TODO: let the script post by themselves or return their message and let the terminal output the result?
         // Letting the terminal deal with the script result could allow using pipes.
         if (targetServer.openPortCount >= targetServer.numOpenPortsRequired) {
+
             targetServer.hasAdminRights = true;
             out(`Gained root access to ${targetServer.hostname}!`);
             // TODO: Make this take time rather than be instant
