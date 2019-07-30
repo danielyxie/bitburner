@@ -87,7 +87,7 @@ export function scp(server: BaseServer, term: any, out:Function, err:Function, a
                         break;
                     default:
                         err(`${value} is not a valid versioning option.`);
-                        throw new Error(`${value} is not a valid versioning option.`);
+                        return;
                 }
                 break;
             }
@@ -96,38 +96,39 @@ export function scp(server: BaseServer, term: any, out:Function, err:Function, a
                     break;
         }
     }
-    if (srcs.length == 0) { throw NO_PATHS_PROVIDED; }
-    if (!options.targetDir && srcs.length == 1) { throw NO_SOURCES_PROVIDED; }
+    if (srcs.length == 0) { err( NO_PATHS_PROVIDED);return; }
+    if (!options.targetDir && srcs.length == 1) { err(NO_SOURCES_PROVIDED);return; }
     if(!options.targetDir){
-        dest = term.getFilepath(srcs.pop())
+        dest = path.resolve(cwd+"/"+(srcs.pop()))
     }else{
-        dest = term.getFilepath(options.targetDir);
+        dest = path.resolve(cwd+"/"+options.targetDir);
     }
     if(!options.targetAsDirectory && (srcs.length > 1 || server.isDir(srcs[0]))) {
-        throw "Cannot copy multiple files into a single filename.";
+        err( "Cannot copy multiple files into a single filename.");
+        return;
     }
     if (!options.to){
-        throw "You must provide a target server using the --to SERVER argument";
+        err( "You must provide a target server using the --to SERVER argument");return;
     }
     if(!options.destServer){ // check for testing purposes when testing without the game being loaded.
         options.destServer = getServer(options.to);
     }
 
     if(!options.destServer){ // this one is the real null check though.
-        throw `Unknown server ${options.to}`;
+        err(`Unknown server ${options.to}`);return;
     }
     if(options.destServer.exists(dest)){
-        if(options.destServer.isDir(dest) && !options.targetAsDirectory) {err(`${dest} already exists as a directory. `)}
-        else if(!options.destServer.isDir(dest) && options.targetAsDirectory) {err(`${dest} already exists as a file. `)}
+        if(options.destServer.isDir(dest) && !options.targetAsDirectory) {err(`${dest} already exists as a directory. `); return;}
+        else if(!options.destServer.isDir(dest) && options.targetAsDirectory) {err(`${dest} already exists as a file. `); return;}
     }
     dest = path.resolve(dest) + ((options.targetAsDirectory)?"/":"");
     const processed = new Set<string>();
-    processed.add(dest);
+    if(server.isDir(dest)) processed.add(dest);
     // this way we cannot copy a folder into itself.
     // ex: copy all the content of /src/ into /src/test/ will not copy the content of /src/test/ as src/test/test/, only /src/ content.
     while (srcs.length > 0) {
-        let src = term.getFilepath(srcs.pop());
-        if (src === dest) { err(`Cannot copy ${src} on itself. Skipping it.`); continue; }
+        let src = path.resolve(cwd+"/"+srcs.pop());
+        if (src === dest && options.destServer.ip == server.ip) { err(`Cannot copy ${src} on itself. Skipping it.`); continue; }
         if (processed.has(src)) { continue; }
         processed.add(src);
         if (!server.exists(src)) {
