@@ -9,8 +9,6 @@ import { Generic_fromJSON,
          Reviver } from "../../utils/JSONReviver";
 import { createRandomString } from "../utils/helpers/createRandomString";
 
-import { SERVERS_INITIALIZED } from "./AllServers";
-
 export interface IConstructorParams {
     adminRights?: boolean;
     hackDifficulty?: number;
@@ -36,7 +34,6 @@ export class Server extends BaseServer {
 
         server.restoreFileSystem(server.volJSON);
 
-        if (SERVERS_INITIALIZED) { server.scripts.forEach((script) => script.updateRamUsage()); }
         // now that the file system has been restored we can update the scripts.
         return server;
     }
