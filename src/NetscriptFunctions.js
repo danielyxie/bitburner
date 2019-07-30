@@ -783,28 +783,17 @@ function NetscriptFunctions(workerScript) {
             if (ip === undefined) {
                 err( "Program call has incorrect number of arguments. Takes 1 argument");
             }
-            var server = getServer(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
-                err( "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
+            let output = [];
+            let out = (msg)=>{if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) workerScript.scriptRef.log(msg);};//output.push(msg)};
+            let exec = sys.fetchExecutable("NUKE.exe");
+            if(!exec){
+                err("You do not have the NUKE.exe virus!");
+                return false;
             }
-            if (!Player.hasProgram(Programs.NukeProgram.name)) {
-                err( "You do not have the NUKE.exe virus!");
+            else{
+                exec(workerScript.getServer(), {}, out, err, [ip]);
+                return true;
             }
-            if (server.openPortCount < server.numOpenPortsRequired) {
-                err( "Not enough ports opened to use NUKE.exe virus");
-            }
-            if (server.hasAdminRights) {
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) {
-                    workerScript.scriptRef.log("Already have root access to " + server.hostname);
-                }
-            } else {
-                server.hasAdminRights = true;
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) {
-                    workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
-                }
-            }
-            return true;
         },
         brutessh: function(ip){
             updateDynamicRam("brutessh", getRamCost("brutessh"));
