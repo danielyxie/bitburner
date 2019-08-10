@@ -748,8 +748,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "the result should be an array with only an empty string.\n\n",
                     "IMPORTANT: The string may contain letters, not just parentheses.",
                     `Examples:\n`,
-                    `"()())()" -> [()()(), (())()]\n`,
-                    `"(a)())()" -> [(a)()(), (a())()]\n`,
+                    `"()())()" -> ["()()()", "(())()"]\n`,
+                    `"(a)())()" -> ["(a)()()", "(a())()"]\n`,
                     `")( -> [""]`].join(" ");
         },
         difficulty: 10,
@@ -817,8 +817,12 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
             const sanitizedPlayerAns = removeBracketsFromArrayString(ans)
                                        .replace(/\s/g, "");
-
             const playerAnsArray: string[] = sanitizedPlayerAns.split(",");
+            for (let i = 0; i < playerAnsArray.length; ++i) {
+                playerAnsArray[i] = removeQuotesFromString(playerAnsArray[i])
+                                    .replace(/\s/g, "");
+            }
+
             if (playerAnsArray.length !== res.length) { return false; }
             for (const resultInAnswer of res) {
                 if (!playerAnsArray.includes(resultInAnswer)) { return false; }
@@ -845,9 +849,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     `"1+01" is not a valid expression`,
                     "Examples:\n\n",
                     `Input: digits = "123", target = 6\n`,
-                    `Output: [1+2+3, 1*2*3]\n\n`,
+                    `Output: ["1+2+3", "1*2*3"]\n\n`,
                     `Input: digits = "105", target = 5\n`,
-                    `Output: [1*0+5, 10-5]`].join(" ");
+                    `Output: ["1*0+5", "10-5"]`].join(" ");
         },
         difficulty: 10,
         gen: () => {
@@ -899,7 +903,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
             for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
                 sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i])
-                                           .replace(/\s/g, "");;
+                                           .replace(/\s/g, "");
             }
 
             if (num == null || num.length === 0) {
