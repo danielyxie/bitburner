@@ -66,7 +66,7 @@ have to successfully hack a server is also determined by the server's
 security and your hacking skill level. Even if your hacking attempt
 is unsuccessful, you will still gain experience points.
 
-When you successfully hack a server. You steal a certain percentage
+When you successfully hack a server, you steal a certain percentage
 of that server's total money. This percentage is, once again, determined by the
 server's security and your hacking skill level. The amount of money
 on a server is not limitless. So, if you constantly hack a server
