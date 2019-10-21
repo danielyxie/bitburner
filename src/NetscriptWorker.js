@@ -16,6 +16,7 @@ import {
 } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
+import { resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
 import { NetscriptPort } from "./NetscriptPort";
 import { Player } from "./Player";
 import { RunningScript } from "./Script/RunningScript";
@@ -55,15 +56,19 @@ export function prestigeWorkerScripts() {
     workerScripts.clear();
 }
 
+const FullThreadUseFunctions = new Set(["hack", "grow", "weaken"]);
+
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
 function startNetscript2Script(workerScript) {
     workerScript.running = true;
 
-    // The name of the currently running netscript function, to prevent concurrent
-    // calls to hack, grow, etc.
-    let runningFn = null;
+    // This tracks how many threads are being used, and what functions are currenting being run.
+    workerScript.runningInfo = {
+        threads: 0,
+        runningFns: new Map(),
+    }
 
     // We need to go through the environment and wrap each function in such a way that it
     // can be called at most once at a time. This will prevent situations where multiple
@@ -81,32 +86,69 @@ function startNetscript2Script(workerScript) {
 
             if (propName === "sleep") return f(...args);  // OK for multiple simultaneous calls to sleep.
 
-            const msg = "Concurrent calls to Netscript functions not allowed! " +
-                        "Did you forget to await hack(), grow(), or some other " +
-                        "promise-returning function? (Currently running: %s tried to run: %s)"
-            if (runningFn) {
-                workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName), null)
+            let threadCost = 1;
+            let scriptThreads = workerScript.scriptRef.threads;
+            let runningThreads = workerScript.runningInfo.threads;
+            let runningFns = workerScript.runningInfo.runningFns;
+
+            // Functions use 1 thread or they use full threads.  For the functions that use
+            // full threads (hack, grow, weaken), they take a options hash that can limit the
+            // number of threads, of the form {threads: 4}
+            if (FullThreadUseFunctions.has(propName)) {
+                threadCost = scriptThreads;
+
+                if (args.length > 1) {
+                    const props = args[1];
+                    if (typeof props === "object" && ("threads" in props)) {
+                        let propThreads = props.threads;
+                        if (typeof propThreads === "number") {
+                            threadCost = resolveNetscriptRequestedThreads(workerScript, propName, propThreads);
+                        }
+                    }
+                }
+            }
+
+            if (workerScript.runningInfo.threads + threadCost > scriptThreads){
+                const msg = "Concurrent calls to Netscript functions over thread max (%s) not allowed. " +
+                            "Did you forget to await hack(), grow(), or some other " +
+                            "promise-returning function? (Currently running: %s tried to run: %s with thread(s) %s)"
+                const running = Array.from(runningFns.keys()).join(", ")
+                workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, scriptThreads, running, propName, threadCost), null)
                 throw workerScript;
             }
-            runningFn = propName;
 
-            // If the function throws an error, clear the runningFn flag first, and then re-throw it
+            workerScript.runningInfo.threads += threadCost;
+
+            const currentCount = runningFns.has(propName) ? runningFns.get(propName) : 0;
+            runningFns.set(propName, currentCount + 1);
+
+            const finishRun = () => {
+                workerScript.runningInfo.threads -= threadCost;
+
+                const currentCount = runningFns.has(propName) ? runningFns.get(propName) : 0;
+                runningFns.set(propName, currentCount - 1);
+                if (runningFns.get(propName) === 0) {
+                    runningFns.delete(propName);
+                }
+            }
+
+            // If the function throws an error, clear the runningInfo first, and then re-throw it
             // This allows people to properly catch errors thrown by NS functions without getting
             // the concurrent call error above
             let result;
             try {
                 result = f(...args);
             } catch(e) {
-                runningFn = null;
+                finishRun();
                 throw(e);
             }
 
             if (result && result.finally !== undefined) {
                 return result.finally(function () {
-                    runningFn = null;
+                    finishRun();
                 });
             } else {
-                runningFn = null;
+                finishRun();
                 return result;
             }
         }
