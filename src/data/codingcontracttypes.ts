@@ -65,14 +65,14 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         solver: (data: number, ans: string) => {
             let fac: number = 2;
             let n: number = data;
-            while (n > ((fac-1) * (fac-1))) {
+            while (n > ((fac - 1) * (fac - 1))) {
                 while (n % fac === 0) {
                     n = Math.round(n / fac);
                 }
                 ++fac;
             }
 
-            return (n===1 ? (fac-1) : n) === parseInt(ans, 10);
+            return (n === 1 ? (fac - 1) : n) === parseInt(ans, 10);
         },
     },
     {
@@ -501,8 +501,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     {
         desc: (data: any[]) => {
-            const k: number = (<number>data[0]);
-            const prices: number[] = (<number[]>data[1]);
+            const k: number = (data[0] as number);
+            const prices: number[] = (data[1] as number[]);
             return ["You are given the following array with two elements:\n\n",
                     `[${k}, [${prices}]]\n\n`,
                     "The first element is an integer k. The second element is an",
@@ -530,15 +530,15 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Algorithmic Stock Trader IV",
         numTries: 10,
         solver: (data: any[], ans: string) => {
-            const k: number = (<number>data[0]);
-            const prices: number[] = (<number[]>data[1]);
+            const k: number = (data[0] as number);
+            const prices: number[] = (data[1] as number[]);
 
             const len = prices.length;
             if (len < 2) { return (parseInt(ans) === 0); }
             if (k > len / 2) {
                 let res: number = 0;
                 for (let i = 1; i < len; ++i) {
-                    res += Math.max(prices[i] - prices[i-1], 0);
+                    res += Math.max(prices[i] - prices[i - 1], 0);
                 }
 
                 return (parseInt(ans) === res);
@@ -558,7 +558,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 cur = prices[i];
                 for (let j = k; j > 0; --j) {
                     rele[j] = Math.max(rele[j], hold[j] + cur);
-                    hold[j] = Math.max(hold[j], rele[j-1] - cur);
+                    hold[j] = Math.max(hold[j], rele[j - 1] - cur);
                 }
             }
 
@@ -577,7 +577,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     str += ",";
                 }
 
-                return str + "\n" + createTriangleRecurse(data, level+1);
+                return str + "\n" + createTriangleRecurse(data, level + 1);
             }
 
             function createTriangle(data: number[][]) {
@@ -618,9 +618,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Minimum Path Sum in a Triangle",
         numTries: 10,
         solver: (data: number[][], ans: string) => {
-            let n: number = data.length;
-            let dp: number[] = data[n-1].slice();
-            for (let i = n-2; i > -1; --i) {
+            const n: number = data.length;
+            const dp: number[] = data[n - 1].slice();
+            for (let i = n - 2; i > -1; --i) {
                 for (let j = 0; j < data[i].length; ++j) {
                     dp[j] = Math.min(dp[j], dp[j + 1]) + data[i][j];
                 }
@@ -653,9 +653,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Unique Paths in a Grid I",
         numTries: 10,
         solver: (data: number[], ans: string) => {
-            let n: number = data[0]; // Number of rows
-            let m: number = data[1]; // Number of columns
-            let currentRow: number[] = [];
+            const n: number = data[0]; // Number of rows
+            const m: number = data[1]; // Number of columns
+            const currentRow: number[] = [];
             currentRow.length = n;
 
             for (let i = 0; i < n; i++) {
@@ -715,7 +715,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Unique Paths in a Grid II",
         numTries: 10,
         solver: (data: number[][], ans: string) => {
-            let obstacleGrid: number[][] = [];
+            const obstacleGrid: number[][] = [];
             obstacleGrid.length = data.length;
             for (let i = 0; i < obstacleGrid.length; ++i) {
                 obstacleGrid[i] = data[i].slice();
@@ -725,16 +725,16 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 for (let j = 0; j < obstacleGrid[0].length; j++) {
                     if (obstacleGrid[i][j] == 1) {
                         obstacleGrid[i][j] = 0;
-                    } else if (i==0 && j==0) {
+                    } else if (i == 0 && j == 0) {
                         obstacleGrid[0][0] = 1;
                     } else {
-                        obstacleGrid[i][j] = (i > 0 ? obstacleGrid[i-1][j] : 0) + ( j > 0 ? obstacleGrid[i][j-1] : 0);
+                        obstacleGrid[i][j] = (i > 0 ? obstacleGrid[i - 1][j] : 0) + (j > 0 ? obstacleGrid[i][j - 1] : 0);
                     }
 
                 }
             }
 
-            return (obstacleGrid[obstacleGrid.length -1][obstacleGrid[0].length-1] === parseInt(ans));
+            return (obstacleGrid[obstacleGrid.length - 1][obstacleGrid[0].length - 1] === parseInt(ans));
         },
     },
     {
@@ -747,15 +747,15 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "as an array of strings. If it is impossible to validate the string",
                     "the result should be an array with only an empty string.\n\n",
                     "IMPORTANT: The string may contain letters, not just parentheses.",
-                    `Examples:\n`,
-                    `"()())()" -> ["()()()", "(())()"]\n`,
-                    `"(a)())()" -> ["(a)()()", "(a())()"]\n`,
-                    `")( -> [""]`].join(" ");
+                    'Examples:\n',
+                    '"()())()" -> ["()()()", "(())()"]\n',
+                    '"(a)())()" -> ["(a)()()", "(a())()"]\n',
+                    '")( -> [""]'].join(" ");
         },
         difficulty: 10,
         gen: () => {
             const len: number = getRandomInt(2, 20);
-            let chars: string[] = [];
+            const chars: string[] = [];
             chars.length = len;
 
             // 80% chance of the first parenthesis being (
@@ -779,12 +779,12 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         solver: (data: string, ans: string) => {
             let left = 0;
             let right = 0;
-            let res: string[] = [];
+            const res: string[] = [];
 
             for (let i = 0; i < data.length; ++i) {
-                if (data[i] === '(') {
+                if (data[i] === "(") {
                     ++left;
-                } else if (data[i] === ')') {
+                } else if (data[i] === ")") {
                     (left > 0) ? --left : ++right;
                 }
             }
@@ -792,22 +792,22 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             function dfs(pair: number, index: number, left: number, right: number, s: string, solution: string, res: string[]) {
                 if (s.length === index) {
                     if (left === 0 && right === 0 && pair === 0) {
-                        for(var i = 0; i < res.length; i++) {
-                            if(res[i] === solution) { return; }
+                        for (let i = 0; i < res.length; i++) {
+                            if (res[i] === solution) { return; }
                         }
                         res.push(solution);
                     }
                     return;
                 }
 
-                if (s[index] === '(') {
+                if (s[index] === "(") {
                     if (left > 0) {
                         dfs(pair, index + 1, left - 1, right, s, solution, res);
                     }
                     dfs(pair + 1, index + 1, left, right, s, solution + s[index], res);
-                } else if (s[index] === ')') {
-                    if (right > 0) dfs(pair, index + 1, left, right - 1, s, solution, res);
-                    if (pair > 0) dfs(pair - 1, index + 1, left, right, s, solution + s[index], res);
+                } else if (s[index] === ")") {
+                    if (right > 0) { dfs(pair, index + 1, left, right - 1, s, solution, res); }
+                    if (pair > 0) { dfs(pair - 1, index + 1, left, right, s, solution + s[index], res); }
                 } else {
                     dfs(pair, index + 1, left, right, s, solution + s[index], res);
                 }
@@ -846,12 +846,12 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "is the string of digits, while the second element is the target number:\n\n",
                     `["${digits}", ${target}]\n\n`,
                     "NOTE: Numbers in the expression cannot have leading 0's. In other words,",
-                    `"1+01" is not a valid expression`,
+                    '"1+01" is not a valid expression',
                     "Examples:\n\n",
-                    `Input: digits = "123", target = 6\n`,
-                    `Output: ["1+2+3", "1*2*3"]\n\n`,
-                    `Input: digits = "105", target = 5\n`,
-                    `Output: ["1*0+5", "10-5"]`].join(" ");
+                    'Input: digits = "123", target = 6\n',
+                    'Output: ["1+2+3", "1*2*3"]\n\n',
+                    'Input: digits = "105", target = 5\n',
+                    'Output: ["1*0+5", "10-5"]'].join(" ");
         },
         difficulty: 10,
         gen: () => {
@@ -886,8 +886,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 }
 
                 for (let i = pos; i < num.length; ++i) {
-                    if (i != pos && num[pos] == '0') { break; }
-                    let cur = parseInt(num.substring(pos, i+1));
+                    if (i != pos && num[pos] == "0") { break; }
+                    const cur = parseInt(num.substring(pos, i + 1));
 
                     if (pos === 0) {
                         helper(res, path + cur, num, target, i + 1, cur, cur);
@@ -912,7 +912,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 return false;
             }
 
-            let result: string[] = [];
+            const result: string[] = [];
             helper(result, "", num, target, 0, 0, 0);
 
             for (const expr of result) {

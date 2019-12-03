@@ -8,9 +8,9 @@
  *  - Lower price -> Bigger spread
  *  - Share tx required for movement used for balancing
  */
-import { StockSymbols } from "./StockSymbols";
-import { IConstructorParams } from "../Stock";
 import { LocationName } from "../../Locations/data/LocationNames";
+import { IConstructorParams } from "../Stock";
+import { StockSymbols } from "./StockSymbols";
 
 export const InitStockMetadata: IConstructorParams[] = [
     {

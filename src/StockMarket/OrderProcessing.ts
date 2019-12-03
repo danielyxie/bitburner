@@ -4,9 +4,9 @@
  */
 import {
     buyStock,
+    sellShort,
     sellStock,
     shortStock,
-    sellShort,
 } from "./BuyingAndSelling";
 import { IOrderBook } from "./IOrderBook";
 import { IStockMarket } from "./IStockMarket";
@@ -23,7 +23,7 @@ import { numeralWrapper } from "../ui/numeralFormat";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 
 export interface IProcessOrderRefs {
-    rerenderFn: () => void;
+    rerenderFn(): void;
     stockMarket: IStockMarket;
     symbolToStockMap: IMap<Stock>;
 }
@@ -36,7 +36,7 @@ export interface IProcessOrderRefs {
  * @param {IProcessOrderRefs} refs - References to objects/functions that are required for this function
  */
 export function processOrders(stock: Stock, orderType: OrderTypes, posType: PositionTypes, refs: IProcessOrderRefs): void {
-    let orderBook = refs.stockMarket["Orders"];
+    const orderBook = refs.stockMarket.Orders;
     if (orderBook == null) {
         const orders: IOrderBook = {};
         for (const name in refs.stockMarket) {
@@ -44,7 +44,7 @@ export function processOrders(stock: Stock, orderType: OrderTypes, posType: Posi
             if (!(stock instanceof Stock)) { continue; }
             orders[stock.symbol] = [];
         }
-        refs.stockMarket["Orders"] = orders;
+        refs.stockMarket.Orders = orders;
         return; // Newly created, so no orders to process
     }
     let stockOrders = orderBook[stock.symbol];
@@ -105,15 +105,15 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
         return;
     }
     const stockMarket = refs.stockMarket;
-    const orderBook = stockMarket["Orders"];
+    const orderBook = stockMarket.Orders;
     const stockOrders = orderBook[stock.symbol];
 
     // When orders are executed, the buying and selling functions shouldn't
     // emit popup dialog boxes. This options object configures the functions for that
     const opts = {
         rerenderFn: refs.rerenderFn,
-        suppressDialog: true
-    }
+        suppressDialog: true,
+    };
 
     let res = true;
     let isBuy = false;
@@ -159,7 +159,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
     } else {
         if (isBuy) {
             dialogBoxCreate(`Failed to execute ${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}). ` +
-                            `This is most likely because you do not have enough money or the order would exceed the stock's maximum number of shares`);
+                            "This is most likely because you do not have enough money or the order would exceed the stock's maximum number of shares");
         }
     }
 }

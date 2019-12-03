@@ -4,7 +4,7 @@ import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
 
 export const Crimes: IMap<Crime> = {
-  Shoplift: new Crime("Shoplift", CONSTANTS.CrimeShoplift, 2e3, 15e3, 1/20, 0.1, {
+  Shoplift: new Crime("Shoplift", CONSTANTS.CrimeShoplift, 2e3, 15e3, 1 / 20, 0.1, {
     dexterity_success_weight: 1,
     agility_success_weight: 1,
 
@@ -12,7 +12,7 @@ export const Crimes: IMap<Crime> = {
     agility_exp: 2,
   }),
 
-  RobStore: new Crime("Rob Store", CONSTANTS.CrimeRobStore, 60e3, 400e3, 1/5, 0.5, {
+  RobStore: new Crime("Rob Store", CONSTANTS.CrimeRobStore, 60e3, 400e3, 1 / 5, 0.5, {
     hacking_exp: 30,
     dexterity_exp: 45,
     agility_exp: 45,
@@ -24,7 +24,7 @@ export const Crimes: IMap<Crime> = {
     intelligence_exp: 0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 
-  Mug: new Crime("Mug", CONSTANTS.CrimeMug, 4e3, 36e3, 1/5, 0.25, {
+  Mug: new Crime("Mug", CONSTANTS.CrimeMug, 4e3, 36e3, 1 / 5, 0.25, {
     strength_exp: 3,
     defense_exp: 3,
     dexterity_exp: 3,
@@ -36,7 +36,7 @@ export const Crimes: IMap<Crime> = {
     agility_success_weight: 0.5,
   }),
 
-  Larceny: new Crime("Larceny", CONSTANTS.CrimeLarceny, 90e3, 800e3, 1/3, 1.5, {
+  Larceny: new Crime("Larceny", CONSTANTS.CrimeLarceny, 90e3, 800e3, 1 / 3, 1.5, {
     hacking_exp: 45,
     dexterity_exp: 60,
     agility_exp: 60,
@@ -58,7 +58,7 @@ export const Crimes: IMap<Crime> = {
     agility_success_weight: 1,
   }),
 
-  BondForgery: new Crime("Bond Forgery", CONSTANTS.CrimeBondForgery, 300e3, 4.5e6, 1/2, 0.1, {
+  BondForgery: new Crime("Bond Forgery", CONSTANTS.CrimeBondForgery, 300e3, 4.5e6, 1 / 2, 0.1, {
     hacking_exp: 100,
     dexterity_exp: 150,
     charisma_exp: 15,

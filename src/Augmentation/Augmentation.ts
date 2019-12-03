@@ -80,12 +80,12 @@ export class Augmentation {
 
     // Multipliers given by this Augmentation.  Must match the property name in
     // The Player/Person classes
-    mults: IMap<number> = {}
+    mults: IMap<number> = {};
 
     // Initial cost. Doesn't change when you purchase multiple Augmentation
     startingCost: number = 0;
 
-    constructor(params: IConstructorParams={ info: "", moneyCost: 0, name: "", repCost: 0 }) {
+    constructor(params: IConstructorParams= { info: "", moneyCost: 0, name: "", repCost: 0 }) {
         this.name = params.name;
         this.info = params.info;
         this.prereqs = params.prereqs ? params.prereqs : [];
@@ -141,7 +141,7 @@ export class Augmentation {
                 console.warn(`In Augmentation.addToFactions(), could not find faction with this name: ${factionList[i]}`);
                 continue;
             }
-            faction!.augmentations.push(this.name);
+            faction.augmentations.push(this.name);
         }
     }
 
@@ -154,7 +154,7 @@ export class Augmentation {
                     console.warn(`Invalid Faction object in addToAllFactions(). Key value: ${fac}`);
                     continue;
                 }
-                facObj!.augmentations.push(this.name);
+                facObj.augmentations.push(this.name);
             }
         }
     }

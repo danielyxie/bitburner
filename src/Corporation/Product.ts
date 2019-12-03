@@ -1,15 +1,15 @@
 import { EmployeePositions }        from "./EmployeePositions";
 import { MaterialSizes }            from "./MaterialSizes";
-import { ProductRatingWeights,
-         IProductRatingWeight }     from "./ProductRatingWeights";
+import { IProductRatingWeight,
+         ProductRatingWeights }     from "./ProductRatingWeights";
 
 import { createCityMap }            from "../Locations/createCityMap";
 import { IMap }                     from "../types";
 
+import { getRandomInt }             from "../../utils/helpers/getRandomInt";
 import { Generic_fromJSON,
          Generic_toJSON,
          Reviver }                  from "../../utils/JSONReviver";
-import { getRandomInt }             from "../../utils/helpers/getRandomInt";
 
 interface IConstructorParams {
     name?: string;
@@ -39,7 +39,6 @@ interface IIndustry {
     sciResearch: any;
     type: string;
 }
-
 
 export class Product {
     // Initiatizes a Product object from a JSON save state.
@@ -114,7 +113,7 @@ export class Product {
     marketTa2: boolean = false;
     marketTa2Price: IMap<number> = createCityMap<number>(0);
 
-    constructor(params: IConstructorParams={}) {
+    constructor(params: IConstructorParams= {}) {
         this.name       = params.name           ? params.name           : "";
         this.dmd        = params.demand         ? params.demand         : 0;
         this.cmp        = params.competition    ? params.competition    : 0;
@@ -135,7 +134,7 @@ export class Product {
 
     // empWorkMult is a multiplier that increases progress rate based on
     // productivity of employees
-    createProduct(marketCycles: number=1, empWorkMult: number=1): void {
+    createProduct(marketCycles: number= 1, empWorkMult: number= 1): void {
         if (this.fin) { return; }
         this.prog += (marketCycles * .01 * empWorkMult);
     }
@@ -144,20 +143,20 @@ export class Product {
     finishProduct(employeeProd: IMap<number>, industry: IIndustry): void {
         this.fin = true;
 
-        //Calculate properties
-        var progrMult = this.prog / 100;
+        // Calculate properties
+        const progrMult = this.prog / 100;
 
-        const engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"];
-        const mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"];
-        const rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"];
-        const opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"];
-        const busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
-        var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
+        const engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd.total;
+        const mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd.total;
+        const rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd.total;
+        const opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd.total;
+        const busRatio    = employeeProd[EmployeePositions.Business] / employeeProd.total;
+        const designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
         console.log("designMult: " + designMult);
-        var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
+        const balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
                           (1.5 * opsRatio) + (busRatio);
-        var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
-        var totalMult = progrMult * balanceMult * designMult * sciMult;
+        const sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
+        const totalMult = progrMult * balanceMult * designMult * sciMult;
 
         this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions.Engineer]) +
                                 (0.05 * employeeProd[EmployeePositions.Management]) +
@@ -190,33 +189,32 @@ export class Product {
                                 (0.05 * employeeProd[EmployeePositions.Operations]) +
                                 (0.05 * employeeProd[EmployeePositions.Business]));
         this.calculateRating(industry);
-        var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
+        const advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
         this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
         this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
         this.cmp = getRandomInt(0, 70);
 
-        //Calculate the product's required materials
-        //For now, just set it to be the same as the requirements to make materials
-        for (var matName in industry.reqMats) {
+        // Calculate the product's required materials
+        // For now, just set it to be the same as the requirements to make materials
+        for (const matName in industry.reqMats) {
             if (industry.reqMats.hasOwnProperty(matName)) {
                 this.reqMats[matName] = industry.reqMats[matName];
             }
         }
 
-        //Calculate the product's size
-        //For now, just set it to be the same size as the requirements to make materials
+        // Calculate the product's size
+        // For now, just set it to be the same size as the requirements to make materials
         this.siz = 0;
-        for (var matName in industry.reqMats) {
+        for (const matName in industry.reqMats) {
             this.siz += MaterialSizes[matName] * industry.reqMats[matName];
         }
 
-        //Delete unneeded variables
+        // Delete unneeded variables
         delete this.prog;
         delete this.createCity;
         delete this.designCost;
         delete this.advCost;
     }
-
 
     calculateRating(industry: IIndustry): void {
         const weights: IProductRatingWeight = ProductRatingWeights[industry.type];

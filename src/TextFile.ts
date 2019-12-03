@@ -1,11 +1,10 @@
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../utils/JSONReviver";
-
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 /**
  * Represents a plain text file that is typically stored on a server.
@@ -61,7 +60,7 @@ export class TextFile {
             setTimeoutRef(() => {
                 document.body.removeChild(a);
                 window.URL.revokeObjectURL(url);
-            }, 0);
+            },            0);
         }
     }
 

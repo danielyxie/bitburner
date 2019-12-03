@@ -1,6 +1,6 @@
-import { Reviver,
+import { Generic_fromJSON,
          Generic_toJSON,
-         Generic_fromJSON } from "../../utils/JSONReviver";
+         Reviver } from "../../utils/JSONReviver";
 
 export class Message {
     // Initializes a Message Object from a JSON save state
@@ -17,7 +17,7 @@ export class Message {
     // Flag indicating whether this Message has been received by the player
     recvd: boolean = false;
 
-    constructor(filename="", msg="") {
+    constructor(filename= "", msg= "") {
         this.filename   = filename;
         this.msg        = msg;
         this.recvd      = false;

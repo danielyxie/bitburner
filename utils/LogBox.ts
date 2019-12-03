@@ -1,8 +1,8 @@
 import { killWorkerScript } from "../src/Netscript/killWorkerScript";
 import { RunningScript } from "../src/Script/RunningScript";
 
-import { clearEventListeners } from "./uiHelpers/clearEventListeners";
 import { arrayToString } from "./helpers/arrayToString";
+import { clearEventListeners } from "./uiHelpers/clearEventListeners";
 
 import { KEY } from "./helpers/keyCodes";
 
@@ -20,7 +20,7 @@ function logBoxInit(): void {
     // Initialize Close button click listener
     const closeButton = document.getElementById("log-box-close");
     if (closeButton == null) {
-        console.error(`Could not find LogBox's close button`);
+        console.error("Could not find LogBox's close button");
         return;
     }
 
@@ -42,7 +42,7 @@ function logBoxInit(): void {
     logBoxClose();
 
     document.removeEventListener("DOMContentLoaded", logBoxInit);
-};
+}
 
 document.addEventListener("DOMContentLoaded", logBoxInit);
 
@@ -61,7 +61,6 @@ function logBoxOpen() {
     }
 }
 
-
 export let logBoxOpened = false;
 let logBoxCurrentScript: RunningScript | null = null;
 export function logBoxCreate(script: RunningScript) {
@@ -69,7 +68,7 @@ export function logBoxCreate(script: RunningScript) {
 
     const killScriptBtn = clearEventListeners("log-box-kill-script");
     if (killScriptBtn == null) {
-        console.error(`Could not find LogBox's 'Kill Script' button`);
+        console.error("Could not find LogBox's 'Kill Script' button");
         return;
     }
 
@@ -85,7 +84,7 @@ export function logBoxCreate(script: RunningScript) {
     if (textHeader instanceof HTMLElement) {
         textHeader.innerHTML = `${logBoxCurrentScript.filename} ${arrayToString(logBoxCurrentScript.args)}:<br><br>`;
     } else {
-        console.warn(`LogBox's Text Header DOM element is null`);
+        console.warn("LogBox's Text Header DOM element is null");
     }
 
     logBoxCurrentScript.logUpd = true;

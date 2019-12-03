@@ -4,5 +4,5 @@
 export function is2DArray(arr: any[]): boolean {
     if (arr.constructor !== Array) { return false; }
 
-    return arr.every((e) => { return e.constructor === Array; });
+    return arr.every((e) => e.constructor === Array);
 }

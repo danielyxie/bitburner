@@ -15,7 +15,7 @@ import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
 import {
     getPurchaseServerCost,
     purchaseRamForHomeComputer,
-    purchaseServer
+    purchaseServer,
 } from "../Server/ServerPurchases";
 import { SpecialServerIps } from "../Server/SpecialServerIps";
 import { Settings } from "../Settings/Settings";
@@ -24,14 +24,14 @@ import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import {
-    yesNoBoxGetYesButton,
-    yesNoBoxGetNoButton,
     yesNoBoxClose,
     yesNoBoxCreate,
-    yesNoTxtInpBoxGetYesButton,
-    yesNoTxtInpBoxGetNoButton,
+    yesNoBoxGetNoButton,
+    yesNoBoxGetYesButton,
     yesNoTxtInpBoxClose,
-    yesNoTxtInpBoxCreate
+    yesNoTxtInpBoxCreate,
+    yesNoTxtInpBoxGetNoButton,
+    yesNoTxtInpBoxGetYesButton,
 } from "../../utils/YesNoBox";
 
 import { createElement } from "../../utils/uiHelpers/createElement";
@@ -59,7 +59,7 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
     const yesBtn = yesNoBoxGetYesButton();
     const noBtn = yesNoBoxGetNoButton();
     if (yesBtn == null || noBtn == null) {
-        console.warn(`Could nto find YesNo pop-up box buttons`);
+        console.warn("Could nto find YesNo pop-up box buttons");
         return;
     }
 
@@ -92,8 +92,8 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
         return;
     }
 
-    var yesBtn = yesNoTxtInpBoxGetYesButton();
-    var noBtn = yesNoTxtInpBoxGetNoButton();
+    const yesBtn = yesNoTxtInpBoxGetYesButton();
+    const noBtn = yesNoTxtInpBoxGetNoButton();
     if (yesBtn == null || noBtn == null) { return; }
     yesBtn.innerHTML = "Purchase Server";
     noBtn.innerHTML = "Cancel";
@@ -107,7 +107,7 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
 
     yesNoTxtInpBoxCreate(
         `Would you like to purchase a new server with ${ram} GB of RAM for ` +
-        `${numeralWrapper.formatMoney(cost)}?<br><br>Please enter the server hostname below:<br>`
+        `${numeralWrapper.formatMoney(cost)}?<br><br>Please enter the server hostname below:<br>`,
     );
 }
 
@@ -156,7 +156,7 @@ export function createStartCorporationPopup(p: IPlayer) {
                             "and manage your company in the City");
             removeElementById(popupId);
             return false;
-        }
+        },
     });
 
     const seedMoneyButton = createElement("button", {
@@ -177,12 +177,12 @@ export function createStartCorporationPopup(p: IPlayer) {
             }
             dialogBoxCreate(
                 "Congratulations! You just started your own corporation with government seed money. " +
-                "You can visit and manage your company in the City"
+                "You can visit and manage your company in the City",
             );
             removeElementById(popupId);
             return false;
-        }
-    })
+        },
+    });
 
     const cancelBtn = createPopupCloseButton(popupId, { class: "popup-box-button" });
 
@@ -207,7 +207,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer) {
         100e12,
         1e15,
         20e15,
-        200e15
+        200e15,
     ];
     const cost: number = allCosts[currentCores];
 
@@ -216,7 +216,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer) {
     if (yesBtn == null || noBtn == null) { return; }
 
     yesBtn.innerHTML = "Purchase";
-    yesBtn.addEventListener("click", ()=>{
+    yesBtn.addEventListener("click", () => {
         if (!p.canAfford(cost)) {
             dialogBoxCreate("You do not have enough money to purchase an additional CPU Core for your home computer!");
         } else {
@@ -224,14 +224,14 @@ export function createUpgradeHomeCoresPopup(p: IPlayer) {
             p.getHomeComputer().cpuCores++;
             dialogBoxCreate(
                 "You purchased an additional CPU Core for your home computer! It now has " +
-                p.getHomeComputer().cpuCores +  " cores."
+                p.getHomeComputer().cpuCores +  " cores.",
             );
         }
         yesNoBoxClose();
     });
 
     noBtn.innerHTML = "Cancel";
-    noBtn.addEventListener("click", ()=>{
+    noBtn.addEventListener("click", () => {
         yesNoBoxClose();
     });
 
@@ -239,7 +239,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer) {
         "Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
         "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
         "Purchasing an additional core (for a total of " + (p.getHomeComputer().cpuCores + 1) + ") will " +
-        "cost " + numeralWrapper.formatMoney(cost)
+        "cost " + numeralWrapper.formatMoney(cost),
     );
 }
 
@@ -256,23 +256,22 @@ export function createUpgradeHomeRamPopup(p: IPlayer) {
     if (yesBtn == null || noBtn == null) { return; }
 
     yesBtn.innerText = "Purchase";
-    yesBtn.addEventListener("click", ()=>{
+    yesBtn.addEventListener("click", () => {
         purchaseRamForHomeComputer(cost, p);
         yesNoBoxClose();
     });
 
     noBtn.innerText = "Cancel";
-    noBtn.addEventListener("click", ()=>{
+    noBtn.addEventListener("click", () => {
         yesNoBoxClose();
     });
 
     yesNoBoxCreate(
         "Would you like to purchase additional RAM for your home computer? <br><br>" +
-        "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
-        "This will cost " + numeralWrapper.format(cost, '$0.000a')
+        "This will upgrade your RAM from " + ram + "GB to " + ram * 2 + "GB. <br><br>" +
+        "This will cost " + numeralWrapper.format(cost, "$0.000a"),
     );
 }
-
 
 /**
  * Attempt to purchase a TOR router
@@ -280,7 +279,7 @@ export function createUpgradeHomeRamPopup(p: IPlayer) {
  */
 export function purchaseTorRouter(p: IPlayer) {
     if (p.hasTorRouter()) {
-        dialogBoxCreate(`You already have a TOR Router`);
+        dialogBoxCreate("You already have a TOR Router");
         return;
     }
     if (!p.canAfford(CONSTANTS.TorRouterCost)) {
@@ -290,8 +289,8 @@ export function purchaseTorRouter(p: IPlayer) {
     p.loseMoney(CONSTANTS.TorRouterCost);
 
     const darkweb = safetlyCreateUniqueServer({
-        ip: createUniqueRandomIp(), hostname:"darkweb", organizationName:"",
-        isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1
+        ip: createUniqueRandomIp(), hostname: "darkweb", organizationName: "",
+        isConnectedTo: false, adminRights: false, purchasedByPlayer: false, maxRam: 1,
     });
     AddToAllServers(darkweb);
     SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
@@ -301,6 +300,6 @@ export function purchaseTorRouter(p: IPlayer) {
     dialogBoxCreate(
         "You have purchased a Tor router!<br>" +
         "You now have access to the dark web from your home computer<br>" +
-        "Use the scan/scan-analyze commands to search for the dark web connection."
+        "Use the scan/scan-analyze commands to search for the dark web connection.",
     );
 }

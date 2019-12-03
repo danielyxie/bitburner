@@ -1,5 +1,5 @@
-import { Industries } from "./IndustryData";
 import { IMap } from "../types";
+import { Industries } from "./IndustryData";
 
 export interface IProductRatingWeight {
     Aesthetics?: number;
@@ -37,7 +37,7 @@ export const ProductRatingWeights: IMap<object> = {
         Aesthetics:     0.05,
         Features:       0.1,
     },
-    "Computer" : {  //Repeat
+    Computer : {  // Repeat
         Quality:        0.15,
         Performance:    0.25,
         Durability:     0.25,
@@ -73,5 +73,5 @@ export const ProductRatingWeights: IMap<object> = {
         Reliability:    0.1,
         Aesthetics:     0.35,
         Features:       0.1,
-    }
-}
+    },
+};

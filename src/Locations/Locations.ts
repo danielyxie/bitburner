@@ -2,13 +2,12 @@
  * Map of all Locations in the game
  * Key = Location name, value = Location object
  */
-import { City }                 from "./City";
 import { Cities }               from "./Cities";
-import { Location,
-         IConstructorParams }   from "./Location";
+import { City }                 from "./City";
 import { CityName }             from "./data/CityNames";
 import { LocationsMetadata }    from "./data/LocationsMetadata";
-
+import { IConstructorParams,
+         Location }   from "./Location";
 
 import { IMap } from "../types";
 
@@ -20,7 +19,7 @@ export const Locations: IMap<Location> = {};
  */
 function constructLocation(p: IConstructorParams): Location {
     if (!p.name) {
-        throw new Error(`Invalid constructor parameters for Location. No 'name' property`);
+        throw new Error("Invalid constructor parameters for Location. No 'name' property");
     }
 
     if (Locations[p.name] instanceof Location) {

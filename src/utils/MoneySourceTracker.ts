@@ -35,7 +35,7 @@ export class MoneySourceTracker {
             return;
         }
 
-        (<number> this[sanitizedSource]) += amt;
+        (this[sanitizedSource] as number) += amt;
         this.total += amt;
     }
 

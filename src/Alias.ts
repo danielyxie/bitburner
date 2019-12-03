@@ -21,28 +21,36 @@ export function loadGlobalAliases(saveString: string): void {
 }
 
 // Prints all aliases to terminal
-export function printAliases(): void {
-    for (var name in Aliases) {
+export function printAliases(): string {
+    let result = []
+    for (const name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
-            post("alias " + name + "=" + Aliases[name]);
+            result.push("alias " + name + "=" + Aliases[name]);
         }
     }
-    for (var name in GlobalAliases) {
+    for (const name in GlobalAliases) {
         if (GlobalAliases.hasOwnProperty(name)) {
-            post("global alias " + name + "=" + GlobalAliases[name]);
+            result.push("global alias " + name + "=" + GlobalAliases[name]);
         }
     }
+    return result.join("\n");
 }
 
 // Returns true if successful, false otherwise
-export function parseAliasDeclaration(dec: string, global: boolean=false) {
-    var re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
-    var matches = dec.match(re);
-    if (matches == null || matches.length != 3) {return false;}
-    if (global){
-        addGlobalAlias(matches[1],matches[2]);
+export function parseAliasDeclaration(dec: string, global: boolean= false) {
+    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))=(".+")$/;
+    const matches = dec.match(re);
+    if (matches == null) {return false; }
+    // values:
+    // 0 : full expression
+    // 1 : alias name
+    // 2 : alias name if more than 1 character
+    // 3 : alias name if only 1 character
+    // 4 : command string
+    if (global) {
+        addGlobalAlias(matches[1], matches[4]);
     } else {
-        addAlias(matches[1], matches[2]);
+        addAlias(matches[1], matches[4]);
     }
     return true;
 }
@@ -55,7 +63,7 @@ function addAlias(name: string, value: string): void {
 }
 
 function addGlobalAlias(name: string, value: string): void {
-    if (name in Aliases){
+    if (name in Aliases) {
         delete Aliases[name];
     }
     GlobalAliases[name] = value;
@@ -96,21 +104,21 @@ export function removeAlias(name: string): boolean {
  */
 export function substituteAliases(origCommand: string): string {
     const commandArray = origCommand.split(" ");
-    if (commandArray.length > 0){
+    if (commandArray.length > 0) {
         // For the unalias command, dont substite
         if (commandArray[0] === "unalias") { return commandArray.join(" "); }
 
-        var alias = getAlias(commandArray[0]);
+        const alias = getAlias(commandArray[0]);
         if (alias != null) {
             commandArray[0] = alias;
         } else {
-            var alias = getGlobalAlias(commandArray[0]);
+            const alias = getGlobalAlias(commandArray[0]);
             if (alias != null) {
                 commandArray[0] = alias;
             }
         }
-        for (var i = 0; i < commandArray.length; ++i) {
-            var alias = getGlobalAlias(commandArray[i]);
+        for (let i = 0; i < commandArray.length; ++i) {
+            const alias = getGlobalAlias(commandArray[i]);
             if (alias != null) {
                 commandArray[i] = alias;
             }
@@ -118,3 +126,17 @@ export function substituteAliases(origCommand: string): string {
     }
     return commandArray.join(" ");
 }
+
+export function resetAliases(){
+    Aliases = {}
+}
+
+export function resetGlobalAliases(){
+    GlobalAliases = {}
+}
+
+export function resetAllAliases(){
+    resetAliases();
+    resetGlobalAliases();
+}
+

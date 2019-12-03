@@ -1,11 +1,11 @@
-import { Material }                 from "./Material";
-import { MaterialSizes }            from "./MaterialSizes";
-import { IMap }                     from "../types";
-import { numeralWrapper }           from "../ui/numeralFormat";
+import { exceptionAlert }           from "../../utils/helpers/exceptionAlert";
 import { Generic_fromJSON,
          Generic_toJSON,
          Reviver }                  from "../../utils/JSONReviver";
-import { exceptionAlert }           from "../../utils/helpers/exceptionAlert";
+import { IMap }                     from "../types";
+import { numeralWrapper }           from "../ui/numeralFormat";
+import { Material }                 from "./Material";
+import { MaterialSizes }            from "./MaterialSizes";
 
 interface IParent {
     getStorageMultiplier(): number;
@@ -70,8 +70,8 @@ export class Warehouse {
             Drugs:      new Material({name: "Drugs"}),
             Robots:     new Material({name: "Robots"}),
             AICores:    new Material({name: "AI Cores"}),
-            RealEstate: new Material({name: "Real Estate"})
-        }
+            RealEstate: new Material({name: "Real Estate"}),
+        };
 
         if (params.corp && params.industry) {
             this.updateSize(params.corp, params.industry);
@@ -83,7 +83,7 @@ export class Warehouse {
         this.sizeUsed = 0;
         this.breakdown = "";
         for (const matName in this.materials) {
-            var mat = this.materials[matName];
+            const mat = this.materials[matName];
             if (MaterialSizes.hasOwnProperty(matName)) {
                 this.sizeUsed += (mat.qty * MaterialSizes[matName]);
                 if (mat.qty > 0) {
@@ -101,7 +101,7 @@ export class Warehouse {
             this.size = (this.level * 100)
                       * corporation.getStorageMultiplier()
                       * industry.getStorageMultiplier();
-        } catch(e) {
+        } catch (e) {
             exceptionAlert(e);
         }
     }

@@ -1,0 +1,3 @@
+This is a *potentially* temporary storage, the final goal is to migrate those scripts directly into a special file system;
+always available to the player, kinda like a supercharged PATH, but where the player can only read the files and not modify them.
+

@@ -2,8 +2,8 @@
 // i.e. all Industries have these types of Research available to unlock
 import { Research } from "../Research";
 import { ResearchMap } from "../ResearchMap";
-import { ResearchTree,
-         Node } from "../ResearchTree";
+import { Node,
+         ResearchTree } from "../ResearchTree";
 
 function makeNode(name: string): Node {
     const research: Research | null = ResearchMap[name];

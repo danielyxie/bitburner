@@ -12,6 +12,8 @@ import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 
+import {Server} from "../Server/Server";
+
 // These special strings are used to reference the presence of a given logical
 // construct within a user script.
 const specialReferenceIF = "__SPECIAL_referenceIf";
@@ -24,12 +26,12 @@ const memCheckGlobalKey = ".__GLOBAL__";
 /**
  * Parses code into an AST and walks through it recursively to calculate
  * RAM usage. Also accounts for imported modules.
- * @param {Script[]} otherScripts - All other scripts on the server. Used to account for imported scripts
  * @param {string} codeCopy - The code being parsed
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
  *                                      keep track of what functions have/havent been accounted for
+ * @param {Server} server - Server where the scripts are supposed to be, used to import scripts.
  */
-async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
+async function parseOnlyRamCalculate(codepath, code, workerScript, server) {
     try {
         /**
          * Maps dependent identifiers to their dependencies.
@@ -90,25 +92,10 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                     return RamCalculationErrorCode.URLImportError;
                 }
             } else {
-                if (!Array.isArray(otherScripts)) {
-                    console.warn(`parseOnlyRamCalculate() not called with array of scripts`);
-                    return RamCalculationErrorCode.ImportError;
-                }
-
-                let script = null;
-                let fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
-                for (const s of otherScripts) {
-                    if (s.filename === fn) {
-                        script = s;
-                        break;
-                    }
-                }
-
-                if (script == null) {
+                code = server.readFile(server.resolvePath(codepath, nextModule));
+                if (code == null) {
                     return RamCalculationErrorCode.ImportError; // No such script on the server
                 }
-
-                code = script.code;
             }
 
             parseCode(code, nextModule);
@@ -314,10 +301,9 @@ function parseOnlyCalculateDeps(code, currentModule) {
 /**
  * Calculate's a scripts RAM Usage
  * @param {string} codeCopy - The script's code
- * @param {Script[]} otherScripts - All other scripts on the server.
- *                                  Used to account for imported scripts
+ * @param {Server} server - The server where the script and its dependencies are supposed to be.
  */
-export async function calculateRamUsage(codeCopy, otherScripts) {
+export async function calculateRamUsage(codepath, codeCopy, server) {
     // We don't need a real WorkerScript for this. Just an object that keeps
     // track of whatever's needed for RAM calculations
     const workerScript = {
@@ -328,7 +314,7 @@ export async function calculateRamUsage(codeCopy, otherScripts) {
     }
 
     try {
-        return await parseOnlyRamCalculate(otherScripts, codeCopy, workerScript);
+        return await parseOnlyRamCalculate(codepath, codeCopy, workerScript, server);
 	} catch (e) {
         console.error(`Failed to parse script for RAM calculations:`);
         console.error(e);

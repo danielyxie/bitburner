@@ -1,5 +1,5 @@
-import { IMap } from "../../types";
 import { LocationName } from "../../Locations/data/LocationNames";
+import { IMap } from "../../types";
 
 export const StockSymbols: IMap<string> = {};
 

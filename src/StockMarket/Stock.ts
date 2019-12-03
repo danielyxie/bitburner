@@ -1,10 +1,10 @@
-import { IMinMaxRange } from "../types";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../../utils/JSONReviver";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { IMinMaxRange } from "../types";
 
 export const StockForecastInfluenceLimit = 5;
 
@@ -30,17 +30,17 @@ const defaultConstructorParams: IConstructorParams = {
     spreadPerc: 0,
     shareTxForMovement: 1e6,
     symbol: "",
-}
+};
 
 // Helper function that convert a IMinMaxRange to a number
 function toNumber(n: number | IMinMaxRange): number {
     let value: number;
     switch (typeof n) {
         case "number": {
-            return <number>n;
+            return n as number;
         }
         case "object": {
-            const range = <IMinMaxRange>n;
+            const range = n as IMinMaxRange;
             value = getRandomInt(range.min, range.max);
             break;
         }
@@ -181,7 +181,7 @@ export class Stock {
         this.shareTxUntilMovement       = this.shareTxForMovement;
 
         // Total shares is determined by market cap, and is rounded to nearest 100k
-        let totalSharesUnrounded: number = (p.marketCap / this.price);
+        const totalSharesUnrounded: number = (p.marketCap / this.price);
         this.totalShares = Math.round(totalSharesUnrounded / 1e5) * 1e5;
 
         // Max Shares (Outstanding shares) is a percentage of total shares
@@ -214,7 +214,7 @@ export class Stock {
      * The way a stock's forecast changes depends on various internal properties,
      * but is ultimately determined by RNG
      */
-    cycleForecast(changeAmt: number=0.1): void {
+    cycleForecast(changeAmt: number= 0.1): void {
         const increaseChance = this.getForecastIncreaseChance();
 
         if (Math.random() < increaseChance) {
@@ -244,7 +244,7 @@ export class Stock {
      * Change's the stock's second-order forecast during a stock market 'tick'.
      * The change for the second-order forecast to increase is 50/50
      */
-    cycleForecastForecast(changeAmt: number=0.1): void {
+    cycleForecastForecast(changeAmt: number= 0.1): void {
         if (Math.random() < 0.5) {
             this.changeForecastForecast(this.otlkMagForecast + changeAmt);
         } else {

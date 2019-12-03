@@ -36,7 +36,7 @@ export class Research {
     sciResearchMult: number = 1;
     storageMult: number = 1;
 
-    constructor(p: IConstructorParams={name: "", cost: 0, desc: ""}) {
+    constructor(p: IConstructorParams= {name: "", cost: 0, desc: ""}) {
         this.name = p.name;
         this.cost = p.cost;
         this.desc = p.desc;

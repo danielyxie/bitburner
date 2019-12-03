@@ -1,17 +1,17 @@
+import { CONSTANTS } from "../../Constants";
 import { IPlayer,
          IProgramCreate } from "../Program";
-import { CONSTANTS } from "../../Constants";
 
 function requireHackingLevel(lvl: number) {
     return function(p: IPlayer) {
         return p.hacking_skill >= lvl;
-    }
+    };
 }
 
 function bitFlumeRequirements() {
     return function(p: IPlayer) {
         return p.sourceFiles.length > 0 && p.hacking_skill >= 1;
-    }
+    };
 }
 
 export interface IProgramCreationParams {

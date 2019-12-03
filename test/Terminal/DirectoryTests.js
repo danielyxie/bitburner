@@ -71,22 +71,23 @@ describe("Terminal Directory Tests", function() {
             expect(isValidFilename("DeepscanV1.exe-1.01%-INC")).to.equal(true);
             expect(isValidFilename("DeepscanV2.exe-1.00%-INC")).to.equal(true);
             expect(isValidFilename("AutoLink.exe-1.%-INC")).to.equal(true);
+            expect(isValidFilename("my script.script")).to.equal(true);
         });
 
         it("should return false for invalid filenames", function() {
-            expect(isValidFilename("foo")).to.equal(false);
-            expect(isValidFilename("my script.script")).to.equal(false);
-            expect(isValidFilename("a^.txt")).to.equal(false);
-            expect(isValidFilename("b#.lit")).to.equal(false);
-            expect(isValidFilename("lib().js")).to.equal(false);
-            expect(isValidFilename("foo.script_")).to.equal(false);
-            expect(isValidFilename("foo._script")).to.equal(false);
-            expect(isValidFilename("foo.hyphened-ext")).to.equal(false);
-            expect(isValidFilename("")).to.equal(false);
-            expect(isValidFilename("AutoLink-1.%-INC.exe")).to.equal(false);
-            expect(isValidFilename("AutoLink.exe-1.%-INC.exe")).to.equal(false);
-            expect(isValidFilename("foo%.exe")).to.equal(false);
-            expect(isValidFilename("-1.00%-INC")).to.equal(false);
+            expect(isValidFilename("fi:le")).to.equal(false); // do not accept :
+            expect(isValidFilename("fi\"le")).to.equal(false); // do not accept "
+            expect(isValidFilename("fi<le")).to.equal(false); // do not accept <
+            expect(isValidFilename("fi>le")).to.equal(false); // do not accept >
+            expect(isValidFilename("fi/le")).to.equal(false); // do not accept /
+            expect(isValidFilename("fi|le")).to.equal(false); // do not accept |
+            expect(isValidFilename("fi\\le")).to.equal(false); // do not accept \
+            expect(isValidFilename("fi?le")).to.equal(false); // do not accept ?
+            expect(isValidFilename("fi*le")).to.equal(false); // do not accept *
+            expect(isValidFilename("")).to.equal(false); // do not accept empty string
+            expect(isValidFilename("file ")).to.equal(false); // must not end with a space
+            expect(isValidFilename("file.")).to.equal(false); // must not end with a period
+            expect(isValidFilename(" file")).to.equal(false); // must not start with a space
         });
     });
 
@@ -107,29 +108,33 @@ describe("Terminal Directory Tests", function() {
         });
 
         it("should return false for invalid directory names", function() {
-            expect(isValidDirectoryName("")).to.equal(false);
-            expect(isValidDirectoryName("foo.dir")).to.equal(false);
-            expect(isValidDirectoryName("1.")).to.equal(false);
-            expect(isValidDirectoryName("foo.")).to.equal(false);
-            expect(isValidDirectoryName("dir#")).to.equal(false);
-            expect(isValidDirectoryName("dir!")).to.equal(false);
-            expect(isValidDirectoryName("dir*")).to.equal(false);
-            expect(isValidDirectoryName(".")).to.equal(false);
+            expect(isValidDirectoryName("di:r")).to.equal(false); // do not accept :
+            expect(isValidDirectoryName("di\"r")).to.equal(false); // do not accept "
+            expect(isValidDirectoryName("di<r")).to.equal(false); // do not accept <
+            expect(isValidDirectoryName("di>r")).to.equal(false); // do not accept >
+            expect(isValidDirectoryName("di/r")).to.equal(false); // do not accept /
+            expect(isValidDirectoryName("di|r")).to.equal(false); // do not accept |
+            expect(isValidDirectoryName("di\\r")).to.equal(false); // do not accept \
+            expect(isValidDirectoryName("di?r")).to.equal(false); // do not accept ?
+            expect(isValidDirectoryName("di*r")).to.equal(false); // do not accept *
+            expect(isValidDirectoryName("")).to.equal(false); // do not accept empty string
+            expect(isValidDirectoryName("dir ")).to.equal(false); // must not end with a space
+            expect(isValidDirectoryName("dir.")).to.equal(false); // must not end with a period
+            expect(isValidDirectoryName(" dir")).to.equal(false); // must not start with a space
         });
     });
 
     describe("isValidDirectoryPath()", function() {
         const isValidDirectoryPath = dirHelpers.isValidDirectoryPath;
 
-        it("should return false for empty strings", function() {
-            expect(isValidDirectoryPath("")).to.equal(false);
+        it("should return true for empty strings", function() { // same meaning as . after all
+            expect(isValidDirectoryPath("")).to.equal(true);
         });
 
         it("should return true only for the forward slash if the string has length 1", function() {
             expect(isValidDirectoryPath("/")).to.equal(true);
-            expect(isValidDirectoryPath(" ")).to.equal(false);
-            expect(isValidDirectoryPath(".")).to.equal(false);
-            expect(isValidDirectoryPath("a")).to.equal(false);
+            expect(isValidDirectoryPath(".")).to.equal(true);
+            expect(isValidDirectoryPath("a")).to.equal(true);
         });
 
         it("should return true for valid directory paths", function() {
@@ -146,19 +151,6 @@ describe("Terminal Directory Tests", function() {
             expect(isValidDirectoryPath("/dir-/_foo")).to.equal(true);
         });
 
-        it("should return false if the path does not have a leading slash", function() {
-            expect(isValidDirectoryPath("a")).to.equal(false);
-            expect(isValidDirectoryPath("dir/a")).to.equal(false);
-            expect(isValidDirectoryPath("dir/foo")).to.equal(false);
-            expect(isValidDirectoryPath(".dir/foo-dir")).to.equal(false);
-            expect(isValidDirectoryPath(".dir/foo_dir")).to.equal(false);
-            expect(isValidDirectoryPath(".dir/.a")).to.equal(false);
-            expect(isValidDirectoryPath("dir1/1")).to.equal(false);
-            expect(isValidDirectoryPath("dir1/a1")).to.equal(false);
-            expect(isValidDirectoryPath("dir1/.a1")).to.equal(false);
-            expect(isValidDirectoryPath("dir_/._foo")).to.equal(false);
-            expect(isValidDirectoryPath("dir-/_foo")).to.equal(false);
-        });
 
         it("should accept dot notation", function() {
             expect(isValidDirectoryPath("/dir/./a")).to.equal(true);
@@ -177,13 +169,6 @@ describe("Terminal Directory Tests", function() {
 
     describe("isValidFilePath()", function() {
         const isValidFilePath = dirHelpers.isValidFilePath;
-
-        it("should return false for strings that are too short", function() {
-            expect(isValidFilePath("/a")).to.equal(false);
-            expect(isValidFilePath("a.")).to.equal(false);
-            expect(isValidFilePath(".a")).to.equal(false);
-            expect(isValidFilePath("/.")).to.equal(false);
-        });
 
         it("should return true for arguments that are just filenames", function() {
             expect(isValidFilePath("test.txt")).to.equal(true);
@@ -219,6 +204,8 @@ describe("Terminal Directory Tests", function() {
             expect(isValidFilePath()).to.equal(false);
             expect(isValidFilePath(5)).to.equal(false);
             expect(isValidFilePath({})).to.equal(false);
+            expect(isValidFilePath("a.")).to.equal(false);//invalid filename
+            expect(isValidFilePath("/.")).to.equal(false);//invalid filename
         })
     });
 
@@ -263,14 +250,16 @@ describe("Terminal Directory Tests", function() {
             expect(isInRootDirectory("a.b")).to.equal(true);
             expect(isInRootDirectory("foo.txt")).to.equal(true);
             expect(isInRootDirectory("/foo.txt")).to.equal(true);
+            expect(isInRootDirectory("/dir")).to.equal(true);
+            expect(isInRootDirectory("/./foo.js")).to.equal(true);
+            expect(isInRootDirectory("../foo.js")).to.equal(true);
         });
 
         it("should return false for filepaths that refer to a file that's NOT in the root directory", function() {
             expect(isInRootDirectory("/dir/foo.txt")).to.equal(false);
             expect(isInRootDirectory("dir/foo.txt")).to.equal(false);
-            expect(isInRootDirectory("/./foo.js")).to.equal(false);
-            expect(isInRootDirectory("../foo.js")).to.equal(false);
             expect(isInRootDirectory("/dir1/dir2/dir3/foo.txt")).to.equal(false);
+            expect(isInRootDirectory("/dir/")).to.equal(false);
         });
 
         it("should return false for invalid inputs (inputs that aren't filepaths)", function() {
@@ -278,10 +267,6 @@ describe("Terminal Directory Tests", function() {
             expect(isInRootDirectory(undefined)).to.equal(false);
             expect(isInRootDirectory("")).to.equal(false);
             expect(isInRootDirectory(" ")).to.equal(false);
-            expect(isInRootDirectory("a")).to.equal(false);
-            expect(isInRootDirectory("/dir")).to.equal(false);
-            expect(isInRootDirectory("/dir/")).to.equal(false);
-            expect(isInRootDirectory("/dir/foo")).to.equal(false);
         });
     });
 

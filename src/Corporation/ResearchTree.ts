@@ -73,25 +73,25 @@ export class Node {
         let htmlClass: string = "";
         if (this.researched) {
             htmlClass = "researched";
-        } else if (this.parent && this.parent.researched === false) {
+        } else if (this.parent && !this.parent.researched) {
             htmlClass = "locked";
         } else {
             htmlClass = "unlocked";
         }
 
         const research: Research | null = ResearchMap[this.text];
-        const sanitizedName: string = this.text.replace(/\s/g, '');
+        const sanitizedName: string = this.text.replace(/\s/g, "");
         return {
             children: childrenArray,
             HTMLclass: htmlClass,
             innerHTML:  `<div id="${sanitizedName}-corp-research-click-listener" class="tooltip">` +
                             `${this.text}<br>${numeralWrapper.format(this.cost, "0,0")} Scientific Research` +
-                            `<span class="tooltiptext">` +
+                            '<span class="tooltiptext">' +
                                 `${research.desc}` +
-                            `</span>` +
-                        `</div>` ,
+                            "</span>" +
+                        "</div>" ,
             text: { name: this.text },
-        }
+        };
     }
 
     // Recursive function for finding a Node with the specified text
@@ -113,7 +113,6 @@ export class Node {
         this.parent =  n;
     }
 }
-
 
 // A ResearchTree defines all available Research in an Industry
 // The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
@@ -225,7 +224,7 @@ export class ResearchTree {
                 continue;
             }
 
-            const mult: any = (<any>research)[propName];
+            const mult: any = (research as any)[propName];
             if (mult == null) {
                 console.warn(`Invalid propName specified in ResearchTree.getMultiplierHelper: ${propName}`);
                 continue;
@@ -239,7 +238,6 @@ export class ResearchTree {
 
         return res;
     }
-
 
     // Search for a Node with the given name ('text' property on the Node)
     // Returns 'null' if it cannot be found

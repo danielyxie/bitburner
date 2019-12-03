@@ -190,7 +190,7 @@ export async function updateScriptEditorContent() {
     }
 
     var codeCopy = code.repeat(1);
-    var ramUsage = await calculateRamUsage(codeCopy, Player.getCurrentServer().scripts);
+    var ramUsage = await calculateRamUsage(filename, codeCopy, Player.getCurrentServer());
     if (ramUsage > 0) {
         scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
@@ -268,8 +268,17 @@ function saveAndCloseScriptEditor() {
         return;
     }
 
+    if( filename.toLowerCase().endsWith(".exe")){
+        dialogBoxCreate("An error seem to have occured. Permission not granted");
+        return;
+    }
+
     if (filename !== ".fconf" && !isValidFilePath(filename)) {
-        dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
+        dialogBoxCreate(`<ul>
+        <li> A file or directory name allows everything except ':', '"', '<', '>', '/', '|', '\\', '?' or '*'</li>
+        <li> The name must not start nor end with a space</li>
+        <li> The name must not end with a period</li>
+        </ul>"`);
         return;
     }
 
@@ -281,35 +290,10 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate(`Invalid .fconf file: ${e}`);
             return;
         }
-    } else if (isScriptFilename(filename)) {
-        //If the current script already exists on the server, overwrite it
-        for (var i = 0; i < s.scripts.length; i++) {
-            if (filename == s.scripts[i].filename) {
-                s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
-                Engine.loadTerminalContent();
-                return;
-            }
-        }
-
-        //If the current script does NOT exist, create a new one
-        const script = new Script();
-        script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
-        s.scripts.push(script);
-    } else if (filename.endsWith(".txt")) {
-        for (var i = 0; i < s.textFiles.length; ++i) {
-            if (s.textFiles[i].fn === filename) {
-                s.textFiles[i].write(code);
-                Engine.loadTerminalContent();
-                return;
-            }
-        }
-        var textFile = new TextFile(filename, code);
-        s.textFiles.push(textFile);
     } else {
-        dialogBoxCreate("Invalid filename. Must be either a script (.script) or " +
-                        " or text file (.txt)")
-        return;
+        s.writeFile(filename, getCurrentEditor().getCode(), true);
     }
+
     Engine.loadTerminalContent();
 }
 
