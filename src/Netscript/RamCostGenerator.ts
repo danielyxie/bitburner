@@ -51,7 +51,7 @@ export const RamCostConstants: IMap<number> = {
     ScriptGangApiBaseRamCost: 4,
 
     ScriptBladeburnerApiBaseRamCost: 4,
-}
+};
 
 export const RamCosts: IMap<any> = {
     hacknet: {
@@ -294,12 +294,12 @@ export const RamCosts: IMap<any> = {
     heart: {
         // Easter egg function
         break : () => 0,
-    }
-}
+    },
+};
 
 export function getRamCost(...args: string[]): number {
     if (args.length === 0) {
-        console.warn(`No arguments passed to getRamCost()`);
+        console.warn("No arguments passed to getRamCost()");
         return 0;
     }
 

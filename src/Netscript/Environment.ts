@@ -22,7 +22,7 @@ export class Environment {
 
     constructor(parent: Environment | null) {
         if (parent instanceof Environment) {
-            this.vars = Object.assign({}, parent.vars);
+            this.vars = {...parent.vars};
         }
 
         this.parent = parent;
@@ -43,7 +43,7 @@ export class Environment {
         return null;
     }
 
-	//Get the current value of a variable
+	// Get the current value of a variable
     get(name: string): any {
         if (name in this.vars) {
             return this.vars[name];
@@ -52,12 +52,12 @@ export class Environment {
         throw new Error(`Undefined variable ${name}`);
     }
 
-	//Sets the value of a variable in any scope
+	// Sets the value of a variable in any scope
     set(name: string, value: any) {
-        var scope = this.lookup(name);
+        const scope = this.lookup(name);
 
-        //If scope has a value, then this variable is already set in a higher scope, so
-        //set is there. Otherwise, create a new variable in the local scope
+        // If scope has a value, then this variable is already set in a higher scope, so
+        // set is there. Otherwise, create a new variable in the local scope
         if (scope !== null) {
             return scope.vars[name] = value;
         } else {
@@ -65,7 +65,7 @@ export class Environment {
         }
     }
 
-	//Creates (or overwrites) a variable in the current scope
+	// Creates (or overwrites) a variable in the current scope
     def(name: string, value: any) {
         return this.vars[name] = value;
     }

@@ -10,17 +10,16 @@
  *
  * As of right now, this feature is only available in BitNode 10
  */
-import { Resleeve } from "./Resleeve";
 import { IPlayer } from "../IPlayer";
+import { Resleeve } from "./Resleeve";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { IPlayerOwnedAugmentation,
          PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { getRandomInt } from "../../../utils/helpers/getRandomInt";
-
 
 // Executes the actual re-sleeve when one is purchased
 export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
@@ -64,13 +63,13 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
     for (let i = p.queuedAugmentations.length - 1; i >= 0; --i) {
         const name: string = p.queuedAugmentations[i].name;
 
-        if (p.augmentations.filter((e: IPlayerOwnedAugmentation) => {return e.name !== AugmentationNames.NeuroFluxGovernor && e.name === name}).length >= 1) {
+        if (p.augmentations.filter((e: IPlayerOwnedAugmentation) => e.name !== AugmentationNames.NeuroFluxGovernor && e.name === name).length >= 1) {
             p.queuedAugmentations.splice(i, 1);
         }
     }
 
     p.reapplyAllAugmentations(true);
-    p.reapplyAllSourceFiles(); //Multipliers get reset, so have to re-process source files too
+    p.reapplyAllSourceFiles(); // Multipliers get reset, so have to re-process source files too
     return true;
 }
 
@@ -78,10 +77,10 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
 export function generateResleeves(): Resleeve[] {
     const NumResleeves: number = 40; // Total number of Resleeves to generate
 
-    let ret: Resleeve[] = [];
+    const ret: Resleeve[] = [];
     for (let i = 0; i < NumResleeves; ++i) {
         // i will be a number indicating how "powerful" the Re-sleeve should be
-        let r: Resleeve = new Resleeve();
+        const r: Resleeve = new Resleeve();
 
         // Generate experience
         const expMult: number = (5 * i) + 1;
@@ -99,16 +98,16 @@ export function generateResleeves(): Resleeve[] {
         const augKeys: string[] = Object.keys(Augmentations);
         for (let a = 0; a < numAugs; ++a) {
             // Get a random aug
-            const randIndex: number = getRandomInt(0, augKeys.length - 1)
+            const randIndex: number = getRandomInt(0, augKeys.length - 1);
             const randKey: string = augKeys[randIndex];
 
             // Forbidden augmentations
             if (randKey === AugmentationNames.TheRedPill || randKey === AugmentationNames.NeuroFluxGovernor) {
                 continue;
             }
-            
+
             const randAug: Augmentation | null = Augmentations[randKey];
-            r.augmentations.push({name: randAug!.name, level: 1});
+            r.augmentations.push({name: randAug.name, level: 1});
             r.applyAugmentation(Augmentations[randKey]);
             r.updateStatLevels();
 

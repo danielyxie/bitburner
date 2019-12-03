@@ -1,12 +1,12 @@
 // Implement the collapsible main menu headers
-import { MainMenuLinks } from "./Links";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { MainMenuLinks } from "./Links";
 
 interface IMainMenuHeaders {
-    Hacking:    HTMLElement | null;
-    Character:  HTMLElement | null;
-    World:      HTMLElement | null;
-    Help:       HTMLElement | null;
+    Hacking: HTMLElement | null;
+    Character: HTMLElement | null;
+    World: HTMLElement | null;
+    Help: HTMLElement | null;
 }
 
 export const MainMenuHeaders: IMainMenuHeaders = {
@@ -14,11 +14,11 @@ export const MainMenuHeaders: IMainMenuHeaders = {
     Character: null,
     World: null,
     Help: null,
-}
+};
 
 // Implements collapsible toggle feature when a header is clicked
 function toggleHeader(open: boolean, elems: HTMLElement[], links: HTMLElement[]) {
-    for (var i = 0; i < elems.length; ++i) {
+    for (let i = 0; i < elems.length; ++i) {
         if (open) {
             elems[i].style.opacity = "1";
             elems[i].style.maxHeight = elems[i].scrollHeight + "px";
@@ -28,7 +28,7 @@ function toggleHeader(open: boolean, elems: HTMLElement[], links: HTMLElement[])
         }
     }
 
-    for (var i = 0; i < links.length; ++i) {
+    for (let i = 0; i < links.length; ++i) {
         if (open) {
             links[i].style.opacity = "1";
             links[i].style.maxHeight = links[i].scrollHeight + "px";
@@ -41,14 +41,14 @@ function toggleHeader(open: boolean, elems: HTMLElement[], links: HTMLElement[])
     }
 }
 
-export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boolean {
+export function initializeMainMenuHeaders(p: IPlayer, dev: boolean= false): boolean {
     function safeGetElement(id: string): HTMLElement {
         const elem: HTMLElement | null = document.getElementById(id);
         if (elem == null) {
             throw new Error(`Failed to find element with id ${id} in initializeMainMenuHeaders()`);
         }
 
-        return elem!;
+        return elem;
     }
 
     try {
@@ -74,12 +74,12 @@ export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boole
             const links: HTMLElement[] = [MainMenuLinks.Terminal!, MainMenuLinks.ScriptEditor!, MainMenuLinks.ActiveScripts!, MainMenuLinks.CreateProgram!];
             if (terminal.style.maxHeight) {
                 toggleHeader(false, elems, links);
-                createProgramNot!.style.display = "none";
+                createProgramNot.style.display = "none";
             } else {
                 toggleHeader(true, elems, links);
-                createProgramNot!.style.display = "block"
+                createProgramNot.style.display = "block";
             }
-        }
+        };
 
         MainMenuHeaders.Character.onclick = function() {
             const stats: HTMLElement            = safeGetElement("stats-tab");
@@ -99,7 +99,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boole
             } else {
                 toggleHeader(true, elems, links);
             }
-        }
+        };
 
         MainMenuHeaders.World.onclick = function() {
             const city: HTMLElement         = safeGetElement("city-tab");
@@ -126,7 +126,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boole
             } else {
                 toggleHeader(true, elems, links);
             }
-        }
+        };
 
         MainMenuHeaders.Help.onclick = function() {
             const tutorial: HTMLElement = safeGetElement("tutorial-tab");
@@ -147,10 +147,10 @@ export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boole
             } else {
                 toggleHeader(true, elems, links);
             }
-        }
+        };
 
         return true;
-    } catch(e) {
+    } catch (e) {
         console.error(`Failed to initialize Main Menu Headers: ${e}`);
         return false;
     }

@@ -6,6 +6,6 @@ export const EmployeePositions: IMap<string> = {
     Business: "Business",
     Management: "Management",
     RandD: "Research & Development",
-    Training:"Training",
-    Unassigned:"Unassigned",
-}
+    Training: "Training",
+    Unassigned: "Unassigned",
+};

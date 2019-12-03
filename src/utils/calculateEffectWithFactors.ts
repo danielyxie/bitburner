@@ -29,10 +29,10 @@ export function calculateEffectWithFactors(n: number, expFac: number, linearFac:
 
 export class EffectWithFactors {
     // Exponential factor
-    private expFac: number;
+    private readonly expFac: number;
 
     // Linear Factor
-    private linearFac: number;
+    private readonly linearFac: number;
 
     constructor(expFac: number, linearFac: number) {
         this.expFac = expFac;

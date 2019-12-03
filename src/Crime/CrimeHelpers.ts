@@ -1,5 +1,5 @@
-import { Crimes } from "./Crimes";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { Crimes } from "./Crimes";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 
@@ -7,7 +7,7 @@ export function determineCrimeSuccess(p: IPlayer, type: string) {
     let chance: number = 0;
     let found: boolean = false;
     for (const i in Crimes) {
-        let crime = Crimes[i];
+        const crime = Crimes[i];
         if (crime.type == type) {
             chance = crime.successRate(p);
             found = true;
@@ -21,10 +21,10 @@ export function determineCrimeSuccess(p: IPlayer, type: string) {
     }
 
     if (Math.random() <= chance) {
-        //Success
+        // Success
         return true;
     } else {
-        //Failure
+        // Failure
         return false;
     }
 }

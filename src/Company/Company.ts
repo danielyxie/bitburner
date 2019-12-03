@@ -22,7 +22,7 @@ const DefaultConstructorParams: IConstructorParams = {
     expMultiplier: 1,
     salaryMultiplier: 1,
     jobStatReqOffset: 0,
-}
+};
 
 export class Company {
     /**
@@ -132,11 +132,10 @@ export class Company {
         return (this.companyPositions[posNames.MiscCompanyPositions[0]] != null);
     }
 
-
     gainFavor(): void {
         if (this.favor == null) { this.favor = 0; }
         if (this.rolloverRep == null) { this.rolloverRep = 0; }
-        var res = this.getFavorGain();
+        const res = this.getFavorGain();
         if (res.length != 2) {
             console.error("Invalid result from getFavorGain() function");
             return;
@@ -152,7 +151,7 @@ export class Company {
         let favorGain = 0, rep = this.playerReputation + this.rolloverRep;
         let reqdRep = CONSTANTS.CompanyReputationToFavorBase *
                       Math.pow(CONSTANTS.CompanyReputationToFavorMult, this.favor);
-        while(rep > 0) {
+        while (rep > 0) {
             if (rep >= reqdRep) {
                 ++favorGain;
                 rep -= reqdRep;

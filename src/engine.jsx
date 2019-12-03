@@ -1034,6 +1034,9 @@ const Engine = {
         const dev               = document.getElementById("dev-tab");
 
         // Load game from save or create new game
+        // load literature data before any potential file migration
+        initLiterature();
+        
         if (loadGame(saveString)) {
             initBitNodeMultipliers(Player);
             Engine.setDisplayElements();    // Sets variables for important DOM elements
@@ -1043,7 +1046,6 @@ const Engine = {
             if (Player.hasWseAccount) {
                 initSymbolToStockMap();
             }
-            initLiterature();
             updateSourceFileFlags(Player);
 
             // Calculate the number of cycles have elapsed while offline
@@ -1166,7 +1168,6 @@ const Engine = {
             initFactions();
             initAugmentations();
             initMessages();
-            initLiterature();
             updateSourceFileFlags(Player);
 
             // Open main menu accordions for new game

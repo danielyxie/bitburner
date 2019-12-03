@@ -1,7 +1,7 @@
-import { IMap }                     from "../types";
-import { Reviver,
+import { Generic_fromJSON,
          Generic_toJSON,
-         Generic_fromJSON }         from "../../utils/JSONReviver";
+         Reviver }         from "../../utils/JSONReviver";
+import { IMap }                     from "../types";
 
 /* Holds IP of Special Servers */
 export let SpecialServerNames: IMap<string> = {
@@ -13,7 +13,7 @@ export let SpecialServerNames: IMap<string> = {
     TheDarkArmyServer:          "The Dark Army Server",
     DaedalusServer:             "Daedalus Server",
     WorldDaemon:                "w0r1d_d43m0n",
-}
+};
 
 export class SpecialServerIpsMap {
     // Initializes a SpecialServerIpsMap Object from a JSON save state
@@ -25,7 +25,7 @@ export class SpecialServerIpsMap {
 
     constructor() {}
 
-    addIp(name:string, ip: string) {
+    addIp(name: string, ip: string) {
         this[name] = ip;
     }
 
@@ -40,7 +40,7 @@ Reviver.constructors.SpecialServerIpsMap = SpecialServerIpsMap;
 export let SpecialServerIps: SpecialServerIpsMap = new SpecialServerIpsMap();
 
 export function prestigeSpecialServerIps() {
-    for (var member in SpecialServerIps) {
+    for (const member in SpecialServerIps) {
         delete SpecialServerIps[member];
     }
 

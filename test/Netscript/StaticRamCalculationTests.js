@@ -1,6 +1,7 @@
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
-import { calculateRamUsage } from "../../src/Script/RamCalculations"
+import { calculateRamUsage } from "../../src/Script/RamCalculations";
 import { expect } from "chai";
+import {BaseServer} from "../../src/Server/BaseServer";
 
 console.log("Beginning Netscript Static RAM Calculation/Generation Tests");
 
@@ -27,12 +28,15 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         expect(expected).to.be.above(0);
 
         const code = fnDesc.join(".") + "(); ";
-
-        const calculated = await calculateRamUsage(code, []);
+        const codePath = "testfile";
+        const server = new BaseServer();
+        server.writeFile(codePath, code);
+        const calculated = await calculateRamUsage(codePath, code, server);
         testEquality(calculated, expected + ScriptBaseCost);
 
         const multipleCallsCode = code.repeat(3);
-        const multipleCallsCalculated = await calculateRamUsage(multipleCallsCode, []);
+        server.writeFile(codePath, multipleCallsCode);
+        const multipleCallsCalculated = await calculateRamUsage(codePath, multipleCallsCode, server);
         expect(multipleCallsCalculated).to.equal(calculated);
     }
 
@@ -51,11 +55,15 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
 
         const code = fnDesc.join(".") + "(); ";
 
-        const calculated = await calculateRamUsage(code, []);
-        testEquality(calculated, ScriptBaseCost);
+        const codePath = "testfile";
+        const server = new BaseServer();
+        server.writeFile(codePath, code);
+        const calculated = await calculateRamUsage(codePath, code, server);
+        testEquality(calculated, expected + ScriptBaseCost);
 
         const multipleCallsCode = code.repeat(3);
-        const multipleCallsCalculated = await calculateRamUsage(code, []);
+        server.writeFile(codePath, multipleCallsCode);
+        const multipleCallsCalculated = await calculateRamUsage(codePath, multipleCallsCode, server);
         expect(multipleCallsCalculated).to.equal(ScriptBaseCost);
     }
 
@@ -486,7 +494,10 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
                 code += ("hacknet." + fn + "(); ");
             }
 
-            const calculated = await calculateRamUsage(code, []);
+            const codePath = "testfile";
+            const server = new BaseServer();
+            server.writeFile(codePath, code);
+            const calculated = await calculateRamUsage(codePath, code, server);
             testEquality(calculated, ScriptBaseCost + HacknetNamespaceCost);
         });
     });

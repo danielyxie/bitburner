@@ -13,8 +13,8 @@ import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import { yesNoTxtInpBoxGetInput } from "../../utils/YesNoBox";
 import { isPowerOfTwo } from "../../utils/helpers/isPowerOfTwo";
+import { yesNoTxtInpBoxGetInput } from "../../utils/YesNoBox";
 
 // Returns the cost of purchasing a server with the given RAM
 // Returns Infinity for invalid 'ram' arguments
@@ -50,13 +50,13 @@ export function getPurchaseServerMaxRam() {
 export function purchaseServer(ram: number, p: IPlayer) {
     const cost = getPurchaseServerCost(ram);
 
-    //Check if player has enough money
+    // Check if player has enough money
     if (!p.canAfford(cost)) {
         dialogBoxCreate("You don't have enough money to purchase this server!", false);
         return;
     }
 
-    //Maximum server limit
+    // Maximum server limit
     if (p.purchasedServers.length >= getPurchaseServerLimit()) {
         dialogBoxCreate("You have reached the maximum limit of " + getPurchaseServerLimit() + " servers. " +
                         "You cannot purchase any more. You can " +
@@ -64,7 +64,7 @@ export function purchaseServer(ram: number, p: IPlayer) {
         return;
     }
 
-    var hostname = yesNoTxtInpBoxGetInput();
+    const hostname = yesNoTxtInpBoxGetInput();
     if (hostname == "") {
         dialogBoxCreate("You must enter a hostname for your new server!");
         return;
@@ -73,10 +73,10 @@ export function purchaseServer(ram: number, p: IPlayer) {
     // Create server
     const newServ = safetlyCreateUniqueServer({
         adminRights: true,
-        hostname: hostname,
+        hostname,
         ip: createUniqueRandomIp(),
         isConnectedTo: false,
-        maxRam:ram,
+        maxRam: ram,
         organizationName: "",
         purchasedByPlayer: true,
     });
@@ -86,7 +86,7 @@ export function purchaseServer(ram: number, p: IPlayer) {
     p.purchasedServers.push(newServ.ip);
 
     // Connect new server to home computer
-    var homeComputer = p.getHomeComputer();
+    const homeComputer = p.getHomeComputer();
     homeComputer.serversOnNetwork.push(newServ.ip);
     newServ.serversOnNetwork.push(homeComputer.ip);
 
@@ -104,10 +104,9 @@ export function purchaseRamForHomeComputer(cost: number, p: IPlayer) {
 
     const homeComputer = p.getHomeComputer();
     if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
-        dialogBoxCreate(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
+        dialogBoxCreate("You cannot upgrade your home computer RAM because it is at its maximum possible value");
         return;
     }
-
 
     homeComputer.maxRam *= 2;
     p.loseMoney(cost);

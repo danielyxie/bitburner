@@ -10,15 +10,16 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
         console.error(`Invalid source file number: ${srcFile.n}`);
         return;
     }
-
+    let mult: number;
+    let incMult: number;
     switch (srcFile.n) {
         case 1: // The Source Genesis
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (16 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
-            var decMult = 1 - (mult / 100);
+            incMult = 1 + (mult / 100);
+            const decMult = 1 - (mult / 100);
             Player.hacking_chance_mult *= incMult;
             Player.hacking_speed_mult  *= incMult;
             Player.hacking_money_mult  *= incMult;
@@ -47,21 +48,21 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
             Player.work_money_mult    *= incMult;
             break;
         case 2: // Rise of the Underworld
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (24 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
+            incMult = 1 + (mult / 100);
             Player.crime_money_mult    *= incMult;
             Player.crime_success_mult  *= incMult;
             Player.charisma_mult       *= incMult;
             break;
         case 3: // Corporatocracy
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
+            incMult = 1 + (mult / 100);
             Player.charisma_mult    *= incMult;
             Player.work_money_mult  *= incMult;
             break;
@@ -69,11 +70,11 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
             // No effects, just gives access to Singularity functions
             break;
         case 5: // Artificial Intelligence
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
+            incMult = 1 + (mult / 100);
             Player.hacking_chance_mult  *= incMult;
             Player.hacking_speed_mult   *= incMult;
             Player.hacking_money_mult   *= incMult;
@@ -82,11 +83,11 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
             Player.hacking_exp_mult     *= incMult;
             break;
         case 6: // Bladeburner
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
+            incMult = 1 + (mult / 100);
             Player.strength_exp_mult        *= incMult;
             Player.defense_exp_mult         *= incMult;
             Player.dexterity_exp_mult       *= incMult;
@@ -97,22 +98,22 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
             Player.agility_mult             *= incMult;
             break;
         case 7: // Bladeburner 2079
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (8 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
+            incMult = 1 + (mult / 100);
             Player.bladeburner_max_stamina_mult     *= incMult;
             Player.bladeburner_stamina_gain_mult    *= incMult;
             Player.bladeburner_analysis_mult        *= incMult;
             Player.bladeburner_success_chance_mult  *= incMult;
             break;
         case 8: // Ghost of Wall Street
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (12 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
+            incMult = 1 + (mult / 100);
             Player.hacking_grow_mult    *= incMult;
             break;
         case 9: // Hacktocracy
@@ -122,17 +123,17 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
             // No effects, just grants sleeves
             break;
         case 11: // The Big Crash
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
+            mult = 0;
+            for (let i = 0; i < srcFile.lvl; ++i) {
                 mult += (32 / (Math.pow(2, i)));
             }
-            var incMult = 1 + (mult / 100);
+            incMult = 1 + (mult / 100);
             Player.work_money_mult    *= incMult;
             Player.company_rep_mult   *= incMult;
             break;
         case 12: // The Recursion
-            var inc = Math.pow(1.01, srcFile.lvl);
-            var dec = Math.pow(0.99, srcFile.lvl);
+            const inc = Math.pow(1.01, srcFile.lvl);
+            const dec = Math.pow(0.99, srcFile.lvl);
 
             Player.hacking_chance_mult *= inc;
             Player.hacking_speed_mult  *= inc;

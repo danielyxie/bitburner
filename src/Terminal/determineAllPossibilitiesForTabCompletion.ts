@@ -6,11 +6,11 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import {
     Aliases,
-    GlobalAliases
+    GlobalAliases,
 } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { Message } from "../Message/Message";
-import { IPlayer } from "../PersonObjects/IPlayer"
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { AllServers } from "../Server/AllServers";
 
 // An array of all Terminal commands
@@ -47,17 +47,17 @@ const commands = [
     "sudov",
     "tail",
     "theme",
-    "top"
+    "top",
 ];
 
-export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: string, index: number, currPath: string=""): string[] {
+export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: string, index: number, currPath: string= ""): string[] {
     let allPos: string[] = [];
     allPos = allPos.concat(Object.keys(GlobalAliases));
     const currServ = p.getCurrentServer();
     const homeComputer = p.getHomeComputer();
 
     let parentDirPath: string = "";
-    let evaledParentDirPath: string | null = null;
+    let evaledParentDirPath: string | undefined;
 
     // Helper functions
     function addAllCodingContracts() {
@@ -124,7 +124,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     // Convert from the real absolute path back to the original path used in the input
     function convertParentPath(filepath: string): string {
         if (parentDirPath == null || evaledParentDirPath == null) {
-            console.warn(`convertParentPath() called when paths are null`);
+            console.warn("convertParentPath() called when paths are null");
             return filepath;
         }
 
@@ -171,13 +171,13 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
      * Put './' in front of each script/executable
      */
     if (isCommand("./") && index == -1) {
-        //All programs and scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
+        // All programs and scripts
+        for (let i = 0; i < currServ.scripts.length; ++i) {
             allPos.push("./" + currServ.scripts[i].filename);
         }
 
-        //Programs are on home computer
-        for(var i = 0; i < homeComputer.programs.length; ++i) {
+        // Programs are on home computer
+        for (let i = 0; i < homeComputer.programs.length; ++i) {
             allPos.push("./" + homeComputer.programs[i]);
         }
         return allPos;
@@ -192,24 +192,24 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     // be a file/directory path. We have to account for that when autocompleting
     const commandArray = input.split(" ");
     if (commandArray.length === 0) {
-        console.warn(`Tab autocompletion logic reached invalid branch`);
+        console.warn("Tab autocompletion logic reached invalid branch");
         return allPos;
     }
     const arg = commandArray[commandArray.length - 1];
     parentDirPath = getAllParentDirectories(arg);
-    evaledParentDirPath = evaluateDirectoryPath(parentDirPath, currPath);
+    evaledParentDirPath = evaluateDirectoryPath(currServ, currPath, parentDirPath);
     if (evaledParentDirPath === "/") {
-        evaledParentDirPath = null;
-    } else if (evaledParentDirPath == null) {
+        evaledParentDirPath = undefined;
+    } else if (!evaledParentDirPath) {
         return allPos; // Invalid path
     } else {
         evaledParentDirPath += "/";
     }
 
     if (isCommand("buy")) {
-        let options = [];
+        const options = [];
         for (const i in DarkWebItems) {
-            const item = DarkWebItems[i]
+            const item = DarkWebItems[i];
             options.push(item.program);
         }
 
@@ -236,8 +236,8 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
 
     if (isCommand("connect")) {
         // All network connections
-        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-            var serv = AllServers[currServ.serversOnNetwork[i]];
+        for (let i = 0; i < currServ.serversOnNetwork.length; ++i) {
+            const serv = AllServers[currServ.serversOnNetwork[i]];
             if (serv == null) { continue; }
             allPos.push(serv.ip);
             allPos.push(serv.hostname);

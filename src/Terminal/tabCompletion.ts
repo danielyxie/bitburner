@@ -1,10 +1,10 @@
 import {
-    post
+    post,
 } from "../ui/postToTerminal";
 
 import {
     containsAllStrings,
-    longestCommonStart
+    longestCommonStart,
 } from "../../utils/StringHelperFunctions";
 
 /**
@@ -21,13 +21,13 @@ export function tabCompletion(command: string, arg: string, allPossibilities: st
     // Remove all options in allPossibilities that do not match the current string
     // that we are attempting to autocomplete
     if (arg === "") {
-        for (let i = allPossibilities.length-1; i >= 0; --i) {
+        for (let i = allPossibilities.length - 1; i >= 0; --i) {
             if (!allPossibilities[i].toLowerCase().startsWith(command.toLowerCase())) {
                 allPossibilities.splice(i, 1);
             }
         }
     } else {
-        for (let i = allPossibilities.length-1; i >= 0; --i) {
+        for (let i = allPossibilities.length - 1; i >= 0; --i) {
             if (!allPossibilities[i].toLowerCase().startsWith(arg.toLowerCase())) {
                 allPossibilities.splice(i, 1);
             }
@@ -36,10 +36,10 @@ export function tabCompletion(command: string, arg: string, allPossibilities: st
 
     const textBoxElem = document.getElementById("terminal-input-text-box");
     if (textBoxElem == null) {
-        console.warn(`Couldn't find terminal input DOM element (id=terminal-input-text-box) when trying to autocomplete`);
+        console.warn("Couldn't find terminal input DOM element (id=terminal-input-text-box) when trying to autocomplete");
         return;
     }
-    const textBox = <HTMLInputElement>textBoxElem;
+    const textBox = textBoxElem as HTMLInputElement;
 
     const oldValue = textBox.value;
     const semiColonIndex = oldValue.lastIndexOf(";");
@@ -49,7 +49,7 @@ export function tabCompletion(command: string, arg: string, allPossibilities: st
         return;
     } else if (allPossibilities.length === 1) {
         if (arg === "") {
-            //Autocomplete command
+            // Autocomplete command
             val = allPossibilities[0] + " ";
         } else {
             val = command + " " + allPossibilities[0];

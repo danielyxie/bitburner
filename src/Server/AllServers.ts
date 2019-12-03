@@ -1,13 +1,13 @@
+import { serverMetadata } from "./data/servers";
 import { Server } from "./Server";
 import { SpecialServerIps } from "./SpecialServerIps";
-import { serverMetadata } from "./data/servers";
 
 import { HacknetServer } from "../Hacknet/HacknetServer";
 
-import { IMap } from "../types";
-import { createRandomIp } from "../../utils/IPAddress";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { createRandomIp } from "../../utils/IPAddress";
 import { Reviver } from "../../utils/JSONReviver";
+import { IMap } from "../types";
 
 /**
  * Map of all Servers that exist in the game
@@ -15,9 +15,14 @@ import { Reviver } from "../../utils/JSONReviver";
  *  Value = Server object
  */
 export let AllServers: IMap<Server | HacknetServer> = {};
+export let hostname2Ip: IMap<string> = {};
 
 export function ipExists(ip: string) {
 	return (AllServers[ip] != null);
+}
+
+export function hostnameExists(hostname: string) {
+    return (hostname2Ip[hostname] != null);
 }
 
 export function createUniqueRandomIp(): string {
@@ -28,20 +33,21 @@ export function createUniqueRandomIp(): string {
         return createRandomIp();
     }
 
-	return ip;
+	   return ip;
 }
 
 // Saftely add a Server to the AllServers map
 export function AddToAllServers(server: Server | HacknetServer): void {
-    var serverIp = server.ip;
+    const serverIp = server.ip;
     if (ipExists(serverIp)) {
         console.warn(`IP of server that's being added: ${serverIp}`);
         console.warn(`Hostname of the server thats being added: ${server.hostname}`);
         console.warn(`The server that already has this IP is: ${AllServers[serverIp].hostname}`);
         throw new Error("Error: Trying to add a server with an existing IP");
     }
-    
+
     AllServers[serverIp] = server;
+    if (server.hasOwnProperty("hostname")) { hostname2Ip[server.hostname] = serverIp; }
 }
 
 interface IServerParams {
@@ -60,7 +66,7 @@ interface IServerParams {
 
 export function initForeignServers(homeComputer: Server) {
     /* Create a randomized network for all the foreign servers */
-    //Groupings for creating a randomized network
+    // Groupings for creating a randomized network
     const networkLayers: Server[][] = [];
     for (let i = 0; i < 15; i++) {
         networkLayers.push([]);
@@ -71,26 +77,26 @@ export function initForeignServers(homeComputer: Server) {
         "hackDifficulty",
         "moneyAvailable",
         "requiredHackingSkill",
-        "serverGrowth"
+        "serverGrowth",
     ];
 
     const toNumber = (value: any) => {
         switch (typeof value) {
-            case 'number':
+            case "number":
                 return value;
-            case 'object':
+            case "object":
                 return getRandomInt(value.min, value.max);
             default:
                 throw Error(`Do not know how to convert the type '${typeof value}' to a number`);
         }
-    }
+    };
 
     for (const metadata of serverMetadata) {
         const serverParams: IServerParams = {
             hostname: metadata.hostname,
             ip: createUniqueRandomIp(),
             numOpenPortsRequired: metadata.numOpenPortsRequired,
-            organizationName: metadata.organizationName
+            organizationName: metadata.organizationName,
         };
 
         if (metadata.maxRamExponent !== undefined) {
@@ -137,15 +143,40 @@ export function initForeignServers(homeComputer: Server) {
     for (let i = 1; i < networkLayers.length; i++) {
         linkNetworkLayers(networkLayers[i], () => getRandomArrayItem(networkLayers[i - 1]));
     }
+
+    SERVERS_INITIALIZED = true;
 }
 
 export function prestigeAllServers() {
-    for (var member in AllServers) {
+    for (const member in AllServers) {
         delete AllServers[member];
     }
     AllServers = {};
+    hostname2Ip = {};
 }
+
+export let SERVERS_INITIALIZED = false;
 
 export function loadAllServers(saveString: string) {
     AllServers = JSON.parse(saveString, Reviver);
+    for (const ip in AllServers) {
+        const server = AllServers[ip];
+        if (server.hasOwnProperty("hostname")) {
+            hostname2Ip[server.hostname] = server.ip;
+        }
+    }
+    SERVERS_INITIALIZED = true;
+}
+
+function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function getServer(serverReference: string) { // can be an ip or a hostname.
+    if (!SERVERS_INITIALIZED) { throw new Error("Servers not initialized yet!"); }
+    if (hostname2Ip[serverReference]) {
+        console.log(`${serverReference} reference to ip ${hostname2Ip[serverReference]} detected`);
+        return AllServers[hostname2Ip[serverReference]]; // if its a reference
+    }
+    return AllServers[serverReference];    // else its an IP.
 }

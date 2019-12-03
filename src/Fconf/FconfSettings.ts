@@ -7,4 +7,4 @@ export const FconfSettings = {
     THEME_HIGHLIGHT_COLOR:      "#ffffff",
     THEME_PROMPT_COLOR:         "#f92672",
     WRAP_INPUT:                 false,
-}
+};

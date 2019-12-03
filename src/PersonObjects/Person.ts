@@ -1,10 +1,9 @@
 // Base class representing a person-like object
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
+import { CityName } from "../Locations/data/CityNames";
 
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks
@@ -27,7 +26,7 @@ export function createTaskTracker(): ITaskTracker {
         agi: 0,
         cha: 0,
         money: 0,
-    }
+    };
 }
 
 export abstract class Person {
@@ -94,7 +93,7 @@ export abstract class Person {
     bladeburner_max_stamina_mult: number = 1;
     bladeburner_stamina_gain_mult: number = 1;
     bladeburner_analysis_mult: number = 1;
-    bladeburner_success_chance_mult : number = 1;
+    bladeburner_success_chance_mult: number = 1;
 
     /**
      * Augmentations
@@ -114,10 +113,10 @@ export abstract class Person {
      */
     applyAugmentation(aug: Augmentation) {
         for (const mult in aug.mults) {
-            if ((<any>this)[mult] == null) {
+            if ((this as any)[mult] == null) {
                 console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
             } else {
-                (<any>this)[mult] *= aug.mults[mult];
+                (this as any)[mult] *= aug.mults[mult];
             }
         }
     }
@@ -126,8 +125,8 @@ export abstract class Person {
      * Given an experience amount and stat multiplier, calculates the
      * stat level. Stat-agnostic (same formula for every stat)
      */
-    calculateStat(exp: number, mult: number=1): number {
-        return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+    calculateStat(exp: number, mult: number= 1): number {
+        return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
     }
 
     /**
@@ -165,8 +164,6 @@ export abstract class Person {
         return t * this.faction_rep_mult;
     }
 
-
-
     /**
      * Reset all multipliers to 1
      */
@@ -199,7 +196,7 @@ export abstract class Person {
      */
     updateStatLevels(): void {
         this.hacking_skill = Math.max(1, Math.floor(this.calculateStat(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)));
-    	this.strength      = Math.max(1, Math.floor(this.calculateStat(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier)));
+    	   this.strength      = Math.max(1, Math.floor(this.calculateStat(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier)));
         this.defense       = Math.max(1, Math.floor(this.calculateStat(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)));
         this.dexterity     = Math.max(1, Math.floor(this.calculateStat(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier)));
         this.agility       = Math.max(1, Math.floor(this.calculateStat(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier)));

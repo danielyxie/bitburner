@@ -1,9 +1,9 @@
 /**
  * Stock Market Helper Functions
  */
-import { Stock } from "./Stock";
-import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
+import { PositionTypes } from "./data/PositionTypes";
+import { Stock } from "./Stock";
 
 // Amount by which a stock's forecast changes during each price movement
 export const forecastChangePerPriceMovement = 0.006;
@@ -87,7 +87,7 @@ export function processTransactionForecastMovement(stock: Stock, shares: number)
     }
 
     // Calculate how many iterations of price changes we need to account for
-    let remainingShares = shares - firstShares;
+    const remainingShares = shares - firstShares;
     let numIterations = 1 + Math.ceil(remainingShares / stock.shareTxForMovement);
 
     // If on the offchance we end up perfectly at the next price movement
@@ -118,8 +118,8 @@ export function calculateBuyMaxAmount(stock: Stock, posType: PositionTypes, mone
 
     const isLong = (posType === PositionTypes.Long);
 
-    let remainingMoney = money - CONSTANTS.StockMarketCommission;
-    let currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
+    const remainingMoney = money - CONSTANTS.StockMarketCommission;
+    const currPrice = isLong ? stock.getAskPrice() : stock.getBidPrice();
 
     return Math.floor(remainingMoney / currPrice);
 }

@@ -9,7 +9,6 @@ import { IMap } from "../types";
 
 import { Reviver } from "../../utils/JSONReviver";
 
-
 export let Factions: IMap<Faction> = {};
 
 export function loadFactions(saveString: string): void {
@@ -25,15 +24,15 @@ export function factionExists(name: string): boolean {
     return Factions.hasOwnProperty(name);
 }
 
-export function initFactions(bitNode: number=1) {
+export function initFactions(bitNode: number= 1) {
     for (const name in FactionInfos) {
         resetFaction(new Faction(name));
     }
 }
 
-//Resets a faction during (re-)initialization. Saves the favor in the new
-//Faction object and deletes the old Faction Object from "Factions". Then
-//reinserts the new Faction object
+// Resets a faction during (re-)initialization. Saves the favor in the new
+// Faction object and deletes the old Faction Object from "Factions". Then
+// reinserts the new Faction object
 export function resetFaction(newFactionObject: Faction) {
     if (!(newFactionObject instanceof Faction)) {
         throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");

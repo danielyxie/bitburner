@@ -53,5 +53,5 @@ export const SleeveFaq: string =
 "then when you switch BitNodes its synchronization will initially be set to 25, rather than 1.<br><br>",
 "Memory can only be increased by purchasing upgrades from The Covenant. It is a",
 "persistent stat, meaning it never gets resets back to 1. The maximum possible",
-"value for a sleeve's memory is 100."
+"value for a sleeve's memory is 100.",
 ].join(" ");

@@ -1,7 +1,7 @@
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { CONSTANTS } from "../Constants";
 import { FactionInfo,
          FactionInfos } from "./FactionInfo";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class Faction {
     /**
@@ -53,7 +53,7 @@ export class Faction {
      */
     rolloverRep: number = 0;
 
-    constructor(name: string="") {
+    constructor(name: string= "") {
         this.name = name;
     }
 
@@ -78,14 +78,14 @@ export class Faction {
         this.rolloverRep = res[1];
     }
 
-    //Returns an array with [How much favor would be gained, how much rep would be left over]
+    // Returns an array with [How much favor would be gained, how much rep would be left over]
     getFavorGain(): number[] {
         if (this.favor == null) { this.favor = 0; }
         if (this.rolloverRep == null) { this.rolloverRep = 0; }
-        var favorGain = 0, rep = this.playerReputation + this.rolloverRep;
+        let favorGain = 0, rep = this.playerReputation + this.rolloverRep;
         let reqdRep = CONSTANTS.FactionReputationToFavorBase *
                       Math.pow(CONSTANTS.FactionReputationToFavorMult, this.favor);
-        while(rep > 0) {
+        while (rep > 0) {
             if (rep >= reqdRep) {
                 ++favorGain;
                 rep -= reqdRep;

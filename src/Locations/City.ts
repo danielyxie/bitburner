@@ -15,7 +15,7 @@ export class City {
      */
     name: CityName;
 
-    constructor(name: CityName, locations: LocationName[]=[]) {
+    constructor(name: CityName, locations: LocationName[]= []) {
         this.name = name;
         this.locations = locations;
     }

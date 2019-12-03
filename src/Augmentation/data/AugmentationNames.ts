@@ -107,9 +107,9 @@ export let AugmentationNames: IMap<string> = {
     BladeArmorIPU:                      "BLADE-51b Tesla Armor: IPU Upgrade",
     BladesSimulacrum:                   "The Blade's Simulacrum",
 
-    //Wasteland Augs
-    //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
-    //PepBoyForceField Generates plasma force fields
-    //PepBoyBlasts Generate high density plasma concussive blasts
-    //PepBoyDataStorage STore more data on pep boy,
-}
+    // Wasteland Augs
+    // PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
+    // PepBoyForceField Generates plasma force fields
+    // PepBoyBlasts Generate high density plasma concussive blasts
+    // PepBoyDataStorage STore more data on pep boy,
+};

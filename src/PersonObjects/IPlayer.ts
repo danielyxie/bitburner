@@ -11,10 +11,10 @@ import { IMap } from "../types";
 import { IPlayerOwnedAugmentation }     from "../Augmentation/PlayerOwnedAugmentation";
 import { Company }                      from "../Company/Company";
 import { CompanyPosition }              from "../Company/CompanyPosition";
-import { CityName }                     from "../Locations/data/CityNames";
 import { Faction }                      from "../Faction/Faction";
-import { HashManager }                  from "../Hacknet/HashManager";
 import { HacknetNode }                  from "../Hacknet/HacknetNode";
+import { HashManager }                  from "../Hacknet/HashManager";
+import { CityName }                     from "../Locations/data/CityNames";
 import { LocationName }                 from "../Locations/data/LocationNames";
 import { Server }                       from "../Server/Server";
 import { IPlayerOwnedSourceFile }       from "../SourceFile/PlayerOwnedSourceFile";
@@ -32,7 +32,7 @@ export interface IPlayer {
     factions: string[];
     firstProgramAvailable: boolean;
     firstTimeTraveled: boolean;
-    hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
+    hacknetNodes: Array<HacknetNode | string>; // HacknetNode object or IP of Hacknet Server
     has4SData: boolean;
     has4SDataTixApi: boolean;
     hashManager: HashManager;

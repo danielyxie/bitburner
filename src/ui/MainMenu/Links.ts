@@ -3,25 +3,25 @@
 import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 
 interface IMainMenuLinks {
-    Terminal:       HTMLElement | null;
-    ScriptEditor:   HTMLElement | null;
-    ActiveScripts:  HTMLElement | null;
-    CreateProgram:  HTMLElement | null;
-    Stats:          HTMLElement | null;
-    Factions:       HTMLElement | null;
-    Augmentations:  HTMLElement | null;
-    HacknetNodes:   HTMLElement | null;
-    Sleeves:        HTMLElement | null;
-    City:           HTMLElement | null;
-    Travel:         HTMLElement | null;
-    Job:            HTMLElement | null;
-    StockMarket:    HTMLElement | null;
-    Bladeburner:    HTMLElement | null;
-    Corporation:    HTMLElement | null;
-    Gang:           HTMLElement | null;
-    Tutorial:       HTMLElement | null;
-    Options:        HTMLElement | null;
-    DevMenu:        HTMLElement | null;
+    Terminal: HTMLElement | null;
+    ScriptEditor: HTMLElement | null;
+    ActiveScripts: HTMLElement | null;
+    CreateProgram: HTMLElement | null;
+    Stats: HTMLElement | null;
+    Factions: HTMLElement | null;
+    Augmentations: HTMLElement | null;
+    HacknetNodes: HTMLElement | null;
+    Sleeves: HTMLElement | null;
+    City: HTMLElement | null;
+    Travel: HTMLElement | null;
+    Job: HTMLElement | null;
+    StockMarket: HTMLElement | null;
+    Bladeburner: HTMLElement | null;
+    Corporation: HTMLElement | null;
+    Gang: HTMLElement | null;
+    Tutorial: HTMLElement | null;
+    Options: HTMLElement | null;
+    DevMenu: HTMLElement | null;
 }
 
 export const MainMenuLinks: IMainMenuLinks = {
@@ -44,7 +44,7 @@ export const MainMenuLinks: IMainMenuLinks = {
     Tutorial: null,
     Options: null,
     DevMenu: null,
-}
+};
 
 export function initializeMainMenuLinks(): boolean {
     try {
@@ -54,7 +54,7 @@ export function initializeMainMenuLinks(): boolean {
                 throw new Error(`clearEventListeners() failed for element with id: ${id}`);
             }
 
-            return elem!;
+            return elem;
         }
 
         MainMenuLinks.Terminal = safeGetLink("terminal-menu-link");
@@ -78,7 +78,7 @@ export function initializeMainMenuLinks(): boolean {
         MainMenuLinks.DevMenu = safeGetLink("dev-menu-link");
 
         return true;
-    } catch(e) {
+    } catch (e) {
         console.error(`Failed to initialize Main Menu Links: ${e}`);
         return false;
     }
