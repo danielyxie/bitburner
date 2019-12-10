@@ -146,7 +146,6 @@ export function isInRootDirectory(filepath: string): boolean {
  */
 export function evaluateDirectoryPath(server: any, path: string, currPath?: string): string | undefined {
     let t_path = path;
-    console.log(`Current server=  ${JSON.stringify(server)}`);
     console.log(`Evaluate Directory Path ${JSON.stringify(path)}`);
     console.log(`Current Path = ${JSON.stringify(currPath)}`);
     // If the path begins with a slash, then its an absolute path. Otherwise its relative

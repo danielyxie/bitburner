@@ -803,7 +803,7 @@ let Terminal = {
         command = substituteAliases(command);
 
         // Only split the first space
-		var commandArray = Terminal.parseCommandArguments(command);
+		const commandArray = Terminal.parseCommandArguments(command);
 		if (commandArray.length == 0) { return; }
 
         /****************** Interactive Tutorial Terminal Commands ******************/
@@ -814,32 +814,32 @@ let Terminal = {
             switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray.length === 1 && commandArray[0] == "help") {
-                    post(TerminalHelpText);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalLs:
                 if (commandArray.length === 1 && commandArray[0] == "ls") {
-                    Terminal.executeListCommand(commandArray);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalScan:
                 if (commandArray.length === 1 && commandArray[0] == "scan") {
-                    Terminal.executeScanCommand(commandArray);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalScanAnalyze1:
                 if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
-                    Terminal.executeScanAnalyzeCommand(1);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalScanAnalyze2:
                 if (commandArray.length == 2 && commandArray[0] == "scan-analyze" &&
                     commandArray[1] === 2) {
-                    Terminal.executeScanAnalyzeCommand(2);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -847,21 +847,14 @@ let Terminal = {
                 if (commandArray.length == 2) {
                     if ((commandArray[0] == "connect") &&
                         (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
-                        Player.getCurrentServer().isConnectedTo = false;
-                        Player.currentServer = foodnstuffServ.ip;
-                        Player.getCurrentServer().isConnectedTo = true;
-                        post("Connected to foodnstuff");
+                        this.executeCommandHelper(command);
                         iTutorialNextStep();
                     } else {post("Wrong command! Try again!"); return;}
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalAnalyze:
                 if (commandArray.length === 1 && commandArray[0] === "analyze") {
-                    if (commandArray.length !== 1) {
-                        post("Incorrect usage of analyze command. Usage: analyze");
-                        return;
-                    }
-                    Terminal.startAnalyze();
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {
                     post("Bad command. Please follow the tutorial");
@@ -870,34 +863,33 @@ let Terminal = {
             case iTutorialSteps.TerminalNuke:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
-                    foodnstuffServ.hasAdminRights = true;
-                    post("NUKE successful! Gained root access to foodnstuff");
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
-                    Terminal.startHack();
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
 				break;
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    Engine.loadScriptEditorContent("foodnstuff.script", "");
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalFree:
                 if (commandArray.length == 1 && commandArray[0] == "free") {
-                    Terminal.executeFreeCommand(commandArray);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalRunScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
-                    Terminal.runScript(commandArray);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -905,12 +897,7 @@ let Terminal = {
                 if (commandArray.length == 2 &&
                     commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
                     // Check that the script exists on this machine
-                    var runningScript = findRunningScript("foodnstuff.script", [], Player.getCurrentServer());
-                    if (runningScript == null) {
-                        post("Error: No such script exists");
-                        return;
-                    }
-                    logBoxCreate(runningScript);
+                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -923,15 +910,29 @@ let Terminal = {
 
         /****************** END INTERACTIVE TUTORIAL ******************/
 
-        /* Command parser */
+        this.executeCommandHelper(command);
+    },
+    
+    // TODO Rename and refactor this. Temporary fix to make Interactive Tutorial work with new filesystem
+    executeCommandHelper: function(command) {
+        if (Terminal.hackFlag || Terminal.analyzeFlag) {
+            postError(`Cannot execute command (${command}) while an action is in progress`);
+            return;
+        }
+        // Process any aliases
+        command = substituteAliases(command);
+
+        const commandArray = Terminal.parseCommandArguments(command);
+        if (commandArray.length == 0) { return; }
+
         var server = Player.getCurrentServer();
         var executable = sys.fetchExecutable(commandArray[0]);
-        if (!executable){
+        if (!executable) {
             let filepath = commandArray[0];
             // this triggers if the file is in relative pathing format.
-            if(!server.exists(filepath) & server.exists(path.resolve(this.currDir+"/"+filepath))) filepath = path.resolve(this.currDir+"/"+filepath);
+            if (!server.exists(filepath) & server.exists(path.resolve(this.currDir + "/" + filepath))) filepath = path.resolve(this.currDir + "/" + filepath);
 
-            if(server.exists(filepath)) {
+            if (server.exists(filepath)) {
                 // if it's an existing path, check if it is a directory or an executable
                 if (server.isDir(filepath))
                     post(`${filepath} is a directory.`);
@@ -941,10 +942,10 @@ let Terminal = {
                     post(`${filepath} is a file.`);
             }
             else postError(`${commandArray[0]} not found`);
-        }else{
+        } else {
             executable(server, Terminal, post, postError, commandArray.splice(1));
         }
-	},
+    },
 
     /**
      * Given a filename, returns that file's full path. This takes into account

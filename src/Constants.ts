@@ -231,6 +231,9 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.47.3
+    * Updated Terminal Functionality 
+    * // TODO Update this 
+    * TODO Add benbernard's change
     * Bug Fix: 'Sanitize Parentheses in Expression' should now properly accept answers with quotes around each element
     `
 }

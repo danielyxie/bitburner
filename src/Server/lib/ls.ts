@@ -15,7 +15,7 @@ const micromatch = require('micromatch');
  * @param {number} [nodeLimit=50] The limit of files to parse, in order to avoid problems with large repositories. Set to -1 to disable.
  * @returns {string} The String representation of the file tree in a record manner.
  */
-export function ls(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={ depth:2}) {
+export function ls(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any={ depth: 0 }) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const HELP_MESSAGE: string = "Incorrect usage of ls command. Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
@@ -96,9 +96,13 @@ export function ls(server: BaseServer, term: any, out:Function, err:Function, ar
         let paths = root.toStringArray(true, patterns);
         results.push(...paths);
     })
-    results.map( (path) => {
+    results.map((path) => {
+        if (path.endsWith("/")) {
+            out(path, "#0000EE"); // Blue for directories
+        } else {
             out(path);
-        } )
+        }
+    })
 }
 
 const SCOPE: string     = "│  ";
@@ -111,18 +115,20 @@ class TreeNode {
     fileType: string = "";
     childrens: TreeNode[] = [];
     depth: number = 0;
+
     constructor(name: string, fileType: string) {
         this.name = name;
         this.fileType = fileType;
         this.childrens = [];
     }
 
-    toStringArray(isLast=false, patterns:string[]):string[]{
+    toStringArray(isLast=false, patterns: string[]): string[] {
         const localResults: string[] = [];
-        let path = this.getFullName()
-        if (patterns.length==0 || (patterns.length>0 && micromatch.isMatch(path, patterns))){
+        let path = this.getFullName();
+        if (patterns.length === 0 || (patterns.length > 0 && micromatch.isMatch(path, patterns))) {
             localResults.push(path);
         }
+
         if (this.childrens.length > 0) {
             this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
             for (let i:number = 0; i < this.childrens.length; i++) {
@@ -134,17 +140,17 @@ class TreeNode {
 
     addChild(node: TreeNode,treeMerge=false) {
         node.depth = this.depth + 1;
-        if(treeMerge){
+        if (treeMerge) {
             node.path = this.path+this.name;
             node.name = node.name.replace(this.path+this.name, "");
-        }else{
+        } else {
             node.path = this.path + this.name + ((this.name.endsWith("/")) ? "" : "/");
         }
         this.childrens.push(node);
     }
 
-    getFullName(){
-        return [this.path, this.name, (this.fileType == FileType.DIRECTORY && this.name != "/") ? "/" : ""].join("")
+    getFullName() {
+        return [this.path, this.name, (this.fileType === FileType.DIRECTORY && this.name != "/") ? "/" : ""].join("")
     }
 }
 import {registerExecutable, ManualEntry} from "./sys";

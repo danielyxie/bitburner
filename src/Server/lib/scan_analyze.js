@@ -6,6 +6,7 @@ import {getServer, AllServers} from "../AllServers";
 import {connect} from "./connect";
 import { Programs } from "../../Programs/Programs";
 import {HacknetServer} from "../../Hacknet/HacknetServer";
+
 export function scan_analyze(server, term, out, err, args, options={}){
     if (args.length === 0) {
         executeScanAnalyze(server, term, out, err, 1);
@@ -101,3 +102,20 @@ function executeScanAnalyze(server, term, out, err, depth, all=false){
     }
 }
 
+const MANUAL = new ManualEntry(
+`scan_analyze - print detailed information about servers`,
+`scan_analyze [depth]`,
+`Prints detailed information about all servers up to [depth] nodes away 
+on the network. Calling 'scan_analyze 1' will display information about
+the same servers that are shown by the 'scan' command. This command also 
+shows the relative paths to reach each server.
+
+By default, the maximum depth that can be specified for this command is 3.
+However, owning the DeepscanV1.exe and DeepscanV2.exe programs lets you 
+execute this command with a depth up to 5 and 10, respectively.
+
+The information this command displays about each server includes whether 
+or not you have root access to it, its required hacking level, the number of 
+open ports required to run NUKE.exe on it, and how much RAM it has.`);
+
+registerExecutable("scan_analyze", scan_analyze, MANUAL);

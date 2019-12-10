@@ -3,11 +3,18 @@ import { getElementById } from "../../utils/uiHelpers/getElementById";
 /**
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
+ * @param color Optional color for the output text
  */
-export function post(input: string) {
-    postContent(input);
+export function post(input: string, color?: string) {
+    const config: IPostContentConfig = {};
+    if (typeof color === "string") { config.color = color; }
+    postContent(input, config);
 }
 
+/**
+ * Adds error output to the terminal using a red font-color
+ * @param input Error text to post to the terminal
+ */
 export function postError(input: string) {
     postContent(`ERROR: ${input}`, { color: "#ff2929" });
 }

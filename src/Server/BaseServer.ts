@@ -300,7 +300,7 @@ export class BaseServer {
                 postError(`Cannot copy file ${src} to itself`);
             }
 
-            throw `Cannot copy file ${src} to itself`;
+            throw new Error(`Cannot copy file ${src} to itself`);
         }
         if( (this.exists(target) && this.isDir(target)) || options.targetAsDirectory || target.endsWith("/")){
             target = target + ((target.endsWith("/"))?"":"/") + src;
