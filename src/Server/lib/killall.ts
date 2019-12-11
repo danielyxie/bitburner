@@ -24,6 +24,6 @@ may take a while for the script to actually stop running.
 This will happen if the script is in the middle of a
 command such as grow() or weaken() that takes time to
 execute. The script will not be stopped/killed until after
-that time has elapsed.`)
+that time has elapsed.`);
 
 registerExecutable("killall", killall, MANUAL);

@@ -37,6 +37,7 @@
                 }
             }
         ],
+        "increment-decrement": false,
         "linebreak-style": false,
         "max-line-length": [ true, 160 ],
         "member-access": [
@@ -44,6 +45,7 @@
             "no-public"
         ],
         "member-ordering": [ false ],
+        "newline-before-return": false,,
         "no-any": false,
         "no-inferrable-types": [
             false,

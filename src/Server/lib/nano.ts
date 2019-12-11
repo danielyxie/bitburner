@@ -17,8 +17,8 @@ export function nano(server: BaseServer, term: any, out:Function, err:Function, 
         server.touch(filename);
         var content = term.getFileContent(filename);
         const filepath = term.getFilepath(filename);
-        if (filename === ".fconf" && content === ""){
-                content = createFconf();
+        if (filename === ".fconf" && content === "") {
+            content = createFconf();
         }
 
         Engine.loadScriptEditorContent(filepath, content);
@@ -35,5 +35,6 @@ const MANUAL = new ManualEntry(
 `nano - opens up the specified file in the Text Editor`,
 `nano FILENAME`,
 `Opens up the specified file in the Text Editor. If the file
-does not already exist, then a new, empty one will be created.`)
+does not already exist, then a new, empty one will be created.`);
+
 registerExecutable("nano", nano, MANUAL);

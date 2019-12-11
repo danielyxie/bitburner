@@ -28,23 +28,27 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
         switch (arg) {
             case "-h":
             case "--help":
-                throw HELP_MESSAGE;
+                out(HELP_MESSAGE);
+                break;
             case "-d":
             case "--depth":
-                if (args.length > 0) { options.depth = parseInt(args.shift() as string); }
-                else { throw HELP_MESSAGE; }
+                if (args.length > 0) {
+                    options.depth = parseInt(args.shift() as string);
+                } else {
+                    out(HELP_MESSAGE);
+                }
                 break;
             default:
                 roots.push(arg);
                 break;
         }
     }
-    if (roots.length==0) { roots = [cwd]; }
+    if (roots.length === 0) { roots = [cwd]; }
     const toBeProcessed: TreeNode[] = [];
-    var treeRoots:TreeNode[] = []
+    var treeRoots: TreeNode[] = [];
     const processed: Set<string> = new Set<string>();
-    for(let root of roots){
-        let targetDir:any = path.resolve(cwd, root);
+    for (let root of roots){
+        let targetDir: any = path.resolve(cwd, root);
         if (!targetDir) { patterns.push(root); }
         else{
             if(server.isDir(root)){
@@ -57,8 +61,8 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
             }
         }
     }
-    //if everything was patterns
-    if(treeRoots.length==0){
+    // if everything was patterns
+    if (treeRoots.length==0){
         // we add the cwd to it
         const rootNode = new TreeNode(cwd, FileType.DIRECTORY);
         toBeProcessed.push(rootNode);
@@ -91,18 +95,28 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
             return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));
         });
 
-    let results:string[] = [];
-    treeRoots.forEach((root)=>{
-        let paths = root.toStringArray(true, patterns);
+    const results: string[] = [];
+    treeRoots.forEach((root: TreeNode)=>{
+        const paths: string[] = root.toStringArray(true, patterns);
+
+        // 'paths' currently contains the full filepaths, so we should remove
+        // the current filepath from each element.
+        const currFilepath: string = term.currDir === "/" ? term.currDir : `${term.currDir}/`;
+        for (let i: number = 0; i < paths.length; ++i) {
+            if (paths[i].startsWith(currFilepath)) {
+                paths[i] = paths[i].replace(currFilepath, "");
+            }
+        }
+
         results.push(...paths);
-    })
-    results.map((path) => {
+    });
+    results.map((path: string) => {
         if (path.endsWith("/")) {
             out(path, "#0000EE"); // Blue for directories
         } else {
             out(path);
         }
-    })
+    });
 }
 
 const SCOPE: string     = "│  ";
@@ -138,7 +152,7 @@ class TreeNode {
         return localResults;
     }
 
-    addChild(node: TreeNode,treeMerge=false) {
+    addChild(node: TreeNode, treeMerge: boolean = false) {
         node.depth = this.depth + 1;
         if (treeMerge) {
             node.path = this.path+this.name;

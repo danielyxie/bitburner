@@ -1,5 +1,5 @@
 import { BaseServer } from "../BaseServer";
-import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
+import { registerExecutable, ManualEntry, fetchUsage, fetchExecutable } from "./sys";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { RunningScript } from "../../Script/RunningScript";
 import{ Script } from "../../Script/Script";
@@ -11,34 +11,29 @@ export async function run(server:BaseServer, term:any, out:Function, err:Functio
     //TODO change the Player as any to Player, but this requires registering various
     // functions like getContractReward and such as part of the Player type definition, couldn't get
     // it to register the functions. so I disabled the checking with any for those calls.
-    const cwd:string = term.currDir;
-    let player:any;
-    if(!options.Player) player = Player;
-    else player = options.Player;//testing.
+    const cwd: string = term.currDir;
+    let player: any;
+    if (!options.Player) {
+        player = Player;
+    } else {
+        player = options.Player; // testing.
+    }
 
     if (args.length < 1) {
         err("You must specify an executable.");
     } else {
         // [executableName, ...args] -> executableName, [...args]
-        var executableName = args.shift() as string;
+        let executableName = args.shift() as string;
 
-        if(executableName.endsWith(".exe")){
+        if (executableName.endsWith(".exe")){
             let executable = fetchExecutable(executableName) // the owning check is already included here.
-            if(executable) {
+            if (executable) {
                 executable(server, term, out, err, args);
                 return;
-            }
-            else{
+            } else {
                 err(`${executableName} not found`)
                 return;
             }
-        }
-
-        if(!server.isExecutable(executableName)){ // is it using relative pathing?
-            let temp_path = path.resolve(cwd+"/"+executableName);
-            if(server.isExecutable(temp_path)){// if so, yes it was a relative path.
-                executableName = temp_path;
-            }//else it was either a program or a contract.
         }
 
         // Secret Music player!
@@ -47,26 +42,21 @@ export async function run(server:BaseServer, term:any, out:Function, err:Functio
             return;
         }
 
-        if(server.exists(executableName)){//is it a script? (search is in O(1))
+        // If we're not running a .exe, we have to search using the full path
+        executableName = term.getFilepath(executableName);
+
+        if (server.exists(executableName)){ //is it a script? (search is in O(1))
             return _runScript(server, term, out, err, executableName, args).catch((e)=>{err(e)});
-
-        }// Check if its a script or just a program/executable
-        else if (executableName.endsWith(".cct")){
+        } else if (executableName.endsWith(".cct")){
             return _runContract(server, term, out, err, executableName).catch((e)=>{err(e)});
-
         }
-
 
         err(`${executableName} not found`)
         return;
     }
 }
 
-import {
-    CodingContract,
-    CodingContractResult,
-    CodingContractRewardType
-} from "../../CodingContracts";
+import { CodingContractResult } from "../../CodingContracts";
 
 async function _runContract(server:BaseServer, term:any, out:Function, err:Function, contractName:string){
     // There's already an opened contract
@@ -154,7 +144,7 @@ async function _runScript(server:BaseServer, term:any, out:Function, err:Functio
         server.scriptsMap[scriptName] = script;
     }
 
-    await script.updateRamUsage()
+    await script.updateRamUsage();
     if( isNaN(script.ramUsage) ){
         //inccorect syntax or something like that
         err(`RAM usage calculation impossible, check ${scriptName} for any syntax errors.`);
@@ -170,7 +160,7 @@ async function _runScript(server:BaseServer, term:any, out:Function, err:Functio
     var runningScriptObj = new RunningScript(script, Scriptargs);
     runningScriptObj.threads = numThreads;
     if (startWorkerScript(runningScriptObj, server)) {
-        out("Running script with " + numThreads +  " thread(s) and args: " + JSON.stringify(args) + ".");
+        out(`Running script ${script.filename} with ${numThreads} thread(s) and args: ${JSON.stringify(args)}.`);
     } else {
         err(`Failed to start script`);
     }

@@ -1,47 +1,15 @@
-import {
-    evaluateDirectoryPath,
-    evaluateFilePath,
-    getFirstParentDirectory,
-    isInRootDirectory,
-    isValidDirectoryPath,
-    isValidFilename,
-    removeLeadingSlash,
-    removeTrailingSlash
-} from "./Terminal/DirectoryHelpers";
 import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
-import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
 import { tabCompletion } from "./Terminal/tabCompletion";
 
-import {
-    Aliases,
-    GlobalAliases,
-    parseAliasDeclaration,
-    printAliases,
-    removeAlias,
-    substituteAliases
-} from "./Alias";
-import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-import {
-    CodingContract,
-    CodingContractResult,
-    CodingContractRewardType
-} from "./CodingContracts";
+import { substituteAliases } from "./Alias";
 import { CONSTANTS } from "./Constants";
-import { Programs } from "./Programs/Programs";
-import {
-    checkIfConnectedToDarkweb
-} from "./DarkWeb/DarkWeb";
-import { DarkWebItems } from "./DarkWeb/DarkWebItems";
 import { Engine } from "./engine";
-import { parseFconfSettings, createFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import {
     calculateHackingChance,
     calculateHackingExpGain,
     calculatePercentMoneyHacked,
     calculateHackingTime,
-    calculateGrowTime,
-    calculateWeakenTime
 } from "./Hacking";
 import { HacknetServer } from "./Hacknet/HacknetServer";
 import {
@@ -49,57 +17,24 @@ import {
     iTutorialSteps,
     ITutorial
 } from "./InteractiveTutorial";
-import { showLiterature } from "./Literature";
-import { Message } from "./Message/Message";
-import { showMessage } from "./Message/MessageHelpers";
-import { startWorkerScript } from "./NetscriptWorker";
-import { killWorkerScript } from "./Netscript/killWorkerScript";
-import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
-import { RunningScript } from "./Script/RunningScript";
-import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
-import { findRunningScript } from "./Script/ScriptHelpers";
-import { isScriptFilename } from "./Script/ScriptHelpersTS";
-import { AllServers } from "./Server/AllServers";
-import { Server } from "./Server/Server";
-import {
-    GetServerByHostname,
-    getServer,
-    getServerOnNetwork
-} from "./Server/ServerHelpers";
-import { Settings } from "./Settings/Settings";
+import { GetServerByHostname } from "./Server/ServerHelpers";
 import {
     SpecialServerIps,
     SpecialServerNames
 } from "./Server/SpecialServerIps";
-import { getTextFile } from "./TextFile";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { KEY } from "../utils/helpers/keyCodes";
-import { addOffset } from "../utils/helpers/addOffset";
-import { isString } from "../utils/helpers/isString";
-import { arrayToString } from "../utils/helpers/arrayToString";
 import { getTimestamp } from "../utils/helpers/getTimestamp";
-import { logBoxCreate } from "../utils/LogBox";
-import {
-    yesNoBoxCreate,
-    yesNoBoxGetYesButton,
-    yesNoBoxGetNoButton,
-    yesNoBoxClose
-} from "../utils/YesNoBox";
 import {
     post,
-    postContent,
     postError,
     hackProgressBarPost,
     hackProgressPost
 } from "./ui/postToTerminal";
-import {
-    calculateRamUsage
-} from "./Script/RamCalculations";
-import{ Script } from "./Script/Script";
 import * as sys from "./Server/lib/sys";
 //////////////////////////////////////////////////////////////////////////////
 // Here we import every existing function to let them initialize themselves //
@@ -685,23 +620,22 @@ let Terminal = {
         // Process any aliases
         commands = substituteAliases(commands);
 
-        var chars = new antlr4.InputStream(commands); // text 
-        var lexer = new TerminalLexer(chars);   // text to symbols 
+        var chars = new antlr4.InputStream(commands); // text
+        var lexer = new TerminalLexer(chars);   // text to symbols
         var tokens = new antlr4.CommonTokenStream(lexer); // symbols
         var parser = new TerminalParser(tokens); // symbols to ast
         parser.buildParseTrees = true;
-        console.log(`Parsing "${commands}"...`) 
         var tree = parser.commandSequence();
         var commandListener = new CommandListener();
         antlr4.tree.ParseTreeWalker.DEFAULT.walk(commandListener, tree);
-        
+
         commands = commandListener.parsedCommands;
         // Execute sequentially
         for (let i = 0; i < commands.length; i++) {
             // the parser automatically removes empty statements.
             // we just have to execute them now.
             Terminal.executeCommand(commands[i].string);
-            
+
         }
     },
 
@@ -912,7 +846,7 @@ let Terminal = {
 
         this.executeCommandHelper(command);
     },
-    
+
     // TODO Rename and refactor this. Temporary fix to make Interactive Tutorial work with new filesystem
     executeCommandHelper: function(command) {
         if (Terminal.hackFlag || Terminal.analyzeFlag) {
@@ -951,8 +885,10 @@ let Terminal = {
      * Given a filename, returns that file's full path. This takes into account
      * the Terminal's current directory.
      */
-    getFilepath : function(filename) {
-        let result = path.resolve( Terminal.currDir+filename)
+    getFilepath: function(filename) {
+        // Terminal.currDir does not contain the trailing forward slash, so we have to append it if necessary
+        const directoryPath = Terminal.currDir === "/" ? Terminal.currDir : `${Terminal.currDir}/`;
+        let result = path.resolve(directoryPath + filename)
         return result;
     },
 
