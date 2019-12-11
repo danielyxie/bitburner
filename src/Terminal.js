@@ -882,13 +882,21 @@ let Terminal = {
     },
 
     /**
+     * Return the Terminal's current directory. In most cases, this should be used rather than
+     * accesssing Terminal.currDir directly
+     */
+    getCurrentDirectory: function() {
+        return Terminal.currDir === "/" ? Terminal.currDir : `${Terminal.currDir}/`
+    },
+
+    /**
      * Given a filename, returns that file's full path. This takes into account
      * the Terminal's current directory.
      */
     getFilepath: function(filename) {
         // Terminal.currDir does not contain the trailing forward slash, so we have to append it if necessary
-        const directoryPath = Terminal.currDir === "/" ? Terminal.currDir : `${Terminal.currDir}/`;
-        let result = path.resolve(directoryPath + filename)
+        const currDir = Terminal.getCurrentDirectory();
+        let result = path.resolve(currDir + filename)
         return result;
     },
 

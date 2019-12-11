@@ -11,7 +11,6 @@ export async function run(server:BaseServer, term:any, out:Function, err:Functio
     //TODO change the Player as any to Player, but this requires registering various
     // functions like getContractReward and such as part of the Player type definition, couldn't get
     // it to register the functions. so I disabled the checking with any for those calls.
-    const cwd: string = term.currDir;
     let player: any;
     if (!options.Player) {
         player = Player;
@@ -102,20 +101,20 @@ async function _runContract(server:BaseServer, term:any, out:Function, err:Funct
 
 async function _runScript(server:BaseServer, term:any, out:Function, err:Function, scriptName:string, args:string[]){
     let numThreads = 1;
-    const Scriptargs:string[] = [];
+    const Scriptargs: string[] = [];
 
     if (args.length > 1) {
-        if (args.length >= 3 && args[1] == "-t") {
-            numThreads = Math.round(parseFloat(args[2]));
+        if (args.length >= 2 && args[0] == "-t") {
+            numThreads = Math.round(parseFloat(args[1]));
             if (isNaN(numThreads) || numThreads < 1) {
                 err("Invalid number of threads specified. Number of threads must be greater than 0");
                 return;
             }
-            for (let i = 3; i < args.length; ++i) {
+            for (let i = 2; i < args.length; ++i) {
                 Scriptargs.push(args[i]);
             }
         } else {
-            for (let i = 1; i < args.length; ++i) {
+            for (let i = 0; i < args.length; ++i) {
                 Scriptargs.push(args[i])
             }
         }
@@ -126,33 +125,33 @@ async function _runScript(server:BaseServer, term:any, out:Function, err:Functio
         err("This script is already running. Cannot run multiple instances");
         return;
     }
-    if(!server.hasAdminRights) {
+    if (!server.hasAdminRights) {
         err(`Need root access to run script`);
         return;
     }
-    if(!server.exists(scriptName)) {
+    if (!server.exists(scriptName)) {
         err(`No such script`);
         return;
     }
-    if(!server.isExecutable(scriptName)) {
+    if (!server.isExecutable(scriptName)) {
         err(`Not an executable`);
         return;
     }
     let script = server.scriptsMap[scriptName];
-    if(!script){ // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?)
+    if (!script) { // if the file has not been analyzed yet (created by another file? or update ongoing, or invalid syntax?)
         script = new Script(scriptName, server.ip);
         server.scriptsMap[scriptName] = script;
     }
 
     await script.updateRamUsage();
-    if( isNaN(script.ramUsage) ){
-        //inccorect syntax or something like that
+    if (isNaN(script.ramUsage) ){
+        // inccorect syntax or something like that
         err(`RAM usage calculation impossible, check ${scriptName} for any syntax errors.`);
         return;
     }
     let ramUsage = script.ramUsage * numThreads;
     let ramAvailable = server.maxRam - server.ramUsed;
-    if(ramUsage > ramAvailable){
+    if (ramUsage > ramAvailable){
         err(`This machine does not have enough RAM to run this script with ${numThreads} threads. Script requires ${ramUsage} GB of RAM`);
         return;
     }
@@ -160,7 +159,7 @@ async function _runScript(server:BaseServer, term:any, out:Function, err:Functio
     var runningScriptObj = new RunningScript(script, Scriptargs);
     runningScriptObj.threads = numThreads;
     if (startWorkerScript(runningScriptObj, server)) {
-        out(`Running script ${script.filename} with ${numThreads} thread(s) and args: ${JSON.stringify(args)}.`);
+        out(`Running script ${script.filename} with ${numThreads} thread(s) and args: ${JSON.stringify(Scriptargs)}.`);
     } else {
         err(`Failed to start script`);
     }
@@ -184,6 +183,6 @@ immediately afterwards.
 [ARGS]... represents a variable number of arguments that will
 be passed into the script. See the documentation about script
 arguments. Each specified argument must be separated by a
-space.`)
+space.`);
 
 registerExecutable("run", run, MANUAL);

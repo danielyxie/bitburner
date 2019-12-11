@@ -18,7 +18,8 @@ const micromatch = require('micromatch');
 export function ls(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any={ depth: 0 }) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
-    const HELP_MESSAGE: string = "Incorrect usage of ls command. Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
+    const USAGE_MESSAGE: string = "Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
+    const INCORRECT_USAGE_MESSAGE = `Incorrect usage of ls command. ${USAGE_MESSAGE}`;
     let error: string;
     const cwd: string = term.currDir;
     let roots: string[] = [];
@@ -28,14 +29,15 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
         switch (arg) {
             case "-h":
             case "--help":
-                out(HELP_MESSAGE);
-                break;
+                out(USAGE_MESSAGE);
+                return;
             case "-d":
             case "--depth":
                 if (args.length > 0) {
                     options.depth = parseInt(args.shift() as string);
                 } else {
-                    out(HELP_MESSAGE);
+                    out(INCORRECT_USAGE_MESSAGE);
+                    return;
                 }
                 break;
             default:
@@ -101,7 +103,7 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
 
         // 'paths' currently contains the full filepaths, so we should remove
         // the current filepath from each element.
-        const currFilepath: string = term.currDir === "/" ? term.currDir : `${term.currDir}/`;
+        const currFilepath: string = term.getCurrentDirectory();
         for (let i: number = 0; i < paths.length; ++i) {
             if (paths[i].startsWith(currFilepath)) {
                 paths[i] = paths[i].replace(currFilepath, "");
