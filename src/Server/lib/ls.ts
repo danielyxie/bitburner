@@ -41,7 +41,6 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
     }
     if (roots.length === 0) { roots = ["."]; }
 
-
     const toBeProcessed: Node[] = [];
     const addresses:string[] = Object.keys(server.vol.toJSON());
 

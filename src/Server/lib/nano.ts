@@ -25,10 +25,13 @@ export function nano(server: BaseServer, term: any, out:Function, err:Function, 
         const filepath = term.getFilepath(filename);
         if (filename === ".fconf" && content === "") {
             content = createFconf();
+            filepath = filename;
+        } else {
+            content = term.getFileContent(filename);
+            filepath = term.getFilepath(filename);
         }
 
         Engine.loadScriptEditorContent(filepath, content);
-
     } catch(e) {
         err(e);
     }

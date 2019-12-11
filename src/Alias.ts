@@ -1,5 +1,4 @@
 import { IMap } from "./types";
-import { post } from "./ui/postToTerminal";
 
 export let Aliases: IMap<string> = {};
 export let GlobalAliases: IMap<string> = {};
@@ -21,7 +20,7 @@ export function loadGlobalAliases(saveString: string): void {
 }
 
 // Prints all aliases to terminal
-export function printAliases(): string {
+export function getAllAliases(): string {
     let result = []
     for (const name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
@@ -37,10 +36,10 @@ export function printAliases(): string {
 }
 
 // Returns true if successful, false otherwise
-export function parseAliasDeclaration(dec: string, global: boolean= false) {
-    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))=(".+")$/;
+export function parseAliasDeclaration(dec: string, global: boolean = false) {
+    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))="(.+)"$/;
     const matches = dec.match(re);
-    if (matches == null) {return false; }
+    if (matches == null) { return false; }
     // values:
     // 0 : full expression
     // 1 : alias name

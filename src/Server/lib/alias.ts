@@ -3,8 +3,7 @@ import { BaseServer } from "../BaseServer";
 
 import {
     parseAliasDeclaration,
-    printAliases,
-    removeAlias,
+    getAllAliases,
 } from "../../Alias";
 
 export function alias(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={global:false, print:false}) {
@@ -35,24 +34,27 @@ export function alias(server: BaseServer, term: any, out:Function, err:Function,
     }
     if (newAliases.length == 0) { options.print = true; }
 
-    for(let keyValuePair of newAliases){
+    for (const keyValuePair of newAliases){
         if(!parseAliasDeclaration(keyValuePair, options.global)){
             err(`${keyValuePair} is not a valid argument.`);
+        } else {
+            out(`Added alias definition ${keyValuePair}`);
         }
     }
     if(options.print){
-        out(printAliases());
+        out(getAllAliases());
     }
 }
-import {registerExecutable, ManualEntry} from "./sys";
+
+import { registerExecutable, ManualEntry } from "./sys";
 
 const MANUAL = new ManualEntry(
 `alias - Define or display aliases.`,
-`alias [OPTIONS] [name[=value] ... ]`,
+`alias [OPTIONS] [name[="value"] ... ]`,
 `Define or display aliases.
 
 Without arguments, 'alias' prints the list of aliases in the reusable
-form 'alias NAME=VALUE' on standard output.
+form 'alias NAME="VALUE"' on standard output.
 
 Otherwise, an alias is defined for each NAME whose VALUE is given.
 A trailing space in VALUE causes the next word to be checked for
@@ -63,5 +65,11 @@ alias substitution when the alias is expanded.
 
 -g, --global
     set the alias accross servers, as a global alias
-`)
+
+Examples:
+
+alias sa="scan_analyze"
+alias nuke="run NUKE.exe"
+`);
+
 registerExecutable("alias", alias, MANUAL);

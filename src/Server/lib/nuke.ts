@@ -43,6 +43,8 @@ const MANUAL = new ManualEntry(
 `NUKE.exe [SERVER]`,
 `KABOOM.
 
-Require the NUKE.exe program.`)
+Requires the NUKE.exe program. This is an executable program and is executed
+using the run command ('run NUKE.exe'). The program grants root access to
+a server if enough ports have been opened.`);
 
 registerExecutable("NUKE.exe", nuke, MANUAL, true);

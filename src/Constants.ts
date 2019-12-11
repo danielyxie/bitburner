@@ -231,10 +231,11 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.47.3
-    * Updated Terminal Functionality 
-    * // TODO Update this 
+    * Updated Terminal Functionality
+    * // TODO Update this
     * TODO Add benbernard's change
+    * Added getJoinedFactions() Netscript Singularity function (by helldragger) TODO Add documentation
+    * Bug Fix: Fixed an issue where Duplicate Sleeves were losing shock too quickly (by amling)
     * Bug Fix: 'Sanitize Parentheses in Expression' should now properly accept answers with quotes around each element
     `
 }
-

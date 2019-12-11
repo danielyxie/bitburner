@@ -4,7 +4,7 @@ import { BaseServer } from "../BaseServer";
 
 export function help(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={}){
     let executable:string;
-    if(args.length == 0){
+    if (args.length === 0){
         out(fetchHelpIndex());
         return;
     }
@@ -14,8 +14,7 @@ export function help(server: BaseServer, term: any, out:Function, err:Function, 
     let result = fetchHelp(executable);
     if (!result) {
         err(`No help found for '${result}'.`);
-    }
-    else{
+    } else{
         out(result);
     }
 }

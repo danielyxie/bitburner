@@ -2,7 +2,7 @@ const helpRegistry:Map<string, ManualEntry> = new Map<string, ManualEntry>();
 const executableRegistry:Map<string, Function> = new Map<string, Function>();
 const hiddenExecutables:Set<string> = new Set<string>();
 import {Player} from "../../Player";
-export class ManualEntry{
+export class ManualEntry {
     name:string;
     synopsis:string;
     options:string;
@@ -11,7 +11,7 @@ export class ManualEntry{
         this.synopsis = synopsis.replace(/^/gm, '\t');
         this.options = options.replace(/^/gm, '\t');
     }
-    toString(){
+    toString() {
         return ["NAME",
                 this.name,
                 "SYNOPSIS",
@@ -71,11 +71,19 @@ export function fetchOptions(name:string){
 }
 
 export function fetchHelpIndex(){
-    let names:string[] = [];
-    for(let k of helpRegistry.keys()){
-        if(!isExecutableHidden(k)) names.push((helpRegistry.get(k) as ManualEntry).name)
+    const intro: string[] = [
+        "",
+        "Type 'help X' to find out more about the command/function/program X",
+        "",
+    ];
+
+    const names: string[] = [];
+    for (let k of helpRegistry.keys()){
+        if(!isExecutableHidden(k)) {
+            names.push((helpRegistry.get(k) as ManualEntry).name);
+        }
     }
-    return names.sort().join('\n');
+    return intro.concat(names.sort()).join('\n');
 }
 
 export function isExecutableHidden(name:string){
