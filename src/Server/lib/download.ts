@@ -12,16 +12,14 @@ export function download(server: BaseServer, term: any, out:Function, err:Functi
     // can be seen as a "pipe" into grep "piping" into a file
     function fileFilter (pathsBlock:string){
         for(let path of pathsBlock.split("\n")){
-            if (micromatch.isMatch(path, args)) {
-                if (!server.isDir(path)) {
-                    filepathSet.add(path);
-                }
+            if (server.isExecutable(path) && (! server.isDir(path))) {
+                filepathSet.add(path);
             }
         }
     };
     // Call to the ls function, to list every file from the current working directory using the default depth
     // the standard output is "piped" into fileFilter which will "pipe" into filepatSet
-    ls(server, term, fileFilter, err, []);
+    ls(server, term, fileFilter, err, args);
     if(filepathSet.size==0){
         err(`No files found.`);
         return;
