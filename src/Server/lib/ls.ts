@@ -15,7 +15,7 @@ const micromatch = require('micromatch');
  * @param {number} [nodeLimit=50] The limit of files to parse, in order to avoid problems with large repositories. Set to -1 to disable.
  * @returns {string} The String representation of the file tree in a record manner.
  */
-export function ls(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any={ depth: 0 }) {
+export function ls(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any={ recursive:false }) {
     const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
     const INVALID_PATH_ERROR: string = "Invalid path";
     const USAGE_MESSAGE: string = "Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
@@ -31,144 +31,103 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
             case "--help":
                 out(USAGE_MESSAGE);
                 return;
-            case "-d":
-            case "--depth":
-                if (args.length > 0) {
-                    options.depth = parseInt(args.shift() as string);
-                } else {
-                    out(INCORRECT_USAGE_MESSAGE);
-                    return;
-                }
+            case "-R":
+                options.recursive = true;
                 break;
             default:
                 roots.push(arg);
                 break;
         }
     }
-    if (roots.length === 0) { roots = [cwd]; }
-    const toBeProcessed: TreeNode[] = [];
-    var treeRoots: TreeNode[] = [];
-    const processed: Set<string> = new Set<string>();
-    for (let root of roots){
-        let targetDir: any = path.resolve(cwd, root);
-        if (!targetDir) { patterns.push(root); }
-        else{
-            if(server.isDir(root)){
-                const rootNode = new TreeNode(targetDir, FileType.DIRECTORY);
-                toBeProcessed.push(rootNode);
-                treeRoots.push(rootNode);
-            }
-            else{
-                patterns.push(root);
-            }
+    if (roots.length === 0) { roots = ["."]; }
+
+
+    const toBeProcessed: Node[] = [];
+    const addresses:string[] = Object.keys(server.vol.toJSON());
+
+    for (let i = 0; i<roots.length; i++){
+        let root = roots[i];
+        let targetDir: any = path.resolve(cwd+((cwd.endsWith("/")) ? "" : "/"), root);
+        if (!server.exists(targetDir)) { // pattern, we detect every valid addresses on the filesystem using the pattern
+            let valid = addresses.filter((address:string)=>{return micromatch.isMatch(address,[root])});
+            valid = valid.sort()
+            roots = [...roots.slice(0, i), ...valid, ...roots.slice(i+1, roots.length)]; // remove the pattern from the roots, replace it with all valid adresses in place.
+            i--;// restart at i as if the pattern never existed
+            //out("pattern detected: "+root+ " replaced with following roots: "+JSON.stringify(valid));
         }
-    }
-    // if everything was patterns
-    if (treeRoots.length==0){
-        // we add the cwd to it
-        const rootNode = new TreeNode(cwd, FileType.DIRECTORY);
-        toBeProcessed.push(rootNode);
-        treeRoots.push(rootNode);
-    };
-    while (toBeProcessed.length > 0) {
-        const node: TreeNode = toBeProcessed.shift() as TreeNode;
-        processed.add(node.path + node.name);
-        const dirContent = server.readdir(node.path + node.name, {withFileTypes:true});
-        if (!dirContent) { return `An error occured when parsing the content of the ${node.name} directory.`; }
-        for (let c = 0; c < dirContent.length; c++) {
-            const fileInfo = dirContent[c];
-            if (processed.has(node.path +node.name+ fileInfo.name)) {
-                continue;
-            }else{
-                const filetype = detectFileType(fileInfo);
-                if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
-                    const childrenNode = new TreeNode(fileInfo.name, filetype);
-                    node.addChild(childrenNode);
-                    if (fileInfo.isDirectory() && (node.depth < options.depth || options.depth < 0)) {
-                        toBeProcessed.push(childrenNode);
-                    }
+        else{ // not a pattern, actual path
+            if(server.isDir(targetDir)){ // is it a directory?
+                //out("root "+root+" target "+targetDir)
+                let rootNode = new Node(root);
+                rootNode.path = targetDir;
+                rootNode.fileType = FileType.DIRECTORY;
+                rootNode.content = listDirectoryContent(server, rootNode)
+                if (options.recursive){
+                    roots = [...roots.slice(0, i+1), ...listSubdirectories(server, rootNode), ...roots.slice(i+1, roots.length)]; // insert all subdirectories in place
                 }
+                toBeProcessed.push(rootNode);
+            }
+            else if (server.isExecutable(targetDir)){
+                out(targetDir)
+            }else{
+                err("cannot access '"+targetDir+"': No such file or directory")
             }
         }
     }
 
-    treeRoots
-        .sort( function (a:TreeNode, b:TreeNode):number {
-            return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));
+    let isFirst = true;
+    for(let node of toBeProcessed){
+        if (node.content.length == 0) continue;
+        if (!isFirst){out("")}
+        if (isFirst){isFirst = false;}
+        if (toBeProcessed.length > 1){
+            out(node.name+((node.name.endsWith("/")) ? "" : "/")+":")
+        }
+        node.content.forEach(element => {
+            out(element)
         });
-
-    const results: string[] = [];
-    treeRoots.forEach((root: TreeNode)=>{
-        const paths: string[] = root.toStringArray(true, patterns);
-
-        // 'paths' currently contains the full filepaths, so we should remove
-        // the current filepath from each element.
-        const currFilepath: string = term.getCurrentDirectory();
-        for (let i: number = 0; i < paths.length; ++i) {
-            if (paths[i].startsWith(currFilepath)) {
-                paths[i] = paths[i].replace(currFilepath, "");
-            }
-        }
-
-        results.push(...paths);
-    });
-    results.map((path: string) => {
-        if (path.endsWith("/")) {
-            out(path, "#0000EE"); // Blue for directories
-        } else {
-            out(path);
-        }
-    });
+    }
 }
 
-const SCOPE: string     = "│  ";
-const BRANCH: string    = "├──";
-const LAST: string      = "└──";
+function listDirectoryContent(server: BaseServer, node:Node){
+    let content: string[] = []
+    const dirContent = server.readdir(node.path, {withFileTypes:true});
+    for (let c = 0; c < dirContent.length; c++) {
+        const fileInfo = dirContent[c];
+        const filetype = detectFileType(fileInfo);
+        if (filetype == FileType.FILE || filetype == FileType.DIRECTORY) {
+            content.push(fileInfo.name + ((filetype == FileType.DIRECTORY) ? "/" : ""));
+        }
+    }
+    content = content.sort();
+    return content;
+}
 
-class TreeNode {
-    name: string = "";
-    path: string = "";
+function listSubdirectories(server:BaseServer, node:Node){
+    let content: string[] = []
+    const dirContent = server.readdir(node.path, {withFileTypes:true});
+    for (let c = 0; c < dirContent.length; c++) {
+        const fileInfo = dirContent[c];
+        const filetype = detectFileType(fileInfo);
+        if (filetype == FileType.DIRECTORY) {
+            content.push(node.name+((node.name.endsWith("/")) ? "" : "/")+fileInfo.name + "/" );
+        }
+    }
+    content = content.sort();
+    return content;
+}
+
+class Node{
+    name:string="";
+    path:string="";
     fileType: string = "";
-    childrens: TreeNode[] = [];
-    depth: number = 0;
-
-    constructor(name: string, fileType: string) {
+    content:string[]=[];
+    constructor(name:string){
         this.name = name;
-        this.fileType = fileType;
-        this.childrens = [];
-    }
-
-    toStringArray(isLast=false, patterns: string[]): string[] {
-        const localResults: string[] = [];
-        let path = this.getFullName();
-        if (patterns.length === 0 || (patterns.length > 0 && micromatch.isMatch(path, patterns))) {
-            localResults.push(path);
-        }
-
-        if (this.childrens.length > 0) {
-            this.childrens.sort( function (a:TreeNode, b:TreeNode):number { return ((a.name < b.name)?-1:((a.name > b.name)?1: 0));} );
-            for (let i:number = 0; i < this.childrens.length; i++) {
-                localResults.push(...this.childrens[i].toStringArray(i == (this.childrens.length - 1), patterns));
-            }
-        }
-        return localResults;
-    }
-
-    addChild(node: TreeNode, treeMerge: boolean = false) {
-        node.depth = this.depth + 1;
-        if (treeMerge) {
-            node.path = this.path+this.name;
-            node.name = node.name.replace(this.path+this.name, "");
-        } else {
-            node.path = this.path + this.name + ((this.name.endsWith("/")) ? "" : "/");
-        }
-        this.childrens.push(node);
-    }
-
-    getFullName() {
-        return [this.path, this.name, (this.fileType === FileType.DIRECTORY && this.name != "/") ? "/" : ""].join("")
     }
 }
+
+
 import {registerExecutable, ManualEntry} from "./sys";
 
 const MANUAL = new ManualEntry(
@@ -179,8 +138,8 @@ ls [OPTIONS]`,
 directory to the standard output. The files will be displayed in
 alphabetical order.
 
--d, --depth=DEPTH
-    limits the pattern matching to DEPTH subdirectories.
+-R
+    display files in subdirectories recursively.
 
 --help
     display this help and exit
