@@ -492,7 +492,7 @@ export class Sleeve extends Person {
         this.currentTaskTime += time;
 
         // Shock gradually goes towards 100
-        this.shock = Math.min(100, this.shock + (0.0001 * this.storedCycles));
+        this.shock = Math.min(100, this.shock + (0.0001 * cyclesUsed));
 
         let retValue: ITaskTracker = createTaskTracker();
         switch (this.currentTask) {
