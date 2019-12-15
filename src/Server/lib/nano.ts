@@ -22,7 +22,7 @@ export function nano(server: BaseServer, term: any, out:Function, err:Function, 
             }
         }
         var content = term.getFileContent(filename);
-        const filepath = term.getFilepath(filename);
+        let filepath = term.getFilepath(filename);
         if (filename === ".fconf" && content === "") {
             content = createFconf();
             filepath = filename;
