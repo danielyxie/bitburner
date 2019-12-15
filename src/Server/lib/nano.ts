@@ -14,7 +14,13 @@ export function nano(server: BaseServer, term: any, out:Function, err:Function, 
         return;
     }
     try {
-        server.touch(filename);
+        if(!server.exists(filename)){
+            server.touch(filename);
+            if (filename.endsWith(".js")|| filename.endsWith(".ns")||filename.endsWith(".ns2")){
+                const TEMPLATE = "export async function main(ns){ }";
+                server.writeFile(filename, TEMPLATE);
+            }
+        }
         var content = term.getFileContent(filename);
         const filepath = term.getFilepath(filename);
         if (filename === ".fconf" && content === "") {
