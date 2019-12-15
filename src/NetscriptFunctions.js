@@ -2861,6 +2861,24 @@ function NetscriptFunctions(workerScript) {
 
             return Factions[name].playerReputation;
         },
+        getJoinedFactions: function() {
+            updateDynamicRam("getJoinedFactions", getRamCost("getJoinedFactions"));
+            if (Player.bitNodeN !== 4) {
+                if (SourceFileFlags[4] <= 1) {
+                    err( "Cannot run getJoinedFactions(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+            let result = [];
+            for(let factionName of Object.keys(Factions)){
+                let faction = Factions[factionName];
+                if(faction.isMember){
+                    result.push(faction.name);
+                }
+            }
+            result = result.sort()
+            return result;
+        },
         getFactionFavor: function(name) {
             updateDynamicRam("getFactionFavor", getRamCost("getFactionFavor"));
             if (Player.bitNodeN !== 4) {

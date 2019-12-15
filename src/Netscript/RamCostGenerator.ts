@@ -190,6 +190,7 @@ export const RamCosts: IMap<any> = {
     checkFactionInvitations: () => RamCostConstants.ScriptSingularityFn2RamCost,
     joinFaction: () => RamCostConstants.ScriptSingularityFn2RamCost,
     workForFaction: () => RamCostConstants.ScriptSingularityFn2RamCost,
+    getJoinedFactions : () => RamCostConstants.ScriptSingularityFn2RamCost / 3,
     getFactionRep: () => RamCostConstants.ScriptSingularityFn2RamCost / 3,
     getFactionFavor: () => RamCostConstants.ScriptSingularityFn2RamCost / 3,
     getFactionFavorGain: () => RamCostConstants.ScriptSingularityFn2RamCost / 4,
