@@ -3294,6 +3294,9 @@ function NetscriptFunctions(workerScript) {
                                 strengthEquipMult:      member.str_mult,
                                 strengthAscensionMult:  member.str_asc_mult,
                                 task:                   member.task,
+                                respectGains : member.calculateRespectGain(Player.gang),
+                                wantedLevelGains : member.calculateWantedLevelGain(Player.gang),
+                                moneyGains : member.calculateMoneyGain(Player.gang)
                             }
                         }
                     }
