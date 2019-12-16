@@ -14,6 +14,7 @@ import { rm } from "../../src/Server/lib/rm";
 import { mv } from "../../src/Server/lib/mv";
 import { ls } from "../../src/Server/lib/ls";
 import { nano } from "../../src/Server/lib/nano";
+import { touch } from "../../src/Server/lib/touch";
 import { tree } from "../../src/Server/lib/tree";
 import { top } from "../../src/Server/lib/top";
 import { scan } from "../../src/Server/lib/scan";
@@ -1107,6 +1108,41 @@ describe("BaseServer file system core library tests", function() {
                 let expected = "/dA/dB";
                 expect(()=>cd(server, fakeTerm, out, err, ["../dC"])).to.throw();
                 expect(fakeTerm.currDir).to.equal(expected)
+            });
+        });
+
+        describe("touch", function(){
+            it("Can create a file from cwd", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>touch(server, fakeTerm, out, err, ["testfile"])).not.to.throw();
+                expect(server.exists("/testfile")).to.equal(true);
+                fakeTerm.cwd = "/dA";
+                expect(()=>touch(server, fakeTerm, out, err, ["testfile"])).not.to.throw();
+                expect(server.exists("/dA/testfile")).to.equal(true);
+            });
+            it("Can create a file in another directory", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>touch(server, fakeTerm, out, err, ["dA/testfile"])).not.to.throw();
+                expect(server.exists("/dA/testfile")).to.equal(true);
+            });
+        });
+        describe("nano", function(){
+            it("Can create a file from cwd", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>nano(server, fakeTerm, out, err, ["testfile"], {testing:true})).not.to.throw();
+                expect(server.exists("/testfile")).to.equal(true);
+                fakeTerm.cwd = "/dA";
+                expect(()=>nano(server, fakeTerm, out, err, ["testfile"], {testing:true})).not.to.throw();
+                expect(server.exists("/dA/testfile")).to.equal(true);
+            });
+            it("Can create a file in another directory", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>nano(server, fakeTerm, out, err, ["dA/testfile"], {testing:true})).not.to.throw();
+                expect(server.exists("/dA/testfile")).to.equal(true);
             });
         });
 
