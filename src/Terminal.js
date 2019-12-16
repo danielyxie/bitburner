@@ -877,7 +877,16 @@ let Terminal = {
             }
             else postError(`${commandArray[0]} not found`);
         } else {
-            executable(server, Terminal, post, postError, commandArray.splice(1));
+            if (commandArray[0] === "ls") {
+                // Special output command for 'ls' to color directories blue
+                const postForLsCommand = (input) => {
+                    input.endsWith("/") ? post(input, "#0000EE") : post(input)
+                };
+
+                executable(server, Terminal, postForLsCommand, postError, commandArray.splice(1));
+            } else {
+                executable(server, Terminal, post, postError, commandArray.splice(1));
+            }
         }
     },
 

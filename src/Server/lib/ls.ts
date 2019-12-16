@@ -16,14 +16,9 @@ const micromatch = require('micromatch');
  * @returns {string} The String representation of the file tree in a record manner.
  */
 export function ls(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any={ recursive:false }) {
-    const TOO_MANY_ARGUMENTS_ERROR: string = "Too many arguments";
-    const INVALID_PATH_ERROR: string = "Invalid path";
     const USAGE_MESSAGE: string = "Usage: ls <--depth -d> number <--limit -l> number <targetDir>";
-    const INCORRECT_USAGE_MESSAGE = `Incorrect usage of ls command. ${USAGE_MESSAGE}`;
-    let error: string;
     const cwd: string = term.currDir;
     let roots: string[] = [];
-    let patterns: string[] = [];
     while (args.length > 0) {
         const arg = args.shift() as string;
         switch (arg) {
@@ -49,7 +44,7 @@ export function ls(server: BaseServer, term: any, out: Function, err: Function, 
         let targetDir: any = path.resolve(cwd+((cwd.endsWith("/")) ? "" : "/"), root);
         if (!server.exists(targetDir)) { // pattern, we detect every valid addresses on the filesystem using the pattern
             let valid = addresses.filter((address:string)=>{return micromatch.isMatch(address,[root])});
-            valid = valid.sort()
+            valid = valid.sort();
             roots = [...roots.slice(0, i), ...valid, ...roots.slice(i+1, roots.length)]; // remove the pattern from the roots, replace it with all valid adresses in place.
             i--;// restart at i as if the pattern never existed
             //out("pattern detected: "+root+ " replaced with following roots: "+JSON.stringify(valid));
@@ -142,5 +137,13 @@ alphabetical order.
 
 --help
     display this help and exit
+
+This command supports glob matching for searching:
+
+ls /*.js                -- Lists all files ending in ".js" in the root directory
+ls /scripts/*.js        -- Lists all files ending in ".js" in the /scripts/ directory
+ls **/*.js              -- Lists all files ending in ".js" in any directory/subdirectory starting at root
+ls /*server*            -- Lists all files that contain the text "server" in the root directory
+ls /!(*.js)             -- Lists all files that do NOT end in ".js" in the root directory
 `)
 registerExecutable("ls", ls, MANUAL);
