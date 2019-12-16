@@ -1,6 +1,7 @@
 import { BaseServer } from "../BaseServer";
 import { Engine } from "../../engine";
 import { createFconf } from "../../Fconf/Fconf";
+import { touch } from "./touch";
 
 export function nano(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={}){
     if (args.length < 1) {
@@ -14,24 +15,12 @@ export function nano(server: BaseServer, term: any, out:Function, err:Function, 
         return;
     }
     try {
-        if(!server.exists(filename)){
-            server.touch(filename);
-            if (filename.endsWith(".js")|| filename.endsWith(".ns")||filename.endsWith(".ns2")){
-                const TEMPLATE = "export async function main(ns){ }";
-                server.writeFile(filename, TEMPLATE);
-            }
+        let filepath = term.getFilepath(filename);
+        if(!server.exists(filepath)){
+            touch(server, term, out, err, [filename]);
         }
         var content = term.getFileContent(filename);
-        let filepath = term.getFilepath(filename);
-        if (filename === ".fconf" && content === "") {
-            content = createFconf();
-            filepath = filename;
-        } else {
-            content = term.getFileContent(filename);
-            filepath = term.getFilepath(filename);
-        }
-
-        Engine.loadScriptEditorContent(filepath, content);
+        if (!options.testing) Engine.loadScriptEditorContent(filepath, content);
     } catch(e) {
         err(e);
     }
