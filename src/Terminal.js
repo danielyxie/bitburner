@@ -844,23 +844,12 @@ let Terminal = {
 
         /****************** END INTERACTIVE TUTORIAL ******************/
 
-        this.executeCommandHelper(command);
-    },
-
-    // TODO Rename and refactor this. Temporary fix to make Interactive Tutorial work with new filesystem
-    executeCommandHelper: function(command) {
-        if (Terminal.hackFlag || Terminal.analyzeFlag) {
-            postError(`Cannot execute command (${command}) while an action is in progress`);
-            return;
-        }
         // Process any aliases
-        command = substituteAliases(command);
-
-        const commandArray = Terminal.parseCommandArguments(command);
         if (commandArray.length == 0) { return; }
 
         var server = Player.getCurrentServer();
         var executable = sys.fetchExecutable(commandArray[0]);
+
         if (!executable) {
             let filepath = commandArray[0];
             // this triggers if the file is in relative pathing format.
@@ -877,22 +866,23 @@ let Terminal = {
             }
             else postError(`${commandArray[0]} not found`);
         } else {
+            var args = commandArray.slice(1);
             if (commandArray[0] === "ls") {
                 // Special output command for 'ls' to color directories blue
                 const postForLsCommand = (input) => {
                     input.endsWith("/") ? post(input, "#0000EE") : post(input)
                 };
 
-                executable(server, Terminal, postForLsCommand, postError, commandArray.splice(1));
+                executable(server, Terminal, postForLsCommand, postError, args);
             }
             else if (commandArray[0] === "alias" && commandArray.length > 1) {
                 // adding things only
                 const postForAliasCommand = (input) => {
                     post("Added alias definition ", input)
                 };
-                executable(server, Terminal, postForAliasCommand, postError, commandArray.splice(1));
+                executable(server, Terminal, postForAliasCommand, postError, args);
             }
-            executable(server, Terminal, post, postError, commandArray.splice(1));
+            executable(server, Terminal, post, postError, args);
         }
     },
 
