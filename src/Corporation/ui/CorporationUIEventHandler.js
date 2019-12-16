@@ -1170,7 +1170,7 @@ export class CorporationEventHandler {
                         return false;
                     }
 
-                    if (isNaN(amount)) {
+                    if (isNaN(amount) || amount <= 0) {
                         dialogBoxCreate("Invalid input amount");
                     } else {
                         const cost = amount * mat.bCost;
