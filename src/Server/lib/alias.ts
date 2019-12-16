@@ -37,8 +37,6 @@ export function alias(server: BaseServer, term: any, out:Function, err:Function,
     for (const keyValuePair of newAliases){
         if(!parseAliasDeclaration(keyValuePair, options.global)){
             err(`${keyValuePair} is not a valid argument.`);
-        } else {
-            out(`Added alias definition ${keyValuePair}`);
         }
     }
     if(options.print){

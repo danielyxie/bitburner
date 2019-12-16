@@ -24,12 +24,12 @@ export function getAllAliases(): string {
     let result = []
     for (const name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
-            result.push("alias " + name + "=" + Aliases[name]);
+            result.push("alias " + name + "=" + Aliases[name]+"");
         }
     }
     for (const name in GlobalAliases) {
         if (GlobalAliases.hasOwnProperty(name)) {
-            result.push("global alias " + name + "=" + GlobalAliases[name]);
+            result.push("global alias " + name + "=" + GlobalAliases[name]+"");
         }
     }
     return result.join("\n");
@@ -37,7 +37,7 @@ export function getAllAliases(): string {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global: boolean = false) {
-    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))="(.+)"$/;
+    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))=(.+)$/;
     const matches = dec.match(re);
     if (matches == null) { return false; }
     // values:

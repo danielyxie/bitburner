@@ -884,9 +884,15 @@ let Terminal = {
                 };
 
                 executable(server, Terminal, postForLsCommand, postError, commandArray.splice(1));
-            } else {
-                executable(server, Terminal, post, postError, commandArray.splice(1));
             }
+            else if (commandArray[0] === "alias" && commandArray.length > 1) {
+                // adding things only
+                const postForAliasCommand = (input) => {
+                    post("Added alias definition ", input)
+                };
+                executable(server, Terminal, postForAliasCommand, postError, commandArray.splice(1));
+            }
+            executable(server, Terminal, post, postError, commandArray.splice(1));
         }
     },
 
