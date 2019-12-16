@@ -208,7 +208,7 @@ $(document).keydown(function(event) {
             // Autocomplete
             if (terminalInput == null) {return;}
             let input = terminalInput.value;
-            if (input == "") { return; }
+            if (input === "") { return; }
 
             const semiColonIndex = input.lastIndexOf(";");
             if(semiColonIndex !== -1) {
@@ -221,7 +221,7 @@ $(document).keydown(function(event) {
             const commandArray = input.split(" ");
             let index = commandArray.length - 2;
             if (index < -1) { index = 0; }
-            const allPos = determineAllPossibilitiesForTabCompletion(Player, input, index, Terminal.currDir);
+            const allPos = determineAllPossibilitiesForTabCompletion(Player, input, index, Terminal.getCurrentDirectory());
             if (allPos.length == 0) {return;}
 
             let arg = "";

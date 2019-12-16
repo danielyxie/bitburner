@@ -86,6 +86,16 @@ export function fetchHelpIndex(){
     return intro.concat(names.sort()).join('\n');
 }
 
+export function fetchHelpKeys() {
+    const keys: string[] = [];
+    for (let k of helpRegistry.keys()) {
+        if (!isExecutableHidden(k)) {
+            keys.push(k);
+        }
+    }
+    return keys;
+}
+
 export function isExecutableHidden(name:string){
     return hiddenExecutables.has(name) && !(Player as any).hasProgram(name)
 }

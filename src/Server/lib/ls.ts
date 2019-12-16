@@ -140,10 +140,10 @@ alphabetical order.
 
 This command supports glob matching for searching:
 
-ls /*.js                -- Lists all files ending in ".js" in the root directory
-ls /scripts/*.js        -- Lists all files ending in ".js" in the /scripts/ directory
-ls **/*.js              -- Lists all files ending in ".js" in any directory/subdirectory starting at root
-ls /*server*            -- Lists all files that contain the text "server" in the root directory
-ls /!(*.js)             -- Lists all files that do NOT end in ".js" in the root directory
+ls /*.js                -- Lists files ending in ".js" in the root directory
+ls /scripts/*.js        -- Lists files ending in ".js" in the /scripts/ directory
+ls **/*.js              -- Lists files ending in ".js" in any directory/subdirectory starting at root
+ls /*server*            -- Lists files that contain the text "server" in the root directory
+ls /!(*.js)             -- Lists files that do NOT end in ".js" in the root directory
 `)
 registerExecutable("ls", ls, MANUAL);

@@ -68,6 +68,7 @@ Examples:
 
 alias sa="scan_analyze"
 alias nuke="run NUKE.exe"
+alias c="connect" h="home"
 `);
 
 registerExecutable("alias", alias, MANUAL);
