@@ -19,7 +19,7 @@ export function nano(server: BaseServer, term: any, out:Function, err:Function, 
         if(!server.exists(filepath)){
             touch(server, term, out, err, [filename]);
         }
-        var content = term.getFileContent(filename);
+        var content = server.readFile(filepath);
         if (!options.testing) Engine.loadScriptEditorContent(filepath, content);
     } catch(e) {
         err(e);
