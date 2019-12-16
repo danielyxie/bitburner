@@ -905,7 +905,7 @@ let Terminal = {
     getFilepath: function(filename) {
         // Terminal.currDir does not contain the trailing forward slash, so we have to append it if necessary
         const currDir = Terminal.getCurrentDirectory();
-        let result = path.resolve(currDir + filename)
+        let result = path.resolve(currDir+((currDir.endsWith("/")) ? "" : "/"), filename)
         return result;
     },
 
