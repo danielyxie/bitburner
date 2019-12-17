@@ -28,7 +28,7 @@ import {
     calculateGrowTime,
     calculateWeakenTime
 } from "./Hacking";
-import { AllGangs } from "./Gang";
+import { AllGangs, Gang } from "./Gang";
 import { Faction } from "./Faction/Faction";
 import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
@@ -333,6 +333,18 @@ function NetscriptFunctions(workerScript) {
         }
         if (!Player.hasTixApiAccess) {
             err( `You don't have TIX API Access! Cannot use ${callingFn}()`);
+        }
+    }
+
+    /**
+     * Checks if the player has GANG API access. Throws an error if the player does not
+     */
+    const checkGangApiAccess = function(callingFn="") {
+        let access=false;
+        let out = (value)=>access=value;
+        sys.fetchExecutable("hasGangAPI")(server, term, out, err, []);
+        if (!access) {
+            err( `You don't have Gang API Access! Cannot use ${callingFn}()`);
         }
     }
 
@@ -3244,6 +3256,15 @@ function NetscriptFunctions(workerScript) {
                 } catch(e) {
                     err( nsGang.unknownGangApiExceptionMessage("getMemberNames", e));
                 }
+            },
+            hasGang: function() {
+                updateDynamicRam("hasGang", getRamCost("gang", "hasGang"));
+                checkGangApiAccess("hasGang");
+
+                let result = false;
+                let out = (exists)=>result=exists;
+                sys.fetchExecutable("hasGang")(currServ, term, out, err,[] );
+                return result;
             },
             getGangInformation: function() {
                 updateDynamicRam("getGangInformation", getRamCost("gang", "getGangInformation"));
