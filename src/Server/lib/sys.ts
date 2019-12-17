@@ -1,6 +1,8 @@
 const helpRegistry:Map<string, ManualEntry> = new Map<string, ManualEntry>();
 const executableRegistry:Map<string, Function> = new Map<string, Function>();
 const hiddenExecutables:Set<string> = new Set<string>();
+const namespaceExecutable:Map<string, string[]> =new Map<string, string[]>();
+const executableNamespace:Map<string, string> = new Map<string, string>();
 import {Player} from "../../Player";
 export class ManualEntry {
     name:string;
@@ -21,9 +23,20 @@ export class ManualEntry {
     }
 }
 
-export function registerExecutable(name:string, func:Function, help:ManualEntry, hidden:boolean=false){
+export function registerExecutable(name:string, func:Function, help:ManualEntry, hidden:boolean=false, namespace:string|undefined=undefined, level:number=1){
     helpRegistry.set(name, help);
     executableRegistry.set(name, func);
+    if(namespace !== undefined){
+        namespace+=level;
+        executableNamespace.set(name, namespace);
+        let ns:string[]|undefined = namespaceExecutable.get(namespace) ;
+        if (ns === undefined){
+            ns = [name];
+        }else{
+            ns.push(name);
+        }
+        namespaceExecutable.set(namespace, ns);
+    }
     if (hidden) hideExecutable(name); // TODO save the state of this object somewhere
     // This is a more optimized way of "buying executables" and allows the integration
     // of command documentations for those executables.
@@ -41,6 +54,17 @@ export function hideExecutable(name:string){
 export function revealExecutable(name:string){
     hiddenExecutables.delete(name);
 }
+
+export function revealNamespace(name:string, level:number=1){
+    name+=level;
+    let ns =  namespaceExecutable.get(name);
+    if (ns !== undefined){
+        for(let exec of ns){
+            revealExecutable(exec);
+        }
+    }
+}
+
 
 export function fetchExecutable(name:string){
     if (isExecutableHidden(name)) return;
