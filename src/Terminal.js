@@ -90,6 +90,8 @@ import { fl1ght } from "./Server/lib/fl1ght";
 import { b1t_flum3 } from "./Server/lib/b1t_flum3";
 import { cat } from "./Server/lib/cat";
 import { free } from "./Server/lib/free";
+import {hasGangAPI} from "./Gangs/lib/hasGangAPI";
+import {hasGang} from "./Gangs/lib/hasGang";
 import { fs } from 'memfs';
 
 import autosize from "autosize";
@@ -916,6 +918,10 @@ let Terminal = {
     getFileContent: function(filename){
         return Player.getCurrentServer().readFile(Terminal.getFilepath(filename));
     },
+
+    getPlayer: function(){
+        return Player;
+    }
 };
 
 export {postNetburnerText, Terminal};
