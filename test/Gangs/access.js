@@ -66,25 +66,25 @@ describe("Gang system core library tests", function() {
             it("Available in Bitnode 2" ,function(){
                 resetEnv();
                 Player.sourceFiles=[];
-                let hasAccess = false;
-                out = (msg)=> hasAccess = msg;
-                expect(()=>hasAccess = sys.isExecutableHidden("hasGangAPI")).to.not.throw();
-                expect(hasAccess).to.equal(false);
+                let isHidden = false;
+                out = (msg)=> isHidden = msg;
+                expect(()=>isHidden = sys.isExecutableHidden("hasGangAPI")).to.not.throw();
+                expect(isHidden).to.equal(false);
             });
             it("Available with SourceFile 2" ,function(){
                 resetEnv();
                 Player.bitNodeN = 1;
-                let hasAccess = false;
-                expect(()=>hasAccess = sys.isExecutableHidden("hasGangAPI")).to.not.throw();
-                expect(hasAccess).to.equal(false);
+                let isHidden = false;
+                expect(()=>isHidden = sys.isExecutableHidden("hasGangAPI")).to.not.throw();
+                expect(isHidden).to.equal(false);
             });
             it("Available without SourceFile 2 nor Bitnode 2" ,function(){
                 resetEnv();
                 Player.bitNodeN = 1;
                 Player.sourceFiles=[];
-                let hasAccess = false;
-                expect(()=>hasAccess = sys.isExecutableHidden("hasGangAPI")).to.not.throw();
-                expect(hasAccess).to.equal(false);
+                let isHidden = false;
+                expect(()=>isHidden = sys.isExecutableHidden("hasGangAPI")).to.not.throw();
+                expect(isHidden).to.equal(false);
             });
         });
     });
