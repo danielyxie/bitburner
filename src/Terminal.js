@@ -35,12 +35,10 @@ import {
     hackProgressBarPost,
     hackProgressPost
 } from "./ui/postToTerminal";
-
 import * as sys from "./Server/lib/sys";
 //////////////////////////////////////////////////////////////////////////////
 // Here we import every existing function to let them initialize themselves //
 //////////////////////////////////////////////////////////////////////////////
-
 import { mkdir } from "./Server/lib/mkdir";
 import { rm } from "./Server/lib/rm";
 import { mv } from "./Server/lib/mv";
