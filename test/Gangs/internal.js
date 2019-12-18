@@ -12,6 +12,8 @@ import {HacknetServer} from "../../src/Hacknet/HacknetServer";
 import { hasGangAPI } from "../../src/Gangs/lib/hasGangAPI";
 import { hasGang } from "../../src/Gangs/lib/hasGang";
 import { createGang } from "../../src/Gangs/lib/createGang";
+import { getBonusTime } from "../../src/Gangs/lib/getBonusTime";
+import { setTerritoryWarfare } from "../../src/Gangs/lib/setTerritoryWarfare";
 
 
 import * as sys from "../../src/Server/lib/sys";
@@ -40,25 +42,33 @@ describe("Gang system core library tests", function() {
     }
     var Player = new PlayerObject();
 
-    function resetEnv(options={gangInitType:gangInitType.POSSIBLE}){
+    function resetEnv(options={gangInitType:gangInitType.EXISTS}){
         Player = new PlayerObject();
         Player.bitNodeN = 2;
         Player.sourceFiles=[{n:2,lvl:1}];
-        fakeTerm.getPlayer=()=>Player;
+        Player.gang = undefined;
 
         switch (options.gangInitType) {
             case gangInitType.EXISTS:
                 Player.factions.push("Slum Snakes");
-                Player.gang = new Gang("Slum Snakes", GANGTYPE.combat);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.bitNodeN = 2;
+                Player.sourceFiles=[{n:2,lvl:1}];
                 break;
             case gangInitType.POSSIBLE:
                 Player.factions.push("Slum Snakes");
+                Player.bitNodeN = 2;
+                Player.sourceFiles=[{n:2,lvl:1}];
                 break;
             default:
+                Player.bitNodeN = 1;
+                Player.sourceFiles=[];
                 break;
         }
+        fakeTerm.getPlayer=()=>{return Player};
         out = (msg) => {};
         err = (msg) => {throw msg};
+        sys.revealNamespace("gang");
 
     };
 
@@ -66,25 +76,27 @@ describe("Gang system core library tests", function() {
     describe("Gang executables", function (){
         describe("HasGangAPI says gang function are ", function(){
             it("Available in Bitnode 2" ,function(){
-                resetEnv();
-                Player.sourceFiles=[];
+                resetEnv(gangInitType.POSSIBLE);
+                Player.bitNodeN = 2;
+                Player.sourceFiles = [{n:2, lvl:1}];
                 let hasAccess = false;
                 out = (msg)=> hasAccess = msg;
                 expect(()=>hasGangAPI(null, fakeTerm, out, err, [])).to.not.throw();
                 expect(hasAccess).to.equal(true);
             });
             it("Available with SourceFile 2" ,function(){
-                resetEnv();
+                resetEnv(gangInitType.POSSIBLE);
                 Player.bitNodeN = 1;
+                Player.sourceFiles = [{n:2, lvl:1}];
                 let hasAccess = false;
                 out = (msg)=> hasAccess = msg;
                 expect(()=>hasGangAPI(null, fakeTerm, out, err, [])).to.not.throw();
                 expect(hasAccess).to.equal(true);
             });
             it("Unavailable without SourceFile 2 nor Bitnode 2" ,function(){
-                resetEnv();
+                resetEnv(gangInitType.CANNOT);
                 Player.bitNodeN = 1;
-                Player.sourceFiles=[];
+                Player.sourceFiles = [];
                 let hasAccess = false;
                 out = (msg)=> hasAccess = msg;
                 expect(()=>hasGangAPI(null, fakeTerm, out, err, [])).to.not.throw();
@@ -95,14 +107,13 @@ describe("Gang system core library tests", function() {
             it("Exists if it does" ,function(){
                 resetEnv(gangInitType.EXISTS);
                 Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
-                fakeTerm.getPlayer = ()=>Player;
                 let exists = false;
                 out = (msg)=> exists = msg;
                 expect(()=>hasGang(null, fakeTerm, out, err, [])).to.not.throw();
                 expect(exists).to.equal(true);
             });
             it("Do not exists if it doesn't" ,function(){
-                resetEnv(gangInitType.POSSIBLE);
+                resetEnv(gangInitType.CANNOT);
                 let exists = false;
                 out = (msg)=> exists = msg;
                 expect(()=>hasGang(null, fakeTerm, out, err, [])).to.not.throw();
@@ -113,7 +124,6 @@ describe("Gang system core library tests", function() {
             it("lists all current factions you can currently create gangs with" ,function(){
                 resetEnv(gangInitType.POSSIBLE);
                 Player.factions=["NiteSec", "Slum Snakes"];
-                fakeTerm.getPlayer = ()=>Player;
                 let expected = ["NiteSec\thacking", "Slum Snakes\tcombat"];
                 let result = [];
                 out = (msg)=> result.push(msg);
@@ -125,7 +135,6 @@ describe("Gang system core library tests", function() {
             it("lists the type of gang factions you are currently member with can create" ,function(){
                 resetEnv(gangInitType.POSSIBLE);
                 Player.factions=["NiteSec", "Slum Snakes", "Sector 12"];
-                fakeTerm.getPlayer = ()=>Player;
                 let expected = ["NiteSec\thacking", "Slum Snakes\tcombat", "Sector 12 does not deal with gangs"];
                 let result = [];
                 out = (msg)=> result.push(msg);
@@ -137,7 +146,6 @@ describe("Gang system core library tests", function() {
             it("does NOT lists the type of gang factions you are NOT currently member with can create" ,function(){
                 resetEnv(gangInitType.POSSIBLE);
                 Player.factions=[];
-                fakeTerm.getPlayer = ()=>Player;
                 let result = [];
                 out = (msg)=> result.push(msg);
                 expect(()=>createGang(null, fakeTerm, out, err, ["-t", "NiteSec"])).to.throw();
@@ -146,7 +154,6 @@ describe("Gang system core library tests", function() {
             it("creates a gang with a faction you are a member of which can create gang" ,function(){
                 resetEnv(gangInitType.POSSIBLE);
                 Player.factions=["Slum Snakes"];
-                fakeTerm.getPlayer = ()=>Player;
                 let expected = ["Gang with Slum Snakes successfully created!"];
                 let result = [];
                 out = (msg)=> result.push(msg);
@@ -157,7 +164,6 @@ describe("Gang system core library tests", function() {
             it("does NOT creates a gang with a faction you are NOT a member of" ,function(){
                 resetEnv(gangInitType.POSSIBLE);
                 Player.factions=[];
-                fakeTerm.getPlayer = ()=>Player;
                 let expected = [];
                 let result = [];
                 out = (msg)=> result.push(msg);
@@ -168,7 +174,6 @@ describe("Gang system core library tests", function() {
             it("does NOT creates a gang with a faction you are a member of but CANNOT manage gangs" ,function(){
                 resetEnv(gangInitType.POSSIBLE);
                 Player.factions=["Sector 12"];
-                fakeTerm.getPlayer = ()=>Player;
                 let expected = [];
                 let result = [];
                 out = (msg)=> result.push(msg);
@@ -180,13 +185,54 @@ describe("Gang system core library tests", function() {
                 resetEnv(gangInitType.EXISTS);
                 Player.factions=["Slum Snakes", "NiteSec"];
                 Player.gang=new Gang("Slum Snakes", GANGTYPE.COMBAT);
-                fakeTerm.getPlayer = ()=>Player;
                 let expected = [];
                 let result = [];
                 let out = (msg)=> {result.push(msg)};
                 let err=(msg)=>{throw msg};
                 expect(()=>createGang(null, fakeTerm, out, err, ["NiteSec"])).to.throw();
                 expect(result.join("\n")).to.equal(expected.join("\n"));
+            });
+        });
+        describe("getBonusTime", function(){
+            it("outputs the bonus time available to your gang" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                let value;
+                out = (msg)=> {value = msg};
+                expect(()=>getBonusTime(null, fakeTerm, out, err, [])).to.not.throw();
+                expect(value).not.to.equal(undefined);
+            });
+            it("does NOT outputs any bonus time if you have NO gang" ,function(){
+                resetEnv(gangInitType.POSSIBLE);
+                Player.gang = undefined;
+                fakeTerm.getPlayer=()=>{return Player};
+                let value;
+                out = (msg)=> {value = msg};
+                expect(()=>getBonusTime(null, fakeTerm, out, err, [])).to.throw();
+                expect(value).to.equal(undefined);
+            });
+        });
+        describe("setTerritoryWarfare", function(){
+            it("Sets the Territory Warfare of your gang to the right mode" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.gang.territoryWarfareEngaged = false;
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>setTerritoryWarfare(null, fakeTerm, out, err, ["true"])).to.not.throw();
+                expect(Player.gang.territoryWarfareEngaged).to.equal(true);
+                expect(()=>setTerritoryWarfare(null, fakeTerm, out, err, ["false"])).to.not.throw();
+                expect(Player.gang.territoryWarfareEngaged).to.equal(false);
+                expect(()=>setTerritoryWarfare(null, fakeTerm, out, err, [true])).to.not.throw();
+                expect(Player.gang.territoryWarfareEngaged).to.equal(true);
+                expect(()=>setTerritoryWarfare(null, fakeTerm, out, err, [false])).to.not.throw();
+                expect(Player.gang.territoryWarfareEngaged).to.equal(false);
+            });
+            it("THROW an error if you have NO gang" ,function(){
+                resetEnv(gangInitType.POSSIBLE);
+                Player.gang = undefined;
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>setTerritoryWarfare(null, fakeTerm, out, err, [])).to.throw();
             });
         });
     });
