@@ -3394,14 +3394,10 @@ function NetscriptFunctions(workerScript) {
             getTaskNames: function() {
                 updateDynamicRam("getTaskNames", getRamCost("gang", "getTaskNames"));
                 checkGangApiAccess("getTaskNames", err);
-
-                try {
-                    const tasks = Player.gang.getAllTaskNames();
-                    tasks.unshift("Unassigned");
-                    return tasks;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getTaskNames", e));
-                }
+                let result = [];
+                let out = (msg)=>{result.push(msg)};
+                sys.fetchExecutable("getTaskNames")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
             },
             setMemberTask: function(memberName, taskName) {
                 updateDynamicRam("setMemberTask", getRamCost("gang", "setMemberTask"));
