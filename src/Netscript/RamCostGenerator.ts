@@ -225,6 +225,7 @@ export const RamCosts: IMap<any> = {
         setTerritoryWarfare: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
         getChanceToWinClash: () => RamCostConstants.ScriptGangApiBaseRamCost,
         hasGang: () => RamCostConstants.ScriptGangApiBaseRamCost,
+        createGang: () => RamCostConstants.ScriptGangApiBaseRamCost,
         getBonusTime: () => 0,
     },
 
