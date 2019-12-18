@@ -340,13 +340,24 @@ function NetscriptFunctions(workerScript) {
      * Checks if the player has GANG API access. Throws an error if the player does not
      */
     const checkGangApiAccess = function(callingFn, err) {
+        checkApiAccess("gang."+callingFn, "hasGangAPI", err)
+    }
+
+    /**
+     * Checks if the player has any API access. Throws an error if the player does not
+     */
+    const checkApiAccess = function(callingFn, APIchecker, err) {
         let access=false;
         let out = (value)=>access=value;
-        sys.fetchExecutable("hasGangAPI")(null, {getPlayer:()=>{return Player}}, out, err, []);
+        let exec = sys.fetchExecutable(APIchecker);
+        if (exec === undefined){
+            err(`${callingFn}() not found`);
+            return;
+        }
+        sys.fetchExecutable(APIchecker)(null, {getPlayer:()=>{return Player}}, out, err, []);
         if (!access) {
-            err( `You don't have Gang API Access! Cannot use ${callingFn}()`);
-        }else{
-            sys.revealNamespace("gang");
+            err( `You don't have access to ${callingFn}()`);
+            return;
         }
     }
 
