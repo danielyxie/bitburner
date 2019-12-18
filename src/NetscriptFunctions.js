@@ -3247,7 +3247,7 @@ function NetscriptFunctions(workerScript) {
         gang: {
             getMemberNames: function() {
                 updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
-                nsGang.checkGangApiAccess(workerScript, "getMemberNames");
+                checkGangApiAccess("getMemberNames", err);
 
                 try {
                     const names = [];
@@ -3276,7 +3276,7 @@ function NetscriptFunctions(workerScript) {
             },
             getGangInformation: function() {
                 updateDynamicRam("getGangInformation", getRamCost("gang", "getGangInformation"));
-                nsGang.checkGangApiAccess(workerScript, "getGangInformation");
+                checkGangApiAccess("getGangInformation", err);
 
                 try {
                     return {
@@ -3298,7 +3298,7 @@ function NetscriptFunctions(workerScript) {
             },
             getOtherGangInformation: function() {
                 updateDynamicRam("getOtherGangInformation", getRamCost("gang", "getOtherGangInformation"));
-                nsGang.checkGangApiAccess(workerScript, "getOtherGangInformation");
+                checkGangApiAccess("getOtherGangInformation", err);
 
                 try {
                     // We have to make a deep copy
@@ -3314,7 +3314,7 @@ function NetscriptFunctions(workerScript) {
             },
             getMemberInformation: function(name) {
                 updateDynamicRam("getMemberInformation", getRamCost("gang", "getMemberInformation"));
-                nsGang.checkGangApiAccess(workerScript, "getMemberInformation");
+                checkGangApiAccess("getMemberInformation", err);
 
                 try {
                     for (const member of Player.gang.members) {
@@ -3353,7 +3353,7 @@ function NetscriptFunctions(workerScript) {
             },
             canRecruitMember: function() {
                 updateDynamicRam("canRecruitMember", getRamCost("gang", "canRecruitMember"));
-                nsGang.checkGangApiAccess(workerScript, "canRecruitMember");
+                checkGangApiAccess("canRecruitMember", err);
 
                 try {
                     return Player.gang.canRecruitMember();
@@ -3363,7 +3363,7 @@ function NetscriptFunctions(workerScript) {
             },
             recruitMember: function(name) {
                 updateDynamicRam("recruitMember", getRamCost("gang", "recruitMember"));
-                nsGang.checkGangApiAccess(workerScript, "recruitMember");
+                checkGangApiAccess("recruitMember", err);
 
                 try {
                     const res = Player.gang.recruitMember(name);
@@ -3382,7 +3382,7 @@ function NetscriptFunctions(workerScript) {
             },
             getTaskNames: function() {
                 updateDynamicRam("getTaskNames", getRamCost("gang", "getTaskNames"));
-                nsGang.checkGangApiAccess(workerScript, "getTaskNames");
+                checkGangApiAccess("getTaskNames", err);
 
                 try {
                     const tasks = Player.gang.getAllTaskNames();
@@ -3394,7 +3394,7 @@ function NetscriptFunctions(workerScript) {
             },
             setMemberTask: function(memberName, taskName) {
                 updateDynamicRam("setMemberTask", getRamCost("gang", "setMemberTask"));
-                nsGang.checkGangApiAccess(workerScript, "setMemberTask");
+                checkGangApiAccess("setMemberTask", err);
 
                 try {
                     for (const member of Player.gang.members) {
@@ -3420,7 +3420,7 @@ function NetscriptFunctions(workerScript) {
             },
             getEquipmentNames: function() {
                 updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
-                nsGang.checkGangApiAccess(workerScript, "getEquipmentNames");
+                checkGangApiAccess("getEquipmentNames", err);
 
                 try {
                     return Player.gang.getAllUpgradeNames();
@@ -3430,7 +3430,7 @@ function NetscriptFunctions(workerScript) {
             },
             getEquipmentCost: function(equipName) {
                 updateDynamicRam("getEquipmentCost", getRamCost("gang", "getEquipmentCost"));
-                nsGang.checkGangApiAccess(workerScript, "getEquipmentCost");
+                checkGangApiAccess("getEquipmentCost", err);
 
                 try {
                     return Player.gang.getUpgradeCost(equipName);
@@ -3440,7 +3440,7 @@ function NetscriptFunctions(workerScript) {
             },
             getEquipmentType: function(equipName) {
                 updateDynamicRam("getEquipmentType", getRamCost("gang", "getEquipmentType"));
-                nsGang.checkGangApiAccess(workerScript, "getEquipmentType");
+                checkGangApiAccess("getEquipmentType", err);
 
                 try {
                     return Player.gang.getUpgradeType(equipName);
@@ -3450,7 +3450,7 @@ function NetscriptFunctions(workerScript) {
             },
             purchaseEquipment: function(memberName, equipName) {
                 updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));
-                nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
+                checkGangApiAccess("purchaseEquipment", err);
 
                 try {
                     for (const member of Player.gang.members) {
@@ -3476,7 +3476,7 @@ function NetscriptFunctions(workerScript) {
             },
             ascendMember: function(name) {
                 updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
-                nsGang.checkGangApiAccess(workerScript, "ascendMember");
+                checkGangApiAccess("ascendMember", err);
 
                 try {
                     for (const member of Player.gang.members) {
@@ -3493,7 +3493,7 @@ function NetscriptFunctions(workerScript) {
             },
             setTerritoryWarfare: function(engage) {
                 updateDynamicRam("setTerritoryWarfare", getRamCost("gang", "setTerritoryWarfare"));
-                nsGang.checkGangApiAccess(workerScript, "setTerritoryWarfare");
+                checkGangApiAccess("setTerritoryWarfare", err);
 
                 try {
                     if (engage) {
@@ -3513,7 +3513,7 @@ function NetscriptFunctions(workerScript) {
             },
             getChanceToWinClash: function(otherGang) {
                 updateDynamicRam("getChanceToWinClash", getRamCost("gang", "getChanceToWinClash"));
-                nsGang.checkGangApiAccess(workerScript, "getChanceToWinClash");
+                checkGangApiAccess("getChanceToWinClash", err);
 
                 try {
                     if (AllGangs[otherGang] == null) {
