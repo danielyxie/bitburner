@@ -37,7 +37,7 @@ import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 // Constants
 const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
-const MaximumGangMembers = 30;
+export const MaximumGangMembers = 30;
 const GangRecruitCostMultiplier = 2;
 const CyclesPerTerritoryAndPowerUpdate = 100;
 const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
