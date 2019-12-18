@@ -3512,20 +3512,11 @@ function NetscriptFunctions(workerScript) {
             getChanceToWinClash: function(otherGang) {
                 updateDynamicRam("getChanceToWinClash", getRamCost("gang", "getChanceToWinClash"));
                 checkGangApiAccess("getChanceToWinClash", err);
+                let result = 0;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getChanceToWinClash")(null , {getPlayer:()=>Player}, out, err,[otherGang] );
+                return result
 
-                try {
-                    if (AllGangs[otherGang] == null) {
-                        workerScript.log(`Invalid gang specified in gang.getChanceToWinClash() : ${otherGang}`);
-                        return 0;
-                    }
-
-                    const playerPower = AllGangs[Player.gang.facName].power;
-                    const otherPower = AllGangs[otherGang].power;
-
-                    return playerPower / (otherPower + playerPower);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getChanceToWinClash", e));
-                }
             },
             getBonusTime: function() {
                 checkGangApiAccess("getBonusTime", err);
