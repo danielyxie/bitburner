@@ -3530,13 +3530,11 @@ function NetscriptFunctions(workerScript) {
                 }
             },
             getBonusTime: function() {
-                nsGang.checkGangApiAccess(workerScript, "getBonusTime");
-
-                try {
-                    return Math.round(Player.gang.storedCycles / 5);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getBonusTime", e));
-                }
+                checkGangApiAccess("getBonusTime", err);
+                let result = 0;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getBonusTime")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
             },
         }, // end gang namespace
 
