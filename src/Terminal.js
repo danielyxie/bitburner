@@ -749,28 +749,43 @@ let Terminal = {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray.length === 1 && commandArray[0] == "help") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalLs:
                 if (commandArray.length === 1 && commandArray[0] == "ls") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalScan:
                 if (commandArray.length === 1 && commandArray[0] == "scan") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalScanAnalyze1:
-                if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
+                if (commandArray.length == 1 && commandArray[0] == "scan_analyze") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalScanAnalyze2:
-                if (commandArray.length == 2 && commandArray[0] == "scan-analyze" &&
+                if (commandArray.length == 2 && commandArray[0] == "scan_analyze" &&
                     commandArray[1] === 2) {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalConnect:
                 if (commandArray.length == 2) {
@@ -779,55 +794,76 @@ let Terminal = {
 
                         iTutorialNextStep();
                     } else {post("Wrong command! Try again!"); return;}
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalAnalyze:
                 if (commandArray.length === 1 && commandArray[0] === "analyze") {
                     iTutorialNextStep();
                 } else {
                     post("Bad command. Please follow the tutorial");
+                    return;
                 }
                 break;
             case iTutorialSteps.TerminalNuke:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
 				break;
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalFree:
                 if (commandArray.length == 1 && commandArray[0] == "free") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalRunScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.ActiveScriptsToTerminal:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
                     // Check that the script exists on this machine
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             default:
                 post("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
                 return;
             }
-            return;
         }
 
         /****************** END INTERACTIVE TUTORIAL ******************/
@@ -862,15 +898,15 @@ let Terminal = {
                 };
 
                 executable(server, Terminal, postForLsCommand, postError, args);
-            }
-            else if (commandArray[0] === "alias" && commandArray.length > 1) {
+            } else if (commandArray[0] === "alias" && commandArray.length > 1) {
                 // adding things only
                 const postForAliasCommand = (input) => {
                     post("Added alias definition ", input)
                 };
                 executable(server, Terminal, postForAliasCommand, postError, args);
+            } else {
+                executable(server, Terminal, post, postError, args);
             }
-            executable(server, Terminal, post, postError, args);
         }
     },
 

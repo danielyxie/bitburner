@@ -235,7 +235,7 @@ function saveAndCloseScriptEditor() {
 
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
         //Make sure filename + code properly follow tutorial
-        if (filename !== "foodnstuff.script") {
+        if (filename !== "/foodnstuff.script") {
             dialogBoxCreate("Leave the script name as 'foodnstuff'!");
             return;
         }
