@@ -1,5 +1,5 @@
 import { BaseServer } from "../../Server/BaseServer";
-import { Gang } from "../../Gangs";
+import { Gang } from "../../Gang";
 
 export function hasGang(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={}) {
     out(term.getPlayer().gang instanceof Gang);
