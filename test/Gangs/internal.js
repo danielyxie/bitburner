@@ -22,7 +22,7 @@ import {getEquipmentNames} from "./Gangs/lib/getEquipmentNames";
 import {setMemberTask} from "./Gangs/lib/setMemberTask";
 import {getTaskNames} from "./Gangs/lib/getTaskNames";
 //import {recruitMember} from "./Gangs/lib/recruitMember";
-//import {canRecruitMember} from "./Gangs/lib/canRecruitMember";
+import {canRecruitMember} from "./Gangs/lib/canRecruitMember";
 //import {getMemberInformation} from "./Gangs/lib/getMemberInformation";
 //import {getOtherGangInformation} from "./Gangs/lib/getOtherGangInformation";
 //import {getGangInformation} from "./Gangs/lib/getGangInformation";
