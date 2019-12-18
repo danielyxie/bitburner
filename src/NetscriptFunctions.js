@@ -3365,12 +3365,10 @@ function NetscriptFunctions(workerScript) {
             canRecruitMember: function() {
                 updateDynamicRam("canRecruitMember", getRamCost("gang", "canRecruitMember"));
                 checkGangApiAccess("canRecruitMember", err);
-
-                try {
-                    return Player.gang.canRecruitMember();
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("canRecruitMember", e));
-                }
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("canRecruitMember")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result
             },
             recruitMember: function(name) {
                 updateDynamicRam("recruitMember", getRamCost("gang", "recruitMember"));
