@@ -11,4 +11,4 @@ const MANUAL = new ManualEntry(
 `hasGangAPI`,
 `Returns whether the Gang API is available or not.`);
 
-registerExecutable("hasGangAPI", hasGangAPI, MANUAL, false, "gang");
+registerExecutable("hasGangAPI", hasGangAPI, MANUAL, true, "gang");
