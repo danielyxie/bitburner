@@ -3406,28 +3406,8 @@ function NetscriptFunctions(workerScript) {
             setMemberTask: function(memberName, taskName) {
                 updateDynamicRam("setMemberTask", getRamCost("gang", "setMemberTask"));
                 checkGangApiAccess("setMemberTask", err);
-
-                try {
-                    for (const member of Player.gang.members) {
-                        if (member.name === memberName) {
-                            const res = member.assignToTask(taskName);
-                            if (workerScript.shouldLog("setMemberTask")) {
-                                if (res) {
-                                    workerScript.log(`Successfully assigned Gang Member ${memberName} to ${taskName} task`);
-                                } else {
-                                    workerScript.log(`Failed to assign Gang Member ${memberName} to ${taskName} task. ${memberName} is now Unassigned`);
-                                }
-                            }
-
-                            return res;
-                        }
-                    }
-
-                    workerScript.log(`Invalid argument passed to gang.setMemberTask(). No gang member could be found with name ${memberName}`);
-                    return false;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("setMemberTask", e));
-                }
+                let out = (msg)=>{if(workerScript.shouldLog("setMemberTask")) {workerScript.log(msg)}};
+                return sys.fetchExecutable("setMemberTask")(null , {getPlayer:()=>Player}, out, err,["-m", memberName, "-t", taskName] );
             },
             getEquipmentNames: function() {
                 updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
