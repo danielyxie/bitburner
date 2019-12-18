@@ -175,7 +175,7 @@ export function loadAllGangs(saveString) {
  */
 export function Gang(facName, hacking=false) {
     this.facName    = facName;
-    this.members    = [];
+    this.members    = {};
     this.wanted     = 1;
     this.respect    = 1;
 
@@ -232,7 +232,7 @@ Gang.prototype.process = function(numCycles=1, player) {
 Gang.prototype.processGains = function(numCycles=1, player) {
     // Get gains per cycle
     var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
-    for (var i = 0; i < this.members.length; ++i) {
+    for (let i of Object.keys(this.members)) {
         respectGains += (this.members[i].calculateRespectGain(this));
         wantedLevelGains += (this.members[i].calculateWantedLevelGain(this));
         moneyGains += (this.members[i].calculateMoneyGain(this));
@@ -254,7 +254,7 @@ Gang.prototype.processGains = function(numCycles=1, player) {
         }
 
         // Keep track of respect gained per member
-        for (let i = 0; i < this.members.length; ++i) {
+        for (let i of Object.keys(this.members)) {
             this.members[i].recordEarnedRespect(numCycles, this);
         }
     } else {
@@ -376,16 +376,16 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
 }
 
 Gang.prototype.canRecruitMember = function() {
-    if (this.members.length >= MaximumGangMembers) { return false; }
+    if (Object.keys(this.members).length >= MaximumGangMembers) { return false; }
     return (this.respect >= this.getRespectNeededToRecruitMember());
 }
 
 Gang.prototype.getRespectNeededToRecruitMember = function() {
     // First N gang members are free (can be recruited at 0 respect)
     const numFreeMembers = 3;
-    if (this.members.length < numFreeMembers) { return 0; }
+    if (Object.keys(this.members).length < numFreeMembers) { return 0; }
 
-    const i = this.members.length - (numFreeMembers - 1);
+    const i = Object.keys(this.members).length - (numFreeMembers - 1);
     return Math.round(0.9 * Math.pow(i, 3) + Math.pow(i, 2));
 }
 
@@ -394,13 +394,10 @@ Gang.prototype.recruitMember = function(name) {
     if (name === "" || !this.canRecruitMember()) { return false; }
 
     // Check for already-existing names
-    let sameNames = this.members.filter((m) => {
-        return m.name === name;
-    });
-    if (sameNames.length >= 1) { return false; }
+    if (Object.keys(this.members).includes(name)){return false;}
 
     let member = new GangMember(name);
-    this.members.push(member);
+    this.members[name] = member;
     if (routing.isOn(Page.Gang)) {
         this.createGangMemberDisplayElement(member);
         this.updateGangContent();
@@ -414,7 +411,7 @@ Gang.prototype.getWantedPenalty = function() {
 }
 
 Gang.prototype.processExperienceGains = function(numCycles=1) {
-    for (var i = 0; i < this.members.length; ++i) {
+    for (let i of Object.keys(this.members)) {
         this.members[i].gainExperience(numCycles);
         this.members[i].updateSkillLevels();
     }
@@ -423,7 +420,7 @@ Gang.prototype.processExperienceGains = function(numCycles=1) {
 //Calculates power GAIN, which is added onto the Gang's existing power
 Gang.prototype.calculatePower = function() {
     var memberTotal = 0;
-    for (var i = 0; i < this.members.length; ++i) {
+    for (let i of Object.keys(this.members)) {
         if (GangMemberTasks.hasOwnProperty(this.members[i].task) && this.members[i].task == "Territory Warfare") {
             const gain = this.members[i].calculatePower();
             memberTotal += gain;
@@ -445,7 +442,7 @@ Gang.prototype.clash = function(won=false) {
     // Deaths can only occur during X% of clashes
     if (Math.random() < 0.65) { return; }
 
-    for (let i = this.members.length - 1; i >= 0; --i) {
+    for (let i of Object.keys(this.members)) {
         const member = this.members[i];
 
         // Only members assigned to Territory Warfare can die
@@ -467,7 +464,7 @@ Gang.prototype.killMember = function(memberObj) {
     const lostRespect = (0.05 * totalRespect) + memberObj.earnedRespect;
     this.respect = Math.max(0, totalRespect - lostRespect);
 
-    for (let i = 0; i < this.members.length; ++i) {
+    for (let i = 0; i < Object.keys(this.members).length; ++i) {
         if (memberObj.name === this.members[i].name) {
             this.members.splice(i, 1);
             break;
@@ -585,6 +582,10 @@ Gang.prototype.getUpgradeType = function(upgName) {
         default:
             return "";
     }
+}
+
+Gang.prototype.getMember = function(memberName){
+    return this.members[memberName];
 }
 
 Gang.prototype.toJSON = function() {
@@ -1023,7 +1024,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
         UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
 
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < this.members.length; ++i) {
+        for (let i of Object.keys(this.members)) {
             if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
                 var newPanel = this.members[i].createGangMemberUpgradePanel(this, player);
                 UIElems.gangMemberUpgradeBoxContent.appendChild(newPanel);
@@ -1051,7 +1052,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
         UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
 
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < this.members.length; ++i) {
+        for (let i of Object.keys(this.members)) {
             if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
                 UIElems.gangMemberUpgradeBoxElements.push(this.members[i].createGangMemberUpgradePanel(this, player));
             }
@@ -1698,7 +1699,7 @@ Gang.prototype.updateGangContent = function() {
         }
 
         // Toggle the 'Recruit member button' if valid
-        const numMembers = this.members.length;
+        const numMembers = Object.keys(this.members).length;
         const respectCost = this.getRespectNeededToRecruitMember();
 
         const btn = UIElems.gangRecruitMemberButton;
@@ -1716,7 +1717,7 @@ Gang.prototype.updateGangContent = function() {
         }
 
         // Update information for each gang member
-        for (let i = 0; i < this.members.length; ++i) {
+        for (let i = 0; i < Object.keys(this.members).length; ++i) {
             this.updateGangMemberDisplayElement(this.members[i]);
         }
     }
