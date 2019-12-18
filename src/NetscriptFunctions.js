@@ -3462,28 +3462,8 @@ function NetscriptFunctions(workerScript) {
             purchaseEquipment: function(memberName, equipName) {
                 updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));
                 checkGangApiAccess("purchaseEquipment", err);
-
-                try {
-                    for (const member of Player.gang.members) {
-                        if (member.name === memberName) {
-                            const res = member.buyUpgrade(equipName, Player, Player.gang);
-                            if (workerScript.shouldLog("purchaseEquipment")) {
-                                if (res) {
-                                    workerScript.log(`Purchased ${equipName} for Gang member ${memberName}`);
-                                } else {
-                                    workerScript.log(`Failed to purchase ${equipName} for Gang member ${memberName}`);
-                                }
-                            }
-
-                            return res;
-                        }
-                    }
-
-                    workerScript.log(`Invalid argument passed to gang.purchaseEquipment(). No gang member could be found with name ${memberName}`);
-                    return false;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("purchaseEquipment", e));
-                }
+                let out = (msg)=>{if(workerScript.shouldLog("purchaseEquipment")) {workerScript.log(msg)}};
+                return sys.fetchExecutable("purchaseEquipment")(null , {getPlayer:()=>Player}, out, err,["-m", memberName, "-e", equipName] );
             },
             ascendMember: function(name) {
                 updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
