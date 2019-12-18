@@ -3506,21 +3506,8 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("setTerritoryWarfare", getRamCost("gang", "setTerritoryWarfare"));
                 checkGangApiAccess("setTerritoryWarfare", err);
 
-                try {
-                    if (engage) {
-                        Player.gang.territoryWarfareEngaged = true;
-                        if (workerScript.shouldLog("setTerritoryWarfare")) {
-                            workerScript.log("Engaging in Gang Territory Warfare");
-                        }
-                    } else {
-                        Player.gang.territoryWarfareEngaged = false;
-                        if (workerScript.shouldLog("setTerritoryWarfare")) {
-                            workerScript.log("Disengaging in Gang Territory Warfare");
-                        }
-                    }
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
-                }
+                let out = (msg)=>{if(workerScript.shouldLog("setTerritoryWarfare")) {workerScript.log(msg)}};
+                sys.fetchExecutable("setTerritoryWarfare")(null , {getPlayer:()=>Player}, out, err,[] );
             },
             getChanceToWinClash: function(otherGang) {
                 updateDynamicRam("getChanceToWinClash", getRamCost("gang", "getChanceToWinClash"));
