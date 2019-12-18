@@ -339,12 +339,14 @@ function NetscriptFunctions(workerScript) {
     /**
      * Checks if the player has GANG API access. Throws an error if the player does not
      */
-    const checkGangApiAccess = function(callingFn="") {
+    const checkGangApiAccess = function(callingFn, err) {
         let access=false;
         let out = (value)=>access=value;
-        sys.fetchExecutable("hasGangAPI")(server, term, out, err, []);
+        sys.fetchExecutable("hasGangAPI")(null, {getPlayer:()=>{return Player}}, out, err, []);
         if (!access) {
             err( `You don't have Gang API Access! Cannot use ${callingFn}()`);
+        }else{
+            sys.revealNamespace("gang");
         }
     }
 
@@ -3259,12 +3261,18 @@ function NetscriptFunctions(workerScript) {
             },
             hasGang: function() {
                 updateDynamicRam("hasGang", getRamCost("gang", "hasGang"));
-                checkGangApiAccess("hasGang");
+                checkGangApiAccess("hasGang", err);
 
                 let result = false;
                 let out = (exists)=>result=exists;
-                sys.fetchExecutable("hasGang")(currServ, term, out, err,[] );
+                sys.fetchExecutable("hasGang")(null , {getPlayer:()=>Player}, out, err,[] );
                 return result;
+            },
+            createGang: function(faction) {
+                updateDynamicRam("createGang", getRamCost("gang", "createGang"));
+                checkGangApiAccess("createGang", err);
+                if(typeof faction != "string") err(`${faction} is not a faction name`);
+                else return sys.fetchExecutable("createGang")(null, {getPlayer:()=>Player}, ()=>{}, err, [faction] );
             },
             getGangInformation: function() {
                 updateDynamicRam("getGangInformation", getRamCost("gang", "getGangInformation"));
