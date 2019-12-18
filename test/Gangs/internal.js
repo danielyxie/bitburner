@@ -16,6 +16,7 @@ import { getBonusTime } from "../../src/Gangs/lib/getBonusTime";
 import { setTerritoryWarfare } from "../../src/Gangs/lib/setTerritoryWarfare";
 import { getChanceToWinClash } from "../../src/Gangs/lib/getChanceToWinClash";
 import {ascendMember} from "../../src/Gangs/lib/ascendMember";
+import {purchaseEquipment} from "../../src/Gangs/lib/purchaseEquipment";
 
 
 import * as sys from "../../src/Server/lib/sys";
@@ -303,6 +304,54 @@ describe("Gang system core library tests", function() {
                 Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
                 fakeTerm.getPlayer=()=>{return Player};
                 expect(()=>ascendMember(null, fakeTerm, out, err, [])).to.throw();
+            });
+        });
+        describe("purchaseEquipment", function(){
+            it("purchase a valid Equipment for a valid gang member" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.gang.recruitMember("test1");
+                Player.gainMoney(1000000000);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>purchaseEquipment(null, fakeTerm, out, err, ["-e","Baseball Bat","-m", "test1"])).to.not.throw();
+            });
+            it("does NOT purchase a valid Equipment for an INVALID gang member" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.gang.recruitMember("test1");
+                Player.gainMoney(1000000000);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>purchaseEquipment(null, fakeTerm, out, err, ["-e","Baseball Bat","-m", "test2"])).to.throw();
+            });
+            it("does NOT purchase an INVALID Equipment for an valid gang member" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.gang.recruitMember("test1");
+                Player.gainMoney(1000000000);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>purchaseEquipment(null, fakeTerm, out, err, ["-e","Baseball tab","-m", "test1"])).to.throw();
+            });
+            it("THROW an error if you don't provide enough arguments" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.gang.recruitMember("test1");
+                Player.gainMoney(1000000000);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>purchaseEquipment(null, fakeTerm, out, err, [])).to.throw();
+            });
+            it("THROW an error if you provide too much arguments" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.gang.recruitMember("test1");
+                Player.gainMoney(1000000000);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>purchaseEquipment(null, fakeTerm, out, err, ["a", "b", "c"])).to.throw();
+            });
+            it("THROW an error if you dont have a gang" ,function(){
+                resetEnv(gangInitType.POSSIBLE);
+                Player.gang = undefined;
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>purchaseEquipment(null, fakeTerm, out, err, ["a", "b"])).to.throw();
             });
         });
     });
