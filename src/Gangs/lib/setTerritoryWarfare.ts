@@ -6,10 +6,15 @@ export function setTerritoryWarfare(server: BaseServer, term: any, out:Function,
     let HELPMESSAGE = `USAGE: setTerritoryWarfare true/false`
 
     if (args.length != 1) err(HELPMESSAGE);
-    if(!(term.getPlayer().gang instanceof Gang)){
+
+    let hasGangAlready:boolean = true;
+    let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
+    hasGang(server, term, hasGangOut, err, [])
+    if(!hasGangAlready){
         err(`You have no gang`);
         return false;
     }
+
     let engage = args[0];
     if (typeof args[0] == "string") engage = JSON.parse(engage);
     try{
