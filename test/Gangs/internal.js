@@ -19,7 +19,7 @@ import {ascendMember} from "../../src/Gangs/lib/ascendMember";
 import {purchaseEquipment} from "../../src/Gangs/lib/purchaseEquipment";
 import {getEquipmentCost} from "./Gangs/lib/getEquipmentCost";
 import {getEquipmentNames} from "./Gangs/lib/getEquipmentNames";
-//import {setMemberTask} from "./Gangs/lib/setMemberTask";
+import {setMemberTask} from "./Gangs/lib/setMemberTask";
 //import {getTaskNames} from "./Gangs/lib/getTaskNames";
 //import {recruitMember} from "./Gangs/lib/recruitMember";
 //import {canRecruitMember} from "./Gangs/lib/canRecruitMember";
