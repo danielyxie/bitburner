@@ -3432,32 +3432,35 @@ function NetscriptFunctions(workerScript) {
             getEquipmentNames: function() {
                 updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
                 checkGangApiAccess("getEquipmentNames", err);
-
-                try {
-                    return Player.gang.getAllUpgradeNames();
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getEquipmentNames", e));
-                }
+                let result = [];
+                let out = (msg)=>{result.push(msg)};
+                sys.fetchExecutable("getEquipmentNames")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
             },
             getEquipmentCost: function(equipName) {
                 updateDynamicRam("getEquipmentCost", getRamCost("gang", "getEquipmentCost"));
                 checkGangApiAccess("getEquipmentCost", err);
-
-                try {
-                    return Player.gang.getUpgradeCost(equipName);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getEquipmentCost", e));
+                if(typeof equipName != "string"){
+                    err(`${equipName} must be a string`)
+                    return false;
                 }
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getEquipmentCost")(null , {getPlayer:()=>Player}, out, err,[equipName] );
+                return result
             },
             getEquipmentType: function(equipName) {
                 updateDynamicRam("getEquipmentType", getRamCost("gang", "getEquipmentType"));
                 checkGangApiAccess("getEquipmentType", err);
-
-                try {
-                    return Player.gang.getUpgradeType(equipName);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getEquipmentType", e));
+                if(typeof equipName != "string"){
+                    err(`${equipName} must be a string`)
+                    return false;
                 }
+
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getEquipmentType")(null , {getPlayer:()=>Player}, out, err,[equipName] );
+                return result
             },
             purchaseEquipment: function(memberName, equipName) {
                 updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));
