@@ -93,6 +93,7 @@ import { free } from "./Server/lib/free";
 import {hasGangAPI} from "./Gangs/lib/hasGangAPI";
 import {hasGang} from "./Gangs/lib/hasGang";
 import {createGang} from "./Gangs/lib/createGang";
+import {getBonusTime} from "./Gangs/lib/getBonusTime";
 
 import { fs } from 'memfs';
 
