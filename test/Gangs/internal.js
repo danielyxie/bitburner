@@ -14,6 +14,7 @@ import { hasGang } from "../../src/Gangs/lib/hasGang";
 import { createGang } from "../../src/Gangs/lib/createGang";
 import { getBonusTime } from "../../src/Gangs/lib/getBonusTime";
 import { setTerritoryWarfare } from "../../src/Gangs/lib/setTerritoryWarfare";
+import { getChanceToWinClash } from "../../src/Gangs/lib/getChanceToWinClash";
 
 
 import * as sys from "../../src/Server/lib/sys";
@@ -24,7 +25,7 @@ import {Player} from "../../src/Player";
 
 import { PlayerObject } from "../../src/PersonObjects/Player/PlayerObject";
 
-import { Gang, GANGTYPE } from "../../src/Gang";
+import { Gang, GANGTYPE, AllGangs } from "../../src/Gang";
 
 describe("Gang system core library tests", function() {
 
@@ -233,6 +234,47 @@ describe("Gang system core library tests", function() {
                 Player.gang = undefined;
                 fakeTerm.getPlayer=()=>{return Player};
                 expect(()=>setTerritoryWarfare(null, fakeTerm, out, err, [])).to.throw();
+            });
+        });
+        describe("getChanceToWinClash", function(){
+            it("Gets the chances to win clash between your gang and another" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>getChanceToWinClash(null, fakeTerm, out, err, ["NiteSec", "The Black Hand"])).to.not.throw();
+            });
+            it("Gets the chances to win clash between your gang and every other gang with list argument" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                let result = [];
+                out = (msg)=>{result.push(msg)}
+                expect(()=>getChanceToWinClash(null, fakeTerm, out, err, ["-l"])).to.not.throw();
+                expect(result.length).to.equal(Object.keys(AllGangs).length-1);
+            });
+            it("THROW an error if you have NO gang" ,function(){
+                resetEnv(gangInitType.POSSIBLE);
+                Player.gang = undefined;
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>getChanceToWinClash(null, fakeTerm, out, err, ["NiteSec"])).to.throw();
+            });
+            it("THROW an error if you don't provide arguments" ,function(){
+                resetEnv(gangInitType.POSSIBLE);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>getChanceToWinClash(null, fakeTerm, out, err, [])).to.throw();
+            });
+            it("THROW an error if you provide your own gang alone" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>getChanceToWinClash(null, fakeTerm, out, err, [Player.gang.facName])).to.throw();
+            });
+            it("does NOT throw an error if you provide your own gang among others" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>getChanceToWinClash(null, fakeTerm, out, err, [Player.gang.facName, Player.gang.facName])).to.not.throw();
             });
         });
     });
