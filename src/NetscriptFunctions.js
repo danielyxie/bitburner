@@ -3488,19 +3488,10 @@ function NetscriptFunctions(workerScript) {
             ascendMember: function(name) {
                 updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
                 checkGangApiAccess("ascendMember", err);
-
-                try {
-                    for (const member of Player.gang.members) {
-                        if (member.name === name) {
-                            return Player.gang.ascendMember(member, workerScript);
-                        }
-                    }
-
-                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${name}`);
-                    return false;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("ascendMember", e));
-                }
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("ascendMember")(null , {getPlayer:()=>Player}, out, err,[name] );
+                return result
             },
             setTerritoryWarfare: function(engage) {
                 updateDynamicRam("setTerritoryWarfare", getRamCost("gang", "setTerritoryWarfare"));
