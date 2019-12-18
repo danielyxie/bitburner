@@ -547,14 +547,14 @@ describe("BaseServer file system core library tests", function() {
 
                 let result = "";
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
-                expect(result).to.equal("Added alias definition a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"alias a=val1d aliascommand; another_ammaam!#$%^&*()_+{}[]");
+                expect(result).to.equal(`alias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"`);
             });
             it("Can register a new global alias and print it" ,function(){
                 resetEnv();
 
                 let result = "";
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["-g", "a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
-                expect(result).to.equal("Added alias definition a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"global alias a=val1d aliascommand; another_ammaam!#$%^&*()_+{}[]");
+                expect(result).to.equal(`global alias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"`);
             });
             it("Can register multiple new aliases" ,function(){
                 resetEnv();
@@ -562,7 +562,7 @@ describe("BaseServer file system core library tests", function() {
                 let result = "";
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["wat=\"wowie\"", "a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
                 expect(result).to.equal(
-                    "Added alias definition wat=\"wowie\"Added alias definition a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"alias wat=wowie\nalias a=val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"
+                    `alias wat="wowie"\nalias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"`
                 );
             });
             it("Can replace an older alias" ,function(){
@@ -572,7 +572,7 @@ describe("BaseServer file system core library tests", function() {
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"wowie\"", "-p"])).to.not.throw();
                 expect(result).to.equal(
-                    "Added alias definition a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"alias a=val1d aliascommand; another_ammaam!#$%^&*()_+{}[]Added alias definition a=\"wowie\"alias a=wowie"
+                    `alias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"alias a="wowie"`
                 );
             });
             it("Can NOT register invalid aliases" ,function(){
@@ -1233,7 +1233,7 @@ describe("BaseServer file system core library tests", function() {
             it("Can NOT connect to a NON neighbouring server", function(){
                 resetEnv();
                 let result = "";
-                let expected = "xxx.xxx.xxx.xxx out of reach";
+                let expected = "xxx.xxx.xxx.xxx out of reach or not found";
                 err = (msg) => { result += msg; throw msg};
 
                 expect(()=>connect(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.throw();

@@ -232,9 +232,11 @@ export let CONSTANTS: IMap<any> = {
     `
     v0.47.3
     * Updated Terminal Functionality
-    * // TODO Update this
+    * // TODO Update this terminal stuff
     * TODO Add benbernard's change
-    * Added getJoinedFactions() Netscript Singularity function (by helldragger) TODO Add documentation
+    * Added getJoinedFactions() Netscript Singularity function (by helldragger) TODO Update docs
+    * gang.getMemberInformation() function now returns the member's respect/wanted/money production rates (by helldragger) TODO update docs
+    * Added getAugmentationEffects() Singularity function (by helldragger) TODO update docs
     * Bug Fix: You can no longer bulk-purchase negative quantities of materials in your Corporation (by helldragger)
     * Bug Fix: Fixed a UI bug where it looked like SF-3 was infinitely repeatedly, rather than SF-12
     * Bug Fix: Fixed an issue where Duplicate Sleeves were losing shock too quickly (by amling)

@@ -748,32 +748,27 @@ let Terminal = {
             switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray.length === 1 && commandArray[0] == "help") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalLs:
                 if (commandArray.length === 1 && commandArray[0] == "ls") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalScan:
                 if (commandArray.length === 1 && commandArray[0] == "scan") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalScanAnalyze1:
                 if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalScanAnalyze2:
                 if (commandArray.length == 2 && commandArray[0] == "scan-analyze" &&
                     commandArray[1] === 2) {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -781,14 +776,13 @@ let Terminal = {
                 if (commandArray.length == 2) {
                     if ((commandArray[0] == "connect") &&
                         (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
-                        this.executeCommandHelper(command);
+
                         iTutorialNextStep();
                     } else {post("Wrong command! Try again!"); return;}
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalAnalyze:
                 if (commandArray.length === 1 && commandArray[0] === "analyze") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {
                     post("Bad command. Please follow the tutorial");
@@ -797,33 +791,28 @@ let Terminal = {
             case iTutorialSteps.TerminalNuke:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
 				break;
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalFree:
                 if (commandArray.length == 1 && commandArray[0] == "free") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalRunScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -831,7 +820,6 @@ let Terminal = {
                 if (commandArray.length == 2 &&
                     commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
                     // Check that the script exists on this machine
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;

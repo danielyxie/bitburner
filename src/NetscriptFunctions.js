@@ -228,11 +228,11 @@ const possibleLogs = {
 import * as path from 'path';
 import * as sys from "./Server/lib/sys";
 
+const CYCLES_PER_SEC = 5;
+
 function NetscriptFunctions(workerScript) {
 
-
     const err = (e)=>{throw makeRuntimeRejectMsg(workerScript,e);};
-
 
     const updateDynamicRam = function(fnName, ramCost) {
         if (workerScript.dynamicLoadedFns[fnName]) { return; }
@@ -3332,9 +3332,9 @@ function NetscriptFunctions(workerScript) {
                                 strengthEquipMult:      member.str_mult,
                                 strengthAscensionMult:  member.str_asc_mult,
                                 task:                   member.task,
-                                respectGains : member.calculateRespectGain(Player.gang),
-                                wantedLevelGains : member.calculateWantedLevelGain(Player.gang),
-                                moneyGains : member.calculateMoneyGain(Player.gang)
+                                respectGainRate :       CYCLES_PER_SEC * member.calculateRespectGain(Player.gang),
+                                wantedLevelGainRate :   CYCLES_PER_SEC * member.calculateWantedLevelGain(Player.gang),
+                                moneyGainRate :         CYCLES_PER_SEC * member.calculateMoneyGain(Player.gang)
                             }
                         }
                     }
