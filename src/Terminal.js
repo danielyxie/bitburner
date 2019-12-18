@@ -94,6 +94,7 @@ import {hasGangAPI} from "./Gangs/lib/hasGangAPI";
 import {hasGang} from "./Gangs/lib/hasGang";
 import {createGang} from "./Gangs/lib/createGang";
 import {getBonusTime} from "./Gangs/lib/getBonusTime";
+import {setTerritoryWarfare} from "./Gangs/lib/setTerritoryWarfare";
 
 import { fs } from 'memfs';
 
