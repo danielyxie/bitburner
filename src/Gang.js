@@ -939,7 +939,7 @@ gangMemberTasksMetadata.forEach((e) => {
     addGangMemberTask(e.name, e.desc, e.isHacking, e.isCombat, e.params);
 });
 
-function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
+export function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
     this.name = name;
     this.cost = cost;
     this.type = type; //w = weapon, a = armor, v = vehicle, r = rootkit, g = Aug
@@ -998,7 +998,7 @@ GangMemberUpgrade.fromJSON = function(value) {
 Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
 // Initialize Gang Member Upgrades
-const GangMemberUpgrades = {}
+export const GangMemberUpgrades = {}
 
 function addGangMemberUpgrade(name, cost, type, mults) {
     GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);
