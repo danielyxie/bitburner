@@ -97,6 +97,7 @@ import {getBonusTime} from "./Gangs/lib/getBonusTime";
 import {setTerritoryWarfare} from "./Gangs/lib/setTerritoryWarfare";
 import {getChanceToWinClash} from "./Gangs/lib/getChanceToWinClash";
 import {ascendMember} from "./Gangs/lib/ascendMember";
+import {purchaseEquipment} from "./Gangs/lib/purchaseEquipment";
 
 import { fs } from 'memfs';
 
