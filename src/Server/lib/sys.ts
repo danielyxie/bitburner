@@ -64,6 +64,15 @@ export function revealNamespace(name:string, level:number=1){
         }
     }
 }
+export function hideNamespace(name:string, level:number=1){
+    name+='-'+level;
+    let ns =  namespaceExecutable.get(name);
+    if (ns !== undefined){
+        for(let exec of ns){
+            hideExecutable(exec);
+        }
+    }
+}
 
 
 export function fetchExecutable(name:string){
