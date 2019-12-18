@@ -15,6 +15,7 @@ import { createGang } from "../../src/Gangs/lib/createGang";
 import { getBonusTime } from "../../src/Gangs/lib/getBonusTime";
 import { setTerritoryWarfare } from "../../src/Gangs/lib/setTerritoryWarfare";
 import { getChanceToWinClash } from "../../src/Gangs/lib/getChanceToWinClash";
+import {ascendMember} from "../../src/Gangs/lib/ascendMember";
 
 
 import * as sys from "../../src/Server/lib/sys";
@@ -275,6 +276,33 @@ describe("Gang system core library tests", function() {
                 Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
                 fakeTerm.getPlayer=()=>{return Player};
                 expect(()=>getChanceToWinClash(null, fakeTerm, out, err, [Player.gang.facName, Player.gang.facName])).to.not.throw();
+            });
+        });
+        describe("ascendMember", function(){
+            it("ascend a valid gang member" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                Player.gang.recruitMember("test1");
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>ascendMember(null, fakeTerm, out, err, ["test1"])).to.not.throw();
+            });
+            it("does NOT ascend an INVALID gang member" ,function(){
+                resetEnv(gangInitType.EXISTS);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>ascendMember(null, fakeTerm, out, err, ["test1"])).to.throw();
+            });
+            it("THROW an error if you have NO gang" ,function(){
+                resetEnv(gangInitType.POSSIBLE);
+                Player.gang = undefined;
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>ascendMember(null, fakeTerm, out, err, ["NiteSec"])).to.throw();
+            });
+            it("THROW an error if you don't provide arguments" ,function(){
+                resetEnv(gangInitType.POSSIBLE);
+                Player.gang = new Gang("Slum Snakes", GANGTYPE.COMBAT);
+                fakeTerm.getPlayer=()=>{return Player};
+                expect(()=>ascendMember(null, fakeTerm, out, err, [])).to.throw();
             });
         });
     });
