@@ -1,6 +1,6 @@
 import { BaseServer } from "../../Server/BaseServer";
-import { Gang, FactionToGangType, GANGTYPE, AllGangs } from "../../Gang";
-import { hasGang } from "./hasGang";
+import { AllGangs } from "../../Gang";
+import {throwIfNoGang} from "./throwIfNoGang";
 
 export function getChanceToWinClash(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
     let HELP_MESSAGE = `USAGE: getChanceToWinClash GANGNAME ...`
@@ -23,13 +23,8 @@ export function getChanceToWinClash(server: BaseServer, term: any, out:Function,
         }
     }
 
-    let hasGangAlready:boolean = true;
-    let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
-    hasGang(server, term, hasGangOut, err, [])
-    if(!hasGangAlready){
-        err(`You have no gang`);
-        return false;
-    }
+
+    throwIfNoGang(server, term, err);
 
 
     if (factions.length == 0 && !options.list){

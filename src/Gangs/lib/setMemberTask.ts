@@ -1,5 +1,5 @@
 import { BaseServer } from "../../Server/BaseServer";
-import { hasGang } from "./hasGang";
+import {throwIfNoGang} from "./throwIfNoGang";
 import {GangMemberTasks} from "../../Gang";
 
 
@@ -55,13 +55,8 @@ export function setMemberTask(server: BaseServer, term: any, out:Function, err:F
     }
 
     let player = term.getPlayer();
-    let hasGangAlready:boolean = false;
-    let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
-    hasGang(server, term, hasGangOut, err, [])
-    if(!hasGangAlready){
-        err(`You dont have a gang`);
-        return false;
-    }
+
+    throwIfNoGang(server, term, err);
     let gang = player.gang;
     for (let memberName of memberNames){
         const member = gang.getMember(memberName);

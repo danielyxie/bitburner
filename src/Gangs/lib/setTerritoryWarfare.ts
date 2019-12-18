@@ -1,19 +1,13 @@
 import { BaseServer } from "../../Server/BaseServer";
-import { Gang, FactionToGangType, GANGTYPE } from "../../Gang";
-import { hasGang } from "./hasGang";
+import {throwIfNoGang} from "./throwIfNoGang";
 
 export function setTerritoryWarfare(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
     let HELPMESSAGE = `USAGE: setTerritoryWarfare true/false`
 
     if (args.length != 1) err(HELPMESSAGE);
 
-    let hasGangAlready:boolean = true;
-    let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
-    hasGang(server, term, hasGangOut, err, [])
-    if(!hasGangAlready){
-        err(`You have no gang`);
-        return false;
-    }
+
+    throwIfNoGang(server, term, err);
 
     let engage = args[0];
     if (typeof args[0] == "string") engage = JSON.parse(engage);

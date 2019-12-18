@@ -1,6 +1,5 @@
 import { BaseServer } from "../../Server/BaseServer";
-import { Gang, FactionToGangType, GANGTYPE } from "../../Gang";
-import { hasGang } from "./hasGang";
+import {throwIfNoGang} from "./throwIfNoGang";
 
 export function ascendMember(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
 
@@ -24,13 +23,8 @@ export function ascendMember(server: BaseServer, term: any, out:Function, err:Fu
         err(`You must provide a member`);
         return false;
     }
-    let hasGangAlready:boolean = false;
-    let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
-    hasGang(server, term, hasGangOut, err, [])
-    if(!hasGangAlready){
-        err(`You dont have a gang`);
-        return false;
-    }
+
+    throwIfNoGang(server, term, err);
 
     for (let memberName of members){
         const member = term.getPlayer().gang.getMember(memberName);

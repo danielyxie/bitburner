@@ -1,15 +1,10 @@
 import { BaseServer } from "../../Server/BaseServer";
 import {GangMemberUpgrades} from "../../Gang";
-import { hasGang } from "./hasGang";
+import {throwIfNoGang} from "./throwIfNoGang";
 
 export function getEquipmentCost(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
-    let hasGangAlready:boolean = false;
-    let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
-    hasGang(server, term, hasGangOut, err, [])
-    if(!hasGangAlready){
-        err(`You dont have a gang`);
-        return false;
-    }
+
+    throwIfNoGang(server, term, err);
     if (args.length == 0){
         err(`You must provide at least one equipment`)
         return false;

@@ -1,5 +1,5 @@
 import { BaseServer } from "../../Server/BaseServer";
-import { hasGang } from "./hasGang";
+import {throwIfNoGang} from "./throwIfNoGang";
 import {GangMemberUpgrades, GangMemberUpgrade, UIElems} from "../../Gang";
 
 import { Page, routing } from "../../ui/navigationTracking";
@@ -46,13 +46,8 @@ export function purchaseEquipment(server: BaseServer, term: any, out:Function, e
     }
 
     let player = term.getPlayer();
-    let hasGangAlready:boolean = false;
-    let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
-    hasGang(server, term, hasGangOut, err, [])
-    if(!hasGangAlready){
-        err(`You dont have a gang`);
-        return false;
-    }
+
+    throwIfNoGang(server, term, err);
     let gang = player.gang;
     try {
         const member = term.getPlayer().gang.getMember(memberName);

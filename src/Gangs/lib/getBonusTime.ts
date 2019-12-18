@@ -1,12 +1,10 @@
 import { BaseServer } from "../../Server/BaseServer";
-import { Gang} from "../../Gang";
+import {throwIfNoGang} from "./throwIfNoGang";
 
 export function getBonusTime(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
 
-    if(! (term.getPlayer().gang instanceof Gang)){
-        err(`You have no gang`)
-        return false;
-    }
+
+    throwIfNoGang(server, term, err);
     let result = Math.round(term.getPlayer().gang.storedCycles / 5);
     out(result);
     return true;
