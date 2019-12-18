@@ -17,7 +17,17 @@ import { setTerritoryWarfare } from "../../src/Gangs/lib/setTerritoryWarfare";
 import { getChanceToWinClash } from "../../src/Gangs/lib/getChanceToWinClash";
 import {ascendMember} from "../../src/Gangs/lib/ascendMember";
 import {purchaseEquipment} from "../../src/Gangs/lib/purchaseEquipment";
-
+//import {getEquipmentCost} from "./Gangs/lib/getEquipmentCost";
+//import {getEquipmentNames} from "./Gangs/lib/getEquipmentNames";
+//import {setMemberTask} from "./Gangs/lib/setMemberTask";
+//import {getTaskNames} from "./Gangs/lib/getTaskNames";
+//import {recruitMember} from "./Gangs/lib/recruitMember";
+//import {canRecruitMember} from "./Gangs/lib/canRecruitMember";
+//import {getMemberInformation} from "./Gangs/lib/getMemberInformation";
+//import {getOtherGangInformation} from "./Gangs/lib/getOtherGangInformation";
+//import {getGangInformation} from "./Gangs/lib/getGangInformation";
+//import {getMemberNames} from "./Gangs/lib/getMemberNames";
+//import {getEquipmentType} from "./Gangs/lib/getEquipmentType";
 
 import * as sys from "../../src/Server/lib/sys";
 
