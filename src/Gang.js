@@ -42,6 +42,32 @@ const GangRecruitCostMultiplier = 2;
 const CyclesPerTerritoryAndPowerUpdate = 100;
 const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
 
+export const GANGTYPE = {
+    HACKING : 0,
+    COMBAT : 1
+}
+
+export const FactionToGangType= {
+    "NiteSec" : GANGTYPE.HACKING,
+    "The Black Hand" : GANGTYPE.HACKING,
+    "Slum Snakes": GANGTYPE.COMBAT,
+    "Tetrads": GANGTYPE.COMBAT,
+    "The Syndicate": GANGTYPE.COMBAT,
+    "The Dark Army": GANGTYPE.COMBAT,
+    "Speakers for the Dead": GANGTYPE.COMBAT
+};
+
+
+const GangNames = [
+    "Slum Snakes",
+    "Tetrads",
+    "The Syndicate",
+    "The Dark Army",
+    "Speakers for the Dead",
+    "NiteSec",
+    "The Black Hand"
+];
+
 // Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
     if (routing.isOn(Page.Gang) && event.altKey) {
@@ -74,15 +100,6 @@ $(document).mousedown(function(event) {
     }
 });
 
-const GangNames = [
-    "Slum Snakes",
-    "Tetrads",
-    "The Syndicate",
-    "The Dark Army",
-    "Speakers for the Dead",
-    "NiteSec",
-    "The Black Hand"
-];
 
 export let AllGangs = {
     "Slum Snakes" : {
