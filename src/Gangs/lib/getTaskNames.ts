@@ -3,13 +3,9 @@ import { BaseServer } from "../../Server/BaseServer";
 import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
 import { throwIfNoGang } from "./throwIfNoGang";
 
-export function getTaskNames(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
-    type: false,
-    list: false
-}) {
-
+export function getTaskNames(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {}) {
     throwIfNoGang(server, term, err);
-    for (let task of Object.keys(GangMemberTasks)) {
+    for (const task of Object.keys(GangMemberTasks)) {
         out(task);
     }
     return true;

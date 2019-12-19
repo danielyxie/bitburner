@@ -17,11 +17,11 @@ export function recruitMember(server: BaseServer, term: any, out: Function, err:
         err(`You cannot recruit a member currently`);
         return false;
     }
-    if (args.length != 1) {
+    if (args.length !== 1) {
         err(`You must provide a name and only one`);
         return false;
     }
-    let name: string = args.shift() as string;
+    const name: string = args.shift() as string;
     if (name === "") {
         err(`You must provide a non-empty name`);
         return false;
@@ -30,8 +30,8 @@ export function recruitMember(server: BaseServer, term: any, out: Function, err:
         err(`Another member is already named ${name}, you must provide a unique name`);
         return false;
     }
-
-    let member = new GangMember(name);
+    const member = new GangMember(name);
+    out(`${name} has been recruited`);
     gang.members[name] = member;
     if (routing.isOn(Page.Gang)) {
         gang.createGangMemberDisplayElement(member);

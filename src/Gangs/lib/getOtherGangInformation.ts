@@ -7,7 +7,7 @@ export function getOtherGangInformation(server: BaseServer, term: any, out: Func
 
     throwIfNoGang(server, term, err);
     const cpy: any = {};
-    for (const gang of AllGangs) {
+    for (const gang of Object.keys(AllGangs)) {
         cpy[gang] = {...AllGangs[gang]};
     }
     out(cpy);

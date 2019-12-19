@@ -2,37 +2,33 @@
  * TODO
  * Add police clashes
  * balance point to keep them from running out of control
-*/
+ */
 
-import { gangMemberTasksMetadata } from "./data/gangmembertasks";
-import { gangMemberUpgradesMetadata } from "./data/gangmemberupgrades";
+import {gangMemberTasksMetadata} from "./data/gangmembertasks";
+import {gangMemberUpgradesMetadata} from "./data/gangmemberupgrades";
 
-import { Engine } from "./engine";
-import { Faction } from "./Faction/Faction";
-import { Factions } from "./Faction/Factions";
-import { displayFactionContent } from "./Faction/FactionHelpers";
+import {Engine} from "./engine";
+import {Faction} from "./Faction/Faction";
+import {Factions} from "./Faction/Factions";
+import {displayFactionContent} from "./Faction/FactionHelpers";
 
-import { Page, routing } from "./ui/navigationTracking";
-import { numeralWrapper } from "./ui/numeralFormat";
+import {Page, routing} from "./ui/navigationTracking";
+import {numeralWrapper} from "./ui/numeralFormat";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import {
-    Reviver,
-    Generic_toJSON,
-    Generic_fromJSON
-} from "../utils/JSONReviver";
-import { formatNumber } from "../utils/StringHelperFunctions";
+import {dialogBoxCreate} from "../utils/DialogBox";
+import {Generic_fromJSON, Generic_toJSON, Reviver} from "../utils/JSONReviver";
+import {formatNumber} from "../utils/StringHelperFunctions";
 
-import { exceptionAlert } from "../utils/helpers/exceptionAlert";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { KEY } from "../utils/helpers/keyCodes";
+import {exceptionAlert} from "../utils/helpers/exceptionAlert";
+import {getRandomInt} from "../utils/helpers/getRandomInt";
+import {KEY} from "../utils/helpers/keyCodes";
 
-import { createAccordionElement } from "../utils/uiHelpers/createAccordionElement";
-import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
-import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
-import { removeElement } from "../utils/uiHelpers/removeElement";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import {createAccordionElement} from "../utils/uiHelpers/createAccordionElement";
+import {createElement} from "../utils/uiHelpers/createElement";
+import {createPopup} from "../utils/uiHelpers/createPopup";
+import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
+import {removeElement} from "../utils/uiHelpers/removeElement";
+import {removeElementById} from "../utils/uiHelpers/removeElementById";
 
 
 // Constants
@@ -43,9 +39,9 @@ const CyclesPerTerritoryAndPowerUpdate = 100;
 const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
 
 export const GANGTYPE = {
-    HACKING : 0,
-    COMBAT : 1
-}
+    HACKING: 0,
+    COMBAT: 1
+};
 
 export const FactionToGangType= {
     "NiteSec" : GANGTYPE.HACKING,
@@ -58,7 +54,7 @@ export const FactionToGangType= {
 };
 
 
-const GangNames = [
+export const GangNames = [
     "Slum Snakes",
     "Tetrads",
     "The Syndicate",
@@ -120,17 +116,17 @@ export let AllGangs = {
     },
     "Speakers for the Dead" : {
         power: 1,
-        territory: 1/7,
+        territory: 1 / 7,
     },
-    "NiteSec" : {
+    "NiteSec": {
         power: 1,
-        territory: 1/7,
+        territory: 1 / 7,
     },
-    "The Black Hand" : {
+    "The Black Hand": {
         power: 1,
-        territory: 1/7,
+        territory: 1 / 7,
     },
-}
+};
 
 export function resetGangs() {
     AllGangs = {
@@ -199,13 +195,13 @@ export function Gang(facName, hacking=false) {
     this.notifyMemberDeath = true;
 }
 
-Gang.prototype.getPower = function() {
+Gang.prototype.getPower = function () {
     return AllGangs[this.facName].power;
-}
+};
 
-Gang.prototype.getTerritory = function() {
+Gang.prototype.getTerritory = function () {
     return AllGangs[this.facName].territory;
-}
+};
 
 Gang.prototype.process = function(numCycles=1, player) {
     const CyclesPerSecond = 1000 / Engine._idleSpeed;
@@ -224,10 +220,10 @@ Gang.prototype.process = function(numCycles=1, player) {
         this.processExperienceGains(cycles);
         this.processTerritoryAndPowerGains(cycles);
         this.storedCycles -= cycles;
-    } catch(e) {
+    } catch (e) {
         exceptionAlert(`Exception caught when processing Gang: ${e}`);
     }
-}
+};
 
 Gang.prototype.processGains = function(numCycles=1, player) {
     // Get gains per cycle
@@ -284,7 +280,7 @@ Gang.prototype.processGains = function(numCycles=1, player) {
     } else {
         console.warn("ERROR: respectGains is NaN");
     }
-}
+};
 
 Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     this.storedTerritoryAndPowerCycles += numCycles;
@@ -373,28 +369,34 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
             }
         }
     }
-}
+};
 
-Gang.prototype.canRecruitMember = function() {
-    if (Object.keys(this.members).length >= MaximumGangMembers) { return false; }
+Gang.prototype.canRecruitMember = function () {
+    if (Object.keys(this.members).length >= MaximumGangMembers) {
+        return false;
+    }
     return (this.respect >= this.getRespectNeededToRecruitMember());
-}
+};
 
-Gang.prototype.getRespectNeededToRecruitMember = function() {
+Gang.prototype.getRespectNeededToRecruitMember = function () {
     // First N gang members are free (can be recruited at 0 respect)
     const numFreeMembers = 3;
-    if (Object.keys(this.members).length < numFreeMembers) { return 0; }
+    if (Object.keys(this.members).length < numFreeMembers) {
+        return 0;
+    }
 
     const i = Object.keys(this.members).length - (numFreeMembers - 1);
     return Math.round(0.9 * Math.pow(i, 3) + Math.pow(i, 2));
-}
+};
 
 Gang.prototype.recruitMember = function(name) {
     name = String(name);
     if (name === "" || !this.canRecruitMember()) { return false; }
 
     // Check for already-existing names
-    if (Object.keys(this.members).includes(name)){return false;}
+    if (Object.keys(this.members).includes(name)) {
+        return false;
+    }
 
     let member = new GangMember(name);
     this.members[name] = member;
@@ -403,22 +405,22 @@ Gang.prototype.recruitMember = function(name) {
         this.updateGangContent();
     }
     return true;
-}
+};
 
 // Money and Respect gains multiplied by this number (< 1)
-Gang.prototype.getWantedPenalty = function() {
+Gang.prototype.getWantedPenalty = function () {
     return (this.respect) / (this.respect + this.wanted);
-}
+};
 
-Gang.prototype.processExperienceGains = function(numCycles=1) {
+Gang.prototype.processExperienceGains = function (numCycles = 1) {
     for (let i of Object.keys(this.members)) {
         this.members[i].gainExperience(numCycles);
         this.members[i].updateSkillLevels();
     }
-}
+};
 
 //Calculates power GAIN, which is added onto the Gang's existing power
-Gang.prototype.calculatePower = function() {
+Gang.prototype.calculatePower = function () {
     var memberTotal = 0;
     for (let i of Object.keys(this.members)) {
         if (GangMemberTasks.hasOwnProperty(this.members[i].task) && this.members[i].task == "Territory Warfare") {
@@ -427,7 +429,7 @@ Gang.prototype.calculatePower = function() {
         }
     }
     return (0.015 * this.getTerritory() * memberTotal);
-}
+};
 
 Gang.prototype.clash = function(won=false) {
     // Determine if a gang member should die
@@ -446,7 +448,9 @@ Gang.prototype.clash = function(won=false) {
         const member = this.members[i];
 
         // Only members assigned to Territory Warfare can die
-        if (member.task !== "Territory Warfare") { continue; }
+        if (member.task !== "Territory Warfare") {
+            continue;
+        }
 
         // Chance to die is decreased based on defense
         const modifiedDeathChance = baseDeathChance / Math.pow(member.def, 0.6);
@@ -454,7 +458,7 @@ Gang.prototype.clash = function(won=false) {
             this.killMember(member);
         }
     }
-}
+};
 
 Gang.prototype.killMember = function(memberObj) {
     const gangName = this.facName;
@@ -480,7 +484,7 @@ Gang.prototype.killMember = function(memberObj) {
     if (routing.isOn(Page.Gang)) {
         this.displayGangMemberList();
     }
-}
+};
 
 Gang.prototype.ascendMember = function(memberObj, workerScript) {
     try {
@@ -512,17 +516,17 @@ Gang.prototype.ascendMember = function(memberObj, workerScript) {
             this.displayGangMemberList();
         }
         return res;
-    } catch(e) {
+    } catch (e) {
         if (workerScript == null) {
             exceptionAlert(e);
         } else {
             throw e; // Re-throw, will be caught in the Netscript Function
         }
     }
-}
+};
 
 // Cost of upgrade gets cheaper as gang increases in respect + power
-Gang.prototype.getDiscount = function() {
+Gang.prototype.getDiscount = function () {
     const power = this.getPower();
     const respect = this.respect;
 
@@ -530,7 +534,7 @@ Gang.prototype.getDiscount = function() {
     const powerLinearFac = 1e6;
     const discount = Math.pow(respect, 0.01) + respect / respectLinearFac + Math.pow(power, 0.01) + power / powerLinearFac - 1;
     return Math.max(1, discount);
-}
+};
 
 // Returns only valid tasks for this gang. Excludes 'Unassigned'
 Gang.prototype.getAllTaskNames = function() {
@@ -546,22 +550,28 @@ Gang.prototype.getAllTaskNames = function() {
     } else {
         tasks = allTasks.filter((e) => {
             let task = GangMemberTasks[e];
-            if (task == null) { return false; }
-            if (e === "Unassigned") { return false; }
+            if (task == null) {
+                return false;
+            }
+            if (e === "Unassigned") {
+                return false;
+            }
             return task.isCombat;
         });
     }
     return tasks;
-}
+};
 
-Gang.prototype.getAllUpgradeNames = function() {
+Gang.prototype.getAllUpgradeNames = function () {
     return Object.keys(GangMemberUpgrades);
-}
+};
 
-Gang.prototype.getUpgradeCost = function(upgName) {
-    if (GangMemberUpgrades[upgName] == null) { return Infinity; }
+Gang.prototype.getUpgradeCost = function (upgName) {
+    if (GangMemberUpgrades[upgName] == null) {
+        return Infinity;
+    }
     return GangMemberUpgrades[upgName].getCost(this);
-}
+};
 
 // Returns a player-friendly string stating the type of the specified upgrade
 Gang.prototype.getUpgradeType = function(upgName) {
@@ -582,33 +592,33 @@ Gang.prototype.getUpgradeType = function(upgName) {
         default:
             return "";
     }
-}
+};
 
-Gang.prototype.getMember = function(memberName){
+Gang.prototype.getMember = function (memberName) {
     return this.members[memberName];
-}
+};
 
-Gang.prototype.toJSON = function() {
-	return Generic_toJSON("Gang", this);
-}
+Gang.prototype.toJSON = function () {
+    return Generic_toJSON("Gang", this);
+};
 
-Gang.fromJSON = function(value) {
-	return Generic_fromJSON(Gang, value.data);
-}
+Gang.fromJSON = function (value) {
+    return Generic_fromJSON(Gang, value.data);
+};
 
 Reviver.constructors.Gang = Gang;
 
-function GangMember(name) {
-    this.name   = name;
-    this.task   = "Unassigned";
+export function GangMember(name) {
+    this.name = name;
+    this.task = "Unassigned";
 
     this.earnedRespect = 0;
 
-    this.hack   = 1;
-    this.str    = 1;
-    this.def    = 1;
-    this.dex    = 1;
-    this.agi    = 1;
+    this.hack = 1;
+    this.str = 1;
+    this.def = 1;
+    this.dex = 1;
+    this.agi = 1;
     this.cha    = 1;
 
     this.hack_exp   = 0;
@@ -637,24 +647,24 @@ function GangMember(name) {
 }
 
 // Same skill calculation formula as Player
-GangMember.prototype.calculateSkill = function(exp, mult=1) {
+GangMember.prototype.calculateSkill = function (exp, mult = 1) {
     return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
-}
+};
 
-GangMember.prototype.updateSkillLevels = function() {
-    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult * this.hack_asc_mult);
-    this.str    = this.calculateSkill(this.str_exp, this.str_mult * this.str_asc_mult);
-    this.def    = this.calculateSkill(this.def_exp, this.def_mult * this.def_asc_mult);
-    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult * this.dex_asc_mult);
-    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult * this.agi_asc_mult);
-    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult * this.cha_asc_mult);
-}
+GangMember.prototype.updateSkillLevels = function () {
+    this.hack = this.calculateSkill(this.hack_exp, this.hack_mult * this.hack_asc_mult);
+    this.str = this.calculateSkill(this.str_exp, this.str_mult * this.str_asc_mult);
+    this.def = this.calculateSkill(this.def_exp, this.def_mult * this.def_asc_mult);
+    this.dex = this.calculateSkill(this.dex_exp, this.dex_mult * this.dex_asc_mult);
+    this.agi = this.calculateSkill(this.agi_exp, this.agi_mult * this.agi_asc_mult);
+    this.cha = this.calculateSkill(this.cha_exp, this.cha_mult * this.cha_asc_mult);
+};
 
-GangMember.prototype.calculatePower = function() {
+GangMember.prototype.calculatePower = function () {
     return (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95;
-}
+};
 
-GangMember.prototype.assignToTask = function(taskName) {
+GangMember.prototype.assignToTask = function (taskName) {
     if (GangMemberTasks.hasOwnProperty(taskName)) {
         this.task = taskName;
         return true;
@@ -662,13 +672,13 @@ GangMember.prototype.assignToTask = function(taskName) {
         this.task = "Unassigned";
         return false;
     }
-}
+};
 
-GangMember.prototype.unassignFromTask = function() {
+GangMember.prototype.unassignFromTask = function () {
     this.task = "Unassigned";
-}
+};
 
-GangMember.prototype.getTask = function() {
+GangMember.prototype.getTask = function () {
     // Backwards compatibility
     if (this.task instanceof GangMemberTask) {
         this.task = this.task.name;
@@ -678,7 +688,7 @@ GangMember.prototype.getTask = function() {
         return GangMemberTasks[this.task];
     }
     return GangMemberTasks["Unassigned"];
-}
+};
 
 // Gains are per cycle
 GangMember.prototype.calculateRespectGain = function(gang) {
@@ -686,17 +696,21 @@ GangMember.prototype.calculateRespectGain = function(gang) {
     if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
+        (task.defWeight / 100) * this.def +
+        (task.dexWeight / 100) * this.dex +
+        (task.agiWeight / 100) * this.agi +
+        (task.chaWeight / 100) * this.cha;
     statWeight -= (4 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
+    if (statWeight <= 0) {
+        return 0;
+    }
     const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
+    if (isNaN(territoryMult) || territoryMult <= 0) {
+        return 0;
+    }
     var respectMult = gang.getWantedPenalty();
     return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
-}
+};
 
 GangMember.prototype.calculateWantedLevelGain = function(gang) {
     const task = this.getTask();
@@ -710,7 +724,9 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) { return 0; }
     const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
+    if (isNaN(territoryMult) || territoryMult <= 0) {
+        return 0;
+    }
     if (task.baseWanted < 0) {
         return 0.4 * task.baseWanted * statWeight * territoryMult;
     } else {
@@ -720,42 +736,48 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
         // denominator is very small. Might want to rethink formula later
         return Math.min(100, calc);
     }
-}
+};
 
 GangMember.prototype.calculateMoneyGain = function(gang) {
     const task = this.getTask();
     if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
+        (task.defWeight / 100) * this.def +
+        (task.dexWeight / 100) * this.dex +
+        (task.agiWeight / 100) * this.agi +
+        (task.chaWeight / 100) * this.cha;
     statWeight -= (3.2 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
+    if (statWeight <= 0) {
+        return 0;
+    }
     const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
+    if (isNaN(territoryMult) || territoryMult <= 0) {
+        return 0;
+    }
     var respectMult = gang.getWantedPenalty();
     return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
-}
+};
 
 GangMember.prototype.gainExperience = function(numCycles=1) {
     const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task === GangMemberTasks["Unassigned"]) {return;}
+    if (task == null || !(task instanceof GangMemberTask) || task === GangMemberTasks["Unassigned"]) {
+        return;
+    }
     const difficultyMult = Math.pow(task.difficulty, 0.9);
     const difficultyPerCycles = difficultyMult * numCycles;
     const weightDivisor = 1500;
-    this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles;
-    this.str_exp    += (task.strWeight / weightDivisor) * difficultyPerCycles;
-    this.def_exp    += (task.defWeight / weightDivisor) * difficultyPerCycles;
-    this.dex_exp    += (task.dexWeight / weightDivisor) * difficultyPerCycles;
-    this.agi_exp    += (task.agiWeight / weightDivisor) * difficultyPerCycles;
-    this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
-}
+    this.hack_exp += (task.hackWeight / weightDivisor) * difficultyPerCycles;
+    this.str_exp += (task.strWeight / weightDivisor) * difficultyPerCycles;
+    this.def_exp += (task.defWeight / weightDivisor) * difficultyPerCycles;
+    this.dex_exp += (task.dexWeight / weightDivisor) * difficultyPerCycles;
+    this.agi_exp += (task.agiWeight / weightDivisor) * difficultyPerCycles;
+    this.cha_exp += (task.chaWeight / weightDivisor) * difficultyPerCycles;
+};
 
-GangMember.prototype.recordEarnedRespect = function(numCycles=1, gang) {
+GangMember.prototype.recordEarnedRespect = function (numCycles = 1, gang) {
     this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
-}
+};
 
 GangMember.prototype.ascend = function() {
     const res = this.getAscensionResults();
@@ -805,7 +827,7 @@ GangMember.prototype.ascend = function() {
         agi: agiAscMult,
         cha: chaAscMult,
     };
-}
+};
 
 // Returns the multipliers that would be gained from ascension
 GangMember.prototype.getAscensionResults = function() {
@@ -833,13 +855,13 @@ GangMember.prototype.getAscensionResults = function() {
     // Subtract 1 because we're only interested in the actual "bonus" part
     return {
         hack: (Math.max(0, hack - 1) * AscensionMultiplierRatio),
-        str:  (Math.max(0, str - 1) * AscensionMultiplierRatio),
-        def:  (Math.max(0, def - 1) * AscensionMultiplierRatio),
-        dex:  (Math.max(0, dex - 1) * AscensionMultiplierRatio),
-        agi:  (Math.max(0, agi - 1) * AscensionMultiplierRatio),
-        cha:  (Math.max(0, cha - 1) * AscensionMultiplierRatio),
+        str: (Math.max(0, str - 1) * AscensionMultiplierRatio),
+        def: (Math.max(0, def - 1) * AscensionMultiplierRatio),
+        dex: (Math.max(0, dex - 1) * AscensionMultiplierRatio),
+        agi: (Math.max(0, agi - 1) * AscensionMultiplierRatio),
+        cha: (Math.max(0, cha - 1) * AscensionMultiplierRatio),
     }
-}
+};
 
 GangMember.prototype.buyUpgrade = function(upg, player, gang) {
     if (typeof upg === 'string') {
@@ -866,15 +888,15 @@ GangMember.prototype.buyUpgrade = function(upg, player, gang) {
         gang.createGangMemberUpgradeBox(player, initFilterValue);
     }
     return true;
-}
+};
 
-GangMember.prototype.toJSON = function() {
-	return Generic_toJSON("GangMember", this);
-}
+GangMember.prototype.toJSON = function () {
+    return Generic_toJSON("GangMember", this);
+};
 
-GangMember.fromJSON = function(value) {
-	return Generic_fromJSON(GangMember, value.data);
-}
+GangMember.fromJSON = function (value) {
+    return Generic_fromJSON(GangMember, value.data);
+};
 
 Reviver.constructors.GangMember = GangMember;
 
@@ -919,17 +941,17 @@ function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
     this.territory      = params.territory ? params.territory : {money: 1, respect: 1, wanted: 1};
 }
 
-GangMemberTask.prototype.toJSON = function() {
-	return Generic_toJSON("GangMemberTask", this);
-}
+GangMemberTask.prototype.toJSON = function () {
+    return Generic_toJSON("GangMemberTask", this);
+};
 
-GangMemberTask.fromJSON = function(value) {
-	return Generic_fromJSON(GangMemberTask, value.data);
-}
+GangMemberTask.fromJSON = function (value) {
+    return Generic_fromJSON(GangMemberTask, value.data);
+};
 
 Reviver.constructors.GangMemberTask = GangMemberTask;
 
-const GangMemberTasks = {};
+export const GangMemberTasks = {};
 
 function addGangMemberTask(name, desc, isHacking, isCombat, params) {
     GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);
@@ -948,10 +970,10 @@ export function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
     this.createDescription();
 }
 
-GangMemberUpgrade.prototype.getCost = function(gang) {
+GangMemberUpgrade.prototype.getCost = function (gang) {
     const discount = gang.getDiscount();
     return this.cost / discount;
-}
+};
 
 GangMemberUpgrade.prototype.createDescription = function() {
     const lines = ["Increases:"];
@@ -974,31 +996,43 @@ GangMemberUpgrade.prototype.createDescription = function() {
         lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)}%`);
     }
     this.desc = lines.join("<br>");
-}
+};
 
 // Passes in a GangMember object
-GangMemberUpgrade.prototype.apply = function(member) {
-    if (this.mults.str != null)     { member.str_mult *= this.mults.str; }
-    if (this.mults.def != null)     { member.def_mult *= this.mults.def; }
-    if (this.mults.dex != null)     { member.dex_mult *= this.mults.dex; }
-    if (this.mults.agi != null)     { member.agi_mult *= this.mults.agi; }
-    if (this.mults.cha != null)     { member.cha_mult *= this.mults.cha; }
-    if (this.mults.hack != null)    { member.hack_mult *= this.mults.hack; }
-    return;
-}
+GangMemberUpgrade.prototype.apply = function (member) {
+    if (this.mults.str != null) {
+        member.str_mult *= this.mults.str;
+    }
+    if (this.mults.def != null) {
+        member.def_mult *= this.mults.def;
+    }
+    if (this.mults.dex != null) {
+        member.dex_mult *= this.mults.dex;
+    }
+    if (this.mults.agi != null) {
+        member.agi_mult *= this.mults.agi;
+    }
+    if (this.mults.cha != null) {
+        member.cha_mult *= this.mults.cha;
+    }
+    if (this.mults.hack != null) {
+        member.hack_mult *= this.mults.hack;
+    }
 
-GangMemberUpgrade.prototype.toJSON = function() {
-	return Generic_toJSON("GangMemberUpgrade", this);
-}
+};
 
-GangMemberUpgrade.fromJSON = function(value) {
-	return Generic_fromJSON(GangMemberUpgrade, value.data);
-}
+GangMemberUpgrade.prototype.toJSON = function () {
+    return Generic_toJSON("GangMemberUpgrade", this);
+};
+
+GangMemberUpgrade.fromJSON = function (value) {
+    return Generic_fromJSON(GangMemberUpgrade, value.data);
+};
 
 Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
 // Initialize Gang Member Upgrades
-export const GangMemberUpgrades = {}
+export const GangMemberUpgrades = {};
 
 function addGangMemberUpgrade(name, cost, type, mults) {
     GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);
@@ -1062,7 +1096,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
         UIElems.gangMemberUpgradeBoxContent = document.getElementById(boxId + "-content");
         UIElems.gangMemberUpgradeBoxOpened = true;
     }
-}
+};
 
 // Create upgrade panels for each individual Gang Member
 GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
@@ -1171,13 +1205,13 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
             (function (upg, div, memberObj, i, gang) {
                 let createElementParams = {
                     innerText: upg.name + " - " + numeralWrapper.format(upg.getCost(gang), "$0.000a"),
-                    class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
-                    fontSize:"11px",
-                    clickListener:()=>{
+                    class: "a-link-button", margin: "2px", padding: "2px", display: "block",
+                    fontSize: "11px",
+                    clickListener: () => {
                         memberObj.buyUpgrade(upg, player, gangObj);
                         return false;
                     }
-                }
+                };
 
                 // For the last two divs, tooltip should be on the left
                 if (i >= 3) {
@@ -1196,7 +1230,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
     container.appendChild(rootkitDiv);
     container.appendChild(augDiv);
     return container;
-}
+};
 
 // Gang UI Dom Elements
 const UIElems = {
@@ -1228,7 +1262,7 @@ const UIElems = {
     gangMemberUpgradeBoxContent:    null,
     gangMemberUpgradeBoxFilter:     null,
     gangMemberUpgradeBoxDiscount:   null,
-    gangMemberUpgradeBoxElements:   null,
+    gangMemberUpgradeBoxElements: null,
 
     // Gang Territory Elements
     gangTerritoryDescText: null,
@@ -1238,7 +1272,7 @@ const UIElems = {
     gangTerritoryDeathNotifyCheckbox: null,
     gangTerritoryDeathNotifyCheckboxLabel: null,
     gangTerritoryInfoText: null,
-}
+};
 
 Gang.prototype.displayGangContent = function(player) {
     if (!UIElems.gangContentCreated || UIElems.gangContainer == null) {
@@ -1269,7 +1303,7 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.managementButton = createElement("a", {
             id:"gang-management-subpage-button", class:"a-link-button-inactive",
             display:"inline-block", innerHTML: "Gang Management (Alt+1)",
-            clickListener:()=>{
+            clickListener: () => {
                 UIElems.gangManagementSubpage.style.display = "block";
                 UIElems.gangTerritorySubpage.style.display = "none";
                 UIElems.managementButton.classList.toggle("a-link-button-inactive");
@@ -1279,11 +1313,11 @@ Gang.prototype.displayGangContent = function(player) {
                 this.updateGangContent();
                 return false;
             }
-        })
+        });
         UIElems.territoryButton = createElement("a", {
-            id:"gang-territory-subpage-button", class:"a-link-button",
-            display:"inline-block", innerHTML:"Gang Territory (Alt+2)",
-            clickListener:() => {
+            id: "gang-territory-subpage-button", class: "a-link-button",
+            display: "inline-block", innerHTML: "Gang Territory (Alt+2)",
+            clickListener: () => {
                 UIElems.gangManagementSubpage.style.display = "none";
                 UIElems.gangTerritorySubpage.style.display = "block";
                 UIElems.managementButton.classList.toggle("a-link-button-inactive");
@@ -1555,9 +1589,9 @@ Gang.prototype.displayGangContent = function(player) {
     }
     UIElems.gangContainer.style.display = "block";
     this.updateGangContent();
-}
+};
 
-Gang.prototype.displayGangMemberList = function() {
+Gang.prototype.displayGangMemberList = function () {
     removeChildrenFromElement(UIElems.gangMemberList);
     UIElems.gangMemberPanels = {};
     const members = this.members;
@@ -1567,7 +1601,7 @@ Gang.prototype.displayGangMemberList = function() {
             this.createGangMemberDisplayElement(members[i]);
         }
     }
-}
+};
 
 Gang.prototype.updateGangContent = function() {
     if (!UIElems.gangContentCreated) { return; }
@@ -1721,7 +1755,7 @@ Gang.prototype.updateGangContent = function() {
             this.updateGangMemberDisplayElement(this.members[i]);
         }
     }
-}
+};
 
 // Takes in a GangMember object
 Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
@@ -1883,7 +1917,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     UIElems.gangMemberList.appendChild(li);
     this.setGangMemberTaskDescription(memberObj, taskName); //Initialize description, TODO doesnt work rn
     this.updateGangMemberDisplayElement(memberObj);
-}
+};
 
 Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     if (!UIElems.gangContentCreated) { return; }
@@ -1944,21 +1978,25 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
             taskSelector.selectedIndex = taskIndex;
         }
     }
-}
+};
 
-Gang.prototype.setGangMemberTaskDescription = function(memberObj, taskName) {
+Gang.prototype.setGangMemberTaskDescription = function (memberObj, taskName) {
     const name = memberObj.name;
     const taskDesc = document.getElementById(name + "gang-member-task-description");
     if (taskDesc) {
         var task = GangMemberTasks[taskName];
-        if (task == null) { task = GangMemberTasks["Unassigned"]; }
+        if (task == null) {
+            task = GangMemberTasks["Unassigned"];
+        }
         var desc = task.desc;
         taskDesc.innerHTML = desc;
     }
-}
+};
 
-Gang.prototype.clearUI = function() {
-    if (UIElems.gangContainer instanceof Element) { removeElement(UIElems.gangContainer); }
+Gang.prototype.clearUI = function () {
+    if (UIElems.gangContainer instanceof Element) {
+        removeElement(UIElems.gangContainer);
+    }
 
     for (const prop in UIElems) {
         UIElems[prop] = null;
@@ -1967,4 +2005,4 @@ Gang.prototype.clearUI = function() {
     UIElems.gangContentCreated = false;
     UIElems.gangMemberUpgradeBoxOpened = false;
     UIElems.gangMemberPanels = {};
-}
+};
