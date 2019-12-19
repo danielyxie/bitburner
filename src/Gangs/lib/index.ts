@@ -12,7 +12,6 @@ import "./getMemberNames";
 import "./getOtherGangInformation";
 import "./getTaskNames";
 import "./hasGang";
-import "./hasGangAPI";
 import "./purchaseEquipment";
 import "./recruitMember";
 import "./setMemberTask";
