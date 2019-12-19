@@ -19,6 +19,7 @@ export function getMemberInformation(server: BaseServer, term: any, out: Functio
         return false;
     }
     const member = gang.members[name];
+    const CYCLES_PER_SEC = 5;
 
     out({
             agility: member.agi,
@@ -42,6 +43,9 @@ export function getMemberInformation(server: BaseServer, term: any, out: Functio
             strengthEquipMult: member.str_mult,
             strengthAscensionMult: member.str_asc_mult,
             task: member.task,
+            respectGainRate: CYCLES_PER_SEC * member.calculateRespectGain(term.getPlayer().gang),
+            wantedLevelGainRate: CYCLES_PER_SEC * member.calculateWantedLevelGain(term.getPlayer().gang),
+            moneyGainRate: CYCLES_PER_SEC * member.calculateMoneyGain(term.getPlayer().gang)
         });
     return true;
 }
