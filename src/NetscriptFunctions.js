@@ -88,7 +88,6 @@ import {
     unknownBladeburnerActionErrorMessage,
     unknownBladeburnerExceptionMessage
 } from "./NetscriptBladeburner";
-import * as nsGang from "./NetscriptGang";
 import {NetscriptPorts, runScriptFromScript,} from "./NetscriptWorker";
 import {killWorkerScript} from "./Netscript/killWorkerScript";
 import {workerScripts} from "./Netscript/WorkerScripts";
@@ -3221,16 +3220,12 @@ function NetscriptFunctions(workerScript) {
             getMemberNames: function() {
                 updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
                 checkGangApiAccess("getMemberNames", err);
-
-                try {
-                    const names = [];
-                    for (const member of Player.gang.members) {
-                        names.push(member.name);
-                    }
-                    return names;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getMemberNames", e));
-                }
+                let result = [];
+                let out = (msg) => {
+                    result.push(msg)
+                };
+                sys.fetchExecutable("getMemberNames")(null, {getPlayer: () => Player}, out, err, []);
+                return result;
             },
             hasGang: function() {
                 updateDynamicRam("hasGang", getRamCost("gang", "hasGang"));
@@ -3250,40 +3245,22 @@ function NetscriptFunctions(workerScript) {
             getGangInformation: function() {
                 updateDynamicRam("getGangInformation", getRamCost("gang", "getGangInformation"));
                 checkGangApiAccess("getGangInformation", err);
-
-                try {
-                    return {
-                        faction:                    Player.gang.facName,
-                        isHacking:                  Player.gang.isHackingGang,
-                        moneyGainRate:              Player.gang.moneyGainRate,
-                        power:                      Player.gang.getPower(),
-                        respect:                    Player.gang.respect,
-                        respectGainRate:            Player.gang.respectGainRate,
-                        territory:                  Player.gang.getTerritory(),
-                        territoryClashChance:       Player.gang.territoryClashChance,
-                        territoryWarfareEngaged:    Player.gang.territoryWarfareEngaged,
-                        wantedLevel:                Player.gang.wanted,
-                        wantedLevelGainRate:        Player.gang.wantedGainRate,
-                    }
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getGangInformation", e));
-                }
+                let result;
+                let out = (value) => {
+                    result = value
+                };
+                sys.fetchExecutable("getGangInformation")(null, {getPlayer: () => Player}, out, err, []);
+                return result;
             },
             getOtherGangInformation: function() {
                 updateDynamicRam("getOtherGangInformation", getRamCost("gang", "getOtherGangInformation"));
                 checkGangApiAccess("getOtherGangInformation", err);
-
-                try {
-                    // We have to make a deep copy
-                    const cpy = {};
-                    for (const gang in AllGangs) {
-                        cpy[gang] = Object.assign({}, AllGangs[gang]);
-                    }
-
-                    return cpy;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getOtherGangInformation", e));
-                }
+                let result;
+                let out = (value) => {
+                    result = value
+                };
+                sys.fetchExecutable("getOtherGangInformation")(null, {getPlayer: () => Player}, out, err, []);
+                return result;
             },
             getMemberInformation: function(name) {
                 updateDynamicRam("getMemberInformation", getRamCost("gang", "getMemberInformation"));
@@ -3292,7 +3269,7 @@ function NetscriptFunctions(workerScript) {
                 let out = (value) => {
                     result = value
                 };
-                sys.fetchExecutable("getMemberInformation")(null, {getPlayer: () => Player}, out, err, []);
+                sys.fetchExecutable("getMemberInformation")(null, {getPlayer: () => Player}, out, err, [name]);
                 return result;
             },
             canRecruitMember: function() {
