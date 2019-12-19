@@ -6,7 +6,6 @@ chai.use(chaiAsPromised);
 //////////////////////////////////////////////////////////////////////////////
 // Here we import every existing function to let them initialize themselves //
 //////////////////////////////////////////////////////////////////////////////
-import {hasGangAPI} from "../../src/Gangs/lib/hasGangAPI";
 import {hasGang} from "../../src/Gangs/lib/hasGang";
 import {createGang} from "../../src/Gangs/lib/createGang";
 import {getBonusTime} from "../../src/Gangs/lib/getBonusTime";
@@ -93,35 +92,6 @@ describe("Gang system core library tests", function () {
 
 
     describe("Gang executables", function () {
-        describe("HasGangAPI says gang function are ", function () {
-            it("Available in Bitnode 2", function () {
-                resetEnv(gangInitType.POSSIBLE);
-                Player.bitNodeN = 2;
-                Player.sourceFiles = [{n: 2, lvl: 1}];
-                let hasAccess = false;
-                out = (msg) => hasAccess = msg;
-                expect(() => hasGangAPI(null, fakeTerm, out, err, [])).to.not.throw();
-                expect(hasAccess).to.equal(true);
-            });
-            it("Available with SourceFile 2", function () {
-                resetEnv(gangInitType.POSSIBLE);
-                Player.bitNodeN = 1;
-                Player.sourceFiles = [{n: 2, lvl: 1}];
-                let hasAccess = false;
-                out = (msg) => hasAccess = msg;
-                expect(() => hasGangAPI(null, fakeTerm, out, err, [])).to.not.throw();
-                expect(hasAccess).to.equal(true);
-            });
-            it("Unavailable without SourceFile 2 nor Bitnode 2", function () {
-                resetEnv(gangInitType.CANNOT);
-                Player.bitNodeN = 1;
-                Player.sourceFiles = [];
-                let hasAccess = false;
-                out = (msg) => hasAccess = msg;
-                expect(() => hasGangAPI(null, fakeTerm, out, err, [])).to.not.throw();
-                expect(hasAccess).to.equal(false);
-            });
-        });
         describe("HasGang says gang", function () {
             it("Exists if it does", function () {
                 resetEnv(gangInitType.EXISTS);
