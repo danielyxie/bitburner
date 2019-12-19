@@ -1,60 +1,40 @@
-import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
-import { tabCompletion } from "./Terminal/tabCompletion";
+import {determineAllPossibilitiesForTabCompletion} from "./Terminal/determineAllPossibilitiesForTabCompletion";
+import {tabCompletion} from "./Terminal/tabCompletion";
 
-import { substituteAliases } from "./Alias";
-import { CONSTANTS } from "./Constants";
-import { Engine } from "./engine";
-import { FconfSettings } from "./Fconf/FconfSettings";
+import {substituteAliases} from "./Alias";
+import {CONSTANTS} from "./Constants";
+import {Engine} from "./engine";
+import {FconfSettings} from "./Fconf/FconfSettings";
 import {
     calculateHackingChance,
     calculateHackingExpGain,
-    calculatePercentMoneyHacked,
     calculateHackingTime,
+    calculatePercentMoneyHacked,
 } from "./Hacking";
-import { HacknetServer } from "./Hacknet/HacknetServer";
-import {
-    iTutorialNextStep,
-    iTutorialSteps,
-    ITutorial
-} from "./InteractiveTutorial";
-import { Player } from "./Player";
-import { hackWorldDaemon } from "./RedPill";
-import { GetServerByHostname } from "./Server/ServerHelpers";
-import {
-    SpecialServerIps,
-    SpecialServerNames
-} from "./Server/SpecialServerIps";
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
-import { Page, routing } from "./ui/navigationTracking";
-import { numeralWrapper } from "./ui/numeralFormat";
-import { KEY } from "../utils/helpers/keyCodes";
-import { getTimestamp } from "../utils/helpers/getTimestamp";
-import {
-    post,
-    postError,
-    hackProgressBarPost,
-    hackProgressPost
-} from "./ui/postToTerminal";
+import {HacknetServer} from "./Hacknet/HacknetServer";
+import {ITutorial, iTutorialNextStep, iTutorialSteps} from "./InteractiveTutorial";
+import {Player} from "./Player";
+import {hackWorldDaemon} from "./RedPill";
+import {GetServerByHostname} from "./Server/ServerHelpers";
+import {SpecialServerIps, SpecialServerNames} from "./Server/SpecialServerIps";
+import {setTimeoutRef} from "./utils/SetTimeoutRef";
+import {Page, routing} from "./ui/navigationTracking";
+import {numeralWrapper} from "./ui/numeralFormat";
+import {KEY} from "../utils/helpers/keyCodes";
+import {getTimestamp} from "../utils/helpers/getTimestamp";
+import {hackProgressBarPost, hackProgressPost, post, postError} from "./ui/postToTerminal";
 import * as sys from "./Server/lib/sys";
+
+import autosize from "autosize";
+import * as path from 'path';
 //////////////////////////////////////////////////////////////////////////////
 // Here we import every existing function to let them initialize themselves //
 //////////////////////////////////////////////////////////////////////////////
-
-import "./Gangs/lib";
-import "./Server/lib";
-
-import { fs } from 'memfs';
-
-import autosize from "autosize";
-import * as JSZip from "jszip";
-import * as FileSaver from "file-saver";
 
 const antlr4 = require('antlr4');
 const TerminalLexer = require('../utils/grammars/TerminalLexer').TerminalLexer;
 const TerminalParser = require('../utils/grammars/TerminalParser').TerminalParser;
 const CommandListener = require('../utils/grammars/CommandListener').CommandListener;
-
-import * as path from 'path';
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
@@ -479,7 +459,7 @@ let Terminal = {
 				server.moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
                 Player.recordMoneySource(moneyGained, "hacking");
-                Player.gainHackingExp(expGainedOnSuccess)
+                Player.gainHackingExp(expGainedOnSuccess);
                 Player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
@@ -487,8 +467,8 @@ let Terminal = {
 				post("Hack successful! Gained " + numeralWrapper.format(moneyGained, '($0,0.00)') + " and " + numeralWrapper.format(expGainedOnSuccess, '0.0000') + " hacking EXP");
 			} else { // Failure
 				// Player only gains 25% exp for failure? TODO Can change this later to balance
-                Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + server.hostname + ". Gained " + numeralWrapper.format(expGainedOnFailure, '0.0000') + " hacking EXP");
+                Player.gainHackingExp(expGainedOnFailure);
+                post("Failed to hack " + server.hostname + ". Gained " + numeralWrapper.format(expGainedOnFailure, '0.0000') + " hacking EXP");
 			}
 		}
 
@@ -824,7 +804,7 @@ let Terminal = {
                 if (server.isDir(filepath))
                     post(`${filepath} is a directory.`);
                 else if (server.isExecutable(filepath))
-                    run(server, Terminal, post, postError, commandArray)
+                    run(server, Terminal, post, postError, commandArray);
                 else
                     post(`${filepath} is a file.`);
             }
@@ -858,7 +838,7 @@ let Terminal = {
     getFilepath: function(filename) {
         // Terminal.currDir does not contain the trailing forward slash, so we have to append it if necessary
         const currDir = Terminal.getCurrentDirectory();
-        let result = path.resolve(currDir + filename)
+        let result = path.resolve(currDir + filename);
         return result;
     },
 
