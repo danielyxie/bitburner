@@ -1,14 +1,18 @@
-import { BaseServer } from "../../Server/BaseServer";
+import {BaseServer} from "../../Server/BaseServer";
 import {throwIfNoGang} from "./throwIfNoGang";
-import {GangMemberUpgrades, GangMemberUpgrade, UIElems} from "../../Gang";
+import {GangMemberUpgrade, GangMemberUpgrades, UIElems} from "../../Gang";
 
-import { Page, routing } from "../../ui/navigationTracking";
+import {Page, routing} from "../../ui/navigationTracking";
+import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
 
-export function purchaseEquipment(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
+export function purchaseEquipment(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+    type: false,
+    list: false
+}) {
 
     const HELP_MESSAGE: string = "Usage: purchaseEquipment [-e] EQUIPNAME [-m] MEMBERNAME";
-    let memberName:string|undefined;
-    let equipName:string|undefined;
+    let memberName: string | undefined;
+    let equipName: string | undefined;
     while (args.length > 0) {
         const arg = args.shift() as string;
         switch (arg) {
@@ -18,26 +22,26 @@ export function purchaseEquipment(server: BaseServer, term: any, out:Function, e
                 return false;
             case "-e":
             case "--equip":
-                if(args.length < 1){
-                    err(`No equipment specified after -e`)
+                if (args.length < 1) {
+                    err(`No equipment specified after -e`);
                     return false;
                 }
                 equipName = args.shift() as string;
                 break;
             case "-m":
             case "--member":
-                if(args.length < 1){
-                    err(`No member specified after -m`)
+                if (args.length < 1) {
+                    err(`No member specified after -m`);
                     return false;
                 }
                 memberName = args.shift() as string;
                 break;
             default:
-                if(memberName === undefined){
+                if (memberName === undefined) {
                     memberName = arg as string;
-                }else if(equipName === undefined){
+                } else if (equipName === undefined) {
                     equipName = arg as string;
-                }else{
+                } else {
                     err(`Too many arguments: ${arg}`);
                     return false;
                 }
@@ -51,7 +55,7 @@ export function purchaseEquipment(server: BaseServer, term: any, out:Function, e
     let gang = player.gang;
     try {
         const member = term.getPlayer().gang.getMember(memberName);
-        if (member === undefined){
+        if (member === undefined) {
             err(`No gang member could be found with name ${memberName}`);
             return false;
         }
@@ -71,7 +75,7 @@ export function purchaseEquipment(server: BaseServer, term: any, out:Function, e
         }
 
         if (player.money.lt(upg.getCost(gang))) {
-            err(`You do not have enough money to afford this.`)
+            err(`You do not have enough money to afford this.`);
             return false;
         }
 
@@ -93,17 +97,14 @@ export function purchaseEquipment(server: BaseServer, term: any, out:Function, e
         out(`Purchased ${equipName} for Gang member ${memberName}`);
 
         return true;
-    } catch(e) {
+    } catch (e) {
         err(e);
     }
 }
 
-import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
-import { mem } from "src/Server/lib/mem";
-
 const MANUAL = new ManualEntry(
-`purchaseEquipment - Purchase a specific equipment for a specific gang member.`,
-`purchaseEquipment [-e] EQUIPNAME [-m] MEMBERNAME`,
-`Purchase a specific equipment for a specific gang member.`);
+    `purchaseEquipment - Purchase a specific equipment for a specific gang member.`,
+    `purchaseEquipment [-e] EQUIPNAME [-m] MEMBERNAME`,
+    `Purchase a specific equipment for a specific gang member.`);
 
 registerExecutable("purchaseEquipment", purchaseEquipment, MANUAL, true, "gang");

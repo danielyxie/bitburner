@@ -1,20 +1,24 @@
-import { BaseServer } from "../../Server/BaseServer";
+import {BaseServer} from "../../Server/BaseServer";
 import {GangMemberUpgrades} from "../../Gang";
 import {throwIfNoGang} from "./throwIfNoGang";
+import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
 
-export function getEquipmentCost(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
+export function getEquipmentCost(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+    type: false,
+    list: false
+}) {
 
     throwIfNoGang(server, term, err);
-    if (args.length == 0){
-        err(`You must provide at least one equipment`)
+    if (args.length == 0) {
+        err(`You must provide at least one equipment`);
         return false;
     }
     let multiple = args.length > 1;
-    let discount = term.getPlayer().gang.getDiscount()
+    let discount = term.getPlayer().gang.getDiscount();
 
-    for(let upgName of args){
+    for (let upgName of args) {
         const upg = GangMemberUpgrades[upgName];
-        if (upg === undefined){
+        if (upg === undefined) {
             if (!multiple) {
                 err(`Unknown equipment ${upgName}`);
                 return false;
@@ -23,18 +27,17 @@ export function getEquipmentCost(server: BaseServer, term: any, out:Function, er
             continue;
         }
 
-        let actualCost = upg.cost / discount
-        if (!multiple) out(`${actualCost}`)
+        let actualCost = upg.cost / discount;
+        if (!multiple) out(`${actualCost}`);
         else out(`${upgName}\t${actualCost}`);
     }
     return true;
 }
-import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
 
 const MANUAL = new ManualEntry(
-`getEquipmentCost - Outputs the cost of specified equipments.`,
-`getEquipmentCost EQUIPNAME
+    `getEquipmentCost - Outputs the cost of specified equipments.`,
+    `getEquipmentCost EQUIPNAME
 getEquipmentCost EQUIPNAME ...`,
-`Outputs the cost of specified equipments.`);
+    `Outputs the cost of specified equipments.`);
 
 registerExecutable("getEquipmentCost", getEquipmentCost, MANUAL, true, "gang");

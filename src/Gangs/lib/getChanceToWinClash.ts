@@ -1,11 +1,15 @@
-import { BaseServer } from "../../Server/BaseServer";
-import { AllGangs } from "../../Gang";
+import {BaseServer} from "../../Server/BaseServer";
+import {AllGangs} from "../../Gang";
 import {throwIfNoGang} from "./throwIfNoGang";
+import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
 
-export function getChanceToWinClash(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
-    let HELP_MESSAGE = `USAGE: getChanceToWinClash GANGNAME ...`
+export function getChanceToWinClash(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+    type: false,
+    list: false
+}) {
+    let HELP_MESSAGE = `USAGE: getChanceToWinClash GANGNAME ...`;
 
-    let factions:string[]=[];
+    let factions: string[] = [];
     while (args.length > 0) {
         const arg = args.shift() as string;
         switch (arg) {
@@ -27,41 +31,37 @@ export function getChanceToWinClash(server: BaseServer, term: any, out:Function,
     throwIfNoGang(server, term, err);
 
 
-    if (factions.length == 0 && !options.list){
+    if (factions.length == 0 && !options.list) {
         err(`You must provide a faction`);
         return false;
     }
-    if (options.list){
+    if (options.list) {
         factions = Object.keys(AllGangs);
     }
-    for(let faction of factions){
-        if(AllGangs[faction] == null) {
+    for (let faction of factions) {
+        if (AllGangs[faction] == null) {
             err(`Gang ${faction} does not exists`);
             return false;
-        }
-        else if(faction == term.getPlayer().gang.facName){
-            if(options.list) continue;
-            else if(factions.length == 1) err(`You cannot clash with your own gang`);
+        } else if (faction == term.getPlayer().gang.facName) {
+            if (options.list) continue;
+            else if (factions.length == 1) err(`You cannot clash with your own gang`);
             else out(`You cannot clash with your own gang`);
             return false;
-        }
-        else{
+        } else {
             const playerPower = AllGangs[term.getPlayer().gang.facName].power;
             const otherPower = AllGangs[faction].power;
-            if(factions.length == 1) out(playerPower / (otherPower + playerPower));
+            if (factions.length == 1) out(playerPower / (otherPower + playerPower));
             else out(`${faction}\t${playerPower / (otherPower + playerPower)}`);
         }
     }
     return true;
 }
 
-import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
-
 const MANUAL = new ManualEntry(
-`getChanceToWinClash - Returns your odds of winning a clash against another gang.`,
-`getChanceToWinClash GANGNAME1 ....
+    `getChanceToWinClash - Returns your odds of winning a clash against another gang.`,
+    `getChanceToWinClash GANGNAME1 ....
 getChanceToWinClash -l`,
-`Returns your odds of winning a clash against another gang.
+    `Returns your odds of winning a clash against another gang.
 
 -l --list
     returns odds of winning against every other gangs.

@@ -1,11 +1,15 @@
-import { BaseServer } from "../../Server/BaseServer";
+import {BaseServer} from "../../Server/BaseServer";
 import {throwIfNoGang} from "./throwIfNoGang";
+import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
 
-export function ascendMember(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
+export function ascendMember(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+    type: false,
+    list: false
+}) {
 
     const HELP_MESSAGE: string = "Usage: ascendMember MEMBER ...";
 
-    let members:string[]=[];
+    let members: string[] = [];
     while (args.length > 0) {
         const arg = args.shift() as string;
         switch (arg) {
@@ -19,16 +23,16 @@ export function ascendMember(server: BaseServer, term: any, out:Function, err:Fu
         }
     }
 
-    if (members.length == 0){
+    if (members.length == 0) {
         err(`You must provide a member`);
         return false;
     }
 
     throwIfNoGang(server, term, err);
 
-    for (let memberName of members){
+    for (let memberName of members) {
         const member = term.getPlayer().gang.getMember(memberName);
-        if (member === undefined){
+        if (member === undefined) {
             err(`${memberName} is not a member`);
             return false;
         }
@@ -37,11 +41,9 @@ export function ascendMember(server: BaseServer, term: any, out:Function, err:Fu
     return true;
 }
 
-import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
-
 const MANUAL = new ManualEntry(
-`ascendMember - Ascend specified gang members.`,
-`ascendMember MEMBER ...`,
-`Ascend specified gang members.`);
+    `ascendMember - Ascend specified gang members.`,
+    `ascendMember MEMBER ...`,
+    `Ascend specified gang members.`);
 
 registerExecutable("ascendMember", ascendMember, MANUAL, true, "gang");

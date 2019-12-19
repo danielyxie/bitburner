@@ -1,12 +1,16 @@
-import { BaseServer } from "../../Server/BaseServer";
-import { Gang, FactionToGangType, GANGTYPE } from "../../Gang";
-import { hasGang } from "./hasGang";
+import {BaseServer} from "../../Server/BaseServer";
+import {FactionToGangType, Gang, GANGTYPE} from "../../Gang";
+import {hasGang} from "./hasGang";
+import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
 
-export function createGang(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
+export function createGang(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+    type: false,
+    list: false
+}) {
 
     const HELP_MESSAGE: string = "Usage: createGang <-t> FACTION";
 
-    let factions:string[]=[];
+    let factions: string[] = [];
     while (args.length > 0) {
         const arg = args.shift() as string;
         switch (arg) {
@@ -28,16 +32,16 @@ export function createGang(server: BaseServer, term: any, out:Function, err:Func
         }
     }
 
-    if (options.list){
-        for(let faction of term.getPlayer().factions){
-            if(Object.keys(FactionToGangType).includes(faction)){
+    if (options.list) {
+        for (let faction of term.getPlayer().factions) {
+            if (Object.keys(FactionToGangType).includes(faction)) {
                 let type = FactionToGangType[faction];
-                switch(type){
+                switch (type) {
                     case GANGTYPE.HACKING:
-                        out(`${faction}\thacking`)
+                        out(`${faction}\thacking`);
                         break;
                     case GANGTYPE.COMBAT:
-                        out(`${faction}\tcombat`)
+                        out(`${faction}\tcombat`);
                         break;
                     default:
                         err(`Unknown Gang Type ${type}`);
@@ -45,53 +49,55 @@ export function createGang(server: BaseServer, term: any, out:Function, err:Func
                 }
             }
         }
-    }else{
-        if (factions.length == 0){
+    } else {
+        if (factions.length == 0) {
             err(`You must provide a faction`);
             return false;
         }
 
-        if (options.type){
-            for (let faction of factions){
+        if (options.type) {
+            for (let faction of factions) {
 
-                if(!term.getPlayer().factions.includes(faction)){
+                if (!term.getPlayer().factions.includes(faction)) {
                     err(`You are not a member of ${faction}`);
                     continue;
                 }
-                if(Object.keys(FactionToGangType).includes(faction)){
+                if (Object.keys(FactionToGangType).includes(faction)) {
                     let type = FactionToGangType[faction];
-                    switch(type){
+                    switch (type) {
                         case GANGTYPE.HACKING:
-                            out(`${faction}\thacking`)
+                            out(`${faction}\thacking`);
                             break;
                         case GANGTYPE.COMBAT:
-                            out(`${faction}\tcombat`)
+                            out(`${faction}\tcombat`);
                             break;
                         default:
                             err(`Unknown Gang Type ${type}`);
                     }
-                }else out(`${faction} does not deal with gangs`);
+                } else out(`${faction} does not deal with gangs`);
             }
             return false;
-        }else{
-            let hasGangAlready:boolean = false;
-            let hasGangOut = (value:boolean)=>{hasGangAlready=value;};
-            hasGang(server, term, hasGangOut, err, [])
-            if(hasGangAlready){
+        } else {
+            let hasGangAlready: boolean = false;
+            let hasGangOut = (value: boolean) => {
+                hasGangAlready = value;
+            };
+            hasGang(server, term, hasGangOut, err, []);
+            if (hasGangAlready) {
                 err(`You already have a gang`);
                 return false;
             }
 
-            if(factions.length>1) {
-                err(`You cannot create a gang with multiple factions, did you meant to use the --type flag?`)
+            if (factions.length > 1) {
+                err(`You cannot create a gang with multiple factions, did you meant to use the --type flag?`);
                 return false;
             }
-            let faction:string = factions[0];
-            if(!term.getPlayer().factions.includes(faction)){
+            let faction: string = factions[0];
+            if (!term.getPlayer().factions.includes(faction)) {
                 err(`You are not a member of ${faction}`);
                 return false;
             }
-            if(!Object.keys(FactionToGangType).includes(faction)) {
+            if (!Object.keys(FactionToGangType).includes(faction)) {
                 err(`${faction} does not deal with gangs`);
                 return false;
             }
@@ -103,14 +109,12 @@ export function createGang(server: BaseServer, term: any, out:Function, err:Func
     }
 }
 
-import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
-
 const MANUAL = new ManualEntry(
-`createGang - Create a gang if you don't currently have one.`,
-`createGang FACTION
+    `createGang - Create a gang if you don't currently have one.`,
+    `createGang FACTION
 createGang -t FACTION1 FACTION2...
 createGang -l`,
-`Without arguments, it creates a gang if you don't currently have one.
+    `Without arguments, it creates a gang if you don't currently have one.
 You can only create a gang with a faction you are in.
 
 

@@ -1,14 +1,18 @@
-import { BaseServer } from "../../Server/BaseServer";
+import {BaseServer} from "../../Server/BaseServer";
 import {throwIfNoGang} from "./throwIfNoGang";
 import {GangMemberTasks} from "../../Gang";
+import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
 
 
-export function setMemberTask(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
+export function setMemberTask(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+    type: false,
+    list: false
+}) {
 
     const HELP_MESSAGE: string = "Usage: setMemberTask [-t] TASKNAME [-m] MEMBERNAME";
-    let memberNames:string[]= [];
-    let taskName:string|undefined;
-    let memberFlag=false;
+    let memberNames: string[] = [];
+    let taskName: string | undefined;
+    let memberFlag = false;
     while (args.length > 0) {
         const arg = args.shift() as string;
         switch (arg) {
@@ -18,36 +22,36 @@ export function setMemberTask(server: BaseServer, term: any, out:Function, err:F
                 return false;
             case "-t":
             case "--task":
-                if(args.length < 1){
-                    err(`No taskname specified after -t`)
+                if (args.length < 1) {
+                    err(`No taskname specified after -t`);
                     return false;
                 }
                 taskName = args.shift() as string;
                 break;
             case "-m":
             case "--member":
-                if(memberFlag || memberNames.length > 0){
-                    err(`Cannot specify multiple members using the -m flag`)
+                if (memberFlag || memberNames.length > 0) {
+                    err(`Cannot specify multiple members using the -m flag`);
                     return false;
                 }
 
                 memberFlag = true;
-                if(args.length < 1){
-                    err(`No member specified after -m`)
+                if (args.length < 1) {
+                    err(`No member specified after -m`);
                     return false;
                 }
                 memberNames.push(args.shift() as string);
                 break;
             default:
 
-                if(memberFlag && taskName !== undefined){
-                    err(`Cannot specify multiple members using the -m flag`)
+                if (memberFlag && taskName !== undefined) {
+                    err(`Cannot specify multiple members using the -m flag`);
                     return false;
                 }
 
-                if(taskName === undefined){
+                if (taskName === undefined) {
                     taskName = arg as string;
-                }else {
+                } else {
                     memberNames.push(arg as string);
                 }
                 break;
@@ -58,22 +62,22 @@ export function setMemberTask(server: BaseServer, term: any, out:Function, err:F
 
     throwIfNoGang(server, term, err);
     let gang = player.gang;
-    for (let memberName of memberNames){
+    for (let memberName of memberNames) {
         const member = gang.getMember(memberName);
-        if (member === undefined){
+        if (member === undefined) {
             err(`No gang member could be found with name ${memberName}`);
             return false;
         }
-        if (taskName === undefined){
+        if (taskName === undefined) {
             taskName = "Unassigned";
-        }else if (!GangMemberTasks.hasOwnProperty(taskName)){
+        } else if (!GangMemberTasks.hasOwnProperty(taskName)) {
             err(`No task could be found with name ${taskName}`);
             return false;
         }
 
-        if(member.task == taskName){
+        if (member.task == taskName) {
             out(`${memberName} already assigned to task ${taskName}`);
-        }else{
+        } else {
             member.task = taskName;
             out(`Gang member ${memberName} assigned to task ${taskName}`);
         }
@@ -81,13 +85,11 @@ export function setMemberTask(server: BaseServer, term: any, out:Function, err:F
     return true;
 }
 
-import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
-
 const MANUAL = new ManualEntry(
-`setMemberTask - Assign a specific task to a gang member.`,
-`setMemberTask [-t] TASKNAME [-m] MEMBERNAME
+    `setMemberTask - Assign a specific task to a gang member.`,
+    `setMemberTask [-t] TASKNAME [-m] MEMBERNAME
 setMemberTask [-t] TASKNAME MEMBERNAME ...`,
-`Assign a specific task to a gang member.
+    `Assign a specific task to a gang member.
 
 -t, --task TASKNAME
     Sets the assigned task to TASKNAME.

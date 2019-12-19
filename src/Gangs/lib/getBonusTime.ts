@@ -1,7 +1,11 @@
-import { BaseServer } from "../../Server/BaseServer";
+import {BaseServer} from "../../Server/BaseServer";
 import {throwIfNoGang} from "./throwIfNoGang";
+import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
 
-export function getBonusTime(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={type:false, list:false}) {
+export function getBonusTime(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+    type: false,
+    list: false
+}) {
 
 
     throwIfNoGang(server, term, err);
@@ -10,11 +14,9 @@ export function getBonusTime(server: BaseServer, term: any, out:Function, err:Fu
     return true;
 }
 
-import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
-
 const MANUAL = new ManualEntry(
-`getBonusTime - Displays the amount of bonus time remaining for your gang.`,
-`getBonusTime`,
-`Displays the amount of bonus time remaining for your gang.`);
+    `getBonusTime - Displays the amount of bonus time remaining for your gang.`,
+    `getBonusTime`,
+    `Displays the amount of bonus time remaining for your gang.`);
 
 registerExecutable("getBonusTime", getBonusTime, MANUAL, true, "gang");
