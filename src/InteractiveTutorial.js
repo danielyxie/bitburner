@@ -21,8 +21,8 @@ const orderedITutorialSteps = [
     "TerminalHelp",                     // Using 'help' Terminal command
     "TerminalLs",                       // Using 'ls' Terminal command
     "TerminalScan",                     // Using 'scan' Terminal command
-    "TerminalScanAnalyze1",             // Using 'scan-analyze' Terminal command
-    "TerminalScanAnalyze2",             // Using 'scan-analyze 3' Terminal command
+    "TerminalScanAnalyze1",             // Using 'scan_analyze' Terminal command
+    "TerminalScanAnalyze2",             // Using 'scan_analyze 3' Terminal command
     "TerminalConnect",                  // Connecting to foodnstuff
     "TerminalAnalyze",                  // Analyzing foodnstuff
     "TerminalNuke",                     // NUKE foodnstuff
@@ -195,16 +195,16 @@ function iTutorialEvaluateStep() {
                          "it displays a list of all servers that can be connected to from your " +
                          "current machine. A server is identified by either its IP or its hostname. <br><br> " +
                          "That's great and all, but there's so many servers. Which one should you go to? " +
-                         "The 'scan-analyze' command gives some more detailed information about servers on the " +
+                         "The 'scan_analyze' command gives some more detailed information about servers on the " +
                          "network. Try it now");
         nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalScanAnalyze2:
         Engine.loadTerminalContent();
-        iTutorialSetText("You just ran 'scan-analyze' with a depth of one. This command shows more detailed " +
+        iTutorialSetText("You just ran 'scan_analyze' with a depth of one. This command shows more detailed " +
                          "information about each server that you can connect to (servers that are a distance of " +
-                         "one node away). <br><br> It is also possible to run 'scan-analyze' with " +
-                         "a higher depth. Let's try a depth of two with the following command: 'scan-analyze 2'.")
+                         "one node away). <br><br> It is also possible to run 'scan_analyze' with " +
+                         "a higher depth. Let's try a depth of two with the following command: 'scan_analyze 2'.")
         nextBtn.style.display = "none"; // next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalConnect:
@@ -213,7 +213,7 @@ function iTutorialEvaluateStep() {
                          "as figure out how to navigate to those servers through the network. You can only connect to " +
                          "a server that is one node away. To connect to a machine, use the 'connect [ip/hostname]' command. You can type in " +
                          "the ip or the hostname, but dont use both.<br><br>" +
-                         "From the results of the 'scan-analyze' command, we can see that the 'foodnstuff' server is " +
+                         "From the results of the 'scan_analyze' command, we can see that the 'foodnstuff' server is " +
                          "only one node away. Let's connect so it now using: 'connect foodnstuff'");
         nextBtn.style.display = "none"; // next step triggered by terminal command
         break;

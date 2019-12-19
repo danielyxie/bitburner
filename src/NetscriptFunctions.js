@@ -181,11 +181,11 @@ const possibleLogs = {
     setTerritoryWarfare: true,
 };
 
+const CYCLES_PER_SEC = 5;
+
 function NetscriptFunctions(workerScript) {
 
-
     const err = (e)=>{throw makeRuntimeRejectMsg(workerScript,e);};
-
 
     const updateDynamicRam = function(fnName, ramCost) {
         if (workerScript.dynamicLoadedFns[fnName]) { return; }
@@ -3103,6 +3103,26 @@ function NetscriptFunctions(workerScript) {
             var aug = Augmentations[name];
             return aug.prereqs.slice();
         },
+        getAugmentationEffects: function(name) {
+            updateDynamicRam("getAugmentationEffects", getRamCost("getAugmentationEffects"));
+            if (Player.bitNodeN !== 4) {
+                if (SourceFileFlags[4] <= 2) {
+                    err( "Cannot run getAugmentationEffects(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (!augmentationExists(name)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationEffects() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
+                return [];
+            }
+
+            var aug = Augmentations[name];
+            var results = {}
+            Object.keys(aug.mults).forEach((key)=>{if (aug.mults[key] != 0.) results[key]= aug.mults[key];});
+
+            return results;
+        },
         getAugmentationCost: function(name) {
             updateDynamicRam("getAugmentationCost", getRamCost("getAugmentationCost"));
             if (Player.bitNodeN !== 4) {
@@ -3267,6 +3287,7 @@ function NetscriptFunctions(workerScript) {
                 };
                 sys.fetchExecutable("getMemberInformation")(null, {getPlayer: () => Player}, out, err, [name]);
                 return result;
+
             },
             canRecruitMember: function() {
                 updateDynamicRam("canRecruitMember", getRamCost("gang", "canRecruitMember"));

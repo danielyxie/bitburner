@@ -24,12 +24,12 @@ export function getAllAliases(): string {
     let result = []
     for (const name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
-            result.push("alias " + name + "=" + Aliases[name]);
+            result.push("alias " + name + "=\"" + Aliases[name]+"\"");
         }
     }
     for (const name in GlobalAliases) {
         if (GlobalAliases.hasOwnProperty(name)) {
-            result.push("global alias " + name + "=" + GlobalAliases[name]);
+            result.push("global alias " + name + "=\"" + GlobalAliases[name]+"\"");
         }
     }
     return result.join("\n");
@@ -37,7 +37,7 @@ export function getAllAliases(): string {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global: boolean = false) {
-    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))="(.+)"$/;
+    const re = /((^[^"<>/\\|?*: ][^"<>/\\|?*:]*[^"<>/\\|?*:. ])|(^[^"<>/\\|?*:. ]))=(.+)$/;
     const matches = dec.match(re);
     if (matches == null) { return false; }
     // values:
@@ -46,6 +46,9 @@ export function parseAliasDeclaration(dec: string, global: boolean = false) {
     // 2 : alias name if more than 1 character
     // 3 : alias name if only 1 character
     // 4 : command string
+    if (matches[4].endsWith(matches[4][0]) && ['\'', '\"'].includes(matches[4][0])){
+        matches[4] = JSON.parse(matches[4]) // matches 4 is a quoted string so whatever
+    }
     if (global) {
         addGlobalAlias(matches[1], matches[4]);
     } else {

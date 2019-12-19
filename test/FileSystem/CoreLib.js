@@ -14,6 +14,7 @@ import { rm } from "../../src/Server/lib/rm";
 import { mv } from "../../src/Server/lib/mv";
 import { ls } from "../../src/Server/lib/ls";
 import { nano } from "../../src/Server/lib/nano";
+import { touch } from "../../src/Server/lib/touch";
 import { tree } from "../../src/Server/lib/tree";
 import { top } from "../../src/Server/lib/top";
 import { scan } from "../../src/Server/lib/scan";
@@ -546,23 +547,23 @@ describe("BaseServer file system core library tests", function() {
 
                 let result = "";
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
-                expect(result).to.equal("alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"");
+                expect(result).to.equal(`alias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"`);
             });
             it("Can register a new global alias and print it" ,function(){
                 resetEnv();
 
                 let result = "";
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["-g", "a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
-                expect(result).to.equal("global alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"");
+                expect(result).to.equal(`global alias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"`);
             });
             it("Can register multiple new aliases" ,function(){
                 resetEnv();
 
                 let result = "";
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["wat=\"wowie\"", "a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
-                expect(result).to.equal([
-                    "alias wat=\"wowie\"",
-                    "alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\""].join('\n'));
+                expect(result).to.equal(
+                    `alias wat="wowie"\nalias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"`
+                );
             });
             it("Can replace an older alias" ,function(){
                 resetEnv();
@@ -570,9 +571,9 @@ describe("BaseServer file system core library tests", function() {
                 let result = "";
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"", "-p"])).to.not.throw();
                 expect(()=>alias(server, fakeTerm, (msg)=>{result+=msg;}, err, ["a=\"wowie\"", "-p"])).to.not.throw();
-                expect(result).to.equal([
-                    "alias a=\"val1d aliascommand; another_ammaam!#$%^&*()_+{}[]\"",
-                    "alias a=\"wowie\""].join(""));
+                expect(result).to.equal(
+                    `alias a="val1d aliascommand; another_ammaam!#$%^&*()_+{}[]"alias a="wowie"`
+                );
             });
             it("Can NOT register invalid aliases" ,function(){
                 resetEnv();
@@ -1110,6 +1111,36 @@ describe("BaseServer file system core library tests", function() {
             });
         });
 
+        describe("touch", function(){
+            it("Can create a file in cwd 1", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>touch(server, fakeTerm, out, err, ["testfile"])).not.to.throw();
+                expect(server.isExecutable("/testfile")).to.equal(true);
+            });
+            it("Can create a file in another directory", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>touch(server, fakeTerm, out, err, ["dA/testfile"])).not.to.throw();
+                expect(server.isExecutable("/dA/testfile")).to.equal(true);
+            });
+        });
+        describe("nano", function(){
+            it("Can create a file in cwd 1", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>nano(server, fakeTerm, out, err, ["testfile"], {testing:true})).not.to.throw();
+                expect(server.isExecutable("/testfile")).to.equal(true);
+
+            });
+            it("Can create a file in another directory", function(){
+                resetEnv();
+                fakeTerm.cwd = "/";
+                expect(()=>nano(server, fakeTerm, out, err, ["dA/testfile"], {testing:true})).not.to.throw();
+                expect(server.isExecutable("/dA/testfile")).to.equal(true);
+            });
+        });
+
         describe("scan", function(){
             it("Can scan neighbouring servers", function(){
                 resetEnv();
@@ -1202,7 +1233,7 @@ describe("BaseServer file system core library tests", function() {
             it("Can NOT connect to a NON neighbouring server", function(){
                 resetEnv();
                 let result = "";
-                let expected = "xxx.xxx.xxx.xxx out of reach";
+                let expected = "xxx.xxx.xxx.xxx out of reach or not found";
                 err = (msg) => { result += msg; throw msg};
 
                 expect(()=>connect(server, fakeTerm, out, err, ["xxx.xxx.xxx.xxx"])).to.throw();
