@@ -143,16 +143,20 @@ function fetchHelpNamespaceIndex(namespace:string){
     return {index:names, hidden:hidden};
 }
 
-export function fetchHelpIndex(){
+export function fetchHelpIndex(namespaceFilter: string = "") {
     const intro: string[] = [
         "",
         "Type 'help X' to find out more about the command/function/program X",
         "",
     ];
-    let tmpNamespaceIndexes:any = {};
-    let tmpNamespaceHidden:any = {};
 
-    for(let namespaceKey of namespaceExecutable.keys()){
+    let tmpNamespaceIndexes: any = {};
+    let tmpNamespaceHidden: any = {};
+
+    for (let namespaceKey of namespaceExecutable.keys()) {
+        if (!namespaceKey.startsWith(namespaceFilter)) {
+            continue;
+        }
         let namespace:string = namespaceKey.split("-")[0] as string;
         if (!Object.keys(tmpNamespaceIndexes).includes(namespace)) tmpNamespaceIndexes[namespace] = [];
         if (!Object.keys(tmpNamespaceHidden).includes(namespace)) tmpNamespaceHidden[namespace] = true;
@@ -163,6 +167,7 @@ export function fetchHelpIndex(){
             tmpNamespaceIndexes[namespace] = tmpNamespaceIndexes[namespace].concat(index);
         }
     }
+
     for(let namespace of Object.keys(tmpNamespaceIndexes).sort()) {
         if (tmpNamespaceHidden[namespace]) {
             intro.push(generateId(namespace.length) + ":");
