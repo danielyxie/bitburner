@@ -1,7 +1,7 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {MaximumGangMembers} from "../../Gang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { MaximumGangMembers } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function canRecruitMember(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {}) {
     throwIfNoGang(server, term, err);

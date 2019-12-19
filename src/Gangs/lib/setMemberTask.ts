@@ -1,8 +1,7 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {GangMemberTasks} from "../../Gang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
-
+import { GangMemberTasks } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function setMemberTask(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
     type: false,

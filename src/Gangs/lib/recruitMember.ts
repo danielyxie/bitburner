@@ -1,10 +1,9 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {GangMember} from "../../Gang";
-import {Page, routing} from "../../ui/navigationTracking";
-import {canRecruitMember} from "./canRecruitMember";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
-
+import { GangMember } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { Page, routing } from "../../ui/navigationTracking";
+import { canRecruitMember } from "./canRecruitMember";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function recruitMember(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {}) {
     throwIfNoGang(server, term, err);

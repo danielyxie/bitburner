@@ -1,6 +1,6 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function setTerritoryWarfare(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
     type: false,
@@ -8,13 +8,16 @@ export function setTerritoryWarfare(server: BaseServer, term: any, out: Function
 }) {
     let HELPMESSAGE = `USAGE: setTerritoryWarfare true/false`;
 
-    if (args.length != 1) err(HELPMESSAGE);
-
+    if (args.length != 1) {
+        err(HELPMESSAGE);
+    }
 
     throwIfNoGang(server, term, err);
 
     let engage = args[0];
-    if (typeof args[0] == "string") engage = JSON.parse(engage);
+    if (typeof args[0] == "string") {
+        engage = JSON.parse(engage);
+    }
     try {
         if (engage) {
             term.getPlayer().gang.territoryWarfareEngaged = true;

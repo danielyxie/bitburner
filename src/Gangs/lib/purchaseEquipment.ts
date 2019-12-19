@@ -1,11 +1,11 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {GangMemberUpgrade, GangMemberUpgrades, UIElems} from "../../Gang";
+import { GangMemberUpgrade, GangMemberUpgrades, UIElems } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
 
-import {Page, routing} from "../../ui/navigationTracking";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { Page, routing } from "../../ui/navigationTracking";
+import { throwIfNoGang } from "./throwIfNoGang";
 
-export function purchaseEquipment(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
+export function purchaseEquipment(server: BaseServer, term: any, out: (msg: string) => void, err: (msg: string) => void, args: string[], options: any = {
     type: false,
     list: false
 }) {

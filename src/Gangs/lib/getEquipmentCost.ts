@@ -1,7 +1,7 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {GangMemberUpgrades} from "../../Gang";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { GangMemberUpgrades } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function getEquipmentCost(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
     type: false,
@@ -28,8 +28,11 @@ export function getEquipmentCost(server: BaseServer, term: any, out: Function, e
         }
 
         let actualCost = upg.cost / discount;
-        if (!multiple) out(`${actualCost}`);
-        else out(`${upgName}\t${actualCost}`);
+        if (!multiple) {
+            out(`${actualCost}`);
+        } else {
+            out(`${upgName}\t${actualCost}`);
+        }
     }
     return true;
 }

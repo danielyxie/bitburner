@@ -1,7 +1,7 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {GangMemberUpgrades} from "../../Gang";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { GangMemberUpgrades } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function getEquipmentType(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
     type: false,
@@ -28,24 +28,39 @@ export function getEquipmentType(server: BaseServer, term: any, out: Function, e
 
         switch (upg.type) {
             case "w":
-                if (!multiple) out("Weapon");
-                else out(`${upgName}\tWeapon`);
+                if (!multiple) {
+                    out("Weapon");
+                } else {
+                    out(`${upgName}\tWeapon`);
+                }
                 break;
             case "a":
-                if (!multiple) out("Armor");
-                else out(`${upgName}\tArmor`);
+                if (!multiple) {
+                    out("Armor");
+                } else {
+                    out(`${upgName}\tArmor`);
+                }
                 break;
             case "v":
-                if (!multiple) out("Vehicle");
-                else out(`${upgName}\tVehicle`);
+                if (!multiple) {
+                    out("Vehicle");
+                } else {
+                    out(`${upgName}\tVehicle`);
+                }
                 break;
             case "r":
-                if (!multiple) out("Rootkit");
-                else out(`${upgName}\tRootkit`);
+                if (!multiple) {
+                    out("Rootkit");
+                } else {
+                    out(`${upgName}\tRootkit`);
+                }
                 break;
             case "g":
-                if (!multiple) out("Augmentation");
-                else out(`${upgName}\tAugmentation`);
+                if (!multiple) {
+                    out("Augmentation");
+                } else {
+                    out(`${upgName}\tAugmentation`);
+                }
                 break;
             default:
                 if (!multiple) {

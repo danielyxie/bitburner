@@ -1,5 +1,5 @@
-import {hasGang} from "./hasGang";
-import {BaseServer} from "../../Server/BaseServer";
+import { BaseServer } from "../../Server/BaseServer";
+import { hasGang } from "./hasGang";
 
 export function throwIfNoGang(server: BaseServer, term: any, err: any) {
     let hasGangAlready: boolean = false;

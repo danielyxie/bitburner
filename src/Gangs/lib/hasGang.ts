@@ -1,6 +1,6 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {Gang} from "../../Gang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { Gang } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
 
 export function hasGang(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {}) {
     out(term.getPlayer().gang instanceof Gang);

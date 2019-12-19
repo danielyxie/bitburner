@@ -1,7 +1,7 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {FactionToGangType, Gang, GANGTYPE} from "../../Gang";
-import {hasGang} from "./hasGang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { FactionToGangType, Gang, GANGTYPE } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { hasGang } from "./hasGang";
 
 export function createGang(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
     type: false,
@@ -74,7 +74,9 @@ export function createGang(server: BaseServer, term: any, out: Function, err: Fu
                         default:
                             err(`Unknown Gang Type ${type}`);
                     }
-                } else out(`${faction} does not deal with gangs`);
+                } else {
+                    out(`${faction} does not deal with gangs`);
+                }
             }
             return false;
         } else {

@@ -1,7 +1,7 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {AllGangs} from "../../Gang";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { AllGangs } from "../../Gang";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function getChanceToWinClash(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
     type: false,
@@ -27,9 +27,7 @@ export function getChanceToWinClash(server: BaseServer, term: any, out: Function
         }
     }
 
-
     throwIfNoGang(server, term, err);
-
 
     if (factions.length == 0 && !options.list) {
         err(`You must provide a faction`);
@@ -43,15 +41,22 @@ export function getChanceToWinClash(server: BaseServer, term: any, out: Function
             err(`Gang ${faction} does not exists`);
             return false;
         } else if (faction == term.getPlayer().gang.facName) {
-            if (options.list) continue;
-            else if (factions.length == 1) err(`You cannot clash with your own gang`);
-            else out(`You cannot clash with your own gang`);
+            if (options.list) {
+                continue;
+            } else if (factions.length == 1) {
+                err(`You cannot clash with your own gang`);
+            } else {
+                out(`You cannot clash with your own gang`);
+            }
             return false;
         } else {
             const playerPower = AllGangs[term.getPlayer().gang.facName].power;
             const otherPower = AllGangs[faction].power;
-            if (factions.length == 1) out(playerPower / (otherPower + playerPower));
-            else out(`${faction}\t${playerPower / (otherPower + playerPower)}`);
+            if (factions.length == 1) {
+                out(playerPower / (otherPower + playerPower));
+            } else {
+                out(`${faction}\t${playerPower / (otherPower + playerPower)}`);
+            }
         }
     }
     return true;

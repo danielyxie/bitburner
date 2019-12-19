@@ -1,6 +1,6 @@
-import {BaseServer} from "../../Server/BaseServer";
-import {throwIfNoGang} from "./throwIfNoGang";
-import {ManualEntry, registerExecutable} from "../../Server/lib/sys";
+import { BaseServer } from "../../Server/BaseServer";
+import { ManualEntry, registerExecutable } from "../../Server/lib/sys";
+import { throwIfNoGang } from "./throwIfNoGang";
 
 export function ascendMember(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {
     type: false,
