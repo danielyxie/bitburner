@@ -17,17 +17,18 @@ import { setTerritoryWarfare } from "../../src/Gangs/lib/setTerritoryWarfare";
 import { getChanceToWinClash } from "../../src/Gangs/lib/getChanceToWinClash";
 import {ascendMember} from "../../src/Gangs/lib/ascendMember";
 import {purchaseEquipment} from "../../src/Gangs/lib/purchaseEquipment";
-import {getEquipmentCost} from "./Gangs/lib/getEquipmentCost";
-import {getEquipmentNames} from "./Gangs/lib/getEquipmentNames";
-import {setMemberTask} from "./Gangs/lib/setMemberTask";
-import {getTaskNames} from "./Gangs/lib/getTaskNames";
-//import {recruitMember} from "./Gangs/lib/recruitMember";
-import {canRecruitMember} from "./Gangs/lib/canRecruitMember";
-//import {getMemberInformation} from "./Gangs/lib/getMemberInformation";
-//import {getOtherGangInformation} from "./Gangs/lib/getOtherGangInformation";
-//import {getGangInformation} from "./Gangs/lib/getGangInformation";
-//import {getMemberNames} from "./Gangs/lib/getMemberNames";
-import {getEquipmentType} from "./Gangs/lib/getEquipmentType";
+import {getEquipmentCost} from "../../src/Gangs/lib/getEquipmentCost";
+import {getEquipmentNames} from "../../src/Gangs/lib/getEquipmentNames";
+import {setMemberTask} from "../../src/Gangs/lib/setMemberTask";
+import {getTaskNames} from "../../src/Gangs/lib/getTaskNames";
+import {recruitMember} from "../../src/Gangs/lib/recruitMember";
+import {canRecruitMember} from "../../src/Gangs/lib/canRecruitMember";
+//import {getMemberInformation} from "../../src/Gangs/lib/getMemberInformation";
+//import {getOtherGangInformation} from "../../src/Gangs/lib/getOtherGangInformation";
+//import {getGangInformation} from "../../src/Gangs/lib/getGangInformation";
+//import {getMemberNames} from "../../src/Gangs/lib/getMemberNames";
+import {getEquipmentType} from "../../src/Gangs/lib/getEquipmentType";
+
 
 import * as sys from "../../src/Server/lib/sys";
 
@@ -38,6 +39,7 @@ import {Player} from "../../src/Player";
 import { PlayerObject } from "../../src/PersonObjects/Player/PlayerObject";
 
 import { Gang, GANGTYPE, AllGangs } from "../../src/Gang";
+import { lineBreak } from "acorn";
 
 describe("Gang system core library tests", function() {
 
