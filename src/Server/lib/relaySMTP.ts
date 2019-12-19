@@ -2,7 +2,7 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { getServer } from "../AllServers";
 import { BaseServer } from "../BaseServer";
 import { Server } from "../Server";
-import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
+import { ManualEntry, registerExecutable } from "./sys";
 
 export function relaySMTP(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
     var targetServer: Server | HacknetServer | undefined;
@@ -33,12 +33,12 @@ export function relaySMTP(server:BaseServer, term:any, out:Function, err:Functio
 }
 
 const MANUAL = new ManualEntry(
-`relaySMTP.exe - open a port using a spam attack`,
-`relaySMTP.exe [SERVER]`,
-`Open a port on SERVER using a SMTP relay to spam SERVER.
+    `relaySMTP.exe - open a port using a spam attack`,
+    `relaySMTP.exe [SERVER]`,
+    `Open a port on SERVER using a SMTP relay to spam SERVER.
 
 Require the SQLInject.exe program available for purchase in
 some shady n3tw0rk5 or, with a sufficent hacking level,
-available for creation.`)
+available for creation.`);
 
-registerExecutable("relaySMTP.exe", relaySMTP, MANUAL, true);
+registerExecutable("relaySMTP.exe", relaySMTP, MANUAL, true, "system", "relaySMTP");

@@ -2,7 +2,7 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { getServer } from "../AllServers";
 import { BaseServer } from "../BaseServer";
 import { Server } from "../Server";
-import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
+import { ManualEntry, registerExecutable } from "./sys";
 
 export function SQLInject(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}) {
     var targetServer: Server | HacknetServer | undefined;
@@ -31,14 +31,13 @@ export function SQLInject(server:BaseServer, term:any, out:Function, err:Functio
     }
 }
 
-
 const MANUAL = new ManualEntry(
-`SQLInject.exe - open a port using a SQL injection attack`,
-`SQLInject.exe [SERVER]`,
-`Open a port on SERVER using a SQL injection attack.
+    `SQLInject.exe - open a port using a SQL injection attack`,
+    `SQLInject.exe [SERVER]`,
+    `Open a port on SERVER using a SQL injection attack.
 
 Require the SQLInject.exe program available for purchase in
 some shady n3tw0rk5 or, with a sufficent hacking level,
-available for creation.`)
+available for creation.`);
 
-registerExecutable("SQLInject.exe", SQLInject, MANUAL, true);
+registerExecutable("SQLInject.exe", SQLInject, MANUAL, true, "system", "SQLInject");

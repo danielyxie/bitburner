@@ -1,15 +1,10 @@
+import { calculateGrowTime, calculateHackingTime, calculateWeakenTime } from "../../Hacking";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
+import { numeralWrapper } from "../../ui/numeralFormat";
 import { getServer } from "../AllServers";
 import { BaseServer } from "../BaseServer";
 import { Server } from "../Server";
-import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
-import { numeralWrapper } from "../../ui/numeralFormat";
-
-import {
-    calculateHackingTime,
-    calculateGrowTime,
-    calculateWeakenTime
-} from "../../Hacking";
+import { ManualEntry, registerExecutable } from "./sys";
 
 export function ServerProfiler(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
     var targetServer: Server | HacknetServer | undefined;
@@ -17,8 +12,7 @@ export function ServerProfiler(server:BaseServer, term:any, out:Function, err:Fu
     if(args.length == 0){
         targetServer = server as Server|HacknetServer;
         target = targetServer.ip;
-    }
-    else{
+    } else{
         target = args[0];
         targetServer = getServer(target);
     }
@@ -31,13 +25,14 @@ export function ServerProfiler(server:BaseServer, term:any, out:Function, err:Fu
     out("Netscript grow() execution time: " + numeralWrapper.format(calculateGrowTime(targetServer), '0.0') + "s");
     out("Netscript weaken() execution time: " + numeralWrapper.format(calculateWeakenTime(targetServer), '0.0') + "s");
 }
+
 const MANUAL = new ManualEntry(
-`ServerProfiler.exe - displays hacking and Netscript-related information about a server`,
-`ServerProfiler.exe [SERVER]`,
-`Displays hacking and Netscript-related information about a server.
+    `ServerProfiler.exe - displays hacking and Netscript-related information about a server`,
+    `ServerProfiler.exe [SERVER]`,
+    `Displays hacking and Netscript-related information about a server.
 
 Require the ServerProfiler.exe program available for purchase in
 some shady n3tw0rk5 or, with a sufficent hacking level,
-available for creation.`)
+available for creation.`);
 
-registerExecutable("ServerProfiler.exe", ServerProfiler, MANUAL, true);
+registerExecutable("ServerProfiler.exe", ServerProfiler, MANUAL, true, "system", "ServerProfiler");

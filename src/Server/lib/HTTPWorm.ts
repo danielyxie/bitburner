@@ -2,7 +2,7 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { getServer } from "../AllServers";
 import { BaseServer } from "../BaseServer";
 import { Server } from "../Server";
-import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
+import { ManualEntry, registerExecutable } from "./sys";
 
 export function HTTPWorm(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
     var targetServer: Server | HacknetServer | undefined;
@@ -32,12 +32,12 @@ export function HTTPWorm(server:BaseServer, term:any, out:Function, err:Function
 }
 
 const MANUAL = new ManualEntry(
-`HTTPWorm.exe - open a port using a worm attack`,
-`HTTPWorm.exe [SERVER]`,
-`Open a port on SERVER using a worm attack.
+    `HTTPWorm.exe - open a port using a worm attack`,
+    `HTTPWorm.exe [SERVER]`,
+    `Open a port on SERVER using a worm attack.
 
 Require the HTTPWorm.exe program available for purchase in
 some shady n3tw0rk5 or, with a sufficent hacking level,
-available for creation.`)
+available for creation.`);
 
-registerExecutable("HTTPWorm.exe", HTTPWorm, MANUAL, true);
+registerExecutable("HTTPWorm.exe", HTTPWorm, MANUAL, true, "system", "HTTPWorm");

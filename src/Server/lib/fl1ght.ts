@@ -1,26 +1,18 @@
-import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { getServer } from "../AllServers";
-import { BaseServer } from "../BaseServer";
-import { Server } from "../Server";
-import {registerExecutable, ManualEntry, fetchUsage, fetchExecutable} from "./sys";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import {Player} from "../../Player";
-import {
-    calculateHackingTime,
-    calculateGrowTime,
-    calculateWeakenTime
-} from "../../Hacking";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { Player } from "../../Player";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { BaseServer } from "../BaseServer";
+import { ManualEntry, registerExecutable } from "./sys";
 
-export function fl1ght(server:BaseServer, term:any, out:Function, err:Function, args:string[], options:any={}){
-    const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement*30)
+export function fl1ght(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {}) {
+    const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement * 30);
     const fulfilled = Player.augmentations.length >= numAugReq &&
         Player.money.gt(1e11) &&
-        ((Player.hacking_skill >= 2500)||
-        (Player.strength >= 1500 &&
-        Player.defense >= 1500 &&
-        Player.dexterity >= 1500 &&
-        Player.agility >= 1500));
+        ((Player.hacking_skill >= 2500) ||
+            (Player.strength >= 1500 &&
+                Player.defense >= 1500 &&
+                Player.dexterity >= 1500 &&
+                Player.agility >= 1500));
     if(!fulfilled) {
         out(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
 
@@ -39,13 +31,14 @@ export function fl1ght(server:BaseServer, term:any, out:Function, err:Function, 
     out("We will contact you.");
     out("-- Daedalus --");
 }
+
 const MANUAL = new ManualEntry(
-`fl1ght.exe - we expect great things from you`,
-`fl1ght.exe`,
-`We expect great things from you.
+    `fl1ght.exe - we expect great things from you`,
+    `fl1ght.exe`,
+    `We expect great things from you.
 
 Please, fulfill our expectations, bit by bit.
 
-Require the fl1ght.exe program. We will contact you.`)
+Require the fl1ght.exe program. We will contact you.`);
 
-registerExecutable("fl1ght.exe", fl1ght, MANUAL, true);
+registerExecutable("fl1ght.exe", fl1ght, MANUAL, true, "system", "fl1ght");
