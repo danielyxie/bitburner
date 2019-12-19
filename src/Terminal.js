@@ -141,7 +141,7 @@ $(document).keydown(function(event) {
             // Autocomplete
             if (terminalInput == null) {return;}
             let input = terminalInput.value;
-            if (input == "") { return; }
+            if (input === "") { return; }
 
             const semiColonIndex = input.lastIndexOf(";");
             if(semiColonIndex !== -1) {
@@ -154,7 +154,7 @@ $(document).keydown(function(event) {
             const commandArray = input.split(" ");
             let index = commandArray.length - 2;
             if (index < -1) { index = 0; }
-            const allPos = determineAllPossibilitiesForTabCompletion(Player, input, index, Terminal.currDir);
+            const allPos = determineAllPossibilitiesForTabCompletion(Player, input, index, Terminal.getCurrentDirectory());
             if (allPos.length == 0) {return;}
 
             let arg = "";
@@ -681,119 +681,132 @@ let Terminal = {
             switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray.length === 1 && commandArray[0] == "help") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalLs:
                 if (commandArray.length === 1 && commandArray[0] == "ls") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalScan:
                 if (commandArray.length === 1 && commandArray[0] == "scan") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalScanAnalyze1:
-                if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
-                    this.executeCommandHelper(command);
+                if (commandArray.length == 1 && commandArray[0] == "scan_analyze") {
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalScanAnalyze2:
-                if (commandArray.length == 2 && commandArray[0] == "scan-analyze" &&
+                if (commandArray.length == 2 && commandArray[0] == "scan_analyze" &&
                     commandArray[1] === 2) {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalConnect:
                 if (commandArray.length == 2) {
                     if ((commandArray[0] == "connect") &&
                         (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
-                        this.executeCommandHelper(command);
+
                         iTutorialNextStep();
                     } else {post("Wrong command! Try again!"); return;}
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalAnalyze:
                 if (commandArray.length === 1 && commandArray[0] === "analyze") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
                 } else {
                     post("Bad command. Please follow the tutorial");
+                    return;
                 }
                 break;
             case iTutorialSteps.TerminalNuke:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
 				break;
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalFree:
                 if (commandArray.length == 1 && commandArray[0] == "free") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.TerminalRunScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             case iTutorialSteps.ActiveScriptsToTerminal:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
                     // Check that the script exists on this machine
-                    this.executeCommandHelper(command);
                     iTutorialNextStep();
-                } else {post("Bad command. Please follow the tutorial");}
+                } else {
+                    post("Bad command. Please follow the tutorial");
+                    return;
+                }
                 break;
             default:
                 post("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
                 return;
             }
-            return;
         }
 
         /****************** END INTERACTIVE TUTORIAL ******************/
 
-        this.executeCommandHelper(command);
-    },
-
-    // TODO Rename and refactor this. Temporary fix to make Interactive Tutorial work with new filesystem
-    executeCommandHelper: function(command) {
-        if (Terminal.hackFlag || Terminal.analyzeFlag) {
-            postError(`Cannot execute command (${command}) while an action is in progress`);
-            return;
-        }
         // Process any aliases
-        command = substituteAliases(command);
-
-        const commandArray = Terminal.parseCommandArguments(command);
         if (commandArray.length == 0) { return; }
 
         var server = Player.getCurrentServer();
         var executable = sys.fetchExecutable(commandArray[0]);
+
         if (!executable) {
             let filepath = commandArray[0];
             // this triggers if the file is in relative pathing format.
@@ -810,15 +823,22 @@ let Terminal = {
             }
             else postError(`${commandArray[0]} not found`);
         } else {
+            var args = commandArray.slice(1);
             if (commandArray[0] === "ls") {
                 // Special output command for 'ls' to color directories blue
                 const postForLsCommand = (input) => {
                     input.endsWith("/") ? post(input, "#0000EE") : post(input)
                 };
 
-                executable(server, Terminal, postForLsCommand, postError, commandArray.splice(1));
+                executable(server, Terminal, postForLsCommand, postError, args);
+            } else if (commandArray[0] === "alias" && commandArray.length > 1) {
+                // adding things only
+                const postForAliasCommand = (input) => {
+                    post("Added alias definition ", input)
+                };
+                executable(server, Terminal, postForAliasCommand, postError, args);
             } else {
-                executable(server, Terminal, post, postError, commandArray.splice(1));
+                executable(server, Terminal, post, postError, args);
             }
         }
     },
@@ -838,7 +858,7 @@ let Terminal = {
     getFilepath: function(filename) {
         // Terminal.currDir does not contain the trailing forward slash, so we have to append it if necessary
         const currDir = Terminal.getCurrentDirectory();
-        let result = path.resolve(currDir + filename);
+        let result = path.resolve(currDir+((currDir.endsWith("/")) ? "" : "/"), filename)
         return result;
     },
 

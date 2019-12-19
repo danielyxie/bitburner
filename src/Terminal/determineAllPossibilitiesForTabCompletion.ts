@@ -12,43 +12,11 @@ import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { Message } from "../Message/Message";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { AllServers } from "../Server/AllServers";
+import { fetchHelpKeys } from "../Server/lib/sys";
 
-// An array of all Terminal commands
-const commands = [
-    "alias",
-    "analyze",
-    "cat",
-    "cd",
-    "check",
-    "clear",
-    "cls",
-    "connect",
-    "download",
-    "expr",
-    "free",
-    "hack",
-    "help",
-    "home",
-    "hostname",
-    "ifconfig",
-    "kill",
-    "killall",
-    "ls",
-    "lscpu",
-    "mem",
-    "mv",
-    "nano",
-    "ps",
-    "rm",
-    "run",
-    "scan",
-    "scan-analyze",
-    "scp",
-    "sudov",
-    "tail",
-    "theme",
-    "top",
-];
+function getCommands(): string[] {
+    return fetchHelpKeys().filter((k) => !k.endsWith(".exe"));
+}
 
 export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: string, index: number, currPath: string= ""): string[] {
     let allPos: string[] = [];
@@ -185,7 +153,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
 
     // Autocomplete the command
     if (index === -1) {
-        return commands.concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
+        return getCommands().concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
     }
 
     // Since we're autocompleting an argument and not a command, the argument might
@@ -197,7 +165,9 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     }
     const arg = commandArray[commandArray.length - 1];
     parentDirPath = getAllParentDirectories(arg);
-    evaledParentDirPath = evaluateDirectoryPath(currServ, currPath, parentDirPath);
+    console.log(parentDirPath);
+    evaledParentDirPath = evaluateDirectoryPath(currServ, parentDirPath, currPath);
+    console.log(evaledParentDirPath);
     if (evaledParentDirPath === "/") {
         evaledParentDirPath = undefined;
     } else if (!evaledParentDirPath) {
@@ -307,6 +277,10 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
 
     if (isCommand("ls") && index === 0) {
         addAllDirectories();
+    }
+
+    if (isCommand("help")) {
+        allPos = allPos.concat(fetchHelpKeys());
     }
 
     return allPos;

@@ -103,7 +103,7 @@ async function _runScript(server:BaseServer, term:any, out:Function, err:Functio
     let numThreads = 1;
     const Scriptargs: string[] = [];
 
-    if (args.length > 1) {
+    if (args.length > 0) {
         if (args.length >= 2 && args[0] == "-t") {
             numThreads = Math.round(parseFloat(args[1]));
             if (isNaN(numThreads) || numThreads < 1) {

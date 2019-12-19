@@ -203,6 +203,7 @@ export const RamCosts: IMap<any> = {
     getAugmentationsFromFaction: () => RamCostConstants.ScriptSingularityFn3RamCost,
     getAugmentationPrereq: () => RamCostConstants.ScriptSingularityFn3RamCost,
     getAugmentationCost: () => RamCostConstants.ScriptSingularityFn3RamCost,
+    getAugmentationEffects: () => RamCostConstants.ScriptSingularityFn3RamCost,
     purchaseAugmentation: () => RamCostConstants.ScriptSingularityFn3RamCost,
     installAugmentations: () => RamCostConstants.ScriptSingularityFn3RamCost,
 

@@ -146,30 +146,27 @@ export function isInRootDirectory(filepath: string): boolean {
  */
 export function evaluateDirectoryPath(server: any, path: string, currPath?: string): string | undefined {
     let t_path = path;
-    console.log(`Evaluate Directory Path ${JSON.stringify(path)}`);
-    console.log(`Current Path = ${JSON.stringify(currPath)}`);
     // If the path begins with a slash, then its an absolute path. Otherwise its relative
     // For relative paths, we need to prepend the current directory
     if (!t_path.startsWith("/") && currPath != null) {
-        t_path = currPath + (currPath.endsWith("/") ? "" : "/") + t_path + (t_path.endsWith("/") ? "" : "/");
+        t_path = currPath + t_path;
+        if (!t_path.endsWith("/")) {
+            t_path += "/";
+        }
     }
-    console.log(`1. Current temporary path = ${JSON.stringify(t_path)}`);
+
+    console.log(t_path);
 
     if (!server.isDir(t_path)) { return ; }
 
     // Trim leading/trailing slashes
     t_path = removeLeadingSlash(t_path);
-    console.log(`2. Current temporary path = ${JSON.stringify(t_path)}`);
-
     t_path = removeTrailingSlash(t_path);
-    console.log(`3. Current temporary path = ${JSON.stringify(t_path)}`);
 
     const dirs = t_path.split("/");
-    console.log(`4. Current directories = ${JSON.stringify(dirs)}`);
     const reconstructedPath: string[] = [];
 
     for (const dir of dirs) {
-        console.log(`5. Current reconstructed path = ${JSON.stringify(reconstructedPath)}:`);
         if (dir === ".") {
             // Current directory, do nothing
             continue;
@@ -184,7 +181,6 @@ export function evaluateDirectoryPath(server: any, path: string, currPath?: stri
         }
     }
     const result = "/" + reconstructedPath.join("/");
-    console.log(`5. result path = ${JSON.stringify(result)}:`);
     return result;
 }
 
