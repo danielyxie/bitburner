@@ -2,6 +2,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import {throwIfNoGang} from "./throwIfNoGang";
 import {GangMember} from "../../Gang";
 import { Page, routing } from "../../ui/navigationTracking";
+import { canRecruitMember } from "./canRecruitMember";
 
 
 export function recruitMember(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={}) {
@@ -38,7 +39,6 @@ export function recruitMember(server: BaseServer, term: any, out:Function, err:F
 }
 
 import { registerExecutable, ManualEntry } from "../../Server/lib/sys";
-import { canRecruitMember } from "./canRecruitMember";
 
 const MANUAL = new ManualEntry(
 `recruitMember - Recruits a new gang member.`,
