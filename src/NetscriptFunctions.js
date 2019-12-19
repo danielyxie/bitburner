@@ -3373,21 +3373,8 @@ function NetscriptFunctions(workerScript) {
             recruitMember: function(name) {
                 updateDynamicRam("recruitMember", getRamCost("gang", "recruitMember"));
                 checkGangApiAccess("recruitMember", err);
-
-                try {
-                    const res = Player.gang.recruitMember(name);
-                    if (workerScript.shouldLog("recruitMember")) {
-                        if (res) {
-                            workerScript.log(`Successfully recruited Gang Member ${name}`);
-                        } else {
-                            workerScript.log(`Failed to recruit Gang Member ${name}`);
-                        }
-                    }
-
-                    return res;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("recruitMember", e));
-                }
+                let out = (msg)=>{if(workerScript.shouldLog("recruitMember")) {workerScript.log(msg)}};
+                return sys.fetchExecutable("recruitMember")(null , {getPlayer:()=>Player}, out, err, [name] );
             },
             getTaskNames: function() {
                 updateDynamicRam("getTaskNames", getRamCost("gang", "getTaskNames"));
