@@ -7,3 +7,4 @@ Netburner.txt
 /test/*.bundle.*
 /test/*.css
 .vscode/*
+.idea/*
