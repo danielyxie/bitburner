@@ -17,42 +17,49 @@
                 "enums": true,
                 "enum-members": true,
                 "functions": {
-                    "visibilities": [
-                        "exported"
-                    ]
+                    "visibilities": "exported"
                 },
                 "interfaces": false,
                 "methods": {
-                    "privacies": [
-                        "public"
-                    ]
+                    "privacies": "public"
                 },
                 "namespaces": true,
                 "properties": true,
                 "types": true,
                 "variables": {
-                    "visibilities": [
-                        "exported"
-                    ]
+                    "visibilities": "exported"
                 }
             }
         ],
         "increment-decrement": false,
         "linebreak-style": false,
-        "max-line-length": [ true, 160 ],
+        "max-line-length": [
+            true,
+            160
+        ],
         "member-access": [
             true,
             "no-public"
         ],
-        "member-ordering": [ false ],
-        "newline-before-return": false,,
+        "member-ordering": [
+            false
+        ],
+        "newline-before-return": false,
         "no-any": false,
         "no-inferrable-types": [
             false,
             "ignore-params",
             "ignore-properties"
         ],
-        "no-magic-numbers": [true, -1, 0, 1, 2, 10, 100],
+        "no-magic-numbers": [
+            true,
+            -1,
+            0,
+            1,
+            2,
+            10,
+            100
+        ],
         "no-null-keyword": false,
         "no-unsafe-any": false,
         "object-literal-key-quotes": [
@@ -67,8 +74,8 @@
         "triple-equals": [true, "allow-null-check", "allow-undefined-check"],
         "typedef": [
             true,
-            "call-signatures",
-            "arrow-call-signatures",
+            "call-signature",
+            "arrow-call-signature",
             "parameter",
             "arrow-parameter",
             "property-declaration",
