@@ -3,105 +3,84 @@
  *
  * TODO: Separate UI functionality into its own component
  */
-import {
-    convertTimeMsToTimeElapsedString,
-    replaceAt
-} from "../utils/StringHelperFunctions";
-import { logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
-import { Augmentations } from "./Augmentation/Augmentations";
-import {
-    initAugmentations,
-    displayAugmentationsContent,
-} from "./Augmentation/AugmentationHelpers";
-import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-import {
-    initBitNodeMultipliers
-} from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner";
-import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
-import { cinematicTextFlag } from "./CinematicText";
-import { generateRandomContract } from "./CodingContractGenerator";
-import { initCompanies } from "./Company/Companies";
-import { Corporation } from "./Corporation/Corporation";
-import { CONSTANTS } from "./Constants";
-import { createDevMenu, closeDevMenu } from "./DevMenu";
-import { Factions, initFactions } from "./Faction/Factions";
+import {convertTimeMsToTimeElapsedString, replaceAt} from "../utils/StringHelperFunctions";
+import {logBoxOpened, logBoxUpdateText} from "../utils/LogBox";
+import {Augmentations} from "./Augmentation/Augmentations";
+import {displayAugmentationsContent, initAugmentations,} from "./Augmentation/AugmentationHelpers";
+import {AugmentationNames} from "./Augmentation/data/AugmentationNames";
+import {initBitNodeMultipliers} from "./BitNode/BitNode";
+import {Bladeburner} from "./Bladeburner";
+import {CharacterOverviewComponent} from "./ui/React/CharacterOverview";
+import {cinematicTextFlag} from "./CinematicText";
+import {generateRandomContract} from "./CodingContractGenerator";
+import {initCompanies} from "./Company/Companies";
+import {Corporation} from "./Corporation/Corporation";
+import {CONSTANTS} from "./Constants";
+import {closeDevMenu, createDevMenu} from "./DevMenu";
+import {Factions, initFactions} from "./Faction/Factions";
 import {
     displayFactionContent,
+    inviteToFaction,
     joinFaction,
-    processPassiveFactionRepGain,
-    inviteToFaction
+    processPassiveFactionRepGain
 } from "./Faction/FactionHelpers";
-import { FconfSettings } from "./Fconf/FconfSettings";
+import {FconfSettings} from "./Fconf/FconfSettings";
 import {
-    hasHacknetServers,
-    renderHacknetNodesUI,
     clearHacknetNodesUI,
-    processHacknetEarnings
+    hasHacknetServers,
+    processHacknetEarnings,
+    renderHacknetNodesUI
 } from "./Hacknet/HacknetHelpers";
-import { iTutorialStart } from "./InteractiveTutorial";
-import { initLiterature } from "./Literature";
-import { LocationName } from "./Locations/data/LocationNames";
-import { LocationRoot } from "./Locations/ui/Root";
-import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
-import { inMission, currMission } from "./Missions";
-import { workerScripts } from "./Netscript/WorkerScripts";
-import {
-    loadAllRunningScripts,
-    updateOnlineScriptTimes,
-} from "./NetscriptWorker";
-import { Player } from "./Player";
-import { prestigeAugmentation } from "./Prestige";
+import {iTutorialStart} from "./InteractiveTutorial";
+import {initLiterature} from "./Literature";
+import {LocationName} from "./Locations/data/LocationNames";
+import {LocationRoot} from "./Locations/ui/Root";
+import {checkForMessagesToSend, initMessages} from "./Message/MessageHelpers";
+import {currMission, inMission} from "./Missions";
+import {workerScripts} from "./Netscript/WorkerScripts";
+import {loadAllRunningScripts, updateOnlineScriptTimes,} from "./NetscriptWorker";
+import {Player} from "./Player";
+import {prestigeAugmentation} from "./Prestige";
 import {
     displayCreateProgramContent,
     getNumAvailableCreateProgram,
     initCreateProgramButtons
 } from "./Programs/ProgramHelpers";
-import { redPillFlag } from "./RedPill";
-import { saveObject, loadGame } from "./SaveObject";
-import {
-    getCurrentEditor,
-    scriptEditorInit,
-    updateScriptEditorContent
-} from "./Script/ScriptHelpers";
-import { initForeignServers } from "./Server/AllServers";
-import { Settings } from "./Settings/Settings";
-import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
-import { initSpecialServerIps } from "./Server/SpecialServerIps";
-import {
-    initSymbolToStockMap,
-    processStockPrices,
-    displayStockMarketContent
-} from "./StockMarket/StockMarket";
-import { Terminal, postNetburnerText } from "./Terminal";
-import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
-import {
-    clearSleevesPage,
-    createSleevesPage,
-    updateSleevesPage
-} from "./PersonObjects/Sleeve/SleeveUI";
-import {
-    clearResleevesPage,
-    createResleevesPage
-} from "./PersonObjects/Resleeving/ResleevingUI";
+import {redPillFlag} from "./RedPill";
+import {loadGame, saveObject} from "./SaveObject";
+import {getCurrentEditor, scriptEditorInit, updateScriptEditorContent} from "./Script/ScriptHelpers";
+import {initForeignServers} from "./Server/AllServers";
+import {Settings} from "./Settings/Settings";
+import {updateSourceFileFlags} from "./SourceFile/SourceFileFlags";
+import {initSpecialServerIps} from "./Server/SpecialServerIps";
+import {displayStockMarketContent, initSymbolToStockMap, processStockPrices} from "./StockMarket/StockMarket";
+import {postNetburnerText, Terminal} from "./Terminal";
+import {Sleeve} from "./PersonObjects/Sleeve/Sleeve";
+import {clearSleevesPage, createSleevesPage, updateSleevesPage} from "./PersonObjects/Sleeve/SleeveUI";
+import {clearResleevesPage, createResleevesPage} from "./PersonObjects/Resleeving/ResleevingUI";
 
-import { createStatusText } from "./ui/createStatusText";
-import { displayCharacterInfo } from "./ui/displayCharacterInfo";
-import { Page, routing } from "./ui/navigationTracking";
-import { numeralWrapper } from "./ui/numeralFormat";
-import { setSettingsLabels } from "./ui/setSettingsLabels";
+import {createStatusText} from "./ui/createStatusText";
+import {displayCharacterInfo} from "./ui/displayCharacterInfo";
+import {Page, routing} from "./ui/navigationTracking";
+import {numeralWrapper} from "./ui/numeralFormat";
+import {setSettingsLabels} from "./ui/setSettingsLabels";
 
-import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
-import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
-import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
+import {ActiveScriptsRoot} from "./ui/ActiveScripts/Root";
+import {initializeMainMenuHeaders} from "./ui/MainMenu/Headers";
+import {initializeMainMenuLinks, MainMenuLinks} from "./ui/MainMenu/Links";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
-import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
-import { createElement } from "../utils/uiHelpers/createElement";
-import { exceptionAlert } from "../utils/helpers/exceptionAlert";
-import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
-import { KEY } from "../utils/helpers/keyCodes";
+import {dialogBoxCreate} from "../utils/DialogBox";
+import {gameOptionsBoxClose, gameOptionsBoxOpen} from "../utils/GameOptions";
+import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
+import {createElement} from "../utils/uiHelpers/createElement";
+import {exceptionAlert} from "../utils/helpers/exceptionAlert";
+import {removeLoadingScreen} from "../utils/uiHelpers/removeLoadingScreen";
+
+import "./Gangs/lib";
+import "./Server/lib";
+import * as sys from "./Server/lib/sys";
+
+import {KEY} from "../utils/helpers/keyCodes";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -265,9 +244,9 @@ const Engine = {
         Engine.Display.activeScriptsContent.style.display = "block";
         routing.navigateTo(Page.ActiveScripts);
         ReactDOM.render(
-            <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
+            <ActiveScriptsRoot p={Player} workerScripts={workerScripts}/>,
             Engine.Display.activeScriptsContent
-        )
+        );
         MainMenuLinks.ActiveScripts.classList.add("active");
     },
 
@@ -329,11 +308,11 @@ const Engine = {
         MainMenuLinks.City.classList.add("active");
 
         routing.navigateTo(Page.Location);
-        const rootComponent =   <LocationRoot
-                                    initiallyInCity={initiallyInCity}
-                                    engine={Engine}
-                                    p={Player}
-                                />
+        const rootComponent = <LocationRoot
+            initiallyInCity={initiallyInCity}
+            engine={Engine}
+            p={Player}
+        />;
         ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
@@ -346,11 +325,11 @@ const Engine = {
         MainMenuLinks.Travel.classList.add("active");
 
         routing.navigateTo(Page.Location);
-        const rootComponent =   <LocationRoot
-                                    initiallyInCity={false}
-                                    engine={Engine}
-                                    p={Player}
-                                />
+        const rootComponent = <LocationRoot
+            initiallyInCity={false}
+            engine={Engine}
+            p={Player}
+        />;
         ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
@@ -368,11 +347,11 @@ const Engine = {
         MainMenuLinks.Job.classList.add("active");
 
         routing.navigateTo(Page.Location);
-        const rootComponent =   <LocationRoot
-                                    initiallyInCity={false}
-                                    engine={Engine}
-                                    p={Player}
-                                />
+        const rootComponent = <LocationRoot
+            initiallyInCity={false}
+            engine={Engine}
+            p={Player}
+        />;
         ReactDOM.render(rootComponent, Engine.Display.locationContent);
     },
 
@@ -1012,15 +991,34 @@ const Engine = {
         }
     },
 
-    load: function(saveString) {
+    loadKnownExecutables: function (Player) {
+
+        const APIChecker = sys.fetchExecutable("hasAPI");
+        if (APIChecker === undefined) {
+            throw "API checker was not found!"
+        }
+        // Revealing APIs
+        for (let api of sys.namespaces) {
+            let hasAccess = false;
+            APIChecker(null, {getPlayer: () => Player}, (access) => {
+                hasAccess = access
+            }, () => {
+            }, [api]);
+            if (hasAccess) {
+                sys.revealNamespace(api);
+            }
+        }
+    },
+
+    load: function (saveString) {
         // Initialize main menu accordion panels to all start as "open"
-        const terminal          = document.getElementById("terminal-tab");
-        const createScript      = document.getElementById("create-script-tab");
-        const activeScripts     = document.getElementById("active-scripts-tab");
-        const createProgram     = document.getElementById("create-program-tab");
-        const stats             = document.getElementById("stats-tab");
-        const factions          = document.getElementById("factions-tab");
-        const augmentations     = document.getElementById("augmentations-tab");
+        const terminal = document.getElementById("terminal-tab");
+        const createScript = document.getElementById("create-script-tab");
+        const activeScripts = document.getElementById("active-scripts-tab");
+        const createProgram = document.getElementById("create-program-tab");
+        const stats = document.getElementById("stats-tab");
+        const factions = document.getElementById("factions-tab");
+        const augmentations = document.getElementById("augmentations-tab");
         const hacknetnodes      = document.getElementById("hacknet-nodes-tab");
         const city              = document.getElementById("city-tab");
         const travel            = document.getElementById("travel-tab");
@@ -1036,7 +1034,7 @@ const Engine = {
         // Load game from save or create new game
         // load literature data before any potential file migration
         initLiterature();
-        
+
         if (loadGame(saveString)) {
             initBitNodeMultipliers(Player);
             Engine.setDisplayElements();    // Sets variables for important DOM elements
@@ -1047,6 +1045,7 @@ const Engine = {
                 initSymbolToStockMap();
             }
             updateSourceFileFlags(Player);
+            Engine.loadKnownExecutables(Player);
 
             // Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
@@ -1275,7 +1274,7 @@ const Engine = {
                              "If that doesn't work, report the issue to the developer";
             exceptionAlert(new Error(errorMsg));
             console.error(errorMsg);
-            return;
+
         }
     },
 
@@ -1548,10 +1547,10 @@ window.onload = function() {
         var transaction = indexedDb.transaction(["savestring"]);
         var objectStore = transaction.objectStore("savestring");
         var request = objectStore.get("save");
-        request.onerror = function(e) {
+        request.onerror = function (e) {
             console.log("Error in Database request to get savestring: " + e);
             return Engine.load(null); // Try to load from localstorage
-        }
+        };
 
         request.onsuccess = function(e) {
             Engine.load(request.result);

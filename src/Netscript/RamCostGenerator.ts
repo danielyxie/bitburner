@@ -208,6 +208,7 @@ export const RamCosts: IMap<any> = {
     installAugmentations: () => RamCostConstants.ScriptSingularityFn3RamCost,
 
     // Gang API
+    hasGangAPI: ()=> 0,
     gang : {
         getMemberNames: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
         getGangInformation: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
@@ -224,6 +225,8 @@ export const RamCosts: IMap<any> = {
         ascendMember: () => RamCostConstants.ScriptGangApiBaseRamCost,
         setTerritoryWarfare: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
         getChanceToWinClash: () => RamCostConstants.ScriptGangApiBaseRamCost,
+        hasGang: () => RamCostConstants.ScriptGangApiBaseRamCost,
+        createGang: () => RamCostConstants.ScriptGangApiBaseRamCost,
         getBonusTime: () => 0,
     },
 

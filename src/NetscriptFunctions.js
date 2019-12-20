@@ -1,158 +1,114 @@
 const sprintf = require("sprintf-js").sprintf;
 const vsprintf = require("sprintf-js").vsprintf;
 
-import { getRamCost } from "./Netscript/RamCostGenerator";
-import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
+import {getRamCost} from "./Netscript/RamCostGenerator";
+import {WorkerScriptStartStopEventEmitter} from "./Netscript/WorkerScriptStartStopEventEmitter";
 
-import { Augmentation } from "./Augmentation/Augmentation";
-import { Augmentations } from "./Augmentation/Augmentations";
+import {Augmentation} from "./Augmentation/Augmentation";
+import {Augmentations} from "./Augmentation/Augmentations";
+import {augmentationExists, installAugmentations} from "./Augmentation/AugmentationHelpers";
+import {AugmentationNames} from "./Augmentation/data/AugmentationNames";
+import {BitNodeMultipliers} from "./BitNode/BitNodeMultipliers";
+import {findCrime} from "./Crime/CrimeHelpers";
+import {Bladeburner} from "./Bladeburner";
+import {Company} from "./Company/Company";
+import {Companies, companyExists} from "./Company/Companies";
+import {CompanyPosition} from "./Company/CompanyPosition";
+import {CompanyPositions} from "./Company/CompanyPositions";
+import {CONSTANTS} from "./Constants";
+import {DarkWebItems} from "./DarkWeb/DarkWebItems";
 import {
-    augmentationExists,
-    installAugmentations
-} from "./Augmentation/AugmentationHelpers";
-import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-import { findCrime } from "./Crime/CrimeHelpers";
-import { Bladeburner } from "./Bladeburner";
-import { Company } from "./Company/Company";
-import { Companies, companyExists } from "./Company/Companies";
-import { CompanyPosition } from "./Company/CompanyPosition";
-import { CompanyPositions } from "./Company/CompanyPositions";
-import { CONSTANTS } from "./Constants";
-import { DarkWebItems } from "./DarkWeb/DarkWebItems";
-import {
+    calculateGrowTime,
     calculateHackingChance,
     calculateHackingExpGain,
-    calculatePercentMoneyHacked,
     calculateHackingTime,
-    calculateGrowTime,
+    calculatePercentMoneyHacked,
     calculateWeakenTime
 } from "./Hacking";
-import { AllGangs } from "./Gang";
-import { Faction } from "./Faction/Faction";
-import { Factions, factionExists } from "./Faction/Factions";
-import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
-import { FactionWorkType } from "./Faction/FactionWorkTypeEnum";
-import {
-    netscriptCanGrow,
-    netscriptCanHack,
-    netscriptCanWeaken
-} from "./Hacking/netscriptCanHack";
+import {AllGangs} from "./Gang";
+import {Faction} from "./Faction/Faction";
+import {factionExists, Factions} from "./Faction/Factions";
+import {joinFaction, purchaseAugmentation} from "./Faction/FactionHelpers";
+import {FactionWorkType} from "./Faction/FactionWorkTypeEnum";
+import {netscriptCanGrow, netscriptCanHack, netscriptCanWeaken} from "./Hacking/netscriptCanHack";
 
 import {
     getCostOfNextHacknetNode,
     getCostOfNextHacknetServer,
     hasHacknetServers,
+    purchaseCacheUpgrade,
+    purchaseCoreUpgrade,
     purchaseHacknet,
+    purchaseHashUpgrade,
     purchaseLevelUpgrade,
     purchaseRamUpgrade,
-    purchaseCoreUpgrade,
-    purchaseCacheUpgrade,
-    purchaseHashUpgrade,
     updateHashManagerCapacity,
 } from "./Hacknet/HacknetHelpers";
-import { HacknetServer } from "./Hacknet/HacknetServer";
-import { CityName } from "./Locations/data/CityNames";
-import { LocationName } from "./Locations/data/LocationNames";
-
-import { Message } from "./Message/Message";
-import { Messages } from "./Message/MessageHelpers";
-import { inMission } from "./Missions";
-import { Player } from "./Player";
-import { Programs } from "./Programs/Programs";
-import { Script } from "./Script/Script";
-import { findRunningScript } from "./Script/ScriptHelpers";
-import { isScriptFilename } from "./Script/ScriptHelpersTS";
+import {HacknetServer} from "./Hacknet/HacknetServer";
+import {CityName} from "./Locations/data/CityNames";
+import {LocationName} from "./Locations/data/LocationNames";
+import {inMission} from "./Missions";
+import {Player} from "./Player";
+import {Programs} from "./Programs/Programs";
+import {Script} from "./Script/Script";
+import {findRunningScript} from "./Script/ScriptHelpers";
+import {isScriptFilename} from "./Script/ScriptHelpersTS";
+import {AddToAllServers, AllServers, createUniqueRandomIp,} from "./Server/AllServers";
+import {Server} from "./Server/Server";
 import {
-    AllServers,
-    AddToAllServers,
-    createUniqueRandomIp,
-} from "./Server/AllServers";
-import { Server } from "./Server/Server";
-import {
-    GetServerByHostname,
     getServer,
+    GetServerByHostname,
     getServerOnNetwork,
     numCycleForGrowth,
     processSingleServerGrowth,
     safetlyCreateUniqueServer,
 } from "./Server/ServerHelpers";
+import {getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam} from "./Server/ServerPurchases";
+import {SpecialServerIps} from "./Server/SpecialServerIps";
+import {SourceFileFlags} from "./SourceFile/SourceFileFlags";
+import {buyStock, sellShort, sellStock, shortStock,} from "./StockMarket/BuyingAndSelling";
+import {influenceStockThroughServerGrow, influenceStockThroughServerHack,} from "./StockMarket/PlayerInfluencing";
+import {Stock} from "./StockMarket/Stock";
 import {
-    getPurchaseServerCost,
-    getPurchaseServerLimit,
-    getPurchaseServerMaxRam
-} from "./Server/ServerPurchases";
-import { Settings } from "./Settings/Settings";
-import { SpecialServerIps } from "./Server/SpecialServerIps";
-import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
-import {
-    buyStock,
-    sellStock,
-    shortStock,
-    sellShort,
-} from "./StockMarket/BuyingAndSelling";
-import {
-    influenceStockThroughServerHack,
-    influenceStockThroughServerGrow,
-} from "./StockMarket/PlayerInfluencing";
-import { Stock } from "./StockMarket/Stock";
-import {
-    StockMarket,
-    SymbolToStockMap,
-    placeOrder,
     cancelOrder,
     displayStockMarketContent,
+    placeOrder,
+    StockMarket,
+    SymbolToStockMap,
 } from "./StockMarket/StockMarket";
-import {
-    getBuyTransactionCost,
-    getSellTransactionGain,
-} from "./StockMarket/StockMarketHelpers";
-import { OrderTypes } from "./StockMarket/data/OrderTypes";
-import { PositionTypes } from "./StockMarket/data/PositionTypes";
-import { StockSymbols } from "./StockMarket/data/StockSymbols";
-import {
-    getStockMarket4SDataCost,
-    getStockMarket4STixApiCost
-} from "./StockMarket/StockMarketCosts";
-import { isValidFilePath } from "./Terminal/DirectoryHelpers";
+import {getBuyTransactionCost, getSellTransactionGain,} from "./StockMarket/StockMarketHelpers";
+import {OrderTypes} from "./StockMarket/data/OrderTypes";
+import {PositionTypes} from "./StockMarket/data/PositionTypes";
+import {StockSymbols} from "./StockMarket/data/StockSymbols";
+import {getStockMarket4SDataCost, getStockMarket4STixApiCost} from "./StockMarket/StockMarketCosts";
+import {isValidFilePath} from "./Terminal/DirectoryHelpers";
 
 import {
+    checkBladeburnerAccess,
     unknownBladeburnerActionErrorMessage,
-    unknownBladeburnerExceptionMessage,
-    checkBladeburnerAccess
+    unknownBladeburnerExceptionMessage
 } from "./NetscriptBladeburner";
-import * as nsGang from "./NetscriptGang";
-import {
-    NetscriptPorts,
-    runScriptFromScript,
-} from "./NetscriptWorker";
-import { killWorkerScript } from "./Netscript/killWorkerScript";
-import { workerScripts } from "./Netscript/WorkerScripts";
-import {
-    makeRuntimeRejectMsg,
-    netscriptDelay,
-    resolveNetscriptRequestedThreads,
-} from "./NetscriptEvaluator";
-import { NetscriptPort } from "./NetscriptPort";
-import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
-import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
+import {NetscriptPorts, runScriptFromScript,} from "./NetscriptWorker";
+import {killWorkerScript} from "./Netscript/killWorkerScript";
+import {workerScripts} from "./Netscript/WorkerScripts";
+import {makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads,} from "./NetscriptEvaluator";
+import {NetscriptPort} from "./NetscriptPort";
+import {SleeveTaskType} from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
+import {findSleevePurchasableAugs} from "./PersonObjects/Sleeve/SleeveHelpers";
+import {numeralWrapper} from "./ui/numeralFormat";
+import {post} from "./ui/postToTerminal";
+import {setTimeoutRef} from "./utils/SetTimeoutRef";
+import {is2DArray} from "./utils/helpers/is2DArray";
+import {formatNumber} from "../utils/StringHelperFunctions";
+import {logBoxCreate} from "../utils/LogBox";
+import {arrayToString} from "../utils/helpers/arrayToString";
+import {isString} from "../utils/helpers/isString";
 
-import { Page, routing } from "./ui/navigationTracking";
-import { numeralWrapper } from "./ui/numeralFormat";
-import { post } from "./ui/postToTerminal";
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
-import { is2DArray } from "./utils/helpers/is2DArray";
-
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { formatNumber, isHTML } from "../utils/StringHelperFunctions";
-import { logBoxCreate } from "../utils/LogBox";
-import { arrayToString } from "../utils/helpers/arrayToString";
-import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
-import { isString } from "../utils/helpers/isString";
-
-import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import {createElement} from "../utils/uiHelpers/createElement";
+import {createPopup} from "../utils/uiHelpers/createPopup";
+import {removeElementById} from "../utils/uiHelpers/removeElementById";
+import * as path from 'path';
+import * as sys from "./Server/lib/sys";
 
 const possibleLogs = {
     ALL: true,
@@ -223,10 +179,7 @@ const possibleLogs = {
     setMemberTask: true,
     purchaseEquipment: true,
     setTerritoryWarfare: true,
-}
-
-import * as path from 'path';
-import * as sys from "./Server/lib/sys";
+};
 
 const CYCLES_PER_SEC = 5;
 
@@ -262,14 +215,14 @@ function NetscriptFunctions(workerScript) {
      * @param {string} callingFnName - Name of calling function. For logging purposes
      * @returns {Server} The specified Server
      */
-    const safeGetServer = function(ip, callingFnName="") {
+    const safeGetServer = function (ip, callingFnName = "") {
         var server = getServer(ip);
         if (server == null) {
             workerScript.log(`ERROR: Invalid IP or hostname passed into ${callingFnName}()`);
-            err( `Invalid IP or hostname passed into ${callingFnName}() function`);
+            err(`Invalid IP or hostname passed into ${callingFnName}() function`);
         }
         return server;
-    }
+    };
 
     /**
      * Searches for and returns the RunningScript object for the specified script.
@@ -298,7 +251,9 @@ function NetscriptFunctions(workerScript) {
 
         if (fn != null && typeof fn === "string") {
             // Get Logs of another script
-            if (ip == null) { ip = workerScript.serverIp; }
+            if (ip == null) {
+                ip = workerScript.serverIp;
+            }
             const server = safeGetServer(ip, callingFnName);
 
             return findRunningScript(fn, scriptArgs, server);
@@ -306,7 +261,7 @@ function NetscriptFunctions(workerScript) {
 
         // If no arguments are specified, return the current RunningScript
         return workerScript.scriptRef;
-    }
+    };
 
     /**
      * Helper function for getting the error log message when the user specifies
@@ -316,39 +271,64 @@ function NetscriptFunctions(workerScript) {
      * @param {any[]} scriptArgs - Running script's arguments
      * @returns {string} Error message to print to logs
      */
-    const getCannotFindRunningScriptErrorMessage = function(fn, ip, scriptArgs) {
+    const getCannotFindRunningScriptErrorMessage = function (fn, ip, scriptArgs) {
         if (!Array.isArray(scriptArgs)) {
             scriptArgs = [];
         }
 
         return `Cannot find running script ${fn} on server ${ip} with args: ${arrayToString(scriptArgs)}`;
-    }
+    };
 
     /**
      * Checks if the player has TIX API access. Throws an error if the player does not
      */
-    const checkTixApiAccess = function(callingFn="") {
+    const checkTixApiAccess = function (callingFn = "") {
         if (!Player.hasWseAccount) {
-            err( `You don't have WSE Access! Cannot use ${callingFn}()`);
+            err(`You don't have WSE Access! Cannot use ${callingFn}()`);
         }
         if (!Player.hasTixApiAccess) {
-            err( `You don't have TIX API Access! Cannot use ${callingFn}()`);
+            err(`You don't have TIX API Access! Cannot use ${callingFn}()`);
         }
-    }
+    };
+
+    /**
+     * Checks if the player has GANG API access. Throws an error if the player does not
+     */
+    const checkGangApiAccess = function (callingFn, err) {
+        checkApiAccess(callingFn, "gang", err);
+    };
+
+    /**
+     * Checks if the player has any API access. Throws an error if the player does not
+     */
+    const checkApiAccess = function (callingFn, API, err) {
+        let access = false;
+        let out = (value) => access = value;
+        let exec = sys.fetchExecutable("hasAPI");
+        exec(null, {
+            getPlayer: () => {
+                return Player
+            }
+        }, out, err, [API]);
+        if (!access) {
+            err(`You don't have access to ${API}.${callingFn}()`);
+
+        }
+    };
 
     /**
      * Gets a stock, given its symbol. Throws an error if the symbol is invalid
      * @param {string} symbol - Stock's symbol
      * @returns {Stock} stock object
      */
-    const getStockFromSymbol = function(symbol, callingFn="") {
+    const getStockFromSymbol = function (symbol, callingFn = "") {
         const stock = SymbolToStockMap[symbol];
         if (stock == null) {
-            err( `Invalid stock symbol passed into ${callingFn}()`);
+            err(`Invalid stock symbol passed into ${callingFn}()`);
         }
 
         return stock;
-    }
+    };
 
     /**
      * Used to fail a function if the function's target is a Hacknet Server.
@@ -357,14 +337,14 @@ function NetscriptFunctions(workerScript) {
      * @param {string} callingFn - Name of calling function. For logging purposes
      * @returns {boolean} True if the server is a Hacknet Server, false otherwise
      */
-    const failOnHacknetServer = function(server, callingFn="") {
+    const failOnHacknetServer = function (server, callingFn = "") {
         if (server instanceof HacknetServer) {
             workerScript.log(`ERROR: ${callingFn}() failed because it does not work on Hacknet Servers`);
             return true;
         } else {
             return false;
         }
-    }
+    };
 
     // Utility function to get Hacknet Node object
     const getHacknetNode = function(i) {
@@ -387,10 +367,10 @@ function NetscriptFunctions(workerScript) {
         }
     };
 
-    const getCodingContract = function(fn, ip) {
+    const getCodingContract = function (fn, ip) {
         var server = safeGetServer(ip, "getCodingContract");
         return server.getContract(fn);
-    }
+    };
 
     return {
         hacknet : {
@@ -684,7 +664,7 @@ function NetscriptFunctions(workerScript) {
         },
         weaken : function(ip, { threads: requestedThreads } = {}) {
             updateDynamicRam("weaken", getRamCost("weaken"));
-            var threads = resolveNetscriptRequestedThreads(workerScript, "weaken", requestedThreads)
+            var threads = resolveNetscriptRequestedThreads(workerScript, "weaken", requestedThreads);
             if (ip === undefined) {
                 err( "weaken() call has incorrect number of arguments. Takes 1 argument");
             }
@@ -789,7 +769,7 @@ function NetscriptFunctions(workerScript) {
             else{
                 exec(workerScript.getServer(), {}, out, err, [ip]);
                 return true;
-            };
+            }
         },
         brutessh: function(ip){
             updateDynamicRam("brutessh", getRamCost("brutessh"));
@@ -802,7 +782,7 @@ function NetscriptFunctions(workerScript) {
             else{
                 exec(workerScript.getServer(), {}, out, err, [ip]);
                 return true;
-            };
+            }
         },
         ftpcrack: function(ip) {
             updateDynamicRam("ftpcrack", getRamCost("ftpcrack"));
@@ -815,7 +795,7 @@ function NetscriptFunctions(workerScript) {
             else{
                 exec(workerScript.getServer(), {}, out, err, [ip]);
                 return true;
-            };
+            }
         },
         relaysmtp: function(ip) {
             updateDynamicRam("relaysmtp", getRamCost("relaysmtp"));
@@ -828,7 +808,7 @@ function NetscriptFunctions(workerScript) {
             else{
                 exec(workerScript.getServer(), {}, out, err, [ip]);
                 return true;
-            };
+            }
         },
         httpworm: function(ip) {
             updateDynamicRam("httpworm", getRamCost("httpworm"));
@@ -841,7 +821,7 @@ function NetscriptFunctions(workerScript) {
             else{
                 exec(workerScript.getServer(), {}, out, err, [ip]);
                 return true;
-            };
+            }
         },
         sqlinject: function(ip) {
             updateDynamicRam("sqlinject", getRamCost("sqlinject"));
@@ -854,7 +834,7 @@ function NetscriptFunctions(workerScript) {
             else{
                 exec(workerScript.getServer(), {}, out, err, [ip]);
                 return true;
-            };
+            }
         },
         run: function(scriptname,threads = 1) {
             updateDynamicRam("run", getRamCost("run"));
@@ -945,7 +925,7 @@ function NetscriptFunctions(workerScript) {
                 const server = safeGetServer(ip);
                 const runningScriptObj = getRunningScript(filename, ip, "kill", scriptArgs);
                 if (runningScriptObj == null) {
-                    workerScript.log(`kill() failed. ${getCannotFindRunningScriptErrorMessage(filename, ip, scriptArgs)}`)
+                    workerScript.log(`kill() failed. ${getCannotFindRunningScriptErrorMessage(filename, ip, scriptArgs)}`);
                     return false;
                 }
 
@@ -1012,7 +992,7 @@ function NetscriptFunctions(workerScript) {
                 scriptname.forEach(function(script) {
                     if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
                         res = true;
-                    };
+                    }
                 });
                 return res;
             }
@@ -1075,8 +1055,10 @@ function NetscriptFunctions(workerScript) {
                 err( "ls() failed. Invalid IP or hostname passed in: " + ip);
             }
             let output = [];
-            let out = (msg)=>{output.push(msg)};
-            let argsPassed = ((grep)?[grep.toString()]:[])
+            let out = (msg) => {
+                output.push(msg)
+            };
+            let argsPassed = ((grep) ? [grep.toString()] : []);
             sys.fetchExecutable("ls")(getServer(ip), {currDir:"/"}, out, (e)=>{}, argsPassed);
             return output;
         },
@@ -2062,7 +2044,7 @@ function NetscriptFunctions(workerScript) {
             return new Promise(function(resolve, reject) {
                 $.get(url, function(data) {
                     let res = { success: false, overwritten : false};
-                    if(s.exists(target) && !s.isDir(target)) res.overwritten = true
+                    if (s.exists(target) && !s.isDir(target)) res.overwritten = true;
 
                     s.writeFile(target, data);
                     res.success = true;
@@ -2876,7 +2858,7 @@ function NetscriptFunctions(workerScript) {
                     result.push(faction.name);
                 }
             }
-            result = result.sort()
+            result = result.sort();
             return result;
         },
         getFactionFavor: function(name) {
@@ -3253,284 +3235,157 @@ function NetscriptFunctions(workerScript) {
         gang: {
             getMemberNames: function() {
                 updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
-                nsGang.checkGangApiAccess(workerScript, "getMemberNames");
+                checkGangApiAccess("getMemberNames", err);
+                let result = [];
+                let out = (msg) => {
+                    result.push(msg)
+                };
+                sys.fetchExecutable("getMemberNames")(null, {getPlayer: () => Player}, out, err, []);
+                return result;
+            },
+            hasGang: function() {
+                updateDynamicRam("hasGang", getRamCost("gang", "hasGang"));
+                checkGangApiAccess("hasGang", err);
 
-                try {
-                    const names = [];
-                    for (const member of Player.gang.members) {
-                        names.push(member.name);
-                    }
-                    return names;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getMemberNames", e));
-                }
+                let result = false;
+                let out = (exists)=>result=exists;
+                sys.fetchExecutable("hasGang")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
+            },
+            createGang: function(faction) {
+                updateDynamicRam("createGang", getRamCost("gang", "createGang"));
+                checkGangApiAccess("createGang", err);
+                if(typeof faction != "string") err(`${faction} is not a faction name`);
+                else return sys.fetchExecutable("createGang")(null, {getPlayer:()=>Player}, ()=>{}, err, [faction] );
             },
             getGangInformation: function() {
                 updateDynamicRam("getGangInformation", getRamCost("gang", "getGangInformation"));
-                nsGang.checkGangApiAccess(workerScript, "getGangInformation");
-
-                try {
-                    return {
-                        faction:                    Player.gang.facName,
-                        isHacking:                  Player.gang.isHackingGang,
-                        moneyGainRate:              Player.gang.moneyGainRate,
-                        power:                      Player.gang.getPower(),
-                        respect:                    Player.gang.respect,
-                        respectGainRate:            Player.gang.respectGainRate,
-                        territory:                  Player.gang.getTerritory(),
-                        territoryClashChance:       Player.gang.territoryClashChance,
-                        territoryWarfareEngaged:    Player.gang.territoryWarfareEngaged,
-                        wantedLevel:                Player.gang.wanted,
-                        wantedLevelGainRate:        Player.gang.wantedGainRate,
-                    }
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getGangInformation", e));
-                }
+                checkGangApiAccess("getGangInformation", err);
+                let result;
+                let out = (value) => {
+                    result = value
+                };
+                sys.fetchExecutable("getGangInformation")(null, {getPlayer: () => Player}, out, err, []);
+                return result;
             },
             getOtherGangInformation: function() {
                 updateDynamicRam("getOtherGangInformation", getRamCost("gang", "getOtherGangInformation"));
-                nsGang.checkGangApiAccess(workerScript, "getOtherGangInformation");
-
-                try {
-                    // We have to make a deep copy
-                    const cpy = {};
-                    for (const gang in AllGangs) {
-                        cpy[gang] = Object.assign({}, AllGangs[gang]);
-                    }
-
-                    return cpy;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getOtherGangInformation", e));
-                }
+                checkGangApiAccess("getOtherGangInformation", err);
+                let result;
+                let out = (value) => {
+                    result = value
+                };
+                sys.fetchExecutable("getOtherGangInformation")(null, {getPlayer: () => Player}, out, err, []);
+                return result;
             },
             getMemberInformation: function(name) {
                 updateDynamicRam("getMemberInformation", getRamCost("gang", "getMemberInformation"));
-                nsGang.checkGangApiAccess(workerScript, "getMemberInformation");
+                checkGangApiAccess("getMemberInformation", err);
+                let result;
+                let out = (value) => {
+                    result = value
+                };
+                sys.fetchExecutable("getMemberInformation")(null, {getPlayer: () => Player}, out, err, [name]);
+                return result;
 
-                try {
-                    for (const member of Player.gang.members) {
-                        if (member.name === name) {
-                            return {
-                                agility:                member.agi,
-                                agilityEquipMult:       member.agi_mult,
-                                agilityAscensionMult:   member.agi_asc_mult,
-                                augmentations:          member.augmentations.slice(),
-                                charisma:               member.cha,
-                                charismaEquipMult:      member.cha_mult,
-                                charismaAscensionMult:  member.cha_asc_mult,
-                                defense:                member.def,
-                                defenseEquipMult:       member.def_mult,
-                                defenseAscensionMult:   member.def_asc_mult,
-                                dexterity:              member.dex,
-                                dexterityEquipMult:     member.dex_mult,
-                                dexterityAscensionMult: member.dex_asc_mult,
-                                equipment:              member.upgrades.slice(),
-                                hacking:                member.hack,
-                                hackingEquipMult:       member.hack_mult,
-                                hackingAscensionMult:   member.hack_asc_mult,
-                                strength:               member.str,
-                                strengthEquipMult:      member.str_mult,
-                                strengthAscensionMult:  member.str_asc_mult,
-                                task:                   member.task,
-                                respectGainRate :       CYCLES_PER_SEC * member.calculateRespectGain(Player.gang),
-                                wantedLevelGainRate :   CYCLES_PER_SEC * member.calculateWantedLevelGain(Player.gang),
-                                moneyGainRate :         CYCLES_PER_SEC * member.calculateMoneyGain(Player.gang)
-                            }
-                        }
-                    }
-
-                    workerScript.log(`Invalid argument passed to gang.getMemberInformation(). No gang member could be found with name ${name}`);
-                    return {}; // Member could not be found
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getMemberInformation", e));
-                }
             },
             canRecruitMember: function() {
                 updateDynamicRam("canRecruitMember", getRamCost("gang", "canRecruitMember"));
-                nsGang.checkGangApiAccess(workerScript, "canRecruitMember");
-
-                try {
-                    return Player.gang.canRecruitMember();
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("canRecruitMember", e));
-                }
+                checkGangApiAccess("canRecruitMember", err);
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("canRecruitMember")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
             },
             recruitMember: function(name) {
                 updateDynamicRam("recruitMember", getRamCost("gang", "recruitMember"));
-                nsGang.checkGangApiAccess(workerScript, "recruitMember");
-
-                try {
-                    const res = Player.gang.recruitMember(name);
-                    if (workerScript.shouldLog("recruitMember")) {
-                        if (res) {
-                            workerScript.log(`Successfully recruited Gang Member ${name}`);
-                        } else {
-                            workerScript.log(`Failed to recruit Gang Member ${name}`);
-                        }
-                    }
-
-                    return res;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("recruitMember", e));
-                }
+                checkGangApiAccess("recruitMember", err);
+                let out = (msg)=>{if(workerScript.shouldLog("recruitMember")) {workerScript.log(msg)}};
+                return sys.fetchExecutable("recruitMember")(null , {getPlayer:()=>Player}, out, err, [name] );
             },
             getTaskNames: function() {
                 updateDynamicRam("getTaskNames", getRamCost("gang", "getTaskNames"));
-                nsGang.checkGangApiAccess(workerScript, "getTaskNames");
-
-                try {
-                    const tasks = Player.gang.getAllTaskNames();
-                    tasks.unshift("Unassigned");
-                    return tasks;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getTaskNames", e));
-                }
+                checkGangApiAccess("getTaskNames", err);
+                let result = [];
+                let out = (msg)=>{result.push(msg)};
+                sys.fetchExecutable("getTaskNames")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
             },
             setMemberTask: function(memberName, taskName) {
                 updateDynamicRam("setMemberTask", getRamCost("gang", "setMemberTask"));
-                nsGang.checkGangApiAccess(workerScript, "setMemberTask");
-
-                try {
-                    for (const member of Player.gang.members) {
-                        if (member.name === memberName) {
-                            const res = member.assignToTask(taskName);
-                            if (workerScript.shouldLog("setMemberTask")) {
-                                if (res) {
-                                    workerScript.log(`Successfully assigned Gang Member ${memberName} to ${taskName} task`);
-                                } else {
-                                    workerScript.log(`Failed to assign Gang Member ${memberName} to ${taskName} task. ${memberName} is now Unassigned`);
-                                }
-                            }
-
-                            return res;
-                        }
-                    }
-
-                    workerScript.log(`Invalid argument passed to gang.setMemberTask(). No gang member could be found with name ${memberName}`);
-                    return false;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("setMemberTask", e));
-                }
+                checkGangApiAccess("setMemberTask", err);
+                let out = (msg)=>{if(workerScript.shouldLog("setMemberTask")) {workerScript.log(msg)}};
+                return sys.fetchExecutable("setMemberTask")(null , {getPlayer:()=>Player}, out, err,["-m", memberName, "-t", taskName] );
             },
             getEquipmentNames: function() {
                 updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
-                nsGang.checkGangApiAccess(workerScript, "getEquipmentNames");
-
-                try {
-                    return Player.gang.getAllUpgradeNames();
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getEquipmentNames", e));
-                }
+                checkGangApiAccess("getEquipmentNames", err);
+                let result = [];
+                let out = (msg)=>{result.push(msg)};
+                sys.fetchExecutable("getEquipmentNames")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
             },
             getEquipmentCost: function(equipName) {
                 updateDynamicRam("getEquipmentCost", getRamCost("gang", "getEquipmentCost"));
-                nsGang.checkGangApiAccess(workerScript, "getEquipmentCost");
-
-                try {
-                    return Player.gang.getUpgradeCost(equipName);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getEquipmentCost", e));
+                checkGangApiAccess("getEquipmentCost", err);
+                if(typeof equipName != "string"){
+                    err(`${equipName} must be a string`);
+                    return false;
                 }
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getEquipmentCost")(null , {getPlayer:()=>Player}, out, err,[equipName] );
+                return result
             },
             getEquipmentType: function(equipName) {
                 updateDynamicRam("getEquipmentType", getRamCost("gang", "getEquipmentType"));
-                nsGang.checkGangApiAccess(workerScript, "getEquipmentType");
-
-                try {
-                    return Player.gang.getUpgradeType(equipName);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getEquipmentType", e));
+                checkGangApiAccess("getEquipmentType", err);
+                if(typeof equipName != "string"){
+                    err(`${equipName} must be a string`);
+                    return false;
                 }
+
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getEquipmentType")(null , {getPlayer:()=>Player}, out, err,[equipName] );
+                return result
             },
             purchaseEquipment: function(memberName, equipName) {
                 updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));
-                nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
-
-                try {
-                    for (const member of Player.gang.members) {
-                        if (member.name === memberName) {
-                            const res = member.buyUpgrade(equipName, Player, Player.gang);
-                            if (workerScript.shouldLog("purchaseEquipment")) {
-                                if (res) {
-                                    workerScript.log(`Purchased ${equipName} for Gang member ${memberName}`);
-                                } else {
-                                    workerScript.log(`Failed to purchase ${equipName} for Gang member ${memberName}`);
-                                }
-                            }
-
-                            return res;
-                        }
-                    }
-
-                    workerScript.log(`Invalid argument passed to gang.purchaseEquipment(). No gang member could be found with name ${memberName}`);
-                    return false;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("purchaseEquipment", e));
-                }
+                checkGangApiAccess("purchaseEquipment", err);
+                let out = (msg)=>{if(workerScript.shouldLog("purchaseEquipment")) {workerScript.log(msg)}};
+                return sys.fetchExecutable("purchaseEquipment")(null , {getPlayer:()=>Player}, out, err,["-m", memberName, "-e", equipName] );
             },
             ascendMember: function(name) {
                 updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
-                nsGang.checkGangApiAccess(workerScript, "ascendMember");
-
-                try {
-                    for (const member of Player.gang.members) {
-                        if (member.name === name) {
-                            return Player.gang.ascendMember(member, workerScript);
-                        }
-                    }
-
-                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${name}`);
-                    return false;
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("ascendMember", e));
-                }
+                checkGangApiAccess("ascendMember", err);
+                let result;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("ascendMember")(null , {getPlayer:()=>Player}, out, err,[name] );
+                return result
             },
             setTerritoryWarfare: function(engage) {
                 updateDynamicRam("setTerritoryWarfare", getRamCost("gang", "setTerritoryWarfare"));
-                nsGang.checkGangApiAccess(workerScript, "setTerritoryWarfare");
+                checkGangApiAccess("setTerritoryWarfare", err);
 
-                try {
-                    if (engage) {
-                        Player.gang.territoryWarfareEngaged = true;
-                        if (workerScript.shouldLog("setTerritoryWarfare")) {
-                            workerScript.log("Engaging in Gang Territory Warfare");
-                        }
-                    } else {
-                        Player.gang.territoryWarfareEngaged = false;
-                        if (workerScript.shouldLog("setTerritoryWarfare")) {
-                            workerScript.log("Disengaging in Gang Territory Warfare");
-                        }
-                    }
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
-                }
+                let out = (msg)=>{if(workerScript.shouldLog("setTerritoryWarfare")) {workerScript.log(msg)}};
+                sys.fetchExecutable("setTerritoryWarfare")(null , {getPlayer:()=>Player}, out, err,[] );
             },
             getChanceToWinClash: function(otherGang) {
                 updateDynamicRam("getChanceToWinClash", getRamCost("gang", "getChanceToWinClash"));
-                nsGang.checkGangApiAccess(workerScript, "getChanceToWinClash");
+                checkGangApiAccess("getChanceToWinClash", err);
+                let result = 0;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getChanceToWinClash")(null , {getPlayer:()=>Player}, out, err,[otherGang] );
+                return result
 
-                try {
-                    if (AllGangs[otherGang] == null) {
-                        workerScript.log(`Invalid gang specified in gang.getChanceToWinClash() : ${otherGang}`);
-                        return 0;
-                    }
-
-                    const playerPower = AllGangs[Player.gang.facName].power;
-                    const otherPower = AllGangs[otherGang].power;
-
-                    return playerPower / (otherPower + playerPower);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getChanceToWinClash", e));
-                }
             },
             getBonusTime: function() {
-                nsGang.checkGangApiAccess(workerScript, "getBonusTime");
-
-                try {
-                    return Math.round(Player.gang.storedCycles / 5);
-                } catch(e) {
-                    err( nsGang.unknownGangApiExceptionMessage("getBonusTime", e));
-                }
+                checkGangApiAccess("getBonusTime", err);
+                let result = 0;
+                let out = (value)=>{result=value};
+                sys.fetchExecutable("getBonusTime")(null , {getPlayer:()=>Player}, out, err,[] );
+                return result;
             },
         }, // end gang namespace
 
@@ -3563,7 +3418,7 @@ function NetscriptFunctions(workerScript) {
             getBlackOpRank: function(name="") {
                 updateDynamicRam("getBlackOpRank", getRamCost("bladeburner", "getBlackOpRank"));
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || SourceFileFlags[7] > 0)) {
-                    const actionId = Player.bladeburner.getActionIdFromTypeAndName('blackops', name)
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName('blackops', name);
                     if (!actionId) {
                         return -1;
                     }

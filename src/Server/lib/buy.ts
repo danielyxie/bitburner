@@ -1,23 +1,19 @@
+import { DarkWebItems } from "../../DarkWeb/DarkWebItems";
+import { Player } from "../../Player";
 import { BaseServer } from "../BaseServer";
 
-import {
-    listAllDarkwebItems,
-    buyDarkwebItem
-} from "../../DarkWeb/DarkWeb";
-import { DarkWebItems }                         from "../../DarkWeb/DarkWebItems";
-
 import { SpecialServerIps } from "../SpecialServerIps";
-import { Player }                               from "../../Player";
+import * as sys from "./sys";
+import { ManualEntry, registerExecutable } from "./sys";
 
-export function buy(server: BaseServer, term: any, out:Function, err:Function, args: string[], options:any={}){
+export function buy(server: BaseServer, term: any, out: Function, err: Function, args: string[], options: any = {}) {
     const HELP = "Usage: buy <-l --list> ITEMNAME";
     // TODO : why not passing the wanted vendor ip/hostname to determine which of multiple marketplace to buy from?
 
-    if(!options.SpecialServerIps){// not testing mode
-        options.SpecialServerIps= SpecialServerIps;
+    if (!options.SpecialServerIps) {// not testing mode
+        options.SpecialServerIps = SpecialServerIps;
     }
-    if (!options.SpecialServerIps.hasOwnProperty("Darkweb Server"))
-    {
+    if (!options.SpecialServerIps.hasOwnProperty("Darkweb Server")) {
         err("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
         return;
     }
@@ -85,11 +81,9 @@ export function buy(server: BaseServer, term: any, out:Function, err:Function, a
     // buy and push
     options.Player.loseMoney(item.price); //TODO perhaps change the saving location to another special fs?
     options.Player.getHomeComputer().programs.push(item.program); // TODO determine the content of programs.
+    sys.revealExecutable(item.program);
     out('You have purchased the ' + item.program + ' program. The new program can be found on your home computer.');
 }
-
-
-import {registerExecutable, ManualEntry} from "./sys";
 
 const MANUAL = new ManualEntry(
 `buy - Purchase a program through the Dark Web.`,
@@ -111,5 +105,5 @@ This is name is NOT case-sensitive.
 
 -l
     lists all available programs on the Dark Web market.
-`)
+`);
 registerExecutable("buy", buy, MANUAL);

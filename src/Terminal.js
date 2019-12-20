@@ -1,107 +1,40 @@
-import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
-import { tabCompletion } from "./Terminal/tabCompletion";
+import {determineAllPossibilitiesForTabCompletion} from "./Terminal/determineAllPossibilitiesForTabCompletion";
+import {tabCompletion} from "./Terminal/tabCompletion";
 
-import { substituteAliases } from "./Alias";
-import { CONSTANTS } from "./Constants";
-import { Engine } from "./engine";
-import { FconfSettings } from "./Fconf/FconfSettings";
+import {substituteAliases} from "./Alias";
+import {CONSTANTS} from "./Constants";
+import {Engine} from "./engine";
+import {FconfSettings} from "./Fconf/FconfSettings";
 import {
     calculateHackingChance,
     calculateHackingExpGain,
-    calculatePercentMoneyHacked,
     calculateHackingTime,
+    calculatePercentMoneyHacked,
 } from "./Hacking";
-import { HacknetServer } from "./Hacknet/HacknetServer";
-import {
-    iTutorialNextStep,
-    iTutorialSteps,
-    ITutorial
-} from "./InteractiveTutorial";
-import { Player } from "./Player";
-import { hackWorldDaemon } from "./RedPill";
-import { GetServerByHostname } from "./Server/ServerHelpers";
-import {
-    SpecialServerIps,
-    SpecialServerNames
-} from "./Server/SpecialServerIps";
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
-import { Page, routing } from "./ui/navigationTracking";
-import { numeralWrapper } from "./ui/numeralFormat";
-import { KEY } from "../utils/helpers/keyCodes";
-import { getTimestamp } from "../utils/helpers/getTimestamp";
-import {
-    post,
-    postError,
-    hackProgressBarPost,
-    hackProgressPost
-} from "./ui/postToTerminal";
+import {HacknetServer} from "./Hacknet/HacknetServer";
+import {ITutorial, iTutorialNextStep, iTutorialSteps} from "./InteractiveTutorial";
+import {Player} from "./Player";
+import {hackWorldDaemon} from "./RedPill";
+import {GetServerByHostname} from "./Server/ServerHelpers";
+import {SpecialServerIps, SpecialServerNames} from "./Server/SpecialServerIps";
+import {setTimeoutRef} from "./utils/SetTimeoutRef";
+import {Page, routing} from "./ui/navigationTracking";
+import {numeralWrapper} from "./ui/numeralFormat";
+import {KEY} from "../utils/helpers/keyCodes";
+import {getTimestamp} from "../utils/helpers/getTimestamp";
+import {hackProgressBarPost, hackProgressPost, post, postError} from "./ui/postToTerminal";
 import * as sys from "./Server/lib/sys";
+
+import autosize from "autosize";
+import * as path from 'path';
 //////////////////////////////////////////////////////////////////////////////
 // Here we import every existing function to let them initialize themselves //
 //////////////////////////////////////////////////////////////////////////////
-import { mkdir } from "./Server/lib/mkdir";
-import { rm } from "./Server/lib/rm";
-import { mv } from "./Server/lib/mv";
-import { ls } from "./Server/lib/ls";
-import { nano } from "./Server/lib/nano";
-import { tree } from "./Server/lib/tree";
-import { top } from "./Server/lib/top";
-import { scan } from "./Server/lib/scan";
-import { mem } from "./Server/lib/mem";
-import { cd } from "./Server/lib/cd";
-import { cls } from "./Server/lib/cls";
-import { sudov } from "./Server/lib/sudov";
-import { clear } from "./Server/lib/clear";
-import { nuke } from "./Server/lib/nuke";
-import { analyze } from "./Server/lib/analyze";
-import { run } from "./Server/lib/run";
-import { FTPCrack } from "./Server/lib/FTPCrack";
-import { bruteSSH } from "./Server/lib/bruteSSH";
-import { HTTPWorm } from "./Server/lib/HTTPWorm";
-import { lscpu } from "./Server/lib/lscpu";
-import { hostname } from "./Server/lib/hostname";
-import { home } from "./Server/lib/home";
-import { connect } from "./Server/lib/connect";
-import { ifconfig } from "./Server/lib/ifconfig";
-import { scan_analyze } from "./Server/lib/scan_analyze";
-import { relaySMTP } from "./Server/lib/relaySMTP";
-import { help } from "./Server/lib/help";
-import { download } from "./Server/lib/download";
-import { cp } from "./Server/lib/cp";
-import { scp } from "./Server/lib/scp";
-import { expr } from "./Server/lib/expr";
-import { check } from "./Server/lib/check";
-import { SQLInject } from "./Server/lib/SQLInject";
-import { kill } from "./Server/lib/kill";
-import { killall } from "./Server/lib/killall";
-import { wget } from "./Server/lib/wget";
-import { hack } from "./Server/lib/hack";
-import { alias } from "./Server/lib/alias";
-import { unalias } from "./Server/lib/unalias";
-import { theme } from "./Server/lib/theme";
-import { ps } from "./Server/lib/ps";
-import { buy } from "./Server/lib/buy";
-import { tail } from "./Server/lib/tail";
-import { ServerProfiler } from "./Server/lib/ServerProfiler";
-import { AutoLink } from "./Server/lib/AutoLink";
-import { DeepscanV2 } from "./Server/lib/DeepscanV2";
-import { DeepscanV1 } from "./Server/lib/DeepscanV1";
-import { fl1ght } from "./Server/lib/fl1ght";
-import { b1t_flum3 } from "./Server/lib/b1t_flum3";
-import { cat } from "./Server/lib/cat";
-import { free } from "./Server/lib/free";
-import { fs } from 'memfs';
-
-import autosize from "autosize";
-import * as JSZip from "jszip";
-import * as FileSaver from "file-saver";
 
 const antlr4 = require('antlr4');
 const TerminalLexer = require('../utils/grammars/TerminalLexer').TerminalLexer;
 const TerminalParser = require('../utils/grammars/TerminalParser').TerminalParser;
 const CommandListener = require('../utils/grammars/CommandListener').CommandListener;
-
-import * as path from 'path';
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
@@ -526,7 +459,7 @@ let Terminal = {
 				server.moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
                 Player.recordMoneySource(moneyGained, "hacking");
-                Player.gainHackingExp(expGainedOnSuccess)
+                Player.gainHackingExp(expGainedOnSuccess);
                 Player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
@@ -534,8 +467,8 @@ let Terminal = {
 				post("Hack successful! Gained " + numeralWrapper.format(moneyGained, '($0,0.00)') + " and " + numeralWrapper.format(expGainedOnSuccess, '0.0000') + " hacking EXP");
 			} else { // Failure
 				// Player only gains 25% exp for failure? TODO Can change this later to balance
-                Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + server.hostname + ". Gained " + numeralWrapper.format(expGainedOnFailure, '0.0000') + " hacking EXP");
+                Player.gainHackingExp(expGainedOnFailure);
+                post("Failed to hack " + server.hostname + ". Gained " + numeralWrapper.format(expGainedOnFailure, '0.0000') + " hacking EXP");
 			}
 		}
 
@@ -884,7 +817,7 @@ let Terminal = {
                 if (server.isDir(filepath))
                     post(`${filepath} is a directory.`);
                 else if (server.isExecutable(filepath))
-                    run(server, Terminal, post, postError, commandArray)
+                    run(server, Terminal, post, postError, commandArray);
                 else
                     post(`${filepath} is a file.`);
             }
@@ -936,6 +869,10 @@ let Terminal = {
     getFileContent: function(filename){
         return Player.getCurrentServer().readFile(Terminal.getFilepath(filename));
     },
+
+    getPlayer: function(){
+        return Player;
+    }
 };
 
 export {postNetburnerText, Terminal};
