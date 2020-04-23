@@ -102,6 +102,7 @@ import { createElement } from "../utils/uiHelpers/createElement";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
 import { KEY } from "../utils/helpers/keyCodes";
+import "./utils/PrototypeTamperingPrevention";
 
 import React from "react";
 import ReactDOM from "react-dom";
