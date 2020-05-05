@@ -31,17 +31,35 @@ function unconfigurable(parent: object, keys: string[]) {
     });
 
 unconfigurable(Array.prototype, [
+    "entries",
+    "every",
+    "fill",
+    "filter",
+    "findIndex",
+    "forEach",
+    "indexOf",
+    "keys",
+    "lastIndexOf",
+    "map",
     "pop",
     "push",
-    "shift",
-    "unshift",
-    "map",
-    "sort",
-    "splice",
-    "slice",
     "reduce",
     "reduceRight",
-    "forEach",
+    "reverse",
+    "shift",
+    "slice",
+    "sort",
+    "some",
+    "splice",
+    "unshift",
+    "values",
+]);
+
+unconfigurable(Array, [
+    "from",
+    "of",
+    "isArray",
+    "prototype",
 ]);
 
 unconfigurable(Function.prototype, [
@@ -49,17 +67,48 @@ unconfigurable(Function.prototype, [
     "bind",
 ]);
 
-unconfigurable(Object, [
-    "values",
-    "keys",
+unconfigurable(Function, [
+    "apply",
+    "bind",
+    "call",
+    "prototype",
 ]);
 
-unconfigurable(Array, ["prototype"]);
-unconfigurable(Function, ["prototype"]);
-unconfigurable(Object, ["prototype"]);
+unconfigurable(Number.prototype, [
+    "toExponential",
+    "toFixed",
+    "toPrecision",
+    "valueOf",
+]);
+
+unconfigurable(Number, [
+    "isFinite",
+    "isNaN",
+    "isInteger",
+    "isSafeInteger",
+    "parseFloat",
+    "parseInt",
+    "prototype",
+]);
+
+unconfigurable(Object, [
+    "assign",
+    "create",
+    "defineProperties",
+    "defineProperty",
+    "entries",
+    "freeze",
+    "keys",
+    "preventExtensions",
+    "seal",
+    "values",
+    "prototype",
+]);
+
 unconfigurable(window, [
     "Array",
     "Function",
+    "Number",
     "Object",
     "eval",
     "setTimeout",
