@@ -7,3 +7,5 @@ setToCompanyWork() Netscript Function
     :param string companyName: Name of the company to work for.
 
     Return a boolean indicating whether or not the sleeve started working or this company.
+
+    :RAM cost: 4 GB
