@@ -2,6 +2,7 @@ installAugmentations() Netscript Function
 =========================================
 
 .. js:function:: installAugmentations(cbScript)
+    :RAM cost: 5 GB
 
     :param string cbScript:
         Optional callback script. This is a script that will automatically be run after Augmentations are installed (after the reset).
