@@ -5,6 +5,7 @@ nFormat() Netscript Function
 
     :param number n: Number to format
     :param string format: Formatter
+    :RAM cost: 0 GB
 
     Converts a number into a string with the specified formatter. This uses the
     `numeraljs <http://numeraljs.com/>`_ library, so the formatters must be compatible
