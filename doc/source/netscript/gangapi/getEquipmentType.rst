@@ -14,3 +14,5 @@ getEquipmentType() Netscript Function
     * Augmentation
 
     :returns: A string stating the type of the equipment
+
+    :RAM cost: 2 GB
