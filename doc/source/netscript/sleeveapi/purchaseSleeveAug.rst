@@ -7,3 +7,5 @@ purchaseSleeveAug() Netscript Function
     :param string augName: Name of the aug to buy. Must be an exact match
 
     Return true if the aug was purchased and installed on the sleeve.
+
+    :RAM cost: 4 GB
