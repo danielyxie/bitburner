@@ -12,6 +12,8 @@ getBitNodeMultipliers() Netscript Function
     The structure of the returned object is subject to change as BitNode multipliers get added to the game.
     Refer to the `source code here <https://github.com/danielyxie/bitburner/blob/master/src/BitNode/BitNodeMultipliers.ts>`_
     to see the name of the BitNode multipliers.
+    
+    :RAM cost: 4.0 GB
 
     Example::
 
