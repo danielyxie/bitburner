@@ -9,3 +9,5 @@ setToCommitCrime() Netscript Function
     Return a boolean indicating whether or not this action was set successfully.
 
     Returns false if an invalid action is specified.
+
+    :RAM cost: 4 GB
