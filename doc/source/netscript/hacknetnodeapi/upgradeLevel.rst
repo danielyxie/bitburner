@@ -12,3 +12,5 @@ upgradeLevel() Netscript Function
     if it is upgraded by some positive amount and the Node reaches its max level.
 
     Returns false otherwise.
+
+    :RAM cost: 0 GB
