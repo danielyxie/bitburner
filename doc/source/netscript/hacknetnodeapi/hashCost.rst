@@ -12,6 +12,8 @@ hashCost() Netscript Function
 
     Returns the number of hashes required for the specified upgrade.  The name of the
     upgrade must be an exact match.
+    
+    :RAM cost: 0 GB
 
     Example:
 
