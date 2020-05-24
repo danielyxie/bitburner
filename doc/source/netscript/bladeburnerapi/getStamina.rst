@@ -2,6 +2,7 @@ getStamina() Netscript Function
 ===============================
 
 .. js:function:: getStamina()
+    :RAM cost: 4 GB
 
     Returns an array with two elements:
 
