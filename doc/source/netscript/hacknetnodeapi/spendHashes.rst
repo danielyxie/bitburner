@@ -24,3 +24,5 @@ spendHashes() Netscript Function
 
         hacknet.spendHashes("Sell for Corporation Funds");
         hacknet.spendHashes("Increase Maximum Money", "foodnstuff");
+        
+    :RAM cost: 0 GB
