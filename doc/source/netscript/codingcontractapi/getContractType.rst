@@ -11,3 +11,5 @@ getContractType() Netscript Function
     (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
 
     :returns: A string with the contract's problem type
+
+    :RAM cost: 5 GB
