@@ -2,6 +2,7 @@ getCrimeChance() Netscript Function
 ===================================
 
 .. js:function:: getCrimeChance(crime)
+    :RAM cost: 5 GB
 
     :param string crime:
         Name of crime. Not case-sensitive. This argument is fairlyn lenient in terms of what inputs it accepts.
