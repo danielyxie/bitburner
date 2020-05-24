@@ -13,3 +13,5 @@ The function signatures are then::
     getHackTime(hostname/ip[, hackLvl=current level, intLvl=current level])
     getGrowTime(hostname/ip[, hackLvl=current level, intLvl=current level])
     getWeakenTime(hostname/ip[, hackLvl=current level, intLvl=current level])
+    
+    :RAM cost: 0.05 GB
