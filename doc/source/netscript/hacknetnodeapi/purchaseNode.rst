@@ -9,3 +9,5 @@ purchaseNode() Netscript Function
 
     If the player cannot afford to purchase a new Hacknet Node then the function
     will return -1.
+
+    :RAM cost: 0 GB
