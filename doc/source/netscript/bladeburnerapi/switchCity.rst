@@ -2,6 +2,7 @@ switchCity() Netscript Function
 ===============================
 
 .. js:function:: switchCity(cityName)
+    :RAM cost: 4 GB
 
     :param string cityName: Name of city
 
