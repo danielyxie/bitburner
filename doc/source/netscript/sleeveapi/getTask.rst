@@ -7,6 +7,8 @@ getTask() Netscript Function
 
     Return the current task that the sleeve is performing. type is set to "Idle" if the sleeve isn't doing anything
 
+    :RAM cost: 4 GB
+    
 .. code-block:: javascript
 
     {
