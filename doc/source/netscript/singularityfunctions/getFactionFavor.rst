@@ -2,6 +2,7 @@ getFactionFavor() Netscript Function
 ====================================
 
 .. js:function:: getFactionFavor(factionName)
+    :RAM cost: 1 GB
 
     :param string factionName: Name of faction. CASE-SENSITIVE
 
