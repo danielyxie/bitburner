@@ -65,12 +65,11 @@ List of Factions and their Requirements
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | Aevum          | * Be in Aevum                           | * Chongqing                   |
 |                     |                | * $40m                                  | * New Tokyo                   |
-|                     |                |                                         | * Ishima                      |
+|                     |                | * Not in any other faction              | * Ishima                      |
 |                     |                |                                         | * Volhaven                    |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Volhaven       | * Be in Volhaven                        | * Sector-12                   |
-|                     |                | * $50m                                  | * Aevum                       |
-|                     |                |                                         | * Chongqing                   |
+|                     | Volhaven       | * Be in Volhaven                        | * Aevum                       |
+|                     |                | * $50m                                  | * Chongqing                   |
 |                     |                |                                         | * New Tokyo                   |
 |                     |                |                                         | * Ishima                      |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
