@@ -6,3 +6,5 @@ setTerritoryWarfare() Netscript Function
     :param bool engage: Whether or not to engage in territory warfare
 
     Set whether or not the gang should engage in territory warfare
+
+    :RAM cost: 2 GB

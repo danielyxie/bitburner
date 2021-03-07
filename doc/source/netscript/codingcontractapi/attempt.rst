@@ -18,3 +18,5 @@ attempt() Netscript Function
               option is configured, then the function will instead return a string. If the
               contract is successfully solved, the string will contain a description of the
               contract's reward. Otherwise, it will be an empty string.
+
+    :RAM cost: 10 GB

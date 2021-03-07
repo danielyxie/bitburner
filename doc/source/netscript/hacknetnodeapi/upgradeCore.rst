@@ -12,3 +12,5 @@ upgradeCore() Netscript Function
     it purchases some positive amount and the Node reaches its max number of cores.
 
     Returns false otherwise.
+
+    :RAM cost: 0 GB

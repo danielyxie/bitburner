@@ -8,3 +8,5 @@ setToGymWorkout() Netscript Function
     :param string stat: Name of the stat to train.
 
     Return a boolean indicating whether or not the sleeve started working out.
+
+    :RAM cost: 4 GB

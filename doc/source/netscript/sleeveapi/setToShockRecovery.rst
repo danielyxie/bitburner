@@ -6,3 +6,5 @@ setToShockRecovery() Netscript Function
     :param int sleeveNumber: Index of the sleeve to start recovery. See :ref:`here <netscript_sleeveapi_referencingaduplicatesleeve>`
 
     Return a boolean indicating whether or not this action was set successfully.
+
+    :RAM cost: 4 GB

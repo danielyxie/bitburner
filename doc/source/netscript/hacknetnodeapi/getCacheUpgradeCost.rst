@@ -15,3 +15,5 @@ getCacheUpgradeCost() Netscript Function
 
     If an invalid value for *n* is provided, then this function returns 0. If the
     specified Hacknet Server is already at the max cache level, then Infinity is returned.
+
+    :RAM cost: 0 GB

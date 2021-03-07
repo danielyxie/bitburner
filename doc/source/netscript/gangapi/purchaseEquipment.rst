@@ -10,3 +10,5 @@ purchaseEquipment() Netscript Function
     Gang member.
 
     :returns: True if the equipment was successfully purchased. False otherwise
+
+    :RAM cost: 4 GB

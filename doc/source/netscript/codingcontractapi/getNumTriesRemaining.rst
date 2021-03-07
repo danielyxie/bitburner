@@ -11,3 +11,5 @@ getNumTriesRemaining() Netscript Function
     self-destructs.
 
     :returns: Number indicating how many attempts are remaining
+
+    :RAM cost: 2 GB

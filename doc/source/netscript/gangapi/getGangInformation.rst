@@ -21,3 +21,5 @@ getGangInformation() Netscript Function
             wantedLevel:            Gang's wanted level
             wantedLevelGainRate:    Wanted level gained/lost per second (negative for losses)
         }
+
+    :RAM cost: 2 GB

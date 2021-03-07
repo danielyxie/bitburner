@@ -24,3 +24,5 @@ getOtherGangInformation() Netscript Function
             },
             ... (for all six gangs)
         }
+
+    :RAM cost: 2 GB

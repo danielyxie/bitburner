@@ -9,3 +9,5 @@ numHashes() Netscript Function
               of a Hacknet Node).
 
     Returns the number of hashes you have
+
+    :RAM cost: 0 GB
