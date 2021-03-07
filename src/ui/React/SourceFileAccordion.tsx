@@ -16,7 +16,7 @@ type IProps = {
 }
 
 export function SourceFileAccordion(props: IProps): React.ReactElement {
-    const maxLevel = props.sf.n === 3 ? "∞" : "3";
+    const maxLevel = props.sf.n === 12 ? "∞" : "3";
 
     return (
         <Accordion

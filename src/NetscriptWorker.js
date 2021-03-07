@@ -6,6 +6,7 @@ import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
+import { generateNextPid } from "./Netscript/Pid";
 
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
@@ -413,42 +414,6 @@ function processNetscript1Imports(code, workerScript) {
 }
 
 /**
- * Find and return the next availble PID for a script
- */
-let pidCounter = 1;
-function generateNextPid() {
-    let tempCounter = pidCounter;
-
-    // Cap the number of search iterations at some arbitrary value to avoid
-    // infinite loops. We'll assume that players wont have 1mil+ running scripts
-    let found = false;
-    for (let i = 0; i < 1e6;) {
-        if (!workerScripts.has(tempCounter + i)) {
-            found = true;
-            tempCounter = tempCounter + i;
-            break;
-        }
-
-        if (i === Number.MAX_SAFE_INTEGER - 1) {
-            i = 1;
-        } else {
-            ++i;
-        }
-    }
-
-    if (found) {
-        pidCounter = tempCounter + 1;
-        if (pidCounter >= Number.MAX_SAFE_INTEGER) {
-            pidCounter = 1;
-        }
-
-        return tempCounter;
-    } else {
-        return -1;
-    }
-}
-
-/**
  * Used to start a RunningScript (by creating and starting its
  * corresponding WorkerScript), and add the RunningScript to the server on which
  * it is active
@@ -535,7 +500,6 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
         // the script from being cleaned up twice
         if (!w.running) { return; }
 
-        console.log("Stopping script " + w.name + " because it finished running naturally");
         killWorkerScript(s);
         w.log("Script finished running");
     }).catch(function(w) {
@@ -547,8 +511,8 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
             if (isScriptErrorMessage(w.errorMessage)) {
                 var errorTextArray = w.errorMessage.split("|");
                 if (errorTextArray.length != 4) {
-                    console.log("ERROR: Something wrong with Error text in evaluator...");
-                    console.log("Error text: " + errorText);
+                    console.error("ERROR: Something wrong with Error text in evaluator...");
+                    console.error("Error text: " + errorText);
                     return;
                 }
                 var serverIp = errorTextArray[1];
@@ -567,11 +531,11 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
             w.env.stopFlag = true;
         } else if (isScriptErrorMessage(w)) {
             dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-            console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
+            console.error("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
             return;
         } else {
             dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-            console.log(w);
+            console.error(w);
         }
 
         killWorkerScript(s);

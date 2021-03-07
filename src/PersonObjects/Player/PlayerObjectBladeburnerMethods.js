@@ -4,7 +4,7 @@ import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 export function canAccessBladeburner() {
     if (this.bitNodeN === 8) { return false; }
     
-    return (this.bitNodeN === 6) || (this.bitNodeN === 7) || (SourceFileFlags[6] > 0);
+    return (this.bitNodeN === 6) || (this.bitNodeN === 7) || (SourceFileFlags[6] > 0) || (SourceFileFlags[7] > 0);
 }
 
 export function inBladeburner() {

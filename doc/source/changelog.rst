@@ -3,6 +3,49 @@
 Changelog
 =========
 
+
+v0.48.0 - ASCII - 2020-03-07
+-------
+
+**ASCII**
+* Travel Agency now displays a world map
+* Cities are now top view of metro station maps
+
+**Netscript**
+* 'softReset' is a new netscript function that performs a soft reset
+    regardless of if the player has bought augmentations or not.
+* 'getAugmentationStats' is a new netscript function that returns the stats of
+    an augmentation.
+* getCharacterInformation now additionally returns exp
+* pid resets back to 1 when installing or destroying a BitNode.
+* New '.ns' scripts start with a main function.
+* 'hacknet.maxNumNodes' returns the maximum number of hacknet nodes.
+
+**Bladeburner**
+* Current stamina will scale as max stamina increases, this prevents players
+    from having very high penalty when they gain huge amount of exp at the 
+    start of a reset.
+
+**Misc.**
+* Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as
+    having a limit of 3.
+* Fixed an issue where the gang equipment screen would freeze the game if a 
+    script installed augmentations while it is open.
+* All BonusTime now displays in the 'H M S' format.
+* Donation textbox style updated to match the rest of the game.
+* Corporation name style updated to match the rest of the game.
+* minor formatting under Hacking>Active Scripts
+* typo in BN12 description
+* BN12 now reduces contract money
+* Character>Stats percentages are aligned, server and hacknet limit are
+    displayed, if the player has SF5 the reduces stats are shown.
+* Character>Augmentations now displays by how much the player stats will
+    increase.
+* Character>Augmentations has a badge indicating how many augs the player
+    has bought but not installed
+* Character>Factions has a badge indicating how many factions have pending
+    invites.
+
 v0.47.2 - 7/15/2019
 -------------------
 

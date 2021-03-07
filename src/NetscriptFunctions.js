@@ -10,6 +10,7 @@ import {
     augmentationExists,
     installAugmentations
 } from "./Augmentation/AugmentationHelpers";
+import { prestigeAugmentation } from "./Prestige";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { findCrime } from "./Crime/CrimeHelpers";
@@ -51,7 +52,7 @@ import {
     purchaseHashUpgrade,
     updateHashManagerCapacity,
 } from "./Hacknet/HacknetHelpers";
-import { HacknetServer } from "./Hacknet/HacknetServer";
+import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
 
@@ -390,6 +391,9 @@ function NetscriptFunctions(workerScript) {
         hacknet : {
             numNodes : function() {
                 return Player.hacknetNodes.length;
+            },
+            maxNumNodes : function() {
+                return MaxNumberHacknetServers;
             },
             purchaseNode : function() {
                 return purchaseHacknet();
@@ -2742,6 +2746,12 @@ function NetscriptFunctions(workerScript) {
                 workChaExpGain:     Player.workChaExpGained,
                 workRepGain:        Player.workRepGained,
                 workMoneyGain:      Player.workMoneyGained,
+                hackingExp:         Player.hacking_exp,
+                strengthExp:        Player.strength_exp,
+                defenseExp:         Player.defense_exp,
+                dexterityExp:       Player.dexterity_exp,
+                agilityExp:         Player.agility_exp,
+                charismaExp:        Player.charisma_exp,
             };
         },
         isBusy: function() {
@@ -3415,6 +3425,24 @@ function NetscriptFunctions(workerScript) {
             var aug = Augmentations[name];
             return [aug.baseRepRequirement, aug.baseCost];
         },
+        getAugmentationStats: function(name) {
+            updateDynamicRam("getAugmentationStats", getRamCost("getAugmentationStats"));
+            if (Player.bitNodeN !== 4) {
+                if (SourceFileFlags[4] <= 2) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getAugmentationStats(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (!augmentationExists(name)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationStats() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
+                return {};
+            }
+
+
+            var aug = Augmentations[name];
+            return Object.assign({}, aug.mults);
+        },
         purchaseAugmentation: function(faction, name) {
             updateDynamicRam("purchaseAugmentation", getRamCost("purchaseAugmentation"));
             if (Player.bitNodeN !== 4) {
@@ -3482,6 +3510,24 @@ function NetscriptFunctions(workerScript) {
             } else {
                 return false;
             }
+        },
+        softReset: function() {
+            updateDynamicRam("softReset", getRamCost("softReset"));
+            if (Player.bitNodeN !== 4) {
+                if (SourceFileFlags[4] <= 2) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run softReset(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            workerScript.log("Soft resetting. This will cause this script to be killed");
+            setTimeoutRef(() => {
+                prestigeAugmentation();
+            }, 0);
+
+            // Prevent workerScript from "finishing execution naturally"
+            workerScript.running = false;
+            killWorkerScript(workerScript);
         },
         installAugmentations: function(cbScript) {
             updateDynamicRam("installAugmentations", getRamCost("installAugmentations"));

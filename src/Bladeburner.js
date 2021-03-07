@@ -31,6 +31,7 @@ import { KEY } from "../utils/helpers/keyCodes";
 
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 import { appendLineBreaks } from "../utils/uiHelpers/appendLineBreaks";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElement } from "../utils/uiHelpers/removeElement";
@@ -991,12 +992,16 @@ Bladeburner.prototype.process = function() {
 }
 
 Bladeburner.prototype.calculateMaxStamina = function() {
-    var effAgility = Player.agility * this.skillMultipliers.effAgi;
-    var maxStamina = (Math.pow(effAgility, 0.8) + this.staminaBonus);
-    maxStamina *= this.skillMultipliers.stamina;
-    maxStamina *= Player.bladeburner_max_stamina_mult;
+    const effAgility = Player.agility * this.skillMultipliers.effAgi;
+    let maxStamina = (Math.pow(effAgility, 0.8) + this.staminaBonus) *
+      this.skillMultipliers.stamina *
+      Player.bladeburner_max_stamina_mult;
+    if (this.maxStamina !== maxStamina) {
+      const oldMax = this.maxStamina;
+      this.maxStamina = maxStamina;
+      this.stamina = this.maxStamina * this.stamina / oldMax;
+    }
     if (isNaN(maxStamina)) {throw new Error("Max Stamina calculated to be NaN in Bladeburner.calculateMaxStamina()");}
-    this.maxStamina = maxStamina;
 }
 
 Bladeburner.prototype.calculateStaminaGainPerSecond = function() {
@@ -2349,7 +2354,7 @@ Bladeburner.prototype.updateOverviewContent = function() {
     DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + formatNumber(this.getCurrentCity().comms, 0);
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);
-    DomElems.overviewBonusTime.childNodes[0].nodeValue = "Bonus time: " + this.storedCycles/CyclesPerSecond;
+    DomElems.overviewBonusTime.childNodes[0].nodeValue = "Bonus time: " + convertTimeMsToTimeElapsedString(this.storedCycles/CyclesPerSecond*1000);
     DomElems.overviewAugSuccessMult.innerText = "Aug. Success Chance Mult: " + formatNumber(Player.bladeburner_success_chance_mult*100, 1) + "%";
     DomElems.overviewAugMaxStaminaMult.innerText = "Aug. Max Stamina Mult: " + formatNumber(Player.bladeburner_max_stamina_mult*100, 1) + "%";
     DomElems.overviewAugStaminaGainMult.innerText = "Aug. Stamina Gain Mult: " + formatNumber(Player.bladeburner_stamina_gain_mult*100, 1) + "%";

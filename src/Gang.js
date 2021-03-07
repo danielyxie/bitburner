@@ -33,6 +33,7 @@ import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 
 // Constants
@@ -1570,7 +1571,9 @@ Gang.prototype.updateGangContent = function() {
         // Update territory information
         UIElems.gangTerritoryInfoText.innerHTML = "";
         const playerPower = AllGangs[this.facName].power;
-        for (const gangname in AllGangs) {
+        let gangNames = Object.keys(AllGangs).filter(g => g != this.facName);
+        gangNames.unshift(this.facName);
+        for (const gangname of gangNames) {
             if (AllGangs.hasOwnProperty(gangname)) {
                 const gangTerritoryInfo = AllGangs[gangname];
                 let territory = gangTerritoryInfo.territory * 100;
@@ -1670,7 +1673,7 @@ Gang.prototype.updateGangContent = function() {
 
             const CyclesPerSecond = 1000 / Engine._idleSpeed;
             UIElems.gangInfo.appendChild(createElement("p", { // Stored Cycles
-                innerText: `Bonus time(s): ${this.storedCycles / CyclesPerSecond}`,
+                innerText: `Bonus time: ${convertTimeMsToTimeElapsedString(this.storedCycles / CyclesPerSecond*1000)}`,
                 display: "inline-block",
                 tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
                          "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
@@ -1941,6 +1944,8 @@ Gang.prototype.setGangMemberTaskDescription = function(memberObj, taskName) {
 
 Gang.prototype.clearUI = function() {
     if (UIElems.gangContainer instanceof Element) { removeElement(UIElems.gangContainer); }
+
+    if (UIElems.gangMemberUpgradeBox instanceof Element) { removeElement(UIElems.gangMemberUpgradeBox); }
 
     for (const prop in UIElems) {
         UIElems[prop] = null;

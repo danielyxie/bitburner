@@ -59,10 +59,16 @@
 }
 
 #character-hp-wrapper    { color: $my-stat-hp-color;    }
+.character-hp-cell       { color: $my-stat-hp-color;    }
 #character-money-wrapper { color: $my-stat-money-color; }
+.character-money-cell    { color: $my-stat-money-color; }
 #character-hack-wrapper  { color: $my-stat-hack-color;  }
+.character-hack-cell     { color: $my-stat-hack-color;  }
 #character-cha-wrapper   { color: $my-stat-cha-color;   }
+.character-cha-cell      { color: $my-stat-cha-color;   }
 #character-int-wrapper   { color: $my-stat-int-color;   }
+.character-int-cell      { color: $my-stat-int-color;   }
+.character-combat-cell   { color: $my-stat-physical;    }
 
 .character-overview-btn {
     @include borderRadius(12px);

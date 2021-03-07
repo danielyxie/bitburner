@@ -88,7 +88,7 @@ export class DonateOption extends React.Component<IProps, IState> {
         return (
             <div className={"faction-work-div"}>
                 <div className={"faction-work-div-wrapper"}>
-                    <input onChange={this.handleChange} placeholder={"Donation amount"} style={inputStyleMarkup} />
+                    <input className='text-input' onChange={this.handleChange} placeholder={"Donation amount"} style={inputStyleMarkup} />
                     <StdButton
                         onClick={this.donate}
                         text={"Donate Money"}

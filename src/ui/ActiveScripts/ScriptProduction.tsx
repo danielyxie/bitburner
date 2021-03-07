@@ -24,14 +24,14 @@ export function ScriptProduction(props: IProps): React.ReactElement {
 
     return (
         <p id="active-scripts-total-prod">
-            Total online production of Active scripts:
+            Total online production of Active scripts:&nbsp;
             <span className="money-gold">
                 <span id="active-scripts-total-production-active">
                     {numeralWrapper.formatMoney(onlineProduction)}
                 </span> / sec
             </span><br />
 
-            Total online production since last Aug installation:
+            Total online production since last Aug installation:&nbsp;
             <span id="active-scripts-total-prod-aug-total" className="money-gold">
                 {numeralWrapper.formatMoney(props.p.scriptProdSinceLastAug)}
             </span>

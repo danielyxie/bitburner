@@ -17,7 +17,8 @@ body {
 p,
 pre,
 h2,
-.text {
+.text,
+td {
     color: var(--my-font-color);
 }
 
@@ -73,6 +74,28 @@ a:visited {
 }
 
 #create-program-notification {
+    font-size: $defaultFontSize * 0.625;
+    position: absolute; /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
+}
+
+#factions-tab {
+    position: relative;
+}
+
+#factions-notification {
+    font-size: $defaultFontSize * 0.625;
+    position: absolute; /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
+}
+
+#augmentations-tab {
+    position: relative;
+}
+
+#augmentations-notification {
     font-size: $defaultFontSize * 0.625;
     position: absolute; /* Position the badge within the relatively positioned button */
     top: 0;

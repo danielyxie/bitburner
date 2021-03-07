@@ -127,6 +127,7 @@ export function createStartCorporationPopup(p: IPlayer) {
     });
 
     const nameInput = createElement("input", {
+        class: 'text-input',
         placeholder: "Corporation Name",
     }) as HTMLInputElement;
 

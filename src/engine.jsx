@@ -86,7 +86,7 @@ import {
 } from "./PersonObjects/Resleeving/ResleevingUI";
 
 import { createStatusText } from "./ui/createStatusText";
-import { displayCharacterInfo } from "./ui/displayCharacterInfo";
+import { CharacterInfo } from "./ui/CharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { setSettingsLabels } from "./ui/setSettingsLabels";
@@ -567,7 +567,7 @@ const Engine = {
 
     /// Display character info
     updateCharacterInfo: function() {
-        displayCharacterInfo(Engine.Display.characterInfo, Player);
+        ReactDOM.render(CharacterInfo(Player), Engine.Display.characterInfo)
     },
 
     // TODO Refactor this into Faction implementation
@@ -592,7 +592,7 @@ const Engine = {
                 factionsList.appendChild(createElement("a", {
                     class:"a-link-button", innerText:factionName, padding:"4px", margin:"4px",
                     display:"inline-block",
-                    clickListener:()=>{
+                    clickListener: () => {
                         Engine.loadFactionContent();
                         displayFactionContent(factionName);
                         return false;
@@ -774,6 +774,7 @@ const Engine = {
         updateDisplaysLong: 15,
         updateActiveScriptsDisplay: 5,
         createProgramNotifications: 10,
+        augmentationsNotifications: 10,
         checkFactionInvitations: 100,
         passiveFactionGrowth: 600,
         messages: 150,
@@ -868,6 +869,19 @@ const Engine = {
             Engine.Counters.createProgramNotifications = 10;
         }
 
+        if (Engine.Counters.augmentationsNotifications <= 0) {
+            var num = Player.queuedAugmentations.length;
+            var elem = document.getElementById("augmentations-notification");
+            if (num > 0) {
+                elem.innerHTML = num;
+                elem.setAttribute("class", "notification-on");
+            } else {
+                elem.innerHTML = "";
+                elem.setAttribute("class", "notification-off");
+            }
+            Engine.Counters.augmentationsNotifications = 10;
+        }
+
         if (Engine.Counters.checkFactionInvitations <= 0) {
             var invitedFactions = Player.checkForFactionInvitations();
             if (invitedFactions.length > 0) {
@@ -881,6 +895,17 @@ const Engine = {
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 inviteToFaction(randFaction);
             }
+
+            const num = Player.factionInvitations.length;
+            const elem = document.getElementById("factions-notification");
+            if (num > 0) {
+                elem.innerHTML = num;
+                elem.setAttribute("class", "notification-on");
+            } else {
+                elem.innerHTML = "";
+                elem.setAttribute("class", "notification-off");
+            }
+
             Engine.Counters.checkFactionInvitations = 100;
         }
 
@@ -1536,19 +1561,18 @@ window.onload = function() {
     indexedDbRequest = window.indexedDB.open("bitburnerSave", 1);
 
     indexedDbRequest.onerror = function(e) {
-        console.log("Error opening indexedDB: ");
-        console.log(e);
+        console.error("Error opening indexedDB: ");
+        console.error(e);
         return Engine.load(null); // Try to load from localstorage
     };
 
     indexedDbRequest.onsuccess = function(e) {
-        console.log("Opening bitburnerSave database successful!");
         indexedDb = e.target.result;
         var transaction = indexedDb.transaction(["savestring"]);
         var objectStore = transaction.objectStore("savestring");
         var request = objectStore.get("save");
         request.onerror = function(e) {
-            console.log("Error in Database request to get savestring: " + e);
+            console.error("Error in Database request to get savestring: " + e);
             return Engine.load(null); // Try to load from localstorage
         }
 
