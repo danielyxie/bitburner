@@ -240,6 +240,7 @@ export let CONSTANTS: IMap<any> = {
     * getAugmentationStats is a new netscript function that returns the stats of
         an augmentation.
     * getCharacterInformation now additionally returns exp
+    * pid resets back to 1 when installing or destroying a BitNode.
 
     Misc.
     * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as

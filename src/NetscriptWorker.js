@@ -6,6 +6,7 @@ import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
+import { generateNextPid } from "./Netscript/Pid";
 
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
@@ -410,42 +411,6 @@ function processNetscript1Imports(code, workerScript) {
         lineOffset: lineOffset
     }
     return res;
-}
-
-/**
- * Find and return the next availble PID for a script
- */
-let pidCounter = 1;
-function generateNextPid() {
-    let tempCounter = pidCounter;
-
-    // Cap the number of search iterations at some arbitrary value to avoid
-    // infinite loops. We'll assume that players wont have 1mil+ running scripts
-    let found = false;
-    for (let i = 0; i < 1e6;) {
-        if (!workerScripts.has(tempCounter + i)) {
-            found = true;
-            tempCounter = tempCounter + i;
-            break;
-        }
-
-        if (i === Number.MAX_SAFE_INTEGER - 1) {
-            i = 1;
-        } else {
-            ++i;
-        }
-    }
-
-    if (found) {
-        pidCounter = tempCounter + 1;
-        if (pidCounter >= Number.MAX_SAFE_INTEGER) {
-            pidCounter = 1;
-        }
-
-        return tempCounter;
-    } else {
-        return -1;
-    }
 }
 
 /**

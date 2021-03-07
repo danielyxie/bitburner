@@ -20,6 +20,7 @@ import { Message } from "./Message/Message";
 import { initMessages, Messages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
+import { resetPidCounter } from "./Netscript/Pid";
 
 import {
     AllServers,
@@ -172,6 +173,8 @@ function prestigeAugmentation() {
             DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);
         }
     }
+
+    resetPidCounter();
 }
 
 
@@ -346,6 +349,8 @@ function prestigeSourceFile() {
 
     // Gain int exp
     Player.gainIntelligenceExp(5);
+
+    resetPidCounter();
 }
 
 export {prestigeAugmentation, prestigeSourceFile};
