@@ -992,12 +992,16 @@ Bladeburner.prototype.process = function() {
 }
 
 Bladeburner.prototype.calculateMaxStamina = function() {
-    var effAgility = Player.agility * this.skillMultipliers.effAgi;
-    var maxStamina = (Math.pow(effAgility, 0.8) + this.staminaBonus);
-    maxStamina *= this.skillMultipliers.stamina;
-    maxStamina *= Player.bladeburner_max_stamina_mult;
+    const effAgility = Player.agility * this.skillMultipliers.effAgi;
+    let maxStamina = (Math.pow(effAgility, 0.8) + this.staminaBonus) *
+      this.skillMultipliers.stamina *
+      Player.bladeburner_max_stamina_mult;
+    if (this.maxStamina !== maxStamina) {
+      const oldMax = this.maxStamina;
+      this.maxStamina = maxStamina;
+      this.stamina = this.maxStamina * this.stamina / oldMax;
+    }
     if (isNaN(maxStamina)) {throw new Error("Max Stamina calculated to be NaN in Bladeburner.calculateMaxStamina()");}
-    this.maxStamina = maxStamina;
 }
 
 Bladeburner.prototype.calculateStaminaGainPerSecond = function() {
