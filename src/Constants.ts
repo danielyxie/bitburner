@@ -242,6 +242,7 @@ export let CONSTANTS: IMap<any> = {
     * getCharacterInformation now additionally returns exp
     * pid resets back to 1 when installing or destroying a BitNode.
     * New '.ns' scripts start with a main function.
+    * hacknet.maxNumNodes returns the maximum number of hacknet nodes.
 
     Misc.
     * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as

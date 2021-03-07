@@ -103,7 +103,7 @@ let NetscriptFunctions =
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
     "upgradeLevel|upgradeRam|upgradeCore|upgradeCache|getLevelUpgradeCost|"    +
-    "getRamUpgradeCost|getCoreUpgradeCost|getCacheUpgradeCost|"                +
+    "getRamUpgradeCost|getCoreUpgradeCost|getCacheUpgradeCost|maxNumNodes|"    +
 
     // Gang API
     "gang|"                                                                    +

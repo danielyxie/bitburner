@@ -52,7 +52,7 @@ import {
     purchaseHashUpgrade,
     updateHashManagerCapacity,
 } from "./Hacknet/HacknetHelpers";
-import { HacknetServer } from "./Hacknet/HacknetServer";
+import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
 
@@ -391,6 +391,9 @@ function NetscriptFunctions(workerScript) {
         hacknet : {
             numNodes : function() {
                 return Player.hacknetNodes.length;
+            },
+            maxNumNodes : function() {
+                return MaxNumberHacknetServers;
             },
             purchaseNode : function() {
                 return purchaseHacknet();
