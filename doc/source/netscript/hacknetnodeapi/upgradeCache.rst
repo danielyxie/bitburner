@@ -17,3 +17,5 @@ upgradeCache() Netscript Function
     it purchases some positive amount and the Server reaches its max cache level.
 
     Returns false otherwise.
+
+    :RAM cost: 0 GB

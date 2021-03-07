@@ -10,3 +10,5 @@ setMemberTask() Netscript Function
     If an invalid task is specified, the Gang member will be set to idle ("Unassigned")
 
     :returns: True if the Gang Member was successfully assigned to the task. False otherwise
+
+    :RAM cost: 2 GB

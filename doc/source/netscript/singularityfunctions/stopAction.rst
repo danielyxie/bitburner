@@ -2,6 +2,7 @@ stopAction() Netscript Function
 ===============================
 
 .. js:function:: stopAction()
+    :RAM cost: 1 GB
 
     If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.
     This function is used to end whatever 'action' the player is currently performing. The player

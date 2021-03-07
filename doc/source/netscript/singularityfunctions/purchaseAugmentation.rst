@@ -2,6 +2,7 @@ purchaseAugmentation() Netscript Function
 =========================================
 
 .. js:function:: purchaseAugmentation(factionName, augName)
+    :RAM cost: 5 GB
 
     :param string factionName: Name of faction to purchase Augmentation from. CASE-SENSITIVE
     :param string augName: Name of Augmentation to purchase. CASE-SENSITIVE

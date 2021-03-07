@@ -2,6 +2,7 @@ joinBladeburnerDivision() Netscript Function
 ============================================
 
 .. js:function:: joinBladeburnerDivision()
+    :RAM cost: 4 GB
 
     Attempts to join the Bladeburner division.
 

@@ -2,6 +2,7 @@ donateToFaction() Netscript Function
 ====================================
 
 .. js:function:: donateToFaction(factionName, donateAmt)
+    :RAM cost: 5 GB
 
     :param string factionName: Name of faction to donate to. CASE-SENSITIVE
     :param number donateAmt: Amount of money to donate

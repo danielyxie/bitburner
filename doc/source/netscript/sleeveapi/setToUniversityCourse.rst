@@ -8,3 +8,5 @@ setToUniversityCourse() Netscript Function
     :param string className: Name of the class to follow.
 
     Return a boolean indicating whether or not this action was set successfully.
+
+    :RAM cost: 4 GB

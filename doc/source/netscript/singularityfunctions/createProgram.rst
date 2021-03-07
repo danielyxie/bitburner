@@ -2,6 +2,7 @@ createProgram() Netscript Function
 ==================================
 
 .. js:function:: createProgram(programName)
+    :RAM cost: 5 GB
 
     :param string programName: Name of program to create. Not case-sensitive
 

@@ -13,3 +13,5 @@ recruitMember() Netscript Function
     * There already exists a member with the specified name
 
     :returns: True if the member was successfully recruited. False otherwise
+
+    :RAM cost: 2 GB

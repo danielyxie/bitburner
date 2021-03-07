@@ -21,3 +21,5 @@ getStats() Netscript Function
 
         res = getStats();
         print('My charisma level is: ' + res.charisma);
+
+    :RAM cost: 0.5 GB

@@ -16,3 +16,5 @@ purchaseProgram() Netscript Function
         purchaseProgram("brutessh.exe");
 
     This function will return true if the specified program is purchased, and false otherwise.
+
+    :RAM cost: 2 GB

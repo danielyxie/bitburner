@@ -7,6 +7,8 @@ getSleeveStats() Netscript Function
 
     Return a structure containing the stats of the sleeve
 
+    :RAM cost: 4 GB
+    
 .. code-block:: javascript
 
     {
