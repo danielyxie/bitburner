@@ -254,5 +254,7 @@ export let CONSTANTS: IMap<any> = {
     * minor formatting under Hacking>Active Scripts
     * typo in BN12 description
     * BN12 now reduces contract money
+    * Character>Stats percentages are aligned, server and hacknet limit are
+        displayed, if the player has SF5 the reduces stats are shown.
     `
 }

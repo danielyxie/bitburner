@@ -86,7 +86,7 @@ import {
 } from "./PersonObjects/Resleeving/ResleevingUI";
 
 import { createStatusText } from "./ui/createStatusText";
-import { displayCharacterInfo } from "./ui/displayCharacterInfo";
+import { CharacterInfo } from "./ui/CharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { setSettingsLabels } from "./ui/setSettingsLabels";
@@ -567,7 +567,7 @@ const Engine = {
 
     /// Display character info
     updateCharacterInfo: function() {
-        displayCharacterInfo(Engine.Display.characterInfo, Player);
+        ReactDOM.render(CharacterInfo(Player), Engine.Display.characterInfo)
     },
 
     // TODO Refactor this into Faction implementation
