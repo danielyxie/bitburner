@@ -10,6 +10,7 @@ import { CorporationUpgrades }          from "../data/CorporationUpgrades";
 
 import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 
 export class Overview extends BaseReactComponent {
     // Generic Function for Creating a button
@@ -71,9 +72,9 @@ export class Overview extends BaseReactComponent {
                       `Private Shares: ${numeralWrapper.format(this.corp().totalShares - this.corp().issuedShares - this.corp().numShares, "0.000a")}` +
                   "</span></p><br><br>";
 
-        const storedTime = this.corp().storedCycles * CONSTANTS.MilliPerCycle / 1000;
-        if (storedTime > 15) {
-            txt += `Bonus Time: ${storedTime} seconds<br><br>`;
+        const storedTime = this.corp().storedCycles * CONSTANTS.MilliPerCycle;
+        if (storedTime > 15000) {
+            txt += `Bonus time: ${convertTimeMsToTimeElapsedString(storedTime)}<br><br>`;
         }
 
         let prodMult        = this.corp().getProductionMultiplier(),

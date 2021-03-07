@@ -246,7 +246,8 @@ export let CONSTANTS: IMap<any> = {
     Misc.
     * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as
         having a limit of 3.
-    * Fixed an issue where the gang equipment screen would freeze the game if a
+    * Fixed an issue where the gang equipment screen would freeze the game if a 
         script installed augmentations while it is open.
+    * All BonusTime now displays in the 'H M S' format
     `
 }

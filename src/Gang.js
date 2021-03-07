@@ -33,6 +33,7 @@ import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 
 // Constants
@@ -1670,7 +1671,7 @@ Gang.prototype.updateGangContent = function() {
 
             const CyclesPerSecond = 1000 / Engine._idleSpeed;
             UIElems.gangInfo.appendChild(createElement("p", { // Stored Cycles
-                innerText: `Bonus time(s): ${this.storedCycles / CyclesPerSecond}`,
+                innerText: `Bonus time: ${convertTimeMsToTimeElapsedString(this.storedCycles / CyclesPerSecond*1000)}`,
                 display: "inline-block",
                 tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
                          "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
