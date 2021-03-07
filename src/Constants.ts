@@ -231,6 +231,9 @@ export let CONSTANTS: IMap<any> = {
     v0.48.0
     -------
 
+    ASCII
+    * Travel Agency now displays a world map
+
     Netscript
     * softReset is a new netscript function that performs a soft reset
         regardless of if the player has bought augmentations or not.
