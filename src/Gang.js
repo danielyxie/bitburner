@@ -1571,7 +1571,9 @@ Gang.prototype.updateGangContent = function() {
         // Update territory information
         UIElems.gangTerritoryInfoText.innerHTML = "";
         const playerPower = AllGangs[this.facName].power;
-        for (const gangname in AllGangs) {
+        let gangNames = Object.keys(AllGangs).filter(g => g != this.facName);
+        gangNames.unshift(this.facName);
+        for (const gangname of gangNames) {
             if (AllGangs.hasOwnProperty(gangname)) {
                 const gangTerritoryInfo = AllGangs[gangname];
                 let territory = gangTerritoryInfo.territory * 100;
