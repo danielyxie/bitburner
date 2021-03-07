@@ -245,6 +245,11 @@ export let CONSTANTS: IMap<any> = {
     * New '.ns' scripts start with a main function.
     * hacknet.maxNumNodes returns the maximum number of hacknet nodes.
 
+    Bladeburner
+    * Current stamina will scale as max stamina increases, this prevents players
+        from having very high penalty when they gain huge amount of exp at the 
+        start of a reset.
+
     Misc.
     * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as
         having a limit of 3.

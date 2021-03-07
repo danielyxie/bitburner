@@ -774,6 +774,7 @@ const Engine = {
         updateDisplaysLong: 15,
         updateActiveScriptsDisplay: 5,
         createProgramNotifications: 10,
+        augmentationsNotifications: 10,
         checkFactionInvitations: 100,
         passiveFactionGrowth: 600,
         messages: 150,
@@ -868,6 +869,19 @@ const Engine = {
             Engine.Counters.createProgramNotifications = 10;
         }
 
+        if (Engine.Counters.augmentationsNotifications <= 0) {
+            var num = Player.queuedAugmentations.length;
+            var elem = document.getElementById("augmentations-notification");
+            if (num > 0) {
+                elem.innerHTML = num;
+                elem.setAttribute("class", "notification-on");
+            } else {
+                elem.innerHTML = "";
+                elem.setAttribute("class", "notification-off");
+            }
+            Engine.Counters.augmentationsNotifications = 10;
+        }
+
         if (Engine.Counters.checkFactionInvitations <= 0) {
             var invitedFactions = Player.checkForFactionInvitations();
             if (invitedFactions.length > 0) {
@@ -881,6 +895,17 @@ const Engine = {
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 inviteToFaction(randFaction);
             }
+
+            const num = Player.factionInvitations.length;
+            const elem = document.getElementById("factions-notification");
+            if (num > 0) {
+                elem.innerHTML = num;
+                elem.setAttribute("class", "notification-on");
+            } else {
+                elem.innerHTML = "";
+                elem.setAttribute("class", "notification-off");
+            }
+
             Engine.Counters.checkFactionInvitations = 100;
         }
 
