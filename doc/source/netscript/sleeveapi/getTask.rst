@@ -3,11 +3,11 @@ getTask() Netscript Function
 
 .. js:function:: getTask(sleeveNumber)
 
+    :RAM cost: 4 GB
+
     :param int sleeveNumber: Index of the sleeve to retrieve task from. See :ref:`here <netscript_sleeveapi_referencingaduplicatesleeve>`
 
     Return the current task that the sleeve is performing. type is set to "Idle" if the sleeve isn't doing anything
-
-    :RAM cost: 4 GB
     
 .. code-block:: javascript
 

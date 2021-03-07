@@ -2,6 +2,7 @@ getCrimeChance() Netscript Function
 ===================================
 
 .. js:function:: getCrimeChance(crime)
+
     :RAM cost: 5 GB
 
     :param string crime:

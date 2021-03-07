@@ -5,6 +5,8 @@ upgradeCache() Netscript Function
 
 .. js:function:: upgradeCache(i, n)
 
+    :RAM cost: 0 GB
+
     :param number i: Index/Identifier of Hacknet Node. :ref:`See here for details <netscript_hacknetnodeapi_referencingahacknetnode>`
     :param number n: Number of cache levels to purchase. Must be positive. Rounded to nearest integer
 
@@ -17,5 +19,3 @@ upgradeCache() Netscript Function
     it purchases some positive amount and the Server reaches its max cache level.
 
     Returns false otherwise.
-
-    :RAM cost: 0 GB

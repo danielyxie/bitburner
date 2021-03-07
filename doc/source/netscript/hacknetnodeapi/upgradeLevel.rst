@@ -3,6 +3,8 @@ upgradeLevel() Netscript Function
 
 .. js:function:: upgradeLevel(i, n)
 
+    :RAM cost: 0 GB
+
     :param number i: Index/Identifier of Hacknet Node. :ref:`See here for details <netscript_hacknetnodeapi_referencingahacknetnode>`
     :param number n: Number of levels to purchase. Must be positive. Rounded to nearest integer
 
@@ -12,5 +14,3 @@ upgradeLevel() Netscript Function
     if it is upgraded by some positive amount and the Node reaches its max level.
 
     Returns false otherwise.
-
-    :RAM cost: 0 GB

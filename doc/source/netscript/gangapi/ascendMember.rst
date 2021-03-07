@@ -3,6 +3,8 @@ ascendMember() Netscript Function
 
 .. js:function:: ascendMember(name)
 
+    :RAM cost: 4 GB
+
     :param string name: Name of member to ascend
 
     Ascend the specified Gang Member.
@@ -20,5 +22,3 @@ ascendMember() Netscript Function
             agi:        Agility multiplier gained from ascending. Decimal form
             cha:        Charisma multiplier gained from ascending. Decimal form
         }
-
-    :RAM cost: 4 GB
