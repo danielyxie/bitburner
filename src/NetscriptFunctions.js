@@ -2743,6 +2743,12 @@ function NetscriptFunctions(workerScript) {
                 workChaExpGain:     Player.workChaExpGained,
                 workRepGain:        Player.workRepGained,
                 workMoneyGain:      Player.workMoneyGained,
+                hackingExp:         Player.hacking_exp,
+                strengthExp:        Player.strength_exp,
+                defenseExp:         Player.defense_exp,
+                dexterityExp:       Player.dexterity_exp,
+                agilityExp:         Player.agility_exp,
+                charismaExp:        Player.charisma_exp,
             };
         },
         isBusy: function() {
