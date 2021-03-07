@@ -233,6 +233,7 @@ export let CONSTANTS: IMap<any> = {
 
     ASCII
     * Travel Agency now displays a world map
+    * Cities are now top view of metro station maps
 
     Netscript
     * softReset is a new netscript function that performs a soft reset

@@ -15,9 +15,15 @@ export class City {
      */
     name: CityName;
 
-    constructor(name: CityName, locations: LocationName[]=[]) {
+    /**
+     * Metro map ascii art
+     */
+    asciiArt: string;
+
+    constructor(name: CityName, locations: LocationName[]=[], asciiArt: string='') {
         this.name = name;
         this.locations = locations;
+        this.asciiArt = asciiArt;
     }
 
     addLocation(loc: LocationName): void {
