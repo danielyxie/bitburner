@@ -411,7 +411,7 @@ export function recordMoneySource(amt, source) {
 
 export function gainHackingExp(exp) {
     if (isNaN(exp)) {
-        console.log("ERR: NaN passed into Player.gainHackingExp()"); return;
+        console.error("ERR: NaN passed into Player.gainHackingExp()"); return;
     }
     this.hacking_exp += exp;
     if(this.hacking_exp < 0) {
@@ -421,7 +421,7 @@ export function gainHackingExp(exp) {
 
 export function gainStrengthExp(exp) {
     if (isNaN(exp)) {
-        console.log("ERR: NaN passed into Player.gainStrengthExp()"); return;
+        console.error("ERR: NaN passed into Player.gainStrengthExp()"); return;
     }
     this.strength_exp += exp;
     if(this.strength_exp < 0) {
@@ -431,7 +431,7 @@ export function gainStrengthExp(exp) {
 
 export function gainDefenseExp(exp) {
     if (isNaN(exp)) {
-        console.log("ERR: NaN passed into player.gainDefenseExp()"); return;
+        console.error("ERR: NaN passed into player.gainDefenseExp()"); return;
     }
     this.defense_exp += exp;
     if(this.defense_exp < 0) {
@@ -441,7 +441,7 @@ export function gainDefenseExp(exp) {
 
 export function gainDexterityExp(exp) {
     if (isNaN(exp)) {
-        console.log("ERR: NaN passed into Player.gainDexterityExp()"); return;
+        console.error("ERR: NaN passed into Player.gainDexterityExp()"); return;
     }
     this.dexterity_exp += exp;
     if(this.dexterity_exp < 0) {
@@ -451,7 +451,7 @@ export function gainDexterityExp(exp) {
 
 export function gainAgilityExp(exp) {
     if (isNaN(exp)) {
-        console.log("ERR: NaN passed into Player.gainAgilityExp()"); return;
+        console.error("ERR: NaN passed into Player.gainAgilityExp()"); return;
     }
     this.agility_exp += exp;
     if(this.agility_exp < 0) {
@@ -461,7 +461,7 @@ export function gainAgilityExp(exp) {
 
 export function gainCharismaExp(exp) {
     if (isNaN(exp)) {
-        console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
+        console.error("ERR: NaN passed into Player.gainCharismaExp()"); return;
     }
     this.charisma_exp += exp;
     if(this.charisma_exp < 0) {
@@ -471,7 +471,7 @@ export function gainCharismaExp(exp) {
 
 export function gainIntelligenceExp(exp) {
     if (isNaN(exp)) {
-        console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
+        console.error("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
     }
     if (SourceFileFlags[5] > 0 || this.intelligence > 0) {
         this.intelligence_exp += exp;
@@ -1827,7 +1827,6 @@ export function isQualified(company, position) {
 
 /********** Reapplying Augmentations and Source File ***********/
 export function reapplyAllAugmentations(resetMultipliers=true) {
-    console.log("Re-applying augmentations");
     if (resetMultipliers) {
         this.resetMultipliers();
     }
@@ -1856,7 +1855,6 @@ export function reapplyAllAugmentations(resetMultipliers=true) {
 }
 
 export function reapplyAllSourceFiles() {
-    console.log("Re-applying source files");
     //Will always be called after reapplyAllAugmentations() so multipliers do not have to be reset
     //this.resetMultipliers();
 

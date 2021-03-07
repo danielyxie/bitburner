@@ -258,5 +258,7 @@ export let CONSTANTS: IMap<any> = {
     * BN12 now reduces contract money
     * Character>Stats percentages are aligned, server and hacknet limit are
         displayed, if the player has SF5 the reduces stats are shown.
+    * Character>Augmentations now displays by how much the player stats will
+        increase.
     `
 }

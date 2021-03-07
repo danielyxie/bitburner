@@ -112,7 +112,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     var request = objectStore.put(saveString, "save");
 
     request.onerror = function(e) {
-        console.log("Error saving game to IndexedDB: " + e);
+        console.error("Error saving game to IndexedDB: " + e);
     }
 
     request.onsuccess = function(e) {
@@ -124,7 +124,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     } catch(e) {
         if (e.code == 22) {
             createStatusText("Save failed for localStorage! Check console(F12)");
-            console.log("Failed to save game to localStorage because the size of the save file " +
+            console.error("Failed to save game to localStorage because the size of the save file " +
                         "is too large. However, the game will still be saved to IndexedDb if your browser " +
                         "supports it. If you would like to save to localStorage as well, then " +
                         "consider killing several of your scripts to " +
@@ -247,7 +247,7 @@ function loadGame(saveString) {
         try {
             Settings.load(saveObj.SettingsSave);
         } catch(e) {
-            console.log("ERROR: Failed to parse Settings. Re-initing default values");
+            console.error("ERROR: Failed to parse Settings. Re-initing default values");
             Settings.init();
         }
     } else {
@@ -257,7 +257,7 @@ function loadGame(saveString) {
         try {
             loadFconf(saveObj.FconfSettingsSave);
         } catch(e) {
-            console.log("ERROR: Failed to parse .fconf Settings.");
+            console.error("ERROR: Failed to parse .fconf Settings.");
         }
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
@@ -281,7 +281,7 @@ function loadGame(saveString) {
         try {
             loadAllGangs(saveObj.AllGangsSave);
         } catch(e) {
-            console.log("ERROR: Failed to parse AllGangsSave: " + e);
+            console.error("ERROR: Failed to parse AllGangsSave: " + e);
         }
     }
 
@@ -439,7 +439,7 @@ function loadImportedGame(saveObj, saveString) {
         try {
             loadFconf(saveObj.FconfSettingsSave);
         } catch(e) {
-            console.log("ERROR: Failed to load .fconf settings when importing");
+            console.error("ERROR: Failed to load .fconf settings when importing");
         }
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
@@ -460,7 +460,7 @@ function loadImportedGame(saveObj, saveString) {
         try {
             loadAllGangs(saveObj.AllGangsSave);
         } catch(e) {
-            console.log("ERROR: Failed to parse AllGangsSave: " + e);
+            console.error("ERROR: Failed to parse AllGangsSave: " + e);
         }
     }
 

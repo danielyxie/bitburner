@@ -42,7 +42,6 @@ document.addEventListener("keydown", function (event) {
 let dialogBoxOpened = false;
 
 function dialogBoxCreate(txt, preformatted=false) {
-    console.log(`dialogBoxCreate() called`)
     var container = document.createElement("div");
     container.setAttribute("class", "dialog-box-container");
 

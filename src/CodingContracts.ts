@@ -74,7 +74,6 @@ for (const md of codingContractTypesMetadata) {
     // tslint:disable-next-line
     CodingContractTypes[md.name] = new CodingContractType(md.name, md.desc, md.gen, md.solver, md.difficulty, md.numTries);
 }
-console.info(`${Object.keys(CodingContractTypes).length} Coding Contract Types loaded`);
 
 /**
  * Enum representing the different types of rewards a Coding Contract can give

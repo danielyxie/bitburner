@@ -500,7 +500,6 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
         // the script from being cleaned up twice
         if (!w.running) { return; }
 
-        console.log("Stopping script " + w.name + " because it finished running naturally");
         killWorkerScript(s);
         w.log("Script finished running");
     }).catch(function(w) {
@@ -512,8 +511,8 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
             if (isScriptErrorMessage(w.errorMessage)) {
                 var errorTextArray = w.errorMessage.split("|");
                 if (errorTextArray.length != 4) {
-                    console.log("ERROR: Something wrong with Error text in evaluator...");
-                    console.log("Error text: " + errorText);
+                    console.error("ERROR: Something wrong with Error text in evaluator...");
+                    console.error("Error text: " + errorText);
                     return;
                 }
                 var serverIp = errorTextArray[1];
@@ -532,11 +531,11 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
             w.env.stopFlag = true;
         } else if (isScriptErrorMessage(w)) {
             dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-            console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
+            console.error("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
             return;
         } else {
             dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-            console.log(w);
+            console.error(w);
         }
 
         killWorkerScript(s);
