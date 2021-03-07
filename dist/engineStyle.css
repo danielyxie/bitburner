@@ -26,7 +26,8 @@ body {
 p,
 pre,
 h2,
-.text {
+.text,
+td {
   color: var(--my-font-color); }
 
 h1 {
@@ -72,6 +73,26 @@ a:visited {
   position: relative; }
 
 #create-program-notification {
+  font-size: 10px;
+  position: absolute;
+  /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0; }
+
+#factions-tab {
+  position: relative; }
+
+#factions-notification {
+  font-size: 10px;
+  position: absolute;
+  /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0; }
+
+#augmentations-tab {
+  position: relative; }
+
+#augmentations-notification {
   font-size: 10px;
   position: absolute;
   /* Position the badge within the relatively positioned button */
@@ -684,17 +705,35 @@ button {
 #character-hp-wrapper {
   color: #dd3434; }
 
+.character-hp-cell {
+  color: #dd3434; }
+
 #character-money-wrapper {
+  color: #ffd700; }
+
+.character-money-cell {
   color: #ffd700; }
 
 #character-hack-wrapper {
   color: #adff2f; }
 
+.character-hack-cell {
+  color: #adff2f; }
+
 #character-cha-wrapper {
+  color: #a671d1; }
+
+.character-cha-cell {
   color: #a671d1; }
 
 #character-int-wrapper {
   color: #6495ed; }
+
+.character-int-cell {
+  color: #6495ed; }
+
+.character-combat-cell {
+  color: #faffdf; }
 
 .character-overview-btn {
   -webkit-border-radius: 12px;

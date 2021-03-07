@@ -228,7 +228,7 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.48.0
+    v0.48.0 - ASCII
     -------
 
     ASCII
@@ -236,14 +236,14 @@ export let CONSTANTS: IMap<any> = {
     * Cities are now top view of metro station maps
 
     Netscript
-    * softReset is a new netscript function that performs a soft reset
+    * 'softReset' is a new netscript function that performs a soft reset
         regardless of if the player has bought augmentations or not.
-    * getAugmentationStats is a new netscript function that returns the stats of
+    * 'getAugmentationStats' is a new netscript function that returns the stats of
         an augmentation.
     * getCharacterInformation now additionally returns exp
     * pid resets back to 1 when installing or destroying a BitNode.
     * New '.ns' scripts start with a main function.
-    * hacknet.maxNumNodes returns the maximum number of hacknet nodes.
+    * 'hacknet.maxNumNodes' returns the maximum number of hacknet nodes.
 
     Bladeburner
     * Current stamina will scale as max stamina increases, this prevents players
@@ -265,5 +265,9 @@ export let CONSTANTS: IMap<any> = {
         displayed, if the player has SF5 the reduces stats are shown.
     * Character>Augmentations now displays by how much the player stats will
         increase.
+    * Character>Augmentations has a badge indicating how many augs the player
+        has bought but not installed
+    * Character>Factions has a badge indicating how many factions have pending
+        invites.
     `
 }
