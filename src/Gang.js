@@ -1942,6 +1942,8 @@ Gang.prototype.setGangMemberTaskDescription = function(memberObj, taskName) {
 Gang.prototype.clearUI = function() {
     if (UIElems.gangContainer instanceof Element) { removeElement(UIElems.gangContainer); }
 
+    if (UIElems.gangMemberUpgradeBox instanceof Element) { removeElement(UIElems.gangMemberUpgradeBox); }
+
     for (const prop in UIElems) {
         UIElems[prop] = null;
     }
