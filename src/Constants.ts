@@ -251,5 +251,7 @@ export let CONSTANTS: IMap<any> = {
     * All BonusTime now displays in the 'H M S' format.
     * Donation textbox style updated to match the rest of the game.
     * Corporation name style updated to match the rest of the game.
+    * minor formatting under Hacking>Active Scripts
+    * typo in BN12 description
     `
 }

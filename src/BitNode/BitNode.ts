@@ -234,7 +234,7 @@ BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                         "Level 3: 56%");
 BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
                                         "To iterate is human, to recurse divine.<br><br>" +
-                                        "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give your Souce-File 12, or " +
+                                        "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give you Souce-File 12, or " +
                                         "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
                                         "of Source-File 12 will increase all of your multipliers by 1%. This effect is multiplicative with itself. " +
                                         "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
