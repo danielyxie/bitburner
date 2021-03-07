@@ -203,6 +203,7 @@ export const RamCosts: IMap<any> = {
     getAugmentationPrereq: () => RamCostConstants.ScriptSingularityFn3RamCost,
     getAugmentationCost: () => RamCostConstants.ScriptSingularityFn3RamCost,
     purchaseAugmentation: () => RamCostConstants.ScriptSingularityFn3RamCost,
+    softReset: () => RamCostConstants.ScriptSingularityFn3RamCost,
     installAugmentations: () => RamCostConstants.ScriptSingularityFn3RamCost,
 
     // Gang API

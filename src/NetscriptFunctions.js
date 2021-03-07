@@ -10,6 +10,7 @@ import {
     augmentationExists,
     installAugmentations
 } from "./Augmentation/AugmentationHelpers";
+import { prestigeAugmentation } from "./Prestige";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { findCrime } from "./Crime/CrimeHelpers";
@@ -3482,6 +3483,24 @@ function NetscriptFunctions(workerScript) {
             } else {
                 return false;
             }
+        },
+        softReset: function() {
+            updateDynamicRam("softReset", getRamCost("softReset"));
+            if (Player.bitNodeN !== 4) {
+                if (SourceFileFlags[4] <= 2) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run softReset(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            workerScript.log("Soft resetting. This will cause this script to be killed");
+            setTimeoutRef(() => {
+                prestigeAugmentation();
+            }, 0);
+
+            // Prevent workerScript from "finishing execution naturally"
+            workerScript.running = false;
+            killWorkerScript(workerScript);
         },
         installAugmentations: function(cbScript) {
             updateDynamicRam("installAugmentations", getRamCost("installAugmentations"));
