@@ -253,5 +253,6 @@ export let CONSTANTS: IMap<any> = {
     * Corporation name style updated to match the rest of the game.
     * minor formatting under Hacking>Active Scripts
     * typo in BN12 description
+    * BN12 now reduces contract money
     `
 }

@@ -460,11 +460,12 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.PurchasedServerLimit     = dec;
             BitNodeMultipliers.PurchasedServerMaxRam    = dec;
 
-            BitNodeMultipliers.ManualHackMoney  = dec;
-            BitNodeMultipliers.ScriptHackMoney  = dec;
-            BitNodeMultipliers.CompanyWorkMoney = dec;
-            BitNodeMultipliers.CrimeMoney       = dec;
-            BitNodeMultipliers.HacknetNodeMoney = dec;
+            BitNodeMultipliers.ManualHackMoney     = dec;
+            BitNodeMultipliers.ScriptHackMoney     = dec;
+            BitNodeMultipliers.CompanyWorkMoney    = dec;
+            BitNodeMultipliers.CrimeMoney          = dec;
+            BitNodeMultipliers.HacknetNodeMoney    = dec;
+            BitNodeMultipliers.CodingContractMoney = dec;
 
             BitNodeMultipliers.CompanyWorkExpGain = dec;
             BitNodeMultipliers.ClassGymExpGain    = dec;
