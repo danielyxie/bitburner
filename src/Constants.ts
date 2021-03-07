@@ -241,6 +241,7 @@ export let CONSTANTS: IMap<any> = {
         an augmentation.
     * getCharacterInformation now additionally returns exp
     * pid resets back to 1 when installing or destroying a BitNode.
+    * New '.ns' scripts start with a main function.
 
     Misc.
     * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as

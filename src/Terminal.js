@@ -1760,7 +1760,14 @@ let Terminal = {
                 const filepath = Terminal.getFilepath(filename);
                 const script = Terminal.getScript(filename);
                 if (script == null) {
-                    Engine.loadScriptEditorContent(filepath);
+                    let code = ""
+                    if(filename.endsWith(".ns")) {
+                        code = `export async function main(ns) {
+    
+}`;
+                    }
+                    console.log('default code');
+                    Engine.loadScriptEditorContent(filepath, code);
                 } else {
                     Engine.loadScriptEditorContent(filepath, script.code);
                 }
