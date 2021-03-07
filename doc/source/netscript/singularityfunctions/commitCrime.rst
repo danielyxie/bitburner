@@ -2,6 +2,7 @@ commitCrime() Netscript Function
 ================================
 
 .. js:function:: commitCrime(crime)
+
     :RAM cost: 5 GB
 
     :param string crime:

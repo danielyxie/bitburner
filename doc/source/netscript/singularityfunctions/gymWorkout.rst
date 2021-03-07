@@ -2,6 +2,7 @@ gymWorkout() Netscript Function
 ===============================
 
 .. js:function:: gymWorkout(gymName, stat)
+
     :RAM cost: 2 GB
 
     :param string gymName:

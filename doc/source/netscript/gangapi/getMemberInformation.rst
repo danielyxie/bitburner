@@ -3,13 +3,13 @@ getMemberInformation() Netscript Function
 
 .. js:function:: getMemberInformation(name)
 
+    :RAM cost: 2 GB
+
     :param string name: Name of member
 
     Get stat and equipment-related information about a Gang Member
 
     :returns: An object with the gang member information.
-
-    :RAM cost: 2 GB
 
     The object has the following structure::
 

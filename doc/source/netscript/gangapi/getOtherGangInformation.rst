@@ -3,6 +3,8 @@ getOtherGangInformation() Netscript Function
 
 .. js:function:: getOtherGangInformation()
 
+    :RAM cost: 2 GB
+
     Get territory and power information about all gangs
 
     :returns: An object with information about all gangs
@@ -24,5 +26,3 @@ getOtherGangInformation() Netscript Function
             },
             ... (for all six gangs)
         }
-
-    :RAM cost: 2 GB

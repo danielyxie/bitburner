@@ -3,6 +3,8 @@ getOwnedAugmentations() Netscript Function
 
 .. js:function:: getOwnedAugmentations(purchased=false)
 
+    :RAM cost: 5 GB
+
     :param boolean purchase:
         Specifies whether the returned array should include Augmentations you have purchased but not yet installed.
         By default, this argument is false which means that the return value will NOT have the purchased Augmentations.
