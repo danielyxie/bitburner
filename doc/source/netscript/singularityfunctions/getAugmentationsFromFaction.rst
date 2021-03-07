@@ -2,6 +2,7 @@ getAugmentationsFromFaction() Netscript Function
 ================================================
 
 .. js:function:: getAugmentationsFromFaction(facName)
+
     :RAM cost: 5 GB
 
     :param string facName: Name of faction. CASE-SENSITIVE

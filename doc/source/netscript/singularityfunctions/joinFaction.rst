@@ -2,6 +2,7 @@ joinFaction() Netscript Function
 ================================
 
 .. js:function:: joinFaction(name)
+
     :RAM cost: 3 GB
 
     :param string name: Name of faction to join. CASE-SENSITIVE

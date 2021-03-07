@@ -5,6 +5,8 @@ spendHashes() Netscript Function
 
 .. js:function:: spendHashes(upgName, upgTarget)
 
+    :RAM cost: 0 GB
+
     :param string upgName: Name of upgrade to spend hashes on. Must be an exact match
     :param string upgTarget: Object to which upgrade applies. Required for certain upgrades
 
@@ -24,5 +26,3 @@ spendHashes() Netscript Function
 
         hacknet.spendHashes("Sell for Corporation Funds");
         hacknet.spendHashes("Increase Maximum Money", "foodnstuff");
-        
-    :RAM cost: 0 GB

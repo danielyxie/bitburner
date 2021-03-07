@@ -2,6 +2,7 @@ installAugmentations() Netscript Function
 =========================================
 
 .. js:function:: installAugmentations(cbScript)
+
     :RAM cost: 5 GB
 
     :param string cbScript:

@@ -3,11 +3,11 @@ getSleeveStats() Netscript Function
 
 .. js:function:: getSleeveStats(sleeveNumber)
 
+    :RAM cost: 4 GB
+
     :param int sleeveNumber: Index of the sleeve to get stats of. See :ref:`here <netscript_sleeveapi_referencingaduplicatesleeve>`
 
     Return a structure containing the stats of the sleeve
-
-    :RAM cost: 4 GB
     
 .. code-block:: javascript
 

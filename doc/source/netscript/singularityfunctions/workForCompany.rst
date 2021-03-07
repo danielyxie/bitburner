@@ -2,6 +2,7 @@ workForCompany() Netscript Function
 ===================================
 
 .. js:function:: workForCompany(companyName=lastCompany)
+
     :RAM cost: 3 GB
 
     :param string companyName: Name of company to work for. Must be an exact match.

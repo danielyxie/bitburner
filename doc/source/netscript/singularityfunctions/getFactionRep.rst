@@ -2,6 +2,7 @@ getFactionRep() Netscript Function
 ==================================
 
 .. js:function:: getFactionRep(factionName)
+
     :RAM cost: 1 GB
 
     :param string factionName: Name of faction. CASE-SENSITIVE

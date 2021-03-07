@@ -2,6 +2,7 @@ universityCourse() Netscript Function
 =====================================
 
 .. js:function:: universityCourse(universityName, courseName)
+
     :RAM cost: 2 GB
 
     :param string universityName:

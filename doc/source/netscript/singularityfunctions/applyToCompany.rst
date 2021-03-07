@@ -2,6 +2,7 @@ applyToCompany() Netscript Function
 ===================================
 
 .. js:function:: applyToCompany(companyName, field)
+
     :RAM cost: 3 GB
 
     :param string companyName: Name of company to apply to. CASE-SENSITIVE.
