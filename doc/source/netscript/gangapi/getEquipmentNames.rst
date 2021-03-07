@@ -7,3 +7,5 @@ getEquipmentNames() Netscript Function
     Gang Members. This includes Augmentations.
 
     :returns: Array of strings of the names of all Equpiment/Augmentations
+
+    :RAM cost: 1 GB

@@ -10,3 +10,5 @@ getEquipmentCost() Netscript Function
 
     :returns: Cost to purchase the specified Equipment/Augmentation (number). Infinity
              for invalid arguments
+
+    :RAM cost: 2 GB

@@ -64,13 +64,13 @@ export const IndustryDescriptions: IIndustryMap<string> = {
     Energy: "Engage in the production and distribution of energy.<br><br>" +
             "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Energy, "$0.000a") + "<br>" +
             "Recommended starting Industry: NO",
-    Utilities: "Distributes water and provides wastewater services.<br><br>" +
+    Utilities: "Distribute water and provide wastewater services.<br><br>" +
                "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Utilities, "$0.000a") + "<br>" +
                "Recommended starting Industry: NO",
-    Agriculture: "Cultive crops and breed livestock to produce food.<br><br>" +
+    Agriculture: "Cultivate crops and breed livestock to produce food.<br><br>" +
                  "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Agriculture, "$0.000a") + "<br>" +
                  "Recommended starting Industry: YES",
-    Fishing: "Produce food through the breeding and processing of fish and fish products<br><br>" +
+    Fishing: "Produce food through the breeding and processing of fish and fish products.<br><br>" +
              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Fishing, "$0.000a") + "<br>" +
              "Recommended starting Industry: NO",
     Mining: "Extract and process metals from the earth.<br><br>" +
@@ -82,7 +82,7 @@ export const IndustryDescriptions: IIndustryMap<string> = {
     Tobacco: "Create and distribute tobacco and tobacco-related products.<br><br>" +
              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Tobacco, "$0.000a") + "<br>" +
              "Recommended starting Industry: YES",
-    Chemical: "Product industrial chemicals<br><br>" +
+    Chemical: "Produce industrial chemicals.<br><br>" +
               "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Chemical, "$0.000a") + "<br>" +
               "Recommended starting Industry: NO",
     Pharmaceutical: "Discover, develop, and create new pharmaceutical drugs.<br><br>" +

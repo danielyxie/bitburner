@@ -6,6 +6,8 @@ getInformation() Netscript Function
     :param int sleeveNumber: Index of the sleeve to retrieve information. See :ref:`here <netscript_sleeveapi_referencingaduplicatesleeve>`
 
     Return a struct containing tons of information about this sleeve
+    
+    :RAM cost: 4 GB
 
 .. code-block:: javascript
 

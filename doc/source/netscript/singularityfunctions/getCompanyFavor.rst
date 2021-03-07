@@ -2,6 +2,7 @@ getCompanyFavor() Netscript Function
 ====================================
 
 .. js:function:: getCompanyFavor(companyName)
+    :RAM cost: 1 GB
 
     :param string companyName: Name of the company. CASE-SENSITIVE
 

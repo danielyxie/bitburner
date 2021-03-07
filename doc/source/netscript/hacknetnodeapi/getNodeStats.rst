@@ -21,6 +21,8 @@ getNodeStats() Netscript Function
             totalProduction:    Total amount that the Node has produced
         }
 
+    :RAM cost: 0 GB
+    
     .. note:: Note that for Hacknet Nodes, production refers to the amount of money the node generates.
               For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the amount
               of hashes the node generates.

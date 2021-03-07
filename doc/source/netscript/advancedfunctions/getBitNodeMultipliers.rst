@@ -18,3 +18,5 @@ getBitNodeMultipliers() Netscript Function
         mults = getBitNodeMultipliers();
         print(mults.ServerMaxMoney);
         print(mults.HackExpGain);
+
+    :RAM cost: 4 GB

@@ -7,3 +7,5 @@ travel() Netscript Function
     :param string cityName: Name of the destination city.
 
     Return a boolean indicating whether or not the sleeve reached destination.
+
+    :RAM cost: 4 GB

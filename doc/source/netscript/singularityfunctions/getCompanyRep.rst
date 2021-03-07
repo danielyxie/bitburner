@@ -2,6 +2,7 @@ getCompanyRep() Netscript Function
 ==================================
 
 .. js:function:: getCompanyRep(companyName)
+    :RAM cost: 1 GB
 
     :param string companyName: Name of the company. CASE-SENSITIVE
 

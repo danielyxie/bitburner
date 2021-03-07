@@ -9,6 +9,8 @@ getMemberInformation() Netscript Function
 
     :returns: An object with the gang member information.
 
+    :RAM cost: 2 GB
+
     The object has the following structure::
 
         {

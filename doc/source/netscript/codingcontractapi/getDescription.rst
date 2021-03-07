@@ -10,3 +10,5 @@ getDescription() Netscript Function
     Get the full text description for the problem posed by the Coding Contract
 
     :returns: A string with the contract's text description
+
+    :RAM cost: 5 GB

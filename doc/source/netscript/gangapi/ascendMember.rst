@@ -20,3 +20,5 @@ ascendMember() Netscript Function
             agi:        Agility multiplier gained from ascending. Decimal form
             cha:        Charisma multiplier gained from ascending. Decimal form
         }
+
+    :RAM cost: 4 GB

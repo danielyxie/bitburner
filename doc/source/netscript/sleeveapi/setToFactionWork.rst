@@ -8,3 +8,5 @@ setToFactionWork() Netscript Function
     :param string factionWorkType: Name of the action to perform for this faction.
 
     Return a boolean indicating whether or not the sleeve started working or this faction.
+
+    :RAM cost: 4 GB

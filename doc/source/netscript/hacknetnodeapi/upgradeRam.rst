@@ -14,3 +14,5 @@ upgradeRam() Netscript Function
     it is upgraded some positive number of times and the Node reaches it max RAM.
 
     Returns false otherwise.
+
+    :RAM cost: 0 GB
