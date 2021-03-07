@@ -91,7 +91,7 @@ let NetscriptFunctions =
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
     "getAugmentationPrereq|getAugmentationCost|purchaseAugmentation|"          +
-    "softReset|installAugmentations|"                                          +
+    "softReset|installAugmentations|getAugmentationStats|"                      +
 
     // TIX API
     "getStockPrice|getStockPosition|getStockSymbols|getStockMaxShares|"        +

@@ -234,6 +234,8 @@ export let CONSTANTS: IMap<any> = {
     Netscript
     * softReset is a new netscript function that performs a soft reset
         regardless of if the player has bought augmentations or not.
+    * getAugmentationStats is a new netscript function that returns the stats of
+        an augmentation.
 
     Misc.
     * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as

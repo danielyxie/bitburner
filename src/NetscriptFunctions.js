@@ -3416,6 +3416,24 @@ function NetscriptFunctions(workerScript) {
             var aug = Augmentations[name];
             return [aug.baseRepRequirement, aug.baseCost];
         },
+        getAugmentationStats: function(name) {
+            updateDynamicRam("getAugmentationStats", getRamCost("getAugmentationStats"));
+            if (Player.bitNodeN !== 4) {
+                if (SourceFileFlags[4] <= 2) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getAugmentationStats(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (!augmentationExists(name)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationStats() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
+                return {};
+            }
+
+
+            var aug = Augmentations[name];
+            return Object.assign({}, aug.mults);
+        },
         purchaseAugmentation: function(faction, name) {
             updateDynamicRam("purchaseAugmentation", getRamCost("purchaseAugmentation"));
             if (Player.bitNodeN !== 4) {
