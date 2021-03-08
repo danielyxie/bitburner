@@ -492,7 +492,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.BladeburnerSkillCost = inc;
             break;
         default:
-            console.log("WARNING: Player.bitNodeN invalid");
+            console.warn("Player.bitNodeN invalid");
             break;
     }
 }

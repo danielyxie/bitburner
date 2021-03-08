@@ -165,7 +165,7 @@ Node.prototype.deselect = function(actionButtons) {
 
 Node.prototype.untarget = function() {
     if (this.targetedCount === 0) {
-        console.log("WARN: Node " + this.el.id + " is being 'untargeted' when it has no target count");
+        console.warn(`Node ${this.el.id} is being 'untargeted' when it has no target count`);
         return;
     }
     --this.targetedCount;
@@ -214,7 +214,6 @@ function HackingMission(rep, fac) {
     this.jsplumbinstance = null;
 
     this.difficulty = rep / CONSTANTS.HackingMissionRepToDiffConversion + 1;
-    console.log("difficulty: " + this.difficulty);
     this.reward = 250 + (rep / CONSTANTS.HackingMissionRepToRewardConversion);
 }
 
@@ -408,7 +407,7 @@ HackingMission.prototype.createPageDom = function() {
     // Set Action Button event listeners
     this.actionButtons[0].addEventListener("click", ()=>{
         if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
+            console.error("Pressing Action button without selected node");
             return;
         }
         if (this.selectedNode[0].type !== NodeTypes.Core) {return;}
@@ -421,7 +420,7 @@ HackingMission.prototype.createPageDom = function() {
 
     this.actionButtons[1].addEventListener("click", ()=>{
         if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
+            console.error("Pressing Action button without selected node");
             return;
         }
         var nodeType = this.selectedNode[0].type; // In a multiselect, every Node will have the same type
@@ -435,7 +434,7 @@ HackingMission.prototype.createPageDom = function() {
 
     this.actionButtons[2].addEventListener("click", ()=>{
         if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
+            console.error("Pressing Action button without selected node");
             return;
         }
         var nodeType = this.selectedNode[0].type; // In a multiselect, every Node will have the same type
@@ -449,7 +448,7 @@ HackingMission.prototype.createPageDom = function() {
 
     this.actionButtons[3].addEventListener("click", ()=>{
         if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
+            console.error("Pressing Action button without selected node");
             return;
         }
         this.setActionButtonsActive(this.selectedNode[0].type);
@@ -461,7 +460,7 @@ HackingMission.prototype.createPageDom = function() {
 
     this.actionButtons[4].addEventListener("click", ()=>{
         if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
+            console.error("Pressing Action button without selected node");
             return;
         }
         var nodeType = this.selectedNode[0].type;
@@ -475,7 +474,7 @@ HackingMission.prototype.createPageDom = function() {
 
     this.actionButtons[5].addEventListener("click", ()=>{
         if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
+            console.error("Pressing Action button without selected node");
             return;
         }
         this.selectedNode.forEach(function(node){
@@ -637,18 +636,16 @@ HackingMission.prototype.removeAvailablePosition = function(x, y) {
             return;
         }
     }
-    console.log("WARNING: removeAvailablePosition() did not remove " + x + ", " + y);
+    console.warn(`removeAvailablePosition() did not remove ${x}, ${y}`);
 }
 
 HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
     if (!(nodeObj instanceof Node)) {
-        console.log("WARNING: Non-Node object passed into setNodePOsition");
+        console.warn("Non-Node object passed into setNodePOsition");
         return;
     }
     if (isNaN(x) || isNaN(y)) {
-        console.log("ERR: Invalid values passed as x and y for setNodePosition");
-        console.log(x);
-        console.log(y);
+        console.error(`Invalid values (${x}, ${y}) passed as (x, y) for setNodePosition`);
         return;
     }
     nodeObj.pos = [x, y];
@@ -725,7 +722,6 @@ HackingMission.prototype.createMap = function() {
 
     // Configure all Player CPUS
     for (var i = 0; i < this.playerCores.length; ++i) {
-        console.log("Configuring Player Node: " + this.playerCores[i].el.id);
         this.configurePlayerNodeElement(this.playerCores[i].el);
     }
 }
@@ -793,7 +789,7 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
 
 HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     if (nodeObj.el == null) {
-        console.log("ERR: Calling updateNodeDomElement on a Node without an element");
+        console.error("Calling updateNodeDomElement on a Node without an element");
         return;
     }
 
@@ -853,12 +849,12 @@ HackingMission.prototype.getNodeFromElement = function(el) {
     id = id.replace("hacking-mission-node-", "");
     var res = id.split('-');
     if (res.length != 2) {
-        console.log("ERROR Parsing Hacking Mission Node Id. Could not find coordinates");
+        console.error("Parsing hacking mission node id. could not find coordinates");
         return null;
     }
     var x = res[0], y = res[1];
     if (isNaN(x) || isNaN(y) || x >= 8 || y >= 8 || x < 0 || y < 0) {
-        console.log("ERROR: Unexpected values for x and y: " + x + ", " + y);
+        console.error(`Unexpected values (${x}, ${y}) for (x, y)`);
         return null;
     }
     return this.map[x][y];
@@ -866,7 +862,7 @@ HackingMission.prototype.getNodeFromElement = function(el) {
 
 function selectNode(hackMissionInst, el) {
     var nodeObj = hackMissionInst.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("Error getting Node object");}
+    if (nodeObj == null) {console.error("Failed getting Node object");}
     if (!nodeObj.plyrCtrl) {return;}
 
     clearAllSelectedNodes(hackMissionInst);
@@ -876,7 +872,7 @@ function selectNode(hackMissionInst, el) {
 
 function multiselectNode(hackMissionInst, el) {
     var nodeObj = hackMissionInst.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("ERROR: Getting Node Object in multiselectNode()");}
+    if (nodeObj == null) {console.error("Failed getting Node Object in multiselectNode()");}
     if (!nodeObj.plyrCtrl) {return;}
 
     clearAllSelectedNodes(hackMissionInst);
@@ -912,7 +908,7 @@ function clearAllSelectedNodes(hackMissionInst) {
  */
 HackingMission.prototype.configurePlayerNodeElement = function(el) {
     var nodeObj = this.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("Error getting Node object");}
+    if (nodeObj == null) {console.error("Failed getting Node object");}
 
     // Add event listener
     var self = this;
@@ -1239,7 +1235,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             calcStats = true;
             break;
         default:
-            console.log("ERR: Invalid Node Action: " + nodeObj.action);
+            console.error(`Invalid Node Action: ${nodeObj.action}`);
             break;
     }
 
@@ -1452,7 +1448,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                     targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
                 }
                 if (targetNode == null) {
-                    console.log("Error getting Target node Object in enemyAISelectAction()");
+                    console.error("Error getting Target node Object in enemyAISelectAction()");
                 }
 
                 if (targetNode.def > this.enemyAtk + 15) {
@@ -1529,9 +1525,6 @@ HackingMission.prototype.finishMission = function(win) {
 
     if (win) {
         var favorMult = 1 + (this.faction.favor / 100);
-        console.log("Hacking mission base reward: " + this.reward);
-        console.log("favorMult: " + favorMult);
-        console.log("rep mult: " + Player.faction_rep_mult);
         var gain = this.reward  * Player.faction_rep_mult * favorMult;
         dialogBoxCreate("Mission won! You earned " +
                         formatNumber(gain, 3) + " reputation with " + this.faction.name);

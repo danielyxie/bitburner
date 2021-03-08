@@ -62,7 +62,7 @@ function Perk(name, reqRep, info) {
 
 Perk.prototype.setCompany = function(companyName) {
     if (this.factionPerk) {
-        console.log("ERR: Perk cannot be both faction and company perk");
+        console.error("Perk cannot be both faction and company perk");
         return;
     }
     this.companyPerk = true;
@@ -71,7 +71,7 @@ Perk.prototype.setCompany = function(companyName) {
 
 Perk.prototype.setFaction = function(factionName) {
     if (this.companyPerk) {
-        console.log("ERR: Perk cannot be both faction and company perk");
+        console.error("Perk cannot be both faction and company perk");
         return;
     }
     this.factionPerk = true;
@@ -145,7 +145,7 @@ applyPerk = function(perk) {
         case PerkNames.InsiderKnowledgeFactionPerk:
             break;
         default: 
-            console.log("WARNING: Unrecognized perk: " + perk.name);
+            console.warn(`Unrecognized perk: ${perk.name}`);
             return;
     }
 }

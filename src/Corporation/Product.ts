@@ -153,7 +153,6 @@ export class Product {
         const opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"];
         const busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
         var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
-        console.log("designMult: " + designMult);
         var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
                           (1.5 * opsRatio) + (busRatio);
         var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
@@ -221,7 +220,7 @@ export class Product {
     calculateRating(industry: IIndustry): void {
         const weights: IProductRatingWeight = ProductRatingWeights[industry.type];
         if (weights == null) {
-            console.log("ERROR: Could not find product rating weights for: " + industry);
+            console.error(`Could not find product rating weights for: ${industry}`);
             return;
         }
         this.rat = 0;

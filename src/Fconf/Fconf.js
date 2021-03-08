@@ -91,7 +91,7 @@ function parseFconfSetting(setting, value) {
     setting = String(setting);
     value = String(value);
     if (setting == null || value == null || FconfSettings[setting] == null) {
-        console.log("WARNING: Invalid .fconf setting: " + setting);
+        console.warn(`Invalid .fconf setting: ${setting}`);
         return;
     }
 
@@ -184,7 +184,7 @@ function setTheme() {
         FconfSettings.THEME_FONT_COLOR == null ||
         FconfSettings.THEME_BACKGROUND_COLOR == null ||
         FconfSettings.THEME_PROMPT_COLOR == null) {
-        console.log("ERROR: Cannot find Theme Settings");
+        console.error("Cannot find Theme Settings");
         return;
     }
     if (/^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(FconfSettings.THEME_HIGHLIGHT_COLOR) &&

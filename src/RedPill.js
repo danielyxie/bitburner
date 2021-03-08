@@ -96,7 +96,7 @@ function hackWorldDaemon(currentNodeNumber, flume=false) {
     }).then(function() {
         return loadBitVerse(currentNodeNumber, flume);
     }).catch(function(e){
-        console.log("ERROR: " + e.toString());
+        console.error(e.toString());
     });
 }
 
@@ -104,7 +104,7 @@ function giveSourceFile(bitNodeNumber) {
     var sourceFileKey = "SourceFile"+ bitNodeNumber.toString();
     var sourceFile = SourceFiles[sourceFileKey];
     if (sourceFile == null) {
-        console.log("ERROR: could not find source file for Bit node: " + bitNodeNumber);
+        console.error(`Could not find source file for Bit node: ${bitNodeNumber}`);
         return;
     }
 
@@ -264,7 +264,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
     }).then(function() {
         return Promise.resolve(true);
     }).catch(function(e){
-        console.log("ERROR: " + e.toString());
+        console.error(e.toString());
     });
 }
 
@@ -308,7 +308,6 @@ function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume=fal
 
         // Set new Bit Node
         Player.bitNodeN = newBitNode;
-        console.log(`Entering Bit Node ${Player.bitNodeN}`);
 
         // Reenable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");

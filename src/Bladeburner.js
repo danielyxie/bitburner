@@ -495,7 +495,7 @@ Action.prototype.getSuccessChance = function(inst, params={}) {
             var key = "eff" + stat.charAt(0).toUpperCase() + stat.slice(1);
             var effMultiplier = inst.skillMultipliers[key];
             if (effMultiplier == null) {
-                console.log("ERROR: Failed to find Bladeburner Skill multiplier for: " + stat);
+                console.error(`Failed to find Bladeburner Skill multiplier for: ${stat}`);
                 effMultiplier = 1;
             }
             competence += (this.weights[stat] * Math.pow(effMultiplier*playerStatLvl, this.decays[stat]));
@@ -1218,8 +1218,7 @@ Bladeburner.prototype.startAction = function(actionId) {
 Bladeburner.prototype.processAction = function(seconds) {
     if (this.action.type === ActionTypes["Idle"]) {return;}
     if (this.actionTimeToComplete <= 0) {
-        console.log("action.type: " + this.action.type);
-        throw new Error("Invalid actionTimeToComplete value: " + this.actionTimeToComplete);
+        throw new Error(`Invalid actionTimeToComplete value: ${this.actionTimeToComplete}, type; ${this.action.type}`);
     }
     if (!(this.action instanceof ActionIdentifier)) {
         throw new Error("Bladeburner.action is not an ActionIdentifier Object");
@@ -1720,7 +1719,7 @@ Bladeburner.prototype.randomEvent = function() {
 
 Bladeburner.prototype.triggerPotentialMigration = function(sourceCityName, chance) {
     if (chance == null || isNaN(chance)) {
-        console.log("ERROR: Invalid 'chance' parameter passed into Bladeburner.triggerPotentialMigration()");
+        console.error("Invalid 'chance' parameter passed into Bladeburner.triggerPotentialMigration()");
     }
     if (chance > 1) {chance /= 100;}
     if (Math.random() < chance) {this.triggerMigration(sourceCityName);}
@@ -2310,7 +2309,7 @@ Bladeburner.prototype.createSkillsContent = function() {
                     // TODO in the future if items are ever implemented
                     break;
                 default:
-                    console.log("Warning: Unrecognized SkillMult Key: " + multKeys[i]);
+                    console.warn(`Unrecognized SkillMult Key: ${multKeys[i]}`);
                     break;
             }
         }
@@ -3022,7 +3021,6 @@ Bladeburner.prototype.parseCommandArguments = function(command) {
         ++i;
     }
     if (start !== i) {args.push(command.substr(start, i-start));}
-    console.log("Bladeburner console command parsing returned: " + args);
     return args;
 }
 
@@ -3286,7 +3284,7 @@ Bladeburner.prototype.executeSkillConsoleCommand = function(args) {
                                 // TODO if items are ever implemented
                                 break;
                             default:
-                                console.log("Warning: Unrecognized SkillMult Key: " + multKeys[i]);
+                                console.warn(`Unrecognized SkillMult Key: ${multKeys[i]}`);
                                 break;
                         }
                     }

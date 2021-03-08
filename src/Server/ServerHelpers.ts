@@ -74,7 +74,7 @@ export function processSingleServerGrowth(server: Server, numCycles: number, p: 
     //Apply serverGrowth for the calculated number of growth cycles
     let serverGrowth = Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * p.hacking_grow_mult);
     if (serverGrowth < 1) {
-        console.log("WARN: serverGrowth calculated to be less than 1");
+        console.warn("serverGrowth calculated to be less than 1");
         serverGrowth = 1;
     }
 

@@ -167,7 +167,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
                             }
                             return 0;
                         } catch(e) {
-                            console.log("ERROR applying function: " + e);
+                            console.error(`Error applying function: ${e}`);
                             return 0;
                         }
                     } else {

@@ -726,7 +726,7 @@ export function workPartTime(numCycles) {
 
     var comp = Companies[this.companyName], companyRep = "0";
     if (comp == null || !(comp instanceof Company)) {
-        console.log("ERROR: Could not find Company: " + this.companyName);
+        console.error(`Could not find Company: ${this.companyName}`);
     } else {
         companyRep = comp.playerReputation;
     }
@@ -1417,8 +1417,7 @@ export function finishCrime(cancelled) {
                 }
             }
             if(crime == null) {
-                console.log(this.crimeType);
-                dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+                dialogBoxCreate(`ERR: Unrecognized crime type (${this.crimeType}). This is probably a bug please contact the developer`);
             }
             this.gainMoney(this.workMoneyGained);
             this.recordMoneySource(this.workMoneyGained, "crime");
@@ -1529,7 +1528,7 @@ export function singularityStopWork() {
             res = this.finishCrime(true);
             break;
         default:
-            console.log("ERROR: Unrecognized work type");
+            console.error(`Unrecognized work type (${this.workType})`);
             return "";
     }
     return res;
@@ -1840,7 +1839,7 @@ export function reapplyAllAugmentations(resetMultipliers=true) {
         const augName = this.augmentations[i].name;
         var aug = Augmentations[augName];
         if (aug == null) {
-            console.log(`WARNING: Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
+            console.warn(`Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
             continue;
         }
         aug.owned = true;
@@ -1862,7 +1861,7 @@ export function reapplyAllSourceFiles() {
         var srcFileKey = "SourceFile" + this.sourceFiles[i].n;
         var sourceFileObject = SourceFiles[srcFileKey];
         if (sourceFileObject == null) {
-            console.log("ERROR: Invalid source file number: " + this.sourceFiles[i].n);
+            console.error(`Invalid source file number: ${this.sourceFiles[i].n}`);
             continue;
         }
         applySourceFile(this.sourceFiles[i]);
@@ -2003,7 +2002,7 @@ export function checkForFactionInvitations() {
     var fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
     var fulcrumSecretServer = AllServers[SpecialServerIps[SpecialServerNames.FulcrumSecretTechnologies]];
     if (fulcrumSecretServer == null) {
-        console.log("ERROR: Could not find Fulcrum Secret Technologies Server");
+        console.error("Could not find Fulcrum Secret Technologies Server");
     } else {
         if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
             !fulcrumsecrettechonologiesFac.alreadyInvited &&
@@ -2018,7 +2017,7 @@ export function checkForFactionInvitations() {
     var homeComp = this.getHomeComputer();
     var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
     if (bitrunnersServer == null) {
-        console.log("ERROR: Could not find BitRunners Server");
+        console.error("Could not find BitRunners Server");
     } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.manuallyHacked &&
                !bitrunnersFac.alreadyInvited && this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
         invitedFactions.push(bitrunnersFac);
@@ -2028,7 +2027,7 @@ export function checkForFactionInvitations() {
     var theblackhandFac = Factions["The Black Hand"];
     var blackhandServer = AllServers[SpecialServerIps[SpecialServerNames.TheBlackHandServer]];
     if (blackhandServer == null) {
-        console.log("ERROR: Could not find The Black Hand Server");
+        console.error("Could not find The Black Hand Server");
     } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
                !theblackhandFac.alreadyInvited && this.hacking_skill >= 350 && homeComp.maxRam >= 64) {
         invitedFactions.push(theblackhandFac);
@@ -2038,7 +2037,7 @@ export function checkForFactionInvitations() {
     var nitesecFac = Factions["NiteSec"];
     var nitesecServer = AllServers[SpecialServerIps[SpecialServerNames.NiteSecServer]];
     if (nitesecServer == null) {
-        console.log("ERROR: Could not find NiteSec Server");
+        console.error("Could not find NiteSec Server");
     } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
                !nitesecFac.alreadyInvited && this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
         invitedFactions.push(nitesecFac);
@@ -2182,7 +2181,7 @@ export function checkForFactionInvitations() {
     var cybersecFac = Factions["CyberSec"];
     var cybersecServer = AllServers[SpecialServerIps[SpecialServerNames.CyberSecServer]];
     if (cybersecServer == null) {
-        console.log("ERROR: Could not find CyberSec Server");
+        console.error("Could not find CyberSec Server");
     } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
                !cybersecFac.alreadyInvited && this.hacking_skill >= 50) {
         invitedFactions.push(cybersecFac);
@@ -2199,14 +2198,14 @@ export function setBitNodeNumber(n) {
 export function queueAugmentation(name) {
     for(const i in this.queuedAugmentations) {
         if(this.queuedAugmentations[i].name == name) {
-            console.log('tried to queue '+name+' twice, this may be a bug');
+            console.warn(`tried to queue ${name} twice, this may be a bug`);
             return;
         }
     }
 
     for(const i in this.augmentations) {
         if(this.augmentations[i].name == name) {
-            console.log('tried to queue '+name+' but we already have that aug');
+            console.warn(`tried to queue ${name} twice, this may be a bug`);
             return;
         }
     }

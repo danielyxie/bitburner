@@ -2063,7 +2063,7 @@ function installAugmentations(cbScript=null) {
     for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
         var aug = Augmentations[Player.queuedAugmentations[i].name];
         if (aug == null) {
-            console.log("ERROR. Invalid augmentation");
+            console.error(`Invalid augmentation: ${Player.queuedAugmentations[i].name}`);
             continue;
         }
         applyAugmentation(Player.queuedAugmentations[i]);

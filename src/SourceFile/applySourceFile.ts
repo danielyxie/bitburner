@@ -168,7 +168,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile) {
             Player.work_money_mult    *= inc;
             break;
         default:
-            console.log("ERROR: Invalid source file number: " + srcFile.n);
+            console.error(`Invalid source file number: ${srcFile.n}`);
             break;
     }
 

@@ -110,7 +110,6 @@ export class CorporationEventHandler {
                 } else {
                     var totalAmount = money + (stockShares * stockPrice);
                     var repGain = totalAmount / BribeToRepRatio;
-                    console.log("repGain: " + repGain);
                     repGainText.innerText = "You will gain " + numeralWrapper.format(repGain, "0,0") +
                                             " reputation with " +
                                             factionSelector.options[factionSelector.selectedIndex].value +
@@ -1539,8 +1538,7 @@ export class CorporationEventHandler {
 
                     this.corp.numShares -= shares;
                     if (isNaN(this.corp.issuedShares)) {
-                        console.log("ERROR: Corporation issuedShares is NaN: " + this.corp.issuedShares);
-                        console.log("Converting to number now");
+                        console.error(`Corporation issuedShares is NaN: ${this.corp.issuedShares}`);
                         var res = parseInt(this.corp.issuedShares);
                         if (isNaN(res)) {
                             this.corp.issuedShares = 0;
