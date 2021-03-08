@@ -981,7 +981,7 @@ GangMemberUpgrade.fromJSON = function(value) {
 Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
 // Initialize Gang Member Upgrades
-const GangMemberUpgrades = {}
+export const GangMemberUpgrades = {}
 
 function addGangMemberUpgrade(name, cost, type, mults) {
     GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);

@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.48.0",
+    Version:                "0.49.0",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -230,6 +230,9 @@ export let CONSTANTS: IMap<any> = {
     `
     v0.49.0
     -------
+
+    Netscript
+    * 'gang.getEquipmentStats' returns the stats of the equipment.
 
     Misc.
     * Minor formatting under Hacking>Active Scripts

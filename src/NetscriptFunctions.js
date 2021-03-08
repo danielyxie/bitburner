@@ -29,7 +29,7 @@ import {
     calculateGrowTime,
     calculateWeakenTime
 } from "./Hacking";
-import { AllGangs } from "./Gang";
+import { AllGangs, GangMemberUpgrades } from "./Gang";
 import { Faction } from "./Faction/Faction";
 import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
@@ -3741,6 +3741,16 @@ function NetscriptFunctions(workerScript) {
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentType", e));
                 }
+            },
+            getEquipmentStats: function(equipName) {
+                updateDynamicRam("getEquipmentStats", getRamCost("gang", "getEquipmentStats"));
+                nsGang.checkGangApiAccess(workerScript, "getEquipmentStats");
+
+                const equipment = GangMemberUpgrades[equipName];
+                if (!equipment) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentStats", `${equipName} does not exists`));
+                }
+                return Object.assign({}, equipment.mults);
             },
             purchaseEquipment: function(memberName, equipName) {
                 updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));

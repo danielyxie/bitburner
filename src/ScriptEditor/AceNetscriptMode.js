@@ -110,7 +110,7 @@ let NetscriptFunctions =
     "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
     "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
     "getEquipmentCost|getEquipmentType|purchaseEquipment|ascendMember|"        +
-    "setTerritoryWarfare|"                                                     +
+    "setTerritoryWarfare|getEquipmentStats|"                                   +
     "getChanceToWinClash|getBonusTime|"                                        +
 
     // Bladeburner API
