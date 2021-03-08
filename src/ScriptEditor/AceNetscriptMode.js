@@ -87,11 +87,11 @@ let NetscriptFunctions =
     "getCompanyFavor|stopAction|getFactionFavor|"                              +
     "getFavorToDonate|getFactionFavorGain|getCompanyFavorGain|"                +
     "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
-    "donateToFaction|"                                                         +
+    "donateToFaction|getCrimeStats|"                                           +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
     "getAugmentationPrereq|getAugmentationCost|purchaseAugmentation|"          +
-    "softReset|installAugmentations|getAugmentationStats|"                      +
+    "softReset|installAugmentations|getAugmentationStats|"                     +
 
     // TIX API
     "getStockPrice|getStockPosition|getStockSymbols|getStockMaxShares|"        +

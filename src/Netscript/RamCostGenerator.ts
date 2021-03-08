@@ -197,6 +197,7 @@ export const RamCosts: IMap<any> = {
     createProgram: () => RamCostConstants.ScriptSingularityFn3RamCost,
     commitCrime: () => RamCostConstants.ScriptSingularityFn3RamCost,
     getCrimeChance: () => RamCostConstants.ScriptSingularityFn3RamCost,
+    getCrimeStats: () => RamCostConstants.ScriptSingularityFn3RamCost,
     getOwnedAugmentations: () => RamCostConstants.ScriptSingularityFn3RamCost,
     getOwnedSourceFiles: () => RamCostConstants.ScriptSingularityFn3RamCost,
     getAugmentationsFromFaction: () => RamCostConstants.ScriptSingularityFn3RamCost,

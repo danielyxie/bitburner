@@ -3332,6 +3332,22 @@ function NetscriptFunctions(workerScript) {
 
             return crime.successRate(Player);
         },
+        getCrimeStats: function(crimeRoughName) {
+            updateDynamicRam("getCrimeStats", getRamCost("getCrimeStats"));
+            if (Player.bitNodeN !== 4) {
+                if (SourceFileFlags[4] <= 2) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getCrimeStats(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return;
+                }
+            }
+
+            const crime = findCrime(crimeRoughName.toLowerCase());
+            if(crime == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into getCrimeStats(): " + crime);
+            }
+
+            return Object.assign({}, crime);
+        },
         getOwnedAugmentations: function(purchased=false) {
             updateDynamicRam("getOwnedAugmentations", getRamCost("getOwnedAugmentations"));
             if (Player.bitNodeN !== 4) {
