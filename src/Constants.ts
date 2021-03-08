@@ -233,6 +233,7 @@ export let CONSTANTS: IMap<any> = {
 
     Netscript
     * 'gang.getEquipmentStats' returns the stats of the equipment.
+    * 'gang.getTaskStats' returns the stats of a task.
 
     Misc.
     * Minor formatting under Hacking>Active Scripts

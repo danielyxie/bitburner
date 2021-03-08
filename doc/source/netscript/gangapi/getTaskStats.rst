@@ -1,9 +1,11 @@
 getTaskStats() Netscript Function
 ======================================
 
-.. js:function:: getTaskStats()
+.. js:function:: getTaskStats(taskName)
 
     :RAM cost: 1 GB
+
+    :param string name: Name of the task.
 
     Get the stats of a gang member stats. This is typically used to evaluate
     which action should be executed next.
