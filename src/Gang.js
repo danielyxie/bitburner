@@ -912,7 +912,7 @@ GangMemberTask.fromJSON = function(value) {
 
 Reviver.constructors.GangMemberTask = GangMemberTask;
 
-const GangMemberTasks = {};
+export const GangMemberTasks = {};
 
 function addGangMemberTask(name, desc, isHacking, isCombat, params) {
     GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);

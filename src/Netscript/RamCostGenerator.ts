@@ -216,6 +216,7 @@ export const RamCosts: IMap<any> = {
         canRecruitMember: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
         recruitMember: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
         getTaskNames: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
+        getTaskStats: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
         setMemberTask: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
         getEquipmentNames: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
         getEquipmentCost: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,

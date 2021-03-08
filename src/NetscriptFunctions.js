@@ -29,7 +29,11 @@ import {
     calculateGrowTime,
     calculateWeakenTime
 } from "./Hacking";
-import { AllGangs, GangMemberUpgrades } from "./Gang";
+import {
+    AllGangs,
+    GangMemberUpgrades,
+    GangMemberTasks
+} from "./Gang";
 import { Faction } from "./Faction/Faction";
 import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
@@ -3711,6 +3715,17 @@ function NetscriptFunctions(workerScript) {
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setMemberTask", e));
                 }
+            },
+            getTaskStats: function(taskName) {
+                updateDynamicRam("getTaskStats", getRamCost("gang", "getTaskStats"));
+                nsGang.checkGangApiAccess(workerScript, "getTaskStats");
+                const task = GangMemberTasks[taskName];
+                if (!task) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getTaskStats", `${taskName} does not exists`));
+                }
+                const copy = Object.assign({}, task);
+                copy.territory = Object.assign({}, task.territory)
+                return copy;
             },
             getEquipmentNames: function() {
                 updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
