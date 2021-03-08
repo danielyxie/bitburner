@@ -4,14 +4,16 @@ Changelog
 =========
 
 
-v0.48.0 - ASCII - 2020-03-07
+v0.48.0 - ASCII - 2020-03-07 (hydroflame)
 -------
 
 **ASCII**
+
 * Travel Agency now displays a world map
 * Cities are now top view of metro station maps
 
 **Netscript**
+
 * 'softReset' is a new netscript function that performs a soft reset
     regardless of if the player has bought augmentations or not.
 * 'getAugmentationStats' is a new netscript function that returns the stats of
@@ -22,11 +24,13 @@ v0.48.0 - ASCII - 2020-03-07
 * 'hacknet.maxNumNodes' returns the maximum number of hacknet nodes.
 
 **Bladeburner**
+
 * Current stamina will scale as max stamina increases, this prevents players
     from having very high penalty when they gain huge amount of exp at the 
     start of a reset.
 
 **Misc.**
+
 * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as
     having a limit of 3.
 * Fixed an issue where the gang equipment screen would freeze the game if a 
