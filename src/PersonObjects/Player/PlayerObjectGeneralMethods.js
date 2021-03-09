@@ -37,6 +37,7 @@ import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
 import { Settings } from "../../Settings/Settings";
 import { SpecialServerIps, SpecialServerNames } from "../../Server/SpecialServerIps";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
+import { applyExploit } from "../../Exploits/applyExploits";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
@@ -1866,6 +1867,7 @@ export function reapplyAllSourceFiles() {
         }
         applySourceFile(this.sourceFiles[i]);
     }
+    applyExploit();
 }
 
 /*************** Check for Faction Invitations *************/
@@ -2297,4 +2299,10 @@ export function gotoLocation(to) {
 
 export function canAccessResleeving() {
     return this.bitNodeN === 10 || (SourceFileFlags[10] > 0);
+}
+
+export function giveExploit(exploit) {
+    if(!this.exploits.includes(exploit)) {
+        this.exploits.push(exploit);
+    }
 }

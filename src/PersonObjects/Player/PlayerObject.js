@@ -201,6 +201,8 @@ export function PlayerObject() {
 
     // Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
+
+    this.exploits = [];
 };
 
 // Apply player methods to the prototype using Object.assign()

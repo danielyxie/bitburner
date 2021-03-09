@@ -142,6 +142,7 @@ import {
 import { NetscriptPort } from "./NetscriptPort";
 import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
+import { Exploit } from './Exploits/Exploit.ts';
 
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
@@ -4713,6 +4714,9 @@ function NetscriptFunctions(workerScript) {
             break: function() {
                 return Player.karma;
             }
+        },
+        exploit: function() {
+            Player.giveExploit(Exploit.UndocumentedFunctionCall);
         }
     } // End return
 } // End NetscriptFunction()
