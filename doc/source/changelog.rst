@@ -4,7 +4,7 @@ Changelog
 =========
 
 
-v0.48.0 - ASCII - 2020-03-07 (hydroflame)
+v0.48.0 - ASCII - 2021-03-07 (hydroflame)
 -------
 
 **ASCII**

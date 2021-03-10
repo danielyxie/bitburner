@@ -228,8 +228,15 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.49.0
+    v0.49.0 - 2021-XX-XX Source-File -1
     -------
+
+    Source-File -1
+    * For advanced players: The game now embraces exploits and will reward
+      players for doing so.
+
+
+
 
     Netscript
     * 'gang.getEquipmentStats' returns the stats of the equipment.
