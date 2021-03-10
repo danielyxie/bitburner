@@ -29,6 +29,9 @@ export class Script {
     // Filename for the script file
     filename: string = "";
 
+    // url of the script if any, only for NS2.
+    url: string = "";
+
     // The dynamic module generated for this script when it is run.
     // This is only applicable for NetscriptJS
     module: any = "";

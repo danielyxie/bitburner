@@ -68,6 +68,7 @@ import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
 import { findRunningScript } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
+import { _getScriptUrls } from "./NetscriptJSEvaluator";
 import {
     AllServers,
     AddToAllServers,
@@ -392,6 +393,23 @@ function NetscriptFunctions(workerScript) {
         return server.getContract(fn);
     }
 
+    const lineNumber = function() {
+        // exactly 5 function call parent from this one, so index 4
+        const fileline = (new Error()).stack.split('\n')[4];
+        const scripts = workerScript.getServer().scripts;
+
+        let problem;
+        for(const script of scripts) {
+            if (script.url && fileline.includes(script.url)) {
+                problem = script.filename;
+            }
+        }
+
+        const re = /.*:(\d+):\d+.*/;
+        const match = fileline.match(re);
+        return `${problem}#${match[1]}`;
+    }
+
     return {
         hacknet : {
             numNodes : function() {
@@ -531,7 +549,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
-                workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
+                workerScript.scriptRef.log(`Executing hack ${ip} in ${hackingTime.toFixed(3)} seconds (t=${threads})`);
             }
 
             return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
@@ -567,7 +585,7 @@ function NetscriptFunctions(workerScript) {
                     Player.gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
-                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
+                        workerScript.scriptRef.log(`Successfully hacked ${server.hostname} for ${numeralWrapper.format(moneyGained, '$0.000a')} and ${numeralWrapper.format(expGainedOnSuccess, '0.000a')} exp (t=${threads})`);
                     }
                     server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
                     if (stock) {
@@ -579,7 +597,7 @@ function NetscriptFunctions(workerScript) {
                     Player.gainHackingExp(expGainedOnFailure);
                     workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
-                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
+                        workerScript.scriptRef.log(`Failed to hack ${server.hostname}. Gained ${numeralWrapper.format(expGainedOnFailure, '0.000a')} exp (t=${threads})`);
                     }
                     return Promise.resolve(0);
                 }
@@ -635,8 +653,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot grow(). Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log(`Cannot grow(). Invalid IP or hostname passed in: ${ip}`);
+                throw makeRuntimeRejectMsg(workerScript, `Cannot grow(). Invalid IP or hostname passed in: ${ip}`);
             }
 
             // No root access or skill level too low
@@ -648,7 +666,7 @@ function NetscriptFunctions(workerScript) {
 
             var growTime = calculateGrowTime(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
-                workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime, 3) + " seconds (t=" + threads + ")");
+                workerScript.scriptRef.log(`Executing grow('${server.hostname}') in ${formatNumber(growTime, 3)} seconds (t=${threads})`);
             }
             return netscriptDelay(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
@@ -661,10 +679,9 @@ function NetscriptFunctions(workerScript) {
                 if (growthPercentage == 1) {
                     expGain = 0;
                 }
+                const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
                 if (workerScript.shouldLog("grow")) {
-                    workerScript.log("Available money on " + server.hostname + " grown by " +
-                                     formatNumber((moneyAfter/moneyBefore)*100 - 100, 6) + "%. Gained " +
-                                     formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");
+                    workerScript.log(`Available money on ${server.hostname} grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.format(expGain, '0.000a')} hacking exp (t=${threads})`);
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
@@ -706,8 +723,7 @@ function NetscriptFunctions(workerScript) {
 
             var weakenTime = calculateWeakenTime(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
-                workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
-                                           formatNumber(weakenTime, 3) + " seconds (t=" + threads + ")");
+                workerScript.scriptRef.log(`Executing weaken('${server.hostname}') in ${formatNumber(weakenTime, 3)} seconds (t=${threads})`);
             }
             return netscriptDelay(weakenTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
@@ -715,8 +731,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
                 var expGain = calculateHackingExpGain(server) * threads;
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
-                    workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
-                                               ". Gained " + formatNumber(expGain, 4) + " hacking exp (t=" + threads + ")");
+                    workerScript.scriptRef.log(`${server.hostname} security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.format(expGain, '0.000a')} hacking exp (t=${threads})`);
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
@@ -734,32 +749,32 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
             }
             var x = args.toString();
-            post(workerScript.scriptRef.filename + ": " + args.toString());
+            post(`${workerScript.scriptRef.filename}: ${args.toString()}`);
         },
         clearLog: function() {
             workerScript.scriptRef.clearLog();
         },
         disableLog: function(fn) {
             if (possibleLogs[fn]===undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid argument to disableLog: "+fn);
+                throw makeRuntimeRejectMsg(workerScript, `Invalid argument to disableLog: ${fn}`);
             }
             workerScript.disableLogs[fn] = true;
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.disableLog == null) {
-                workerScript.scriptRef.log("Disabled logging for " + fn);
+                workerScript.scriptRef.log(`Disabled logging for ${fn}`);
             }
         },
         enableLog: function(fn) {
             if (possibleLogs[fn]===undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid argument to enableLog: "+fn);
+                throw makeRuntimeRejectMsg(workerScript, `Invalid argument to enableLog: ${fn}`);
             }
             delete workerScript.disableLogs[fn];
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.enableLog == null) {
-                workerScript.scriptRef.log("Enabled logging for " + fn);
+                workerScript.scriptRef.log(`Enabled logging for ${fn}`);
             }
         },
         isLogEnabled : function(fn) {
             if (possibleLogs[fn] === undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid argument to isLogEnabled: " + fn);
+                throw makeRuntimeRejectMsg(workerScript, `Invalid argument to isLogEnabled: ${fn}`);
             }
             return workerScript.disableLogs[fn] ? false : true;
         },
@@ -784,12 +799,13 @@ function NetscriptFunctions(workerScript) {
         nuke: function(ip){
             updateDynamicRam("nuke", getRamCost("nuke"));
             if (ip === undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw makeRuntimeRejectMsg(workerScript, "nuke call has incorrect number of arguments. Takes 1 argument");
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
+                const msg = `Cannot call nuke('${ip}'). Invalid IP/hostname.`;
+                workerScript.scriptRef.log(msg);
+                throw makeRuntimeRejectMsg(workerScript, msg);
             }
             if (!Player.hasProgram(Programs.NukeProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the NUKE.exe virus!");
@@ -799,12 +815,12 @@ function NetscriptFunctions(workerScript) {
             }
             if (server.hasAdminRights) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) {
-                    workerScript.scriptRef.log("Already have root access to " + server.hostname);
+                    workerScript.scriptRef.log(`Already have root access to ${server.hostname}`);
                 }
             } else {
                 server.hasAdminRights = true;
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) {
-                    workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
+                    workerScript.scriptRef.log(`Executed NUKE.exe virus on ${server.hostname} to gain root access`);
                 }
             }
             return true;
@@ -812,12 +828,13 @@ function NetscriptFunctions(workerScript) {
         brutessh: function(ip){
             updateDynamicRam("brutessh", getRamCost("brutessh"));
             if (ip === undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw makeRuntimeRejectMsg(workerScript, "brutessh call has incorrect number of arguments. Takes 1 argument");
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
+                const msg = `Cannot call brutessh('${ip}'). Invalid IP/hostname.`;
+                workerScript.scriptRef.log(msg);
+                throw makeRuntimeRejectMsg(workerScript, msg);
             }
             if (!Player.hasProgram(Programs.BruteSSHProgram.name)) {
                 workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
@@ -825,13 +842,13 @@ function NetscriptFunctions(workerScript) {
             }
             if (!server.sshPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) {
-                    workerScript.scriptRef.log("Executed BruteSSH.exe on " + server.hostname + " to open SSH port (22)");
+                    workerScript.scriptRef.log(`Executed BruteSSH.exe on ${server.hostname} to open SSH port (22)`);
                 }
                 server.sshPortOpen = true;
                 ++server.openPortCount;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) {
-                    workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
+                    workerScript.scriptRef.log(`SSH Port (22) already opened on ${server.hostname}`);
                 }
             }
             return true;
@@ -843,21 +860,22 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
+                const msg = `Cannot call ftpcrack('${ip}'). Invalid IP/hostname.`
+                workerScript.scriptRef.log(msg);
+                throw makeRuntimeRejectMsg(workerScript, msg);
             }
             if (!Player.hasProgram(Programs.FTPCrackProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the FTPCrack.exe program!");
             }
             if (!server.ftpPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) {
-                    workerScript.scriptRef.log("Executed FTPCrack.exe on " + server.hostname + " to open FTP port (21)");
+                    workerScript.scriptRef.log(`Executed FTPCrack.exe on ${server.hostname} to open FTP port (21)`);
                 }
                 server.ftpPortOpen = true;
                 ++server.openPortCount;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) {
-                    workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
+                    workerScript.scriptRef.log(`FTP Port (21) already opened on ${server.hostname}`);
                 }
             }
             return true;
@@ -869,21 +887,22 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
+                const msg = `Cannot call relaysmtp('${ip}'). Invalid IP/hostname.`
+                workerScript.scriptRef.log(msg);
+                throw makeRuntimeRejectMsg(workerScript, msg);
             }
             if (!Player.hasProgram(Programs.RelaySMTPProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the relaySMTP.exe program!");
             }
             if (!server.smtpPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) {
-                    workerScript.scriptRef.log("Executed relaySMTP.exe on " + server.hostname + " to open SMTP port (25)");
+                    workerScript.scriptRef.log(`Executed relaySMTP.exe on ${server.hostname} to open SMTP port (25)`);
                 }
                 server.smtpPortOpen = true;
                 ++server.openPortCount;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) {
-                    workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
+                    workerScript.scriptRef.log(`SMTP Port (25) already opened on ${server.hostname}`);
                 }
             }
             return true;
@@ -895,21 +914,22 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
+                const msg = `Cannot call httpworm('${ip}'). Invalid IP/hostname.`
+                workerScript.scriptRef.log(msg);
+                throw makeRuntimeRejectMsg(workerScript, msg);
             }
             if (!Player.hasProgram(Programs.HTTPWormProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the HTTPWorm.exe program!");
             }
             if (!server.httpPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) {
-                    workerScript.scriptRef.log("Executed HTTPWorm.exe on " + server.hostname + " to open HTTP port (80)");
+                    workerScript.scriptRef.log(`Executed HTTPWorm.exe on ${server.hostname} to open HTTP port (80)`);
                 }
                 server.httpPortOpen = true;
                 ++server.openPortCount;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) {
-                    workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
+                    workerScript.scriptRef.log(`HTTP Port (80) already opened on ${server.hostname}`);
                 }
             }
             return true;
@@ -921,21 +941,22 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
+                const msg = `Cannot call sqlinject('${ip}'). Invalid IP/hostname.`
+                workerScript.scriptRef.log(msg);
+                throw makeRuntimeRejectMsg(workerScript, msg);
             }
             if (!Player.hasProgram(Programs.SQLInjectProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the SQLInject.exe program!");
             }
             if (!server.sqlPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) {
-                    workerScript.scriptRef.log("Executed SQLInject.exe on " + server.hostname + " to open SQL port (1433)");
+                    workerScript.scriptRef.log(`Executed SQLInject.exe on ${server.hostname} to open SQL port (1433)`);
                 }
                 server.sqlPortOpen = true;
                 ++server.openPortCount;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) {
-                    workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
+                    workerScript.scriptRef.log(`SQL Port (1433) already opened on ${server.hostname}`);
                 }
             }
             return true;
@@ -1154,21 +1175,21 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 if (!found) {
-                    workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                    workerScript.scriptRef.log(`${scriptname} does not exist. scp() failed`);
                     return false;
                 }
 
                 for (var i = 0; i < destServer.messages.length; ++i) {
                     if (destServer.messages[i] === scriptname) {
                         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
-                            workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                            workerScript.scriptRef.log(`${scriptname} copied over to ${destServer.hostname}`);
                         }
                         return true; // Already exists
                     }
                 }
                 destServer.messages.push(scriptname);
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
-                    workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                    workerScript.scriptRef.log(`${scriptname} copied over to ${destServer.hostname}`);
                 }
                 return true;
             }
@@ -4717,6 +4738,12 @@ function NetscriptFunctions(workerScript) {
         },
         exploit: function() {
             Player.giveExploit(Exploit.UndocumentedFunctionCall);
+        },
+        whatever: function(ip) {
+            const server = getServer(ip);
+            if (server == null) {
+                throw makeRuntimeRejectMsg(workerScript, `${lineNumber()}: hack('${ip}'): Invalid IP/hostname.`);
+            }
         }
     } // End return
 } // End NetscriptFunction()
