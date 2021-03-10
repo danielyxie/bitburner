@@ -11,7 +11,6 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
 import { MaxNumberHacknetServers } from "../Hacknet/HacknetServer";
 
-
 export function CharacterInfo(p: IPlayer): React.ReactElement {
     function LastEmployer(): React.ReactElement {
         if (p.companyName) {
@@ -225,7 +224,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
             <b>Misc.</b><br /><br />
             <span>Servers owned:       {p.purchasedServers.length} / {getPurchaseServerLimit()}</span><br />
-            <span>Hacknet Nodes owned: {p.hacknetNodes.length} / {MaxNumberHacknetServers}</span><br />
+            <span>Hacknet Nodes owned: {p.hacknetNodes.length}</span><br />
             <span>Augmentations installed: {p.augmentations.length}</span><br />
             <span>Time played since last Augmentation: {convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug)}</span><br />
             <BitNodeTimeText />

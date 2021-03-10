@@ -120,7 +120,7 @@ export function getCostOfNextHacknetServer() {
     const numOwned = Player.hacknetNodes.length;
     const mult = HacknetServerPurchaseMult;
 
-    if (numOwned > MaxNumberHacknetServers) { return Infinity; }
+    if (numOwned >= MaxNumberHacknetServers) { return Infinity; }
 
     return BaseCostForHacknetServer * Math.pow(mult, numOwned) * Player.hacknet_node_purchase_cost_mult;
 }

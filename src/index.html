@@ -406,7 +406,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <div id="game-options-left-panel">
                 <!-- Netscript execution time -->
                 <fieldset>
-                    <label for="settingsNSExecTimeRangeVal" class="tooltip">Netscript exec time:
+                    <label for="settingsNSExecTimeRangeVal" class="tooltip">Netscript exec time:&nbsp;
                         <span class="tooltiptext">
                             The minimum number of milliseconds it takes to execute an operation in Netscript.
                             Setting this too low can result in poor performance if you have many scripts running.
@@ -414,13 +414,13 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                         </span>
                     </label>
 
-                    <input type ="range" max="100" min="10" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="25" />
+                    <input class="optionRange" type="range" max="100" min="10" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="25" />
                     <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
                 <!-- Log capacity -->
                 <fieldset>
-                    <label for="settingsNSLogRangeVal" class="tooltip">Netscript log size:
+                    <label for="settingsNSLogRangeVal" class="tooltip">Netscript log size:&nbsp;&nbsp;
                         <span class="tooltiptext">
                             The maximum number of lines a script's logs can hold. Setting this too high
                             can cause the game to use a lot of memory if you have many scripts running.
@@ -428,13 +428,13 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20" step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50" />
+                    <input class="optionRange" type="range" max="100" min="20" step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50" />
                     <em id="settingsNSLogRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
                 <!-- Port capacity -->
                 <fieldset>
-                    <label for="settingsNSPortRangeVal" class="tooltip">Netscript port size:
+                    <label for="settingsNSPortRangeVal" class="tooltip">Netscript port size:&nbsp;
                         <span class="tooltiptext">
                             The maximum number of entries that can be written to a port using Netscript's
                             write() function. Setting this too high can cause the game to use a lot of memory.
@@ -442,19 +442,19 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20" step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50" />
+                    <input class="optionRange" type="range" max="100" min="20" step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50" />
                     <em id="settingsNSPortRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
                 <!-- Autosave Interval -->
                 <fieldset>
-                    <label for="settingsAutosaveIntervalVal" class="tooltip">Autosave Interval
+                    <label for="settingsAutosaveIntervalVal" class="tooltip">Autosave Interval:&nbsp;&nbsp;&nbsp;
                         <span class="tooltiptext">
                             The time (in seconds) between each autosave. Set to 0 to disable autosave.
                         </span>
                     </label>
 
-                    <input type="range" max="600" min="0" step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60" />
+                    <input class="optionRange" type="range" max="600" min="0" step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60" />
                     <em id="settingsAutosaveIntervalValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -467,7 +467,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             and can be viewed with the 'cat' Terminal command.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsSuppressMessages" id="settingsSuppressMessages">
+                    <input class="optionCheckbox" type="checkbox" name="settingsSuppressMessages" id="settingsSuppressMessages">
                 </fieldset>
 
                 <!-- Suppress faction invites -->
@@ -478,7 +478,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             on the screen. Your outstanding faction invites can be viewed in the 'Factions' page.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsSuppressFactionInvites" id="settingsSuppressFactionInvites">
+                    <input class="optionCheckbox" type="checkbox" name="settingsSuppressFactionInvites" id="settingsSuppressFactionInvites">
                 </fieldset>
 
                 <!-- Suppress travel confirmation -->
@@ -488,7 +488,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             If this is set, the confirmation message before traveling will not show up. You will automatically be deducted the travel cost as soon as you click.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsSuppressTravelConfirmation" id="settingsSuppressTravelConfirmation">
+                    <input class="optionCheckbox" type="checkbox" name="settingsSuppressTravelConfirmation" id="settingsSuppressTravelConfirmation">
                 </fieldset>
 
 
@@ -499,7 +499,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             If this is set, the confirmation message before buying augmentation will not show up.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsSuppressBuyAugmentationConfirmation" id="settingsSuppressBuyAugmentationConfirmation">
+                    <input class="optionCheckbox" type="checkbox" name="settingsSuppressBuyAugmentationConfirmation" id="settingsSuppressBuyAugmentationConfirmation">
                 </fieldset>
 
                 <!-- Hospitalization Popup -->
@@ -509,7 +509,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             If this is set, a popup message will no longer be shown when you are hospitalized after taking too much damage.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsSuppressHospitalizationPopup" id="settingsSuppressHospitalizationPopup">
+                    <input class="optionCheckbox" type="checkbox" name="settingsSuppressHospitalizationPopup" id="settingsSuppressHospitalizationPopup">
                 </fieldset>
 
                 <!-- Disable Terminal and Navigation Shortcuts -->
@@ -521,7 +521,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             and the "Save and Close (Ctrl + b)" hotkey in the Text Editor.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsDisableHotkeys" id="settingsDisableHotkeys">
+                    <input class="optionCheckbox" type="checkbox" name="settingsDisableHotkeys" id="settingsDisableHotkeys">
                 </fieldset>
 
                 <!-- Locale for displaying numbers -->
