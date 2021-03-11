@@ -1107,12 +1107,10 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (res) {
-                if (workerScript.shouldLog("kill")) {
-                    if (killByPid) {
-                        workerScript.log("kill", `Killing script with PID ${filename}`);
-                    } else {
-                        workerScript.log("kill", `Killing ${filename} on ${ip} with args: ${arrayToString(scriptArgs)}.`);
-                    }
+                if (killByPid) {
+                    workerScript.log("kill", `Killing script with PID ${filename}`);
+                } else {
+                    workerScript.log("kill", `Killing '${filename}' on '${ip}' with args: ${arrayToString(scriptArgs)}.`);
                 }
                 return true;
             } else {
@@ -1138,7 +1136,7 @@ function NetscriptFunctions(workerScript) {
                 killWorkerScript(server.runningScripts[i], server.ip, false);
             }
             WorkerScriptStartStopEventEmitter.emitEvent();
-            workerScript.log("killall", `Killing all scripts on ${server.hostname}. May take a few minutes for the scripts to die.`);
+            workerScript.log("killall", `Killing all scripts on '${server.hostname}'. May take a few minutes for the scripts to die.`);
 
             return scriptsRunning;
         },
@@ -1168,7 +1166,7 @@ function NetscriptFunctions(workerScript) {
 
             // Invalid file type
             if (!isValidFilePath(scriptname)) {
-                throw makeRuntimeErrorMsg("scp", `Invalid filename: ${scriptname}`);
+                throw makeRuntimeErrorMsg("scp", `Invalid filename: '${scriptname}'`);
             }
 
             // Invalid file name
@@ -1455,10 +1453,10 @@ function NetscriptFunctions(workerScript) {
             if (failOnHacknetServer(server, "getServerMoneyAvailable")) { return 0; }
             if (server.hostname == "home") {
                 // Return player's money
-                workerScript.log("getServerMoneyAvailable", `returned player's money: $${formatNumber(Player.money.toNumber(), 2)}`);
+                workerScript.log("getServerMoneyAvailable", `returned player's money: ${numeralWrapper.format(Player.money.toNumber(), '$0.000a')}`);
                 return Player.money.toNumber();
             }
-            workerScript.log("getServerMoneyAvailable", `returned ${formatNumber(server.moneyAvailable, 2)} for '${server.hostname}`);
+            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.format(server.moneyAvailable, '$0.000a')} for '${server.hostname}`);
             return server.moneyAvailable;
         },
         getServerSecurityLevel: function(ip) {
@@ -1493,7 +1491,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerMaxMoney", getRamCost("getServerMaxMoney"));
             const server = safeGetServer(ip, "getServerMaxMoney");
             if (failOnHacknetServer(server, "getServerMaxMoney")) { return 0; }
-            workerScript.log("getServerMaxMoney", `returned ${formatNumber(server.moneyMax, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerMaxMoney", `returned ${numeralWrapper.format(server.moneyMax, '$0.000a')} for '${server.hostname}'`);
             return server.moneyMax;
         },
         getServerGrowth: function(ip) {
@@ -1901,7 +1899,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (Player.money.lt(cost)) {
-                workerScript.log("purchaseServer", `Not enough money to purchase server. Need $${formatNumber(cost, 2)}`);
+                workerScript.log("purchaseServer", `Not enough money to purchase server. Need ${numeralWrapper.format(cost, '$0.000a')}`);
                 return "";
             }
             var newServ = safetlyCreateUniqueServer({
@@ -1920,7 +1918,7 @@ function NetscriptFunctions(workerScript) {
             homeComputer.serversOnNetwork.push(newServ.ip);
             newServ.serversOnNetwork.push(homeComputer.ip);
             Player.loseMoney(cost);
-            workerScript.log("purchaseServer", `Purchased new server with hostname '${newServ.hostname}' for $${formatNumber(cost, 2)}`);
+            workerScript.log("purchaseServer", `Purchased new server with hostname '${newServ.hostname}' for ${numeralWrapper.format(cost, '$0.000a')}`);
             return newServ.hostname;
         },
         deleteServer: function(hostname) {
@@ -1954,7 +1952,7 @@ function NetscriptFunctions(workerScript) {
 
             // Delete all scripts running on server
             if (server.runningScripts.length > 0) {
-                workerScript.log("deleteServer", `Cannot delete server ('${server.hostname}') because it still has scripts running.`);
+                workerScript.log("deleteServer", `Cannot delete server '${server.hostname}' because it still has scripts running.`);
                 return false;
             }
 
@@ -3340,12 +3338,10 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("recruitMember", getRamCost("gang", "recruitMember"));
                 checkGangApiAccess("recruitMember");
                 const recruited = Player.gang.recruitMember(name);
-                if (workerScript.shouldLog("recruitMember")) {
-                    if (recruited) {
-                        workerScript.log("recruitMember", `Successfully recruited Gang Member '${name}'`);
-                    } else {
-                        workerScript.log("recruitMember", `Failed to recruit Gang Member '${name}'`);
-                    }
+                if (recruited) {
+                    workerScript.log("recruitMember", `Successfully recruited Gang Member '${name}'`);
+                } else {
+                    workerScript.log("recruitMember", `Failed to recruit Gang Member '${name}'`);
                 }
 
                 return recruited;
@@ -3362,12 +3358,10 @@ function NetscriptFunctions(workerScript) {
                 checkGangApiAccess("setMemberTask");
                 const member = getGangMember("setMemberTask", memberName);
                 const success = member.assignToTask(taskName);
-                if (workerScript.shouldLog("setMemberTask")) {
-                    if (success) {
-                        workerScript.log("setMemberTask", `Successfully assigned Gang Member '${memberName}' to '${taskName}' task`);
-                    } else {
-                        workerScript.log("setMemberTask", `Failed to assign Gang Member '${memberName}' to '${taskName}' task. '${memberName}' is now Unassigned`);
-                    }
+                if (success) {
+                    workerScript.log("setMemberTask", `Successfully assigned Gang Member '${memberName}' to '${taskName}' task`);
+                } else {
+                    workerScript.log("setMemberTask", `Failed to assign Gang Member '${memberName}' to '${taskName}' task. '${memberName}' is now Unassigned`);
                 }
 
                 return success;
@@ -3409,12 +3403,10 @@ function NetscriptFunctions(workerScript) {
                 checkGangApiAccess("purchaseEquipment");
                 const member = getGangMember("purchaseEquipment", memberName);
                 const res = member.buyUpgrade(equipName, Player, Player.gang);
-                if (workerScript.shouldLog("purchaseEquipment")) {
-                    if (res) {
-                        workerScript.log("purchaseEquipment", `Purchased '${equipName}' for Gang member '${memberName}'`);
-                    } else {
-                        workerScript.log("purchaseEquipment", `Failed to purchase '${equipName}' for Gang member '${memberName}'`);
-                    }
+                if (res) {
+                    workerScript.log("purchaseEquipment", `Purchased '${equipName}' for Gang member '${memberName}'`);
+                } else {
+                    workerScript.log("purchaseEquipment", `Failed to purchase '${equipName}' for Gang member '${memberName}'`);
                 }
 
                 return res;
