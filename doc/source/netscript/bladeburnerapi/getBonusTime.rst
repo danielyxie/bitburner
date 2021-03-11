@@ -2,6 +2,7 @@ getBonusTime() Netscript Function
 =================================
 
 .. js:function:: getBonusTime()
+
     :RAM cost: 0 GB
 
     Returns the amount of accumulated "bonus time" (seconds) for the Bladeburner mechanic.

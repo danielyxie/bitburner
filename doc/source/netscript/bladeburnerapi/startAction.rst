@@ -2,6 +2,7 @@ startAction() Netscript Function
 ================================
 
 .. js:function:: startAction(type, name)
+
     :RAM cost: 4 GB
 
     :param string type: Type of action. See :ref:`bladeburner_action_types`

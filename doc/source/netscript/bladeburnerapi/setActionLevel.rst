@@ -2,6 +2,7 @@ setActionLevel() Netscript Function
 ===================================
 
 .. js:function:: setActionLevel(type, name, level)
+
     :RAM cost: 4 GB
 
     :param string type: Type of action. See :ref:`bladeburner_action_types`

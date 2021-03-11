@@ -2,6 +2,7 @@ setActionAutolevel() Netscript Function
 =======================================
 
 .. js:function:: setActionAutolevel(type, name, autoLevel)
+
     :RAM cost: 4 GB
 
     :param string type: Type of action. See :ref:`bladeburner_action_types`

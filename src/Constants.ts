@@ -235,15 +235,15 @@ export let CONSTANTS: IMap<any> = {
     * For advanced players: The game now embraces exploits and will reward
       players for doing so.
 
-
-
-
     Netscript
     * 'gang.getEquipmentStats' returns the stats of the equipment.
     * 'gang.getTaskStats' returns the stats of a task.
     * 'getCrimeStats' returns the stats of a crime.
+    * Crashes should now print the ns stack trace.
+    * Log messages are now more consistent.
 
     Misc.
     * Minor formatting under Hacking>Active Scripts
+    * option menu colors now match the rest of the game, kinda.
     `
 }
