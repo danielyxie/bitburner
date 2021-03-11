@@ -3827,43 +3827,6 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
     return sanitizedSize;
 }
 
-Bladeburner.prototype.getCityEstimatedPopulationNetscriptFn = function(cityName, workerScript) {
-    if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: bladeburner.getCityEstimatedPopulation() failed because the specified " +
-                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
-        return -1;
-    }
-    return this.cities[cityName].popEst;
-}
-
-Bladeburner.prototype.getCityEstimatedCommunitiesNetscriptFn = function(cityName, workerScript) {
-    if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: bladeburner.getCityEstimatedCommunities() failed because the specified " +
-                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
-        return -1;
-    }
-    return this.cities[cityName].commsEst;
-}
-
-Bladeburner.prototype.getCityChaosNetscriptFn = function(cityName, workerScript) {
-    if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: bladeburner.getCityChaos() failed because the specified " +
-                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
-        return -1;
-    }
-    return this.cities[cityName].chaos;
-}
-
-Bladeburner.prototype.switchCityNetscriptFn = function(cityName, workerScript) {
-    if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: bladeburner.switchCity() failed because the specified " +
-                         "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
-        return false;
-    }
-    this.city = cityName;
-    return true;
-}
-
 Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript) {
     var bladeburnerFac = Factions["Bladeburners"];
     if (bladeburnerFac.isMember) {

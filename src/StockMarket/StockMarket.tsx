@@ -38,7 +38,7 @@ export function placeOrder(stock: Stock, shares: number, price: number, type: Or
     const tixApi = (workerScript instanceof WorkerScript);
     if (!(stock instanceof Stock)) {
         if (tixApi) {
-            workerScript!.log(`ERROR: Invalid stock passed to placeOrder() function`);
+            workerScript!.log("placeOrder", `Invalid stock: '${stock}'`);
         } else {
             dialogBoxCreate(`ERROR: Invalid stock passed to placeOrder() function`);
         }
@@ -46,7 +46,7 @@ export function placeOrder(stock: Stock, shares: number, price: number, type: Or
     }
     if (typeof shares !== "number" || typeof price !== "number") {
         if (tixApi) {
-            workerScript!.log("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
+            workerScript!.log("placeOrder", `Invalid arguments: shares='${shares}' price='${price}'`);
         } else {
             dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
         }

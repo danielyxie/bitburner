@@ -5,6 +5,7 @@
  * being evaluated. See RunningScript for that
  */
 import { calculateRamUsage } from "./RamCalculations";
+import { ScriptUrl } from "./ScriptUrl";
 import { Page, routing } from "../ui/navigationTracking";
 
 import { setTimeoutRef } from "../utils/SetTimeoutRef";
@@ -42,7 +43,7 @@ export class Script {
     // Only used with NS2 scripts; the list of dependency script filenames. This is constructed
     // whenever the script is first evaluated, and therefore may be out of date if the script
     // has been updated since it was last run.
-    dependencies: string[] = [];
+    dependencies: ScriptUrl[] = [];
 
     // Amount of RAM this Script requres to run
     ramUsage: number = 0;

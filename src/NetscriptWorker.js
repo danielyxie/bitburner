@@ -501,7 +501,7 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
         if (!w.running) { return; }
 
         killWorkerScript(s);
-        w.log("Script finished running");
+        w.log("", "Script finished running");
     }).catch(function(w) {
         if (w instanceof Error) {
             dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
@@ -509,22 +509,27 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
             return;
         } else if (w instanceof WorkerScript) {
             if (isScriptErrorMessage(w.errorMessage)) {
-                var errorTextArray = w.errorMessage.split("|");
+                const errorTextArray = w.errorMessage.split("|");
                 if (errorTextArray.length != 4) {
                     console.error("ERROR: Something wrong with Error text in evaluator...");
                     console.error("Error text: " + errorText);
                     return;
                 }
-                var serverIp = errorTextArray[1];
-                var scriptName = errorTextArray[2];
-                var errorMsg = errorTextArray[3];
+                const serverIp = errorTextArray[1];
+                const scriptName = errorTextArray[2];
+                const errorMsg = errorTextArray[3];
 
-                dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp +
-                                "<br>Script name: " + scriptName +
-                                "<br>Args:" + arrayToString(w.args) + "<br>" + errorMsg);
-                w.log("Script crashed with runtime error");
+                let msg = `RUNTIME ERROR<br>${scriptName}@${serverIp}<br>`
+                if (w.args.length > 0) {
+                    msg += `Args: ${arrayToString(w.args)}<br>`
+                }
+                msg += "<br>";
+                msg += errorMsg;
+
+                dialogBoxCreate(msg);
+                w.log("", "Script crashed with runtime error");
             } else {
-                w.log("Script killed");
+                w.log("", "Script killed");
                 return; // Already killed, so stop here
             }
             w.running = false;
@@ -594,14 +599,14 @@ export function loadAllRunningScripts() {
 /**
  * Run a script from inside another script (run(), exec(), spawn(), etc.)
  */
-export function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
+export function runScriptFromScript(caller, server, scriptname, args, workerScript, threads=1) {
     // Sanitize arguments
     if (!(workerScript instanceof WorkerScript)) {
         return 0;
     }
 
     if (typeof scriptname !== "string" || !Array.isArray(args)) {
-        workerScript.log(`ERROR: runScriptFromScript() failed due to invalid arguments`);
+        workerScript.log(caller, `Invalid arguments: scriptname='${scriptname} args='${ags}'`);
         console.error(`runScriptFromScript() failed due to invalid arguments`);
         return 0;
     }
@@ -609,14 +614,14 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
     // Check if the script is already running
     let runningScriptObj = server.getRunningScript(scriptname, args);
     if (runningScriptObj != null) {
-        workerScript.log(`${scriptname} is already running on ${server.hostname}`);
+        workerScript.log(caller, `'${scriptname}' is already running on '${server.hostname}'`);
         return 0;
     }
 
     // 'null/undefined' arguments are not allowed
     for (let i = 0; i < args.length; ++i) {
         if (args[i] == null) {
-            workerScript.log("ERROR: Cannot execute a script with null/undefined as an argument");
+            workerScript.log(caller, "Cannot execute a script with null/undefined as an argument");
             return 0;
         }
     }
@@ -633,16 +638,14 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
             const ramAvailable = server.maxRam - server.ramUsed;
 
             if (server.hasAdminRights == false) {
-                workerScript.log(`Cannot run script ${scriptname} on ${server.hostname} because you do not have root access!`);
+                workerScript.log(caller, `You do not have root access on '${server.hostname}'`);
                 return 0;
             } else if (ramUsage > ramAvailable){
-                workerScript.log(`Cannot run script ${scriptname} (t=${threads}) on ${server.hostname} because there is not enough available RAM!`);
+                workerScript.log(caller, `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`);
                 return 0;
             } else {
                 // Able to run script
-                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.exec == null && workerScript.disableLogs.run == null && workerScript.disableLogs.spawn == null) {
-                    workerScript.log(`Running script: ${scriptname} on ${server.hostname} with ${threads} threads and args: ${arrayToString(args)}.`);
-                }
+                workerScript.log(caller, `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`);
                 let runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;
 
@@ -651,6 +654,6 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
         }
     }
 
-    workerScript.log(`Could not find script ${scriptname} on ${server.hostname}`);
+    workerScript.log(caller, `Could not find script '${scriptname}' on '${server.hostname}'`);
     return 0;
 }

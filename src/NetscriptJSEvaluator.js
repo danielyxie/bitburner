@@ -1,21 +1,12 @@
 import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { Script } from "./Script/Script";
+import { ScriptUrl } from "./Script/ScriptUrl";
 
 // Makes a blob that contains the code of a given script.
 export function makeScriptBlob(code) {
     return new Blob([code], {type: "text/javascript"});
 }
 
-class ScriptUrl {
-    /**
-     * @param {string} filename
-     * @param {string} url
-     */
-    constructor(filename, url) {
-        this.filename = filename;
-        this.url = url;
-    }
-}
 
 // Begin executing a user JS script, and return a promise that resolves
 // or rejects when the script finishes.
@@ -40,7 +31,7 @@ export async function executeJSScript(scripts = [], workerScript) {
         urls = _getScriptUrls(script, scripts, []);
         script.url = urls[urls.length - 1].url;
         script.module = new Promise(resolve => resolve(eval('import(urls[urls.length - 1].url)')));
-        script.dependencies = urls.map(u => u.filename);
+        script.dependencies = urls;
     }
     loadedModule = await script.module;
 
@@ -69,7 +60,7 @@ export async function executeJSScript(scripts = [], workerScript) {
 function shouldCompile(script, scripts) {
     if (script.module === "") return true;
     return script.dependencies.some(dep => {
-        const depScript = scripts.find(s => s.filename == dep);
+        const depScript = scripts.find(s => s.filename == dep.url);
 
         // If the script is not present on the server, we should recompile, if only to get any necessary
         // compilation errors.
