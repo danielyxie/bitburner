@@ -74,6 +74,8 @@ import {
     AddToAllServers,
     createUniqueRandomIp,
 } from "./Server/AllServers";
+import { RunningScript } from "./Script/RunningScript";
+import { startWorkerScript } from "./NetscriptWorker";
 import { Server } from "./Server/Server";
 import {
     GetServerByHostname,
@@ -527,6 +529,31 @@ function NetscriptFunctions(workerScript) {
         }
 
         return Augmentations[name];
+    }
+
+    const runAfterReset = function(cbScript=null) {
+        //Run a script after reset
+        console.log(cbScript);
+        if (cbScript && isString(cbScript)) {
+            console.log('here');
+            const home = Player.getHomeComputer();
+            for (const script of home.scripts) {
+                console.log('here 2'+script);
+                if (script.filename === cbScript) {
+                    console.log('here 3');
+                    const ramUsage = script.ramUsage;
+                    const ramAvailable = home.maxRam - home.ramUsed;
+                    if (ramUsage > ramAvailable) {
+                        console.log('here 4');
+                        return; // Not enough RAM
+                    }
+                    const runningScriptObj = new RunningScript(script, []); // No args
+                    runningScriptObj.threads = 1; // Only 1 thread
+                    console.log('running!');
+                    startWorkerScript(runningScriptObj, home);
+                }
+            }
+        }
     }
 
     return {
@@ -3242,7 +3269,8 @@ function NetscriptFunctions(workerScript) {
 
             workerScript.log("softReset", "Soft resetting. This will cause this script to be killed");
             setTimeoutRef(() => {
-                prestigeAugmentation(cbScript);
+                prestigeAugmentation();
+                runAfterReset(cbScript);
             }, 0);
 
             // Prevent workerScript from "finishing execution naturally"
@@ -3260,7 +3288,8 @@ function NetscriptFunctions(workerScript) {
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             workerScript.log("installAugmentations", "Installing Augmentations. This will cause this script to be killed");
             setTimeoutRef(() => {
-                installAugmentations(cbScript);
+                installAugmentations();
+                runAfterReset(cbScript);
             }, 0);
 
             workerScript.running = false; // Prevent workerScript from "finishing execution naturally"

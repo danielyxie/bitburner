@@ -228,12 +228,16 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.49.0 - 2021-XX-XX Source-File -1
+    v0.49.0 - 2021-03-11 Source-File -1
     -------
 
     Source-File -1
     * For advanced players: The game now embraces exploits and will reward
       players for doing so.
+
+    Gang
+    * ascension is less effective as the ascension multiplier goes up.
+    * territory gain scales with power difference.
 
     Netscript
     * 'gang.getEquipmentStats' returns the stats of the equipment.
@@ -241,6 +245,7 @@ export let CONSTANTS: IMap<any> = {
     * 'getCrimeStats' returns the stats of a crime.
     * Crashes should now print the ns stack trace.
     * Log messages are now more consistent.
+    * 'softReset' now accepts a callback script like 'installAugmentations'
 
     Misc.
     * Minor formatting under Hacking>Active Scripts
