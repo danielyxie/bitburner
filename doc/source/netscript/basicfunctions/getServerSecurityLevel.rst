@@ -1,10 +1,14 @@
 getServerSecurityLevel() Netscript Function
 ===========================================
 
-.. js:function:: getServerSecurityLevel(hostname/ip)
+.. js:function:: getServerSecurityLevel(hostname)
 
-    :param string hostname/ip: Hostname or IP of target server
     :RAM cost: 0.1 GB
+    :param string hostname: Hostname of target server.
+    :returns: The security level of the target server.
 
-    Returns the security level of the target server. A server's security level is denoted by a number, typically
-    between 1 and 100 (but it can go above 100).
+    Example:
+
+    .. code-block:: javascript
+
+        getServerSecurityLevel("foodnstuff"); // returns: 3.45

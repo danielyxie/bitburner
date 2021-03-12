@@ -1,28 +1,29 @@
 ps() Netscript Function
 =======================
 
-.. js:function:: ps(hostname/ip=current ip)
+.. js:function:: ps([hostname=current hostname])
 
-    :param string ip: Hostname or IP address of the target server.
-                      If not specified, it will be the current server's IP by default
     :RAM cost: 0.2 GB
+    :param string hostname: Hostname address of the target server.
+        If not specified, it will be the current server's IP by default.
+    :returns: array of object
 
-    Returns an array with general information about all scripts running on the specified
-    target server. The information for each server is given in an object with
-    the following structure::
+    Returns an array with general information about all scripts running on the
+    specified target server. The information for each server is given in an
+    object with the following structure::
 
         {
-            filename:   Script name,
-            threads:    Number of threads script is running with,
-            args:       Script's arguments
+            filename: Script name,
+            threads:  Number of threads script is running with,
+            args:     Script's arguments
         }
 
-    Example usage (using :ref:`netscriptjs`)::
+    Example:
 
-        export async function main(ns) {
-            const ps = ns.ps("home");
-            for (let i = 0; i < ps.length; ++i) {
-                ns.tprint(ps[i].filename + ' ' + ps[i].threads);
-                ns.tprint(ps[i].args);
-            }
+    .. code-block:: javascript
+
+        processes = ps("home");
+        for (let i = 0; i < ps.length; ++i) {
+            tprint(ps[i].filename + ' ' + ps[i].threads);
+            tprint(ps[i].args);
         }

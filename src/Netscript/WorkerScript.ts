@@ -190,10 +190,12 @@ export class WorkerScript {
 
     log(func: string, txt: string): void {
         if(this.shouldLog(func)) {
-            if(func !== "" && txt !== ""){
+            if(func && txt){
                 this.scriptRef.log(`${func}: ${txt}`);
+            } else if(func) {
+                this.scriptRef.log(func);
             } else {
-                this.scriptRef.log(func+txt);
+                this.scriptRef.log(txt);
             }
         }
     }

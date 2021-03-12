@@ -3,8 +3,9 @@ getStockPosition() Netscript Function
 
 .. js:function:: getStockPosition(sym)
 
-    :param string sym: Stock symbol
     :RAM cost: 2 GB
+    :param string sym: Stock symbol
+
 
     Returns an array of four elements that represents the player's position in a stock.
 

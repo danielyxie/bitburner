@@ -4,5 +4,10 @@ getFavorToDonate() Netscript Function
 .. js:function:: getFavorToDonate()
 
     :RAM cost: 0.1 GB
+    :returns: Amount of faction favor required to unlock donation.
 
-    Returns the amount of Faction favor required to be able to donate to a faction.
+    Example:
+
+    .. code-block:: javascript
+
+        getFavorToDonate() // returns: 150

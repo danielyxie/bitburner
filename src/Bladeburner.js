@@ -3511,12 +3511,10 @@ Bladeburner.prototype.getSkillNamesNetscriptFn = function() {
 }
 
 Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: bladeburner.startAction() failed due to an invalid action specified. " +
-                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
-                       "name of the operation is case-sensitive.";
-    var actionId = this.getActionIdFromTypeAndName(type, name);
+  const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.startAction", errorLogText);
         return false;
     }
 
@@ -3525,13 +3523,13 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
         // Can't start a BlackOp if you don't have the required rank
         let action = this.getActionObject(actionId);
         if (action.reqdRank > this.rank) {
-            workerScript.log(`Failed to start Black Op ${actionId.name} due to insufficient rank`);
+            workerScript.log("bladeburner.startAction", `Insufficient rank to start Black Op '${actionId.name}'.`);
             return false;
         }
 
         // Can't start a BlackOp if its already been done
         if (this.blackops[actionId.name] != null) {
-            workerScript.log(`Failed to start Black Op ${actionId.name} because its already been completed`);
+            workerScript.log("bladeburner.startAction", `Black Op ${actionId.name} has already been completed.`);
             return false;
         }
 
@@ -3548,43 +3546,38 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
 
         let i = blackops.indexOf(actionId.name);
         if (i === -1) {
-            workerScript.log("ERROR: Invalid Black Operation name passed into bladeburner.startAction(). Note that this name is case-sensitive & whitespace-sensitive");
+            workerScript.log("bladeburner.startAction", `Invalid Black Op: '${name}'`);
             return false;
         }
 
         if (i > 0 && this.blackops[blackops[i-1]] == null) {
-            workerScript.log(`ERROR: Cannot attempt Black Operation ${actionId.name} because you have not done the preceding one`);
+            workerScript.log("bladeburner.startAction", `Preceding Black Op must be completed before starting '${actionId.name}'.`);
             return false;
         }
     }
 
     try {
         this.startAction(actionId);
-        if (workerScript.shouldLog("startAction")) {
-            workerScript.log("Starting bladeburner action with type " + type + " and name " + name);
-        }
+        workerScript.log("bladeburner.startAction", `Starting bladeburner action with type '${type}' and name ${name}"`);
         return true;
     } catch(e) {
         this.resetAction();
-        workerScript.log("ERROR: bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
-                                   "Note that this name is case-sensitive and whitespace-sensitive");
+        workerScript.log("bladeburner.startAction", errorLogText);
         return false;
     }
 }
 
 Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: bladeburner.getActionTime() failed due to an invalid action specified. " +
-                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
-                       "name of the operation is case-sensitive.";
-    var actionId = this.getActionIdFromTypeAndName(type, name);
+  const errorLogText = `Invalid action: type='${type}' name='${name}'`
+    const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getActionTime", errorLogText);
         return -1;
     }
 
-    var actionObj = this.getActionObject(actionId);
+    const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getActionTime", errorLogText);
         return -1;
     }
 
@@ -3601,24 +3594,22 @@ Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScri
         case ActionTypes["Recruitment"]:
             return this.getRecruitmentTime();
         default:
-            workerScript.log(errorLogText);
+            workerScript.log("bladeburner.getActionTime", errorLogText);
             return -1;
     }
 }
 
 Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: bladeburner.getActionEstimatedSuccessChance() failed due to an invalid action specified. " +
-                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
-                       "name of the operation is case-sensitive.";
-    var actionId = this.getActionIdFromTypeAndName(type, name);
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`
+    const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
         return -1;
     }
 
-    var actionObj = this.getActionObject(actionId);
+    const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
         return -1;
     }
 
@@ -3635,24 +3626,22 @@ Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type
         case ActionTypes["Recruitment"]:
             return this.getRecruitmentSuccessChance();
         default:
-            workerScript.log(errorLogText);
+            workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
             return -1;
     }
 }
 
 Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: bladeburner.getActionCountRemaining() failed due to an invalid action specified. " +
-                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
-                       "name of the operation is case-sensitive.";
-    var actionId = this.getActionIdFromTypeAndName(type, name);
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
         return -1;
     }
 
-    var actionObj = this.getActionObject(actionId);
+    const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
         return -1;
     }
 
@@ -3672,21 +3661,14 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
         case ActionTypes["FieldAnalysis"]:
             return Infinity;
         default:
-            workerScript.log(errorLogText);
+            workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
             return -1;
     }
 }
 
 Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScript) {
-    var errorLogText = "ERROR: bladeburner.getSkillLevel() failed due to an invalid skill specified: " +
-                       skillName + ". Note that the name of the skill is case-sensitive";
-
-    if (skillName === "") {
-        return -1;
-    }
-
-    if (!Skills.hasOwnProperty(skillName)) {
-        workerScript.log(errorLogText);
+    if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
+        workerScript.log("bladeburner.getSkillLevel", `Invalid skill: '${skillName}'`);
         return -1;
     }
 
@@ -3698,19 +3680,12 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
 }
 
 Bladeburner.prototype.getSkillUpgradeCostNetscriptFn = function(skillName, workerScript) {
-    var errorLogText = "ERROR: bladeburner.getSkillUpgradeCostNetscriptFn() failed due to an invalid skill specified: " +
-                       skillName + ". Note that the name of the skill is case-sensitive";
-
-    if (skillName === "") {
+    if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
+        workerScript.log("bladeburner.getSkillUpgradeCost", `Invalid skill: '${skillName}'`);
         return -1;
     }
 
-    if (!Skills.hasOwnProperty(skillName)) {
-        workerScript.log(errorLogText);
-        return -1;
-    }
-
-    var skill = Skills[skillName];
+    const skill = Skills[skillName];
     if (this.skills[skillName] == null) {
         return skill.calculateCost(0);
     } else {
@@ -3719,33 +3694,26 @@ Bladeburner.prototype.getSkillUpgradeCostNetscriptFn = function(skillName, worke
 }
 
 Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript) {
-    var errorLogText = "ERROR: bladeburner.upgradeSkill() failed due to an invalid skill specified: " +
-                       skillName + ". Note that the name of the skill is case-sensitive";
+    const errorLogText = `Invalid skill: '${skillName}'`;
     if (!Skills.hasOwnProperty(skillName)) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.upgradeSkill", errorLogText);
         return false;
     }
 
-    var skill = Skills[skillName];
-    var currentLevel = 0;
+    const skill = Skills[skillName];
+    let currentLevel = 0;
     if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
         currentLevel = this.skills[skillName];
     }
-    var cost = skill.calculateCost(currentLevel);
+    const cost = skill.calculateCost(currentLevel);
 
     if(skill.maxLvl && currentLevel >= skill.maxLvl) {
-      if (workerScript.shouldLog("upgradeSkill")) {
-        workerScript.log(`bladeburner.upgradeSkill() failed because ${skillName} is already maxed`);
-      }
+      workerScript.log("bladeburner.upgradeSkill", `Skill '${skillName}' is already maxed.`);
       return false;
     }
 
     if (this.skillPoints < cost) {
-        if (workerScript.shouldLog("upgradeSkill")) {
-            workerScript.log("bladeburner.upgradeSkill() failed because you do not have enough " +
-                             "skill points to upgrade " + skillName + " (You have " +
-                            this.skillPoints + ", you need " + cost + ")");
-        }
+        workerScript.log("bladeburner.upgradeSkill", `You do not have enough skill points to upgrade ${skillName} (You have ${this.skillPoints}, you need ${cost})`);
         return false;
     }
 
@@ -3754,9 +3722,7 @@ Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript
     if (routing.isOn(Page.Bladeburner) && DomElems.currentTab.toLowerCase() === "skills") {
         this.createActionAndSkillsContent();
     }
-    if (workerScript.shouldLog("upgradeSkill")) {
-        workerScript.log(skillName + " successfully upgraded to level " + this.skills[skillName]);
-    }
+    workerScript.log("bladeburner.upgradeSkill", `'${skillName}' upgraded to level ${this.skills[skillName]}`);
     return true;
 }
 
@@ -3765,19 +3731,16 @@ Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript
         return this.teamSize;
     }
 
-    var errorLogText = "ERROR: bladeburner.getTeamSize() failed due to an invalid action specified. " +
-                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
-                       "name of the operation is case-sensitive.";
-
-    var actionId = this.getActionIdFromTypeAndName(type, name);
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getTeamSize", errorLogText);
         return -1;
     }
 
-    var actionObj = this.getActionObject(actionId);
+    const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.getTeamSize", errorLogText);
         return -1;
     }
 
@@ -3791,39 +3754,34 @@ Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript
 }
 
 Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, workerScript) {
-    var errorLogText = "ERROR: bladeburner.setTeamSize() failed due to an invalid action specified. " +
-                       "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
-                       "name of the operation is case-sensitive.";
-    var actionId = this.getActionIdFromTypeAndName(type, name);
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.setTeamSize", errorLogText);
         return -1;
     }
 
     if (actionId.type !== ActionTypes["Operation"] &&
         actionId.type !== ActionTypes["BlackOp"]   &&
         actionId.type !== ActionTypes["BlackOperation"]) {
-        workerScript.log("ERROR: bladeburner.setTeamSize() failed. This function " +
-                         "only works for Operations and BlackOps");
+        workerScript.log("bladeburner.setTeamSize", "Only valid for 'Operations' and 'BlackOps'");
         return -1;
     }
 
-    var actionObj = this.getActionObject(actionId);
+    const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-        workerScript.log(errorLogText);
+        workerScript.log("bladeburner.setTeamSize", errorLogText);
         return -1;
     }
 
-    var sanitizedSize = Math.round(size);
+    const sanitizedSize = Math.round(size);
     if (isNaN(sanitizedSize)) {
-        workerScript.log("ERROR: bladeburner.setTeamSize() failed due to an invalid 'size' argument: " + size);
+        workerScript.log("bladeburner.setTeamSize", `Invalid size: ${size}`);
         return -1;
     }
     if (this.teamSize < sanitizedSize) {sanitizedSize = this.teamSize;}
     actionObj.teamCount = sanitizedSize;
-    if (workerScript.shouldLog("setTeamSize")) {
-        workerScript.log("Team size for " + name + " set to " + sanitizedSize);
-    }
+    workerScript.log("bladeburner.setTeamSize", `Team size for '${name}' set to ${sanitizedSize}.`);
     return sanitizedSize;
 }
 
@@ -3833,19 +3791,14 @@ Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript)
         return true;
     } else if (this.rank >= RankNeededForFaction) {
         joinFaction(bladeburnerFac);
-        if (workerScript.shouldLog("joinBladeburnerFaction")) {
-            workerScript.log("Joined Bladeburners Faction");
-        }
+        workerScript.log("bladeburner.joinBladeburnerFaction", "Joined Bladeburners faction.");
         if (routing.isOn(Page.Bladeburner)) {
             removeChildrenFromElement(DomElems.overviewDiv);
             this.createOverviewContent();
         }
         return true;
     } else {
-        if (workerScript.shouldLog("joinBladeburnerFaction")) {
-            workerScript.log("Failed to join Bladeburners Faction because " +
-                             "you do not have the required " + RankNeededForFaction + " rank");
-        }
+        workerScript.log("bladeburner.joinBladeburnerFaction", `You do not have the required rank (${this.rank}/${RankNeededForFaction}).`);
         return false;
     }
 }

@@ -1,11 +1,16 @@
 getScriptRam() Netscript Function
 =================================
 
-.. js:function:: getScriptRam(scriptname[, hostname/ip])
+.. js:function:: getScriptRam(filename[, hostname])
 
-    :param string scriptname: Filename of script. This is case-sensitive.
-    :param string hostname/ip: Hostname or IP of target server the script is located on. This is optional, If it is not specified then the function will set the current server as the target server.
     :RAM cost: 0.1 GB
+    :param string filename: Filename of script.
+    :param string hostname: Hostname of target server the script is located on.
+        Default to the server this script is running on.
+    :returns: Amount of RAM required to run the script, 0 if it does not exist.
 
-    Returns the amount of RAM required to run the specified script on the target server. Returns
-    0 if the script does not exist.
+    Example:
+
+    .. code-block:: javascript
+
+        getScriptRam("grow.script"); // returns: 1.75

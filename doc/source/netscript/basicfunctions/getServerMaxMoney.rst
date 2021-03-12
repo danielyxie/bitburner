@@ -1,9 +1,14 @@
 getServerMaxMoney() Netscript Function
 ======================================
 
-.. js:function:: getServerMaxMoney(hostname/ip)
+.. js:function:: getServerMaxMoney(hostname)
 
-    :param string hostname/ip: Hostname or IP of target server
     :RAM cost: 0.1 GB
+    :param string hostname: Hostname of target server.
+    :returns: Maximum amount of money that  can be available on a server.
 
-    Returns the maximum amount of money that can be available on a server
+    Example:
+
+    .. code-block:: javascript
+
+        getServerMaxMoney('foodnstuff'); // returns: 4000000

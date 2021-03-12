@@ -1,13 +1,16 @@
 sqlinject() Netscript Function
 ==============================
 
-.. js:function:: sqlinject(hostname/ip)
+.. js:function:: sqlinject(hostname)
 
-    :param string hostname/ip: IP or hostname of the target server
     :RAM cost: 0.05 GB
+    :param string hostname: Hostname of the target server.
 
-    Runs the SQLInject.exe program on the target server. SQLInject.exe must exist on your home computer.
+    Runs the SQLInject.exe program on the target server. SQLInject.exe must
+    exist on your home computer.
 
-    Example::
+    Example:
+
+    .. code-block:: javascript
 
         sqlinject("foodnstuff");

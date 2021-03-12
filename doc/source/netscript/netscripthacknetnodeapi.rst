@@ -29,6 +29,7 @@ In :ref:`netscriptjs`::
     :caption: API Functions:
 
     numNodes() <hacknetnodeapi/numNodes>
+    maxNumNodes() <hacknetnodeapi/maxNumNodes>
     purchaseNode() <hacknetnodeapi/purchaseNode>
     getPurchaseNodeCost() <hacknetnodeapi/getPurchaseNodeCost>
     getNodeStats() <hacknetnodeapi/getNodeStats>

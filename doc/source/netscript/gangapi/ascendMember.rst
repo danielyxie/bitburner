@@ -4,11 +4,7 @@ ascendMember() Netscript Function
 .. js:function:: ascendMember(name)
 
     :RAM cost: 4 GB
-
     :param string name: Name of member to ascend
-
-    Ascend the specified Gang Member.
-
     :returns: An object with info about the ascension results.
 
     The object has the following structure::
@@ -22,3 +18,5 @@ ascendMember() Netscript Function
             agi:        Agility multiplier gained from ascending. Decimal form
             cha:        Charisma multiplier gained from ascending. Decimal form
         }
+
+    Ascend the specified Gang Member.

@@ -6,10 +6,10 @@ getNodeStats() Netscript Function
 .. js:function:: getNodeStats(i)
 
     :RAM cost: 0 GB
+    :param number i: Index of Hacknet Node. :ref:`See here for details <netscript_hacknetnodeapi_referencingahacknetnode>`
+    :returns: Object containing a variety of stats about the specified Hacknet Node
 
-    :param number i: Index/Identifier of Hacknet Node. :ref:`See here for details <netscript_hacknetnodeapi_referencingahacknetnode>`
-
-    Returns an object containing a variety of stats about the specified Hacknet Node::
+    ::
 
         {
             name:               Node's name ("hacknet-node-5"),
@@ -24,5 +24,5 @@ getNodeStats() Netscript Function
         }
     
     .. note:: Note that for Hacknet Nodes, production refers to the amount of money the node generates.
-              For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the amount
-              of hashes the node generates.
+        For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the amount
+        of hashes the node generates.

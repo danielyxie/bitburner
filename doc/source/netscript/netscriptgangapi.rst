@@ -33,9 +33,11 @@ In :ref:`netscriptjs`::
     recruitMember() <gangapi/recruitMember>
     getTaskNames() <gangapi/getTaskNames>
     setMemberTask() <gangapi/setMemberTask>
+    getTaskStats() <gangapi/getTaskStats>
     getEquipmentNames() <gangapi/getEquipmentNames>
     getEquipmentCost() <gangapi/getEquipmentCost>
     getEquipmentType() <gangapi/getEquipmentType>
+    getEquipmentStats() <gangapi/getEquipmentStats>
     purchaseEquipment() <gangapi/purchaseEquipment>
     ascendMember() <gangapi/ascendMember>
     setTerritoryWarfare() <gangapi/setTerritoryWarfare>

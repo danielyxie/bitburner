@@ -3,9 +3,10 @@ buyStock() Netscript Function
 
 .. js:function:: buyStock(sym, shares)
 
+    :RAM cost: 2.5 GB
     :param string sym: Symbol of stock to purchase
     :param number shares: Number of shares to purchased. Must be positive. Will be rounded to nearest integer
-    :RAM cost: 2.5 GB
+
 
     Attempts to purchase shares of a stock using a `Market Order <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.
 

@@ -1,9 +1,14 @@
 serverExists() Netscript Function
 =================================
 
-.. js:function:: serverExists(hostname/ip)
+.. js:function:: serverExists(hostname)
 
-    :param string hostname/ip: Hostname or IP of target server
     :RAM cost: 0.1 GB
+    :param string hostname: Hostname of target server.
+    :returns: ``true`` if the target server exists.
 
-    Returns a boolean denoting whether or not the specified server exists
+    Example:
+
+    .. code-block:: javascript
+
+        serverExists("foodnstuff"); // returns: true

@@ -4,8 +4,8 @@ createProgram() Netscript Function
 .. js:function:: createProgram(programName)
 
     :RAM cost: 5 GB
-
     :param string programName: Name of program to create. Not case-sensitive
+    :returns: ``true`` if you successfully start working on the specified program.
 
     If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.
 
@@ -28,5 +28,3 @@ createProgram() Netscript Function
         * DeepscanV2.exe: 400
         * ServerProfiler.exe: 75
         * AutoLink.exe: 25
-
-        This function returns true if you successfully start working on the specified program, and false otherwise.

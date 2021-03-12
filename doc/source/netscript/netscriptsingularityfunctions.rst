@@ -45,10 +45,13 @@ level 3, then you will be able to access all of the Singularity Functions.
     createProgram() <singularityfunctions/createProgram>
     commitCrime() <singularityfunctions/commitCrime>
     getCrimeChance() <singularityfunctions/getCrimeChance>
+    getCrimeStats() <singularityfunctions/getCrimeStats>
     getOwnedAugmentations() <singularityfunctions/getOwnedAugmentations>
     getOwnedSourceFiles() <singularityfunctions/getOwnedSourceFiles>
     getAugmentationsFromFaction() <singularityfunctions/getAugmentationsFromFaction>
     getAugmentationPrereq() <singularityfunctions/getAugmentationPrereq>
     getAugmentationCost() <singularityfunctions/getAugmentationCost>
+    getAugmentationStats() <singularityfunctions/getAugmentationStats>
     purchaseAugmentation() <singularityfunctions/purchaseAugmentation>
     installAugmentations() <singularityfunctions/installAugmentations>
+    softReset() <singularityfunctions/softReset>
