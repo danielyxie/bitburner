@@ -2638,7 +2638,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
 
                 });
                 var input = createElement("input", {
-                    type:"number", placeholder: "Team Members"
+                    type:"number", placeholder: "Team size", class: "text-input",
                 });
                 var setBtn = createElement("a", {
                     innerText:"Confirm", class:"a-link-button",
@@ -2794,7 +2794,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
 
                 });
                 var input = createElement("input", {
-                    type:"number", placeholder: "Team Members"
+                    type:"number", placeholder: "Team size", class: "text-input",
                 });
                 var setBtn = createElement("a", {
                     innerText:"Confirm", class:"a-link-button",
