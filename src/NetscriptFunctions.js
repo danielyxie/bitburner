@@ -864,7 +864,7 @@ function NetscriptFunctions(workerScript) {
             if (args === undefined) {
                 throw makeRuntimeErrorMsg("print", "Takes 1 argument.");
             }
-            workerScript.print("print", args.toString());
+            workerScript.print(args.toString());
         },
         tprint: function(args) {
             if (args === undefined || args == null) {
