@@ -237,6 +237,9 @@ export let CONSTANTS: IMap<any> = {
     Netscript
     * Ace editor will now correctly highlight all functions.
 
+    Gang
+    * style improvements
+
     Sleeve
     * karma gain now scales with sync.
     `

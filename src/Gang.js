@@ -1934,10 +1934,10 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     var gainInfo = document.getElementById(name + "gang-member-gain-info");
     if (gainInfo) {
         gainInfo.innerHTML =
-            [`Money: $ ${formatNumber(5*memberObj.calculateMoneyGain(this), 2)} / sec`,
-             `Respect: ${formatNumber(5*memberObj.calculateRespectGain(this), 6)} / sec`,
-             `Wanted Level: ${formatNumber(5*memberObj.calculateWantedLevelGain(this), 6)} / sec`,
-             `Total Respect Earned: ${formatNumber(memberObj.earnedRespect, 6)}`].join("<br>");
+            [`Money: ${numeralWrapper.format(5*memberObj.calculateMoneyGain(this), '$0.000a')} / sec`,
+             `Respect: ${numeralWrapper.format(5*memberObj.calculateRespectGain(this), '0.00000a')} / sec`,
+             `Wanted Level: ${numeralWrapper.format(5*memberObj.calculateWantedLevelGain(this), '0.00000a')} / sec`,
+             `Total Respect Earned: ${numeralWrapper.format(memberObj.earnedRespect, '0.00000a')}`].join("<br>");
     }
 
     // Update selector to have the correct task

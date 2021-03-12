@@ -60,11 +60,12 @@ var identifierRe = "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*";
 
 let functions = (function(){
     function recursiveKeywords(namespace) {
-        const keywords = [];
+        let keywords = [];
         for(const elem of Object.keys(namespace)) {
             keywords.push(elem);
-            if(typeof namespace[elem] === Object) {
-                keywords.concat(namespace[elem]);
+            if(typeof namespace[elem] == 'object') {
+                console.log(recursiveKeywords(namespace[elem]));
+                keywords = keywords.concat(recursiveKeywords(namespace[elem]));
             }
         }
         return keywords;
@@ -74,6 +75,8 @@ let functions = (function(){
     // reverse is important so that both clearLog and clear  are highlighted.
     return recursiveKeywords(ns).sort().reverse().join("|");
 })();
+
+console.log(functions);
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
