@@ -236,6 +236,8 @@ export let CONSTANTS: IMap<any> = {
 
     Netscript
     * Ace editor will now correctly highlight all functions.
+    * 'tFormat' is a new netscript function that returns a human readable
+      representation of milliseconds. eg. "2 hours 15 minute 43 seconds"
 
     Gang
     * style improvements

@@ -151,6 +151,7 @@ import { numeralWrapper } from "./ui/numeralFormat";
 import { post } from "./ui/postToTerminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { formatNumber, isHTML } from "../utils/StringHelperFunctions";
@@ -2348,6 +2349,9 @@ function NetscriptFunctions(workerScript) {
             }
 
             return numeralWrapper.format(parseFloat(n), format);
+        },
+        tFormat: function(milliseconds) {
+            return convertTimeMsToTimeElapsedString(milliseconds);
         },
         getTimeSinceLastAug: function() {
             updateDynamicRam("getTimeSinceLastAug", getRamCost("getTimeSinceLastAug"));
