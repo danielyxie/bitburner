@@ -360,9 +360,11 @@ a:visited {
     font-size: $defaultFontSize * 0.8125;
 }
 
+input[type=checkbox] {
+    filter: invert(1) sepia(1) hue-rotate(41deg) brightness(100%) saturate(10);
+}
 
 .optionCheckbox {
-  filter: invert(1) sepia(1) hue-rotate(41deg) brightness(100%) saturate(10);
   margin: 5px;
   float: right;
 }
