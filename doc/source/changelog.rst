@@ -3,15 +3,44 @@
 Changelog
 =========
 
+v0.49.0 - 2021-03-11 Source-File -1 (hydroflame)
+-------
 
-v0.48.0 - ASCII - 2020-03-07
+**Source-File -1**
+
+* For advanced players: The game now embraces exploits and will reward
+  players for doing so.
+
+**Gang**
+
+* ascension is less effective as the ascension multiplier goes up.
+* territory gain scales with power difference.
+
+**Netscript**
+
+* 'gang.getEquipmentStats' returns the stats of the equipment.
+* 'gang.getTaskStats' returns the stats of a task.
+* 'getCrimeStats' returns the stats of a crime.
+* Crashes should now print the ns stack trace.
+* Log messages are now more consistent.
+* 'softReset' now accepts a callback script like 'installAugmentations'
+
+**Misc.**
+
+* Minor formatting under Hacking>Active Scripts
+* option menu colors now match the rest of the game, kinda.
+
+
+v0.48.0 - ASCII - 2021-03-07 (hydroflame)
 -------
 
 **ASCII**
+
 * Travel Agency now displays a world map
 * Cities are now top view of metro station maps
 
 **Netscript**
+
 * 'softReset' is a new netscript function that performs a soft reset
     regardless of if the player has bought augmentations or not.
 * 'getAugmentationStats' is a new netscript function that returns the stats of
@@ -22,11 +51,13 @@ v0.48.0 - ASCII - 2020-03-07
 * 'hacknet.maxNumNodes' returns the maximum number of hacknet nodes.
 
 **Bladeburner**
+
 * Current stamina will scale as max stamina increases, this prevents players
     from having very high penalty when they gain huge amount of exp at the 
     start of a reset.
 
 **Misc.**
+
 * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as
     having a limit of 3.
 * Fixed an issue where the gang equipment screen would freeze the game if a 

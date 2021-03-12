@@ -359,3 +359,38 @@ a:visited {
 .smallfont {
     font-size: $defaultFontSize * 0.8125;
 }
+
+
+.optionCheckbox {
+  filter: invert(1) sepia(1) hue-rotate(41deg) brightness(100%) saturate(10);
+  margin: 5px;
+  float: right;
+}
+
+.optionRange {
+  -webkit-appearance: none;
+  background: #777;
+  outline: none;
+  opacity: 0.7;
+  height: 10px;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin: 3px;
+}
+
+
+.optionRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: var(--my-font-color);
+  cursor: pointer;
+}
+
+.optionRange::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--my-font-color);
+  cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import { Corporation } from "./Corporation/Corporation";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
+import { sanitizeExploits } from "./Exploits/Exploit";
 
 import { Reviver } from "../utils/JSONReviver";
 
@@ -26,4 +27,6 @@ export function loadPlayer(saveString) {
             ind.thisCycleExpenses = new Decimal(ind.thisCycleExpenses);
         }
     }
+
+    Player.exploits = sanitizeExploits(Player.exploits);
 }

@@ -2,6 +2,7 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 import { isString } from "../utils/helpers/isString";
+import { AllServers } from "./Server/AllServers";
 
 export function netscriptDelay(time, workerScript) {
     return new Promise(function(resolve, reject) {
@@ -19,7 +20,12 @@ export function makeRuntimeRejectMsg(workerScript, msg, exp=null) {
         var num = getErrorLineNumber(exp, workerScript);
         lineNum = " (Line " + num + ")"
     }
-    return "|"+workerScript.serverIp+"|"+workerScript.name+"|" + msg + lineNum;
+    const server = AllServers[workerScript.serverIp];
+    if (server == null) {
+        throw new Error(`WorkerScript constructed with invalid server ip: ${this.serverIp}`);
+    }
+
+    return "|"+server.hostname+"|"+workerScript.name+"|" + msg + lineNum;
 }
 
 export function resolveNetscriptRequestedThreads(workerScript, functionName, requestedThreads) {
@@ -57,8 +63,5 @@ export function isScriptErrorMessage(msg) {
         return false;
     }
     var ip = splitMsg[1];
-    if (!isValidIPAddress(ip)) {
-        return false;
-    }
     return true;
 }

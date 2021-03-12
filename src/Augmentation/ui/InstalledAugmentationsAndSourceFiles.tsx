@@ -10,6 +10,7 @@ import * as React from "react";
 import { InstalledAugmentations } from "./InstalledAugmentations";
 import { ListConfiguration } from "./ListConfiguration";
 import { OwnedSourceFiles } from "./OwnedSourceFiles";
+import { SourceFileMinus1 } from "./SourceFileMinus1";
 
 import { Settings } from "../../Settings/Settings";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
@@ -98,6 +99,7 @@ export class InstalledAugmentationsAndSourceFiles extends React.Component<IProps
                 sortInOrderFn={this.sortInOrder}
             />
             <ul className="augmentations-list" ref={this.listRef}>
+                <SourceFileMinus1 />
                 <OwnedSourceFiles />
                 <InstalledAugmentations />
             </ul>

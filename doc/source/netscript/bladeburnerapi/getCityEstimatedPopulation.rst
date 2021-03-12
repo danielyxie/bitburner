@@ -2,6 +2,7 @@ getCityEstimatedPopulation() Netscript Function
 ===============================================
 
 .. js:function:: getCityEstimatedPopulation(cityName)
+
     :RAM cost: 4 GB
 
     :param string cityName: Name of city. Case-sensitive

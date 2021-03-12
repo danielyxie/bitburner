@@ -19,6 +19,7 @@ import { LocationName }                 from "../Locations/data/LocationNames";
 import { Server }                       from "../Server/Server";
 import { IPlayerOwnedSourceFile }       from "../SourceFile/PlayerOwnedSourceFile";
 import { MoneySourceTracker }           from "../utils/MoneySourceTracker";
+import { Exploit }                        from "../Exploits/Exploit";
 
 export interface IPlayer {
     // Class members
@@ -56,6 +57,7 @@ export interface IPlayer {
     sleeves: Sleeve[];
     sleevesFromCovenant: number;
     sourceFiles: IPlayerOwnedSourceFile[];
+    exploits: Exploit[];
     totalPlaytime: number;
 
     // Stats
@@ -173,4 +175,5 @@ export interface IPlayer {
     startWork(companyName: string): void;
     startWorkPartTime(companyName: string): void;
     travel(to: CityName): boolean;
+    giveExploit(exploit: Exploit): void;
 }

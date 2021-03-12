@@ -167,7 +167,6 @@ export function getCurrentEditor() {
         case EditorSetting.CodeMirror:
             return CodeMirrorEditor;
         default:
-            console.log(`Invalid Editor Setting: ${Settings.Editor}`);
             throw new Error(`Invalid Editor Setting: ${Settings.Editor}`);
             return null;
     }
@@ -334,7 +333,6 @@ export function scriptCalculateOfflineProduction(runningScriptObj) {
             var serv = AllServers[ip];
             if (serv == null) {continue;}
             var timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
-            console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             var growth = processSingleServerGrowth(serv, timesGrown * 450, Player);
             runningScriptObj.log(serv.hostname + " grown by " + numeralWrapper.format(growth * 100 - 100, '0.000000%') + " from grow() calls made while offline");
@@ -356,7 +354,6 @@ export function scriptCalculateOfflineProduction(runningScriptObj) {
             totalOfflineProduction += production;
             Player.gainMoney(production);
             Player.recordMoneySource(production, "hacking");
-            console.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             serv.moneyAvailable -= production;
             if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
@@ -383,7 +380,6 @@ export function scriptCalculateOfflineProduction(runningScriptObj) {
             var serv = AllServers[ip];
             if (serv == null) {continue;}
             var timesHacked = Math.round(0.5 * runningScriptObj.dataMap[ip][1] / runningScriptObj.onlineRunningTime * timePassed);
-            console.log(runningScriptObj.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
             runningScriptObj.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
             serv.fortify(CONSTANTS.ServerFortifyAmount * timesHacked);
         }
@@ -396,7 +392,6 @@ export function scriptCalculateOfflineProduction(runningScriptObj) {
             var serv = AllServers[ip];
             if (serv == null) {continue;}
             var timesWeakened = Math.round(0.5 * runningScriptObj.dataMap[ip][3] / runningScriptObj.onlineRunningTime * timePassed);
-            console.log(runningScriptObj.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             runningScriptObj.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
         }

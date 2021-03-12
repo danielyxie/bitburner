@@ -2054,7 +2054,7 @@ function applyAugmentation(aug, reapply=false) {
     }
 }
 
-function installAugmentations(cbScript=null) {
+function installAugmentations() {
     if (Player.queuedAugmentations.length == 0) {
         dialogBoxCreate("You have not purchased any Augmentations to install!");
         return false;
@@ -2063,7 +2063,7 @@ function installAugmentations(cbScript=null) {
     for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
         var aug = Augmentations[Player.queuedAugmentations[i].name];
         if (aug == null) {
-            console.log("ERROR. Invalid augmentation");
+            console.error(`Invalid augmentation: ${Player.queuedAugmentations[i].name}`);
             continue;
         }
         applyAugmentation(Player.queuedAugmentations[i]);
@@ -2074,24 +2074,6 @@ function installAugmentations(cbScript=null) {
                     "to install the following Augmentations:<br>" + augmentationList +
                     "<br>You wake up in your home...you feel different...");
     prestigeAugmentation();
-
-    //Run a script after prestiging
-    if (cbScript && isString(cbScript)) {
-        var home = Player.getHomeComputer();
-        for (const script of home.scripts) {
-            if (script.filename === cbScript) {
-                const ramUsage = script.ramUsage;
-                const ramAvailable = home.maxRam - home.ramUsed;
-                if (ramUsage > ramAvailable) {
-                    return; // Not enough RAM
-                }
-                const runningScriptObj = new RunningScript(script, []); // No args
-                runningScriptObj.threads = 1; // Only 1 thread
-
-                startWorkerScript(runningScriptObj, home);
-            }
-        }
-    }
 }
 
 function augmentationExists(name) {

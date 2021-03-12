@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.48.0",
+    Version:                "0.49.0",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,46 +228,27 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.48.0 - ASCII
+    v0.49.0 - 2021-03-11 Source-File -1
     -------
 
-    ASCII
-    * Travel Agency now displays a world map
-    * Cities are now top view of metro station maps
+    Source-File -1
+    * For advanced players: The game now embraces exploits and will reward
+      players for doing so.
+
+    Gang
+    * ascension is less effective as the ascension multiplier goes up.
+    * territory gain scales with power difference.
 
     Netscript
-    * 'softReset' is a new netscript function that performs a soft reset
-        regardless of if the player has bought augmentations or not.
-    * 'getAugmentationStats' is a new netscript function that returns the stats of
-        an augmentation.
-    * getCharacterInformation now additionally returns exp
-    * pid resets back to 1 when installing or destroying a BitNode.
-    * New '.ns' scripts start with a main function.
-    * 'hacknet.maxNumNodes' returns the maximum number of hacknet nodes.
-
-    Bladeburner
-    * Current stamina will scale as max stamina increases, this prevents players
-        from having very high penalty when they gain huge amount of exp at the 
-        start of a reset.
+    * 'gang.getEquipmentStats' returns the stats of the equipment.
+    * 'gang.getTaskStats' returns the stats of a task.
+    * 'getCrimeStats' returns the stats of a crime.
+    * Crashes should now print the ns stack trace.
+    * Log messages are now more consistent.
+    * 'softReset' now accepts a callback script like 'installAugmentations'
 
     Misc.
-    * Fixed an issue where SF3 was listed as infinitly repeatable and SF12 as
-        having a limit of 3.
-    * Fixed an issue where the gang equipment screen would freeze the game if a 
-        script installed augmentations while it is open.
-    * All BonusTime now displays in the 'H M S' format.
-    * Donation textbox style updated to match the rest of the game.
-    * Corporation name style updated to match the rest of the game.
-    * minor formatting under Hacking>Active Scripts
-    * typo in BN12 description
-    * BN12 now reduces contract money
-    * Character>Stats percentages are aligned, server and hacknet limit are
-        displayed, if the player has SF5 the reduces stats are shown.
-    * Character>Augmentations now displays by how much the player stats will
-        increase.
-    * Character>Augmentations has a badge indicating how many augs the player
-        has bought but not installed
-    * Character>Factions has a badge indicating how many factions have pending
-        invites.
+    * Minor formatting under Hacking>Active Scripts
+    * option menu colors now match the rest of the game, kinda.
     `
 }

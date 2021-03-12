@@ -322,7 +322,7 @@ function loadImportedGame(saveObj, saveString) {
             try {
                 tempAliases         = JSON.parse(tempSaveObj.AliasesSave, Reviver);
             } catch(e) {
-                console.log("Parsing Aliases save failed: " + e);
+                console.error(`Parsing Aliases save failed: ${e}`);
                 tempAliases = {};
             }
         } else {
@@ -332,7 +332,7 @@ function loadImportedGame(saveObj, saveString) {
             try {
                 tempGlobalAliases   = JSON.parse(tempSaveObj.AliasesSave, Reviver);
             } catch(e) {
-                console.log("Parsing Global Aliases save failed: " + e);
+                console.error(`Parsing Global Aliases save failed: ${e}`);
                 tempGlobalAliases = {};
             }
         } else {
@@ -342,7 +342,7 @@ function loadImportedGame(saveObj, saveString) {
             try {
                 tempMessages        = JSON.parse(tempSaveObj.MessagesSave, Reviver);
             } catch(e) {
-                console.log("Parsing Messages save failed: " + e);
+                console.error(`Parsing Messages save failed: ${e}`);
                 initMessages();
             }
         } else {
@@ -352,7 +352,7 @@ function loadImportedGame(saveObj, saveString) {
             try {
                 tempStockMarket     = JSON.parse(tempSaveObj.StockMarketSave, Reviver);
             } catch(e) {
-                console.log("Parsing StockMarket save failed: " + e);
+                console.error(`Parsing StockMarket save failed: ${e}`);
                 tempStockMarket     = {};
             }
         } else {
@@ -479,7 +479,6 @@ function loadImportedGame(saveObj, saveString) {
     gameOptionsBoxClose();
 
     // Re-start game
-    console.log("Importing game");
     Engine.setDisplayElements();    // Sets variables for important DOM elements
     Engine.init();                  // Initialize buttons, work, etc.
 
@@ -491,7 +490,6 @@ function loadImportedGame(saveObj, saveString) {
     // Process offline progress
     var offlineProductionFromScripts = loadAllRunningScripts();    // This also takes care of offline production for those scripts
     if (Player.isWorking) {
-        console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
         if (Player.workType == CONSTANTS.WorkTypeFaction) {
             Player.workForFaction(numCyclesOffline);
         } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
@@ -588,7 +586,7 @@ BitburnerSaveObject.prototype.deleteGame = function(db) {
         console.log("Successfully deleted save from indexedDb");
     }
     request.onerror = function(e) {
-        console.log("Failed to delete save from indexedDb: " + e);
+        console.error(`Failed to delete save from indexedDb: ${e}`);
     }
     createStatusText("Game deleted!");
 }

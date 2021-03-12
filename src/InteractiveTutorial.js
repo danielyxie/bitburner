@@ -69,7 +69,6 @@ function iTutorialStart() {
 
     // Don't autosave during this interactive tutorial
     Engine.Counters.autoSaveCounter = Infinity;
-    console.log("Interactive Tutorial started");
     ITutorial.currStep = 0;
     ITutorial.isRunning = true;
 
@@ -100,7 +99,7 @@ function iTutorialStart() {
 }
 
 function iTutorialEvaluateStep() {
-    if (!ITutorial.isRunning) {console.log("Interactive Tutorial not running"); return;}
+    if (!ITutorial.isRunning) {return;}
 
     // Disable and clear main menu
     var terminalMainMenu        = clearEventListeners("terminal-menu-link");
@@ -475,8 +474,6 @@ function iTutorialEnd() {
     } else {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
     }
-
-    console.log("Ending interactive tutorial");
 
     // Initialize references to main menu links
     // We have to call initializeMainMenuLinks() again because the Interactive Tutorial

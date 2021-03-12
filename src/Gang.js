@@ -270,13 +270,19 @@ Gang.prototype.processGains = function(numCycles=1, player) {
     }
 }
 
+function calculateTerritoryGain(winGang, loseGang) {
+    const powerBonus = Math.max(1, 1+Math.log(AllGangs[winGang].power/AllGangs[loseGang].power)/Math.log(50));
+    const gains = Math.min(AllGangs[loseGang].territory, powerBonus*0.0001*(Math.random()+.5))
+    return gains;
+}
+
 Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     this.storedTerritoryAndPowerCycles += numCycles;
     if (this.storedTerritoryAndPowerCycles < CyclesPerTerritoryAndPowerUpdate) { return; }
     this.storedTerritoryAndPowerCycles -= CyclesPerTerritoryAndPowerUpdate;
 
     // Process power first
-    var gangName = this.facName;
+    const gangName = this.facName;
     for (const name in AllGangs) {
         if (AllGangs.hasOwnProperty(name)) {
             if (name == gangName) {
@@ -327,12 +333,14 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
         const otherPwr = AllGangs[otherGang].power;
         const thisChance = thisPwr / (thisPwr + otherPwr);
 
+
         if (Math.random() < thisChance) {
             if (AllGangs[otherGang].territory <= 0) {
                 return;
             }
-            AllGangs[thisGang].territory += 0.0001;
-            AllGangs[otherGang].territory -= 0.0001;
+            const territoryGain = calculateTerritoryGain(thisGang, otherGang);
+            AllGangs[thisGang].territory += territoryGain;
+            AllGangs[otherGang].territory -= territoryGain;
             if (thisGang === gangName) {
                 this.clash(true); // Player won
                 AllGangs[otherGang].power *= (1 / 1.01);
@@ -345,8 +353,9 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
             if (AllGangs[thisGang].territory <= 0) {
                 return;
             }
-            AllGangs[thisGang].territory -= 0.0001;
-            AllGangs[otherGang].territory += 0.0001;
+            const territoryGain = calculateTerritoryGain(otherGang, thisGang);
+            AllGangs[thisGang].territory -= territoryGain;
+            AllGangs[otherGang].territory += territoryGain;
             if (thisGang === gangName) {
                 this.clash(false); // Player lost
             } else if (otherGang === gangName) {
@@ -790,6 +799,20 @@ GangMember.prototype.ascend = function() {
     };
 }
 
+GangMember.prototype.getAscensionEfficiency = function() {
+    function formula(mult) {
+        return 1/(1+Math.log(mult)/Math.log(10));
+    }
+    return {
+        hack: formula(this.hack_asc_mult),
+        str: formula(this.str_asc_mult),
+        def: formula(this.def_asc_mult),
+        dex: formula(this.dex_asc_mult),
+        agi: formula(this.agi_asc_mult),
+        cha: formula(this.cha_asc_mult),
+    };
+}
+
 // Returns the multipliers that would be gained from ascension
 GangMember.prototype.getAscensionResults = function() {
     /**
@@ -814,13 +837,14 @@ GangMember.prototype.getAscensionResults = function() {
     }
 
     // Subtract 1 because we're only interested in the actual "bonus" part
+    const eff = this.getAscensionEfficiency();
     return {
-        hack: (Math.max(0, hack - 1) * AscensionMultiplierRatio),
-        str:  (Math.max(0, str - 1) * AscensionMultiplierRatio),
-        def:  (Math.max(0, def - 1) * AscensionMultiplierRatio),
-        dex:  (Math.max(0, dex - 1) * AscensionMultiplierRatio),
-        agi:  (Math.max(0, agi - 1) * AscensionMultiplierRatio),
-        cha:  (Math.max(0, cha - 1) * AscensionMultiplierRatio),
+        hack: (Math.max(0, hack - 1) * AscensionMultiplierRatio * eff.hack),
+        str:  (Math.max(0, str - 1) * AscensionMultiplierRatio * eff.str),
+        def:  (Math.max(0, def - 1) * AscensionMultiplierRatio * eff.def),
+        dex:  (Math.max(0, dex - 1) * AscensionMultiplierRatio * eff.dex),
+        agi:  (Math.max(0, agi - 1) * AscensionMultiplierRatio * eff.agi),
+        cha:  (Math.max(0, cha - 1) * AscensionMultiplierRatio * eff.cha),
     }
 }
 
@@ -912,7 +936,7 @@ GangMemberTask.fromJSON = function(value) {
 
 Reviver.constructors.GangMemberTask = GangMemberTask;
 
-const GangMemberTasks = {};
+export const GangMemberTasks = {};
 
 function addGangMemberTask(name, desc, isHacking, isCombat, params) {
     GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);
@@ -981,7 +1005,7 @@ GangMemberUpgrade.fromJSON = function(value) {
 Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
 // Initialize Gang Member Upgrades
-const GangMemberUpgrades = {}
+export const GangMemberUpgrades = {}
 
 function addGangMemberUpgrade(name, cost, type, mults) {
     GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);

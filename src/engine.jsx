@@ -102,6 +102,7 @@ import { createElement } from "../utils/uiHelpers/createElement";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
 import { KEY } from "../utils/helpers/keyCodes";
+import "./Exploits/tampering";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -1079,7 +1080,6 @@ const Engine = {
             // Process offline progress
             var offlineProductionFromScripts = loadAllRunningScripts(); // This also takes care of offline production for those scripts
             if (Player.isWorking) {
-                console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     Player.workForFaction(numCyclesOffline);
                 } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
@@ -1180,7 +1180,6 @@ const Engine = {
             Engine.closeMainMenuHeader(visibleMenuTabs);
         } else {
             // No save found, start new game
-            console.log("Initializing new game");
             initBitNodeMultipliers(Player);
             initSpecialServerIps();
             Engine.setDisplayElements(); // Sets variables for important DOM elements
@@ -1525,7 +1524,6 @@ const Engine = {
 
         // DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
-            console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
             dialogBoxCreate("Forcefully deleted all running scripts on home computer. Please save and refresh page");
             gameOptionsBoxClose();

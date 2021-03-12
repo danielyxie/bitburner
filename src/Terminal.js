@@ -1766,7 +1766,6 @@ let Terminal = {
     
 }`;
                     }
-                    console.log('default code');
                     Engine.loadScriptEditorContent(filepath, code);
                 } else {
                     Engine.loadScriptEditorContent(filepath, script.code);

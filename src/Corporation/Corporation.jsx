@@ -383,7 +383,7 @@ Industry.prototype.init = function() {
             this.makesProducts = true;
             break;
         default:
-            console.log("ERR: Invalid Industry Type passed into Industry.init(): " + this.type);
+            console.error(`Invalid Industry Type passed into Industry.init(): ${this.type}`);
             return;
     }
 }
@@ -409,7 +409,7 @@ Industry.prototype.getProductDescriptionText = function() {
         case Industries.RealEstate:
             return "develop and manage real estate properties";
         default:
-            console.log("ERROR: Invalid industry type in Industry.getProductDescriptionText");
+            console.error("Invalid industry type in Industry.getProductDescriptionText");
             return "";
     }
 }
@@ -477,9 +477,7 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
     //Then calculate salaries and processs the markets
     if (state === "START") {
         if (isNaN(this.thisCycleRevenue) || isNaN(this.thisCycleExpenses)) {
-            console.log("ERROR: NaN in Corporation's computed revenue/expenses");
-            console.log(this.thisCycleRevenue.toString());
-            console.log(this.thisCycleExpenses.toString());
+            console.error("NaN in Corporation's computed revenue/expenses");
             dialogBoxCreate("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
             this.thisCycleRevenue = new Decimal(0);
             this.thisCycleExpenses = new Decimal(0);
@@ -898,7 +896,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                     var expIndustry = company.divisions[foo];
                                     var expWarehouse = expIndustry.warehouses[exp.city];
                                     if (!(expWarehouse instanceof Warehouse)) {
-                                        console.log("ERROR: Invalid export! " + expIndustry.name + " "  + exp.city);
+                                        console.error(`Invalid export! ${expIndustry.name} ${exp.city}`);
                                         break;
                                     }
 
@@ -931,7 +929,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
             case "START":
                 break;
             default:
-                console.log("ERROR: Invalid state: " + this.state);
+                console.error(`Invalid state: ${this.state}`);
                 break;
             } //End switch(this.state)
             this.updateWarehouseSizeUsed(warehouse);
@@ -1181,7 +1179,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             case "EXPORT":
                 break;
             default:
-                console.log("ERROR: Invalid State: " + this.state);
+                console.error(`Invalid State: ${this.state}`);
                 break;
             } //End switch(this.state)
         }
@@ -1221,7 +1219,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             this.popularity *= ((1 + getRandomInt(1, 3) / 100) * advMult);
             break;
         default:
-            console.log("ERROR: Un-implemented function index: " + upgN);
+            console.error(`Un-implemented function index: ${upgN}`);
             break;
     }
 }
@@ -1287,7 +1285,6 @@ Industry.prototype.updateResearchTree = function() {
     // Since ResearchTree data isnt saved, we'll update the Research Tree data
     // based on the stored 'researched' property in the Industry object
     if (Object.keys(researchTree.researched).length !== Object.keys(this.researched).length) {
-        console.log("Updating Corporation Research Tree Data");
         for (let research in this.researched) {
             researchTree.research(research);
         }
@@ -1547,7 +1544,7 @@ Employee.prototype.calculateProductivity = function(corporation, industry) {
             prodMult = 0;
             break;
         default:
-            console.log("ERROR: Invalid employee position: " + this.pos);
+            console.error(`Invalid employee position: ${this.pos}`);
             break;
     }
     return prodBase * prodMult;

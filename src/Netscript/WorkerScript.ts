@@ -188,7 +188,17 @@ export class WorkerScript {
         return (this.disableLogs.ALL == null && this.disableLogs[fn] == null);
     }
 
-    log(txt: string): void {
+    log(func: string, txt: string): void {
+        if(this.shouldLog(func)) {
+            if(func !== "" && txt !== ""){
+                this.scriptRef.log(`${func}: ${txt}`);
+            } else {
+                this.scriptRef.log(func+txt);
+            }
+        }
+    }
+
+    print(txt: string): void {
         this.scriptRef.log(txt);
     }
 }
