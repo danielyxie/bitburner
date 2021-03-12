@@ -228,27 +228,16 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.49.0 - 2021-03-11 Source-File -1
+    v0.50.0 - 2021-XX-XX
     -------
 
-    Source-File -1
-    * For advanced players: The game now embraces exploits and will reward
-      players for doing so.
-
-    Gang
-    * ascension is less effective as the ascension multiplier goes up.
-    * territory gain scales with power difference.
+    Documentation
+    * readthedocs should now be more consistent and many examples were added.
 
     Netscript
-    * 'gang.getEquipmentStats' returns the stats of the equipment.
-    * 'gang.getTaskStats' returns the stats of a task.
-    * 'getCrimeStats' returns the stats of a crime.
-    * Crashes should now print the ns stack trace.
-    * Log messages are now more consistent.
-    * 'softReset' now accepts a callback script like 'installAugmentations'
+    * Ace editor will now correctly highlight all functions.
 
-    Misc.
-    * Minor formatting under Hacking>Active Scripts
-    * option menu colors now match the rest of the game, kinda.
+    Sleeve
+    * karma gain now scales with sync.
     `
 }
