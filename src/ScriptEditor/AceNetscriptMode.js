@@ -64,7 +64,6 @@ let functions = (function(){
         for(const elem of Object.keys(namespace)) {
             keywords.push(elem);
             if(typeof namespace[elem] == 'object') {
-                console.log(recursiveKeywords(namespace[elem]));
                 keywords = keywords.concat(recursiveKeywords(namespace[elem]));
             }
         }
@@ -75,8 +74,6 @@ let functions = (function(){
     // reverse is important so that both clearLog and clear  are highlighted.
     return recursiveKeywords(ns).sort().reverse().join("|");
 })();
-
-console.log(functions);
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
