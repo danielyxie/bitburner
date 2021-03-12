@@ -2575,11 +2575,10 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
     el.appendChild(createElement("br"));
     var autolevelCheckboxId = "bladeburner-" + action.name + "-autolevel-checkbox";
     el.appendChild(createElement("label", {
-        for:autolevelCheckboxId, innerText:"Autolevel",color:"white",
+        for:autolevelCheckboxId, innerText:"Autolevel: ",color:"white",
         tooltip:"Automatically increase contract level when possible"
     }));
 
-    const checkboxDiv = createElement("div", { class: "bbcheckbox" });
     const checkboxInput = createElement("input", {
       type:"checkbox",
       id: autolevelCheckboxId,
@@ -2588,11 +2587,8 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         action.autoLevel = checkboxInput.checked;
       },
     });
-    const checkmarkLabel = createElement("label", { for: autolevelCheckboxId });
-    checkboxDiv.appendChild(checkboxInput);
-    checkboxDiv.appendChild(checkmarkLabel);
 
-    el.appendChild(checkboxDiv);
+    el.appendChild(checkboxInput);
 }
 
 Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
@@ -2718,11 +2714,10 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     el.appendChild(createElement("br"));
     var autolevelCheckboxId = "bladeburner-" + action.name + "-autolevel-checkbox";
     el.appendChild(createElement("label", {
-        for:autolevelCheckboxId, innerText:"Autolevel",color:"white",
+        for:autolevelCheckboxId, innerText:"Autolevel: ",color:"white",
         tooltip:"Automatically increase operation level when possible"
     }));
 
-    const checkboxDiv = createElement("div", { class: "bbcheckbox" });
     const checkboxInput = createElement("input", {
       type:"checkbox",
       id: autolevelCheckboxId,
@@ -2731,11 +2726,8 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         action.autoLevel = checkboxInput.checked;
       },
     });
-    const checkmarkLabel = createElement("label", { for: autolevelCheckboxId });
-    checkboxDiv.appendChild(checkboxInput);
-    checkboxDiv.appendChild(checkmarkLabel);
 
-    el.appendChild(checkboxDiv);
+    el.appendChild(checkboxInput);
 }
 
 Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
