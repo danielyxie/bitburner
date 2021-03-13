@@ -1,11 +1,13 @@
 getPurchasedServers() Netscript Function
 ========================================
 
-.. js:function:: getPurchasedServers([hostname=true])
+.. js:function:: getPurchasedServers()
 
-    :param boolean hostname:
-        Specifies whether hostnames or IP addresses should be returned. If it's true then hostnames will be returned, and if false
-        then IPs will be returned. If this argument is omitted then it is true by default
     :RAM cost: 2.25 GB
+    :returns: String array of hostnames of all of the servers you have purchased.
 
-    Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+    Example:
+
+    .. code-block:: javascript
+
+        getPurchasedServers(); // returns: ['grow-server-0', 'grow-server-1', 'weaken-server-0']

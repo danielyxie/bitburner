@@ -5,4 +5,4 @@ exit() Netscript Function
 
     :RAM cost: 0 GB
 
-    Terminates the current script immediately
+    Terminates the current script immediately.

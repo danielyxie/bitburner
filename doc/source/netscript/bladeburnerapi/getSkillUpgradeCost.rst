@@ -1,13 +1,14 @@
 getSkillUpgradeCost() Netscript Function
 ========================================
 
-.. js:function:: getSkillUpgradeCost(skillName="")
+.. js:function:: getSkillUpgradeCost(skillName)
 
     :RAM cost: 4 GB
-
     :param string skillName: Name of skill. Case-sensitive and must be an exact match
+    :returns: Amount of skill points needed to upgrade the specified skill. -1 for invalid skills.
 
-    This function returns the number of skill points needed to upgrade the
-    specified skill.
+    Example:
 
-    The function returns -1 if an invalid skill name is passed in.
+    .. code-block:: javascript
+
+        bladeburner.getSkillUpgradeCost("Overclock"); // returns: 120

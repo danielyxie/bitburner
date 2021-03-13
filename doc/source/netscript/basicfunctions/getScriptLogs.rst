@@ -1,27 +1,27 @@
 getScriptLogs() Netscript Function
 ==================================
 
-.. js:function:: getScriptLogs([fn], [hostname/ip=current ip], [args...])
+.. js:function:: getScriptLogs([filename[, hostname=current hostname[, args...]]])
 
-    :param string fn: Optional. Filename of script to get logs from.
-    :param string ip: Optional. IP or hostname of the server that the script is on
-    :param args...: Arguments to identify which scripts to get logs for
     :RAM cost: 0 GB
+    :param string filename: Optional. Filename of script to get logs from.
+    :param string hostname: Optional. Hostname of the server running the script.
+    :param args...: Arguments to identify which scripts to get logs for
+    :returns: Array of string, each line being a logged line. Chronological.
 
-    Returns a script's logs. The logs are returned as an array, where each
-    line is an element in the array. The most recently logged line is at the
-    end of the array.
-
-    Note that there is a maximum number of lines that a script stores in its logs.
+.. note:: There is a maximum number of lines that a script stores in its logs.
     This is configurable in the game's options.
 
-    If the function is called with no arguments, it will return the current script's logs.
+    If the function is called with no arguments, it will return the current
+    script's logs.
 
-    Otherwise, the `fn`, `hostname/ip,` and `args...` arguments can be used to get the logs
-    from another script. Remember that scripts are uniquely identified by both
-    their names and arguments.
+    Otherwise, the ``filename``, ``hostname``, and ``args...`` arguments can be
+    used to get the logs from another script. Remember that scripts are uniquely
+    identified by both their names and arguments.
 
-    Examples::
+    Example:
+
+    .. code-block:: javascript
 
         // Get logs from foo.script on the current server that was run with no args
         getScriptLogs("foo.script");

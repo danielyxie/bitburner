@@ -1,15 +1,19 @@
 getNumTriesRemaining() Netscript Function
 =========================================
 
-.. js:function:: getNumTriesRemaining(fn[, hostname/ip=current ip])
+.. js:function:: getNumTriesRemaining(filename[, hostname=current hostname])
 
-    :param string fn: Filename of the contract
-    :param string hostname/ip: Hostname or IP of the server containing the contract.
-                               Optional. Defaults to current server if not provided
+    :RAM cost: 2 GB
+    :param string filename: Filename of the contract
+    :param string hostname: Hostname of the server containing the contract.
+        Optional. Defaults to current server if not provided
+    :returns: Number indicating how many attempts are remaining
 
     Get the number of tries remaining on the contract before it
     self-destructs.
 
-    :returns: Number indicating how many attempts are remaining
+    Example:
 
-    :RAM cost: 2 GB
+    .. code-block:: javascript
+
+        codingcontract.getNumTriesRemaining("contract-123.cct", "home"); // returns: 5

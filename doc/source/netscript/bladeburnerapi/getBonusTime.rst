@@ -4,8 +4,7 @@ getBonusTime() Netscript Function
 .. js:function:: getBonusTime()
 
     :RAM cost: 0 GB
-
-    Returns the amount of accumulated "bonus time" (seconds) for the Bladeburner mechanic.
+    :returns: Amount of accumulated "bonus time" (seconds) for the Bladeburner mechanic.
 
     "Bonus time" is accumulated when the game is offline or if the game is
     inactive in the browser.
@@ -14,3 +13,9 @@ getBonusTime() Netscript Function
     For example, if an action takes 30 seconds to complete but you've accumulated
     over 30 seconds in bonus time, then the action will only take 6 seconds
     in real life to complete.
+
+    Example:
+
+    .. code-block:: javascript
+
+        bladeburner.getBonusTime(); // returns: 130

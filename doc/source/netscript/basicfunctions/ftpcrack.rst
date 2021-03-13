@@ -1,13 +1,18 @@
 ftpcrack() Netscript Function
 =============================
 
-.. js:function:: ftpcrack(hostname/ip)
+.. js:function:: ftpcrack(hostname)
 
-    :param string hostname/ip: IP or hostname of the target server
     :RAM cost: 0.05 GB
 
-    Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.
+    :param string hostname: Hostname of the target server.
 
-    Example::
+    Runs the ``FTPCrack.exe`` program on the target server. ``FTPCrack.exe``
+    must exist on your home computer.
+
+
+    Examples:
+
+    .. code-block:: javascript
 
         ftpcrack("foodnstuff");

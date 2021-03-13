@@ -1,16 +1,22 @@
 getHackTime() Netscript Function
 ================================
 
-.. js:function:: getHackTime(hostname/ip[, hackLvl=current level])
+.. js:function:: getHackTime(hostname[, hackLvl=current level])
 
-    :param string hostname/ip: Hostname or IP of target server
-    :param number hackLvl: Optional hacking level for the calculation. Defaults to player's current hacking level
     :RAM cost: 0.05 GB
+    :param string hostname: Hostname of target server.
+    :param number hackLvl: Optional hacking level for the calculation. Defaults
+        to player's current hacking level.
+    :returns: seconds it takes to execute :doc:`hack<hack>` on that server.
 
-    Returns the amount of time in seconds it takes to execute the *hack()* Netscript function on the target server.
+    The function takes in an optional ``hackLvl`` parameter that can be
+    specified to see what the hack time would be at different hacking levels.
 
-    The function takes in an optional *hackLvl* parameter that can be specified
-    to see what the hack time would be at different hacking levels.
+    Example:
+
+    .. code-block:: javascript
+
+        getHackTime("foodnstuff"); // returns: 53.4
 
     .. note:: For Hacknet Servers (the upgraded version of a Hacknet Node), this function will
               return :code:`Infinity`. 

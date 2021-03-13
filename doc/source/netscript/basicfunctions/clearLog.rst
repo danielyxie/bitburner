@@ -5,4 +5,13 @@ clearLog() Netscript Function
 
     :RAM cost: 0 GB
 
-    Clears the script's logs
+    Clears the script's logs. Useful when making monitoring scripts.
+
+    Examples:
+
+    .. code-block:: javascript
+
+        while(true) {
+            clearLog();
+            print(getServerMoneyAvailable('foodnstuff'));
+        }

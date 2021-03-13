@@ -1,13 +1,17 @@
 brutessh() Netscript Function
 =============================
 
-.. js:function:: brutessh(hostname/ip)
+.. js:function:: brutessh(hostname)
 
-    :param string hostname/ip: IP or hostname of the target server
     :RAM cost: 0.05 GB
 
-    Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.
+    :param string hostname: Hostname of the target server.
 
-    Example::
+    Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist
+    on your home computer.
+
+    Examples:
+
+    .. code-block:: javascript
 
         brutessh("foodnstuff");

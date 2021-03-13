@@ -1,11 +1,15 @@
 ls() Netscript Function
 =======================
 
-.. js:function:: ls(hostname/ip, [grep])
+.. js:function:: ls(hostname[, grep])
 
-    :param string hostname/ip: Hostname or IP of the target server
-    :param string grep: a substring to search for in the filename
     :RAM cost: 0.2 GB
+    :param string hostname: Hostname of the target server.
+    :param string grep: a substring to search for in the filename.
+    :returns: String array of all files in alphabetical order.
 
-    Returns an array with the filenames of all files on the specified server (as strings). The returned array
-    is sorted in alphabetic order
+    Example:
+
+    .. code-block:: javascript
+
+        ls("home"); // returns: ["demo.script", "msg1.txt"]

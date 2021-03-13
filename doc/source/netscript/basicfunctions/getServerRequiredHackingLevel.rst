@@ -1,9 +1,14 @@
 getServerRequiredHackingLevel() Netscript Function
 ==================================================
 
-.. js:function:: getServerRequiredHackingLevel(hostname/ip)
+.. js:function:: getServerRequiredHackingLevel(hostname)
 
-    :param string hostname/ip: Hostname or IP of target server
     :RAM cost: 0.1 GB
+    :param string hostname: Hostname of target server.
+    :returns: The required hacking level of target server.
 
-    Returns the required hacking level of the target server
+    Example:
+
+    .. code-block:: javascript
+
+        getServerRequiredHackingLevel("foodnstuff"); // returns: 5

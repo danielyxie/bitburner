@@ -228,27 +228,34 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.49.0 - 2021-03-11 Source-File -1
+    v0.49.2 - 2021-03-13
     -------
 
-    Source-File -1
-    * For advanced players: The game now embraces exploits and will reward
-      players for doing so.
+    BN8
+    * A new bitnode multipler has been added, it lets you reduce money from a
+      server without gaining actually any money. This is important for BN8 where
+      hack/grow can influence the stock market. No money can be gained from
+      hacking but server money can still be reduced.
 
-    Gang
-    * ascension is less effective as the ascension multiplier goes up.
-    * territory gain scales with power difference.
+    Documentation
+    * readthedocs should now be more consistent and many examples were added.
 
     Netscript
-    * 'gang.getEquipmentStats' returns the stats of the equipment.
-    * 'gang.getTaskStats' returns the stats of a task.
-    * 'getCrimeStats' returns the stats of a crime.
-    * Crashes should now print the ns stack trace.
-    * Log messages are now more consistent.
-    * 'softReset' now accepts a callback script like 'installAugmentations'
+    * Ace editor will now correctly highlight all functions.
+    * 'tFormat' is a new netscript function that returns a human readable
+      representation of milliseconds. eg. "2 hours 15 minute 43 seconds"
+
+    Gang
+    * style improvements
+
+    Bladeburner
+    * style improvements
+    * fix bug where 'skill list SKILL' would crash if skill is level 0.
+
+    Sleeve
+    * karma gain now scales with sync.
 
     Misc.
-    * Minor formatting under Hacking>Active Scripts
-    * option menu colors now match the rest of the game, kinda.
+    Fix issue where the effective stats under Character>Stats were being calculated.
     `
 }

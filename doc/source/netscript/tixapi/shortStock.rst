@@ -3,9 +3,10 @@ shortStock() Netscript Function
 
 .. js:function:: shortStock(sym, shares)
 
+    :RAM cost: 2.5 GB
     :param string sym: Symbol of stock to short
     :param number shares: Number of shares to short. Must be positive. Will be rounded to nearest integer
-    :RAM cost: 2.5 GB
+
 
     Attempts to purchase a `short <http://bitburner.wikia.com/wiki/Stock_Market#Positions:_Long_vs_Short>`_ position of a stock
     using a `Market Order <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.

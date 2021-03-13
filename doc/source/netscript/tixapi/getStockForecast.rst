@@ -3,8 +3,9 @@ getStockForecast() Netscript Function
 
 .. js:function:: getStockForecast(sym)
 
-    :param string sym: Symbol of stock
     :RAM cost: 2.5 GB
+    :param string sym: Symbol of stock
+
 
     Returns the probability that the specified stock's price will increase
     (as opposed to decrease) during the next tick.

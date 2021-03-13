@@ -4,5 +4,10 @@ getTimeSinceLastAug() Netscript Function
 .. js:function:: getTimeSinceLastAug()
 
     :RAM cost: 0.05 GB
+    :returns: Milliseconds since you last installed augmentations.
 
-    Returns the amount of time in milliseconds that have passed since you last installed Augmentations
+    Example:
+
+    .. code-block:: javascript
+
+        getTimeSinceLastAug(); // returns: 13912400

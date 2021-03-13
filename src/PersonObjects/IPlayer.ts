@@ -176,4 +176,5 @@ export interface IPlayer {
     startWorkPartTime(companyName: string): void;
     travel(to: CityName): boolean;
     giveExploit(exploit: Exploit): void;
+    queryStatFromString(str: string): number;
 }

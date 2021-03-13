@@ -3,8 +3,9 @@ getStockVolatility() Netscript Function
 
 .. js:function:: getStockVolatility(sym)
 
-    :param string sym: Symbol of stock
     :RAM cost: 2.5 GB
+    :param string sym: Symbol of stock
+
 
     Returns the volatility of the specified stock.
 

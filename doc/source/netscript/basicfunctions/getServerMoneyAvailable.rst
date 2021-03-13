@@ -1,15 +1,19 @@
 getServerMoneyAvailable() Netscript Function
 ============================================
 
-.. js:function:: getServerMoneyAvailable(hostname/ip)
+.. js:function:: getServerMoneyAvailable(hostname)
 
-    :param string hostname/ip: Hostname or IP of target server
     :RAM cost: 0.1 GB
+    :param string hostname: Hostname of target server.
+    :returns: Money available on that server.
 
-    Returns the amount of money available on a server. **Running this function on the home computer will return
-    the player's money.**
+    .. note::
 
-    Example::
+        Running this function on the home computer will return the player's money.
 
-        getServerMoneyAvailable("foodnstuff");
-        getServerMoneyAvailable("home"); //Returns player's money
+    Example:
+
+    .. code-block:: javascript
+
+        getServerMoneyAvailable("foodnstuff"); // returns: 120000
+        getServerMoneyAvailable("home"); // returns: 1000

@@ -1,13 +1,16 @@
 httpworm() Netscript Function
 =============================
 
-.. js:function:: httpworm(hostname/ip)
+.. js:function:: httpworm(hostname)
 
-    :param string hostname/ip: IP or hostname of the target server
     :RAM cost: 0.05 GB
+    :param string hostname: Hostname of the target server.
 
-    Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.
+    Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist
+    on your home computer.
 
-    Example::
+    Example:
+
+    .. code-block:: javascript
 
         httpworm("foodnstuff");

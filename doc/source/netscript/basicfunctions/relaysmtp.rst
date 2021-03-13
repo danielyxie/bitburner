@@ -1,13 +1,17 @@
 relaysmtp() Netscript Function
 ==============================
 
-.. js:function:: relaysmtp(hostname/ip)
+.. js:function:: relaysmtp(hostname)
 
-    :param string hostname/ip: IP or hostname of the target server
     :RAM cost: 0.05 GB
+    :param string hostname: Hostname of the target server.
 
-    Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on your home computer.
 
-    Example::
+    Runs the relaySMTP.exe program on the target server. relaySMTP.exe must
+    exist on your home computer.
+
+    Example:
+
+    .. code-block:: javascript
 
         relaysmtp("foodnstuff");

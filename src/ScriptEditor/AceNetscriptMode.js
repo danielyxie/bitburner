@@ -1,4 +1,5 @@
 //This file should be copied into brace/mode/netscript.js
+import { NetscriptFunctions } from '../NetscriptFunctions';
 
 ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
 "use strict";
@@ -45,7 +46,6 @@ DocCommentHighlightRules.getEndRule = function (start) {
     };
 };
 
-
 exports.DocCommentHighlightRules = DocCommentHighlightRules;
 
 });
@@ -58,81 +58,22 @@ var DocCommentHighlightRules = acequire("./doc_comment_highlight_rules").DocComm
 var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
 var identifierRe = "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*";
 
-let NetscriptFunctions =
-    "hack|hackAnalyzeThreads|hackAnalyzePercent|hackChance|"                   +
-    "sleep|grow|weaken|growthAnalyze|print|tprint|scan|nuke|brutessh|"         +
-    "ftpcrack|"                                                                +
-    "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|tail|"           +
-    "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
-    "scp|ls|ps|hasRootAccess|"                                                 +
-    "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
-    "getHacknetMultipliers|"                                                   +
-    "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
-    "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
-    "getServerMinSecurityLevel|"                                               +
-    "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
-    "serverExists|fileExists|isRunning|"                                       +
-    "deleteServer|getPurchasedServers|"                                        +
-    "getPurchasedServerLimit|getPurchasedServerMaxRam|"                        +
-    "getPurchasedServerCost|"                                                  +
-    "purchaseServer|round|write|tryWrite|read|peek|clear|rm|getPortHandle|"    +
-    "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
-    "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
-    "getTimeSinceLastAug|prompt|"                                              +
+let functions = (function(){
+    function recursiveKeywords(namespace) {
+        let keywords = [];
+        for(const elem of Object.keys(namespace)) {
+            keywords.push(elem);
+            if(typeof namespace[elem] == 'object') {
+                keywords = keywords.concat(recursiveKeywords(namespace[elem]));
+            }
+        }
+        return keywords;
+    }
 
-    // Singularity Functions
-    "universityCourse|getCharacterInformation|"                                +
-    "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
-    "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
-    "getCompanyFavor|stopAction|getFactionFavor|"                              +
-    "getFavorToDonate|getFactionFavorGain|getCompanyFavorGain|"                +
-    "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
-    "donateToFaction|getCrimeStats|"                                           +
-    "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
-    "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
-    "getAugmentationPrereq|getAugmentationCost|purchaseAugmentation|"          +
-    "softReset|installAugmentations|getAugmentationStats|"                     +
-
-    // TIX API
-    "getStockPrice|getStockPosition|getStockSymbols|getStockMaxShares|"        +
-    "getStockAskPrice|getStockBidPrice|getStockPurchaseCost|getStockSaleGain|" +
-    "buyStock|sellStock|shortStock|sellShort|"                                 +
-    "placeOrder|cancelOrder|getOrders|getStockVolatility|getStockForecast|"    +
-    "purchase4SMarketData|purchase4SMarketDataTixApi|"                         +
-
-    // Hacknet Node API
-    "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
-    "upgradeLevel|upgradeRam|upgradeCore|upgradeCache|getLevelUpgradeCost|"    +
-    "getRamUpgradeCost|getCoreUpgradeCost|getCacheUpgradeCost|maxNumNodes|"    +
-
-    // Gang API
-    "gang|"                                                                    +
-    "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
-    "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
-    "getEquipmentCost|getEquipmentType|purchaseEquipment|ascendMember|"        +
-    "setTerritoryWarfare|getEquipmentStats|getTaskStats|"                      +
-    "getChanceToWinClash|getBonusTime|"                                        +
-
-    // Bladeburner API
-    "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
-    "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
-    "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
-    "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
-    "getActionRepGain|setActionAutolevel|setActionLevel|getBlackOpRank|"       +
-    "getRank|getSkillPoints|getSkillLevel|getSkillUpgradeCost|"                +
-    "upgradeSkill|getTeamSize|getCity|getCurrentAction|"                       +
-    "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
-    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime|"  +
-
-    // Coding Contract API
-    "codingcontract|attempt|getContractType|getData|getDescription|"           +
-    "getNumTriesRemaining|"                                                    +
-
-    // Sleeve API
-    "sleeve|getNumSleeves|setToShockRecovery|setToSynchronize|"                +
-    "setToCommitCrime|setToUniversityCourse|travel|setToCompanyWork|"          +
-    "setToFactionWork|setToGymWorkout|getSleeveStats|getTask|getInformation|"  +
-    "getSleeveAugmentations|getSleevePurchasableAugs|purchaseSleeveAug";
+    const ns = NetscriptFunctions(null);
+    // reverse is important so that both clearLog and clear  are highlighted.
+    return recursiveKeywords(ns).sort().reverse().join("|");
+})();
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
@@ -145,7 +86,7 @@ var NetscriptHighlightRules = function(options) {
             "SyntaxError|TypeError|URIError|"                                          +
             "decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|eval|isFinite|" + // Non-constructor functions
             "isNaN|parseFloat|parseInt|"                                               +
-            "ns|" + NetscriptFunctions +"|"                                            +
+            "ns|" + functions +"|"                                            +
             "JSON|Math|"                                                               + // Other
             "this|arguments|prototype|window|document"                                 , // Pseudo
         "keyword":
@@ -291,7 +232,7 @@ var NetscriptHighlightRules = function(options) {
                 regex : /[.](?![.])/
             }, {
                 token : "support.function",
-                regex : "/|" + NetscriptFunctions + "|/"
+                regex : "/|" + functions + "|/"
             }, {
                 token : "support.function",
                 regex : /(s(?:h(?:ift|ow(?:Mod(?:elessDialog|alDialog)|Help))|croll(?:X|By(?:Pages|Lines)?|Y|To)?|t(?:op|rike)|i(?:n|zeToContent|debar|gnText)|ort|u(?:p|b(?:str(?:ing)?)?)|pli(?:ce|t)|e(?:nd|t(?:Re(?:sizable|questHeader)|M(?:i(?:nutes|lliseconds)|onth)|Seconds|Ho(?:tKeys|urs)|Year|Cursor|Time(?:out)?|Interval|ZOptions|Date|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Date|FullYear)|FullYear|Active)|arch)|qrt|lice|avePreferences|mall)|h(?:ome|andleEvent)|navigate|c(?:har(?:CodeAt|At)|o(?:s|n(?:cat|textual|firm)|mpile)|eil|lear(?:Timeout|Interval)?|a(?:ptureEvents|ll)|reate(?:StyleSheet|Popup|EventObject))|t(?:o(?:GMTString|S(?:tring|ource)|U(?:TCString|pperCase)|Lo(?:caleString|werCase))|est|a(?:n|int(?:Enabled)?))|i(?:s(?:NaN|Finite)|ndexOf|talics)|d(?:isableExternalCapture|ump|etachEvent)|u(?:n(?:shift|taint|escape|watch)|pdateCommands)|j(?:oin|avaEnabled)|p(?:o(?:p|w)|ush|lugins.refresh|a(?:ddings|rse(?:Int|Float)?)|r(?:int|ompt|eference))|e(?:scape|nableExternalCapture|val|lementFromPoint|x(?:p|ec(?:Script|Command)?))|valueOf|UTC|queryCommand(?:State|Indeterm|Enabled|Value)|f(?:i(?:nd|le(?:ModifiedDate|Size|CreatedDate|UpdatedDate)|xed)|o(?:nt(?:size|color)|rward)|loor|romCharCode)|watch|l(?:ink|o(?:ad|g)|astIndexOf)|a(?:sin|nchor|cos|t(?:tachEvent|ob|an(?:2)?)|pply|lert|b(?:s|ort))|r(?:ou(?:nd|teEvents)|e(?:size(?:By|To)|calc|turnValue|place|verse|l(?:oad|ease(?:Capture|Events)))|andom)|g(?:o|et(?:ResponseHeader|M(?:i(?:nutes|lliseconds)|onth)|Se(?:conds|lection)|Hours|Year|Time(?:zoneOffset)?|Da(?:y|te)|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Da(?:y|te)|FullYear)|FullYear|A(?:ttention|llResponseHeaders)))|m(?:in|ove(?:B(?:y|elow)|To(?:Absolute)?|Above)|ergeAttributes|a(?:tch|rgins|x))|b(?:toa|ig|o(?:ld|rderWidths)|link|ack))\b(?=\()/

@@ -151,6 +151,7 @@ import { numeralWrapper } from "./ui/numeralFormat";
 import { post } from "./ui/postToTerminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { formatNumber, isHTML } from "../utils/StringHelperFunctions";
@@ -430,14 +431,18 @@ function NetscriptFunctions(workerScript) {
         }
     }
 
-    const checkBladeburnerAccess = function(func) {
-        const accessDenied = `You do not ` +
-                             "currently have access to the Bladeburner API. To access the Bladeburner API " +
-                             "you must be employed at the Bladeburner division, AND you must either be in " +
-                             "BitNode-7 or have Source-File 7.";
-        const hasAccess = Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || Player.sourceFiles.some(a=>{return a.n === 7}));
-        if(!hasAccess) {
-            throw makeRuntimeErrorMsg(`bladeburner.${func}`, accessDenied);
+    const checkBladeburnerAccess = function(func, skipjoined=false) {
+        const apiAccess = (Player.bitNodeN === 7 || Player.sourceFiles.some(a=>{return a.n === 7}));
+        if (!apiAccess) {
+            const apiDenied = `You do not currently have access to the Bladeburner API. You must either be in BitNode-7 or have Source-File 7.`;
+            throw makeRuntimeErrorMsg(`bladeburner.${func}`, apiDenied);
+        }
+        if (!skipjoined) {
+            const bladeburnerAccess = Player.bladeburner instanceof Bladeburner;
+            if(!bladeburnerAccess) {
+                const bladeburnerDenied = `You must be a member of the Bladeburner division to use this API.`;
+                throw makeRuntimeErrorMsg(`bladeburner.${func}`, bladeburnerDenied);
+            }
         }
     }
 
@@ -706,16 +711,18 @@ function NetscriptFunctions(workerScript) {
                         maxThreadNeeded = 1e6;
                     }
 
-                    let moneyGained = Math.floor(server.moneyAvailable * percentHacked) * threads;
+                    let moneyDrained = Math.floor(server.moneyAvailable * percentHacked) * threads;
 
                     // Over-the-top safety checks
-                    if (moneyGained <= 0) {
-                        moneyGained = 0;
+                    if (moneyDrained <= 0) {
+                        moneyDrained = 0;
                         expGainedOnSuccess = expGainedOnFailure;
                     }
-                    if (moneyGained > server.moneyAvailable) {moneyGained = server.moneyAvailable;}
-                    server.moneyAvailable -= moneyGained;
+                    if (moneyDrained > server.moneyAvailable) {moneyDrained = server.moneyAvailable;}
+                    server.moneyAvailable -= moneyDrained;
                     if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
+
+                    const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
 
                     Player.gainMoney(moneyGained);
                     workerScript.scriptRef.onlineMoneyMade += moneyGained;
@@ -1680,7 +1687,8 @@ function NetscriptFunctions(workerScript) {
             checkTixApiAccess("buyStock");
             const stock = getStockFromSymbol(symbol, "buyStock");
             const res = buyStock(stock, shares, workerScript, { rerenderFn: displayStockMarketContent });
-
+            console.log(stock);
+            console.log(res);
             return res ? stock.price : 0;
         },
         sellStock: function(symbol, shares) {
@@ -2348,6 +2356,9 @@ function NetscriptFunctions(workerScript) {
             }
 
             return numeralWrapper.format(parseFloat(n), format);
+        },
+        tFormat: function(milliseconds) {
+            return convertTimeMsToTimeElapsedString(milliseconds);
         },
         getTimeSinceLastAug: function() {
             updateDynamicRam("getTimeSinceLastAug", getRamCost("getTimeSinceLastAug"));
@@ -3692,12 +3703,12 @@ function NetscriptFunctions(workerScript) {
             },
             joinBladeburnerFaction: function() {
                 updateDynamicRam("joinBladeburnerFaction", getRamCost("bladeburner", "joinBladeburnerFaction"));
-                checkBladeburnerAccess("joinBladeburnerFaction");
+                checkBladeburnerAccess("joinBladeburnerFaction", true);
                 return Player.bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
             },
             joinBladeburnerDivision: function() {
                 updateDynamicRam("joinBladeburnerDivision", getRamCost("bladeburner", "joinBladeburnerDivision"));
-                checkBladeburnerAccess("joinBladeburnerDivision");
+                checkBladeburnerAccess("joinBladeburnerDivision", true);
                 if ((Player.bitNodeN === 7 || SourceFileFlags[7] > 0)) {
                     if (Player.bitNodeN === 8) { return false; }
                     if (Player.bladeburner instanceof Bladeburner) {

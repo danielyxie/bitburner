@@ -4,10 +4,12 @@ getActionCurrentLevel() Netscript Function
 .. js:function:: getActionCurrentLevel(type, name)
 
     :RAM cost: 4 GB
-
     :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
+    :param string name: Name of action. Must be an exact match.
+    :returns: Action current level, -1 for invalid actions.
 
-    Returns the current level of this action.
+    Example:
 
-    Returns -1 if an invalid action is specified.
+    .. code-block:: javascript
+
+        bladeburner.getActionCountRemaining("Contracts", "Tracking"); // returns: 7

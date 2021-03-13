@@ -4,11 +4,7 @@ getMemberInformation() Netscript Function
 .. js:function:: getMemberInformation(name)
 
     :RAM cost: 2 GB
-
     :param string name: Name of member
-
-    Get stat and equipment-related information about a Gang Member
-
     :returns: An object with the gang member information.
 
     The object has the following structure::
@@ -36,3 +32,5 @@ getMemberInformation() Netscript Function
             strengthAscensionMult:  Strength multiplier from ascension. Decimal form
             task:                   Name of currently assigned task
         }
+
+    Get stat and equipment-related information about a Gang Member

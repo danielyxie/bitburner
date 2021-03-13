@@ -1,10 +1,14 @@
 isLogEnabled() Netscript Function
 =================================
 
-.. js:function:: isLogEnabled(fn)
+.. js:function:: isLogEnabled(functionName)
 
-    :param string fn: Name of function to check
     :RAM cost: 0 GB
+    :param string functionName: Name of function to check.
+    :returns: ``true`` is logs are enabled for this function or for 'ALL'
 
-    Returns a boolean indicating whether or not logging is enabled for that
-    function (or 'ALL')
+    Example:
+
+    .. code-block:: javascript
+
+        isLogEnabled('hack'); // returns: true

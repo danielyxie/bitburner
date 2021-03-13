@@ -4,10 +4,12 @@ getActionMaxLevel() Netscript Function
 .. js:function:: getActionMaxLevel(type, name)
 
     :RAM cost: 4 GB
-
     :param string type: Type of action. See :ref:`bladeburner_action_types`
     :param string name: Name of action. Must be an exact match
+    :returns: Action max level, -1 for invalid actions.
 
-    Returns the maximum level for this action.
+    Example:
 
-    Returns -1 if an invalid action is specified.
+    .. code-block:: javascript
+
+        bladeburner.getActionMaxLevel("Contracts", "Tracking"); // returns: 15

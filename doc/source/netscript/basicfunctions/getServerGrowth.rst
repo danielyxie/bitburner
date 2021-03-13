@@ -1,12 +1,19 @@
 getServerGrowth() Netscript Function
 ====================================
 
-.. js:function:: getServerGrowth(hostname/ip)
+.. js:function:: getServerGrowth(hostname)
 
-    :param string hostname/ip: Hostname or IP of target server
     :RAM cost: 0.1 GB
+    :param string hostname: Hostname of target server.
+    :returns: Server growth parameter.
 
-    Returns the server's instrinsic "growth parameter". This growth parameter is a number
-    between 1 and 100 that represents how quickly the server's money grows. This parameter affects the
-    percentage by which the server's money is increased when using the *grow()* function. A higher
-    growth parameter will result in a higher percentage increase from *grow()*.
+    The growth parameter is a number between 1 and 100 affects the percentage by
+    which the server's money is increased when using the :doc:`grow<grow>`
+    function. A higher growth parameter will result in a higher percentage
+    increase.
+
+    Example:
+
+    .. code-block:: javascript
+
+        getServerGrowth('foodnstuff'); // returns: 5

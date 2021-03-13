@@ -3,6 +3,7 @@ placeOrder() Netscript Function
 
 .. js:function:: placeOrder(sym, shares, price, type, pos)
 
+    :RAM cost: 2.5 GB
     :param string sym: Symbol of stock to player order for
     :param number shares: Number of shares for order. Must be positive. Will be rounded to nearest integer
     :param number price: Execution price for the order
@@ -17,7 +18,6 @@ placeOrder() Netscript Function
     :param string pos:
         Specifies whether the order is a "Long" or "Short" position. The Values "L" or "S" can also be used. This is
         NOT case-sensitive.
-    :RAM cost: 2.5 GB
 
     Places an order on the stock market. This function only works
     for :ref:`Limit and Stop Orders <gameplay_stock_market_order_types>`.

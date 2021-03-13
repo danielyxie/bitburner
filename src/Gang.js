@@ -1042,6 +1042,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
         // New popup
         UIElems.gangMemberUpgradeBoxFilter = createElement("input", {
             type:"text", placeholder:"Filter gang members",
+            class: "text-input",
             value:initialFilter,
             onkeyup:()=>{
                 var filterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
@@ -1353,6 +1354,7 @@ Gang.prototype.displayGangContent = function(player) {
                     },
                     placeholder: "Name must be unique",
                     type: "text",
+                    class:"text-input",
                 });
                 yesBtn = createElement("a", {
                     class: "std-button",
@@ -1433,6 +1435,7 @@ Gang.prototype.displayGangContent = function(player) {
         });
         UIElems.gangMemberFilter = createElement("input", {
             type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
+            class:"text-input",
             onkeyup:()=>{
                 this.displayGangMemberList();
             }
@@ -1638,8 +1641,8 @@ Gang.prototype.updateGangContent = function() {
             removeChildrenFromElement(UIElems.gangInfo);
             UIElems.gangInfo.appendChild(createElement("p", { // Respect
                 display: "inline-block",
-                innerText: "Respect: " + formatNumber(this.respect, 6) +
-                           " (" + formatNumber(5*this.respectGainRate, 6) + " / sec)",
+                innerText: "Respect: " + numeralWrapper.format(this.respect, '0.00000a') +
+                           " (" + numeralWrapper.format(5*this.respectGainRate, '0.00000a') + " / sec)",
                 tooltip: "Represents the amount of respect your gang has from other gangs and criminal " +
                          "organizations. Your respect affects the amount of money " +
                          "your gang members will earn, and also determines how much " +
@@ -1649,8 +1652,8 @@ Gang.prototype.updateGangContent = function() {
 
             UIElems.gangInfo.appendChild(createElement("p", { // Wanted level
                 display: "inline-block",
-                innerText: "Wanted Level: " + formatNumber(this.wanted, 6) +
-                           " (" + formatNumber(5*this.wantedGainRate, 6) + " / sec)",
+                innerText: "Wanted Level: " + numeralWrapper.format(this.wanted, '0.00000a') +
+                           " (" + numeralWrapper.format(5*this.wantedGainRate, '0.00000a') + " / sec)",
                 tooltip: "Represents how much the gang is wanted by law enforcement. The higher " +
                          "your gang's wanted level, the harder it will be for your gang members " +
                          "to make money and earn respect. Note that the minimum wanted level is 1."
@@ -1691,18 +1694,20 @@ Gang.prototype.updateGangContent = function() {
 
             UIElems.gangInfo.appendChild(createElement("p", {  // Faction reputation
                 display:"inline-block",
-                innerText:"Faction reputation: " + formatNumber(rep, 3)
+                innerText:"Faction reputation: " + numeralWrapper.format(rep, '0.000a')
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
 
             const CyclesPerSecond = 1000 / Engine._idleSpeed;
-            UIElems.gangInfo.appendChild(createElement("p", { // Stored Cycles
-                innerText: `Bonus time: ${convertTimeMsToTimeElapsedString(this.storedCycles / CyclesPerSecond*1000)}`,
-                display: "inline-block",
-                tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
-                         "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
-            }));
-            UIElems.gangInfo.appendChild(createElement("br"));
+            if (this.storedCycles / CyclesPerSecond*1000 > 5000) {
+                UIElems.gangInfo.appendChild(createElement("p", { // Stored Cycles
+                    innerText: `Bonus time: ${convertTimeMsToTimeElapsedString(this.storedCycles / CyclesPerSecond*1000)}`,
+                    display: "inline-block",
+                    tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
+                             "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
+                }));
+                UIElems.gangInfo.appendChild(createElement("br"));
+            }
         } else {
             console.error("gang-info DOM element DNE");
         }
@@ -1776,12 +1781,12 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
             const popupId = `gang-management-ascend-member ${memberObj.name}`;
             const ascendBenefits = memberObj.getAscensionResults();
             const txt = createElement("pre", {
-               innerText: ["Are you sure you want to ascend this member? (S)he will lose all of",
-                           "his non-Augmentation upgrades and his/her stats will reset back to 1.",
+               innerText: ["Are you sure you want to ascend this member? They will lose all of",
+                           "their non-Augmentation upgrades and their stats will reset back to 1.",
                            "",
-                           `Furthermore, your gang will lose ${numeralWrapper.format(memberObj.earnedRespect, "0.000000")} respect`,
+                           `Furthermore, your gang will lose ${numeralWrapper.format(memberObj.earnedRespect, "0.000a")} respect`,
                            "",
-                           "In return, (s)he will gain the following permanent boost to stat multipliers:\n",
+                           "In return, they will gain the following permanent boost to stat multipliers:\n",
                            `Hacking: +${numeralWrapper.format(ascendBenefits.hack, "0.00%")}`,
                            `Strength: +${numeralWrapper.format(ascendBenefits.str, "0.00%")}`,
                            `Defense: +${numeralWrapper.format(ascendBenefits.def, "0.00%")}`,
@@ -1929,10 +1934,10 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     var gainInfo = document.getElementById(name + "gang-member-gain-info");
     if (gainInfo) {
         gainInfo.innerHTML =
-            [`Money: $ ${formatNumber(5*memberObj.calculateMoneyGain(this), 2)} / sec`,
-             `Respect: ${formatNumber(5*memberObj.calculateRespectGain(this), 6)} / sec`,
-             `Wanted Level: ${formatNumber(5*memberObj.calculateWantedLevelGain(this), 6)} / sec`,
-             `Total Respect Earned: ${formatNumber(memberObj.earnedRespect, 6)}`].join("<br>");
+            [`Money: ${numeralWrapper.format(5*memberObj.calculateMoneyGain(this), '$0.000a')} / sec`,
+             `Respect: ${numeralWrapper.format(5*memberObj.calculateRespectGain(this), '0.00000a')} / sec`,
+             `Wanted Level: ${numeralWrapper.format(5*memberObj.calculateWantedLevelGain(this), '0.00000a')} / sec`,
+             `Total Respect Earned: ${numeralWrapper.format(memberObj.earnedRespect, '0.00000a')}`].join("<br>");
     }
 
     // Update selector to have the correct task
