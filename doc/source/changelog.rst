@@ -3,6 +3,37 @@
 Changelog
 =========
 
+
+v0.49.2 - 2021-03-13 (hydroflame)
+-------
+
+BN8
+* A new bitnode multipler has been added, it lets you reduce money from a
+  server without gaining actually any money. This is important for BN8 where
+  hack/grow can influence the stock market. No money can be gained from
+  hacking but server money can still be reduced.
+
+Documentation
+* readthedocs should now be more consistent and many examples were added.
+
+Netscript
+* Ace editor will now correctly highlight all functions.
+* 'tFormat' is a new netscript function that returns a human readable
+  representation of milliseconds. eg. "2 hours 15 minute 43 seconds"
+
+Gang
+* style improvements
+
+Bladeburner
+* style improvements
+* fix bug where 'skill list SKILL' would crash if skill is level 0.
+
+Sleeve
+* karma gain now scales with sync.
+
+Misc.
+Fix issue where the effective stats under Character>Stats were being calculated.
+
 v0.49.0 - 2021-03-11 Source-File -1 (hydroflame)
 -------
 
