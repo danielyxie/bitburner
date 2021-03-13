@@ -84,6 +84,7 @@ This includes information such as function signatures, what they do, and their r
     sprintf() <basicfunctions/sprintf>
     vsprintf() <basicfunctions/vsprintf>
     nFormat() <basicfunctions/nFormat>
+    tFormat() <basicfunctions/tFormat>
     prompt() <basicfunctions/prompt>
     wget() <basicfunctions/wget>
     getFavorToDonate() <basicfunctions/getFavorToDonate>
