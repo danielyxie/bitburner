@@ -171,6 +171,13 @@ interface IBitNodeMultipliers {
     ScriptHackMoney: number;
 
     /**
+     * The amount of money actually gained when script hack a server. This is
+     * different than the above because you can reduce the amount of money but
+     * not gain that same amount.
+     */
+    ScriptHackMoneyGain: number;
+
+    /**
      * Influences the growth percentage per cycle against a server.
      */
     ServerGrowthRate: number;
@@ -233,6 +240,7 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
     HacknetNodeMoney:           1,
     ManualHackMoney:            1,
     ScriptHackMoney:            1,
+    ScriptHackMoneyGain:        1,
     CodingContractMoney:        1,
 
     ClassGymExpGain:            1,

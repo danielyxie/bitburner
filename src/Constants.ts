@@ -242,6 +242,12 @@ export let CONSTANTS: IMap<any> = {
     Gang
     * style improvements
 
+    Bladeburner
+    * style improvements
+
+    Bladeburner
+    * fix bug where 'skill list SKILL' would crash if skill is level 0.
+
     Sleeve
     * karma gain now scales with sync.
     `

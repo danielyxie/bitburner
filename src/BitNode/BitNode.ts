@@ -353,7 +353,8 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.DaedalusAugsRequirement      = 1.166; // Results in 35 Augs needed
             break;
         case 8: // Ghost of Wall Street
-            BitNodeMultipliers.ScriptHackMoney          = 0;
+            BitNodeMultipliers.ScriptHackMoney          = 0.3;
+            BitNodeMultipliers.ScriptHackMoneyGain      = 0;
             BitNodeMultipliers.ManualHackMoney          = 0;
             BitNodeMultipliers.CompanyWorkMoney         = 0;
             BitNodeMultipliers.CrimeMoney               = 0;
