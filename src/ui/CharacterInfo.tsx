@@ -170,8 +170,8 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <MultiplierTable rows={[
                 ['Hacking Chance', p.hacking_chance_mult],
                 ['Hacking Speed', p.hacking_speed_mult],
-                ['Hacking Money', p.hacking_money_mult, p.hacking_speed_mult*BitNodeMultipliers.ScriptHackMoney],
-                ['Hacking Growth', p.hacking_grow_mult, p.hacking_money_mult*BitNodeMultipliers.ServerGrowthRate]
+                ['Hacking Money', p.hacking_money_mult, p.hacking_money_mult*BitNodeMultipliers.ScriptHackMoney],
+                ['Hacking Growth', p.hacking_grow_mult, p.hacking_grow_mult*BitNodeMultipliers.ServerGrowthRate]
             ]} /><br />
             <MultiplierTable rows={[
                 ['Hacking Level', p.hacking_mult, p.hacking_mult*BitNodeMultipliers.HackingLevelMultiplier],
