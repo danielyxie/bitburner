@@ -146,6 +146,7 @@ export interface IPlayer {
     hasCorporation(): boolean;
     hasGangWith(facName: string): boolean;
     hasTorRouter(): boolean;
+    hasProgram(program: string): boolean;
     inBladeburner(): boolean;
     inGang(): boolean;
     isQualified(company: Company, position: CompanyPosition): boolean;

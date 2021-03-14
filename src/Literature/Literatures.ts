@@ -1,28 +1,13 @@
-/**
- * Lore / world building literature files that can be found on servers.
- * These files can be read by the player
- */
-import { dialogBoxCreate } from "../utils/DialogBox";
+import { Literature } from "./Literature";
+import { LiteratureNames } from "./data/LiteratureNames";
+import { IMap } from "../types";
 
-function Literature(title, filename, txt) {
-    this.title      = title;
-    this.fn         = filename;
-    this.txt        = txt;
-}
+export const Literatures: IMap<Literature> = {};
 
-function showLiterature(fn) {
-    const litObj = Literatures[fn];
-    if (litObj == null) { return; }
-    const txt = `<i>${litObj.title}</i><br><br>${litObj.txt}`;
-    dialogBoxCreate(txt);
-}
-
-let Literatures = {}
-
-function initLiterature() {
-    var title, fn, txt;
+(function () {
+    let title, fn, txt;
     title   = "The Beginner's Guide to Hacking";
-    fn      = "hackers-starting-handbook.lit";
+    fn      = LiteratureNames.HackersStartingHandbook;
     txt     = "Some resources:<br><br>"  +
               "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript/netscriptlearntoprogram.html' target='_blank' style='margin:4px'>Learn to Program</a><br><br>" +
               "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html' target='_blank' style='margin:4px'>For Experienced JavaScript Developers: NetscriptJS</a><br><br>" +
@@ -44,7 +29,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The Complete Handbook for Creating a Successful Corporation";
-    fn      = "corporation-management-handbook.lit";
+    fn      = LiteratureNames.CorporationManagementHandbook;
     txt     =   "<u>Getting Started with Corporations</u><br>" +
                 "To get started, visit the City Hall in Sector-12 in order to create a Corporation. This requires " +
                 "$150b of your own money, but this $150b will get put into your Corporation's funds. " +
@@ -94,7 +79,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "A Brief History of Synthoids";
-    fn      = "history-of-synthoids.lit";
+    fn      = LiteratureNames.HistoryOfSynthoids;
     txt     = "Synthetic androids, or Synthoids for short, are genetically engineered robots and, short of Augmentations, " +
               "are composed entirely of organic substances. For this reason, Synthoids are virtually identical to " +
               "humans in form, composition, and appearance.<br><br>" +
@@ -134,7 +119,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "A Green Tomorrow";
-    fn      = "A-Green-Tomorrow.lit";
+    fn      = LiteratureNames.AGreenTomorrow;
     txt     = "Starting a few decades ago, there was a massive global movement towards the generation of renewable energy in an effort to " +
               "combat global warming and climate change. The shift towards renewable energy was a big success, or so it seemed. In 2045 " +
               "a staggering 80% of the world's energy came from non-renewable fossil fuels. Now, about three decades later, that " +
@@ -156,7 +141,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Alpha and Omega";
-    fn      = "alpha-omega.lit";
+    fn      = LiteratureNames.AlphaOmega;
     txt     = "Then we saw a new heaven and a new earth, for our first heaven and earth had gone away, and our sea was no more. " +
               "And we saw a new holy city, new Aeria, coming down out of this new heaven, prepared as a bride adorned for her husband. " +
               "And we heard a loud voice saying, 'Behold, the new dwelling place of the Gods. We will dwell with them, and they " +
@@ -173,7 +158,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Are We Living in a Computer Simulation?";
-    fn      = "simulated-reality.lit";
+    fn      = LiteratureNames.SimulatedReality;
     txt     = "The idea that we are living in a virtual world is not new. It's a trope that has " +
               "been explored constantly in literature and pop culture. However, it is also a legitimate " +
               "scientific hypothesis that many notable physicists and philosophers have debated for years.<br><br>" +
@@ -191,7 +176,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Beyond Man";
-    fn      = "beyond-man.lit";
+    fn      = LiteratureNames.BeyondMan;
     txt     = "Humanity entered a 'transhuman' era a long time ago. And despite the protests and criticisms of many who cried out against " +
               "human augmentation at the time, the transhuman movement continued and prospered. Proponents of the movement ignored the critics, " +
               "arguing that it was in our inherent nature to better ourselves. To improve. To be more than we were. They claimed that " +
@@ -208,7 +193,7 @@ function initLiterature() {
 
 
     title   = "Brighter than the Sun";
-    fn      = "brighter-than-the-sun.lit";
+    fn      = LiteratureNames.BrighterThanTheSun;
     txt     = "When people think about the corporations that dominate the East, they typically think of KuaiGong International, which " +
               "holds a complete monopoly for manufacturing and commerce in Asia, or Global Pharmaceuticals, the world's largest " +
               "drug company, or OmniTek Incorporated, the global leader in intelligent and autonomous robots. But there's one company " +
@@ -231,7 +216,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Democracy is Dead: The Fall of an Empire";
-    fn      = "democracy-is-dead.lit";
+    fn      = LiteratureNames.DemocracyIsDead;
     txt     = "They rose from the shadows in the street<br>From the places where the oppressed meet<br>" +
               "Their cries echoed loudly through the air<br>As they once did in Tiananmen Square<br>" +
               "Loudness in the silence, Darkness in the light<br>They came forth with power and might<br>" +
@@ -244,7 +229,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Figures Show Rising Crime Rates in Sector-12";
-    fn      = "sector-12-crime.lit";
+    fn      = LiteratureNames.Sector12Crime;
     txt     = "A recent study by analytics company Wilson Inc. shows a significant rise " +
               "in criminal activity in Sector-12. Perhaps the most alarming part of the statistic " +
               "is that most of the rise is in violent crime such as homicide and assault. According " +
@@ -258,7 +243,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Man and the Machine";
-    fn      = "man-and-machine.lit";
+    fn      = LiteratureNames.ManAndMachine;
     txt     = "In 2005 Ray Kurzweil popularized his theory of the Singularity. He predicted that the rate " +
               "of technological advancement would continue to accelerate faster and faster until one day " +
               "machines would be become infinitely more intelligent than humans. This point, called the " +
@@ -276,7 +261,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Secret Societies";
-    fn      = "secret-societies.lit";
+    fn      = LiteratureNames.SecretSocieties;
     txt     = "The idea of secret societies has long intrigued the general public by inspiring curiosity, fascination, and " +
               "distrust. People have long wondered about who these secret society members are and what they do, with the " +
               "most radical of conspiracy theorists claiming that they control everything in the entire world. And while the world " +
@@ -294,7 +279,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Space: The Failed Frontier";
-    fn      = "the-failed-frontier.lit";
+    fn      = LiteratureNames.TheFailedFrontier;
     txt     = "Humans have long dreamed about spaceflight. With enduring interest, we were driven to explore " +
               "the unknown and discover new worlds. We dreamed about conquering the stars. And in our quest, " +
               "we pushed the boundaries of our scientific limits, and then pushed further. Space exploration " +
@@ -311,7 +296,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Coded Intelligence: Myth or Reality?";
-    fn      = "coded-intelligence.lit";
+    fn      = LiteratureNames.CodedIntelligence;
     txt     = "Tremendous progress has been made in the field of Artificial Intelligence over the past few decades. " +
               "Our autonomous vehicles and transporation systems. The electronic personal assistants that control our everyday lives. " +
               "Medical, service, and manufacturing robots. All of these are examples of how far AI has come and how much it has " +
@@ -327,7 +312,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Synthetic Muscles";
-    fn      = "synthetic-muscles.lit";
+    fn      = LiteratureNames.SyntheticMuscles;
     txt     = "Initial versions of synthetic muscles weren't made of anything organic but were actually " +
               "crude devices made to mimic human muscle function. Some of the early iterations were actually made of " +
               "common materials such as fishing lines and sewing threads due to their high strength for " +
@@ -340,7 +325,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Tensions rise in global tech race";
-    fn      = "tensions-in-tech-race.lit";
+    fn      = LiteratureNames.TensionsInTechRace;
     txt     = "Have we entered a new Cold War? Is WWIII just beyond the horizon?<br><br>" +
               "After rumors came out that OmniTek Incorporated had begun developing advanced robotic supersoldiers, " +
               "geopolitical tensions quickly flared between the USA, Russia, and several Asian superpowers. " +
@@ -354,7 +339,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The Cost of Immortality";
-    fn      = "cost-of-immortality.lit";
+    fn      = LiteratureNames.CostOfImmortality;
     txt     = "Evolution and advances in medical and augmentation technology has lead to drastic improvements " +
               "in human mortality rates. Recent figures show that the life expectancy for humans " +
               "that live in a first-world country is about 130 years of age, almost double of what it was " +
@@ -378,7 +363,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The Hidden World";
-    fn      = "the-hidden-world.lit";
+    fn      = LiteratureNames.TheHiddenWorld;
     txt     = "WAKE UP SHEEPLE<br><br>" +
               "THE GOVERNMENT DOES NOT EXIST. CORPORATIONS DO NOT RUN SOCIETY<br><br>" +
               "THE ILLUMINATI ARE THE SECRET RULERS OF THE WORLD!<br><br>" +
@@ -396,7 +381,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The New God";
-    fn      = "the-new-god.lit";
+    fn      = LiteratureNames.TheNewGod;
     txt     = "Everyone has that moment in their life where they wonder about the bigger questions<br><br>" +
               "What's the point of all of this? What is my purpose?<br><br>" +
               "Some people dare to think even bigger<br><br>" +
@@ -409,7 +394,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The New Triads";
-    fn      = "new-triads.lit";
+    fn      = LiteratureNames.NewTriads;
     txt     = "The Triads were an ancient transnational crime syndicate based in China, Hong Kong, and other Asian " +
               "territories. They were often considered one of the first and biggest criminal secret societies. " +
               "While most of the branches of the Triads have been destroyed over the past few decades, the " +
@@ -427,13 +412,7 @@ function initLiterature() {
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The Secret War";
-    fn      = "the-secret-war.lit";
+    fn      = LiteratureNames.TheSecretWar;
     txt     = ""
     Literatures[fn] = new Literature(title, fn, txt);
-}
-
-export {
-    Literatures,
-    initLiterature,
-    showLiterature
-};
+})()

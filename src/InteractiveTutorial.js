@@ -3,6 +3,7 @@ import { Player } from "./Player";
 import { Settings } from "./Settings/Settings";
 
 import { initializeMainMenuLinks } from "./ui/MainMenu/Links";
+import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
@@ -499,7 +500,7 @@ function iTutorialEnd() {
         "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/guidesandtips/gettingstartedguideforbeginnerprogrammers.html' target='_blank'>Getting Started Guide</a>" +
         "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/' target='_blank'>Documentation</a><br><br>"  +
         "The Beginner's Guide to Hacking was added to your home computer! It contains some tips/pointers for starting out with the game. " +
-        "To read it, go to Terminal and enter<br><br>cat hackers-starting-handbook.lit"
+        "To read it, go to Terminal and enter<br><br>cat " + LiteratureNames.HackersStartingHandbook
     });
     var gotitBtn = createElement("a", {
         class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
@@ -509,7 +510,7 @@ function iTutorialEnd() {
     });
     createPopup(popupId, [txt, gotitBtn]);
 
-    Player.getHomeComputer().messages.push("hackers-starting-handbook.lit");
+    Player.getHomeComputer().messages.push(LiteratureNames.HackersStartingHandbook);
 }
 
 function iTutorialSetText(txt) {

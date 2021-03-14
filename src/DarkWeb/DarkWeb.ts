@@ -8,14 +8,14 @@ import { isValidIPAddress }                     from "../../utils/helpers/isVali
 import { formatNumber }                         from "../../utils/StringHelperFunctions";
 
 //Posts a "help" message if connected to DarkWeb
-export function checkIfConnectedToDarkweb() {
+export function checkIfConnectedToDarkweb(): void {
     if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-        var darkwebIp =  SpecialServerIps["Darkweb Server"];
+        const darkwebIp =  SpecialServerIps.getIp("Darkweb Server");
         if (!isValidIPAddress(darkwebIp)) {return;}
         if (darkwebIp == Player.getCurrentServer().ip) {
             post("You are now connected to the dark web. From the dark web you can purchase illegal items. " +
                  "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
-                 "to purchase an item");
+                 "to purchase an item.");
         }
     }
 }
@@ -23,7 +23,7 @@ export function checkIfConnectedToDarkweb() {
 //Handler for dark web commands. The terminal's executeCommand() function will pass
 //dark web-specific commands into this. It will pass in the raw split command array
 //rather than the command string
-export function executeDarkwebTerminalCommand(commandArray) {
+export function executeDarkwebTerminalCommand(commandArray: string[]): void {
     if (commandArray.length == 0) {return;}
     switch (commandArray[0]) {
         case "buy":
@@ -53,7 +53,7 @@ function listAllDarkwebItems() {
     }
 }
 
-function buyDarkwebItem(itemName) {
+function buyDarkwebItem(itemName: string): void {
     itemName = itemName.toLowerCase();
 
     // find the program that matches, if any

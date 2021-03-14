@@ -40,7 +40,6 @@ import {
     processHacknetEarnings
 } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
-import { initLiterature } from "./Literature";
 import { LocationName } from "./Locations/data/LocationNames";
 import { LocationRoot } from "./Locations/ui/Root";
 import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
@@ -1069,7 +1068,6 @@ const Engine = {
             if (Player.hasWseAccount) {
                 initSymbolToStockMap();
             }
-            initLiterature();
             updateSourceFileFlags(Player);
 
             // Calculate the number of cycles have elapsed while offline
@@ -1190,7 +1188,6 @@ const Engine = {
             initFactions();
             initAugmentations();
             initMessages();
-            initLiterature();
             updateSourceFileFlags(Player);
 
             // Open main menu accordions for new game

@@ -10,6 +10,7 @@ import { CONSTANTS } from "../Constants";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Programs } from "../Programs/Programs";
+import { LiteratureNames } from "../Literature/data/LiteratureNames";
 
 import { isValidNumber } from "../utils/helpers/isValidNumber";
 import { isValidIPAddress } from "../../utils/helpers/isValidIPAddress";
@@ -118,7 +119,7 @@ export function prestigeHomeComputer(homeComp: Server) {
     });
 
     homeComp.messages.length = 0; //Remove .lit and .msg files
-    homeComp.messages.push("hackers-starting-handbook.lit");
+    homeComp.messages.push(LiteratureNames.HackersStartingHandbook);
 }
 
 //Returns server object with corresponding hostname

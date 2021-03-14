@@ -50,7 +50,7 @@ import {
     iTutorialSteps,
     ITutorial
 } from "./InteractiveTutorial";
-import { showLiterature } from "./Literature";
+import { showLiterature } from "./Literature/LiteratureHelpers";
 import { Message } from "./Message/Message";
 import { showMessage } from "./Message/MessageHelpers";
 import { startWorkerScript } from "./NetscriptWorker";

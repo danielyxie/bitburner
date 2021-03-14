@@ -29,6 +29,10 @@ export class SpecialServerIpsMap {
         this[name] = ip;
     }
 
+    getIp(name: string): string {
+        return this[name] as string;
+    }
+
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("SpecialServerIpsMap", this);

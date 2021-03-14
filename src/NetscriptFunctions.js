@@ -128,7 +128,6 @@ import { TextFile, getTextFile, createTextFile } from "./TextFile";
 import {
     unknownBladeburnerActionErrorMessage
 } from"./NetscriptBladeburner";
-import * as nsGang from "./NetscriptGang";
 import { Gang } from "./Gang";
 import {
     NetscriptPorts,
