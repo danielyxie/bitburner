@@ -860,7 +860,7 @@ Random Tips
 .. Substitution definitions
 .. |Alpha Enterprises|      replace:: :code:`Alpha Enterprises`
 .. |Augmentations tab|      replace:: :code:`Augmentations` tab
-.. |AutoLink|               replace:: :code:`NUKE.exe`
+.. |AutoLink|               replace:: :code:`AutoLink.exe`
 .. |BruteSSH|               replace:: :code:`BruteSSH.exe`
 .. |City tab|               replace:: :code:`City` tab
 .. |CyberSec|               replace:: :code:`CyberSec`
