@@ -1149,10 +1149,11 @@ const Engine = {
             Engine.start(); // Run main game loop and Scripts loop
             removeLoadingScreen();
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
-            dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
-                            "generated <span class='money-gold'>" +
-                            numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> " +
-                            "and your Hacknet Nodes generated <span class='money-gold'>" + hacknetProdInfo + "</span>");
+            dialogBoxCreate(<>
+                Offline for {timeOfflineString}. While you were offline, your scripts generated
+                <span class='money-gold'> {numeralWrapper.formatMoney(offlineProductionFromScripts)} </span>
+                and your Hacknet Nodes generated <span class='money-gold'>{hacknetProdInfo}</span>.
+            </>);
             // Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];

@@ -329,10 +329,10 @@ function NetscriptFunctions(workerScript) {
      */
     const checkTixApiAccess = function(callingFn="") {
         if (!Player.hasWseAccount) {
-            throw makeRuntimeRejectMsg(workerScript, `You don't have WSE Access! Cannot use ${callingFn}()`);
+            throw makeRuntimeErrorMsg(callingFn, `You don't have WSE Access! Cannot use ${callingFn}()`);
         }
         if (!Player.hasTixApiAccess) {
-            throw makeRuntimeRejectMsg(workerScript, `You don't have TIX API Access! Cannot use ${callingFn}()`);
+            throw makeRuntimeErrorMsg(callingFn, `You don't have TIX API Access! Cannot use ${callingFn}()`);
         }
     }
 
@@ -344,7 +344,7 @@ function NetscriptFunctions(workerScript) {
     const getStockFromSymbol = function(symbol, callingFn="") {
         const stock = SymbolToStockMap[symbol];
         if (stock == null) {
-            throw makeRuntimeRejectMsg(workerScript, `Invalid stock symbol passed into ${callingFn}()`);
+            throw makeRuntimeErrorMsg(callingFn, `Invalid stock symbol: '${symbol}'`);
         }
 
         return stock;
@@ -367,18 +367,18 @@ function NetscriptFunctions(workerScript) {
     }
 
     // Utility function to get Hacknet Node object
-    const getHacknetNode = function(i) {
+    const getHacknetNode = function(i, callingFn="") {
         if (isNaN(i)) {
-            throw makeRuntimeRejectMsg(workerScript, "Invalid index specified for Hacknet Node: " + i);
+            throw makeRuntimeErrorMsg(callingFn, "Invalid index specified for Hacknet Node: " + i);
         }
         if (i < 0 || i >= Player.hacknetNodes.length) {
-            throw makeRuntimeRejectMsg(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
+            throw makeRuntimeErrorMsg(callingFn, "Index specified for Hacknet Node is out-of-bounds: " + i);
         }
 
         if (hasHacknetServers()) {
             const hserver = AllServers[Player.hacknetNodes[i]];
             if (hserver == null) {
-                throw makeRuntimeRejectMsg(workerScript, `Could not get Hacknet Server for index ${i}. This is probably a bug, please report to game dev`);
+                throw makeRuntimeErrorMsg(callingFn, `Could not get Hacknet Server for index ${i}. This is probably a bug, please report to game dev`);
             }
 
             return hserver;
@@ -579,7 +579,7 @@ function NetscriptFunctions(workerScript) {
                 }
             },
             getNodeStats : function(i) {
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "getNodeStats");
                 const hasUpgraded = hasHacknetServers();
                 const res = {
                     name:               hasUpgraded ? node.hostname : node.name,
@@ -599,20 +599,20 @@ function NetscriptFunctions(workerScript) {
                 return res;
             },
             upgradeLevel : function(i, n) {
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeLevel");
                 return purchaseLevelUpgrade(node, n);
             },
             upgradeRam : function(i, n) {
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeRam");
                 return purchaseRamUpgrade(node, n);
             },
             upgradeCore : function(i, n) {
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeCore");
                 return purchaseCoreUpgrade(node, n);
             },
             upgradeCache : function(i, n) {
                 if (!hasHacknetServers()) { return false; }
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeCache");
                 const res = purchaseCacheUpgrade(node, n);
                 if (res) {
                     updateHashManagerCapacity();
@@ -620,20 +620,20 @@ function NetscriptFunctions(workerScript) {
                 return res;
             },
             getLevelUpgradeCost : function(i, n) {
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeLevel");
                 return node.calculateLevelUpgradeCost(n, Player.hacknet_node_level_cost_mult);
             },
             getRamUpgradeCost : function(i, n) {
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeRam");
                 return node.calculateRamUpgradeCost(n, Player.hacknet_node_ram_cost_mult);
             },
             getCoreUpgradeCost : function(i, n) {
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeCore");
                 return node.calculateCoreUpgradeCost(n, Player.hacknet_node_core_cost_mult);
             },
             getCacheUpgradeCost : function(i, n) {
                 if (!hasHacknetServers()) { return Infinity; }
-                const node = getHacknetNode(i);
+                const node = getHacknetNode(i, "upgradeCache");
                 return node.calculateCacheUpgradeCost(n);
             },
             numHashes : function() {
