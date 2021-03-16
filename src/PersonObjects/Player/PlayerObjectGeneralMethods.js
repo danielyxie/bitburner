@@ -2021,7 +2021,7 @@ export function checkForFactionInvitations() {
     if (bitrunnersServer == null) {
         console.error("Could not find BitRunners Server");
     } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.manuallyHacked &&
-               !bitrunnersFac.alreadyInvited && this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
+               !bitrunnersFac.alreadyInvited && homeComp.maxRam >= 128) {
         invitedFactions.push(bitrunnersFac);
     }
 
@@ -2031,7 +2031,7 @@ export function checkForFactionInvitations() {
     if (blackhandServer == null) {
         console.error("Could not find The Black Hand Server");
     } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
-               !theblackhandFac.alreadyInvited && this.hacking_skill >= 350 && homeComp.maxRam >= 64) {
+               !theblackhandFac.alreadyInvited && homeComp.maxRam >= 64) {
         invitedFactions.push(theblackhandFac);
     }
 
@@ -2041,7 +2041,7 @@ export function checkForFactionInvitations() {
     if (nitesecServer == null) {
         console.error("Could not find NiteSec Server");
     } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
-               !nitesecFac.alreadyInvited && this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
+               !nitesecFac.alreadyInvited && homeComp.maxRam >= 32) {
         invitedFactions.push(nitesecFac);
     }
 
@@ -2185,7 +2185,7 @@ export function checkForFactionInvitations() {
     if (cybersecServer == null) {
         console.error("Could not find CyberSec Server");
     } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
-               !cybersecFac.alreadyInvited && this.hacking_skill >= 50) {
+               !cybersecFac.alreadyInvited) {
         invitedFactions.push(cybersecFac);
     }
 

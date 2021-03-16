@@ -39,6 +39,10 @@ import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildr
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
 import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
+import { EarningsTableElement } from "./ui/EarningsTableElement";
+import { StatsElement } from "./ui/StatsElement";
+import * as ReactDOM from "react-dom";
+
 // Object that keeps track of all DOM elements for the UI for a single Sleeve
 interface ISleeveUIElems {
     container:              HTMLElement | null;
@@ -94,7 +98,7 @@ export function createSleevesPage(p: IPlayer) {
 
         UIElems.info = createElement("p", {
             class: "sleeves-page-info",
-            innerHTML: "Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your " +
+            innerHTML: "<h1>Sleeves</h1>Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your " +
                        "consciousness has been copied. In other words, these Synthoids contain " +
                        "a perfect duplicate of your mind.<br><br>" +
                        "Sleeves can be used to perform different tasks synchronously.<br><br>",
@@ -195,7 +199,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     });
 
     elems.statsPanel = createElement("div", { class: "sleeve-panel", width: "25%" });
-    elems.stats = createElement("p", { class: "sleeve-stats-text" });
+    elems.stats = createElement("div", { class: "sleeve-stats-text" });
     elems.moreStatsButton = createElement("button", {
         class: "std-button",
         innerText: "More Stats",
@@ -323,7 +327,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     elems.taskPanel.appendChild(elems.taskProgressBar);
 
     elems.earningsPanel = createElement("div", { class: "sleeve-panel", width: "35%" });
-    elems.currentEarningsInfo = createElement("p");
+    elems.currentEarningsInfo = createElement("div");
     elems.totalEarningsButton = createElement("button", {
         class: "std-button",
         innerText: "More Earnings Info",
@@ -375,53 +379,40 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
 function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
     if (!routing.isOn(Page.Sleeves)) { return; }
 
-    elems.stats!.innerHTML = [`Hacking: ${numeralWrapper.format(sleeve.hacking_skill, "0,0")}`,
-                              `Strength: ${numeralWrapper.format(sleeve.strength, "0,0")}`,
-                              `Defense: ${numeralWrapper.format(sleeve.defense, "0,0")}`,
-                              `Dexterity: ${numeralWrapper.format(sleeve.dexterity, "0,0")}`,
-                              `Agility: ${numeralWrapper.format(sleeve.agility, "0,0")}`,
-                              `Charisma: ${numeralWrapper.format(sleeve.charisma, "0,0")}`,
-                              `HP: ${numeralWrapper.format(sleeve.hp, "0,0")} / ${numeralWrapper.format(sleeve.max_hp, "0,0")}`,
-                              `City: ${sleeve.city}`,
-                              `Shock: ${numeralWrapper.format(100 - sleeve.shock, "0,0.000")}`,
-                              `Sync: ${numeralWrapper.format(sleeve.sync, "0,0.000")}`,
-                              `Memory: ${numeralWrapper.format(sleeve.memory, "0")}`].join("<br>");
-
-    let repGainText: string = "";
-    if (sleeve.currentTask === SleeveTaskType.Company || sleeve.currentTask === SleeveTaskType.Faction) {
-        const repGain: number = sleeve.getRepGain(playerRef!);
-        repGainText = `Reputation: ${numeralWrapper.format(5 * repGain, "0.00")} / s`
-    }
+    ReactDOM.render(StatsElement(sleeve), elems.stats!);
 
     if (sleeve.currentTask === SleeveTaskType.Crime) {
-        elems.currentEarningsInfo!.innerHTML = [
-            `Earnings (Pre-Synchronization):`,
-            `Money: ${numeralWrapper.formatMoney(parseFloat(sleeve.currentTaskLocation))} if successful`,
-            `Hacking Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.hack, "0.00")} (2x if successful)`,
-            `Strength Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.str, "0.00")} (2x if successful)`,
-            `Defense Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.def, "0.00")} (2x if successful)`,
-            `Dexterity Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.dex, "0.00")} (2x if successful)`,
-            `Agility Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.agi, "0.00")} (2x if successful)`,
-            `Charisma Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.cha, "0.00")} (2x if successful)`
-        ].join("<br>");
+        const data = [
+            [`Money`, `${numeralWrapper.formatMoney(parseFloat(sleeve.currentTaskLocation))}`, `(on success)`],
+            [`Hacking Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.hack, "0.00")}`, `(2x on success)`],
+            [`Strength Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.str, "0.00")}`, `(2x on success)`],
+            [`Defense Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.def, "0.00")}`, `(2x on success)`],
+            [`Dexterity Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.dex, "0.00")}`, `(2x on success)`],
+            [`Agility Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.agi, "0.00")}`, `(2x on success)`],
+            [`Charisma Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.cha, "0.00")}`, `(2x on success)`]
+        ];
+        ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo!)
 
         elems.taskProgressBar!.innerText = createProgressBarText({
             progress: sleeve.currentTaskTime / sleeve.currentTaskMaxTime,
             totalTicks: 25,
         });
     } else {
-        const lines = [
-            `Earnings (Pre-Synchronization):`,
-            `Money: ${numeralWrapper.formatMoney(5 * sleeve.gainRatesForTask.money)} / s`,
-            `Hacking Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.hack, "0.00")} / s`,
-            `Strength Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.str, "0.00")} / s`,
-            `Defense Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.def, "0.00")} / s`,
-            `Dexterity Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.dex, "0.00")} / s`,
-            `Agility Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.agi, "0.00")} / s`,
-            `Charisma Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.cha, "0.00")} / s`
+        const data = [
+            [`Money:`, `${numeralWrapper.formatMoney(5 * sleeve.gainRatesForTask.money)} / s`],
+            [`Hacking Exp:`, `${numeralWrapper.format(5 * sleeve.gainRatesForTask.hack, "0.00")} / s`],
+            [`Strength Exp:`, `${numeralWrapper.format(5 * sleeve.gainRatesForTask.str, "0.00")} / s`],
+            [`Defense Exp:`, `${numeralWrapper.format(5 * sleeve.gainRatesForTask.def, "0.00")} / s`],
+            [`Dexterity Exp:`, `${numeralWrapper.format(5 * sleeve.gainRatesForTask.dex, "0.00")} / s`],
+            [`Agility Exp:`, `${numeralWrapper.format(5 * sleeve.gainRatesForTask.agi, "0.00")} / s`],
+            [`Charisma Exp:`, `${numeralWrapper.format(5 * sleeve.gainRatesForTask.cha, "0.00")} / s`]
         ];
-        if (repGainText !== "") { lines.push(repGainText); }
-        elems.currentEarningsInfo!.innerHTML = lines.join("<br>");
+        let repGainText: string = "";
+        if (sleeve.currentTask === SleeveTaskType.Company || sleeve.currentTask === SleeveTaskType.Faction) {
+            const repGain: number = sleeve.getRepGain(playerRef!);
+            data.push([`Reputation:`, `${numeralWrapper.format(5 * repGain, "0.00")} / s`]);
+        }
+        ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo!)
 
         elems.taskProgressBar!.innerText = "";
     }
