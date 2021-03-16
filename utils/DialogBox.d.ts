@@ -1,2 +1,2 @@
-export function dialogBoxCreate(txt: string, preformatted?: boolean): void;
+export function dialogBoxCreate(txt: string | JSX.Element, preformatted?: boolean): void;
 export var dialogBoxOpened: boolean;

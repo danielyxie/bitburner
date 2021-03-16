@@ -41,6 +41,9 @@ import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 import { EarningsTableElement } from "./ui/EarningsTableElement";
 import { StatsElement } from "./ui/StatsElement";
+import { MoreStatsContent } from "./ui/MoreStatsContent";
+import { MoreEarningsContent } from "./ui/MoreEarningsContent";
+import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 // Object that keeps track of all DOM elements for the UI for a single Sleeve
@@ -100,8 +103,8 @@ export function createSleevesPage(p: IPlayer) {
             class: "sleeves-page-info",
             innerHTML: "<h1>Sleeves</h1>Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your " +
                        "consciousness has been copied. In other words, these Synthoids contain " +
-                       "a perfect duplicate of your mind.<br><br>" +
-                       "Sleeves can be used to perform different tasks synchronously.<br><br>",
+                       "a perfect duplicate of your mind.<br /><br />" +
+                       "Sleeves can be used to perform different tasks synchronously.<br /><br />",
         });
 
         UIElems.faqButton = createElement("button", {
@@ -163,7 +166,7 @@ export function clearSleevesPage() {
     }
 
     for (const prop in UIElems) {
-        (<any>UIElems)[prop] = null;
+        (UIElems as any)[prop] = null;
     }
 
     playerRef = null;
@@ -204,35 +207,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         class: "std-button",
         innerText: "More Stats",
         clickListener: () => {
-            dialogBoxCreate(
-                [
-                    "<h2><u>Stats:</u></h2>",
-                    `Hacking: ${sleeve.hacking_skill} (${numeralWrapper.formatBigNumber(sleeve.hacking_exp)} exp)`,
-                    `Strength: ${sleeve.strength} (${numeralWrapper.formatBigNumber(sleeve.strength_exp)} exp)`,
-                    `Defense: ${sleeve.defense} (${numeralWrapper.formatBigNumber(sleeve.defense_exp)} exp)`,
-                    `Dexterity: ${sleeve.dexterity} (${numeralWrapper.formatBigNumber(sleeve.dexterity_exp)} exp)`,
-                    `Agility: ${sleeve.agility} (${numeralWrapper.formatBigNumber(sleeve.agility_exp)} exp)`,
-                    `Charisma: ${sleeve.charisma} (${numeralWrapper.formatBigNumber(sleeve.charisma_exp)} exp)<br>`,
-                    "<h2><u>Multipliers:</u></h2>",
-                    `Hacking Level multiplier: ${numeralWrapper.formatPercentage(sleeve.hacking_mult)}`,
-                    `Hacking Experience multiplier: ${numeralWrapper.formatPercentage(sleeve.hacking_exp_mult)}`,
-                    `Strength Level multiplier: ${numeralWrapper.formatPercentage(sleeve.strength_mult)}`,
-                    `Strength Experience multiplier: ${numeralWrapper.formatPercentage(sleeve.strength_exp_mult)}`,
-                    `Defense Level multiplier: ${numeralWrapper.formatPercentage(sleeve.defense_mult)}`,
-                    `Defense Experience multiplier: ${numeralWrapper.formatPercentage(sleeve.defense_exp_mult)}`,
-                    `Dexterity Level multiplier: ${numeralWrapper.formatPercentage(sleeve.dexterity_mult)}`,
-                    `Dexterity Experience multiplier: ${numeralWrapper.formatPercentage(sleeve.dexterity_exp_mult)}`,
-                    `Agility Level multiplier: ${numeralWrapper.formatPercentage(sleeve.agility_mult)}`,
-                    `Agility Experience multiplier: ${numeralWrapper.formatPercentage(sleeve.agility_exp_mult)}`,
-                    `Charisma Level multiplier: ${numeralWrapper.formatPercentage(sleeve.charisma_mult)}`,
-                    `Charisma Experience multiplier: ${numeralWrapper.formatPercentage(sleeve.charisma_exp_mult)}`,
-                    `Faction Reputation Gain multiplier: ${numeralWrapper.formatPercentage(sleeve.faction_rep_mult)}`,
-                    `Company Reputation Gain multiplier: ${numeralWrapper.formatPercentage(sleeve.company_rep_mult)}`,
-                    `Salary multiplier: ${numeralWrapper.formatPercentage(sleeve.work_money_mult)}`,
-                    `Crime Money multiplier: ${numeralWrapper.formatPercentage(sleeve.crime_money_mult)}`,
-                    `Crime Success multiplier: ${numeralWrapper.formatPercentage(sleeve.crime_success_mult)}`,
-                ].join("<br>"), false
-            );
+            dialogBoxCreate(MoreStatsContent(sleeve));
         }
     });
     elems.travelButton = createElement("button", {
@@ -261,7 +236,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
                                 dialogBoxCreate("You cannot afford to have this sleeve travel to another city", false);
                                 return false;
                             }
-                            sleeve.city = <CityName>cityName;
+                            sleeve.city = cityName as CityName;
                             playerRef!.loseMoney(CONSTANTS.TravelCost);
                             sleeve.resetTaskStatus();
                             removeElementById(popupId);
@@ -332,34 +307,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         class: "std-button",
         innerText: "More Earnings Info",
         clickListener: () => {
-            dialogBoxCreate(
-                [
-                    "<h2><u>Earnings for Current Task:</u></h2>",
-                    `Money: ${numeralWrapper.formatMoney(sleeve.earningsForTask.money)}`,
-                    `Hacking Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.hack)}`,
-                    `Strength Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.str)}`,
-                    `Defense Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.def)}`,
-                    `Dexterity Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.dex)}`,
-                    `Agility Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.agi)}`,
-                    `Charisma Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.cha)}<br>`,
-                    "<h2><u>Total Earnings for Host Consciousness:</u></h2>",
-                    `Money: ${numeralWrapper.formatMoney(sleeve.earningsForPlayer.money)}`,
-                    `Hacking Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.hack)}`,
-                    `Strength Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.str)}`,
-                    `Defense Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.def)}`,
-                    `Dexterity Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.dex)}`,
-                    `Agility Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.agi)}`,
-                    `Charisma Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.cha)}<br>`,
-                    "<h2><u>Total Earnings for Other Sleeves:</u></h2>",
-                    `Money: ${numeralWrapper.formatMoney(sleeve.earningsForSleeves.money)}`,
-                    `Hacking Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.hack)}`,
-                    `Strength Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.str)}`,
-                    `Defense Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.def)}`,
-                    `Dexterity Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.dex)}`,
-                    `Agility Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.agi)}`,
-                    `Charisma Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.cha)}`,
-                ].join("<br>"), false
-            );
+            dialogBoxCreate(MoreEarningsContent(sleeve));
         }
     });
 
@@ -383,13 +331,13 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
 
     if (sleeve.currentTask === SleeveTaskType.Crime) {
         const data = [
-            [`Money`, `${numeralWrapper.formatMoney(parseFloat(sleeve.currentTaskLocation))}`, `(on success)`],
-            [`Hacking Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.hack, "0.00")}`, `(2x on success)`],
-            [`Strength Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.str, "0.00")}`, `(2x on success)`],
-            [`Defense Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.def, "0.00")}`, `(2x on success)`],
-            [`Dexterity Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.dex, "0.00")}`, `(2x on success)`],
-            [`Agility Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.agi, "0.00")}`, `(2x on success)`],
-            [`Charisma Exp`, `${numeralWrapper.format(sleeve.gainRatesForTask.cha, "0.00")}`, `(2x on success)`]
+            [`Money`, numeralWrapper.formatMoney(parseFloat(sleeve.currentTaskLocation)), `(on success)`],
+            [`Hacking Exp`, numeralWrapper.format(sleeve.gainRatesForTask.hack, "0.00"), `(2x on success)`],
+            [`Strength Exp`, numeralWrapper.format(sleeve.gainRatesForTask.str, "0.00"), `(2x on success)`],
+            [`Defense Exp`, numeralWrapper.format(sleeve.gainRatesForTask.def, "0.00"), `(2x on success)`],
+            [`Dexterity Exp`, numeralWrapper.format(sleeve.gainRatesForTask.dex, "0.00"), `(2x on success)`],
+            [`Agility Exp`, numeralWrapper.format(sleeve.gainRatesForTask.agi, "0.00"), `(2x on success)`],
+            [`Charisma Exp`, numeralWrapper.format(sleeve.gainRatesForTask.cha, "0.00"), `(2x on success)`]
         ];
         ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo!)
 

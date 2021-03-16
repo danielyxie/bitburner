@@ -2,7 +2,7 @@ import * as React from "react";
 
 export function EarningsTableElement(title: string, stats: any[][]): React.ReactElement {
     return (<>
-        {title}
+        <pre>{title}</pre>
         <table>
             <tbody>
                 {stats.map((stat: any[], i: number) => <tr key={i}>
