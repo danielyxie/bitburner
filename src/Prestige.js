@@ -21,6 +21,7 @@ import { initMessages, Messages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { resetPidCounter } from "./Netscript/Pid";
+import { LiteratureNames } from "./Literature/data/LiteratureNames"
 
 import {
     AllServers,
@@ -36,7 +37,6 @@ import {
 } from "./SourceFile/SourceFileFlags";
 import {
     SpecialServerIps,
-    SpecialServerIpsMap,
     prestigeSpecialServerIps,
     SpecialServerNames
 } from "./Server/SpecialServerIps";
@@ -257,7 +257,7 @@ function prestigeSourceFile() {
 
     // BitNode 3: Corporatocracy
     if (Player.bitNodeN === 3) {
-        homeComp.messages.push("corporation-management-handbook.lit");
+        homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
         dialogBoxCreate("You received a copy of the Corporation Management Handbook on your home computer. " +
                         "Read it if you need help getting started with Corporations!");
     }
@@ -348,7 +348,7 @@ function prestigeSourceFile() {
     document.getElementById("world-menu-header").click();
 
     // Gain int exp
-    Player.gainIntelligenceExp(5);
+    Player.gainIntelligenceExp(300);
 
     resetPidCounter();
 }

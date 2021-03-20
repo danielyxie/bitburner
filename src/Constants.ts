@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.49.2",
+    Version:                "0.50.0",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -75,14 +75,14 @@ export let CONSTANTS: IMap<any> = {
     HospitalCostPerHp: 100e3,
 
     // Intelligence-related constants
-    IntelligenceCrimeWeight: 0.05, // Weight for how much int affects crime success rates
+    IntelligenceCrimeWeight: 0.025, // Weight for how much int affects crime success rates
     IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
-    IntelligenceCrimeBaseExpGain: 0.001,
-    IntelligenceProgramBaseExpGain: 500, // Program required hack level divided by this to determine int exp gain
+    IntelligenceCrimeBaseExpGain: 0.05,
+    IntelligenceProgramBaseExpGain: 2.5, // Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
-    IntelligenceSingFnBaseExpGain: 0.002,
-    IntelligenceClassBaseExpGain: 0.000001,
-    IntelligenceHackingMissionBaseExpGain: 0.03, // Hacking Mission difficulty multiplied by this to get exp gain
+    IntelligenceSingFnBaseExpGain: 1.5,
+    IntelligenceClassBaseExpGain: 0.01,
+    IntelligenceHackingMissionBaseExpGain: 3, // Hacking Mission difficulty multiplied by this to get exp gain
 
     // Hacking Missions
     // TODO Move this into Hacking Mission implementation
@@ -228,34 +228,20 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.49.2 - 2021-03-13
+    v0.50.0 - 2021-03-20 Intelligence (hydroflame)
     -------
+    Intelligence
+    * int exp gain and effect has been reworked. It is now much more easy to
+      acquire and far more powerful. The goal here is to feel like players have
+      another tool in their arsenal.
 
-    BN8
-    * A new bitnode multipler has been added, it lets you reduce money from a
-      server without gaining actually any money. This is important for BN8 where
-      hack/grow can influence the stock market. No money can be gained from
-      hacking but server money can still be reduced.
-
-    Documentation
-    * readthedocs should now be more consistent and many examples were added.
-
-    Netscript
-    * Ace editor will now correctly highlight all functions.
-    * 'tFormat' is a new netscript function that returns a human readable
-      representation of milliseconds. eg. "2 hours 15 minute 43 seconds"
-
-    Gang
-    * style improvements
-
-    Bladeburner
-    * style improvements
-    * fix bug where 'skill list SKILL' would crash if skill is level 0.
-
-    Sleeve
-    * karma gain now scales with sync.
+    Factions
+    * Hacking factions no longer have hacking level requirements since their associated servers do.
 
     Misc.
-    Fix issue where the effective stats under Character>Stats were being calculated.
+    * Sleeve styling.
+    * number formatting
+    * remove wiki button in Hacking Missions.
+    * Fix NaN displayed when very very large numbers are reached.
     `
 }

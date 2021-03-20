@@ -21,4 +21,6 @@ export interface IPlayerOrSleeve {
 
     // Multipliers
     crime_success_mult: number;
+
+    getIntelligenceBonus(weight: number): number;
 }

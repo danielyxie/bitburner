@@ -9,8 +9,12 @@ getAugmentationStats() Netscript Function
 
     If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.
 
-    ns.getAugmentationStats("Synfibril Muscle")
-    {
-       strength_mult: 1.3,
-       defense_mult: 1.3,
-    }
+    Examples:
+
+    .. code-block:: javascript
+
+        ns.getAugmentationStats("Synfibril Muscle")
+        {
+           strength_mult: 1.3,
+           defense_mult: 1.3,
+        }

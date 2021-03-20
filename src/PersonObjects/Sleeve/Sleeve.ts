@@ -533,7 +533,7 @@ export class Sleeve extends Person {
                 this.shock = Math.min(100, this.shock + (0.0002 * cyclesUsed));
                 break;
             case SleeveTaskType.Sync:
-                this.sync = Math.min(100, this.sync + (0.0002 * cyclesUsed));
+                this.sync = Math.min(100, this.sync + (p.getIntelligenceBonus(0.5) * 0.0002 * cyclesUsed));
                 break;
             default:
                 break;

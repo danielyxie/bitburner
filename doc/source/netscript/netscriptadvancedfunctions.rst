@@ -9,4 +9,3 @@ they contain spoilers for the game.
 .. toctree::
 
     getBitNodeMultipliers() <advancedfunctions/getBitNodeMultipliers>
-    getHackTime(), getGrowTime(), & getWeakenTime() <advancedfunctions/getHackGrowWeakenTimes>

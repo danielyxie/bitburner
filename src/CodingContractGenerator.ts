@@ -1,20 +1,23 @@
 import {
     CodingContract,
     CodingContractRewardType,
-    CodingContractTypes
+    CodingContractTypes,
+    ICodingContractReward
 } from "./CodingContracts";
 import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
 import { AllServers } from "./Server/AllServers";
 import { GetServerByHostname } from "./Server/ServerHelpers";
 import { SpecialServerNames } from "./Server/SpecialServerIps";
+import { Server } from "./Server/Server";
+import { HacknetServer } from "./Hacknet/HacknetServer";
 
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 
 export function generateRandomContract() {
     // First select a random problem type
-    let problemType = getRandomProblemType();
+    const problemType = getRandomProblemType();
 
     // Then select a random reward type. 'Money' will always be the last reward type
     const reward = getRandomReward();
@@ -22,15 +25,15 @@ export function generateRandomContract() {
     // Choose random server
     const randServer = getRandomServer();
 
-    let contractFn = getRandomFilename(randServer, reward);
-    let contract = new CodingContract(contractFn, problemType, reward);
+    const contractFn = getRandomFilename(randServer, reward);
+    const contract = new CodingContract(contractFn, problemType, reward);
 
     randServer.addContract(contract);
 }
 
 export function generateRandomContractOnHome() {
     // First select a random problem type
-    let problemType = getRandomProblemType();
+    const problemType = getRandomProblemType();
 
     // Then select a random reward type. 'Money' will always be the last reward type
     const reward = getRandomReward();
@@ -38,13 +41,19 @@ export function generateRandomContractOnHome() {
     // Choose random server
     const serv = Player.getHomeComputer();
 
-    let contractFn = getRandomFilename(serv, reward);
-    let contract = new CodingContract(contractFn, problemType, reward);
+    const contractFn = getRandomFilename(serv, reward);
+    const contract = new CodingContract(contractFn, problemType, reward);
 
     serv.addContract(contract);
 }
 
-export function generateContract(params) {
+export interface IGenerateContractParams {
+    problemType?: string;
+    server?: string;
+    fn?: string;
+}
+
+export function generateContract(params: IGenerateContractParams) {
     // Problem Type
     let problemType;
     const problemTypes = Object.keys(CodingContractTypes);
@@ -62,7 +71,7 @@ export function generateContract(params) {
     if (params.server != null) {
         server = GetServerByHostname(params.server);
         if (server == null) {
-            server = AllServers[param.server];
+            server = AllServers[params.server];
         }
         if (server == null) {
             server = getRandomServer();
@@ -84,7 +93,7 @@ export function generateContract(params) {
 }
 
 // Ensures that a contract's reward type is valid
-function sanitizeRewardType(rewardType) {
+function sanitizeRewardType(rewardType: CodingContractRewardType): CodingContractRewardType {
     let type = rewardType; // Create copy
 
     const factionsThatAllowHacking = Player.factions.filter((fac) => {
@@ -115,9 +124,11 @@ function getRandomProblemType() {
     return problemTypes[randIndex];
 }
 
-function getRandomReward() {
-    let reward = {};
-    reward.type = getRandomInt(0, CodingContractRewardType.Money);
+function getRandomReward(): ICodingContractReward {
+    let reward: ICodingContractReward = {
+        name: "",
+        type: getRandomInt(0, CodingContractRewardType.Money),
+    };
     reward.type = sanitizeRewardType(reward.type);
 
     // Add additional information based on the reward type
@@ -155,7 +166,7 @@ function getRandomReward() {
     return reward;
 }
 
-function getRandomServer() {
+function getRandomServer(): Server | HacknetServer {
     const servers = Object.keys(AllServers);
     let randIndex = getRandomInt(0, servers.length - 1);
     let randServer = AllServers[servers[randIndex]];
@@ -163,7 +174,7 @@ function getRandomServer() {
     // An infinite loop shouldn't ever happen, but to be safe we'll use
     // a for loop with a limited number of tries
     for (let i = 0; i < 200; ++i) {
-        if (!randServer.purchasedByPlayer && randServer.hostname !== SpecialServerNames.WorldDaemon) {
+        if (randServer instanceof Server && !randServer.purchasedByPlayer && randServer.hostname !== SpecialServerNames.WorldDaemon) {
             break;
         }
         randIndex = getRandomInt(0, servers.length - 1);
@@ -173,11 +184,11 @@ function getRandomServer() {
     return randServer;
 }
 
-function getRandomFilename(server, reward) {
+function getRandomFilename(server: Server | HacknetServer, reward: ICodingContractReward): string {
     let contractFn = `contract-${getRandomInt(0, 1e6)}`;
 
     for (let i = 0; i < 1000; ++i) {
-        if (server.contracts.filter((c) => {return c.fn === contractFn}).length <= 0) { break; }
+        if (server.contracts.filter((c: CodingContract) => {return c.fn === contractFn}).length <= 0) { break; }
         contractFn = `contract-${getRandomInt(0, 1e6)}`;
     }
 

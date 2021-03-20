@@ -21,7 +21,7 @@ export const Crimes: IMap<Crime> = {
     dexterity_success_weight: 2,
     agility_success_weight: 1,
 
-    intelligence_exp: 0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+    intelligence_exp: 7.5 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 
   Mug: new Crime("Mug", CONSTANTS.CrimeMug, 4e3, 36e3, 1/5, 0.25, {
@@ -45,7 +45,7 @@ export const Crimes: IMap<Crime> = {
     dexterity_success_weight: 1,
     agility_success_weight: 1,
 
-    intelligence_exp: 0.5 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+    intelligence_exp: 15 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 
   DealDrugs: new Crime("Deal Drugs", CONSTANTS.CrimeDrugs, 10e3, 120e3, 1, 0.5, {
@@ -66,7 +66,7 @@ export const Crimes: IMap<Crime> = {
     hacking_success_weight: 0.05,
     dexterity_success_weight: 1.25,
 
-    intelligence_exp: 2 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+    intelligence_exp: 60 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 
   TraffickArms: new Crime("Traffick Arms", CONSTANTS.CrimeTraffickArms, 40e3, 600e3, 2, 1, {
@@ -110,7 +110,7 @@ export const Crimes: IMap<Crime> = {
     agility_success_weight: 2,
     charisma_success_weight: 2,
 
-    intelligence_exp: CONSTANTS.IntelligenceCrimeBaseExpGain,
+    intelligence_exp: 16 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 
   Kidnap: new Crime("Kidnap", CONSTANTS.CrimeKidnap, 120e3, 3.6e6, 5, 6, {
@@ -125,7 +125,7 @@ export const Crimes: IMap<Crime> = {
     dexterity_success_weight: 1,
     agility_success_weight: 1,
 
-    intelligence_exp: 2 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+    intelligence_exp: 26 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 
   Assassination: new Crime("Assassination", CONSTANTS.CrimeAssassination, 300e3, 12e6, 8, 10, {
@@ -138,7 +138,7 @@ export const Crimes: IMap<Crime> = {
     dexterity_success_weight: 2,
     agility_success_weight: 1,
 
-    intelligence_exp: 5 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+    intelligence_exp: 65 * CONSTANTS.IntelligenceCrimeBaseExpGain,
 
     kills: 1,
   }),
@@ -158,6 +158,6 @@ export const Crimes: IMap<Crime> = {
     agility_success_weight: 1,
     charisma_success_weight: 1,
 
-    intelligence_exp: 10 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+    intelligence_exp: 130 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 };

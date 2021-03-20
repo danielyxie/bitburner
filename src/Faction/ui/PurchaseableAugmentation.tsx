@@ -119,7 +119,7 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
             statusTxt = `UNLOCKED - ${numeralWrapper.formatMoney(moneyCost)}`;
         } else {
             disabled = true;
-            statusTxt = `LOCKED (Requires ${numeralWrapper.format(repCost, "0,0.0")} faction reputation - ${numeralWrapper.formatMoney(moneyCost)})`;
+            statusTxt = `LOCKED (Requires ${numeralWrapper.format(repCost, "0.000a")} faction reputation - ${numeralWrapper.formatMoney(moneyCost)})`;
             color = "red";
         }
 

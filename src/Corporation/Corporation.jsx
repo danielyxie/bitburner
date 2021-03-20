@@ -17,7 +17,8 @@ import { Warehouse }                                    from "./Warehouse";
 import { BitNodeMultipliers }                           from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS }                                    from "../Constants";
 import { Factions }                                     from "../Faction/Factions";
-import { showLiterature }                               from "../Literature";
+import { showLiterature }                               from "../Literature/LiteratureHelpers";
+import { LiteratureNames }                              from "../Literature/data/LiteratureNames";
 import { createCityMap }                                from "../Locations/Cities";
 import { CityName }                                     from "../Locations/data/CityNames";
 import { Player }                                       from "../Player";
@@ -1795,7 +1796,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
                         "Creativity: " + formatNumber(employee.cre, 1) + "<br>" +
                         "Efficiency: " + formatNumber(employee.eff, 1) + "<br>" +
                         "Salary: " + numeralWrapper.format(employee.sal, '$0.000a') + " \ s<br>",
-            clickListener:()=>{
+            clickListener:() => {
                 office.hireEmployee(employee, parentRefs);
                 removeElementById("cmpy-mgmt-hire-employee-popup");
                 return false;
@@ -1808,7 +1809,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
         class:"a-link-button",
         innerText:"Cancel",
         float:"right",
-        clickListener:()=>{
+        clickListener:() => {
             removeElementById("cmpy-mgmt-hire-employee-popup");
             return false;
         }
@@ -1842,7 +1843,7 @@ OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
         company.rerender();
         return yesNoTxtInpBoxClose();
     });
-    noBtn.addEventListener("click", ()=>{
+    noBtn.addEventListener("click", () => {
         return yesNoTxtInpBoxClose();
     });
     yesNoTxtInpBoxCreate("Give your employee a nickname!");
@@ -2075,14 +2076,14 @@ Corporation.prototype.getInvestment = function() {
         noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Accept";
     noBtn.innerHML = "Reject";
-    yesBtn.addEventListener("click", ()=>{
+    yesBtn.addEventListener("click", () => {
         ++this.fundingRound;
         this.funds = this.funds.plus(funding);
         this.numShares -= investShares;
         this.rerender();
         return yesNoBoxClose();
     });
-    noBtn.addEventListener("click", ()=>{
+    noBtn.addEventListener("click", () => {
         return yesNoBoxClose();
     });
     yesNoBoxCreate("An investment firm has offered you " + numeralWrapper.format(funding, '$0.000a') +
@@ -2107,7 +2108,7 @@ Corporation.prototype.goPublic = function() {
     var input = createElement("input", {
         type:"number",
         placeholder: "Shares to issue",
-        onkeyup:(e)=>{
+        onkeyup:(e) => {
             e.preventDefault();
             if (e.keyCode === KEY.ENTER) {yesBtn.click();}
         }
@@ -2116,7 +2117,7 @@ Corporation.prototype.goPublic = function() {
     yesBtn = createElement("a", {
         class:"a-link-button",
         innerText:"Go Public",
-        clickListener:()=>{
+        clickListener:() => {
             var numShares = Math.round(input.value);
             var initialSharePrice = this.determineValuation() / (this.totalShares);
             if (isNaN(numShares)) {
@@ -2142,7 +2143,7 @@ Corporation.prototype.goPublic = function() {
     var noBtn = createElement("a", {
         class:"a-link-button",
         innerText:"Cancel",
-        clickListener:()=>{
+        clickListener:() => {
             removeElementById(goPublicPopupId);
             return false;
         }
@@ -2330,7 +2331,7 @@ Corporation.prototype.getStarterGuide = function() {
     // Check if player already has Corporation Handbook
     let homeComp = Player.getHomeComputer(),
         hasHandbook = false,
-        handbookFn = "corporation-management-handbook.lit";
+        handbookFn = LiteratureNames.CorporationManagementHandbook;
     for (let i = 0; i < homeComp.messages.length; ++i) {
         if (isString(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
             hasHandbook = true;

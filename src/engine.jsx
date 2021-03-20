@@ -40,7 +40,6 @@ import {
     processHacknetEarnings
 } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
-import { initLiterature } from "./Literature";
 import { LocationName } from "./Locations/data/LocationNames";
 import { LocationRoot } from "./Locations/ui/Root";
 import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
@@ -197,13 +196,6 @@ const Engine = {
     // Display objects
     // TODO-Refactor this into its own component
     Display: {
-        // Progress bar
-        progress:               null,
-
-        // Display for status text (such as "Saved" or "Loaded")
-        statusText:             null,
-
-        hacking_skill:          null,
 
         // Main menu content
         terminalContent:                null,
@@ -1069,7 +1061,6 @@ const Engine = {
             if (Player.hasWseAccount) {
                 initSymbolToStockMap();
             }
-            initLiterature();
             updateSourceFileFlags(Player);
 
             // Calculate the number of cycles have elapsed while offline
@@ -1151,10 +1142,11 @@ const Engine = {
             Engine.start(); // Run main game loop and Scripts loop
             removeLoadingScreen();
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
-            dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
-                            "generated <span class='money-gold'>" +
-                            numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> " +
-                            "and your Hacknet Nodes generated <span class='money-gold'>" + hacknetProdInfo + "</span>");
+            dialogBoxCreate(<>
+                Offline for {timeOfflineString}. While you were offline, your scripts generated
+                <span className='money-gold'> {numeralWrapper.formatMoney(offlineProductionFromScripts)} </span>
+                and your Hacknet Nodes generated <span className='money-gold'>{hacknetProdInfo}</span>.
+            </>);
             // Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];
@@ -1190,7 +1182,6 @@ const Engine = {
             initFactions();
             initAugmentations();
             initMessages();
-            initLiterature();
             updateSourceFileFlags(Player);
 
             // Open main menu accordions for new game

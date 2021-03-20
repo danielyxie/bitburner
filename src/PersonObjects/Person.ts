@@ -209,4 +209,13 @@ export abstract class Person {
         this.max_hp = Math.floor(10 + this.defense / 10);
         this.hp     = Math.round(this.max_hp * ratio);
     }
+
+
+    getIntelligenceBonus(weight: number): number {
+        // 15  => +1.4%  when you initially acquire int
+        // 50  => +3.8%  mid game
+        // 100 => +6.6%  late game
+        // 250 => +13.4% realistic best possible
+        return 1+(weight*Math.pow(this.intelligence, 0.8)/600);
+    }
 }

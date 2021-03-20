@@ -120,6 +120,7 @@ export class Crime {
         chance /= CONSTANTS.MaxSkillLevel;
         chance /= this.difficulty;
         chance *= p.crime_success_mult;
+        chance *= p.getIntelligenceBonus(1);
 
         return Math.min(chance, 1);
     }

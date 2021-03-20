@@ -1,4 +1,7 @@
 import { KEY } from "./helpers/keyCodes";
+import { DialogBox } from "./ui/DialogBox";
+import React from "react";
+import ReactDOM from "react-dom";
 
 /**
  * Create and display a pop-up dialog box.
@@ -41,32 +44,24 @@ document.addEventListener("keydown", function (event) {
 
 let dialogBoxOpened = false;
 
+
+
 function dialogBoxCreate(txt, preformatted=false) {
-    var container = document.createElement("div");
+    const container = document.createElement("div");
     container.setAttribute("class", "dialog-box-container");
 
-    var content = document.createElement("div");
-    content.setAttribute("class", "dialog-box-content");
-
-    var closeButton = document.createElement("span");
-    closeButton.setAttribute("class", "dialog-box-close-button");
-    closeButton.innerHTML = "&times;"
-
-    var textE;
-    if (preformatted) {
-        // For text files as they are often computed data that
-        // shouldn't be wrapped and should retain tabstops.
-        textE = document.createElement("pre");
-        textE.innerHTML = txt;
-    } else {
-        textE = document.createElement("p");
-        textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let elem = txt;
+    if (typeof txt === 'string') {
+        if (preformatted) {
+            // For text files as they are often computed data that
+            // shouldn't be wrapped and should retain tabstops.
+            elem = <pre dangerouslySetInnerHTML={{ __html: txt }} />
+        } else {
+            elem = <p dangerouslySetInnerHTML={{ __html: txt.replace(/(?:\r\n|\r|\n)/g, '<br />') }} />
+        }
     }
 
-    content.appendChild(closeButton);
-    content.appendChild(textE);
-    container.appendChild(content);
-
+    ReactDOM.render(DialogBox(elem), container);
     document.body.appendChild(container);
     if (dialogBoxes.length >= 1) {
         container.style.visibility = "hidden";

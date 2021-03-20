@@ -5,6 +5,7 @@ import { Player } from "./Player";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { formatNumber } from "../utils/StringHelperFunctions";
+import { numeralWrapper } from "./ui/numeralFormat";
 
 import { addOffset } from "../utils/helpers/addOffset";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -286,11 +287,8 @@ HackingMission.prototype.createPageDom = function() {
     var gain = this.reward  * Player.faction_rep_mult * favorMult;
     var headerText = document.createElement("p");
     headerText.innerHTML = "You are about to start a hacking mission! You will gain " +
-                    formatNumber(gain, 3) + " faction reputation with " + this.faction.name +
-                    " if you win. For more information " +
-                    "about how hacking missions work, click one of the guide links " +
-                    "below (one opens up an in-game guide and the other opens up " +
-                    "the guide from the wiki). Click the 'Start' button to begin.";
+                    numeralWrapper.format(gain, '0.000a') + " faction reputation with " + this.faction.name +
+                    " if you win. Click the 'Start' button to begin.";
     headerText.style.display = "block";
     headerText.classList.add("hack-mission-header-element");
     headerText.style.width = "80%";
@@ -304,15 +302,6 @@ HackingMission.prototype.createPageDom = function() {
         dialogBoxCreate(CONSTANTS.HackingMissionHowToPlay);
         return false;
     });
-
-    var wikiGuideBtn = document.createElement("a");
-    wikiGuideBtn.innerText = "Wiki Guide";
-    wikiGuideBtn.classList.add("a-link-button");
-    wikiGuideBtn.style.display = "inline-block";
-    wikiGuideBtn.classList.add("hack-mission-header-element");
-    wikiGuideBtn.target = "_blank";
-    // TODO Add link to wiki page     wikiGuideBtn.href =
-
 
     // Start button will get replaced with forfeit when game is started
     var startBtn = document.createElement("a");
@@ -490,7 +479,6 @@ HackingMission.prototype.createPageDom = function() {
 
     container.appendChild(headerText);
     container.appendChild(inGameGuideBtn);
-    container.appendChild(wikiGuideBtn);
     container.appendChild(startBtn);
     container.appendChild(forfeitMission);
     container.appendChild(timer);
@@ -1527,7 +1515,8 @@ HackingMission.prototype.finishMission = function(win) {
         var favorMult = 1 + (this.faction.favor / 100);
         var gain = this.reward  * Player.faction_rep_mult * favorMult;
         dialogBoxCreate("Mission won! You earned " +
-                        formatNumber(gain, 3) + " reputation with " + this.faction.name);
+                        numeralWrapper.format(gain, '0.000a') + " reputation with " + this.faction.name);
+        console.log(`diff ${this.difficulty}`);
         Player.gainIntelligenceExp(this.difficulty * CONSTANTS.IntelligenceHackingMissionBaseExpGain);
         this.faction.playerReputation += gain;
     } else {

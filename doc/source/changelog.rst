@@ -3,39 +3,65 @@
 Changelog
 =========
 
+v0.50.0 - 2021-03-20 Intelligence (hydroflame)
+----------------------------------------------
+
+**Intelligence**
+
+* int exp gain and effect has been reworked. It is now much more easy to
+  acquire and far more powerful. The goal here is to feel like players have
+  another tool in their arsenal.
+
+**Factions**
+
+* Hacking factions no longer have hacking level requirements since their associated servers do.
+
+**Misc.**
+
+* Sleeve styling.
+* number formatting
+* remove wiki button in Hacking Missions.
+* Fix NaN displayed when very very large numbers are reached.
 
 v0.49.2 - 2021-03-13 (hydroflame)
--------
+---------------------------------
 
-BN8
+**BN8**
+
 * A new bitnode multipler has been added, it lets you reduce money from a
   server without gaining actually any money. This is important for BN8 where
   hack/grow can influence the stock market. No money can be gained from
   hacking but server money can still be reduced.
 
-Documentation
+**Documentation**
+
 * readthedocs should now be more consistent and many examples were added.
 
-Netscript
+**Netscript**
+
 * Ace editor will now correctly highlight all functions.
 * 'tFormat' is a new netscript function that returns a human readable
   representation of milliseconds. eg. "2 hours 15 minute 43 seconds"
 
-Gang
+**Gang**
+
 * style improvements
 
-Bladeburner
+**Bladeburner**
+
 * style improvements
 * fix bug where 'skill list SKILL' would crash if skill is level 0.
 
-Sleeve
+**Sleeve**
+
 * karma gain now scales with sync.
 
-Misc.
-Fix issue where the effective stats under Character>Stats were being calculated.
+**Misc.**
+
+* Fix issue where the effective stats under Character>Stats were being calculated.
 
 v0.49.0 - 2021-03-11 Source-File -1 (hydroflame)
--------
+------------------------------------------------
 
 **Source-File -1**
 
@@ -63,7 +89,7 @@ v0.49.0 - 2021-03-11 Source-File -1 (hydroflame)
 
 
 v0.48.0 - ASCII - 2021-03-07 (hydroflame)
--------
+-----------------------------------------
 
 **ASCII**
 
@@ -135,7 +161,7 @@ v0.47.2 - 7/15/2019
 * Added 'Solarized Dark' theme to CodeMirror editor
 * After Infiltration, you will now return to the company page rather than the city page
 * Bug fix: Stock Market UI should no longer crash for certain locale settings
-* Bug fix: You can now properly remove unfinished programs (the *.exe-N%-INC files)
+* Bug fix: You can now properly remove unfinished programs (the `*.exe-N%-INC` files)
 * Bug fix: Fixed an issue that allowed you to increase money on servers with a 'maxMoney' of 0 (like CSEC)
 * Bug fix: Scripts no longer persist if they were started with syntax/import errors
 * Bug fix: 'hack' and 'analyze' Terminal commands are now blocking

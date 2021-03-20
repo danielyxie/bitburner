@@ -50,6 +50,9 @@ import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
+import { StatsTable } from "./ui/React/StatsTable";
+import ReactDOM from "react-dom";
+
 const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 166 132"  style="fill:#adff2f;"><g><path d="M132.658-0.18l-24.321,24.321c-7.915-2.71-16.342-4.392-25.087-4.392c-45.84,0-83,46-83,46   s14.1,17.44,35.635,30.844L12.32,120.158l12.021,12.021L144.68,11.841L132.658-0.18z M52.033,80.445   c-2.104-4.458-3.283-9.438-3.283-14.695c0-19.054,15.446-34.5,34.5-34.5c5.258,0,10.237,1.179,14.695,3.284L52.033,80.445z"/><path d="M134.865,37.656l-18.482,18.482c0.884,3.052,1.367,6.275,1.367,9.612c0,19.055-15.446,34.5-34.5,34.5   c-3.337,0-6.56-0.483-9.611-1.367l-10.124,10.124c6.326,1.725,12.934,2.743,19.735,2.743c45.84,0,83-46,83-46   S153.987,50.575,134.865,37.656z"/></g></svg>&nbsp;`
 const killIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="-22 0 511 511.99561" style="fill:#adff2f;"><path d="m.496094 466.242188 39.902344-39.902344 45.753906 45.753906-39.898438 39.902344zm0 0"/><path d="m468.421875 89.832031-1.675781-89.832031-300.265625 300.265625 45.753906 45.753906zm0 0"/><path d="m95.210938 316.785156 16.84375 16.847656h.003906l83.65625 83.65625 22.753906-22.753906-100.503906-100.503906zm0 0"/><path d="m101.445312 365.300781-39.902343 39.902344 45.753906 45.753906 39.902344-39.902343-39.90625-39.902344zm0 0"/></svg>`
 
@@ -1211,10 +1214,7 @@ Bladeburner.prototype.initializeDomElementRefs = function() {
         overviewChaos:              null,
         overviewSkillPoints:        null,
         overviewBonusTime:          null,
-        overviewAugSuccessMult:     null,
-        overviewAugMaxStaminaMult:  null,
-        overviewAugStaminaGainMult: null,
-        overviewAugAnalysisMult:    null,
+        overviewAugMults:           null,
 
         // Actions and Skills Content
         actionsAndSkillsDesc:   null,
@@ -1397,10 +1397,7 @@ Bladeburner.prototype.createOverviewContent = function() {
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
 
 
-    DomElems.overviewAugSuccessMult = createElement("p", {display:"block"});
-    DomElems.overviewAugMaxStaminaMult = createElement("p", {display:"block"});
-    DomElems.overviewAugStaminaGainMult = createElement("p", {display:"block"});
-    DomElems.overviewAugAnalysisMult = createElement("p", {display:"block"});
+    DomElems.overviewAugMults = createElement("div", {display:"block"});
 
 
     DomElems.overviewDiv.appendChild(DomElems.overviewRank);
@@ -1418,10 +1415,7 @@ Bladeburner.prototype.createOverviewContent = function() {
     DomElems.overviewDiv.appendChild(DomElems.overviewBonusTime);
     DomElems.overviewDiv.appendChild(DomElems.overviewSkillPoints);
     appendLineBreaks(DomElems.overviewDiv, 1);
-    DomElems.overviewDiv.appendChild(DomElems.overviewAugSuccessMult);
-    DomElems.overviewDiv.appendChild(DomElems.overviewAugMaxStaminaMult);
-    DomElems.overviewDiv.appendChild(DomElems.overviewAugStaminaGainMult);
-    DomElems.overviewDiv.appendChild(DomElems.overviewAugAnalysisMult);
+    DomElems.overviewDiv.appendChild(DomElems.overviewAugMults);
 
     // Travel to new city button
     appendLineBreaks(DomElems.overviewDiv, 1);
@@ -1783,10 +1777,12 @@ Bladeburner.prototype.updateOverviewContent = function() {
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);
     DomElems.overviewBonusTime.childNodes[0].nodeValue = "Bonus time: " + convertTimeMsToTimeElapsedString(this.storedCycles/BladeburnerConstants.CyclesPerSecond*1000);
-    DomElems.overviewAugSuccessMult.innerText = "Aug. Success Chance Mult: " + formatNumber(Player.bladeburner_success_chance_mult*100, 1) + "%";
-    DomElems.overviewAugMaxStaminaMult.innerText = "Aug. Max Stamina Mult: " + formatNumber(Player.bladeburner_max_stamina_mult*100, 1) + "%";
-    DomElems.overviewAugStaminaGainMult.innerText = "Aug. Stamina Gain Mult: " + formatNumber(Player.bladeburner_stamina_gain_mult*100, 1) + "%";
-    DomElems.overviewAugAnalysisMult.innerText = "Aug. Field Analysis Mult: " + formatNumber(Player.bladeburner_analysis_mult*100, 1) + "%";
+    ReactDOM.render(StatsTable([
+        ["Aug. Success Chance mult: ", formatNumber(Player.bladeburner_success_chance_mult*100, 1) + "%"],
+        ["Aug. Max Stamina mult: ", formatNumber(Player.bladeburner_max_stamina_mult*100, 1) + "%"],
+        ["Aug. Stamina Gain mult: ", formatNumber(Player.bladeburner_stamina_gain_mult*100, 1) + "%"],
+        ["Aug. Field Analysis mult: ", formatNumber(Player.bladeburner_analysis_mult*100, 1) + "%"],
+    ]), DomElems.overviewAugMults);
 }
 
 Bladeburner.prototype.updateActionAndSkillsContent = function() {
