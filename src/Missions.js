@@ -1515,7 +1515,8 @@ HackingMission.prototype.finishMission = function(win) {
         var favorMult = 1 + (this.faction.favor / 100);
         var gain = this.reward  * Player.faction_rep_mult * favorMult;
         dialogBoxCreate("Mission won! You earned " +
-                        formatNumber(gain, 3) + " reputation with " + this.faction.name);
+                        numeralWrapper.format(gain, '0.000a') + " reputation with " + this.faction.name);
+        console.log(`diff ${this.difficulty}`);
         Player.gainIntelligenceExp(this.difficulty * CONSTANTS.IntelligenceHackingMissionBaseExpGain);
         this.faction.playerReputation += gain;
     } else {
