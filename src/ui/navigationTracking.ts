@@ -34,6 +34,11 @@ export enum Page {
     CreateProgram = "CreateProgram",
 
     /**
+     * The Stanek's Gift to overclock stats.
+     */
+    StaneksGift = "StaneksGift",
+
+    /**
      * The list of all factions, and invites, available to the player.
      */
     Factions = "Factions",

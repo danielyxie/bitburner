@@ -143,6 +143,20 @@ function prestigeAugmentation() {
         Player.bladeburner.prestige();
     }
 
+    if (augmentationExists(AugmentationNames.StaneksGift) &&
+        Augmentations[AugmentationNames.StaneksGift].owned) {
+        // TODO(hydroflame): refactor faction names so we don't have to hard
+        // code strings.
+        joinFaction(Factions["Church of the Machine God"]);
+
+        // add the tab
+        document.getElementById("staneks-gift-tab").style.display = "list-item";
+        document.getElementById("hacking-menu-header").click();
+        document.getElementById("hacking-menu-header").click();
+    }
+
+
+
     // BitNode 8: Ghost of Wall Street
     if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
     if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {

@@ -7,6 +7,7 @@ interface IMainMenuLinks {
     ScriptEditor:   HTMLElement;
     ActiveScripts:  HTMLElement;
     CreateProgram:  HTMLElement;
+    StaneksGift:    HTMLElement;
     Stats:          HTMLElement;
     Factions:       HTMLElement;
     Augmentations:  HTMLElement;
@@ -36,6 +37,7 @@ export const MainMenuLinks: IMainMenuLinks = {
     ScriptEditor: emptyElement,
     ActiveScripts: emptyElement,
     CreateProgram: emptyElement,
+    StaneksGift: emptyElement,
     Stats: emptyElement,
     Factions: emptyElement,
     Augmentations: emptyElement,
@@ -69,6 +71,7 @@ export function initializeMainMenuLinks(): boolean {
         MainMenuLinks.ScriptEditor = safeGetLink("create-script-menu-link");
         MainMenuLinks.ActiveScripts = safeGetLink("active-scripts-menu-link");
         MainMenuLinks.CreateProgram = safeGetLink("create-program-menu-link");
+        MainMenuLinks.StaneksGift = safeGetLink("staneks-gift-menu-link");
         MainMenuLinks.Stats = safeGetLink("stats-menu-link");
         MainMenuLinks.Factions = safeGetLink("factions-menu-link");
         MainMenuLinks.Augmentations = safeGetLink("augmentations-menu-link");

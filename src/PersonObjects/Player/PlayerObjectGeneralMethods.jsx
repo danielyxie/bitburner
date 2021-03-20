@@ -1885,11 +1885,6 @@ export function reapplyAllAugmentations(resetMultipliers=true) {
     }
 
     for (let i = 0; i < this.augmentations.length; ++i) {
-        //Compatibility with new version
-        if (this.augmentations[i].name === "HacknetNode NIC Architecture Neural-Upload") {
-            this.augmentations[i].name = "Hacknet Node NIC Architecture Neural-Upload";
-        }
-
         const augName = this.augmentations[i].name;
         var aug = Augmentations[augName];
         if (aug == null) {
@@ -2352,6 +2347,10 @@ export function gotoLocation(to) {
 
 export function canAccessResleeving() {
     return this.bitNodeN === 10 || (SourceFileFlags[10] > 0);
+}
+
+export function canAccessCotMG() {
+    return this.bitNodeN === 13 || (SourceFileFlags[13] > 0);
 }
 
 export function giveExploit(exploit) {

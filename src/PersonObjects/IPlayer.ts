@@ -128,6 +128,7 @@ export interface IPlayer {
     canAccessCorporation(): boolean;
     canAccessGang(): boolean;
     canAccessResleeving(): boolean;
+    canAccessCotMG(): boolean;
     canAfford(cost: number): boolean;
     gainHackingExp(exp: number): void;
     gainStrengthExp(exp: number): void;
@@ -175,6 +176,7 @@ export interface IPlayer {
     startGang(facName: string, isHacking: boolean): void;
     startWork(companyName: string): void;
     startWorkPartTime(companyName: string): void;
+    queueAugmentation(augmentation: string): void;
     travel(to: CityName): boolean;
     giveExploit(exploit: Exploit): void;
     queryStatFromString(str: string): number;

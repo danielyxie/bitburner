@@ -107,6 +107,13 @@ export const AugmentationNames: IMap<string> = {
     BladeArmorOmnibeam:                 "BLADE-51b Tesla Armor: Omnibeam Upgrade",
     BladeArmorIPU:                      "BLADE-51b Tesla Armor: IPU Upgrade",
     BladesSimulacrum:                   "The Blade's Simulacrum",
+    StaneksGift:                        "Stanek's Gift",
+    StaneksGiftI:                       "Stanek's Gift - II",
+    StaneksGiftII:                      "Stanek's Gift - III",
+    StaneksGiftAscensionPort:           "Stanek's Gift - Ascension",
+    StaneksGiftNeckExpansion:           "Stanek's Gift - Neck expansion",
+    StaneksGiftVertabraeExpansion:      "Stanek's Gift - Vertabrae expansion",
+    StaneksGiftCranialExpansion:        "Stanek's Gift - Cranial expansion",
 
     //Wasteland Augs
     //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System

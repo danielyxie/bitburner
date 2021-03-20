@@ -114,6 +114,8 @@ function startNetscript2Script(workerScript) {
         workerScript.env.vars[prop] = wrap(prop, workerScript.env.vars[prop]);
     }
 
+    workerScript.env.vars.stanek.charge = wrap("stanek.prop", workerScript.env.vars.stanek.charge);
+
     // Note: the environment that we pass to the JS script only needs to contain the functions visible
     // to that script, which env.vars does at this point.
     return executeJSScript(workerScript.getServer().scripts,

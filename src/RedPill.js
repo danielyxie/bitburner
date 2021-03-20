@@ -162,7 +162,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false, quick=false) {
     // Create the Bit Verse
     const bitVerseImage = document.createElement("pre");
     const bitNodes = [];
-    for (let i = 1; i <= 12; ++i) {
+    for (let i = 1; i <= 13; ++i) {
         bitNodes.push(createBitNode(i));
     }
 
@@ -177,7 +177,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false, quick=false) {
     "O | | |  \\|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
     "| | | |O  /  |  | O   /   |   O   O |  |  \\  O| | | |<br>" +
     "| | |/  \\/  / __| | |/ \\  |   \\   | |__ \\  \\/  \\| | |<br>" +
-    " \\| O   |  |_/    |\\|   \\ O    \\__|    \\_|  |   O |/ <br>" +
+    " \\| O   |  |_/    |\\|   \\ "+bitNodes[12]+"    \\__|    \\_|  |   O |/ <br>" +
     "  | |   |_/       | |    \\|    /  |       \\_|   | |  <br>" +
     "   \\|   /          \\|     |   /  /          \\   |/   <br>" +
     "    |  "+bitNodes[9]+"            |     |  /  |            "+bitNodes[10]+"  |    <br>" +
@@ -196,12 +196,12 @@ function loadBitVerse(destroyedBitNodeNum, flume=false, quick=false) {
     container.appendChild(bitVerseImage);
 
     // BitNode event listeners
-    for (let i = 1; i <= 12; ++i) {
+    for (let i = 1; i <= 13; ++i) {
         (function(i) {
             const elemId = "bitnode-" + i.toString();
             const elem = clearEventListeners(elemId);
             if (elem == null) { return; }
-            if (i >= 1 && i <= 12) {
+            if (i >= 1 && i <= 13) {
                 elem.addEventListener("click", function() {
                     const bitNodeKey = "BitNode" + i;
                     const bitNode = BitNodes[bitNodeKey];

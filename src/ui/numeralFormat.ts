@@ -154,6 +154,19 @@ class NumeralFormatter {
             return Math.max(numeralValue, parsed);
         }
     }
+
+    formatStaneksGiftHeat(n: number): string {
+        return this.format(n, "0.000a");
+    }
+
+    formatStaneksGiftCharge(n: number): string {
+        return this.format(n, "0.000a");
+    }
+
+    formatStaneksGiftPower(n: number): string {
+        return this.format(n, "0");
+
+    }
 }
 
 export const numeralWrapper = new NumeralFormatter();

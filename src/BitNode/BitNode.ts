@@ -237,8 +237,22 @@ BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
                                         "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give you Source-File 12, or " +
                                         "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
                                         "of Source-File 12 lets you start any BitNodes with NeuroFlux Governor equal to the level of this source file.");
+BitNodes["BitNode13"] = new BitNode(13, "They're lunatics", "1 step back, 2 steps forward",
+                                        "With the invention of Augmentations in the 2040s a religious group known as the Church of the Machine God has rallied far more support than anyone would have hoped.<br><br>" +
+                                        "Their leader, Allison \"Mother\" Stanek is said to have created her own Augmentation whose power goes beyond any other." +
+                                        "Find her in Chongquin and gain her trust.<br><br>" +
+                                        "In this BitNode:<br><br>" +
+                                        "Every is significantly reduced<br>" +
+                                        "Stanek's Gift power is significantly increased.<br><br>" +
+                                        "Destroying this BitNode will give you Source-File 13, or if you already have " +
+                                        "this Source-File it will upgrade its level up to a maximum of 3. This Source-File " +
+                                        "lets the Church of the Machine God appear in other BitNodes.<br><br>" +
+                                        "This Source-File also increases Stanek's Gift multipliers by:<br><br>" +
+                                        "Level 1: 8%<br>" +
+                                        "Level 2: 12%<br>" +
+                                        "Level 3: 14%<br><br>" +
+                                        "Each level of this Source-File also increases the size of the gift.");
 // Books: Frontera, Shiner
-BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
 BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
 BitNodes["BitNode15"] = new BitNode(15, "", "COMING SOON");
 BitNodes["BitNode16"] = new BitNode(16, "", "COMING SOON");
@@ -499,8 +513,46 @@ export function initBitNodeMultipliers(p: IPlayer): void {
             BitNodeMultipliers.BladeburnerSkillCost = inc;
             break;
         }
+        case 13:
+            BitNodeMultipliers.DaedalusAugsRequirement = 100;
+
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.2;
+            BitNodeMultipliers.StrengthLevelMultiplier  = 0.2;
+            BitNodeMultipliers.DefenseLevelMultiplier   = 0.2;
+            BitNodeMultipliers.DexterityLevelMultiplier = 0.2;
+            BitNodeMultipliers.AgilityLevelMultiplier   = 0.2;
+            BitNodeMultipliers.CharismaLevelMultiplier  = 0.2;
+
+            BitNodeMultipliers.ServerMaxMoney         = 0.15;
+            BitNodeMultipliers.ServerStartingMoney    = 0.75;
+
+            BitNodeMultipliers.ServerStartingSecurity = 2;
+
+            BitNodeMultipliers.ScriptHackMoney     = 0.2;
+            BitNodeMultipliers.CompanyWorkMoney    = 0.2;
+            BitNodeMultipliers.CrimeMoney          = 0.2;
+            BitNodeMultipliers.HacknetNodeMoney    = 0.2;
+            BitNodeMultipliers.CodingContractMoney = 0.2;
+
+            BitNodeMultipliers.CompanyWorkExpGain = 0.1;
+            BitNodeMultipliers.ClassGymExpGain    = 0.1;
+            BitNodeMultipliers.FactionWorkExpGain = 0.1;
+            BitNodeMultipliers.HackExpGain        = 0.1;
+            BitNodeMultipliers.CrimeExpGain       = 0.1;
+
+            BitNodeMultipliers.FactionWorkRepGain    = 0.2;
+
+            BitNodeMultipliers.FourSigmaMarketDataCost = 4;
+            BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
+
+            BitNodeMultipliers.CorporationValuation = 0.01;
+
+            BitNodeMultipliers.BladeburnerRank      = 0.5;
+            BitNodeMultipliers.BladeburnerSkillCost = 2;
+            BitNodeMultipliers.GangKarmaRequirement = 20;
+            break;
         default:
-            console.warn("Player.bitNodeN invalid");
+            console.warn(`Player.bitNodeN ${p.bitNodeN} invalid`);
             break;
     }
 }

@@ -1990,6 +1990,163 @@ function initAugmentations() {
         resetAugmentation(BladesSimulacrum);
     }
 
+    // Special Bladeburner Augmentations
+    const ChurchOfTheMachineGodFactionName = "Church of the Machine God";
+    if (factionExists(ChurchOfTheMachineGodFactionName)) {
+        const StaneksGift = new Augmentation({
+            name:AugmentationNames.StaneksGift, repCost: 0, moneyCost: 0,
+            info:'Allison "Mother" Stanek imparts you with her gift. An ' +
+                 'experimental Augmentation implanted at the base of the neck. ' +
+                 'It allows you to overclock your entire system by carefully ' +
+                 'changing the configuration.<br><br>' +
+                 'Its unstable nature decreases all your stats by 10%',
+            isSpecial: true,
+            hacking_chance_mult: 0.90,
+            hacking_speed_mult: 0.90,
+            hacking_money_mult: 0.90,
+            hacking_grow_mult: 0.90,
+            hacking_mult: 0.90,
+            strength_mult: 0.90,
+            defense_mult: 0.90,
+            dexterity_mult: 0.90,
+            agility_mult: 0.90,
+            charisma_mult: 0.90,
+            hacking_exp_mult: 0.90,
+            strength_exp_mult: 0.90,
+            defense_exp_mult: 0.90,
+            dexterity_exp_mult: 0.90,
+            agility_exp_mult: 0.90,
+            charisma_exp_mult: 0.90,
+            company_rep_mult: 0.90,
+            faction_rep_mult: 0.90,
+            crime_money_mult: 0.90,
+            crime_success_mult: 0.90,
+            hacknet_node_money_mult: 0.90,
+            hacknet_node_purchase_cost_mult: 1.10,
+            hacknet_node_ram_cost_mult: 1.10,
+            hacknet_node_core_cost_mult: 1.10,
+            hacknet_node_level_cost_mult: 1.10,
+            work_money_mult: 0.90,
+        });
+        StaneksGift.addToFactions([ChurchOfTheMachineGodFactionName]);
+        resetAugmentation(StaneksGift);
+
+        const StaneksGiftI = new Augmentation({
+            name:AugmentationNames.StaneksGiftI, repCost: 1000, moneyCost: 0,
+            info:'TODO, something about Mother being bullshit and you get more control over her \"gift\"<br><br>' +
+                'The penalty for the gift is only 5%',
+            prereqs:[AugmentationNames.StaneksGift],
+            isSpecial: true,
+            hacking_chance_mult: 0.95/0.90,
+            hacking_speed_mult: 0.95/0.90,
+            hacking_money_mult: 0.95/0.90,
+            hacking_grow_mult: 0.95/0.90,
+            hacking_mult: 0.95/0.90,
+            strength_mult: 0.95/0.90,
+            defense_mult: 0.95/0.90,
+            dexterity_mult: 0.95/0.90,
+            agility_mult: 0.95/0.90,
+            charisma_mult: 0.95/0.90,
+            hacking_exp_mult: 0.95/0.90,
+            strength_exp_mult: 0.95/0.90,
+            defense_exp_mult: 0.95/0.90,
+            dexterity_exp_mult: 0.95/0.90,
+            agility_exp_mult: 0.95/0.90,
+            charisma_exp_mult: 0.95/0.90,
+            company_rep_mult: 0.95/0.90,
+            faction_rep_mult: 0.95/0.90,
+            crime_money_mult: 0.95/0.90,
+            crime_success_mult: 0.95/0.90,
+            hacknet_node_money_mult: 0.95/0.90,
+            hacknet_node_purchase_cost_mult: 1.05/1.10,
+            hacknet_node_ram_cost_mult: 1.05/1.10,
+            hacknet_node_core_cost_mult: 1.05/1.10,
+            hacknet_node_level_cost_mult: 1.05/1.10,
+            work_money_mult: 0.95/0.90,
+        });
+        StaneksGiftI.addToFactions([ChurchOfTheMachineGodFactionName]);
+        resetAugmentation(StaneksGiftI);
+
+        const StaneksGiftII = new Augmentation({
+            name:AugmentationNames.StaneksGiftII, repCost: 10000, moneyCost: 0,
+            info:'TODO, learn more about Allisons scheme, gain full control over the gift.<br><br>' +
+                'Finally freed from the penalty of the gift.',
+            prereqs:[AugmentationNames.StaneksGiftI],
+            isSpecial: true,
+            hacking_chance_mult: 1/0.95,
+            hacking_speed_mult: 1/0.95,
+            hacking_money_mult: 1/0.95,
+            hacking_grow_mult: 1/0.95,
+            hacking_mult: 1/0.95,
+            strength_mult: 1/0.95,
+            defense_mult: 1/0.95,
+            dexterity_mult: 1/0.95,
+            agility_mult: 1/0.95,
+            charisma_mult: 1/0.95,
+            hacking_exp_mult: 1/0.95,
+            strength_exp_mult: 1/0.95,
+            defense_exp_mult: 1/0.95,
+            dexterity_exp_mult: 1/0.95,
+            agility_exp_mult: 1/0.95,
+            charisma_exp_mult: 1/0.95,
+            company_rep_mult: 1/0.95,
+            faction_rep_mult: 1/0.95,
+            crime_money_mult: 1/0.95,
+            crime_success_mult: 1/0.95,
+            hacknet_node_money_mult: 1/0.95,
+            hacknet_node_purchase_cost_mult: 1/1.05,
+            hacknet_node_ram_cost_mult: 1/1.05,
+            hacknet_node_core_cost_mult: 1/1.05,
+            hacknet_node_level_cost_mult: 1/1.05,
+            work_money_mult: 1/0.95,
+        });
+        StaneksGiftII.addToFactions([ChurchOfTheMachineGodFactionName]);
+        resetAugmentation(StaneksGiftII);
+
+        const StaneksGiftNeckExpansion = new Augmentation({
+            name:AugmentationNames.StaneksGiftNeckExpansion, repCost: 10000, moneyCost: 0,
+            info:'Expands Stanek\'s Gift. Covering a large portion of the neck.<br><br>' +
+                 'This Augmentation increases Stanek\'s Gift Fragment board size.<br><br>' +
+                 '(hydro notes: does nothing)',
+            prereqs:[AugmentationNames.StaneksGift],
+            isSpecial: true,
+        });
+        StaneksGiftNeckExpansion.addToFactions([ChurchOfTheMachineGodFactionName]);
+        resetAugmentation(StaneksGiftNeckExpansion);
+
+        const StaneksGiftVertabraeExpansion = new Augmentation({
+            name:AugmentationNames.StaneksGiftVertabraeExpansion, repCost: 100000, moneyCost: 0,
+            info:'Further expand Stanek\'s gift to your dorsal vertebrae.<br><br>' +
+                 'This Augmentation increases Stanek\'s Gift Fragment board size.<br><br>' +
+                 '(hydro notes: does nothing)',
+            prereqs:[AugmentationNames.StaneksGiftNeckExpansion],
+            isSpecial: true,
+        });
+        StaneksGiftVertabraeExpansion.addToFactions([ChurchOfTheMachineGodFactionName]);
+        resetAugmentation(StaneksGiftVertabraeExpansion);
+
+        const StaneksGiftCranialExpansion = new Augmentation({
+            name:AugmentationNames.StaneksGiftCranialExpansion, repCost: 500000, moneyCost: 0,
+            info:'Finalize Stanek\'s gift expansion. Digging directly into your skull.<br><br>' +
+                 'This Augmentation increases Stanek\'s Gift Fragment board size.<br><br>' +
+                 '(hydro notes: does nothing)',
+            prereqs:[AugmentationNames.StaneksGiftVertabraeExpansion],
+            isSpecial: true,
+        });
+        StaneksGiftCranialExpansion.addToFactions([ChurchOfTheMachineGodFactionName]);
+        resetAugmentation(StaneksGiftCranialExpansion);
+
+        const StaneksGiftAscensionPort = new Augmentation({
+            name:AugmentationNames.StaneksGiftAscensionPort, repCost: 500000000, moneyCost: 0,
+            info:'Allow Allison to install an Ascension port in her Gift. Allowing you to connect with the Machine God.<br><br>' +
+            '(hydro notes: Finishes the BN, eventually)',
+            prereqs:[AugmentationNames.StaneksGift],
+            isSpecial: true,
+        });
+        StaneksGiftAscensionPort.addToFactions([ChurchOfTheMachineGodFactionName]);
+        resetAugmentation(StaneksGiftAscensionPort);
+    }
+
     // Update costs based on how many have been purchased
     mult = Math.pow(CONSTANTS.MultipleAugMultiplier, Player.queuedAugmentations.length);
     for (var name in Augmentations) {

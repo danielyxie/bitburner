@@ -178,6 +178,11 @@ import { isString } from "../utils/helpers/isString";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { staneksGift } from "./CotMG/Helper";
+import {
+    Fragments,
+    FragmentById,
+} from "./CotMG/Fragment";
 
 const possibleLogs = {
     ALL: true,
@@ -559,6 +564,12 @@ function NetscriptFunctions(workerScript) {
             const msg = `Invalid sleeve number: ${sleeveNumber}`;
             workerScript.log(func, msg);
             throw makeRuntimeErrorMsg(`sleeve.${func}`, msg);
+        }
+    }
+
+    const checkStanekAPIAccess = function(func) {
+        if (Player.bitNodeN !== 13 && !SourceFileFlags[13]) {
+            throw makeRuntimeErrorMsg(`stanek.${func}`, "You do not currently have access to the Stanek API. This is either because you are not in BitNode-13 or because you do not have Source-File 13");
         }
     }
 
@@ -4403,6 +4414,64 @@ function NetscriptFunctions(workerScript) {
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
             },
         }, // End sleeve
+        
+        // Stanek's gift API
+        stanek: {
+            charge: function(worldX, worldY) {
+                updateDynamicRam("charge", getRamCost("stanek", "charge"));
+                //checkStanekAPIAccess("charge");
+                const fragment = staneksGift.fragmentAt(worldX, worldY);
+                if(!fragment) throw makeRuntimeErrorMsg("stanek.charge", `No fragment at (${worldX}, ${worldY})`)
+                return netscriptDelay(1000, workerScript).then(function() {
+                    if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+                    const ram = workerScript.scriptRef.ramUsage * workerScript.scriptRef.threads;
+                    return Promise.resolve(staneksGift.charge(worldX, worldY, ram));
+                });
+            },
+            fragmentDefinitions: function() {
+                updateDynamicRam("fragmentDefinitions", getRamCost("stanek", "fragmentDefinitions"));
+                //checkStanekAPIAccess("fragmentDefinitions");
+                return Fragments.map(f => f.copy());
+            },
+            placedFragments: function() {
+                updateDynamicRam("placedFragments", getRamCost("stanek", "placedFragments"));
+                //checkStanekAPIAccess("placedFragments");
+                return staneksGift.fragments.map(af => {
+                    return {...af.copy(), ...af.fragment().copy()};
+                })
+            },
+            clear: function() {
+                updateDynamicRam("clear", getRamCost("stanek", "clear"));
+                //checkStanekAPIAccess("clear");
+                staneksGift.clear();
+            },
+            canPlace: function(worldX, worldY, fragmentId) {
+                updateDynamicRam("canPlace", getRamCost("stanek", "canPlace"));
+                //checkStanekAPIAccess("canPlace");
+                const fragment = FragmentById(fragmentId);
+                if(!fragment) throw makeRuntimeErrorMsg("stanek.canPlace", `Invalid fragment id: ${fragmentId}`)
+                return staneksGift.canPlace(worldX, worldY, fragment);
+            },
+            place: function(worldX, worldY, fragmentId) {
+                updateDynamicRam("place", getRamCost("stanek", "place"));
+                //checkStanekAPIAccess("place");
+                const fragment = FragmentById(fragmentId);
+                if(!fragment) throw makeRuntimeErrorMsg("stanek.place", `Invalid fragment id: ${fragmentId}`)
+                return staneksGift.place(worldX, worldY, fragment);
+            },
+            fragmentAt: function(worldX, worldY) {
+                updateDynamicRam("fragmentAt", getRamCost("stanek", "fragmentAt"));
+                //checkStanekAPIAccess("fragmentAt");
+                const fragment = staneksGift.fragmentAt(worldX, worldY);
+                if(fragment !== null) return fragment.copy();
+                return null;
+            },
+            deleteAt: function(worldX, worldY) {
+                updateDynamicRam("deleteAt", getRamCost("stanek", "deleteAt"));
+                //checkStanekAPIAccess("deleteAt");
+                return staneksGift.deleteAt(worldX, worldY);
+            },
+        }, // End stanek
         formulas: {
             basic: {
                 calculateSkill: function(exp, mult = 1) {
