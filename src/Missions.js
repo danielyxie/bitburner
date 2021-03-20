@@ -5,6 +5,7 @@ import { Player } from "./Player";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { formatNumber } from "../utils/StringHelperFunctions";
+import { numeralWrapper } from "./ui/numeralFormat";
 
 import { addOffset } from "../utils/helpers/addOffset";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -286,11 +287,8 @@ HackingMission.prototype.createPageDom = function() {
     var gain = this.reward  * Player.faction_rep_mult * favorMult;
     var headerText = document.createElement("p");
     headerText.innerHTML = "You are about to start a hacking mission! You will gain " +
-                    formatNumber(gain, 3) + " faction reputation with " + this.faction.name +
-                    " if you win. For more information " +
-                    "about how hacking missions work, click one of the guide links " +
-                    "below (one opens up an in-game guide and the other opens up " +
-                    "the guide from the wiki). Click the 'Start' button to begin.";
+                    numeralWrapper.format(gain, '0.000a') + " faction reputation with " + this.faction.name +
+                    " if you win. Click the 'Start' button to begin.";
     headerText.style.display = "block";
     headerText.classList.add("hack-mission-header-element");
     headerText.style.width = "80%";
