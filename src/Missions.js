@@ -305,15 +305,6 @@ HackingMission.prototype.createPageDom = function() {
         return false;
     });
 
-    var wikiGuideBtn = document.createElement("a");
-    wikiGuideBtn.innerText = "Wiki Guide";
-    wikiGuideBtn.classList.add("a-link-button");
-    wikiGuideBtn.style.display = "inline-block";
-    wikiGuideBtn.classList.add("hack-mission-header-element");
-    wikiGuideBtn.target = "_blank";
-    // TODO Add link to wiki page     wikiGuideBtn.href =
-
-
     // Start button will get replaced with forfeit when game is started
     var startBtn = document.createElement("a");
     startBtn.innerHTML = "Start";
@@ -490,7 +481,6 @@ HackingMission.prototype.createPageDom = function() {
 
     container.appendChild(headerText);
     container.appendChild(inGameGuideBtn);
-    container.appendChild(wikiGuideBtn);
     container.appendChild(startBtn);
     container.appendChild(forfeitMission);
     container.appendChild(timer);
