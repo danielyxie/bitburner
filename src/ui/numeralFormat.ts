@@ -37,7 +37,12 @@ class NumeralFormatter {
     format(n: number, format: string): string {
         // numeraljs doesnt properly format numbers that are too big or too small
         if (Math.abs(n) < 1e-6) { n = 0; }
-        return numeral(n).format(format);
+        console.log(`${n}: ${numeral(n).format(format)}`);
+        const answer = numeral(n).format(format);
+        if (answer === 'NaN') {
+            return `${n}`;
+        }
+        return answer;
     }
 
     formatBigNumber(n: number): string {
