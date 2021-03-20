@@ -178,4 +178,5 @@ export interface IPlayer {
     travel(to: CityName): boolean;
     giveExploit(exploit: Exploit): void;
     queryStatFromString(str: string): number;
+    getIntelligenceBonus(weight: number): number;
 }

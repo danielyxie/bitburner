@@ -60,7 +60,7 @@ export const BladeburnerConstants: {
     ChaosThreshold: 50, // City chaos level after which it starts making tasks harder
 
     BaseStatGain: 1, // Base stat gain per second
-    BaseIntGain: 0.001, // Base intelligence stat gain
+    BaseIntGain: 0.003, // Base intelligence stat gain
 
     ActionCountGrowthPeriod: 480, // Time (s) it takes for action count to grow by its specified value
 

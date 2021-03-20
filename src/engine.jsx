@@ -196,13 +196,6 @@ const Engine = {
     // Display objects
     // TODO-Refactor this into its own component
     Display: {
-        // Progress bar
-        progress:               null,
-
-        // Display for status text (such as "Saved" or "Loaded")
-        statusText:             null,
-
-        hacking_skill:          null,
 
         // Main menu content
         terminalContent:                null,

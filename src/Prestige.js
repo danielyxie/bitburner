@@ -348,7 +348,7 @@ function prestigeSourceFile() {
     document.getElementById("world-menu-header").click();
 
     // Gain int exp
-    Player.gainIntelligenceExp(5);
+    Player.gainIntelligenceExp(300);
 
     resetPidCounter();
 }

@@ -214,6 +214,7 @@ export class Action {
                 competence += (this.weights[stat] * Math.pow(effMultiplier*playerStatLvl, this.decays[stat]));
             }
         }
+        competence *= Player.getIntelligenceBonus(0.75);
         competence *= inst.calculateStaminaPenalty();
 
         competence *= this.getTeamSuccessBonus(inst);

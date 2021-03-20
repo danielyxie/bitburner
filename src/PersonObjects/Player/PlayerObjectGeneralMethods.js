@@ -821,7 +821,7 @@ export function startFactionHackWork(faction) {
     this.resetWorkStatus();
 
     this.workHackExpGainRate = .15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-    this.workRepGainRate = this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+    this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult * this.getIntelligenceBonus(0.5);
 
     this.factionWorkType = CONSTANTS.FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -869,7 +869,7 @@ export function workForFaction(numCycles) {
     //Constantly update the rep gain rate
     switch (this.factionWorkType) {
         case CONSTANTS.FactionWorkHacking:
-            this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+            this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult * this.getIntelligenceBonus(0.5);
             break;
         case CONSTANTS.FactionWorkField:
             this.workRepGainRate = this.getFactionFieldWorkRepGain();
@@ -1157,7 +1157,7 @@ export function startCreateProgramWork(programName, time, reqLevel) {
 export function createProgramWork(numCycles) {
     //Higher hacking skill will allow you to create programs faster
     var reqLvl = this.createProgramReqLvl;
-    var skillMult = (this.hacking_skill / reqLvl); //This should always be greater than 1;
+    var skillMult = (this.hacking_skill / reqLvl) * this.getIntelligenceBonus(3); //This should always be greater than 1;
     skillMult = 1 + ((skillMult - 1) / 5); //The divider constant can be adjusted as necessary
 
     //Skill multiplier directly applied to "time worked"
@@ -2305,4 +2305,13 @@ export function giveExploit(exploit) {
     if(!this.exploits.includes(exploit)) {
         this.exploits.push(exploit);
     }
+}
+
+
+export function getIntelligenceBonus(weight) {
+    // 15  => +1.4%  when you initially acquire int
+    // 50  => +3.8%  mid game
+    // 100 => +6.6%  late game
+    // 250 => +13.4% realistic best possible
+    return 1+(weight*Math.pow(this.intelligence, 0.8)/600);
 }
