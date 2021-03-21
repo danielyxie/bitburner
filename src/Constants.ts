@@ -234,6 +234,9 @@ export let CONSTANTS: IMap<any> = {
     Factions
     * Augmentations offered by a Faction but already bought are in a separate list at the bottom of the page.
 
+    Bug fixed
+    * Fixed a bug where completing a maxed non-repeatable BitNode would make its color on the BitVerse like level 1.
+
     Misc.
     * Minor spacing in stats tables.
     `
