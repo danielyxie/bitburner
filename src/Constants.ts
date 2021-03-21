@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.50.0",
+    Version:                "0.5X.X",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,20 +228,13 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.50.0 - 2021-03-20 Intelligence (hydroflame)
+    v0.5X.X - 2021-XX-XX TITLE (hydroflame)
     -------
-    Intelligence
-    * int exp gain and effect has been reworked. It is now much more easy to
-      acquire and far more powerful. The goal here is to feel like players have
-      another tool in their arsenal.
 
     Factions
-    * Hacking factions no longer have hacking level requirements since their associated servers do.
+    * Augmentations offered by a Faction but already bought are in a separate list at the bottom of the page.
 
     Misc.
-    * Sleeve styling.
-    * number formatting
-    * remove wiki button in Hacking Missions.
-    * Fix NaN displayed when very very large numbers are reached.
+    * Minor spacing in stats tables.
     `
 }

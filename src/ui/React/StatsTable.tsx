@@ -13,7 +13,7 @@ export function StatsTable(rows: any[][], title: string | null): React.ReactElem
                     return <tr key={row[0]}>
                         {row.map((elem: any, i: number) => {
                             let style = {};
-                            if (i !== 0) style = {textAlign: 'right'};
+                            if (i !== 0) style = {textAlign: 'right', paddingLeft: '.25em'};
                             return <td key={i} style={style}>{elem}</td>
                         })}
                     </tr>
