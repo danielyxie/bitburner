@@ -228,8 +228,10 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.5X.X - 2021-XX-XX TITLE (hydroflame)
+    v0.50.1 - 2021-03-22 (hydroflame)
     -------
+    Netscript
+    * getTaskTasks works
 
     Factions
     * Augmentations offered by a Faction but already bought are in a separate list at the bottom of the page.
