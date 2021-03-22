@@ -231,7 +231,7 @@ export let CONSTANTS: IMap<any> = {
     v0.50.1 - 2021-03-22 (hydroflame)
     -------
     Netscript
-    * getTaskTasks works
+    * getTaskStats works
 
     Source-File -1
     * Added a new Exploit
