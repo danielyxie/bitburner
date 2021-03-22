@@ -490,9 +490,9 @@ function NetscriptFunctions(workerScript) {
     }
 
     const getGangTask = function(func, name) {
-        const task = GangMemberTasks[taskName];
+        const task = GangMemberTasks[name];
         if (!task) {
-            throw makeRuntimeErrorMsg(`gang.${func}`, `Invalid task: '${taskName}'`);
+            throw makeRuntimeErrorMsg(`gang.${func}`, `Invalid task: '${name}'`);
         }
 
         return task;

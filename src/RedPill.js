@@ -151,7 +151,8 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
     // Update NextSourceFileFlags
     nextSourceFileFlags = SourceFileFlags.slice();
     if (!flume) {
-        ++nextSourceFileFlags[destroyedBitNodeNum];
+        if (nextSourceFileFlags[destroyedBitNodeNum] < 3 && destroyedBitNodeNum !== 12)
+            ++nextSourceFileFlags[destroyedBitNodeNum];
     }
 
     // Create the Bit Verse

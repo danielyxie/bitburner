@@ -78,7 +78,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             if(SourceFileFlags[5] > 0 && r.length > 2 && r[1] != r[2]) {
                 return <td key='2' style={{textAlign: 'right'}}> ({numeralWrapper.formatPercentage(r[2])})</td>
             }
-            return undefined;
+            return <></>;
         }
         return <>
             <table>

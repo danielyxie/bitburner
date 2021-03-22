@@ -102,6 +102,7 @@ import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
 import { KEY } from "../utils/helpers/keyCodes";
 import "./Exploits/tampering";
+import "./Exploits/unclickable";
 
 import React from "react";
 import ReactDOM from "react-dom";

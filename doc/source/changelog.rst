@@ -3,6 +3,28 @@
 Changelog
 =========
 
+v0.50.1 - 2021-03-22 (hydroflame)
+---------------------------------
+**Netscript**
+
+* getTaskTasks works
+
+**Source-File -1**
+
+* Added a new Exploit
+
+**Factions**
+
+* Augmentations offered by a Faction but already bought are in a separate list at the bottom of the page.
+
+**Bug fixed**
+
+* Fixed a bug where completing a maxed non-repeatable BitNode would make its color on the BitVerse like level 1.
+
+**Misc.**
+
+* Minor spacing in stats tables.
+
 v0.50.0 - 2021-03-20 Intelligence (hydroflame)
 ----------------------------------------------
 

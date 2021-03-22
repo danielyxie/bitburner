@@ -114,7 +114,6 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
             color = "red";
         } else if (this.aug.name !== AugmentationNames.NeuroFluxGovernor && (this.aug.owned || this.owned())) {
             disabled = true;
-            statusTxt = "ALREADY OWNED";
         } else if (this.hasReputation()) {
             statusTxt = `UNLOCKED - ${numeralWrapper.formatMoney(moneyCost)}`;
         } else {
