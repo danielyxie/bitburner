@@ -233,6 +233,9 @@ export let CONSTANTS: IMap<any> = {
     Netscript
     * getTaskTasks works
 
+    Source-File -1
+    * Added a new Exploit
+
     Factions
     * Augmentations offered by a Faction but already bought are in a separate list at the bottom of the page.
 
