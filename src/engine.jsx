@@ -134,7 +134,7 @@ $(document).keydown(function(e) {
     } catch(e) {}
 
     if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
-        if (e.keyCode == 84 && e.altKey) {
+        if (e.keyCode == KEY.T && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
         } else if (e.keyCode === KEY.C && e.altKey) {
@@ -174,6 +174,12 @@ $(document).keydown(function(e) {
         } else if (e.keyCode === KEY.U && e.altKey) {
             e.preventDefault();
             Engine.loadTutorialContent();
+        } else if (e.keyCode === KEY.B && e.altKey) {
+            e.preventDefault();
+            Engine.loadBladeburnerContent();
+        } else if (e.keyCode === KEY.G && e.altKey) {
+            e.preventDefault();
+            Engine.loadGangContent();
         }
     }
 
