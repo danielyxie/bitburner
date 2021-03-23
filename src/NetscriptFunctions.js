@@ -59,6 +59,7 @@ import {
 import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
+import { Terminal } from "./Terminal";
 
 import { Message } from "./Message/Message";
 import { Messages } from "./Message/MessageHelpers";
@@ -537,23 +538,17 @@ function NetscriptFunctions(workerScript) {
 
     const runAfterReset = function(cbScript=null) {
         //Run a script after reset
-        console.log(cbScript);
         if (cbScript && isString(cbScript)) {
-            console.log('here');
             const home = Player.getHomeComputer();
             for (const script of home.scripts) {
-                console.log('here 2'+script);
                 if (script.filename === cbScript) {
-                    console.log('here 3');
                     const ramUsage = script.ramUsage;
                     const ramAvailable = home.maxRam - home.ramUsed;
                     if (ramUsage > ramAvailable) {
-                        console.log('here 4');
                         return; // Not enough RAM
                     }
                     const runningScriptObj = new RunningScript(script, []); // No args
                     runningScriptObj.threads = 1; // Only 1 thread
-                    console.log('running!');
                     startWorkerScript(runningScriptObj, home);
                 }
             }
@@ -2683,6 +2678,17 @@ function NetscriptFunctions(workerScript) {
             Player.getHomeComputer().programs.push(item.program);
             workerScript.log("purchaseProgram", `You have purchased the '${item.program}' program. The new program can be found on your home computer.`);
             return true;
+        },
+        executeCommand: function(command) {
+            updateDynamicRam("executeCommand", getRamCost("executeCommand"));
+            checkSingularityAccess("executeCommand", 1);
+            Terminal.executeCommand(command);
+            return new Promise(function (resolve, reject) {
+                (function wait(){
+                    if (!Terminal.hackFlag && !Terminal.analyzeFlag) return resolve();
+                    setTimeout(wait, 30);
+                })();
+            });
         },
         getStats: function() {
             updateDynamicRam("getStats", getRamCost("getStats"));
