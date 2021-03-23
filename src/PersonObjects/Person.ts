@@ -5,6 +5,7 @@ import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentatio
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
+import { calculateSkill } from "./formulas/skill";
 
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks
@@ -127,7 +128,7 @@ export abstract class Person {
      * stat level. Stat-agnostic (same formula for every stat)
      */
     calculateStat(exp: number, mult: number=1): number {
-        return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+        return calculateSkill(exp, mult);
     }
 
     /**

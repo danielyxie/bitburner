@@ -28,6 +28,7 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
+import { calculateSkill as calculateSkillF } from "../formulas/skill";
 import {
     AllServers,
     AddToAllServers,
@@ -293,7 +294,7 @@ export function receiveInvite(factionName) {
 
 //Calculates skill level based on experience. The same formula will be used for every skill
 export function calculateSkill(exp, mult=1) {
-    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+    return calculateSkillF(exp, mult);
 }
 
 export function updateSkillLevels() {
