@@ -31,6 +31,8 @@ Alt + f    Switch to 'Factions' page
 Alt + a    Switch to 'Augmentations' page
 Alt + u    Switch to 'Tutorial' page
 Alt + o    Switch to 'Options' page
+Alt + g    Switch to 'Gang' page
+Alt + b    Switch to 'Bladeburner' page
 ========== ===========================================================================
 
 Script Editor
