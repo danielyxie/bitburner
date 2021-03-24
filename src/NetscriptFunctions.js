@@ -555,6 +555,80 @@ function NetscriptFunctions(workerScript) {
         }
     }
 
+    const hack = function(ip, manual, { threads: requestedThreads, stock } = {}) {
+        if (ip === undefined) {
+            throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
+        }
+        const threads = resolveNetscriptRequestedThreads(workerScript, "hack", requestedThreads);
+        const server = getServer(ip);
+        if (server == null) {
+            throw makeRuntimeErrorMsg("hack", `Invalid IP/hostname: ${ip}.`);
+        }
+
+        // Calculate the hacking time
+        var hackingTime = calculateHackingTime(server); // This is in seconds
+
+        // No root access or skill level too low
+        const canHack = netscriptCanHack(server, Player);
+        if (!canHack.res) {
+            throw makeRuntimeErrorMsg('hack', canHack.msg);
+        }
+
+        workerScript.log("hack", `Executing ${ip} in ${hackingTime.toFixed(3)} seconds (t=${threads})`);
+
+        return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
+            if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+            var hackChance = calculateHackingChance(server);
+            var rand = Math.random();
+            var expGainedOnSuccess = calculateHackingExpGain(server) * threads;
+            var expGainedOnFailure = (expGainedOnSuccess / 4);
+            if (rand < hackChance) { // Success!
+                const percentHacked = calculatePercentMoneyHacked(server);
+                let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
+                if (isNaN(maxThreadNeeded)) {
+                    // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
+                    maxThreadNeeded = 1e6;
+                }
+
+                let moneyDrained = Math.floor(server.moneyAvailable * percentHacked) * threads;
+
+                // Over-the-top safety checks
+                if (moneyDrained <= 0) {
+                    moneyDrained = 0;
+                    expGainedOnSuccess = expGainedOnFailure;
+                }
+                if (moneyDrained > server.moneyAvailable) {moneyDrained = server.moneyAvailable;}
+                server.moneyAvailable -= moneyDrained;
+                if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
+
+                const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
+
+                Player.gainMoney(moneyGained);
+                workerScript.scriptRef.onlineMoneyMade += moneyGained;
+                Player.scriptProdSinceLastAug += moneyGained;
+                Player.recordMoneySource(moneyGained, "hacking");
+                workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
+                Player.gainHackingExp(expGainedOnSuccess);
+                workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
+                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.format(moneyGained, '$0.000a')} and ${numeralWrapper.format(expGainedOnSuccess, '0.000a')} exp (t=${threads})`);
+                server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
+                if (stock) {
+                    influenceStockThroughServerHack(server, moneyGained);
+                }
+                if(manual) {
+                    server.manuallyHacked = true;
+                }
+                return Promise.resolve(moneyGained);
+            } else {
+                // Player only gains 25% exp for failure?
+                Player.gainHackingExp(expGainedOnFailure);
+                workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
+                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.format(expGainedOnFailure, '0.000a')} exp (t=${threads})`);
+                return Promise.resolve(0);
+            }
+        });
+    }
+
     return {
         hacknet : {
             numNodes : function() {
@@ -671,74 +745,7 @@ function NetscriptFunctions(workerScript) {
         },
         hack : function(ip, { threads: requestedThreads, stock } = {}){
             updateDynamicRam("hack", getRamCost("hack"));
-            if (ip === undefined) {
-                throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
-            }
-            const threads = resolveNetscriptRequestedThreads(workerScript, "hack", requestedThreads);
-            const server = getServer(ip);
-            if (server == null) {
-                throw makeRuntimeErrorMsg("hack", `Invalid IP/hostname: ${ip}.`);
-            }
-
-            // Calculate the hacking time
-            var hackingTime = calculateHackingTime(server); // This is in seconds
-
-            // No root access or skill level too low
-            const canHack = netscriptCanHack(server, Player);
-            if (!canHack.res) {
-                throw makeRuntimeErrorMsg('hack', canHack.msg);
-            }
-
-            workerScript.log("hack", `Executing ${ip} in ${hackingTime.toFixed(3)} seconds (t=${threads})`);
-
-            return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
-                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                var hackChance = calculateHackingChance(server);
-                var rand = Math.random();
-                var expGainedOnSuccess = calculateHackingExpGain(server) * threads;
-                var expGainedOnFailure = (expGainedOnSuccess / 4);
-                if (rand < hackChance) { // Success!
-                    const percentHacked = calculatePercentMoneyHacked(server);
-                    let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
-                    if (isNaN(maxThreadNeeded)) {
-                        // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
-                        maxThreadNeeded = 1e6;
-                    }
-
-                    let moneyDrained = Math.floor(server.moneyAvailable * percentHacked) * threads;
-
-                    // Over-the-top safety checks
-                    if (moneyDrained <= 0) {
-                        moneyDrained = 0;
-                        expGainedOnSuccess = expGainedOnFailure;
-                    }
-                    if (moneyDrained > server.moneyAvailable) {moneyDrained = server.moneyAvailable;}
-                    server.moneyAvailable -= moneyDrained;
-                    if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
-
-                    const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
-
-                    Player.gainMoney(moneyGained);
-                    workerScript.scriptRef.onlineMoneyMade += moneyGained;
-                    Player.scriptProdSinceLastAug += moneyGained;
-                    Player.recordMoneySource(moneyGained, "hacking");
-                    workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
-                    Player.gainHackingExp(expGainedOnSuccess);
-                    workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                    workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.format(moneyGained, '$0.000a')} and ${numeralWrapper.format(expGainedOnSuccess, '0.000a')} exp (t=${threads})`);
-                    server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
-                    if (stock) {
-                        influenceStockThroughServerHack(server, moneyGained);
-                    }
-                    return Promise.resolve(moneyGained);
-                } else {
-                    // Player only gains 25% exp for failure?
-                    Player.gainHackingExp(expGainedOnFailure);
-                    workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                    workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.format(expGainedOnFailure, '0.000a')} exp (t=${threads})`);
-                    return Promise.resolve(0);
-                }
-            });
+            return hack(ip, false, {threads: requestedThreads, stock: stock});
         },
         hackAnalyzeThreads : function(ip, hackAmount) {
             updateDynamicRam("hackAnalyzeThreads", getRamCost("hackAnalyzeThreads"));
@@ -2679,16 +2686,46 @@ function NetscriptFunctions(workerScript) {
             workerScript.log("purchaseProgram", `You have purchased the '${item.program}' program. The new program can be found on your home computer.`);
             return true;
         },
-        executeCommand: function(command) {
-            updateDynamicRam("executeCommand", getRamCost("executeCommand"));
-            checkSingularityAccess("executeCommand", 1);
-            Terminal.executeCommand(command);
-            return new Promise(function (resolve, reject) {
-                (function wait(){
-                    if (!Terminal.hackFlag && !Terminal.analyzeFlag) return resolve();
-                    setTimeout(wait, 30);
-                })();
-            });
+        connect: function(hostname) {
+            if (!hostname) {
+                throw makeRuntimeErrorMsg("connect", `Invalid hostname: '${hostname}'`);
+            }
+
+            let target = getServer(hostname);
+            if (target == null) {
+                throw makeRuntimeErrorMsg("connect", `Invalid hostname: '${hostname}'`);
+                return;
+            }
+
+            if(hostname === 'home') {
+                Player.getCurrentServer().isConnectedTo = false;
+                Player.currentServer = Player.getHomeComputer().ip;
+                Player.getCurrentServer().isConnectedTo = true;
+                Terminal.currDir = "/";
+                Terminal.resetTerminalInput(true);
+                return true;
+            }
+
+            const server = Player.getCurrentServer();
+            for (let i = 0; i < server.serversOnNetwork.length; i++) {
+                const other = getServerOnNetwork(server, i);
+                if (other.ip == hostname || other.hostname == hostname) {
+                    Player.getCurrentServer().isConnectedTo = false;
+                    Player.currentServer = target.ip;
+                    Player.getCurrentServer().isConnectedTo = true;
+                    Terminal.currDir = "/";
+                    Terminal.resetTerminalInput(true);
+                    return true;
+                }
+            }
+
+            return false;
+        },
+        manualHack: function() {
+            updateDynamicRam("manualHack", getRamCost("manualHack"));
+            checkSingularityAccess("manualHack", 1);
+            const server = Player.getCurrentServer();
+            return hack(server.hostname, true);
         },
         getStats: function() {
             updateDynamicRam("getStats", getRamCost("getStats"));

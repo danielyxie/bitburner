@@ -24,6 +24,8 @@ level 3, then you will be able to access all of the Singularity Functions.
     travelToCity() <singularityfunctions/travelToCity>
     purchaseTor() <singularityfunctions/purchaseTor>
     purchaseProgram() <singularityfunctions/purchaseProgram>
+    connect() <singularityfunctions/connect>
+    manualHack() <singularityfunctions/manualHack>
     getStats() <singularityfunctions/getStats>
     getCharacterInformation() <singularityfunctions/getCharacterInformation>
     isBusy() <singularityfunctions/isBusy>
