@@ -110,6 +110,11 @@ interface IBitNodeMultipliers {
     FourSigmaMarketDataCost: number;
 
     /**
+     * Influences how much negative karma is required to create a gang in this bitnode.
+     */
+    GangKarmaRequirement: number;
+
+    /**
      * Influences the experienced gained when hacking a server.
      */
     HackExpGain: number;
@@ -268,4 +273,5 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
     BladeburnerSkillCost:       1,
 
     DaedalusAugsRequirement:    1,
+    GangKarmaRequirement:       1,
 };

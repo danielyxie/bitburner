@@ -230,6 +230,8 @@ export let CONSTANTS: IMap<any> = {
     `
     v0.51.0 - 2021-XX-XX formulas (hydroflame)
     -------
+    BitNodeMultipliers
+    * 'GangKarmaRequirements': a new multipler that influences how much karma is required to make a gang different bitnodes.
 
     Netscript
     * 'connect': a new singularity function that connects you to a server. (like the terminal command)

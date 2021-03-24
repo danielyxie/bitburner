@@ -1,16 +1,16 @@
 import { Factions } from "../../Faction/Factions";
 import { Gang } from "../../Gang";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 // Amount of negative karma needed to manage a gang in BitNodes other than 2
 const GangKarmaRequirement = -54000;
 
 export function canAccessGang() {
     if (this.bitNodeN === 2) { return true; }
-
     if (SourceFileFlags[2] <= 0) { return false; }
 
-    return (this.karma <= GangKarmaRequirement);
+    return (this.karma <= BitNodeMultipliers.GangKarmaRequirement*GangKarmaRequirement);
 }
 
 export function getGangFaction() {
