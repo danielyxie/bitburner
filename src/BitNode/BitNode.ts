@@ -274,6 +274,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.InfiltrationMoney        = 3;
             BitNodeMultipliers.FactionWorkRepGain       = 0.5;
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
+            BitNodeMultipliers.GangKarmaRequirement     = 0;
             break;
         case 3: // Corporatocracy
             BitNodeMultipliers.HackingLevelMultiplier   = 0.8;
@@ -289,6 +290,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.HacknetNodeMoney         = 0.25;
             BitNodeMultipliers.HomeComputerRamCost      = 1.5;
             BitNodeMultipliers.PurchasedServerCost      = 2;
+            BitNodeMultipliers.GangKarmaRequirement     = 3;
             break;
         case 4: // The Singularity
             BitNodeMultipliers.ServerMaxMoney           = 0.15;
@@ -331,6 +333,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
             BitNodeMultipliers.HackExpGain              = 0.25;
             BitNodeMultipliers.DaedalusAugsRequirement  = 1.166; // Results in 35 Augs needed
+            BitNodeMultipliers.GangKarmaRequirement     = 5;
             break;
         case 7: // Bladeburner 2079
             BitNodeMultipliers.BladeburnerRank              = 0.6;
@@ -351,6 +354,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.FourSigmaMarketDataCost      = 2;
             BitNodeMultipliers.FourSigmaMarketDataApiCost   = 2;
             BitNodeMultipliers.DaedalusAugsRequirement      = 1.166; // Results in 35 Augs needed
+            BitNodeMultipliers.GangKarmaRequirement         = 5;
             break;
         case 8: // Ghost of Wall Street
             BitNodeMultipliers.ScriptHackMoney          = 0.3;
@@ -363,6 +367,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.RepToDonateToFaction     = 0;
             BitNodeMultipliers.CorporationValuation     = 0;
             BitNodeMultipliers.CodingContractMoney      = 0;
+            BitNodeMultipliers.GangKarmaRequirement    = 10;
             break;
         case 9: // Hacktocracy
             BitNodeMultipliers.HackingLevelMultiplier       = 0.4;
@@ -384,6 +389,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.FourSigmaMarketDataApiCost   = 4;
             BitNodeMultipliers.BladeburnerRank              = 0.9;
             BitNodeMultipliers.BladeburnerSkillCost         = 1.2;
+            BitNodeMultipliers.GangKarmaRequirement         = 3;
             break;
         case 10: // Digital Carbon
             BitNodeMultipliers.HackingLevelMultiplier   = 0.2;
@@ -407,6 +413,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.PurchasedServerLimit     = 0.6;
             BitNodeMultipliers.PurchasedServerMaxRam    = 0.5;
             BitNodeMultipliers.BladeburnerRank          = 0.8;
+            BitNodeMultipliers.GangKarmaRequirement     = 3;
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.HackingLevelMultiplier       = 0.5;
