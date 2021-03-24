@@ -231,6 +231,10 @@ export let CONSTANTS: IMap<any> = {
     v0.51.0 - 2021-XX-XX formulas (hydroflame)
     -------
 
+    Netscript
+    * 'connect': a new singularity function that connects you to a server. (like the terminal command)
+    * 'manualHack': a new singularity function that performs a manual hack on the players current server.
+
     Misc.
     * New shortcut, Alt + b, brings you to bladeburner
     * New shortcut, Alt + g, brings you to gang
