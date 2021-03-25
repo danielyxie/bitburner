@@ -9,7 +9,6 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
-import { MaxNumberHacknetServers } from "../Hacknet/HacknetServer";
 
 export function CharacterInfo(p: IPlayer): React.ReactElement {
     function LastEmployer(): React.ReactElement {
