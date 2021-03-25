@@ -236,6 +236,7 @@ export let CONSTANTS: IMap<any> = {
     Netscript
     * 'connect': a new singularity function that connects you to a server. (like the terminal command)
     * 'manualHack': a new singularity function that performs a manual hack on the players current server.
+    * ns2 stack trace works on Firefox now.
 
     Misc.
     * New shortcut, Alt + b, brings you to bladeburner
