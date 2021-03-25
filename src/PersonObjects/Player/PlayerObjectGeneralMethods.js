@@ -29,6 +29,7 @@ import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
 import { calculateSkill as calculateSkillF } from "../formulas/skill";
+import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
     AllServers,
     AddToAllServers,
@@ -2310,9 +2311,5 @@ export function giveExploit(exploit) {
 
 
 export function getIntelligenceBonus(weight) {
-    // 15  => +1.4%  when you initially acquire int
-    // 50  => +3.8%  mid game
-    // 100 => +6.6%  late game
-    // 250 => +13.4% realistic best possible
-    return 1+(weight*Math.pow(this.intelligence, 0.8)/600);
+    return calculateIntelligenceBonus(this.intelligence, weight);
 }

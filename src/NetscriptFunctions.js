@@ -60,6 +60,10 @@ import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer"
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
 import { Terminal } from "./Terminal";
+import  {
+    calculateSkill,
+    calculateExp,
+} from "./PersonObjects/formulas/skill";
 
 import { Message } from "./Message/Message";
 import { Messages } from "./Message/MessageHelpers";
@@ -447,6 +451,16 @@ function NetscriptFunctions(workerScript) {
         workerScript.log(caller, msg);
         const rejectMsg = `${caller}: ${msg}<br><br>Stack:<br>${userstack.join('<br>')}`
         return makeRuntimeRejectMsg(workerScript, rejectMsg);
+    }
+
+    const checkFormulasAccess = function(func, n) {
+        if (SourceFileFlags[5] < 1 || SourceFileFlags[n] < 1) {
+            let extra = '';
+            if (n !== 5) {
+                extra = ` and Source-File ${n}-1`;
+            }
+            throw makeRuntimeErrorMsg(`formulas.${func}`, `Requires Source-File 5-1${extra} to run.`);
+        }
     }
 
     const checkSingularityAccess = function(func, n) {
@@ -4088,6 +4102,18 @@ function NetscriptFunctions(workerScript) {
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
             }
         }, // End sleeve
+        formulas: {
+            basic: {
+                calculateSkill: function(exp, mult = 1) {
+                    checkFormulasAccess("basic.calculateSkill", 5);
+                    return calculateSkill(exp, mult);
+                },
+                calculateExp: function(skill, mult = 1) {
+                    checkFormulasAccess("basic.calculateExp", 5);
+                    return calculateExp(skill, mult);
+                },
+            },
+        }, // end formulas
         heart: {
             // Easter egg function
             break: function() {
