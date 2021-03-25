@@ -406,16 +406,42 @@ function NetscriptFunctions(workerScript) {
             }
             if(!filename) continue
 
-            const lineRe = /.*:(\d+):\d+.*/;
-            const lineMatch = stackline.match(lineRe);
+            function parseChromeStackline(line) {
+                const lineRe = /.*:(\d+):\d+.*/;
+                const funcRe = /.*at (.+) \(.*/;
 
+                const lineMatch = line.match(lineRe);
+                const funcMatch = line.match(funcRe);
+                if(lineMatch && funcMatch) {
+                    let func = funcMatch[1];
+                    return {line: lineMatch[1], func: func};
+                }
+                return null;
+            }
+            let call = {line: "-1", func: "unknown"};;
+            let chromeCall = parseChromeStackline(stackline);
+            if (chromeCall) {
+                call = chromeCall;
+            }
 
-            const funcRe = /.*at (.+) \(.*/;
-            const funcMatch = stackline.match(funcRe);
-            let func = funcMatch[1];
-            if(func.includes('.')) func = func.split('.')[1];
+            function parseFirefoxStackline(line) {
+                const lineRe = /.*:(\d+):\d+$/;
+                const lineMatch = line.match(lineRe);
 
-            userstack.push(`${filename}:L${lineMatch[1]}@${func}`);
+                const lio = line.lastIndexOf("@");
+
+                if(lineMatch && lio !== -1) {
+                    return {line: lineMatch[1], func: line.slice(0, lio)};
+                }
+                return null;
+            }
+
+            let firefoxCall = parseFirefoxStackline(stackline);
+            if (firefoxCall) {
+                call = firefoxCall;
+            }
+
+            userstack.push(`${filename}:L${call.line}@${call.func}`);
         }
 
         workerScript.log(caller, msg);
@@ -1688,8 +1714,6 @@ function NetscriptFunctions(workerScript) {
             checkTixApiAccess("buyStock");
             const stock = getStockFromSymbol(symbol, "buyStock");
             const res = buyStock(stock, shares, workerScript, { rerenderFn: displayStockMarketContent });
-            console.log(stock);
-            console.log(res);
             return res ? stock.price : 0;
         },
         sellStock: function(symbol, shares) {
