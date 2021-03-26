@@ -25,6 +25,7 @@ import {
     Generic_fromJSON
 } from "../../utils/JSONReviver";
 import { formatNumber } from "../../utils/StringHelperFunctions";
+import { numeralWrapper } from "../ui/numeralFormat";
 import {
     yesNoBoxCreate,
     yesNoBoxGetYesButton,
@@ -110,8 +111,8 @@ export function purchaseAugmentationBoxCreate(aug, fac) {
 
     yesNoBoxCreate("<h2>" + aug.name + "</h2><br>" +
                    aug.info + "<br><br>" +
-                   "<br>Would you like to purchase the " + aug.name + " Augmentation for $" +
-                   formatNumber(aug.baseCost * factionInfo.augmentationPriceMult, 2)  + "?");
+                   "<br>Would you like to purchase the " + aug.name + " Augmentation for " +
+                   numeralWrapper.formatMoney(aug.baseCost * factionInfo.augmentationPriceMult)  + "?");
 }
 
 //Returns a boolean indicating whether the player has the prerequisites for the
