@@ -396,3 +396,11 @@ input[type=checkbox] {
   background: var(--my-font-color);
   cursor: pointer;
 }
+
+.noselect {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}

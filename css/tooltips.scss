@@ -85,3 +85,45 @@
 .tooltip:hover .tooltiptextlow {
     visibility: visible;
 }
+
+.copy_tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.copy_tooltip_copied {
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.copy_tooltip .copy_tooltip_text {
+    visibility: hidden;
+    font-size: 15px;
+    padding: 5px;
+    background-color: var(--my-background-color);
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    top: 120%;
+    left: 5%;
+    opacity: 0;
+    border: 2px solid var(--my-highlight-color);
+}
+
+.copy_tooltip .copy_tooltip_text::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+
+.copy_tooltip .copy_tooltip_text_visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
