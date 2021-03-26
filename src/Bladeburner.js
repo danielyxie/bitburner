@@ -51,6 +51,8 @@ import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 import { StatsTable } from "./ui/React/StatsTable";
+import { CopyableText } from "./ui/React/CopyableText";
+import React from "react";
 import ReactDOM from "react-dom";
 
 const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 166 132"  style="fill:#adff2f;"><g><path d="M132.658-0.18l-24.321,24.321c-7.915-2.71-16.342-4.392-25.087-4.392c-45.84,0-83,46-83,46   s14.1,17.44,35.635,30.844L12.32,120.158l12.021,12.021L144.68,11.841L132.658-0.18z M52.033,80.445   c-2.104-4.458-3.283-9.438-3.283-14.695c0-19.054,15.446-34.5,34.5-34.5c5.258,0,10.237,1.179,14.695,3.284L52.033,80.445z"/><path d="M134.865,37.656l-18.482,18.482c0.884,3.052,1.367,6.275,1.367,9.612c0,19.055-15.446,34.5-34.5,34.5   c-3.337,0-6.56-0.483-9.611-1.367l-10.124,10.124c6.326,1.725,12.934,2.743,19.735,2.743c45.84,0,83-46,83-46   S153.987,50.575,134.865,37.656z"/></g></svg>&nbsp;`
@@ -1989,8 +1991,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
                   `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
-
-                  "Time Required (s): " + formatNumber(actionTime, 0) + "\n" +
+                  "Time Required: " + convertTimeMsToTimeElapsedString(actionTime*1000) + "\n" +
                   "Contracts remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
@@ -2129,7 +2130,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
                   `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
-                  "Time Required(s): " + formatNumber(actionTime, 0) + "\n" +
+                  "Time Required: " + convertTimeMsToTimeElapsedString(actionTime*1000) + "\n" +
                   "Operations remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
@@ -2252,7 +2253,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     el.appendChild(createElement("p", {
         display:"inline-block",
         innerHTML:`Estimated Success Chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
-                  "Time Required(s): " + formatNumber(actionTime, 0),
+                  "Time Required: " + convertTimeMsToTimeElapsedString(actionTime*1000),
     }))
 }
 
@@ -2265,9 +2266,15 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
     }
     var pointCost = skill.calculateCost(currentLevel);
 
-    el.appendChild(createElement("h2", { // Header
-        innerText:skill.name + " (Lvl " + currentLevel + ")", display:"inline-block"
-    }));
+    const nameDiv = createElement("div");
+    ReactDOM.render(React.createElement(CopyableText, {value: skill.name}, null), nameDiv);
+    el.appendChild(nameDiv)
+
+    const h2 = createElement("h2", { // Header
+        display:"inline-block",
+    });
+    h2.appendChild(nameDiv);
+    el.appendChild(h2);
 
     var canLevel = this.skillPoints >= pointCost;
     var maxLvl = skill.maxLvl ? currentLevel >= skill.maxLvl : false;
@@ -2284,6 +2291,10 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
         }
     }));
     appendLineBreaks(el, 2);
+    el.appendChild(createElement("p", {
+        display:"block",
+        innerText:`Level: ${currentLevel}`,
+    }));
     if (maxLvl) {
         el.appendChild(createElement("p", {
             color:"red", display:"block",

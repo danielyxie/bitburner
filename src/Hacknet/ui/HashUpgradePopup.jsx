@@ -19,6 +19,7 @@ import { ServerDropdown,
          ServerType }           from "../../ui/React/ServerDropdown"
 
 import { dialogBoxCreate }      from "../../../utils/DialogBox";
+import { CopyableText } from "../../ui/React/CopyableText";
 
 class HashUpgrade extends React.Component {
     constructor(props) {
@@ -63,7 +64,7 @@ class HashUpgrade extends React.Component {
         // We'll reuse a Bladeburner css class
         return (
             <div className={"bladeburner-action"}>
-                <h2>{upg.name}</h2>
+                <CopyableText value={upg.name} />
                 <p>Cost: {numeralWrapper.format(cost, "0.000a")}</p>
                 <p>{upg.desc}</p>
                 <button className={btnClass} onClick={this.purchase}>
