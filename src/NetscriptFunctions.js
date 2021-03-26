@@ -56,10 +56,30 @@ import {
     purchaseHashUpgrade,
     updateHashManagerCapacity,
 } from "./Hacknet/HacknetHelpers";
+import {
+    calculateMoneyGainRate,
+    calculateLevelUpgradeCost,
+    calculateRamUpgradeCost,
+    calculateCoreUpgradeCost,
+    calculateNodeCost,
+} from "./Hacknet/formulas/HacknetNodes";
+import {
+    calculateHashGainRate as HScalculateHashGainRate,
+    calculateLevelUpgradeCost as HScalculateLevelUpgradeCost,
+    calculateRamUpgradeCost as HScalculateRamUpgradeCost,
+    calculateCoreUpgradeCost as HScalculateCoreUpgradeCost,
+    calculateCacheUpgradeCost as HScalculateCacheUpgradeCost,
+    calculateServerCost as HScalculateServerCost,
+} from "./Hacknet/formulas/HacknetServers";
+import { HacknetNodeConstants, HacknetServerConstants } from "./Hacknet/data/Constants";
 import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
 import { Terminal } from "./Terminal";
+import  {
+    calculateSkill,
+    calculateExp,
+} from "./PersonObjects/formulas/skill";
 
 import { Message } from "./Message/Message";
 import { Messages } from "./Message/MessageHelpers";
@@ -449,6 +469,16 @@ function NetscriptFunctions(workerScript) {
         return makeRuntimeRejectMsg(workerScript, rejectMsg);
     }
 
+    const checkFormulasAccess = function(func, n) {
+        if (SourceFileFlags[5] < 1 || SourceFileFlags[n] < 1) {
+            let extra = '';
+            if (n !== 5) {
+                extra = ` and Source-File ${n}-1`;
+            }
+            throw makeRuntimeErrorMsg(`formulas.${func}`, `Requires Source-File 5-1${extra} to run.`);
+        }
+    }
+
     const checkSingularityAccess = function(func, n) {
         if (Player.bitNodeN !== 4) {
             if (SourceFileFlags[4] < n) {
@@ -743,7 +773,22 @@ function NetscriptFunctions(workerScript) {
             spendHashes : function(upgName, upgTarget) {
                 if (!hasHacknetServers()) { return false; }
                 return purchaseHashUpgrade(upgName, upgTarget);
-            }
+            },
+            getHashUpgradeLevel : function(upgName) {
+                const level = Player.hashManager.upgrades[upgName];
+                if(level === undefined) {
+                    throw makeRuntimeErrorMsg("hacknet.hashUpgradeLevel", `Invalid Hash Upgrade: ${upgName}`);
+                }
+                return level;
+            },
+            getStudyMult : function() {
+                if (!hasHacknetServers()) { return false; }
+                return Player.hashManager.getStudyMult();
+            },
+            getTrainingMult : function() {
+                if (!hasHacknetServers()) { return false; }
+                return Player.hashManager.getTrainingMult();
+            },
         },
         sprintf : sprintf,
         vsprintf: vsprintf,
@@ -4088,6 +4133,82 @@ function NetscriptFunctions(workerScript) {
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
             }
         }, // End sleeve
+        formulas: {
+            basic: {
+                calculateSkill: function(exp, mult = 1) {
+                    checkFormulasAccess("basic.calculateSkill", 5);
+                    return calculateSkill(exp, mult);
+                },
+                calculateExp: function(skill, mult = 1) {
+                    checkFormulasAccess("basic.calculateExp", 5);
+                    return calculateExp(skill, mult);
+                },
+            },
+            hacknetNodes: {
+                calculateMoneyGainRate: function(level, ram, cores, mult=1) {
+                    checkFormulasAccess("hacknetNodes.calculateMoneyGainRate", 5);
+                    return calculateMoneyGainRate(level, ram, cores, mult);
+                },
+                calculateLevelUpgradeCost: function(startingLevel, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetNodes.calculateLevelUpgradeCost", 5);
+                    return calculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
+                },
+                calculateRamUpgradeCost: function(startingRam, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetNodes.calculateRamUpgradeCost", 5);
+                    return calculateRamUpgradeCost(startingRam, extraLevels, costMult);
+                },
+                calculateCoreUpgradeCost: function(startingCore, extraCores=1, costMult=1) {
+                    checkFormulasAccess("hacknetNodes.calculateCoreUpgradeCost", 5);
+                    return calculateCoreUpgradeCost(startingCore, extraCores, costMult);
+                },
+                calculateHacknetNodeCost: function(n, mult) {
+                    checkFormulasAccess("hacknetNodes.calculateHacknetNodeCost", 5);
+                    return calculateNodeCost(n, mult);
+                },
+                constants: function() {
+                    checkFormulasAccess("hacknetNodes.constants", 5);
+                    return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
+                }
+            },
+            hacknetServers: {
+                calculateHashGainRate: function(level, ram, cores, mult=1) {
+                    checkFormulasAccess("hacknetServers.calculateMoneyGainRate", 9);
+                    return HScalculateHashGainRate(level, ram, cores, mult);
+                },
+                calculateLevelUpgradeCost: function(startingLevel, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.calculateLevelUpgradeCost", 9);
+                    return HScalculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
+                },
+                calculateRamUpgradeCost: function(startingRam, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.calculateRamUpgradeCost", 9);
+                    return HScalculateRamUpgradeCost(startingRam, extraLevels, costMult);
+                },
+                calculateCoreUpgradeCost: function(startingCore, extraCores=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.calculateCoreUpgradeCost", 9);
+                    return HScalculateCoreUpgradeCost(startingCore, extraCores, costMult);
+                },
+                calculateCacheUpgradeCost: function(startingCache, extraCache=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.calculateCacheUpgradeCost", 9);
+                    return HScalculateCacheUpgradeCost(startingCache, extraCache, costMult);
+                },
+                calculateHashUpgradeCost: function(upgName, level) {
+                    checkFormulasAccess("hacknetServers.calculateHashUpgradeCost", 9);
+                    const upg = Player.hashManager.getUpgrade(upgName);
+                    if(!upg) {
+                        throw makeRuntimeErrorMsg("formulas.hacknetServers.calculateHashUpgradeCost", `Invalid Hash Upgrade: ${upgName}`);
+                    }
+                    return upg.getCost(level);
+                },
+                calculateHacknetServerCost: function(n, mult) {
+                    checkFormulasAccess("hacknetServers.calculateHacknetServerCost", 9);
+                    return HScalculateServerCost(n, mult);
+                },
+                constants: function() {
+                    checkFormulasAccess("hacknetServers.constants", 9);
+                    return Object.assign({}, HacknetServerConstants);
+                }
+            },
+        }, // end formulas
         heart: {
             // Easter egg function
             break: function() {

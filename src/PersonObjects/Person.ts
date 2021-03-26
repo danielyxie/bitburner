@@ -5,6 +5,8 @@ import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentatio
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
+import { calculateSkill } from "./formulas/skill";
+import { calculateIntelligenceBonus } from "./formulas/intelligence";
 
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks
@@ -127,7 +129,7 @@ export abstract class Person {
      * stat level. Stat-agnostic (same formula for every stat)
      */
     calculateStat(exp: number, mult: number=1): number {
-        return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+        return calculateSkill(exp, mult);
     }
 
     /**
@@ -212,10 +214,6 @@ export abstract class Person {
 
 
     getIntelligenceBonus(weight: number): number {
-        // 15  => +1.4%  when you initially acquire int
-        // 50  => +3.8%  mid game
-        // 100 => +6.6%  late game
-        // 250 => +13.4% realistic best possible
-        return 1+(weight*Math.pow(this.intelligence, 0.8)/600);
+        return calculateIntelligenceBonus(this.intelligence, weight);
     }
 }

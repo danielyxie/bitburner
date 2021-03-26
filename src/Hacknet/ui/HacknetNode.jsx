@@ -4,11 +4,7 @@
  */
 import React from "react";
 
-import {
-    HacknetNodeMaxLevel,
-    HacknetNodeMaxRam,
-    HacknetNodeMaxCores
-} from "../HacknetNode";
+import { HacknetNodeConstants } from "../data/Constants";
 import {
     getMaxNumberLevelUpgrades,
     getMaxNumberRamUpgrades,
@@ -30,15 +26,15 @@ export class HacknetNode extends React.Component {
 
         // Upgrade Level Button
         let upgradeLevelText, upgradeLevelClass;
-        if (node.level >= HacknetNodeMaxLevel) {
+        if (node.level >= HacknetNodeConstants.MaxLevel) {
             upgradeLevelText = "MAX LEVEL";
             upgradeLevelClass = "std-button-disabled";
         } else {
             let multiplier = 0;
             if (purchaseMult === "MAX") {
-                multiplier = getMaxNumberLevelUpgrades(node, HacknetNodeMaxLevel);
+                multiplier = getMaxNumberLevelUpgrades(node, HacknetNodeConstants.MaxLevel);
             } else {
-                const levelsToMax = HacknetNodeMaxLevel - node.level;
+                const levelsToMax = HacknetNodeConstants.MaxLevel - node.level;
                 multiplier = Math.min(levelsToMax, purchaseMult);
             }
 
@@ -53,7 +49,7 @@ export class HacknetNode extends React.Component {
         const upgradeLevelOnClick = () => {
             let numUpgrades = purchaseMult;
             if (purchaseMult === "MAX") {
-                numUpgrades = getMaxNumberLevelUpgrades(node, HacknetNodeMaxLevel);
+                numUpgrades = getMaxNumberLevelUpgrades(node, HacknetNodeConstants.MaxLevel);
             }
             purchaseLevelUpgrade(node, numUpgrades);
             recalculate();
@@ -61,15 +57,15 @@ export class HacknetNode extends React.Component {
         }
 
         let upgradeRamText, upgradeRamClass;
-        if (node.ram >= HacknetNodeMaxRam) {
+        if (node.ram >= HacknetNodeConstants.MaxRam) {
             upgradeRamText = "MAX RAM";
             upgradeRamClass = "std-button-disabled";
         } else {
             let multiplier = 0;
             if (purchaseMult === "MAX") {
-                multiplier = getMaxNumberRamUpgrades(node, HacknetNodeMaxRam);
+                multiplier = getMaxNumberRamUpgrades(node, HacknetNodeConstants.MaxRam);
             } else {
-                const levelsToMax = Math.round(Math.log2(HacknetNodeMaxRam / node.ram));
+                const levelsToMax = Math.round(Math.log2(HacknetNodeConstants.MaxRam / node.ram));
                 multiplier = Math.min(levelsToMax, purchaseMult);
             }
 
@@ -84,7 +80,7 @@ export class HacknetNode extends React.Component {
         const upgradeRamOnClick = () => {
             let numUpgrades = purchaseMult;
             if (purchaseMult === "MAX") {
-                numUpgrades = getMaxNumberRamUpgrades(node, HacknetNodeMaxRam);
+                numUpgrades = getMaxNumberRamUpgrades(node, HacknetNodeConstants.MaxRam);
             }
             purchaseRamUpgrade(node, numUpgrades);
             recalculate();
@@ -92,15 +88,15 @@ export class HacknetNode extends React.Component {
         }
 
         let upgradeCoresText, upgradeCoresClass;
-        if (node.cores >= HacknetNodeMaxCores) {
+        if (node.cores >= HacknetNodeConstants.MaxCores) {
             upgradeCoresText = "MAX CORES";
             upgradeCoresClass = "std-button-disabled";
         } else {
             let multiplier = 0;
             if (purchaseMult === "MAX") {
-                multiplier = getMaxNumberCoreUpgrades(node, HacknetNodeMaxCores);
+                multiplier = getMaxNumberCoreUpgrades(node, HacknetNodeConstants.MaxCores);
             } else {
-                const levelsToMax = HacknetNodeMaxCores - node.cores;
+                const levelsToMax = HacknetNodeConstants.MaxCores - node.cores;
                 multiplier = Math.min(levelsToMax, purchaseMult);
             }
 
@@ -115,7 +111,7 @@ export class HacknetNode extends React.Component {
         const upgradeCoresOnClick = () => {
             let numUpgrades = purchaseMult;
             if (purchaseMult === "MAX") {
-                numUpgrades = getMaxNumberCoreUpgrades(node, HacknetNodeMaxCores);
+                numUpgrades = getMaxNumberCoreUpgrades(node, HacknetNodeConstants.MaxCores);
             }
             purchaseCoreUpgrade(node, numUpgrades);
             recalculate();
