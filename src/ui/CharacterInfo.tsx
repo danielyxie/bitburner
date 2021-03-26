@@ -9,9 +9,8 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
-import { MaxNumberHacknetServers } from "../Hacknet/HacknetServer";
+import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import { StatsTable } from "./React/StatsTable";
-
 
 export function CharacterInfo(p: IPlayer): React.ReactElement {
     function LastEmployer(): React.ReactElement {
@@ -42,7 +41,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         if(!(p.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
             return <><span>Hacknet Nodes owned: {p.hacknetNodes.length}</span><br /></>
         } else {
-            return <><span>Hacknet Servers owned: {p.hacknetNodes.length} / {MaxNumberHacknetServers}</span><br /></>
+            return <><span>Hacknet Servers owned: {p.hacknetNodes.length} / {HacknetServerConstants.MaxServers}</span><br /></>
         }
     }
 

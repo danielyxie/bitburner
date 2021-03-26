@@ -28,6 +28,8 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
+import { calculateSkill as calculateSkillF } from "../formulas/skill";
+import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
     AllServers,
     AddToAllServers,
@@ -293,7 +295,7 @@ export function receiveInvite(factionName) {
 
 //Calculates skill level based on experience. The same formula will be used for every skill
 export function calculateSkill(exp, mult=1) {
-    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+    return calculateSkillF(exp, mult);
 }
 
 export function updateSkillLevels() {
@@ -2309,9 +2311,5 @@ export function giveExploit(exploit) {
 
 
 export function getIntelligenceBonus(weight) {
-    // 15  => +1.4%  when you initially acquire int
-    // 50  => +3.8%  mid game
-    // 100 => +6.6%  late game
-    // 250 => +13.4% realistic best possible
-    return 1+(weight*Math.pow(this.intelligence, 0.8)/600);
+    return calculateIntelligenceBonus(this.intelligence, weight);
 }

@@ -8,24 +8,11 @@
  *
  * TODO Should probably split the different types of functions into their own modules
  */
-import {
-    HacknetNode,
-    BaseCostForHacknetNode,
-    HacknetNodePurchaseNextMult,
-    HacknetNodeMaxLevel,
-    HacknetNodeMaxRam,
-    HacknetNodeMaxCores
-} from "./HacknetNode";
-import {
-    HacknetServer,
-    BaseCostForHacknetServer,
-    HacknetServerPurchaseMult,
-    HacknetServerMaxLevel,
-    HacknetServerMaxRam,
-    HacknetServerMaxCores,
-    HacknetServerMaxCache,
-    MaxNumberHacknetServers
-} from "./HacknetServer";
+import { HacknetNode } from "./HacknetNode";
+import { calculateNodeCost } from "./formulas/HacknetNodes";
+import { calculateServerCost } from "./formulas/HacknetServers";
+import { HacknetNodeConstants, HacknetServerConstants } from "./data/Constants";
+import { HacknetServer } from "./HacknetServer";
 import { HashManager } from "./HashManager";
 import { HashUpgrades } from "./HashUpgrades";
 
@@ -105,24 +92,15 @@ export function purchaseHacknet() {
 }
 
 export function hasMaxNumberHacknetServers() {
-    return hasHacknetServers() && Player.hacknetNodes.length >= MaxNumberHacknetServers;
+    return hasHacknetServers() && Player.hacknetNodes.length >= HacknetServerConstants.MaxServers;
 }
 
 export function getCostOfNextHacknetNode() {
-    // Cost increases exponentially based on how many you own
-    const numOwned = Player.hacknetNodes.length;
-    const mult = HacknetNodePurchaseNextMult;
-
-    return BaseCostForHacknetNode * Math.pow(mult, numOwned) * Player.hacknet_node_purchase_cost_mult;
+    return calculateNodeCost(Player.hacknetNodes.length+1, Player.hacknet_node_purchase_cost_mult);
 }
 
 export function getCostOfNextHacknetServer() {
-    const numOwned = Player.hacknetNodes.length;
-    const mult = HacknetServerPurchaseMult;
-
-    if (numOwned >= MaxNumberHacknetServers) { return Infinity; }
-
-    return BaseCostForHacknetServer * Math.pow(mult, numOwned) * Player.hacknet_node_purchase_cost_mult;
+    return calculateServerCost(Player.hacknetNodes.length+1, Player.hacknet_node_purchase_cost_mult);
 }
 
 // Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's level
@@ -270,14 +248,14 @@ export function purchaseLevelUpgrade(node, levels=1) {
     const isServer = (node instanceof HacknetServer);
 
     // If we're at max level, return false
-    if (node.level >= (isServer ? HacknetServerMaxLevel : HacknetNodeMaxLevel)) {
+    if (node.level >= (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel)) {
         return false;
     }
 
     // If the number of specified upgrades would exceed the max level, calculate
     // the maximum number of upgrades and use that
-    if (node.level + sanitizedLevels > (isServer ? HacknetServerMaxLevel : HacknetNodeMaxLevel)) {
-        const diff = Math.max(0, (isServer ? HacknetServerMaxLevel : HacknetNodeMaxLevel) - node.level);
+    if (node.level + sanitizedLevels > (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel)) {
+        const diff = Math.max(0, (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel) - node.level);
         return purchaseLevelUpgrade(node, diff);
     }
 
@@ -301,20 +279,20 @@ export function purchaseRamUpgrade(node, levels=1) {
     const isServer = (node instanceof HacknetServer);
 
     // Fail if we're already at max
-    if (node.ram >= (isServer ? HacknetServerMaxRam : HacknetNodeMaxRam)) {
+    if (node.ram >= (isServer ? HacknetServerConstants.MaxRam : HacknetNodeConstants.MaxRam)) {
         return false;
     }
 
     // If the number of specified upgrades would exceed the max RAM, calculate the
     // max possible number of upgrades and use that
     if (isServer) {
-        if (node.maxRam * Math.pow(2, sanitizedLevels) > HacknetServerMaxRam) {
-            const diff = Math.max(0, Math.log2(Math.round(HacknetServerMaxRam / node.maxRam)));
+        if (node.maxRam * Math.pow(2, sanitizedLevels) > HacknetServerConstants.MaxRam) {
+            const diff = Math.max(0, Math.log2(Math.round(HacknetServerConstants.MaxRam / node.maxRam)));
             return purchaseRamUpgrade(node, diff);
         }
     } else {
-        if (node.ram * Math.pow(2, sanitizedLevels) > HacknetNodeMaxRam) {
-            const diff = Math.max(0, Math.log2(Math.round(HacknetNodeMaxRam / node.ram)));
+        if (node.ram * Math.pow(2, sanitizedLevels) > HacknetNodeConstants.MaxRam) {
+            const diff = Math.max(0, Math.log2(Math.round(HacknetNodeConstants.MaxRam / node.ram)));
             return purchaseRamUpgrade(node, diff);
         }
     }
@@ -340,14 +318,14 @@ export function purchaseCoreUpgrade(node, levels=1) {
     const isServer = (node instanceof HacknetServer);
 
     // Fail if we're already at max
-    if (node.cores >= (isServer ? HacknetServerMaxCores : HacknetNodeMaxCores)) {
+    if (node.cores >= (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores)) {
         return false;
     }
 
     // If the specified number of upgrades would exceed the max Cores, calculate
     // the max possible number of upgrades and use that
-    if (node.cores + sanitizedLevels > (isServer ? HacknetServerMaxCores : HacknetNodeMaxCores)) {
-        const diff = Math.max(0, (isServer ? HacknetServerMaxCores : HacknetNodeMaxCores) - node.cores);
+    if (node.cores + sanitizedLevels > (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores)) {
+        const diff = Math.max(0, (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores) - node.cores);
         return purchaseCoreUpgrade(node, diff);
     }
 
@@ -374,8 +352,8 @@ export function purchaseCacheUpgrade(node, levels=1) {
     }
 
     // Fail if we're already at max
-    if (node.cache + sanitizedLevels > HacknetServerMaxCache) {
-        const diff = Math.max(0, HacknetServerMaxCache - node.cache);
+    if (node.cache + sanitizedLevels > HacknetServerConstants.MaxCache) {
+        const diff = Math.max(0, HacknetServerConstants.MaxCache - node.cache);
         return purchaseCacheUpgrade(node, diff);
     }
 
