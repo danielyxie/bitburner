@@ -234,7 +234,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <b>Misc.</b><br /><br />
             <span>Servers owned: {p.purchasedServers.length} / {getPurchaseServerLimit()}</span><br />
             <Hacknet />
-            <span>Augmentations installed: {p.augmentations.length}</span><br />
+            <span>Augmentations installed: {p.augmentations.length}</span><br /><br />
             {StatsTable(timeRows, null)}
             <br />
             <CurrentBitNode />
