@@ -10,6 +10,8 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
 import { MaxNumberHacknetServers } from "../Hacknet/HacknetServer";
+import { StatsTable } from "./React/StatsTable";
+
 
 export function CharacterInfo(p: IPlayer): React.ReactElement {
     function LastEmployer(): React.ReactElement {
@@ -33,6 +35,15 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
                     </ul><br /><br />
                 </>
         return <></>;
+    }
+
+    function Hacknet(): React.ReactElement {
+        // Can't import HacknetHelpers for some reason.
+        if(!(p.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
+            return <><span>Hacknet Nodes owned: {p.hacknetNodes.length}</span><br /></>
+        } else {
+            return <><span>Hacknet Servers owned: {p.hacknetNodes.length} / {MaxNumberHacknetServers}</span><br /></>
+        }
     }
 
     function convertMoneySourceTrackerToString(src: MoneySourceTracker): string {
@@ -93,16 +104,6 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         </>
     }
 
-    function BitNodeTimeText(): React.ReactElement {
-        if(p.sourceFiles.length > 0) {
-            return <>
-                <span>Time played since last Bitnode destroyed: {convertTimeMsToTimeElapsedString(p.playtimeSinceLastBitnode)}</span>
-                <br />
-            </>
-        }
-        return <></>
-    }
-
     function CurrentBitNode(): React.ReactElement {
         if(p.sourceFiles.length > 0) {
 
@@ -119,6 +120,14 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
         return <></>
     }
+
+    const timeRows = [
+        ['Time played since last Augmentation:', convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug)],
+    ]
+    if(p.sourceFiles.length > 0) {
+        timeRows.push(['Time played since last Bitnode destroyed:', convertTimeMsToTimeElapsedString(p.playtimeSinceLastBitnode)]);
+    }
+    timeRows.push(['Total Time played:', convertTimeMsToTimeElapsedString(p.totalPlaytime)])
 
     return (
         <pre>
@@ -223,13 +232,10 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             ]} /><br /><br />
 
             <b>Misc.</b><br /><br />
-            <span>Servers owned:       {p.purchasedServers.length} / {getPurchaseServerLimit()}</span><br />
-            <span>Hacknet Nodes owned: {p.hacknetNodes.length}</span><br />
+            <span>Servers owned: {p.purchasedServers.length} / {getPurchaseServerLimit()}</span><br />
+            <Hacknet />
             <span>Augmentations installed: {p.augmentations.length}</span><br />
-            <span>Time played since last Augmentation: {convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug)}</span><br />
-            <BitNodeTimeText />
-            <span>Time played: {convertTimeMsToTimeElapsedString(p.totalPlaytime)}</span><br />
-
+            {StatsTable(timeRows, null)}
             <br />
             <CurrentBitNode />
         </pre>
