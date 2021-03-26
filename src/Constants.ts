@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.51.0",
+    Version:                "0.50.2",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,7 +228,7 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.0 - 2021-XX-XX formulas (hydroflame)
+    v0.50.2 - 2021-03-25 Everyone asked for this one. (hydroflame)
     -------
     BitNodeMultipliers
     * 'GangKarmaRequirements': a new multipler that influences how much karma is required to make a gang different bitnodes.
