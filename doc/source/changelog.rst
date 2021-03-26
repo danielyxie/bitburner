@@ -3,6 +3,24 @@
 Changelog
 =========
 
+v0.50.2 - 2021-03-25 Everyone asked for this one. (hydroflame)
+--------------------------------------------------------------
+
+**BitNodeMultipliers**
+
+* 'GangKarmaRequirements': a new multipler that influences how much karma is required to make a gang different bitnodes.
+
+**Netscript**
+
+* 'connect': a new singularity function that connects you to a server. (like the terminal command)
+* 'manualHack': a new singularity function that performs a manual hack on the players current server.
+* ns2 stack trace works on Firefox now.
+
+**Misc.**
+
+* New shortcut, Alt + b, brings you to bladeburner
+* New shortcut, Alt + g, brings you to gang
+
 v0.50.1 - 2021-03-22 (hydroflame)
 ---------------------------------
 **Netscript**
