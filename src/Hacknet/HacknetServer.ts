@@ -58,7 +58,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     // How long this HacknetServer has existed, in seconds
     onlineTimeSeconds: number = 0;
 
-    // Total number of hashes earned by this
+    // Total number of hashes earned by this server
     totalHashesGenerated: number = 0;
 
     constructor(params: IConstructorParams={ hostname: "", ip: createRandomIp() }) {

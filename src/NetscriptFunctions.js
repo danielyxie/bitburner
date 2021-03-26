@@ -764,7 +764,22 @@ function NetscriptFunctions(workerScript) {
             spendHashes : function(upgName, upgTarget) {
                 if (!hasHacknetServers()) { return false; }
                 return purchaseHashUpgrade(upgName, upgTarget);
-            }
+            },
+            getHashUpgradeLevel : function(upgName) {
+                const level = Player.hashManager.upgrades[upgName];
+                if(level === undefined) {
+                    throw makeRuntimeErrorMsg("hacknet.hashUpgradeLevel", `Invalid Hash Upgrade: ${upgName}`);
+                }
+                return level;
+            },
+            getStudyMult : function() {
+                if (!hasHacknetServers()) { return false; }
+                return Player.hashManager.getStudyMult();
+            },
+            getTrainingMult : function() {
+                if (!hasHacknetServers()) { return false; }
+                return Player.hashManager.getTrainingMult();
+            },
         },
         sprintf : sprintf,
         vsprintf: vsprintf,
