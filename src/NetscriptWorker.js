@@ -163,7 +163,7 @@ function startNetscript1Script(workerScript) {
             if (typeof entry === "function") {
                 //Async functions need to be wrapped. See JS-Interpreter documentation
                 if (name === "hack"     || name === "grow"  || name === "weaken" || name === "sleep" ||
-                    name === "prompt") {
+                    name === "prompt"   || name === "manualHack") {
                     let tempWrapper = function() {
                         let fnArgs = [];
 

@@ -113,6 +113,10 @@ function isNumber(str) {
     return !isNaN(str) && !isNaN(parseFloat(str));
 }
 
+function getTerminalInput() {
+    return document.getElementById("terminal-input-text-box").value;
+}
+
 // Defines key commands in terminal
 $(document).keydown(function(event) {
 	// Terminal
@@ -122,7 +126,7 @@ $(document).keydown(function(event) {
 
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); // Prevent newline from being entered in Script Editor
-			const command = terminalInput.value;
+			const command = getTerminalInput();
             const dir = Terminal.currDir;
 			post(
                 "<span class='prompt'>[" +
@@ -344,22 +348,36 @@ let Terminal = {
     // Excludes the trailing forward slash
     currDir:            "/",
 
-    resetTerminalInput: function() {
+    resetTerminalInput: function(keepInput=false) {
+        let input = "";
+        if(keepInput) {
+            input = getTerminalInput();
+        }
         const dir = Terminal.currDir;
         if (FconfSettings.WRAP_INPUT) {
             document.getElementById("terminal-input-td").innerHTML =
                 `<div id='terminal-input-header' class='prompt'>[${Player.getCurrentServer().hostname} ~${dir}]$ </div>` +
-                '<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+                `<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"  value=\"${input}\"/>`;
 
             // Auto re-size the line element as it wraps
             autosize(document.getElementById("terminal-input-text-box"));
         } else {
             document.getElementById("terminal-input-td").innerHTML =
                 `<div id='terminal-input-header' class='prompt'>[${Player.getCurrentServer().hostname} ~${dir}]$ </div>` +
-                `<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>`;
+                `<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"  value=\"${input}\"/>`;
         }
-        var hdr = document.getElementById("terminal-input-header");
+        const hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
+
+        const terminalInput = document.getElementById("terminal-input-text-box");
+        if (typeof terminalInput.selectionStart == "number") {
+            terminalInput.selectionStart = terminalInput.selectionEnd = terminalInput.value.length;
+        } else if (typeof terminalInput.createTextRange != "undefined") {
+            terminalInput.focus();
+            var range = el.createTextRange();
+            range.collapse(false);
+            range.select();
+        }
     },
 
     modifyInput: function(mod) {

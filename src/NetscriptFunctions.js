@@ -59,6 +59,7 @@ import {
 import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
+import { Terminal } from "./Terminal";
 
 import { Message } from "./Message/Message";
 import { Messages } from "./Message/MessageHelpers";
@@ -405,16 +406,42 @@ function NetscriptFunctions(workerScript) {
             }
             if(!filename) continue
 
-            const lineRe = /.*:(\d+):\d+.*/;
-            const lineMatch = stackline.match(lineRe);
+            function parseChromeStackline(line) {
+                const lineRe = /.*:(\d+):\d+.*/;
+                const funcRe = /.*at (.+) \(.*/;
 
+                const lineMatch = line.match(lineRe);
+                const funcMatch = line.match(funcRe);
+                if(lineMatch && funcMatch) {
+                    let func = funcMatch[1];
+                    return {line: lineMatch[1], func: func};
+                }
+                return null;
+            }
+            let call = {line: "-1", func: "unknown"};;
+            let chromeCall = parseChromeStackline(stackline);
+            if (chromeCall) {
+                call = chromeCall;
+            }
 
-            const funcRe = /.*at (.+) \(.*/;
-            const funcMatch = stackline.match(funcRe);
-            let func = funcMatch[1];
-            if(func.includes('.')) func = func.split('.')[1];
+            function parseFirefoxStackline(line) {
+                const lineRe = /.*:(\d+):\d+$/;
+                const lineMatch = line.match(lineRe);
 
-            userstack.push(`${filename}:L${lineMatch[1]}@${func}`);
+                const lio = line.lastIndexOf("@");
+
+                if(lineMatch && lio !== -1) {
+                    return {line: lineMatch[1], func: line.slice(0, lio)};
+                }
+                return null;
+            }
+
+            let firefoxCall = parseFirefoxStackline(stackline);
+            if (firefoxCall) {
+                call = firefoxCall;
+            }
+
+            userstack.push(`${filename}:L${call.line}@${call.func}`);
         }
 
         workerScript.log(caller, msg);
@@ -537,27 +564,95 @@ function NetscriptFunctions(workerScript) {
 
     const runAfterReset = function(cbScript=null) {
         //Run a script after reset
-        console.log(cbScript);
         if (cbScript && isString(cbScript)) {
-            console.log('here');
             const home = Player.getHomeComputer();
             for (const script of home.scripts) {
-                console.log('here 2'+script);
                 if (script.filename === cbScript) {
-                    console.log('here 3');
                     const ramUsage = script.ramUsage;
                     const ramAvailable = home.maxRam - home.ramUsed;
                     if (ramUsage > ramAvailable) {
-                        console.log('here 4');
                         return; // Not enough RAM
                     }
                     const runningScriptObj = new RunningScript(script, []); // No args
                     runningScriptObj.threads = 1; // Only 1 thread
-                    console.log('running!');
                     startWorkerScript(runningScriptObj, home);
                 }
             }
         }
+    }
+
+    const hack = function(ip, manual, { threads: requestedThreads, stock } = {}) {
+        if (ip === undefined) {
+            throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
+        }
+        const threads = resolveNetscriptRequestedThreads(workerScript, "hack", requestedThreads);
+        const server = getServer(ip);
+        if (server == null) {
+            throw makeRuntimeErrorMsg("hack", `Invalid IP/hostname: ${ip}.`);
+        }
+
+        // Calculate the hacking time
+        var hackingTime = calculateHackingTime(server); // This is in seconds
+
+        // No root access or skill level too low
+        const canHack = netscriptCanHack(server, Player);
+        if (!canHack.res) {
+            throw makeRuntimeErrorMsg('hack', canHack.msg);
+        }
+
+        workerScript.log("hack", `Executing ${ip} in ${hackingTime.toFixed(3)} seconds (t=${threads})`);
+
+        return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
+            if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+            var hackChance = calculateHackingChance(server);
+            var rand = Math.random();
+            var expGainedOnSuccess = calculateHackingExpGain(server) * threads;
+            var expGainedOnFailure = (expGainedOnSuccess / 4);
+            if (rand < hackChance) { // Success!
+                const percentHacked = calculatePercentMoneyHacked(server);
+                let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
+                if (isNaN(maxThreadNeeded)) {
+                    // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
+                    maxThreadNeeded = 1e6;
+                }
+
+                let moneyDrained = Math.floor(server.moneyAvailable * percentHacked) * threads;
+
+                // Over-the-top safety checks
+                if (moneyDrained <= 0) {
+                    moneyDrained = 0;
+                    expGainedOnSuccess = expGainedOnFailure;
+                }
+                if (moneyDrained > server.moneyAvailable) {moneyDrained = server.moneyAvailable;}
+                server.moneyAvailable -= moneyDrained;
+                if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
+
+                const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
+
+                Player.gainMoney(moneyGained);
+                workerScript.scriptRef.onlineMoneyMade += moneyGained;
+                Player.scriptProdSinceLastAug += moneyGained;
+                Player.recordMoneySource(moneyGained, "hacking");
+                workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
+                Player.gainHackingExp(expGainedOnSuccess);
+                workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
+                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.format(moneyGained, '$0.000a')} and ${numeralWrapper.format(expGainedOnSuccess, '0.000a')} exp (t=${threads})`);
+                server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
+                if (stock) {
+                    influenceStockThroughServerHack(server, moneyGained);
+                }
+                if(manual) {
+                    server.manuallyHacked = true;
+                }
+                return Promise.resolve(moneyGained);
+            } else {
+                // Player only gains 25% exp for failure?
+                Player.gainHackingExp(expGainedOnFailure);
+                workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
+                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.format(expGainedOnFailure, '0.000a')} exp (t=${threads})`);
+                return Promise.resolve(0);
+            }
+        });
     }
 
     return {
@@ -676,74 +771,7 @@ function NetscriptFunctions(workerScript) {
         },
         hack : function(ip, { threads: requestedThreads, stock } = {}){
             updateDynamicRam("hack", getRamCost("hack"));
-            if (ip === undefined) {
-                throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
-            }
-            const threads = resolveNetscriptRequestedThreads(workerScript, "hack", requestedThreads);
-            const server = getServer(ip);
-            if (server == null) {
-                throw makeRuntimeErrorMsg("hack", `Invalid IP/hostname: ${ip}.`);
-            }
-
-            // Calculate the hacking time
-            var hackingTime = calculateHackingTime(server); // This is in seconds
-
-            // No root access or skill level too low
-            const canHack = netscriptCanHack(server, Player);
-            if (!canHack.res) {
-                throw makeRuntimeErrorMsg('hack', canHack.msg);
-            }
-
-            workerScript.log("hack", `Executing ${ip} in ${hackingTime.toFixed(3)} seconds (t=${threads})`);
-
-            return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
-                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                var hackChance = calculateHackingChance(server);
-                var rand = Math.random();
-                var expGainedOnSuccess = calculateHackingExpGain(server) * threads;
-                var expGainedOnFailure = (expGainedOnSuccess / 4);
-                if (rand < hackChance) { // Success!
-                    const percentHacked = calculatePercentMoneyHacked(server);
-                    let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
-                    if (isNaN(maxThreadNeeded)) {
-                        // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
-                        maxThreadNeeded = 1e6;
-                    }
-
-                    let moneyDrained = Math.floor(server.moneyAvailable * percentHacked) * threads;
-
-                    // Over-the-top safety checks
-                    if (moneyDrained <= 0) {
-                        moneyDrained = 0;
-                        expGainedOnSuccess = expGainedOnFailure;
-                    }
-                    if (moneyDrained > server.moneyAvailable) {moneyDrained = server.moneyAvailable;}
-                    server.moneyAvailable -= moneyDrained;
-                    if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
-
-                    const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
-
-                    Player.gainMoney(moneyGained);
-                    workerScript.scriptRef.onlineMoneyMade += moneyGained;
-                    Player.scriptProdSinceLastAug += moneyGained;
-                    Player.recordMoneySource(moneyGained, "hacking");
-                    workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
-                    Player.gainHackingExp(expGainedOnSuccess);
-                    workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                    workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.format(moneyGained, '$0.000a')} and ${numeralWrapper.format(expGainedOnSuccess, '0.000a')} exp (t=${threads})`);
-                    server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
-                    if (stock) {
-                        influenceStockThroughServerHack(server, moneyGained);
-                    }
-                    return Promise.resolve(moneyGained);
-                } else {
-                    // Player only gains 25% exp for failure?
-                    Player.gainHackingExp(expGainedOnFailure);
-                    workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                    workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.format(expGainedOnFailure, '0.000a')} exp (t=${threads})`);
-                    return Promise.resolve(0);
-                }
-            });
+            return hack(ip, false, {threads: requestedThreads, stock: stock});
         },
         hackAnalyzeThreads : function(ip, hackAmount) {
             updateDynamicRam("hackAnalyzeThreads", getRamCost("hackAnalyzeThreads"));
@@ -1686,8 +1714,6 @@ function NetscriptFunctions(workerScript) {
             checkTixApiAccess("buyStock");
             const stock = getStockFromSymbol(symbol, "buyStock");
             const res = buyStock(stock, shares, workerScript, { rerenderFn: displayStockMarketContent });
-            console.log(stock);
-            console.log(res);
             return res ? stock.price : 0;
         },
         sellStock: function(symbol, shares) {
@@ -2683,6 +2709,47 @@ function NetscriptFunctions(workerScript) {
             Player.getHomeComputer().programs.push(item.program);
             workerScript.log("purchaseProgram", `You have purchased the '${item.program}' program. The new program can be found on your home computer.`);
             return true;
+        },
+        connect: function(hostname) {
+            if (!hostname) {
+                throw makeRuntimeErrorMsg("connect", `Invalid hostname: '${hostname}'`);
+            }
+
+            let target = getServer(hostname);
+            if (target == null) {
+                throw makeRuntimeErrorMsg("connect", `Invalid hostname: '${hostname}'`);
+                return;
+            }
+
+            if(hostname === 'home') {
+                Player.getCurrentServer().isConnectedTo = false;
+                Player.currentServer = Player.getHomeComputer().ip;
+                Player.getCurrentServer().isConnectedTo = true;
+                Terminal.currDir = "/";
+                Terminal.resetTerminalInput(true);
+                return true;
+            }
+
+            const server = Player.getCurrentServer();
+            for (let i = 0; i < server.serversOnNetwork.length; i++) {
+                const other = getServerOnNetwork(server, i);
+                if (other.ip == hostname || other.hostname == hostname) {
+                    Player.getCurrentServer().isConnectedTo = false;
+                    Player.currentServer = target.ip;
+                    Player.getCurrentServer().isConnectedTo = true;
+                    Terminal.currDir = "/";
+                    Terminal.resetTerminalInput(true);
+                    return true;
+                }
+            }
+
+            return false;
+        },
+        manualHack: function() {
+            updateDynamicRam("manualHack", getRamCost("manualHack"));
+            checkSingularityAccess("manualHack", 1);
+            const server = Player.getCurrentServer();
+            return hack(server.hostname, true);
         },
         getStats: function() {
             updateDynamicRam("getStats", getRamCost("getStats"));

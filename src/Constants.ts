@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.50.1",
+    Version:                "0.50.2",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,21 +228,18 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.50.1 - 2021-03-22 (hydroflame)
+    v0.50.2 - 2021-03-25 Everyone asked for this one. (hydroflame)
     -------
+    BitNodeMultipliers
+    * 'GangKarmaRequirements': a new multipler that influences how much karma is required to make a gang different bitnodes.
+
     Netscript
-    * getTaskStats works
-
-    Source-File -1
-    * Added a new Exploit
-
-    Factions
-    * Augmentations offered by a Faction but already bought are in a separate list at the bottom of the page.
-
-    Bug fixed
-    * Fixed a bug where completing a maxed non-repeatable BitNode would make its color on the BitVerse like level 1.
+    * 'connect': a new singularity function that connects you to a server. (like the terminal command)
+    * 'manualHack': a new singularity function that performs a manual hack on the players current server.
+    * ns2 stack trace works on Firefox now.
 
     Misc.
-    * Minor spacing in stats tables.
+    * New shortcut, Alt + b, brings you to bladeburner
+    * New shortcut, Alt + g, brings you to gang
     `
 }
