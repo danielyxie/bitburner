@@ -1,7 +1,7 @@
-calculateHacknetServerCost() Netscript Function
+hacknetServerCost() Netscript Function
 ===============================================
 
-.. js:function:: calculateHacknetServerCost(serverN[, costMult]])
+.. js:function:: hacknetServerCost(serverN[, costMult]])
 
     :RAM cost: 0 GB
     :param number serverN: Number of the new node.
@@ -16,4 +16,4 @@ calculateHacknetServerCost() Netscript Function
 
     .. code-block:: javascript
 
-        formulas.hacknetNodes.calculateHacknetServerCost(2); // returns: 1800000
+        formulas.hacknetNodes.hacknetServerCost(2); // returns: 1800000
