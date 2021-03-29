@@ -15,6 +15,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StdButton } from "../../ui/React/StdButton";
 import { StdButtonPurchased } from "../../ui/React/StdButtonPurchased";
+import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
@@ -107,7 +108,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
                 <StdButton
                     disabled={!this.props.p.canAfford(cost)}
                     onClick={this.purchaseWseAccount}
-                    text={`Buy WSE Account - ${numeralWrapper.formatMoney(cost)}`}
+                    text={<>Buy WSE Account - {Money(cost)}</>}
                 />
             )
         }
@@ -125,7 +126,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
                     disabled={!this.props.p.canAfford(cost) || !this.props.p.hasWseAccount}
                     onClick={this.purchaseTixApiAccess}
                     style={blockStyleMarkup}
-                    text={`Buy Trade Information eXchange (TIX) API Access - ${numeralWrapper.formatMoney(cost)}`}
+                    text={<>Buy Trade Information eXchange (TIX) API Access - {Money(cost)}</>}
                 />
             )
         }
@@ -145,7 +146,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
                 <StdButton
                     disabled={!this.props.p.canAfford(cost) || !this.props.p.hasWseAccount}
                     onClick={this.purchase4SMarketData}
-                    text={`Buy 4S Market Data Access - ${numeralWrapper.formatMoney(cost)}`}
+                    text={<>Buy 4S Market Data Access - {Money(cost)}</>}
                     tooltip={"Lets you view additional pricing and volatility information about stocks"}
                 />
             )
@@ -174,7 +175,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
                 <StdButton
                     disabled={!this.props.p.canAfford(cost)}
                     onClick={this.purchase4SMarketDataTixApiAccess}
-                    text={`Buy 4S Market Data TIX API Access - ${numeralWrapper.formatMoney(cost)}`}
+                    text={<>Buy 4S Market Data TIX API Access - {Money(cost)}</>}
                     tooltip={"Let you access 4S Market Data through Netscript"}
                 />
             )
@@ -216,7 +217,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
                 {this.renderPurchase4SMarketDataTixApiAccessButton()}
                 <p>
                     Commission Fees: Every transaction you make has
-                    a {numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} commission fee.
+                    a {Money(CONSTANTS.StockMarketCommission)} commission fee.
                 </p><br />
                 <p>
                     WARNING: When you reset after installing Augmentations, the Stock

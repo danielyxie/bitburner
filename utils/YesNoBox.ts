@@ -8,6 +8,8 @@
  */
 import { clearEventListeners } from "./uiHelpers/clearEventListeners";
 import { KEY } from "./helpers/keyCodes";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 export let yesNoBoxOpen: boolean = false;
 
@@ -49,12 +51,16 @@ export function yesNoBoxGetNoButton() {
     return clearEventListeners("yes-no-box-no");
 }
 
-export function yesNoBoxCreate(txt: string) {
+export function yesNoBoxCreate(txt: string | JSX.Element) {
     if (yesNoBoxOpen) { return false; }   //Already open
     yesNoBoxOpen = true;
 
     if (yesNoBoxTextElement) {
-        yesNoBoxTextElement.innerHTML = txt;
+        if(typeof txt === 'string') {
+            yesNoBoxTextElement.innerHTML = txt as string;
+        } else {
+            ReactDOM.render(txt, yesNoBoxTextElement);
+        }
     } else {
         console.error(`Text element not found for YesNoBox`);
     }
@@ -125,11 +131,15 @@ export function yesNoTxtInpBoxGetInput(): string {
     return val;
 }
 
-export function yesNoTxtInpBoxCreate(txt: string) {
+export function yesNoTxtInpBoxCreate(txt: string | JSX.Element) {
     yesNoBoxOpen = true;
 
     if (yesNoTextInputBoxTextElement) {
-        yesNoTextInputBoxTextElement.innerHTML = txt;
+        if(typeof txt === 'string') {
+            yesNoTextInputBoxTextElement.innerHTML = txt;
+        } else {
+            ReactDOM.render(txt, yesNoTextInputBoxTextElement);
+        }
     }
 
     if (yesNoTextInputBoxContainer) {

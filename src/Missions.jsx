@@ -6,6 +6,7 @@ import { Player } from "./Player";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { formatNumber } from "../utils/StringHelperFunctions";
 import { numeralWrapper } from "./ui/numeralFormat";
+import { Reputation } from "./ui/React/Reputation";
 
 import { addOffset } from "../utils/helpers/addOffset";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -14,6 +15,9 @@ import { isString } from "../utils/helpers/isString";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 
 import jsplumb from "jsplumb";
+
+import React from "react";
+import ReactDOM from "react-dom";
 
 
 let inMission = false; // Flag to denote whether a mission is running
@@ -286,9 +290,7 @@ HackingMission.prototype.createPageDom = function() {
     var favorMult = 1 + (this.faction.favor / 100);
     var gain = this.reward  * Player.faction_rep_mult * favorMult;
     var headerText = document.createElement("p");
-    headerText.innerHTML = "You are about to start a hacking mission! You will gain " +
-                    numeralWrapper.format(gain, '0.000a') + " faction reputation with " + this.faction.name +
-                    " if you win. Click the 'Start' button to begin.";
+    ReactDOM.render(<>You are about to start a hacking mission! You will gain {Reputation(gain)} faction reputation with {this.faction.name} if you win. Click the 'Start' button to begin.</>, headerText);
     headerText.style.display = "block";
     headerText.classList.add("hack-mission-header-element");
     headerText.style.width = "80%";
@@ -310,7 +312,7 @@ HackingMission.prototype.createPageDom = function() {
     startBtn.classList.add("a-link-button");
     startBtn.classList.add("hack-mission-header-element");
     startBtn.style.display = "inline-block";
-    startBtn.addEventListener("click", ()=>{
+    startBtn.addEventListener("click", () => {
         this.start();
         return false;
     });
@@ -320,7 +322,7 @@ HackingMission.prototype.createPageDom = function() {
     forfeitMission.classList.add("a-link-button");
     forfeitMission.classList.add("hack-mission-header-element");
     forfeitMission.style.display = "inline-block";
-    forfeitMission.addEventListener("click", ()=> {
+    forfeitMission.addEventListener("click", () => {
         this.finishMission(false);
         return false;
     });
@@ -394,7 +396,7 @@ HackingMission.prototype.createPageDom = function() {
     actionsContainer.appendChild(enemyStats);
 
     // Set Action Button event listeners
-    this.actionButtons[0].addEventListener("click", ()=>{
+    this.actionButtons[0].addEventListener("click", () => {
         if (!(this.selectedNode.length > 0)) {
             console.error("Pressing Action button without selected node");
             return;
@@ -407,7 +409,7 @@ HackingMission.prototype.createPageDom = function() {
         });
     });
 
-    this.actionButtons[1].addEventListener("click", ()=>{
+    this.actionButtons[1].addEventListener("click", () => {
         if (!(this.selectedNode.length > 0)) {
             console.error("Pressing Action button without selected node");
             return;
@@ -421,7 +423,7 @@ HackingMission.prototype.createPageDom = function() {
         });
     });
 
-    this.actionButtons[2].addEventListener("click", ()=>{
+    this.actionButtons[2].addEventListener("click", () => {
         if (!(this.selectedNode.length > 0)) {
             console.error("Pressing Action button without selected node");
             return;
@@ -435,7 +437,7 @@ HackingMission.prototype.createPageDom = function() {
         });
     });
 
-    this.actionButtons[3].addEventListener("click", ()=>{
+    this.actionButtons[3].addEventListener("click", () => {
         if (!(this.selectedNode.length > 0)) {
             console.error("Pressing Action button without selected node");
             return;
@@ -447,7 +449,7 @@ HackingMission.prototype.createPageDom = function() {
         });
     });
 
-    this.actionButtons[4].addEventListener("click", ()=>{
+    this.actionButtons[4].addEventListener("click", () => {
         if (!(this.selectedNode.length > 0)) {
             console.error("Pressing Action button without selected node");
             return;
@@ -461,7 +463,7 @@ HackingMission.prototype.createPageDom = function() {
         });
     });
 
-    this.actionButtons[5].addEventListener("click", ()=>{
+    this.actionButtons[5].addEventListener("click", () => {
         if (!(this.selectedNode.length > 0)) {
             console.error("Pressing Action button without selected node");
             return;
@@ -1049,7 +1051,7 @@ HackingMission.prototype.initJsPlumb = function() {
     });
 
     // Detach Connection events
-    instance.bind("connectionDetached", (info, originalEvent)=>{
+    instance.bind("connectionDetached", (info, originalEvent) => {
         var sourceNode = this.getNodeFromElement(info.source);
         sourceNode.conn = null;
         var targetNode = this.getNodeFromElement(info.target);
@@ -1087,11 +1089,11 @@ HackingMission.prototype.process = function(numCycles=1) {
 
     var res = false;
     // Process actions of all player nodes
-    this.playerCores.forEach((node)=>{
+    this.playerCores.forEach((node) => {
         res |= this.processNode(node, storedCycles);
     });
 
-    this.playerNodes.forEach((node)=>{
+    this.playerNodes.forEach((node) => {
         if (node.type === NodeTypes.Transfer ||
             node.type === NodeTypes.Shield ||
             node.type === NodeTypes.Firewall) {
@@ -1100,12 +1102,12 @@ HackingMission.prototype.process = function(numCycles=1) {
     });
 
     // Process actions of all enemy nodes
-    this.enemyCores.forEach((node)=>{
+    this.enemyCores.forEach((node) => {
         this.enemyAISelectAction(node);
         res |= this.processNode(node, storedCycles);
     });
 
-    this.enemyNodes.forEach((node)=>{
+    this.enemyNodes.forEach((node) => {
         if (node.type === NodeTypes.Transfer ||
             node.type === NodeTypes.Shield ||
             node.type === NodeTypes.Firewall) {
@@ -1115,7 +1117,7 @@ HackingMission.prototype.process = function(numCycles=1) {
     });
 
     // The hp of enemy databases increases slowly
-    this.enemyDatabases.forEach((node)=>{
+    this.enemyDatabases.forEach((node) => {
         node.maxhp += (0.1 * storedCycles);
         node.hp += (0.1 * storedCycles);
     });
@@ -1138,7 +1140,7 @@ HackingMission.prototype.process = function(numCycles=1) {
     }
 
     // Defense/hp of misc nodes increases slowly over time
-    this.miscNodes.forEach((node)=>{
+    this.miscNodes.forEach((node) => {
         node.def += (0.1 * storedCycles);
         node.maxhp += (0.05 * storedCycles);
         node.hp += (0.1 * storedCycles);
@@ -1353,7 +1355,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
 
         // If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
         if (isMiscNode) { //&& conqueredByPlayer) {
-            this.miscNodes.forEach((node)=>{
+            this.miscNodes.forEach((node) => {
                 if (node.targetedCount === 0) {
                     node.def *= CONSTANTS.HackingMissionMiscDefenseIncrease;
                 }
@@ -1514,8 +1516,7 @@ HackingMission.prototype.finishMission = function(win) {
     if (win) {
         var favorMult = 1 + (this.faction.favor / 100);
         var gain = this.reward  * Player.faction_rep_mult * favorMult;
-        dialogBoxCreate("Mission won! You earned " +
-                        numeralWrapper.format(gain, '0.000a') + " reputation with " + this.faction.name);
+        dialogBoxCreate(<>Mission won! You earned {Reputation(gain)} reputation with {this.faction.name}</>);
         Player.gainIntelligenceExp(this.difficulty * CONSTANTS.IntelligenceHackingMissionBaseExpGain);
         this.faction.playerReputation += gain;
     } else {

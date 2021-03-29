@@ -26,6 +26,7 @@ import { createElement } from "../utils/uiHelpers/createElement";
 import { createOptionElement } from "../utils/uiHelpers/createOptionElement";
 import { getSelectText } from "../utils/uiHelpers/getSelectData";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { Money } from "./ui/React/Money";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -611,12 +612,16 @@ class DevMenuComponent extends Component {
     }
 
     viewStockCaps() {
-        let text = "<table><tbody><tr><th>Stock</th><th>Price cap</th></tr>";
+        let stocks = [];
         this.processStocks((stock) => {
-            text += `<tr><td>${stock.symbol}</td><td style="text-align:right;">${numeralWrapper.format(stock.cap, '$0.000a')}</td></tr>`;
+            stocks.push(<tr key={stock.symbol}>
+                <td>{stock.symbol}</td>
+                <td style={{'textAlign':'right'}}>{Money(stock.cap)}</td>
+            </tr>);
         });
-        text += "</tbody></table>";
-        dialogBoxCreate(text);
+        dialogBoxCreate(<table><tbody><tr><th>Stock</th><th>Price cap</th></tr>
+            {stocks}
+        </tbody></table>);
     }
 
     sleeveMaxAllShock() {

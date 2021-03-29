@@ -20,6 +20,9 @@ import {
 import { Player } from "../../Player";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
+import { Hashes } from "../../ui/React/Hashes";
+import { HashRate } from "../../ui/React/HashRate";
 
 export class HacknetServer extends React.Component {
     render() {
@@ -28,9 +31,9 @@ export class HacknetServer extends React.Component {
         const recalculate = this.props.recalculate;
 
         // Upgrade Level Button
-        let upgradeLevelText, upgradeLevelClass;
+        let upgradeLevelContent, upgradeLevelClass;
         if (node.level >= HacknetServerConstants.MaxLevel) {
-            upgradeLevelText = "MAX LEVEL";
+            upgradeLevelContent = <>MAX LEVEL</>;
             upgradeLevelClass = "std-button-disabled";
         } else {
             let multiplier = 0;
@@ -42,7 +45,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, Player.hacknet_node_level_cost_mult);
-            upgradeLevelText = `Upgrade x${multiplier} - ${numeralWrapper.formatMoney(upgradeLevelCost)}`;
+            upgradeLevelContent = <>Upgrade x{multiplier} - {Money(upgradeLevelCost)}</>;
             if (Player.money.lt(upgradeLevelCost)) {
                 upgradeLevelClass = "std-button-disabled";
             } else {
@@ -60,9 +63,9 @@ export class HacknetServer extends React.Component {
         }
 
         // Upgrade RAM Button
-        let upgradeRamText, upgradeRamClass;
+        let upgradeRamContent, upgradeRamClass;
         if (node.maxRam >= HacknetServerConstants.MaxRam) {
-            upgradeRamText = "MAX RAM";
+            upgradeRamContent = <>MAX RAM</>;
             upgradeRamClass = "std-button-disabled";
         } else {
             let multiplier = 0;
@@ -74,7 +77,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, Player.hacknet_node_ram_cost_mult);
-            upgradeRamText = `Upgrade x${multiplier} - ${numeralWrapper.formatMoney(upgradeRamCost)}`;
+            upgradeRamContent = <>Upgrade x{multiplier} - {Money(upgradeRamCost)}</>;
             if (Player.money.lt(upgradeRamCost)) {
                 upgradeRamClass = "std-button-disabled";
             } else {
@@ -92,9 +95,9 @@ export class HacknetServer extends React.Component {
         }
 
         // Upgrade Cores Button
-        let upgradeCoresText, upgradeCoresClass;
+        let upgradeCoresContent, upgradeCoresClass;
         if (node.cores >= HacknetServerConstants.MaxCores) {
-            upgradeCoresText = "MAX CORES";
+            upgradeCoresContent = <>MAX CORES</>;
             upgradeCoresClass = "std-button-disabled";
         } else {
             let multiplier = 0;
@@ -106,7 +109,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, Player.hacknet_node_core_cost_mult);
-            upgradeCoresText = `Upgrade x${multiplier} - ${numeralWrapper.formatMoney(upgradeCoreCost)}`;
+            upgradeCoresContent = <>Upgrade x{multiplier} - {Money(upgradeCoreCost)}</>;
             if (Player.money.lt(upgradeCoreCost)) {
                 upgradeCoresClass = "std-button-disabled";
             } else {
@@ -124,9 +127,9 @@ export class HacknetServer extends React.Component {
         }
 
         // Upgrade Cache button
-        let upgradeCacheText, upgradeCacheClass;
+        let upgradeCacheContent, upgradeCacheClass;
         if (node.cache >= HacknetServerConstants.MaxCache) {
-            upgradeCacheText = "MAX CACHE";
+            upgradeCacheContent = <>MAX CACHE</>;
             upgradeCacheClass = "std-button-disabled";
         } else {
             let multiplier = 0;
@@ -138,7 +141,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeCacheCost = node.calculateCacheUpgradeCost(multiplier);
-            upgradeCacheText = `Upgrade x${multiplier} - ${numeralWrapper.formatMoney(upgradeCacheCost)}`;
+            upgradeCacheContent = <>Upgrade x{multiplier} - {Money(upgradeCacheCost)}</>;
             if (Player.money.lt(upgradeCacheCost)) {
                 upgradeCacheClass = "std-button-disabled";
             } else {
@@ -166,7 +169,7 @@ export class HacknetServer extends React.Component {
                     <div className={"row"}>
                         <p>Production:</p>
                         <span className={"text money-gold"}>
-                            {numeralWrapper.formatBigNumber(node.totalHashesGenerated)} ({numeralWrapper.formatBigNumber(node.hashRate)} / sec)
+                            {Hashes(node.totalHashesGenerated)} ({HashRate(node.hashRate)})
                         </span>
                     </div>
                     <div className={"row"}>
@@ -176,25 +179,25 @@ export class HacknetServer extends React.Component {
                     <div className={"row"}>
                         <p>Level:</p><span className={"text upgradable-info"}>{node.level}</span>
                         <button className={upgradeLevelClass} onClick={upgradeLevelOnClick}>
-                            {upgradeLevelText}
+                            {upgradeLevelContent}
                         </button>
                     </div>
                     <div className={"row"}>
                         <p>RAM:</p><span className={"text upgradable-info"}>{node.maxRam}GB</span>
                         <button className={upgradeRamClass} onClick={upgradeRamOnClick}>
-                            {upgradeRamText}
+                            {upgradeRamContent}
                         </button>
                     </div>
                     <div className={"row"}>
                         <p>Cores:</p><span className={"text upgradable-info"}>{node.cores}</span>
                         <button className={upgradeCoresClass} onClick={upgradeCoresOnClick}>
-                            {upgradeCoresText}
+                            {upgradeCoresContent}
                         </button>
                     </div>
                     <div className={"row"}>
                         <p>Cache Level:</p><span className={"text upgradable-info"}>{node.cache}</span>
                         <button className={upgradeCacheClass} onClick={upgradeCacheOnClick}>
-                            {upgradeCacheText}
+                            {upgradeCacheContent}
                         </button>
                     </div>
                 </div>

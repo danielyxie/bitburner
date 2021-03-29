@@ -8,6 +8,7 @@ import { numeralWrapper } from "../numeralFormat";
 
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Money } from "../React/Money";
 
 type IProps = {
     p: IPlayer;
@@ -27,18 +28,18 @@ export function ScriptProduction(props: IProps): React.ReactElement {
             Total online production of Active scripts:&nbsp;
             <span className="money-gold">
                 <span id="active-scripts-total-production-active">
-                    {numeralWrapper.formatMoney(onlineProduction)}
+                    {Money(onlineProduction)}
                 </span> / sec
             </span><br />
 
             Total online production since last Aug installation:&nbsp;
             <span id="active-scripts-total-prod-aug-total" className="money-gold">
-                {numeralWrapper.formatMoney(props.p.scriptProdSinceLastAug)}
+                {Money(props.p.scriptProdSinceLastAug)}
             </span>
 
             &nbsp;(<span className="money-gold">
                 <span id="active-scripts-total-prod-aug-avg" className="money-gold">
-                    {numeralWrapper.formatMoney(prodRateSinceLastAug)}
+                    {Money(prodRateSinceLastAug)}
                 </span> / sec
             </span>)
         </p>

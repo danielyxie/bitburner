@@ -23,6 +23,8 @@ import { IPlayer }                  from "../../PersonObjects/IPlayer";
 
 import { numeralWrapper }           from "../../ui/numeralFormat";
 import { StdButton }                from "../../ui/React/StdButton";
+import { Reputation }               from "../../ui/React/Reputation";
+import { Favor }                    from "../../ui/React/Favor";
 
 type IProps = {
     engine: IEngine;
@@ -32,6 +34,10 @@ type IProps = {
 
 type IState = {
     employedHere: boolean;
+}
+
+const blockStyleMarkup = {
+    display: "block",
 }
 
 export class CompanyLocation extends React.Component<IProps, IState> {
@@ -211,23 +217,24 @@ export class CompanyLocation extends React.Component<IProps, IState> {
                     isEmployedHere &&
                     <div>
                         <p>Job Title: {this.jobTitle}</p>
-                        <p>--------------------</p>
+                        <br /><p style={blockStyleMarkup}>-------------------------</p><br />
                         <p className={"tooltip"}>
-                            Company reputation: {numeralWrapper.format(this.company.playerReputation, "0,0.000")}
+                            Company reputation: {Reputation(this.company.playerReputation)}
                             <span className={"tooltiptext"}>
-                                You will earn {numeralWrapper.format(favorGain[0], "0,0")} company
+                                You will earn {Favor(favorGain[0])} company
                                 favor upon resetting after installing Augmentations
                             </span>
-                        </p>
-                        <p>--------------------</p>
+                        </p><br />
+                        <br /><p style={blockStyleMarkup}>-------------------------</p><br />
                         <p className={"tooltip"}>
-                            Company Favor: {numeralWrapper.format(this.company.favor, "0,0")}
+                            Company Favor: {Favor(this.company.favor)}
                             <span className={"tooltiptext"}>
                                 Company favor increases the rate at which you earn reputation for this company by
                                 1% per favor. Company favor is gained whenever you reset after installing Augmentations. The amount
                                 of favor you gain depends on how much reputation you have with the comapny.
                             </span>
-                        </p>
+                        </p><br />
+                        <br /><p style={blockStyleMarkup}>-------------------------</p><br />
                         <StdButton
                             id={"foo-work-button-id"}
                             onClick={this.work}

@@ -191,7 +191,7 @@ export async function updateScriptEditorContent() {
     var codeCopy = code.repeat(1);
     var ramUsage = await calculateRamUsage(codeCopy, Player.getCurrentServer().scripts);
     if (ramUsage > 0) {
-        scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
+        scriptEditorRamText.innerText = "RAM: " + numeralWrapper.formatRAM(ramUsage);
     } else {
         switch (ramUsage) {
             case RamCalculationErrorCode.ImportError:

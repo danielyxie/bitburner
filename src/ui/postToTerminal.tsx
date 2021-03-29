@@ -1,3 +1,5 @@
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server"
 import { getElementById } from "../../utils/uiHelpers/getElementById";
 
 /**
@@ -31,6 +33,10 @@ export function hackProgressPost(input: string) {
 interface IPostContentConfig {
     id?: string;    // Replaces class, if specified
     color?: string; // Additional class for terminal-line. Does NOT replace
+}
+
+export function postElement(element: JSX.Element) {
+    postContent(renderToStaticMarkup(element));
 }
 
 export function postContent(input: string, config: IPostContentConfig = {}) {

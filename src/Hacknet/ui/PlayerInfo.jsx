@@ -9,43 +9,33 @@ import React from "react";
 import { hasHacknetServers } from "../HacknetHelpers";
 import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
+import { MoneyRate } from "../../ui/React/MoneyRate";
+import { HashRate } from "../../ui/React/HashRate";
+import { Hashes } from "../../ui/React/Hashes";
 
 export function PlayerInfo(props) {
     const hasServers = hasHacknetServers();
 
     let prod;
     if (hasServers) {
-        prod = numeralWrapper.format(props.totalProduction, "0.000a") + " hashes / sec";
+        prod = HashRate(props.totalProduction);
     } else {
-        prod = numeralWrapper.formatMoney(props.totalProduction) + " / sec";
-    }
-
-    let hashInfo;
-    if (hasServers) {
-        hashInfo = numeralWrapper.format(Player.hashManager.hashes, "0.000a") + " / " +
-                   numeralWrapper.format(Player.hashManager.capacity, "0.000a");
+        prod = MoneyRate(props.totalProduction);
     }
 
     return (
         <p id={"hacknet-nodes-money"}>
-            <span>Money:</span>
-            <span className={"money-gold"}>{numeralWrapper.formatMoney(Player.money.toNumber())}</span><br />
+            <span>Money: </span>
+            {Money(Player.money.toNumber())}<br />
 
             {
                 hasServers &&
-                <span>Hashes:</span>
-            }
-            {
-                hasServers &&
-                <span className={"money-gold"}>{hashInfo}</span>
-            }
-            {
-                hasServers &&
-                <br />
+                <><span>Hashes: {Hashes(Player.hashManager.hashes)} / {Hashes(Player.hashManager.capacity)}</span><br /></>
             }
 
-            <span>Total Hacknet Node Production:</span>
-            <span className={"money-gold"}>{prod}</span>
+            <span>Total Hacknet Node Production: </span>
+            {prod}
         </p>
     )
 }

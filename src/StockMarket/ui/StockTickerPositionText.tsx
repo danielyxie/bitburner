@@ -8,6 +8,7 @@ import { Stock } from "../Stock";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 type IProps = {
@@ -39,13 +40,13 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
                     </span>
                 </h3><br />
                 <p>
-                    Shares: {numeralWrapper.format(stock.playerShares, "0,0")}
+                    Shares: {numeralWrapper.formatShares(stock.playerShares)}
                 </p><br />
                 <p>
-                    Average Price: {numeralWrapper.formatMoney(stock.playerAvgPx)} (Total Cost: {numeralWrapper.formatMoney(totalCost)})
+                    Average Price: {Money(stock.playerAvgPx)} (Total Cost: {Money(totalCost)})
                 </p><br />
                 <p>
-                    Profit: {numeralWrapper.formatMoney(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
+                    Profit: {Money(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
                 </p><br />
             </div>
         )
@@ -71,13 +72,13 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
                         </span>
                     </h3><br />
                     <p>
-                        Shares: {numeralWrapper.format(stock.playerShortShares, "0,0")}
+                        Shares: {numeralWrapper.formatShares(stock.playerShortShares)}
                     </p><br />
                     <p>
-                        Average Price: {numeralWrapper.formatMoney(stock.playerAvgShortPx)} (Total Cost: {numeralWrapper.formatMoney(totalCost)})
+                        Average Price: {Money(stock.playerAvgShortPx)} (Total Cost: {Money(totalCost)})
                     </p><br />
                     <p>
-                        Profit: {numeralWrapper.formatMoney(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
+                        Profit: {Money(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
                     </p><br />
                 </div>
             )
@@ -92,16 +93,16 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
         return (
             <div className={"stock-market-position-text"}>
                 <p style={blockStyleMarkup}>
-                    Max Shares: {numeralWrapper.formatBigNumber(stock.maxShares)}
+                    Max Shares: {numeralWrapper.formatShares(stock.maxShares)}
                 </p>
                 <p className={"tooltip"} >
-                    Ask Price: {numeralWrapper.formatMoney(stock.getAskPrice())}
+                    Ask Price: {Money(stock.getAskPrice())}
                     <span className={"tooltiptext"}>
                         See Investopedia for details on what this is
                     </span>
                 </p><br />
                 <p className={"tooltip"} >
-                    Bid Price: {numeralWrapper.formatMoney(stock.getBidPrice())}
+                    Bid Price: {Money(stock.getBidPrice())}
                     <span className={"tooltiptext"}>
                         See Investopedia for details on what this is
                     </span>

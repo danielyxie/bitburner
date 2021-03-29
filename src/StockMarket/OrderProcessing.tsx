@@ -19,8 +19,11 @@ import { PositionTypes } from "./data/PositionTypes";
 import { IMap } from "../types";
 
 import { numeralWrapper } from "../ui/numeralFormat";
+import { Money } from "../ui/React/Money";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
+
+import * as React from "react";
 
 export interface IProcessOrderRefs {
     rerenderFn: () => void;
@@ -147,8 +150,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
         for (let i = 0; i < stockOrders.length; ++i) {
             if (order == stockOrders[i]) {
                 stockOrders.splice(i, 1);
-                dialogBoxCreate(`${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}) was filled ` +
-                                `(${numeralWrapper.formatBigNumber(Math.round(order.shares))} shares)`);
+                dialogBoxCreate(<>{order.type} for {stock.symbol} @ {Money(order.price)} ({pos}) was filled ({numeralWrapper.formatShares(Math.round(order.shares))} shares)</>);
                 refs.rerenderFn();
                 return;
             }
@@ -158,8 +160,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
         console.error(order);
     } else {
         if (isBuy) {
-            dialogBoxCreate(`Failed to execute ${order.type} for ${stock.symbol} @ ${numeralWrapper.formatMoney(order.price)} (${pos}). ` +
-                            `This is most likely because you do not have enough money or the order would exceed the stock's maximum number of shares`);
+            dialogBoxCreate(<>Failed to execute {order.type} for {stock.symbol} @ {Money(order.price)} ({pos}). This is most likely because you do not have enough money or the order would exceed the stock's maximum number of shares</>);
         }
     }
 }
