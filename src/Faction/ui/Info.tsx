@@ -10,6 +10,8 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { AutoupdatingParagraph } from "../../ui/React/AutoupdatingParagraph";
 import { ParagraphWithTooltip } from "../../ui/React/ParagraphWithTooltip";
+import { Reputation } from "../../ui/React/Reputation";
+import { Favor } from "../../ui/React/Favor";
 
 type IProps = {
     faction: Faction;
@@ -33,18 +35,17 @@ export class Info extends React.Component<IProps, any> {
     constructor(props: IProps) {
         super(props);
 
-        this.getFavorGainText = this.getFavorGainText.bind(this);
-        this.getReputationText = this.getReputationText.bind(this);
+        this.getFavorGainContent = this.getFavorGainContent.bind(this);
+        this.getReputationContent = this.getReputationContent.bind(this);
     }
 
-    getFavorGainText(): string {
+    getFavorGainContent(): JSX.Element {
         const favorGain = this.props.faction.getFavorGain()[0];
-        return `You will earn ${numeralWrapper.format(favorGain, "0,0")} faction favor upon resetting after installing an Augmentation`
+        return <>You will earn {Favor(favorGain)} faction favor upon resetting after installing an Augmentation</>
     }
 
-    getReputationText(): string {
-        const formattedRep = numeralWrapper.format(this.props.faction.playerReputation, "0.000a");
-        return `Reputation: ${formattedRep}`
+    getReputationContent(): JSX.Element {
+        return <>Reputation: {Reputation(this.props.faction.playerReputation)}</>
     }
 
     render() {
@@ -65,12 +66,12 @@ export class Info extends React.Component<IProps, any> {
                 <p style={blockStyleMarkup}>-------------------------</p>
                 <AutoupdatingParagraph
                     intervalTime={5e3}
-                    getText={this.getReputationText}
-                    getTooltip={this.getFavorGainText}
+                    getContent={this.getReputationContent}
+                    getTooltip={this.getFavorGainContent}
                 />
                 <p style={blockStyleMarkup}>-------------------------</p>
                 <ParagraphWithTooltip
-                    text={`Faction Favor: ${numeralWrapper.format(this.props.faction.favor, "0,0")}`}
+                    content={<>Faction Favor: {Favor(this.props.faction.favor)}</>}
                     tooltip={favorTooltip}
                 />
                 <p style={blockStyleMarkup}>-------------------------</p>

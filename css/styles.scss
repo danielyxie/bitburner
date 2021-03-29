@@ -356,8 +356,16 @@ a:visited {
     color: $my-stat-cha-color;
 }
 
+.reputation {
+    color: $light-yellow;
+}
+
 .smallfont {
     font-size: $defaultFontSize * 0.8125;
+}
+
+.samefont {
+    font-size: inherit;
 }
 
 input[type=checkbox] {

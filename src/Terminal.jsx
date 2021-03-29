@@ -92,15 +92,19 @@ import {
 } from "../utils/YesNoBox";
 import {
     post,
+    postElement,
     postContent,
     postError,
     hackProgressBarPost,
     hackProgressPost
 } from "./ui/postToTerminal";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { Money } from "./ui/React/Money";
 
 import autosize from "autosize";
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
+import React from "react";
 
 
 function postNetburnerText() {
@@ -540,11 +544,11 @@ let Terminal = {
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
 
-				post("Hack successful! Gained " + numeralWrapper.format(moneyGained, '($0,0.00)') + " and " + numeralWrapper.format(expGainedOnSuccess, '0.0000') + " hacking EXP");
+				postElement(<>Hack successful! Gained {Money(moneyGained)} and {numeralWrapper.formatExp(expGainedOnSuccess)} hacking exp</>);
 			} else { // Failure
 				// Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + server.hostname + ". Gained " + numeralWrapper.format(expGainedOnFailure, '0.0000') + " hacking EXP");
+				post(`Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`);
 			}
 		}
 
@@ -568,10 +572,10 @@ let Terminal = {
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
 			if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
-			post("Server security level: " + numeralWrapper.format(currServ.hackDifficulty, '0.000a'));
-			post("Chance to hack: " + numeralWrapper.format(calculateHackingChance(currServ), '0.00%'));
-			post("Time to hack: " + numeralWrapper.format(calculateHackingTime(currServ), '0.000') + " seconds");
-			post("Total money available on server: " + numeralWrapper.format(currServ.moneyAvailable, '$0,0.00'));
+			post("Server security level: " + numeralWrapper.formatServerSecurity(currServ.hackDifficulty));
+			post("Chance to hack: " + numeralWrapper.formatPercentage(calculateHackingChance(currServ)));
+			post("Time to hack: " + convertTimeMsToTimeElapsedString(calculateHackingTime(currServ)*1000));
+			postElement(<>Total money available on server: {Money(currServ.moneyAvailable)}</>);
 			if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
 
             if (currServ.sshPortOpen) {
@@ -1493,7 +1497,7 @@ let Terminal = {
                     const spacesThread = " ".repeat(numSpacesThread);
 
 					// Calculate and transform RAM usage
-					const ramUsage = numeralWrapper.format(getRamUsageFromRunningScript(script) * script.threads, '0.00') + " GB";
+					const ramUsage = numeralWrapper.formatRAM(getRamUsageFromRunningScript(script) * script.threads);
 
 					const entry = [
                         script.filename,
@@ -1578,15 +1582,15 @@ let Terminal = {
             postError("Incorrect usage of free command. Usage: free");
             return;
         }
-        const ram = numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00');
-        const used = numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00');
-        const avail = numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00');
+        const ram = numeralWrapper.formatRAM(Player.getCurrentServer().maxRam);
+        const used = numeralWrapper.formatRAM(Player.getCurrentServer().ramUsed);
+        const avail = numeralWrapper.formatRAM(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed);
         const maxLength = Math.max(ram.length, Math.max(used.length, avail.length));
-        const usedPercent = numeralWrapper.format(Player.getCurrentServer().ramUsed/Player.getCurrentServer().maxRam*100, '0.00');
+        const usedPercent = numeralWrapper.formatPercentage(Player.getCurrentServer().ramUsed/Player.getCurrentServer().maxRam);
 
-        post(`Total:     ${" ".repeat(maxLength-ram.length)}${ram} GB`);
-        post(`Used:      ${" ".repeat(maxLength-used.length)}${used} GB (${usedPercent}%)`);
-        post(`Available: ${" ".repeat(maxLength-avail.length)}${avail} GB`);
+        post(`Total:     ${" ".repeat(maxLength-ram.length)}${ram}`);
+        post(`Used:      ${" ".repeat(maxLength-used.length)}${used} (${usedPercent})`);
+        post(`Available: ${" ".repeat(maxLength-avail.length)}${avail}`);
     },
 
     executeKillCommand: function(commandArray) {
@@ -1756,7 +1760,7 @@ let Terminal = {
 
             const ramUsage = script.ramUsage * numThreads;
 
-            post(`This script requires ${numeralWrapper.format(ramUsage, '0.00')} GB of RAM to run for ${numThreads} thread(s)`);
+            post(`This script requires ${numeralWrapper.formatRAM(ramUsage)} of RAM to run for ${numThreads} thread(s)`);
         } catch(e) {
             Terminal.postThrownError(e);
         }
@@ -1885,7 +1889,7 @@ let Terminal = {
             if (s.hasAdminRights) {c = "YES";}
             post(`${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
             if (!isHacknet) { post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired); }
-            post(dashes + "RAM: " + s.maxRam);
+            post(dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam));
             post(" ");
         }
 
@@ -2114,9 +2118,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post("Netscript hack() execution time: " + numeralWrapper.format(calculateHackingTime(targetServer), '0.0') + "s");
-            post("Netscript grow() execution time: " + numeralWrapper.format(calculateGrowTime(targetServer), '0.0') + "s");
-            post("Netscript weaken() execution time: " + numeralWrapper.format(calculateWeakenTime(targetServer), '0.0') + "s");
+            post(`Netscript hack() execution time: ${convertTimeMsToTimeElapsedString(calculateHackingTime(targetServer)*1000)}`);
+            post(`Netscript grow() execution time: ${convertTimeMsToTimeElapsedString(calculateGrowTime(targetServer)*1000)}`);
+            post(`Netscript weaken() execution time: ${convertTimeMsToTimeElapsedString(calculateWeakenTime(targetServer)*1000)}`);
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");
@@ -2143,7 +2147,7 @@ let Terminal = {
             if(!fulfilled) {
                 post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
 
-                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / ${numeralWrapper.format(1e11, '($0.000a)')}`);
+                postElement(<>Money: {Money(Player.money.toNumber())} / {Money(1e11)}</>);
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post(`Hacking skill: ${Player.hacking_skill} / 2500`);

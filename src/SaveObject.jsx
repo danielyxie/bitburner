@@ -471,7 +471,7 @@ function loadImportedGame(saveObj, saveString) {
     });
     var gotitBtn = createElement("a", {
         class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
-        clickListener:()=>{
+        clickListener:() => {
             removeElementById(popupId);
         }
     });
@@ -508,8 +508,8 @@ function loadImportedGame(saveObj, saveString) {
     // Hacknet Nodes offline progress
     var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
     const hacknetProdInfo = hasHacknetServers() ?
-                            `${numeralWrapper.format(offlineProductionFromHacknetNodes, "0.000a")} hashes` :
-                            `${numeralWrapper.formatMoney(offlineProductionFromHacknetNodes)}`;
+                            <>Hashes(offlineProductionFromHacknetNodes)} hashes</> :
+                            Money(offlineProductionFromHacknetNodes);
 
     // Passive faction rep gain offline
     processPassiveFactionRepGain(numCyclesOffline);
@@ -532,10 +532,9 @@ function loadImportedGame(saveObj, saveString) {
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start(); // Run main game loop and Scripts loop
     const timeOfflineString = convertTimeMsToTimeElapsedString(time);
-    dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
-                    "generated <span class='money-gold'>" +
-                    numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> " +
-                    "and your Hacknet Nodes generated <span class='money-gold'>" + hacknetProdInfo + "</span>");
+    dialogBoxCreate(<>Offline for {timeOfflineString}. While you were offline, your scripts 
+generated {Money(offlineProductionFromScripts)}
+and your Hacknet Nodes generated hacknetProdInfo</>);
     return true;
 }
 

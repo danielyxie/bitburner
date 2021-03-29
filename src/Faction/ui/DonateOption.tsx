@@ -8,6 +8,8 @@ import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
+import { Reputation } from "../../ui/React/Reputation";
 
 import { StdButton } from "../../ui/React/StdButton";
 
@@ -21,7 +23,7 @@ type IProps = {
 
 type IState = {
     donateAmt: number;
-    statusTxt: string;
+    status: JSX.Element;
 }
 
 const inputStyleMarkup = {
@@ -37,7 +39,7 @@ export class DonateOption extends React.Component<IProps, IState> {
 
         this.state = {
             donateAmt: 0,
-            statusTxt: "",
+            status: <></>,
         }
 
         this.calculateRepGain = this.calculateRepGain.bind(this);
@@ -61,8 +63,9 @@ export class DonateOption extends React.Component<IProps, IState> {
             this.props.p.loseMoney(amt);
             const repGain = this.calculateRepGain(amt);
             this.props.faction.playerReputation += repGain;
-            dialogBoxCreate(`You just donated ${numeralWrapper.formatMoney(amt)} to ${fac.name} to gain ` +
-                            `${numeralWrapper.format(repGain, "0,0.000")} reputation`);
+            dialogBoxCreate(<>
+                You just donated {Money(amt)} to {fac.name} to gain {Reputation(repGain)} reputation
+            </>);
             this.props.rerender();
         }
     }
@@ -73,13 +76,13 @@ export class DonateOption extends React.Component<IProps, IState> {
         if (isNaN(amt)) {
             this.setState({
                 donateAmt: 0,
-                statusTxt: "Invalid donate amount entered!",
+                status: <>Invalid donate amount entered!</>,
             });
         } else {
             const repGain = this.calculateRepGain(amt);
             this.setState({
                 donateAmt: amt,
-                statusTxt: `This donation will result in ${numeralWrapper.format(repGain, "0,0.000")} reputation gain`,
+                status: <>This donation will result in {Reputation(repGain)} reputation gain</>,
             });
         }
     }
@@ -93,7 +96,7 @@ export class DonateOption extends React.Component<IProps, IState> {
                         onClick={this.donate}
                         text={"Donate Money"}
                     />
-                    <p style={this.blockStyle}>{this.state.statusTxt}</p>
+                    <p style={this.blockStyle}>{this.state.status}</p>
                 </div>
             </div>
         )

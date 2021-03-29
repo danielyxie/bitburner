@@ -16,6 +16,7 @@ import { numeralWrapper }               from "../../../ui/numeralFormat";
 
 import { PopupCloseButton }             from "../../../ui/React/PopupCloseButton";
 import { StdButton }                    from "../../../ui/React/StdButton";
+import { Money }                        from "../../../ui/React/Money";
 
 import { dialogBoxCreate }              from "../../../../utils/DialogBox";
 
@@ -92,7 +93,7 @@ export class CovenantPurchasesRoot extends React.Component<IProps, IState> {
                 <PopupCloseButton popup={PopupId} text={"Close"} />
                 <p>
                     Would you like to purchase an additional Duplicate Sleeve from The Covenant
-                    for {numeralWrapper.formatMoney(this.purchaseCost())}?
+                    for {Money(this.purchaseCost())}?
                 </p>
                 <br />
                 <p>

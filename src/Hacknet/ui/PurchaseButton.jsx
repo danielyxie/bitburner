@@ -7,6 +7,7 @@ import { hasHacknetServers,
          hasMaxNumberHacknetServers } from "../HacknetHelpers";
 import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
 
 export function PurchaseButton(props) {
     if (props.multiplier == null || props.onClick == null) {
@@ -20,13 +21,13 @@ export function PurchaseButton(props) {
     if (hasHacknetServers()) {
         if (hasMaxNumberHacknetServers()) {
             className = "std-button-disabled";
-            text = "Hacknet Server limit reached";
+            text = <>Hacknet Server limit reached</>;
             style = {color: "red"};
         } else {
-            text = `Purchase Hacknet Server - ${numeralWrapper.formatMoney(cost)}`;
+            text = <>Purchase Hacknet Server - {Money(cost)}</>;
         }
     } else {
-        text = `Purchase Hacknet Node  - ${numeralWrapper.formatMoney(cost)}`;
+        text = <>Purchase Hacknet Node  - {Money(cost)}</>;
     }
 
     return (

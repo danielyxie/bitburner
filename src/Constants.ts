@@ -236,7 +236,7 @@ export let CONSTANTS: IMap<any> = {
       It'll help you make more informed decisions.
 
     Misc.
-    * Hacknet hash upgrade names can now be clicked form the UI to copy to clipboard.
+    * Various UI elements can now be clicked to copy their text to clipboard.
     * Minor formatting.
     `
 }

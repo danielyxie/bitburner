@@ -10,7 +10,7 @@ interface IStdButtonProps {
     id?: string;
     onClick?: (e: React.MouseEvent<HTMLElement>) => any;
     style?: object;
-    text: string;
+    text: string | JSX.Element;
     tooltip?: string;
 }
 

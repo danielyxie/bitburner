@@ -16,6 +16,7 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { logBoxCreate } from "../../../utils/LogBox";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { arrayToString } from "../../../utils/helpers/arrayToString";
+import { Money } from "../React/Money";
 
 type IProps = {
     workerScript: WorkerScript;
@@ -52,14 +53,14 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
                 <pre>Args: {arrayToString(props.workerScript.args)}</pre>
                 <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
                 <pre>Offline Time: {convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</pre>
-                <pre>Total online production: {numeralWrapper.formatMoney(scriptRef.onlineMoneyMade)}</pre>
-                <pre>{(Array(26).join(" ") + numeralWrapper.formatBigNumber(scriptRef.onlineExpGained) + " hacking exp")}</pre>
-                <pre>Online production rate: {numeralWrapper.formatMoney(onlineMps)} / second</pre>
-                <pre>{(Array(25).join(" ") + numeralWrapper.formatBigNumber(onlineEps) + " hacking exp / second")}</pre>
-                <pre>Total offline production: {numeralWrapper.formatMoney(scriptRef.offlineMoneyMade)}</pre>
-                <pre>{(Array(27).join(" ") + numeralWrapper.formatBigNumber(scriptRef.offlineExpGained) + " hacking exp")}</pre>
-                <pre>Offline production rate: {numeralWrapper.formatMoney(offlineMps)} / second</pre>
-                <pre>{(Array(26).join(" ") + numeralWrapper.formatBigNumber(offlineEps) +  " hacking exp / second")}</pre>
+                <pre>Total online production: {Money(scriptRef.onlineMoneyMade)}</pre>
+                <pre>{(Array(26).join(" ") + numeralWrapper.formatExp(scriptRef.onlineExpGained) + " hacking exp")}</pre>
+                <pre>Online production rate: {Money(onlineMps)} / second</pre>
+                <pre>{(Array(25).join(" ") + numeralWrapper.formatExp(onlineEps) + " hacking exp / second")}</pre>
+                <pre>Total offline production: {Money(scriptRef.offlineMoneyMade)}</pre>
+                <pre>{(Array(27).join(" ") + numeralWrapper.formatExp(scriptRef.offlineExpGained) + " hacking exp")}</pre>
+                <pre>Offline production rate: {Money(offlineMps)} / second</pre>
+                <pre>{(Array(26).join(" ") + numeralWrapper.formatExp(offlineEps) +  " hacking exp / second")}</pre>
 
                 <AccordionButton
                     onClick={logClickHandler}

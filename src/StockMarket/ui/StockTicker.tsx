@@ -22,6 +22,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Accordion } from "../../ui/React/Accordion";
+import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import {
@@ -70,8 +71,8 @@ export class StockTicker extends React.Component<IProps, IState> {
             qty: "",
         }
 
-        this.getBuyTransactionCostText = this.getBuyTransactionCostText.bind(this);
-        this.getSellTransactionCostText = this.getSellTransactionCostText.bind(this);
+        this.getBuyTransactionCostContent = this.getBuyTransactionCostContent.bind(this);
+        this.getSellTransactionCostContent = this.getSellTransactionCostContent.bind(this);
         this.handleBuyButtonClick = this.handleBuyButtonClick.bind(this);
         this.handleBuyMaxButtonClick = this.handleBuyMaxButtonClick.bind(this);
         this.handleHeaderClick = this.handleHeaderClick.bind(this);
@@ -106,46 +107,40 @@ export class StockTicker extends React.Component<IProps, IState> {
         yesNoTxtInpBoxCreate(popupTxt);
     }
 
-    getBuyTransactionCostText(): string {
+    getBuyTransactionCostContent(): JSX.Element | null {
         const stock = this.props.stock;
         const qty: number = this.getQuantity();
-        if (isNaN(qty)) { return ""; }
+        if (isNaN(qty)) { return null; }
 
         const cost = getBuyTransactionCost(stock, qty, this.state.position);
-        if (cost == null) { return ""; }
+        if (cost == null) { return null; }
 
-        let costTxt = `Purchasing ${numeralWrapper.formatBigNumber(qty)} shares (${this.state.position === PositionTypes.Long ? "Long" : "Short"}) ` +
-                      `will cost ${numeralWrapper.formatMoney(cost)}. `;
-
-        return costTxt;
+        return <>Purchasing {numeralWrapper.formatShares(qty)} shares ({this.state.position === PositionTypes.Long ? "Long" : "Short"}) will cost {Money(cost)}.</>;
     }
 
     getQuantity(): number {
         return Math.round(parseFloat(this.state.qty));
     }
 
-    getSellTransactionCostText(): string {
+    getSellTransactionCostContent(): JSX.Element | null {
         const stock = this.props.stock;
         const qty: number = this.getQuantity();
-        if (isNaN(qty)) { return ""; }
+        if (isNaN(qty)) { return null; }
 
         if (this.state.position === PositionTypes.Long) {
             if (qty > stock.playerShares) {
-                return `You do not have this many shares in the Long position`;
+                return <>You do not have this many shares in the Long position</>;
             }
         } else {
             if (qty > stock.playerShortShares) {
-                return `You do not have this many shares in the Short position`;
+                return <>You do not have this many shares in the Short position</>;
             }
         }
 
         const cost = getSellTransactionGain(stock, qty, this.state.position);
-        if (cost == null) { return ""; }
+        if (cost == null) { return null; }
 
-        let costTxt = `Selling ${numeralWrapper.formatBigNumber(qty)} shares (${this.state.position === PositionTypes.Long ? "Long" : "Short"}) ` +
-                      `will result in a gain of ${numeralWrapper.formatMoney(cost)}. `;
-
-        return costTxt;
+        return <>Selling {numeralWrapper.formatShares(qty)} shares ({this.state.position === PositionTypes.Long ? "Long" : "Short"}) will result in a gain of {Money(cost)}.</>;
     }
 
     handleBuyButtonClick() {
@@ -380,8 +375,8 @@ export class StockTicker extends React.Component<IProps, IState> {
                                 }
                             </select>
 
-                            <StockTickerTxButton onClick={this.handleBuyButtonClick} text={"Buy"} tooltip={this.getBuyTransactionCostText()} />
-                            <StockTickerTxButton onClick={this.handleSellButtonClick} text={"Sell"} tooltip={this.getSellTransactionCostText()} />
+                            <StockTickerTxButton onClick={this.handleBuyButtonClick} text={"Buy"} tooltip={this.getBuyTransactionCostContent()} />
+                            <StockTickerTxButton onClick={this.handleSellButtonClick} text={"Sell"} tooltip={this.getSellTransactionCostContent()} />
                             <StockTickerTxButton onClick={this.handleBuyMaxButtonClick} text={"Buy MAX"} />
                             <StockTickerTxButton onClick={this.handleSellAllButtonClick} text={"Sell ALL"} />
                             <StockTickerPositionText p={this.props.p} stock={this.props.stock} />

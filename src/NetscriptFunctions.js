@@ -666,7 +666,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                 Player.gainHackingExp(expGainedOnSuccess);
                 workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.format(moneyGained, '$0.000a')} and ${numeralWrapper.format(expGainedOnSuccess, '0.000a')} exp (t=${threads})`);
+                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(expGainedOnSuccess)} exp (t=${threads})`);
                 server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
                 if (stock) {
                     influenceStockThroughServerHack(server, moneyGained);
@@ -679,7 +679,7 @@ function NetscriptFunctions(workerScript) {
                 // Player only gains 25% exp for failure?
                 Player.gainHackingExp(expGainedOnFailure);
                 workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.format(expGainedOnFailure, '0.000a')} exp (t=${threads})`);
+                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} exp (t=${threads})`);
                 return Promise.resolve(0);
             }
         });
@@ -889,7 +889,7 @@ function NetscriptFunctions(workerScript) {
                     expGain = 0;
                 }
                 const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
-                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.format(expGain, '0.000a')} hacking exp (t=${threads}).`);
+                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${threads}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 if (stock) {
@@ -933,7 +933,7 @@ function NetscriptFunctions(workerScript) {
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
                 var expGain = calculateHackingExpGain(server) * threads;
-                workerScript.log("weaken", `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.format(expGain, '0.000a')} hacking exp (t=${threads})`);
+                workerScript.log("weaken", `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${threads})`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads);
@@ -1559,10 +1559,10 @@ function NetscriptFunctions(workerScript) {
             if (failOnHacknetServer(server, "getServerMoneyAvailable")) { return 0; }
             if (server.hostname == "home") {
                 // Return player's money
-                workerScript.log("getServerMoneyAvailable", `returned player's money: ${numeralWrapper.format(Player.money.toNumber(), '$0.000a')}`);
+                workerScript.log("getServerMoneyAvailable", `returned player's money: ${numeralWrapper.formatMoney(Player.money.toNumber())}`);
                 return Player.money.toNumber();
             }
-            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.format(server.moneyAvailable, '$0.000a')} for '${server.hostname}`);
+            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.formatMoney(server.moneyAvailable)} for '${server.hostname}`);
             return server.moneyAvailable;
         },
         getServerSecurityLevel: function(ip) {
@@ -1597,7 +1597,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerMaxMoney", getRamCost("getServerMaxMoney"));
             const server = safeGetServer(ip, "getServerMaxMoney");
             if (failOnHacknetServer(server, "getServerMaxMoney")) { return 0; }
-            workerScript.log("getServerMaxMoney", `returned ${numeralWrapper.format(server.moneyMax, '$0.000a')} for '${server.hostname}'`);
+            workerScript.log("getServerMaxMoney", `returned ${numeralWrapper.formatMoney(server.moneyMax)} for '${server.hostname}'`);
             return server.moneyMax;
         },
         getServerGrowth: function(ip) {
@@ -2004,7 +2004,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (Player.money.lt(cost)) {
-                workerScript.log("purchaseServer", `Not enough money to purchase server. Need ${numeralWrapper.format(cost, '$0.000a')}`);
+                workerScript.log("purchaseServer", `Not enough money to purchase server. Need ${numeralWrapper.formatMoney(cost)}`);
                 return "";
             }
             var newServ = safetlyCreateUniqueServer({
@@ -2023,7 +2023,7 @@ function NetscriptFunctions(workerScript) {
             homeComputer.serversOnNetwork.push(newServ.ip);
             newServ.serversOnNetwork.push(homeComputer.ip);
             Player.loseMoney(cost);
-            workerScript.log("purchaseServer", `Purchased new server with hostname '${newServ.hostname}' for ${numeralWrapper.format(cost, '$0.000a')}`);
+            workerScript.log("purchaseServer", `Purchased new server with hostname '${newServ.hostname}' for ${numeralWrapper.formatMoney(cost)}`);
             return newServ.hostname;
         },
         deleteServer: function(hostname) {
@@ -2740,7 +2740,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if(Player.money.lt(item.price)) {
-                workerScript.log("purchaseProgram", `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.format(item.price, '$0.000a')}`);
+                workerScript.log("purchaseProgram", `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.formatMoney(item.price)}`);
                 return false;
             }
 
@@ -2885,7 +2885,7 @@ function NetscriptFunctions(workerScript) {
 
             const cost = Player.getUpgradeHomeRamCost();
             if (Player.money.lt(cost)) {
-                workerScript.log("upgradeHomeRam", `You don't have enough money. Need ${numeralWrapper.format(cost, '$0.000a')}`);
+                workerScript.log("upgradeHomeRam", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
                 return false;
             }
 
@@ -3040,7 +3040,7 @@ function NetscriptFunctions(workerScript) {
         joinFaction: function(name) {
             updateDynamicRam("joinFaction", getRamCost("joinFaction"));
             checkSingularityAccess("joinFaction", 2);
-            getFaction("workForFaction", name);
+            getFaction("joinFaction", name);
 
             if (!Player.factionInvitations.includes(name)) {
                 workerScript.log("joinFaction", `You have not been invited by faction '${name}'`);
@@ -3172,7 +3172,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
             if (Player.money.lt(amt)) {
-                workerScript.log("donateToFaction", `You do not have enough money to donate ${numeralWrapper.format(amt, '$0.000a')} to '${name}'`);
+                workerScript.log("donateToFaction", `You do not have enough money to donate ${numeralWrapper.formatMoney(amt)} to '${name}'`);
                 return false;
             }
             const repNeededToDonate = Math.round(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
@@ -3183,7 +3183,7 @@ function NetscriptFunctions(workerScript) {
             const repGain = amt / CONSTANTS.DonateMoneyToRepDivisor * Player.faction_rep_mult;
             faction.playerReputation += repGain;
             Player.loseMoney(amt);
-            workerScript.log("donateToFaction", `${numeralWrapper.format(amt, '$0.000a')} donated to '${name}' for ${numeralWrapper.format(repGain, '0.000a')} reputation`);
+            workerScript.log("donateToFaction", `${numeralWrapper.formatMoney(amt)} donated to '${name}' for ${numeralWrapper.formatReputation(repGain)} reputation`);
             return true;
         },
         createProgram: function(name) {

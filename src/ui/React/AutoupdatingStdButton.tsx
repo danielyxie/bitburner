@@ -11,7 +11,7 @@ interface IProps {
     intervalTime?: number;
     onClick?: (e: React.MouseEvent<HTMLElement>) => any;
     style?: object;
-    text: string;
+    text: string | JSX.Element;
     tooltip?: string;
 }
 

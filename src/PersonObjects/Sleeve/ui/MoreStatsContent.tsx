@@ -8,12 +8,12 @@ export function MoreStatsContent(sleeve: Sleeve): React.ReactElement {
     style = {textAlign: 'right'};
     return (<>
         {StatsTable([
-            ['Hacking: ', sleeve.hacking_skill, `(${numeralWrapper.formatBigNumber(sleeve.hacking_exp)} exp)`],
-            ['Strength: ', sleeve.strength, `(${numeralWrapper.formatBigNumber(sleeve.strength_exp)} exp)`],
-            ['Defense: ', sleeve.defense, `(${numeralWrapper.formatBigNumber(sleeve.defense_exp)} exp)`],
-            ['Dexterity: ', sleeve.dexterity, `(${numeralWrapper.formatBigNumber(sleeve.dexterity_exp)} exp)`],
-            ['Agility: ', sleeve.agility, `(${numeralWrapper.formatBigNumber(sleeve.agility_exp)} exp)`],
-            ['Charisma: ', sleeve.charisma, `(${numeralWrapper.formatBigNumber(sleeve.charisma_exp)} exp)`],
+            ['Hacking: ', sleeve.hacking_skill, `(${numeralWrapper.formatExp(sleeve.hacking_exp)} exp)`],
+            ['Strength: ', sleeve.strength, `(${numeralWrapper.formatExp(sleeve.strength_exp)} exp)`],
+            ['Defense: ', sleeve.defense, `(${numeralWrapper.formatExp(sleeve.defense_exp)} exp)`],
+            ['Dexterity: ', sleeve.dexterity, `(${numeralWrapper.formatExp(sleeve.dexterity_exp)} exp)`],
+            ['Agility: ', sleeve.agility, `(${numeralWrapper.formatExp(sleeve.agility_exp)} exp)`],
+            ['Charisma: ', sleeve.charisma, `(${numeralWrapper.formatExp(sleeve.charisma_exp)} exp)`],
         ], 'Stats:')}
         <br />
         {StatsTable([

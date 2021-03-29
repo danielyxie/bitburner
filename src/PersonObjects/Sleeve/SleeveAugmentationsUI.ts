@@ -11,6 +11,7 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
@@ -18,6 +19,8 @@ import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createPopup } from "../../../utils/uiHelpers/createPopup";
 import { createPopupCloseButton } from "../../../utils/uiHelpers/createPopupCloseButton";
 import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
+
+import { renderToStaticMarkup } from "react-dom/server"
 
 export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
     // Array of all owned Augmentations. Names only
@@ -86,7 +89,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             innerHTML:
             [
                 `<h2>${aug.name}</h2><br>`,
-                `Cost: ${numeralWrapper.formatMoney(aug.startingCost)}<br><br>`,
+                `Cost: ${renderToStaticMarkup(Money(aug.startingCost))}<br><br>`,
                 `${aug.info}`
             ].join(" "),
             padding: "2px",

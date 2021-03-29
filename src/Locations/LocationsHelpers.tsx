@@ -21,6 +21,7 @@ import { SpecialServerIps } from "../Server/SpecialServerIps";
 import { Settings } from "../Settings/Settings";
 
 import { numeralWrapper } from "../ui/numeralFormat";
+import { Money } from "../ui/React/Money";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import {
@@ -38,6 +39,7 @@ import { createElement } from "../../utils/uiHelpers/createElement";
 import { createPopup } from "../../utils/uiHelpers/createPopup";
 import { createPopupCloseButton } from "../../utils/uiHelpers/createPopupCloseButton";
 import { removeElementById } from "../../utils/uiHelpers/removeElementById";
+import * as React from "react";
 
 /**
  * Create a pop-up box that lets the player confirm traveling to a different city.
@@ -49,7 +51,7 @@ import { removeElementById } from "../../utils/uiHelpers/removeElementById";
  */
 type TravelFunction = (to: CityName) => void;
 export function createTravelPopup(destination: CityName, travelFn: TravelFunction): void {
-    const cost = CONSTANTS.TravelCost;
+    const cost: number = CONSTANTS.TravelCost;
 
     if (Settings.SuppressTravelConfirmation) {
         travelFn(destination);
@@ -76,8 +78,8 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
         return false;
     });
 
-    yesNoBoxCreate(`Would you like to travel to ${destination}? The trip will ` +
-                   `cost ${numeralWrapper.formatMoney(cost)}`);
+    yesNoBoxCreate(<span>Would you like to travel to ${destination}? The trip will
+        cost {Money(cost)}.</span>);
 }
 
 /**
@@ -105,10 +107,9 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
         yesNoTxtInpBoxClose();
     });
 
-    yesNoTxtInpBoxCreate(
-        `Would you like to purchase a new server with ${ram} GB of RAM for ` +
-        `${numeralWrapper.formatMoney(cost)}?<br><br>Please enter the server hostname below:<br>`
-    );
+    yesNoTxtInpBoxCreate(<>Would you like to purchase a new server with {numeralWrapper.formatRAM(ram)} of RAM for {Money(cost)}?
+        <br /><br />Please enter the server hostname below:<br />
+    </>);
 }
 
 /**
@@ -236,12 +237,10 @@ export function createUpgradeHomeCoresPopup(p: IPlayer) {
         yesNoBoxClose();
     });
 
-    yesNoBoxCreate(
-        "Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
-        "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
-        "Purchasing an additional core (for a total of " + (p.getHomeComputer().cpuCores + 1) + ") will " +
-        "cost " + numeralWrapper.formatMoney(cost)
-    );
+    yesNoBoxCreate(<>Would you like to purchase an additional CPU Core for your home computer? Each CPU Core 
+lets you start with an additional Core Node in Hacking Missions.<br /><br />
+Purchasing an additional core (for a total of {p.getHomeComputer().cpuCores + 1}) will 
+cost {Money(cost)}</>);
 }
 
 /**
@@ -267,11 +266,11 @@ export function createUpgradeHomeRamPopup(p: IPlayer) {
         yesNoBoxClose();
     });
 
-    yesNoBoxCreate(
-        "Would you like to purchase additional RAM for your home computer? <br><br>" +
-        "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
-        "This will cost " + numeralWrapper.format(cost, '$0.000a')
-    );
+    yesNoBoxCreate(<>
+        Would you like to purchase additional RAM for your home computer? <br /><br />
+        This will upgrade your RAM from {numeralWrapper.formatRAM(ram)} to {numeralWrapper.formatRAM(ram*2)}. <br /><br />
+        This will cost {Money(cost)}
+    </>);
 }
 
 

@@ -89,6 +89,8 @@ import { CharacterInfo } from "./ui/CharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { setSettingsLabels } from "./ui/setSettingsLabels";
+import { Money } from "./ui/React/Money";
+import { Hashes } from "./ui/React/Hashes";
 
 import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
@@ -1096,8 +1098,8 @@ const Engine = {
             // Hacknet Nodes offline progress
             var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
             const hacknetProdInfo = hasHacknetServers() ?
-                                    `${numeralWrapper.format(offlineProductionFromHacknetNodes, "0.000a")} hashes` :
-                                    `${numeralWrapper.formatMoney(offlineProductionFromHacknetNodes)}`;
+                                    Hashes(offlineProductionFromHacknetNodes):
+                                    Money(offlineProductionFromHacknetNodes);
 
             // Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
@@ -1150,9 +1152,7 @@ const Engine = {
             removeLoadingScreen();
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
             dialogBoxCreate(<>
-                Offline for {timeOfflineString}. While you were offline, your scripts generated
-                <span className='money-gold'> {numeralWrapper.formatMoney(offlineProductionFromScripts)} </span>
-                and your Hacknet Nodes generated <span className='money-gold'>{hacknetProdInfo}</span>.
+                Offline for {timeOfflineString}. While you were offline, your scripts generated {Money(offlineProductionFromScripts)} and your Hacknet Nodes generated {hacknetProdInfo} hashes.
             </>);
             // Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,

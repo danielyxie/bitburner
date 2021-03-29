@@ -48,8 +48,36 @@ class NumeralFormatter {
         return this.format(n, "0.000a");
     }
 
+    formatHp(n: number): string {
+        return this.format(n, "0.0");
+    }
+
     formatMoney(n: number): string {
         return this.format(n, "$0.000a");
+    }
+
+    formatSkill(n: number): string {
+        return this.format(n, "0,0");
+    }
+
+    formatExp(n: number): string {
+        return this.format(n, "0.000a");
+    }
+
+    formatHashes(n: number): string {
+        return this.format(n, "0.000a");
+    }
+
+    formatReputation(n: number): string {
+        return this.format(n, "0.000a");
+    }
+
+    formatFavor(n: number): string {
+        return this.format(n, "0,0");
+    }
+
+    formatRAM(n: number): string {
+        return this.format(n, "0.00")+"GB";
     }
 
     formatPercentage(n: number, decimalPlaces: number=2): string {
@@ -57,7 +85,48 @@ class NumeralFormatter {
         return this.format(n, formatter);
     }
 
+    formatServerSecurity(n: number, decimalPlaces: number=2): string {
+        return this.format(n, "0,0.000");
+    }
 
+    formatRespect(n: number): string {
+        return this.format(n, "0.00000a");
+    }
+
+    formatWanted(n: number): string {
+        return this.format(n, "0.00000a");
+    }
+
+    formatMultiplier(n: number): string {
+        return this.format(n, "0,0.00");
+    }
+
+    formatShock(n: number): string {
+        return this.format(n, "0,0.000");
+    }
+
+    formatSync(n: number): string {
+        return this.format(n, "0,0.000");
+    }
+
+    formatMemory(n: number): string {
+        return this.format(n, "0");
+    }
+
+    formatPopulation(n: number): string {
+        return this.format(n, "0.000a");
+    }
+
+    formatStamina(n: number): string {
+        return this.format(n, "0.0");
+    }
+
+    formatShares(n: number): string {
+        if (n < 1000) {
+            return this.format(n, "0");
+        }
+        return this.format(n, "0.000a");
+    }
 }
 
 export const numeralWrapper = new NumeralFormatter();
