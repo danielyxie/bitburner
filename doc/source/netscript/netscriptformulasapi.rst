@@ -30,11 +30,11 @@ These functions are under the ``formulas.hacknetNodes.`` namespace and available
 soon as you acquire Source-File 5-1.
 
 .. toctree::
-    calculateHacknetNodeCost() <formulasapi/hacknetNodes/calculateHacknetNodeCost>
-    calculateMoneyGainRate() <formulasapi/hacknetNodes/calculateMoneyGainRate>
-    calculateLevelUpgradeCost() <formulasapi/hacknetNodes/calculateLevelUpgradeCost>
-    calculateRamUpgradeCost() <formulasapi/hacknetNodes/calculateRamUpgradeCost>
-    calculateCoreUpgradeCost() <formulasapi/hacknetNodes/calculateCoreUpgradeCost>
+    hacknetNodeCost() <formulasapi/hacknetNodes/hacknetNodeCost>
+    moneyGainRate() <formulasapi/hacknetNodes/moneyGainRate>
+    levelUpgradeCost() <formulasapi/hacknetNodes/levelUpgradeCost>
+    ramUpgradeCost() <formulasapi/hacknetNodes/ramUpgradeCost>
+    coreUpgradeCost() <formulasapi/hacknetNodes/coreUpgradeCost>
     constants() <formulasapi/hacknetNodes/constants>
 
 hacknetServers formulas
@@ -44,11 +44,11 @@ These functions are under the ``formulas.hacknetServers.`` namespace.
 These functions require Source-File 5-1 and Source-File 9-1 to be invoked.
 
 .. toctree::
-    calculateHacknetServerCost() <formulasapi/hacknetServers/calculateHacknetServerCost>
-    calculateHashGainRate() <formulasapi/hacknetServers/calculateHashGainRate>
-    calculateLevelUpgradeCost() <formulasapi/hacknetServers/calculateLevelUpgradeCost>
-    calculateRamUpgradeCost() <formulasapi/hacknetServers/calculateRamUpgradeCost>
-    calculateCoreUpgradeCost() <formulasapi/hacknetServers/calculateCoreUpgradeCost>
-    calculateCacheUpgradeCost() <formulasapi/hacknetServers/calculateCacheUpgradeCost>
-    calculateHashUpgradeCost() <formulasapi/hacknetServers/calculateHashUpgradeCost>
+    hacknetServerCost() <formulasapi/hacknetServers/hacknetServerCost>
+    hashGainRate() <formulasapi/hacknetServers/hashGainRate>
+    levelUpgradeCost() <formulasapi/hacknetServers/levelUpgradeCost>
+    ramUpgradeCost() <formulasapi/hacknetServers/ramUpgradeCost>
+    coreUpgradeCost() <formulasapi/hacknetServers/coreUpgradeCost>
+    cacheUpgradeCost() <formulasapi/hacknetServers/cacheUpgradeCost>
+    hashUpgradeCost() <formulasapi/hacknetServers/hashUpgradeCost>
     constants() <formulasapi/hacknetServers/constants>

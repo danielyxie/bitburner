@@ -1,7 +1,7 @@
-calculateHashUpgradeCost() Netscript Function
+hashUpgradeCost() Netscript Function
 =============================================
 
-.. js:function:: calculateHashUpgradeCost(upgName, level)
+.. js:function:: hashUpgradeCost(upgName, level)
 
     :RAM cost: 0 GB
     :param string upgName: Name of the Hash upgrade.
@@ -16,4 +16,4 @@ calculateHashUpgradeCost() Netscript Function
 
     .. code-block:: javascript
 
-        formulas.hacknetServers.calculateHashUpgradeCost("Increase Maximum Money", 5); // returns: 250
+        formulas.hacknetServers.hashUpgradeCost("Increase Maximum Money", 5); // returns: 250

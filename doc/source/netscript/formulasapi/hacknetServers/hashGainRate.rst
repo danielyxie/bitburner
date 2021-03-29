@@ -1,7 +1,7 @@
-calculateHashGainRate() Netscript Function
+hashGainRate() Netscript Function
 ==========================================
 
-.. js:function:: calculateHashGainRate(level, ram, core[, mult])
+.. js:function:: hashGainRate(level, ram, core[, mult])
 
     :RAM cost: 0 GB
     :param number level: level of the server.
@@ -18,7 +18,7 @@ calculateHashGainRate() Netscript Function
     .. code-block:: javascript
 
         server = hacknet.getNodeStats(1);
-        currentRate = formulas.hacknetNodes.calculateHashGainRate(server.level, server.ram, server.cores);
-        levelRate = formulas.hacknetNodes.calculateHashGainRate(server.level+1, server.ram, server.cores);
-        ramRate = formulas.hacknetNodes.calculateHashGainRate(server.level, server.ram*2, server.cores);
-        coresRate = formulas.hacknetNodes.calculateHashGainRate(server.level, server.ram, server.cores+1);
+        currentRate = formulas.hacknetNodes.hashGainRate(server.level, server.ram, server.cores);
+        levelRate = formulas.hacknetNodes.hashGainRate(server.level+1, server.ram, server.cores);
+        ramRate = formulas.hacknetNodes.hashGainRate(server.level, server.ram*2, server.cores);
+        coresRate = formulas.hacknetNodes.hashGainRate(server.level, server.ram, server.cores+1);

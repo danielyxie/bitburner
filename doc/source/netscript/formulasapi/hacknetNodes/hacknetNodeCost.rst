@@ -1,7 +1,7 @@
-calculateHacknetNodeCost() Netscript Function
+hacknetNodeCost() Netscript Function
 =============================================
 
-.. js:function:: calculateHacknetNodeCost(nodeN[, costMult]])
+.. js:function:: hacknetNodeCost(nodeN[, costMult]])
 
     :RAM cost: 0 GB
     :param number nodeN: Number of the new node.
@@ -16,4 +16,4 @@ calculateHacknetNodeCost() Netscript Function
 
     .. code-block:: javascript
 
-        formulas.hacknetNodes.calculateHacknetNodeCost(2); // returns: 1800
+        formulas.hacknetNodes.hacknetNodeCost(2); // returns: 1800

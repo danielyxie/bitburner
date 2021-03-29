@@ -1,7 +1,7 @@
-calculateRamUpgradeCost() Netscript Function
+ramUpgradeCost() Netscript Function
 =============================================
 
-.. js:function:: calculateRamUpgradeCost(startingRam[, extraRamLevels[, costMult]])
+.. js:function:: ramUpgradeCost(startingRam[, extraRamLevels[, costMult]])
 
     :RAM cost: 0 GB
     :param number startingRam: Amount of RAM at the start the calculation.
@@ -19,4 +19,4 @@ calculateRamUpgradeCost() Netscript Function
 
     .. code-block:: javascript
 
-        formulas.hacknetServers.calculateRamUpgradeCost(1, 5); // returns: 15810000
+        formulas.hacknetServers.ramUpgradeCost(1, 5); // returns: 15810000

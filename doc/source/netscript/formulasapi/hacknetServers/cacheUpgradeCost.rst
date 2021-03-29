@@ -1,7 +1,7 @@
-calculateCacheUpgradeCost() Netscript Function
+cacheUpgradeCost() Netscript Function
 ==============================================
 
-.. js:function:: calculateCacheUpgradeCost(startingCache[, extraCacheLevels[, costMult]])
+.. js:function:: cacheUpgradeCost(startingCache[, extraCacheLevels[, costMult]])
 
     :RAM cost: 0 GB
     :param number startingCache: Cache level at the start the calculation.
@@ -17,4 +17,4 @@ calculateCacheUpgradeCost() Netscript Function
 
     .. code-block:: javascript
 
-        formulas.hacknetServers.calculateCacheUpgradeCost(1, 5); // returns: 243170000
+        formulas.hacknetServers.cacheUpgradeCost(1, 5); // returns: 243170000

@@ -1,7 +1,7 @@
-calculateLevelUpgradeCost() Netscript Function
-=============================================
+levelUpgradeCost() Netscript Function
+==============================================
 
-.. js:function:: calculateLevelUpgradeCost(startingLevel[, extraLevels[, costMult]])
+.. js:function:: levelUpgradeCost(startingLevel[, extraLevels[, costMult]])
 
     :RAM cost: 0 GB
     :param number startingLevel: Number of level at the start the calculation.
@@ -9,7 +9,7 @@ calculateLevelUpgradeCost() Netscript Function
     :param number costMult: Aug multiplier that reduces cost. Defaults to ``1``.
     :returns: Money required to go from ``startingLevel`` to ``startingLevel+extraLevels``.
 
-    You must have Source-File 5-1 and Source-File 9-1 in order to use this function.
+    You must have Source-File 5-1 in order to use this function.
 
     This function calculates the cost of upgrading levels from any level to any level.
 
@@ -17,4 +17,4 @@ calculateLevelUpgradeCost() Netscript Function
 
     .. code-block:: javascript
 
-        formulas.hacknetServers.calculateLevelUpgradeCost(1, 5); // returns: 2792000
+        formulas.hacknetNodes.levelUpgradeCost(1, 5); // returns: 2816
