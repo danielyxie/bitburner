@@ -1229,9 +1229,7 @@ export function startClass(costMult, expMult, className) {
 
     this.className = className;
 
-    var gameCPS = 1000 / Engine._idleSpeed;
-
-    const baseGymExp                  = 1;
+    const gameCPS = 1000 / Engine._idleSpeed;
 
     //Find cost and exp gain per game cycle
     var cost = 0;
@@ -1263,19 +1261,19 @@ export function startClass(costMult, expMult, className) {
             break;
         case CONSTANTS.ClassGymStrength:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            strExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            strExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDefense:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            defExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            defExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDexterity:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            dexExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            dexExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymAgility:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            agiExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            agiExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         default:
             throw new Error("ERR: Invalid/unrecognized class name");
