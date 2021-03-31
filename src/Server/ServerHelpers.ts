@@ -4,6 +4,7 @@ import {
     ipExists,
 } from "./AllServers";
 import { Server, IConstructorParams } from "./Server";
+import { calculateServerGrowth } from "./formulas/grow";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
@@ -59,21 +60,8 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer) {
 }
 
 //Applied server growth for a single server. Returns the percentage growth
-export function processSingleServerGrowth(server: Server, numCycles: number, p: IPlayer) {
-    //Server growth processed once every 450 game cycles
-    const numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
-
-    //Get adjusted growth rate, which accounts for server security
-    const growthRate = CONSTANTS.ServerBaseGrowthRate;
-    var adjGrowthRate = 1 + (growthRate - 1) / server.hackDifficulty;
-    if (adjGrowthRate > CONSTANTS.ServerMaxGrowthRate) {adjGrowthRate = CONSTANTS.ServerMaxGrowthRate;}
-
-    //Calculate adjusted server growth rate based on parameters
-    const serverGrowthPercentage = server.serverGrowth / 100;
-    const numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate;
-
-    //Apply serverGrowth for the calculated number of growth cycles
-    let serverGrowth = Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * p.hacking_grow_mult);
+export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer) {
+    let serverGrowth = calculateServerGrowth(server, threads, p);
     if (serverGrowth < 1) {
         console.warn("serverGrowth calculated to be less than 1");
         serverGrowth = 1;

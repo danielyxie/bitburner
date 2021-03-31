@@ -9,3 +9,4 @@ they contain spoilers for the game.
 .. toctree::
 
     getBitNodeMultipliers() <advancedfunctions/getBitNodeMultipliers>
+    getServer() <advancedfunctions/getServer>

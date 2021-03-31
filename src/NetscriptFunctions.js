@@ -29,6 +29,7 @@ import {
     calculateGrowTime,
     calculateWeakenTime
 } from "./Hacking";
+import { calculateServerGrowth } from "./Server/formulas/grow";
 import {
     AllGangs,
     GangMemberUpgrades,
@@ -881,7 +882,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); // It can be grown even if it has no money
-                var growthPercentage = processSingleServerGrowth(server, 450 * threads, Player);
+                var growthPercentage = processSingleServerGrowth(server, threads, Player);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = calculateHackingExpGain(server, Player) * threads;
@@ -2772,7 +2773,14 @@ function NetscriptFunctions(workerScript) {
             workerScript.log("purchaseProgram", `You have purchased the '${item.program}' program. The new program can be found on your home computer.`);
             return true;
         },
+        getCurrentServer: function() {
+            updateDynamicRam("getCurrentServer", getRamCost("getCurrentServer"));
+            checkSingularityAccess("getCurrentServer", 1);
+            return Player.getCurrentServer().hostname;
+        },
         connect: function(hostname) {
+            updateDynamicRam("connect", getRamCost("connect"));
+            checkSingularityAccess("connect", 1);
             if (!hostname) {
                 throw makeRuntimeErrorMsg("connect", `Invalid hostname: '${hostname}'`);
             }
@@ -4264,9 +4272,9 @@ function NetscriptFunctions(workerScript) {
                     checkFormulasAccess("basic.hackPercent", 5);
                     return calculatePercentMoneyHacked(server, player);
                 },
-                growPercent: function(server, player) {
+                growPercent: function(server, threads, player) {
                     checkFormulasAccess("basic.growPercent", 5);
-                    return (function(a, b){ return ""})(server, player);
+                    return calculateServerGrowth(server, threads, player);
                 },
                 hackTime: function(server, player) {
                     checkFormulasAccess("basic.hackTime", 5);

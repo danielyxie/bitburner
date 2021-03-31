@@ -1185,7 +1185,6 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
         for (let j = 0; j < upgradeArray.length; ++j) {
             let upg = upgradeArray[j];
             (function (upg, div, memberObj, i, gang) {
-                console.log(renderToStaticMarkup(Money(upg.getCost(gang))));
                 let createElementParams = {
                     innerHTML: `${upg.name} - ${renderToStaticMarkup(Money(upg.getCost(gang)))}`,
                     class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
