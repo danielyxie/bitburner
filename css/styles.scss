@@ -368,6 +368,15 @@ a:visited {
     font-size: inherit;
 }
 
+.noscrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 input[type=checkbox] {
     filter: invert(1) sepia(1) hue-rotate(41deg) brightness(100%) saturate(10);
 }

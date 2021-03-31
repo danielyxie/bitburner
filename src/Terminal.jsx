@@ -481,7 +481,7 @@ let Terminal = {
         Terminal.hackFlag = true;
 
         // Hacking through Terminal should be faster than hacking through a script
-        Terminal.actionTime = calculateHackingTime(Player.getCurrentServer()) / 4;
+        Terminal.actionTime = calculateHackingTime(Player.getCurrentServer(), Player) / 4;
         Terminal.startAction();
     },
 
@@ -517,9 +517,9 @@ let Terminal = {
             var server = Player.getCurrentServer();
 
 			// Calculate whether hack was successful
-			var hackChance = calculateHackingChance(server);
+			var hackChance = calculateHackingChance(server, Player);
 			var rand = Math.random();
-			var expGainedOnSuccess = calculateHackingExpGain(server);
+			var expGainedOnSuccess = calculateHackingExpGain(server, Player);
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) { // Success!
                 if (SpecialServerIps[SpecialServerNames.WorldDaemon] &&
@@ -531,7 +531,7 @@ let Terminal = {
                     return;
                 }
                 server.manuallyHacked = true;
-				var moneyGained = calculatePercentMoneyHacked(server);
+				var moneyGained = calculatePercentMoneyHacked(server, Player);
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
 				if (moneyGained <= 0) {moneyGained = 0;} // Safety check
@@ -573,7 +573,7 @@ let Terminal = {
             post("Root Access: " + rootAccess);
 			if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
 			post("Server security level: " + numeralWrapper.formatServerSecurity(currServ.hackDifficulty));
-			post("Chance to hack: " + numeralWrapper.formatPercentage(calculateHackingChance(currServ)));
+			post("Chance to hack: " + numeralWrapper.formatPercentage(calculateHackingChance(currServ, Player)));
 			post("Time to hack: " + convertTimeMsToTimeElapsedString(calculateHackingTime(currServ)*1000));
 			postElement(<>Total money available on server: {Money(currServ.moneyAvailable)}</>);
 			if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
@@ -2118,9 +2118,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post(`Netscript hack() execution time: ${convertTimeMsToTimeElapsedString(calculateHackingTime(targetServer)*1000)}`);
-            post(`Netscript grow() execution time: ${convertTimeMsToTimeElapsedString(calculateGrowTime(targetServer)*1000)}`);
-            post(`Netscript weaken() execution time: ${convertTimeMsToTimeElapsedString(calculateWeakenTime(targetServer)*1000)}`);
+            post(`Netscript hack() execution time: ${convertTimeMsToTimeElapsedString(calculateHackingTime(targetServer, Player)*1000)}`);
+            post(`Netscript grow() execution time: ${convertTimeMsToTimeElapsedString(calculateGrowTime(targetServer, Player)*1000)}`);
+            post(`Netscript weaken() execution time: ${convertTimeMsToTimeElapsedString(calculateWeakenTime(targetServer, Player)*1000)}`);
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");
