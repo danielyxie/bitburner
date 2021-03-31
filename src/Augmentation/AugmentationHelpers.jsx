@@ -1704,7 +1704,7 @@ function initAugmentations() {
     const HydroflameLeftArm = new Augmentation({
         name:AugmentationNames.HydroflameLeftArm, repCost:600e3, moneyCost:200e9,
         info:"The left arm of a legendary BitRunner who ascended beyond this world. " +
-             "It projects an energy shield that protect the exposed inner parts." +
+             "It projects an energy shield that protect the exposed inner parts. " +
              "While it contains no weapon, the advanced titanium components " +
              "increase strength to never-before-seen levels.<br><br>" +
              "This augmentation increases the user's strength by 300%.",
