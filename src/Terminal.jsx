@@ -574,7 +574,7 @@ let Terminal = {
 			if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
 			post("Server security level: " + numeralWrapper.formatServerSecurity(currServ.hackDifficulty));
 			post("Chance to hack: " + numeralWrapper.formatPercentage(calculateHackingChance(currServ, Player)));
-			post("Time to hack: " + convertTimeMsToTimeElapsedString(calculateHackingTime(currServ)*1000));
+			post("Time to hack: " + convertTimeMsToTimeElapsedString(calculateHackingTime(currServ, Player)*1000));
 			postElement(<>Total money available on server: {Money(currServ.moneyAvailable)}</>);
 			if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
 
