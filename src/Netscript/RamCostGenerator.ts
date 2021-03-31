@@ -177,6 +177,7 @@ export const RamCosts: IMap<any> = {
     travelToCity: () => RamCostConstants.ScriptSingularityFn1RamCost,
     purchaseTor: () => RamCostConstants.ScriptSingularityFn1RamCost,
     purchaseProgram: () => RamCostConstants.ScriptSingularityFn1RamCost,
+    getCurrentServer: () => RamCostConstants.ScriptSingularityFn1RamCost,
     connect: () => RamCostConstants.ScriptSingularityFn1RamCost,
     manualHack: () => RamCostConstants.ScriptSingularityFn1RamCost,
     getStats: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,

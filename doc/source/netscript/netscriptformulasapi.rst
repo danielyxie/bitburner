@@ -21,6 +21,13 @@ soon as you acquire Source-File 5-1
 .. toctree::
     calculateSkill() <formulasapi/basic/calculateSkill>
     calculateExp() <formulasapi/basic/calculateExp>
+    growTime() <formulasapi/basic/growTime>
+    hackTime() <formulasapi/basic/hackTime>
+    weakenTime() <formulasapi/basic/weakenTime>
+    growPercent() <formulasapi/basic/growPercent>
+    hackPercent() <formulasapi/basic/hackPercent>
+    hackChance() <formulasapi/basic/hackChance>
+    hackExp() <formulasapi/basic/hackExp>
 
 
 hacknetNodes formulas

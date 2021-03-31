@@ -24,10 +24,10 @@ level 3, then you will be able to access all of the Singularity Functions.
     travelToCity() <singularityfunctions/travelToCity>
     purchaseTor() <singularityfunctions/purchaseTor>
     purchaseProgram() <singularityfunctions/purchaseProgram>
+    getCurrentServer() <singularityfunctions/getCurrentServer>
     connect() <singularityfunctions/connect>
     manualHack() <singularityfunctions/manualHack>
-    getStats() <singularityfunctions/getStats>
-    getCharacterInformation() <singularityfunctions/getCharacterInformation>
+    getPlayer() <singularityfunctions/getPlayer>
     isBusy() <singularityfunctions/isBusy>
     stopAction() <singularityfunctions/stopAction>
     upgradeHomeRam() <singularityfunctions/upgradeHomeRam>
@@ -57,3 +57,10 @@ level 3, then you will be able to access all of the Singularity Functions.
     purchaseAugmentation() <singularityfunctions/purchaseAugmentation>
     installAugmentations() <singularityfunctions/installAugmentations>
     softReset() <singularityfunctions/softReset>
+
+
+.. toctree::
+    :caption: Deprecated:
+
+    getStats() <singularityfunctions/getStats>
+    getCharacterInformation() <singularityfunctions/getCharacterInformation>

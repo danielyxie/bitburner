@@ -353,8 +353,23 @@ a:visited {
 .charisma-purple {
   color: #a671d1; }
 
+.reputation {
+  color: #faffdf; }
+
 .smallfont {
   font-size: 13px; }
+
+.samefont {
+  font-size: inherit; }
+
+.noscrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */ }
+
+.noscrollbar::-webkit-scrollbar {
+  display: none; }
 
 input[type=checkbox] {
   filter: invert(1) sepia(1) hue-rotate(41deg) brightness(100%) saturate(10); }
@@ -386,6 +401,13 @@ input[type=checkbox] {
   height: 10px;
   background: var(--my-font-color);
   cursor: pointer; }
+
+.noselect {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 /* COLORS */
 /* Attributes */
@@ -459,6 +481,43 @@ input[type=checkbox] {
 .tooltip:hover .tooltiptextleft,
 .tooltip:hover .tooltiptextlow {
   visibility: visible; }
+
+.copy_tooltip {
+  position: relative;
+  display: inline-block; }
+
+.copy_tooltip_copied {
+  color: #fff;
+  transition: color 0.3s; }
+
+.copy_tooltip .copy_tooltip_text {
+  visibility: hidden;
+  font-size: 15px;
+  padding: 5px;
+  background-color: var(--my-background-color);
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 5%;
+  opacity: 0;
+  border: 2px solid var(--my-highlight-color); }
+
+.copy_tooltip .copy_tooltip_text::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent white transparent; }
+
+.copy_tooltip .copy_tooltip_text_visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s; }
 
 /* COLORS */
 /* Attributes */

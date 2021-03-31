@@ -334,7 +334,7 @@ export function scriptCalculateOfflineProduction(runningScriptObj) {
             if (serv == null) {continue;}
             var timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
             runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            var growth = processSingleServerGrowth(serv, timesGrown * 450, Player);
+            var growth = processSingleServerGrowth(serv, timesGrown, Player);
             runningScriptObj.log(serv.hostname + " grown by " + numeralWrapper.format(growth * 100 - 100, '0.000000%') + " from grow() calls made while offline");
         }
     }
