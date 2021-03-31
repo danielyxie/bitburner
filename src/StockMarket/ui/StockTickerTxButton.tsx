@@ -7,7 +7,7 @@ import * as React from "react";
 type IProps = {
     onClick: () => void;
     text: string;
-    tooltip?: string;
+    tooltip?: JSX.Element | null;
 }
 
 type IInnerHTMLMarkup = {
@@ -17,16 +17,9 @@ type IInnerHTMLMarkup = {
 export function StockTickerTxButton(props: IProps): React.ReactElement {
     let className = "stock-market-input std-button";
 
-    const hasTooltip = (typeof props.tooltip === "string" && props.tooltip !== "");
+    const hasTooltip = (props.tooltip != null);
     if (hasTooltip) {
         className += " tooltip";
-    }
-
-    let tooltipMarkup: IInnerHTMLMarkup | null;
-    if (hasTooltip) {
-        tooltipMarkup = {
-            __html: props.tooltip!
-        }
     }
 
     return (
@@ -34,7 +27,7 @@ export function StockTickerTxButton(props: IProps): React.ReactElement {
             {props.text}
             {
                 hasTooltip &&
-                <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
+                <span className={"tooltiptext"}>{props.tooltip!}</span>
             }
         </button>
     )

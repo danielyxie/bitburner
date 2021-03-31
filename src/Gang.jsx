@@ -35,6 +35,14 @@ import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
+import { StatsTable } from "./ui/React/StatsTable";
+import { Money } from "./ui/React/Money";
+import { MoneyRate } from "./ui/React/MoneyRate";
+import { Reputation } from "./ui/React/Reputation";
+
+import React from "react";
+import ReactDOM from "react-dom";
+import { renderToStaticMarkup } from "react-dom/server"
 
 // Constants
 const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
@@ -492,15 +500,15 @@ Gang.prototype.ascendMember = function(memberObj, workerScript) {
         if (workerScript == null) {
             dialogBoxCreate([`You ascended ${memberObj.name}!`,
                              "",
-                             `Your gang lost ${numeralWrapper.format(res.respect, "0.000a")} respect`,
+                             `Your gang lost ${numeralWrapper.formatRespect(res.respect)} respect`,
                              "",
                              `${memberObj.name} gained the following stat multipliers for ascending:`,
-                             `Hacking: ${numeralWrapper.format(res.hack, "0.000%")}`,
-                             `Strength: ${numeralWrapper.format(res.str, "0.000%")}`,
-                             `Defense: ${numeralWrapper.format(res.def, "0.000%")}`,
-                             `Dexterity: ${numeralWrapper.format(res.dex, "0.000%")}`,
-                             `Agility: ${numeralWrapper.format(res.agi, "0.000%")}`,
-                             `Charisma: ${numeralWrapper.format(res.cha, "0.000%")}`].join("<br>"));
+                             `Hacking: ${numeralWrapper.formatPercentage(res.hack, 3)}`,
+                             `Strength: ${numeralWrapper.formatPercentage(res.str, 3)}`,
+                             `Defense: ${numeralWrapper.formatPercentage(res.def, 3)}`,
+                             `Dexterity: ${numeralWrapper.formatPercentage(res.dex, 3)}`,
+                             `Agility: ${numeralWrapper.formatPercentage(res.agi, 3)}`,
+                             `Charisma: ${numeralWrapper.formatPercentage(res.cha, 3)}`].join("<br>"));
         } else {
             workerScript.log(`Ascended Gang member ${memberObj.name}`);
         }
@@ -1044,14 +1052,14 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
             type:"text", placeholder:"Filter gang members",
             class: "text-input",
             value:initialFilter,
-            onkeyup:()=>{
+            onkeyup:() => {
                 var filterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
                 this.createGangMemberUpgradeBox(player, filterValue);
             }
         });
 
         UIElems.gangMemberUpgradeBoxDiscount = createElement("p", {
-            innerText: "Discount: -" + numeralWrapper.format(1 - 1 / this.getDiscount(), "0.00%"),
+            innerText: "Discount: -" + numeralWrapper.formatPercentage(1 - 1 / this.getDiscount()),
             marginLeft: "6px",
             tooltip: "You get a discount on equipment and upgrades based on your gang's " +
                      "respect and power. More respect and power leads to more discounts."
@@ -1178,10 +1186,10 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
             let upg = upgradeArray[j];
             (function (upg, div, memberObj, i, gang) {
                 let createElementParams = {
-                    innerText: upg.name + " - " + numeralWrapper.format(upg.getCost(gang), "$0.000a"),
+                    innerHTML: `${upg.name} - ${renderToStaticMarkup(Money(upg.getCost(gang)))}`,
                     class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
                     fontSize:"11px",
-                    clickListener:()=>{
+                    clickListener:() => {
                         memberObj.buyUpgrade(upg, player, gangObj);
                         return false;
                     }
@@ -1266,7 +1274,7 @@ Gang.prototype.displayGangContent = function(player) {
         // Back button
         UIElems.gangContainer.appendChild(createElement("a", {
             class:"a-link-button", display:"inline-block", innerText:"Back",
-            clickListener:()=>{
+            clickListener:() => {
                 Engine.loadFactionContent();
                 displayFactionContent(facName);
                 return false;
@@ -1277,7 +1285,7 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.managementButton = createElement("a", {
             id:"gang-management-subpage-button", class:"a-link-button-inactive",
             display:"inline-block", innerHTML: "Gang Management (Alt+1)",
-            clickListener:()=>{
+            clickListener:() => {
                 UIElems.gangManagementSubpage.style.display = "block";
                 UIElems.gangTerritorySubpage.style.display = "none";
                 UIElems.managementButton.classList.toggle("a-link-button-inactive");
@@ -1340,7 +1348,7 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.gangRecruitMemberButton = createElement("a", {
             id: "gang-management-recruit-member-btn", class:"a-link-button-inactive",
             innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
-            clickListener:()=>{
+            clickListener:() => {
                 const popupId = "recruit-gang-member-popup";
 
                 let yesBtn;
@@ -1408,7 +1416,7 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.gangExpandAllButton = createElement("a", {
             class:"a-link-button", display:"inline-block",
             innerHTML:"Expand All",
-            clickListener:()=>{
+            clickListener:() => {
                 var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
                 for (var i = 0; i < allHeaders.length; ++i) {
                     var hdr = allHeaders[i];
@@ -1422,7 +1430,7 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.gangCollapseAllButton = createElement("a", {
             class:"a-link-button", display:"inline-block",
             innerHTML:"Collapse All",
-            clickListener:()=>{
+            clickListener:() => {
                 var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
                 for (var i = 0; i < allHeaders.length; ++i) {
                     var hdr = allHeaders[i];
@@ -1436,7 +1444,7 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.gangMemberFilter = createElement("input", {
             type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
             class:"text-input",
-            onkeyup:()=>{
+            onkeyup:() => {
                 this.displayGangMemberList();
             }
         });
@@ -1584,13 +1592,13 @@ Gang.prototype.updateGangContent = function() {
 
     if (UIElems.gangMemberUpgradeBoxOpened) {
         UIElems.gangMemberUpgradeBoxDiscount.childNodes[0].nodeValue =
-            "Discount: -" + numeralWrapper.format(1 - 1 / this.getDiscount(), "0.00%");
+            "Discount: -" + numeralWrapper.formatPercentage(1 - 1 / this.getDiscount());
     }
 
     if (UIElems.gangTerritorySubpage.style.display === "block") {
         // Territory Warfare Clash Chance
         UIElems.gangTerritoryWarfareClashChance.innerText =
-            `Territory Clash Chance: ${numeralWrapper.format(this.territoryClashChance, '0.000%')}`;
+            `Territory Clash Chance: ${numeralWrapper.formatPercentage(this.territoryClashChance, 3)}`;
 
         // Engaged in Territory Warfare checkbox
         UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
@@ -1623,7 +1631,7 @@ Gang.prototype.updateGangContent = function() {
                     const clashVictoryChance = playerPower / (gangTerritoryInfo.power + playerPower);
                     let newHTML = `<u>${gangname}</u><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
                     newHTML += `Territory: ${displayNumber}%<br>`;
-                    newHTML += `Chance to win clash with this gang: ${numeralWrapper.format(clashVictoryChance, "0.000%")}<br><br>`;
+                    newHTML += `Chance to win clash with this gang: ${numeralWrapper.formatPercentage(clashVictoryChance, 3)}<br><br>`;
                     UIElems.gangTerritoryInfoText.innerHTML += newHTML;
                 }
             }
@@ -1641,8 +1649,8 @@ Gang.prototype.updateGangContent = function() {
             removeChildrenFromElement(UIElems.gangInfo);
             UIElems.gangInfo.appendChild(createElement("p", { // Respect
                 display: "inline-block",
-                innerText: "Respect: " + numeralWrapper.format(this.respect, '0.00000a') +
-                           " (" + numeralWrapper.format(5*this.respectGainRate, '0.00000a') + " / sec)",
+                innerText: "Respect: " + numeralWrapper.formatRespect(this.respect) +
+                           " (" + numeralWrapper.formatRespect(5*this.respectGainRate) + " / sec)",
                 tooltip: "Represents the amount of respect your gang has from other gangs and criminal " +
                          "organizations. Your respect affects the amount of money " +
                          "your gang members will earn, and also determines how much " +
@@ -1652,8 +1660,8 @@ Gang.prototype.updateGangContent = function() {
 
             UIElems.gangInfo.appendChild(createElement("p", { // Wanted level
                 display: "inline-block",
-                innerText: "Wanted Level: " + numeralWrapper.format(this.wanted, '0.00000a') +
-                           " (" + numeralWrapper.format(5*this.wantedGainRate, '0.00000a') + " / sec)",
+                innerText: "Wanted Level: " + numeralWrapper.formatWanted(this.wanted) +
+                           " (" + numeralWrapper.formatWanted(5*this.wantedGainRate) + " / sec)",
                 tooltip: "Represents how much the gang is wanted by law enforcement. The higher " +
                          "your gang's wanted level, the harder it will be for your gang members " +
                          "to make money and earn respect. Note that the minimum wanted level is 1."
@@ -1669,10 +1677,9 @@ Gang.prototype.updateGangContent = function() {
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
 
-            UIElems.gangInfo.appendChild(createElement("p", { // Money gain rate
-                display: "inline-block",
-                innerText: `Money gain rate: ${numeralWrapper.format(5 * this.moneyGainRate, "$0.000a")} / sec`,
-            }));
+            const d0 = createElement("div");
+            ReactDOM.render(<p style={{'display': 'inline-block'}}>Money gain rate: {MoneyRate(5 * this.moneyGainRate)}</p>, d0);
+            UIElems.gangInfo.appendChild(d0);
             UIElems.gangInfo.appendChild(createElement("br"));
 
             // Fix some rounding issues graphically
@@ -1692,10 +1699,9 @@ Gang.prototype.updateGangContent = function() {
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
 
-            UIElems.gangInfo.appendChild(createElement("p", {  // Faction reputation
-                display:"inline-block",
-                innerText:"Faction reputation: " + numeralWrapper.format(rep, '0.000a')
-            }));
+            const d1 = createElement("div");
+            ReactDOM.render(<p style={{'display': 'inline-block'}}>Faction reputation: {Reputation(rep)}</p>, d1);
+            UIElems.gangInfo.appendChild(d1);
             UIElems.gangInfo.appendChild(createElement("br"));
 
             const CyclesPerSecond = 1000 / Engine._idleSpeed;
@@ -1761,12 +1767,12 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     const statsDiv = createElement("div", {
         class: "gang-member-info-div",
         id: name + "gang-member-stats",
-        tooltipsmall: [`Hk: x${numeralWrapper.format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.hack_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                       `St: x${numeralWrapper.format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.str_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                       `Df: x${numeralWrapper.format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.def_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                       `Dx: x${numeralWrapper.format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.dex_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                       `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                       `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
+        tooltipsmall: [`Hk: x${numeralWrapper.formatMultiplier(memberObj.hack_mult * memberObj.hack_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.hack_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.hack_asc_mult)} Asc)`,
+                       `St: x${numeralWrapper.formatMultiplier(memberObj.str_mult * memberObj.str_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.str_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.str_asc_mult)} Asc)`,
+                       `Df: x${numeralWrapper.formatMultiplier(memberObj.def_mult * memberObj.def_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.def_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.def_asc_mult)} Asc)`,
+                       `Dx: x${numeralWrapper.formatMultiplier(memberObj.dex_mult * memberObj.dex_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.dex_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.dex_asc_mult)} Asc)`,
+                       `Ag: x${numeralWrapper.formatMultiplier(memberObj.agi_mult * memberObj.agi_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.agi_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.agi_asc_mult)} Asc)`,
+                       `Ch: x${numeralWrapper.formatMultiplier(memberObj.cha_mult * memberObj.cha_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.cha_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.cha_asc_mult)} Asc)`].join("<br>"),
     });
     UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
     const statsP = createElement("pre", {
@@ -1784,15 +1790,15 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
                innerText: ["Are you sure you want to ascend this member? They will lose all of",
                            "their non-Augmentation upgrades and their stats will reset back to 1.",
                            "",
-                           `Furthermore, your gang will lose ${numeralWrapper.format(memberObj.earnedRespect, "0.000a")} respect`,
+                           `Furthermore, your gang will lose ${numeralWrapper.formatRespect(memberObj.earnedRespect)} respect`,
                            "",
                            "In return, they will gain the following permanent boost to stat multipliers:\n",
-                           `Hacking: +${numeralWrapper.format(ascendBenefits.hack, "0.00%")}`,
-                           `Strength: +${numeralWrapper.format(ascendBenefits.str, "0.00%")}`,
-                           `Defense: +${numeralWrapper.format(ascendBenefits.def, "0.00%")}`,
-                           `Dexterity: +${numeralWrapper.format(ascendBenefits.dex, "0.00%")}`,
-                           `Agility: +${numeralWrapper.format(ascendBenefits.agi, "0.00%")}`,
-                           `Charisma: +${numeralWrapper.format(ascendBenefits.cha, "0.00%")}`].join("\n"),
+                           `Hacking: +${numeralWrapper.formatPercentage(ascendBenefits.hack)}`,
+                           `Strength: +${numeralWrapper.formatPercentage(ascendBenefits.str)}`,
+                           `Defense: +${numeralWrapper.formatPercentage(ascendBenefits.def)}`,
+                           `Dexterity: +${numeralWrapper.formatPercentage(ascendBenefits.dex)}`,
+                           `Agility: +${numeralWrapper.formatPercentage(ascendBenefits.agi)}`,
+                           `Charisma: +${numeralWrapper.formatPercentage(ascendBenefits.cha)}`].join("\n"),
             });
             const confirmBtn = createElement("button", {
                 class: "std-button",
@@ -1874,7 +1880,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
         taskSelector.selectedIndex = taskIndex;
     }
 
-    var gainInfo = createElement("p", {id:name + "gang-member-gain-info"});
+    var gainInfo = createElement("div", {id:name + "gang-member-gain-info"});
     taskDiv.appendChild(taskSelector);
     taskDiv.appendChild(gainInfo);
 
@@ -1907,12 +1913,12 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     var stats = document.getElementById(name + "gang-member-stats-text");
     if (stats) {
         stats.innerText =
-            [`Hacking: ${formatNumber(memberObj.hack, 0)} (${numeralWrapper.format(memberObj.hack_exp, '(0.00a)')} exp)`,
-             `Strength: ${formatNumber(memberObj.str, 0)} (${numeralWrapper.format(memberObj.str_exp, '(0.00a)')} exp)`,
-             `Defense: ${formatNumber(memberObj.def, 0)} (${numeralWrapper.format(memberObj.def_exp, '(0.00a)')} exp)`,
-             `Dexterity: ${formatNumber(memberObj.dex, 0)} (${numeralWrapper.format(memberObj.dex_exp, '(0.00a)')} exp)`,
-             `Agility: ${formatNumber(memberObj.agi, 0)} (${numeralWrapper.format(memberObj.agi_exp, '(0.00a)')} exp)`,
-             `Charisma: ${formatNumber(memberObj.cha, 0)} (${numeralWrapper.format(memberObj.cha_exp, '(0.00a)')} exp)`].join("\n");
+            [`Hacking: ${formatNumber(memberObj.hack, 0)} (${numeralWrapper.formatExp(memberObj.hack_exp)} exp)`,
+             `Strength: ${formatNumber(memberObj.str, 0)} (${numeralWrapper.formatExp(memberObj.str_exp)} exp)`,
+             `Defense: ${formatNumber(memberObj.def, 0)} (${numeralWrapper.formatExp(memberObj.def_exp)} exp)`,
+             `Dexterity: ${formatNumber(memberObj.dex, 0)} (${numeralWrapper.formatExp(memberObj.dex_exp)} exp)`,
+             `Agility: ${formatNumber(memberObj.agi, 0)} (${numeralWrapper.formatExp(memberObj.agi_exp)} exp)`,
+             `Charisma: ${formatNumber(memberObj.cha, 0)} (${numeralWrapper.formatExp(memberObj.cha_exp)} exp)`].join("\n");
     }
 
     // Update tooltip for stat multipliers
@@ -1921,23 +1927,25 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
         const statsDiv = panel["statsDiv"];
         if (statsDiv) {
             statsDiv.firstChild.innerHTML =
-                [`Hk: x${numeralWrapper.format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.hack_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                `St: x${numeralWrapper.format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.str_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                `Df: x${numeralWrapper.format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.def_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                `Dx: x${numeralWrapper.format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.dex_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
+                [`Hk: x${numeralWrapper.formatMultiplier(memberObj.hack_mult * memberObj.hack_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.hack_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.hack_asc_mult)} Asc)`,
+                `St: x${numeralWrapper.formatMultiplier(memberObj.str_mult * memberObj.str_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.str_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.str_asc_mult)} Asc)`,
+                `Df: x${numeralWrapper.formatMultiplier(memberObj.def_mult * memberObj.def_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.def_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.def_asc_mult)} Asc)`,
+                `Dx: x${numeralWrapper.formatMultiplier(memberObj.dex_mult * memberObj.dex_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.dex_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.dex_asc_mult)} Asc)`,
+                `Ag: x${numeralWrapper.formatMultiplier(memberObj.agi_mult * memberObj.agi_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.agi_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.agi_asc_mult)} Asc)`,
+                `Ch: x${numeralWrapper.formatMultiplier(memberObj.cha_mult * memberObj.cha_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.cha_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.cha_asc_mult)} Asc)`].join("<br>");
         }
     }
 
     // Update info about gang member's earnings/gains
     var gainInfo = document.getElementById(name + "gang-member-gain-info");
     if (gainInfo) {
-        gainInfo.innerHTML =
-            [`Money: ${numeralWrapper.format(5*memberObj.calculateMoneyGain(this), '$0.000a')} / sec`,
-             `Respect: ${numeralWrapper.format(5*memberObj.calculateRespectGain(this), '0.00000a')} / sec`,
-             `Wanted Level: ${numeralWrapper.format(5*memberObj.calculateWantedLevelGain(this), '0.00000a')} / sec`,
-             `Total Respect Earned: ${numeralWrapper.format(memberObj.earnedRespect, '0.00000a')}`].join("<br>");
+        const data = [
+            [`Money:`, MoneyRate(5*memberObj.calculateMoneyGain(this))],
+            [`Respect:`, `${numeralWrapper.formatRespect(5*memberObj.calculateRespectGain(this))} / sec`],
+            [`Wanted Level:`, `${numeralWrapper.formatWanted(5*memberObj.calculateWantedLevelGain(this))} / sec`],
+            [`Total Respect:`, `${numeralWrapper.formatRespect(memberObj.earnedRespect)}`],
+        ];
+        ReactDOM.render(StatsTable(data), gainInfo);
     }
 
     // Update selector to have the correct task

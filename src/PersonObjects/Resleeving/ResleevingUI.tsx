@@ -11,6 +11,7 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
 import { Page,
          routing } from "../../ui/navigationTracking";
 
@@ -23,6 +24,9 @@ import { createOptionElement } from "../../../utils/uiHelpers/createOptionElemen
 import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
+
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server"
 
 interface IResleeveUIElems {
     container:          HTMLElement | null;
@@ -74,13 +78,13 @@ export function createResleevesPage(p: IPlayer) {
             innerHTML: "Re-sleeving is the process of digitizing and transferring your consciousness " +
                        "into a new human body, or 'sleeve'. Here at VitaLife, you can purchase new " +
                        "specially-engineered bodies for the re-sleeve process. Many of these bodies " +
-                       "even come with genetic and cybernetic Augmentations!<br><br>" +
+                       "even come with genetic and cybernetic Augmentations!<br /><br />" +
                        "Re-sleeving will change your experience for every stat. It will also REMOVE " +
                        "all of your currently-installed Augmentations, and replace " +
                        "them with the ones provided by the purchased sleeve. However, Augmentations that you have " +
                        "purchased but not installed will NOT be removed. If you have purchased an " +
                        "Augmentation and then re-sleeve into a body which already has that Augmentation, " +
-                       "it will be removed (since you cannot have duplicate Augmentations).<br><br>" +
+                       "it will be removed (since you cannot have duplicate Augmentations).<br /><br />" +
                        "NOTE: The stats and multipliers displayed on this page do NOT include your bonuses from " +
                        "Source-File.",
             width: "75%",
@@ -225,7 +229,7 @@ export function clearResleevesPage() {
     }
 
     for (const prop in UIElems) {
-        (<any>UIElems)[prop] = null;
+        (UIElems as any)[prop] = null;
     }
 
     playerRef = null;
@@ -256,12 +260,12 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     elems.stats = createElement("p", {
         class: "resleeve-stats-text",
         innerHTML:
-            `Hacking: ${numeralWrapper.format(resleeve.hacking_skill, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.hacking_exp)} exp)<br>` +
-            `Strength: ${numeralWrapper.format(resleeve.strength, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.strength_exp)} exp)<br>` +
-            `Defense: ${numeralWrapper.format(resleeve.defense, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.defense_exp)} exp)<br>` +
-            `Dexterity: ${numeralWrapper.format(resleeve.dexterity, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.dexterity_exp)} exp)<br>` +
-            `Agility: ${numeralWrapper.format(resleeve.agility, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.agility_exp)} exp)<br>` +
-            `Charisma: ${numeralWrapper.format(resleeve.charisma, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.charisma_exp)} exp)<br>` +
+            `Hacking: ${numeralWrapper.formatSkill(resleeve.hacking_skill)} (${numeralWrapper.formatExp(resleeve.hacking_exp)} exp)<br />` +
+            `Strength: ${numeralWrapper.formatSkill(resleeve.strength)} (${numeralWrapper.formatExp(resleeve.strength_exp)} exp)<br />` +
+            `Defense: ${numeralWrapper.formatSkill(resleeve.defense)} (${numeralWrapper.formatExp(resleeve.defense_exp)} exp)<br />` +
+            `Dexterity: ${numeralWrapper.formatSkill(resleeve.dexterity)} (${numeralWrapper.formatExp(resleeve.dexterity_exp)} exp)<br />` +
+            `Agility: ${numeralWrapper.formatSkill(resleeve.agility)} (${numeralWrapper.formatExp(resleeve.agility_exp)} exp)<br />` +
+            `Charisma: ${numeralWrapper.formatSkill(resleeve.charisma)} (${numeralWrapper.formatExp(resleeve.charisma_exp)} exp)<br />` +
             `# Augmentations: ${resleeve.augmentations.length}`,
     });
     elems.multipliersButton = createElement("button", {
@@ -301,7 +305,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
                     `Bladeburner Stamina Gain multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_stamina_gain_mult)}`,
                     `Bladeburner Field Analysis multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_analysis_mult)}`,
                     `Bladeburner Success Chance multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_success_chance_mult)}`
-                ].join("<br>"), false
+                ].join("<br />"), false
             )
         }
     });
@@ -324,7 +328,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     const cost: number = resleeve.getCost();
     elems.costPanel = createElement("div", { class: "resleeve-panel", width: "20%" });
     elems.costText = createElement("p", {
-        innerText: `It costs ${numeralWrapper.formatMoney(cost)} ` +
+        innerHTML: `It costs ${renderToStaticMarkup(Money(cost))} ` +
                    `to purchase this Sleeve.`,
     });
     elems.buyButton = createElement("button", {
@@ -332,7 +336,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
         innerText: "Purchase",
         clickListener: () => {
             if (purchaseResleeve(resleeve, playerRef!)) {
-                dialogBoxCreate(`You re-sleeved for ${numeralWrapper.formatMoney(cost)}!`, false);
+                dialogBoxCreate((<>You re-sleeved for {Money(cost)}!</>), false);
             } else {
                 dialogBoxCreate(`You cannot afford to re-sleeve into this body`, false);
             }

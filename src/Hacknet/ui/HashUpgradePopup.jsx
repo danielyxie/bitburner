@@ -19,6 +19,8 @@ import { ServerDropdown,
          ServerType }           from "../../ui/React/ServerDropdown"
 
 import { dialogBoxCreate }      from "../../../utils/DialogBox";
+import { CopyableText } from "../../ui/React/CopyableText";
+import { Hashes } from "../../ui/React/Hashes";
 
 class HashUpgrade extends React.Component {
     constructor(props) {
@@ -63,8 +65,8 @@ class HashUpgrade extends React.Component {
         // We'll reuse a Bladeburner css class
         return (
             <div className={"bladeburner-action"}>
-                <h2>{upg.name}</h2>
-                <p>Cost: {numeralWrapper.format(cost, "0.000a")}</p>
+                <CopyableText value={upg.name} />
+                <p>Cost: {Hashes(cost)}</p>
                 <p>{upg.desc}</p>
                 <button className={btnClass} onClick={this.purchase}>
                     Purchase
@@ -122,7 +124,7 @@ export class HashUpgradePopup extends React.Component {
             <div>
                 <PopupCloseButton popup={this.props.popupId} text={"Close"} />
                 <p>Spend your hashes on a variety of different upgrades</p>
-                <p>Hashes: {numeralWrapper.formatBigNumber(this.state.totalHashes)}</p>
+                <p>Hashes: {numeralWrapper.formatHashes(this.state.totalHashes)}</p>
                 {upgradeElems}
             </div>
         )

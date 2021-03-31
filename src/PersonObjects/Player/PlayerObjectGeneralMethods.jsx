@@ -28,6 +28,8 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
+import { calculateSkill as calculateSkillF } from "../formulas/skill";
+import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
     AllServers,
     AddToAllServers,
@@ -54,6 +56,14 @@ import {
     Generic_fromJSON,
 } from "../../../utils/JSONReviver";
 import {convertTimeMsToTimeElapsedString} from "../../../utils/StringHelperFunctions";
+
+import { Reputation } from "../../ui/React/Reputation";
+import { Money } from "../../ui/React/Money";
+import { MoneyRate } from "../../ui/React/MoneyRate";
+import { ReputationRate } from "../../ui/React/ReputationRate";
+
+import React from "react";
+import ReactDOM from "react-dom";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
@@ -293,7 +303,7 @@ export function receiveInvite(factionName) {
 
 //Calculates skill level based on experience. The same formula will be used for every skill
 export function calculateSkill(exp, mult=1) {
-    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+    return calculateSkillF(exp, mult);
 }
 
 export function updateSkillLevels() {
@@ -520,7 +530,7 @@ export function resetWorkStatus() {
     this.createProgramName = "";
     this.className = "";
 
-    document.getElementById("work-in-progress-text").innerHTML = "";
+    ReactDOM.unmountComponentAtNode(document.getElementById("work-in-progress-text"));
 }
 
 export function processWorkEarnings(numCycles=1) {
@@ -611,22 +621,22 @@ export function work(numCycles) {
 
     const position = this.jobs[this.companyName];
 
-    var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + position +
-                    " at " + this.companyName + " (Current Company Reputation: " +
-                    numeralWrapper.format(companyRep, '0,0') + ")<br><br>" +
-                    "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "You have earned: <br><br>" +
-                    "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + " ($" + numeralWrapper.format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    numeralWrapper.format(this.workRepGained, '0,0.0000') + " (" + numeralWrapper.format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
-                    numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " +
-                    "but you will only gain half of the reputation you've earned so far."
+    var elem = document.getElementById("work-in-progress-text");
+    ReactDOM.render(<>
+        You are currently working as a {position} at {this.companyName} (Current Company Reputation: {Reputation(companyRep)})<br /><br />
+        You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
+        You have earned: <br /><br />
+        {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+        {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this company <br /><br />
+        {numeralWrapper.formatExp(this.workHackExpGained)} ({`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}) hacking exp <br /><br />
+        {numeralWrapper.formatExp(this.workStrExpGained)} ({`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}) strength exp <br />
+        {numeralWrapper.formatExp(this.workDefExpGained)} ({`${numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}) defense exp <br />
+        {numeralWrapper.formatExp(this.workDexExpGained)} ({`${numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}) dexterity exp <br />
+        {numeralWrapper.formatExp(this.workAgiExpGained)} ({`${numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}) agility exp <br /><br /> 
+        {numeralWrapper.formatExp(this.workChaExpGained)} ({`${numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}) charisma exp <br /><br />
+        You will automatically finish after working for 8 hours. You can cancel earlier if you wish, 
+        but you will only gain half of the reputation you've earned so far.
+    </>, elem);
 }
 
 export function finishWork(cancelled, sing=false) {
@@ -640,23 +650,27 @@ export function finishWork(cancelled, sing=false) {
 
     this.updateSkillLevels();
 
-    var txt = "You earned a total of: <br>" +
-              "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + "<br>" +
-              numeralWrapper.format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
-              numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+    let content = <>
+        You earned a total of: <br />
+        {Money(this.workMoneyGained)}<br />
+        {Reputation(this.workRepGained)} reputation for the company <br />
+        {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
+        {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
+        {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
+        {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
+        {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
+        {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp<br />
+    </>
 
     if (cancelled) {
-        txt = "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
-              "Since you cancelled your work early, you only gained half of the reputation you earned. <br><br>" + txt;
+        content = <>
+            You worked a short shift of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br /><br />
+            Since you cancelled your work early, you only gained half of the reputation you earned. <br /><br />{content}
+        </>
     } else {
-        txt = "You worked a full shift of 8 hours! <br><br> " + txt;
+        content = <>You worked a full shift of 8 hours! <br /><br />{content}</>;
     }
-    if (!sing) {dialogBoxCreate(txt);}
+    if (!sing) {dialogBoxCreate(content);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -665,14 +679,14 @@ export function finishWork(cancelled, sing=false) {
 
     if (sing) {
         var res =  "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
-               "earned $" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + ", " +
-               numeralWrapper.format(this.workRepGained, '0,0.0000') + " reputation, " +
-               numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-               numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-               numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-               numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-               numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma exp.";
+               "earned $" + numeralWrapper.formatMoney(this.workMoneyGained) + ", " +
+               numeralWrapper.formatReputation(this.workRepGained) + " reputation, " +
+               numeralWrapper.formatExp(this.workHackExpGained) + " hacking exp, " +
+               numeralWrapper.formatExp(this.workStrExpGained) + " strength exp, " +
+               numeralWrapper.formatExp(this.workDefExpGained) + " defense exp, " +
+               numeralWrapper.formatExp(this.workDexExpGained) + " dexterity exp, " +
+               numeralWrapper.formatExp(this.workAgiExpGained) + " agility exp, and " +
+               numeralWrapper.formatExp(this.workChaExpGained) + " charisma exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -734,23 +748,21 @@ export function workPartTime(numCycles) {
 
     const position = this.jobs[this.companyName];
 
-    var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + position +
-                    " at " + this.companyName + " (Current Company Reputation: "  +
-                    numeralWrapper.format(companyRep, '0,0') + ")<br><br>" +
-                    "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "You have earned: <br><br>" +
-                    "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + " ($" + numeralWrapper.format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    numeralWrapper.format(this.workRepGained, '0,0.0000') + " (" + numeralWrapper.format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
-                    numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" +
-                    "and there will be no penalty because this is a part-time job.";
-
+    const elem = document.getElementById("work-in-progress-text");
+    ReactDOM.render(<>
+        You are currently working as a {position} at {this.companyName} (Current Company Reputation: {Reputation(companyRep)})<br /><br />
+        You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
+        You have earned: <br /><br />
+        {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+        {Reputation(this.workRepGained)} ({Reputation(`${numeralWrapper.formatExp(this.workRepGainRate * CYCLES_PER_SEC)} / sec`)}) reputation for this company <br /><br />
+        {numeralWrapper.formatExp(this.workHackExpGained)} ({`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}) hacking exp <br /><br />
+        {numeralWrapper.formatExp(this.workStrExpGained)} ({`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}) strength exp <br />
+        {numeralWrapper.formatExp(this.workDefExpGained)} ({`${numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}) defense exp <br />
+        {numeralWrapper.formatExp(this.workDexExpGained)} ({`${numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}) dexterity exp <br />
+        {numeralWrapper.formatExp(this.workAgiExpGained)} ({`${numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}) agility exp <br /><br /> 
+        {numeralWrapper.formatExp(this.workChaExpGained)} ({`${numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}) charisma exp <br /><br />
+        You will automatically finish after working for 8 hours. You can cancel earlier if you wish, and there will be no penalty because this is a part-time job.
+    </>, elem);
 }
 
 export function finishWorkPartTime(sing=false) {
@@ -759,17 +771,19 @@ export function finishWorkPartTime(sing=false) {
 
     this.updateSkillLevels();
 
-    var txt = "You earned a total of: <br>" +
-              "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + "<br>" +
-              numeralWrapper.format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
-              numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
-    txt = "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br> " + txt;
-    if (!sing) {dialogBoxCreate(txt);}
+    const content = <>
+        You worked for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br /> 
+        You earned a total of: <br />
+        {Money(this.workMoneyGained)}<br />
+        {Reputation(this.workRepGained)} reputation for the company <br />
+        {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
+        {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
+        {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
+        {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
+        {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
+        {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp<br />
+    </>;
+    if (!sing) {dialogBoxCreate(content);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -778,14 +792,14 @@ export function finishWorkPartTime(sing=false) {
     if (sing) {
         var res =  "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
                "earned a total of " +
-               "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + ", " +
-               numeralWrapper.format(this.workRepGained, '0,0.0000') + " reputation, " +
-               numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-               numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-               numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-               numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-               numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma exp";
+               "$" + numeralWrapper.formatMoney(this.workMoneyGained) + ", " +
+               numeralWrapper.formatReputation(this.workRepGained) + " reputation, " +
+               numeralWrapper.formatExp(this.workHackExpGained) + " hacking exp, " +
+               numeralWrapper.formatExp(this.workStrExpGained) + " strength exp, " +
+               numeralWrapper.formatExp(this.workDefExpGained) + " defense exp, " +
+               numeralWrapper.formatExp(this.workDexExpGained) + " dexterity exp, " +
+               numeralWrapper.formatExp(this.workAgiExpGained) + " agility exp, and " +
+               numeralWrapper.formatExp(this.workChaExpGained) + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -902,22 +916,22 @@ export function workForFaction(numCycles) {
         return this.finishFactionWork(false);
     }
 
-    var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name +
-                    " (Current Faction Reputation: " + numeralWrapper.format(faction.playerReputation, '0,0') + "). <br>" +
-                    "You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "You have earned: <br><br>" +
-                    "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + " (" + numeralWrapper.format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    numeralWrapper.format(this.workRepGained, '0,0.0000') + " (" + numeralWrapper.format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this faction <br><br>" +
-                    numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
+    const elem = document.getElementById("work-in-progress-text");
+    ReactDOM.render(<>You are currently {this.currentWorkFactionDescription} for your faction {faction.name}<br />
+                    (Current Faction Reputation: {Reputation(faction.playerReputation)}). <br />
+                    You have been doing this for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
+                    You have earned: <br /><br />
+                    {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+                    {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this faction <br /><br />
+                    {numeralWrapper.formatExp(this.workHackExpGained)} ({numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br /><br />
+                    {numeralWrapper.formatExp(this.workStrExpGained)} ({numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
+                    {numeralWrapper.formatExp(this.workDefExpGained)} ({numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
+                    {numeralWrapper.formatExp(this.workDexExpGained)} ({numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
+                    {numeralWrapper.formatExp(this.workAgiExpGained)} ({numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br /><br /> 
+                    {numeralWrapper.formatExp(this.workChaExpGained)} ({numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br /><br />
 
-                    "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" +
-                    "There is no penalty for cancelling earlier.";
+                    You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br />
+                    There is no penalty for cancelling earlier.</>, elem)
 }
 
 export function finishFactionWork(cancelled, sing=false) {
@@ -926,17 +940,20 @@ export function finishFactionWork(cancelled, sing=false) {
 
     this.updateSkillLevels();
 
-    var txt = "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
-              "You earned a total of: <br>" +
-              "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + "<br>" +
-              numeralWrapper.format(this.workRepGained, '0,0.0000') + " reputation for the faction <br>" +
-              numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
-    if (!sing) {dialogBoxCreate(txt);}
+    if (!sing) {
+        dialogBoxCreate(<>
+            You worked for your faction {faction.name} for a total of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br /><br />
+            You earned a total of: <br />
+            {Money(this.workMoneyGained)}<br />
+            {Reputation(this.workRepGained)} reputation for the faction <br />
+            {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
+            {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
+            {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
+            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
+            {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
+            {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp<br />
+        </>);
+    }
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -948,13 +965,13 @@ export function finishFactionWork(cancelled, sing=false) {
     if (sing) {
         var res="You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + ". " +
                "You earned " +
-               numeralWrapper.format(this.workRepGained, '0,0.0000') + " rep, " +
-               numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-               numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-               numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-               numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agi exp, and " +
-               numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " cha exp.";
+               numeralWrapper.formatReputation(this.workRepGained) + " rep, " +
+               numeralWrapper.formatExp(this.workHackExpGained) + " hacking exp, " +
+               numeralWrapper.formatExp(this.workStrExpGained) + " str exp, " +
+               numeralWrapper.formatExp(this.workDefExpGained) + " def exp, " +
+               numeralWrapper.formatExp(this.workDexExpGained) + " dex exp, " +
+               numeralWrapper.formatExp(this.workAgiExpGained) + " agi exp, and " +
+               numeralWrapper.formatExp(this.workChaExpGained) + " cha exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -1169,11 +1186,13 @@ export function createProgramWork(numCycles) {
         this.finishCreateProgramWork(false);
     }
 
-    var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " +
-                    "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "The program is " + (this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
-                    "If you cancel, your work will be saved and you can come back to complete the program later.";
+    const elem = document.getElementById("work-in-progress-text");
+    ReactDOM.render(<>
+        You are currently working on coding {programName}.<br /><br />
+        You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
+        The program is {(this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toFixed(2)}% complete. <br />
+        If you cancel, your work will be saved and you can come back to complete the program later.
+    </>, elem);
 }
 
 export function finishCreateProgramWork(cancelled, sing=false) {
@@ -1210,9 +1229,7 @@ export function startClass(costMult, expMult, className) {
 
     this.className = className;
 
-    var gameCPS = 1000 / Engine._idleSpeed;
-
-    const baseGymExp                  = 1;
+    const gameCPS = 1000 / Engine._idleSpeed;
 
     //Find cost and exp gain per game cycle
     var cost = 0;
@@ -1244,19 +1261,19 @@ export function startClass(costMult, expMult, className) {
             break;
         case CONSTANTS.ClassGymStrength:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            strExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            strExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDefense:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            defExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            defExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDexterity:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            dexExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            dexExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymAgility:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            agiExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
+            agiExp = expMult / gameCPS * hashManager.getTrainingMult();
             break;
         default:
             throw new Error("ERR: Invalid/unrecognized class name");
@@ -1294,19 +1311,21 @@ export function takeClass(numCycles) {
     var className = this.className;
 
     this.processWorkEarnings(numCycles);
-
-    var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You have been " + className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "This has cost you: <br>" +
-                    "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + " ($" + numeralWrapper.format(this.workMoneyLossRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    "You have gained: <br>" +
-                    numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br>" +
-                    numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br>" +
-                    numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " (" + numeralWrapper.format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br>" +
-                    "You may cancel at any time";
+    
+    const elem = document.getElementById("work-in-progress-text");
+    ReactDOM.render(<>
+        You have been {className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
+        This has cost you: <br />
+        {Money(-this.workMoneyGained)} ({MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br /><br />
+        You have gained: <br />
+        {numeralWrapper.formatExp(this.workHackExpGained)} ({numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
+        {numeralWrapper.formatExp(this.workStrExpGained)} ({numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
+        {numeralWrapper.formatExp(this.workDefExpGained)} ({numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
+        {numeralWrapper.formatExp(this.workDexExpGained)} ({numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
+        {numeralWrapper.formatExp(this.workAgiExpGained)} ({numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br />
+        {numeralWrapper.formatExp(this.workChaExpGained)} ({numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br />
+        You may cancel at any time
+    </>, elem);
 }
 
 //The 'sing' argument defines whether or not this function was called
@@ -1319,16 +1338,19 @@ export function finishClass(sing=false) {
     }
 
     this.updateSkillLevels();
-    var txt = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", <br>" +
-              "you spent a total of $" + numeralWrapper.format(this.workMoneyGained * -1, '0,0.00') + ". <br><br>" +
-              "You earned a total of: <br>" +
-              numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
-    if (!sing) {dialogBoxCreate(txt);}
+    if (!sing) {
+        dialogBoxCreate(<>
+            After {this.className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}, <br />
+            you spent a total of {Money(this.workMoneyGained * -1)}. <br /><br />
+            You earned a total of: <br />
+            {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
+            {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
+            {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
+            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
+            {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
+            {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp<br />
+        </>);
+    }
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -1338,14 +1360,14 @@ export function finishClass(sing=false) {
     Engine.loadLocationContent(false);
     if (sing) {
         var res="After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", " +
-              "you spent a total of $" + numeralWrapper.format(this.workMoneyGained * -1, '0,0.00') + ". " +
+              "you spent a total of " + numeralWrapper.formatMoney(this.workMoneyGained * -1) + ". " +
               "You earned a total of: " +
-              numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-              numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-              numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-              numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-              numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-              numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma exp";
+              numeralWrapper.formatExp(this.workHackExpGained) + " hacking exp, " +
+              numeralWrapper.formatExp(this.workStrExpGained) + " strength exp, " +
+              numeralWrapper.formatExp(this.workDefExpGained) + " defense exp, " +
+              numeralWrapper.formatExp(this.workDexExpGained) + " dexterity exp, " +
+              numeralWrapper.formatExp(this.workAgiExpGained) + " agility exp, and " +
+              numeralWrapper.formatExp(this.workChaExpGained) + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -1438,24 +1460,26 @@ export function finishCrime(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
-                                                               numeralWrapper.format(this.workMoneyGained, "$0.000a") + ", " +
-                                                               numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
-                                                               numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-                                                               numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-                                                               numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-                                                               numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
-                                                               numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " cha exp.");
+                                                               numeralWrapper.formatMoney(this.workMoneyGained) + ", " +
+                                                               numeralWrapper.formatExp(this.workHackExpGained) + " hack exp, " +
+                                                               numeralWrapper.formatExp(this.workStrExpGained) + " str exp, " +
+                                                               numeralWrapper.formatExp(this.workDefExpGained) + " def exp, " +
+                                                               numeralWrapper.formatExp(this.workDexExpGained) + " dex exp, " +
+                                                               numeralWrapper.formatExp(this.workAgiExpGained) + " agi exp, " +
+                                                               numeralWrapper.formatExp(this.workChaExpGained) + " cha exp.");
                 }
             } else {
-                dialogBoxCreate("Crime successful! <br><br>" +
-                                "You gained:<br>"+
-                                "$" + numeralWrapper.format(this.workMoneyGained, '0,0.00') + "<br>" +
-                                numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
-                                numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
-                                numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
-                                numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
-                                numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
-                                numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma experience");
+                dialogBoxCreate(<>
+                    Crime successful!<br /><br />
+                    You gained:<br />
+                    {Money(this.workMoneyGained)}<br />
+                    {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
+                    {numeralWrapper.formatExp(this.workStrExpGained)} strength experience<br />
+                    {numeralWrapper.formatExp(this.workDefExpGained)} defense experience<br />
+                    {numeralWrapper.formatExp(this.workDexExpGained)} dexterity experience<br />
+                    {numeralWrapper.formatExp(this.workAgiExpGained)} agility experience<br />
+                    {numeralWrapper.formatExp(this.workChaExpGained)} charisma experience
+                </>);
             }
 
         } else {
@@ -1469,22 +1493,25 @@ export function finishCrime(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
-                                                               numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
-                                                               numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-                                                               numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-                                                               numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-                                                               numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
-                                                               numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " cha exp.");
+                                                               numeralWrapper.formatExp(this.workHackExpGained) + " hack exp, " +
+                                                               numeralWrapper.formatExp(this.workStrExpGained) + " str exp, " +
+                                                               numeralWrapper.formatExp(this.workDefExpGained) + " def exp, " +
+                                                               numeralWrapper.formatExp(this.workDexExpGained) + " dex exp, " +
+                                                               numeralWrapper.formatExp(this.workAgiExpGained) + " agi exp, " +
+                                                               numeralWrapper.formatExp(this.workChaExpGained) + " cha exp.");
                 }
             } else {
-                dialogBoxCreate("Crime failed! <br><br>" +
-                        "You gained:<br>"+
-                        numeralWrapper.format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
-                        numeralWrapper.format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
-                        numeralWrapper.format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
-                        numeralWrapper.format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
-                        numeralWrapper.format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
-                        numeralWrapper.format(this.workChaExpGained, '0,0.0000') + " charisma experience");
+                dialogBoxCreate(<>
+                    Crime failed!<br /><br />
+                    You gained:<br />
+                    {Money(this.workMoneyGained)}<br />
+                    {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
+                    {numeralWrapper.formatExp(this.workStrExpGained)} strength experience<br />
+                    {numeralWrapper.formatExp(this.workDefExpGained)} defense experience<br />
+                    {numeralWrapper.formatExp(this.workDexExpGained)} dexterity experience<br />
+                    {numeralWrapper.formatExp(this.workAgiExpGained)} agility experience<br />
+                    {numeralWrapper.formatExp(this.workChaExpGained)} charisma experience
+                </>);
             }
         }
 
@@ -1563,11 +1590,11 @@ export function regenerateHp(amt) {
 
 export function hospitalize() {
     if (Settings.SuppressHospitalizationPopup === false) {
-        dialogBoxCreate(
-            "You were in critical condition! You were taken to the hospital where " +
-            "luckily they were able to save your life. You were charged " +
-            numeralWrapper.format(this.max_hp * CONSTANTS.HospitalCostPerHp, '$0.000a')
-        );
+        dialogBoxCreate(<>
+            You were in critical condition! You were taken to the hospital where 
+            luckily they were able to save your life. You were charged&nbsp;
+            {Money(this.max_hp * CONSTANTS.HospitalCostPerHp)}
+        </>);
     }
 
     const cost = this.max_hp * CONSTANTS.HospitalCostPerHp
@@ -2271,7 +2298,7 @@ export function gainCodingContractReward(reward, difficulty=1) {
             var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
             this.gainMoney(moneyGain);
             this.recordMoneySource(moneyGain, "codingcontract");
-            return `Gained ${numeralWrapper.format(moneyGain, '$0.000a')}`;
+            return `Gained ${numeralWrapper.formatMoney(moneyGain)}`;
             break;
     }
     /* eslint-enable no-case-declarations */
@@ -2309,9 +2336,5 @@ export function giveExploit(exploit) {
 
 
 export function getIntelligenceBonus(weight) {
-    // 15  => +1.4%  when you initially acquire int
-    // 50  => +3.8%  mid game
-    // 100 => +6.6%  late game
-    // 250 => +13.4% realistic best possible
-    return 1+(weight*Math.pow(this.intelligence, 0.8)/600);
+    return calculateIntelligenceBonus(this.intelligence, weight);
 }

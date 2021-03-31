@@ -356,8 +356,25 @@ a:visited {
     color: $my-stat-cha-color;
 }
 
+.reputation {
+    color: $light-yellow;
+}
+
 .smallfont {
     font-size: $defaultFontSize * 0.8125;
+}
+
+.samefont {
+    font-size: inherit;
+}
+
+.noscrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 input[type=checkbox] {
@@ -395,4 +412,12 @@ input[type=checkbox] {
   height: 10px;
   background: var(--my-font-color);
   cursor: pointer;
+}
+
+.noselect {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
 }

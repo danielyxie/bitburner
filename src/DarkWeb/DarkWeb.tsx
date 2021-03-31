@@ -1,11 +1,14 @@
+import * as React from "react";
 import { DarkWebItems }                         from "./DarkWebItems";
 
 import { Player }                               from "../Player";
 import { SpecialServerIps }                     from "../Server/SpecialServerIps";
-import { post }                                 from "../ui/postToTerminal";
+import { post, postElement }                    from "../ui/postToTerminal";
+import { Money }                                from "../ui/React/Money";
 
 import { isValidIPAddress }                     from "../../utils/helpers/isValidIPAddress";
 import { formatNumber }                         from "../../utils/StringHelperFunctions";
+import { numeralWrapper } from "../ui/numeralFormat";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
@@ -49,7 +52,7 @@ export function executeDarkwebTerminalCommand(commandArray: string[]): void {
 function listAllDarkwebItems() {
     for(const key in DarkWebItems) {
         const item = DarkWebItems[key];
-        post(item.toString());
+        postElement(<>{item.program} - {Money(item.price)} - {item.description}</>);
     }
 }
 

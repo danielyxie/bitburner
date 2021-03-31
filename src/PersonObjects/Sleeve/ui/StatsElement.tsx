@@ -10,7 +10,7 @@ export function StatsElement(sleeve: Sleeve): React.ReactElement {
             <tbody>
                 <tr>
                     <td className="character-hp-cell">HP: </td>
-                    <td className="character-hp-cell" style={style}>{numeralWrapper.format(sleeve.hp, "0,0")} / {numeralWrapper.format(sleeve.max_hp, "0,0")}</td>
+                    <td className="character-hp-cell" style={style}>{numeralWrapper.formatHp(sleeve.hp)} / {numeralWrapper.formatHp(sleeve.max_hp)}</td>
                 </tr>
                 <tr>
                     <td>City: </td>
@@ -18,39 +18,39 @@ export function StatsElement(sleeve: Sleeve): React.ReactElement {
                 </tr>
                 <tr>
                     <td className="character-hack-cell">Hacking: </td>
-                    <td className="character-hack-cell" style={style}>{numeralWrapper.format(sleeve.hacking_skill, "0,0")}</td>
+                    <td className="character-hack-cell" style={style}>{numeralWrapper.formatSkill(sleeve.hacking_skill)}</td>
                 </tr>
                 <tr>
                     <td className="character-combat-cell">Strength: </td>
-                    <td className="character-combat-cell" style={style}>{numeralWrapper.format(sleeve.strength, "0,0")}</td>
+                    <td className="character-combat-cell" style={style}>{numeralWrapper.formatSkill(sleeve.strength)}</td>
                 </tr>
                 <tr>
                     <td className="character-combat-cell">Defense: </td>
-                    <td className="character-combat-cell" style={style}>{numeralWrapper.format(sleeve.defense, "0,0")}</td>
+                    <td className="character-combat-cell" style={style}>{numeralWrapper.formatSkill(sleeve.defense)}</td>
                 </tr>
                 <tr>
                     <td className="character-combat-cell">Dexterity: </td>
-                    <td className="character-combat-cell" style={style}>{numeralWrapper.format(sleeve.dexterity, "0,0")}</td>
+                    <td className="character-combat-cell" style={style}>{numeralWrapper.formatSkill(sleeve.dexterity)}</td>
                 </tr>
                 <tr>
                     <td className="character-combat-cell">Agility: </td>
-                    <td className="character-combat-cell" style={style}>{numeralWrapper.format(sleeve.agility, "0,0")}</td>
+                    <td className="character-combat-cell" style={style}>{numeralWrapper.formatSkill(sleeve.agility)}</td>
                 </tr>
                 <tr>
                     <td className="character-cha-cell">Charisma: </td>
-                    <td className="character-cha-cell" style={style}>{numeralWrapper.format(sleeve.charisma, "0,0")}</td>
+                    <td className="character-cha-cell" style={style}>{numeralWrapper.formatSkill(sleeve.charisma)}</td>
                 </tr>
                 <tr>
                     <td className="character-int-cell">Shock: </td>
-                    <td className="character-int-cell" style={style}>{numeralWrapper.format(100 - sleeve.shock, "0,0.000")}</td>
+                    <td className="character-int-cell" style={style}>{numeralWrapper.formatShock(100 - sleeve.shock)}</td>
                 </tr>
                 <tr>
                     <td className="character-int-cell">Sync: </td>
-                    <td className="character-int-cell" style={style}>{numeralWrapper.format(sleeve.sync, "0,0.000")}</td>
+                    <td className="character-int-cell" style={style}>{numeralWrapper.formatSync(sleeve.sync)}</td>
                 </tr>
                 <tr>
                     <td className="character-int-cell">Memory: </td>
-                    <td className="character-int-cell" style={style}>{numeralWrapper.format(sleeve.memory, "0")}</td>
+                    <td className="character-int-cell" style={style}>{numeralWrapper.formatMemory(sleeve.memory)}</td>
                 </tr>
             </tbody>
         </table>

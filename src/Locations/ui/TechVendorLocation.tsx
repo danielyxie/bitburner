@@ -18,6 +18,7 @@ import { getPurchaseServerCost }        from "../../Server/ServerPurchases";
 import { numeralWrapper }               from "../../ui/numeralFormat";
 import { StdButtonPurchased }           from "../../ui/React/StdButtonPurchased";
 import { StdButton }                    from "../../ui/React/StdButton";
+import { Money }                        from "../../ui/React/Money";
 
 type IProps = {
     loc: Location;
@@ -70,7 +71,7 @@ export class TechVendorLocation extends React.Component<IProps, any> {
                     key={i}
                     onClick={() => createPurchaseServerPopup(i, this.props.p)}
                     style={this.btnStyle}
-                    text={`Purchase ${i}GB Server - ${numeralWrapper.formatMoney(cost)}`}
+                    text={<>Purchase {i}GB Server - {Money(cost)}</>}
                 />
             )
         }
@@ -88,7 +89,7 @@ export class TechVendorLocation extends React.Component<IProps, any> {
                         <StdButton
                             onClick={this.purchaseTorRouter}
                             style={this.btnStyle}
-                            text={`Purchase TOR Router - ${numeralWrapper.formatMoney(CONSTANTS.TorRouterCost)}`}
+                            text={<>Purchase TOR Router - {Money(CONSTANTS.TorRouterCost)}</>}
                         />
                     )
 

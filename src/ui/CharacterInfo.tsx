@@ -9,7 +9,9 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
-import { MaxNumberHacknetServers } from "../Hacknet/HacknetServer";
+import { HacknetServerConstants } from "../Hacknet/data/Constants";
+import { StatsTable } from "./React/StatsTable";
+import { Money } from "./React/Money";
 
 export function CharacterInfo(p: IPlayer): React.ReactElement {
     function LastEmployer(): React.ReactElement {
@@ -29,45 +31,56 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             return <>
                     <span>All Employers:</span><br />
                     <ul>
-                        {Object.keys(p.jobs).map(j => <li key='j'>    * {j}</li>)}
+                        {Object.keys(p.jobs).map(j => <li key={j}>    * {j}</li>)}
                     </ul><br /><br />
                 </>
         return <></>;
     }
 
-    function convertMoneySourceTrackerToString(src: MoneySourceTracker): string {
-        let parts: string[] = [`Total: ${numeralWrapper.formatMoney(src.total)}`];
-        if (src.bladeburner)     { parts.push(`Bladeburner: ${numeralWrapper.formatMoney(src.bladeburner)}`) };
-        if (src.codingcontract)  { parts.push(`Coding Contracts: ${numeralWrapper.formatMoney(src.codingcontract)}`) };
-        if (src.work)            { parts.push(`Company Work: ${numeralWrapper.formatMoney(src.work)}`) };
-        if (src.corporation)     { parts.push(`Corporation: ${numeralWrapper.formatMoney(src.corporation)}`) };
-        if (src.crime)           { parts.push(`Crimes: ${numeralWrapper.formatMoney(src.crime)}`) };
-        if (src.gang)            { parts.push(`Gang: ${numeralWrapper.formatMoney(src.gang)}`) };
-        if (src.hacking)         { parts.push(`Hacking: ${numeralWrapper.formatMoney(src.hacking)}`) };
-        if (src.hacknetnode)     { parts.push(`Hacknet Nodes: ${numeralWrapper.formatMoney(src.hacknetnode)}`) };
-        if (src.hospitalization) { parts.push(`Hospitalization: ${numeralWrapper.formatMoney(src.hospitalization)}`) };
-        if (src.infiltration)    { parts.push(`Infiltration: ${numeralWrapper.formatMoney(src.infiltration)}`) };
-        if (src.stock)           { parts.push(`Stock Market: ${numeralWrapper.formatMoney(src.stock)}`) };
+    function Hacknet(): React.ReactElement {
+        // Can't import HacknetHelpers for some reason.
+        if(!(p.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
+            return <><span>Hacknet Nodes owned: {p.hacknetNodes.length}</span><br /></>
+        } else {
+            return <><span>Hacknet Servers owned: {p.hacknetNodes.length} / {HacknetServerConstants.MaxServers}</span><br /></>
+        }
+    }
 
-        return parts.join("<br>");
+    function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
+        let parts: any[][] = [[`Total:`, Money(src.total)]];
+        if (src.bladeburner)     { parts.push([`Bladeburner:`, Money(src.bladeburner)]) };
+        if (src.codingcontract)  { parts.push([`Coding Contracts:`, Money(src.codingcontract)]) };
+        if (src.work)            { parts.push([`Company Work:`, Money(src.work)]) };
+        if (src.corporation)     { parts.push([`Corporation:`, Money(src.corporation)]) };
+        if (src.crime)           { parts.push([`Crimes:`, Money(src.crime)]) };
+        if (src.gang)            { parts.push([`Gang:`, Money(src.gang)]) };
+        if (src.hacking)         { parts.push([`Hacking:`, Money(src.hacking)]) };
+        if (src.hacknetnode)     { parts.push([`Hacknet Nodes:`, Money(src.hacknetnode)]) };
+        if (src.hospitalization) { parts.push([`Hospitalization:`, Money(src.hospitalization)]) };
+        if (src.infiltration)    { parts.push([`Infiltration:`, Money(src.infiltration)]) };
+        if (src.stock)           { parts.push([`Stock Market:`, Money(src.stock)]) };
+
+        return StatsTable(parts, "");
     }
 
     function openMoneyModal() {
-        let txt: string = "<u>Money earned since you last installed Augmentations:</u><br>" +
-                          convertMoneySourceTrackerToString(p.moneySourceA);
+        let content = (<>
+            <u>Money earned since you last installed Augmentations:</u><br />
+            {convertMoneySourceTrackerToString(p.moneySourceA)}
+        </>);
         if (p.sourceFiles.length !== 0) {
-            txt += "<br><br><u>Money earned in this BitNode:</u><br>" +
-                   convertMoneySourceTrackerToString(p.moneySourceB);
+            content = (<>{content}<br /><br /><u>Money earned in this BitNode:</u><br />
+                   {convertMoneySourceTrackerToString(p.moneySourceB)}</>);
         }
 
-        dialogBoxCreate(txt, false);
+        dialogBoxCreate(content, false);
     }
 
     function Intelligence(): React.ReactElement {
         if (p.intelligence > 0) {
             return <tr key='5'>
                 <td>Intelligence:</td>
-                <td style={{textAlign: 'right'}}>{(p.intelligence).toLocaleString()}</td>
+                <td style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.intelligence)}</td>
             </tr>;
         }
         return <></>;
@@ -93,16 +106,6 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         </>
     }
 
-    function BitNodeTimeText(): React.ReactElement {
-        if(p.sourceFiles.length > 0) {
-            return <>
-                <span>Time played since last Bitnode destroyed: {convertTimeMsToTimeElapsedString(p.playtimeSinceLastBitnode)}</span>
-                <br />
-            </>
-        }
-        return <></>
-    }
-
     function CurrentBitNode(): React.ReactElement {
         if(p.sourceFiles.length > 0) {
 
@@ -120,6 +123,14 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         return <></>
     }
 
+    const timeRows = [
+        ['Time played since last Augmentation:', convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug)],
+    ]
+    if(p.sourceFiles.length > 0) {
+        timeRows.push(['Time played since last Bitnode destroyed:', convertTimeMsToTimeElapsedString(p.playtimeSinceLastBitnode)]);
+    }
+    timeRows.push(['Total Time played:', convertTimeMsToTimeElapsedString(p.totalPlaytime)])
+
     return (
         <pre>
             <b>General</b>
@@ -128,40 +139,40 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <LastEmployer />
             <LastJob />
             <Employers />
-            <span>Money: {numeralWrapper.formatMoney(p.money.toNumber())}</span>
+            <span>Money: {Money(p.money.toNumber())}</span>
             <button className="popup-box-button" style={{display: 'inline-block', float: 'none'}} onClick={openMoneyModal}>Money Statistics & Breakdown</button><br /><br />
             <b>Stats</b>
             <table>
               <tbody>
                 <tr key='0'>
                   <td key='0'>Hacking:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{p.hacking_skill.toLocaleString()}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.format(p.hacking_exp, '0.000a')} exp)</td>
+                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.hacking_skill)}</td>
+                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.hacking_exp)} exp)</td>
                 </tr>
                 <tr key='1'>
                   <td key='0'>Strength:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{p.strength.toLocaleString()}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.format(p.strength_exp, '0.000a')} exp)</td>
+                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.strength)}</td>
+                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.strength_exp)} exp)</td>
                 </tr>
                 <tr key='2'>
                   <td key='0'>Defense:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{p.defense.toLocaleString()}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.format(p.defense_exp, '0.000a')} exp)</td>
+                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.defense)}</td>
+                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.defense_exp)} exp)</td>
                 </tr>
                 <tr key='3'>
                   <td key='0'>Dexterity:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{p.dexterity.toLocaleString()}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.format(p.dexterity_exp, '0.000a')} exp)</td>
+                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.dexterity)}</td>
+                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.dexterity_exp)} exp)</td>
                 </tr>
                 <tr key='4'>
                   <td key='0'>Agility:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{p.agility.toLocaleString()}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.format(p.agility_exp, '0.000a')} exp)</td>
+                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.agility)}</td>
+                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.agility_exp)} exp)</td>
                 </tr>
                 <tr key='5'>
                   <td key='0'>Charisma:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{p.charisma.toLocaleString()}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.format(p.charisma_exp, '0.000a')} exp)</td>
+                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.charisma)}</td>
+                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.charisma_exp)} exp)</td>
                 </tr>
                 <Intelligence />
             </tbody>
@@ -223,13 +234,10 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             ]} /><br /><br />
 
             <b>Misc.</b><br /><br />
-            <span>Servers owned:       {p.purchasedServers.length} / {getPurchaseServerLimit()}</span><br />
-            <span>Hacknet Nodes owned: {p.hacknetNodes.length}</span><br />
-            <span>Augmentations installed: {p.augmentations.length}</span><br />
-            <span>Time played since last Augmentation: {convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug)}</span><br />
-            <BitNodeTimeText />
-            <span>Time played: {convertTimeMsToTimeElapsedString(p.totalPlaytime)}</span><br />
-
+            <span>Servers owned: {p.purchasedServers.length} / {getPurchaseServerLimit()}</span><br />
+            <Hacknet />
+            <span>Augmentations installed: {p.augmentations.length}</span><br /><br />
+            {StatsTable(timeRows, null)}
             <br />
             <CurrentBitNode />
         </pre>

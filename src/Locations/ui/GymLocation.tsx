@@ -12,6 +12,7 @@ import { IPlayer }          from "../../PersonObjects/IPlayer";
 
 import { numeralWrapper }   from "../../ui/numeralFormat";
 import { StdButton }        from "../../ui/React/StdButton";
+import { Money }            from "../../ui/React/Money";
 
 type IProps = {
     loc: Location;
@@ -66,22 +67,22 @@ export class GymLocation extends React.Component<IProps, any> {
                 <StdButton
                     onClick={this.trainStrength}
                     style={this.btnStyle}
-                    text={`Train Strength (${numeralWrapper.formatMoney(cost)} / sec)`}
+                    text={<>Train Strength ({Money(cost)} / sec)</>}
                 />
                 <StdButton
                     onClick={this.trainDefense}
                     style={this.btnStyle}
-                    text={`Train Defense (${numeralWrapper.formatMoney(cost)} / sec)`}
+                    text={<>Train Defense ({Money(cost)} / sec)</>}
                 />
                 <StdButton
                     onClick={this.trainDexterity}
                     style={this.btnStyle}
-                    text={`Train Dexterity (${numeralWrapper.formatMoney(cost)} / sec)`}
+                    text={<>Train Dexterity ({Money(cost)} / sec)</>}
                 />
                 <StdButton
                     onClick={this.trainAgility}
                     style={this.btnStyle}
-                    text={`Train Agility (${numeralWrapper.formatMoney(cost)} / sec)`}
+                    text={<>Train Agility ({Money(cost)} / sec)</>}
                 />
             </div>
         )

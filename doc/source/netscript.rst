@@ -30,4 +30,5 @@ to reach out to the developer!
     Gang API <netscript/netscriptgangapi>
     Coding Contract API <netscript/netscriptcodingcontractapi>
     Sleeve API <netscript/netscriptsleeveapi>
+    Formulas API <netscript/netscriptformulasapi>
     Miscellaneous <netscript/netscriptmisc>

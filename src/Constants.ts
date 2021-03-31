@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.50.2",
+    Version:                "0.51.0",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,18 +228,25 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.50.2 - 2021-03-25 Everyone asked for this one. (hydroflame)
+    v0.51.0 - 2021-03-31 Formulas (hydroflame)
     -------
-    BitNodeMultipliers
-    * 'GangKarmaRequirements': a new multipler that influences how much karma is required to make a gang different bitnodes.
+
+    Formulas API
+    * A new API is introduced, this gives players access to various formulas used in the game.
+      It'll help you make more informed decisions.
 
     Netscript
-    * 'connect': a new singularity function that connects you to a server. (like the terminal command)
-    * 'manualHack': a new singularity function that performs a manual hack on the players current server.
-    * ns2 stack trace works on Firefox now.
+    * 'getServer' is a new function meant to be used with the formulas API.
+    * 'getPlayer' is a new function meant to be used with the formulas API.
+    * 'getStats' and 'getCharacterInformation' are deprecated in favor of 'getPlayer'
+    * 'getCurrentServer' is a new function that returns the server the player is currently connected.
 
-    Misc.
-    * New shortcut, Alt + b, brings you to bladeburner
-    * New shortcut, Alt + g, brings you to gang
+    Display
+    * All money should now consistently be orange.
+    * All rep should now consistently be light-yellow.
+    * Most numbers should display consistently now (aka all money is formatted the same).
+
+    Click to copy
+    * Certain UI elements are now 'click-to-copy'
     `
 }

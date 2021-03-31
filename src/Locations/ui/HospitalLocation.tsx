@@ -10,6 +10,7 @@ import { IPlayer }                  from "../../PersonObjects/IPlayer";
 
 import { numeralWrapper }           from "../../ui/numeralFormat";
 import { AutoupdatingStdButton }    from "../../ui/React/AutoupdatingStdButton";
+import { Money }                    from "../../ui/React/Money";
 
 import { dialogBoxCreate }          from "../../../utils/DialogBox";
 
@@ -59,7 +60,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
             currHp: this.props.p.hp,
         });
 
-        dialogBoxCreate(`You were healed to full health! The hospital billed you for ${numeralWrapper.formatMoney(cost)}`);
+        dialogBoxCreate(<>You were healed to full health! The hospital billed you for {Money(cost)}</>);
     }
 
     render() {
@@ -69,7 +70,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
             <AutoupdatingStdButton
                 onClick={this.getHealed}
                 style={this.btnStyle}
-                text={`Get treatment for wounds - ${numeralWrapper.formatMoney(cost)}`}
+                text={<>Get treatment for wounds - {Money(cost)}</>}
             />
         )
     }

@@ -18,9 +18,12 @@ import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
+import { Reputation } from "../../ui/React/Reputation";
 import { IMap } from "../../types";
 
 import { StdButton } from "../../ui/React/StdButton";
+import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 
 type IProps = {
     augName: string;
@@ -106,19 +109,19 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
 
         // Determine UI properties
         let disabled: boolean = false;
-        let statusTxt: string = "";
+        let status: JSX.Element = <></>;
         let color: string = "";
         if (!this.hasPrereqs()) {
             disabled = true;
-            statusTxt = `LOCKED (Requires ${this.aug.prereqs.join(",")} as prerequisite(s))`;
+            status = <>LOCKED (Requires {this.aug.prereqs.map(aug => AugFormat(aug))} as prerequisite)</>;
             color = "red";
         } else if (this.aug.name !== AugmentationNames.NeuroFluxGovernor && (this.aug.owned || this.owned())) {
             disabled = true;
         } else if (this.hasReputation()) {
-            statusTxt = `UNLOCKED - ${numeralWrapper.formatMoney(moneyCost)}`;
+            status = <>UNLOCKED - {Money(moneyCost)}</>;
         } else {
             disabled = true;
-            statusTxt = `LOCKED (Requires ${numeralWrapper.format(repCost, "0.000a")} faction reputation - ${numeralWrapper.formatMoney(moneyCost)})`;
+            status = <>LOCKED (Requires {Reputation(repCost)} faction reputation - {Money(moneyCost)})</>;
             color = "red";
         }
 
@@ -143,7 +146,7 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
                         text={btnTxt}
                         tooltip={this.aug.info}
                     />
-                    <p style={txtStyle}>{statusTxt}</p>
+                    <p style={txtStyle}>{status}</p>
                 </span>
             </li>
         )

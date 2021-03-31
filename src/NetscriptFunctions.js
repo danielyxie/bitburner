@@ -29,6 +29,7 @@ import {
     calculateGrowTime,
     calculateWeakenTime
 } from "./Hacking";
+import { calculateServerGrowth } from "./Server/formulas/grow";
 import {
     AllGangs,
     GangMemberUpgrades,
@@ -56,10 +57,30 @@ import {
     purchaseHashUpgrade,
     updateHashManagerCapacity,
 } from "./Hacknet/HacknetHelpers";
+import {
+    calculateMoneyGainRate,
+    calculateLevelUpgradeCost,
+    calculateRamUpgradeCost,
+    calculateCoreUpgradeCost,
+    calculateNodeCost,
+} from "./Hacknet/formulas/HacknetNodes";
+import {
+    calculateHashGainRate as HScalculateHashGainRate,
+    calculateLevelUpgradeCost as HScalculateLevelUpgradeCost,
+    calculateRamUpgradeCost as HScalculateRamUpgradeCost,
+    calculateCoreUpgradeCost as HScalculateCoreUpgradeCost,
+    calculateCacheUpgradeCost as HScalculateCacheUpgradeCost,
+    calculateServerCost as HScalculateServerCost,
+} from "./Hacknet/formulas/HacknetServers";
+import { HacknetNodeConstants, HacknetServerConstants } from "./Hacknet/data/Constants";
 import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
 import { Terminal } from "./Terminal";
+import  {
+    calculateSkill,
+    calculateExp,
+} from "./PersonObjects/formulas/skill";
 
 import { Message } from "./Message/Message";
 import { Messages } from "./Message/MessageHelpers";
@@ -449,6 +470,16 @@ function NetscriptFunctions(workerScript) {
         return makeRuntimeRejectMsg(workerScript, rejectMsg);
     }
 
+    const checkFormulasAccess = function(func, n) {
+        if (SourceFileFlags[5] < 1 || SourceFileFlags[n] < 1) {
+            let extra = '';
+            if (n !== 5) {
+                extra = ` and Source-File ${n}-1`;
+            }
+            throw makeRuntimeErrorMsg(`formulas.${func}`, `Requires Source-File 5-1${extra} to run.`);
+        }
+    }
+
     const checkSingularityAccess = function(func, n) {
         if (Player.bitNodeN !== 4) {
             if (SourceFileFlags[4] < n) {
@@ -592,7 +623,7 @@ function NetscriptFunctions(workerScript) {
         }
 
         // Calculate the hacking time
-        var hackingTime = calculateHackingTime(server); // This is in seconds
+        var hackingTime = calculateHackingTime(server, Player); // This is in seconds
 
         // No root access or skill level too low
         const canHack = netscriptCanHack(server, Player);
@@ -604,12 +635,12 @@ function NetscriptFunctions(workerScript) {
 
         return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
             if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-            var hackChance = calculateHackingChance(server);
+            var hackChance = calculateHackingChance(server, Player);
             var rand = Math.random();
-            var expGainedOnSuccess = calculateHackingExpGain(server) * threads;
+            var expGainedOnSuccess = calculateHackingExpGain(server, Player) * threads;
             var expGainedOnFailure = (expGainedOnSuccess / 4);
             if (rand < hackChance) { // Success!
-                const percentHacked = calculatePercentMoneyHacked(server);
+                const percentHacked = calculatePercentMoneyHacked(server, Player);
                 let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
                 if (isNaN(maxThreadNeeded)) {
                     // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
@@ -636,7 +667,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                 Player.gainHackingExp(expGainedOnSuccess);
                 workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.format(moneyGained, '$0.000a')} and ${numeralWrapper.format(expGainedOnSuccess, '0.000a')} exp (t=${threads})`);
+                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(expGainedOnSuccess)} exp (t=${threads})`);
                 server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
                 if (stock) {
                     influenceStockThroughServerHack(server, moneyGained);
@@ -649,7 +680,7 @@ function NetscriptFunctions(workerScript) {
                 // Player only gains 25% exp for failure?
                 Player.gainHackingExp(expGainedOnFailure);
                 workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.format(expGainedOnFailure, '0.000a')} exp (t=${threads})`);
+                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} exp (t=${threads})`);
                 return Promise.resolve(0);
             }
         });
@@ -743,7 +774,22 @@ function NetscriptFunctions(workerScript) {
             spendHashes : function(upgName, upgTarget) {
                 if (!hasHacknetServers()) { return false; }
                 return purchaseHashUpgrade(upgName, upgTarget);
-            }
+            },
+            getHashUpgradeLevel : function(upgName) {
+                const level = Player.hashManager.upgrades[upgName];
+                if(level === undefined) {
+                    throw makeRuntimeErrorMsg("hacknet.hashUpgradeLevel", `Invalid Hash Upgrade: ${upgName}`);
+                }
+                return level;
+            },
+            getStudyMult : function() {
+                if (!hasHacknetServers()) { return false; }
+                return Player.hashManager.getStudyMult();
+            },
+            getTrainingMult : function() {
+                if (!hasHacknetServers()) { return false; }
+                return Player.hashManager.getTrainingMult();
+            },
         },
         sprintf : sprintf,
         vsprintf: vsprintf,
@@ -786,7 +832,7 @@ function NetscriptFunctions(workerScript) {
                 return -1;
             }
 
-            const percentHacked = calculatePercentMoneyHacked(server);
+            const percentHacked = calculatePercentMoneyHacked(server, Player);
 
             return hackAmount / Math.floor(server.moneyAvailable * percentHacked);
         },
@@ -795,14 +841,14 @@ function NetscriptFunctions(workerScript) {
 
             const server = safeGetServer(ip, 'hackAnalyzePercent');
 
-            return calculatePercentMoneyHacked(server) * 100;
+            return calculatePercentMoneyHacked(server, Player) * 100;
         },
         hackChance : function(ip) {
             updateDynamicRam("hackChance", getRamCost("hackChance"));
 
             const server = safeGetServer(ip, 'hackChance');
 
-            return calculateHackingChance(server);
+            return calculateHackingChance(server, Player);
         },
         sleep : function(time){
             if (time === undefined) {
@@ -830,21 +876,21 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("grow", canHack.msg);
             }
 
-            var growTime = calculateGrowTime(server);
+            var growTime = calculateGrowTime(server, Player);
             workerScript.log("grow", `Executing on '${server.hostname}' in ${formatNumber(growTime, 3)} seconds (t=${threads}).`);
             return netscriptDelay(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); // It can be grown even if it has no money
-                var growthPercentage = processSingleServerGrowth(server, 450 * threads, Player);
+                var growthPercentage = processSingleServerGrowth(server, threads, Player);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
-                var expGain = calculateHackingExpGain(server) * threads;
+                var expGain = calculateHackingExpGain(server, Player) * threads;
                 if (growthPercentage == 1) {
                     expGain = 0;
                 }
                 const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
-                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.format(expGain, '0.000a')} hacking exp (t=${threads}).`);
+                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${threads}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 if (stock) {
@@ -881,14 +927,14 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("weaken", canHack.msg);
             }
 
-            var weakenTime = calculateWeakenTime(server);
+            var weakenTime = calculateWeakenTime(server, Player);
             workerScript.log("weaken", `Executing on '${server.hostname}' in ${formatNumber(weakenTime, 3)} seconds (t=${threads})`);
             return netscriptDelay(weakenTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
-                var expGain = calculateHackingExpGain(server) * threads;
-                workerScript.log("weaken", `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.format(expGain, '0.000a')} hacking exp (t=${threads})`);
+                var expGain = calculateHackingExpGain(server, Player) * threads;
+                workerScript.log("weaken", `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${threads})`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads);
@@ -1508,16 +1554,33 @@ function NetscriptFunctions(workerScript) {
             let copy = Object.assign({}, BitNodeMultipliers);
             return copy;
         },
+        getServer: function(ip) {
+            updateDynamicRam("getServer", getRamCost("getServer"));
+            if (SourceFileFlags[5] <= 0) {
+                throw makeRuntimeErrorMsg("getServer", "Requires Source-File 5 to run.");
+            }
+            const server = safeGetServer(ip, "getServer");
+            const copy = Object.assign({}, server);
+            // These fields should be hidden.
+            copy.contracts        = undefined;
+            copy.messages         = undefined;
+            copy.runningScripts   = undefined;
+            copy.scripts          = undefined;
+            copy.textFiles        = undefined;
+            copy.programs         = undefined;
+            copy.serversOnNetwork = undefined;
+            return copy;
+        },
         getServerMoneyAvailable: function(ip) {
             updateDynamicRam("getServerMoneyAvailable", getRamCost("getServerMoneyAvailable"));
             const server = safeGetServer(ip, "getServerMoneyAvailable");
             if (failOnHacknetServer(server, "getServerMoneyAvailable")) { return 0; }
             if (server.hostname == "home") {
                 // Return player's money
-                workerScript.log("getServerMoneyAvailable", `returned player's money: ${numeralWrapper.format(Player.money.toNumber(), '$0.000a')}`);
+                workerScript.log("getServerMoneyAvailable", `returned player's money: ${numeralWrapper.formatMoney(Player.money.toNumber())}`);
                 return Player.money.toNumber();
             }
-            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.format(server.moneyAvailable, '$0.000a')} for '${server.hostname}`);
+            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.formatMoney(server.moneyAvailable)} for '${server.hostname}`);
             return server.moneyAvailable;
         },
         getServerSecurityLevel: function(ip) {
@@ -1552,7 +1615,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerMaxMoney", getRamCost("getServerMaxMoney"));
             const server = safeGetServer(ip, "getServerMaxMoney");
             if (failOnHacknetServer(server, "getServerMaxMoney")) { return 0; }
-            workerScript.log("getServerMaxMoney", `returned ${numeralWrapper.format(server.moneyMax, '$0.000a')} for '${server.hostname}'`);
+            workerScript.log("getServerMaxMoney", `returned ${numeralWrapper.formatMoney(server.moneyMax)} for '${server.hostname}'`);
             return server.moneyMax;
         },
         getServerGrowth: function(ip) {
@@ -1959,7 +2022,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (Player.money.lt(cost)) {
-                workerScript.log("purchaseServer", `Not enough money to purchase server. Need ${numeralWrapper.format(cost, '$0.000a')}`);
+                workerScript.log("purchaseServer", `Not enough money to purchase server. Need ${numeralWrapper.formatMoney(cost)}`);
                 return "";
             }
             var newServ = safetlyCreateUniqueServer({
@@ -1978,7 +2041,7 @@ function NetscriptFunctions(workerScript) {
             homeComputer.serversOnNetwork.push(newServ.ip);
             newServ.serversOnNetwork.push(homeComputer.ip);
             Player.loseMoney(cost);
-            workerScript.log("purchaseServer", `Purchased new server with hostname '${newServ.hostname}' for ${numeralWrapper.format(cost, '$0.000a')}`);
+            workerScript.log("purchaseServer", `Purchased new server with hostname '${newServ.hostname}' for ${numeralWrapper.formatMoney(cost)}`);
             return newServ.hostname;
         },
         deleteServer: function(hostname) {
@@ -2300,21 +2363,21 @@ function NetscriptFunctions(workerScript) {
             const server = safeGetServer(ip, "getHackTime");
             if (failOnHacknetServer(server, "getHackTime")) { return Infinity; }
 
-            return calculateHackingTime(server, hack, int); // Returns seconds
+            return calculateHackingTime(server, Player); // Returns seconds
         },
         getGrowTime: function(ip, hack, int) {
             updateDynamicRam("getGrowTime", getRamCost("getGrowTime"));
             const server = safeGetServer(ip, "getGrowTime");
             if (failOnHacknetServer(server, "getGrowTime")) { return Infinity; }
 
-            return calculateGrowTime(server, hack, int); // Returns seconds
+            return calculateGrowTime(server, Player); // Returns seconds
         },
         getWeakenTime: function(ip, hack, int) {
             updateDynamicRam("getWeakenTime", getRamCost("getWeakenTime"));
             const server = safeGetServer(ip, "getWeakenTime");
             if (failOnHacknetServer(server, "getWeakenTime")) { return Infinity; }
 
-            return calculateWeakenTime(server, hack, int); // Returns seconds
+            return calculateWeakenTime(server, Player); // Returns seconds
         },
         getScriptIncome: function(scriptname, ip) {
             updateDynamicRam("getScriptIncome", getRamCost("getScriptIncome"));
@@ -2695,7 +2758,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if(Player.money.lt(item.price)) {
-                workerScript.log("purchaseProgram", `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.format(item.price, '$0.000a')}`);
+                workerScript.log("purchaseProgram", `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.formatMoney(item.price)}`);
                 return false;
             }
 
@@ -2710,7 +2773,14 @@ function NetscriptFunctions(workerScript) {
             workerScript.log("purchaseProgram", `You have purchased the '${item.program}' program. The new program can be found on your home computer.`);
             return true;
         },
+        getCurrentServer: function() {
+            updateDynamicRam("getCurrentServer", getRamCost("getCurrentServer"));
+            checkSingularityAccess("getCurrentServer", 1);
+            return Player.getCurrentServer().hostname;
+        },
         connect: function(hostname) {
+            updateDynamicRam("connect", getRamCost("connect"));
+            checkSingularityAccess("connect", 1);
             if (!hostname) {
                 throw makeRuntimeErrorMsg("connect", `Invalid hostname: '${hostname}'`);
             }
@@ -2754,6 +2824,7 @@ function NetscriptFunctions(workerScript) {
         getStats: function() {
             updateDynamicRam("getStats", getRamCost("getStats"));
             checkSingularityAccess("getStats", 1);
+            workerScript.log("getStats", `getStats is deprecated, please use getPlayer`);
 
             return {
                 hacking:        Player.hacking_skill,
@@ -2768,6 +2839,7 @@ function NetscriptFunctions(workerScript) {
         getCharacterInformation: function() {
             updateDynamicRam("getCharacterInformation", getRamCost("getCharacterInformation"));
             checkSingularityAccess("getCharacterInformation", 1);
+            workerScript.log("getCharacterInformation", `getCharacterInformation is deprecated, please use getPlayer`);
 
             return {
                 bitnode:            Player.bitNodeN,
@@ -2812,6 +2884,96 @@ function NetscriptFunctions(workerScript) {
                 charismaExp:        Player.charisma_exp,
             };
         },
+        getPlayer: function() {
+            updateDynamicRam("getPlayer", getRamCost("getPlayer"));
+            checkSingularityAccess("getPlayer", 1);
+
+            const data = {
+                hacking_skill:                   Player.hacking_skill,
+                hp:                              Player.hp,
+                max_hp:                          Player.max_hp,
+                strength:                        Player.strength,
+                defense:                         Player.defense,
+                dexterity:                       Player.dexterity,
+                agility:                         Player.agility,
+                charisma:                        Player.charisma,
+                intelligence:                    Player.intelligence,
+                hacking_chance_mult:             Player.hacking_chance_mult,
+                hacking_speed_mult:              Player.hacking_speed_mult,
+                hacking_money_mult:              Player.hacking_money_mult,
+                hacking_grow_mult:               Player.hacking_grow_mult,
+                hacking_exp:                     Player.hacking_exp,
+                strength_exp:                    Player.strength_exp,
+                defense_exp:                     Player.defense_exp,
+                dexterity_exp:                   Player.dexterity_exp,
+                agility_exp:                     Player.agility_exp,
+                charisma_exp:                    Player.charisma_exp,
+                hacking_mult:                    Player.hacking_mult,
+                strength_mult:                   Player.strength_mult,
+                defense_mult:                    Player.defense_mult,
+                dexterity_mult:                  Player.dexterity_mult,
+                agility_mult:                    Player.agility_mult,
+                charisma_mult:                   Player.charisma_mult,
+                hacking_exp_mult:                Player.hacking_exp_mult,
+                strength_exp_mult:               Player.strength_exp_mult,
+                defense_exp_mult:                Player.defense_exp_mult,
+                dexterity_exp_mult:              Player.dexterity_exp_mult,
+                agility_exp_mult:                Player.agility_exp_mult,
+                charisma_exp_mult:               Player.charisma_exp_mult,
+                company_rep_mult:                Player.company_rep_mult,
+                faction_rep_mult:                Player.faction_rep_mult,
+                money:                           Player.money.toNumber(),
+                city:                            Player.city,
+                location:                        Player.location,
+                crime_money_mult:                Player.crime_money_mult,
+                crime_success_mult:              Player.crime_success_mult,
+                isWorking:                       Player.isWorking,
+                workType:                        Player.workType,
+                currentWorkFactionName:          Player.currentWorkFactionName,
+                currentWorkFactionDescription:   Player.currentWorkFactionDescription,
+                workHackExpGainRate:             Player.workHackExpGainRate,
+                workStrExpGainRate:              Player.workStrExpGainRate,
+                workDefExpGainRate:              Player.workDefExpGainRate,
+                workDexExpGainRate:              Player.workDexExpGainRate,
+                workAgiExpGainRate:              Player.workAgiExpGainRate,
+                workChaExpGainRate:              Player.workChaExpGainRate,
+                workRepGainRate:                 Player.workRepGainRate,
+                workMoneyGainRate:               Player.workMoneyGainRate,
+                workMoneyLossRate:               Player.workMoneyLossRate,
+                workHackExpGained:               Player.workHackExpGained,
+                workStrExpGained:                Player.workStrExpGained,
+                workDefExpGained:                Player.workDefExpGained,
+                workDexExpGained:                Player.workDexExpGained,
+                workAgiExpGained:                Player.workAgiExpGained,
+                workChaExpGained:                Player.workChaExpGained,
+                workRepGained:                   Player.workRepGained,
+                workMoneyGained:                 Player.workMoneyGained,
+                createProgramName:               Player.createProgramName,
+                createProgramReqLvl:             Player.createProgramReqLvl,
+                className:                       Player.className,
+                crimeType:                       Player.crimeType,
+                work_money_mult:                 Player.work_money_mult,
+                hacknet_node_money_mult:         Player.hacknet_node_money_mult,
+                hacknet_node_purchase_cost_mult: Player.hacknet_node_purchase_cost_mult,
+                hacknet_node_ram_cost_mult:      Player.hacknet_node_ram_cost_mult,
+                hacknet_node_core_cost_mult:     Player.hacknet_node_core_cost_mult,
+                hacknet_node_level_cost_mult:    Player.hacknet_node_level_cost_mult,
+                hasWseAccount:                   Player.hasWseAccount,
+                hasTixApiAccess:                 Player.hasTixApiAccess,
+                has4SData:                       Player.has4SData,
+                has4SDataTixApi:                 Player.has4SDataTixApi,
+                bladeburner_max_stamina_mult:    Player.bladeburner_max_stamina_mult,
+                bladeburner_stamina_gain_mult:   Player.bladeburner_stamina_gain_mult,
+                bladeburner_success_chance_mult: Player.bladeburner_success_chance_mult,
+                bitNodeN:                        Player.bitNodeN,
+                totalPlaytime:                   Player.totalPlaytime,
+                playtimeSinceLastAug:            Player.playtimeSinceLastAug,
+                playtimeSinceLastBitnode:        Player.playtimeSinceLastBitnode,
+                jobs:                            {},
+            };
+            Object.assign(data.jobs, Player.jobs);
+            return data;
+        },
         isBusy: function() {
             updateDynamicRam("isBusy", getRamCost("isBusy"));
             checkSingularityAccess("isBusy", 1);
@@ -2840,7 +3002,7 @@ function NetscriptFunctions(workerScript) {
 
             const cost = Player.getUpgradeHomeRamCost();
             if (Player.money.lt(cost)) {
-                workerScript.log("upgradeHomeRam", `You don't have enough money. Need ${numeralWrapper.format(cost, '$0.000a')}`);
+                workerScript.log("upgradeHomeRam", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
                 return false;
             }
 
@@ -2995,7 +3157,7 @@ function NetscriptFunctions(workerScript) {
         joinFaction: function(name) {
             updateDynamicRam("joinFaction", getRamCost("joinFaction"));
             checkSingularityAccess("joinFaction", 2);
-            getFaction("workForFaction", name);
+            getFaction("joinFaction", name);
 
             if (!Player.factionInvitations.includes(name)) {
                 workerScript.log("joinFaction", `You have not been invited by faction '${name}'`);
@@ -3127,7 +3289,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
             if (Player.money.lt(amt)) {
-                workerScript.log("donateToFaction", `You do not have enough money to donate ${numeralWrapper.format(amt, '$0.000a')} to '${name}'`);
+                workerScript.log("donateToFaction", `You do not have enough money to donate ${numeralWrapper.formatMoney(amt)} to '${name}'`);
                 return false;
             }
             const repNeededToDonate = Math.round(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
@@ -3138,7 +3300,7 @@ function NetscriptFunctions(workerScript) {
             const repGain = amt / CONSTANTS.DonateMoneyToRepDivisor * Player.faction_rep_mult;
             faction.playerReputation += repGain;
             Player.loseMoney(amt);
-            workerScript.log("donateToFaction", `${numeralWrapper.format(amt, '$0.000a')} donated to '${name}' for ${numeralWrapper.format(repGain, '0.000a')} reputation`);
+            workerScript.log("donateToFaction", `${numeralWrapper.formatMoney(amt)} donated to '${name}' for ${numeralWrapper.formatReputation(repGain)} reputation`);
             return true;
         },
         createProgram: function(name) {
@@ -4088,6 +4250,110 @@ function NetscriptFunctions(workerScript) {
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
             }
         }, // End sleeve
+        formulas: {
+            basic: {
+                calculateSkill: function(exp, mult = 1) {
+                    checkFormulasAccess("basic.calculateSkill", 5);
+                    return calculateSkill(exp, mult);
+                },
+                calculateExp: function(skill, mult = 1) {
+                    checkFormulasAccess("basic.calculateExp", 5);
+                    return calculateExp(skill, mult);
+                },
+                hackChance: function(server, player) {
+                    checkFormulasAccess("basic.hackChance", 5);
+                    return calculateHackingChance(server, player);
+                },
+                hackExp: function(server, player) {
+                    checkFormulasAccess("basic.hackExp", 5);
+                    return calculateHackingExpGain(server, player);
+                },
+                hackPercent: function(server, player) {
+                    checkFormulasAccess("basic.hackPercent", 5);
+                    return calculatePercentMoneyHacked(server, player);
+                },
+                growPercent: function(server, threads, player) {
+                    checkFormulasAccess("basic.growPercent", 5);
+                    return calculateServerGrowth(server, threads, player);
+                },
+                hackTime: function(server, player) {
+                    checkFormulasAccess("basic.hackTime", 5);
+                    return calculateHackingTime(server, player);
+                },
+                growTime: function(server, player) {
+                    checkFormulasAccess("basic.growTime", 5);
+                    return calculateGrowTime(server, player);
+                },
+                weakenTime: function(server, player) {
+                    checkFormulasAccess("basic.weakenTime", 5);
+                    return calculateWeakenTime(server, player);
+                },
+            },
+            hacknetNodes: {
+                moneyGainRate: function(level, ram, cores, mult=1) {
+                    checkFormulasAccess("hacknetNodes.moneyGainRate", 5);
+                    return calculateMoneyGainRate(level, ram, cores, mult);
+                },
+                levelUpgradeCost: function(startingLevel, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetNodes.levelUpgradeCost", 5);
+                    return calculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
+                },
+                ramUpgradeCost: function(startingRam, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetNodes.ramUpgradeCost", 5);
+                    return calculateRamUpgradeCost(startingRam, extraLevels, costMult);
+                },
+                coreUpgradeCost: function(startingCore, extraCores=1, costMult=1) {
+                    checkFormulasAccess("hacknetNodes.coreUpgradeCost", 5);
+                    return calculateCoreUpgradeCost(startingCore, extraCores, costMult);
+                },
+                hacknetNodeCost: function(n, mult) {
+                    checkFormulasAccess("hacknetNodes.hacknetNodeCost", 5);
+                    return calculateNodeCost(n, mult);
+                },
+                constants: function() {
+                    checkFormulasAccess("hacknetNodes.constants", 5);
+                    return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
+                }
+            },
+            hacknetServers: {
+                hashGainRate: function(level, ram, cores, mult=1) {
+                    checkFormulasAccess("hacknetServers.hashGainRate", 9);
+                    return HScalculateHashGainRate(level, ram, cores, mult);
+                },
+                levelUpgradeCost: function(startingLevel, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.levelUpgradeCost", 9);
+                    return HScalculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
+                },
+                ramUpgradeCost: function(startingRam, extraLevels=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.ramUpgradeCost", 9);
+                    return HScalculateRamUpgradeCost(startingRam, extraLevels, costMult);
+                },
+                coreUpgradeCost: function(startingCore, extraCores=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.coreUpgradeCost", 9);
+                    return HScalculateCoreUpgradeCost(startingCore, extraCores, costMult);
+                },
+                cacheUpgradeCost: function(startingCache, extraCache=1, costMult=1) {
+                    checkFormulasAccess("hacknetServers.cacheUpgradeCost", 9);
+                    return HScalculateCacheUpgradeCost(startingCache, extraCache, costMult);
+                },
+                hashUpgradeCost: function(upgName, level) {
+                    checkFormulasAccess("hacknetServers.hashUpgradeCost", 9);
+                    const upg = Player.hashManager.getUpgrade(upgName);
+                    if(!upg) {
+                        throw makeRuntimeErrorMsg("formulas.hacknetServers.calculateHashUpgradeCost", `Invalid Hash Upgrade: ${upgName}`);
+                    }
+                    return upg.getCost(level);
+                },
+                hacknetServerCost: function(n, mult) {
+                    checkFormulasAccess("hacknetServers.hacknetServerCost", 9);
+                    return HScalculateServerCost(n, mult);
+                },
+                constants: function() {
+                    checkFormulasAccess("hacknetServers.constants", 9);
+                    return Object.assign({}, HacknetServerConstants);
+                }
+            },
+        }, // end formulas
         heart: {
             // Easter egg function
             break: function() {

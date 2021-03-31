@@ -3,6 +3,31 @@
 Changelog
 =========
 
+v0.51.0 - 2021-03-31 Formulas (hydroflame)
+------------------------------------------
+
+**Formulas API**
+
+* A new API is introduced, this gives players access to various formulas used in the game.
+  It'll help you make more informed decisions.
+
+**Netscript**
+
+* 'getServer' is a new function meant to be used with the formulas API.
+* 'getPlayer' is a new function meant to be used with the formulas API.
+* 'getStats' and 'getCharacterInformation' are deprecated in favor of 'getPlayer'
+* 'getCurrentServer' is a new function that returns the server the player is currently connected.
+
+**Display**
+
+* All money should now consistently be orange.
+* All rep should now consistently be light-yellow.
+* Most numbers should display consistently now (aka all money is formatted the same).
+
+**Click to copy**
+
+* Certain UI elements are now 'click-to-copy'
+
 v0.50.2 - 2021-03-25 Everyone asked for this one. (hydroflame)
 --------------------------------------------------------------
 

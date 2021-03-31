@@ -7,6 +7,7 @@
  * those upgrades
  */
 import { HashUpgrades } from "./HashUpgrades";
+import { HashUpgrade } from "./HashUpgrade";
 
 import { IMap } from "../types";
 import { Generic_fromJSON,
@@ -67,11 +68,20 @@ export class HashManager {
         return this.getMult(upgName);
     }
 
+    getUpgrade(upgName: string): HashUpgrade | null {
+        const upg = HashUpgrades[upgName];
+        if (!upg) {
+            console.error(`Invalid Upgrade Name given to HashManager.getUpgrade(): ${upgName}`);
+            return null;
+        }
+        return upg;
+    }
+
     /**
      * Get the cost (in hashes) of an upgrade
      */
     getUpgradeCost(upgName: string): number {
-        const upg = HashUpgrades[upgName];
+        const upg = this.getUpgrade(upgName);
         const currLevel = this.upgrades[upgName];
         if (upg == null || currLevel == null) {
             console.error(`Invalid Upgrade Name given to HashManager.getUpgradeCost(): ${upgName}`);

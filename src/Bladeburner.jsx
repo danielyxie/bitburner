@@ -51,6 +51,9 @@ import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 import { StatsTable } from "./ui/React/StatsTable";
+import { CopyableText } from "./ui/React/CopyableText";
+import { Money } from "./ui/React/Money";
+import React from "react";
 import ReactDOM from "react-dom";
 
 const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 166 132"  style="fill:#adff2f;"><g><path d="M132.658-0.18l-24.321,24.321c-7.915-2.71-16.342-4.392-25.087-4.392c-45.84,0-83,46-83,46   s14.1,17.44,35.635,30.844L12.32,120.158l12.021,12.021L144.68,11.841L132.658-0.18z M52.033,80.445   c-2.104-4.458-3.283-9.438-3.283-14.695c0-19.054,15.446-34.5,34.5-34.5c5.258,0,10.237,1.179,14.695,3.284L52.033,80.445z"/><path d="M134.865,37.656l-18.482,18.482c0.884,3.052,1.367,6.275,1.367,9.612c0,19.055-15.446,34.5-34.5,34.5   c-3.337,0-6.56-0.483-9.611-1.367l-10.124,10.124c6.326,1.725,12.934,2.743,19.735,2.743c45.84,0,83-46,83-46   S153.987,50.575,134.865,37.656z"/></g></svg>&nbsp;`
@@ -709,7 +712,7 @@ Bladeburner.prototype.completeAction = function() {
                         if (isOperation && this.logging.ops) {
                             this.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
                         } else if (!isOperation && this.logging.contracts) {
-                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeralWrapper.format(moneyGain, "$0.000a"));
+                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeralWrapper.formatMoney(moneyGain));
                         }
                     }
                     isOperation ? this.completeOperation(true) : this.completeContract(true);
@@ -902,7 +905,7 @@ Bladeburner.prototype.completeAction = function() {
             this.stamina = Math.min(this.maxStamina, this.stamina + staminaGain);
             this.startAction(this.action);
             if (this.logging.general) {
-                this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${BladeburnerConstants.HrcHpGain} HP and gained ${numeralWrapper.format(staminaGain, "0.0")} stamina`);
+                this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${BladeburnerConstants.HrcHpGain} HP and gained ${numeralWrapper.formatStamina(staminaGain)} stamina`);
             }
             break;
         }
@@ -1256,7 +1259,7 @@ Bladeburner.prototype.createContent = function() {
     // Console
     DomElems.consoleDiv          = createElement("div", {
         class:"bladeburner-console-div",
-        clickListener:()=>{
+        clickListener:() => {
             if (DomElems.consoleInput instanceof Element) {
                 DomElems.consoleInput.focus();
             }
@@ -1264,12 +1267,12 @@ Bladeburner.prototype.createContent = function() {
         }
     });
     DomElems.consoleTable        = createElement("table", {class:"bladeburner-console-table"});
-    DomElems.consoleInputRow     = createElement("tr", {class:"bladeburner-console-input-row", id:"bladeubrner-console-input-row"});
+    DomElems.consoleInputRow     = createElement("tr", {class:"bladeburner-console-input-row", id:"bladeburner-console-input-row"});
     DomElems.consoleInputCell    = createElement("td", {class:"bladeburner-console-input-cell"});
     DomElems.consoleInputHeader  = createElement("pre", {innerText:"> "});
     DomElems.consoleInput        = createElement("input", {
         type:"text", class:"bladeburner-console-input", tabIndex:1,
-        onfocus:()=>{DomElems.consoleInput.value = DomElems.consoleInput.value}
+        onfocus:() => {DomElems.consoleInput.value = DomElems.consoleInput.value}
     });
 
     DomElems.consoleInputCell.appendChild(DomElems.consoleInputHeader);
@@ -1330,7 +1333,7 @@ Bladeburner.prototype.createOverviewContent = function() {
     DomElems.overviewStaminaHelpTip = createElement("div", {
         class:"help-tip",
         innerText:"?",
-        clickListener: ()=> {
+        clickListener: () => {
             dialogBoxCreate("Performing actions will use up your stamina.<br><br>" +
                             "Your max stamina is determined primarily by your agility stat.<br><br>" +
                             "Your stamina gain rate is determined by both your agility and your " +
@@ -1358,7 +1361,7 @@ Bladeburner.prototype.createOverviewContent = function() {
 
     DomElems.overviewEstPopHelpTip = createElement("div", {
         innerText:"?", class:"help-tip",
-        clickListener:()=>{
+        clickListener:() => {
             dialogBoxCreate("The success rate of your contracts/operations depends on " +
                             "the population of Synthoids in your current city. " +
                             "The success rate that is shown to you is only an estimate, " +
@@ -1421,12 +1424,12 @@ Bladeburner.prototype.createOverviewContent = function() {
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(createElement("a", {
         innerHTML:"Travel", class:"a-link-button", display:"inline-block",
-        clickListener:()=>{
+        clickListener:() => {
             var popupId = "bladeburner-travel-popup-cancel-btn";
             var popupArguments = [];
             popupArguments.push(createElement("a", { // Cancel Button
                 innerText:"Cancel", class:"a-link-button",
-                clickListener:()=>{
+                clickListener:() => {
                     removeElementById(popupId); return false;
                 }
             }))
@@ -1445,7 +1448,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                      */
                     class:"cmpy-mgmt-find-employee-option",
                     innerText:BladeburnerConstants.CityNames[i],
-                    clickListener:()=>{
+                    clickListener:() => {
                         inst.city = BladeburnerConstants.CityNames[i];
                         removeElementById(popupId);
                         inst.updateOverviewContent();
@@ -1468,7 +1471,7 @@ Bladeburner.prototype.createOverviewContent = function() {
         DomElems.overviewDiv.appendChild(createElement("a", {
             innerText:"Faction", class:"a-link-button", display:"inline-block",
             tooltip:"Apply to the Bladeburner Faction, or go to the faction page if you are already a member",
-            clickListener:()=>{
+            clickListener:() => {
                 if (bladeburnerFac.isMember) {
                     Engine.loadFactionContent();
                     displayFactionContent(bladeburnersFactionName);
@@ -1512,7 +1515,7 @@ Bladeburner.prototype.createActionAndSkillsContent = function() {
             DomElems.actionAndSkillsDiv.appendChild(createElement("a", {
                 innerText:buttons[i],
                 class:currTab === buttons[i].toLowerCase() ? "bladeburner-nav-button-inactive" : "bladeburner-nav-button",
-                clickListener:()=>{
+                clickListener:() => {
                     DomElems.currentTab = buttons[i].toLowerCase();
                     inst.createActionAndSkillsContent();
                     return false;
@@ -1764,15 +1767,16 @@ Bladeburner.prototype.updateOverviewContent = function() {
     if (!routing.isOn(Page.Bladeburner)) {return;}
     DomElems.overviewRank.childNodes[0].nodeValue = "Rank: " + formatNumber(this.rank, 2);
     DomElems.overviewStamina.innerText = "Stamina: " + formatNumber(this.stamina, 3) + " / " + formatNumber(this.maxStamina, 3);
-    DomElems.overviewGen1.innerHTML =
-        "Stamina Penalty: " + formatNumber((1-this.calculateStaminaPenalty())*100, 1) + "%<br><br>" +
-        "Team Size: "   + formatNumber(this.teamSize, 0)  + "<br>" +
-        "Team Members Lost: " + formatNumber(this.teamLost, 0) + "<br><br>" +
-        "Num Times Hospitalized: " + this.numHosp + "<br>" +
-        "Money Lost From Hospitalizations: " + numeralWrapper.format(this.moneyLost, "$0.000a") + "<br><br>" +
-        "Current City: " + this.city + "<br>";
+    ReactDOM.render(<>
+        Stamina Penalty: {formatNumber((1-this.calculateStaminaPenalty())*100, 1)}%<br /><br />
+        Team Size: {formatNumber(this.teamSize, 0)}<br />
+        Team Members Lost: {formatNumber(this.teamLost, 0)}<br /><br />
+        Num Times Hospitalized: this.numHosp<br />
+        Money Lost From Hospitalizations: {Money(this.moneyLost)}<br /><br />
+        Current City: {this.city}<br />
+    </>, DomElems.overviewGen1);
 
-    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + numeralWrapper.format(this.getCurrentCity().popEst, "0.000a");
+    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + numeralWrapper.formatPopulation(this.getCurrentCity().popEst);
     DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + formatNumber(this.getCurrentCity().comms, 0);
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);
@@ -1898,7 +1902,7 @@ Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
         el.appendChild(createElement("a", {
             innerText:"Start", class: "a-link-button",
             margin:"3px", padding:"3px",
-            clickListener:()=>{
+            clickListener:() => {
                 this.action.type = ActionTypes[action.name];
                 this.action.name = action.name;
                 this.startAction(this.action);
@@ -1939,7 +1943,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         el.appendChild(createElement("a", {
             innerText:"Start", class: "a-link-button",
             padding:"3px", margin:"3px",
-            clickListener:()=>{
+            clickListener:() => {
                 this.action.type = ActionTypes.Contract;
                 this.action.name = action.name;
                 this.startAction(this.action);
@@ -1963,7 +1967,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         padding:"2px", margin:"2px",
         tooltip: isActive ? "WARNING: changing the level will restart the contract" : "",
         display:"inline",
-        clickListener:()=>{
+        clickListener:() => {
             ++action.level;
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateContractsUIElement(el, action);
@@ -1975,7 +1979,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         padding:"2px", margin:"2px",
         tooltip: isActive ? "WARNING: changing the level will restart the contract" : "",
         display:"inline",
-        clickListener:()=>{
+        clickListener:() => {
             --action.level;
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateContractsUIElement(el, action);
@@ -1989,8 +1993,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
                   `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
-
-                  "Time Required (s): " + formatNumber(actionTime, 0) + "\n" +
+                  "Time Required: " + convertTimeMsToTimeElapsedString(actionTime*1000) + "\n" +
                   "Contracts remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
@@ -2038,7 +2041,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         el.appendChild(createElement("a", {
             innerText:"Start", class: "a-link-button",
             margin:"3px", padding:"3px",
-            clickListener:()=>{
+            clickListener:() => {
                 this.action.type = ActionTypes.Operation;
                 this.action.name = action.name;
                 this.startAction(this.action);
@@ -2049,7 +2052,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         el.appendChild(createElement("a", {
             innerText:"Set Team Size (Curr Size: " + formatNumber(action.teamCount, 0) + ")", class:"a-link-button",
             margin:"3px", padding:"3px",
-            clickListener:()=>{
+            clickListener:() => {
                 var popupId = "bladeburner-operation-set-team-size-popup";
                 var txt = createElement("p", {
                     innerText:"Enter the amount of team members you would like to take on these " +
@@ -2063,7 +2066,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                 });
                 var setBtn = createElement("a", {
                     innerText:"Confirm", class:"a-link-button",
-                    clickListener:()=>{
+                    clickListener:() => {
                         var num = Math.round(parseFloat(input.value));
                         if (isNaN(num)) {
                             dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric)")
@@ -2077,7 +2080,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                 });
                 var cancelBtn = createElement("a", {
                     innerText:"Cancel", class:"a-link-button",
-                    clickListener:()=>{
+                    clickListener:() => {
                         removeElementById(popupId);
                         return false;
                     }
@@ -2101,7 +2104,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         padding:"2px", margin:"2px",
         tooltip: isActive ? "WARNING: changing the level will restart the Operation" : "",
         display:"inline",
-        clickListener:()=>{
+        clickListener:() => {
             ++action.level;
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateOperationsUIElement(el, action);
@@ -2113,7 +2116,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         padding:"2px", margin:"2px",
         tooltip: isActive ? "WARNING: changing the level will restart the Operation" : "",
         display:"inline",
-        clickListener:()=>{
+        clickListener:() => {
             --action.level;
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateOperationsUIElement(el, action);
@@ -2129,7 +2132,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
                   `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
-                  "Time Required(s): " + formatNumber(actionTime, 0) + "\n" +
+                  "Time Required: " + convertTimeMsToTimeElapsedString(actionTime*1000) + "\n" +
                   "Operations remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
@@ -2190,7 +2193,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
         el.appendChild(createElement("a", { // Start button
             innerText:"Start", margin:"3px", padding:"3px",
             class:hasReqdRank ? "a-link-button" : "a-link-button-inactive",
-            clickListener:()=>{
+            clickListener:() => {
                 this.action.type = ActionTypes.BlackOperation;
                 this.action.name = action.name;
                 this.startAction(this.action);
@@ -2201,7 +2204,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
         el.appendChild(createElement("a", { // Set Team Size Button
             innerText:"Set Team Size (Curr Size: " + formatNumber(action.teamCount, 0) + ")", class:"a-link-button",
             margin:"3px", padding:"3px",
-            clickListener:()=>{
+            clickListener:() => {
                 var popupId = "bladeburner-operation-set-team-size-popup";
                 var txt = createElement("p", {
                     innerText:"Enter the amount of team members you would like to take on this " +
@@ -2215,7 +2218,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                 });
                 var setBtn = createElement("a", {
                     innerText:"Confirm", class:"a-link-button",
-                    clickListener:()=>{
+                    clickListener:() => {
                         var num = Math.round(parseFloat(input.value));
                         if (isNaN(num)) {
                             dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric)")
@@ -2229,7 +2232,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                 });
                 var cancelBtn = createElement("a", {
                     innerText:"Cancel", class:"a-link-button",
-                    clickListener:()=>{
+                    clickListener:() => {
                         removeElementById(popupId);
                         return false;
                     }
@@ -2252,7 +2255,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     el.appendChild(createElement("p", {
         display:"inline-block",
         innerHTML:`Estimated Success Chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
-                  "Time Required(s): " + formatNumber(actionTime, 0),
+                  "Time Required: " + convertTimeMsToTimeElapsedString(actionTime*1000),
     }))
 }
 
@@ -2265,9 +2268,15 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
     }
     var pointCost = skill.calculateCost(currentLevel);
 
-    el.appendChild(createElement("h2", { // Header
-        innerText:skill.name + " (Lvl " + currentLevel + ")", display:"inline-block"
-    }));
+    const nameDiv = createElement("div");
+    ReactDOM.render(React.createElement(CopyableText, {value: skill.name}, null), nameDiv);
+    el.appendChild(nameDiv)
+
+    const h2 = createElement("h2", { // Header
+        display:"inline-block",
+    });
+    h2.appendChild(nameDiv);
+    el.appendChild(h2);
 
     var canLevel = this.skillPoints >= pointCost;
     var maxLvl = skill.maxLvl ? currentLevel >= skill.maxLvl : false;
@@ -2275,7 +2284,7 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
         innerText:"Level", display:"inline-block",
         class: canLevel && !maxLvl ? "a-link-button" : "a-link-button-inactive",
         margin:"3px", padding:"3px",
-        clickListener:()=>{
+        clickListener:() => {
             if (this.skillPoints < pointCost) {return;}
             this.skillPoints -= pointCost;
             this.upgradeSkill(skill);
@@ -2284,6 +2293,10 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
         }
     }));
     appendLineBreaks(el, 2);
+    el.appendChild(createElement("p", {
+        display:"block",
+        innerText:`Level: ${currentLevel}`,
+    }));
     if (maxLvl) {
         el.appendChild(createElement("p", {
             color:"red", display:"block",
@@ -2311,7 +2324,7 @@ Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
     }
 
     if (input == null || DomElems.consoleDiv == null) {return;}
-    $("#bladeubrner-console-input-row").before('<tr><td class="bladeburner-console-line" style="color: var(--my-font-color); white-space:pre-wrap;">' + input + '</td></tr>');
+    $("#bladeburner-console-input-row").before('<tr><td class="bladeburner-console-line" style="color: var(--my-font-color); white-space:pre-wrap;">' + input + '</td></tr>');
 
     if (DomElems.consoleTable.childNodes.length > MaxConsoleEntries) {
         DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
