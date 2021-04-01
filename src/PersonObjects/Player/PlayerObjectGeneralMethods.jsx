@@ -1504,7 +1504,6 @@ export function finishCrime(cancelled) {
                 dialogBoxCreate(<>
                     Crime failed!<br /><br />
                     You gained:<br />
-                    {Money(this.workMoneyGained)}<br />
                     {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
                     {numeralWrapper.formatExp(this.workStrExpGained)} strength experience<br />
                     {numeralWrapper.formatExp(this.workDefExpGained)} defense experience<br />
