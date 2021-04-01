@@ -93,6 +93,8 @@ getPlayer() Netscript Function
             playtimeSinceLastAug
             playtimeSinceLastBitnode
             jobs
+            factions
+            tor
         }
 
     Example::
