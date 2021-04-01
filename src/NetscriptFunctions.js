@@ -2970,6 +2970,8 @@ function NetscriptFunctions(workerScript) {
                 playtimeSinceLastAug:            Player.playtimeSinceLastAug,
                 playtimeSinceLastBitnode:        Player.playtimeSinceLastBitnode,
                 jobs:                            {},
+                factions:                        Player.factions.slice(),
+                tor:                             SpecialServerIps.hasOwnProperty("Darkweb Server"),
             };
             Object.assign(data.jobs, Player.jobs);
             return data;
