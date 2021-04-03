@@ -7,6 +7,7 @@ import * as React from "react";
 
 import { City } from "../City";
 import { LocationName } from "../data/LocationNames";
+import { Settings } from "../../Settings/Settings";
 
 import { StdButton } from "../../ui/React/StdButton";
 
@@ -16,7 +17,7 @@ type IProps = {
 }
 
 export class LocationCity extends React.Component<IProps, any> {
-    render() {
+    asciiCity() {
         const thiscity = this;
         const topprop = this.props
 
@@ -66,9 +67,29 @@ export class LocationCity extends React.Component<IProps, any> {
             elems.push(<pre key={i}>{lineElems(lines[i])}</pre>)
         }
 
+        return elems;
+    }
+
+    listCity() {
+        const locationButtons = this.props.city.locations.map((locName) => {
+            return (
+                <li key={locName}>
+                    <StdButton onClick={this.props.enterLocation.bind(this, locName)} text={locName} />
+                </li>
+            )
+        });
+
+        return (
+            <ul>
+                {locationButtons}
+            </ul>
+        )
+    }
+
+    render() {
         return (
             <>
-                {elems}
+                {Settings.DisableASCIIArt ? this.listCity() : this.asciiCity()}
             </>
         )
     }
