@@ -10,6 +10,7 @@ import { createTravelPopup }    from "../LocationsHelpers";
 
 import { CONSTANTS }            from "../../Constants";
 import { IPlayer }              from "../../PersonObjects/IPlayer";
+import { Settings }             from "../../Settings/Settings";
 
 import { numeralWrapper }       from "../../ui/numeralFormat";
 import { StdButton }            from "../../ui/React/StdButton";
@@ -32,7 +33,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
         this.btnStyle = { display: "block" };
     }
 
-    render() {
+    asciiWorldMap() {
         const thisTravelAgencyLocation = this;
 
         function LocationLetter(props: any) {
@@ -75,5 +76,43 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
 <pre>                      ~'</pre>
             </div>
         )
+    }
+
+
+    listWorldMap() {
+        const travelBtns: React.ReactNode[] = [];
+        for (const key in CityName) {
+            const city = CityName[key];
+
+            // Skip current city
+            if (city === this.props.p.city) { continue; }
+
+            travelBtns.push(
+                <StdButton
+                    key={city}
+                    onClick={createTravelPopup.bind(null, city, this.props.travel)}
+                    style={this.btnStyle}
+                    text={`Travel to ${city}`}
+                />
+            )
+        }
+
+        return (
+            <div>
+                <p>
+                    From here, you can travel to any other city! A ticket
+                    costs {Money(CONSTANTS.TravelCost)}.
+                </p>
+                {travelBtns}
+            </div>
+        )
+    }
+
+    render() {
+        if (Settings.DisableASCIIArt) {
+            return this.listWorldMap();
+        } else {
+            return this.asciiWorldMap();
+        }
     }
 }

@@ -23,6 +23,7 @@ function setSettingsLabels() {
     const suppressHospitalizationPopup = document.getElementById("settingsSuppressHospitalizationPopup");
     const autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     const disableHotkeys = document.getElementById("settingsDisableHotkeys");
+    const disableASCIIArt = document.getElementById("settingsDisableASCIIArt");
     const locale = document.getElementById("settingsLocale");
 
     //Initialize values on labels
@@ -36,6 +37,7 @@ function setSettingsLabels() {
     suppressHospitalizationPopup.checked = Settings.SuppressHospitalizationPopup;
     setAutosaveLabel(autosaveInterval);
     disableHotkeys.checked = Settings.DisableHotkeys;
+    disableASCIIArt.checked = Settings.CityListView;
     locale.value = Settings.Locale;
     numeralWrapper.updateLocale(Settings.Locale); //Initialize locale
 
@@ -97,6 +99,10 @@ function setSettingsLabels() {
 
     disableHotkeys.onclick = function() {
         Settings.DisableHotkeys = this.checked;
+    }
+
+    disableASCIIArt.onclick = function() {
+        Settings.DisableASCIIArt = this.checked;
     }
 
     //Locale selector

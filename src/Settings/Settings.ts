@@ -21,6 +21,11 @@ interface IDefaultSettings {
     CodeInstructionRunTime: number;
 
     /**
+     * Render city as list of buttons.
+     */
+    DisableASCIIArt: boolean;
+
+    /**
      * Whether global keyboard shortcuts should be recognized throughout the game.
      */
     DisableHotkeys: boolean;
@@ -101,6 +106,7 @@ interface ISettings extends IDefaultSettings {
 const defaultSettings: IDefaultSettings = {
     AutosaveInterval:                    60,
     CodeInstructionRunTime:              50,
+    DisableASCIIArt:                     false,
     DisableHotkeys:                      false,
     Locale:                              "en",
     MaxLogCapacity:                      50,
@@ -119,6 +125,7 @@ const defaultSettings: IDefaultSettings = {
 export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     AutosaveInterval:                    defaultSettings.AutosaveInterval,
     CodeInstructionRunTime:              25,
+    DisableASCIIArt:                     defaultSettings.DisableASCIIArt,
     DisableHotkeys:                      defaultSettings.DisableHotkeys,
     Editor:                              EditorSetting.Ace,
     EditorKeybinding:                    AceKeybindingSetting.Ace,
