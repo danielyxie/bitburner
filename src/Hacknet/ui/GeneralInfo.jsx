@@ -42,11 +42,9 @@ export class GeneralInfo extends React.Component {
                     hackers all around the world to anonymously share computing power and
                     perform distributed cyberattacks without the fear of being traced.
                 </p>
-                <br />
                 <p className={"hacknet-general-info"}>
                     {this.getSecondParagraph()}
                 </p>
-                <br />
                 <p className={"hacknet-general-info"}>
                     {this.getThirdParagraph()}
                 </p>
