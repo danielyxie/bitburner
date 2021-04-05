@@ -1601,6 +1601,7 @@ export function hospitalize() {
     this.loseMoney(cost);
     this.recordMoneySource(-1 * cost, "hospitalization");
     this.hp = this.max_hp;
+    return cost;
 }
 
 /********* Company job application **********/

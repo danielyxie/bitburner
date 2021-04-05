@@ -2976,6 +2976,11 @@ function NetscriptFunctions(workerScript) {
             Object.assign(data.jobs, Player.jobs);
             return data;
         },
+        hospitalize: function() {
+            updateDynamicRam("hospitalize", getRamCost("hospitalize"));
+            checkSingularityAccess("hospitalize", 1);
+            return Player.hospitalize();
+        },
         isBusy: function() {
             updateDynamicRam("isBusy", getRamCost("isBusy"));
             checkSingularityAccess("isBusy", 1);
