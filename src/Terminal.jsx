@@ -2139,23 +2139,11 @@ let Terminal = {
             const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement*30)
             const fulfilled = Player.augmentations.length >= numAugReq &&
                 Player.money.gt(1e11) &&
-                ((Player.hacking_skill >= 2500)||
-                (Player.strength >= 1500 &&
-                Player.defense >= 1500 &&
-                Player.dexterity >= 1500 &&
-                Player.agility >= 1500));
+                Player.hacking_skill >= 2500;
             if(!fulfilled) {
                 post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
-
                 postElement(<>Money: {Money(Player.money.toNumber())} / {Money(1e11)}</>);
-                post("One path below must be fulfilled...");
-                post("----------HACKING PATH----------");
                 post(`Hacking skill: ${Player.hacking_skill} / 2500`);
-                post("----------COMBAT PATH----------");
-                post(`Strength: ${Player.strength} / 1500`);
-                post(`Defense: ${Player.defense} / 1500`);
-                post(`Dexterity: ${Player.dexterity} / 1500`);
-                post(`Agility: ${Player.agility} / 1500`);
                 return;
             }
 
