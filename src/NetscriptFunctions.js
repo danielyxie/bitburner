@@ -766,6 +766,10 @@ function NetscriptFunctions(workerScript) {
                 if (!hasHacknetServers()) { return 0; }
                 return Player.hashManager.hashes;
             },
+            hashCapacity: function() {
+                if (!hasHacknetServers()) { return 0; }
+                return Player.hashManager.capacity;
+            },
             hashCost : function(upgName) {
                 if (!hasHacknetServers()) { return Infinity; }
 
