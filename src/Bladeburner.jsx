@@ -8,6 +8,7 @@ import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, displayFactionContent } from "./Faction/FactionHelpers";
 import { Player } from "./Player";
 import { hackWorldDaemon, redPillFlag } from "./RedPill";
+import { calculateHospitalizationCost } from "./Hospital/Hospital";
 
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
@@ -728,9 +729,10 @@ Bladeburner.prototype.completeAction = function() {
                         damage = action.hpLoss * difficultyMultiplier;
                         damage = Math.ceil(addOffset(damage, 10));
                         this.hpLost += damage;
+                        const cost = calculateHospitalizationCost(Player, damage);
                         if (Player.takeDamage(damage)) {
                             ++this.numHosp;
-                            this.moneyLost += (CONSTANTS.HospitalCostPerHp * Player.max_hp);
+                            this.moneyLost += cost;
                         }
                     }
                     var logLossText = "";
@@ -800,9 +802,10 @@ Bladeburner.prototype.completeAction = function() {
                     if (action.hpLoss) {
                         damage = action.hpLoss * difficultyMultiplier;
                         damage = Math.ceil(addOffset(damage, 10));
+                        const cost = calculateHospitalizationCost(Player, damage);
                         if (Player.takeDamage(damage)) {
                             ++this.numHosp;
-                            this.moneyLost += (CONSTANTS.HospitalCostPerHp * Player.max_hp);
+                            this.moneyLost += cost;
                         }
                     }
                     teamLossMax = Math.floor(teamCount);
@@ -1771,7 +1774,7 @@ Bladeburner.prototype.updateOverviewContent = function() {
         Stamina Penalty: {formatNumber((1-this.calculateStaminaPenalty())*100, 1)}%<br /><br />
         Team Size: {formatNumber(this.teamSize, 0)}<br />
         Team Members Lost: {formatNumber(this.teamLost, 0)}<br /><br />
-        Num Times Hospitalized: this.numHosp<br />
+        Num Times Hospitalized: {this.numHosp}<br />
         Money Lost From Hospitalizations: {Money(this.moneyLost)}<br /><br />
         Current City: {this.city}<br />
     </>, DomElems.overviewGen1);
