@@ -134,19 +134,22 @@ export class HacknetNode extends React.Component {
                         </span>
                     </div>
                     <div className={"row"}>
-                        <p>Level:</p><span className={"text upgradable-info"}>{node.level}</span>
+                        <p>Level:</p>
+                        <span className={"text upgradable-info"}>{node.level}</span>
                         <button className={upgradeLevelClass} onClick={upgradeLevelOnClick}>
                             {upgradeLevelContent}
                         </button>
                     </div>
                     <div className={"row"}>
-                        <p>RAM:</p><span className={"text upgradable-info"}>{node.ram}GB</span>
+                        <p>RAM:</p>
+                        <span className={"text upgradable-info"}>{node.ram}GB</span>
                         <button className={upgradeRamClass} onClick={upgradeRamOnClick}>
                             {upgradeRamContent}
                         </button>
                     </div>
                     <div className={"row"}>
-                        <p>Cores:</p><span className={"text upgradable-info"}>{node.cores}</span>
+                        <p>Cores:</p>
+                        <span className={"text upgradable-info"}>{node.cores}</span>
                         <button className={upgradeCoresClass} onClick={upgradeCoresOnClick}>
                             {upgradeCoresContent}
                         </button>

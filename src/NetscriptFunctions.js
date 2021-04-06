@@ -766,6 +766,10 @@ function NetscriptFunctions(workerScript) {
                 if (!hasHacknetServers()) { return 0; }
                 return Player.hashManager.hashes;
             },
+            hashCapacity: function() {
+                if (!hasHacknetServers()) { return 0; }
+                return Player.hashManager.capacity;
+            },
             hashCost : function(upgName) {
                 if (!hasHacknetServers()) { return Infinity; }
 
@@ -2976,6 +2980,11 @@ function NetscriptFunctions(workerScript) {
             Object.assign(data.jobs, Player.jobs);
             return data;
         },
+        hospitalize: function() {
+            updateDynamicRam("hospitalize", getRamCost("hospitalize"));
+            checkSingularityAccess("hospitalize", 1);
+            return Player.hospitalize();
+        },
         isBusy: function() {
             updateDynamicRam("isBusy", getRamCost("isBusy"));
             checkSingularityAccess("isBusy", 1);
@@ -3576,27 +3585,35 @@ function NetscriptFunctions(workerScript) {
                 checkGangApiAccess("getMemberInformation");
                 const member = getGangMember("getMemberInformation", name);
                 return {
-                    agility:                member.agi,
-                    agilityEquipMult:       member.agi_mult,
-                    agilityAscensionMult:   member.agi_asc_mult,
-                    augmentations:          member.augmentations.slice(),
-                    charisma:               member.cha,
-                    charismaEquipMult:      member.cha_mult,
-                    charismaAscensionMult:  member.cha_asc_mult,
-                    defense:                member.def,
-                    defenseEquipMult:       member.def_mult,
-                    defenseAscensionMult:   member.def_asc_mult,
-                    dexterity:              member.dex,
-                    dexterityEquipMult:     member.dex_mult,
-                    dexterityAscensionMult: member.dex_asc_mult,
-                    equipment:              member.upgrades.slice(),
-                    hacking:                member.hack,
-                    hackingEquipMult:       member.hack_mult,
-                    hackingAscensionMult:   member.hack_asc_mult,
-                    strength:               member.str,
-                    strengthEquipMult:      member.str_mult,
-                    strengthAscensionMult:  member.str_asc_mult,
-                    task:                   member.task,
+                    name:          member.name,
+                    task:          member.task,
+                    earnedRespect: member.earnedRespect,
+                    hack:          member.hack,
+                    str:           member.str,
+                    def:           member.def,
+                    dex:           member.dex,
+                    agi:           member.agi,
+                    cha:           member.cha,
+                    hack_exp:      member.hack_exp,
+                    str_exp:       member.str_exp,
+                    def_exp:       member.def_exp,
+                    dex_exp:       member.dex_exp,
+                    agi_exp:       member.agi_exp,
+                    cha_exp:       member.cha_exp,
+                    hack_mult:     member.hack_mult,
+                    str_mult:      member.str_mult,
+                    def_mult:      member.def_mult,
+                    dex_mult:      member.dex_mult,
+                    agi_mult:      member.agi_mult,
+                    cha_mult:      member.cha_mult,
+                    hack_asc_mult: member.hack_asc_mult,
+                    str_asc_mult:  member.str_asc_mult,
+                    def_asc_mult:  member.def_asc_mult,
+                    dex_asc_mult:  member.dex_asc_mult,
+                    agi_asc_mult:  member.agi_asc_mult,
+                    cha_asc_mult:  member.cha_asc_mult,
+                    upgrades:      member.upgrades.slice(),
+                    augmentations: member.augmentations.slice(),
                 }
             },
             canRecruitMember: function() {

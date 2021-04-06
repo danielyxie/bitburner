@@ -1374,8 +1374,7 @@ button {
   margin-top: 20px; }
 
 #infiltration-buttons .a-link-button {
-  display: inline;
-  width: 25%; }
+  display: inline; }
 
 /**
  * Styling for the Augmentations UI. This is the page that displays all of the

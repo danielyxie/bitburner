@@ -43,6 +43,7 @@ import { applyExploit } from "../../Exploits/applyExploits";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
+import { getHospitalizationCost } from "../../Hospital/Hospital";
 
 import Decimal from "decimal.js";
 
@@ -1588,18 +1589,19 @@ export function regenerateHp(amt) {
 }
 
 export function hospitalize() {
+    const cost = getHospitalizationCost(this);
     if (Settings.SuppressHospitalizationPopup === false) {
         dialogBoxCreate(<>
             You were in critical condition! You were taken to the hospital where 
             luckily they were able to save your life. You were charged&nbsp;
-            {Money(this.max_hp * CONSTANTS.HospitalCostPerHp)}
+            {Money(cost)}
         </>);
     }
 
-    const cost = this.max_hp * CONSTANTS.HospitalCostPerHp
     this.loseMoney(cost);
     this.recordMoneySource(-1 * cost, "hospitalization");
     this.hp = this.max_hp;
+    return cost;
 }
 
 /********* Company job application **********/

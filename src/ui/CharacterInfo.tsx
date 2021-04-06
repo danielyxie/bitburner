@@ -40,9 +40,9 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     function Hacknet(): React.ReactElement {
         // Can't import HacknetHelpers for some reason.
         if(!(p.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
-            return <><span>Hacknet Nodes owned: {p.hacknetNodes.length}</span><br /></>
+            return <><span>{`Hacknet Nodes owned: ${p.hacknetNodes.length}</span>`}</span><br /></>
         } else {
-            return <><span>Hacknet Servers owned: {p.hacknetNodes.length} / {HacknetServerConstants.MaxServers}</span><br /></>
+            return <><span>{`Hacknet Servers owned: ${p.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}</span>`}</span><br /></>
         }
     }
 
@@ -97,8 +97,8 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <table>
                 <tbody>
                     {props.rows.map((r: any) => <tr key={r[0]}>
-                        <td key='0'>{r[0]} multiplier: </td>
-                        <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatPercentage(r[1])}</td>
+                        <td key='0'>{`${r[0]} multiplier:`}</td>
+                        <td key='1' style={{textAlign: 'right', paddingLeft: '5px'}}>{numeralWrapper.formatPercentage(r[1])}</td>
                         {bn5Stat(r)}
                     </tr>)}
                 </tbody>
@@ -234,9 +234,9 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             ]} /><br /><br />
 
             <b>Misc.</b><br /><br />
-            <span>Servers owned: {p.purchasedServers.length} / {getPurchaseServerLimit()}</span><br />
+            <span>{`Servers owned: ${p.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span><br />
             <Hacknet />
-            <span>Augmentations installed: {p.augmentations.length}</span><br /><br />
+            <span>{`Augmentations installed: ${p.augmentations.length}`}</span><br /><br />
             {StatsTable(timeRows, null)}
             <br />
             <CurrentBitNode />

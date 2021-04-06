@@ -46,6 +46,7 @@ In :ref:`netscriptjs`::
     upgradeCache() <hacknetnodeapi/upgradeCache>
     getCacheUpgradeCost() <hacknetnodeapi/getCacheUpgradeCost>
     numHashes() <hacknetnodeapi/numHashes>
+    hashCapacity() <hacknetnodeapi/hashCapacity>
     hashCost() <hacknetnodeapi/hashCost>
     spendHashes() <hacknetnodeapi/spendHashes>
     getHashUpgradeLevel() <hacknetnodeapi/getHashUpgradeLevel>

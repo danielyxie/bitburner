@@ -183,6 +183,7 @@ export const RamCosts: IMap<any> = {
     getStats: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
     getCharacterInformation: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
     getPlayer: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
+    hospitalize: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
     isBusy: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
     stopAction: () => RamCostConstants.ScriptSingularityFn1RamCost / 2,
     upgradeHomeRam: () => RamCostConstants.ScriptSingularityFn2RamCost,

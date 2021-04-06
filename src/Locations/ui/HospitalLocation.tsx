@@ -7,6 +7,7 @@ import * as React from "react";
 
 import { CONSTANTS }                from "../../Constants";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
+import { getHospitalizationCost }   from "../../Hospital/Hospital";
 
 import { numeralWrapper }           from "../../ui/numeralFormat";
 import { AutoupdatingStdButton }    from "../../ui/React/AutoupdatingStdButton";
@@ -42,7 +43,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
     }
 
     getCost(): number {
-        return (this.props.p.max_hp - this.props.p.hp) * CONSTANTS.HospitalCostPerHp;
+        return getHospitalizationCost(this.props.p);
     }
 
     getHealed(e: React.MouseEvent<HTMLElement>): void {

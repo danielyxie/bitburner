@@ -134,7 +134,9 @@ export function yesNoTxtInpBoxGetInput(): string {
 export function yesNoTxtInpBoxCreate(txt: string | JSX.Element) {
     yesNoBoxOpen = true;
 
+
     if (yesNoTextInputBoxTextElement) {
+        yesNoTextInputBoxTextElement.innerHTML = '';
         if(typeof txt === 'string') {
             yesNoTextInputBoxTextElement.innerHTML = txt;
         } else {
