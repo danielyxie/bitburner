@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.51.0",
+    Version:                "0.51.1",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,25 +228,30 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.0 - 2021-03-31 Formulas (hydroflame)
+    v0.51.1 - 2021-04-06 Bugfixes because the author of the last patch sucks (it's hydroflame)
     -------
 
-    Formulas API
-    * A new API is introduced, this gives players access to various formulas used in the game.
-      It'll help you make more informed decisions.
-
     Netscript
-    * 'getServer' is a new function meant to be used with the formulas API.
-    * 'getPlayer' is a new function meant to be used with the formulas API.
-    * 'getStats' and 'getCharacterInformation' are deprecated in favor of 'getPlayer'
-    * 'getCurrentServer' is a new function that returns the server the player is currently connected.
+    * 'getPlayer' returns players faction and tor
+    * 'hospitalization' is a new singularity function.
+    * 'gang.getMemberInformation' now returns more information.
+    * 'hacknet.hashCapacity' is a new hacknet function that returns the maximum hash capacity.
 
-    Display
-    * All money should now consistently be orange.
-    * All rep should now consistently be light-yellow.
-    * Most numbers should display consistently now (aka all money is formatted the same).
+    Hospitalization
+    * Now only cost at most 10% of your money.
 
-    Click to copy
-    * Certain UI elements are now 'click-to-copy'
+    Bugfix
+    * confirmation dialog box no longer use previous text
+
+    Accessibility
+    * The game is a little easier to handle for screen readers (yes, there's an
+      absolute legend playing this game with a screen reader)
+    * Infiltration use buttons instead of a-links
+    * New option to disable ASCII art. This will make the metro map and world
+      map display as a list of buttons.
+
+    Misc.
+    * 'fl1ght.exe' will no longer suggest the combat path. Related faction
+      requirements unchanged.
     `
 }

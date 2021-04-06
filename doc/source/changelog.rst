@@ -3,6 +3,32 @@
 Changelog
 =========
 
+v0.51.1 - 2021-04-06 Bugfixes because the author of the last patch sucks (it's hydroflame)
+------------------------------------------------------------------------------------------
+
+**Netscript**
+* 'getPlayer' returns players faction and tor
+* 'hospitalization' is a new singularity function.
+* 'gang.getMemberInformation' now returns more information.
+* 'hacknet.hashCapacity' is a new hacknet function that returns the maximum hash capacity.
+
+**Hospitalization**
+* Now only cost at most 10% of your money.
+
+**Bugfix**
+* confirmation dialog box no longer use previous text
+
+**Accessibility**
+* The game is a little easier to handle for screen readers (yes, there's an
+  absolute legend playing this game with a screen reader)
+* Infiltration use buttons instead of a-links
+* New option to disable ASCII art. This will make the metro map and world
+  map display as a list of buttons.
+
+**Misc.**
+* 'fl1ght.exe' will no longer suggest the combat path. Related faction
+  requirements unchanged.
+
 v0.51.0 - 2021-03-31 Formulas (hydroflame)
 ------------------------------------------
 
