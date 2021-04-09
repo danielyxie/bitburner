@@ -3,6 +3,20 @@
 Changelog
 =========
 
+v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
+----------------------------------------------
+
+**New location: The Iker Molina Casino**
+
+* A casino opened in Aevum. However the house is rumored to cheat. If only 
+  we could give them a taste of their own medicine.
+
+**Misc.**
+
+* Link to discord added under options
+* 'getMemberInformation' doc updated, oops
+* tech vendor now handle max ram and cores.
+
 v0.51.1 - 2021-04-06 Bugfixes because the author of the last patch sucks (it's hydroflame)
 ------------------------------------------------------------------------------------------
 
