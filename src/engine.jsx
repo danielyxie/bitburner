@@ -612,8 +612,7 @@ const Engine = {
         }));
         Engine.Display.factionsContent.appendChild(createElement("p", {
             width:"70%",
-            innerText:"Lists factions you have been invited to, as well as " +
-                      "factions you have previously rejected. You can accept " +
+            innerText:"Lists factions you have been invited to. You can accept " +
                       "these faction invitations at any time."
         }));
         var invitationsList = createElement("ul");
