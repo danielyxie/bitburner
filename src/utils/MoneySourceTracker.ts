@@ -22,6 +22,7 @@ export class MoneySourceTracker {
     stock: number = 0;
     total: number = 0;
     work: number = 0;
+    casino: number = 0;
 
     [key: string]: number | Function;
 

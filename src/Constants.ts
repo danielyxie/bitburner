@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.51.1",
+    Version:                "0.51.2",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,30 +228,16 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.1 - 2021-04-06 Bugfixes because the author of the last patch sucks (it's hydroflame)
+    v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
     -------
 
-    Netscript
-    * 'getPlayer' returns players faction and tor
-    * 'hospitalization' is a new singularity function.
-    * 'gang.getMemberInformation' now returns more information.
-    * 'hacknet.hashCapacity' is a new hacknet function that returns the maximum hash capacity.
-
-    Hospitalization
-    * Now only cost at most 10% of your money.
-
-    Bugfix
-    * confirmation dialog box no longer use previous text
-
-    Accessibility
-    * The game is a little easier to handle for screen readers (yes, there's an
-      absolute legend playing this game with a screen reader)
-    * Infiltration use buttons instead of a-links
-    * New option to disable ASCII art. This will make the metro map and world
-      map display as a list of buttons.
+    New location: The Iker Molina Casino
+    * A casino opened in Aevum. However the house is rumored to cheat. If only 
+      we could give them a taste of their own medicine.
 
     Misc.
-    * 'fl1ght.exe' will no longer suggest the combat path. Related faction
-      requirements unchanged.
+    * Link to discord added under options
+    * 'getMemberInformation' doc updated, oops
+    * tech vendor now handle max ram and cores.
     `
 }

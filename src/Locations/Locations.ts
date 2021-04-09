@@ -47,14 +47,14 @@ Cities[CityName.Aevum].asciiArt = `
             \\  56                    B                                         
              x                        \\         [summit university]            
               \\                        \\  28                                  
-               \\ [snap fitness gym]     x       o--L------------               
+               \\ [snap fitness gym]     x       o--L-----------N               
                 K                        \\     /                               
-                 \\                        \\   P                               
+                 \\                        \\   Q               [casino]        
                   x 58                     \\ /  [travel agency]                
                    \\         94     95      o                                  
      90             x 59     o------o       |                                   
                      \\      /        \\      |             98    102  103      
-      o--------N------x----o 93    96 o-----+------------o       o----o         
+      o--------O------x----o 93    96 o-----+------------o       o----o         
                        \\                    |             \\     /             
         [hospital]      \\  61    [ecorp]    x 31        99 o-F-o 101           
                          o                  |                                   
@@ -69,13 +69,13 @@ Cities[CityName.Aevum].asciiArt = `
                          |               34 x   \\                              
            [clarke inc.] C                  |    \\    [world stock exchange]   
                          |                  |     \\                            
-                         |                  |      o-M-------Q--------o         
+                         |                  |      o-M-------R--------o         
 [galactic cybersystems]  G               35 x                                   
                          |                      [watchdog security]             
                          |                                                      
                       67 o                                                      
                                                                                 
-                                    [the slums] O                               `
+                                    [the slums] P                               `
 Cities[CityName.Chongqing].asciiArt = `
                                     |                                           
                                  75 o                                           

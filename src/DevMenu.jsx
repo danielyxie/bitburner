@@ -708,8 +708,11 @@ class DevMenuComponent extends Component {
         <h2>Generic</h2>
     </div>
     <div className="row">
+            <button className="std-button" onClick={this.addMoney(1e6)}>Add $1m</button>
+            <button className="std-button" onClick={this.addMoney(1e9)}>Add $1b</button>
             <button className="std-button" onClick={this.addMoney(1e12)}>Add $1t</button>
             <button className="std-button" onClick={this.addMoney(1e15)}>Add $1000t</button>
+            <button className="std-button" onClick={this.addMoney(1e27)}>Add $1e27</button>
             <button className="std-button" onClick={this.upgradeRam}>Upgrade Home Computer's RAM</button>
     </div>
     <div className="row">
