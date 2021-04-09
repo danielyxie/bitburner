@@ -146,6 +146,11 @@ export const LocationsMetadata: IConstructorParams[] = [
         types: [LocationType.Company],
     },
     {
+        city: CityName.Aevum,
+        name: LocationName.AevumCasino,
+        types: [LocationType.Casino],
+    },
+    {
         city: CityName.Chongqing,
         infiltrationData: {
             baseRewardValue: 100,

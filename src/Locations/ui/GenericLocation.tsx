@@ -14,6 +14,7 @@ import { SpecialLocation }          from "./SpecialLocation";
 import { TechVendorLocation }       from "./TechVendorLocation";
 import { TravelAgencyLocation }     from "./TravelAgencyLocation";
 import { UniversityLocation }       from "./UniversityLocation";
+import { CasinoLocation }           from "./CasinoLocation";
 
 import { Location }                 from "../Location";
 import { LocationType }             from "../LocationTypeEnum";
@@ -126,6 +127,15 @@ export class GenericLocation extends React.Component<IProps, any> {
                 <UniversityLocation
                     key={"universitylocation"}
                     loc={this.props.loc}
+                    p={this.props.p}
+                />
+            )
+        }
+
+        if (this.props.loc.types.includes(LocationType.Casino)) {
+            content.push(
+                <CasinoLocation
+                    key={"casinoLocation"}
                     p={this.props.p}
                 />
             )
