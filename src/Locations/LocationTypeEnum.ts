@@ -11,4 +11,5 @@ export enum LocationType {
     TechVendor,
     TravelAgency,
     University,
+    Casino,
 }
