@@ -198,7 +198,12 @@ export function createStartCorporationPopup(p: IPlayer) {
  */
 export function createUpgradeHomeCoresPopup(p: IPlayer) {
     const currentCores = p.getHomeComputer().cpuCores;
-    if (currentCores >= 8) { return; } // Max of 8 cores
+    if (currentCores >= 8) {
+        dialogBoxCreate(<>
+            You've have the maximum amount of CPU cores on your home computer.
+        </>);
+        return;
+    }
 
     // Cost of purchasing another cost is found by indexing this array with number of current cores
     const allCosts = [
@@ -254,6 +259,14 @@ export function createUpgradeHomeRamPopup(p: IPlayer) {
     const yesBtn = yesNoBoxGetYesButton();
     const noBtn = yesNoBoxGetNoButton();
     if (yesBtn == null || noBtn == null) { return; }
+
+    const homeComputer = p.getHomeComputer();
+    if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
+        dialogBoxCreate(<>
+            You've have the maximum amount of RAM on your home computer.
+        </>);
+        return;
+    }
 
     yesBtn.innerText = "Purchase";
     yesBtn.addEventListener("click", ()=>{

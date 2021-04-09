@@ -10,27 +10,35 @@ getMemberInformation() Netscript Function
     The object has the following structure::
 
         {
-            agility:                Agility stat
-            agilityEquipMult:       Agility multiplier from equipment. Decimal form
-            agilityAscensionMult:   Agility multiplier from ascension. Decimal form
-            augmentations:          Array of names of all owned Augmentations
-            charisma:               Charisma stat
-            charismaEquipMult:      Charisma multiplier from equipment. Decimal form
-            charismaAscensionMult:  Charisma multiplier from ascension. Decimal form
-            defense:                Defense stat
-            defenseEquipMult:       Defense multiplier from equipment. Decimal form
-            defenseAscensionMult:   Defense multiplier from ascension. Decimal form
-            dexterity:              Dexterity stat
-            dexterityEquipMult:     Dexterity multiplier from equipment. Decimal form
-            dexterityAscensionMult: Dexterity multiplier from ascension. Decimal form
-            equipment:              Array of names of all owned Non-Augmentation Equipment
-            hacking:                Hacking stat
-            hackingEquipMult:       Hacking multiplier from equipment. Decimal form
-            hackingAscensionMult:   Hacking multiplier from ascension. Decimal form
-            strength:               Strength stat
-            strengthEquipMult:      Strength multiplier from equipment. Decimal form
-            strengthAscensionMult:  Strength multiplier from ascension. Decimal form
-            task:                   Name of currently assigned task
+            name:          Name of this member.
+            task:          Name of currently assigned task.
+            earnedRespect: Total amount of respect earned by this member.
+            hack:          Hacking stat
+            str:           Strength stat
+            def:           Defense stat
+            dex:           Dexterity stat
+            agi:           Agility stat
+            cha:           Charisma stat
+            hack_exp:      Hacking experience
+            str_exp:       Strength experience
+            def_exp:       Defense experience
+            dex_exp:       Dexterity experience
+            agi_exp:       Agility experience
+            cha_exp:       Charisma experience
+            hack_mult:     Hacking multiplier from equipment. Decimal form
+            str_mult:      Strength multiplier from equipment. Decimal form
+            def_mult:      Defense multiplier from equipment. Decimal form
+            dex_mult:      Dexterity multiplier from equipment. Decimal form
+            agi_mult:      Agility multiplier from equipment. Decimal form
+            cha_mult:      Charisma multiplier from equipment. Decimal form
+            hack_asc_mult: Hacking multiplier from ascension. Decimal form
+            str_asc_mult:  Strength multiplier from ascension. Decimal form
+            def_asc_mult:  Defense multiplier from ascension. Decimal form
+            dex_asc_mult:  Dexterity multiplier from ascension. Decimal form
+            agi_asc_mult:  Agility multiplier from ascension. Decimal form
+            cha_asc_mult:  Charisma multiplier from ascension. Decimal form
+            upgrades:      Array of names of all owned Non-Augmentation Equipment
+            augmentations: Array of names of all owned Augmentations
         }
 
     Get stat and equipment-related information about a Gang Member

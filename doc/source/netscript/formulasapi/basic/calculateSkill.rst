@@ -5,7 +5,7 @@ calculateSkill() Netscript Function
 
     :RAM cost: 0 GB
     :param number exp: ``exp`` to convert to skillLevel.
-    :param number mult: Assume a specific skill multipler.
+    :param number mult: Assume a specific skill multipler (not exp multiplier).
     :returns: skillLevel that ``exp`` would reach with that multiplier.
 
     You must have Source-File 5-1 in order to use this function.
