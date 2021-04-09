@@ -24,7 +24,7 @@ export enum LocationName {
     AevumSnapFitnessGym             = "Snap Fitness Gym",
     AevumSummitUniversity           = "Summit University",
     AevumWatchdogSecurity           = "Watchdog Security",
-    AevumCasino                     = "Casino",
+    AevumCasino                     = "Iker Molina Casino",
 
     // Chongqing locations
     ChongqingKuaiGongInternational  = "KuaiGong International",

@@ -45,12 +45,12 @@ export class CasinoLocation extends React.Component<IProps, IState> {
     renderGames() {
         return (<>
             <StdButton
-                onClick={() => this.updateGame('slots')}
-                text={"Play slots"}
-            /><br />
-            <StdButton
                 onClick={() => this.updateGame('coin')}
                 text={"Play coin flip"}
+            /><br />
+            <StdButton
+                onClick={() => this.updateGame('slots')}
+                text={"Play slots"}
             /><br />
             <StdButton
                 onClick={() => this.updateGame('roulette')}
@@ -62,11 +62,11 @@ export class CasinoLocation extends React.Component<IProps, IState> {
     renderGame() {
         let elem;
         switch(this.state.game) {
-        case 'slots':
-            elem = <SlotMachine p={this.props.p} />
-            break;
         case 'coin':
             elem = <CoinFlip p={this.props.p} />
+            break;
+        case 'slots':
+            elem = <SlotMachine p={this.props.p} />
             break;
         case 'roulette':
             elem = <Roulette p={this.props.p} />

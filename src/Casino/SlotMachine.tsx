@@ -1,13 +1,10 @@
-/**
- * React Subcomponent for displaying a location's UI, when that location is a gym
- *
- * This subcomponent renders all of the buttons for training at the gym
- */
 import * as React from "react";
 
-import { IPlayer }          from "../PersonObjects/IPlayer";
-import { StdButton }        from "../ui/React/StdButton";
-import { WHRNG }            from "./RNG";
+import { IPlayer }   from "../PersonObjects/IPlayer";
+import { StdButton } from "../ui/React/StdButton";
+import { Money }     from "../ui/React/Money";
+import { WHRNG }     from "./RNG";
+import { Game }     from "./Game";
 
 type IProps = {
     p: IPlayer;
@@ -18,13 +15,51 @@ type IState = {
     locks: number[];
     investment: number;
     canPlay: boolean;
+    status: string | JSX.Element;
 }
 
-const symbols = ["C", "♥", "C", "D", "C","!", "?", "@", "$", "*", "7", "*", "?"]
+// statically shuffled array of symbols.
+let symbols = ["D", "C", "$", "?", "♥", "A", "C", "B", "C", "E", "B", "E", "C",
+    "*", "D", "♥", "B", "A", "A", "A", "C", "A", "D", "B", "E", "?", "D", "*",
+    "@", "♥", "B", "E", "?"];
 
-const maxPlay = 100e3;
+function getPayout(s: string, n: number): number {
+    switch (s) {
+        case "$":
+            return [20, 200, 1000][n];
+        case "@":
+            return [8, 80, 400][n];
+        case "♥":
+        case "?":
+            return [6, 20, 150][n];
+        case "D":
+        case "E":
+            return [1, 8, 30][n];
+        default:
+            return [1, 5, 20][n];
+    }
+}
 
-export class SlotMachine extends React.Component<IProps, IState> {
+const payLines = [
+    // lines
+    [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]],
+    [[1, 0], [1, 1], [1, 2], [1, 3], [1, 4]],
+    [[2, 0], [2, 1], [2, 2], [2, 3], [2, 4]],
+
+    // Vs
+    [[2, 0], [1, 1], [0, 2], [1, 3], [2, 4]],
+    [[0, 0], [1, 1], [2, 2], [1, 3], [0, 4]],
+
+    // rest
+    [[0, 0], [1, 1], [1, 2], [1, 3], [0, 4]],
+    [[2, 0], [1, 1], [1, 2], [1, 3], [2, 4]],
+    [[1, 0], [0, 1], [0, 2], [0, 3], [1, 4]],
+    [[1, 0], [2, 1], [2, 2], [2, 3], [1, 4]],
+];
+
+const maxPlay = 1e6;
+
+export class SlotMachine extends Game<IProps, IState> {
     rng: WHRNG;
     interval: number = -1;
 
@@ -37,6 +72,7 @@ export class SlotMachine extends React.Component<IProps, IState> {
             investment: 1000,
             locks: [0, 0, 0, 0, 0],
             canPlay: true,
+            status: 'waiting',
         };
 
         this.play = this.play.bind(this);
@@ -44,11 +80,12 @@ export class SlotMachine extends React.Component<IProps, IState> {
         this.unlock = this.unlock.bind(this);
         this.step = this.step.bind(this);
         this.checkWinnings = this.checkWinnings.bind(this);
+        this.getTable = this.getTable.bind(this);
         this.updateInvestment = this.updateInvestment.bind(this);
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.step, 100);
+        this.interval = setInterval(this.step, 50);
     }
 
     step() {
@@ -60,18 +97,29 @@ export class SlotMachine extends React.Component<IProps, IState> {
             stoppedOne = true;
         }
 
+        this.setState({index: index});
+
         if(stoppedOne && index.every((e, i) => e === this.state.locks[i])) {
             this.checkWinnings();
         }
-
-        this.setState({index: index});
     }
 
     componentWillUnmount() {
       clearInterval(this.interval);
     }
 
+    getTable(): string[][] {
+        return [
+            [symbols[(this.state.index[0]+symbols.length-1)%symbols.length], symbols[(this.state.index[1]+symbols.length-1)%symbols.length], symbols[(this.state.index[2]+symbols.length-1)%symbols.length], symbols[(this.state.index[3]+symbols.length-1)%symbols.length], symbols[(this.state.index[4]+symbols.length-1)%symbols.length]],
+            [symbols[this.state.index[0]], symbols[this.state.index[1]], symbols[this.state.index[2]], symbols[this.state.index[3]], symbols[this.state.index[4]]],
+            [symbols[(this.state.index[0]+1)%symbols.length], symbols[(this.state.index[1]+1)%symbols.length], symbols[(this.state.index[2]+1)%symbols.length], symbols[(this.state.index[3]+1)%symbols.length], symbols[(this.state.index[4]+1)%symbols.length]],
+        ];
+    }
+
     play() {
+        if(this.reachedLimit(this.props.p)) return;
+        this.setState({status: 'playing'});
+        this.win(this.props.p, -this.state.investment);
         if(!this.state.canPlay) return;
         this.unlock();
         setTimeout(this.lock, this.rng.random()*2000+1000);
@@ -86,12 +134,44 @@ export class SlotMachine extends React.Component<IProps, IState> {
                 Math.floor(this.rng.random()*symbols.length),
                 Math.floor(this.rng.random()*symbols.length),
             ],
-            canPlay: true,
         })
     }
 
     checkWinnings() {
+        const t = this.getTable();
+        const getPaylineData = function(payline: number[][]): string[] {
+            let data = [];
+            for(const point of payline) {
+                data.push(t[point[0]][point[1]]);
+            }
+            return data;
+        }
 
+        const countSequence = function(data: string[]): number {
+            let count = 1;
+            for(let i = 1; i < data.length; i++) {
+                if (data[i]!==data[i-1]) break;
+                count++;
+            }
+
+            return count;
+        }
+
+        let gains = -this.state.investment;
+        for (const payline of payLines) {
+            const data = getPaylineData(payline);
+            const count = countSequence(data);
+            if (count < 3) continue;
+            const payout = getPayout(data[0], count-3);
+            gains += this.state.investment*payout;
+            this.win(this.props.p, this.state.investment*payout);
+        }
+
+        this.setState({
+            status: <>{gains>0?"gained":"lost"} {Money(Math.abs(gains))}</>,
+            canPlay: true,
+        })
+        if(this.reachedLimit(this.props.p)) return;
     }
 
     unlock() {
@@ -113,10 +193,11 @@ export class SlotMachine extends React.Component<IProps, IState> {
     }
 
     render() {
+        const t = this.getTable();
         return <>
 <pre>
 +———————————————————————+<br />
-| | {symbols[(this.state.index[0]+symbols.length-1)%symbols.length]} | {symbols[(this.state.index[1]+symbols.length-1)%symbols.length]} | {symbols[(this.state.index[2]+symbols.length-1)%symbols.length]} | {symbols[(this.state.index[3]+symbols.length-1)%symbols.length]} | {symbols[(this.state.index[4]+symbols.length-1)%symbols.length]} | |<br />
+| | {t[0][0]} | {t[0][1]} | {t[0][2]} | {t[0][3]} | {t[0][4]} | |<br />
 | |   |   |   |   |   | |<br />
 | | {symbols[this.state.index[0]]} | {symbols[this.state.index[1]]} | {symbols[this.state.index[2]]} | {symbols[this.state.index[3]]} | {symbols[this.state.index[4]]} | |<br />
 | |   |   |   |   |   | |<br />
@@ -124,8 +205,8 @@ export class SlotMachine extends React.Component<IProps, IState> {
 +———————————————————————+<br />
 </pre>
         <input type="number" className='text-input' onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
-        <StdButton onClick={this.play} text={"Spin!"} />
-
+        <StdButton onClick={this.play} text={"Spin!"} disabled={!this.state.canPlay} />
+<h1>{this.state.status}</h1>
 <h2>Pay lines</h2>
 <pre>
 -----   ·····   ····· <br />

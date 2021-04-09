@@ -2335,7 +2335,10 @@ export function giveExploit(exploit) {
     }
 }
 
-
 export function getIntelligenceBonus(weight) {
     return calculateIntelligenceBonus(this.intelligence, weight);
+}
+
+export function getCasinoWinnings() {
+    return this.moneySourceA.casino;
 }

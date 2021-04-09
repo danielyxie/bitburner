@@ -59,6 +59,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         if (src.hospitalization) { parts.push([`Hospitalization:`, Money(src.hospitalization)]) };
         if (src.infiltration)    { parts.push([`Infiltration:`, Money(src.infiltration)]) };
         if (src.stock)           { parts.push([`Stock Market:`, Money(src.stock)]) };
+        if (src.casino)          { parts.push([`Casino:`, Money(src.casino)]) };
 
         return StatsTable(parts, "");
     }

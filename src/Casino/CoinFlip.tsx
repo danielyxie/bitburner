@@ -8,6 +8,7 @@ import * as React from "react";
 import { IPlayer }          from "../PersonObjects/IPlayer";
 import { StdButton }        from "../ui/React/StdButton";
 import { BadRNG }           from "./RNG";
+import { Game }     from "./Game";
 
 type IProps = {
     p: IPlayer;
@@ -16,11 +17,12 @@ type IProps = {
 type IState = {
     investment: number;
     result: any;
+    status: string;
 }
 
 const maxPlay = 10e3;
 
-export class CoinFlip extends React.Component<IProps, IState> {
+export class CoinFlip extends Game<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
@@ -28,6 +30,7 @@ export class CoinFlip extends React.Component<IProps, IState> {
         this.state = {
             investment: 1000,
             result: <span> </span>,
+            status: '',
         };
 
         this.play = this.play.bind(this);
@@ -46,6 +49,7 @@ export class CoinFlip extends React.Component<IProps, IState> {
     }
 
     play(guess: string) {
+        if(this.reachedLimit(this.props.p)) return;
         const v = BadRNG.random();
         let letter: string;
         if (v < 0.5) {
@@ -54,12 +58,16 @@ export class CoinFlip extends React.Component<IProps, IState> {
             letter = 'T';
         }
         const correct: boolean = guess===letter;
-        this.setState({result: <span className={correct ? "text" : "failure"}>{letter}</span>});
+        this.setState({
+            result: <span className={correct ? "text" : "failure"}>{letter}</span>,
+            status: correct ? " win!" : "lose!",
+        });
         if (correct) {
-            this.props.p.gainMoney(this.state.investment);
+            this.win(this.props.p, this.state.investment);
         } else {
-            this.props.p.loseMoney(this.state.investment);
+            this.win(this.props.p, -this.state.investment);
         }
+        if(this.reachedLimit(this.props.p)) return;
     }
 
 
@@ -75,6 +83,7 @@ export class CoinFlip extends React.Component<IProps, IState> {
         <span className="text">Play for: </span><input type="number" className='text-input' onChange={this.updateInvestment} value={this.state.investment} /><br />
         <StdButton onClick={() => this.play('H')} text={"Head!"} />
         <StdButton onClick={() => this.play('T')} text={"Tail!"} />
+        <h1>{this.state.status}</h1>
         </>
     }
 }
