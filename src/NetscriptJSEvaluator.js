@@ -107,7 +107,7 @@ export function _getScriptUrls(script, scripts, seen) {
         // import {foo} from "blob://<uuid>"
         //
         // Where the blob URL contains the script content.
-        let transformedCode = script.code.replace(/((?:from|import)\s+(?:'|"))(?:\.\/)?([^'"]+)('|";)/g,
+        let transformedCode = script.code.replace(/((?:from|import)\s+(?:'|"))(?:\.\/)?([^'"]+)('|")/g,
             (unmodified, prefix, filename, suffix) => {
                 const isAllowedImport = scripts.some(s => s.filename == filename);
                 if (!isAllowedImport) return unmodified;
