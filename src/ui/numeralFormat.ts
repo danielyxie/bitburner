@@ -49,7 +49,7 @@ class NumeralFormatter {
     }
 
     formatHp(n: number): string {
-        return this.format(n, "0.0");
+        return this.format(n, "0");
     }
 
     formatMoney(n: number): string {
