@@ -40,7 +40,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     function Hacknet(): React.ReactElement {
         // Can't import HacknetHelpers for some reason.
         if(!(p.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
-            return <><span>{`Hacknet Nodes owned: ${p.hacknetNodes.length}</span>`}</span><br /></>
+            return <><span>{`Hacknet Nodes owned: ${p.hacknetNodes.length}`}</span><br /></>
         } else {
             return <><span>{`Hacknet Servers owned: ${p.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}`}</span><br /></>
         }
