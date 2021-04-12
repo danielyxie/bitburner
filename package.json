@@ -47,6 +47,7 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@types/chai": "^4.1.7",
+    "@types/lodash": "^4.14.168",
     "@types/mocha": "^5.2.7",
     "babel-loader": "^8.0.5",
     "beautify-lint": "^1.0.3",
