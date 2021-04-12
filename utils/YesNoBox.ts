@@ -56,6 +56,8 @@ export function yesNoBoxCreate(txt: string | JSX.Element) {
     yesNoBoxOpen = true;
 
     if (yesNoBoxTextElement) {
+        ReactDOM.unmountComponentAtNode(yesNoBoxTextElement);
+        yesNoBoxTextElement.innerHTML = '';
         if(typeof txt === 'string') {
             yesNoBoxTextElement.innerHTML = txt as string;
         } else {
@@ -136,6 +138,7 @@ export function yesNoTxtInpBoxCreate(txt: string | JSX.Element) {
 
 
     if (yesNoTextInputBoxTextElement) {
+        ReactDOM.unmountComponentAtNode(yesNoTextInputBoxTextElement);
         yesNoTextInputBoxTextElement.innerHTML = '';
         if(typeof txt === 'string') {
             yesNoTextInputBoxTextElement.innerHTML = txt;
