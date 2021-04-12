@@ -51,6 +51,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         if (src.bladeburner)     { parts.push([`Bladeburner:`, Money(src.bladeburner)]) };
         if (src.codingcontract)  { parts.push([`Coding Contracts:`, Money(src.codingcontract)]) };
         if (src.work)            { parts.push([`Company Work:`, Money(src.work)]) };
+        if (src.class)           { parts.push([`Class:`, Money(src.class)]) };
         if (src.corporation)     { parts.push([`Corporation:`, Money(src.corporation)]) };
         if (src.crime)           { parts.push([`Crimes:`, Money(src.crime)]) };
         if (src.gang)            { parts.push([`Gang:`, Money(src.gang)]) };
