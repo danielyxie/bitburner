@@ -4,7 +4,11 @@ module.exports = {
         "commonjs": true,
         "es6": false,
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 8,
         "sourceType": "module",
@@ -12,6 +16,9 @@ module.exports = {
             "experimentalObjectRestSpread": true,
         },
     },
+    "plugins": [
+        '@typescript-eslint',
+    ],
     "rules": {
         "accessor-pairs": [
             "error",
@@ -186,8 +193,7 @@ module.exports = {
             "off",
         ],
         "linebreak-style": [
-            "error",
-            "windows"
+            "off", // Line endings automatically converted to LF on git commit so probably shouldn't care about it here
         ],
         "lines-around-comment": [
             "off",
@@ -856,15 +862,25 @@ module.exports = {
     "overrides": [
         {
             // TypeScript configuration
+<<<<<<< HEAD
             "files": [ "**/*.ts", "**/*.tsx" ],
             "parser": "@typescript-eslint/parser",
             "plugins": [ "@typescript-eslint" ],
             "extends": [
                 "plugin:@typescript-eslint/recommended",
+=======
+            "files": ["**/*.ts", "**/*.tsx"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": ["@typescript-eslint"],
+            "extends": [
+                "plugin:@typescript-eslint/recommended",
+                "plugin:import/typescript"
+>>>>>>> 109f056a... Update some tools (eslint, typescript)
             ],
             "rules": {
                 "lines-between-class-members": "off",
                 "no-empty-pattern": "off",
+<<<<<<< HEAD
                 "no-useless-constructor": [
                     "off", // Valid for typescript due to property ctor shorthand
                 ],
@@ -873,15 +889,29 @@ module.exports = {
                 "@typescript-eslint/camelcase": "off",
                 "@typescript-eslint/explicit-function-return-type": ["error", {
                     "allowExpressions": true,
+=======
+                "@typescript-eslint/ban-ts-ignore": "off",
+                "@typescript-eslint/camelcase": "off",
+                "@typescript-eslint/explicit-function-return-type": ["error", {
+                    "allowExpressions": true
+>>>>>>> 109f056a... Update some tools (eslint, typescript)
                 }],
                 "@typescript-eslint/member-delimiter-style": ["error", {
                     "multiline": {
                         "delimiter": "semi",
+<<<<<<< HEAD
                         "requireLast": true,
                     },
                     "singleline": {
                         "delimiter": "semi",
                         "requireLast": false,
+=======
+                        "requireLast": true
+                    },
+                    "singleline": {
+                        "delimiter": "semi",
+                        "requireLast": false
+>>>>>>> 109f056a... Update some tools (eslint, typescript)
                     }
                 }],
                 "@typescript-eslint/member-ordering": ["error", {
@@ -893,11 +923,19 @@ module.exports = {
                         "constructor",
                         "instance-method",
                         "abstract-method",
+<<<<<<< HEAD
                         "static-method",
                     ]
                 }],
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/no-use-before-define": "off",
+=======
+                        "static-method"
+                    ]
+                }],
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-use-before-define": "off"
+>>>>>>> 109f056a... Update some tools (eslint, typescript)
             }
         }
     ]
