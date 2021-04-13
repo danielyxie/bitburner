@@ -19,9 +19,9 @@ type IProps = {
 export class LocationCity extends React.Component<IProps, any> {
     asciiCity() {
         const thiscity = this;
-        const topprop = this.props
+        const topprop = this.props;
 
-        function LocationLetter(location: string) {
+        function LocationLetter(location: LocationName) {
             if (location)
                 return <span key={location} className='tooltip' style={{color: 'blue', whiteSpace: 'nowrap', margin: '0px', padding: '0px', cursor: 'pointer'}} onClick={topprop.enterLocation.bind(thiscity, location)}>
                     X

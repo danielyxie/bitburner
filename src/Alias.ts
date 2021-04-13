@@ -35,7 +35,7 @@ export function printAliases(): void {
 }
 
 // Returns true if successful, false otherwise
-export function parseAliasDeclaration(dec: string, global: boolean=false) {
+export function parseAliasDeclaration(dec: string, global = false): boolean {
     var re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
     var matches = dec.match(re);
     if (matches == null || matches.length != 3) {return false;}

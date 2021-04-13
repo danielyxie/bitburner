@@ -4,7 +4,11 @@ module.exports = {
         "commonjs": true,
         "es6": false
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 8,
         "sourceType": "module",
@@ -12,6 +16,9 @@ module.exports = {
             "experimentalObjectRestSpread": true
         }
     },
+    "plugins": [
+        '@typescript-eslint',
+    ],
     "rules": {
         "accessor-pairs": [
             "error",
@@ -180,8 +187,7 @@ module.exports = {
             "off"
         ],
         "linebreak-style": [
-            "error",
-            "windows"
+            "off", // Line endings automatically converted to LF on git commit so probably shouldn't care about it here
         ],
         "lines-around-comment": [
             "off"
@@ -853,5 +859,50 @@ module.exports = {
             "error",
             "never"
         ]
-    }
+    },
+    "overrides": [
+        {
+            // TypeScript configuration
+            "files": ["**/*.ts", "**/*.tsx"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": ["@typescript-eslint"],
+            "extends": [
+                "plugin:@typescript-eslint/recommended",
+                "plugin:import/typescript"
+            ],
+            "rules": {
+                "lines-between-class-members": "off",
+                "no-empty-pattern": "off",
+                "@typescript-eslint/ban-ts-ignore": "off",
+                "@typescript-eslint/camelcase": "off",
+                "@typescript-eslint/explicit-function-return-type": ["error", {
+                    "allowExpressions": true
+                }],
+                "@typescript-eslint/member-delimiter-style": ["error", {
+                    "multiline": {
+                        "delimiter": "semi",
+                        "requireLast": true
+                    },
+                    "singleline": {
+                        "delimiter": "semi",
+                        "requireLast": false
+                    }
+                }],
+                "@typescript-eslint/member-ordering": ["error", {
+                    "default": [
+                        "signature",
+                        "static-field",
+                        "instance-field",
+                        "abstract-field",
+                        "constructor",
+                        "instance-method",
+                        "abstract-method",
+                        "static-method"
+                    ]
+                }],
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-use-before-define": "off"
+            }
+        }
+    ]
 };

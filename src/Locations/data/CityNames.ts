@@ -9,4 +9,4 @@ export enum CityName {
     NewTokyo    = "New Tokyo",
     Sector12    = "Sector-12",
     Volhaven    = "Volhaven",
-};
+}
