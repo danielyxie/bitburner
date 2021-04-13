@@ -163,8 +163,7 @@ export class HacknetServer extends React.Component {
             <li className={"hacknet-node"}>
                 <div className={"hacknet-node-container"}>
                     <div className={"row"}>
-                        <p>Node name:</p>
-                        <span className={"text"}>{node.hostname}</span>
+                        <h1 style={{"fontSize":"1em"}}>{node.hostname}</h1>
                     </div>
                     <div className={"row"}>
                         <p>Production:</p>

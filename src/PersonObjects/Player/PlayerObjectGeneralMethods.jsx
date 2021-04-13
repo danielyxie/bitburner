@@ -550,7 +550,11 @@ export function processWorkEarnings(numCycles=1) {
     this.gainAgilityExp(agiExpGain);
     this.gainCharismaExp(chaExpGain);
     this.gainMoney(moneyGain);
-    this.recordMoneySource(moneyGain, "work");
+    if (this.className) {
+        this.recordMoneySource(moneyGain, "class");
+    } else {
+        this.recordMoneySource(moneyGain, "work");
+    }
     this.workHackExpGained  += hackExpGain;
     this.workStrExpGained   += strExpGain;
     this.workDefExpGained   += defExpGain;

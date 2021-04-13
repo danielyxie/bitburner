@@ -11,6 +11,8 @@ export class MoneySourceTracker {
     }
 
     bladeburner: number = 0;
+    casino: number = 0;
+    class: number = 0;
     codingcontract: number = 0;
     corporation: number = 0;
     crime: number = 0;
@@ -22,7 +24,6 @@ export class MoneySourceTracker {
     stock: number = 0;
     total: number = 0;
     work: number = 0;
-    casino: number = 0;
 
     [key: string]: number | Function;
 

@@ -1395,6 +1395,23 @@ function initAugmentations() {
     }
     AddToAugmentations(Xanipher);
 
+    const HydroflameLeftArm = new Augmentation({
+        name:AugmentationNames.HydroflameLeftArm, repCost:500e3, moneyCost:500e9,
+        info:"The left arm of a legendary BitRunner who ascended beyond this world. " +
+             "It projects a light blue energy shield that protects the exposed inner parts. " +
+             "Even though it contains no weapons, the advance tungsten titanium " +
+             "alloy increases the users strength to unbelievable levels.<br><br>" +
+             "This augmentation increases the player's strength by 300%.",
+        strength_mult: 3,
+    });
+    HydroflameLeftArm.addToFactions(["NWO"]);
+    if (augmentationExists(AugmentationNames.HydroflameLeftArm)) {
+        delete Augmentations[AugmentationNames.HydroflameLeftArm];
+    }
+    AddToAugmentations(HydroflameLeftArm);
+
+
+
     // ClarkeIncorporated
     const nextSENS = new Augmentation({
         name:AugmentationNames.nextSENS, repCost:175e3, moneyCost:385e6,

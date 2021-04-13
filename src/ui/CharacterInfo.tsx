@@ -40,7 +40,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     function Hacknet(): React.ReactElement {
         // Can't import HacknetHelpers for some reason.
         if(!(p.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
-            return <><span>{`Hacknet Nodes owned: ${p.hacknetNodes.length}</span>`}</span><br /></>
+            return <><span>{`Hacknet Nodes owned: ${p.hacknetNodes.length}`}</span><br /></>
         } else {
             return <><span>{`Hacknet Servers owned: ${p.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}`}</span><br /></>
         }
@@ -51,6 +51,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         if (src.bladeburner)     { parts.push([`Bladeburner:`, Money(src.bladeburner)]) };
         if (src.codingcontract)  { parts.push([`Coding Contracts:`, Money(src.codingcontract)]) };
         if (src.work)            { parts.push([`Company Work:`, Money(src.work)]) };
+        if (src.class)           { parts.push([`Class:`, Money(src.class)]) };
         if (src.corporation)     { parts.push([`Corporation:`, Money(src.corporation)]) };
         if (src.crime)           { parts.push([`Crimes:`, Money(src.crime)]) };
         if (src.gang)            { parts.push([`Gang:`, Money(src.gang)]) };
