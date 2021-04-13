@@ -82,7 +82,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
     listWorldMap() {
         const travelBtns: React.ReactNode[] = [];
         for (const key in CityName) {
-            const city = CityName[key];
+            const city: CityName = (CityName as any)[key];
 
             // Skip current city
             if (city === this.props.p.city) { continue; }

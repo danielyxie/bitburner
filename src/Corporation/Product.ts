@@ -210,9 +210,13 @@ export class Product {
         }
 
         //Delete unneeded variables
+        // @ts-ignore
         delete this.prog;
+        // @ts-ignore
         delete this.createCity;
+        // @ts-ignore
         delete this.designCost;
+        // @ts-ignore
         delete this.advCost;
     }
 
