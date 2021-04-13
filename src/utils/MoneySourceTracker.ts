@@ -45,7 +45,7 @@ export class MoneySourceTracker {
     reset(): void {
         for (const prop in this) {
             if (typeof this[prop] === "number") {
-                this[prop] = 0;
+                (this[prop] as number) = 0;
             }
         }
     }
