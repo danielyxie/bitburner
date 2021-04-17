@@ -243,6 +243,17 @@ export let CONSTANTS: IMap<any> = {
     Gang
     * Nerfed ascension mechanic once again :(
 
+    Casino
+    * Cannot bet negative money anymore.
+    * Roulette max bet is a bit higher.
+    * Coin Flip has a small cooldown.
+
+    Documentation
+    * Changed a message that said nsjs only works on Chrome.
+
+    Bugfix
+    * hacknet.maxNumNodes now works for both nodes and servers.
+    
     Misc.
     * Souce-File typo fix
     * Fix 'while you were away' screen.
