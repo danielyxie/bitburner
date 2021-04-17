@@ -18,10 +18,8 @@ type IState = {
     investment: number;
     result: any;
     status: string;
-    playLock: boolean;
 }
 
-const minPlay = 0;
 const maxPlay = 10e3;
 
 export class CoinFlip extends Game<IProps, IState> {
@@ -33,7 +31,6 @@ export class CoinFlip extends Game<IProps, IState> {
             investment: 1000,
             result: <span> </span>,
             status: '',
-            playLock: false,
         };
 
         this.play = this.play.bind(this);
@@ -43,13 +40,10 @@ export class CoinFlip extends Game<IProps, IState> {
     updateInvestment(e: React.FormEvent<HTMLInputElement>) {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
-            investment = minPlay;
+            investment = 1000;
         }
         if (investment > maxPlay) {
             investment = maxPlay;
-        }
-        if (investment < minPlay) {
-            investment = minPlay;
         }
         this.setState({investment: investment});
     }
@@ -67,9 +61,7 @@ export class CoinFlip extends Game<IProps, IState> {
         this.setState({
             result: <span className={correct ? "text" : "failure"}>{letter}</span>,
             status: correct ? " win!" : "lose!",
-            playLock: true,
         });
-        setTimeout(()=>this.setState({playLock: false}), 250);
         if (correct) {
             this.win(this.props.p, this.state.investment);
         } else {
@@ -89,8 +81,8 @@ export class CoinFlip extends Game<IProps, IState> {
 +———————+<br />
 </pre>
         <span className="text">Play for: </span><input type="number" className='text-input' onChange={this.updateInvestment} value={this.state.investment} /><br />
-        <StdButton onClick={() => this.play('H')} text={"Head!"} disabled={this.state.playLock} />
-        <StdButton onClick={() => this.play('T')} text={"Tail!"} disabled={this.state.playLock} />
+        <StdButton onClick={() => this.play('H')} text={"Head!"} />
+        <StdButton onClick={() => this.play('T')} text={"Tail!"} />
         <h1>{this.state.status}</h1>
         </>
     }
