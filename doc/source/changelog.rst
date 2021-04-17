@@ -3,6 +3,35 @@
 Changelog
 =========
 
+v0.51.3 - 2021-04-16 Y'all broke it on the first day (hydroflame)
+-----------------------------------------------------------------
+
+**Netscript**
+
+* print/tprint now take any number of arguments.
+* print/tprint will now print object as json.
+* print/tprint now handle passing in an undefined argument properly.
+
+**Casino**
+
+* Cannot bet negative money anymore.
+* Roulette max bet is a bit higher.
+* Coin Flip has a small cooldown.
+
+**Documentation**
+
+* Changed a message that said nsjs only works on Chrome.
+
+**Bugfix**
+
+* hacknet.maxNumNodes now works for both nodes and servers.
+
+**Misc.**
+
+* turned off autocomplete for the terminal text input.
+* Fixed an issue on Windows+Firefox where pressing up on the terminal would
+  bring the cursor to the begining of the line. (Issue #836)
+
 v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
 ----------------------------------------------
 

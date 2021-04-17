@@ -65,6 +65,6 @@ Here is a short summary of the differences between Netscript 1.0 and Netscript 2
 
 * Supports (almost) all features of modern JavaScript
 * Extremely fast - code is executed as an Async Function
-* Currently only works with Google Chrome browser
+* Compatible with most modern browsers.
 * Each script becomes a module and therefore all instances of that script can easily
   share data between each other (essentially global/static variables)
