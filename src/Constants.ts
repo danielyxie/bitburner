@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.51.3",
+    Version:                "0.51.2",
 
 	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -218,7 +218,7 @@ export let CONSTANTS: IMap<any> = {
     CrimeHeist: "pull off the ultimate heist",
 
     // Coding Contract
-    // TODO: Move this into Coding contract implementation?
+    // TODO Move this into Coding contract impelmentation?
     CodingContractBaseFactionRepGain: 2500,
     CodingContractBaseCompanyRepGain: 4000,
     CodingContractBaseMoneyGain: 75e6,
@@ -228,28 +228,16 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.3 - 2021-04-16 Y'all broke it on the first day (hydroflame)
+    v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
     -------
 
-    Netscript
-    * print/tprint now take any number of arguments.
-    * print/tprint will now print object as json.
-    * print/tprint now handle passing in an undefined argument properly.
+    New location: The Iker Molina Casino
+    * A casino opened in Aevum. However the house is rumored to cheat. If only 
+      we could give them a taste of their own medicine.
 
-    Casino
-    * Cannot bet negative money anymore.
-    * Roulette max bet is a bit higher.
-    * Coin Flip has a small cooldown.
-
-    Documentation
-    * Changed a message that said nsjs only works on Chrome.
-
-    Bugfix
-    * hacknet.maxNumNodes now works for both nodes and servers.
-    
     Misc.
-    * turned off autocomplete for the terminal text input.
-    * Fixed an issue on Windows+Firefox where pressing up on the terminal would
-      bring the cursor to the begining of the line. (Issue #836)
+    * Link to discord added under options
+    * 'getMemberInformation' doc updated, oops
+    * tech vendor now handle max ram and cores.
     `
 }

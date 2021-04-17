@@ -686,29 +686,13 @@ function NetscriptFunctions(workerScript) {
         });
     }
 
-    const argsToString = function(args) {
-        let out = '';
-        for(let arg of args) {
-            if(typeof arg === 'object') {
-                out += JSON.stringify(arg);
-                continue
-            }
-            out += `${arg}`;
-        }
-
-        return out;
-    }
-
     return {
         hacknet : {
             numNodes : function() {
                 return Player.hacknetNodes.length;
             },
             maxNumNodes : function() {
-                if (hasHacknetServers()) {
-                    return HacknetServerConstants.MaxServers;
-                }
-                return Infinity;
+                return MaxNumberHacknetServers;
             },
             purchaseNode : function() {
                 return purchaseHacknet();
@@ -960,17 +944,18 @@ function NetscriptFunctions(workerScript) {
                 return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads);
             });
         },
-        print: function(){
-            if (arguments.length === 0) {
-                throw makeRuntimeErrorMsg("print", "Takes at least 1 argument.");
+        print: function(args){
+            if (args === undefined) {
+                throw makeRuntimeErrorMsg("print", "Takes 1 argument.");
             }
-            workerScript.print(argsToString(arguments));
+            workerScript.print(args.toString());
         },
-        tprint: function() {
-            if (arguments.length === 0) {
-                throw makeRuntimeErrorMsg("tprint", "Takes at least 1 argument.");
+        tprint: function(args) {
+            if (args === undefined || args == null) {
+                throw makeRuntimeErrorMsg("tprint", "Takes 1 argument.");
             }
-            post(`${workerScript.scriptRef.filename}: ${argsToString(arguments)}`);
+            var x = args.toString();
+            post(`${workerScript.scriptRef.filename}: ${args.toString()}`);
         },
         clearLog: function() {
             workerScript.scriptRef.clearLog();

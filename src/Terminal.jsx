@@ -183,7 +183,7 @@ $(document).keydown(function(event) {
             }
             var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
             terminalInput.value = prevCommand;
-            setTimeoutRef(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 10);
+            setTimeoutRef(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
         }
 
         if (event.keyCode === KEY.DOWNARROW ||
@@ -361,14 +361,14 @@ let Terminal = {
         if (FconfSettings.WRAP_INPUT) {
             document.getElementById("terminal-input-td").innerHTML =
                 `<div id='terminal-input-header' class='prompt'>[${Player.getCurrentServer().hostname} ~${dir}]$ </div>` +
-                `<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"  value=\"${input}\"  autocomplete="off" />`;
+                `<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"  value=\"${input}\"/>`;
 
             // Auto re-size the line element as it wraps
             autosize(document.getElementById("terminal-input-text-box"));
         } else {
             document.getElementById("terminal-input-td").innerHTML =
                 `<div id='terminal-input-header' class='prompt'>[${Player.getCurrentServer().hostname} ~${dir}]$ </div>` +
-                `<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"  value=\"${input}\" autocomplete="off" />`;
+                `<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"  value=\"${input}\"/>`;
         }
         const hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";

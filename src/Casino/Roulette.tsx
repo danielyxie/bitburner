@@ -19,8 +19,7 @@ type IState = {
     strategy: Strategy;
 }
 
-const minPlay = 0;
-const maxPlay = 1e7;
+const maxPlay = 1e6;
 
 function isRed(n: number): boolean {
     return [1, 3, 5, 7, 9, 12, 14, 16, 18, 19,
@@ -166,13 +165,10 @@ export class Roulette extends Game<IProps, IState> {
     updateInvestment(e: React.FormEvent<HTMLInputElement>) {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
-            investment = minPlay;
+            investment = 1000;
         }
         if (investment > maxPlay) {
-            investment = maxPlay;
-        }
-        if (investment < minPlay) {
-            investment = minPlay;
+            investment = maxPlay
         }
         this.setState({investment: investment});
     }
