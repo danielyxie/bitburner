@@ -58,7 +58,6 @@ const payLines = [
     [[1, 0], [2, 1], [2, 2], [2, 3], [1, 4]],
 ];
 
-const minPlay = 0;
 const maxPlay = 1e6;
 
 export class SlotMachine extends Game<IProps, IState> {
@@ -186,13 +185,10 @@ export class SlotMachine extends Game<IProps, IState> {
     updateInvestment(e: React.FormEvent<HTMLInputElement>) {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
-            investment = minPlay;
+            investment = 1000;
         }
         if (investment > maxPlay) {
             investment = maxPlay;
-        }
-        if (investment < minPlay) {
-            investment = minPlay;
         }
         this.setState({investment: investment});
     }

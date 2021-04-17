@@ -218,7 +218,7 @@ export let CONSTANTS: IMap<any> = {
     CrimeHeist: "pull off the ultimate heist",
 
     // Coding Contract
-    // TODO: Move this into Coding contract implementation?
+    // TODO Move this into Coding contract impelmentation?
     CodingContractBaseFactionRepGain: 2500,
     CodingContractBaseCompanyRepGain: 4000,
     CodingContractBaseMoneyGain: 75e6,
@@ -243,17 +243,6 @@ export let CONSTANTS: IMap<any> = {
     Gang
     * Nerfed ascension mechanic once again :(
 
-    Casino
-    * Cannot bet negative money anymore.
-    * Roulette max bet is a bit higher.
-    * Coin Flip has a small cooldown.
-
-    Documentation
-    * Changed a message that said nsjs only works on Chrome.
-
-    Bugfix
-    * hacknet.maxNumNodes now works for both nodes and servers.
-    
     Misc.
     * Souce-File typo fix
     * Fix 'while you were away' screen.
