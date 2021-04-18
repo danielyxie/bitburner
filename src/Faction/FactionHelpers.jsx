@@ -15,6 +15,11 @@ import { Factions } from "./Factions";
 import { HackingMission, setInMission } from "../Missions";
 import { Player } from "../Player";
 import { Settings } from "../Settings/Settings";
+import { 
+    getHackingWorkRepGain,
+    getFactionSecurityWorkRepGain,
+    getFactionFieldWorkRepGain,
+} from "../PersonObjects/formulas/reputation";
 
 import { Page, routing } from "../ui/navigationTracking";
 import { dialogBoxCreate } from "../../utils/DialogBox";
@@ -235,15 +240,24 @@ export function getNextNeurofluxLevel() {
 }
 
 export function processPassiveFactionRepGain(numCycles) {
-    var numTimesGain = (numCycles / 600) * Player.faction_rep_mult;
-    for (var name in Factions) {
-		if (Factions.hasOwnProperty(name)) {
-			var faction = Factions[name];
+    for (const name in Factions) {
+        if (name === Player.currentWorkFactionName) continue;
+        if (!Factions.hasOwnProperty(name)) continue;
+        const faction = Factions[name];
+        if (!faction.isMember) continue;
+        // 0 favor = 1%/s
+        // 50 favor = 6%/s
+        // 100 favor = 11%/s
+        const favorMult = (faction.favor / 1000) + 0.01;
+        // Find the best of all possible favor gain, minimum 1 rep / 2 minute.
+        const hRep = getHackingWorkRepGain(Player, faction);
+        const sRep = getFactionSecurityWorkRepGain(Player, faction);
+        const fRep = getFactionFieldWorkRepGain(Player, faction);
+        const rate = Math.max(hRep * favorMult, sRep * favorMult, fRep * favorMult, 1/120);
 
-			//TODO Get hard value of 1 rep per "rep gain cycle"" for now..
-            //maybe later make this based on
-            //a player's 'status' like how powerful they are and how much money they have
-            if (faction.isMember) {faction.playerReputation += (numTimesGain * BitNodeMultipliers.FactionPassiveRepGain);}
-		}
-	}
+        faction.playerReputation += rate *
+            (numCycles) *
+            Player.faction_rep_mult *
+            BitNodeMultipliers.FactionPassiveRepGain;
+    }
 }
