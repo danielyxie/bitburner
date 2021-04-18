@@ -862,7 +862,7 @@ export function startFactionFieldWork(faction) {
     this.workDexExpGainRate     = .1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workAgiExpGainRate     = .1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workChaExpGainRate     = .1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-    this.workRepGainRate        = getFactionFieldWorkRepGain(this);
+    this.workRepGainRate        = getFactionFieldWorkRepGain(this, faction);
 
     this.factionWorkType = CONSTANTS.FactionWorkField;
     this.currentWorkFactionDescription = "carrying out field missions"
@@ -879,7 +879,7 @@ export function startFactionSecurityWork(faction) {
     this.workDexExpGainRate     = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workAgiExpGainRate     = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workChaExpGainRate     = 0.00 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-    this.workRepGainRate        = getFactionSecurityWorkRepGain(this);
+    this.workRepGainRate        = getFactionSecurityWorkRepGain(this, faction);
 
     this.factionWorkType = CONSTANTS.FactionWorkSecurity;
     this.currentWorkFactionDescription = "performing security detail"
