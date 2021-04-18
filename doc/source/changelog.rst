@@ -3,6 +3,47 @@
 Changelog
 =========
 
+v0.51.3 - 2021-04-16 Y'all broke it on the first day (hydroflame)
+-----------------------------------------------------------------
+
+**Passive faction reputation**
+
+* Reworked, from 1 rep / 2 minute. Now is a complicated percentage of the
+  reputation you'd gain working for them. It's not op but it feels a bit
+  more useful.
+
+**Netscript**
+
+* print/tprint now take any number of arguments.
+* print/tprint will now print object as json.
+* print/tprint now handle passing in an undefined argument properly.
+
+**Casino**
+
+* Cannot bet negative money anymore.
+* Roulette max bet is a bit higher.
+* Coin Flip has a small cooldown.
+* All buttons reject unstrusted mouse events.
+
+**Documentation**
+
+* Changed a message that said nsjs only works on Chrome.
+
+**Bugfix**
+
+* hacknet.maxNumNodes now works for both nodes and servers.
+* Fixed a bug where the popup boxes would contain data from previous popup boxes.
+* .js files will also have the 'export async function' boilerplate.
+
+**Misc.**
+
+* turned off web form autocomplete for the terminal text input.
+* Fixed an issue on Windows+Firefox where pressing up on the terminal would
+  bring the cursor to the begining of the line. (Issue #836)
+* Hacknet node names is easier to handle for screen readers.
+* Money spent on classes is now tracked independently of work money.
+* running coding contract from the terminal will display its name.
+
 v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
 ----------------------------------------------
 
