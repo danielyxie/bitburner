@@ -181,6 +181,9 @@ export class CodingContract {
         return new Promise<CodingContractResult>((resolve: Function, reject: Function) => {
             const contractType: CodingContractType = CodingContractTypes[this.type];
             const popupId: string = `coding-contract-prompt-popup-${this.fn}`;
+            const title: HTMLElement = createElement("h1", {
+                innerHTML: this.type,
+            });
             const txt: HTMLElement = createElement("p", {
                 innerHTML: ["You are attempting to solve a Coding Contract. You have",
                             `${this.getMaxNumTries() - this.tries} tries remaining,`,
@@ -225,7 +228,7 @@ export class CodingContract {
                 innerText: "Cancel",
             });
             const lineBreak: HTMLElement = createElement("br");
-            createPopup(popupId, [txt, lineBreak, lineBreak, answerInput, solveBtn, cancelBtn]);
+            createPopup(popupId, [title, lineBreak, txt, lineBreak, lineBreak, answerInput, solveBtn, cancelBtn]);
             answerInput.focus();
         });
     }

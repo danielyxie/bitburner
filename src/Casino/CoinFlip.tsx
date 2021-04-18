@@ -5,10 +5,11 @@
  */
 import * as React from "react";
 
-import { IPlayer }          from "../PersonObjects/IPlayer";
-import { StdButton }        from "../ui/React/StdButton";
-import { BadRNG }           from "./RNG";
-import { Game }     from "./Game";
+import { IPlayer }   from "../PersonObjects/IPlayer";
+import { StdButton } from "../ui/React/StdButton";
+import { BadRNG }    from "./RNG";
+import { Game }      from "./Game";
+import { trusted }   from "./utils";
 
 type IProps = {
     p: IPlayer;
@@ -89,8 +90,8 @@ export class CoinFlip extends Game<IProps, IState> {
 +———————+<br />
 </pre>
         <span className="text">Play for: </span><input type="number" className='text-input' onChange={this.updateInvestment} value={this.state.investment} /><br />
-        <StdButton onClick={() => this.play('H')} text={"Head!"} disabled={this.state.playLock} />
-        <StdButton onClick={() => this.play('T')} text={"Tail!"} disabled={this.state.playLock} />
+        <StdButton onClick={trusted(() => this.play('H'))} text={"Head!"} disabled={this.state.playLock} />
+        <StdButton onClick={trusted(() => this.play('T'))} text={"Tail!"} disabled={this.state.playLock} />
         <h1>{this.state.status}</h1>
         </>
     }

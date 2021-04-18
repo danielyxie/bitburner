@@ -245,6 +245,7 @@ export let CONSTANTS: IMap<any> = {
     * Cannot bet negative money anymore.
     * Roulette max bet is a bit higher.
     * Coin Flip has a small cooldown.
+    * All buttons reject unstrusted mouse events.
 
     Documentation
     * Changed a message that said nsjs only works on Chrome.
@@ -260,5 +261,6 @@ export let CONSTANTS: IMap<any> = {
       bring the cursor to the begining of the line. (Issue #836)
     * Hacknet node names is easier to handle for screen readers.
     * Money spent on classes is now tracked independently of work money.
+    * running coding contract from the terminal will display its name.
     `
 }
