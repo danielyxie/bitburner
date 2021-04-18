@@ -252,6 +252,7 @@ export let CONSTANTS: IMap<any> = {
     Bugfix
     * hacknet.maxNumNodes now works for both nodes and servers.
     * Fixed a bug where the popup boxes would contain data from previous popup boxes.
+    * .js files will also have the export async function boilerplate.
     
     Misc.
     * turned off autocomplete for the terminal text input.

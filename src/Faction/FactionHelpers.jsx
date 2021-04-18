@@ -248,7 +248,7 @@ export function processPassiveFactionRepGain(numCycles) {
         // 0 favor = 1%/s
         // 50 favor = 6%/s
         // 100 favor = 11%/s
-        const favorMult = (faction.favor / 1000) + 0.01;
+        const favorMult = Math.min(0.1, (faction.favor / 1000) + 0.01);
         // Find the best of all possible favor gain, minimum 1 rep / 2 minute.
         const hRep = getHackingWorkRepGain(Player, faction);
         const sRep = getFactionSecurityWorkRepGain(Player, faction);

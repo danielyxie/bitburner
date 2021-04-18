@@ -1783,7 +1783,7 @@ let Terminal = {
                 const script = Terminal.getScript(filename);
                 if (script == null) {
                     let code = ""
-                    if(filename.endsWith(".ns")) {
+                    if(filename.endsWith(".ns") || filename.endsWith(".js")) {
                         code = `export async function main(ns) {
     
 }`;
