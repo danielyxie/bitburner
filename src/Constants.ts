@@ -6,13 +6,13 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.51.2",
+    Version:                "0.51.3",
 
-	/** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
+    /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
      * the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
      */
-	MaxSkillLevel: 			975,
+    MaxSkillLevel:          975,
 
     // Milliseconds per game cycle
     MilliPerCycle: 200,
@@ -218,7 +218,7 @@ export let CONSTANTS: IMap<any> = {
     CrimeHeist: "pull off the ultimate heist",
 
     // Coding Contract
-    // TODO Move this into Coding contract impelmentation?
+    // TODO: Move this into Coding contract implementation?
     CodingContractBaseFactionRepGain: 2500,
     CodingContractBaseCompanyRepGain: 4000,
     CodingContractBaseMoneyGain: 75e6,
@@ -228,16 +228,39 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
+    v0.51.3 - 2021-04-16 Y'all broke it on the first day (hydroflame)
     -------
 
-    New location: The Iker Molina Casino
-    * A casino opened in Aevum. However the house is rumored to cheat. If only 
-      we could give them a taste of their own medicine.
+    Passive faction reputation
+    * Reworked, from 1 rep / 2 minute. Now is a complicated percentage of the
+      reputation you'd gain working for them. It's not op but it feels a bit
+      more useful.
 
+    Netscript
+    * print/tprint now take any number of arguments.
+    * print/tprint will now print object as json.
+    * print/tprint now handle passing in an undefined argument properly.
+
+    Casino
+    * Cannot bet negative money anymore.
+    * Roulette max bet is a bit higher.
+    * Coin Flip has a small cooldown.
+    * All buttons reject unstrusted mouse events.
+
+    Documentation
+    * Changed a message that said nsjs only works on Chrome.
+
+    Bugfix
+    * hacknet.maxNumNodes now works for both nodes and servers.
+    * Fixed a bug where the popup boxes would contain data from previous popup boxes.
+    * .js files will also have the export async function boilerplate.
+    
     Misc.
-    * Link to discord added under options
-    * 'getMemberInformation' doc updated, oops
-    * tech vendor now handle max ram and cores.
+    * turned off autocomplete for the terminal text input.
+    * Fixed an issue on Windows+Firefox where pressing up on the terminal would
+      bring the cursor to the begining of the line. (Issue #836)
+    * Hacknet node names is easier to handle for screen readers.
+    * Money spent on classes is now tracked independently of work money.
+    * running coding contract from the terminal will display its name.
     `
 }

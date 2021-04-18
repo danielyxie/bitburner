@@ -777,7 +777,7 @@ const Engine = {
         createProgramNotifications: 10,
         augmentationsNotifications: 10,
         checkFactionInvitations: 100,
-        passiveFactionGrowth: 600,
+        passiveFactionGrowth: 5,
         messages: 150,
         mechanicProcess: 5, // Processes certain mechanics (Corporation, Bladeburner)
         contractGeneration: 3000, // Generate Coding Contracts
@@ -911,9 +911,9 @@ const Engine = {
         }
 
         if (Engine.Counters.passiveFactionGrowth <= 0) {
-            var adjustedCycles = Math.floor((600 - Engine.Counters.passiveFactionGrowth));
+            var adjustedCycles = Math.floor((5 - Engine.Counters.passiveFactionGrowth));
             processPassiveFactionRepGain(adjustedCycles);
-            Engine.Counters.passiveFactionGrowth = 600;
+            Engine.Counters.passiveFactionGrowth = 5;
         }
 
         if (Engine.Counters.messages <= 0) {

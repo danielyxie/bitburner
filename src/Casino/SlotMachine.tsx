@@ -4,7 +4,8 @@ import { IPlayer }   from "../PersonObjects/IPlayer";
 import { StdButton } from "../ui/React/StdButton";
 import { Money }     from "../ui/React/Money";
 import { WHRNG }     from "./RNG";
-import { Game }     from "./Game";
+import { Game }      from "./Game";
+import { trusted }   from "./utils";
 
 type IProps = {
     p: IPlayer;
@@ -57,6 +58,7 @@ const payLines = [
     [[1, 0], [2, 1], [2, 2], [2, 3], [1, 4]],
 ];
 
+const minPlay = 0;
 const maxPlay = 1e6;
 
 export class SlotMachine extends Game<IProps, IState> {
@@ -184,10 +186,13 @@ export class SlotMachine extends Game<IProps, IState> {
     updateInvestment(e: React.FormEvent<HTMLInputElement>) {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
-            investment = 1000;
+            investment = minPlay;
         }
         if (investment > maxPlay) {
             investment = maxPlay;
+        }
+        if (investment < minPlay) {
+            investment = minPlay;
         }
         this.setState({investment: investment});
     }
@@ -205,7 +210,7 @@ export class SlotMachine extends Game<IProps, IState> {
 +———————————————————————+<br />
 </pre>
         <input type="number" className='text-input' onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
-        <StdButton onClick={this.play} text={"Spin!"} disabled={!this.state.canPlay} />
+        <StdButton onClick={trusted(this.play)} text={"Spin!"} disabled={!this.state.canPlay} />
 <h1>{this.state.status}</h1>
 <h2>Pay lines</h2>
 <pre>

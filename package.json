@@ -121,5 +121,5 @@
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development"
   },
-  "version": "0.51.1"
+  "version": "0.51.3"
 }

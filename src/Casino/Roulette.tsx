@@ -1,10 +1,11 @@
 import * as React from "react";
 
-import { IPlayer }          from "../PersonObjects/IPlayer";
-import { StdButton }        from "../ui/React/StdButton";
-import { Money }            from "../ui/React/Money";
-import { Game }             from "./Game";
-import { WHRNG }              from "./RNG";
+import { IPlayer }   from "../PersonObjects/IPlayer";
+import { StdButton } from "../ui/React/StdButton";
+import { Money }     from "../ui/React/Money";
+import { Game }      from "./Game";
+import { WHRNG }     from "./RNG";
+import { trusted }   from "./utils";
 
 type IProps = {
     p: IPlayer;
@@ -19,7 +20,8 @@ type IState = {
     strategy: Strategy;
 }
 
-const maxPlay = 1e6;
+const minPlay = 0;
+const maxPlay = 1e7;
 
 function isRed(n: number): boolean {
     return [1, 3, 5, 7, 9, 12, 14, 16, 18, 19,
@@ -165,10 +167,13 @@ export class Roulette extends Game<IProps, IState> {
     updateInvestment(e: React.FormEvent<HTMLInputElement>) {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
-            investment = 1000;
+            investment = minPlay;
         }
         if (investment > maxPlay) {
-            investment = maxPlay
+            investment = maxPlay;
+        }
+        if (investment < minPlay) {
+            investment = minPlay;
         }
         this.setState({investment: investment});
     }
@@ -226,62 +231,62 @@ export class Roulette extends Game<IProps, IState> {
         <table>
             <tbody>
                 <tr>
-                    <td><StdButton text={"3"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(3))} /></td>
-                    <td><StdButton text={"6"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(6))} /></td>
-                    <td><StdButton text={"9"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(9))} /></td>
-                    <td><StdButton text={"12"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(12))} /></td>
-                    <td><StdButton text={"15"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(15))} /></td>
-                    <td><StdButton text={"18"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(18))} /></td>
-                    <td><StdButton text={"21"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(21))} /></td>
-                    <td><StdButton text={"24"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(24))} /></td>
-                    <td><StdButton text={"27"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(27))} /></td>
-                    <td><StdButton text={"30"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(30))} /></td>
-                    <td><StdButton text={"33"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(33))} /></td>
-                    <td><StdButton text={"36"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(36))} /></td>
+                    <td><StdButton text={"3"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(3)))} /></td>
+                    <td><StdButton text={"6"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(6)))} /></td>
+                    <td><StdButton text={"9"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(9)))} /></td>
+                    <td><StdButton text={"12"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(12)))} /></td>
+                    <td><StdButton text={"15"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(15)))} /></td>
+                    <td><StdButton text={"18"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(18)))} /></td>
+                    <td><StdButton text={"21"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(21)))} /></td>
+                    <td><StdButton text={"24"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(24)))} /></td>
+                    <td><StdButton text={"27"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(27)))} /></td>
+                    <td><StdButton text={"30"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(30)))} /></td>
+                    <td><StdButton text={"33"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(33)))} /></td>
+                    <td><StdButton text={"36"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(36)))} /></td>
                 </tr>
                 <tr>
-                    <td><StdButton text={"2"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(2))} /></td>
-                    <td><StdButton text={"5"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(5))} /></td>
-                    <td><StdButton text={"8"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(8))} /></td>
-                    <td><StdButton text={"11"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(11))} /></td>
-                    <td><StdButton text={"14"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(14))} /></td>
-                    <td><StdButton text={"17"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(17))} /></td>
-                    <td><StdButton text={"20"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(20))} /></td>
-                    <td><StdButton text={"23"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(23))} /></td>
-                    <td><StdButton text={"26"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(26))} /></td>
-                    <td><StdButton text={"29"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(29))} /></td>
-                    <td><StdButton text={"32"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(32))} /></td>
-                    <td><StdButton text={"35"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(35))} /></td>
+                    <td><StdButton text={"2"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(2)))} /></td>
+                    <td><StdButton text={"5"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(5)))} /></td>
+                    <td><StdButton text={"8"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(8)))} /></td>
+                    <td><StdButton text={"11"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(11)))} /></td>
+                    <td><StdButton text={"14"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(14)))} /></td>
+                    <td><StdButton text={"17"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(17)))} /></td>
+                    <td><StdButton text={"20"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(20)))} /></td>
+                    <td><StdButton text={"23"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(23)))} /></td>
+                    <td><StdButton text={"26"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(26)))} /></td>
+                    <td><StdButton text={"29"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(29)))} /></td>
+                    <td><StdButton text={"32"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(32)))} /></td>
+                    <td><StdButton text={"35"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(35)))} /></td>
                 </tr>
                 <tr>
-                    <td><StdButton text={"1"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(1))} /></td>
-                    <td><StdButton text={"4"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(4))} /></td>
-                    <td><StdButton text={"7"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(7))} /></td>
-                    <td><StdButton text={"10"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(10))} /></td>
-                    <td><StdButton text={"13"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(13))} /></td>
-                    <td><StdButton text={"16"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(16))} /></td>
-                    <td><StdButton text={"19"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(19))} /></td>
-                    <td><StdButton text={"22"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(22))} /></td>
-                    <td><StdButton text={"25"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(25))} /></td>
-                    <td><StdButton text={"28"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(28))} /></td>
-                    <td><StdButton text={"31"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(31))} /></td>
-                    <td><StdButton text={"34"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(34))} /></td>
+                    <td><StdButton text={"1"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(1)))} /></td>
+                    <td><StdButton text={"4"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(4)))} /></td>
+                    <td><StdButton text={"7"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(7)))} /></td>
+                    <td><StdButton text={"10"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(10)))} /></td>
+                    <td><StdButton text={"13"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(13)))} /></td>
+                    <td><StdButton text={"16"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(16)))} /></td>
+                    <td><StdButton text={"19"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(19)))} /></td>
+                    <td><StdButton text={"22"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(22)))} /></td>
+                    <td><StdButton text={"25"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(25)))} /></td>
+                    <td><StdButton text={"28"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(28)))} /></td>
+                    <td><StdButton text={"31"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(31)))} /></td>
+                    <td><StdButton text={"34"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(34)))} /></td>
                 </tr>
                 <tr>
-                    <td colSpan={4}><StdButton text={"1 to 12"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Third1)} /></td>
-                    <td colSpan={4}><StdButton text={"13 to 24"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Third2)} /></td>
-                    <td colSpan={4}><StdButton text={"25 to 36"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Third3)} /></td>
+                    <td colSpan={4}><StdButton text={"1 to 12"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Third1))} /></td>
+                    <td colSpan={4}><StdButton text={"13 to 24"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Third2))} /></td>
+                    <td colSpan={4}><StdButton text={"25 to 36"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Third3))} /></td>
                 </tr>
                 <tr>
-                    <td colSpan={2}><StdButton text={"Red"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Red)} /></td>
-                    <td colSpan={2}><StdButton text={"Black"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Black)} /></td>
-                    <td colSpan={2}><StdButton text={"Odd"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Odd)} /></td>
-                    <td colSpan={2}><StdButton text={"Even"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Even)} /></td>
-                    <td colSpan={2}><StdButton text={"High"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.High)} /></td>
-                    <td colSpan={2}><StdButton text={"Low"} disabled={!this.state.canPlay} onClick={()=>this.play(strategies.Low)} /></td>
+                    <td colSpan={2}><StdButton text={"Red"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Red))} /></td>
+                    <td colSpan={2}><StdButton text={"Black"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Black))} /></td>
+                    <td colSpan={2}><StdButton text={"Odd"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Odd))} /></td>
+                    <td colSpan={2}><StdButton text={"Even"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Even))} /></td>
+                    <td colSpan={2}><StdButton text={"High"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.High))} /></td>
+                    <td colSpan={2}><StdButton text={"Low"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(strategies.Low))} /></td>
                 </tr>
                 <tr>
-                    <td><StdButton text={"0"} disabled={!this.state.canPlay} onClick={()=>this.play(Single(0))} /></td>
+                    <td><StdButton text={"0"} disabled={!this.state.canPlay} onClick={trusted(()=>this.play(Single(0)))} /></td>
                 </tr>
             </tbody>
         </table>

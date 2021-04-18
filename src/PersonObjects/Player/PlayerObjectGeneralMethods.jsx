@@ -31,6 +31,11 @@ import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
 import { calculateSkill as calculateSkillF } from "../formulas/skill";
 import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
+    getHackingWorkRepGain,
+    getFactionSecurityWorkRepGain,
+    getFactionFieldWorkRepGain,
+} from '../formulas/reputation';
+import {
     AllServers,
     AddToAllServers,
     createUniqueRandomIp,
@@ -857,7 +862,7 @@ export function startFactionFieldWork(faction) {
     this.workDexExpGainRate     = .1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workAgiExpGainRate     = .1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workChaExpGainRate     = .1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-    this.workRepGainRate        = this.getFactionFieldWorkRepGain();
+    this.workRepGainRate        = getFactionFieldWorkRepGain(this);
 
     this.factionWorkType = CONSTANTS.FactionWorkField;
     this.currentWorkFactionDescription = "carrying out field missions"
@@ -874,7 +879,7 @@ export function startFactionSecurityWork(faction) {
     this.workDexExpGainRate     = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workAgiExpGainRate     = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workChaExpGainRate     = 0.00 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-    this.workRepGainRate        = this.getFactionSecurityWorkRepGain();
+    this.workRepGainRate        = getFactionSecurityWorkRepGain(this);
 
     this.factionWorkType = CONSTANTS.FactionWorkSecurity;
     this.currentWorkFactionDescription = "performing security detail"
@@ -883,28 +888,22 @@ export function startFactionSecurityWork(faction) {
 }
 
 export function workForFaction(numCycles) {
-    var faction = Factions[this.currentWorkFactionName];
+    const faction = Factions[this.currentWorkFactionName];
 
     //Constantly update the rep gain rate
     switch (this.factionWorkType) {
         case CONSTANTS.FactionWorkHacking:
-            this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult * this.getIntelligenceBonus(0.5);
+            this.workRepGainRate = getHackingWorkRepGain(this, faction);
             break;
         case CONSTANTS.FactionWorkField:
-            this.workRepGainRate = this.getFactionFieldWorkRepGain();
+            this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
             break;
         case CONSTANTS.FactionWorkSecurity:
-            this.workRepGainRate = this.getFactionSecurityWorkRepGain();
+            this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
             break;
         default:
             break;
     }
-
-    //Update reputation gain rate to account for faction favor
-    var favorMult = 1 + (faction.favor / 100);
-    if (isNaN(favorMult)) {favorMult = 1;}
-    this.workRepGainRate *= favorMult;
-    this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
     //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
     var overMax = false;
@@ -1116,25 +1115,25 @@ export function getWorkRepGain() {
     return jobPerformance * this.company_rep_mult * favorMult;
 }
 
-export function getFactionSecurityWorkRepGain() {
-    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel +
-                   this.strength       / CONSTANTS.MaxSkillLevel +
-                   this.defense        / CONSTANTS.MaxSkillLevel +
-                   this.dexterity      / CONSTANTS.MaxSkillLevel +
-                   this.agility        / CONSTANTS.MaxSkillLevel) / 4.5;
-    return t * this.faction_rep_mult;
-}
+// export function getFactionSecurityWorkRepGain() {
+//     var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel +
+//                    this.strength       / CONSTANTS.MaxSkillLevel +
+//                    this.defense        / CONSTANTS.MaxSkillLevel +
+//                    this.dexterity      / CONSTANTS.MaxSkillLevel +
+//                    this.agility        / CONSTANTS.MaxSkillLevel) / 4.5;
+//     return t * this.faction_rep_mult;
+// }
 
-export function getFactionFieldWorkRepGain() {
-    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel +
-                   this.strength       / CONSTANTS.MaxSkillLevel +
-                   this.defense        / CONSTANTS.MaxSkillLevel +
-                   this.dexterity      / CONSTANTS.MaxSkillLevel +
-                   this.agility        / CONSTANTS.MaxSkillLevel +
-                   this.charisma       / CONSTANTS.MaxSkillLevel +
-                   this.intelligence   / CONSTANTS.MaxSkillLevel) / 5.5;
-    return t * this.faction_rep_mult;
-}
+// export function getFactionFieldWorkRepGain() {
+//     var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel +
+//                    this.strength       / CONSTANTS.MaxSkillLevel +
+//                    this.defense        / CONSTANTS.MaxSkillLevel +
+//                    this.dexterity      / CONSTANTS.MaxSkillLevel +
+//                    this.agility        / CONSTANTS.MaxSkillLevel +
+//                    this.charisma       / CONSTANTS.MaxSkillLevel +
+//                    this.intelligence   / CONSTANTS.MaxSkillLevel) / 5.5;
+//     return t * this.faction_rep_mult;
+// }
 
 /* Creating a Program */
 export function startCreateProgramWork(programName, time, reqLevel) {
