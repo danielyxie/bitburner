@@ -75,13 +75,10 @@ List of Factions and their Requirements
 |                     |                |                                         | * Ishima                      |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
 | Hacking             | NiteSec        | * Hack avmnite-02h manually             |                               |
-| Groups              |                | * Home Computer RAM of at least 32GB    |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | The Black Hand | * Hack I.I.I.I manually                 |                               |
-|                     |                | * Home Computer RAM of at least 64GB    |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | Bitrunners     | * Hack run4theh111z manually            |                               |
-|                     |                | * Home Computer RAM of at least 128GB   |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
 | Megacorporations    | ECorp          | * Have 200k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |

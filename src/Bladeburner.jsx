@@ -1069,7 +1069,11 @@ Bladeburner.prototype.gainActionStats = function(action, success) {
     Player.gainDexterityExp(unweightedGain  * action.weights.dex  * Player.dexterity_exp_mult * skillMult);
     Player.gainAgilityExp(unweightedGain    * action.weights.agi  * Player.agility_exp_mult * skillMult);
     Player.gainCharismaExp(unweightedGain   * action.weights.cha  * Player.charisma_exp_mult * skillMult);
-    Player.gainIntelligenceExp(unweightedIntGain * action.weights.int * skillMult);
+    let intExp = unweightedIntGain * action.weights.int * skillMult;
+    if (intExp > 1) {
+        intExp = Math.pow(intExp, 0.8);
+    }
+    Player.gainIntelligenceExp(intExp);
 }
 
 Bladeburner.prototype.randomEvent = function() {

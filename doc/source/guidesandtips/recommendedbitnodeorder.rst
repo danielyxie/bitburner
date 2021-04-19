@@ -278,6 +278,7 @@ Description
     hashes, which can be spent on a variety of different upgrades.
 
     In this BitNode:
+
     * Your stats are significantly decreased
     * You cannnot purchase additional servers
     * Hacking is significantly less profitable
@@ -312,6 +313,7 @@ Description
     2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks synchronously
 
     In this BitNode:
+
     * Your stats are significantly decreased
     * All methods of gaining money are half as profitable (except Stock Market)
     * Purchased servers are more expensive, have less max RAM, and a lower maximum limit

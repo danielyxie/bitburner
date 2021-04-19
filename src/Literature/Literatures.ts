@@ -148,7 +148,7 @@ export const Literatures: IMap<Literature> = {};
               "will be our people, and we will be with them as their Gods. We will wipe away every tear from their eyes, and death " +
               "shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things " +
               "have passed away.'<br><br>" +
-              "And once were were seated on the throne we said 'Behold, I am making all things new.' " +
+              "And once we were seated on the throne we said 'Behold, I am making all things new.' " +
               "Also we said, 'Write this down, for these words are trustworthy and true.' And we said to you, " +
               "'It is done! I am the Alpha and the Omega, the beginning and the end. To the thirsty I will give from the spring " +
               "of the water of life without payment. The one who conquers will have this heritage, and we will be his God and " +

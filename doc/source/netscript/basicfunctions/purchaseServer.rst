@@ -7,7 +7,7 @@ purchaseServer() Netscript Function
     :param string hostname: Hostname of the purchased server.
     :param number ram: Amount of RAM of the purchased server. Must be a power of
         2. Maximum value of :doc:`getPurchasedServerMaxRam<getPurchasedServerMaxRam>`
-    :returns: The hostname of the newly purchased server.
+    :returns: The hostname of the newly purchased server. Empty string on failure.
 
     Purchased a server with the specified hostname and amount of RAM.
 
