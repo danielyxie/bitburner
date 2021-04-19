@@ -248,5 +248,6 @@ export let CONSTANTS: IMap<any> = {
     * Removed dollar sign in travel agency confirmation.
     * Fixed typo in alpha-omega.lit
     * the 'Game saved!' text no longer blocks the save game/options button.
+    * The text editor now remembers the location of your cursor and restores it.
     `
 }

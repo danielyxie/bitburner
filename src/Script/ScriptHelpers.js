@@ -16,6 +16,7 @@ import {
 import { Player } from "../Player";
 import { AceEditor } from "../ScriptEditor/Ace";
 import { CodeMirrorEditor } from "../ScriptEditor/CodeMirror";
+import { CursorPositions } from "../ScriptEditor/CursorPositions";
 import { AllServers } from "../Server/AllServers";
 import { processSingleServerGrowth } from "../Server/ServerHelpers";
 import { Settings } from "../Settings/Settings";
@@ -224,11 +225,13 @@ $(document).keydown(function(e) {
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
 
-    let code;
+    let code, cursor;
     try {
         code = getCurrentEditor().getCode();
+        cursor = getCurrentEditor().getCursor();
+        CursorPositions.saveCursor(filename, cursor);
     } catch(e) {
-        dialogBoxCreate("Something went wrong when trying to save (getCurrentEditor().getCode()). Please report to game developer with details");
+        dialogBoxCreate("Something went wrong when trying to save (getCurrentEditor().getCode() or getCurrentEditor().getCursor()). Please report to game developer with details");
         return;
     }
 
@@ -282,7 +285,7 @@ function saveAndCloseScriptEditor() {
         }
     } else if (isScriptFilename(filename)) {
         //If the current script already exists on the server, overwrite it
-        for (var i = 0; i < s.scripts.length; i++) {
+        for (let i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
                 s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
                 Engine.loadTerminalContent();
@@ -295,14 +298,14 @@ function saveAndCloseScriptEditor() {
         script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
         s.scripts.push(script);
     } else if (filename.endsWith(".txt")) {
-        for (var i = 0; i < s.textFiles.length; ++i) {
+        for (let i = 0; i < s.textFiles.length; ++i) {
             if (s.textFiles[i].fn === filename) {
                 s.textFiles[i].write(code);
                 Engine.loadTerminalContent();
                 return;
             }
         }
-        var textFile = new TextFile(filename, code);
+        const textFile = new TextFile(filename, code);
         s.textFiles.push(textFile);
     } else {
         dialogBoxCreate("Invalid filename. Must be either a script (.script) or " +
