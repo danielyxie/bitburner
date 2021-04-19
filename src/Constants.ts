@@ -247,5 +247,6 @@ export let CONSTANTS: IMap<any> = {
       that goal has been reached.
     * Removed dollar sign in travel agency confirmation.
     * Fixed typo in alpha-omega.lit
+    * the 'Game saved!' text no longer blocks the save game/options button.
     `
 }
