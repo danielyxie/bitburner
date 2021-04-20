@@ -89,7 +89,7 @@ export let AugmentationNames: IMap<string> = {
     BrachiBlades:                       "BrachiBlades",
     BionicArms:                         "Bionic Arms",
     SNA:                                "Social Negotiation Assistant (S.N.A)",
-    HydroflameLeftArm:                  "Hydroflame left arm",
+    HydroflameLeftArm:                  "Hydroflame Left Arm",
     EsperEyewear:                       "EsperTech Bladeburner Eyewear",
     EMS4Recombination:                  "EMS-4 Recombination",
     OrionShoulder:                      "ORION-MKIV Shoulder",

@@ -314,6 +314,14 @@ class AceEditorWrapper extends ScriptEditor {
             elem.style.display = "none";
         }
     }
+
+    getCursor() {
+        return this.editor.getCursorPosition();
+    }
+
+    setCursor(pos) {
+        this.editor.gotoLine(pos.row+1, pos.column);
+    }
 }
 
 export const AceEditor = new AceEditorWrapper();

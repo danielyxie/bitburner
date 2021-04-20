@@ -1,3 +1,5 @@
+import { CursorPositions } from './CursorPositions';
+
 // Base Script Editor class for the Ace/CodeMirror/etc. wrappers
 const beautify = require('js-beautify').js_beautify;
 
@@ -33,6 +35,7 @@ export class ScriptEditor {
         if (filename != "") {
             this.filenameInput.value = filename;
             this.editor.setValue(code);
+            this.setCursor(CursorPositions.getCursor(filename));
         }
 
         this.editor.focus();

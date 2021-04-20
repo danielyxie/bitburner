@@ -924,7 +924,7 @@ function NetscriptFunctions(workerScript) {
 
             // Check argument validity
             const server = safeGetServer(ip, 'growthAnalyze');
-            if (typeof growth !== "number" || isNaN(growth) || growth < 1) {
+            if (typeof growth !== "number" || isNaN(growth) || growth < 1 || !isFinite(growth)) {
                 throw makeRuntimeErrorMsg("growthAnalyze", `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
             }
 
@@ -2037,7 +2037,7 @@ function NetscriptFunctions(workerScript) {
             const cost = getPurchaseServerCost(ram);
             if (cost === Infinity) {
                 workerScript.log("purchaseServer", `Invalid argument: ram='${ram}'`);
-                return Infinity;
+                return "";
             }
 
             if (Player.money.lt(cost)) {

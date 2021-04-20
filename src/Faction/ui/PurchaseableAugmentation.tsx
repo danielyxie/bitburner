@@ -118,7 +118,7 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
         } else if (this.aug.name !== AugmentationNames.NeuroFluxGovernor && (this.aug.owned || this.owned())) {
             disabled = true;
         } else if (this.hasReputation()) {
-            status = <>UNLOCKED - {Money(moneyCost)}</>;
+            status = <>UNLOCKED (at {Reputation(repCost)} faction reputation) - {Money(moneyCost)}</>;
         } else {
             disabled = true;
             status = <>LOCKED (Requires {Reputation(repCost)} faction reputation - {Money(moneyCost)})</>;

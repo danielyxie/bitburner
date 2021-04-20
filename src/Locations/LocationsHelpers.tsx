@@ -78,7 +78,7 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
         return false;
     });
 
-    yesNoBoxCreate(<span>Would you like to travel to ${destination}? The trip will
+    yesNoBoxCreate(<span>Would you like to travel to {destination}? The trip will
         cost {Money(cost)}.</span>);
 }
 

@@ -60,7 +60,7 @@ import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
-import { findRunningScript } from "./Script/ScriptHelpers";
+import { getCurrentEditor, findRunningScript } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
 import { AllServers } from "./Server/AllServers";
 import { Server } from "./Server/Server";
@@ -1789,6 +1789,7 @@ let Terminal = {
 }`;
                     }
                     Engine.loadScriptEditorContent(filepath, code);
+                    getCurrentEditor().setCursor({row: 1, column: 4});
                 } else {
                     Engine.loadScriptEditorContent(filepath, script.code);
                 }

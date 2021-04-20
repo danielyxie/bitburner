@@ -21,7 +21,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
     BlackOperations["Operation Zero"] = new BlackOperation({
         name:"Operation Zero",
         desc:"AeroCorp is one of the world's largest defense contractors. " +
-             "It's leader, Steve Watataki, is thought to be a supporter of " +
+             "Its leader, Steve Watataki, is thought to be a supporter of " +
              "Synthoid rights. He must be removed.<br><br>" +
              "The goal of Operation Zero is to covertly infiltrate AeroCorp and " +
              "uncover any incriminating evidence or " +

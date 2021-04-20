@@ -570,6 +570,15 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             elem.style.display = "none";
         }
     }
+
+    getCursor() {
+        const c = this.editor.getCursor();  //I need to get the cursor position
+        return {row: c.line, column: c.ch};
+    }
+
+    setCursor(pos) {
+        this.editor.setCursor({line: pos.row, ch: pos.column});
+    }
 }
 
 export const CodeMirrorEditor = new CodeMirrorEditorWrapper();
