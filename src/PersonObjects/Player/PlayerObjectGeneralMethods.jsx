@@ -434,6 +434,8 @@ export function gainHackingExp(exp) {
     if(this.hacking_exp < 0) {
         this.hacking_exp = 0;
     }
+
+    this.hacking_skill = calculateSkillF(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
 }
 
 export function gainStrengthExp(exp) {
@@ -444,6 +446,8 @@ export function gainStrengthExp(exp) {
     if(this.strength_exp < 0) {
         this.strength_exp = 0;
     }
+
+    this.strength = calculateSkillF(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
 }
 
 export function gainDefenseExp(exp) {
@@ -454,6 +458,8 @@ export function gainDefenseExp(exp) {
     if(this.defense_exp < 0) {
         this.defense_exp = 0;
     }
+
+    this.defense = calculateSkillF(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
 }
 
 export function gainDexterityExp(exp) {
@@ -464,6 +470,8 @@ export function gainDexterityExp(exp) {
     if(this.dexterity_exp < 0) {
         this.dexterity_exp = 0;
     }
+
+    this.dexterity = calculateSkillF(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier);
 }
 
 export function gainAgilityExp(exp) {
@@ -474,6 +482,8 @@ export function gainAgilityExp(exp) {
     if(this.agility_exp < 0) {
         this.agility_exp = 0;
     }
+
+    this.agility = calculateSkillF(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier);
 }
 
 export function gainCharismaExp(exp) {
@@ -484,6 +494,8 @@ export function gainCharismaExp(exp) {
     if(this.charisma_exp < 0) {
         this.charisma_exp = 0;
     }
+
+    this.charisma = calculateSkillF(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier);
 }
 
 export function gainIntelligenceExp(exp) {
@@ -601,6 +613,17 @@ export function startWork(companyName) {
     Engine.loadWorkInProgressContent();
 }
 
+export function cancelationPenalty() {
+    const company = Companies[this.companyName];
+    const specialIp = SpecialServerIps[this.companyName];
+    if(specialIp) {
+        const server = AllServers[specialIp];
+        if(server && server.manuallyHacked) return 0.75;
+    }
+    return 0.5;
+}
+
+
 export function work(numCycles) {
     // Cap the number of cycles being processed to whatever would put you at
     // the work time limit (8 hours)
@@ -631,6 +654,10 @@ export function work(numCycles) {
 
     const position = this.jobs[this.companyName];
 
+    const penalty = this.cancelationPenalty();
+
+    const penaltyString = penalty === 0.5 ? 'half' : 'three quarter'
+
     var elem = document.getElementById("work-in-progress-text");
     ReactDOM.render(<>
         You are currently working as a {position} at {this.companyName} (Current Company Reputation: {Reputation(companyRep)})<br /><br />
@@ -645,17 +672,17 @@ export function work(numCycles) {
         {numeralWrapper.formatExp(this.workAgiExpGained)} ({`${numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}) agility exp <br /><br /> 
         {numeralWrapper.formatExp(this.workChaExpGained)} ({`${numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}) charisma exp <br /><br />
         You will automatically finish after working for 8 hours. You can cancel earlier if you wish, 
-        but you will only gain half of the reputation you've earned so far.
+        but you will only gain {penaltyString} of the reputation you've earned so far.
     </>, elem);
 }
 
 export function finishWork(cancelled, sing=false) {
     //Since the work was cancelled early, player only gains half of what they've earned so far
     if (cancelled) {
-        this.workRepGained /= 2;
+        this.workRepGained *= this.cancelationPenalty();
     }
 
-    var company = Companies[this.companyName];
+    const company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained);
 
     this.updateSkillLevels();

@@ -228,8 +228,14 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.4 - 2021-04-19 I went for a nap and had all this to do (hydroflame)
+    v0.51.4 - 2021-04-19 Manual hacking is fun (hydroflame)
     -------
+
+    Manual hacking
+    * These bonus require an install or a soft reset to take effect.
+    * Manual hacking gyms and university gives you a 10% discount.
+    * Manual hacking a corporation server decreases the penalty for leaving work
+      early.
 
     BladeBurner
     * nerfed int exp gained.
@@ -245,9 +251,11 @@ export let CONSTANTS: IMap<any> = {
     Misc.
     * Faction Augmentation will list how much reputation is required even after
       that goal has been reached.
-    * Removed dollar sign in travel agency confirmation.
+    * Removed dollar sign in travel agency confirmation dialog box.
     * Fixed typo in alpha-omega.lit
     * the 'Game saved!' text no longer blocks the save game/options button.
     * The text editor now remembers the location of your cursor and restores it.
+    * skills are recalculated instantly.
+    * Fix typo in Operation Zero description.
     `
 }

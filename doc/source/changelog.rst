@@ -3,6 +3,41 @@
 Changelog
 =========
 
+v0.51.4 - 2021-04-19 Manual hacking is fun (hydroflame)
+-------------------------------------------------------
+
+Manual hacking
+
+* These bonus require an install or a soft reset to take effect.
+* Manual hacking gyms and university gives you a 10% discount.
+* Manual hacking a corporation server decreases the penalty for leaving work
+  early.
+
+BladeBurner
+
+* nerfed int exp gained.
+
+Documentation
+
+* purchaseServer specifies what happens on failure.
+* Fixed typo in recommended bitnode page.
+* Removed misleading ram requirements for hacking factions.
+
+Netscript
+
+* growthAnalyze handles Infinity correctly.
+
+Misc.
+
+* Faction Augmentation will list how much reputation is required even after
+  that goal has been reached.
+* Removed dollar sign in travel agency confirmation dialog box.
+* Fixed typo in alpha-omega.lit
+* the 'Game saved!' text no longer blocks the save game/options button.
+* The text editor now remembers the location of your cursor and restores it.
+* skills are recalculated instantly.
+* Fix typo in Operation Zero description.
+
 v0.51.3 - 2021-04-16 Y'all broke it on the first day (hydroflame)
 -----------------------------------------------------------------
 

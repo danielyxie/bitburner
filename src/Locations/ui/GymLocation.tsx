@@ -7,8 +7,11 @@ import * as React from "react";
 
 import { Location }         from "../Location";
 
-import { CONSTANTS }        from "../../Constants";
-import { IPlayer }          from "../../PersonObjects/IPlayer";
+import { CONSTANTS }              from "../../Constants";
+import { IPlayer }                from "../../PersonObjects/IPlayer";
+import { getServer }              from "../../Server/ServerHelpers";
+import { Server }                 from "../../Server/Server";
+import { SpecialServerIps }       from "../../Server/SpecialServerIps";
 
 import { numeralWrapper }   from "../../ui/numeralFormat";
 import { StdButton }        from "../../ui/React/StdButton";
@@ -34,11 +37,22 @@ export class GymLocation extends React.Component<IProps, any> {
         this.trainDefense = this.trainDefense.bind(this);
         this.trainDexterity = this.trainDexterity.bind(this);
         this.trainAgility = this.trainAgility.bind(this);
+
+        this.calculateCost = this.calculateCost.bind(this);
+    }
+
+    calculateCost(): number {
+        const ip = SpecialServerIps.getIp(this.props.loc.name);
+        console.log(`ip: ${ip}`);
+        const server = getServer(ip);
+        if(server == null || !server.hasOwnProperty('manuallyHacked')) return this.props.loc.costMult;
+        const discount = (server as Server).manuallyHacked? 0.9 : 1;
+        return this.props.loc.costMult * discount;
     }
 
     train(stat: string) {
         const loc = this.props.loc;
-        this.props.p.startClass(loc.costMult, loc.expMult, stat);
+        this.props.p.startClass(this.calculateCost(), loc.expMult, stat);
     }
 
     trainStrength() {
@@ -58,9 +72,7 @@ export class GymLocation extends React.Component<IProps, any> {
     }
 
     render() {
-        const costMult: number = this.props.loc.costMult;
-
-        const cost = CONSTANTS.ClassGymBaseCost * costMult;
+        const cost = CONSTANTS.ClassGymBaseCost * this.calculateCost();
 
         return (
             <div>

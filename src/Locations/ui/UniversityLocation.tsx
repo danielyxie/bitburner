@@ -9,6 +9,9 @@ import { Location }         from "../Location";
 
 import { CONSTANTS }        from "../../Constants";
 import { IPlayer }          from "../../PersonObjects/IPlayer";
+import { getServer }              from "../../Server/ServerHelpers";
+import { Server }                 from "../../Server/Server";
+import { SpecialServerIps }       from "../../Server/SpecialServerIps";
 
 import { numeralWrapper }   from "../../ui/numeralFormat";
 import { StdButton }        from "../../ui/React/StdButton";
@@ -37,11 +40,22 @@ export class UniversityLocation extends React.Component<IProps, any> {
         this.algorithms = this.algorithms.bind(this);
         this.management = this.management.bind(this);
         this.leadership = this.leadership.bind(this);
+
+        this.calculateCost = this.calculateCost.bind(this);
+    }
+
+    calculateCost(): number {
+        const ip = SpecialServerIps.getIp(this.props.loc.name);
+        console.log(`ip: ${ip}`);
+        const server = getServer(ip);
+        if(server == null || !server.hasOwnProperty('manuallyHacked')) return this.props.loc.costMult;
+        const discount = (server as Server).manuallyHacked? 0.9 : 1;
+        return this.props.loc.costMult * discount;
     }
 
     take(stat: string) {
         const loc = this.props.loc;
-        this.props.p.startClass(loc.costMult, loc.expMult, stat);
+        this.props.p.startClass(this.calculateCost(), loc.expMult, stat);
     }
 
     study() {
@@ -69,7 +83,7 @@ export class UniversityLocation extends React.Component<IProps, any> {
     }
 
     render() {
-        const costMult: number = this.props.loc.costMult;
+        const costMult: number = this.calculateCost();
 
         const dataStructuresCost = CONSTANTS.ClassDataStructuresBaseCost * costMult;
         const networksCost = CONSTANTS.ClassNetworksBaseCost * costMult;

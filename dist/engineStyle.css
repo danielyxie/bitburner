@@ -250,13 +250,14 @@ a:visited {
     opacity: 0; } }
 
 .status-text {
-  display: inline-block;
-  position: fixed;
   z-index: 2;
   -webkit-animation: status-text 3s 1; }
 
 #status-text-container {
-  background-color: transparent; }
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 50%; }
 
 #status-text {
   background-color: transparent;
