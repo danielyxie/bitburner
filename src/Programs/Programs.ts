@@ -1,6 +1,6 @@
 import { Program }                  from "./Program";
 import { IProgramCreationParams,
-         programsMetadata }         from "./data/programsMetadata";
+         programsMetadata }         from "./data/ProgramsMetadata";
 import { IMap }                     from "../types";
 
 export const Programs: IMap<Program> = {};
