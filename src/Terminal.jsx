@@ -938,10 +938,10 @@ let Terminal = {
                 break;
             }
             case "cd": {
-                if (commandArray.length !== 2) {
+                if (commandArray.length > 2) {
                     postError("Incorrect number of arguments. Usage: cd [dir]");
                 } else {
-                    let dir = commandArray[1];
+                    let dir = commandArray.length === 2 ? commandArray[1] : "/";
 
                     let evaledDir;
                     if (dir === "/") {
