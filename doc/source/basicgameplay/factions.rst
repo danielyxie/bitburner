@@ -35,7 +35,7 @@ List of Factions and their Requirements
 | Early Game          | Faction Name   | Requirements                            | Joining this Faction prevents |
 |  Factions           |                |                                         | you from joining:             |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | CyberSec       | * Hack CSEC Manually                    |                               |
+|                     | CyberSec       | * Install a backdoor on the CSEC server |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | Tian Di Hui    | * $1m                                   |                               |
 |                     |                | * Hacking Level 50                      |                               |
@@ -74,11 +74,17 @@ List of Factions and their Requirements
 |                     |                |                                         | * New Tokyo                   |
 |                     |                |                                         | * Ishima                      |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
-| Hacking             | NiteSec        | * Hack avmnite-02h manually             |                               |
+| Hacking             | NiteSec        | * Install a backdoor on the avmnite-02h |                               |
+| Groups              |                |   server                                |                               |
+|                     |                | * Home Computer RAM of at least 32GB    |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | The Black Hand | * Hack I.I.I.I manually                 |                               |
+|                     | The Black Hand | * Install a backdoor on the I.I.I.I     |                               |
+|                     |                |   server                                |                               |
+|                     |                | * Home Computer RAM of at least 64GB    |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Bitrunners     | * Hack run4theh111z manually            |                               |
+|                     | Bitrunners     | * Install a backdoor on the run4theh111z|                               |
+|                     |                |   server                                |                               |
+|                     |                | * Home Computer RAM of at least 128GB   |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
 | Megacorporations    | ECorp          | * Have 200k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |
@@ -109,7 +115,8 @@ List of Factions and their Requirements
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | Fulcrum Secret | * Have 250k reputation with             |                               |
 |                     | Technologies   |   the Corporation                       |                               |
-|                     |                | * Hack fulcrumassets manually           |                               |
+|                     |                | * Install a backdoor on the             |                               |
+|                     |                |   fulcrumassets server                  |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
 | Criminal            | Slum Snakes    | * All Combat Stats of 30                |                               |
 | Organizations       |                | * -9 Karma                              |                               |

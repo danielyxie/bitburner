@@ -634,7 +634,7 @@ This tells me that I can reach :code:`CSEC` by going through :code:`iron-gym`::
     Make sure you notice the required hacking skill for the :code:`CSEC` server.
     This is a random value between 51 and 60. Although you receive the message
     from CSEC once you hit 50 hacking, you cannot actually pass their test
-    until your hacking is high enough to hack their server.
+    until your hacking is high enough to install a backdoor only their server.
 
 After you are connected to the :code:`CSEC` server, you can hack it. Note that this
 server requires one open port in order to gain root access. We can open the SSH port
@@ -642,10 +642,10 @@ using the :code:`BruteSSH.exe` program we created earlier. In |Terminal|::
 
     $ run BruteSSH.exe
     $ run NUKE.exe
-    $ hack
+    $ backdoor
 
-Keep hacking the server until you are successful. After you successfully hack it, you should
-receive a faction invitation from |CyberSec| shortly afterwards. Accept it. If you accidentally
+After you successfully install the backdoor, you should receive a faction
+invitation from |CyberSec| shortly afterwards. Accept it. If you accidentally
 reject the invitation, that's okay. Just go to the :code:`Factions` tab
 (|Keyboard shortcut| Alt + f) and you should see an option that lets you
 accept the invitation.
