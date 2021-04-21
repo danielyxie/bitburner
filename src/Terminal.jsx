@@ -523,8 +523,8 @@ let Terminal = {
     },
 
     // Complete the hack/analyze command
-    finishHack: function(cancelled = false) {
-        if (cancelled == false) {
+	finishHack: function(cancelled = false) {
+		if (!cancelled)) {
             var server = Player.getCurrentServer();
 
             // Calculate whether hack was successful
@@ -573,7 +573,7 @@ let Terminal = {
     },
 
     finishBackdoor: function(cancelled = false) {
-        if(cancelled == false){
+        if(!cancelled){
             let server = Player.getCurrentServer();
             server.manuallyHacked = true;
             postElement(<>Backdoor successful!</>);
@@ -588,7 +588,7 @@ let Terminal = {
     },
 
     finishAnalyze: function(cancelled = false) {
-        if (cancelled == false) {
+		if (!cancelled) {
             let currServ = Player.getCurrentServer();
             const isHacknet = currServ instanceof HacknetServer;
             post(currServ.hostname + ": ");
