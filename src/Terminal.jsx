@@ -520,6 +520,12 @@ let Terminal = {
         } else if (Terminal.analyzeFlag) {
             Terminal.finishAnalyze(cancelled);
         }
+
+        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
+        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+        $("#hack-progress").attr('id', "old-hack-progress");
+        Terminal.resetTerminalInput();
+        $('input[class=terminal-input]').prop('disabled', false);
     },
 
     // Complete the hack/analyze command
@@ -559,16 +565,9 @@ let Terminal = {
             } else { // Failure
                 // Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-                post(`Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`);
-            }
-        }
-
-        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
-        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-        $("#hack-progress").attr('id', "old-hack-progress");
-        Terminal.resetTerminalInput();
-        $('input[class=terminal-input]').prop('disabled', false);
-
+				post(`Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`);
+			}
+		}
         Terminal.hackFlag = false;
     },
 
@@ -579,12 +578,6 @@ let Terminal = {
             postElement(<>Backdoor successful!</>);
         }
         Terminal.backdoorFlag = false;
-
-        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
-        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-        $("#hack-progress").attr('id', "old-hack-progress");
-        Terminal.resetTerminalInput();
-        $('input[class=terminal-input]').prop('disabled', false);
     },
 
     finishAnalyze: function(cancelled = false) {
@@ -635,12 +628,6 @@ let Terminal = {
             }
         }
         Terminal.analyzeFlag = false;
-
-        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
-        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-        $("#hack-progress").attr('id', "old-hack-progress");
-        Terminal.resetTerminalInput();
-        $('input[class=terminal-input]').prop('disabled', false);
     },
 
     executeCommands : function(commands) {
