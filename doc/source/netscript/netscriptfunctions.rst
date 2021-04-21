@@ -88,3 +88,4 @@ This includes information such as function signatures, what they do, and their r
     prompt() <basicfunctions/prompt>
     wget() <basicfunctions/wget>
     getFavorToDonate() <basicfunctions/getFavorToDonate>
+    flags() <basicfunctions/flags>

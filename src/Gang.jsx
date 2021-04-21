@@ -809,7 +809,7 @@ GangMember.prototype.ascend = function() {
 
 GangMember.prototype.getAscensionEfficiency = function() {
     function formula(mult) {
-        return 1/(1+Math.log(mult)/Math.log(10));
+        return 1/(1+Math.log(mult)/Math.log(20));
     }
     return {
         hack: formula(this.hack_asc_mult),

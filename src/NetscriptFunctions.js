@@ -1,5 +1,6 @@
 const sprintf = require("sprintf-js").sprintf;
 const vsprintf = require("sprintf-js").vsprintf;
+import * as libarg from 'arg';
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
@@ -88,7 +89,10 @@ import { inMission } from "./Missions";
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
-import { findRunningScript } from "./Script/ScriptHelpers";
+import {
+    findRunningScript,
+    findRunningScriptByPid,
+} from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
 import { _getScriptUrls } from "./NetscriptJSEvaluator";
 import {
@@ -162,6 +166,7 @@ import {
     netscriptDelay,
     resolveNetscriptRequestedThreads,
 } from "./NetscriptEvaluator";
+import { Interpreter } from "./JSInterpreter";
 import { NetscriptPort } from "./NetscriptPort";
 import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
@@ -256,6 +261,38 @@ const possibleLogs = {
     setTerritoryWarfare: true,
 }
 
+const defaultInterpreter = new Interpreter('', function(){});
+
+// the acorn interpreter has a bug where it doesn't convert arrays correctly.
+// so we have to more or less copy it here.
+function toNative(pseudoObj) {
+    if(!pseudoObj.hasOwnProperty('properties') ||
+        !pseudoObj.hasOwnProperty('getter') ||
+        !pseudoObj.hasOwnProperty('setter') ||
+        !pseudoObj.hasOwnProperty('proto')) {
+        return pseudoObj; // it wasn't a pseudo object anyway.
+    }
+
+    let nativeObj;
+    if (pseudoObj.hasOwnProperty('class') && pseudoObj.class === 'Array') {
+        nativeObj = [];
+        const length = defaultInterpreter.getProperty(pseudoObj, 'length');
+        for (let i = 0; i < length; i++) {
+          if (defaultInterpreter.hasProperty(pseudoObj, i)) {
+            nativeObj[i] =
+                toNative(defaultInterpreter.getProperty(pseudoObj, i));
+          }
+        }
+      } else {  // Object.
+        nativeObj = {};
+        for (var key in pseudoObj.properties) {
+          const val = pseudoObj.properties[key];
+          nativeObj[key] = toNative(val);
+        }
+      }
+      return nativeObj;
+}
+
 function NetscriptFunctions(workerScript) {
     const updateDynamicRam = function(fnName, ramCost) {
         if (workerScript.dynamicLoadedFns[fnName]) { return; }
@@ -305,7 +342,6 @@ function NetscriptFunctions(workerScript) {
      *      is not specified.
      */
     const getRunningScript = function(fn, ip, callingFnName, scriptArgs) {
-        // Sanitize arguments
         if (typeof callingFnName !== "string" || callingFnName === "") {
             callingFnName = "getRunningScript";
         }
@@ -328,6 +364,15 @@ function NetscriptFunctions(workerScript) {
 
         // If no arguments are specified, return the current RunningScript
         return workerScript.scriptRef;
+    }
+
+    const getRunningScriptByPid = function(pid, ip, callingFnName) {
+        if (typeof callingFnName !== "string" || callingFnName === "") {
+            callingFnName = "getRunningScriptgetRunningScriptByPid";
+        }
+        const server = safeGetServer(ip, callingFnName);
+
+        return findRunningScriptByPid(pid, server);
     }
 
     /**
@@ -689,6 +734,7 @@ function NetscriptFunctions(workerScript) {
     const argsToString = function(args) {
         let out = '';
         for(let arg of args) {
+            arg = toNative(arg);
             if(typeof arg === 'object') {
                 out += JSON.stringify(arg);
                 continue
@@ -1004,8 +1050,13 @@ function NetscriptFunctions(workerScript) {
 
             return runningScriptObj.logs.slice();
         },
-        tail: function(fn, ip, ...scriptArgs) {
-            const runningScriptObj = getRunningScript(fn, ip, "tail", scriptArgs);
+        tail: function(fn, ip=workerScript.serverIp, ...scriptArgs) {
+            let runningScriptObj;
+            if(typeof fn === 'number') {
+                runningScriptObj = getRunningScriptByPid(fn, ip, 'tail');
+            } else {
+                runningScriptObj = getRunningScript(fn, ip, "tail", scriptArgs);
+            }
             if (runningScriptObj == null) {
                 workerScript.log("tail", getCannotFindRunningScriptErrorMessage(fn, ip, scriptArgs));
                 return;
@@ -1509,7 +1560,12 @@ function NetscriptFunctions(workerScript) {
             const processes = [];
             for (const i in server.runningScripts) {
                 const script = server.runningScripts[i];
-                processes.push({filename:script.filename, threads: script.threads, args: script.args.slice()})
+                processes.push({
+                    filename:script.filename,
+                    threads: script.threads,
+                    args: script.args.slice(),
+                    pid: script.pid,
+                })
             }
             return processes;
         },
@@ -1692,20 +1748,16 @@ function NetscriptFunctions(workerScript) {
             }
             return false;
         },
-        isRunning: function(filename,ip) {
+        isRunning: function(fn, ip=workerScript.serverIp, ...scriptArgs) {
             updateDynamicRam("isRunning", getRamCost("isRunning"));
-            if (filename === undefined || ip === undefined) {
+            if (fn === undefined || ip === undefined) {
                 throw makeRuntimeErrorMsg("isRunning", "Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
             }
-            var server = getServer(ip);
-            if (server == null) {
-                throw makeRuntimeErrorMsg("isRunning", `Invalid IP/hostname: ${ip}`);
+            if(typeof fn === 'number') {
+                return getRunningScriptByPid(fn, ip, 'isRunning') != null;
+            } else {
+                return getRunningScript(fn, ip, "isRunning", scriptArgs) != null;
             }
-            var argsForTargetScript = [];
-            for (var i = 2; i < arguments.length; ++i) {
-                argsForTargetScript.push(arguments[i]);
-            }
-            return (findRunningScript(filename, argsForTargetScript, server) != null);
         },
         getStockSymbols: function() {
             updateDynamicRam("getStockSymbols", getRamCost("getStockSymbols"));
@@ -4396,6 +4448,34 @@ function NetscriptFunctions(workerScript) {
         },
         exploit: function() {
             Player.giveExploit(Exploit.UndocumentedFunctionCall);
+        },
+        flags: function(data) {
+            data = toNative(data);
+            // We always want the help flag.
+            const args = {};
+
+            for(const d of data) {
+                let t = String;
+                if(typeof d[1] === 'number') {
+                    t = Number;
+                } else if(typeof d[1] === 'boolean') {
+                    t = Boolean;
+                } else if(Array.isArray(d[1])) {
+                    t = [String];
+                }
+                args['--'+d[0]] = t
+            }
+            const ret = libarg(args, {argv: workerScript.args});
+            for(const d of data) {
+                if(!ret.hasOwnProperty('--'+d[0])) ret[d[0]] = d[1];
+            }
+            for(const key of Object.keys(ret)) {
+                if(!key.startsWith('--')) continue;
+                const value = ret[key];
+                delete ret[key];
+                ret[key.slice(2)] = value;
+            }
+            return ret;
         }
     } // End return
 } // End NetscriptFunction()

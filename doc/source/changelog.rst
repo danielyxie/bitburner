@@ -3,6 +3,29 @@
 Changelog
 =========
 
+v0.51.5 - 2021-04-20 Flags! (hydroflame)
+----------------------------------------
+
+Netscript
+
+* 'flags' is a new function that helps script handle flags.
+  This is subject to change if it doesn't meet the need of the players.
+* 'ps' now returns the pid.
+* 'tail' now works with pid as first argument.
+* 'tail' hostname defaults to current server. (like the documentation says)
+* 'isRunning' hostname defaults to current server.
+* 'isRunning' now works with pid as first argument.
+
+Gang
+
+* Nerfed ascension mechanic once again :(
+
+Misc.
+
+* Souce-File typo fix
+* Fix 'while you were away' screen.
+* Bladeburner team size can no longer be set to negative amounts.
+
 v0.51.4 - 2021-04-19 Manual hacking is fun (hydroflame)
 -------------------------------------------------------
 
