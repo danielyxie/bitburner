@@ -54,7 +54,7 @@ export function initializeMainMenuLinks(): boolean {
                 throw new Error(`clearEventListeners() failed for element with id: ${id}`);
             }
 
-            return elem!;
+            return elem;
         }
 
         MainMenuLinks.Terminal = safeGetLink("terminal-menu-link");

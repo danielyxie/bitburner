@@ -26,8 +26,8 @@ export function PlayerMultipliers(): React.ReactElement {
             let elems: any[] = [];
             if(r) {
                 elems = [
-                    <td key='2'>&nbsp;=>&nbsp;</td>,
-                    <td key='3'>{numeralWrapper.formatPercentage(r)}</td>
+                    <td key="2">&nbsp;{"=>"}&nbsp;</td>,
+                    <td key="3">{numeralWrapper.formatPercentage(r)}</td>
                 ];
             }
             return elems;
@@ -36,8 +36,8 @@ export function PlayerMultipliers(): React.ReactElement {
         return <table>
             <tbody>
                 {rows.map((r: any) => <tr key={r[0]}>
-                    <td key='0'><span>{r[0]} multiplier:&nbsp;</span></td>
-                    <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatPercentage(r[1])}</td>
+                    <td key="0"><span>{r[0]} multiplier:&nbsp;</span></td>
+                    <td key="1" style={{textAlign: 'right'}}>{numeralWrapper.formatPercentage(r[1])}</td>
                     {improvements(r[2])}
                 </tr>)}
             </tbody>
