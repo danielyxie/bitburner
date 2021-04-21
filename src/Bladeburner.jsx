@@ -2075,8 +2075,8 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                     innerText:"Confirm", class:"a-link-button",
                     clickListener:() => {
                         var num = Math.round(parseFloat(input.value));
-                        if (isNaN(num)) {
-                            dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric)")
+                        if (isNaN(num) || num < 0) {
+                            dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric, positive)")
                         } else {
                             action.teamCount = num;
                             this.updateOperationsUIElement(el, action);
@@ -2227,8 +2227,8 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                     innerText:"Confirm", class:"a-link-button",
                     clickListener:() => {
                         var num = Math.round(parseFloat(input.value));
-                        if (isNaN(num)) {
-                            dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric)")
+                        if (isNaN(num) || num < 0) {
+                            dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric, positive)")
                         } else {
                             action.teamCount = num;
                             this.updateBlackOpsUIElement(el, action);
@@ -3211,7 +3211,7 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
     }
 
     const sanitizedSize = Math.round(size);
-    if (isNaN(sanitizedSize)) {
+    if (isNaN(sanitizedSize) || sanitizedSize < 0) {
         workerScript.log("bladeburner.setTeamSize", `Invalid size: ${size}`);
         return -1;
     }

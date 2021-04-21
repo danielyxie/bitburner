@@ -414,3 +414,14 @@ export function findRunningScript(filename, args, server) {
     }
     return null;
 }
+
+//Returns a RunningScript object matching the pid on the
+//designated server, and false otherwise
+export function findRunningScriptByPid(pid, server) {
+    for (var i = 0; i < server.runningScripts.length; ++i) {
+        if (server.runningScripts[i].pid === pid) {
+            return server.runningScripts[i];
+        }
+    }
+    return null;
+}

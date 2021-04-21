@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.51.4",
+    Version:                "0.51.5",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,34 +228,24 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.4 - 2021-04-19 Manual hacking is fun (hydroflame)
+    v0.51.5 - 2021-04-20 Flags! (hydroflame)
     -------
 
-    Manual hacking
-    * These bonus require an install or a soft reset to take effect.
-    * Manual hacking gyms and university gives you a 10% discount.
-    * Manual hacking a corporation server decreases the penalty for leaving work
-      early.
-
-    BladeBurner
-    * nerfed int exp gained.
-
-    Documentation
-    * purchaseServer specifies what happens on failure.
-    * Fixed typo in recommended bitnode page.
-    * Removed misleading ram requirements for hacking factions.
-
     Netscript
-    * growthAnalyze handles Infinity correctly.
+    * 'flags' is a new function that helps script handle flags.
+      This is subject to change if it doesn't meet the need of the players.
+    * 'ps' now returns the pid.
+    * 'tail' now works with pid as first argument.
+    * 'tail' hostname defaults to current server. (like the documentation says)
+    * 'isRunning' hostname defaults to current server.
+    * 'isRunning' now works with pid as first argument.
+
+    Gang
+    * Nerfed ascension mechanic once again :(
 
     Misc.
-    * Faction Augmentation will list how much reputation is required even after
-      that goal has been reached.
-    * Removed dollar sign in travel agency confirmation dialog box.
-    * Fixed typo in alpha-omega.lit
-    * the 'Game saved!' text no longer blocks the save game/options button.
-    * The text editor now remembers the location of your cursor and restores it.
-    * skills are recalculated instantly.
-    * Fix typo in Operation Zero description.
+    * Souce-File typo fix
+    * Fix 'while you were away' screen.
+    * Bladeburner team size can no longer be set to negative amounts.
     `
 }

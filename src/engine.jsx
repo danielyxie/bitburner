@@ -1097,7 +1097,7 @@ const Engine = {
             // Hacknet Nodes offline progress
             var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
             const hacknetProdInfo = hasHacknetServers() ?
-                                    Hashes(offlineProductionFromHacknetNodes):
+                                    <>{Hashes(offlineProductionFromHacknetNodes)} hashes</>:
                                     Money(offlineProductionFromHacknetNodes);
 
             // Passive faction rep gain offline
@@ -1151,7 +1151,7 @@ const Engine = {
             removeLoadingScreen();
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
             dialogBoxCreate(<>
-                Offline for {timeOfflineString}. While you were offline, your scripts generated {Money(offlineProductionFromScripts)} and your Hacknet Nodes generated {hacknetProdInfo} hashes.
+                Offline for {timeOfflineString}. While you were offline, your scripts generated {Money(offlineProductionFromScripts)} and your Hacknet Nodes generated {hacknetProdInfo}.
             </>);
             // Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
