@@ -2429,6 +2429,17 @@ function NetscriptFunctions(workerScript) {
             }
             return 0;
         },
+        getCurrentScript: function() {
+            updateDynamicRam("getCurrentScript", getRamCost("getCurrentScript"));
+            let expGain = workerScript.onlineExpGained / workerScript.onlineRunningTime;
+            let incomeGain = workerScript.onlineMoneyMade / workerScript.onlineRunningTime;
+
+            return {
+                name: workerScript.name,
+                pid: workerScript.pid,
+                ramUsage: workerScript.ramUsage
+            };
+        },
         getHackTime: function(ip, hack, int) {
             updateDynamicRam("getHackTime", getRamCost("getHackTime"));
             const server = safeGetServer(ip, "getHackTime");
