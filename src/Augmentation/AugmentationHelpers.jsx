@@ -31,6 +31,7 @@ import { clearObject } from "../../utils/helpers/clearObject";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { isString } from "../../utils/helpers/isString";
 import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
+import { Money } from "../ui/React/Money";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -1550,12 +1551,12 @@ function initAugmentations() {
 	// Sector12
     const CashRoot = new Augmentation({
         name:AugmentationNames.CashRoot, repCost:5e3, moneyCost:25e6,
-        info:"A collection of digital assets saved on a small chip. The chip is implanted " +
-             "into your wrist. A small jack in the chip allows you to connect it to a computer " +
-             "and upload the assets.<br><br>" +
-             "This augmentation:<br>" +
-             "Lets the player start with $1,000,000 after a reset.<br>" +
-             "Lets the player start with the BruteSSH.exe program after a reset."
+        info:<>A collection of digital assets saved on a small chip. The chip is implanted 
+             into your wrist. A small jack in the chip allows you to connect it to a computer 
+             and upload the assets.<br /><br />
+             This augmentation:<br />
+             Lets the player start with {Money(1e6)} after a reset.<br />
+             Lets the player start with the BruteSSH.exe program after a reset.</>
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
