@@ -27,7 +27,7 @@ getServer() Netscript Function
             sshPortOpen
             baseDifficulty
             hackDifficulty
-            manuallyHacked
+            backdoorInstalled
             minDifficulty
             moneyAvailable
             moneyMax
