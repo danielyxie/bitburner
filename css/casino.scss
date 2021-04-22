@@ -6,35 +6,19 @@
 	border-radius: 10px;
 	font-size: 14pt;
 	text-align: center;
-	color:black;
 	margin: 3px;
+	font-weight: bold;
 }
-
 
 .casino-card .value {
 	font-size:15pt;
 	font-family: sans-serif;
 }
 
-.casino-card .suit
-{
-	background-image: url('../images/CardSuits.png');
-	height: 100px;
-	width: 90px;
+.casino-card.red {
+	color: red;
 }
 
-.casino-card .diamonds
-{
-	background-position-y: 100px;
-}
-
-.casino-card .hearts
-{
-	background-position-x: 90px;
-}
-
-.casino-card .clubs
-{
-	background-position-x:90px;
-	background-position-y:100px;
+.casino-card.black {
+	color: black;
 }

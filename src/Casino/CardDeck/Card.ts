@@ -1,9 +1,10 @@
+// Enum values are lowercased to match css classes
 export enum Suit {
-    Clubs,
-    Diamonds,
-    Hearts,
-    Spades,
-};
+    Clubs = "clubs",
+    Diamonds = "diamonds",
+    Hearts = "hearts",
+    Spades = "spades",
+}
 
 export class Card {
 
@@ -26,6 +27,16 @@ export class Card {
             default:
                 return `${this.value}`;
         }
+    }
+
+    isRedSuit(): boolean {
+        return this.suit === Suit.Hearts || this.suit === Suit.Diamonds;
+    }
+
+    getStringRepresentation(): string {
+        const value = this.formatValue();
+
+        return `${value} of ${this.suit}`;
     }
 
 }

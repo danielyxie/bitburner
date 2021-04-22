@@ -5,7 +5,8 @@ export class Deck {
 
     private cards: Card[] = [];
 
-    constructor() {
+    // Support multiple decks
+    constructor(private numDecks = 1) {
         this.reset();
     }
 
@@ -13,12 +14,21 @@ export class Deck {
         this.cards = shuffle(this.cards); // Just use lodash
     }
 
-    drawCard(): Card | undefined {
+    drawCard(): Card {
         if (this.cards.length == 0) {
             throw new Error("Tried to draw card from empty deck");
         }
+ 
+        return this.cards.shift() as Card; // Guaranteed to return a Card since we throw an Error if array is empty
+    }
 
-        return this.cards.shift();
+    // Draws a card, resetting the deck beforehands if the Deck is empty
+    safeDrawCard(): Card {
+        if (this.cards.length === 0) {
+            this.reset();
+        }
+
+        return this.drawCard();
     }
 
     // Reset the deck back to the original 52 cards and shuffle it
@@ -26,16 +36,22 @@ export class Deck {
         this.cards = [];
 
         for (let i = 1; i <= 13; ++i) {
-            this.cards.push(new Card(i, Suit.Clubs));
-            this.cards.push(new Card(i, Suit.Diamonds));
-            this.cards.push(new Card(i, Suit.Hearts));
-            this.cards.push(new Card(i, Suit.Spades));
+            for (let j = 0; j < this.numDecks; ++j) {
+                this.cards.push(new Card(i, Suit.Clubs));
+                this.cards.push(new Card(i, Suit.Diamonds));
+                this.cards.push(new Card(i, Suit.Hearts));
+                this.cards.push(new Card(i, Suit.Spades));
+            }
         }
 
         this.shuffle();
     }
 
-    isEmpty() {
+    size(): number {
+        return this.cards.length;
+    }
+
+    isEmpty(): boolean {
         return this.cards.length === 0;
     }
 

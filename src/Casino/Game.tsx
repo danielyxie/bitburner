@@ -5,7 +5,7 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 const gainLimit = 10e9;
 
 export class Game<T,U> extends React.Component<T, U> {
-	win(p: IPlayer, n: number) {
+	win(p: IPlayer, n: number): void{
 		p.gainMoney(n);
 		p.recordMoneySource(n, "casino");
 	}
