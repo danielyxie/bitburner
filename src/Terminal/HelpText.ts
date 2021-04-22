@@ -73,7 +73,7 @@ export const HelpTexts: IMap<string> = {
                     "Purchase a program through the Dark Web. Requires a TOR router to use.<br><br>" +
                     "If this command is ran with the '-l' flag, it will display a list of all programs that can be bought through the " +
                     "dark web to the Terminal, as well as their costs.<br><br>" +
-                    "Otherwise, the name of the program must be passed in as a parameter. This is name is NOT case-sensitive.",
+                    "Otherwise, the name of the program must be passed in as a parameter. This name is NOT case-sensitive.",
     cat:            "cat [file]<br>" +
                     "Display message (.msg), literature (.lit), or text (.txt) files. Examples:<br><br>" +
                     "cat j1.msg<br>" +
