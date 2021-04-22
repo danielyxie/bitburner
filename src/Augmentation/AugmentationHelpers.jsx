@@ -880,9 +880,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
              "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " +
              "triggers feelings of admiration and approval in other people.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of reputation the player gains when working for a company by 10% <br>" +
-             "Increases the amount of reputation the player gains for a faction by 10%.",
+             "This augmentation increases the amount of reputation the player gains when working for a faction or company by 10%.",
         company_rep_mult: 1.1,
         faction_rep_mult: 1.1,
     });
@@ -897,8 +895,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered so that it produces the ADR-V2 pheromone, " +
              "which is similar to but more potent than ADR-V1. This pheromone, when excreted, " +
              "triggers feelings of admiration, approval, and respect in others.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of reputation the player gains for a faction and company by 20%.",
+             "This augmentation increases the amount of reputation the player gains when working for a faction or company by 20%.",
         company_rep_mult: 1.2,
         faction_rep_mult: 1.2,
     });
@@ -915,8 +912,7 @@ function initAugmentations() {
               "criminal organizations and allows the user to project and control holographic " +
               "simulacrums within a large radius. These simulacrums are commonly used for " +
               "espionage and surveillance work.<br><br>" +
-              "This augmentation:<br>" +
-              "Increases the amount of reputation the player gains when working for a faction or company by 15%.",
+              "This augmentation increases the amount of reputation the player gains when working for a faction or company by 15%.",
         company_rep_mult: 1.15,
         faction_rep_mult: 1.15,
     });
@@ -1152,7 +1148,7 @@ function initAugmentations() {
              "cells, when powered, have a negative refractive index. As a result, they bend light " +
              "around the skin, making the user much harder to see from the naked eye.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's agility by 5% <br>" +
+             "Increases the player's agility by 5%.<br>" +
              "Increases the amount of money the player gains from crimes by 10%.",
         agility_mult: 1.05,
         crime_money_mult: 1.1,
@@ -1170,8 +1166,8 @@ function initAugmentations() {
              "cells, when powered, are capable of not only bending light but also of bending heat, " +
              "making the user more resilient as well as stealthy.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's agility by 10% <br>" +
-             "Increases the player's defense by 10% <br>" +
+             "Increases the player's agility by 10%.<br>" +
+             "Increases the player's defense by 10%.<br>" +
              "Increases the amount of money the player gains from crimes by 25%.",
 	    prereqs:[AugmentationNames.LuminCloaking1],
         agility_mult: 1.1,
@@ -1574,8 +1570,7 @@ function initAugmentations() {
              "synthesizes glucose, amino acids, and vitamins and redistributes them " +
              "across the body. The device is powered by the body's naturally wasted " +
              "energy in the form of heat.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's experience gain rate for all combat stats by 20%.",
+             "This augmentation increases the player's experience gain rate for all combat stats by 20%.",
         strength_exp_mult: 1.2,
         defense_exp_mult: 1.2,
         dexterity_exp_mult: 1.2,
@@ -1785,8 +1780,7 @@ function initAugmentations() {
                  "nature of the plasma disrupts the electrical systems of Augmentations. However, " +
                  "it can also be effective against non-augmented enemies due to its high temperature " +
                  "and concussive force.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 6%.",
+                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 6%.",
             bladeburner_success_chance_mult: 1.06,
             isSpecial: true,
         });
@@ -1799,8 +1793,7 @@ function initAugmentations() {
                  "is more advanced and powerful than the original V1 model. This V2 model is " +
                  "more power-efficiency, more accurate, and can fire plasma bolts at a much " +
                  "higher velocity than the V1 model.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 8%.",
+                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 8%.",
             prereqs:[AugmentationNames.HyperionV1],
             bladeburner_success_chance_mult: 1.08,
             isSpecial: true,
@@ -1958,8 +1951,7 @@ function initAugmentations() {
             info:"Upgrades the BLADE-51b Tesla Armor with a concentrated deuterium-fluoride laser " +
                  "weapon. It's precision an accuracy makes it useful for quickly neutralizing " +
                  "threats while keeping casualties to a minimum.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 8%.",
+                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 8%.",
             prereqs:[AugmentationNames.BladeArmor],
             bladeburner_success_chance_mult: 1.08,
             isSpecial: true,
@@ -1973,8 +1965,7 @@ function initAugmentations() {
                  "multiple-fiber system. The upgraded weapon uses multiple fiber laser " +
                  "modules that combine together to form a single, more powerful beam of up to " +
                  "2000MW.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 10%.",
+                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 10%.",
             prereqs:[AugmentationNames.BladeArmorUnibeam],
             bladeburner_success_chance_mult: 1.1,
             isSpecial: true,
