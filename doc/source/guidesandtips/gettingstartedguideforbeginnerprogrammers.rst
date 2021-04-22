@@ -634,7 +634,7 @@ This tells me that I can reach :code:`CSEC` by going through :code:`iron-gym`::
     Make sure you notice the required hacking skill for the :code:`CSEC` server.
     This is a random value between 51 and 60. Although you receive the message
     from CSEC once you hit 50 hacking, you cannot actually pass their test
-    until your hacking is high enough to install a backdoor only their server.
+    until your hacking is high enough to install a backdoor on their server.
 
 After you are connected to the :code:`CSEC` server, you can hack it. Note that this
 server requires one open port in order to gain root access. We can open the SSH port
