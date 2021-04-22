@@ -530,7 +530,7 @@ let Terminal = {
 
     // Complete the hack/analyze command
 	finishHack: function(cancelled = false) {
-		if (!cancelled)) {
+		if (!cancelled) {
             var server = Player.getCurrentServer();
 
             // Calculate whether hack was successful
