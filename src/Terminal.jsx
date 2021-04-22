@@ -547,7 +547,7 @@ let Terminal = {
                     hackWorldDaemon(Player.bitNodeN);
                     return;
                 }
-                server.manuallyHacked = true;
+                server.backdoorInstalled = true;
                 var moneyGained = calculatePercentMoneyHacked(server, Player);
                 moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
@@ -574,7 +574,7 @@ let Terminal = {
     finishBackdoor: function(cancelled = false) {
         if(!cancelled){
             let server = Player.getCurrentServer();
-            server.manuallyHacked = true;
+            server.backdoorInstalled = true;
             postElement(<>Backdoor successful!</>);
         }
         Terminal.backdoorFlag = false;

@@ -46,7 +46,7 @@ export class GymLocation extends React.Component<IProps, any> {
         console.log(`ip: ${ip}`);
         const server = getServer(ip);
         if(server == null || !server.hasOwnProperty('manuallyHacked')) return this.props.loc.costMult;
-        const discount = (server as Server).manuallyHacked? 0.9 : 1;
+        const discount = (server as Server).backdoorInstalled? 0.9 : 1;
         return this.props.loc.costMult * discount;
     }
 
