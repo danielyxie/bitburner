@@ -153,7 +153,7 @@ function initMessages()  {
                                  "We've been watching you. Your skills are very impressive. But you're wasting " +
                                  "your talents. If you join us, you can put your skills to good use and change " +
                                  "the world for the better. If you join us, we can unlock your full potential. <br><br>" +
-                                 "But first, you must pass our test. Find and hack our server using the Terminal. <br><br>" +
+                                 "But first, you must pass our test. Find and install the backdoor on our server. <br><br>" +
                                  "-CyberSec"));
     AddToAllMessages(new Message(MessageFilenames.NiteSecTest,
                                  "People say that the corrupted governments and corporations rule the world. " +
@@ -161,7 +161,7 @@ function initMessages()  {
                                  "like us. Because they can't hide from us. Because they can't fight shadows " +
                                  "and ideas with bullets. <br><br>" +
                                  "Join us, and people will fear you, too. <br><br>" +
-                                 "Find and hack our hidden server using the Terminal. Then, we will contact you again." +
+                                 "Find and install the backdoor on our server. Then, we will contact you again." +
                                  "<br><br>-NiteSec"));
     AddToAllMessages(new Message(MessageFilenames.BitRunnersTest,
                                 "We know what you are doing. We know what drives you. We know " +
