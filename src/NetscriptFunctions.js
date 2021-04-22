@@ -2431,13 +2431,12 @@ function NetscriptFunctions(workerScript) {
         },
         getCurrentScript: function() {
             updateDynamicRam("getCurrentScript", getRamCost("getCurrentScript"));
-            let expGain = workerScript.onlineExpGained / workerScript.onlineRunningTime;
-            let incomeGain = workerScript.onlineMoneyMade / workerScript.onlineRunningTime;
 
             return {
                 name: workerScript.name,
                 pid: workerScript.pid,
-                ramUsage: workerScript.ramUsage
+                ramUsage: workerScript.ramUsage,
+                threads: workerScript.scriptRef.threads
             };
         },
         getHackTime: function(ip, hack, int) {
