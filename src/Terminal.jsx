@@ -338,6 +338,7 @@ $(document).keyup(function(e) {
 let Terminal = {
     // Flags to determine whether the player is currently running a hack or an analyze
     hackFlag:           false,
+    backdoorFlag:       false,
     analyzeFlag:        false,
     actionStarted:      false,
     actionTime:         0,
@@ -485,6 +486,14 @@ let Terminal = {
         Terminal.startAction();
     },
 
+    startBackdoor: function() {
+        Terminal.backdoorFlag = true;
+
+        // Backdoor should take the same amount of time as hack
+        Terminal.actionTime = calculateHackingTime(Player.getCurrentServer(), Player) / 4;
+        Terminal.startAction();
+    },
+
     startAnalyze: function() {
         Terminal.analyzeFlag = true;
         Terminal.actionTime = 1;
@@ -506,14 +515,22 @@ let Terminal = {
     finishAction: function(cancelled = false) {
         if (Terminal.hackFlag) {
             Terminal.finishHack(cancelled);
+        } else if (Terminal.backdoorFlag) {
+            Terminal.finishBackdoor(cancelled);
         } else if (Terminal.analyzeFlag) {
             Terminal.finishAnalyze(cancelled);
         }
+
+        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
+        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+        $("#hack-progress").attr('id', "old-hack-progress");
+        Terminal.resetTerminalInput();
+        $('input[class=terminal-input]').prop('disabled', false);
     },
 
     // Complete the hack/analyze command
-    finishHack: function(cancelled = false) {
-        if (cancelled == false) {
+	finishHack: function(cancelled = false) {
+		if (!cancelled) {
             var server = Player.getCurrentServer();
 
             // Calculate whether hack was successful
@@ -530,7 +547,7 @@ let Terminal = {
                     hackWorldDaemon(Player.bitNodeN);
                     return;
                 }
-                server.manuallyHacked = true;
+                server.backdoorInstalled = true;
                 var moneyGained = calculatePercentMoneyHacked(server, Player);
                 moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
@@ -548,21 +565,23 @@ let Terminal = {
             } else { // Failure
                 // Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-                post(`Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`);
-            }
-        }
-
-        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
-        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-        $("#hack-progress").attr('id', "old-hack-progress");
-        Terminal.resetTerminalInput();
-        $('input[class=terminal-input]').prop('disabled', false);
-
+				post(`Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`);
+			}
+		}
         Terminal.hackFlag = false;
     },
 
+    finishBackdoor: function(cancelled = false) {
+        if(!cancelled){
+            let server = Player.getCurrentServer();
+            server.backdoorInstalled = true;
+            postElement(<>Backdoor successful!</>);
+        }
+        Terminal.backdoorFlag = false;
+    },
+
     finishAnalyze: function(cancelled = false) {
-        if (cancelled == false) {
+		if (!cancelled) {
             let currServ = Player.getCurrentServer();
             const isHacknet = currServ instanceof HacknetServer;
             post(currServ.hostname + ": ");
@@ -609,12 +628,6 @@ let Terminal = {
             }
         }
         Terminal.analyzeFlag = false;
-
-        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
-        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-        $("#hack-progress").attr('id', "old-hack-progress");
-        Terminal.resetTerminalInput();
-        $('input[class=terminal-input]').prop('disabled', false);
     },
 
     executeCommands : function(commands) {
@@ -728,8 +741,8 @@ let Terminal = {
         return args;
     },
 
-    executeCommand : function(command) {
-        if (Terminal.hackFlag || Terminal.analyzeFlag) {
+	executeCommand : function(command) {
+        if (Terminal.hackFlag || Terminal.backdoorFlag || Terminal.analyzeFlag) {
             postError(`Cannot execute command (${command}) while an action is in progress`);
             return;
         }
@@ -893,6 +906,24 @@ let Terminal = {
                     return;
                 }
                 Terminal.startAnalyze();
+				break;
+            case "backdoor":
+                if (commandArray.length !== 1) {
+                    post("Incorrect usage of backdoor command. Usage: backdoor");
+                    return;
+                }
+
+                if (s.purchasedByPlayer) {
+                    postError("Cannot use backdoor on your own machines! You are currently connected to your home PC or one of your purchased servers");
+                } else if (!s.hasAdminRights) {
+                    postError("You do not have admin rights for this machine! Cannot backdoor");
+                } else if (s.requiredHackingSkill > Player.hacking_skill) {
+                    postError("Your hacking skill is not high enough to use backdoor on this machine. Try analyzing the machine to determine the required hacking skill");
+                } else if (s instanceof HacknetServer) {
+                    postError("Cannot use backdoor on this type of Server")
+                } else {
+                    Terminal.startBackdoor();
+                }
                 break;
             case "buy":
                 if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
@@ -1785,7 +1816,7 @@ let Terminal = {
                     let code = ""
                     if(filename.endsWith(".ns") || filename.endsWith(".js")) {
                         code = `export async function main(ns) {
-    
+
 }`;
                     }
                     Engine.loadScriptEditorContent(filepath, code);

@@ -9,13 +9,12 @@ manualHack() Netscript Function
     If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.
 
     This function will perform a manual hack on the server you are currently connected to.
-    This is typically required to join factions.
 
     Examples:
 
     .. code-block:: javascript
 
-        connect("CSEC");
+        connect("foodnstuff");
         manualHack();
 
     .. warning::

@@ -17,6 +17,7 @@ import { AllServers } from "../Server/AllServers";
 const commands = [
     "alias",
     "analyze",
+    "backdoor",
     "cat",
     "cd",
     "check",

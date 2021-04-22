@@ -148,6 +148,14 @@ has root access, what ports are opened/closed, and also hacking-related informat
 such as an estimated chance to successfully hack, an estimate of how much money is
 available on the server, etc.
 
+backdoor
+^^^^^^^^
+
+Installs a backdoor on the current server. Root access is required to do this.
+
+Servers will give different bonuses when you install a backdoor.
+This can pass faction tests or give bonsues such as discounts from companies.
+
 buy
 ^^^
 

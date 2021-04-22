@@ -30,16 +30,15 @@ export class Server extends BaseServer {
         return Generic_fromJSON(Server, value.data);
     }
 
+    // Flag indicating whether this server has a backdoor installed by a player
+    backdoorInstalled: boolean = false;
+
     // Initial server security level
     // (i.e. security level when the server was created)
     baseDifficulty: number = 1;
 
     // Server Security Level
     hackDifficulty: number = 1;
-
-    // Flag indicating whether this server has been manually hacked (ie.
-    // hacked through Terminal) by the player
-    manuallyHacked: boolean = false;
 
     // Minimum server security level that this server can be weakened to
     minDifficulty: number = 1;

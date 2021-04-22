@@ -718,7 +718,7 @@ function NetscriptFunctions(workerScript) {
                     influenceStockThroughServerHack(server, moneyGained);
                 }
                 if(manual) {
-                    server.manuallyHacked = true;
+                    server.backdoorInstalled = true;
                 }
                 return Promise.resolve(moneyGained);
             } else {
