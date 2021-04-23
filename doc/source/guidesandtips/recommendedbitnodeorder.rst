@@ -293,7 +293,7 @@ Source-File
     * Level 3: Grants a highly-upgraded Hacknet Server when entering a new BitNode
 
     (Note that the Level 3 effect of this Source-File only applies when entering a new BitNode, NOT
-    when installing Augmentation
+    when installing Augmentations.)
 
 Difficulty
     Hard
