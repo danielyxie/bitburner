@@ -5,7 +5,7 @@ import { Money } from "../ui/React/Money";
 import { Game } from "./Game";
 import { Deck } from "./CardDeck/Deck";
 import { Hand } from "./CardDeck/Hand";
-import { InputAdornment, Paper } from "@material-ui/core";
+import { InputAdornment } from "@material-ui/core";
 import { ReactCard } from "./CardDeck/ReactCard";
 import { MuiTextField } from "../ui/React/MuiTextField";
 import { MuiButton } from "../ui/React/MuiButton";
@@ -61,7 +61,20 @@ export class Blackjack extends Game<Props, State> {
         }
     }
 
+    canStartGame = (): boolean => {
+        const { p } = this.props;
+        const { bet } = this.state;
+
+        return p.canAfford(bet);
+    }
+
     startGame = (): void => {
+        if (!this.canStartGame()) { return; }
+
+        // Take money from player right away so that player's dont just "leave" to avoid the loss (I mean they could 
+        // always reload without saving but w.e)
+        this.props.p.loseMoney(this.state.bet);
+
         const playerHand = new Hand([ this.deck.safeDrawCard(), this.deck.safeDrawCard() ]);
         const dealerHand = new Hand([ this.deck.safeDrawCard(), this.deck.safeDrawCard() ]);
 
@@ -80,48 +93,65 @@ export class Blackjack extends Game<Props, State> {
             } else {
                 this.finishGame(Result.PlayerWonByBlackjack);
             }
+        } else if (this.getTrueHandValue(dealerHand) === 21) {
+            // Check if dealer won by blackjack. We know at this point that the player does not also have blackjack.
+            this.finishGame(Result.DealerWon);
         }
     }
 
-    // Returns a Tuple-2<number> since Aces can count as 1 or 11. If there's no Ace in the hand,
-    // then both numbers will be equal. The 2nd number is guaranteed to be higher
-    getHandValue = (hand: Hand): [ number, number ] => {
-        let sum1 = 0;
-        let sum2 = 0;
+    // Returns an array of numbers representing all possible values of the given Hand. The reason it needs to be 
+    // an array is because an Ace can count as both 1 and 11. 
+    getHandValue = (hand: Hand): number[] => {
+        let result: number[] = [ 0 ];
 
         for (let i = 0 ; i < hand.cards.length; ++i) {
             const value = hand.cards[i].value;
             if (value >= 10) {
-                sum1 += 10;
-                sum2 += 10;
+                result = result.map((x) => x + 10);
             } else if (value === 1) {
-                sum1 += 1;
-                sum2 += 11;
+                result = result.flatMap((x) => [ x + 1, x + 11 ]);
             } else {
-                sum1 += value;
-                sum2 += value;
+                result = result.map((x) => x + value);
             }
         }
 
-        return [ sum1, sum2 ];
+        return result;
     }
 
     // Returns the single hand value used for determine things like victory and whether or not 
-    // the dealer has to hit. Essentially this uses the bigger value (2nd value from getHandValue()) if i
-    // its 21 or under, otherwise the 1st value. 
+    // the dealer has to hit. Essentially this uses the biggest value that's 21 or under. If no such value exists,
+    // then it means the hand is busted and we can just return whatever
     getTrueHandValue = (hand: Hand): number => {
-        const [value1, value2] = this.getHandValue(hand);
+        const handValues = this.getHandValue(hand);
+        const valuesUnder21 = handValues.filter((x) => (x <= 21));
+        
+        if (valuesUnder21.length > 0) {
+            valuesUnder21.sort((a, b) => a - b);
+            return valuesUnder21[valuesUnder21.length - 1];
+        } else {
+            // Just return the first value. It doesnt really matter anyways since hand is buted 
+            return handValues[0];
+        }
+    }
 
-        return value2 <= 21 ? value2 : value1;
+    // Returns all hand values that are 21 or under. If no values are 21 or under, then the first value is returned.
+    getHandDisplayValues = (hand: Hand): number[] => {  
+        const handValues = this.getHandValue(hand);
+        if (this.isHandBusted(hand)) {
+            // Hand is busted so just return the 1st value, doesn't really matter
+            return [ ...new Set([ handValues[0] ]) ];
+        } else {
+            return [ ...new Set(handValues.filter((x) => x <= 21)) ];
+        }
     }
 
     isHandBusted = (hand: Hand): boolean => {
-        const [ value1, value2 ] = this.getHandValue(hand);
-
-        return value1 > 21 && value2 > 21;
+        return this.getTrueHandValue(hand) > 21;
     }
 
-    playerHit = (): void => {
+    playerHit = (event: React.MouseEvent): void => {
+        if (!event.isTrusted) { return; }
+
         const newHand = this.state.playerHand.addCards(this.deck.safeDrawCard());
 
         this.setState({
@@ -134,7 +164,9 @@ export class Blackjack extends Game<Props, State> {
         }
     }
 
-    playerStay = (): void => {
+    playerStay = (event: React.MouseEvent): void => {
+        if (!event.isTrusted) { return; }
+
         // Determine if Dealer needs to hit. A dealer must hit if they have 16 or lower.
         // If the dealer has a Soft 17 (Ace + 6), then they stay.
         let newDealerHand = this.state.dealerHand;
@@ -161,6 +193,9 @@ export class Blackjack extends Game<Props, State> {
             const dealerHandValue = this.getTrueHandValue(newDealerHand);
             const playerHandValue = this.getTrueHandValue(this.state.playerHand);
 
+            console.log(`dealerHandValue: ${dealerHandValue}`);
+            console.log(`playerHandValue: ${playerHandValue}`);
+
             // We expect nobody to have busted. If someone busted, there is an error 
             // in our game logic
             if (dealerHandValue > 21 || playerHandValue > 21) {
@@ -182,10 +217,14 @@ export class Blackjack extends Game<Props, State> {
         let gains = 0;
         if (this.isPlayerWinResult(result)) {
             gains = this.state.bet;
-            this.win(this.props.p, gains);
+
+            // We 2x the gains because we took away money at the start, so we need to give the original bet back.
+            this.win(this.props.p, 2 * gains);
         } else if (result === Result.DealerWon) {
             gains = -1 * this.state.bet;
-            this.win(this.props.p, gains);
+            // Dont need to take money here since we already did it at the start
+        } else if (result === Result.Tie) {
+            this.win(this.props.p, this.state.bet); // Get the original bet back
         }
 
         this.setState({
@@ -200,6 +239,7 @@ export class Blackjack extends Game<Props, State> {
     }
 
     wagerOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const { p } = this.props;
         const betInput = event.target.value;
         const wager = Math.round(parseFloat(betInput));
         if (isNaN(wager)) {
@@ -222,6 +262,13 @@ export class Blackjack extends Game<Props, State> {
                 betInput,
                 wagerInvalid: true,
                 wagerInvalidHelperText: "Exceeds max bet",
+            });
+        } else if (!p.canAfford(wager)) {
+            this.setState({
+                bet: 0, 
+                betInput,
+                wagerInvalid: true,
+                wagerInvalidHelperText: "Not enough money",
             });
         } else {
             // Valid wager
@@ -254,47 +301,54 @@ export class Blackjack extends Game<Props, State> {
             result,
             wagerInvalid,
             wagerInvalidHelperText,
+            gains,
         } = this.state;
 
         // Get the player totals to display. 
-        const playerHandValues = this.getHandValue(playerHand);
-        if (playerHandValues[1] > 21 || playerHandValues[0] === playerHandValues[1]) { playerHandValues.pop() }
-
-        const dealerHandValues = this.getHandValue(dealerHand);
-        if (dealerHandValues[1] > 21 || dealerHandValues[0] === dealerHandValues[1]) { dealerHandValues.pop(); }
-
-        console.log(dealerHandValues);
-        console.log(playerHandValues);
+        const playerHandValues = this.getHandDisplayValues(playerHand);
+        const dealerHandValues = this.getHandDisplayValues(dealerHand);
 
         return (
             <div> 
                 {/* Wager input */}
-                <MuiTextField 
-                    value={betInput}
-                    label={
-                        <>
-                            {"Wager (Max: "}
-                            {Money(MAX_BET)}
-                            {")"}
-                        </>
-                    }
-                    disabled={gameInProgress}
-                    onChange={this.wagerOnChange}
-                    error={wagerInvalid}
-                    helperText={wagerInvalid ? wagerInvalidHelperText : ""}
-                    type="number"
-                    variant="filled"
-                    style={{
-                        width: "200px",
-                    }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start" >$</InputAdornment>,
-                    }} />
+                <div>
+                    <MuiTextField
+                        value={betInput}
+                        label={
+                            <>
+                                {"Wager (Max: "}
+                                {Money(MAX_BET)}
+                                {")"}
+                            </>
+                        }
+                        disabled={gameInProgress}
+                        onChange={this.wagerOnChange}
+                        error={wagerInvalid}
+                        helperText={wagerInvalid ? wagerInvalidHelperText : ""}
+                        type="number"
+                        variant="filled"
+                        style={{
+                            width: "200px",
+                        }}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start" >$</InputAdornment>,
+                        }} />
+
+                    <p>
+                        {"Total earnings this session: "}
+                        {Money(gains)}
+                    </p>
+                </div>
+                
 
                 {/* Buttons */}
                 {!gameInProgress ? (
                     <div>
-                        <MuiButton color="primary" onClick={this.startOnClick} disabled={wagerInvalid}>
+                        <MuiButton 
+                                color="primary" 
+                                onClick={this.startOnClick} 
+                                disabled={wagerInvalid || !this.canStartGame()}>
+
                             Start
                         </MuiButton>
                     </div>
@@ -319,7 +373,7 @@ export class Blackjack extends Game<Props, State> {
                                 <ReactCard card={card} key={i} />
                             ))}
 
-                            <pre>Value: </pre>
+                            <pre>Value(s): </pre>
                             {playerHandValues.map((value, i) => (
                                 <pre key={i}>{value}</pre>  
                             ))}
@@ -330,13 +384,18 @@ export class Blackjack extends Game<Props, State> {
                         <MuiPaper variant="outlined" elevation={2}>
                             <pre>Dealer</pre>
                             {dealerHand.cards.map((card, i) => (
-                                <ReactCard card={card} key={i} />
+                                // Hide every card except the first while game is in progress
+                                <ReactCard card={card} hidden={gameInProgress && i !== 0} key={i} />
                             ))}
 
-                            <pre>Value: </pre>
-                            {dealerHandValues.map((value, i) => (
-                                <pre key={i}>{value}</pre>
-                            ))}
+                            {!gameInProgress && (
+                                <>
+                                    <pre>Value(s): </pre>
+                                    {dealerHandValues.map((value, i) => (
+                                        <pre key={i}>{value}</pre>
+                                    ))}
+                                </>
+                            )}
                         </MuiPaper>
                     </div>
                 )}
@@ -347,13 +406,13 @@ export class Blackjack extends Game<Props, State> {
                         {result}
                         {this.isPlayerWinResult(result) && (
                             <>
-                                {"You gained "}
+                                {" You gained "}
                                 {Money(this.state.bet)}
                             </>
                         )}
                         {result === Result.DealerWon && (
                             <>
-                                {"You lost "}
+                                {" You lost "}
                                 {Money(this.state.bet)}
                             </>
                         )}

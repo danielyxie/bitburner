@@ -27,16 +27,14 @@ export const ReactCard: FC<Props> = ({ card, hidden }) => {
     }
     return (
         <div className={`casino-card ${card.isRedSuit() ? "red" : "black"}`}>
-            {!hidden && (
-                <>
-                    <div className="value">
-                        {card.formatValue()}
-                    </div>
-                    <div className={`suit`}>
-                        {suit}
-                    </div>
-                </>
-            )}
+            <>
+                <div className="value">
+                    {hidden ? " - " : card.formatValue()}
+                </div>
+                <div className={`suit`}>
+                    {hidden ? " - " : suit}
+                </div>
+            </>
         </div>
     )
 }
