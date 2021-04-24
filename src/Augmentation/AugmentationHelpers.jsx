@@ -178,7 +178,7 @@ function initAugmentations() {
     const CombatRib3 = new Augmentation({
         name:AugmentationNames.CombatRib3, repCost:14e3, moneyCost:24e6,
         info:"This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " +
-             "drugs into the bloodstream<br><br>." +
+             "drugs into the bloodstream.<br><br>" +
              "This augmentation increases the player's strength and defense by 18%.",
         prereqs:[AugmentationNames.CombatRib2],
         strength_mult: 1.18,
@@ -1369,7 +1369,7 @@ function initAugmentations() {
         name:AugmentationNames.Xanipher, repCost:350e3, moneyCost:850e6,
         info:"A concoction of advanced nanobots that is orally ingested into the " +
              "body. These nanobots induce physiological change and significantly " +
-             "improve the body's functionining in all aspects.<br><br>" +
+             "improve the body's functioning in all aspects.<br><br>" +
              "This augmentation:<br>" +
              "Increases all of the player's stats by 20%.<br>" +
              "Increases the player's experience gain rate for all stats by 15%.",
