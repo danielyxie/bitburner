@@ -1,5 +1,5 @@
 getCurrentScript() Netscript Function
-==================================
+=====================================
 
 .. js:function:: getCurrentScript()
 
@@ -13,5 +13,6 @@ getCurrentScript() Netscript Function
         {
             name,
             pid,
-            ramUsage
+            ramUsage,
+            threads
         }
