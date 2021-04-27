@@ -2429,6 +2429,16 @@ function NetscriptFunctions(workerScript) {
             }
             return 0;
         },
+        getCurrentScript: function() {
+            updateDynamicRam("getCurrentScript", getRamCost("getCurrentScript"));
+
+            return {
+                name: workerScript.name,
+                pid: workerScript.pid,
+                ramUsage: workerScript.ramUsage,
+                threads: workerScript.scriptRef.threads
+            };
+        },
         getHackTime: function(ip, hack, int) {
             updateDynamicRam("getHackTime", getRamCost("getHackTime"));
             const server = safeGetServer(ip, "getHackTime");
