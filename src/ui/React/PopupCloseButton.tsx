@@ -8,30 +8,20 @@
 import * as React       from "react";
 import *  as ReactDOM   from "react-dom";
 
-import { KEY } from "../../../utils/helpers/keyCodes";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
+import { IPopupButtonProps, PopupButton } from "./PopupButton";
 
-export interface IPopupCloseButtonProps {
+export interface IPopupCloseButtonProps extends IPopupButtonProps {
     class?: string;
     popup: HTMLElement | string;
     style?: object;
     text: string;
 }
 
-export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, any> {
+export class PopupCloseButton extends PopupButton {
     constructor(props: IPopupCloseButtonProps) {
         super(props);
-
         this.closePopup = this.closePopup.bind(this);
-        this.keyListener = this.keyListener.bind(this);
-    }
-
-    componentDidMount() {
-        document.addEventListener("keydown", this.keyListener);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener("keydown", this.keyListener);
     }
 
     closePopup() {
@@ -46,12 +36,6 @@ export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, an
         if (popup instanceof HTMLElement) {
             ReactDOM.unmountComponentAtNode(popup); // Removes everything inside the wrapper container
             removeElement(popup); // Removes the wrapper container
-        }
-    }
-
-    keyListener(e: KeyboardEvent) {
-        if (e.keyCode === KEY.ESC) {
-            this.closePopup();
         }
     }
 

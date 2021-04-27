@@ -5,6 +5,8 @@ import {
     SolverFunc
 } from "./data/codingcontracttypes";
 
+import { CodingContractPopup } from "./ui/CodingContractPopup";
+
 import { IMap } from "./types";
 
 import {
@@ -12,10 +14,7 @@ import {
     Generic_toJSON,
     Reviver
 } from "../utils/JSONReviver";
-import { KEY } from "../utils/helpers/keyCodes";
-import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { createPopup, removePopup } from "./ui/React/createPopup";
 
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
@@ -130,6 +129,8 @@ export class CodingContract {
 
     /* String representing the contract's type. Must match type in ContractTypes */
     type: string;
+    /* The id used for the popup. We need this to close it later. */
+    popupId: string;
 
     constructor(fn: string = "",
                 type: string = "Find Largest Prime Factor",
@@ -147,6 +148,8 @@ export class CodingContract {
         this.type = type;
         this.data = CodingContractTypes[type].generate();
         this.reward = reward;
+        this.popupId = `coding-contract-prompt-popup-${this.fn}`;
+        // this.popup = new CodingContractPopup({c:this});
     }
 
     getData(): any {
@@ -173,63 +176,30 @@ export class CodingContract {
         return CodingContractTypes[this.type].solver(this.data, solution);
     }
 
+    isCancelled() {
+        //
+    }
     /**
      * Creates a popup to prompt the player to solve the problem
      */
-    async prompt(): Promise<CodingContractResult> {
-        // tslint:disable-next-line
+    async prompt(){
         return new Promise<CodingContractResult>((resolve: Function, reject: Function) => {
-            const contractType: CodingContractType = CodingContractTypes[this.type];
-            const popupId: string = `coding-contract-prompt-popup-${this.fn}`;
-            const title: HTMLElement = createElement("h1", {
-                innerHTML: this.type,
-            });
-            const txt: HTMLElement = createElement("p", {
-                innerHTML: ["You are attempting to solve a Coding Contract. You have",
-                            `${this.getMaxNumTries() - this.tries} tries remaining,`,
-                            "after which the contract will self-destruct.<br><br>",
-                            `${contractType.desc(this.data).replace(/\n/g, "<br>")}`].join(" "),
-            });
-            let answerInput: HTMLInputElement;
-            let solveBtn: HTMLElement;
-            let cancelBtn: HTMLElement;
-            answerInput = createElement("input", {
-                onkeydown: (e: any) => {
-                    if (e.keyCode === KEY.ENTER && answerInput.value !== "") {
-                        e.preventDefault();
-                        solveBtn.click();
-                    } else if (e.keyCode === KEY.ESC) {
-                        e.preventDefault();
-                        cancelBtn.click();
-                    }
+            let popup = new CodingContractPopup({c:this, 
+                onCloseClick: () => {
+                    resolve(CodingContractResult.Cancelled); 
+                    removePopup(this.popupId);
                 },
-                placeholder: "Enter Solution here",
-                width: "50%",
-            }) as HTMLInputElement;
-            solveBtn = createElement("a", {
-                class: "a-link-button",
-                clickListener: () => {
-                    const answer: string = answerInput.value;
+                onSolveClick: () => {
+                    const answer: string = popup.getValue();
                     if (this.isSolution(answer)) {
                         resolve(CodingContractResult.Success);
                     } else {
                         resolve(CodingContractResult.Failure);
                     }
-                    removeElementById(popupId);
-                },
-                innerText: "Solve",
+                    removePopup(this.popupId);
+                }
             });
-            cancelBtn = createElement("a", {
-                class: "a-link-button",
-                clickListener: () => {
-                    resolve(CodingContractResult.Cancelled);
-                    removeElementById(popupId);
-                },
-                innerText: "Cancel",
-            });
-            const lineBreak: HTMLElement = createElement("br");
-            createPopup(popupId, [title, lineBreak, txt, lineBreak, lineBreak, answerInput, solveBtn, cancelBtn]);
-            answerInput.focus();
+            createPopup(this.popupId, CodingContractPopup, popup.props);
         });
     }
 
