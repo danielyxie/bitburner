@@ -102,7 +102,7 @@ export class Server extends BaseServer {
 
         // Place some arbitrarily limit that realistically should never happen unless someone is
         // screwing around with the game
-        if (this.hackDifficulty > 1000000) {this.hackDifficulty = 1000000;}
+        if (this.hackDifficulty > 100) {this.hackDifficulty = 100;}
     }
 
     /**

@@ -1745,6 +1745,11 @@ export function getNextCompanyPosition(company, entryPosType) {
     return entryPosType;
 }
 
+export function quitJob(company) {
+    this.companyName = "";
+    delete this.jobs[company];
+}
+
 export function applyForSoftwareJob(sing=false) {
     return this.applyForJob(CompanyPositions[posNames.SoftwareCompanyPositions[0]], sing);
 }

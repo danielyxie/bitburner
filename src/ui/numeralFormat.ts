@@ -127,6 +127,10 @@ class NumeralFormatter {
         }
         return this.format(n, "0.000a");
     }
+
+    formatInfiltrationSecurity(n: number): string {
+        return this.format(n, "0.000a");
+    }
 }
 
 export const numeralWrapper = new NumeralFormatter();

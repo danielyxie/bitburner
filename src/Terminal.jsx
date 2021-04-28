@@ -986,6 +986,12 @@ let Terminal = {
                             postError("Invalid path. Failed to change directories");
                             return;
                         }
+
+                        const server = Player.getCurrentServer();
+                        if(!server.scripts.some(script => script.filename.startsWith(evaledDir))) {
+                            postError("Invalid path. Failed to change directories");
+                            return;
+                        }
                     }
 
                     Terminal.currDir = evaledDir;
@@ -2360,7 +2366,7 @@ let Terminal = {
                     runningScriptObj.threads = numThreads;
 
                     if (startWorkerScript(runningScriptObj, server)) {
-                        post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
+                        post(`Running script with ${numThreads} thread(s), pid ${runningScriptObj.pid} and args: ${arrayToString(args)}.`);
                     } else {
                         postError(`Failed to start script`);
                     }
