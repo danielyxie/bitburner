@@ -24,7 +24,7 @@ import { IEngine }                  from "../../IEngine";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
 
 import { SpecialServerIps }         from "../../Server/SpecialServerIps";
-import { getServer }                from "../../Server/ServerHelpers";
+import { getServer, isBackdoorInstalled }                from "../../Server/ServerHelpers";
 
 import { StdButton }                from "../../ui/React/StdButton";
 import { CorruptableText }          from "../../ui/React/CorruptableText";
@@ -152,7 +152,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         const locContent: React.ReactNode[] = this.getLocationSpecificContent();
         const ip = SpecialServerIps.getIp(this.props.loc.name);
         const server = getServer(ip);
-        const backdoorInstalled = server?.hasOwnProperty('backdoorInstalled');
+        const backdoorInstalled = server !== null && isBackdoorInstalled(server);
         
         return (
             <div>
