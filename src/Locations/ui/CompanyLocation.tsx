@@ -26,6 +26,13 @@ import { StdButton }                from "../../ui/React/StdButton";
 import { Reputation }               from "../../ui/React/Reputation";
 import { Favor }                    from "../../ui/React/Favor";
 
+import {
+    yesNoBoxGetYesButton,
+    yesNoBoxGetNoButton,
+    yesNoBoxClose,
+    yesNoBoxCreate
+} from "../../../utils/YesNoBox";
+
 type IProps = {
     engine: IEngine;
     locName: LocationName;
@@ -73,6 +80,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
 
         this.btnStyle = { display: "block" };
 
+        this.quit = this.quit.bind(this);
         this.applyForAgentJob = this.applyForAgentJob.bind(this);
         this.applyForBusinessConsultantJob = this.applyForBusinessConsultantJob.bind(this);
         this.applyForBusinessJob = this.applyForBusinessJob.bind(this);
@@ -207,6 +215,26 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         }
     }
 
+    quit(e: React.MouseEvent<HTMLElement>) {
+        if (!e.isTrusted) { return false; }
+
+        var yesBtn = yesNoBoxGetYesButton();
+        var noBtn = yesNoBoxGetNoButton();
+        if (yesBtn == null || noBtn == null) { return; }
+        yesBtn.innerHTML = "Quit job";
+        noBtn.innerHTML = "Cancel";
+        yesBtn.addEventListener("click", () => {
+            this.props.p.quitJob(this.props.locName);
+            this.checkIfEmployedHere(true);
+            yesNoBoxClose();
+        });
+        noBtn.addEventListener("click", () => {
+            yesNoBoxClose();
+        });
+
+        yesNoBoxCreate(<>Would you like to quit your job at {this.company.name}?</>);
+    }
+
     render() {
         const isEmployedHere = this.jobTitle != null;
         const favorGain = this.company.getFavorGain();
@@ -236,10 +264,12 @@ export class CompanyLocation extends React.Component<IProps, IState> {
                         </p><br />
                         <br /><p style={blockStyleMarkup}>-------------------------</p><br />
                         <StdButton
-                            id={"foo-work-button-id"}
                             onClick={this.work}
-                            style={this.btnStyle}
                             text={"Work"}
+                        />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <StdButton
+                            onClick={this.quit}
+                            text={"Quit"}
                         />
                     </div>
                 }
