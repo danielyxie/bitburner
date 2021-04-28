@@ -6,24 +6,29 @@
  */
 import * as React from "react";
 
-import { CompanyLocation }          from "./CompanyLocation";
-import { GymLocation }              from "./GymLocation";
-import { HospitalLocation }         from "./HospitalLocation";
-import { SlumsLocation }            from "./SlumsLocation";
-import { SpecialLocation }          from "./SpecialLocation";
-import { TechVendorLocation }       from "./TechVendorLocation";
-import { TravelAgencyLocation }     from "./TravelAgencyLocation";
-import { UniversityLocation }       from "./UniversityLocation";
-import { CasinoLocation }           from "./CasinoLocation";
+import { CompanyLocation }                  from "./CompanyLocation";
+import { GymLocation }                      from "./GymLocation";
+import { HospitalLocation }                 from "./HospitalLocation";
+import { SlumsLocation }                    from "./SlumsLocation";
+import { SpecialLocation }                  from "./SpecialLocation";
+import { TechVendorLocation }               from "./TechVendorLocation";
+import { TravelAgencyLocation }             from "./TravelAgencyLocation";
+import { UniversityLocation }               from "./UniversityLocation";
+import { CasinoLocation }                   from "./CasinoLocation";
 
-import { Location }                 from "../Location";
-import { LocationType }             from "../LocationTypeEnum";
-import { CityName }                 from "../data/CityNames";
+import { Location }                         from "../Location";
+import { LocationType }                     from "../LocationTypeEnum";
+import { CityName }                         from "../data/CityNames";
 
-import { IEngine }                  from "../../IEngine";
-import { IPlayer }                  from "../../PersonObjects/IPlayer";
+import { IEngine }                          from "../../IEngine";
+import { IPlayer }                          from "../../PersonObjects/IPlayer";
+import { Settings }                         from "../../Settings/Settings";
 
-import { StdButton }                from "../../ui/React/StdButton";
+import { SpecialServerIps }                 from "../../Server/SpecialServerIps";
+import { getServer, isBackdoorInstalled }   from "../../Server/ServerHelpers";
+
+import { StdButton }                        from "../../ui/React/StdButton";
+import { CorruptableText }                  from "../../ui/React/CorruptableText";
 
 type IProps = {
     engine: IEngine;
@@ -146,11 +151,19 @@ export class GenericLocation extends React.Component<IProps, any> {
 
     render() {
         const locContent: React.ReactNode[] = this.getLocationSpecificContent();
-
+        const ip = SpecialServerIps.getIp(this.props.loc.name);
+        const server = getServer(ip);
+        const backdoorInstalled = server !== null && isBackdoorInstalled(server);
+        
         return (
             <div>
                 <StdButton onClick={this.props.returnToCity} style={this.btnStyle} text={"Return to World"} />
-                <h1>{this.props.loc.name}</h1>
+                <h1>
+                    {backdoorInstalled && !Settings.DisableTextEffects
+                        ? <CorruptableText content={this.props.loc.name}/>
+                        : this.props.loc.name
+                    }
+                </h1>
                 {locContent}
             </div>
         )

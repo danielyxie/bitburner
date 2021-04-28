@@ -541,6 +541,16 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                     <input class="optionCheckbox" type="checkbox" name="settingsDisableASCIIArt" id="settingsDisableASCIIArt">
                 </fieldset>
 
+                <!-- Disable text effects such as corruption. -->
+                <fieldset>
+                    <label for="settingsDisableTextEffects" class="tooltip">Disable Text Effects:
+                        <span class="tooltiptexthigh">
+                            If this is set, text effects will not be displayed. This can help if text is difficult to read in certain areas.
+                        </span>
+                    </label>
+                    <input class="optionCheckbox" type="checkbox" name="settingsDisableTextEffects" id="settingsDisableTextEffects">
+                </fieldset>
+
                 <!-- Locale for displaying numbers -->
                 <fieldset>
                     <label for="settingsLocale" class="tooltip">Locale:

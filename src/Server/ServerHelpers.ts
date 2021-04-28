@@ -147,3 +147,10 @@ export function getServerOnNetwork(server: Server, i: number) {
 
     return AllServers[server.serversOnNetwork[i]];
 }
+
+export function isBackdoorInstalled(server: Server | HacknetServer): boolean {
+    if ("backdoorInstalled" in server) {
+      return server.backdoorInstalled;
+    }
+    return false;
+}
