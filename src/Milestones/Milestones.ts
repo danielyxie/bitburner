@@ -37,7 +37,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Install all the Augmentation from CSEC",
+        title: "Install all the Augmentations from CSEC",
         fulfilled: (p: IPlayer) => {
             return allFactionAugs(p, Factions["CyberSec"]);
         },
@@ -49,7 +49,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Install all the Augmentation from NiteSec",
+        title: "Install all the Augmentations from NiteSec",
         fulfilled: (p: IPlayer) => {
             return allFactionAugs(p, Factions["NiteSec"]);
         },
@@ -61,7 +61,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Install all the Augmentation from The Black Hand",
+        title: "Install all the Augmentations from The Black Hand",
         fulfilled: (p: IPlayer) => {
             return allFactionAugs(p, Factions["The Black Hand"]);
         },
@@ -73,7 +73,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Install all the Augmentation from BitRunners",
+        title: "Install all the Augmentations from BitRunners",
         fulfilled: (p: IPlayer) => {
             return allFactionAugs(p, Factions["BitRunners"]);
         },
