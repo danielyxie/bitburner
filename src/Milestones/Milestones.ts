@@ -7,8 +7,8 @@ import { GetServerByHostname } from "../Server/ServerHelpers";
 
 function allFactionAugs(p: IPlayer, f: Faction): boolean {
     const factionAugs = f.augmentations.slice().filter((aug)=> "NeuroFlux Governor" !== aug);
-    for(const faug of factionAugs) {
-        if(!p.augmentations.some(aug => {return aug.name == faug})) return false;
+    for(const factionAug of factionAugs) {
+        if(!p.augmentations.some(aug => {return aug.name == factionAug})) return false;
     }
     return true;
 }
@@ -17,7 +17,6 @@ export const Milestones: Milestone[] = [
     new Milestone("Gain root access on CSEC",
         (p: IPlayer) => {
             const server = GetServerByHostname("CSEC");
-            console.log(server);
             if(!server || !server.hasOwnProperty('hasAdminRights')) return false;
             return (server as any).hasAdminRights;
         }
@@ -79,7 +78,7 @@ export const Milestones: Milestone[] = [
             return p.augmentations.some(aug => aug.name == "The Red Pill")
         }
     ),
-    new Milestone("Install the final backdoor and free yourself.", (p: IPlayer) => {
+    new Milestone("Install the final backdoor and free yourself.", () => {
             return false;
         }
     ),
