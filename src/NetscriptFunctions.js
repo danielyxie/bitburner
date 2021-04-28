@@ -2429,14 +2429,23 @@ function NetscriptFunctions(workerScript) {
             }
             return 0;
         },
-        getCurrentScript: function() {
-            updateDynamicRam("getCurrentScript", getRamCost("getCurrentScript"));
+        getRunningScript: function() {
+            updateDynamicRam("getRunningScript", getRamCost("getRunningScript"));
 
             return {
-                name: workerScript.name,
-                pid: workerScript.pid,
-                ramUsage: workerScript.ramUsage,
-                threads: workerScript.scriptRef.threads
+                args: args.slice(),
+                filename: filename,
+                logs: logs.slice(),
+                offlineExpGained: offlineExpGained,
+                offlineMoneyMade: offlineMoneyMade,
+                offlineRunningTime: offlineRunningTime,
+                onlineExpGained: onlineExpGained,
+                onlineMoneyMade: onlineMoneyMade,
+                onlineRunningTime: onlineRunningTime,
+                pid: pid,
+                ramUsage: ramUsage,
+                server: server,
+                threads: threads,
             };
         },
         getHackTime: function(ip, hack, int) {
