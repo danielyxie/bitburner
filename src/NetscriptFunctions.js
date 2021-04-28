@@ -2563,7 +2563,7 @@ function NetscriptFunctions(workerScript) {
             return Player.playtimeSinceLastAug;
         },
         prompt : function(txt) {
-            if (!isString(txt)) {txt = String(txt);}
+            if (!isString(txt)) {txt = JSON.stringify(txt);}
 
             // The id for this popup will consist of the first 20 characters of the prompt string..
             // Thats hopefully good enough to be unique
