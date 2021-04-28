@@ -4,16 +4,12 @@ function replace(str: string, i: number, char: string): string {
     return str.substring(0, i) + char + str.substring(i + 1);
 }
 
-type IProps = {
+interface IProps {
     content: string;
 }
 
 function randomize(char: string): string {
-
-    function randFrom(str: string): string {
-        return str[Math.floor(Math.random()*str.length)];
-    }
-
+    const randFrom = (str: string): string => str[Math.floor(Math.random()*str.length)];
     const classes = [
         "abcdefghijklmnopqrstuvwxyz",
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -22,6 +18,7 @@ function randomize(char: string): string {
         "()[]{}<>",
     ];
     const other = `!@#$%^&*()_+|\\';"/.,?\`~`;
+
     for(const c of classes) {
         if (c.includes(char)) return randFrom(c);
     }
@@ -32,7 +29,7 @@ function randomize(char: string): string {
 export function CorruptableText(props: IProps) {
     const [content, setContent] = React.useState(props.content);
 
-    const corruptText = () => {
+    useEffect(() => {
         let counter = 5;
         const id = setInterval(() => {
             counter--;
@@ -50,10 +47,6 @@ export function CorruptableText(props: IProps) {
         return () => {
             clearInterval(id);
         };
-    }
-
-    useEffect(() => {
-        return corruptText();
     }, []);
 
     return <span>{content}</span>
