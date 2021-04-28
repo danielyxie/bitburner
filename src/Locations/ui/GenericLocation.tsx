@@ -6,28 +6,29 @@
  */
 import * as React from "react";
 
-import { CompanyLocation }          from "./CompanyLocation";
-import { GymLocation }              from "./GymLocation";
-import { HospitalLocation }         from "./HospitalLocation";
-import { SlumsLocation }            from "./SlumsLocation";
-import { SpecialLocation }          from "./SpecialLocation";
-import { TechVendorLocation }       from "./TechVendorLocation";
-import { TravelAgencyLocation }     from "./TravelAgencyLocation";
-import { UniversityLocation }       from "./UniversityLocation";
-import { CasinoLocation }           from "./CasinoLocation";
+import { CompanyLocation }                  from "./CompanyLocation";
+import { GymLocation }                      from "./GymLocation";
+import { HospitalLocation }                 from "./HospitalLocation";
+import { SlumsLocation }                    from "./SlumsLocation";
+import { SpecialLocation }                  from "./SpecialLocation";
+import { TechVendorLocation }               from "./TechVendorLocation";
+import { TravelAgencyLocation }             from "./TravelAgencyLocation";
+import { UniversityLocation }               from "./UniversityLocation";
+import { CasinoLocation }                   from "./CasinoLocation";
 
-import { Location }                 from "../Location";
-import { LocationType }             from "../LocationTypeEnum";
-import { CityName }                 from "../data/CityNames";
+import { Location }                         from "../Location";
+import { LocationType }                     from "../LocationTypeEnum";
+import { CityName }                         from "../data/CityNames";
 
-import { IEngine }                  from "../../IEngine";
-import { IPlayer }                  from "../../PersonObjects/IPlayer";
+import { IEngine }                          from "../../IEngine";
+import { IPlayer }                          from "../../PersonObjects/IPlayer";
+import { Settings }                         from "../../Settings/Settings";
 
-import { SpecialServerIps }         from "../../Server/SpecialServerIps";
-import { getServer, isBackdoorInstalled }                from "../../Server/ServerHelpers";
+import { SpecialServerIps }                 from "../../Server/SpecialServerIps";
+import { getServer, isBackdoorInstalled }   from "../../Server/ServerHelpers";
 
-import { StdButton }                from "../../ui/React/StdButton";
-import { CorruptableText }          from "../../ui/React/CorruptableText";
+import { StdButton }                        from "../../ui/React/StdButton";
+import { CorruptableText }                  from "../../ui/React/CorruptableText";
 
 type IProps = {
     engine: IEngine;
