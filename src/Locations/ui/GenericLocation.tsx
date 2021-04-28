@@ -23,7 +23,11 @@ import { CityName }                 from "../data/CityNames";
 import { IEngine }                  from "../../IEngine";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
 
+import { SpecialServerIps }         from "../../Server/SpecialServerIps";
+import { getServer }                from "../../Server/ServerHelpers";
+
 import { StdButton }                from "../../ui/React/StdButton";
+import { CorruptableText }          from "../../ui/React/CorruptableText";
 
 type IProps = {
     engine: IEngine;
@@ -146,11 +150,19 @@ export class GenericLocation extends React.Component<IProps, any> {
 
     render() {
         const locContent: React.ReactNode[] = this.getLocationSpecificContent();
-
+        const ip = SpecialServerIps.getIp(this.props.loc.name);
+        const server = getServer(ip);
+        const backdoorInstalled = server?.hasOwnProperty('backdoorInstalled');
+        
         return (
             <div>
                 <StdButton onClick={this.props.returnToCity} style={this.btnStyle} text={"Return to World"} />
-                <h1>{this.props.loc.name}</h1>
+                <h1>
+                    {backdoorInstalled
+                        ? <CorruptableText content={this.props.loc.name}/>
+                        : this.props.loc.name
+                    }
+                </h1>
                 {locContent}
             </div>
         )
