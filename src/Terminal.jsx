@@ -2360,7 +2360,7 @@ let Terminal = {
                     runningScriptObj.threads = numThreads;
 
                     if (startWorkerScript(runningScriptObj, server)) {
-                        post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
+                        post(`Running script with ${numThreads} thread(s), pid ${runningScriptObj.pid} and args: ${arrayToString(args)}.`);
                     } else {
                         postError(`Failed to start script`);
                     }
