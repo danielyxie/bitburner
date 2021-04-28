@@ -247,7 +247,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 2.5,
         gen: () => {
-            const len: number = getRandomInt(1, 25);
+            const len: number = getRandomInt(3, 25);
             const arr: number[] = [];
             arr.length = len;
             for (let i: number = 0; i < arr.length; ++i) {
@@ -291,7 +291,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         difficulty: 3,
         gen: () => {
             const intervals: number[][] = [];
-            const numIntervals: number = getRandomInt(1, 20);
+            const numIntervals: number = getRandomInt(3, 20);
             for (let i: number = 0; i < numIntervals; ++i) {
                 const start: number = getRandomInt(1, 25);
                 const end: number = start + getRandomInt(1, 10);
@@ -403,7 +403,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 1,
         gen: () => {
-            const len: number = getRandomInt(1, 50);
+            const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
             for (let i: number = 0; i < len; ++i) {
@@ -439,7 +439,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 2,
         gen: () => {
-            const len: number = getRandomInt(1, 50);
+            const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
             for (let i: number = 0; i < len; ++i) {
@@ -473,7 +473,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 5,
         gen: () => {
-            const len: number = getRandomInt(1, 50);
+            const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
             for (let i: number = 0; i < len; ++i) {
@@ -518,7 +518,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         difficulty: 8,
         gen: () => {
             const k: number = getRandomInt(2, 10);
-            const len: number = getRandomInt(1, 50);
+            const len: number = getRandomInt(3, 50);
             const prices: number[] = [];
             prices.length = len;
             for (let i = 0; i < len; ++i) {
@@ -602,7 +602,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         difficulty: 5,
         gen: () => {
             const triangle: number[][] = [];
-            const levels: number = getRandomInt(1, 12);
+            const levels: number = getRandomInt(3, 12);
             triangle.length = levels;
 
             for (let row = 0; row < levels; ++row) {
@@ -645,8 +645,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 3,
         gen: () => {
-            const numRows: number = getRandomInt(1, 14);
-            const numColumns: number = getRandomInt(1, 14);
+            const numRows: number = getRandomInt(2, 14);
+            const numColumns: number = getRandomInt(2, 14);
 
             return [numRows, numColumns];
         },
@@ -687,8 +687,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 5,
         gen: () => {
-            const numRows: number = getRandomInt(1, 12);
-            const numColumns: number = getRandomInt(1, 12);
+            const numRows: number = getRandomInt(2, 12);
+            const numColumns: number = getRandomInt(2, 12);
 
             const grid: number[][] = [];
             grid.length = numRows;
@@ -754,7 +754,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 10,
         gen: () => {
-            const len: number = getRandomInt(2, 20);
+            const len: number = getRandomInt(6, 20);
             let chars: string[] = [];
             chars.length = len;
 
