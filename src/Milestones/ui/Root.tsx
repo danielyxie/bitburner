@@ -3,7 +3,7 @@ import { Milestones } from "../Milestones";
 import { Milestone } from "../Milestone";
 import * as React from "react";
 
-type IProps = {
+interface IProps {
     player: IPlayer;
 }
 
