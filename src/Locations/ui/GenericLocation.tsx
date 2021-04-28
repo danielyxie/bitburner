@@ -159,7 +159,7 @@ export class GenericLocation extends React.Component<IProps, any> {
             <div>
                 <StdButton onClick={this.props.returnToCity} style={this.btnStyle} text={"Return to World"} />
                 <h1>
-                    {backdoorInstalled
+                    {backdoorInstalled && !Settings.DisableTextEffects
                         ? <CorruptableText content={this.props.loc.name}/>
                         : this.props.loc.name
                     }
