@@ -519,8 +519,8 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
             await testNonzeroDynamicRamCost(f);
         });
 
-        it("getCurrentScript()", async function() {
-            const f = ["getCurrentScript"];
+        it("getRunningScript()", async function() {
+            const f = ["getRunningScript"];
             await testNonzeroDynamicRamCost(f);
         });
 
