@@ -4,36 +4,42 @@ import { KEY } from "../../utils/helpers/keyCodes";
 import { CodingContract, CodingContractType, CodingContractTypes } from "../CodingContracts";
 import { ClickableTag, CopyableText } from "../ui/React/CopyableText";
 import { PopupCloseButton } from "../ui/React/PopupCloseButton";
+import { PopupButton} from "../ui/React/PopupButton";
 
 type IProps = {
     c: CodingContract;
-    onCloseClick: () => void;
-    onSolveClick: () => void;
+    popupId: string;
+    onClose: () => void;
+    onAttempt: (val: string) => void;
 }
 
-export class CodingContractPopup extends React.Component<IProps>{
-    state: any;
+type IState = {
+    value: string;
+}
+
+export class CodingContractPopup extends React.Component<IProps, IState>{
     constructor(props: IProps) {
         super(props);
-        this.state = { value: ''};
-        this.setValue = this.setValue.bind(this);
+        this.state = {
+            value: '',
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleAttempt = this.handleAttempt.bind(this);
     }
-    getValue(){
-        let input = document.getElementById('contractInput')?.getAttribute('value');
-        if (input === null || input === undefined) //Make sure to always return a string
-            input = "";
-        return input;
+    handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
+        const answer = e.target.value;
+        this.setState({ value: answer });
     }
-    setValue(event: any) {
-        this.setState({ value: event.target.value });
+    handleAttempt(){
+        this.props.onAttempt(this.state.value);
     }
     onInputKeydown(e:any){
         if (e.keyCode === KEY.ENTER && e.target.value !== "") {
             e.preventDefault();
-            this.props.onSolveClick();
+            this.handleAttempt();
         } else if (e.keyCode === KEY.ESC) {
             e.preventDefault();
-            this.props.onCloseClick();  
+            this.props.onClose();
         }
     }
 
@@ -50,10 +56,10 @@ export class CodingContractPopup extends React.Component<IProps>{
                 <br/>
                 <p>{description}</p>
                 <br/>
-                <input style={{ width:"50%",marginTop:"8px" }} autoFocus={true} placeholder="Enter Solution here" value={this.state.value} 
-                    onChange={this.setValue} onKeyDown={this.onInputKeydown} />
-                <PopupCloseButton popup={this.props.c.popupId} ClickHandler={this.props.onSolveClick} text={"Solve"} />
-                <PopupCloseButton popup={this.props.c.popupId} ClickHandler={this.props.onCloseClick} text={"Close"} />
+                <input className='text-input' style={{ width:"50%",marginTop:"8px" }} autoFocus={true} placeholder="Enter Solution here"
+                    onChange={this.handleChange} onKeyDown={this.onInputKeydown} />
+                <PopupButton popup={this.props.popupId} onClick={this.handleAttempt} text={"Solve"} />
+                <PopupCloseButton popup={this.props.popupId} onClick={this.props.onClose} text={"Close"} />
             </div>
         )
     }

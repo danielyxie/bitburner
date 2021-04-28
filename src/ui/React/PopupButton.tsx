@@ -14,21 +14,21 @@ import { removeElement } from "../../../utils/uiHelpers/removeElement";
 export interface IPopupButtonProps {
     class?: string;
     popup: HTMLElement | string;
-    ClickHandler: () => void;
+    onClick: () => void;
     style?: object;
     text: string;
 }
 
 export class PopupButton extends React.Component<IPopupButtonProps, any> {
     public static defaultProps = {
-        ClickHandler: undefined
+       onClick: undefined
     };
     constructor(props: IPopupButtonProps) {
         super(props);
-        if (this.props.ClickHandler == undefined)
+        if (this.props.onClick == undefined)
             this.handleClick = this.handleClick.bind(this);
         else
-            this.handleClick = this.props.ClickHandler;
+            this.handleClick = this.props.onClick.bind(this);//Bind event from props to handleClick
         this.keyListener = this.keyListener.bind(this);
     }
 

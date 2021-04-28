@@ -129,8 +129,6 @@ export class CodingContract {
 
     /* String representing the contract's type. Must match type in ContractTypes */
     type: string;
-    /* The id used for the popup. We need this to close it later. */
-    popupId: string;
 
     constructor(fn: string = "",
                 type: string = "Find Largest Prime Factor",
@@ -148,8 +146,6 @@ export class CodingContract {
         this.type = type;
         this.data = CodingContractTypes[type].generate();
         this.reward = reward;
-        this.popupId = `coding-contract-prompt-popup-${this.fn}`;
-        // this.popup = new CodingContractPopup({c:this});
     }
 
     getData(): any {
@@ -175,31 +171,29 @@ export class CodingContract {
     isSolution(solution: string): boolean {
         return CodingContractTypes[this.type].solver(this.data, solution);
     }
-
-    isCancelled() {
-        //
-    }
     /**
      * Creates a popup to prompt the player to solve the problem
      */
     async prompt(){
         return new Promise<CodingContractResult>((resolve: Function, reject: Function) => {
             let popup = new CodingContractPopup({c:this, 
-                onCloseClick: () => {
+                popupId: `coding-contract-prompt-popup-${this.fn}`,
+                onClose: () => {
                     resolve(CodingContractResult.Cancelled); 
-                    removePopup(this.popupId);
+                    removePopup(popup.props.popupId);
                 },
-                onSolveClick: () => {
-                    const answer: string = popup.getValue();
+                onAttempt: (val: string) => {
+                    alert(val);
+                    const answer: string = popup.state.value;
                     if (this.isSolution(answer)) {
                         resolve(CodingContractResult.Success);
                     } else {
-                        resolve(CodingContractResult.Failure);
+                        resolve(CodingContractResult.Cancelled); //resolve(CodingContractResult.Failure);
                     }
-                    removePopup(this.popupId);
+                    removePopup(popup.props.popupId);
                 }
             });
-            createPopup(this.popupId, CodingContractPopup, popup.props);
+            createPopup(popup.props.popupId, CodingContractPopup, popup.props);
         });
     }
 
