@@ -986,6 +986,12 @@ let Terminal = {
                             postError("Invalid path. Failed to change directories");
                             return;
                         }
+
+                        const server = Player.getCurrentServer();
+                        if(!server.scripts.some(script => script.filename.startsWith(evaledDir))) {
+                            postError("Invalid path. Failed to change directories");
+                            return;
+                        }
                     }
 
                     Terminal.currDir = evaledDir;
