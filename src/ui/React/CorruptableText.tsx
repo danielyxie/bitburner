@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 function replace(str: string, i: number, char: string): string {
     return str.substring(0, i) + char + str.substring(i + 1);
@@ -27,7 +27,7 @@ function randomize(char: string): string {
 }
 
 export function CorruptableText(props: IProps) {
-    const [content, setContent] = React.useState(props.content);
+    const [content, setContent] = useState(props.content);
 
     useEffect(() => {
         let counter = 5;
