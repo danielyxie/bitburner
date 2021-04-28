@@ -266,6 +266,7 @@ const defaultInterpreter = new Interpreter('', function(){});
 // the acorn interpreter has a bug where it doesn't convert arrays correctly.
 // so we have to more or less copy it here.
 function toNative(pseudoObj) {
+    if(pseudoObj == null) return null;
     if(!pseudoObj.hasOwnProperty('properties') ||
         !pseudoObj.hasOwnProperty('getter') ||
         !pseudoObj.hasOwnProperty('setter') ||
@@ -366,13 +367,17 @@ function NetscriptFunctions(workerScript) {
         return workerScript.scriptRef;
     }
 
-    const getRunningScriptByPid = function(pid, ip, callingFnName) {
+    const getRunningScriptByPid = function(pid, callingFnName) {
         if (typeof callingFnName !== "string" || callingFnName === "") {
             callingFnName = "getRunningScriptgetRunningScriptByPid";
         }
-        const server = safeGetServer(ip, callingFnName);
-
-        return findRunningScriptByPid(pid, server);
+        
+        for(const name of Object.keys(AllServers)) {
+            const server = AllServers[name];
+            const runningScript = findRunningScriptByPid(pid, server);
+            if (runningScript) return runningScript;
+        }
+        return null;
     }
 
     /**
@@ -1052,8 +1057,10 @@ function NetscriptFunctions(workerScript) {
         },
         tail: function(fn, ip=workerScript.serverIp, ...scriptArgs) {
             let runningScriptObj;
-            if(typeof fn === 'number') {
-                runningScriptObj = getRunningScriptByPid(fn, ip, 'tail');
+            if(arguments.length === 0) {
+                runningScriptObj = workerScript.scriptRef;
+            } else if(typeof fn === 'number') {
+                runningScriptObj = getRunningScriptByPid(fn, 'tail');
             } else {
                 runningScriptObj = getRunningScript(fn, ip, "tail", scriptArgs);
             }
@@ -1754,7 +1761,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("isRunning", "Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
             }
             if(typeof fn === 'number') {
-                return getRunningScriptByPid(fn, ip, 'isRunning') != null;
+                return getRunningScriptByPid(fn, 'isRunning') != null;
             } else {
                 return getRunningScript(fn, ip, "isRunning", scriptArgs) != null;
             }
@@ -2429,14 +2436,36 @@ function NetscriptFunctions(workerScript) {
             }
             return 0;
         },
-        getCurrentScript: function() {
-            updateDynamicRam("getCurrentScript", getRamCost("getCurrentScript"));
+        getRunningScript: function(fn, ip) {
+            updateDynamicRam("getRunningScript", getRamCost("getRunningScript"));
 
+            let runningScript;
+            if(arguments.length === 0) {
+                runningScript = workerScript.scriptRef;
+            } else if(typeof fn === 'number') {
+                runningScript = getRunningScriptByPid(fn, 'getRunningScript');
+            } else {
+                const scriptArgs = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    scriptArgs.push(arguments[i]);
+                }
+                runningScript = getRunningScript(fn, ip, 'getRunningScript', scriptArgs);
+            }
+            if (runningScript === null) return null;
             return {
-                name: workerScript.name,
-                pid: workerScript.pid,
-                ramUsage: workerScript.ramUsage,
-                threads: workerScript.scriptRef.threads
+                args: runningScript.args.slice(),
+                filename: runningScript.filename,
+                logs: runningScript.logs.slice(),
+                offlineExpGained: runningScript.offlineExpGained,
+                offlineMoneyMade: runningScript.offlineMoneyMade,
+                offlineRunningTime: runningScript.offlineRunningTime,
+                onlineExpGained: runningScript.onlineExpGained,
+                onlineMoneyMade: runningScript.onlineMoneyMade,
+                onlineRunningTime: runningScript.onlineRunningTime,
+                pid: runningScript.pid,
+                ramUsage: runningScript.ramUsage,
+                server: runningScript.server,
+                threads: runningScript.threads,
             };
         },
         getHackTime: function(ip, hack, int) {
