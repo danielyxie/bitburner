@@ -157,6 +157,7 @@ $(document).keydown(function(event) {
             }
         }
 
+        console.log(`${event.keyCode === KEY.L}, ${event.ctrlKey}`)
         if (event.keyCode === KEY.L && event.ctrlKey) {
             event.preventDefault();
             Terminal.executeCommand("clear"); // Clear screen
