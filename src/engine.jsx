@@ -72,6 +72,7 @@ import {
     processStockPrices,
     displayStockMarketContent
 } from "./StockMarket/StockMarket";
+import { displayMilestonesContent } from "./Milestones/MilestoneHelpers";
 import { Terminal, postNetburnerText } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import {
@@ -216,6 +217,7 @@ const Engine = {
         factionsContent:                null,
         factionContent:                 null,
         augmentationsContent:           null,
+        milestonesContent:              null,
         tutorialContent:                null,
         infiltrationContent:            null,
         stockMarketContent:             null,
@@ -309,6 +311,14 @@ const Engine = {
         routing.navigateTo(Page.Augmentations);
         displayAugmentationsContent(Engine.Display.augmentationsContent);
         MainMenuLinks.Augmentations.classList.add("active");
+    },
+
+    loadMilestonesContent: function() {
+        Engine.hideAllContent();
+        Engine.Display.milestonesContent.style.display = "block";
+        routing.navigateTo(Page.Milestones);
+        displayMilestonesContent();
+        MainMenuLinks.Milestones.classList.add("active");
     },
 
     loadTutorialContent: function() {
@@ -496,6 +506,7 @@ const Engine = {
         Engine.Display.augmentationsContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.augmentationsContent);
 
+        Engine.Display.milestonesContent.style.display = "none";
         Engine.Display.tutorialContent.style.display = "none";
 
         Engine.Display.locationContent.style.display = "none";
@@ -550,6 +561,7 @@ const Engine = {
         MainMenuLinks.Bladeburner.classList.remove("active");
         MainMenuLinks.Corporation.classList.remove("active");
         MainMenuLinks.Gang.classList.remove("active");
+        MainMenuLinks.Milestones.classList.remove("active");
         MainMenuLinks.Tutorial.classList.remove("active");
         MainMenuLinks.Options.classList.remove("active");
         MainMenuLinks.DevMenu.classList.remove("active");
@@ -1055,6 +1067,7 @@ const Engine = {
         const bladeburner       = document.getElementById("bladeburner-tab");
         const corp              = document.getElementById("corporation-tab");
         const gang              = document.getElementById("gang-tab");
+        const milestones        = document.getElementById("milestones-tab");
         const tutorial          = document.getElementById("tutorial-tab");
         const options           = document.getElementById("options-tab");
         const dev               = document.getElementById("dev-tab");
@@ -1155,7 +1168,8 @@ const Engine = {
             </>);
             // Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
-                                   hacknetnodes, city, tutorial, options, dev];
+                                   hacknetnodes, city, milestones, tutorial,
+                                   options, dev];
             if (Player.firstFacInvRecvd) {visibleMenuTabs.push(factions);}
             else {factions.style.display = "none";}
             if (Player.firstAugPurchased) {visibleMenuTabs.push(augmentations);}
@@ -1214,7 +1228,7 @@ const Engine = {
 
             Engine.openMainMenuHeader(
                 [terminal, createScript, activeScripts, stats,
-                 hacknetnodes, city,
+                 hacknetnodes, city, milestones,
                  tutorial, options]
             );
 
@@ -1257,6 +1271,8 @@ const Engine = {
         Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
         Engine.Display.augmentationsContent.style.display = "none";
 
+        Engine.Display.milestonesContent = document.getElementById("milestones-container");
+        Engine.Display.milestonesContent.style.display = "none";
 
         Engine.Display.tutorialContent = document.getElementById("tutorial-container");
         Engine.Display.tutorialContent.style.display = "none";
@@ -1398,6 +1414,11 @@ const Engine = {
             return false;
         });
 
+        MainMenuLinks.Milestones.addEventListener("click", function() {
+            Engine.loadMilestonesContent();
+            return false;
+        });
+
         MainMenuLinks.Tutorial.addEventListener("click", function() {
             Engine.loadTutorialContent();
             return false;
@@ -1480,6 +1501,7 @@ const Engine = {
         document.getElementById("active-scripts-menu-link").removeAttribute("class");
         document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
         document.getElementById("city-menu-link").removeAttribute("class");
+        document.getElementById("milestones-menu-link").removeAttribute("class");
         document.getElementById("tutorial-menu-link").removeAttribute("class");
 
         // Copy Save Data to Clipboard

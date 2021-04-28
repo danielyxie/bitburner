@@ -19,6 +19,7 @@ interface IMainMenuLinks {
     Bladeburner:    HTMLElement | null;
     Corporation:    HTMLElement | null;
     Gang:           HTMLElement | null;
+    Milestones:     HTMLElement | null;
     Tutorial:       HTMLElement | null;
     Options:        HTMLElement | null;
     DevMenu:        HTMLElement | null;
@@ -41,6 +42,7 @@ export const MainMenuLinks: IMainMenuLinks = {
     Bladeburner: null,
     Corporation: null,
     Gang: null,
+    Milestones: null,
     Tutorial: null,
     Options: null,
     DevMenu: null,
@@ -73,6 +75,7 @@ export function initializeMainMenuLinks(): boolean {
         MainMenuLinks.Bladeburner = safeGetLink("bladeburner-menu-link");
         MainMenuLinks.Corporation = safeGetLink("corporation-menu-link");
         MainMenuLinks.Gang = safeGetLink("gang-menu-link");
+        MainMenuLinks.Milestones = safeGetLink("milestones-menu-link");
         MainMenuLinks.Tutorial = safeGetLink("tutorial-menu-link");
         MainMenuLinks.Options = document.getElementById("options-menu-link"); // This click listener is already set, so don't clear it
         MainMenuLinks.DevMenu = safeGetLink("dev-menu-link");

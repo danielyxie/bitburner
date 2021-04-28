@@ -129,13 +129,14 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
         }
 
         MainMenuHeaders.Help.onclick = function() {
+            const milestones: HTMLElement = safeGetElement("milestones-tab");
             const tutorial: HTMLElement = safeGetElement("tutorial-tab");
             const options: HTMLElement  = safeGetElement("options-tab");
 
             (this as any).classList.toggle("opened");
 
-            const elems: HTMLElement[] = [tutorial, options];
-            const links: HTMLElement[] = [MainMenuLinks.Tutorial!, MainMenuLinks.Options!];
+            const elems: HTMLElement[] = [milestones, tutorial, options];
+            const links: HTMLElement[] = [MainMenuLinks.Milestones!, MainMenuLinks.Tutorial!, MainMenuLinks.Options!];
 
             if (dev) {
                 elems.push(safeGetElement("dev-tab"));
