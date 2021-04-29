@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.51.5",
+    Version:                "0.51.6",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,24 +228,42 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.5 - 2021-04-20 Flags! (hydroflame)
+    v0.51.6 - 2021-04-28 Backdoor! (Community)
     -------
 
-    Netscript
-    * 'flags' is a new function that helps script handle flags.
-      This is subject to change if it doesn't meet the need of the players.
-    * 'ps' now returns the pid.
-    * 'tail' now works with pid as first argument.
-    * 'tail' hostname defaults to current server. (like the documentation says)
-    * 'isRunning' hostname defaults to current server.
-    * 'isRunning' now works with pid as first argument.
+    Backdoor
+    * a new terminal command, backdoor, has been added to help differentiate
+      between the terminal hack command and the netscript hack function. (@dewint)
 
-    Gang
-    * Nerfed ascension mechanic once again :(
+    Milestones
+    * A new tab under the Help menu has been added to guide players through the
+      game.
+
+    Casino
+    * Blackjack has been added (@BigD)
+
+    Netscript
+    * 'prompt' now converts input to JSON.
+    * 'getRunningScript' is a new netscript function that returns a bunch of
+      data related to a running script.
+
+    Coding contracts
+    * trivial puzzles should no longer appear.
+
+    Infiltration
+    * All numbers are formatted like the rest of the game.
 
     Misc.
-    * Souce-File typo fix
-    * Fix 'while you were away' screen.
-    * Bladeburner team size can no longer be set to negative amounts.
+    * Server security is capped at 100.
+    * Added option to quit a job.
+    * 'cd' no longer works on unexistent folders.
+    * cd with no arguments brings you back to top level folder (@Andreas)
+    * 'softReset' documentation udpated.
+    * Money tracker now accounts for going to the hospital manually.
+    * codemirror is now the default editor (for new save files)
+    * fix typo in dark web help text (@Rodeth)
+    * so many documentation and typos fixes (@Pimgd)
+    * A corruption visual effect has been added to location with servers that
+      have backdoor installed. (@dewint)
     `
 }

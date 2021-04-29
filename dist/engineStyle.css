@@ -5007,5 +5007,31 @@ html {
   margin-left: 0px;
   margin-right: 0px; }
 
+.casino-card {
+  padding: 10px;
+  border: solid 1px #808080;
+  background-color: white;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 14pt;
+  text-align: center;
+  margin: 3px;
+  font-weight: bold; }
+
+.casino-card .value {
+  font-size: 15pt;
+  font-family: sans-serif; }
+
+.casino-card.red {
+  color: red; }
+
+.casino-card.black {
+  color: black; }
+
+#milestones-container {
+  position: fixed;
+  padding: 6px;
+  width: 60%; }
+
 
 /*# sourceMappingURL=engineStyle.css.map*/
