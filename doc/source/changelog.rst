@@ -12,6 +12,10 @@ v0.51.6 - 2021-04-28 Backdoor! (Community)
 * a new terminal command, backdoor, has been added to help differentiate
   between the terminal hack command and the netscript hack function. (@dewint)
 
+**Servers**
+
+* foodnstuff, sigma-cosmetics, and joesguns have been rebalanced to help new players.
+
 **Milestones**
 
 * A new tab under the Help menu has been added to guide players through the
