@@ -521,7 +521,7 @@ function NetscriptFunctions(workerScript) {
     }
 
     const checkFormulasAccess = function(func, n) {
-        if (SourceFileFlags[5] < 1 || SourceFileFlags[n] < 1) {
+        if ((SourceFileFlags[5] < 1 && Player.bitNodeN !== 5) || (SourceFileFlags[n] < 1 && Player.bitNodeN !== n)) {
             let extra = '';
             if (n !== 5) {
                 extra = ` and Source-File ${n}-1`;
@@ -1638,7 +1638,7 @@ function NetscriptFunctions(workerScript) {
         },
         getServer: function(ip) {
             updateDynamicRam("getServer", getRamCost("getServer"));
-            if (SourceFileFlags[5] <= 0) {
+            if (SourceFileFlags[5] <= 0 && Player.bitNodeN !== 5) {
                 throw makeRuntimeErrorMsg("getServer", "Requires Source-File 5 to run.");
             }
             const server = safeGetServer(ip, "getServer");
