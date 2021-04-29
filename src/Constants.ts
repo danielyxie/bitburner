@@ -239,6 +239,9 @@ export let CONSTANTS: IMap<any> = {
     * A new tab under the Help menu has been added to guide players through the
       game.
 
+    Servers
+    * foodnstuff, sigma-cosmetics, and joesguns have been rebalanced to help new players.
+
     Casino
     * Blackjack has been added (@BigD)
 
