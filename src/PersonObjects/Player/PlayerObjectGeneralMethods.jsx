@@ -618,7 +618,7 @@ export function cancelationPenalty() {
     const specialIp = SpecialServerIps[this.companyName];
     if(specialIp) {
         const server = AllServers[specialIp];
-        if(server && server.manuallyHacked) return 0.75;
+        if(server && server.backdoorInstalled) return 0.75;
     }
     return 0.5;
 }
@@ -1745,6 +1745,11 @@ export function getNextCompanyPosition(company, entryPosType) {
     return entryPosType;
 }
 
+export function quitJob(company) {
+    this.companyName = "";
+    delete this.jobs[company];
+}
+
 export function applyForSoftwareJob(sing=false) {
     return this.applyForJob(CompanyPositions[posNames.SoftwareCompanyPositions[0]], sing);
 }
@@ -2066,7 +2071,7 @@ export function checkForFactionInvitations() {
     } else {
         if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
             !fulcrumsecrettechonologiesFac.alreadyInvited &&
-            fulcrumSecretServer.manuallyHacked &&
+            fulcrumSecretServer.backdoorInstalled &&
             checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies, 250e3)) {
             invitedFactions.push(fulcrumsecrettechonologiesFac);
         }
@@ -2078,7 +2083,7 @@ export function checkForFactionInvitations() {
     var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
     if (bitrunnersServer == null) {
         console.error("Could not find BitRunners Server");
-    } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.manuallyHacked &&
+    } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.backdoorInstalled &&
                !bitrunnersFac.alreadyInvited && homeComp.maxRam >= 128) {
         invitedFactions.push(bitrunnersFac);
     }
@@ -2088,7 +2093,7 @@ export function checkForFactionInvitations() {
     var blackhandServer = AllServers[SpecialServerIps[SpecialServerNames.TheBlackHandServer]];
     if (blackhandServer == null) {
         console.error("Could not find The Black Hand Server");
-    } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
+    } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.backdoorInstalled &&
                !theblackhandFac.alreadyInvited && homeComp.maxRam >= 64) {
         invitedFactions.push(theblackhandFac);
     }
@@ -2098,7 +2103,7 @@ export function checkForFactionInvitations() {
     var nitesecServer = AllServers[SpecialServerIps[SpecialServerNames.NiteSecServer]];
     if (nitesecServer == null) {
         console.error("Could not find NiteSec Server");
-    } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
+    } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.backdoorInstalled &&
                !nitesecFac.alreadyInvited && homeComp.maxRam >= 32) {
         invitedFactions.push(nitesecFac);
     }
@@ -2242,7 +2247,7 @@ export function checkForFactionInvitations() {
     var cybersecServer = AllServers[SpecialServerIps[SpecialServerNames.CyberSecServer]];
     if (cybersecServer == null) {
         console.error("Could not find CyberSec Server");
-    } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
+    } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.backdoorInstalled &&
                !cybersecFac.alreadyInvited) {
         invitedFactions.push(cybersecFac);
     }

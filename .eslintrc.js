@@ -2,91 +2,104 @@ module.exports = {
     "env": {
         "browser": true,
         "commonjs": true,
-        "es6": false
+        "es6": false,
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 8,
         "sourceType": "module",
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
-        }
+            "experimentalObjectRestSpread": true,
+        },
     },
+    "plugins": [
+        '@typescript-eslint',
+    ],
     "rules": {
         "accessor-pairs": [
             "error",
             {
                 "setWithoutGet": true,
-                "getWithoutSet": false
-            }
+                "getWithoutSet": false,
+            },
         ],
         "array-bracket-newline": [
-            "off"
+            "off",
         ],
         "array-bracket-spacing": [
-            "off"
+            "off",
         ],
         "array-callback-return": [
-            "off"
+            "off",
         ],
         "array-element-newline": [
-            "off"
+            "off",
         ],
         "arrow-body-style": [
-            "off"
+            "off",
         ],
         "arrow-parens": [
-            "off"
+            "off",
         ],
         "arrow-spacing": [
-            "off"
+            "off",
         ],
         "block-scoped-var": [
-            "off"
+            "off",
         ],
         "block-spacing": [
-            "off"
+            "off",
         ],
         "brace-style": [
-            "off"
+            "off",
         ],
         "callback-return": [
-            "error"
+            "error",
         ],
         "camelcase": [
-            "off"
+            "off",
         ],
         "capitalized-comments": [
-            "off"
+            "off",
         ],
         "class-methods-use-this": [
-            "error"
+            "off",
         ],
         "comma-dangle": [
-            "off"
+            "error", {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "always-multiline",
+                "exports": "always-multiline",
+                "functions": "always-multiline",
+            }
         ],
         "comma-spacing": [
-            "off"
+            "off",
         ],
         "comma-style": [
             "error",
-            "last"
+            "last",
         ],
         "complexity": [
-            "off"
+            "off",
         ],
         "computed-property-spacing": [
             "off",
-            "never"
+            "never",
         ],
         "consistent-return": [
-            "off"
+            "off",
         ],
         "consistent-this": [
-            "off"
+            "off",
         ],
         "constructor-super": [
-            "error"
+            "error",
         ],
         "curly": [
             "off"
@@ -99,203 +112,202 @@ module.exports = {
             "property"
         ],
         "dot-notation": [
-            "off"
+            "off",
         ],
         "eol-last": [
-            "off"
+            "off",
         ],
         "eqeqeq": [
-            "off"
+            "off",
         ],
         "for-direction": [
-            "error"
+            "error",
         ],
         "func-call-spacing": [
-            "off"
+            "off",
         ],
         "func-name-matching": [
-            "error"
+            "error",
         ],
         "func-names": [
             "off",
-            "never"
+            "never",
         ],
         "func-style": [
-            "off"
+            "off",
         ],
         "function-paren-newline": [
-            "off"
+            "off",
         ],
         "generator-star-spacing": [
             "error",
-            "before"
+            "before",
         ],
         "getter-return": [
             "error",
             {
-                "allowImplicit": false
-            }
+                "allowImplicit": false,
+            },
         ],
         "global-require": [
-            "off"
+            "off",
         ],
         "guard-for-in": [
-            "off"
+            "off",
         ],
         "handle-callback-err": [
-            "error"
+            "error",
         ],
         "id-blacklist": [
-            "error"
+            "error",
         ],
         "id-length": [
-            "off"
+            "off",
         ],
         "id-match": [
-            "error"
+            "error",
         ],
         "implicit-arrow-linebreak": [
             "error",
-            "beside"
+            "beside",
         ],
         "indent": [
-            "off"
+            "off",
         ],
         "indent-legacy": [
-            "off"
+            "off",
         ],
         "init-declarations": [
-            "off"
+            "off",
         ],
         "jsx-quotes": [
-	    "error"
+	    "error",
     	],
         "key-spacing": [
-            "off"
+            "off",
         ],
         "keyword-spacing": [
-            "off"
+            "off",
         ],
         "line-comment-position": [
-            "off"
+            "off",
         ],
         "linebreak-style": [
-            "error",
-            "windows"
+            "off", // Line endings automatically converted to LF on git commit so probably shouldn't care about it here
         ],
         "lines-around-comment": [
-            "off"
+            "off",
         ],
         "lines-around-directive": [
-            "error"
+            "error",
         ],
         "lines-between-class-members": [
-            "error"
+            "error",
         ],
         "max-depth": [
-            "off"
+            "off",
         ],
         "max-len": [
-            "off"
+            "off",
         ],
         "max-lines": [
-            "off"
+            "off",
         ],
         "max-nested-callbacks": [
-            "error"
+            "error",
         ],
         "max-params": [
-            "off"
+            "off",
         ],
         "max-statements": [
-            "off"
+            "off",
         ],
         "max-statements-per-line": [
-            "off"
+            "off",
         ],
         "multiline-comment-style": [
             "off",
-            "starred-block"
+            "starred-block",
         ],
         "multiline-ternary": [
             "off",
-            "never"
+            "never",
         ],
         "new-cap": [
-            "off"
+            "off",
         ],
         "new-parens": [
-            "off"
+            "off",
         ],
         "newline-after-var": [
-            "off"
+            "off",
         ],
         "newline-before-return": [
-            "off"
+            "off",
         ],
         "newline-per-chained-call": [
-            "off"
+            "off",
         ],
         "no-alert": [
-            "error"
+            "error",
         ],
         "no-array-constructor": [
-            "error"
+            "error",
         ],
         "no-await-in-loop": [
-            "error"
+            "error",
         ],
         "no-bitwise": [
-            "off"
+            "off",
         ],
         "no-buffer-constructor": [
-            "error"
+            "error",
         ],
         "no-caller": [
-            "error"
+            "error",
         ],
         "no-case-declarations": [
-            "error"
+            "error",
         ],
         "no-catch-shadow": [
-            "error"
+            "error",
         ],
         "no-class-assign": [
-            "error"
+            "error",
         ],
         "no-compare-neg-zero": [
-            "error"
+            "error",
         ],
         "no-cond-assign": [
             "off",
-            "except-parens"
+            "except-parens",
         ],
         "no-confusing-arrow": [
-            "error"
+            "error",
         ],
         "no-console": [
-            "off"
+            "off",
         ],
         "no-const-assign": [
-            "error"
+            "error",
         ],
         "no-constant-condition": [
             "error",
             {
-                "checkLoops": false
-            }
+                "checkLoops": false,
+            },
         ],
         "no-continue": [
-            "off"
+            "off",
         ],
         "no-control-regex": [
-            "error"
+            "error",
         ],
         "no-debugger": [
-            "error"
+            "error",
         ],
         "no-delete-var": [
-            "error"
+            "error",
         ],
         "no-div-regex": [
             "error"
@@ -346,11 +358,7 @@ module.exports = {
             "error"
         ],
         "no-extra-parens": [
-            "error",
-            "all",
-            {
-                "conditionalAssign": false
-            }
+            "off"
         ],
         "no-extra-semi": [
             "off"
@@ -366,9 +374,6 @@ module.exports = {
         ],
         "no-extra-label": [
             "error"
-        ],
-        "no-extra-parens": [
-            "off"
         ],
         "no-fallthrough": [
             "off"
@@ -853,5 +858,53 @@ module.exports = {
             "error",
             "never"
         ]
-    }
+    },
+    "overrides": [
+        {
+            // TypeScript configuration
+            "files": [ "**/*.ts", "**/*.tsx" ],
+            "parser": "@typescript-eslint/parser",
+            "plugins": [ "@typescript-eslint" ],
+            "extends": [
+                "plugin:@typescript-eslint/recommended",
+            ],
+            "rules": {
+                "lines-between-class-members": "off",
+                "no-empty-pattern": "off",
+                "no-useless-constructor": [
+                    "off", // Valid for typescript due to property ctor shorthand
+                ],
+                "@typescript-eslint/ban-ts-comment": "off",
+                "@typescript-eslint/ban-ts-ignore": "off",
+                "@typescript-eslint/camelcase": "off",
+                "@typescript-eslint/explicit-function-return-type": ["error", {
+                    "allowExpressions": true,
+                }],
+                "@typescript-eslint/member-delimiter-style": ["error", {
+                    "multiline": {
+                        "delimiter": "semi",
+                        "requireLast": true,
+                    },
+                    "singleline": {
+                        "delimiter": "semi",
+                        "requireLast": false,
+                    }
+                }],
+                "@typescript-eslint/member-ordering": ["error", {
+                    "default": [
+                        "signature",
+                        "static-field",
+                        "instance-field",
+                        "abstract-field",
+                        "constructor",
+                        "instance-method",
+                        "abstract-method",
+                        "static-method",
+                    ]
+                }],
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-use-before-define": "off",
+            }
+        }
+    ]
 };

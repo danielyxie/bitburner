@@ -30,7 +30,7 @@ tail() Netscript Function
         // Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
         tail("foo.script", "foodnstuff", 1, "test");
 
-.. js:function:: tail(scriptPid[, hostname=current hostname])
+.. js:function:: tail(scriptPid)
 
     :RAM cost: 0 GB
     :param number scriptPid: PID of the script to tail.
@@ -46,3 +46,16 @@ tail() Netscript Function
 
         // Open logs from process with id 42 on the foodnstuff server
         tail(42, "foodnstuff");
+
+.. js:function:: tail()
+
+    :RAM cost: 0 GB
+
+    Opens the current script logs.
+
+    Example:
+
+    .. code-block:: javascript
+
+        // Open the current script logs.
+        tail();

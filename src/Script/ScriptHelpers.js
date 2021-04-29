@@ -271,7 +271,7 @@ function saveAndCloseScriptEditor() {
     }
 
     if (filename !== ".fconf" && !isValidFilePath(filename)) {
-        dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
+        dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores, and must end with an extension.");
         return;
     }
 

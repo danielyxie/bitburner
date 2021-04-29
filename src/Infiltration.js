@@ -7,6 +7,7 @@ import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { infiltrationBoxCreate } from "../utils/InfiltrationBox";
 import { formatNumber } from "../utils/StringHelperFunctions";
+import { numeralWrapper } from "./ui/numeralFormat";
 
 let InfiltrationScenarios = {
     Guards: "You see an armed security guard patrolling the area.",
@@ -451,9 +452,9 @@ function endInfiltrationLevel(inst) {
                                BitNodeMultipliers.InfiltrationMoney;
         inst.secretsStolen.push(baseSecretValue);
         dialogBoxCreate("You found and stole a set of classified documents from the company. " +
-                        "These classified secrets could probably be sold for money (<span class='money-gold'>$" +
-                        formatNumber(secretMoneyValue, 2) + "</span>), or they " +
-                        "could be given to factions for reputation (<span class='light-yellow'>" + formatNumber(secretValue, 3) + " rep</span>)");
+                        "These classified secrets could probably be sold for money (<span class='money-gold'>" +
+                        numeralWrapper.formatMoney(secretMoneyValue) + "</span>), or they " +
+                        "could be given to factions for reputation (<span class='light-yellow'>" + numeralWrapper.formatReputation(secretValue) + " rep</span>)");
     }
 
     // Increase security level based on difficulty
@@ -495,16 +496,16 @@ function updateInfiltrationLevelText(inst) {
     document.getElementById("infiltration-level-text").innerHTML =
         "Facility name:    " + inst.companyName + "<br>" +
         "Clearance Level:  " + inst.clearanceLevel + "<br>" +
-        "Security Level:   " + formatNumber(inst.securityLevel, 3) + "<br><br>" +
+        "Security Level:   " + numeralWrapper.formatInfiltrationSecurity(inst.securityLevel) + "<br><br>" +
         "Total value of stolen secrets<br>" +
-        "Reputation:       <span class='light-yellow'>" + formatNumber(totalValue, 3) + "</span><br>" +
-        "Money:           <span class='money-gold'>$" + formatNumber(totalMoneyValue, 2) + "</span><br><br>" +
-        "Hack exp gained:  " + formatNumber(inst.calcGainedHackingExp(), 3) + "<br>" +
-        "Str exp gained:   " + formatNumber(inst.calcGainedStrengthExp(), 3) + "<br>" +
-        "Def exp gained:   " + formatNumber(inst.calcGainedDefenseExp(), 3) + "<br>" +
-        "Dex exp gained:   " + formatNumber(inst.calcGainedDexterityExp(), 3) + "<br>" +
-        "Agi exp gained:   " + formatNumber(inst.calcGainedAgilityExp(), 3) + "<br>" +
-        "Cha exp gained:   " + formatNumber(inst.calcGainedCharismaExp(), 3);
+        "Reputation:       <span class='light-yellow'>" + numeralWrapper.formatReputation(totalValue, 3) + "</span><br>" +
+        "Money:           <span class='money-gold'>" + numeralWrapper.formatMoney(totalMoneyValue, 2) + "</span><br><br>" +
+        "Hack exp gained:  " + numeralWrapper.formatExp(inst.calcGainedHackingExp(), 3) + "<br>" +
+        "Str exp gained:   " + numeralWrapper.formatExp(inst.calcGainedStrengthExp(), 3) + "<br>" +
+        "Def exp gained:   " + numeralWrapper.formatExp(inst.calcGainedDefenseExp(), 3) + "<br>" +
+        "Dex exp gained:   " + numeralWrapper.formatExp(inst.calcGainedDexterityExp(), 3) + "<br>" +
+        "Agi exp gained:   " + numeralWrapper.formatExp(inst.calcGainedAgilityExp(), 3) + "<br>" +
+        "Cha exp gained:   " + numeralWrapper.formatExp(inst.calcGainedCharismaExp(), 3);
     /* eslint-enable no-irregular-whitespace */
 }
 
@@ -524,7 +525,7 @@ function updateInfiltrationButtons(inst, scenario) {
                 "<span class='tooltiptext'>" +
                 "Attempt to escape the facility with the classified secrets and " +
                 "documents you have stolen. You have a " +
-                formatNumber(escapeChance*100, 2) + "% chance of success. If you fail, " +
+                numeralWrapper.formatPercentage(escapeChance, 2) + " chance of success. If you fail, " +
                 "the security level will increase by 5%.</span>";
 
     switch(scenario) {
@@ -532,55 +533,55 @@ function updateInfiltrationButtons(inst, scenario) {
             document.getElementById("infiltration-pickdoor").innerHTML = "Lockpick" +
                 "<span class='tooltiptext'>" +
                 "Attempt to pick the locked door. You have a " +
-                formatNumber(lockpickChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(lockpickChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increased by 1%. If you fail, the " +
                 "security level will increase by 3%.</span>";
         case InfiltrationScenarios.TechOnly:
             document.getElementById("infiltration-hacksecurity").innerHTML = "Hack" +
                 "<span class='tooltiptext'>" +
                 "Attempt to hack and disable the security system. You have a " +
-                formatNumber(hackChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(hackChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increase by 3%. If you fail, " +
                 "the security level will increase by 5%.</span>";
 
             document.getElementById("infiltration-destroysecurity").innerHTML = "Destroy security" +
                 "<span class='tooltiptext'>" +
                 "Attempt to violently destroy the security system. You have a " +
-                formatNumber(destroySecurityChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(destroySecurityChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increase by 5%. If you fail, the " +
                 "security level will increase by 10%. </span>";
 
             document.getElementById("infiltration-sneak").innerHTML = "Sneak" +
                 "<span class='tooltiptext'>" +
                 "Attempt to sneak past the security system. You have a " +
-                formatNumber(sneakChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(sneakChance, 2) + " chance of success. " +
                 "If you fail, the security level will increase by 8%. </span>";
             break;
         case InfiltrationScenarios.Bots:
             document.getElementById("infiltration-kill").innerHTML = "Destroy bots" +
                 "<span class='tooltiptext'>" +
                 "Attempt to destroy the security bots through combat. You have a " +
-                formatNumber(killChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(killChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increase by 5%. If you fail, " +
                 "the security level will increase by 10%. </span>";
 
             document.getElementById("infiltration-assassinate").innerHTML = "Assassinate bots" +
                 "<span class='tooltiptext'>" +
                 "Attempt to stealthily destroy the security bots through assassination. You have a " +
-                formatNumber(assassinateChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(assassinateChance, 2) + " chance of success. " +
                 "If you fail, the security level will increase by 10%. </span>";
 
             document.getElementById("infiltration-hacksecurity").innerHTML = "Hack bots" +
                 "<span class='tooltiptext'>" +
                 "Attempt to disable the security bots by hacking them. You have a "  +
-                formatNumber(hackChance*100, 2) +  "% chance of success. " +
+                numeralWrapper.formatPercentage(hackChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increase by 3%. If you fail, " +
                 "the security level will increase by 5%. </span>";
 
             document.getElementById("infiltration-sneak").innerHTML = "Sneak" +
                 "<span class='tooltiptext'>" +
                 "Attempt to sneak past the security bots. You have a " +
-                formatNumber(sneakChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(sneakChance, 2) + " chance of success. " +
                 "If you fail, the security level will increase by 8%. </span>";
             break;
 
@@ -589,39 +590,39 @@ function updateInfiltrationButtons(inst, scenario) {
             document.getElementById("infiltration-kill").innerHTML = "Kill" +
                 "<span class='tooltiptext'>" +
                 "Attempt to kill the security guard. You have a " +
-                formatNumber(killChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(killChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increase by 5%. If you fail, " +
                 "the security level will decrease by 10%. </span>";
 
             document.getElementById("infiltration-knockout").innerHTML = "Knockout" +
                 "<span class='tooltiptext'>" +
                 "Attempt to knockout the security guard. You have a " +
-                formatNumber(knockoutChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(knockoutChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increase by 3%. If you fail, the " +
                 "security level will increase by 10%. </span>";
 
             document.getElementById("infiltration-stealthknockout").innerHTML = "Stealth Knockout" +
                 "<span class='tooltiptext'>" +
                 "Attempt to stealthily knockout the security guard. You have a " +
-                formatNumber(stealthKnockoutChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(stealthKnockoutChance, 2) + " chance of success. " +
                 "If you fail, the security level will increase by 10%. </span>";
 
             document.getElementById("infiltration-assassinate").innerHTML = "Assassinate" +
                 "<span class='tooltiptext'>" +
                 "Attempt to assassinate the security guard. You have a " +
-                formatNumber(assassinateChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(assassinateChance, 2) + " chance of success. " +
                 "If you fail, the security level will increase by 5%. </span>";
 
             document.getElementById("infiltration-sneak").innerHTML = "Sneak" +
                 "<span class='tooltiptext'>" +
                 "Attempt to sneak past the security guard. You have a " +
-                formatNumber(sneakChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(sneakChance, 2) + " chance of success. " +
                 "If you fail, the security level will increase by 8%. </span>";
 
             document.getElementById("infiltration-bribe").innerHTML = "Bribe" +
                 "<span class='tooltiptext'>" +
                 "Attempt to bribe the security guard. You have a " +
-                formatNumber(bribeChance*100, 2) + "% chance of success. " +
+                numeralWrapper.formatPercentage(bribeChance, 2) + " chance of success. " +
                 "If you fail, the security level will increase by 15%. </span>";
             break;
     }

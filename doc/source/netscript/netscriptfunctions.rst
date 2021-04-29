@@ -75,6 +75,7 @@ This includes information such as function signatures, what they do, and their r
     scriptKill() <basicfunctions/scriptKill>
     getScriptName() <basicfunctions/getScriptName>
     getScriptRam() <basicfunctions/getScriptRam>
+    getRunningScript() <basicfunctions/getRunningScript>
     getHackTime() <basicfunctions/getHackTime>
     getGrowTime() <basicfunctions/getGrowTime>
     getWeakenTime() <basicfunctions/getWeakenTime>

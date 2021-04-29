@@ -48,8 +48,8 @@ export class UniversityLocation extends React.Component<IProps, any> {
         const ip = SpecialServerIps.getIp(this.props.loc.name);
         console.log(`ip: ${ip}`);
         const server = getServer(ip);
-        if(server == null || !server.hasOwnProperty('manuallyHacked')) return this.props.loc.costMult;
-        const discount = (server as Server).manuallyHacked? 0.9 : 1;
+        if(server == null || !server.hasOwnProperty('backdoorInstalled')) return this.props.loc.costMult;
+        const discount = (server as Server).backdoorInstalled? 0.9 : 1;
         return this.props.loc.costMult * discount;
     }
 

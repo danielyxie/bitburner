@@ -5,6 +5,7 @@ export const TerminalHelpText: string =
     "Type 'help name' to learn more about the command 'name'<br><br>" +
     'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
     "analyze                        Get information about the current machine <br>" +
+    'backdoor                       Install a backdoor on the current machine <br>' +
     "buy [-l/program]               Purchase a program through the Dark Web<br>" +
     "cat [file]                     Display a .msg, .lit, or .txt file<br>" +
     "cd [dir]                       Change to a new directory<br>" +
@@ -65,11 +66,14 @@ export const HelpTexts: IMap<string> = {
                     "server details such as the hostname, whether the player has root access, what ports are opened/closed, and also " +
                     "hacking-related information such as an estimated chance to successfully hack, an estimate of how much money is " +
                     "available on the server, etc.",
+    backdoor:       "backdoor<br>" +
+                    "Install a backdoor on the current machine, grants a secret bonus depending on the machine.<br>" +
+                    "Requires root access to run.<br>",
     buy:            "buy [-l / program]<br>" +
                     "Purchase a program through the Dark Web. Requires a TOR router to use.<br><br>" +
                     "If this command is ran with the '-l' flag, it will display a list of all programs that can be bought through the " +
                     "dark web to the Terminal, as well as their costs.<br><br>" +
-                    "Otherwise, the name of the program must be passed in as a parameter. This is name is NOT case-sensitive.",
+                    "Otherwise, the name of the program must be passed in as a parameter. This name is NOT case-sensitive.",
     cat:            "cat [file]<br>" +
                     "Display message (.msg), literature (.lit), or text (.txt) files. Examples:<br><br>" +
                     "cat j1.msg<br>" +

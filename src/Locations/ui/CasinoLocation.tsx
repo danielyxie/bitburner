@@ -4,25 +4,28 @@
  * This subcomponent renders all of the buttons for training at the gym
  */
 import * as React from "react";
+import { Blackjack } from "../../Casino/Blackjack";
+import { CoinFlip } from "../../Casino/CoinFlip";
+import { Roulette } from "../../Casino/Roulette";
+import { SlotMachine } from "../../Casino/SlotMachine";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { StdButton } from "../../ui/React/StdButton";
 
-import { Location }         from "../Location";
 
-import { CONSTANTS }        from "../../Constants";
-import { IPlayer }          from "../../PersonObjects/IPlayer";
-
-import { numeralWrapper }   from "../../ui/numeralFormat";
-import { StdButton }        from "../../ui/React/StdButton";
-import { Money }            from "../../ui/React/Money";
-import { SlotMachine }      from "../../Casino/SlotMachine";
-import { CoinFlip }         from "../../Casino/CoinFlip";
-import { Roulette }         from "../../Casino/Roulette";
+enum GameType {
+    None = 'none',
+    Coin = 'coin',
+    Slots = 'slots',
+    Roulette = 'roulette',
+    Blackjack = 'blackjack',
+}
 
 type IProps = {
     p: IPlayer;
 }
 
 type IState = {
-    game: string;
+    game: GameType;
 }
 
 export class CasinoLocation extends React.Component<IProps, IState> {
@@ -30,57 +33,70 @@ export class CasinoLocation extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            game: '',
+            game: GameType.None,
         }
 
         this.updateGame = this.updateGame.bind(this);
     }
 
-    updateGame(game: string) {
+    updateGame(game: GameType): void {
         this.setState({
-            game: game,
+            game,
         });
     }
 
-    renderGames() {
+    renderGames(): React.ReactNode {
         return (<>
             <StdButton
-                onClick={() => this.updateGame('coin')}
+                onClick={() => this.updateGame(GameType.Coin)}
                 text={"Play coin flip"}
             /><br />
             <StdButton
-                onClick={() => this.updateGame('slots')}
+                onClick={() => this.updateGame(GameType.Slots)}
                 text={"Play slots"}
             /><br />
             <StdButton
-                onClick={() => this.updateGame('roulette')}
+                onClick={() => this.updateGame(GameType.Roulette)}
                 text={"Play roulette"}
+            /><br />
+            <StdButton
+                onClick={() => this.updateGame(GameType.Blackjack)}
+                text={"Play blackjack"}
             />
         </>)
     }
 
-    renderGame() {
-        let elem;
+    renderGame(): React.ReactNode {
+        let elem = null;
         switch(this.state.game) {
-        case 'coin':
-            elem = <CoinFlip p={this.props.p} />
-            break;
-        case 'slots':
-            elem = <SlotMachine p={this.props.p} />
-            break;
-        case 'roulette':
-            elem = <Roulette p={this.props.p} />
-            break;
+            case GameType.Coin:
+                elem = <CoinFlip p={this.props.p} />
+                break;
+            case GameType.Slots:
+                elem = <SlotMachine p={this.props.p} />
+                break;
+            case GameType.Roulette:
+                elem = <Roulette p={this.props.p} />
+                break;
+            case GameType.Blackjack:
+                elem = <Blackjack p={this.props.p} />
+                break;
+            case GameType.None:
+                break;
+            default:
+                throw new Error(`MissingCaseException: ${this.state.game}`);
         }
 
-        return (<>
-            <StdButton onClick={() => this.updateGame('')} text={"Stop playing"} />
-            {elem}
-        </>)
+        return (
+            <>
+                <StdButton onClick={() => this.updateGame(GameType.None)} text={"Stop playing"} />
+                {elem}
+            </>
+        )
     }
 
-    render() {
-        if(!this.state.game) {
+    render(): React.ReactNode {
+        if(this.state.game === GameType.None) {
             return this.renderGames();
         } else {
             return this.renderGame();

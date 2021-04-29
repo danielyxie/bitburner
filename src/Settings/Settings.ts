@@ -29,6 +29,11 @@ interface IDefaultSettings {
      * Whether global keyboard shortcuts should be recognized throughout the game.
      */
     DisableHotkeys: boolean;
+    
+    /**
+     * Whether text effects such as corruption should be visible.
+     */
+    DisableTextEffects: boolean;
 
     /**
      * Locale used for display numbers
@@ -108,6 +113,7 @@ const defaultSettings: IDefaultSettings = {
     CodeInstructionRunTime:              50,
     DisableASCIIArt:                     false,
     DisableHotkeys:                      false,
+    DisableTextEffects:                  false,
     Locale:                              "en",
     MaxLogCapacity:                      50,
     MaxPortCapacity:                     50,
@@ -127,8 +133,9 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     CodeInstructionRunTime:              25,
     DisableASCIIArt:                     defaultSettings.DisableASCIIArt,
     DisableHotkeys:                      defaultSettings.DisableHotkeys,
-    Editor:                              EditorSetting.Ace,
-    EditorKeybinding:                    AceKeybindingSetting.Ace,
+    DisableTextEffects:                  defaultSettings.DisableTextEffects,
+    Editor:                              EditorSetting.CodeMirror,
+    EditorKeybinding:                    CodeMirrorKeybindingSetting.Default,
     EditorTheme:                         "Monokai",
     Locale:                              "en",
     MaxLogCapacity:                      defaultSettings.MaxLogCapacity,

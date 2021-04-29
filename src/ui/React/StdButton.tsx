@@ -11,7 +11,7 @@ interface IStdButtonProps {
     onClick?: (e: React.MouseEvent<HTMLElement>) => any;
     style?: object;
     text: string | JSX.Element;
-    tooltip?: string;
+    tooltip?: string | JSX.Element;
 }
 
 type IInnerHTMLMarkup = {
@@ -30,10 +30,16 @@ export function StdButton(props: IStdButtonProps): React.ReactElement {
     }
 
     // Tooltip will be set using inner HTML
-    let tooltipMarkup: IInnerHTMLMarkup | null;
+    let tooltip;
     if (hasTooltip) {
-        tooltipMarkup = {
-            __html: props.tooltip!
+        if(typeof props.tooltip === 'string') {
+            let tooltipMarkup: IInnerHTMLMarkup | null;
+            tooltipMarkup = {
+                __html: props.tooltip!
+            }
+            tooltip = <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
+        } else {
+            tooltip = <span className={"tooltiptext"}>{props.tooltip!}</span>
         }
     }
 
@@ -42,7 +48,7 @@ export function StdButton(props: IStdButtonProps): React.ReactElement {
             {props.text}
             {
                 hasTooltip &&
-                <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
+                tooltip
             }
         </button>
     )

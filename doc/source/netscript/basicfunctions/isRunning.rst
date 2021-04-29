@@ -40,7 +40,7 @@ isRunning() Netscript Function
             isRunning("foo.script", "joesguns", 1, 5, "test");
 
 
-.. js:function:: isRunning(scriptPid[, hostname=current hostname])
+.. js:function:: isRunning(scriptPid)
 
     :RAM cost: 0.1 GB
     :param number scriptPid: PID of the script to check.
@@ -52,5 +52,3 @@ isRunning() Netscript Function
     .. code-block:: javascript
 
             isRunning(39);
-
-            isRunning(39, getHostname());

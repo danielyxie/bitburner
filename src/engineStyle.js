@@ -29,3 +29,5 @@ import "../css/resleeving.scss";
 import "../css/treant.css";
 import "../css/grid.min.css";
 import "../css/dev-menu.css";
+import "../css/casino.scss";
+import "../css/milestones.scss";

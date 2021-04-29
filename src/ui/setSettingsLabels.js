@@ -24,6 +24,7 @@ function setSettingsLabels() {
     const autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     const disableHotkeys = document.getElementById("settingsDisableHotkeys");
     const disableASCIIArt = document.getElementById("settingsDisableASCIIArt");
+    const disableTextEffects = document.getElementById("settingsDisableTextEffects");
     const locale = document.getElementById("settingsLocale");
 
     //Initialize values on labels
@@ -38,6 +39,7 @@ function setSettingsLabels() {
     setAutosaveLabel(autosaveInterval);
     disableHotkeys.checked = Settings.DisableHotkeys;
     disableASCIIArt.checked = Settings.CityListView;
+    disableTextEffects.checked = Settings.DisableTextEffects;
     locale.value = Settings.Locale;
     numeralWrapper.updateLocale(Settings.Locale); //Initialize locale
 
@@ -103,6 +105,10 @@ function setSettingsLabels() {
 
     disableASCIIArt.onclick = function() {
         Settings.DisableASCIIArt = this.checked;
+    }
+
+    disableTextEffects.onclick = function() {
+        Settings.DisableTextEffects = this.checked;
     }
 
     //Locale selector

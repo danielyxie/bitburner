@@ -410,6 +410,11 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
             await expectNonZeroRamCost(f);
         });
 
+        it("getRunningScript()", async function() {
+            const f = ["getRunningScript"];
+            await expectNonZeroRamCost(f);
+        });
+
         it("getTimeSinceLastAug()", async function() {
             const f = ["getTimeSinceLastAug"];
             await expectNonZeroRamCost(f);

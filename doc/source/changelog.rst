@@ -3,10 +3,57 @@
 Changelog
 =========
 
+
+v0.51.6 - 2021-04-28 Backdoor! (Community)
+-------
+
+**Backdoor**
+
+* a new terminal command, backdoor, has been added to help differentiate
+  between the terminal hack command and the netscript hack function. (@dewint)
+
+**Milestones**
+
+* A new tab under the Help menu has been added to guide players through the
+  game.
+
+**Casino**
+
+* Blackjack has been added (@BigD)
+
+**Netscript**
+
+* 'prompt' now converts input to JSON.
+* 'getRunningScript' is a new netscript function that returns a bunch of
+  data related to a running script.
+
+**Coding contracts**
+
+* trivial puzzles should no longer appear.
+
+**Infiltration**
+
+* All numbers are formatted like the rest of the game.
+
+**Misc.**
+
+* Server security is capped at 100.
+* Added option to quit a job.
+* 'cd' no longer works on unexistent folders.
+* cd with no arguments brings you back to top level folder (@Andreas)
+* 'softReset' documentation udpated.
+* Money tracker now accounts for going to the hospital manually.
+* codemirror is now the default editor (for new save files)
+* fix typo in dark web help text (@Rodeth)
+* so many documentation and typos fixes (@Pimgd)
+* A corruption visual effect has been added to location with servers that
+  have backdoor installed. (@dewint)
+
+
 v0.51.5 - 2021-04-20 Flags! (hydroflame)
 ----------------------------------------
 
-Netscript
+**Netscript**
 
 * 'flags' is a new function that helps script handle flags.
   This is subject to change if it doesn't meet the need of the players.
@@ -16,11 +63,11 @@ Netscript
 * 'isRunning' hostname defaults to current server.
 * 'isRunning' now works with pid as first argument.
 
-Gang
+**Gang**
 
 * Nerfed ascension mechanic once again :(
 
-Misc.
+**Misc.**
 
 * Souce-File typo fix
 * Fix 'while you were away' screen.
@@ -29,28 +76,28 @@ Misc.
 v0.51.4 - 2021-04-19 Manual hacking is fun (hydroflame)
 -------------------------------------------------------
 
-Manual hacking
+**Manual hacking**
 
 * These bonus require an install or a soft reset to take effect.
 * Manual hacking gyms and university gives you a 10% discount.
 * Manual hacking a corporation server decreases the penalty for leaving work
   early.
 
-BladeBurner
+**BladeBurner**
 
 * nerfed int exp gained.
 
-Documentation
+**Documentation**
 
 * purchaseServer specifies what happens on failure.
 * Fixed typo in recommended bitnode page.
 * Removed misleading ram requirements for hacking factions.
 
-Netscript
+**Netscript**
 
 * growthAnalyze handles Infinity correctly.
 
-Misc.
+**Misc.**
 
 * Faction Augmentation will list how much reputation is required even after
   that goal has been reached.

@@ -1,4 +1,4 @@
-import * as numeral from 'numeral';
+import numeral from 'numeral';
 import 'numeral/locales/bg';
 import 'numeral/locales/cs';
 import 'numeral/locales/da-dk';
@@ -18,7 +18,7 @@ import 'numeral/locales/ru';
 
 class NumeralFormatter {
     // Default Locale
-    defaultLocale: string = "en";
+    defaultLocale = "en";
 
     constructor() {
         this.defaultLocale = 'en';
@@ -80,12 +80,12 @@ class NumeralFormatter {
         return this.format(n, "0.00")+"GB";
     }
 
-    formatPercentage(n: number, decimalPlaces: number=2): string {
+    formatPercentage(n: number, decimalPlaces = 2): string {
         const formatter: string = "0." + "0".repeat(decimalPlaces) + "%";
         return this.format(n, formatter);
     }
 
-    formatServerSecurity(n: number, decimalPlaces: number=2): string {
+    formatServerSecurity(n: number, decimalPlaces = 2): string {
         return this.format(n, "0,0.000");
     }
 
@@ -125,6 +125,10 @@ class NumeralFormatter {
         if (n < 1000) {
             return this.format(n, "0");
         }
+        return this.format(n, "0.000a");
+    }
+
+    formatInfiltrationSecurity(n: number): string {
         return this.format(n, "0.000a");
     }
 }

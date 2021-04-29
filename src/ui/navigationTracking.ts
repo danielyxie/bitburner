@@ -49,6 +49,11 @@ export enum Page {
     Augmentations = "Augmentations",
 
     /**
+     * List of milestones that players should follow.
+     */
+    Milestones = "Milestones",
+
+    /**
      * A collection of in-game material to learn about the game.
      */
     Tutorial = "Tutorial",
