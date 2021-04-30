@@ -375,7 +375,7 @@ a:visited {
 }
 
 .noscrollbar::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 input[type=checkbox] {
@@ -383,42 +383,42 @@ input[type=checkbox] {
 }
 
 .optionCheckbox {
-  margin: 5px;
-  float: right;
+    margin: 5px;
+    float: right;
 }
 
 .optionRange {
-  -webkit-appearance: none;
-  background: #777;
-  outline: none;
-  opacity: 0.7;
-  height: 10px;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-  margin: 3px;
+    -webkit-appearance: none;
+    background: #777;
+    outline: none;
+    opacity: 0.7;
+    height: 10px;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    margin: 3px;
 }
 
 
 .optionRange::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 10px;
-  height: 10px;
-  background: var(--my-font-color);
-  cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: var(--my-font-color);
+    cursor: pointer;
 }
 
 .optionRange::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  background: var(--my-font-color);
-  cursor: pointer;
+    width: 10px;
+    height: 10px;
+    background: var(--my-font-color);
+    cursor: pointer;
 }
 
 .noselect {
-   -moz-user-select: -moz-none;
-   -khtml-user-select: none;
-   -webkit-user-select: none;
-   -ms-user-select: none;
-   user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
