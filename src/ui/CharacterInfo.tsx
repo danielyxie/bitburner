@@ -47,20 +47,20 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     }
 
     function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
-        let parts: any[][] = [[`Total:`, Money(src.total)]];
-        if (src.bladeburner)     { parts.push([`Bladeburner:`, Money(src.bladeburner)]) };
-        if (src.codingcontract)  { parts.push([`Coding Contracts:`, Money(src.codingcontract)]) };
-        if (src.work)            { parts.push([`Company Work:`, Money(src.work)]) };
-        if (src.class)           { parts.push([`Class:`, Money(src.class)]) };
-        if (src.corporation)     { parts.push([`Corporation:`, Money(src.corporation)]) };
-        if (src.crime)           { parts.push([`Crimes:`, Money(src.crime)]) };
-        if (src.gang)            { parts.push([`Gang:`, Money(src.gang)]) };
-        if (src.hacking)         { parts.push([`Hacking:`, Money(src.hacking)]) };
-        if (src.hacknetnode)     { parts.push([`Hacknet Nodes:`, Money(src.hacknetnode)]) };
-        if (src.hospitalization) { parts.push([`Hospitalization:`, Money(src.hospitalization)]) };
-        if (src.infiltration)    { parts.push([`Infiltration:`, Money(src.infiltration)]) };
-        if (src.stock)           { parts.push([`Stock Market:`, Money(src.stock)]) };
-        if (src.casino)          { parts.push([`Casino:`, Money(src.casino)]) };
+        const parts: any[][] = [[`Total:`, Money(src.total)]];
+        if (src.bladeburner)     { parts.push([`Bladeburner:`, Money(src.bladeburner)]) }
+        if (src.codingcontract)  { parts.push([`Coding Contracts:`, Money(src.codingcontract)]) }
+        if (src.work)            { parts.push([`Company Work:`, Money(src.work)]) }
+        if (src.class)           { parts.push([`Class:`, Money(src.class)]) }
+        if (src.corporation)     { parts.push([`Corporation:`, Money(src.corporation)]) }
+        if (src.crime)           { parts.push([`Crimes:`, Money(src.crime)]) }
+        if (src.gang)            { parts.push([`Gang:`, Money(src.gang)]) }
+        if (src.hacking)         { parts.push([`Hacking:`, Money(src.hacking)]) }
+        if (src.hacknetnode)     { parts.push([`Hacknet Nodes:`, Money(src.hacknetnode)]) }
+        if (src.hospitalization) { parts.push([`Hospitalization:`, Money(src.hospitalization)]) }
+        if (src.infiltration)    { parts.push([`Infiltration:`, Money(src.infiltration)]) }
+        if (src.stock)           { parts.push([`Stock Market:`, Money(src.stock)]) }
+        if (src.casino)          { parts.push([`Casino:`, Money(src.casino)]) }
 
         return StatsTable(parts, "");
     }
@@ -80,7 +80,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
     function Intelligence(): React.ReactElement {
         if (p.intelligence > 0) {
-            return <tr key='5'>
+            return <tr key="5">
                 <td>Intelligence:</td>
                 <td style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.intelligence)}</td>
             </tr>;
@@ -91,7 +91,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     function MultiplierTable(props: any): React.ReactElement {
         function bn5Stat(r: any) {
             if(SourceFileFlags[5] > 0 && r.length > 2 && r[1] != r[2]) {
-                return <td key='2' style={{textAlign: 'right'}}> ({numeralWrapper.formatPercentage(r[2])})</td>
+                return <td key="2" style={{textAlign: 'right'}}> ({numeralWrapper.formatPercentage(r[2])})</td>
             }
             return <></>;
         }
@@ -99,8 +99,8 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <table>
                 <tbody>
                     {props.rows.map((r: any) => <tr key={r[0]}>
-                        <td key='0'>{`${r[0]} multiplier:`}</td>
-                        <td key='1' style={{textAlign: 'right', paddingLeft: '5px'}}>{numeralWrapper.formatPercentage(r[1])}</td>
+                        <td key="0">{`${r[0]} multiplier:`}</td>
+                        <td key="1" style={{textAlign: 'right', paddingLeft: '5px'}}>{numeralWrapper.formatPercentage(r[1])}</td>
                         {bn5Stat(r)}
                     </tr>)}
                 </tbody>
@@ -146,35 +146,35 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <b>Stats</b>
             <table>
               <tbody>
-                <tr key='0'>
-                  <td key='0'>Hacking:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.hacking_skill)}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.hacking_exp)} exp)</td>
+                <tr key="0">
+                  <td key="0">Hacking:</td>
+                  <td key="1" style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.hacking_skill)}</td>
+                  <td key="2" style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.hacking_exp)} exp)</td>
                 </tr>
-                <tr key='1'>
-                  <td key='0'>Strength:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.strength)}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.strength_exp)} exp)</td>
+                <tr key="1">
+                  <td key="0">Strength:</td>
+                  <td key="1" style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.strength)}</td>
+                  <td key="2" style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.strength_exp)} exp)</td>
                 </tr>
-                <tr key='2'>
-                  <td key='0'>Defense:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.defense)}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.defense_exp)} exp)</td>
+                <tr key="2">
+                  <td key="0">Defense:</td>
+                  <td key="1" style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.defense)}</td>
+                  <td key="2" style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.defense_exp)} exp)</td>
                 </tr>
-                <tr key='3'>
-                  <td key='0'>Dexterity:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.dexterity)}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.dexterity_exp)} exp)</td>
+                <tr key="3">
+                  <td key="0">Dexterity:</td>
+                  <td key="1" style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.dexterity)}</td>
+                  <td key="2" style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.dexterity_exp)} exp)</td>
                 </tr>
-                <tr key='4'>
-                  <td key='0'>Agility:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.agility)}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.agility_exp)} exp)</td>
+                <tr key="4">
+                  <td key="0">Agility:</td>
+                  <td key="1" style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.agility)}</td>
+                  <td key="2" style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.agility_exp)} exp)</td>
                 </tr>
-                <tr key='5'>
-                  <td key='0'>Charisma:</td>
-                  <td key='1' style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.charisma)}</td>
-                  <td key='2' style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.charisma_exp)} exp)</td>
+                <tr key="5">
+                  <td key="0">Charisma:</td>
+                  <td key="1" style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.charisma)}</td>
+                  <td key="2" style={{textAlign: 'right'}}>({numeralWrapper.formatExp(p.charisma_exp)} exp)</td>
                 </tr>
                 <Intelligence />
             </tbody>
@@ -184,7 +184,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
                 ['Hacking Chance', p.hacking_chance_mult],
                 ['Hacking Speed', p.hacking_speed_mult],
                 ['Hacking Money', p.hacking_money_mult, p.hacking_money_mult*BitNodeMultipliers.ScriptHackMoney],
-                ['Hacking Growth', p.hacking_grow_mult, p.hacking_grow_mult*BitNodeMultipliers.ServerGrowthRate]
+                ['Hacking Growth', p.hacking_grow_mult, p.hacking_grow_mult*BitNodeMultipliers.ServerGrowthRate],
             ]} /><br />
             <MultiplierTable rows={[
                 ['Hacking Level', p.hacking_mult, p.hacking_mult*BitNodeMultipliers.HackingLevelMultiplier],
@@ -193,27 +193,27 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
             <MultiplierTable rows={[
                 ['Strength Level', p.strength_mult, p.strength_mult*BitNodeMultipliers.StrengthLevelMultiplier],
-                ['Strength Experience', p.strength_exp_mult]
+                ['Strength Experience', p.strength_exp_mult],
             ]} /><br />
 
             <MultiplierTable rows={[
                 ['Defense Level', p.defense_mult, p.defense_mult*BitNodeMultipliers.DefenseLevelMultiplier],
-                ['Defense Experience', p.defense_exp_mult]
+                ['Defense Experience', p.defense_exp_mult],
             ]} /><br />
 
             <MultiplierTable rows={[
                 ['Dexterity Level', p.dexterity_mult, p.dexterity_mult*BitNodeMultipliers.DexterityLevelMultiplier],
-                ['Dexterity Experience', p.dexterity_exp_mult]
+                ['Dexterity Experience', p.dexterity_exp_mult],
             ]} /><br />
 
             <MultiplierTable rows={[
                 ['Agility Level', p.agility_mult, p.agility_mult*BitNodeMultipliers.AgilityLevelMultiplier],
-                ['Agility Experience', p.agility_exp_mult]
+                ['Agility Experience', p.agility_exp_mult],
             ]} /><br />
 
                 <MultiplierTable rows={[
                 ['Charisma Level', p.charisma_mult, p.charisma_mult*BitNodeMultipliers.CharismaLevelMultiplier],
-                ['Charisma Experience', p.charisma_exp_mult]
+                ['Charisma Experience', p.charisma_exp_mult],
             ]} /><br />
 
                 <MultiplierTable rows={[
@@ -221,18 +221,18 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
                 ['Hacknet Node purchase cost', p.hacknet_node_purchase_cost_mult],
                 ['Hacknet Node RAM upgrade cost', p.hacknet_node_ram_cost_mult],
                 ['Hacknet Node Core purchase cost', p.hacknet_node_core_cost_mult],
-                ['Hacknet Node level upgrade cost', p.hacknet_node_level_cost_mult]
+                ['Hacknet Node level upgrade cost', p.hacknet_node_level_cost_mult],
             ]} /><br />
 
             <MultiplierTable rows={[
                 ['Company reputation gain', p.company_rep_mult],
                 ['Faction reputation gain', p.faction_rep_mult, p.faction_rep_mult*BitNodeMultipliers.FactionWorkRepGain],
-                ['Salary', p.work_money_mult, p.work_money_mult*BitNodeMultipliers.CompanyWorkMoney]
+                ['Salary', p.work_money_mult, p.work_money_mult*BitNodeMultipliers.CompanyWorkMoney],
             ]} /><br />
 
             <MultiplierTable rows={[
                 ['Crime success', p.crime_success_mult],
-                ['Crime money', p.crime_money_mult, p.crime_money_mult*BitNodeMultipliers.CrimeMoney]
+                ['Crime money', p.crime_money_mult, p.crime_money_mult*BitNodeMultipliers.CrimeMoney],
             ]} /><br /><br />
 
             <b>Misc.</b><br /><br />

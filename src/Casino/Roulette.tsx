@@ -102,14 +102,14 @@ const strategies: {
     Third2: {
         match: (n: number): boolean => {
             if (n === 0) return false;
-            return 13 <= n && n <= 24;
+            return n >= 13 && n <= 24;
         },
         payout: 2,
     },
     Third3: {
         match: (n: number): boolean => {
             if (n === 0) return false;
-            return 25 <= n;
+            return n >= 25;
         },
         payout: 2,
     },
@@ -125,7 +125,7 @@ function Single(s: number): Strategy {
 }
 
 export class Roulette extends Game<IProps, IState> {
-    interval: number = -1;
+    interval = -1;
     rng: WHRNG;
 
     constructor(props: IProps) {
@@ -226,7 +226,7 @@ export class Roulette extends Game<IProps, IState> {
     render() {
         return <>
         <h1>{this.currentNumber()}</h1>
-        <input type="number" className='text-input' onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
+        <input type="number" className="text-input" onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
         <h1>{this.state.status}</h1>
         <table>
             <tbody>

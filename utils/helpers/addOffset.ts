@@ -10,7 +10,7 @@
  * @param percentage The percentage (in a range of 0-100) to offset
  */
 export function addOffset(midpoint: number, percentage: number) {
-    const maxPercent: number = 100;
+    const maxPercent = 100;
     if (percentage < 0 || percentage > maxPercent) {
         return midpoint;
     }

@@ -36,7 +36,7 @@ class HashUpgrade extends React.Component {
 
     changeTargetServer(e) {
         this.setState({
-            selectedServer: e.target.value
+            selectedServer: e.target.value,
         });
     }
 

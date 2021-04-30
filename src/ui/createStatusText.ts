@@ -2,7 +2,7 @@ import { setTimeoutRef } from "../utils/SetTimeoutRef";
 import { getElementById } from "../../utils/uiHelpers/getElementById";
 import { Action } from "../types";
 
-const threeSeconds: number = 3000;
+const threeSeconds = 3000;
 let x: number | undefined;
 
 /**

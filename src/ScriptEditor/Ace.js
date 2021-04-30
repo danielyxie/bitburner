@@ -287,7 +287,7 @@ class AceEditorWrapper extends ScriptEditor {
                 changeListener: () => {
                     this.editor.getSession().$worker.send("changeOptions", [{maxerr:flex1Input.value}]);
                     flex1ValueLabel.innerText = flex1Input.value;
-                }
+                },
             });
             flex1Fieldset.appendChild(flex1Input);
             flex1Fieldset.appendChild(flex1ValueLabel);

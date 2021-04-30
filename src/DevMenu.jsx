@@ -3,7 +3,7 @@ import { CodingContractTypes } from "./CodingContracts";
 import {
     generateContract,
     generateRandomContract,
-    generateRandomContractOnHome
+    generateRandomContractOnHome,
 } from "./CodingContractGenerator";
 import { Companies } from "./Company/Companies";
 import { Company } from "./Company/Company";
@@ -47,9 +47,11 @@ class ValueAdjusterComponent extends Component {
         this.state = { value: '' };
         this.setValue = this.setValue.bind(this);
     }
+
     setValue(event) {
         this.setState({ value: parseFloat(event.target.value) });
     }
+
     render() {
         const { title, add, subtract, reset } = this.props;
         const { value } = this.state;
@@ -496,7 +498,7 @@ class DevMenuComponent extends Component {
 
     modifyBladeburnerRank(modify) {
         return function(rank) {
-            if (!!Player.bladeburner) {
+            if (Player.bladeburner) {
                 Player.bladeburner.changeRank(rank*modify);
             }
         }
@@ -508,67 +510,67 @@ class DevMenuComponent extends Component {
     }
 
     addTonsBladeburnerRank() {
-        if (!!Player.bladeburner) {
+        if (Player.bladeburner) {
             Player.bladeburner.changeRank(tonsP);
         }
     }
 
     modifyBladeburnerCycles(modify) {
         return function(cycles) {
-            if (!!Player.bladeburner) {
+            if (Player.bladeburner) {
                 Player.bladeburner.storedCycles += cycles*modify;
             }
         }
     }
 
     resetBladeburnerCycles() {
-        if (!!Player.bladeburner) {
+        if (Player.bladeburner) {
             Player.bladeburner.storedCycles = 0;
         }
     }
 
     addTonsBladeburnerCycles() {
-        if (!!Player.bladeburner) {
+        if (Player.bladeburner) {
             Player.bladeburner.storedCycles += tonsP;
         }
     }
 
     addTonsGangCycles() {
-        if (!!Player.gang) {
+        if (Player.gang) {
             Player.gang.storedCycles = tonsP;
         }
     }
 
     modifyGangCycles(modify) {
         return function(cycles) {
-            if (!!Player.gang) {
+            if (Player.gang) {
                 Player.gang.storedCycles += cycles*modify;
             }
         }
     }
 
     resetGangCycles() {
-        if (!!Player.gang) {
+        if (Player.gang) {
             Player.gang.storedCycles = 0;
         }
     }
 
     addTonsCorporationCycles() {
-        if (!!Player.corporation) {
+        if (Player.corporation) {
             Player.corporation.storedCycles = tonsP;
         }
     }
 
     modifyCorporationCycles(modify) {
         return function(cycles) {
-            if (!!Player.corporation) {
+            if (Player.corporation) {
                 Player.corporation.storedCycles += cycles*modify;
             }
         }
     }
 
     resetCorporationCycles() {
-        if (!!Player.corporation) {
+        if (Player.corporation) {
             Player.corporation.storedCycles = 0;
         }
     }
@@ -674,7 +676,7 @@ class DevMenuComponent extends Component {
                     <button className="std-button touch-sides" onClick={this.setSF(i, 2)}>2</button>
                     <button className="std-button touch-left" onClick={this.setSF(i, 3)}>3</button>
                 </td>
-            </tr>
+            </tr>,
         ));
 
 

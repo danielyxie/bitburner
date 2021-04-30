@@ -84,7 +84,7 @@ export class CovenantPurchasesRoot extends React.Component<IProps, IState> {
         for (let i = 0; i < this.props.p.sleeves.length; ++i) {
             const sleeve = this.props.p.sleeves[i];
             upgradePanels.push(
-                <CovenantSleeveUpgrades {...this.props} sleeve={sleeve} index={i} rerender={this.rerender} key={i} />
+                <CovenantSleeveUpgrades {...this.props} sleeve={sleeve} index={i} rerender={this.rerender} key={i} />,
             )
         }
 

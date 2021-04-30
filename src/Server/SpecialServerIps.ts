@@ -4,7 +4,7 @@ import { Reviver,
          Generic_fromJSON }         from "../../utils/JSONReviver";
 
 /* Holds IP of Special Servers */
-export let SpecialServerNames: IMap<string> = {
+export const SpecialServerNames: IMap<string> = {
     FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
     CyberSecServer:             "CyberSec Server",
     NiteSecServer:              "NiteSec Server",
@@ -44,7 +44,7 @@ Reviver.constructors.SpecialServerIpsMap = SpecialServerIpsMap;
 export let SpecialServerIps: SpecialServerIpsMap = new SpecialServerIpsMap();
 
 export function prestigeSpecialServerIps() {
-    for (var member in SpecialServerIps) {
+    for (const member in SpecialServerIps) {
         delete SpecialServerIps[member];
     }
 

@@ -30,7 +30,7 @@ import {
     yesNoBoxGetYesButton,
     yesNoBoxGetNoButton,
     yesNoBoxClose,
-    yesNoBoxCreate
+    yesNoBoxCreate,
 } from "../../../utils/YesNoBox";
 
 type IProps = {
@@ -186,7 +186,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
 
         if (updateState) {
             this.setState({
-                employedHere: this.jobTitle != null
+                employedHere: this.jobTitle != null,
             });
         }
     }
@@ -218,8 +218,8 @@ export class CompanyLocation extends React.Component<IProps, IState> {
     quit(e: React.MouseEvent<HTMLElement>) {
         if (!e.isTrusted) { return false; }
 
-        var yesBtn = yesNoBoxGetYesButton();
-        var noBtn = yesNoBoxGetNoButton();
+        const yesBtn = yesNoBoxGetYesButton();
+        const noBtn = yesNoBoxGetNoButton();
         if (yesBtn == null || noBtn == null) { return; }
         yesBtn.innerHTML = "Quit job";
         noBtn.innerHTML = "Cancel";

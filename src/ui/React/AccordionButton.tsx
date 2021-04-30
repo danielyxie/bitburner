@@ -36,7 +36,7 @@ export function AccordionButton(props: IProps): React.ReactElement {
     let tooltipMarkup: IInnerHTMLMarkup | null;
     if (hasTooltip) {
         tooltipMarkup = {
-            __html: props.tooltip!
+            __html: props.tooltip!,
         }
     }
 

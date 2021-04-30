@@ -209,7 +209,7 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                     return item.match(regex);
                 })).sort(),
                 from: CodeMirror.Pos(cursor.line, start),
-                to: CodeMirror.Pos(cursor.line, end)
+                to: CodeMirror.Pos(cursor.line, end),
             };
 
             return result;
@@ -412,7 +412,7 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                         }
 
                         return ret;
-                    }
+                    },
                 };
 
                 if (showInvisiblesChkBox.checked) {
@@ -452,7 +452,7 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                         },
                         "Shift-Tab": function (cm) {
                             cm.indentSelection("subtract");
-                        }
+                        },
                     });
                 } else {
                     this.editor.removeKeyMap("soft-tabs-keymap");

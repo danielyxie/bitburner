@@ -324,7 +324,7 @@ export async function calculateRamUsage(codeCopy, otherScripts) {
         loadedFns: {},
         env: {
             vars: RamCosts,
-        }
+        },
     }
 
     try {

@@ -41,9 +41,9 @@ export function postElement(element: JSX.Element) {
 
 export function postContent(input: string, config: IPostContentConfig = {}) {
     // tslint:disable-next-line:max-line-length
-    const style: string = `color: ${config.color != null ? config.color : "var(--my-font-color)"}; background-color:var(--my-background-color);${config.id === undefined ? " white-space:pre-wrap;" : ""}`;
+    const style = `color: ${config.color != null ? config.color : "var(--my-font-color)"}; background-color:var(--my-background-color);${config.id === undefined ? " white-space:pre-wrap;" : ""}`;
     // tslint:disable-next-line:max-line-length
-    const content: string = `<tr class="posted"><td ${config.id === undefined ? `class="terminal-line"` : `id="${config.id}"`} style="${style}">${input}</td></tr>`;
+    const content = `<tr class="posted"><td ${config.id === undefined ? `class="terminal-line"` : `id="${config.id}"`} style="${style}">${input}</td></tr>`;
     const inputElement: HTMLElement = getElementById("terminal-input");
     inputElement.insertAdjacentHTML("beforebegin", content);
     scrollTerminalToBottom();

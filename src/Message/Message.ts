@@ -9,13 +9,13 @@ export class Message {
     }
 
     // Name of Message file
-    filename: string = "";
+    filename = "";
 
     // The text contains in the Message
-    msg: string = "";
+    msg = "";
 
     // Flag indicating whether this Message has been received by the player
-    recvd: boolean = false;
+    recvd = false;
 
     constructor(filename="", msg="") {
         this.filename   = filename;

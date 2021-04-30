@@ -71,7 +71,7 @@ export class HeaderTabs extends BaseReactComponent {
                 {
                     this.renderTab({
                         onClick: this.eventHandler().createNewIndustryPopup.bind(this.eventHandler()),
-                        text: "Expand into new Industry"
+                        text: "Expand into new Industry",
                     })
                 }
             </div>

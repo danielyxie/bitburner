@@ -43,8 +43,8 @@ export function StockTickerHeaderText(props: IProps): React.ReactElement {
         // hdrText += ` - ${stock.getAbsoluteForecast()} / ${stock.otlkMagForecast}`;
     }
 
-    let styleMarkup = {
-        color: "#66ff33"
+    const styleMarkup = {
+        color: "#66ff33",
     };
     if (stock.lastPrice === stock.price) {
         styleMarkup.color = "white";

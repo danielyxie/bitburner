@@ -35,7 +35,7 @@ export function StdButton(props: IStdButtonProps): React.ReactElement {
         if(typeof props.tooltip === 'string') {
             let tooltipMarkup: IInnerHTMLMarkup | null;
             tooltipMarkup = {
-                __html: props.tooltip!
+                __html: props.tooltip!,
             }
             tooltip = <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
         } else {

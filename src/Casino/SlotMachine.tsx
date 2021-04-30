@@ -20,7 +20,7 @@ type IState = {
 }
 
 // statically shuffled array of symbols.
-let symbols = ["D", "C", "$", "?", "♥", "A", "C", "B", "C", "E", "B", "E", "C",
+const symbols = ["D", "C", "$", "?", "♥", "A", "C", "B", "C", "E", "B", "E", "C",
     "*", "D", "♥", "B", "A", "A", "A", "C", "A", "D", "B", "E", "?", "D", "*",
     "@", "♥", "B", "E", "?"];
 
@@ -63,7 +63,7 @@ const maxPlay = 1e6;
 
 export class SlotMachine extends Game<IProps, IState> {
     rng: WHRNG;
-    interval: number = -1;
+    interval = -1;
 
     constructor(props: IProps) {
         super(props);
@@ -142,7 +142,7 @@ export class SlotMachine extends Game<IProps, IState> {
     checkWinnings() {
         const t = this.getTable();
         const getPaylineData = function(payline: number[][]): string[] {
-            let data = [];
+            const data = [];
             for(const point of payline) {
                 data.push(t[point[0]][point[1]]);
             }
@@ -209,7 +209,7 @@ export class SlotMachine extends Game<IProps, IState> {
 | | {symbols[(this.state.index[0]+1)%symbols.length]} | {symbols[(this.state.index[1]+1)%symbols.length]} | {symbols[(this.state.index[2]+1)%symbols.length]} | {symbols[(this.state.index[3]+1)%symbols.length]} | {symbols[(this.state.index[4]+1)%symbols.length]} | |<br />
 +———————————————————————+<br />
 </pre>
-        <input type="number" className='text-input' onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
+        <input type="number" className="text-input" onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
         <StdButton onClick={trusted(this.play)} text={"Spin!"} disabled={!this.state.canPlay} />
 <h1>{this.state.status}</h1>
 <h2>Pay lines</h2>

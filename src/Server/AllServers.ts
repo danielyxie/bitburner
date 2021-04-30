@@ -33,7 +33,7 @@ export function createUniqueRandomIp(): string {
 
 // Saftely add a Server to the AllServers map
 export function AddToAllServers(server: Server | HacknetServer): void {
-    var serverIp = server.ip;
+    const serverIp = server.ip;
     if (ipExists(serverIp)) {
         console.warn(`IP of server that's being added: ${serverIp}`);
         console.warn(`Hostname of the server thats being added: ${server.hostname}`);
@@ -71,7 +71,7 @@ export function initForeignServers(homeComputer: Server) {
         "hackDifficulty",
         "moneyAvailable",
         "requiredHackingSkill",
-        "serverGrowth"
+        "serverGrowth",
     ];
 
     const toNumber = (value: any) => {
@@ -90,7 +90,7 @@ export function initForeignServers(homeComputer: Server) {
             hostname: metadata.hostname,
             ip: createUniqueRandomIp(),
             numOpenPortsRequired: metadata.numOpenPortsRequired,
-            organizationName: metadata.organizationName
+            organizationName: metadata.organizationName,
         };
 
         if (metadata.maxRamExponent !== undefined) {
@@ -140,7 +140,7 @@ export function initForeignServers(homeComputer: Server) {
 }
 
 export function prestigeAllServers() {
-    for (var member in AllServers) {
+    for (const member in AllServers) {
         delete AllServers[member];
     }
     AllServers = {};

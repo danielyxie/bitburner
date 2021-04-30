@@ -1,6 +1,6 @@
 import { IMap } from "../../types";
 
-export const overviewPage: string = "Overview";
+export const overviewPage = "Overview";
 
 // Interfaces for whatever's required to sanitize routing with Corporation Data
 interface IOfficeSpace {
@@ -9,7 +9,7 @@ interface IOfficeSpace {
 
 interface IDivision {
     name: string;
-    offices: IMap<IOfficeSpace>
+    offices: IMap<IOfficeSpace>;
 }
 
 interface ICorporation {
@@ -76,7 +76,7 @@ export class CorporationRouting {
             for (let i = 0; i < this.corp.divisions.length; ++i) {
                 if (this.corp.divisions[i].name === page) {
                     this.currentDivision = this.corp.divisions[i];
-                };
+                }
             }
 
             // 'currentDivision' should not be null, since the routing is either on

@@ -69,7 +69,7 @@ const GangNames = [
     "The Dark Army",
     "Speakers for the Dead",
     "NiteSec",
-    "The Black Hand"
+    "The Black Hand",
 ];
 
 export class FactionRoot extends React.Component<IProps, IState> {

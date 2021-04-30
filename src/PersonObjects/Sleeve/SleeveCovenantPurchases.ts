@@ -8,9 +8,9 @@ import { CovenantPurchasesRoot } from "./ui/CovenantPurchasesRoot";
 import { createPopup,
          removePopup } from "../../ui/React/createPopup";
 
-export const MaxSleevesFromCovenant: number = 5;
-export const BaseCostPerSleeve: number = 10e12;
-export const PopupId: string = "covenant-sleeve-purchases-popup";
+export const MaxSleevesFromCovenant = 5;
+export const BaseCostPerSleeve = 10e12;
+export const PopupId = "covenant-sleeve-purchases-popup";
 
 export function createSleevePurchasesFromCovenantPopup(p: IPlayer) {
     const removePopupFn = removePopup.bind(null, PopupId);

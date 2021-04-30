@@ -20,7 +20,7 @@ export class City {
      */
     asciiArt: string;
 
-    constructor(name: CityName, locations: LocationName[]=[], asciiArt: string='') {
+    constructor(name: CityName, locations: LocationName[]=[], asciiArt='') {
         this.name = name;
         this.locations = locations;
         this.asciiArt = asciiArt;

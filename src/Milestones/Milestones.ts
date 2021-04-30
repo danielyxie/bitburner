@@ -6,7 +6,7 @@ import { Faction } from "../Faction/Faction";
 import { GetServerByHostname } from "../Server/ServerHelpers";
 
 function allFactionAugs(p: IPlayer, f: Faction): boolean {
-    const factionAugs = f.augmentations.slice().filter((aug)=> "NeuroFlux Governor" !== aug);
+    const factionAugs = f.augmentations.slice().filter((aug)=> aug !== "NeuroFlux Governor");
     for(const factionAug of factionAugs) {
         if(!p.augmentations.some(aug => {return aug.name == factionAug})) return false;
     }

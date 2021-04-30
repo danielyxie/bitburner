@@ -19,7 +19,7 @@ import { dialogBoxCreate } from "../utils/DialogBox";
 import {
     Reviver,
     Generic_toJSON,
-    Generic_fromJSON
+    Generic_fromJSON,
 } from "../utils/JSONReviver";
 import { formatNumber } from "../utils/StringHelperFunctions";
 
@@ -90,7 +90,7 @@ const GangNames = [
     "The Dark Army",
     "Speakers for the Dead",
     "NiteSec",
-    "The Black Hand"
+    "The Black Hand",
 ];
 
 export let AllGangs = {
@@ -1055,14 +1055,14 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
             onkeyup:() => {
                 var filterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
                 this.createGangMemberUpgradeBox(player, filterValue);
-            }
+            },
         });
 
         UIElems.gangMemberUpgradeBoxDiscount = createElement("p", {
             innerText: "Discount: -" + numeralWrapper.formatPercentage(1 - 1 / this.getDiscount()),
             marginLeft: "6px",
             tooltip: "You get a discount on equipment and upgrades based on your gang's " +
-                     "respect and power. More respect and power leads to more discounts."
+                     "respect and power. More respect and power leads to more discounts.",
         });
 
         UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
@@ -1087,7 +1087,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
     });
 
     var header = createElement("h1", {
-        innerText: this.name + " (" + this.task + ")"
+        innerText: this.name + " (" + this.task + ")",
     });
     container.appendChild(header);
 
@@ -1192,7 +1192,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
                     clickListener:() => {
                         memberObj.buyUpgrade(upg, player, gangObj);
                         return false;
-                    }
+                    },
                 }
 
                 // For the last two divs, tooltip should be on the left
@@ -1278,7 +1278,7 @@ Gang.prototype.displayGangContent = function(player) {
                 Engine.loadFactionContent();
                 displayFactionContent(facName);
                 return false;
-            }
+            },
         }));
 
         // Buttons to switch between panels
@@ -1294,7 +1294,7 @@ Gang.prototype.displayGangContent = function(player) {
                 UIElems.territoryButton.classList.toggle("a-link-button");
                 this.updateGangContent();
                 return false;
-            }
+            },
         })
         UIElems.territoryButton = createElement("a", {
             id:"gang-territory-subpage-button", class:"a-link-button",
@@ -1308,7 +1308,7 @@ Gang.prototype.displayGangContent = function(player) {
                 UIElems.territoryButton.classList.toggle("a-link-button");
                 this.updateGangContent();
                 return false;
-            }
+            },
         });
         UIElems.gangContainer.appendChild(UIElems.managementButton);
         UIElems.gangContainer.appendChild(UIElems.territoryButton);
@@ -1338,7 +1338,7 @@ Gang.prototype.displayGangContent = function(player) {
             "Installing Augmentations does NOT reset your progress with your Gang. " +
             "Furthermore, after installing Augmentations, you will " +
             "automatically be a member of whatever Faction you created your gang with.<br><br>" +
-            "You can also manage your gang programmatically through Netscript using the Gang API"
+            "You can also manage your gang programmatically through Netscript using the Gang API",
         });
         UIElems.gangManagementSubpage.appendChild(UIElems.gangDesc);
 
@@ -1399,7 +1399,7 @@ Gang.prototype.displayGangContent = function(player) {
                 });
                 createPopup(popupId, [txt, br, nameInput, yesBtn, noBtn]);
                 nameInput.focus();
-            }
+            },
         });
         UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitMemberButton);
 
@@ -1425,7 +1425,7 @@ Gang.prototype.displayGangContent = function(player) {
                     }
                 }
                 return false;
-            }
+            },
         });
         UIElems.gangCollapseAllButton = createElement("a", {
             class:"a-link-button", display:"inline-block",
@@ -1439,21 +1439,21 @@ Gang.prototype.displayGangContent = function(player) {
                     }
                 }
                 return false;
-            }
+            },
         });
         UIElems.gangMemberFilter = createElement("input", {
             type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
             class:"text-input",
             onkeyup:() => {
                 this.displayGangMemberList();
-            }
+            },
         });
         UIElems.gangManageEquipmentButton = createElement("a", {
             class:"a-link-button", display:"inline-block",
             innerHTML:"Manage Equipment",
             clickListener: () => {
                 this.createGangMemberUpgradeBox(player);
-            }
+            },
         });
         UIElems.gangManagementSubpage.appendChild(UIElems.gangExpandAllButton);
         UIElems.gangManagementSubpage.appendChild(UIElems.gangCollapseAllButton);
@@ -1467,7 +1467,7 @@ Gang.prototype.displayGangContent = function(player) {
 
         // Subpage for seeing gang territory information
         UIElems.gangTerritorySubpage = createElement("div", {
-            id:"gang-territory-subpage", display:"none"
+            id:"gang-territory-subpage", display:"none",
         });
 
         // Info text for territory page
@@ -1485,7 +1485,7 @@ Gang.prototype.displayGangContent = function(player) {
             "NOTE: Gang members assigned to 'Territory Warfare' can be killed during clashes. This can happen regardless of whether you win " +
             "or lose the clash. A gang member being killed results in both respect and power loss for your gang.<br><br>" +
             "The amount of territory you have affects all aspects of your Gang members' production, including " +
-            "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>"
+            "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>",
         });
         UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDescText);
 
@@ -1654,7 +1654,7 @@ Gang.prototype.updateGangContent = function() {
                 tooltip: "Represents the amount of respect your gang has from other gangs and criminal " +
                          "organizations. Your respect affects the amount of money " +
                          "your gang members will earn, and also determines how much " +
-                         "reputation you are earning with your gang's corresponding Faction."
+                         "reputation you are earning with your gang's corresponding Faction.",
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
 
@@ -1664,7 +1664,7 @@ Gang.prototype.updateGangContent = function() {
                            " (" + numeralWrapper.formatWanted(5*this.wantedGainRate) + " / sec)",
                 tooltip: "Represents how much the gang is wanted by law enforcement. The higher " +
                          "your gang's wanted level, the harder it will be for your gang members " +
-                         "to make money and earn respect. Note that the minimum wanted level is 1."
+                         "to make money and earn respect. Note that the minimum wanted level is 1.",
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
 
@@ -1673,7 +1673,7 @@ Gang.prototype.updateGangContent = function() {
             UIElems.gangInfo.appendChild(createElement("p", { // Wanted Level multiplier
                 display: "inline-block",
                 innerText: `Wanted Level Penalty: -${formatNumber(wantedPenalty, 2)}%`,
-                tooltip: "Penalty for respect and money gain rates due to Wanted Level"
+                tooltip: "Penalty for respect and money gain rates due to Wanted Level",
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
 
@@ -1695,7 +1695,7 @@ Gang.prototype.updateGangContent = function() {
             UIElems.gangInfo.appendChild(createElement("p", {  // Territory multiplier
                 display: "inline-block",
                 innerText: `Territory: ${formatNumber(displayNumber, 3)}%`,
-                tooltip: "The percentage of total territory your Gang controls"
+                tooltip: "The percentage of total territory your Gang controls",
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
 
@@ -1819,7 +1819,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
                 innerText: "Cancel",
             });
             createPopup(popupId, [txt, confirmBtn, cancelBtn]);
-        }
+        },
     });
     const ascendHelpTip = createElement("div", {
         class: "help-tip",

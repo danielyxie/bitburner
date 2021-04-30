@@ -73,7 +73,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             `that you have unlocked through Factions.<br><br>`,
             `When purchasing an Augmentation for a Duplicate Sleeve, they are immediately`,
             `installed. This means that the Duplicate Sleeve will immediately lose all of`,
-            `its stat experience.`
+            `its stat experience.`,
         ].join(" "),
     });
 
@@ -90,7 +90,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             [
                 `<h2>${aug.name}</h2><br>`,
                 `Cost: ${renderToStaticMarkup(Money(aug.startingCost))}<br><br>`,
-                `${aug.info}`
+                `${aug.info}`,
             ].join(" "),
             padding: "2px",
             clickListener: () => {
@@ -101,7 +101,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
                 } else {
                     dialogBoxCreate(`You cannot afford ${aug.name}`, false);
                 }
-            }
+            },
         }));
 
         popupElems.push(div);

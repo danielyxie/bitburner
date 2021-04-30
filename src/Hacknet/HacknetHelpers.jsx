@@ -20,7 +20,7 @@ import { generateRandomContract } from "../CodingContractGenerator";
 import {
     iTutorialSteps,
     iTutorialNextStep,
-    ITutorial
+    ITutorial,
 } from "../InteractiveTutorial";
 import { Player } from "../Player";
 import { AllServers } from "../Server/AllServers";

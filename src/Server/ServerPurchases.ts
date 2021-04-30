@@ -64,7 +64,7 @@ export function purchaseServer(ram: number, p: IPlayer) {
         return;
     }
 
-    var hostname = yesNoTxtInpBoxGetInput();
+    const hostname = yesNoTxtInpBoxGetInput();
     if (hostname == "") {
         dialogBoxCreate("You must enter a hostname for your new server!");
         return;
@@ -86,7 +86,7 @@ export function purchaseServer(ram: number, p: IPlayer) {
     p.purchasedServers.push(newServ.ip);
 
     // Connect new server to home computer
-    var homeComputer = p.getHomeComputer();
+    const homeComputer = p.getHomeComputer();
     homeComputer.serversOnNetwork.push(newServ.ip);
     newServ.serversOnNetwork.push(homeComputer.ip);
 

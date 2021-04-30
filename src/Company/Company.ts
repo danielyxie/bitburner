@@ -136,7 +136,7 @@ export class Company {
     gainFavor(): void {
         if (this.favor == null) { this.favor = 0; }
         if (this.rolloverRep == null) { this.rolloverRep = 0; }
-        var res = this.getFavorGain();
+        const res = this.getFavorGain();
         if (res.length != 2) {
             console.error("Invalid result from getFavorGain() function");
             return;

@@ -1,10 +1,10 @@
 import {
-    post
+    post,
 } from "../ui/postToTerminal";
 
 import {
     containsAllStrings,
-    longestCommonStart
+    longestCommonStart,
 } from "../../utils/StringHelperFunctions";
 
 /**

@@ -117,7 +117,7 @@ export function createSleevesPage(p: IPlayer) {
             innerText: "FAQ",
             clickListener: () => {
                 dialogBoxCreate(SleeveFaq, false);
-            }
+            },
         });
 
         UIElems.docButton = createElement("a", {
@@ -212,13 +212,13 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         innerText: "More Stats",
         clickListener: () => {
             dialogBoxCreate(MoreStatsContent(sleeve));
-        }
+        },
     });
     elems.travelButton = createElement("button", {
         class: "std-button",
         innerText: "Travel",
         clickListener: () => {
-            const popupId: string = "sleeve-travel-popup";
+            const popupId = "sleeve-travel-popup";
             const popupArguments: HTMLElement[] = [];
             popupArguments.push(createPopupCloseButton(popupId, { class: "std-button" }));
             popupArguments.push(createElement("p", {
@@ -247,13 +247,13 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
                             updateSleeveUi(sleeve, elems);
                             updateSleeveTaskSelector(sleeve, elems, allSleeves);
                             return false;
-                        }
+                        },
                     }));
                 })(sleeve, cityName);
             }
 
             createPopup(popupId, popupArguments);
-        }
+        },
     });
     elems.purchaseAugsButton = createElement("button", {
         class: "std-button",
@@ -261,7 +261,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         innerText: "Manage Augmentations",
         clickListener: () => {
             createSleevePurchaseAugsPopup(sleeve, playerRef!);
-        }
+        },
     });
     elems.statsPanel.appendChild(elems.stats);
     elems.statsPanel.appendChild(elems.moreStatsButton);
@@ -296,7 +296,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         innerText: "Set Task",
         clickListener: () => {
             setSleeveTask(sleeve, elems);
-        }
+        },
     });
     elems.taskPanel.appendChild(elems.taskSelector);
     elems.taskPanel.appendChild(elems.taskDetailsSelector);
@@ -312,7 +312,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         innerText: "More Earnings Info",
         clickListener: () => {
             dialogBoxCreate(MoreEarningsContent(sleeve));
-        }
+        },
     });
 
     elems.earningsPanel.appendChild(elems.currentEarningsInfo);
@@ -341,7 +341,7 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
             [`Defense Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.def), `(2x on success)`],
             [`Dexterity Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.dex), `(2x on success)`],
             [`Agility Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.agi), `(2x on success)`],
-            [`Charisma Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.cha), `(2x on success)`]
+            [`Charisma Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.cha), `(2x on success)`],
         ];
         ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo!)
 
@@ -357,9 +357,9 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
             [`Defense Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.def)} / s`],
             [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.dex)} / s`],
             [`Agility Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.agi)} / s`],
-            [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.cha)} / s`]
+            [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.cha)} / s`],
         ];
-        let repGainText: string = "";
+        const repGainText = "";
         if (sleeve.currentTask === SleeveTaskType.Company || sleeve.currentTask === SleeveTaskType.Faction) {
             const repGain: number = sleeve.getRepGain(playerRef!);
             data.push([`Reputation:`, ReputationRate(5 * repGain)]);
@@ -376,14 +376,14 @@ const universitySelectorOptions: string[] = [
     "Networks",
     "Algorithms",
     "Management",
-    "Leadership"
+    "Leadership",
 ];
 
 const gymSelectorOptions: string[] = [
     "Train Strength",
     "Train Defense",
     "Train Dexterity",
-    "Train Agility"
+    "Train Agility",
 ];
 
 // Whenever a new task is selected, the "details" selector must update accordingly
@@ -418,7 +418,7 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
     const value: string = getSelectValue(elems.taskSelector);
     switch(value) {
         case "Work for Company":
-            let companyCount: number = 0;
+            let companyCount = 0;
             const allJobs: string[] = Object.keys(playerRef!.jobs!);
             for (let i = 0; i < allJobs.length; ++i) {
                 if (!forbiddenCompanies.includes(allJobs[i])) {
@@ -436,7 +436,7 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
             }
             break;
         case "Work for Faction":
-            let factionCount: number = 0;
+            let factionCount = 0;
             for (let i = 0; i < playerRef!.factions!.length; ++i) {
                 const fac: string = playerRef!.factions[i]!;
                 if (!forbiddenFactions.includes(fac)) {
@@ -599,7 +599,7 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
         const detailValue: string = getSelectValue(elems.taskDetailsSelector);
         const detailValue2: string = getSelectValue(elems.taskDetailsSelector2);
 
-        let res: boolean = false;
+        let res = false;
         switch(taskValue) {
             case "------":
                 elems.taskDescription!.innerText = "This sleeve is currently idle";

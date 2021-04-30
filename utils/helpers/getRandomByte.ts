@@ -6,7 +6,7 @@ import { getRandomInt } from "./getRandomInt";
  */
 export function getRandomByte(max: number) {
     // Technically 2^8 is 256, but the values are 0-255, not 1-256.
-    const byteMaximum: number = 255;
+    const byteMaximum = 255;
     const upper: number = Math.max(Math.min(max, byteMaximum), 0);
 
     return getRandomInt(0, upper);

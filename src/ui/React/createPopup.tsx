@@ -19,7 +19,7 @@ type ReactComponent = new(...args: any[]) => React.Component<any, any>;
 let gameContainer: HTMLElement;
 
 function getGameContainer() {
-    let container = document.getElementById("entire-game-container");
+    const container = document.getElementById("entire-game-container");
     if (container == null) {
         throw new Error(`Failed to find game container DOM element`)
     }
@@ -51,7 +51,7 @@ export function createPopup(id: string, rootComponent: ReactComponent, props: ob
  * Closes a popup created with the createPopup() function above
  */
 export function removePopup(id: string): void {
-    let content = document.getElementById(`${id}`);
+    const content = document.getElementById(`${id}`);
     if (content == null) { return; }
 
     ReactDOM.unmountComponentAtNode(content);

@@ -27,7 +27,7 @@ import { factionInvitationBoxCreate } from "../../utils/FactionInvitationBox";
 import {
     Reviver,
     Generic_toJSON,
-    Generic_fromJSON
+    Generic_fromJSON,
 } from "../../utils/JSONReviver";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../ui/numeralFormat";
@@ -36,7 +36,7 @@ import {
     yesNoBoxCreate,
     yesNoBoxGetYesButton,
     yesNoBoxGetNoButton,
-    yesNoBoxClose
+    yesNoBoxClose,
 } from "../../utils/YesNoBox";
 
 export function inviteToFaction(faction) {
@@ -90,7 +90,7 @@ export function displayFactionContent(factionName, initiallyOnAugmentationsPage=
             p={Player}
             startHackingMissionFn={startHackingMission}
         />,
-        Engine.Display.factionContent
+        Engine.Display.factionContent,
     )
 }
 

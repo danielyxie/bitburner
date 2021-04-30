@@ -10,6 +10,7 @@
     mod(CodeMirror);
 })(function(CodeMirror) {
   "use strict";
+
   // declare global: JSHINT
 
   function validator(text, options) {
@@ -72,7 +73,7 @@
           message: error.reason,
           severity: error.code ? (error.code.startsWith('W') ? "warning" : "error") : "error",
           from: CodeMirror.Pos(error.line - 1, start),
-          to: CodeMirror.Pos(error.line - 1, end)
+          to: CodeMirror.Pos(error.line - 1, end),
         };
 
         output.push(hint);

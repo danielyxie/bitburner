@@ -72,7 +72,7 @@ export class TechVendorLocation extends React.Component<IProps, any> {
                     onClick={() => createPurchaseServerPopup(i, this.props.p)}
                     style={this.btnStyle}
                     text={<>Purchase {i}GB Server - {Money(cost)}</>}
-                />
+                />,
             )
         }
 

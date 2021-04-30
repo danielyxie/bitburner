@@ -42,7 +42,7 @@ function logBoxInit(): void {
     logBoxClose();
 
     document.removeEventListener("DOMContentLoaded", logBoxInit);
-};
+}
 
 document.addEventListener("DOMContentLoaded", logBoxInit);
 

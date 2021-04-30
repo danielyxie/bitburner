@@ -23,13 +23,13 @@ export class Resleeve extends Person {
 
     getCost(): number {
         // Each experience point adds this to the cost
-        const CostPerExp: number = 25e3;
+        const CostPerExp = 25e3;
 
         // Final cost is multiplied by this constant ^ # Augs
-        const NumAugsExponent: number = 1.2;
+        const NumAugsExponent = 1.2;
 
         // Get total exp in this re-sleeve
-        let totalExp: number = this.hacking_exp +
+        const totalExp: number = this.hacking_exp +
                                this.strength_exp +
                                this.defense_exp +
                                this.dexterity_exp +
@@ -37,7 +37,7 @@ export class Resleeve extends Person {
                                this.charisma_exp;
 
         // Get total base Augmentation cost for this re-sleeve
-        let totalAugmentationCost: number = 0;
+        let totalAugmentationCost = 0;
         for (let i = 0; i < this.augmentations.length; ++i) {
             const aug: Augmentation | null = Augmentations[this.augmentations[i].name];
             if (aug == null) {

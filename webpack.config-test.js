@@ -21,7 +21,7 @@ module.exports = (env, argv) => {
     return {
         plugins: [
             new webpack.DefinePlugin({
-                'process.env.NODE_ENV': "\"development\""
+                'process.env.NODE_ENV': "\"development\"",
             }),
             new webpack.ProvidePlugin({
                 // Automtically detect jQuery and $ as free var in modules
@@ -30,7 +30,7 @@ module.exports = (env, argv) => {
                 // http://stackoverflow.com/questions/29080148/expose-jquery-to-real-window-object-with-webpack
                 jquery: "jquery",
                 jQuery: "jquery",
-                $: "jquery"
+                $: "jquery",
             }),
         ],
         entry: "./test/index.js",
@@ -45,20 +45,20 @@ module.exports = (env, argv) => {
                 {
                     test: /\.tsx?$/,
                     loader: 'ts-loader',
-                    exclude: /node_modules/
+                    exclude: /node_modules/,
                 },
                 {
                     test: /\.(jsx)$/,
                     exclude: /node_modules/,
                     use: {
-                      loader: "babel-loader"
-                    }
+                      loader: "babel-loader",
+                    },
                 },
                 {
                     test: /\.s?css$/,
                     loader: 'null-loader',
                 },
-            ]
+            ],
         },
         optimization: {
             removeAvailableModules: true,
@@ -79,10 +79,10 @@ module.exports = (env, argv) => {
                     vendor: {
                         test: /[\\/]node_modules[\\/]/,
                         name: `tests/vendor`,
-                        chunks: 'all'
-                    }
-                }
-            }
+                        chunks: 'all',
+                    },
+                },
+            },
         },
         resolve: {
             extensions: [
@@ -90,7 +90,7 @@ module.exports = (env, argv) => {
                 ".ts",
                 ".js",
                 ".jsx",
-            ]
+            ],
         },
         stats: statsConfig,
     };

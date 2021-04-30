@@ -13,7 +13,7 @@ export class CorporationState {
 
     // Number representing what state the Corporation is in. The number
     // is an index for the array that holds all Corporation States
-    state: number = 0;
+    state = 0;
 
     constructor() {}
 

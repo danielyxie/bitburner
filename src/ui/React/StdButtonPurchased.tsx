@@ -26,7 +26,7 @@ export class StdButtonPurchased extends React.Component<IStdButtonPurchasedProps
         let tooltipMarkup: IInnerHTMLMarkup | null;
         if (hasTooltip) {
             tooltipMarkup = {
-                __html: this.props.tooltip!
+                __html: this.props.tooltip!,
             }
         }
 

@@ -11,7 +11,7 @@ import { KEY } from "./helpers/keyCodes";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-export let yesNoBoxOpen: boolean = false;
+export let yesNoBoxOpen = false;
 
 const yesNoBoxContainer: HTMLElement | null = document.getElementById("yes-no-box-container");
 const yesNoBoxTextElement: HTMLElement | null = document.getElementById("yes-no-box-text");

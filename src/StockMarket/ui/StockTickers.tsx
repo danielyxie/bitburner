@@ -168,7 +168,7 @@ export class StockTickers extends React.Component<IProps, IState> {
                         sellStockLong={this.props.sellStockLong}
                         sellStockShort={this.props.sellStockShort}
                         stock={val}
-                    />
+                    />,
                 )
             }
         }

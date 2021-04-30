@@ -34,7 +34,7 @@ export function getUpgradeHomeRamCost(this: IPlayer) {
     //Calculate cost
     //Have cost increase by some percentage each time RAM has been upgraded
     const mult = Math.pow(1.58, numUpgrades);
-    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
+    const cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
     return cost;
 }
 

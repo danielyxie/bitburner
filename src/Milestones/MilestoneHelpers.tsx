@@ -23,7 +23,7 @@ export function displayMilestonesContent() {
     if (milestonesContainer instanceof HTMLElement) {
         ReactDOM.render(
             <Root player={Player}/>,
-            milestonesContainer
+            milestonesContainer,
         );
     }
 }

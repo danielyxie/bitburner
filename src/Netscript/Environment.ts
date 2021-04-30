@@ -13,7 +13,7 @@ export class Environment {
     /**
      * Whether or not the script that uses this Environment should stop running
      */
-    stopFlag: boolean = false;
+    stopFlag = false;
 
     /**
      * Environment variables (currently only Netscript functions)
@@ -54,7 +54,7 @@ export class Environment {
 
 	//Sets the value of a variable in any scope
     set(name: string, value: any) {
-        var scope = this.lookup(name);
+        const scope = this.lookup(name);
 
         //If scope has a value, then this variable is already set in a higher scope, so
         //set is there. Otherwise, create a new variable in the local scope

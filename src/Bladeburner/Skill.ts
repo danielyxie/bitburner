@@ -33,36 +33,36 @@ export class Skill {
     name: string;
     desc: string;
     // Cost is in Skill Points
-    baseCost: number = 1;
+    baseCost = 1;
     // Additive cost increase per level
-    costInc: number = 1;
-    maxLvl: number = 0;
+    costInc = 1;
+    maxLvl = 0;
 
     /**
      * These benefits are additive. So total multiplier will be level (handled externally) times the
      * effects below
      */
-    successChanceAll: number = 0;
-    successChanceStealth: number = 0;
-    successChanceKill: number = 0;
-    successChanceContract: number = 0;
-    successChanceOperation: number = 0;
+    successChanceAll = 0;
+    successChanceStealth = 0;
+    successChanceKill = 0;
+    successChanceContract = 0;
+    successChanceOperation = 0;
 
     /**
      * This multiplier affects everything that increases synthoid population/community estimate
      * e.g. Field analysis, Investigation Op, Undercover Op
      */
-    successChanceEstimate: number = 0;
-    actionTime: number = 0;
-    effHack: number = 0;
-    effStr: number = 0;
-    effDef: number = 0;
-    effDex: number = 0;
-    effAgi: number = 0;
-    effCha: number = 0;
-    stamina: number = 0;
-    money: number = 0;
-    expGain: number = 0;
+    successChanceEstimate = 0;
+    actionTime = 0;
+    effHack = 0;
+    effStr = 0;
+    effDef = 0;
+    effDex = 0;
+    effAgi = 0;
+    effCha = 0;
+    stamina = 0;
+    money = 0;
+    expGain = 0;
 
     constructor(params: ISkillParams={name:"foo", desc:"foo"}) {
         if (!params.name) {

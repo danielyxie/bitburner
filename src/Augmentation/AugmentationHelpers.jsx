@@ -24,7 +24,7 @@ import { createAccordionElement } from "../../utils/uiHelpers/createAccordionEle
 import {
     Reviver,
     Generic_toJSON,
-    Generic_fromJSON
+    Generic_fromJSON,
 } from "../../utils/JSONReviver";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { clearObject } from "../../utils/helpers/clearObject";
@@ -1256,7 +1256,7 @@ function initAugmentations() {
 	// Daedalus
     const RedPill = new Augmentation({
         name:AugmentationNames.TheRedPill, repCost:1e6, moneyCost:0,
-        info:"It's time to leave the cave."
+        info:"It's time to leave the cave.",
     });
     RedPill.addToFactions(["Daedalus"]);
     if (augmentationExists(AugmentationNames.TheRedPill)) {
@@ -1556,7 +1556,7 @@ function initAugmentations() {
              and upload the assets.<br /><br />
              This augmentation:<br />
              Lets the player start with {Money(1e6)} after a reset.<br />
-             Lets the player start with the BruteSSH.exe program after a reset.</>
+             Lets the player start with the BruteSSH.exe program after a reset.</>,
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
@@ -2098,7 +2098,7 @@ export function displayAugmentationsContent(contentEl) {
             exportGameFn={saveObject.exportGame.bind(saveObject)}
             installAugmentationsFn={installAugmentations}
         />,
-        contentEl
+        contentEl,
     );
 }
 

@@ -7,7 +7,7 @@ import * as React from "react";
 
 import {
     getStockMarket4SDataCost,
-    getStockMarket4STixApiCost
+    getStockMarket4STixApiCost,
 } from "../StockMarketCosts";
 
 import { CONSTANTS } from "../../Constants";
@@ -55,7 +55,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
             "can change every tick (a tick occurs every few seconds while the game " +
             "is running).<br><br>" +
             "A stock's price forecast can change over time. This is also affected by volatility. " +
-            "The more volatile a stock is, the more its price forecast will change."
+            "The more volatile a stock is, the more its price forecast will change.",
         );
     }
 

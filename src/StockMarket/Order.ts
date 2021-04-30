@@ -25,9 +25,9 @@ export class Order {
     readonly stockSymbol: string;
     readonly type: OrderTypes;
 
-    constructor(stockSymbol: string="", shares: number=0, price: number=0, typ: OrderTypes=OrderTypes.LimitBuy, pos: PositionTypes=PositionTypes.Long) {
+    constructor(stockSymbol="", shares=0, price=0, typ: OrderTypes=OrderTypes.LimitBuy, pos: PositionTypes=PositionTypes.Long) {
         // Validate arguments
-        let invalidArgs: boolean = false;
+        let invalidArgs = false;
         if (typeof shares !== "number" || typeof price !== "number") {
             invalidArgs = true;
         }

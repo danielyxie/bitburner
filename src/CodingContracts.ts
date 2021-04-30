@@ -2,7 +2,7 @@ import {
     codingContractTypesMetadata,
     DescriptionFunc,
     GeneratorFunc,
-    SolverFunc
+    SolverFunc,
 } from "./data/codingcontracttypes";
 
 import { IMap } from "./types";
@@ -10,7 +10,7 @@ import { IMap } from "./types";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../utils/JSONReviver";
 import { KEY } from "../utils/helpers/keyCodes";
 import { createElement } from "../utils/uiHelpers/createElement";
@@ -126,13 +126,13 @@ export class CodingContract {
     reward: ICodingContractReward | null;
 
     /* Number of times the Contract has been attempted */
-    tries: number = 0;
+    tries = 0;
 
     /* String representing the contract's type. Must match type in ContractTypes */
     type: string;
 
-    constructor(fn: string = "",
-                type: string = "Find Largest Prime Factor",
+    constructor(fn = "",
+                type = "Find Largest Prime Factor",
                 reward: ICodingContractReward | null = null) {
         this.fn = fn;
         if (!this.fn.endsWith(".cct")) {
@@ -180,7 +180,7 @@ export class CodingContract {
         // tslint:disable-next-line
         return new Promise<CodingContractResult>((resolve: Function, reject: Function) => {
             const contractType: CodingContractType = CodingContractTypes[this.type];
-            const popupId: string = `coding-contract-prompt-popup-${this.fn}`;
+            const popupId = `coding-contract-prompt-popup-${this.fn}`;
             const title: HTMLElement = createElement("h1", {
                 innerHTML: this.type,
             });

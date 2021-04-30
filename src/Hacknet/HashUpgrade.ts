@@ -23,25 +23,25 @@ export class HashUpgrade {
      * Base cost for this upgrade. Every time the upgrade is purchased,
      * its cost increases by this same amount (so its 1x, 2x, 3x, 4x, etc.)
      */
-    costPerLevel: number = 0;
+    costPerLevel = 0;
 
     /**
      * Description of what the upgrade does
      */
-    desc: string = "";
+    desc = "";
 
     /**
      * Boolean indicating that this upgrade's effect affects a single server,
      * the "target" server
      */
-    hasTargetServer: boolean = false;
+    hasTargetServer = false;
 
     // Name of upgrade
-    name: string = "";
+    name = "";
 
     // Generic value used to indicate the potency/amount of this upgrade's effect
     // The meaning varies between different upgrades
-    value: number = 0;
+    value = 0;
 
     constructor(p: IConstructorParams) {
         if (p.cost != null) { this.cost = p.cost; }

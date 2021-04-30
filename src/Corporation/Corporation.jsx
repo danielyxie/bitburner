@@ -122,7 +122,7 @@ function Industry(params={}) {
         }),
         [CityName.NewTokyo]: 0,
         [CityName.Ishima]: 0,
-        [CityName.Volhaven]: 0
+        [CityName.Volhaven]: 0,
     };
 
     this.name   = params.name ? params.name : 0;
@@ -183,7 +183,7 @@ function Industry(params={}) {
         }),
         [CityName.NewTokyo]: 0,
         [CityName.Ishima]: 0,
-        [CityName.Volhaven]: 0
+        [CityName.Volhaven]: 0,
     };
 
     this.init();
@@ -378,7 +378,7 @@ Industry.prototype.init = function() {
                 "Metal":    5,
                 "Energy":   5,
                 "Water":    2,
-                "Hardware": 4
+                "Hardware": 4,
             }
             this.prodMats = ["RealEstate"];
             this.makesProducts = true;
@@ -1620,7 +1620,7 @@ var OfficeSpaceTiers = {
     Basic: "Basic",
     Enhanced: "Enhanced",
     Luxurious: "Luxurious",
-    Extravagant: "Extravagant"
+    Extravagant: "Extravagant",
 }
 
 function OfficeSpace(params={}) {
@@ -1800,7 +1800,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
                 office.hireEmployee(employee, parentRefs);
                 removeElementById("cmpy-mgmt-hire-employee-popup");
                 return false;
-            }
+            },
         });
         return div;
     };
@@ -1812,7 +1812,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
         clickListener:() => {
             removeElementById("cmpy-mgmt-hire-employee-popup");
             return false;
-        }
+        },
     });
 
     var elems = [text,
@@ -2111,7 +2111,7 @@ Corporation.prototype.goPublic = function() {
         onkeyup:(e) => {
             e.preventDefault();
             if (e.keyCode === KEY.ENTER) {yesBtn.click();}
-        }
+        },
     });
     var br = createElement("br", {});
     yesBtn = createElement("a", {
@@ -2138,7 +2138,7 @@ Corporation.prototype.goPublic = function() {
             dialogBoxCreate(`You took your ${this.name} public and earned ` +
                             `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`);
             return false;
-        }
+        },
     });
     var noBtn = createElement("a", {
         class:"a-link-button",
@@ -2146,7 +2146,7 @@ Corporation.prototype.goPublic = function() {
         clickListener:() => {
             removeElementById(goPublicPopupId);
             return false;
-        }
+        },
     });
     createPopup(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
 }
@@ -2351,7 +2351,7 @@ Corporation.prototype.createUI = function() {
     companyManagementDiv = createElement("div", {
         id:"cmpy-mgmt-container",
         position:"fixed",
-        class:"generic-menupage-container"
+        class:"generic-menupage-container",
     });
     document.getElementById("entire-game-container").appendChild(companyManagementDiv);
 

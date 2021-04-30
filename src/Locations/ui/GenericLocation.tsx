@@ -64,7 +64,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                     key={"companylocation"}
                     locName={this.props.loc.name}
                     p={this.props.p}
-                />
+                />,
             )
         }
 
@@ -74,7 +74,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                     key={"gymlocation"}
                     loc={this.props.loc}
                     p={this.props.p}
-                />
+                />,
             )
         }
 
@@ -83,7 +83,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                 <HospitalLocation
                     key={"hospitallocation"}
                     p={this.props.p}
-                />
+                />,
             )
         }
 
@@ -92,7 +92,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                 <SlumsLocation
                     key={"slumslocation"}
                     p={this.props.p}
-                />
+                />,
             )
         }
 
@@ -103,7 +103,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                     key={"speciallocation"}
                     loc={this.props.loc}
                     p={this.props.p}
-                />
+                />,
             )
         }
 
@@ -113,7 +113,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                     key={"techvendorlocation"}
                     loc={this.props.loc}
                     p={this.props.p}
-                />
+                />,
             )
         }
 
@@ -123,7 +123,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                     key={"travelagencylocation"}
                     p={this.props.p}
                     travel={this.props.travel}
-                />
+                />,
             )
         }
 
@@ -133,7 +133,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                     key={"universitylocation"}
                     loc={this.props.loc}
                     p={this.props.p}
-                />
+                />,
             )
         }
 
@@ -142,7 +142,7 @@ export class GenericLocation extends React.Component<IProps, any> {
                 <CasinoLocation
                     key={"casinoLocation"}
                     p={this.props.p}
-                />
+                />,
             )
         }
 

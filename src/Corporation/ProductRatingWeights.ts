@@ -73,5 +73,5 @@ export const ProductRatingWeights: IMap<object> = {
         Reliability:    0.1,
         Aesthetics:     0.35,
         Features:       0.1,
-    }
+    },
 }

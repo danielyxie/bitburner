@@ -23,7 +23,7 @@ export class LocationCity extends React.Component<IProps, any> {
 
         function LocationLetter(location: LocationName) {
             if (location)
-                return <span key={location} className='tooltip' style={{color: 'blue', whiteSpace: 'nowrap', margin: '0px', padding: '0px', cursor: 'pointer'}} onClick={topprop.enterLocation.bind(thiscity, location)}>
+                return <span key={location} className="tooltip" style={{color: 'blue', whiteSpace: 'nowrap', margin: '0px', padding: '0px', cursor: 'pointer'}} onClick={topprop.enterLocation.bind(thiscity, location)}>
                     X
                 </span>
             return <span>*</span>
@@ -37,8 +37,8 @@ export class LocationCity extends React.Component<IProps, any> {
 
         let locI = 0;
         function lineElems(s: string) {
-            let elems: any[] = [];
-            let matches: any[] = [];
+            const elems: any[] = [];
+            const matches: any[] = [];
             let match: any;
             while ((match = locationLettersRegex.exec(s)) !== null) {
                 matches.push(match);
@@ -48,7 +48,7 @@ export class LocationCity extends React.Component<IProps, any> {
                 return elems;
             }
 
-            let parts: any[] = [];
+            const parts: any[] = [];
             for(let i = 0; i < matches.length; i++) {
                 const startI = i === 0 ? 0 : matches[i-1].index+1;
                 const endI = matches[i].index;
@@ -61,7 +61,7 @@ export class LocationCity extends React.Component<IProps, any> {
             return elems;
         }
 
-        let elems: any[] = [];
+        const elems: any[] = [];
         const lines = this.props.city.asciiArt.split('\n');
         for(const i in lines) {
             elems.push(<pre key={i}>{lineElems(lines[i])}</pre>)

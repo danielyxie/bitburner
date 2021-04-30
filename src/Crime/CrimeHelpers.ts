@@ -4,10 +4,10 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 
 export function determineCrimeSuccess(p: IPlayer, type: string) {
-    let chance: number = 0;
-    let found: boolean = false;
+    let chance = 0;
+    let found = false;
     for (const i in Crimes) {
-        let crime = Crimes[i];
+        const crime = Crimes[i];
         if (crime.type == type) {
             chance = crime.successRate(p);
             found = true;

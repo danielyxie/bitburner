@@ -13,7 +13,7 @@ import { Exploit, ExploitName } from "../../Exploits/Exploit";
 import { Accordion } from "../../ui/React/Accordion";
 
 export function SourceFileMinus1(): React.ReactElement {
-    let exploits = Player.exploits;
+    const exploits = Player.exploits;
 
     if(exploits.length === 0) {
         return <></>

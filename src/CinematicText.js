@@ -99,7 +99,7 @@ function cinematicTextEnd() {
                 mainMenu.style.visibility = "visible";
                 cinematicTextFlag = false;
                 resolve();
-            }
+            },
         }));
     });
 }

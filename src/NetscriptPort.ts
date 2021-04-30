@@ -32,7 +32,7 @@ export class NetscriptPort {
         if (this.data.length === 0) {
             return "NULL PORT DATA";
         } else {
-            var foo = this.data.slice();
+            const foo = this.data.slice();
             return foo[0];
         }
     }

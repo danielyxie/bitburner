@@ -5,7 +5,7 @@
  */
 import {
     convertTimeMsToTimeElapsedString,
-    replaceAt
+    replaceAt,
 } from "../utils/StringHelperFunctions";
 import { logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
 import { Augmentations } from "./Augmentation/Augmentations";
@@ -15,7 +15,7 @@ import {
 } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import {
-    initBitNodeMultipliers
+    initBitNodeMultipliers,
 } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner";
 import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
@@ -30,14 +30,14 @@ import {
     displayFactionContent,
     joinFaction,
     processPassiveFactionRepGain,
-    inviteToFaction
+    inviteToFaction,
 } from "./Faction/FactionHelpers";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import {
     hasHacknetServers,
     renderHacknetNodesUI,
     clearHacknetNodesUI,
-    processHacknetEarnings
+    processHacknetEarnings,
 } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
 import { LocationName } from "./Locations/data/LocationNames";
@@ -54,14 +54,14 @@ import { prestigeAugmentation } from "./Prestige";
 import {
     displayCreateProgramContent,
     getNumAvailableCreateProgram,
-    initCreateProgramButtons
+    initCreateProgramButtons,
 } from "./Programs/ProgramHelpers";
 import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
 import {
     getCurrentEditor,
     scriptEditorInit,
-    updateScriptEditorContent
+    updateScriptEditorContent,
 } from "./Script/ScriptHelpers";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
@@ -70,7 +70,7 @@ import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import {
     initSymbolToStockMap,
     processStockPrices,
-    displayStockMarketContent
+    displayStockMarketContent,
 } from "./StockMarket/StockMarket";
 import { displayMilestonesContent } from "./Milestones/MilestoneHelpers";
 import { Terminal, postNetburnerText } from "./Terminal";
@@ -78,11 +78,11 @@ import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import {
     clearSleevesPage,
     createSleevesPage,
-    updateSleevesPage
+    updateSleevesPage,
 } from "./PersonObjects/Sleeve/SleeveUI";
 import {
     clearResleevesPage,
-    createResleevesPage
+    createResleevesPage,
 } from "./PersonObjects/Resleeving/ResleevingUI";
 
 import { createStatusText } from "./ui/createStatusText";
@@ -270,7 +270,7 @@ const Engine = {
         routing.navigateTo(Page.ActiveScripts);
         ReactDOM.render(
             <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
-            Engine.Display.activeScriptsContent
+            Engine.Display.activeScriptsContent,
         )
         MainMenuLinks.ActiveScripts.classList.add("active");
     },
@@ -590,10 +590,10 @@ const Engine = {
 
         // Factions
         Engine.Display.factionsContent.appendChild(createElement("h1", {
-            innerText:"Factions"
+            innerText:"Factions",
         }));
         Engine.Display.factionsContent.appendChild(createElement("p", {
-            innerText:"Lists all factions you have joined"
+            innerText:"Lists all factions you have joined",
         }));
         var factionsList = createElement("ul");
         Engine.Display.factionsContent.appendChild(createElement("br"));
@@ -610,7 +610,7 @@ const Engine = {
                         Engine.loadFactionContent();
                         displayFactionContent(factionName);
                         return false;
-                    }
+                    },
                 }));
                 factionsList.appendChild(createElement("br"));
             }()); // Immediate invocation
@@ -620,12 +620,12 @@ const Engine = {
 
         // Invited Factions
         Engine.Display.factionsContent.appendChild(createElement("h1", {
-            innerText:"Outstanding Faction Invitations"
+            innerText:"Outstanding Faction Invitations",
         }));
         Engine.Display.factionsContent.appendChild(createElement("p", {
             width:"70%",
             innerText:"Lists factions you have been invited to. You can accept " +
-                      "these faction invitations at any time."
+                      "these faction invitations at any time.",
         }));
         var invitationsList = createElement("ul");
 
@@ -636,7 +636,7 @@ const Engine = {
 
                 var item = createElement("li", {padding:"6px", margin:"6px"});
                 item.appendChild(createElement("p", {
-                    innerText:factionName, display:"inline", margin:"4px", padding:"4px"
+                    innerText:factionName, display:"inline", margin:"4px", padding:"4px",
                 }));
                 item.appendChild(createElement("a", {
                     innerText:"Accept Faction Invitation",
@@ -652,7 +652,7 @@ const Engine = {
                         }
                         Engine.displayFactionsInfo();
                         return false;
-                    }
+                    },
                 }));
 
                 invitationsList.appendChild(item);
@@ -829,7 +829,7 @@ const Engine = {
             if (routing.isOn(Page.ActiveScripts)) {
                 ReactDOM.render(
                     <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
-                    Engine.Display.activeScriptsContent
+                    Engine.Display.activeScriptsContent,
                 )
             }
 
@@ -1229,7 +1229,7 @@ const Engine = {
             Engine.openMainMenuHeader(
                 [terminal, createScript, activeScripts, stats,
                  hacknetnodes, city, milestones,
-                 tutorial, options]
+                 tutorial, options],
             );
 
             // Start interactive tutorial
@@ -1561,7 +1561,7 @@ const Engine = {
     start: function() {
         // Run main loop
         Engine.idleTimer();
-    }
+    },
 };
 
 var indexedDb, indexedDbRequest;

@@ -113,7 +113,7 @@ export function prestigeHomeComputer(homeComp: Server) {
 //Returns server object with corresponding hostname
 //    Relatively slow, would rather not use this a lot
 export function GetServerByHostname(hostname: string): Server | HacknetServer | null {
-    for (var ip in AllServers) {
+    for (const ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
             if (AllServers[ip].hostname == hostname) {
                 return AllServers[ip];

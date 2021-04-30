@@ -1089,7 +1089,7 @@ describe("Stock Market Tests", function() {
                     shares: 1e3,
                     price: 9e3,
                     type: OrderTypes.LimitBuy,
-                    pos: PositionTypes.Long
+                    pos: PositionTypes.Long,
                 });
                 expect(res).to.equal(true);
                 expect(StockMarket["Orders"][stock.symbol]).to.have.lengthOf(0);
@@ -1107,7 +1107,7 @@ describe("Stock Market Tests", function() {
                     shares: 999,
                     price: 9e3,
                     type: OrderTypes.LimitBuy,
-                    pos: PositionTypes.Long
+                    pos: PositionTypes.Long,
                 });
                 expect(res2).to.equal(false);
                 expect(StockMarket["Orders"][stock.symbol]).to.have.lengthOf(1);

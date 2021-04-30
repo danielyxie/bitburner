@@ -99,7 +99,7 @@ export function isValidDirectoryPath(path: string): boolean {
  */
 export function isValidFilePath(path: string): boolean {
     if (path == null || typeof path !== "string") { return false; }
-    let t_path = path;
+    const t_path = path;
 
     // Impossible for filename to have less than length of 3
     if (t_path.length < 3) { return false; }
@@ -132,7 +132,7 @@ export function getFirstParentDirectory(path: string): string {
 
     if (t_path.lastIndexOf("/") === -1) { return "/"; }
 
-    let dirs = t_path.split("/");
+    const dirs = t_path.split("/");
     if (dirs.length === 0) { return "/"; }
 
     return dirs[0] + "/";
@@ -146,7 +146,7 @@ export function getFirstParentDirectory(path: string): string {
  * If there are no parent directories, it returns the empty string
  */
 export function getAllParentDirectories(path: string): string {
-    let t_path = path;
+    const t_path = path;
     const lastSlash = t_path.lastIndexOf("/");
     if (lastSlash === -1) { return ""; }
 

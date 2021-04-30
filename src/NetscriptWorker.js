@@ -111,7 +111,7 @@ function startNetscript2Script(workerScript) {
                 return result;
             }
         }
-    };
+    }
 
     for (let prop in workerScript.env.vars) {
         if (typeof workerScript.env.vars[prop] !== "function") continue;
@@ -330,7 +330,7 @@ function processNetscript1Imports(code, workerScript) {
                     FunctionDeclaration: (node) => {
                         fnNames.push(node.id.name);
                         fnDeclarations.push(node);
-                    }
+                    },
                 });
 
                 //Now we have to generate the code that would create the namespace
@@ -370,7 +370,7 @@ function processNetscript1Imports(code, workerScript) {
                         if (fnsToImport.includes(node.id.name)) {
                             fnDeclarations.push(node);
                         }
-                    }
+                    },
                 });
 
                 //Convert FunctionDeclarations into code
@@ -379,7 +379,7 @@ function processNetscript1Imports(code, workerScript) {
                     generatedCode += "\n";
                 });
             }
-        }
+        },
     });
 
     //If there are no imports, just return the original code
@@ -408,7 +408,7 @@ function processNetscript1Imports(code, workerScript) {
 
     var res = {
         code:       code,
-        lineOffset: lineOffset
+        lineOffset: lineOffset,
     }
     return res;
 }
@@ -459,7 +459,7 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
             `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
             `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
             `the game and the script's RAM usage increased (either because of an update to the game or ` +
-            `your changes to the script.)`
+            `your changes to the script.)`,
         );
         return false;
     }
@@ -470,7 +470,7 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
     if (pid === -1) {
         throw new Error(
             `Failed to start script because could not find available PID. This is most ` +
-            `because you have too many scripts running.`
+            `because you have too many scripts running.`,
         );
     }
 

@@ -8,16 +8,16 @@ import { BladeburnerConstants } from "./data/Constants";
 // import { BlackOperation } from "./BlackOperation";
 
 class StatsMultiplier {
-    hack: number = 0;
-    str: number = 0;
-    def: number = 0;
-    dex: number = 0;
-    agi: number = 0;
-    cha: number = 0;
-    int: number = 0;
+    hack = 0;
+    str = 0;
+    def = 0;
+    dex = 0;
+    agi = 0;
+    cha = 0;
+    int = 0;
 
     [key: string]: number;
-};
+}
 
 export interface IActionParams {
     name?: string;
@@ -44,31 +44,31 @@ export interface IActionParams {
 }
 
 export class Action {
-    name: string = "";
-    desc: string = "";
+    name = "";
+    desc = "";
 
     // Difficulty scales with level. See getDifficulty() method
-    level: number = 1;
-    maxLevel: number = 1;
-    autoLevel: boolean = true;
-    baseDifficulty: number = 100;
-    difficultyFac: number = 1.01;
+    level = 1;
+    maxLevel = 1;
+    autoLevel = true;
+    baseDifficulty = 100;
+    difficultyFac = 1.01;
 
     // Rank increase/decrease is affected by this exponent
-    rewardFac: number = 1.02;
+    rewardFac = 1.02;
 
-    successes: number = 0;
-    failures: number = 0;
+    successes = 0;
+    failures = 0;
 
     // All of these scale with level/difficulty
-    rankGain: number = 0;
-    rankLoss: number = 0;
-    hpLoss: number = 0;
-    hpLost: number = 0;
+    rankGain = 0;
+    rankLoss = 0;
+    hpLoss = 0;
+    hpLost = 0;
 
     // Action Category. Current categories are stealth and kill
-    isStealth: boolean = false;
-    isKill: boolean = false;
+    isStealth = false;
+    isKill = false;
 
     /**
      * Number of this contract remaining, and its growth rate
@@ -81,7 +81,7 @@ export class Action {
     weights: StatsMultiplier = {hack:1/7,str:1/7,def:1/7,dex:1/7,agi:1/7,cha:1/7,int:1/7};
     // Diminishing returns of stats (stat ^ decay where 0 <= decay <= 1)
     decays: StatsMultiplier = { hack: 0.9, str: 0.9, def: 0.9, dex: 0.9, agi: 0.9, cha: 0.9, int: 0.9 };
-    teamCount: number = 0;
+    teamCount = 0;
 
     // Base Class for Contracts, Operations, and BlackOps
     constructor(params: IActionParams| null = null) { //  | null = null
@@ -202,10 +202,10 @@ export class Action {
         if (inst == null) {throw new Error("Invalid Bladeburner instance passed into Action.getSuccessChance");}
         let difficulty = this.getDifficulty();
         let competence = 0;
-        for (let stat in this.weights) {
+        for (const stat in this.weights) {
             if (this.weights.hasOwnProperty(stat)) {
-                let playerStatLvl = Player.queryStatFromString(stat);
-                let key = "eff" + stat.charAt(0).toUpperCase() + stat.slice(1);
+                const playerStatLvl = Player.queryStatFromString(stat);
+                const key = "eff" + stat.charAt(0).toUpperCase() + stat.slice(1);
                 let effMultiplier = inst.skillMultipliers[key];
                 if (effMultiplier == null) {
                     console.error(`Failed to find Bladeburner Skill multiplier for: ${stat}`);

@@ -2,7 +2,7 @@ import {
     CodingContract,
     CodingContractRewardType,
     CodingContractTypes,
-    ICodingContractReward
+    ICodingContractReward,
 } from "./CodingContracts";
 import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
@@ -88,7 +88,7 @@ export function generateContract(params: IGenerateContractParams) {
         fn = getRandomFilename(server, reward);
     }
 
-    let contract = new CodingContract(fn, problemType, reward);
+    const contract = new CodingContract(fn, problemType, reward);
     server.addContract(contract);
 }
 
@@ -119,13 +119,13 @@ function sanitizeRewardType(rewardType: CodingContractRewardType): CodingContrac
 
 function getRandomProblemType() {
     const problemTypes = Object.keys(CodingContractTypes);
-    let randIndex = getRandomInt(0, problemTypes.length - 1);
+    const randIndex = getRandomInt(0, problemTypes.length - 1);
 
     return problemTypes[randIndex];
 }
 
 function getRandomReward(): ICodingContractReward {
-    let reward: ICodingContractReward = {
+    const reward: ICodingContractReward = {
         name: "",
         type: getRandomInt(0, CodingContractRewardType.Money),
     };
@@ -145,8 +145,8 @@ function getRandomReward(): ICodingContractReward {
         case CodingContractRewardType.FactionReputation: {
             // Get a random faction that player is a part of. That
             // faction must allow hacking contracts
-            var numFactions = factionsThatAllowHacking.length;
-            var randFaction = factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
+            const numFactions = factionsThatAllowHacking.length;
+            const randFaction = factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
             reward.name = randFaction;
             break;
         }

@@ -6,7 +6,7 @@ import {
     isValidDirectoryPath,
     isValidFilename,
     removeLeadingSlash,
-    removeTrailingSlash
+    removeTrailingSlash,
 } from "./Terminal/DirectoryHelpers";
 import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
 import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
@@ -18,19 +18,19 @@ import {
     parseAliasDeclaration,
     printAliases,
     removeAlias,
-    substituteAliases
+    substituteAliases,
 } from "./Alias";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import {
     CodingContract,
     CodingContractResult,
-    CodingContractRewardType
+    CodingContractRewardType,
 } from "./CodingContracts";
 import { CONSTANTS } from "./Constants";
 import { Programs } from "./Programs/Programs";
 import {
     executeDarkwebTerminalCommand,
-    checkIfConnectedToDarkweb
+    checkIfConnectedToDarkweb,
 } from "./DarkWeb/DarkWeb";
 import { DarkWebItems } from "./DarkWeb/DarkWebItems";
 import { Engine } from "./engine";
@@ -42,13 +42,13 @@ import {
     calculatePercentMoneyHacked,
     calculateHackingTime,
     calculateGrowTime,
-    calculateWeakenTime
+    calculateWeakenTime,
 } from "./Hacking";
 import { HacknetServer } from "./Hacknet/HacknetServer";
 import {
     iTutorialNextStep,
     iTutorialSteps,
-    ITutorial
+    ITutorial,
 } from "./InteractiveTutorial";
 import { showLiterature } from "./Literature/LiteratureHelpers";
 import { Message } from "./Message/Message";
@@ -67,12 +67,12 @@ import { Server } from "./Server/Server";
 import {
     GetServerByHostname,
     getServer,
-    getServerOnNetwork
+    getServerOnNetwork,
 } from "./Server/ServerHelpers";
 import { Settings } from "./Settings/Settings";
 import {
     SpecialServerIps,
-    SpecialServerNames
+    SpecialServerNames,
 } from "./Server/SpecialServerIps";
 import { getTextFile } from "./TextFile";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
@@ -88,7 +88,7 @@ import {
     yesNoBoxCreate,
     yesNoBoxGetYesButton,
     yesNoBoxGetNoButton,
-    yesNoBoxClose
+    yesNoBoxClose,
 } from "../utils/YesNoBox";
 import {
     post,
@@ -96,7 +96,7 @@ import {
     postContent,
     postError,
     hackProgressBarPost,
-    hackProgressPost
+    hackProgressPost,
 } from "./ui/postToTerminal";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Money } from "./ui/React/Money";
@@ -136,7 +136,7 @@ $(document).keydown(function(event) {
                 "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
-                ` ~${dir}]&gt;</span> ${command}`
+                ` ~${dir}]&gt;</span> ${command}`,
             );
 
             if (command.length > 0) {
@@ -1543,7 +1543,7 @@ let Terminal = {
                         spacesPid,
                         script.threads,
                         spacesThread,
-                        ramUsage
+                        ramUsage,
                     ].join("");
                     post(entry);
                 }

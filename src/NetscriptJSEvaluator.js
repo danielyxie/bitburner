@@ -49,7 +49,7 @@ export async function executeJSScript(scripts = [], workerScript) {
         if (urls != null) {
             for (const b in urls) URL.revokeObjectURL(b.url);
         }
-    };
+    }
 }
 
 /** Returns whether we should compile the script parameter.
@@ -121,7 +121,7 @@ export function _getScriptUrls(script, scripts, seen) {
                 // The top url in the stack is the replacement import file for this script.
                 urlStack.push(...urls);
                 return [prefix, urls[urls.length - 1].url, suffix].join('');
-            }
+            },
         );
 
         // We automatically define a print function() in the NetscriptJS module so that

@@ -24,7 +24,7 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
     /**
      *  Timer ID for auto-updating implementation (returned value from setInterval())
      */
-    interval: number = 0;
+    interval = 0;
 
     constructor(props: IProps) {
         super(props);
@@ -44,7 +44,7 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
 
     tick() {
         this.setState(prevState => ({
-            i: prevState.i + 1
+            i: prevState.i + 1,
         }));
     }
 

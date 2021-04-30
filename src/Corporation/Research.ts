@@ -16,25 +16,25 @@ export interface IConstructorParams {
 
 export class Research {
     // Name of research. This will be used to identify researches in the Research Tree
-    name: string = "";
+    name = "";
 
     // How much scientific research it costs to unlock this
-    cost: number = 0;
+    cost = 0;
 
     // Description of what the Research does
-    desc: string = "";
+    desc = "";
 
     // All possible generic upgrades for the company, in the form of multipliers
-    advertisingMult: number = 1;
-    employeeChaMult: number = 1;
-    employeeCreMult: number = 1;
-    employeeEffMult: number = 1;
-    employeeIntMult: number = 1;
-    productionMult: number = 1;
-    productProductionMult: number = 1;
-    salesMult: number = 1;
-    sciResearchMult: number = 1;
-    storageMult: number = 1;
+    advertisingMult = 1;
+    employeeChaMult = 1;
+    employeeCreMult = 1;
+    employeeEffMult = 1;
+    employeeIntMult = 1;
+    productionMult = 1;
+    productProductionMult = 1;
+    salesMult = 1;
+    sciResearchMult = 1;
+    storageMult = 1;
 
     constructor(p: IConstructorParams={name: "", cost: 0, desc: ""}) {
         this.name = p.name;

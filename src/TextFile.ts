@@ -3,7 +3,7 @@ import { dialogBoxCreate } from "../utils/DialogBox";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../utils/JSONReviver";
 
 
@@ -28,7 +28,7 @@ export class TextFile {
      */
     text: string;
 
-    constructor(fn: string = "", txt: string = "") {
+    constructor(fn = "", txt = "") {
         this.fn = (fn.endsWith(".txt") ? fn : `${fn}.txt`).replace(/\s+/g, "");
         this.text = txt;
     }

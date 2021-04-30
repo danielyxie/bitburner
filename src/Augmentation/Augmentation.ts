@@ -55,25 +55,25 @@ export class Augmentation {
     }
 
     // How much money this costs to buy
-    baseCost: number = 0;
+    baseCost = 0;
 
     // How much faction reputation is required to unlock this
-    baseRepRequirement: number = 0;
+    baseRepRequirement = 0;
 
     // Description of what this Aug is and what it does
-    info: string = "";
+    info = "";
 
     // Any Augmentation not immediately available in BitNode-1 is special (e.g. Bladeburner augs)
-    isSpecial: boolean = false;
+    isSpecial = false;
 
     // Augmentation level - for repeatable Augs like NeuroFlux Governor
-    level: number = 0;
+    level = 0;
 
     // Name of Augmentation
-    name: string = "";
+    name = "";
 
     // Whether the player owns this Augmentation
-    owned: boolean = false;
+    owned = false;
 
     // Array of names of all prerequisites
     prereqs: string[] = [];
@@ -83,7 +83,7 @@ export class Augmentation {
     mults: IMap<number> = {}
 
     // Initial cost. Doesn't change when you purchase multiple Augmentation
-    startingCost: number = 0;
+    startingCost = 0;
 
     constructor(params: IConstructorParams={ info: "", moneyCost: 0, name: "", repCost: 0 }) {
         this.name = params.name;

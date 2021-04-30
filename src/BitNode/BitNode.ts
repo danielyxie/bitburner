@@ -16,7 +16,7 @@ class BitNode {
     number: number;
 
 
-    constructor(n: number, name: string, desc: string="", info: string="") {
+    constructor(n: number, name: string, desc="", info="") {
         this.number = n;
         this.name = name;
         this.desc = desc;
@@ -256,7 +256,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
     if (p.bitNodeN == null) {
         p.bitNodeN = 1;
     }
-    for (var mult in BitNodeMultipliers) {
+    for (const mult in BitNodeMultipliers) {
         if (BitNodeMultipliers.hasOwnProperty(mult)) {
             BitNodeMultipliers[mult] = 1;
         }
@@ -435,7 +435,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             break;
         case 12: //The Recursion
             var sf12Lvl = 0;
-            for (var i = 0; i < p.sourceFiles.length; i++) {
+            for (let i = 0; i < p.sourceFiles.length; i++) {
                 if (p.sourceFiles[i].n === 12) {
                     sf12Lvl = p.sourceFiles[i].lvl;
                 }

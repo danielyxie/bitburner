@@ -65,7 +65,7 @@ let NodeTypes = {
     Database: "Database Node", // No actions available
     Spam: "Spam Node", // No actions Available
     Transfer: "Transfer Node", // Can Weaken, Scan, Fortify and Overflow
-    Shield: "Shield Node" // Can Fortify
+    Shield: "Shield Node", // Can Fortify
 }
 
 let NodeActions = {
@@ -252,7 +252,7 @@ HackingMission.prototype.init = function() {
         var stats = {
             atk: randMult * getRandomInt(80, 86),
             def: randMult * getRandomInt(5, 10),
-            hp: randMult * getRandomInt(210, 230)
+            hp: randMult * getRandomInt(210, 230),
         }
         this.enemyCores.push(new Node(NodeTypes.Core, stats));
         this.enemyCores[i].setControlledByEnemy();
@@ -262,7 +262,7 @@ HackingMission.prototype.init = function() {
         var stats = {
             atk: 0,
             def: randMult * getRandomInt(10, 20),
-            hp: randMult * getRandomInt(275, 300)
+            hp: randMult * getRandomInt(275, 300),
         }
         this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
         this.enemyNodes[i].setControlledByEnemy();
@@ -272,7 +272,7 @@ HackingMission.prototype.init = function() {
         var stats = {
             atk: 0,
             def: randMult * getRandomInt(30, 55),
-            hp: randMult * getRandomInt(210, 275)
+            hp: randMult * getRandomInt(210, 275),
         }
         var node = new Node(NodeTypes.Database, stats);
         node.setControlledByEnemy();
@@ -674,7 +674,7 @@ HackingMission.prototype.createMap = function() {
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(15, 45),
-                            hp: randMult * getRandomInt(200, 225)
+                            hp: randMult * getRandomInt(200, 225),
                         }
                         node = new Node(NodeTypes.Spam, stats);
                         break;
@@ -682,7 +682,7 @@ HackingMission.prototype.createMap = function() {
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(15, 45),
-                            hp: randMult * getRandomInt(250, 275)
+                            hp: randMult * getRandomInt(250, 275),
                         }
                         node = new Node(NodeTypes.Transfer, stats);
                         break;
@@ -691,7 +691,7 @@ HackingMission.prototype.createMap = function() {
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(30, 70),
-                            hp: randMult * getRandomInt(300, 320)
+                            hp: randMult * getRandomInt(300, 320),
                         }
                         node = new Node(NodeTypes.Shield, stats);
                         break;
@@ -971,10 +971,10 @@ HackingMission.prototype.initJsPlumb = function() {
         PaintStyle: {
             gradient: { stops: [
                 [ 0, "#FFFFFF" ],
-                [ 1, "#FFFFFF" ]
+                [ 1, "#FFFFFF" ],
             ] },
             stroke: "#FFFFFF",
-            strokeWidth: 8
+            strokeWidth: 8,
         },
     });
 
@@ -986,7 +986,7 @@ HackingMission.prototype.initJsPlumb = function() {
             deleteEndpointsOnEmpty:true,
             maxConnections:1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
 
@@ -995,28 +995,28 @@ HackingMission.prototype.initJsPlumb = function() {
         instance.makeTarget(this.enemyCores[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
     for (var i = 0; i < this.enemyDatabases.length; ++i) {
         instance.makeTarget(this.enemyDatabases[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:["Flowchart"]
+            connector:["Flowchart"],
         });
     }
     for (var i = 0; i < this.enemyNodes.length; ++i) {
         instance.makeTarget(this.enemyNodes[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
     for (var i = 0; i < this.miscNodes.length; ++i) {
         instance.makeTarget(this.miscNodes[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
 
@@ -1264,7 +1264,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
                 deleteEndpointsOnEmpty:true,
                 maxConnections:1,
                 anchor:"Continuous",
-                connector:"Flowchart"
+                connector:"Flowchart",
             });
         } else {
             targetNode.setControlledByEnemy();
@@ -1273,7 +1273,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             this.jsplumbinstance.makeTarget(targetNode.el, {
                 maxConnections:-1,
                 anchor:"Continuous",
-                connector:["Flowchart"]
+                connector:["Flowchart"],
             });
         }
 
@@ -1393,7 +1393,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                         // Create connection
                         nodeObj.conn = this.jsplumbinstance.connect({
                             source:nodeObj.el,
-                            target:node.el
+                            target:node.el,
                         });
                         ++node.targetedCount;
                     } else {
@@ -1409,7 +1409,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                             // Create connection
                             nodeObj.conn = this.jsplumbinstance.connect({
                                 source:nodeObj.el,
-                                target:node.el
+                                target:node.el,
                             });
                             ++node.targetedCount;
                         }

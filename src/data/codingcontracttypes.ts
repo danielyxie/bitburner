@@ -63,7 +63,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Find Largest Prime Factor",
         numTries: 10,
         solver: (data: number, ans: string) => {
-            let fac: number = 2;
+            let fac = 2;
             let n: number = data;
             while (n > ((fac-1) * (fac-1))) {
                 while (n % fac === 0) {
@@ -87,7 +87,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const len: number = getRandomInt(5, 40);
             const arr: number[] = [];
             arr.length = len;
-            for (let i: number = 0; i < len; ++i) {
+            for (let i = 0; i < len; ++i) {
                 arr[i] = getRandomInt(-10, 10);
             }
 
@@ -97,7 +97,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         numTries: 10,
         solver: (data: number[], ans: string) => {
             const nums: number[] = data.slice();
-            for (let i: number = 1; i < nums.length; i++) {
+            for (let i = 1; i < nums.length; i++) {
                 nums[i] = Math.max(nums[i], nums[i] + nums[i - 1]);
             }
 
@@ -124,7 +124,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const ways: number[] = [1];
             ways.length = data + 1;
             ways.fill(0, 1);
-            for (let i: number = 1; i < data; ++i) {
+            for (let i = 1; i < data; ++i) {
                 for (let j: number = i; j <= data; ++j) {
                     ways[j] += ways[j - i];
                 }
@@ -162,13 +162,13 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const n: number = getRandomInt(1, 15);
             const matrix: number[][] = [];
             matrix.length = m;
-            for (let i: number = 0; i < m; ++i) {
+            for (let i = 0; i < m; ++i) {
                 matrix[i] = [];
                 matrix[i].length = n;
             }
 
-            for (let i: number = 0; i < m; ++i) {
-                for (let j: number = 0; j < n; ++j) {
+            for (let i = 0; i < m; ++i) {
+                for (let j = 0; j < n; ++j) {
                     matrix[i][j] = getRandomInt(1, 50);
                 }
             }
@@ -181,11 +181,11 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const spiral: number[] = [];
             const m: number = data.length;
             const n: number = data[0].length;
-            let u: number = 0;
+            let u = 0;
             let d: number = m - 1;
-            let l: number = 0;
+            let l = 0;
             let r: number = n - 1;
-            let k: number = 0;
+            let k = 0;
             while (true) {
                 // Up
                 for (let col: number = l; col <= r; col++) {
@@ -219,11 +219,11 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans)
                                                .replace(/\s/g, "");
             const playerAns: any[] = sanitizedPlayerAns.split(",");
-            for (let i: number = 0; i < playerAns.length; ++i) {
+            for (let i = 0; i < playerAns.length; ++i) {
                 playerAns[i] = parseInt(playerAns[i], 10);
             }
             if (spiral.length !== playerAns.length) { return false; }
-            for (let i: number = 0; i < spiral.length; ++i) {
+            for (let i = 0; i < spiral.length; ++i) {
                 if (spiral[i] !== playerAns[i]) {
                     return false;
                 }
@@ -250,7 +250,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const len: number = getRandomInt(3, 25);
             const arr: number[] = [];
             arr.length = len;
-            for (let i: number = 0; i < arr.length; ++i) {
+            for (let i = 0; i < arr.length; ++i) {
                 if (Math.random() < 0.2) {
                     arr[i] = 0; // 20% chance of being 0
                 } else {
@@ -264,8 +264,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         numTries: 1,
         solver: (data: number[], ans: string) => {
             const n: number = data.length;
-            let i: number = 0;
-            for (let reach: number = 0; i < n && i <= reach; ++i) {
+            let i = 0;
+            for (let reach = 0; i < n && i <= reach; ++i) {
                 reach = Math.max(i + data[i], reach);
             }
             const solution: boolean = (i === n);
@@ -292,7 +292,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         gen: () => {
             const intervals: number[][] = [];
             const numIntervals: number = getRandomInt(3, 20);
-            for (let i: number = 0; i < numIntervals; ++i) {
+            for (let i = 0; i < numIntervals; ++i) {
                 const start: number = getRandomInt(1, 25);
                 const end: number = start + getRandomInt(1, 10);
                 intervals.push([start, end]);
@@ -343,8 +343,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 3,
         gen: () => {
-            let str: string = "";
-            for (let i: number = 0; i < 4; ++i) {
+            let str = "";
+            for (let i = 0; i < 4; ++i) {
                 const num: number = getRandomInt(0, 255);
                 const convNum: string = num.toString();
                 str += convNum;
@@ -356,10 +356,10 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         numTries: 10,
         solver: (data: string, ans: string) => {
             const ret: string[] = [];
-            for (let a: number = 1; a <= 3; ++a) {
-                for (let b: number = 1; b <= 3; ++b) {
-                    for (let c: number = 1; c <= 3; ++c) {
-                        for (let d: number = 1; d <= 3; ++d) {
+            for (let a = 1; a <= 3; ++a) {
+                for (let b = 1; b <= 3; ++b) {
+                    for (let c = 1; c <= 3; ++c) {
+                        for (let d = 1; d <= 3; ++d) {
                             if (a + b + c + d === data.length) {
                                 const A: number = parseInt(data.substring(0, a), 10);
                                 const B: number = parseInt(data.substring(a, a + b), 10);
@@ -406,7 +406,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
-            for (let i: number = 0; i < len; ++i) {
+            for (let i = 0; i < len; ++i) {
                 arr[i] = getRandomInt(1, 200);
             }
 
@@ -415,9 +415,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Algorithmic Stock Trader I",
         numTries: 5,
         solver: (data: number[], ans: string) => {
-            let maxCur: number = 0;
-            let maxSoFar: number = 0;
-            for (let i: number = 1; i < data.length; ++i) {
+            let maxCur = 0;
+            let maxSoFar = 0;
+            for (let i = 1; i < data.length; ++i) {
                 maxCur = Math.max(0, maxCur += data[i] - data[i - 1]);
                 maxSoFar = Math.max(maxCur, maxSoFar);
             }
@@ -442,7 +442,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
-            for (let i: number = 0; i < len; ++i) {
+            for (let i = 0; i < len; ++i) {
                 arr[i] = getRandomInt(1, 200);
             }
 
@@ -451,8 +451,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Algorithmic Stock Trader II",
         numTries: 10,
         solver: (data: number[], ans: string) => {
-            let profit: number = 0;
-            for (let p: number = 1; p < data.length; ++p) {
+            let profit = 0;
+            for (let p = 1; p < data.length; ++p) {
                 profit += Math.max(data[p] - data[p - 1], 0);
             }
 
@@ -476,7 +476,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
-            for (let i: number = 0; i < len; ++i) {
+            for (let i = 0; i < len; ++i) {
                 arr[i] = getRandomInt(1, 200);
             }
 
@@ -487,8 +487,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         solver: (data: number[], ans: string) => {
             let hold1: number = Number.MIN_SAFE_INTEGER;
             let hold2: number = Number.MIN_SAFE_INTEGER;
-            let release1: number = 0;
-            let release2: number = 0;
+            let release1 = 0;
+            let release2 = 0;
             for (const price of data) {
                 release2    = Math.max(release2, hold2 + price);
                 hold2       = Math.max(hold2, release1 - price);
@@ -536,7 +536,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const len = prices.length;
             if (len < 2) { return (parseInt(ans) === 0); }
             if (k > len / 2) {
-                let res: number = 0;
+                let res = 0;
                 for (let i = 1; i < len; ++i) {
                     res += Math.max(prices[i] - prices[i-1], 0);
                 }
@@ -567,7 +567,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     {
         desc: (data: number[][]) => {
-            function createTriangleRecurse(data: number[][], level: number = 0): string {
+            function createTriangleRecurse(data: number[][], level = 0): string {
                 const numLevels: number = data.length;
                 if (level >= numLevels) { return ""; }
                 const numSpaces = numLevels - level + 1;
@@ -618,8 +618,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Minimum Path Sum in a Triangle",
         numTries: 10,
         solver: (data: number[][], ans: string) => {
-            let n: number = data.length;
-            let dp: number[] = data[n-1].slice();
+            const n: number = data.length;
+            const dp: number[] = data[n-1].slice();
             for (let i = n-2; i > -1; --i) {
                 for (let j = 0; j < data[i].length; ++j) {
                     dp[j] = Math.min(dp[j], dp[j + 1]) + data[i][j];
@@ -653,9 +653,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Unique Paths in a Grid I",
         numTries: 10,
         solver: (data: number[], ans: string) => {
-            let n: number = data[0]; // Number of rows
-            let m: number = data[1]; // Number of columns
-            let currentRow: number[] = [];
+            const n: number = data[0]; // Number of rows
+            const m: number = data[1]; // Number of columns
+            const currentRow: number[] = [];
             currentRow.length = n;
 
             for (let i = 0; i < n; i++) {
@@ -672,7 +672,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     {
         desc: (data: number[][]) => {
-            let gridString: string = "";
+            let gridString = "";
             for (const line of data) {
                 gridString += `${line.toString()},\n`;
             }
@@ -715,7 +715,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         name: "Unique Paths in a Grid II",
         numTries: 10,
         solver: (data: number[][], ans: string) => {
-            let obstacleGrid: number[][] = [];
+            const obstacleGrid: number[][] = [];
             obstacleGrid.length = data.length;
             for (let i = 0; i < obstacleGrid.length; ++i) {
                 obstacleGrid[i] = data[i].slice();
@@ -755,7 +755,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         difficulty: 10,
         gen: () => {
             const len: number = getRandomInt(6, 20);
-            let chars: string[] = [];
+            const chars: string[] = [];
             chars.length = len;
 
             // 80% chance of the first parenthesis being (
@@ -779,7 +779,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         solver: (data: string, ans: string) => {
             let left = 0;
             let right = 0;
-            let res: string[] = [];
+            const res: string[] = [];
 
             for (let i = 0; i < data.length; ++i) {
                 if (data[i] === '(') {
@@ -792,7 +792,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             function dfs(pair: number, index: number, left: number, right: number, s: string, solution: string, res: string[]) {
                 if (s.length === index) {
                     if (left === 0 && right === 0 && pair === 0) {
-                        for(var i = 0; i < res.length; i++) {
+                        for(let i = 0; i < res.length; i++) {
                             if(res[i] === solution) { return; }
                         }
                         res.push(solution);
@@ -883,7 +883,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
                 for (let i = pos; i < num.length; ++i) {
                     if (i != pos && num[pos] == '0') { break; }
-                    let cur = parseInt(num.substring(pos, i+1));
+                    const cur = parseInt(num.substring(pos, i+1));
 
                     if (pos === 0) {
                         helper(res, path + cur, num, target, i + 1, cur, cur);
@@ -899,7 +899,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
             for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
                 sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i])
-                                           .replace(/\s/g, "");;
+                                           .replace(/\s/g, "");
             }
 
             if (num == null || num.length === 0) {
@@ -908,7 +908,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 return false;
             }
 
-            let result: string[] = [];
+            const result: string[] = [];
             helper(result, "", num, target, 0, 0, 0);
 
             for (const expr of result) {

@@ -21,7 +21,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
 
   // Tokenizer
 
-  var keywords = function(){
+  var keywords = (function(){
     function kw(type) {return {type: type, style: "keyword"};}
     var A = kw("keyword a"), B = kw("keyword b"), C = kw("keyword c"), D = kw("keyword d");
     var operator = kw("operator"), atom = {type: "atom", style: "atom"};
@@ -268,7 +268,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "getSleevePurchasableAugs": atom,
       "purchaseSleeveAug": atom,
     };
-  }();
+  }());
 
   var isOperatorChar = /[+\-*&%=<>!?|~^@]/;
   var isJsonldKeyword = /^@(context|id|value|language|type|container|list|set|reverse|index|base|vocab|graph)"/;
@@ -576,7 +576,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       if (type == wanted) return cont();
       else if (wanted == ";" || type == "}" || type == ")" || type == "]") return pass();
       else return cont(exp);
-    };
+    }
     return exp;
   }
 
@@ -1067,7 +1067,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
         lexical: new JSLexical((basecolumn || 0) - indentUnit, 0, "block", false),
         localVars: parserConfig.localVars,
         context: parserConfig.localVars && new Context(null, null, false),
-        indented: basecolumn || 0
+        indented: basecolumn || 0,
       };
       if (parserConfig.globalVars && typeof parserConfig.globalVars == "object")
         state.globalVars = parserConfig.globalVars;
@@ -1135,7 +1135,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
     skipExpression: function(state) {
       var top = state.cc[state.cc.length - 1]
       if (top == expression || top == expressionNoComma) state.cc.pop()
-    }
+    },
   };
 });
 

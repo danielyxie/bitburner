@@ -22,10 +22,10 @@ export class HashManager {
 
     // Max number of hashes this can hold. Equal to the sum of capacities of
     // all Hacknet Servers
-    capacity: number = 0;
+    capacity = 0;
 
     // Number of hashes currently in storage
-    hashes: number = 0;
+    hashes = 0;
 
     // Map of Hash Upgrade Name -> levels in that upgrade
     upgrades: IMap<number> = {};

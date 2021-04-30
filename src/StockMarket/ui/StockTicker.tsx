@@ -166,7 +166,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                     "Enter the price for your Limit Order",
                     (price: number) => {
                         this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitBuy, this.state.position);
-                    }
+                    },
                 );
                 break;
             }
@@ -176,7 +176,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                     "Enter the price for your Stop Order",
                     (price: number) => {
                         this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopBuy, this.state.position);
-                    }
+                    },
                 );
                 break;
             }
@@ -289,7 +289,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                     "Enter the price for your Limit Order",
                     (price: number) => {
                         this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitSell, this.state.position);
-                    }
+                    },
                 );
                 break;
             }
@@ -299,7 +299,7 @@ export class StockTicker extends React.Component<IProps, IState> {
                     "Enter the price for your Stop Order",
                     (price: number) => {
                         this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopSell, this.state.position);
-                    }
+                    },
                 )
                 break;
             }

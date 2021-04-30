@@ -1313,11 +1313,11 @@ export function startClass(costMult, expMult, className) {
 
     this.workMoneyLossRate      = cost;
     this.workHackExpGainRate    = hackExp * this.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-    this.workStrExpGainRate     = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workDefExpGainRate     = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workDexExpGainRate     = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workAgiExpGainRate     = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workChaExpGainRate     = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
+    this.workStrExpGainRate     = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workDefExpGainRate     = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workDexExpGainRate     = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workAgiExpGainRate     = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workChaExpGainRate     = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
 
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     if (className == CONSTANTS.ClassGymStrength ||

@@ -6,7 +6,7 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import {
     Aliases,
-    GlobalAliases
+    GlobalAliases,
 } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { Message } from "../Message/Message";
@@ -48,16 +48,16 @@ const commands = [
     "sudov",
     "tail",
     "theme",
-    "top"
+    "top",
 ];
 
-export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: string, index: number, currPath: string=""): string[] {
+export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: string, index: number, currPath=""): string[] {
     let allPos: string[] = [];
     allPos = allPos.concat(Object.keys(GlobalAliases));
     const currServ = p.getCurrentServer();
     const homeComputer = p.getHomeComputer();
 
-    let parentDirPath: string = "";
+    let parentDirPath = "";
     let evaledParentDirPath: string | null = null;
 
     // Helper functions
@@ -208,7 +208,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     }
 
     if (isCommand("buy")) {
-        let options = [];
+        const options = [];
         for (const i in DarkWebItems) {
             const item = DarkWebItems[i]
             options.push(item.program);
@@ -238,7 +238,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     if (isCommand("connect")) {
         // All network connections
         for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-            var serv = AllServers[currServ.serversOnNetwork[i]];
+            const serv = AllServers[currServ.serversOnNetwork[i]];
             if (serv == null) { continue; }
             allPos.push(serv.ip);
             allPos.push(serv.hostname);

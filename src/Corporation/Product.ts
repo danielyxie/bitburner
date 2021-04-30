@@ -48,43 +48,43 @@ export class Product {
     }
 
     // Product name
-    name: string = "";
+    name = "";
 
     // The demand for this Product in the market. Gradually decreases
-    dmd: number = 0;
+    dmd = 0;
 
     // How much competition there is in the market for this Product
-    cmp: number = 0;
+    cmp = 0;
 
     // Markup. Affects how high of a price you can charge for this Product
     // without suffering a loss in the # of sales
-    mku: number = 0;
+    mku = 0;
 
     // Production cost - estimation of how much money it costs to make this Product
-    pCost: number = 0;
+    pCost = 0;
 
     // Sell cost
-    sCost: number = 0;
+    sCost = 0;
 
     // Variables for handling the creation process of this Product
-    fin: boolean = false;       // Whether this Product has finished being created
-    prog: number = 0;           // Creation progress - A number betwee 0-100 representing percentage
-    createCity: string = "";    // City in which the product is/was being created
-    designCost: number = 0;     // How much money was invested into designing this Product
-    advCost: number = 0;        // How much money was invested into advertising this Product
+    fin = false;       // Whether this Product has finished being created
+    prog = 0;           // Creation progress - A number betwee 0-100 representing percentage
+    createCity = "";    // City in which the product is/was being created
+    designCost = 0;     // How much money was invested into designing this Product
+    advCost = 0;        // How much money was invested into advertising this Product
 
     // Aggregate score for this Product's 'rating'
     // This is based on the stats/properties below. The weighting of the
     // stats/properties below differs between different industries
-    rat: number = 0;
+    rat = 0;
 
     // Stats/properties of this Product
-    qlt: number = 0;
-    per: number = 0;
-    dur: number = 0;
-    rel: number = 0;
-    aes: number = 0;
-    fea: number = 0;
+    qlt = 0;
+    per = 0;
+    dur = 0;
+    rel = 0;
+    aes = 0;
+    fea = 0;
 
     // Data refers to the production, sale, and quantity of the products
     // These values are specific to a city
@@ -93,11 +93,11 @@ export class Product {
 
     // Location of this Product
     // Only applies for location-based products like restaurants/hospitals
-    loc: string = "";
+    loc = "";
 
     // How much space 1 unit of the Product takes (in the warehouse)
     // Not applicable for all Products
-    siz: number = 0;
+    siz = 0;
 
     // Material requirements. An object that maps the name of a material to how much it requires
     // to make 1 unit of the product.
@@ -110,8 +110,8 @@ export class Product {
     sllman: IMap<any[]> = createCityMap<any[]>([false, 0]);
 
     // Flags that signal whether automatic sale pricing through Market TA is enabled
-    marketTa1: boolean = false;
-    marketTa2: boolean = false;
+    marketTa1 = false;
+    marketTa2 = false;
     marketTa2Price: IMap<number> = createCityMap<number>(0);
 
     constructor(params: IConstructorParams={}) {
@@ -135,7 +135,7 @@ export class Product {
 
     // empWorkMult is a multiplier that increases progress rate based on
     // productivity of employees
-    createProduct(marketCycles: number=1, empWorkMult: number=1): void {
+    createProduct(marketCycles=1, empWorkMult=1): void {
         if (this.fin) { return; }
         this.prog += (marketCycles * .01 * empWorkMult);
     }
@@ -145,18 +145,18 @@ export class Product {
         this.fin = true;
 
         //Calculate properties
-        var progrMult = this.prog / 100;
+        const progrMult = this.prog / 100;
 
         const engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"];
         const mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"];
         const rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"];
         const opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"];
         const busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
-        var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
-        var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
+        const designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
+        const balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
                           (1.5 * opsRatio) + (busRatio);
-        var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
-        var totalMult = progrMult * balanceMult * designMult * sciMult;
+        const sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
+        const totalMult = progrMult * balanceMult * designMult * sciMult;
 
         this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions.Engineer]) +
                                 (0.05 * employeeProd[EmployeePositions.Management]) +
@@ -189,7 +189,7 @@ export class Product {
                                 (0.05 * employeeProd[EmployeePositions.Operations]) +
                                 (0.05 * employeeProd[EmployeePositions.Business]));
         this.calculateRating(industry);
-        var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
+        const advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
         this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
         this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
         this.cmp = getRandomInt(0, 70);

@@ -76,12 +76,12 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
 
 // Creates all of the Re-sleeves that will be available for purchase at VitaLife
 export function generateResleeves(): Resleeve[] {
-    const NumResleeves: number = 40; // Total number of Resleeves to generate
+    const NumResleeves = 40; // Total number of Resleeves to generate
 
-    let ret: Resleeve[] = [];
+    const ret: Resleeve[] = [];
     for (let i = 0; i < NumResleeves; ++i) {
         // i will be a number indicating how "powerful" the Re-sleeve should be
-        let r: Resleeve = new Resleeve();
+        const r: Resleeve = new Resleeve();
 
         // Generate experience
         const expMult: number = (5 * i) + 1;

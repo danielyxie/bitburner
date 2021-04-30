@@ -36,8 +36,8 @@ export function printAliases(): void {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global = false): boolean {
-    var re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
-    var matches = dec.match(re);
+    const re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
+    const matches = dec.match(re);
     if (matches == null || matches.length != 3) {return false;}
     if (global){
         addGlobalAlias(matches[1],matches[2]);
@@ -109,7 +109,7 @@ export function substituteAliases(origCommand: string): string {
                 commandArray[0] = alias;
             }
         }
-        for (var i = 0; i < commandArray.length; ++i) {
+        for (let i = 0; i < commandArray.length; ++i) {
             var alias = getGlobalAlias(commandArray[i]);
             if (alias != null) {
                 commandArray[i] = alias;

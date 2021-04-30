@@ -24,6 +24,6 @@ export class PositionTracker {
 		}
 		return position;
 	}
-};
+}
 
 export const CursorPositions: PositionTracker = new PositionTracker();

@@ -25,7 +25,7 @@ module.exports = (env, argv) => {
     return {
         plugins: [
             new webpack.DefinePlugin({
-                'process.env.NODE_ENV': isDevelopment ? "\"development\"" : "\"production\""
+                'process.env.NODE_ENV': isDevelopment ? "\"development\"" : "\"production\"",
             }),
             // http://stackoverflow.com/questions/29080148/expose-jquery-to-real-window-object-with-webpack
             new webpack.ProvidePlugin({
@@ -34,14 +34,14 @@ module.exports = (env, argv) => {
                 // This is required by many jquery plugins
                 jquery: "jquery",
                 jQuery: "jquery",
-                $: "jquery"
+                $: "jquery",
             }),
             new HtmlWebpackPlugin({
                 title: "Bitburner" + (isDevelopment ? ' - development' : ""),
                 template: "src/index.html",
                 favicon: "favicon.ico",
                 googleAnalytics: {
-                    trackingId: 'UA-100157497-1'
+                    trackingId: 'UA-100157497-1',
                 },
                 meta: {},
                 minify: isDevelopment ? false : {
@@ -69,43 +69,43 @@ module.exports = (env, argv) => {
                     removeTagWhitespace: false,
                     sortAttributes: false,
                     sortClassName: false,
-                    useShortDoctype: false
+                    useShortDoctype: false,
                 },
             }),
             new MiniCssExtractPlugin({
-                filename: "[name].css"
-            })
+                filename: "[name].css",
+            }),
         ],
         target: "web",
         entry: entries,
         devtool: "source-map",
         output: {
             path: path.resolve(__dirname, "./"),
-            filename: "[name].bundle.js"
+            filename: "[name].bundle.js",
         },
         module: {
             rules: [
                 {
                     test: /\.tsx?$/,
                     loader: 'ts-loader',
-                    exclude: /node_modules/
+                    exclude: /node_modules/,
                 },
                 {
                     test: /\.(jsx)$/,
                     exclude: /node_modules/,
                     use: {
-                      loader: "babel-loader"
-                    }
+                      loader: "babel-loader",
+                    },
                 },
                 {
                     test: /\.s?css$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         "css-loader",
-                        "sass-loader"
-                    ]
+                        "sass-loader",
+                    ],
                 },
-            ]
+            ],
         },
         optimization: {
             removeAvailableModules: true,
@@ -126,10 +126,10 @@ module.exports = (env, argv) => {
                     vendor: {
                         test: /[\\/]node_modules[\\/]/,
                         name: `${outputDirectory}/vendor`,
-                        chunks: 'all'
-                    }
-                }
-            }
+                        chunks: 'all',
+                    },
+                },
+            },
         },
         devServer: {
             port: 8000,
@@ -142,7 +142,7 @@ module.exports = (env, argv) => {
                 ".ts",
                 ".js",
                 ".jsx",
-            ]
+            ],
         },
         stats: statsConfig,
     };

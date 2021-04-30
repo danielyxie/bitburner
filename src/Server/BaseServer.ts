@@ -29,28 +29,28 @@ export class BaseServer {
 
     // How many CPU cores this server has. Maximum of 8.
     // Currently, this only affects hacking missions
-    cpuCores: number = 1;
+    cpuCores = 1;
 
     // Flag indicating whether the FTP port is open
-    ftpPortOpen: boolean = false;
+    ftpPortOpen = false;
 
     // Flag indicating whether player has admin/root access to this server
-    hasAdminRights: boolean = false;
+    hasAdminRights = false;
 
     // Hostname. Must be unique
-    hostname: string = "";
+    hostname = "";
 
     // Flag indicating whether HTTP Port is open
-    httpPortOpen: boolean = false;
+    httpPortOpen = false;
 
     // IP Address. Must be unique
-    ip: string = "";
+    ip = "";
 
     // Flag indicating whether player is curently connected to this server
-    isConnectedTo: boolean = false;
+    isConnectedTo = false;
 
     // RAM (GB) available on this server
-    maxRam: number = 0;
+    maxRam = 0;
 
     // Message files AND Literature files on this Server
     // For Literature files, this array contains only the filename (string)
@@ -60,13 +60,13 @@ export class BaseServer {
 
     // Name of company/faction/etc. that this server belongs to.
     // Optional, not applicable to all Servers
-    organizationName: string = "";
+    organizationName = "";
 
     // Programs on this servers. Contains only the names of the programs
     programs: string[] = [];
 
     // RAM (GB) used. i.e. unavailable RAM
-    ramUsed: number = 0;
+    ramUsed = 0;
 
     // RunningScript files on this server
     runningScripts: RunningScript[] = [];
@@ -79,13 +79,13 @@ export class BaseServer {
     serversOnNetwork: string[] = [];
 
     // Flag indicating whether SMTP Port is open
-    smtpPortOpen: boolean = false;
+    smtpPortOpen = false;
 
     // Flag indicating whether SQL Port is open
-    sqlPortOpen: boolean = false;
+    sqlPortOpen = false;
 
     // Flag indicating whether the SSH Port is open
-    sshPortOpen: boolean = false;
+    sshPortOpen = false;
 
     // Text files on this server
     textFiles: TextFile[] = [];
@@ -122,7 +122,7 @@ export class BaseServer {
      *          Returns null if no such script can be found
      */
     getRunningScript(scriptName: string, scriptArgs: any[]): RunningScript | null {
-        for (let rs of this.runningScripts) {
+        for (const rs of this.runningScripts) {
             if (rs.filename === scriptName && compareArrays(rs.args, scriptArgs)) {
                 return rs;
             }
@@ -199,7 +199,7 @@ export class BaseServer {
             }
         } else if (fn.endsWith(".lit")) {
             for (let i = 0; i < this.messages.length; ++i) {
-                let f = this.messages[i];
+                const f = this.messages[i];
                 if (typeof f === "string" && f === fn) {
                     this.messages.splice(i, 1);
                     return { res: true };
@@ -243,13 +243,13 @@ export class BaseServer {
      * Overwrites existing files. Creates new files if the script does not eixst
      */
     writeToScriptFile(fn: string, code: string) {
-        var ret = { success: false, overwritten: false };
+        const ret = { success: false, overwritten: false };
         if (!isValidFilePath(fn) || !isScriptFilename(fn)) { return ret; }
 
         // Check if the script already exists, and overwrite it if it does
         for (let i = 0; i < this.scripts.length; ++i) {
             if (fn === this.scripts[i].filename) {
-                let script = this.scripts[i];
+                const script = this.scripts[i];
                 script.code = code;
                 script.updateRamUsage(this.scripts);
                 script.markUpdated();
@@ -269,7 +269,7 @@ export class BaseServer {
     // Write to a text file
     // Overwrites existing files. Creates new files if the text file does not exist
     writeToTextFile(fn: string, txt: string) {
-        var ret = { success: false, overwritten: false };
+        const ret = { success: false, overwritten: false };
         if (!isValidFilePath(fn) || !fn.endsWith("txt")) { return ret; }
 
         // Check if the text file already exists, and overwrite if it does
@@ -283,7 +283,7 @@ export class BaseServer {
         }
 
         // Otherwise create a new text file
-        var newFile = new TextFile(fn, txt);
+        const newFile = new TextFile(fn, txt);
         this.textFiles.push(newFile);
         ret.success = true;
         return ret;

@@ -1,6 +1,6 @@
 interface IReviverValue {
     ctor: string;
-    data: object
+    data: object;
 }
 export function Generic_fromJSON<T>(ctor: new () => T, data: any): T;
 export function Generic_toJSON(ctorName: string, obj: object, keys?: string[]): string;

@@ -25,7 +25,7 @@ export function factionExists(name: string): boolean {
     return Factions.hasOwnProperty(name);
 }
 
-export function initFactions(bitNode: number=1) {
+export function initFactions(bitNode=1) {
     for (const name in FactionInfos) {
         resetFaction(new Faction(name));
     }

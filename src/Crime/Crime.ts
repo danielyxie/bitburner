@@ -22,49 +22,49 @@ export interface IConstructorParams {
 
 export class Crime {
     // Number representing the difficulty of the crime. Used for success chance calculations
-    difficulty: number = 0;
+    difficulty = 0;
 
     // Amount of karma lost for SUCCESSFULLY committing this crime
-    karma: number = 0;
+    karma = 0;
 
     // How many people die as a result of this crime
-    kills: number = 0;
+    kills = 0;
 
     // How much money is given by the
-    money: number = 0;
+    money = 0;
 
     // Name of crime
-    name: string = "";
+    name = "";
 
     // Milliseconds it takes to attempt the crime
-    time: number = 0;
+    time = 0;
 
     // Corresponding type in CONSTANTS. Contains a description for the crime activity
-    type: string = "";
+    type = "";
 
     // Weighting factors that determine how stats affect the success rate of this crime
-    hacking_success_weight: number = 0;
-    strength_success_weight: number = 0;
-    defense_success_weight: number = 0;
-    dexterity_success_weight: number = 0;
-    agility_success_weight: number = 0;
-    charisma_success_weight: number = 0;
+    hacking_success_weight = 0;
+    strength_success_weight = 0;
+    defense_success_weight = 0;
+    dexterity_success_weight = 0;
+    agility_success_weight = 0;
+    charisma_success_weight = 0;
 
     // How much stat experience is granted by this crime
-    hacking_exp: number = 0;
-    strength_exp: number = 0;
-    defense_exp: number = 0;
-    dexterity_exp: number = 0;
-    agility_exp: number = 0;
-    charisma_exp: number = 0;
-    intelligence_exp: number = 0;
+    hacking_exp = 0;
+    strength_exp = 0;
+    defense_exp = 0;
+    dexterity_exp = 0;
+    agility_exp = 0;
+    charisma_exp = 0;
+    intelligence_exp = 0;
 
-    constructor(name: string = "",
-                type: string = "",
-                time: number = 0,
-                money: number = 0,
-                difficulty: number = 0,
-                karma: number = 0,
+    constructor(name = "",
+                type = "",
+                time = 0,
+                money = 0,
+                difficulty = 0,
+                karma = 0,
                 params: IConstructorParams={}) {
         this.name = name;
         this.type = type;
@@ -91,7 +91,7 @@ export class Crime {
         this.kills = params.kills ? params.kills : 0;
     }
 
-    commit(p: IPlayer, div: number=1, singParams: any=null): number {
+    commit(p: IPlayer, div=1, singParams: any=null): number {
         if (div <= 0) { div = 1; }
         p.startCrime(
             this.type,
@@ -103,7 +103,7 @@ export class Crime {
             this.charisma_exp/div,
             this.money/div,
             this.time,
-            singParams
+            singParams,
         );
 
         return this.time;

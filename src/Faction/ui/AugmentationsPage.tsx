@@ -77,7 +77,7 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
     getAugsSortedByCost(): string[] {
         const augs = this.getAugs();
         augs.sort((augName1, augName2)=>{
-            var aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
+            const aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
             if (aug1 == null || aug2 == null) {
                 throw new Error("Invalid Augmentation Names");
             }
@@ -91,7 +91,7 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
     getAugsSortedByReputation(): string[] {
         const augs = this.getAugs();
         augs.sort((augName1, augName2)=>{
-            var aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
+            const aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
             if (aug1 == null || aug2 == null) {
                 throw new Error("Invalid Augmentation Names");
             }
@@ -120,10 +120,9 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
 
     render() {
         const augs = this.getAugsSorted();
-        const purchasable = augs.filter((aug: string) => 
-            aug === AugmentationNames.NeuroFluxGovernor ||
+        const purchasable = augs.filter((aug: string) => aug === AugmentationNames.NeuroFluxGovernor ||
             (!this.props.p.augmentations.some(a => a.name === aug) && 
-            !this.props.p.queuedAugmentations.some(a => a.name === aug))
+            !this.props.p.queuedAugmentations.some(a => a.name === aug)),
         )
 
         const parent = this;

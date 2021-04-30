@@ -38,8 +38,8 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
 
         function LocationLetter(props: any) {
             if(props.city !== thisTravelAgencyLocation.props.p.city) {
-                return <span className='tooltip' style={{color: 'blue', whiteSpace: 'nowrap', margin: '0px', padding: '0px'}} onClick={createTravelPopup.bind(null, props.city, thisTravelAgencyLocation.props.travel)}>
-                    <span className='tooltiptext'>{props.city}</span>
+                return <span className="tooltip" style={{color: 'blue', whiteSpace: 'nowrap', margin: '0px', padding: '0px'}} onClick={createTravelPopup.bind(null, props.city, thisTravelAgencyLocation.props.travel)}>
+                    <span className="tooltiptext">{props.city}</span>
                     {props.city[0]}
                 </span>
             }
@@ -55,20 +55,20 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
 <pre>               ,_   .  ._. _.  .</pre>
 <pre>           , _-\','|~\~      ~/      ;-'_   _-'     ,;_;_,    ~~-</pre>
 <pre>  /~~-\_/-'~'--' \~~| ',    ,'      /  / ~|-_\_/~/~      ~~--~~~~'--_</pre>
-<pre>  /              ,/'-/~ '\ ,' _  , '<LocationLetter city='Volhaven' />,'|~                   ._/-, /~</pre>
+<pre>  /              ,/'-/~ '\ ,' _  , '<LocationLetter city="Volhaven" />,'|~                   ._/-, /~</pre>
 <pre>  ~/-'~\_,       '-,| '|. '   ~  ,\ /'~                /    /_  /~</pre>
-<pre>.-~      '|        '',\~|\       _\~     ,_  ,     <LocationLetter city='Chongqing' />         /,</pre>
-<pre>          '\     <LocationLetter city='Sector-12' />  /'~          |_/~\\,-,~  \ "         ,_,/ |</pre>
-<pre>           |       /            ._-~'\_ _~|              \ ) <LocationLetter city='New Tokyo' /></pre>
+<pre>.-~      '|        '',\~|\       _\~     ,_  ,     <LocationLetter city="Chongqing" />         /,</pre>
+<pre>          '\     <LocationLetter city="Sector-12" />  /'~          |_/~\\,-,~  \ "         ,_,/ |</pre>
+<pre>           |       /            ._-~'\_ _~|              \ ) <LocationLetter city="New Tokyo" /></pre>
 <pre>            \   __-\           '/      ~ |\  \_          /  ~</pre>
 <pre>  .,         '\ |,  ~-_      - |          \\_' ~|  /\  \~ ,</pre>
 <pre>               ~-_'  _;       '\           '-,   \,' /\/  |</pre>
 <pre>                 '\_,~'\_       \_ _,       /'    '  |, /|'</pre>
 <pre>                   /     \_       ~ |      /         \  ~'; -,_.</pre>
 <pre>                   |       ~\        |    |  ,        '-_, ,; ~ ~\</pre>
-<pre>                    \,   <LocationLetter city='Aevum' />  /        \    / /|            ,-, ,   -,</pre>
+<pre>                    \,   <LocationLetter city="Aevum" />  /        \    / /|            ,-, ,   -,</pre>
 <pre>                     |    ,/          |  |' |/          ,-   ~ \   '.</pre>
-<pre>                    ,|   ,/           \ ,/              \   <LocationLetter city='Ishima' />   |</pre>
+<pre>                    ,|   ,/           \ ,/              \   <LocationLetter city="Ishima" />   |</pre>
 <pre>                    /    |             ~                 -~~-, /   _</pre>
 <pre>                    | ,-'                                    ~    /</pre>
 <pre>                    / ,'                                      ~</pre>
@@ -93,7 +93,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
                     onClick={createTravelPopup.bind(null, city, this.props.travel)}
                     style={this.btnStyle}
                     text={`Travel to ${city}`}
-                />
+                />,
             )
         }
 

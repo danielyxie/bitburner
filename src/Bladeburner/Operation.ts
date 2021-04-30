@@ -8,8 +8,8 @@ export interface IOperationParams extends IActionParams {
 }
 
 export class Operation extends Action {
-    reqdRank: number = 100;
-    teamCount: number = 0;
+    reqdRank = 100;
+    teamCount = 0;
 
     constructor(params: IOperationParams | null = null) {
         super(params);
@@ -21,7 +21,7 @@ export class Operation extends Action {
     getTeamSuccessBonus(inst: any): number {
         if (this.teamCount && this.teamCount > 0) {
             this.teamCount = Math.min(this.teamCount, inst.teamSize);
-            let teamMultiplier = Math.pow(this.teamCount, 0.05);
+            const teamMultiplier = Math.pow(this.teamCount, 0.05);
             return teamMultiplier;
         }
 
@@ -35,8 +35,8 @@ export class Operation extends Action {
     getChaosDifficultyBonus(inst: any, params: any): number {
         const city = inst.getCurrentCity();
         if (city.chaos > BladeburnerConstants.ChaosThreshold) {
-            let diff = 1 + (city.chaos - BladeburnerConstants.ChaosThreshold);
-            let mult = Math.pow(diff, 0.1);
+            const diff = 1 + (city.chaos - BladeburnerConstants.ChaosThreshold);
+            const mult = Math.pow(diff, 0.1);
             return mult;
         }
 

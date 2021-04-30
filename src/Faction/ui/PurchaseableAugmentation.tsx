@@ -108,9 +108,9 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
         const repCost = this.getRepCost();
 
         // Determine UI properties
-        let disabled: boolean = false;
+        let disabled = false;
         let status: JSX.Element = <></>;
-        let color: string = "";
+        let color = "";
         if (!this.hasPrereqs()) {
             disabled = true;
             status = <>LOCKED (Requires {this.aug.prereqs.map(aug => AugFormat(aug))} as prerequisite)</>;

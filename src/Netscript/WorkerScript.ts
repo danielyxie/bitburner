@@ -24,7 +24,7 @@ export class WorkerScript {
     /**
      * Copy of the script's code
      */
-    code: string = "";
+    code = "";
 
     /**
      * Holds the timeoutID (numeric value) for whenever this script is blocked by a
@@ -62,7 +62,7 @@ export class WorkerScript {
     /**
      * Status message in case of script error. Currently unused I think
      */
-    errorMessage: string = "";
+    errorMessage = "";
 
     /**
      * Used for static RAM calculation. Stores names of all functions that have
@@ -78,7 +78,7 @@ export class WorkerScript {
     /**
      * Script's output/return value. Currently not used or implemented
      */
-    output: string = "";
+    output = "";
 
     /**
      * Process ID. Must be an integer. Used for efficient script
@@ -89,12 +89,12 @@ export class WorkerScript {
     /**
      * Script's Static RAM usage. Equivalent to underlying script's RAM usage
      */
-    ramUsage: number = 0;
+    ramUsage = 0;
 
     /**
      * Whether or not this workerScript is currently running
      */
-    running: boolean = false;
+    running = false;
 
     /**
      * Reference to underlying RunningScript object
@@ -155,7 +155,7 @@ export class WorkerScript {
      * Returns null if it cannot be found (which would be a bug)
      */
     getScript(): Script | null {
-        let server = this.getServer();
+        const server = this.getServer();
         for (let i = 0; i < server.scripts.length; ++i) {
             if (server.scripts[i].filename === this.name) {
                 return server.scripts[i];

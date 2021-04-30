@@ -98,7 +98,7 @@ export function createResleevesPage(p: IPlayer) {
         // Create a selector for sorting the list of Resleeves
         UIElems.sortTag = createElement("p", {
             display: "inline-block",
-            innerText: "Sort By: "
+            innerText: "Sort By: ",
         });
         UIElems.sortSelector = createElement("select", { class: "dropdown" }) as HTMLSelectElement;
 
@@ -133,7 +133,7 @@ export function createResleevesPage(p: IPlayer) {
 
             // Helper function for averaging
             function getAverage(...values: number[]) {
-                let sum: number = 0;
+                let sum = 0;
                 for (let i = 0; i < values.length; ++i) {
                     sum += values[i];
                 }
@@ -175,16 +175,16 @@ export function createResleevesPage(p: IPlayer) {
                     break;
                 case SortOption.AverageCombatStats:
                     p.resleeves.sort((a, b) => {
-                        let aAvg = getAverage(a.strength, a.defense, a.dexterity, a.agility);
-                        let bAvg = getAverage(b.strength, b.defense, b.dexterity, b.agility);
+                        const aAvg = getAverage(a.strength, a.defense, a.dexterity, a.agility);
+                        const bAvg = getAverage(b.strength, b.defense, b.dexterity, b.agility);
 
                         return aAvg - bAvg;
                     });
                     break;
                 case SortOption.AverageAllStats:
                     p.resleeves.sort((a, b) => {
-                        let aAvg = getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma);
-                        let bAvg = getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma);
+                        const aAvg = getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma);
+                        const bAvg = getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma);
 
                         return aAvg - bAvg;
                     });
@@ -304,10 +304,10 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
                     `Bladeburner Max Stamina multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_max_stamina_mult)}`,
                     `Bladeburner Stamina Gain multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_stamina_gain_mult)}`,
                     `Bladeburner Field Analysis multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_analysis_mult)}`,
-                    `Bladeburner Success Chance multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_success_chance_mult)}`
-                ].join("<br />"), false
+                    `Bladeburner Success Chance multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_success_chance_mult)}`,
+                ].join("<br />"), false,
             )
-        }
+        },
     });
     elems.statsPanel.appendChild(elems.stats);
     elems.statsPanel.appendChild(elems.multipliersButton);
@@ -317,7 +317,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     elems.augDescription = createElement("p");
     for (let i = 0; i < resleeve.augmentations.length; ++i) {
         elems.augSelector.add(createOptionElement(resleeve.augmentations[i].name));
-    };
+    }
     elems.augSelector.addEventListener("change", () => {
         updateAugDescription(elems);
     });
@@ -340,7 +340,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
             } else {
                 dialogBoxCreate(`You cannot afford to re-sleeve into this body`, false);
             }
-        }
+        },
     });
     elems.costPanel.appendChild(elems.costText);
     elems.costPanel.appendChild(elems.buyButton);

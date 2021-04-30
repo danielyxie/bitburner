@@ -9,7 +9,7 @@ import { Augmentation } from "./Augmentation/Augmentation";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
     augmentationExists,
-    installAugmentations
+    installAugmentations,
 } from "./Augmentation/AugmentationHelpers";
 import { prestigeAugmentation } from "./Prestige";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
@@ -28,13 +28,13 @@ import {
     calculatePercentMoneyHacked,
     calculateHackingTime,
     calculateGrowTime,
-    calculateWeakenTime
+    calculateWeakenTime,
 } from "./Hacking";
 import { calculateServerGrowth } from "./Server/formulas/grow";
 import {
     AllGangs,
     GangMemberUpgrades,
-    GangMemberTasks
+    GangMemberTasks,
 } from "./Gang";
 import { Faction } from "./Faction/Faction";
 import { Factions, factionExists } from "./Faction/Factions";
@@ -43,7 +43,7 @@ import { FactionWorkType } from "./Faction/FactionWorkTypeEnum";
 import {
     netscriptCanGrow,
     netscriptCanHack,
-    netscriptCanWeaken
+    netscriptCanWeaken,
 } from "./Hacking/netscriptCanHack";
 
 import {
@@ -114,7 +114,7 @@ import {
 import {
     getPurchaseServerCost,
     getPurchaseServerLimit,
-    getPurchaseServerMaxRam
+    getPurchaseServerMaxRam,
 } from "./Server/ServerPurchases";
 import { Settings } from "./Settings/Settings";
 import { SpecialServerIps } from "./Server/SpecialServerIps";
@@ -146,13 +146,13 @@ import { PositionTypes } from "./StockMarket/data/PositionTypes";
 import { StockSymbols } from "./StockMarket/data/StockSymbols";
 import {
     getStockMarket4SDataCost,
-    getStockMarket4STixApiCost
+    getStockMarket4STixApiCost,
 } from "./StockMarket/StockMarketCosts";
 import { isValidFilePath } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
 import {
-    unknownBladeburnerActionErrorMessage
+    unknownBladeburnerActionErrorMessage,
 } from"./NetscriptBladeburner";
 import { Gang } from "./Gang";
 import {
@@ -351,7 +351,7 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeRejectMsg(
                 workerScript,
                 `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-                `This is probably a bug. Please report to game developer`
+                `This is probably a bug. Please report to game developer`,
             );
         }
 
@@ -489,7 +489,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 return null;
             }
-            let call = {line: "-1", func: "unknown"};;
+            let call = {line: "-1", func: "unknown"};
             let chromeCall = parseChromeStackline(stackline);
             if (chromeCall) {
                 call = chromeCall;
@@ -1343,7 +1343,7 @@ function NetscriptFunctions(workerScript) {
                 scriptname.forEach(function(script) {
                     if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
                         res = true;
-                    };
+                    }
                 });
                 return res;
             }
@@ -1965,7 +1965,7 @@ function NetscriptFunctions(workerScript) {
                 shares: shares,
                 price: price,
                 type: orderType,
-                pos: orderPos
+                pos: orderPos,
             };
             return cancelOrder(params, workerScript);
         },
@@ -2832,7 +2832,7 @@ function NetscriptFunctions(workerScript) {
 
             var darkweb = safetlyCreateUniqueServer({
                 ip: createUniqueRandomIp(), hostname:"darkweb", organizationName:"",
-                isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1
+                isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1,
             });
             AddToAllServers(darkweb);
             SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
@@ -2943,7 +2943,7 @@ function NetscriptFunctions(workerScript) {
                 dexterity:      Player.dexterity,
                 agility:        Player.agility,
                 charisma:       Player.charisma,
-                intelligence:   Player.intelligence
+                intelligence:   Player.intelligence,
             }
         },
         getCharacterInformation: function() {
@@ -4087,7 +4087,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("getBonusTime", getRamCost("bladeburner", "getBonusTime"));
                 checkBladeburnerAccess("getBonusTime");
                 return Math.round(Player.bladeburner.storedCycles / 5);
-            }
+            },
         }, // End Bladeburner
 
         // Coding Contract API
@@ -4373,7 +4373,7 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
-            }
+            },
         }, // End sleeve
         formulas: {
             basic: {
@@ -4438,7 +4438,7 @@ function NetscriptFunctions(workerScript) {
                 constants: function() {
                     checkFormulasAccess("hacknetNodes.constants", 5);
                     return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
-                }
+                },
             },
             hacknetServers: {
                 hashGainRate: function(level, ram, cores, mult=1) {
@@ -4476,14 +4476,14 @@ function NetscriptFunctions(workerScript) {
                 constants: function() {
                     checkFormulasAccess("hacknetServers.constants", 9);
                     return Object.assign({}, HacknetServerConstants);
-                }
+                },
             },
         }, // end formulas
         heart: {
             // Easter egg function
             break: function() {
                 return Player.karma;
-            }
+            },
         },
         exploit: function() {
             Player.giveExploit(Exploit.UndocumentedFunctionCall);
@@ -4515,7 +4515,7 @@ function NetscriptFunctions(workerScript) {
                 ret[key.slice(2)] = value;
             }
             return ret;
-        }
+        },
     } // End return
 } // End NetscriptFunction()
 

@@ -32,7 +32,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 export let StockMarket: IStockMarket | IMap<any> = {}; // Maps full stock name -> Stock object
-export let SymbolToStockMap: IMap<Stock> = {}; // Maps symbol -> Stock object
+export const SymbolToStockMap: IMap<Stock> = {}; // Maps symbol -> Stock object
 
 export function placeOrder(stock: Stock, shares: number, price: number, type: OrderTypes, position: PositionTypes, workerScript: WorkerScript | null=null): boolean {
     const tixApi = (workerScript instanceof WorkerScript);
@@ -87,7 +87,7 @@ interface ICancelOrderParams {
     type?: OrderTypes;
 }
 export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScript | null=null): boolean {
-    var tixApi = (workerScript instanceof WorkerScript);
+    const tixApi = (workerScript instanceof WorkerScript);
     if (StockMarket["Orders"] == null) {return false;}
     if (params.order && params.order instanceof Order) {
         const order = params.order;
@@ -105,10 +105,10 @@ export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScri
                params.pos && params.stock instanceof Stock) {
         // Order properties are passed in. Need to look for the order
         var stockOrders = StockMarket["Orders"][params.stock.symbol];
-        var orderTxt = params.stock.symbol + " - " + params.shares + " @ " +
+        const orderTxt = params.stock.symbol + " - " + params.shares + " @ " +
                        numeralWrapper.formatMoney(params.price);
         for (var i = 0; i < stockOrders.length; ++i) {
-            var order = stockOrders[i];
+            const order = stockOrders[i];
             if (params.shares === order.shares &&
                 params.price === order.price &&
                 params.type === order.type &&
@@ -221,7 +221,7 @@ export function processStockPrices(numCycles=1) {
         stockMarketCycle();
     }
 
-    var v = Math.random();
+    const v = Math.random();
     for (const name in StockMarket) {
         const stock = StockMarket[name];
         if (!(stock instanceof Stock)) { continue; }
@@ -315,7 +315,7 @@ export function displayStockMarketContent() {
                 sellStockShort={sellShort}
                 stockMarket={castedStockMarket}
             />,
-            stockMarketContainer
+            stockMarketContainer,
         )
     }
 }

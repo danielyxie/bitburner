@@ -107,7 +107,7 @@ export const IndustryDescriptions: IIndustryMap<string> = {
 
 // Map of available Research for each Industry. This data is held in a
 // ResearchTree object
-export let IndustryResearchTrees: IIndustryMap<ResearchTree> = {
+export const IndustryResearchTrees: IIndustryMap<ResearchTree> = {
     Energy: getBaseResearchTreeCopy(),
     Utilities: getBaseResearchTreeCopy(),
     Agriculture: getBaseResearchTreeCopy(),

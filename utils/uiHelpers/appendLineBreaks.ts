@@ -6,7 +6,7 @@ import { createElement } from "./createElement";
  * @param n The number of breaks to add.
  */
 export function appendLineBreaks(el: HTMLElement, n: number) {
-    for (let i: number = 0; i < n; ++i) {
+    for (let i = 0; i < n; ++i) {
         el.appendChild(createElement("br"));
     }
 }
