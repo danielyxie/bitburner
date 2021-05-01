@@ -60,13 +60,6 @@ function toNumber(n: number | IMinMaxRange): number {
  */
 export class Stock {
     /**
-     * Initializes a Stock from a JSON save state
-     */
-    static fromJSON(value: any): Stock {
-        return Generic_fromJSON(Stock, value.data);
-    }
-
-    /**
      * Bear or bull (more likely to go up or down, based on otlkMag)
      */
     b: boolean;
@@ -323,6 +316,14 @@ export class Stock {
      */
     toJSON(): any {
         return Generic_toJSON("Stock", this);
+    }
+
+    /**
+     * Initializes a Stock from a JSON save state
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Stock {
+        return Generic_fromJSON(Stock, value.data);
     }
 }
 

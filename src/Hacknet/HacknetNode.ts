@@ -8,7 +8,6 @@ import { IHacknetNode } from "./IHacknetNode";
 
 import { CONSTANTS } from "../Constants";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import {
     calculateMoneyGainRate,
     calculateLevelUpgradeCost,
@@ -23,12 +22,6 @@ import { Generic_fromJSON,
          Reviver } from "../../utils/JSONReviver";
 
 export class HacknetNode implements IHacknetNode {
-    /**
-     * Initiatizes a HacknetNode object from a JSON save state.
-     */
-    static fromJSON(value: any): HacknetNode {
-        return Generic_fromJSON(HacknetNode, value.data);
-    }
 
     // Node's number of cores
     cores = 1;
@@ -126,6 +119,14 @@ export class HacknetNode implements IHacknetNode {
      */
     toJSON(): any {
         return Generic_toJSON("HacknetNode", this);
+    }
+
+    /**
+     * Initiatizes a HacknetNode object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): HacknetNode {
+        return Generic_fromJSON(HacknetNode, value.data);
     }
 }
 

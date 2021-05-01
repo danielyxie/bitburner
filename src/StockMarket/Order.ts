@@ -12,12 +12,6 @@ import {
 } from "../../utils/JSONReviver";
 
 export class Order {
-    /**
-     * Initializes a Order from a JSON save state
-     */
-    static fromJSON(value: any): Order {
-        return Generic_fromJSON(Order, value.data);
-    }
 
     readonly pos: PositionTypes;
     readonly price: number;
@@ -53,6 +47,14 @@ export class Order {
      */
     toJSON(): any {
         return Generic_toJSON("Order", this);
+    }
+
+    /**
+     * Initializes a Order from a JSON save state
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Order {
+        return Generic_fromJSON(Order, value.data);
     }
 }
 

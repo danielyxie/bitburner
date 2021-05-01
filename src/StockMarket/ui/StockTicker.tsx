@@ -45,7 +45,7 @@ export type placeOrderFn = (stock: Stock, shares: number, price: number, ordType
 type IProps = {
     buyStockLong: txFn;
     buyStockShort: txFn;
-    cancelOrder: (params: object) => void;
+    cancelOrder: (params: any) => void;
     orders: Order[];
     p: IPlayer;
     placeOrder: placeOrderFn;
@@ -83,12 +83,12 @@ export class StockTicker extends React.Component<IProps, IState> {
         this.handleSellAllButtonClick = this.handleSellAllButtonClick.bind(this);
     }
 
-    createPlaceOrderPopupBox(yesTxt: string, popupTxt: string, yesBtnCb: (price: number) => void) {
+    createPlaceOrderPopupBox(yesTxt: string, popupTxt: string, yesBtnCb: (price: number) => void): void {
         const yesBtn = yesNoTxtInpBoxGetYesButton();
         const noBtn  = yesNoTxtInpBoxGetNoButton();
 
-        yesBtn!.innerText = yesTxt;
-        yesBtn!.addEventListener("click", () => {
+        yesBtn.innerText = yesTxt;
+        yesBtn.addEventListener("click", () => {
             const price = parseFloat(yesNoTxtInpBoxGetInput());
             if (isNaN(price)) {
                 dialogBoxCreate(`Invalid input for price: ${yesNoTxtInpBoxGetInput()}`);
@@ -99,8 +99,8 @@ export class StockTicker extends React.Component<IProps, IState> {
             yesNoTxtInpBoxClose();
         });
 
-        noBtn!.innerText = "Cancel Order";
-        noBtn!.addEventListener("click", () => {
+        noBtn.innerText = "Cancel Order";
+        noBtn.addEventListener("click", () => {
             yesNoTxtInpBoxClose();
         });
 
@@ -143,7 +143,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         return <>Selling {numeralWrapper.formatShares(qty)} shares ({this.state.position === PositionTypes.Long ? "Long" : "Short"}) will result in a gain of {Money(cost)}.</>;
     }
 
-    handleBuyButtonClick() {
+    handleBuyButtonClick(): void {
         const shares = this.getQuantity();
         if (isNaN(shares)) {
             dialogBoxCreate(`Invalid input for quantity (number of shares): ${this.state.qty}`);
@@ -185,7 +185,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         }
     }
 
-    handleBuyMaxButtonClick() {
+    handleBuyMaxButtonClick(): void {
         const playerMoney: number = this.props.p.money.toNumber();
 
         const stock = this.props.stock;
@@ -209,19 +209,19 @@ export class StockTicker extends React.Component<IProps, IState> {
         }
     }
 
-    handleHeaderClick(e: React.MouseEvent<HTMLButtonElement>) {
+    handleHeaderClick(e: React.MouseEvent<HTMLButtonElement>): void {
         const elem = e.currentTarget;
         elem.classList.toggle("active");
 
         const panel: HTMLElement = elem.nextElementSibling as HTMLElement;
-        if (panel!.style.display === "block") {
-            panel!.style.display = "none";
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
         } else {
             panel.style.display = "block";
         }
     }
 
-    handleOrderTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    handleOrderTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
         const val = e.target.value;
 
         // The select value returns a string. Afaik TypeScript doesnt make it easy
@@ -245,7 +245,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         }
     }
 
-    handlePositionTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    handlePositionTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
         const val = e.target.value;
 
         if (val === PositionTypes.Short) {
@@ -260,13 +260,13 @@ export class StockTicker extends React.Component<IProps, IState> {
 
     }
 
-    handleQuantityChange(e: React.ChangeEvent<HTMLInputElement>) {
+    handleQuantityChange(e: React.ChangeEvent<HTMLInputElement>): void {
         this.setState({
             qty: e.target.value,
         });
     }
 
-    handleSellButtonClick() {
+    handleSellButtonClick(): void {
         const shares = this.getQuantity();
         if (isNaN(shares)) {
             dialogBoxCreate(`Invalid input for quantity (number of shares): ${this.state.qty}`);
@@ -308,7 +308,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         }
     }
 
-    handleSellAllButtonClick() {
+    handleSellAllButtonClick(): void {
         const stock = this.props.stock;
 
         switch (this.state.orderType) {
@@ -338,10 +338,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         return (this.props.p.bitNodeN === 8 || (SourceFileFlags[8] >= 2));
     }
 
-    render() {
-        // Determine if the player's intended transaction will cause a price movement
-        const qty = this.getQuantity();
-
+    render(): React.ReactNode {
         return (
             <li>
                 <Accordion

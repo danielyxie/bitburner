@@ -8,7 +8,6 @@
  */
 import { clearEventListeners } from "./uiHelpers/clearEventListeners";
 import { KEY } from "./helpers/keyCodes";
-import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 export let yesNoBoxOpen = false;
@@ -16,7 +15,7 @@ export let yesNoBoxOpen = false;
 const yesNoBoxContainer: HTMLElement | null = document.getElementById("yes-no-box-container");
 const yesNoBoxTextElement: HTMLElement | null = document.getElementById("yes-no-box-text");
 
-function yesNoBoxHotkeyHandler(e: KeyboardEvent) {
+function yesNoBoxHotkeyHandler(e: KeyboardEvent): void {
     if (e.keyCode === KEY.ESC) {
         yesNoBoxClose();
     } else if (e.keyCode === KEY.ENTER) {
@@ -43,15 +42,15 @@ export function yesNoBoxClose(): boolean {
     return false; //So that 'return yesNoBoxClose()' is return false in event listeners
 }
 
-export function yesNoBoxGetYesButton() {
+export function yesNoBoxGetYesButton(): HTMLElement | null {
     return clearEventListeners("yes-no-box-yes");
 }
 
-export function yesNoBoxGetNoButton() {
+export function yesNoBoxGetNoButton(): HTMLElement | null {
     return clearEventListeners("yes-no-box-no");
 }
 
-export function yesNoBoxCreate(txt: string | JSX.Element) {
+export function yesNoBoxCreate(txt: string | JSX.Element): boolean {
     if (yesNoBoxOpen) { return false; }   //Already open
     yesNoBoxOpen = true;
 
@@ -86,7 +85,7 @@ const yesNoTextInputBoxContainer: HTMLElement | null = document.getElementById("
 const yesNoTextInputBoxInput: HTMLInputElement | null = document.getElementById("yes-no-text-input-box-input") as HTMLInputElement;
 const yesNoTextInputBoxTextElement: HTMLElement | null = document.getElementById("yes-no-text-input-box-text");
 
-export function yesNoTxtInpBoxHotkeyHandler(e: KeyboardEvent) {
+export function yesNoTxtInpBoxHotkeyHandler(e: KeyboardEvent): void {
     if (e.keyCode === KEY.ESC) {
         yesNoTxtInpBoxClose();
     } else if (e.keyCode === KEY.ENTER) {
@@ -106,8 +105,9 @@ export function yesNoTxtInpBoxClose(): boolean {
         console.error("Container not found for YesNoTextInputBox");
         return false;
     }
+    if(!yesNoTextInputBoxInput) throw new Error("yesNoTextInputBoxInput was not set");
     yesNoBoxOpen = false;
-    yesNoTextInputBoxInput!.value = "";
+    yesNoTextInputBoxInput.value = "";
 
     // Remove hotkey handler
     document.removeEventListener("keydown", yesNoTxtInpBoxHotkeyHandler);
@@ -115,25 +115,29 @@ export function yesNoTxtInpBoxClose(): boolean {
     return false;
 }
 
-export function yesNoTxtInpBoxGetYesButton(): HTMLElement | null {
-    return clearEventListeners("yes-no-text-input-box-yes");
+export function yesNoTxtInpBoxGetYesButton(): HTMLElement {
+    const elem = clearEventListeners("yes-no-text-input-box-yes");
+    if(elem === null) throw new Error("Could not find element with id: 'yes-no-text-input-box-yes'");
+    return elem;
 }
 
-export function yesNoTxtInpBoxGetNoButton(): HTMLElement | null {
-    return clearEventListeners("yes-no-text-input-box-no");
+export function yesNoTxtInpBoxGetNoButton(): HTMLElement {
+    const elem = clearEventListeners("yes-no-text-input-box-no");
+    if(elem === null) throw new Error("Could not find element with id: 'yes-no-text-input-box-no'");
+    return elem;
 }
 
 export function yesNoTxtInpBoxGetInput(): string {
-    if (yesNoTextInputBoxInput == null) {
+    if (!yesNoTextInputBoxInput) {
         console.error("Could not find YesNoTextInputBox input element");
         return "";
     }
-    let val: string = yesNoTextInputBoxInput!.value;
+    let val: string = yesNoTextInputBoxInput.value;
     val = val.replace(/\s+/g, '');
     return val;
 }
 
-export function yesNoTxtInpBoxCreate(txt: string | JSX.Element) {
+export function yesNoTxtInpBoxCreate(txt: string | JSX.Element): void {
     yesNoBoxOpen = true;
 
 
@@ -156,5 +160,6 @@ export function yesNoTxtInpBoxCreate(txt: string | JSX.Element) {
     // Add event listener for Esc and Enter hotkeys
     document.addEventListener("keydown", yesNoTxtInpBoxHotkeyHandler);
 
-    yesNoTextInputBoxInput!.focus();
+    if(!yesNoTextInputBoxInput) throw new Error("yesNoTextInputBoxInput was not set");
+    yesNoTextInputBoxInput.focus();
 }

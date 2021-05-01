@@ -18,7 +18,7 @@ class RNG0 implements RNG {
 		this.reset();
 	}
 
-	step() {
+	step(): void {
 		this.x = (this.a*this.x+this.c) % this.m;
 	}
 
@@ -27,7 +27,7 @@ class RNG0 implements RNG {
 		return this.x/this.m;
 	}
 
-	reset() {
+	reset(): void {
 		this.x = (new Date()).getTime() % this.m;
 	}
 }
@@ -51,7 +51,7 @@ export class WHRNG implements RNG {
 		this.s3 = v;
 	}
 
-	step() {
+	step(): void {
 		this.s1 = (171 * this.s1) % 30269;
 		this.s2 = (172 * this.s2) % 30307;
 		this.s3 = (170 * this.s3) % 30323;

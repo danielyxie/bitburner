@@ -7,10 +7,6 @@ interface IConstructorParams {
 }
 
 export class Material {
-    // Initiatizes a Material object from a JSON save state.
-    static fromJSON(value: any): Material {
-        return Generic_fromJSON(Material, value.data);
-    }
 
     // Name of material
     name = "InitName";
@@ -191,6 +187,12 @@ export class Material {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("Material", this);
+    }
+
+    // Initiatizes a Material object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Material {
+        return Generic_fromJSON(Material, value.data);
     }
 }
 

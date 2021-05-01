@@ -1,6 +1,5 @@
 import { Programs }             from "./Programs";
 
-import { CONSTANTS }            from "../Constants";
 import { Player }               from "../Player";
 import { createElement }        from "../../utils/uiHelpers/createElement";
 

@@ -25,7 +25,7 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
         super(props);
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <div id="augmentations-content">
                 <h1>Purchased Augmentations</h1>

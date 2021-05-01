@@ -3,8 +3,7 @@ import { Settings } from "./Settings/Settings";
 export class NetscriptPort {
     data: any[] = [];
 
-    constructor() {}
-
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     write(data: any): any {
         this.data.push(data);
         if (this.data.length > Settings.MaxPortCapacity) {
@@ -13,6 +12,7 @@ export class NetscriptPort {
         return null;
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     tryWrite(data: any): boolean {
         if (this.data.length >= Settings.MaxPortCapacity) {
             return false;

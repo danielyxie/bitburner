@@ -23,6 +23,11 @@ interface IConstructorParams {
     organizationName?: string;
 }
 
+interface writeResult {
+    success: boolean;
+    overwritten: boolean;
+}
+
 export class BaseServer {
     // Coding Contract files on this server
     contracts: CodingContract[] = [];
@@ -101,7 +106,7 @@ export class BaseServer {
         this.hasAdminRights     =    params.adminRights != null       ? params.adminRights        : false;
     }
 
-    addContract(contract: CodingContract) {
+    addContract(contract: CodingContract): void {
         this.contracts.push(contract);
     }
 
@@ -158,7 +163,7 @@ export class BaseServer {
         return false;
     }
 
-    removeContract(contract: CodingContract) {
+    removeContract(contract: CodingContract): void {
         if (contract instanceof CodingContract) {
             this.contracts = this.contracts.filter((c) => {
                 return c.fn !== contract.fn;
@@ -242,7 +247,7 @@ export class BaseServer {
      * Write to a script file
      * Overwrites existing files. Creates new files if the script does not eixst
      */
-    writeToScriptFile(fn: string, code: string) {
+    writeToScriptFile(fn: string, code: string): writeResult {
         const ret = { success: false, overwritten: false };
         if (!isValidFilePath(fn) || !isScriptFilename(fn)) { return ret; }
 
@@ -268,7 +273,7 @@ export class BaseServer {
 
     // Write to a text file
     // Overwrites existing files. Creates new files if the text file does not exist
-    writeToTextFile(fn: string, txt: string) {
+    writeToTextFile(fn: string, txt: string): writeResult {
         const ret = { success: false, overwritten: false };
         if (!isValidFilePath(fn) || !fn.endsWith("txt")) { return ret; }
 

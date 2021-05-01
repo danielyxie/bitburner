@@ -12,7 +12,6 @@ import {
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { StdButton } from "../../ui/React/StdButton";
 import { StdButtonPurchased } from "../../ui/React/StdButtonPurchased";
 import { Money } from "../../ui/React/Money";
@@ -40,7 +39,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         this.purchase4SMarketDataTixApiAccess = this.purchase4SMarketDataTixApiAccess.bind(this);
     }
 
-    handleClick4SMarketDataHelpTip() {
+    handleClick4SMarketDataHelpTip(): void {
         dialogBoxCreate(
             "Access to the 4S Market Data feed will display two additional pieces " +
             "of information about each stock: Price Forecast & Volatility<br><br>" +
@@ -59,7 +58,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         );
     }
 
-    purchaseWseAccount() {
+    purchaseWseAccount(): void {
         if (this.props.p.hasWseAccount) { return; }
         if (!this.props.p.canAfford(CONSTANTS.WSEAccountCost)) { return; }
         this.props.p.hasWseAccount = true;
@@ -73,7 +72,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         }
     }
 
-    purchaseTixApiAccess() {
+    purchaseTixApiAccess(): void {
         if (this.props.p.hasTixApiAccess) { return; }
         if (!this.props.p.canAfford(CONSTANTS.TIXAPICost)) { return; }
         this.props.p.hasTixApiAccess = true;
@@ -81,7 +80,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         this.props.rerender();
     }
 
-    purchase4SMarketData() {
+    purchase4SMarketData(): void {
         if (this.props.p.has4SData) { return; }
         if (!this.props.p.canAfford(getStockMarket4SDataCost())) { return; }
         this.props.p.has4SData = true;
@@ -89,7 +88,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         this.props.rerender();
     }
 
-    purchase4SMarketDataTixApiAccess() {
+    purchase4SMarketDataTixApiAccess(): void {
         if (this.props.p.has4SDataTixApi) { return; }
         if (!this.props.p.canAfford(getStockMarket4STixApiCost())) { return; }
         this.props.p.has4SDataTixApi = true;
@@ -182,7 +181,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         const documentationLink = "https://bitburner.readthedocs.io/en/latest/basicgameplay/stockmarket.html";
         return (
             <div className={"stock-market-info-and-purchases"}>

@@ -4,7 +4,7 @@
  * @param a1 The first array
  * @param a2 The second array
  */
-export function compareArrays<T>(a1: T[], a2: T[]) {
+export function compareArrays<T>(a1: T[], a2: T[]): boolean {
     if (a1.length !== a2.length) {
         return false;
     }

@@ -4,7 +4,6 @@ import {
     getFirstParentDirectory,
     isInRootDirectory,
     isValidDirectoryPath,
-    isValidFilename,
     removeLeadingSlash,
     removeTrailingSlash,
 } from "./Terminal/DirectoryHelpers";
@@ -13,8 +12,6 @@ import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
 import { tabCompletion } from "./Terminal/tabCompletion";
 
 import {
-    Aliases,
-    GlobalAliases,
     parseAliasDeclaration,
     printAliases,
     removeAlias,
@@ -22,9 +19,7 @@ import {
 } from "./Alias";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import {
-    CodingContract,
     CodingContractResult,
-    CodingContractRewardType,
 } from "./CodingContracts";
 import { CONSTANTS } from "./Constants";
 import { Programs } from "./Programs/Programs";
@@ -32,9 +27,7 @@ import {
     executeDarkwebTerminalCommand,
     checkIfConnectedToDarkweb,
 } from "./DarkWeb/DarkWeb";
-import { DarkWebItems } from "./DarkWeb/DarkWebItems";
 import { Engine } from "./engine";
-import { parseFconfSettings, createFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import {
     calculateHackingChance,
@@ -63,24 +56,19 @@ import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import { getCurrentEditor, findRunningScript } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
 import { AllServers } from "./Server/AllServers";
-import { Server } from "./Server/Server";
 import {
     GetServerByHostname,
     getServer,
     getServerOnNetwork,
 } from "./Server/ServerHelpers";
-import { Settings } from "./Settings/Settings";
 import {
     SpecialServerIps,
     SpecialServerNames,
 } from "./Server/SpecialServerIps";
-import { getTextFile } from "./TextFile";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { KEY } from "../utils/helpers/keyCodes";
-import { addOffset } from "../utils/helpers/addOffset";
-import { isString } from "../utils/helpers/isString";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { logBoxCreate } from "../utils/LogBox";
@@ -393,7 +381,6 @@ let Terminal = {
 
             var inputLength = terminalInput.value.length;
             var start = terminalInput.selectionStart;
-            var end = terminalInput.selectionEnd;
             var inputText = terminalInput.value;
 
             switch(mod.toLowerCase()) {
@@ -436,7 +423,6 @@ let Terminal = {
 
             var inputLength = terminalInput.value.length;
             var start = terminalInput.selectionStart;
-            var end = terminalInput.selectionEnd;
 
             switch(loc.toLowerCase()) {
                 case "home":
@@ -1778,7 +1764,6 @@ let Terminal = {
                 return;
             }
 
-            const s = Player.getCurrentServer();
             const scriptName = commandArray[1];
             let numThreads = 1;
             if (commandArray.length === 4 && commandArray[2] === "-t") {
@@ -1960,7 +1945,6 @@ let Terminal = {
                 postError(`Invalid destination. ${commandArray[2]} not found`);
                 return;
             }
-            const ip = destServer.ip;
             const currServ = Player.getCurrentServer();
 
             // Scp for lit files

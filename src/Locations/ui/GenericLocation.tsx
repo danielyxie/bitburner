@@ -42,7 +42,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     /**
      * Stores button styling that sets them all to block display
      */
-    btnStyle: object;
+    btnStyle: any;
 
     constructor(props: IProps) {
         super(props);
@@ -149,7 +149,7 @@ export class GenericLocation extends React.Component<IProps, any> {
         return content;
     }
 
-    render() {
+    render(): React.ReactNode {
         const locContent: React.ReactNode[] = this.getLocationSpecificContent();
         const ip = SpecialServerIps.getIp(this.props.loc.name);
         const server = getServer(ip);

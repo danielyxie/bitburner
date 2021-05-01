@@ -54,7 +54,6 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         const calculated = await calculateRamUsage(code, []);
         testEquality(calculated, ScriptBaseCost);
 
-        const multipleCallsCode = code.repeat(3);
         const multipleCallsCalculated = await calculateRamUsage(code, []);
         expect(multipleCallsCalculated).to.equal(ScriptBaseCost);
     }

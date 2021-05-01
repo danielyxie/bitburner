@@ -10,12 +10,6 @@ import { Augmentations } from "../../Augmentation/Augmentations";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
 export class Resleeve extends Person {
-    /**
-     * Initiatizes a Resleeve object from a JSON save state.
-     */
-    static fromJSON(value: any): Resleeve {
-        return Generic_fromJSON(Resleeve, value.data);
-    }
 
     constructor() {
         super();
@@ -44,7 +38,7 @@ export class Resleeve extends Person {
                 console.error(`Could not find Augmentation ${this.augmentations[i].name}`);
                 continue;
             }
-            totalAugmentationCost += aug!.startingCost;
+            totalAugmentationCost += aug.startingCost;
         }
 
         return (totalExp * CostPerExp) + (totalAugmentationCost * Math.pow(NumAugsExponent, this.augmentations.length));
@@ -55,6 +49,14 @@ export class Resleeve extends Person {
      */
     toJSON(): any {
         return Generic_toJSON("Resleeve", this);
+    }
+
+    /**
+     * Initiatizes a Resleeve object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Resleeve {
+        return Generic_fromJSON(Resleeve, value.data);
     }
 }
 

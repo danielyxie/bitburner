@@ -86,11 +86,11 @@ export class SlotMachine extends Game<IProps, IState> {
         this.updateInvestment = this.updateInvestment.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.interval = setInterval(this.step, 50);
     }
 
-    step() {
+    step(): void {
         let stoppedOne = false;
         const index = this.state.index.slice();
         for(const i in index) {
@@ -106,7 +106,7 @@ export class SlotMachine extends Game<IProps, IState> {
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
       clearInterval(this.interval);
     }
 
@@ -118,7 +118,7 @@ export class SlotMachine extends Game<IProps, IState> {
         ];
     }
 
-    play() {
+    play(): void {
         if(this.reachedLimit(this.props.p)) return;
         this.setState({status: 'playing'});
         this.win(this.props.p, -this.state.investment);
@@ -127,7 +127,7 @@ export class SlotMachine extends Game<IProps, IState> {
         setTimeout(this.lock, this.rng.random()*2000+1000);
     }
 
-    lock() {
+    lock(): void {
         this.setState({
             locks: [
                 Math.floor(this.rng.random()*symbols.length),
@@ -139,7 +139,7 @@ export class SlotMachine extends Game<IProps, IState> {
         })
     }
 
-    checkWinnings() {
+    checkWinnings(): void {
         const t = this.getTable();
         const getPaylineData = function(payline: number[][]): string[] {
             const data = [];
@@ -176,14 +176,14 @@ export class SlotMachine extends Game<IProps, IState> {
         if(this.reachedLimit(this.props.p)) return;
     }
 
-    unlock() {
+    unlock(): void {
         this.setState({
             locks: [-1, -1, -1, -1, -1],
             canPlay: false,
         })
     }
 
-    updateInvestment(e: React.FormEvent<HTMLInputElement>) {
+    updateInvestment(e: React.FormEvent<HTMLInputElement>): void {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
             investment = minPlay;
@@ -197,7 +197,7 @@ export class SlotMachine extends Game<IProps, IState> {
         this.setState({investment: investment});
     }
 
-    render() {
+    render(): React.ReactNode {
         const t = this.getTable();
         return <>
 <pre>

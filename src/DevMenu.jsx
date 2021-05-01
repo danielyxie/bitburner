@@ -6,7 +6,6 @@ import {
     generateRandomContractOnHome,
 } from "./CodingContractGenerator";
 import { Companies } from "./Company/Companies";
-import { Company } from "./Company/Company";
 import { Programs } from "./Programs/Programs";
 import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
@@ -14,17 +13,11 @@ import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { AllServers } from "./Server/AllServers";
 import { GetServerByHostname } from "./Server/ServerHelpers";
 import { hackWorldDaemon } from "./RedPill";
-import { StockMarket, SymbolToStockMap } from "./StockMarket/StockMarket";
+import { StockMarket } from "./StockMarket/StockMarket";
 import { Stock } from "./StockMarket/Stock";
-import { Terminal } from "./Terminal";
-
-import { numeralWrapper } from "./ui/numeralFormat";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { createElement } from "../utils/uiHelpers/createElement";
-import { createOptionElement } from "../utils/uiHelpers/createOptionElement";
-import { getSelectText } from "../utils/uiHelpers/getSelectData";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 import { Money } from "./ui/React/Money";
 
@@ -54,7 +47,6 @@ class ValueAdjusterComponent extends Component {
 
     render() {
         const { title, add, subtract, reset } = this.props;
-        const { value } = this.state;
         return (
             <>
             <button className="std-button add-exp-button" onClick={() => add(this.state.value)}>+</button>
@@ -281,9 +273,8 @@ class DevMenuComponent extends Component {
     }
 
     modifyFactionRep(modifier) {
-        const component = this;
-        return function(reputation) {
-            const fac = Factions[component.state.faction];
+        return (reputation) => {
+            const fac = Factions[this.state.faction];
             if (fac != null && !isNaN(reputation)) {
                 fac.playerReputation += reputation*modifier;
             }
@@ -298,9 +289,8 @@ class DevMenuComponent extends Component {
     }
 
     modifyFactionFavor(modifier) {
-        const component = this;
-        return function(favor) {
-            const fac = Factions[component.state.faction];
+        return (favor) => {
+            const fac = Factions[this.state.faction];
             if (fac != null && !isNaN(favor)) {
                 fac.favor += favor*modifier;
             }
@@ -370,10 +360,9 @@ class DevMenuComponent extends Component {
     }
 
     setAllSF(sfLvl) {
-        const component = this;
-        return function(){
+        return () => {
             for (let i = 0; i < validSFN.length; i++) {
-                component.setSF(validSFN[i], sfLvl)();
+                this.setSF(validSFN[i], sfLvl)();
             }
         }
     }
@@ -443,9 +432,8 @@ class DevMenuComponent extends Component {
     }
 
     modifyCompanyRep(modifier) {
-        const component = this;
-        return function(reputation) {
-            const company = Companies[component.state.company];
+        return (reputation) => {
+            const company = Companies[this.state.company];
             if (company != null && !isNaN(reputation)) {
                 company.playerReputation += reputation*modifier;
             }
@@ -458,9 +446,8 @@ class DevMenuComponent extends Component {
     }
 
     modifyCompanyFavor(modifier) {
-        const component = this;
-        return function(favor) {
-            const company = Companies[component.state.company];
+        return (favor) => {
+            const company = Companies[this.state.company];
             if (company != null && !isNaN(favor)) {
                 company.favor += favor*modifier;
             }
@@ -582,10 +569,10 @@ class DevMenuComponent extends Component {
         });
     }
 
-    processStocks(cb) {
+    processStocks(sub) {
         const inputSymbols = document.getElementById('dev-stock-symbol').value.toString().replace(/\s/g, '');
 
-        let match = function(symbol) { return true; }
+        let match = function() { return true; }
 
         if (inputSymbols !== '' && inputSymbols !== 'all') {
             match = function(symbol) {
@@ -597,7 +584,7 @@ class DevMenuComponent extends Component {
             if (StockMarket.hasOwnProperty(name)) {
                 const stock = StockMarket[name];
                 if (stock instanceof Stock && match(stock.symbol)) {
-                    cb(stock);
+                    sub(stock);
                 }
             }
         }
@@ -638,13 +625,13 @@ class DevMenuComponent extends Component {
         }
     }
 
-    sleeveMaxAllSync() {
+    sleeveSyncMaxAll() {
         for (let i = 0; i < Player.sleeves.length; ++i) {
             Player.sleeves[i].sync = 100;
         }
     }
 
-    sleeveClearAllSync() {
+    sleeveSyncClearAll() {
         for (let i = 0; i < Player.sleeves.length; ++i) {
             Player.sleeves[i].sync = 0;
         }
@@ -1212,8 +1199,8 @@ class DevMenuComponent extends Component {
                     </tr>
                     <tr>
                         <td><span className="text">Sync:</span></td>
-                        <td><button className="std-button" onClick={this.sleeveMaxAllSync}>Max all</button></td>
-                        <td><button className="std-button" onClick={this.sleeveClearAllSync}>Clear all</button></td>
+                        <td><button className="std-button" onClick={this.sleeveSyncMaxAll}>Max all</button></td>
+                        <td><button className="std-button" onClick={this.sleeveSyncClearAll}>Clear all</button></td>
                     </tr>
                 </tbody>
             </table>

@@ -46,7 +46,7 @@ Reviver.constructors = {}; // A list of constructors the smart reviver should kn
 // Returns:    The structure (which will then be turned into a string
 //             as part of the JSON.stringify algorithm)
 function Generic_toJSON(ctorName, obj, keys) {
-  var data, index, key;
+  var data, key;
 
   if (!keys) {
     keys = Object.keys(obj); // Only "own" properties are included

@@ -4,8 +4,6 @@
  */
 import * as React from "react";
 
-import { numeralWrapper } from "../numeralFormat";
-
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../React/Money";

@@ -116,7 +116,7 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
  * Create a popup that lets the player start a Corporation
  * @param {IPlayer} p - Player object
  */
-export function createStartCorporationPopup(p: IPlayer) {
+export function createStartCorporationPopup(p: IPlayer): void {
     if (!p.canAccessCorporation() || p.hasCorporation()) { return; }
 
     const popupId = "create-corporation-popup";
@@ -196,7 +196,7 @@ export function createStartCorporationPopup(p: IPlayer) {
  * Create a popup that lets the player upgrade the cores on his/her home computer
  * @param {IPlayer} p - Player object
  */
-export function createUpgradeHomeCoresPopup(p: IPlayer) {
+export function createUpgradeHomeCoresPopup(p: IPlayer): void {
     const currentCores = p.getHomeComputer().cpuCores;
     if (currentCores >= 8) {
         dialogBoxCreate(<>
@@ -252,7 +252,7 @@ cost {Money(cost)}</>);
  * Create a popup that lets the player upgrade the RAM on his/her home computer
  * @param {IPlayer} p - Player object
  */
-export function createUpgradeHomeRamPopup(p: IPlayer) {
+export function createUpgradeHomeRamPopup(p: IPlayer): void {
     const cost: number = p.getUpgradeHomeRamCost();
     const ram: number = p.getHomeComputer().maxRam;
 
@@ -291,7 +291,7 @@ export function createUpgradeHomeRamPopup(p: IPlayer) {
  * Attempt to purchase a TOR router
  * @param {IPlayer} p - Player object
  */
-export function purchaseTorRouter(p: IPlayer) {
+export function purchaseTorRouter(p: IPlayer): void {
     if (p.hasTorRouter()) {
         dialogBoxCreate(`You already have a TOR Router`);
         return;

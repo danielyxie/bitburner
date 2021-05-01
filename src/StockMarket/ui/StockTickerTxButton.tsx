@@ -10,10 +10,6 @@ type IProps = {
     tooltip?: JSX.Element | null;
 }
 
-type IInnerHTMLMarkup = {
-    __html: string;
-}
-
 export function StockTickerTxButton(props: IProps): React.ReactElement {
     let className = "stock-market-input std-button";
 
@@ -26,8 +22,8 @@ export function StockTickerTxButton(props: IProps): React.ReactElement {
         <button className={className} onClick={props.onClick}>
             {props.text}
             {
-                hasTooltip &&
-                <span className={"tooltiptext"}>{props.tooltip!}</span>
+                props.tooltip != null &&
+                <span className={"tooltiptext"}>{props.tooltip}</span>
             }
         </button>
     )

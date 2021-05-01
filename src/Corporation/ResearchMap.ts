@@ -7,7 +7,7 @@ import { IMap } from "../types";
 
 export const ResearchMap: IMap<Research> = {};
 
-function addResearch(p: IConstructorParams) {
+function addResearch(p: IConstructorParams): void {
     if (ResearchMap[p.name] != null) {
         console.warn(`Duplicate Research being defined: ${p.name}`);
     }

@@ -3,49 +3,55 @@
 import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 
 interface IMainMenuLinks {
-    Terminal:       HTMLElement | null;
-    ScriptEditor:   HTMLElement | null;
-    ActiveScripts:  HTMLElement | null;
-    CreateProgram:  HTMLElement | null;
-    Stats:          HTMLElement | null;
-    Factions:       HTMLElement | null;
-    Augmentations:  HTMLElement | null;
-    HacknetNodes:   HTMLElement | null;
-    Sleeves:        HTMLElement | null;
-    City:           HTMLElement | null;
-    Travel:         HTMLElement | null;
-    Job:            HTMLElement | null;
-    StockMarket:    HTMLElement | null;
-    Bladeburner:    HTMLElement | null;
-    Corporation:    HTMLElement | null;
-    Gang:           HTMLElement | null;
-    Milestones:     HTMLElement | null;
-    Tutorial:       HTMLElement | null;
-    Options:        HTMLElement | null;
-    DevMenu:        HTMLElement | null;
+    Terminal:       HTMLElement;
+    ScriptEditor:   HTMLElement;
+    ActiveScripts:  HTMLElement;
+    CreateProgram:  HTMLElement;
+    Stats:          HTMLElement;
+    Factions:       HTMLElement;
+    Augmentations:  HTMLElement;
+    HacknetNodes:   HTMLElement;
+    Sleeves:        HTMLElement;
+    City:           HTMLElement;
+    Travel:         HTMLElement;
+    Job:            HTMLElement;
+    StockMarket:    HTMLElement;
+    Bladeburner:    HTMLElement;
+    Corporation:    HTMLElement;
+    Gang:           HTMLElement;
+    Milestones:     HTMLElement;
+    Tutorial:       HTMLElement;
+    Options:        HTMLElement;
+    DevMenu:        HTMLElement;
 }
 
+const emptyElement: HTMLElement = ((): HTMLElement => {
+    const elem = document.createElement('div');
+    if(elem === null) throw new Error("unable to create empty div element");
+    return elem;
+})();
+
 export const MainMenuLinks: IMainMenuLinks = {
-    Terminal: null,
-    ScriptEditor: null,
-    ActiveScripts: null,
-    CreateProgram: null,
-    Stats: null,
-    Factions: null,
-    Augmentations: null,
-    HacknetNodes: null,
-    Sleeves: null,
-    City: null,
-    Travel: null,
-    Job: null,
-    StockMarket: null,
-    Bladeburner: null,
-    Corporation: null,
-    Gang: null,
-    Milestones: null,
-    Tutorial: null,
-    Options: null,
-    DevMenu: null,
+    Terminal: emptyElement,
+    ScriptEditor: emptyElement,
+    ActiveScripts: emptyElement,
+    CreateProgram: emptyElement,
+    Stats: emptyElement,
+    Factions: emptyElement,
+    Augmentations: emptyElement,
+    HacknetNodes: emptyElement,
+    Sleeves: emptyElement,
+    City: emptyElement,
+    Travel: emptyElement,
+    Job: emptyElement,
+    StockMarket: emptyElement,
+    Bladeburner: emptyElement,
+    Corporation: emptyElement,
+    Gang: emptyElement,
+    Milestones: emptyElement,
+    Tutorial: emptyElement,
+    Options: emptyElement,
+    DevMenu: emptyElement,
 }
 
 export function initializeMainMenuLinks(): boolean {
@@ -77,7 +83,9 @@ export function initializeMainMenuLinks(): boolean {
         MainMenuLinks.Gang = safeGetLink("gang-menu-link");
         MainMenuLinks.Milestones = safeGetLink("milestones-menu-link");
         MainMenuLinks.Tutorial = safeGetLink("tutorial-menu-link");
-        MainMenuLinks.Options = document.getElementById("options-menu-link"); // This click listener is already set, so don't clear it
+        const op: HTMLElement | null = document.getElementById("options-menu-link");
+        if(op === null) throw new Error(`Could not find element with id: "options-menu-link"`);
+        MainMenuLinks.Options = op; // This click listener is already set, so don't clear it
         MainMenuLinks.DevMenu = safeGetLink("dev-menu-link");
 
         return true;

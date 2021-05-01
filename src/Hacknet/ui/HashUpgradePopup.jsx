@@ -8,12 +8,9 @@ import { HashManager }          from "../HashManager";
 import { HashUpgrades }         from "../HashUpgrades";
 
 import { Player }               from "../../Player";
-import { AllServers }           from "../../Server/AllServers";
-import { Server }               from "../../Server/Server";
 
 import { numeralWrapper }       from "../../ui/numeralFormat";
 
-import { removePopup }          from "../../ui/React/createPopup";
 import { PopupCloseButton }     from "../../ui/React/PopupCloseButton";
 import { ServerDropdown,
          ServerType }           from "../../ui/React/ServerDropdown"

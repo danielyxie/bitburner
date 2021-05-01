@@ -42,10 +42,6 @@ interface IIndustry {
 
 
 export class Product {
-    // Initiatizes a Product object from a JSON save state.
-    static fromJSON(value: any): Product {
-        return Generic_fromJSON(Product, value.data);
-    }
 
     // Product name
     name = "";
@@ -196,7 +192,7 @@ export class Product {
 
         //Calculate the product's required materials
         //For now, just set it to be the same as the requirements to make materials
-        for (var matName in industry.reqMats) {
+        for (const matName in industry.reqMats) {
             if (industry.reqMats.hasOwnProperty(matName)) {
                 this.reqMats[matName] = industry.reqMats[matName];
             }
@@ -205,7 +201,7 @@ export class Product {
         //Calculate the product's size
         //For now, just set it to be the same size as the requirements to make materials
         this.siz = 0;
-        for (var matName in industry.reqMats) {
+        for (const matName in industry.reqMats) {
             this.siz += MaterialSizes[matName] * industry.reqMats[matName];
         }
 
@@ -239,6 +235,12 @@ export class Product {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("Product", this);
+    }
+
+    // Initiatizes a Product object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Product {
+        return Generic_fromJSON(Product, value.data);
     }
 }
 

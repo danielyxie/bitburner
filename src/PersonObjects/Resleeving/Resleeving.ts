@@ -108,7 +108,8 @@ export function generateResleeves(): Resleeve[] {
             }
             
             const randAug: Augmentation | null = Augmentations[randKey];
-            r.augmentations.push({name: randAug!.name, level: 1});
+            if(randAug === null) throw new Error(`null augmentation: ${randKey}`)
+            r.augmentations.push({name: randAug.name, level: 1});
             r.applyAugmentation(Augmentations[randKey]);
             r.updateStatLevels();
 

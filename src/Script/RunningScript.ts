@@ -16,10 +16,6 @@ import {
 import { getTimestamp } from "../../utils/helpers/getTimestamp";
 
 export class RunningScript {
-    // Initializes a RunningScript Object from a JSON save state
-    static fromJSON(value: any): RunningScript {
-        return Generic_fromJSON(RunningScript, value.data);
-    }
 
     // Script arguments
     args: any[] = [];
@@ -101,7 +97,7 @@ export class RunningScript {
     }
 
     // Update the moneyStolen and numTimesHack maps when hacking
-    recordHack(serverIp: string, moneyGained: number, n=1) {
+    recordHack(serverIp: string, moneyGained: number, n=1): void {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -110,7 +106,7 @@ export class RunningScript {
     }
 
     // Update the grow map when calling grow()
-    recordGrow(serverIp: string, n=1) {
+    recordGrow(serverIp: string, n=1): void {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -118,7 +114,7 @@ export class RunningScript {
     }
 
     // Update the weaken map when calling weaken() {
-    recordWeaken(serverIp: string, n=1) {
+    recordWeaken(serverIp: string, n=1): void {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -128,6 +124,12 @@ export class RunningScript {
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("RunningScript", this);
+    }
+
+    // Initializes a RunningScript Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): RunningScript {
+        return Generic_fromJSON(RunningScript, value.data);
     }
 }
 

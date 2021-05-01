@@ -155,17 +155,18 @@ export class City {
     }
 
     /**
-     * Initiatizes a City object from a JSON save state.
-     */
-    static fromJSON(value: any): City {
-        return Generic_fromJSON(City, value.data);
-    }
-
-    /**
      * Serialize the current object to a JSON save state.
      */
     toJSON(): any {
         return Generic_toJSON("City", this);
+    }
+
+    /**
+     * Initiatizes a City object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): City {
+        return Generic_fromJSON(City, value.data);
     }
 }
 

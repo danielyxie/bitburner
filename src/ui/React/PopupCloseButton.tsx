@@ -14,7 +14,7 @@ import { removeElement } from "../../../utils/uiHelpers/removeElement";
 export interface IPopupCloseButtonProps {
     class?: string;
     popup: HTMLElement | string;
-    style?: object;
+    style?: any;
     text: string;
 }
 
@@ -26,15 +26,15 @@ export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, an
         this.keyListener = this.keyListener.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         document.addEventListener("keydown", this.keyListener);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         document.removeEventListener("keydown", this.keyListener);
     }
 
-    closePopup() {
+    closePopup(): void {
         let popup: HTMLElement | null;
         if (typeof this.props.popup === "string") {
             popup = document.getElementById(this.props.popup);
@@ -49,13 +49,13 @@ export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, an
         }
     }
 
-    keyListener(e: KeyboardEvent) {
+    keyListener(e: KeyboardEvent): void {
         if (e.keyCode === KEY.ESC) {
             this.closePopup();
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         const className = this.props.class ? this.props.class : "std-button";
 
         return (

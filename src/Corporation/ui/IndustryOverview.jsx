@@ -12,7 +12,6 @@ import { createProgressBarText }    from "../../../utils/helpers/createProgressB
 
 export class IndustryOverview extends BaseReactComponent {
     renderMakeProductButton() {
-        const corp = this.corp();
         const division = this.routing().currentDivision; // Validated inside render()
 
         var createProductButtonText, createProductPopupText;
@@ -97,7 +96,6 @@ export class IndustryOverview extends BaseReactComponent {
         const popularity = `Popularity: ${numeralWrapper.format(division.popularity, "0.000")}`;
 
         let advertisingInfo = false;
-        let advertisingTooltip;
         const advertisingFactors = division.getAdvertisingFactors();
         const awarenessFac = advertisingFactors[1];
         const popularityFac = advertisingFactors[2];

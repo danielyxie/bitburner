@@ -1,4 +1,3 @@
-import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server"
 import { getElementById } from "../../utils/uiHelpers/getElementById";
 
@@ -6,11 +5,11 @@ import { getElementById } from "../../utils/uiHelpers/getElementById";
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
  */
-export function post(input: string) {
+export function post(input: string): void {
     postContent(input);
 }
 
-export function postError(input: string) {
+export function postError(input: string): void {
     postContent(`ERROR: ${input}`, { color: "#ff2929" });
 }
 
@@ -18,7 +17,7 @@ export function postError(input: string) {
  * Adds some output to the terminal with an identifier of "hack-progress-bar"
  * @param input Text or HTML to output to the terminal
  */
-export function hackProgressBarPost(input: string) {
+export function hackProgressBarPost(input: string): void {
     postContent(input, { id: "hack-progress-bar" });
 }
 
@@ -26,7 +25,7 @@ export function hackProgressBarPost(input: string) {
  * Adds some output to the terminal with an identifier of "hack-progress"
  * @param input Text or HTML to output to the terminal
  */
-export function hackProgressPost(input: string) {
+export function hackProgressPost(input: string): void {
     postContent(input, { id: "hack-progress" });
 }
 
@@ -35,11 +34,11 @@ interface IPostContentConfig {
     color?: string; // Additional class for terminal-line. Does NOT replace
 }
 
-export function postElement(element: JSX.Element) {
+export function postElement(element: JSX.Element): void {
     postContent(renderToStaticMarkup(element));
 }
 
-export function postContent(input: string, config: IPostContentConfig = {}) {
+export function postContent(input: string, config: IPostContentConfig = {}): void {
     // tslint:disable-next-line:max-line-length
     const style = `color: ${config.color != null ? config.color : "var(--my-font-color)"}; background-color:var(--my-background-color);${config.id === undefined ? " white-space:pre-wrap;" : ""}`;
     // tslint:disable-next-line:max-line-length
@@ -49,7 +48,7 @@ export function postContent(input: string, config: IPostContentConfig = {}) {
     scrollTerminalToBottom();
 }
 
-function scrollTerminalToBottom() {
+function scrollTerminalToBottom(): void {
     const container: HTMLElement = getElementById("terminal-container");
     container.scrollTop = container.scrollHeight;
 }

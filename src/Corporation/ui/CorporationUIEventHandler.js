@@ -16,7 +16,7 @@ import { Corporation,
 import { Industries,
          IndustryStartingCosts,
          IndustryDescriptions,
-         IndustryResearchTrees } from "../IndustryData";
+} from "../IndustryData";
 
 import { MaterialSizes } from "../MaterialSizes";
 
@@ -679,8 +679,6 @@ export class CorporationEventHandler {
 
     // Create a popup that lets the player use the Market TA research for Materials
     createMaterialMarketTaPopup(mat, industry) {
-        const corp = this.corp;
-
         const popupId = "cmpy-mgmt-marketta-popup";
         const markupLimit = mat.getMarkupLimit();
         const ta1 = createElement("p", {
@@ -964,8 +962,6 @@ export class CorporationEventHandler {
 
     // Create a popup that lets the player use the Market TA research for Products
     createProductMarketTaPopup(product, industry) {
-        const corp = this.corp;
-
         const popupId = "cmpy-mgmt-marketta-popup";
         const markupLimit = product.rat / product.mku;
         const ta1 = createElement("p", {
@@ -1515,8 +1511,6 @@ export class CorporationEventHandler {
                 } else {
                     const stockSaleResults = this.corp.calculateShareSale(numShares);
                     const profit = stockSaleResults[0];
-                    const newSharePrice = stockSaleResults[1];
-                    const newSharesUntilUpdate = stockSaleResults[2];
                     profitIndicator.innerText = "Sell " + numShares + " shares for a total of " +
                                                 numeralWrapper.format(profit, '$0.000a');
                 }

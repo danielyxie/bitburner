@@ -22,7 +22,7 @@ import { isPowerOfTwo } from "../../utils/helpers/isPowerOfTwo";
  * @param ram Amount of RAM on purchased server (GB)
  * @returns Cost of purchasing the given server. Returns infinity for invalid arguments
  */
-export function getPurchaseServerCost(ram: number) {
+export function getPurchaseServerCost(ram: number): number {
     const sanitizedRam = Math.round(ram);
     if (isNaN(sanitizedRam) || !isPowerOfTwo(sanitizedRam)) {
         return Infinity;
@@ -35,11 +35,11 @@ export function getPurchaseServerCost(ram: number) {
     return sanitizedRam * CONSTANTS.BaseCostFor1GBOfRamServer * BitNodeMultipliers.PurchasedServerCost;
 }
 
-export function getPurchaseServerLimit() {
+export function getPurchaseServerLimit(): number {
     return Math.round(CONSTANTS.PurchasedServerLimit * BitNodeMultipliers.PurchasedServerLimit);
 }
 
-export function getPurchaseServerMaxRam() {
+export function getPurchaseServerMaxRam(): number {
     const ram = Math.round(CONSTANTS.PurchasedServerMaxRam * BitNodeMultipliers.PurchasedServerMaxRam);
 
     // Round this to the nearest power of 2
@@ -47,7 +47,7 @@ export function getPurchaseServerMaxRam() {
 }
 
 // Manually purchase a server (NOT through Netscript)
-export function purchaseServer(ram: number, p: IPlayer) {
+export function purchaseServer(ram: number, p: IPlayer): void {
     const cost = getPurchaseServerCost(ram);
 
     //Check if player has enough money
@@ -96,7 +96,7 @@ export function purchaseServer(ram: number, p: IPlayer) {
 }
 
 // Manually upgrade RAM on home computer (NOT through Netscript)
-export function purchaseRamForHomeComputer(cost: number, p: IPlayer) {
+export function purchaseRamForHomeComputer(cost: number, p: IPlayer): void {
     if (!p.canAfford(cost)) {
         dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
         return;

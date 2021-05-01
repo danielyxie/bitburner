@@ -101,7 +101,7 @@ export function processOrders(stock: Stock, orderType: OrderTypes, posType: Posi
  * @param {Order} order - Order being executed
  * @param {IProcessOrderRefs} refs - References to objects/functions that are required for this function
  */
-function executeOrder(order: Order, refs: IProcessOrderRefs) {
+function executeOrder(order: Order, refs: IProcessOrderRefs): void {
     const stock = refs.symbolToStockMap[order.stockSymbol];
     if (!(stock instanceof Stock)) {
         console.error(`Could not find stock for this order: ${order.stockSymbol}`);

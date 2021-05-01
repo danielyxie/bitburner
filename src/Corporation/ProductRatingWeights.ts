@@ -10,7 +10,7 @@ export interface IProductRatingWeight {
     Reliability?: number;
 }
 
-export const ProductRatingWeights: IMap<object> = {
+export const ProductRatingWeights: IMap<any> = {
     [Industries.Food]: {
         Quality:        0.7,
         Durability:     0.1,

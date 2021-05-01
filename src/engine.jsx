@@ -88,7 +88,6 @@ import {
 import { createStatusText } from "./ui/createStatusText";
 import { CharacterInfo } from "./ui/CharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
-import { numeralWrapper } from "./ui/numeralFormat";
 import { setSettingsLabels } from "./ui/setSettingsLabels";
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
@@ -134,7 +133,7 @@ $(document).keydown(function(e) {
         if (getCurrentEditor().isFocused()) {
             return;
         }
-    } catch(e) {}
+    } catch(error) {}
 
     if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
         if (e.keyCode == KEY.T && e.altKey) {
@@ -1474,7 +1473,6 @@ const Engine = {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
-                    var fac = Factions[Player.currentWorkFactionName];
                     Player.finishFactionWork(true);
                 } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
                     Player.finishCreateProgramWork(true);
@@ -1534,7 +1532,8 @@ const Engine = {
                 // Use the Async Clipboard API
                 navigator.clipboard.writeText(saveString).then(function() {
                     createStatusText("Copied save to clipboard");
-                }, function(e) {
+                }, function(err) {
+                    console.error(err);
                     console.error("Unable to copy save data to clipboard using Async API");
                     createStatusText("Failed to copy save");
                 })
@@ -1593,14 +1592,14 @@ window.onload = function() {
             return Engine.load(null); // Try to load from localstorage
         }
 
-        request.onsuccess = function(e) {
+        request.onsuccess = function() {
             Engine.load(request.result);
         }
     };
 
     indexedDbRequest.onupgradeneeded = function(e) {
-        var db = e.target.result;
-        var objectStore = db.createObjectStore("savestring");
+        const db = e.target.result;
+        db.createObjectStore("savestring");
     }
 };
 

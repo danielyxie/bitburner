@@ -23,8 +23,6 @@ import { AceKeybindingSetting } from "../Settings/SettingEnums";
 import { clearEventListeners } from "../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../utils/uiHelpers/createOptionElement";
-import { getSelectText,
-         getSelectValue } from "../../utils/uiHelpers/getSelectData";
 import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
 
 // Wrapper for Ace editor
@@ -78,16 +76,16 @@ class AceEditorWrapper extends ScriptEditor {
         // Configure some of the VIM keybindings
         ace.config.loadModule('ace/keyboard/vim', function(module) {
             var VimApi = module.CodeMirror.Vim;
-            VimApi.defineEx('write', 'w', function(cm, input) {
+            VimApi.defineEx('write', 'w', function(/*cm, input*/) {
                 params.saveAndCloseFn();
             });
-            VimApi.defineEx('quit', 'q', function(cm, input) {
+            VimApi.defineEx('quit', 'q', function(/*cm, input*/) {
                 params.quitFn();
             });
-            VimApi.defineEx('xwritequit', 'x', function(cm, input) {
+            VimApi.defineEx('xwritequit', 'x', function(/*cm, input*/) {
                 params.saveAndCloseFn();
             });
-            VimApi.defineEx('wqwritequit', 'wq', function(cm, input) {
+            VimApi.defineEx('wqwritequit', 'wq', function(/*cm, input*/) {
                 params.saveAndCloseFn();
             });
         });
@@ -161,8 +159,6 @@ class AceEditorWrapper extends ScriptEditor {
         }
 
         try {
-            const optionsPanel = safeGetElementById("script-editor-options-panel", "Script Editor Options Panel");
-
             // Set editor to visible
             const elem = document.getElementById("ace-editor");
             if (elem instanceof HTMLElement) {

@@ -137,7 +137,7 @@ class Routing {
      * Determines if the player is currently on the specified page.
      * @param page The page to compare against the current state.
      */
-    isOn(page: Page) {
+    isOn(page: Page): boolean {
         return this.currentPage === page;
     }
 
@@ -145,7 +145,7 @@ class Routing {
      * Routes the player to the appropriate page.
      * @param page The page to navigate to.
      */
-    navigateTo(page: Page) {
+    navigateTo(page: Page): void {
         this.currentPage = page;
     }
 }

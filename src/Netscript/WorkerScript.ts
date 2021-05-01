@@ -106,7 +106,7 @@ export class WorkerScript {
      */
     serverIp: string;
 
-    constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => object) {
+    constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
         this.name 			= runningScriptObj.filename;
     	this.serverIp 		= runningScriptObj.server;
 
@@ -146,8 +146,10 @@ export class WorkerScript {
     /**
      * Returns the Server on which this script is running
      */
-    getServer() {
-    	return AllServers[this.serverIp];
+    getServer(): BaseServer {
+        const server = AllServers[this.serverIp];
+        if(server == null) throw new Error(`Script ${this.name} pid ${this.pid} is running on non-existent server?`);
+    	return server;
     }
 
     /**

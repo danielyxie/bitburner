@@ -10,7 +10,7 @@ interface IProps {
     disabled?: boolean;
     id?: string;
     onClick?: (e: React.MouseEvent<HTMLElement>) => any;
-    style?: object;
+    style?: any;
     text: string;
     tooltip?: string;
 }
@@ -33,11 +33,8 @@ export function AccordionButton(props: IProps): React.ReactElement {
     }
 
     // Tooltip will be set using inner HTML
-    let tooltipMarkup: IInnerHTMLMarkup | null;
-    if (hasTooltip) {
-        tooltipMarkup = {
-            __html: props.tooltip!,
-        }
+    const tooltipMarkup: IInnerHTMLMarkup = {
+        __html: props.tooltip ? props.tooltip : "",
     }
 
     return (
@@ -45,7 +42,7 @@ export function AccordionButton(props: IProps): React.ReactElement {
             {props.text}
             {
                 hasTooltip &&
-                <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
+                <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup}></span>
             }
         </button>
     )

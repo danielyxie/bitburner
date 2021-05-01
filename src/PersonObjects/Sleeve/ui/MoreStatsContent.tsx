@@ -4,8 +4,6 @@ import { StatsTable } from "../../../ui/React/StatsTable";
 import * as React from "react";
 
 export function MoreStatsContent(sleeve: Sleeve): React.ReactElement {
-    let style = {}
-    style = {textAlign: 'right'};
     return (<>
         {StatsTable([
             ['Hacking: ', sleeve.hacking_skill, `(${numeralWrapper.formatExp(sleeve.hacking_exp)} exp)`],

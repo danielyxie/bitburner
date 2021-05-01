@@ -108,12 +108,6 @@ export interface ICodingContractReward {
  * The player receives a reward if the problem is solved correctly
  */
 export class CodingContract {
-    /**
-     * Initiatizes a CodingContract from a JSON save state.
-     */
-    static fromJSON(value: any): CodingContract {
-        return Generic_fromJSON(CodingContract, value.data);
-    }
 
     /* Relevant data for the contract's problem */
     data: any;
@@ -178,7 +172,7 @@ export class CodingContract {
      */
     async prompt(): Promise<CodingContractResult> {
         // tslint:disable-next-line
-        return new Promise<CodingContractResult>((resolve: Function, reject: Function) => {
+        return new Promise<CodingContractResult>((resolve) => {
             const contractType: CodingContractType = CodingContractTypes[this.type];
             const popupId = `coding-contract-prompt-popup-${this.fn}`;
             const title: HTMLElement = createElement("h1", {
@@ -190,10 +184,16 @@ export class CodingContract {
                             "after which the contract will self-destruct.<br><br>",
                             `${contractType.desc(this.data).replace(/\n/g, "<br>")}`].join(" "),
             });
-            let answerInput: HTMLInputElement;
             let solveBtn: HTMLElement;
-            let cancelBtn: HTMLElement;
-            answerInput = createElement("input", {
+            const cancelBtn = createElement("a", {
+                class: "a-link-button",
+                clickListener: () => {
+                    resolve(CodingContractResult.Cancelled);
+                    removeElementById(popupId);
+                },
+                innerText: "Cancel",
+            });
+            const answerInput = createElement("input", {
                 onkeydown: (e: any) => {
                     if (e.keyCode === KEY.ENTER && answerInput.value !== "") {
                         e.preventDefault();
@@ -219,14 +219,6 @@ export class CodingContract {
                 },
                 innerText: "Solve",
             });
-            cancelBtn = createElement("a", {
-                class: "a-link-button",
-                clickListener: () => {
-                    resolve(CodingContractResult.Cancelled);
-                    removeElementById(popupId);
-                },
-                innerText: "Cancel",
-            });
             const lineBreak: HTMLElement = createElement("br");
             createPopup(popupId, [title, lineBreak, txt, lineBreak, lineBreak, answerInput, solveBtn, cancelBtn]);
             answerInput.focus();
@@ -238,6 +230,14 @@ export class CodingContract {
      */
     toJSON(): any {
         return Generic_toJSON("CodingContract", this);
+    }
+
+    /**
+     * Initiatizes a CodingContract from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): CodingContract {
+        return Generic_fromJSON(CodingContract, value.data);
     }
 }
 

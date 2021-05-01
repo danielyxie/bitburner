@@ -6,6 +6,7 @@ import { IPlayer } from "../IPlayer";
 import { CONSTANTS } from "../../Constants";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { Server } from "../../Server/Server";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import {
     AddToAllServers,
@@ -14,19 +15,19 @@ import {
 } from "../../Server/AllServers";
 import { SpecialServerIps } from "../../Server/SpecialServerIps";
 
-export function hasTorRouter(this: IPlayer) {
+export function hasTorRouter(this: IPlayer): boolean {
     return SpecialServerIps.hasOwnProperty("Darkweb Server");
 }
 
-export function getCurrentServer(this: IPlayer) {
+export function getCurrentServer(this: IPlayer): Server | HacknetServer | null {
     return AllServers[this.currentServer];
 }
 
-export function getHomeComputer(this: IPlayer) {
+export function getHomeComputer(this: IPlayer): Server | HacknetServer | null {
     return AllServers[this.homeComputer];
 }
 
-export function getUpgradeHomeRamCost(this: IPlayer) {
+export function getUpgradeHomeRamCost(this: IPlayer): number {
     //Calculate how many times ram has been upgraded (doubled)
     const currentRam = this.getHomeComputer().maxRam;
     const numUpgrades = Math.log2(currentRam);

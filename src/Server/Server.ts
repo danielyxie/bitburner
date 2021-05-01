@@ -25,10 +25,6 @@ export interface IConstructorParams {
 }
 
 export class Server extends BaseServer {
-    // Initializes a Server Object from a JSON save state
-    static fromJSON(value: any): Server {
-        return Generic_fromJSON(Server, value.data);
-    }
 
     // Flag indicating whether this server has a backdoor installed by a player
     backdoorInstalled = false;
@@ -155,6 +151,12 @@ export class Server extends BaseServer {
      */
     toJSON(): any {
         return Generic_toJSON("Server", this);
+    }
+
+    // Initializes a Server Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Server {
+        return Generic_fromJSON(Server, value.data);
     }
 }
 

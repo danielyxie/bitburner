@@ -1,7 +1,7 @@
 //This file should be copied into brace/mode/netscript.js
 import { NetscriptFunctions } from '../NetscriptFunctions';
 
-ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
+ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports) {
 "use strict";
 
 var oop = acequire("../lib/oop");
@@ -23,7 +23,7 @@ var DocCommentHighlightRules = function() {
 
 oop.inherits(DocCommentHighlightRules, TextHighlightRules);
 
-DocCommentHighlightRules.getTagRule = function(start) {
+DocCommentHighlightRules.getTagRule = function() {
     return {
         token : "comment.doc.tag.storage.type",
         regex : "\\b(?:TODO|FIXME|XXX|HACK)\\b",
@@ -50,7 +50,7 @@ exports.DocCommentHighlightRules = DocCommentHighlightRules;
 
 });
 
-ace.define("ace/mode/netscript_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/doc_comment_highlight_rules","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
+ace.define("ace/mode/netscript_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/doc_comment_highlight_rules","ace/mode/text_highlight_rules"], function(acequire, exports) {
 "use strict";
 
 var oop = acequire("../lib/oop");
@@ -538,12 +538,14 @@ function comments(next) {
 exports.NetscriptHighlightRules = NetscriptHighlightRules;
 });
 
-ace.define("ace/mode/matching_brace_outdent",["require","exports","module","ace/range"], function(acequire, exports, module) {
+ace.define("ace/mode/matching_brace_outdent",["require","exports","module","ace/range"], function(acequire, exports) {
 "use strict";
 
 var Range = acequire("../range").Range;
 
-var MatchingBraceOutdent = function() {};
+var MatchingBraceOutdent = function() {
+    // do nothing.
+};
 
 (function() {
 
@@ -578,7 +580,7 @@ var MatchingBraceOutdent = function() {};
 exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define("ace/mode/folding/cstyle",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(acequire, exports, module) {
+ace.define("ace/mode/folding/cstyle",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(acequire, exports) {
 "use strict";
 
 var oop = acequire("../../lib/oop");
@@ -718,7 +720,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-ace.define("ace/mode/netscript",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/netscript_highlight_rules","ace/mode/matching_brace_outdent","ace/worker/worker_client","ace/mode/behaviour/cstyle","ace/mode/folding/cstyle"], function(acequire, exports, module) {
+ace.define("ace/mode/netscript",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/netscript_highlight_rules","ace/mode/matching_brace_outdent","ace/worker/worker_client","ace/mode/behaviour/cstyle","ace/mode/folding/cstyle"], function(acequire, exports) {
 "use strict";
 
 var oop = acequire("../lib/oop");

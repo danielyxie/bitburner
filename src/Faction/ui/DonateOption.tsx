@@ -7,7 +7,6 @@ import { CONSTANTS } from "../../Constants";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
@@ -32,7 +31,7 @@ const inputStyleMarkup = {
 
 export class DonateOption extends React.Component<IProps, IState> {
     // Style markup for block elements. Stored as property
-    blockStyle: object = { display: "block" };
+    blockStyle: any = { display: "block" };
 
     constructor(props: IProps) {
         super(props);
@@ -87,7 +86,7 @@ export class DonateOption extends React.Component<IProps, IState> {
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <div className={"faction-work-div"}>
                 <div className={"faction-work-div-wrapper"}>

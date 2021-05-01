@@ -4,7 +4,19 @@ export const overviewPage = "Overview";
 
 // Interfaces for whatever's required to sanitize routing with Corporation Data
 interface IOfficeSpace {
-
+    loc: string;
+    cost: number;
+    size: number;
+    comf: number;
+    beau: number;
+    tier: any;
+    minEne: number;
+    maxEne: number;
+    minHap: number;
+    maxHap: number;
+    maxMor: number;
+    employees: any;
+    employeeProd: any;
 }
 
 interface IDivision {

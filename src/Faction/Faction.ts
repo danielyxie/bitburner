@@ -4,12 +4,6 @@ import { FactionInfo,
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class Faction {
-    /**
-     * Initiatizes a Faction object from a JSON save state.
-     */
-    static fromJSON(value: any): Faction {
-        return Generic_fromJSON(Faction, value.data);
-    }
 
     /**
      * Flag signalling whether the player has already received an invitation
@@ -102,6 +96,14 @@ export class Faction {
      */
     toJSON(): any {
         return Generic_toJSON("Faction", this);
+    }
+
+    /**
+     * Initiatizes a Faction object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Faction {
+        return Generic_fromJSON(Faction, value.data);
     }
 }
 

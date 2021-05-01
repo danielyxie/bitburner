@@ -49,10 +49,6 @@ interface IConstructorParams {
 }
 
 export class Augmentation {
-    // Initiatizes a Augmentation object from a JSON save state.
-    static fromJSON(value: any): Augmentation {
-        return Generic_fromJSON(Augmentation, value.data);
-    }
 
     // How much money this costs to buy
     baseCost = 0;
@@ -141,7 +137,7 @@ export class Augmentation {
                 console.warn(`In Augmentation.addToFactions(), could not find faction with this name: ${factionList[i]}`);
                 continue;
             }
-            faction!.augmentations.push(this.name);
+            faction.augmentations.push(this.name);
         }
     }
 
@@ -154,7 +150,7 @@ export class Augmentation {
                     console.warn(`Invalid Faction object in addToAllFactions(). Key value: ${fac}`);
                     continue;
                 }
-                facObj!.augmentations.push(this.name);
+                facObj.augmentations.push(this.name);
             }
         }
     }
@@ -162,6 +158,12 @@ export class Augmentation {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("Augmentation", this);
+    }
+
+    // Initiatizes a Augmentation object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Augmentation {
+        return Generic_fromJSON(Augmentation, value.data);
     }
 }
 

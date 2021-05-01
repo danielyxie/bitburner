@@ -5,7 +5,6 @@ import { Player } from "./Player";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { formatNumber } from "../utils/StringHelperFunctions";
-import { numeralWrapper } from "./ui/numeralFormat";
 import { Reputation } from "./ui/React/Reputation";
 
 import { addOffset } from "../utils/helpers/addOffset";
@@ -13,8 +12,6 @@ import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { isString } from "../utils/helpers/isString";
 
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
-
-import jsplumb from "jsplumb";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -783,11 +780,11 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
         return;
     }
 
-    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
-    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
+    let id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    let txtEl = document.getElementById(id + "-txt");
 
     // Set node classes based on type
-    var txt;
+    let txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
             txt = "CPU Core<br>" + "HP: " +
@@ -901,14 +898,13 @@ HackingMission.prototype.configurePlayerNodeElement = function(el) {
     if (nodeObj == null) {console.error("Failed getting Node object");}
 
     // Add event listener
-    var self = this;
-    function selectNodeWrapper() {
-        selectNode(self, el);
+    const selectNodeWrapper = () => {
+        selectNode(this, el);
     }
     el.addEventListener("click", selectNodeWrapper);
 
-    function multiselectNodeWrapper() {
-        multiselectNode(self, el);
+    const multiselectNodeWrapper = () => {
+        multiselectNode(this, el);
     }
     el.addEventListener("dblclick", multiselectNodeWrapper);
 
@@ -1021,7 +1017,7 @@ HackingMission.prototype.initJsPlumb = function() {
     }
 
     // Clicking a connection drops it
-    instance.bind("click", (conn, originalEvent) => {
+    instance.bind("click", (conn) => {
         // Cannot drop enemy's connections
         const sourceNode = this.getNodeFromElement(conn.source);
         if (sourceNode.enmyCtrl) { return; }
@@ -1051,7 +1047,7 @@ HackingMission.prototype.initJsPlumb = function() {
     });
 
     // Detach Connection events
-    instance.bind("connectionDetached", (info, originalEvent) => {
+    instance.bind("connectionDetached", (info) => {
         var sourceNode = this.getNodeFromElement(info.source);
         sourceNode.conn = null;
         var targetNode = this.getNodeFromElement(info.target);

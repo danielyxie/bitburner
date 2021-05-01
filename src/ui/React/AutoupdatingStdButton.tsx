@@ -10,7 +10,7 @@ interface IProps {
     disabled?: boolean;
     intervalTime?: number;
     onClick?: (e: React.MouseEvent<HTMLElement>) => any;
-    style?: object;
+    style?: any;
     text: string | JSX.Element;
     tooltip?: string;
 }
@@ -36,22 +36,22 @@ export class AutoupdatingStdButton extends React.Component<IProps, IState> {
         }
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         const time = this.props.intervalTime ? this.props.intervalTime : 1000;
         this.interval = setInterval(() => this.tick(), time);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         clearInterval(this.interval);
     }
 
-    tick() {
+    tick(): void {
         this.setState(prevState => ({
             i: prevState.i + 1,
         }));
     }
 
-    render() {
+    render(): React.ReactNode {
         const hasTooltip = this.props.tooltip != null && this.props.tooltip !== "";
 
         let className = this.props.disabled ? "std-button-disabled" : "std-button";
@@ -60,11 +60,8 @@ export class AutoupdatingStdButton extends React.Component<IProps, IState> {
         }
 
         // Tooltip will eb set using inner HTML
-        let tooltipMarkup: IInnerHTMLMarkup | null;
-        if (hasTooltip) {
-            tooltipMarkup = {
-                __html: this.props.tooltip!,
-            }
+        const tooltipMarkup: IInnerHTMLMarkup = {
+            __html: this.props.tooltip ? this.props.tooltip : "",
         }
 
         return (
@@ -72,7 +69,7 @@ export class AutoupdatingStdButton extends React.Component<IProps, IState> {
                 {this.props.text}
                 {
                     hasTooltip &&
-                    <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
+                    <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup}></span>
                 }
             </button>
         )

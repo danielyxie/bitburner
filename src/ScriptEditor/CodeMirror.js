@@ -98,8 +98,6 @@ import { Settings } from "../Settings/Settings";
 import { clearEventListeners } from "../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../utils/uiHelpers/createOptionElement";
-import { getSelectText,
-         getSelectValue } from "../../utils/uiHelpers/getSelectData";
 import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
 
 // Max number of invisibles to be shown in a group if the "Show Invisibles" option
@@ -217,16 +215,16 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
 
         // Configure VIM keybindings
         var VimApi = CodeMirror.Vim;
-        VimApi.defineEx('write', 'w', function(cm, input) {
+        VimApi.defineEx('write', 'w', function() {
             params.saveAndCloseFn();
         });
-        VimApi.defineEx('quit', 'q', function(cm, input) {
+        VimApi.defineEx('quit', 'q', function() {
             params.quitFn();
         });
-        VimApi.defineEx('xwritequit', 'x', function(cm, input) {
+        VimApi.defineEx('xwritequit', 'x', function() {
             params.saveAndCloseFn();
         });
-        VimApi.defineEx('wqwritequit', 'wq', function(cm, input) {
+        VimApi.defineEx('wqwritequit', 'wq', function() {
             params.saveAndCloseFn();
         });
     }
@@ -355,7 +353,7 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                     keys = keys + key;
                     this.vimCommandDisplay.innerHTML = keys;
                 }
-                const handleVimCommandDone = (e) => {
+                const handleVimCommandDone = () => {
                     keys = '';
                     this.vimCommandDisplay.innerHTML = keys;
                 }
@@ -387,7 +385,7 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             showInvisiblesChkBox.onchange = () => {
                 const overlayMode = {
                     name: 'invisibles',
-                    token:  function nextToken(stream) {
+                    token:  function(stream) {
                         var ret,
                             spaces  = 0,
                             space   = stream.peek() === ' ';

@@ -28,8 +28,6 @@ import { GetServerByHostname } from "../Server/ServerHelpers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { Page, routing } from "../ui/navigationTracking";
 
-import { getElementById } from "../../utils/uiHelpers/getElementById";
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { HacknetRoot } from "./ui/Root";
@@ -68,7 +66,7 @@ export function purchaseHacknet() {
 
         if (!Player.canAfford(cost)) { return -1; }
         Player.loseMoney(cost);
-        const server = Player.createHacknetServer();
+        Player.createHacknetServer();
         updateHashManagerCapacity();
 
         return numOwned;

@@ -3,11 +3,12 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { addOffset } from "../../utils/helpers/addOffset";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { BladeburnerConstants } from "./data/Constants";
-// import { Contract } from "./Contract";
-// import { Operation } from "./Operation";
-// import { BlackOperation } from "./BlackOperation";
+import { IBladeburner } from "./IBladeburner";
+import { IAction, ISuccessChanceParams } from "./IAction";
 
 class StatsMultiplier {
+    [key: string]: number;
+
     hack = 0;
     str = 0;
     def = 0;
@@ -15,8 +16,6 @@ class StatsMultiplier {
     agi = 0;
     cha = 0;
     int = 0;
-
-    [key: string]: number;
 }
 
 export interface IActionParams {
@@ -43,7 +42,7 @@ export interface IActionParams {
     teamCount?: number;
 }
 
-export class Action {
+export class Action implements IAction {
     name = "";
     desc = "";
 
@@ -138,7 +137,7 @@ export class Action {
      * Tests for success. Should be called when an action has completed
      * @param inst {Bladeburner} - Bladeburner instance
      */
-    attempt(inst: any): boolean {
+    attempt(inst: IBladeburner): boolean {
         return (Math.random() < this.getSuccessChance(inst));
     }
 
@@ -147,7 +146,7 @@ export class Action {
         return 1;
     }
 
-    getActionTime(inst: any): number {
+    getActionTime(inst: IBladeburner): number {
         const difficulty = this.getDifficulty();
         let baseTime = difficulty / BladeburnerConstants.DifficultyToTimeFactor;
         const skillFac = inst.skillMultipliers.actionTime; // Always < 1
@@ -165,15 +164,15 @@ export class Action {
     }
 
     // For actions that have teams. To be implemented by subtypes.
-    getTeamSuccessBonus(inst: any): number {
+    getTeamSuccessBonus(inst: IBladeburner): number {
         return 1;
     }
 
-    getActionTypeSkillSuccessBonus(inst: any): number {
+    getActionTypeSkillSuccessBonus(inst: IBladeburner): number {
         return 1;
     }
 
-    getChaosCompetencePenalty(inst: any, params: any): number {
+    getChaosCompetencePenalty(inst: IBladeburner, params: ISuccessChanceParams): number {
         const city = inst.getCurrentCity();
         if (params.est) {
             return Math.pow((city.popEst / BladeburnerConstants.PopulationThreshold), BladeburnerConstants.PopulationExponent);
@@ -182,7 +181,7 @@ export class Action {
         }
     }
 
-    getChaosDifficultyBonus(inst: any, params: any): number {
+    getChaosDifficultyBonus(inst: IBladeburner/*, params: ISuccessChanceParams*/): number {
         const city = inst.getCurrentCity();
         if (city.chaos > BladeburnerConstants.ChaosThreshold) {
             const diff = 1 + (city.chaos - BladeburnerConstants.ChaosThreshold);
@@ -198,7 +197,7 @@ export class Action {
      * @params - options:
      *  est (bool): Get success chance estimate instead of real success chance
      */
-    getSuccessChance(inst: any, params: any={}) {
+    getSuccessChance(inst: IBladeburner, params: ISuccessChanceParams={est: false}): number {
         if (inst == null) {throw new Error("Invalid Bladeburner instance passed into Action.getSuccessChance");}
         let difficulty = this.getDifficulty();
         let competence = 0;
@@ -220,7 +219,7 @@ export class Action {
         competence *= this.getTeamSuccessBonus(inst);
 
         competence *= this.getChaosCompetencePenalty(inst, params);
-        difficulty *= this.getChaosDifficultyBonus(inst, params);
+        difficulty *= this.getChaosDifficultyBonus(inst);
 
         if(this.name == "Raid" && inst.getCurrentCity().comms <= 0) {
             return 0;
@@ -253,18 +252,14 @@ export class Action {
         }
     }
 
-    static fromJSON(value: any): Action {
-        return Generic_fromJSON(Action, value.data);
-    }
-
     toJSON(): any {
         return Generic_toJSON("Action", this);
     }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Action {
+        return Generic_fromJSON(Action, value.data);
+    }
 }
-
-
-
-
-
 
 Reviver.constructors.Action = Action;

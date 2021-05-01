@@ -5,9 +5,6 @@
 import * as React from "react";
 
 import { Player } from "../../Player";
-import { Settings } from "../../Settings/Settings";
-import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
-import { SourceFiles } from "../../SourceFile/SourceFiles";
 import { Exploit, ExploitName } from "../../Exploits/Exploit";
 
 import { Accordion } from "../../ui/React/Accordion";

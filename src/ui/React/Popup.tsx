@@ -10,7 +10,7 @@ type ReactComponent = new(...args: any[]) => React.Component<any, any>
 interface IProps {
     content: ReactComponent;
     id: string;
-    props: object;
+    props: any;
 }
 
 export function Popup(props: IProps): React.ReactElement {

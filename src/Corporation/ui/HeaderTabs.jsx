@@ -4,8 +4,6 @@
 import React from "react";
 import { BaseReactComponent } from "./BaseReactComponent";
 
-import { overviewPage } from "./Routing";
-
 function HeaderTab(props) {
     let className = "cmpy-mgmt-header-tab";
     if (props.current) {

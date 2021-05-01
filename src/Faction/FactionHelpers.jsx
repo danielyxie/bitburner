@@ -24,13 +24,6 @@ import {
 import { Page, routing } from "../ui/navigationTracking";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { factionInvitationBoxCreate } from "../../utils/FactionInvitationBox";
-import {
-    Reviver,
-    Generic_toJSON,
-    Generic_fromJSON,
-} from "../../utils/JSONReviver";
-import { formatNumber } from "../../utils/StringHelperFunctions";
-import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 import {
     yesNoBoxCreate,

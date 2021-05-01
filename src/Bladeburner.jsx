@@ -1,7 +1,6 @@
 import { Augmentations } from "./Augmentation/Augmentations";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Faction } from "./Faction/Faction";
 import { Factions, factionExists } from "./Faction/Factions";
@@ -20,14 +19,16 @@ import {
     Generic_fromJSON,
 } from "../utils/JSONReviver";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
-import { formatNumber } from "../utils/StringHelperFunctions";
+import {
+    formatNumber,
+    convertTimeMsToTimeElapsedString,
+} from "../utils/StringHelperFunctions";
 
 import { ConsoleHelpText } from "./Bladeburner/data/Help";
 import { City } from "./Bladeburner/City";
 import { BladeburnerConstants } from "./Bladeburner/data/Constants";
 import { Skill } from "./Bladeburner/Skill";
 import { Skills } from "./Bladeburner/Skills";
-import { SkillNames } from "./Bladeburner/data/SkillNames";
 import { Operation } from "./Bladeburner/Operation";
 import { BlackOperation } from "./Bladeburner/BlackOperation";
 import { BlackOperations } from "./Bladeburner/BlackOperations";
@@ -45,7 +46,6 @@ import { KEY } from "../utils/helpers/keyCodes";
 
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 import { appendLineBreaks } from "../utils/uiHelpers/appendLineBreaks";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElement } from "../utils/uiHelpers/removeElement";
@@ -2132,7 +2132,6 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     }));
 
     // General Info
-    var difficulty = action.getDifficulty();
     var actionTime = action.getActionTime(this);
     appendLineBreaks(el, 2);
     el.appendChild(createElement("pre", {
@@ -2170,7 +2169,6 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     var isActive = el.classList.contains(ActiveActionCssClass);
     var isCompleted = (this.blackops[action.name] != null);
     var estimatedSuccessChance = action.getSuccessChance(this, {est:true});
-    var difficulty = action.getDifficulty();
     var actionTime = action.getActionTime(this);
     var hasReqdRank = this.rank >= action.reqdRank;
 
@@ -3210,7 +3208,7 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
         return -1;
     }
 
-    const sanitizedSize = Math.round(size);
+    let sanitizedSize = Math.round(size);
     if (isNaN(sanitizedSize) || sanitizedSize < 0) {
         workerScript.log("bladeburner.setTeamSize", `Invalid size: ${size}`);
         return -1;

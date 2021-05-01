@@ -1,6 +1,5 @@
 // Base class representing a person-like object
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CityName } from "../Locations/data/CityNames";
@@ -109,12 +108,10 @@ export abstract class Person {
      */
     city: CityName = CityName.Sector12;
 
-    constructor() {}
-
     /**
      * Updates this object's multipliers for the given augmentation
      */
-    applyAugmentation(aug: Augmentation) {
+    applyAugmentation(aug: Augmentation): void {
         for (const mult in aug.mults) {
             if ((<any>this)[mult] == null) {
                 console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);

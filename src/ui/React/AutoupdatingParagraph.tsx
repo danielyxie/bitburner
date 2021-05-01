@@ -7,17 +7,13 @@ import * as React from "react";
 
 interface IProps {
     intervalTime?: number;
-    style?: object;
+    style?: any;
     getContent: () => JSX.Element;
     getTooltip?: () => JSX.Element;
 }
 
 interface IState {
     i: number;
-}
-
-type IInnerHTMLMarkup = {
-    __html: string;
 }
 
 export class AutoupdatingParagraph extends React.Component<IProps, IState> {
@@ -33,37 +29,40 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
         }
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         const time = this.props.intervalTime ? this.props.intervalTime : 1000;
         this.interval = setInterval(() => this.tick(), time);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         clearInterval(this.interval);
     }
 
-    tick() {
+    tick(): void {
         this.setState(prevState => ({
             i: prevState.i + 1,
         }));
     }
 
-    render() {
-        let hasTooltip = this.props.getTooltip != null;
-        let tooltip: JSX.Element | null;
-        if (hasTooltip) {
-            tooltip = this.props.getTooltip!();
-            if (!tooltip) {
-                hasTooltip = false;
-            }
+    hasTooltip(): boolean {
+        if (this.props.getTooltip != null) {
+            return !!this.props.getTooltip()
         }
+        return true;
+    }
 
+    tooltip(): JSX.Element {
+        if(!this.props.getTooltip) return <></>;
+        return this.props.getTooltip();
+    }
+
+    render(): React.ReactNode {
         return (
             <p className="tooltip" style={this.props.style}>
                 {this.props.getContent()}
                 {
-                    hasTooltip &&
-                    <span className={"tooltiptext"}>{tooltip!}</span>
+                    this.hasTooltip() &&
+                    <span className={"tooltiptext"}>{this.tooltip()}</span>
                 }
             </p>
         )

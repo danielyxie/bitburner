@@ -252,7 +252,7 @@ BitNodes["BitNode22"] = new BitNode(22, "", "COMING SOON");
 BitNodes["BitNode23"] = new BitNode(23, "", "COMING SOON");
 BitNodes["BitNode24"] = new BitNode(24, "", "COMING SOON");
 
-export function initBitNodeMultipliers(p: IPlayer) {
+export function initBitNodeMultipliers(p: IPlayer): void {
     if (p.bitNodeN == null) {
         p.bitNodeN = 1;
     }
@@ -433,15 +433,15 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.FourSigmaMarketDataCost      = 4;
             BitNodeMultipliers.FourSigmaMarketDataApiCost   = 4;
             break;
-        case 12: //The Recursion
-            var sf12Lvl = 0;
+        case 12: { //The Recursion
+            let sf12Lvl = 0;
             for (let i = 0; i < p.sourceFiles.length; i++) {
                 if (p.sourceFiles[i].n === 12) {
                     sf12Lvl = p.sourceFiles[i].lvl;
                 }
             }
-            var inc = Math.pow(1.02, sf12Lvl);
-            var dec = 1/inc;
+            const inc = Math.pow(1.02, sf12Lvl);
+            const dec = 1/inc;
 
             // Multiplier for number of augs needed for Daedalus increases
             // up to a maximum of 1.34, which results in 40 Augs required
@@ -499,6 +499,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.BladeburnerRank      = dec;
             BitNodeMultipliers.BladeburnerSkillCost = inc;
             break;
+        }
         default:
             console.warn("Player.bitNodeN invalid");
             break;

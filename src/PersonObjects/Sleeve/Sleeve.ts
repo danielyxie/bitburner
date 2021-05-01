@@ -39,12 +39,6 @@ import { LocationName } from "../../Locations/data/LocationNames";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
 export class Sleeve extends Person {
-    /**
-     * Initiatizes a Sleeve object from a JSON save state.
-     */
-    static fromJSON(value: any): Sleeve {
-        return Generic_fromJSON(Sleeve, value.data);
-    }
 
     /**
      * Stores the name of the class that the player is currently taking
@@ -376,7 +370,7 @@ export class Sleeve extends Person {
             let favorMult = 1;
             const fac: Faction | null = Factions[this.currentTaskLocation];
             if (fac != null) {
-                favorMult = 1 + (fac!.favor / 100);
+                favorMult = 1 + (fac.favor / 100);
             }
 
             switch (this.factionWorkType) {
@@ -404,10 +398,10 @@ export class Sleeve extends Person {
                 return 0;
             }
 
-            const jobPerformance: number = companyPosition!.calculateJobPerformance(this.hacking_skill, this.strength,
+            const jobPerformance: number = companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
                                                                                    this.defense, this.dexterity,
                                                                                    this.agility, this.charisma);
-            const favorMult = 1 + (company!.favor / 100);
+            const favorMult = 1 + (company.favor / 100);
 
             return jobPerformance * this.company_rep_mult * favorMult;
         } else {
@@ -439,7 +433,7 @@ export class Sleeve extends Person {
     /**
      * Called on every sleeve for a Source File prestige
      */
-    prestige(p: IPlayer) {
+    prestige(p: IPlayer): void {
         // Reset exp
         this.hacking_exp = 0;
         this.strength_exp = 0;
@@ -504,7 +498,7 @@ export class Sleeve extends Person {
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
                 break;
-            case SleeveTaskType.Faction:
+            case SleeveTaskType.Faction: {
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
 
@@ -517,7 +511,8 @@ export class Sleeve extends Person {
 
                 fac.playerReputation += (this.getRepGain(p) * cyclesUsed);
                 break;
-            case SleeveTaskType.Company:
+            }
+            case SleeveTaskType.Company: {
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
 
@@ -527,8 +522,9 @@ export class Sleeve extends Person {
                     break;
                 }
 
-                company!.playerReputation += (this.getRepGain(p) * cyclesUsed);
+                company.playerReputation += (this.getRepGain(p) * cyclesUsed);
                 break;
+            }
             case SleeveTaskType.Recovery:
                 this.shock = Math.min(100, this.shock + (0.0002 * cyclesUsed));
                 break;
@@ -946,6 +942,14 @@ export class Sleeve extends Person {
      */
     toJSON(): any {
         return Generic_toJSON("Sleeve", this);
+    }
+    
+    /**
+     * Initiatizes a Sleeve object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Sleeve {
+        return Generic_fromJSON(Sleeve, value.data);
     }
 }
 

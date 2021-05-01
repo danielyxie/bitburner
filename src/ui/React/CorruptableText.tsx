@@ -26,7 +26,7 @@ function randomize(char: string): string {
     return randFrom(other);
 }
 
-export function CorruptableText(props: IProps) {
+export function CorruptableText(props: IProps): JSX.Element {
     const [content, setContent] = useState(props.content);
 
     useEffect(() => {

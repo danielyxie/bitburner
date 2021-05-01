@@ -15,7 +15,7 @@ import { HacknetServer } from "./Hacknet/HacknetServer";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 
-export function generateRandomContract() {
+export function generateRandomContract(): void {
     // First select a random problem type
     const problemType = getRandomProblemType();
 
@@ -31,7 +31,7 @@ export function generateRandomContract() {
     randServer.addContract(contract);
 }
 
-export function generateRandomContractOnHome() {
+export function generateRandomContractOnHome(): void {
     // First select a random problem type
     const problemType = getRandomProblemType();
 
@@ -53,7 +53,7 @@ export interface IGenerateContractParams {
     fn?: string;
 }
 
-export function generateContract(params: IGenerateContractParams) {
+export function generateContract(params: IGenerateContractParams): void {
     // Problem Type
     let problemType;
     const problemTypes = Object.keys(CodingContractTypes);
@@ -117,7 +117,7 @@ function sanitizeRewardType(rewardType: CodingContractRewardType): CodingContrac
     return type;
 }
 
-function getRandomProblemType() {
+function getRandomProblemType(): string {
     const problemTypes = Object.keys(CodingContractTypes);
     const randIndex = getRandomInt(0, problemTypes.length - 1);
 

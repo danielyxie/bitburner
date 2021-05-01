@@ -21,7 +21,10 @@ import {
     Generic_toJSON,
     Generic_fromJSON,
 } from "../utils/JSONReviver";
-import { formatNumber } from "../utils/StringHelperFunctions";
+import {
+    formatNumber,
+    convertTimeMsToTimeElapsedString,
+} from "../utils/StringHelperFunctions";
 
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -33,7 +36,6 @@ import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { StatsTable } from "./ui/React/StatsTable";
 import { Money } from "./ui/React/Money";
@@ -47,7 +49,6 @@ import { renderToStaticMarkup } from "react-dom/server"
 // Constants
 const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
 const MaximumGangMembers = 30;
-const GangRecruitCostMultiplier = 2;
 const CyclesPerTerritoryAndPowerUpdate = 100;
 const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
 
@@ -69,7 +70,6 @@ $(document).keydown(function(event) {
 
 // Delete upgrade box when clicking outside
 $(document).mousedown(function(event) {
-    var boxId = "gang-member-upgrade-popup-box";
     var contentId = "gang-member-upgrade-popup-box-content";
     if (UIElems.gangMemberUpgradeBoxOpened) {
         if ( $(event.target).closest("#" + contentId).get(0) == null ) {
@@ -461,8 +461,6 @@ Gang.prototype.clash = function(won=false) {
 }
 
 Gang.prototype.killMember = function(memberObj) {
-    const gangName = this.facName;
-
     // Player loses a percentage of total respect, plus whatever respect that member has earned
     const totalRespect = this.respect;
     const lostRespect = (0.05 * totalRespect) + memberObj.earnedRespect;
@@ -1266,10 +1264,7 @@ Gang.prototype.displayGangContent = function(player) {
         });
 
         // Get variables
-        var facName = this.facName,
-            members = this.members,
-            wanted = this.wanted,
-            respect = this.respect;
+        var facName = this.facName;
 
         // Back button
         UIElems.gangContainer.appendChild(createElement("a", {
@@ -1757,7 +1752,6 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
         hdrText: name,
     });
     const li = accordion[0];
-    const hdr = accordion[1];
     const gangMemberDiv = accordion[2];
 
     UIElems.gangMemberPanels[name]["panel"] = gangMemberDiv;

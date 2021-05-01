@@ -19,10 +19,6 @@ import { roundToTwo } from "../../utils/helpers/roundToTwo";
 let globalModuleSequenceNumber = 0;
 
 export class Script {
-    // Initializes a Script Object from a JSON save state
-    static fromJSON(value: any): Script {
-        return Generic_fromJSON(Script, value.data);
-    }
 
     // Code for this script
     code = "";
@@ -87,7 +83,7 @@ export class Script {
      * Marks this script as having been updated. It will be recompiled next time something tries
      * to exec it.
      */
-    markUpdated() {
+    markUpdated(): void {
         this.module = "";
         this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     }
@@ -107,7 +103,7 @@ export class Script {
                 console.error(`Failed to get Script filename DOM element`);
                 return;
             }
-    		this.filename = filenameElem!.value;
+    		this.filename = filenameElem.value;
     		this.server = serverIp;
     		this.updateRamUsage(otherScripts);
             this.markUpdated();
@@ -118,7 +114,7 @@ export class Script {
      * Calculates and updates the script's RAM usage based on its code
      * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
      */
-    async updateRamUsage(otherScripts: Script[]) {
+    async updateRamUsage(otherScripts: Script[]): Promise<void> {
         const res = await calculateRamUsage(this.code, otherScripts);
         if (res > 0) {
             this.ramUsage = roundToTwo(res);
@@ -128,6 +124,12 @@ export class Script {
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("Script", this);
+    }
+
+    // Initializes a Script Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Script {
+        return Generic_fromJSON(Script, value.data);
     }
 }
 

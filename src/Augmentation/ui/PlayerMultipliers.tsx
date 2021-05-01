@@ -7,7 +7,7 @@ import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentations} from "../Augmentations";
 
-function calculateAugmentedStats() {
+function calculateAugmentedStats(): any {
     const augP: any = {};
     for(const aug of Player.queuedAugmentations) {
         const augObj = Augmentations[aug.name];
@@ -22,8 +22,8 @@ function calculateAugmentedStats() {
 export function PlayerMultipliers(): React.ReactElement {
     const mults = calculateAugmentedStats();
     function MultiplierTable(rows: any[]): React.ReactElement {
-        function improvements(r: number) {
-            let elems: any[] = [];
+        function improvements(r: number): JSX.Element[] {
+            let elems: JSX.Element[] = [];
             if(r) {
                 elems = [
                     <td key="2">&nbsp;{"=>"}&nbsp;</td>,

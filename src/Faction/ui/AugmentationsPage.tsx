@@ -118,22 +118,21 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
         });
     }
 
-    render() {
+    render(): React.ReactNode {
         const augs = this.getAugsSorted();
         const purchasable = augs.filter((aug: string) => aug === AugmentationNames.NeuroFluxGovernor ||
             (!this.props.p.augmentations.some(a => a.name === aug) && 
             !this.props.p.queuedAugmentations.some(a => a.name === aug)),
         )
 
-        const parent = this;
-        function purchaseableAugmentation(aug: string) {
+        const purchaseableAugmentation = (aug: string): React.ReactNode => {
             return (
                 <PurchaseableAugmentation
                     augName={aug}
-                    faction={parent.props.faction}
+                    faction={this.props.faction}
                     key={aug}
-                    p={parent.props.p}
-                    rerender={parent.rerender}
+                    p={this.props.p}
+                    rerender={this.rerender}
                 />
             )
         }

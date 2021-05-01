@@ -22,7 +22,7 @@ export interface ICodingContractTypeMetadata {
 }
 
 /* Helper functions for Coding Contract implementations */
-function removeBracketsFromArrayString(str: string) {
+function removeBracketsFromArrayString(str: string): string {
     let strCpy: string = str;
     if (strCpy.startsWith("[")) { strCpy = strCpy.slice(1); }
     if (strCpy.endsWith("]")) { strCpy = strCpy.slice(0, -1); }
@@ -30,7 +30,7 @@ function removeBracketsFromArrayString(str: string) {
     return strCpy;
 }
 
-function removeQuotesFromString(str: string) {
+function removeQuotesFromString(str: string): string {
     let strCpy: string = str;
     if (strCpy.startsWith('"') || strCpy.startsWith("'")) { strCpy = strCpy.slice(1); }
     if (strCpy.endsWith('"') || strCpy.endsWith("'")) { strCpy = strCpy.slice(0, -1); }
@@ -38,7 +38,7 @@ function removeQuotesFromString(str: string) {
     return strCpy;
 }
 
-function convert2DArrayToString(arr: any[][]) {
+function convert2DArrayToString(arr: any[][]): string {
     const components: string[] = [];
     arr.forEach((e: any) => {
         let s: string = e.toString();
@@ -52,17 +52,17 @@ function convert2DArrayToString(arr: any[][]) {
 
 export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     {
-        desc: (n: number) => {
+        desc: (n: number): string => {
             return ["A prime factor is a factor that is a prime number.",
                     `What is the largest prime factor of ${n}?`].join(" ");
         },
         difficulty: 1,
-        gen: () => {
+        gen: (): number => {
             return getRandomInt(500, 1e9);
         },
         name: "Find Largest Prime Factor",
         numTries: 10,
-        solver: (data: number, ans: string) => {
+        solver: (data: number, ans: string): boolean => {
             let fac = 2;
             let n: number = data;
             while (n > ((fac-1) * (fac-1))) {
@@ -76,14 +76,14 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (n: number[]) => {
+        desc: (n: number[]): string => {
             return ["Given the following integer array, find the contiguous subarray",
                     "(containing at least one number) which has the largest sum and return that sum.",
                     "'Sum' refers to the sum of all the numbers in the subarray.\n",
                     `${n.toString()}`].join(" ");
         },
         difficulty: 1,
-        gen: () => {
+        gen: (): number[] => {
             const len: number = getRandomInt(5, 40);
             const arr: number[] = [];
             arr.length = len;
@@ -95,7 +95,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Subarray with Maximum Sum",
         numTries: 10,
-        solver: (data: number[], ans: string) => {
+        solver: (data: number[], ans: string): boolean => {
             const nums: number[] = data.slice();
             for (let i = 1; i < nums.length; i++) {
                 nums[i] = Math.max(nums[i], nums[i] + nums[i - 1]);
@@ -105,7 +105,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (n: number) => {
+        desc: (n: number): string => {
             return ["It is possible write four as a sum in exactly four different ways:\n\n",
                     "    3 + 1\n",
                     "    2 + 2\n",
@@ -115,12 +115,12 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "two positive integers?"].join(" ");
         },
         difficulty: 1.5,
-        gen: () => {
+        gen: (): number => {
             return getRandomInt(8, 100);
         },
         name: "Total Ways to Sum",
         numTries: 10,
-        solver: (data: number, ans: string) => {
+        solver: (data: number, ans: string): boolean => {
             const ways: number[] = [1];
             ways.length = data + 1;
             ways.fill(0, 1);
@@ -134,7 +134,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (n: number[][]) => {
+        desc: (n: number[][]): string => {
             let d: string = ["Given the following array of array of numbers representing a 2D matrix,",
                              "return the elements of the matrix as an array in spiral order:\n\n"].join(" ");
             for (const line of n) {
@@ -157,7 +157,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             return d;
         },
         difficulty: 2,
-        gen: () => {
+        gen: (): number[][] => {
             const m: number = getRandomInt(1, 15);
             const n: number = getRandomInt(1, 15);
             const matrix: number[][] = [];
@@ -177,7 +177,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Spiralize Matrix",
         numTries: 10,
-        solver: (data: number[][], ans: string) => {
+        solver: (data: number[][], ans: string): boolean => {
             const spiral: number[] = [];
             const m: number = data.length;
             const n: number = data[0].length;
@@ -233,7 +233,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (arr: number[]) => {
+        desc: (arr: number[]): string => {
             return ["You are given the following array of integers:\n\n",
                     `${arr}\n\n`,
                     "Each element in the array represents your MAXIMUM jump length",
@@ -246,7 +246,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "Your answer should be submitted as 1 or 0, representing true and false respectively"].join(" ");
         },
         difficulty: 2.5,
-        gen: () => {
+        gen: (): number[] => {
             const len: number = getRandomInt(3, 25);
             const arr: number[] = [];
             arr.length = len;
@@ -262,7 +262,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Array Jumping Game",
         numTries: 1,
-        solver: (data: number[], ans: string) => {
+        solver: (data: number[], ans: string): boolean => {
             const n: number = data.length;
             let i = 0;
             for (let reach = 0; i < n && i <= reach; ++i) {
@@ -277,7 +277,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (arr: number[][]) => {
+        desc: (arr: number[][]): string => {
             return ["Given the following array of array of numbers representing a list of",
                     "intervals, merge all overlapping intervals.\n\n",
                     `[${convert2DArrayToString(arr)}]\n\n`,
@@ -289,7 +289,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "smaller than the second."].join(" ");
         },
         difficulty: 3,
-        gen: () => {
+        gen: (): number[][] => {
             const intervals: number[][] = [];
             const numIntervals: number = getRandomInt(3, 20);
             for (let i = 0; i < numIntervals; ++i) {
@@ -302,7 +302,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Merge Overlapping Intervals",
         numTries: 15,
-        solver: (data: number[][], ans: string) => {
+        solver: (data: number[][], ans: string): boolean => {
             const intervals: number[][] = data.slice();
             intervals.sort((a: number[], b: number[]) => {
                 return a[0] - b[0];
@@ -330,7 +330,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: string) => {
+        desc: (data: string): string => {
             return ["Given the following string containing only digits, return",
                     "an array with all possible valid IP address combinations",
                     "that can be created from the string:\n\n",
@@ -342,7 +342,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "1938718066 -> [193.87.180.66]"].join(" ");
         },
         difficulty: 3,
-        gen: () => {
+        gen: (): string => {
             let str = "";
             for (let i = 0; i < 4; ++i) {
                 const num: number = getRandomInt(0, 255);
@@ -354,7 +354,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Generate IP Addresses",
         numTries: 10,
-        solver: (data: string, ans: string) => {
+        solver: (data: string, ans: string): boolean => {
             const ret: string[] = [];
             for (let a = 1; a <= 3; ++a) {
                 for (let b = 1; b <= 3; ++b) {
@@ -392,7 +392,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: number[]) => {
+        desc: (data: number[]): string => {
             return ["You are given the following array of stock prices (which are numbers)",
                     "where the i-th element represents the stock price on day i:\n\n",
                     `${data}\n\n`,
@@ -402,7 +402,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "that you have to buy the stock before you can sell it"].join(" ");
         },
         difficulty: 1,
-        gen: () => {
+        gen: (): number[] => {
             const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
@@ -414,7 +414,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Algorithmic Stock Trader I",
         numTries: 5,
-        solver: (data: number[], ans: string) => {
+        solver: (data: number[], ans: string): boolean => {
             let maxCur = 0;
             let maxSoFar = 0;
             for (let i = 1; i < data.length; ++i) {
@@ -426,7 +426,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: number[]) => {
+        desc: (data: number[]): string => {
             return ["You are given the following array of stock prices (which are numbers)",
                     "where the i-th element represents the stock price on day i:\n\n",
                     `${data}\n\n`,
@@ -438,7 +438,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "If no profit can be made, then the answer should be 0"].join(" ");
         },
         difficulty: 2,
-        gen: () => {
+        gen: (): number[] => {
             const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
@@ -450,7 +450,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Algorithmic Stock Trader II",
         numTries: 10,
-        solver: (data: number[], ans: string) => {
+        solver: (data: number[], ans: string): boolean => {
             let profit = 0;
             for (let p = 1; p < data.length; ++p) {
                 profit += Math.max(data[p] - data[p - 1], 0);
@@ -460,7 +460,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: number[]) => {
+        desc: (data: number[]): string => {
             return ["You are given the following array of stock prices (which are numbers)",
                     "where the i-th element represents the stock price on day i:\n\n",
                     `${data}\n\n`,
@@ -472,7 +472,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "If no profit can be made, then the answer should be 0"].join(" ");
         },
         difficulty: 5,
-        gen: () => {
+        gen: (): number[] => {
             const len: number = getRandomInt(3, 50);
             const arr: number[] = [];
             arr.length = len;
@@ -484,7 +484,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Algorithmic Stock Trader III",
         numTries: 10,
-        solver: (data: number[], ans: string) => {
+        solver: (data: number[], ans: string): boolean => {
             let hold1: number = Number.MIN_SAFE_INTEGER;
             let hold2: number = Number.MIN_SAFE_INTEGER;
             let release1 = 0;
@@ -500,7 +500,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: any[]) => {
+        desc: (data: any[]): string => {
             const k: number = (<number>data[0]);
             const prices: number[] = (<number[]>data[1]);
             return ["You are given the following array with two elements:\n\n",
@@ -516,7 +516,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "If no profit can be made, then the answer should be 0."].join(" ");
         },
         difficulty: 8,
-        gen: () => {
+        gen: (): any[] => {
             const k: number = getRandomInt(2, 10);
             const len: number = getRandomInt(3, 50);
             const prices: number[] = [];
@@ -529,7 +529,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Algorithmic Stock Trader IV",
         numTries: 10,
-        solver: (data: any[], ans: string) => {
+        solver: (data: any[], ans: string): boolean => {
             const k: number = (<number>data[0]);
             const prices: number[] = (<number[]>data[1]);
 
@@ -566,7 +566,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: number[][]) => {
+        desc: (data: number[][]): string => {
             function createTriangleRecurse(data: number[][], level = 0): string {
                 const numLevels: number = data.length;
                 if (level >= numLevels) { return ""; }
@@ -580,7 +580,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 return str + "\n" + createTriangleRecurse(data, level+1);
             }
 
-            function createTriangle(data: number[][]) {
+            function createTriangle(data: number[][]): string {
                 return ["[\n", createTriangleRecurse(data), "]"].join("");
             }
 
@@ -600,7 +600,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "The minimum path sum is 11 (2 -> 3 -> 5 -> 1)."].join(" ");
         },
         difficulty: 5,
-        gen: () => {
+        gen: (): number[][] => {
             const triangle: number[][] = [];
             const levels: number = getRandomInt(3, 12);
             triangle.length = levels;
@@ -617,7 +617,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Minimum Path Sum in a Triangle",
         numTries: 10,
-        solver: (data: number[][], ans: string) => {
+        solver: (data: number[][], ans: string): boolean => {
             const n: number = data.length;
             const dp: number[] = data[n-1].slice();
             for (let i = n-2; i > -1; --i) {
@@ -630,7 +630,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: number[]) => {
+        desc: (data: number[]): string => {
             const numRows = data[0];
             const numColumns  = data[1];
             return ["You are in a grid with",
@@ -644,7 +644,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     `[${numRows}, ${numColumns}]`].join(" ");
         },
         difficulty: 3,
-        gen: () => {
+        gen: (): number[] => {
             const numRows: number = getRandomInt(2, 14);
             const numColumns: number = getRandomInt(2, 14);
 
@@ -652,7 +652,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Unique Paths in a Grid I",
         numTries: 10,
-        solver: (data: number[], ans: string) => {
+        solver: (data: number[], ans: string): boolean => {
             const n: number = data[0]; // Number of rows
             const m: number = data[1]; // Number of columns
             const currentRow: number[] = [];
@@ -671,7 +671,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: number[][]) => {
+        desc: (data: number[][]): string => {
             let gridString = "";
             for (const line of data) {
                 gridString += `${line.toString()},\n`;
@@ -686,7 +686,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "NOTE: The data returned for this contract is an 2D array of numbers representing the grid."].join(" ");
         },
         difficulty: 5,
-        gen: () => {
+        gen: (): number[][] => {
             const numRows: number = getRandomInt(2, 12);
             const numColumns: number = getRandomInt(2, 12);
 
@@ -714,7 +714,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Unique Paths in a Grid II",
         numTries: 10,
-        solver: (data: number[][], ans: string) => {
+        solver: (data: number[][], ans: string): boolean => {
             const obstacleGrid: number[][] = [];
             obstacleGrid.length = data.length;
             for (let i = 0; i < obstacleGrid.length; ++i) {
@@ -738,7 +738,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: string) => {
+        desc: (data: string): string => {
             return ["Given the following string:\n\n",
                     `${data}\n\n`,
                     "remove the minimum number of invalid parentheses in order to validate",
@@ -753,7 +753,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     `")( -> [""]`].join(" ");
         },
         difficulty: 10,
-        gen: () => {
+        gen: (): string => {
             const len: number = getRandomInt(6, 20);
             const chars: string[] = [];
             chars.length = len;
@@ -776,7 +776,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Sanitize Parentheses in Expression",
         numTries: 10,
-        solver: (data: string, ans: string) => {
+        solver: (data: string, ans: string): boolean => {
             let left = 0;
             let right = 0;
             const res: string[] = [];
@@ -789,7 +789,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 }
             }
 
-            function dfs(pair: number, index: number, left: number, right: number, s: string, solution: string, res: string[]) {
+            function dfs(pair: number, index: number, left: number, right: number, s: string, solution: string, res: string[]): void {
                 if (s.length === index) {
                     if (left === 0 && right === 0 && pair === 0) {
                         for(let i = 0; i < res.length; i++) {
@@ -828,7 +828,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
     },
     {
-        desc: (data: any[]) => {
+        desc: (data: any[]): string => {
             const digits: string = data[0];
             const target: number = data[1];
 
@@ -850,7 +850,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     `Output: [1*0+5, 10-5]`].join(" ");
         },
         difficulty: 10,
-        gen: () => {
+        gen: (): any[] => {
             const numDigits = getRandomInt(4, 12);
             const digitsArray: string[] = [];
             digitsArray.length = numDigits;
@@ -869,11 +869,11 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         name: "Find All Valid Math Expressions",
         numTries: 10,
-        solver: (data: any[], ans: string) => {
+        solver: (data: any[], ans: string): boolean => {
             const num: string = data[0];
             const target: number = data[1];
 
-            function helper(res: string[], path: string, num: string, target: number, pos: number, evaluated: number, multed: number) {
+            function helper(res: string[], path: string, num: string, target: number, pos: number, evaluated: number, multed: number): void {
                 if (pos === num.length) {
                     if (target === evaluated) {
                         res.push(path);

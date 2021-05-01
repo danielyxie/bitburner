@@ -32,6 +32,7 @@ export class Environment {
      * Finds the scope where the variable with the given name is defined
      */
     lookup(name: string): Environment | null {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         let scope: Environment | null = this;
         while (scope) {
             if (Object.prototype.hasOwnProperty.call(scope.vars, name)) {
@@ -53,7 +54,8 @@ export class Environment {
     }
 
 	//Sets the value of a variable in any scope
-    set(name: string, value: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    set(name: string, value: any): any {
         const scope = this.lookup(name);
 
         //If scope has a value, then this variable is already set in a higher scope, so
@@ -66,7 +68,8 @@ export class Environment {
     }
 
 	//Creates (or overwrites) a variable in the current scope
-    def(name: string, value: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    def(name: string, value: any): any {
         return this.vars[name] = value;
     }
 }

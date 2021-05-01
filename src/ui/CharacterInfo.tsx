@@ -65,7 +65,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         return StatsTable(parts, "");
     }
 
-    function openMoneyModal() {
+    function openMoneyModal(): void {
         let content = (<>
             <u>Money earned since you last installed Augmentations:</u><br />
             {convertMoneySourceTrackerToString(p.moneySourceA)}
@@ -89,7 +89,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     }
 
     function MultiplierTable(props: any): React.ReactElement {
-        function bn5Stat(r: any) {
+        function bn5Stat(r: any): JSX.Element {
             if(SourceFileFlags[5] > 0 && r.length > 2 && r[1] != r[2]) {
                 return <td key="2" style={{textAlign: 'right'}}> ({numeralWrapper.formatPercentage(r[2])})</td>
             }

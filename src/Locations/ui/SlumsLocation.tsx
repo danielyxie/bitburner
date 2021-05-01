@@ -19,7 +19,7 @@ export class SlumsLocation extends React.Component<IProps, any> {
     /**
      * Stores button styling that sets them all to block display
      */
-    btnStyle: object;
+    btnStyle: any;
 
     constructor(props: IProps) {
         super(props);
@@ -100,7 +100,7 @@ export class SlumsLocation extends React.Component<IProps, any> {
         Crimes.Heist.commit(this.props.p);
     }
 
-    render() {
+    render(): React.ReactNode {
         const shopliftChance = Crimes.Shoplift.successRate(this.props.p);
         const robStoreChance = Crimes.RobStore.successRate(this.props.p);
         const mugChance = Crimes.Mug.successRate(this.props.p);

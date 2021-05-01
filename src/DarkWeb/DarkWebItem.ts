@@ -1,5 +1,3 @@
-import { numeralWrapper } from "../ui/numeralFormat";
-
 export class DarkWebItem {
     program: string;
     price: number;

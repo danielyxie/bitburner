@@ -61,13 +61,13 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
     let evaledParentDirPath: string | null = null;
 
     // Helper functions
-    function addAllCodingContracts() {
+    function addAllCodingContracts(): void {
         for (const cct of currServ.contracts) {
             allPos.push(cct.fn);
         }
     }
 
-    function addAllLitFiles() {
+    function addAllLitFiles(): void {
         for (const file of currServ.messages) {
             if (!(file instanceof Message)) {
                 allPos.push(file);
@@ -75,7 +75,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
         }
     }
 
-    function addAllMessages() {
+    function addAllMessages(): void {
         for (const file of currServ.messages) {
             if (file instanceof Message) {
                 allPos.push(file.filename);
@@ -83,13 +83,13 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
         }
     }
 
-    function addAllPrograms() {
+    function addAllPrograms(): void {
         for (const program of homeComputer.programs) {
             allPos.push(program);
         }
     }
 
-    function addAllScripts() {
+    function addAllScripts(): void {
         for (const script of currServ.scripts) {
             const res = processFilepath(script.filename);
             if (res) {
@@ -98,7 +98,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
         }
     }
 
-    function addAllTextFiles() {
+    function addAllTextFiles(): void {
         for (const txt of currServ.textFiles) {
             const res = processFilepath(txt.fn);
             if (res) {
@@ -107,7 +107,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
         }
     }
 
-    function addAllDirectories() {
+    function addAllDirectories(): void {
         // Directories are based on the currently evaluated path
         const subdirs = getSubdirectories(currServ, evaledParentDirPath == null ? "/" : evaledParentDirPath);
 
@@ -157,7 +157,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
         return null;
     }
 
-    function isCommand(cmd: string) {
+    function isCommand(cmd: string): boolean {
         let t_cmd = cmd;
         if (!t_cmd.endsWith(" ")) {
             t_cmd += " ";
@@ -173,12 +173,12 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
      */
     if (isCommand("./") && index == -1) {
         //All programs and scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
+        for (let i = 0; i < currServ.scripts.length; ++i) {
             allPos.push("./" + currServ.scripts[i].filename);
         }
 
         //Programs are on home computer
-        for(var i = 0; i < homeComputer.programs.length; ++i) {
+        for(let i = 0; i < homeComputer.programs.length; ++i) {
             allPos.push("./" + homeComputer.programs[i]);
         }
         return allPos;
@@ -237,7 +237,7 @@ export function determineAllPossibilitiesForTabCompletion(p: IPlayer, input: str
 
     if (isCommand("connect")) {
         // All network connections
-        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
+        for (let i = 0; i < currServ.serversOnNetwork.length; ++i) {
             const serv = AllServers[currServ.serversOnNetwork[i]];
             if (serv == null) { continue; }
             allPos.push(serv.ip);

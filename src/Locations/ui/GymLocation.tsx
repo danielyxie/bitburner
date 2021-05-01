@@ -13,7 +13,6 @@ import { getServer }              from "../../Server/ServerHelpers";
 import { Server }                 from "../../Server/Server";
 import { SpecialServerIps }       from "../../Server/SpecialServerIps";
 
-import { numeralWrapper }   from "../../ui/numeralFormat";
 import { StdButton }        from "../../ui/React/StdButton";
 import { Money }            from "../../ui/React/Money";
 
@@ -26,7 +25,7 @@ export class GymLocation extends React.Component<IProps, any> {
     /**
      * Stores button styling that sets them all to block display
      */
-    btnStyle: object;
+    btnStyle: any;
 
     constructor(props: IProps) {
         super(props);
@@ -50,28 +49,28 @@ export class GymLocation extends React.Component<IProps, any> {
         return this.props.loc.costMult * discount;
     }
 
-    train(stat: string) {
+    train(stat: string): void {
         const loc = this.props.loc;
         this.props.p.startClass(this.calculateCost(), loc.expMult, stat);
     }
 
-    trainStrength() {
-        return this.train(CONSTANTS.ClassGymStrength);
+    trainStrength(): void {
+        this.train(CONSTANTS.ClassGymStrength);
     }
 
-    trainDefense() {
-        return this.train(CONSTANTS.ClassGymDefense);
+    trainDefense(): void {
+        this.train(CONSTANTS.ClassGymDefense);
     }
 
-    trainDexterity() {
-        return this.train(CONSTANTS.ClassGymDexterity);
+    trainDexterity(): void {
+        this.train(CONSTANTS.ClassGymDexterity);
     }
 
-    trainAgility() {
-        return this.train(CONSTANTS.ClassGymAgility);
+    trainAgility(): void {
+        this.train(CONSTANTS.ClassGymAgility);
     }
 
-    render() {
+    render(): React.ReactNode {
         const cost = CONSTANTS.ClassGymBaseCost * this.calculateCost();
 
         return (

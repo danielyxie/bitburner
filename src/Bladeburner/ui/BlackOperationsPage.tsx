@@ -38,7 +38,7 @@ for (var i = blackops.length-1; i >= 0 ; --i) {
 
 import * as React from "react";
 
-export function BlackOperationsPage(inst: any): React.ReactElement {
+export function BlackOperationsPage(): React.ReactElement {
     // Put Black Operations in sequence of required rank
     const blackops = [];
     for (const name in BlackOperations) {
@@ -55,7 +55,7 @@ export function BlackOperationsPage(inst: any): React.ReactElement {
             Black Operations (Black Ops) are special, one-time covert operations. Each Black Op must be unlocked successively by completing the one before it.<br /><br />
         <b>Your ultimate goal to climb through the ranks of Bladeburners is to complete all of the Black Ops.</b><br /><br />
         Like normal operations, you may use a team for Black Ops. Failing a black op will incur heavy HP and rank losses.</p>
-        {blackops.map( op => <div className="bladeburner-action">
+        {blackops.map(() => <div className="bladeburner-action">
             </div>,
         )}
     </div>)

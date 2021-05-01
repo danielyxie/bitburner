@@ -8,29 +8,13 @@ import { AugmentationsRoot } from "./ui/Root";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
-import { startWorkerScript } from "../NetscriptWorker";
 import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
 import { saveObject } from "../SaveObject";
-import { RunningScript } from "../Script/RunningScript";
-import { Script } from "../Script/Script";
-import { Server } from "../Server/Server";
-import { OwnedAugmentationsOrderSetting } from "../Settings/SettingEnums";
-import { Settings } from "../Settings/Settings";
 import { Page, routing } from "../ui/navigationTracking";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import { createAccordionElement } from "../../utils/uiHelpers/createAccordionElement";
-import {
-    Reviver,
-    Generic_toJSON,
-    Generic_fromJSON,
-} from "../../utils/JSONReviver";
-import { formatNumber } from "../../utils/StringHelperFunctions";
 import { clearObject } from "../../utils/helpers/clearObject";
-import { createElement } from "../../utils/uiHelpers/createElement";
-import { isString } from "../../utils/helpers/isString";
-import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
 import { Money } from "../ui/React/Money";
 
 import React from "react";

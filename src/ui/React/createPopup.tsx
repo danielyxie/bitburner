@@ -18,7 +18,7 @@ type ReactComponent = new(...args: any[]) => React.Component<any, any>;
 
 let gameContainer: HTMLElement;
 
-function getGameContainer() {
+function getGameContainer(): void {
     const container = document.getElementById("entire-game-container");
     if (container == null) {
         throw new Error(`Failed to find game container DOM element`)
@@ -30,7 +30,8 @@ function getGameContainer() {
 
 document.addEventListener("DOMContentLoaded", getGameContainer);
 
-export function createPopup(id: string, rootComponent: ReactComponent, props: object): HTMLElement | null {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function createPopup(id: string, rootComponent: ReactComponent, props: any): HTMLElement | null {
     let container = document.getElementById(id);
     if (container == null) {
         container = createElement("div", {

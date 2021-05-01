@@ -15,10 +15,6 @@ import { Generic_fromJSON,
          Reviver } from "../../utils/JSONReviver";
 
 export class HashManager {
-    // Initiatizes a HashManager object from a JSON save state.
-    static fromJSON(value: any): HashManager {
-        return Generic_fromJSON(HashManager, value.data);
-    }
 
     // Max number of hashes this can hold. Equal to the sum of capacities of
     // all Hacknet Servers
@@ -158,6 +154,12 @@ export class HashManager {
     //Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("HashManager", this);
+    }
+
+    // Initiatizes a HashManager object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): HashManager {
+        return Generic_fromJSON(HashManager, value.data);
     }
 }
 

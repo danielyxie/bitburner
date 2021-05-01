@@ -19,10 +19,6 @@ interface IConstructorParams {
 }
 
 export class Warehouse {
-    // Initiatizes a Warehouse object from a JSON save state.
-    static fromJSON(value: any): Warehouse {
-        return Generic_fromJSON(Warehouse, value.data);
-    }
 
     // Text that describes how the space in this Warehouse is being used
     // Used to create a tooltip in the UI
@@ -79,7 +75,7 @@ export class Warehouse {
     }
 
     // Re-calculate how much space is being used by this Warehouse
-    updateMaterialSizeUsed() {
+    updateMaterialSizeUsed(): void {
         this.sizeUsed = 0;
         this.breakdown = "";
         for (const matName in this.materials) {
@@ -96,7 +92,7 @@ export class Warehouse {
         }
     }
 
-    updateSize(corporation: IParent, industry: IParent) {
+    updateSize(corporation: IParent, industry: IParent): void {
         try {
             this.size = (this.level * 100)
                       * corporation.getStorageMultiplier()
@@ -109,6 +105,12 @@ export class Warehouse {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("Warehouse", this);
+    }
+
+    // Initiatizes a Warehouse object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Warehouse {
+        return Generic_fromJSON(Warehouse, value.data);
     }
 }
 

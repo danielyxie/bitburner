@@ -6,7 +6,7 @@ import { getElementById } from "./getElementById";
  * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
  * @param el The element or ID of an element to remove all children from.
  */
-export function removeChildrenFromElement(el: string | null | Element) {
+export function removeChildrenFromElement(el: string | null | Element): void {
     if (el === null) {
         return;
     }

@@ -28,10 +28,6 @@ function isRed(n: number): boolean {
         21, 23, 25, 27, 30, 32, 34, 36].includes(n);
 }
 
-function isBlack(n: number): boolean {
-    return !isRed(n);
-}
-
 type Strategy = {
     match: (n: number) => boolean;
     payout: number;
@@ -140,7 +136,7 @@ export class Roulette extends Game<IProps, IState> {
             lock: true,
             strategy: {
                 payout: 0,
-                match: (n: number): boolean => { return false },
+                match: (): boolean => { return false },
             },
         }
 
@@ -150,21 +146,21 @@ export class Roulette extends Game<IProps, IState> {
     }
 
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.interval = setInterval(this.step, 50);
     }
 
-    step() {
+    step(): void {
         if (!this.state.lock) {
             this.setState({n: Math.floor(Math.random()*37)});
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
       clearInterval(this.interval);
     }
 
-    updateInvestment(e: React.FormEvent<HTMLInputElement>) {
+    updateInvestment(e: React.FormEvent<HTMLInputElement>): void {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
             investment = minPlay;
@@ -178,13 +174,13 @@ export class Roulette extends Game<IProps, IState> {
         this.setState({investment: investment});
     }
 
-    currentNumber() {
+    currentNumber(): string {
         if (this.state.n === 0) return '0';
         const color = isRed(this.state.n) ? 'R' : 'B';
         return `${this.state.n}${color}`;
     }
 
-    play(s: Strategy) {
+    play(s: Strategy): void {
         if(this.reachedLimit(this.props.p)) return;
         this.setState({
             canPlay: false,
@@ -223,7 +219,7 @@ export class Roulette extends Game<IProps, IState> {
     }
 
 
-    render() {
+    render(): React.ReactNode {
         return <>
         <h1>{this.currentNumber()}</h1>
         <input type="number" className="text-input" onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />

@@ -60,7 +60,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         const inputId = `sleeve-${this.props.index}-memory-upgrade-input`;
 
         // Memory cannot go above 100
@@ -83,7 +83,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
                 <h2><u>Upgrade Memory</u></h2>
                 <p>
                     Purchase a memory upgrade for your sleeve. Note that a sleeve's max memory
-                    is 100 (current: {numeralWrapper.formatMemory(this.props.sleeve.memory)})
+                    is 100 (current: {numeralWrapper.formatSleeveMemory(this.props.sleeve.memory)})
                 </p>
 
                 <label htmlFor={inputId}>

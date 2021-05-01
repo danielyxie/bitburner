@@ -13,20 +13,21 @@ export class BlackOperation extends Operation {
         return 1.5;
     }
 
-    getChaosCompetencePenalty(inst: any, params: any): number {
+    getChaosCompetencePenalty(/*inst: IBladeburner, params: ISuccessChanceParams*/): number {
         return 1;
     }
 
-    getChaosDifficultyBonus(inst: any, params: any): number {
+    getChaosDifficultyBonus(/*inst: IBladeburner, params: ISuccessChanceParams*/): number {
         return 1;
-    }
-
-    static fromJSON(value: any): Operation {
-        return Generic_fromJSON(BlackOperation, value.data);
     }
 
     toJSON(): any {
         return Generic_toJSON("BlackOperation", this);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Operation {
+        return Generic_fromJSON(BlackOperation, value.data);
     }
 }
 

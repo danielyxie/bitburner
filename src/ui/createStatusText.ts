@@ -9,7 +9,7 @@ let x: number | undefined;
  * Displays a status message to the player for approximately 3 seconds.
  * @param text The status text to display
  */
-export function createStatusText(text: string) {
+export function createStatusText(text: string): void {
     if (x !== undefined) {
         clearTimeout(x);
         // Likely not needed due to clearTimeout, but just in case...

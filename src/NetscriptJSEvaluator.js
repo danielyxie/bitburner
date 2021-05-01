@@ -1,5 +1,4 @@
 import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
-import { Script } from "./Script/Script";
 import { ScriptUrl } from "./Script/ScriptUrl";
 
 // Makes a blob that contains the code of a given script.

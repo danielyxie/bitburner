@@ -1,4 +1,14 @@
-export const ConsoleHelpText: {} = {
+export const ConsoleHelpText: {
+  helpList: string[];
+  automate: string[];
+  clear: string[];
+  cls: string[];
+  help: string[];
+  log: string[];
+  skill: string[];
+  start: string[];
+  stop: string[];
+} = {
     helpList: [
       "Use 'help [command]' to get more information about a particular Bladeburner console command.",
       "",

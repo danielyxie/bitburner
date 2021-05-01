@@ -8,7 +8,6 @@ import React from "react";
 
 import { hasHacknetServers } from "../HacknetHelpers";
 import { Player } from "../../Player";
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { HashRate } from "../../ui/React/HashRate";

@@ -24,7 +24,7 @@ export type placeOrderFn = (stock: Stock, shares: number, price: number, ordType
 type IProps = {
     buyStockLong: txFn;
     buyStockShort: txFn;
-    cancelOrder: (params: object) => void;
+    cancelOrder: (params: any) => void;
     eventEmitterForReset?: EventEmitter;
     p: IPlayer;
     placeOrder: placeOrderFn;
@@ -62,7 +62,7 @@ export class StockTickers extends React.Component<IProps, IState> {
         this.listRef = React.createRef();
     }
 
-    changeDisplayMode() {
+    changeDisplayMode(): void {
         if (this.state.tickerDisplayMode === TickerDisplayMode.AllStocks) {
             this.setState({
                 tickerDisplayMode: TickerDisplayMode.Portfolio,
@@ -74,7 +74,7 @@ export class StockTickers extends React.Component<IProps, IState> {
         }
     }
 
-    changeWatchlistFilter(e: React.ChangeEvent<HTMLInputElement>) {
+    changeWatchlistFilter(e: React.ChangeEvent<HTMLInputElement>): void {
         const watchlist = e.target.value;
         const sanitizedWatchlist = watchlist.replace(/\s/g, '');
 
@@ -93,7 +93,7 @@ export class StockTickers extends React.Component<IProps, IState> {
         }
     }
 
-    collapseAllTickers() {
+    collapseAllTickers(): void {
         const ul = this.listRef.current;
         if (ul == null) { return; }
         const tickers = ul.getElementsByClassName("accordion-header");
@@ -109,7 +109,7 @@ export class StockTickers extends React.Component<IProps, IState> {
         }
     }
 
-    expandAllTickers() {
+    expandAllTickers(): void {
         const ul = this.listRef.current;
         if (ul == null) { return; }
         const tickers = ul.getElementsByClassName("accordion-header");
@@ -125,7 +125,7 @@ export class StockTickers extends React.Component<IProps, IState> {
         }
     }
 
-    rerender() {
+    rerender(): void {
         this.setState((prevState) => {
             return {
                 rerenderFlag: !prevState.rerenderFlag,
@@ -133,7 +133,7 @@ export class StockTickers extends React.Component<IProps, IState> {
         });
     }
 
-    render() {
+    render(): React.ReactNode {
         const tickers: React.ReactElement[] = [];
         for (const stockMarketProp in this.props.stockMarket) {
             const val = this.props.stockMarket[stockMarketProp];

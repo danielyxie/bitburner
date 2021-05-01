@@ -61,7 +61,7 @@ const UIElems: IPageUIElems = {
 
 let playerRef: IPlayer | null;
 
-export function createResleevesPage(p: IPlayer) {
+export function createResleevesPage(p: IPlayer): void {
     if (!routing.isOn(Page.Resleeves)) { return; }
 
     try {
@@ -115,24 +115,24 @@ export function createResleevesPage(p: IPlayer) {
             TotalNumAugmentations = "TotalNumAugmentations",
         }
 
-        UIElems.sortSelector!.add(createOptionElement("Cost", SortOption.Cost));
-        UIElems.sortSelector!.add(createOptionElement("Hacking Level", SortOption.Hacking));
-        UIElems.sortSelector!.add(createOptionElement("Strength Level", SortOption.Strength));
-        UIElems.sortSelector!.add(createOptionElement("Defense Level", SortOption.Defense));
-        UIElems.sortSelector!.add(createOptionElement("Dexterity Level", SortOption.Dexterity));
-        UIElems.sortSelector!.add(createOptionElement("Agility Level", SortOption.Agility));
-        UIElems.sortSelector!.add(createOptionElement("Charisma Level", SortOption.Charisma));
-        UIElems.sortSelector!.add(createOptionElement("Average Combat Stats", SortOption.AverageCombatStats));
-        UIElems.sortSelector!.add(createOptionElement("Average Stats", SortOption.AverageAllStats));
-        UIElems.sortSelector!.add(createOptionElement("Number of Augmentations", SortOption.TotalNumAugmentations));
+        UIElems.sortSelector.add(createOptionElement("Cost", SortOption.Cost));
+        UIElems.sortSelector.add(createOptionElement("Hacking Level", SortOption.Hacking));
+        UIElems.sortSelector.add(createOptionElement("Strength Level", SortOption.Strength));
+        UIElems.sortSelector.add(createOptionElement("Defense Level", SortOption.Defense));
+        UIElems.sortSelector.add(createOptionElement("Dexterity Level", SortOption.Dexterity));
+        UIElems.sortSelector.add(createOptionElement("Agility Level", SortOption.Agility));
+        UIElems.sortSelector.add(createOptionElement("Charisma Level", SortOption.Charisma));
+        UIElems.sortSelector.add(createOptionElement("Average Combat Stats", SortOption.AverageCombatStats));
+        UIElems.sortSelector.add(createOptionElement("Average Stats", SortOption.AverageAllStats));
+        UIElems.sortSelector.add(createOptionElement("Number of Augmentations", SortOption.TotalNumAugmentations));
 
         UIElems.resleeveList = createElement("ul");
-        UIElems.sortSelector!.onchange = () => {
+        UIElems.sortSelector.onchange = () => {
             removeChildrenFromElement(UIElems.resleeveList);
             UIElems.resleeves = [];
 
             // Helper function for averaging
-            function getAverage(...values: number[]) {
+            function getAverage(...values: number[]): number {
                 let sum = 0;
                 for (let i = 0; i < values.length; ++i) {
                     sum += values[i];
@@ -141,7 +141,7 @@ export function createResleevesPage(p: IPlayer) {
                 return sum / values.length;
             }
 
-            const sortOpt = getSelectValue(UIElems.sortSelector!);
+            const sortOpt = getSelectValue(UIElems.sortSelector);
             switch (sortOpt) {
                 case SortOption.Hacking:
                     p.resleeves.sort((a, b) => {
@@ -202,14 +202,18 @@ export function createResleevesPage(p: IPlayer) {
                     break;
             }
 
+            if(UIElems.resleeveList == null) throw new Error("UIElems.resleeveList is null in sortSelector.click()");
+            if(UIElems.resleeves == null) throw new Error("UIElems.resleeves is null in sortSelector.click()");
+
             // Create UI for all Resleeves
             for (const resleeve of p.resleeves) {
                 const resleeveUi = createResleeveUi(resleeve);
-                UIElems.resleeveList!.appendChild(resleeveUi.container!);
-                UIElems.resleeves!.push(resleeveUi);
+                if(resleeveUi.container == null) throw new Error("resleeveUi.container is null in sortSelector.click()");
+                UIElems.resleeveList.appendChild(resleeveUi.container);
+                UIElems.resleeves.push(resleeveUi);
             }
         }
-        UIElems.sortSelector!.dispatchEvent(new Event('change')); // Force onchange event
+        UIElems.sortSelector.dispatchEvent(new Event('change')); // Force onchange event
 
         UIElems.container.appendChild(UIElems.info);
         UIElems.container.appendChild(createElement("br"));
@@ -217,13 +221,15 @@ export function createResleevesPage(p: IPlayer) {
         UIElems.container.appendChild(UIElems.sortSelector);
         UIElems.container.appendChild(UIElems.resleeveList);
 
-        document.getElementById("entire-game-container")!.appendChild(UIElems.container);
+        const container = document.getElementById("entire-game-container");
+        if(container == null) throw new Error("Could not find entire-game-container in createResleevesPage()");
+        container.appendChild(UIElems.container);
     } catch(e) {
         exceptionAlert(e);
     }
 }
 
-export function clearResleevesPage() {
+export function clearResleevesPage(): void {
     if (UIElems.container instanceof HTMLElement) {
         removeElement(UIElems.container);
     }
@@ -335,7 +341,8 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
         class: "std-button",
         innerText: "Purchase",
         clickListener: () => {
-            if (purchaseResleeve(resleeve, playerRef!)) {
+            if(playerRef == null) throw new Error("playerRef is null in buyButton.click()");
+            if (purchaseResleeve(resleeve, playerRef)) {
                 dialogBoxCreate((<>You re-sleeved for {Money(cost)}!</>), false);
             } else {
                 dialogBoxCreate(`You cannot afford to re-sleeve into this body`, false);
@@ -352,7 +359,8 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     return elems;
 }
 
-function updateAugDescription(elems: IResleeveUIElems) {
+function updateAugDescription(elems: IResleeveUIElems): void {
+    if(elems.augDescription == null) throw new Error("elems.augDescription is null in updateAugDescription()");
     const augName: string = getSelectValue(elems.augSelector);
     const aug: Augmentation | null = Augmentations[augName];
     if (aug == null) {
@@ -360,5 +368,5 @@ function updateAugDescription(elems: IResleeveUIElems) {
         return;
     }
 
-    elems.augDescription!.innerHTML = aug!.info;
+    elems.augDescription.innerHTML = aug.info;
 }

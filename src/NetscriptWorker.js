@@ -21,10 +21,7 @@ import { NetscriptPort } from "./NetscriptPort";
 import { Player } from "./Player";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
-import {
-    findRunningScript,
-    scriptCalculateOfflineProduction,
-} from "./Script/ScriptHelpers";
+import { scriptCalculateOfflineProduction } from "./Script/ScriptHelpers";
 import { AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
@@ -32,12 +29,11 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { generate } from "escodegen";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { compareArrays } from "../utils/helpers/compareArrays";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { isString } from "../utils/StringHelperFunctions";
 
-import { parse, Node } from "acorn";
+import { parse } from "acorn";
 const walk = require("acorn-walk");
 
 // Netscript Ports are instantiated here
@@ -180,8 +176,8 @@ function startNetscript1Script(workerScript) {
                         let fnPromise = entry.apply(null, fnArgs);
                         fnPromise.then(function(res) {
                             cb(res);
-                        }).catch(function(e) {
-                            // Do nothing?
+                        }).catch(function(err) {
+                            console.error(err);
                         });
                     }
                     int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
@@ -443,8 +439,6 @@ export function startWorkerScript(runningScript, server) {
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
 export function createAndAddWorkerScript(runningScriptObj, server) {
-	const filename = runningScriptObj.filename;
-
 	// Update server's ram usage
     let threads = 1;
     if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {

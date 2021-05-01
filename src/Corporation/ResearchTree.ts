@@ -56,14 +56,14 @@ export class Node {
         }
     }
 
-    addChild(n: Node) {
+    addChild(n: Node): void {
         this.children.push(n);
         n.parent = this;
     }
 
     // Return an object that describes a TreantJS-compatible markup/config for this Node
     // See: http://fperucic.github.io/treant-js/
-    createTreantMarkup(): object {
+    createTreantMarkup(): any {
         const childrenArray = [];
         for (let i = 0; i < this.children.length; ++i) {
             childrenArray.push(this.children[i].createTreantMarkup());
@@ -109,7 +109,7 @@ export class Node {
         return null;
     }
 
-    setParent(n: Node) {
+    setParent(n: Node): void {
         this.parent =  n;
     }
 }
@@ -124,11 +124,9 @@ export class ResearchTree {
     // Root Node
     root: Node | null = null;
 
-    constructor() {}
-
     // Return an object that contains a Tree markup for TreantJS (using the JSON approach)
     // See: http://fperucic.github.io/treant-js/
-    createTreantMarkup(): object {
+    createTreantMarkup(): any {
         if (this.root == null) { return {}; }
 
         const treeMarkup = this.root.createTreantMarkup();

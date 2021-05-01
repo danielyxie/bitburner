@@ -11,7 +11,7 @@ interface ICreatePopupOptions {
  * @param id The (hopefully) unique identifier for the popup container.
  * @param elems The collection of HTML Elements to show within the popup.
  */
-export function createPopup(id: string, elems: HTMLElement[], options: ICreatePopupOptions={}) {
+export function createPopup(id: string, elems: HTMLElement[], options: ICreatePopupOptions={}): HTMLDivElement {
     const container: HTMLDivElement = createElement("div", {
         class: "popup-box-container",
         display: "flex",

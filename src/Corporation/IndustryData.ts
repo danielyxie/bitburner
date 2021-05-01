@@ -4,8 +4,6 @@ import { getBaseResearchTreeCopy,
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
-import { Reviver } from "../../utils/JSONReviver";
-
 interface IIndustryMap<T> {
     Energy: T;
     Utilities: T;
@@ -124,7 +122,7 @@ export const IndustryResearchTrees: IIndustryMap<ResearchTree> = {
     RealEstate: getProductIndustryResearchTreeCopy(),
 }
 
-export function resetIndustryResearchTrees() {
+export function resetIndustryResearchTrees(): void {
     IndustryResearchTrees.Energy         = getBaseResearchTreeCopy();
     IndustryResearchTrees.Utilities      = getBaseResearchTreeCopy();
     IndustryResearchTrees.Agriculture    = getBaseResearchTreeCopy();

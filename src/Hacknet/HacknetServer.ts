@@ -5,7 +5,6 @@ import { CONSTANTS } from "../Constants";
 
 import { IHacknetNode } from "./IHacknetNode";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { BaseServer } from "../Server/BaseServer";
 import { RunningScript } from "../Script/RunningScript";
 import { HacknetServerConstants } from "./data/Constants";
@@ -35,10 +34,6 @@ interface IConstructorParams {
 }
 
 export class HacknetServer extends BaseServer implements IHacknetNode {
-    // Initializes a HacknetServer Object from a JSON save state
-    static fromJSON(value: any): HacknetServer {
-        return Generic_fromJSON(HacknetServer, value.data);
-    }
 
     // Cache level. Affects hash Capacity
     cache = 1;
@@ -140,6 +135,12 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("HacknetServer", this);
+    }
+
+    // Initializes a HacknetServer Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): HacknetServer {
+        return Generic_fromJSON(HacknetServer, value.data);
     }
 }
 

@@ -10,7 +10,7 @@ export class PositionTracker {
 		this.positions = new Map<string, Position>();
 	}
 
-	saveCursor(filename: string, pos: Position) {
+	saveCursor(filename: string, pos: Position): void {
 		this.positions.set(filename, pos);
 	}
 

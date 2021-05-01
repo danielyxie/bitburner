@@ -858,8 +858,18 @@ module.exports = {
             "error",
             "never",
         ],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
     },
     "overrides": [
+        {
+          // enable the rule specifically for TypeScript files
+          "files": ["*.ts", "*.tsx"],
+          "rules": {
+            "@typescript-eslint/explicit-function-return-type": ["error"],
+            "@typescript-eslint/explicit-module-boundary-types": ["error"],
+          },
+        },
         {
             // TypeScript configuration
             "files": [ "**/*.ts", "**/*.tsx" ],

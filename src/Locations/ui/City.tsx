@@ -17,13 +17,14 @@ type IProps = {
 }
 
 export class LocationCity extends React.Component<IProps, any> {
-    asciiCity() {
-        const thiscity = this;
-        const topprop = this.props;
-
-        function LocationLetter(location: LocationName) {
+    asciiCity(): React.ReactNode {
+        const LocationLetter = (location: LocationName): JSX.Element => {
             if (location)
-                return <span key={location} className="tooltip" style={{color: 'blue', whiteSpace: 'nowrap', margin: '0px', padding: '0px', cursor: 'pointer'}} onClick={topprop.enterLocation.bind(thiscity, location)}>
+                return <span
+                    key={location}
+                    className="tooltip"
+                    style={{color: 'blue', whiteSpace: 'nowrap', margin: '0px', padding: '0px', cursor: 'pointer'}}
+                    onClick={this.props.enterLocation.bind(this, location)}>
                     X
                 </span>
             return <span>*</span>
@@ -35,8 +36,7 @@ export class LocationCity extends React.Component<IProps, any> {
             'P': 15,'Q': 16,'R': 17,'S': 18,'T': 19,'U': 20,'V': 21,'W': 22,
             'X': 23,'Y': 24,'Z': 25}
 
-        let locI = 0;
-        function lineElems(s: string) {
+        const lineElems = (s: string): JSX.Element[] => {
             const elems: any[] = [];
             const matches: any[] = [];
             let match: any;
@@ -48,20 +48,18 @@ export class LocationCity extends React.Component<IProps, any> {
                 return elems;
             }
 
-            const parts: any[] = [];
             for(let i = 0; i < matches.length; i++) {
                 const startI = i === 0 ? 0 : matches[i-1].index+1;
                 const endI = matches[i].index;
                 elems.push(s.slice(startI, endI))
                 const locationI = letterMap[s[matches[i].index]];
-                elems.push(LocationLetter(thiscity.props.city.locations[locationI]))
-                locI++;
+                elems.push(LocationLetter(this.props.city.locations[locationI]))
             }
             elems.push(s.slice(matches[matches.length-1].index+1))
             return elems;
         }
 
-        const elems: any[] = [];
+        const elems: JSX.Element[] = [];
         const lines = this.props.city.asciiArt.split('\n');
         for(const i in lines) {
             elems.push(<pre key={i}>{lineElems(lines[i])}</pre>)
@@ -70,7 +68,7 @@ export class LocationCity extends React.Component<IProps, any> {
         return elems;
     }
 
-    listCity() {
+    listCity(): React.ReactNode {
         const locationButtons = this.props.city.locations.map((locName) => {
             return (
                 <li key={locName}>
@@ -86,7 +84,7 @@ export class LocationCity extends React.Component<IProps, any> {
         )
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <>
                 {Settings.DisableASCIIArt ? this.listCity() : this.asciiCity()}

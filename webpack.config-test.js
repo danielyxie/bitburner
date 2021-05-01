@@ -3,10 +3,8 @@
  */
 var path = require('path');
 var webpack = require('webpack');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = (env, argv) => {
+module.exports = () => {
     const statsConfig = {
         builtAt: true,
         children: false,

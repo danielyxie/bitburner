@@ -124,7 +124,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi=true): void {
  * timed, blocked operation (like hack(), sleep(), etc.). This allows scripts to
  * be killed immediately even if they're in the middle of one of those long operations
  */
-function killNetscriptDelay(workerScript: WorkerScript) {
+function killNetscriptDelay(workerScript: WorkerScript): void {
     if (workerScript instanceof WorkerScript) {
         if (workerScript.delay) {
             clearTimeout(workerScript.delay);
