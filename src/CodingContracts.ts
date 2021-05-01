@@ -183,12 +183,10 @@ export class CodingContract {
                     removePopup(popup.props.popupId);
                 },
                 onAttempt: (val: string) => {
-                    alert(val);
-                    const answer: string = popup.state.value;
-                    if (this.isSolution(answer)) {
+                    if (this.isSolution(val)) {
                         resolve(CodingContractResult.Success);
                     } else {
-                        resolve(CodingContractResult.Cancelled); //resolve(CodingContractResult.Failure);
+                        resolve(CodingContractResult.Failure);
                     }
                     removePopup(popup.props.popupId);
                 }
