@@ -404,7 +404,7 @@ function initAugmentations() {
         info:"The body is injected with a chemical that artificially induces synaptic potentiation, " +
              "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's hacking speed by 2% <br>" +
+             "Increases the player's hacking speed by 2%.<br>" +
              "Increases the player's hacking chance by 5%.<br>" +
              "Increases the player's hacking experience gain rate by 5%.",
         hacking_speed_mult: 1.02,
@@ -1332,7 +1332,7 @@ function initAugmentations() {
              "capable of psychoanalyzing and profiling the personality of " +
              "others using optical imaging software.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's charisma by 50%. <br>" +
+             "Increases the player's charisma by 50%.<br>" +
              "Increases the player's charisma experience gain rate by 50%.<br>" +
              "Increases the amount of reputation the player gains for a company by 25%.<br>" +
              "Increases the amount of reputation the player gains for a faction by 25%.",
@@ -1743,7 +1743,7 @@ function initAugmentations() {
                  "to induce wakefulness and concentration, suppress fear, reduce empathy, and " +
                  "improve reflexes and memory-recall among other things.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases the player's sucess chance in Bladeburner contracts/operations by 3%.<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 3%.<br>" +
                  "Increases the player's effectiveness in Bladeburner Field Analysis by 5%.<br>" +
                  "Increases the player's Bladeburner stamina gain rate by 2%.",
             bladeburner_success_chance_mult: 1.03,
