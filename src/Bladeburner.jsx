@@ -305,7 +305,7 @@ Bladeburner.prototype.create = function() {
         name:"Raid",
         desc:"Lead an assault on a known Synthoid community. Note that " +
              "there must be an existing Synthoid community in your current city " +
-             "in order for this Operation to be successful",
+             "in order for this Operation to be successful.",
         baseDifficulty:800, difficultyFac:1.045, rewardFac:1.1, reqdRank:3000,
         rankGain:55,rankLoss:2.5,hpLoss:50,
         count:getRandomInt(1, 150), countGrowth:getRandomInt(2, 40)/10,
