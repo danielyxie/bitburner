@@ -2,12 +2,12 @@ import { BitNodes } from "../BitNode/BitNode";
 
 export class SourceFile {
     info: string;
-    lvl: number = 1;
+    lvl = 1;
     n: number;
     name: string;
-    owned: boolean = false;
+    owned = false;
 
-    constructor(number: number, info: string="") {
+    constructor(number: number, info="") {
         const bitnodeKey = "BitNode" + number;
         const bitnode = BitNodes[bitnodeKey];
         if (bitnode == null) {

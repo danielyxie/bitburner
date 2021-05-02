@@ -1,4 +1,4 @@
-// import { BladeburnerConstants } from "./data/Constants";
+import { IBladeburner } from "./IBladeburner";
 import { Action, IActionParams } from "./Action";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
@@ -8,16 +8,17 @@ export class Contract extends Action {
         super(params);
     }
 
-    getActionTypeSkillSuccessBonus(inst: any): number {
+    getActionTypeSkillSuccessBonus(inst: IBladeburner): number {
         return inst.skillMultipliers.successChanceContract;
-    }
-
-    static fromJSON(value: any): Contract {
-        return Generic_fromJSON(Contract, value.data);
     }
 
     toJSON(): any {
         return Generic_toJSON("Contract", this);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Contract {
+        return Generic_fromJSON(Contract, value.data);
     }
 }
 

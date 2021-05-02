@@ -307,7 +307,7 @@ export const RamCosts: IMap<any> = {
     heart: {
         // Easter egg function
         break : () => 0,
-    }
+    },
 }
 
 export function getRamCost(...args: string[]): number {

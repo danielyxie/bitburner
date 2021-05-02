@@ -3,7 +3,6 @@ import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Bladeburner } from "../../Bladeburner";
 import { CodingContractRewardType } from "../../CodingContracts";
 import { Company } from "../../Company/Company";
 import { Companies } from "../../Company/Companies";
@@ -12,7 +11,6 @@ import { getJobRequirementText } from "../../Company/GetJobRequirementText";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import * as posNames from "../../Company/data/companypositionnames";
 import {CONSTANTS} from "../../Constants";
-import { Corporation } from "../../Corporation/Corporation";
 import { Programs } from "../../Programs/Programs";
 import { determineCrimeSuccess } from "../../Crime/CrimeHelpers";
 import { Crimes } from "../../Crime/Crimes";
@@ -22,7 +20,6 @@ import { Factions } from "../../Faction/Factions";
 import { displayFactionContent } from "../../Faction/FactionHelpers";
 import { resetGangs } from "../../Gang";
 import { hasHacknetServers } from "../../Hacknet/HacknetHelpers";
-import { HashManager } from "../../Hacknet/HashManager";
 import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
@@ -56,12 +53,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
-import {
-    Reviver,
-    Generic_toJSON,
-    Generic_fromJSON,
-} from "../../../utils/JSONReviver";
-import {convertTimeMsToTimeElapsedString} from "../../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Money } from "../../ui/React/Money";
@@ -614,7 +606,6 @@ export function startWork(companyName) {
 }
 
 export function cancelationPenalty() {
-    const company = Companies[this.companyName];
     const specialIp = SpecialServerIps[this.companyName];
     if(specialIp) {
         const server = AllServers[specialIp];
@@ -1226,7 +1217,7 @@ export function createProgramWork(numCycles) {
     </>, elem);
 }
 
-export function finishCreateProgramWork(cancelled, sing=false) {
+export function finishCreateProgramWork(cancelled) {
     var programName = this.createProgramName;
     if (cancelled === false) {
         dialogBoxCreate("You've finished creating " + programName + "!<br>" +
@@ -1313,11 +1304,11 @@ export function startClass(costMult, expMult, className) {
 
     this.workMoneyLossRate      = cost;
     this.workHackExpGainRate    = hackExp * this.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-    this.workStrExpGainRate     = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workDefExpGainRate     = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workDexExpGainRate     = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workAgiExpGainRate     = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
-    this.workChaExpGainRate     = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
+    this.workStrExpGainRate     = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workDefExpGainRate     = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workDexExpGainRate     = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workAgiExpGainRate     = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workChaExpGainRate     = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
 
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     if (className == CONSTANTS.ClassGymStrength ||
@@ -1460,7 +1451,6 @@ export function commitCrime(numCycles) {
 export function finishCrime(cancelled) {
     //Determine crime success/failure
     if (!cancelled) {
-        var statusText = ""; // TODO, unique message for each crime when you succeed
         if (determineCrimeSuccess(this, this.crimeType)) {
             //Handle Karma and crime statistics
             let crime = null;
@@ -1580,7 +1570,7 @@ export function singularityStopWork() {
             res = this.finishFactionWork(true, true);
             break;
         case CONSTANTS.WorkTypeCreateProgram:
-            res = this.finishCreateProgramWork(true, true);
+            res = this.finishCreateProgramWork(true);
             break;
         case CONSTANTS.WorkTypeCrime:
             res = this.finishCrime(true);

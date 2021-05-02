@@ -6,7 +6,7 @@
 
 #codemirror-form-wrapper {
     height: 80%;
-    margin: 10px 0px 0px 6px;
+    margin: 10px 0 0 6px;
 }
 
 .CodeMirror {
@@ -22,11 +22,11 @@
  * Highlight matches
  */
 .cm-matchhighlight {
-    background-color: #8F908A;
+    background-color: #8f908a;
 }
 
 .CodeMirror-selection-highlight-scrollbar {
-    background-color: #8F908A;
+    background-color: #8f908a;
 }
 
 /**
@@ -35,7 +35,7 @@
 .cm-whitespace::before {
     position: absolute;
     pointer-events: none;
-    color: #404F7D;
+    color: #404f7d;
 }
 
 /**

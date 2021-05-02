@@ -19,7 +19,6 @@ import {
 
 import { Player } from "../../Player";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Hashes } from "../../ui/React/Hashes";
 import { HashRate } from "../../ui/React/HashRate";

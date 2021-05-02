@@ -5,7 +5,6 @@ import { CONSTANTS } from "../Constants";
 
 import { IHacknetNode } from "./IHacknetNode";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { BaseServer } from "../Server/BaseServer";
 import { RunningScript } from "../Script/RunningScript";
 import { HacknetServerConstants } from "./data/Constants";
@@ -22,7 +21,7 @@ import { createRandomIp } from "../../utils/IPAddress";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../../utils/JSONReviver";
 
 interface IConstructorParams {
@@ -35,31 +34,27 @@ interface IConstructorParams {
 }
 
 export class HacknetServer extends BaseServer implements IHacknetNode {
-    // Initializes a HacknetServer Object from a JSON save state
-    static fromJSON(value: any): HacknetServer {
-        return Generic_fromJSON(HacknetServer, value.data);
-    }
 
     // Cache level. Affects hash Capacity
-    cache: number = 1;
+    cache = 1;
 
     // Number of cores. Improves hash production
-    cores: number = 1;
+    cores = 1;
 
     // Number of hashes that can be stored by this Hacknet Server
-    hashCapacity: number = 0;
+    hashCapacity = 0;
 
     // Hashes produced per second
-    hashRate: number = 0;
+    hashRate = 0;
 
     // Similar to Node level. Improves hash production
-    level: number = 1;
+    level = 1;
 
     // How long this HacknetServer has existed, in seconds
-    onlineTimeSeconds: number = 0;
+    onlineTimeSeconds = 0;
 
     // Total number of hashes earned by this server
-    totalHashesGenerated: number = 0;
+    totalHashesGenerated = 0;
 
     constructor(params: IConstructorParams={ hostname: "", ip: createRandomIp() }) {
         super(params);
@@ -85,7 +80,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     }
 
     // Process this Hacknet Server in the game loop. Returns the number of hashes generated
-    process(numCycles: number=1): number {
+    process(numCycles=1): number {
         const seconds = numCycles * CONSTANTS.MilliPerCycle / 1000;
 
         return this.hashRate * seconds;
@@ -140,6 +135,12 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("HacknetServer", this);
+    }
+
+    // Initializes a HacknetServer Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): HacknetServer {
+        return Generic_fromJSON(HacknetServer, value.data);
     }
 }
 

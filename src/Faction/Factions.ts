@@ -16,7 +16,7 @@ export function loadFactions(saveString: string): void {
     Factions = JSON.parse(saveString, Reviver);
 }
 
-export function AddToFactions(faction: Faction) {
+export function AddToFactions(faction: Faction): void {
 	const name: string = faction.name;
 	Factions[name] = faction;
 }
@@ -25,7 +25,7 @@ export function factionExists(name: string): boolean {
     return Factions.hasOwnProperty(name);
 }
 
-export function initFactions(bitNode: number=1) {
+export function initFactions(): void {
     for (const name in FactionInfos) {
         resetFaction(new Faction(name));
     }
@@ -34,7 +34,7 @@ export function initFactions(bitNode: number=1) {
 //Resets a faction during (re-)initialization. Saves the favor in the new
 //Faction object and deletes the old Faction Object from "Factions". Then
 //reinserts the new Faction object
-export function resetFaction(newFactionObject: Faction) {
+export function resetFaction(newFactionObject: Faction): void {
     if (!(newFactionObject instanceof Faction)) {
         throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
     }

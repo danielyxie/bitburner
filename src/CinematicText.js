@@ -90,7 +90,7 @@ function cinematicTextEnd() {
     var mainMenu = document.getElementById("mainmenu-container");
     container.appendChild(createElement("br"));
 
-    return new Promise (function(resolve, reject) {
+    return new Promise (function(resolve) {
         container.appendChild(createElement("a", {
             class:"a-link-button", innerText:"Continue...",
             clickListener:()=>{
@@ -99,7 +99,7 @@ function cinematicTextEnd() {
                 mainMenu.style.visibility = "visible";
                 cinematicTextFlag = false;
                 resolve();
-            }
+            },
         }));
     });
 }

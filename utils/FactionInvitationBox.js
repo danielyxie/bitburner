@@ -20,11 +20,6 @@ function factionInvitationSetText(txt) {
     textBox.innerHTML = txt;
 }
 
-function factionInvitationSetMessage(msg) {
-    var msgBox = document.getElementById("faction-invitation-box-message");
-    msgBox.innerHTML = msg;
-}
-
 //ram argument is in GB
 function factionInvitationBoxCreate(faction) {
     factionInvitationSetText("You have received a faction invitation from " + faction.name);

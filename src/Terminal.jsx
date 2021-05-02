@@ -4,37 +4,30 @@ import {
     getFirstParentDirectory,
     isInRootDirectory,
     isValidDirectoryPath,
-    isValidFilename,
     removeLeadingSlash,
-    removeTrailingSlash
+    removeTrailingSlash,
 } from "./Terminal/DirectoryHelpers";
 import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
 import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
 import { tabCompletion } from "./Terminal/tabCompletion";
 
 import {
-    Aliases,
-    GlobalAliases,
     parseAliasDeclaration,
     printAliases,
     removeAlias,
-    substituteAliases
+    substituteAliases,
 } from "./Alias";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import {
-    CodingContract,
     CodingContractResult,
-    CodingContractRewardType
 } from "./CodingContracts";
 import { CONSTANTS } from "./Constants";
 import { Programs } from "./Programs/Programs";
 import {
     executeDarkwebTerminalCommand,
-    checkIfConnectedToDarkweb
+    checkIfConnectedToDarkweb,
 } from "./DarkWeb/DarkWeb";
-import { DarkWebItems } from "./DarkWeb/DarkWebItems";
 import { Engine } from "./engine";
-import { parseFconfSettings, createFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import {
     calculateHackingChance,
@@ -42,13 +35,13 @@ import {
     calculatePercentMoneyHacked,
     calculateHackingTime,
     calculateGrowTime,
-    calculateWeakenTime
+    calculateWeakenTime,
 } from "./Hacking";
 import { HacknetServer } from "./Hacknet/HacknetServer";
 import {
     iTutorialNextStep,
     iTutorialSteps,
-    ITutorial
+    ITutorial,
 } from "./InteractiveTutorial";
 import { showLiterature } from "./Literature/LiteratureHelpers";
 import { Message } from "./Message/Message";
@@ -63,24 +56,19 @@ import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import { getCurrentEditor, findRunningScript } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
 import { AllServers } from "./Server/AllServers";
-import { Server } from "./Server/Server";
 import {
     GetServerByHostname,
     getServer,
-    getServerOnNetwork
+    getServerOnNetwork,
 } from "./Server/ServerHelpers";
-import { Settings } from "./Settings/Settings";
 import {
     SpecialServerIps,
-    SpecialServerNames
+    SpecialServerNames,
 } from "./Server/SpecialServerIps";
-import { getTextFile } from "./TextFile";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { KEY } from "../utils/helpers/keyCodes";
-import { addOffset } from "../utils/helpers/addOffset";
-import { isString } from "../utils/helpers/isString";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { logBoxCreate } from "../utils/LogBox";
@@ -88,7 +76,7 @@ import {
     yesNoBoxCreate,
     yesNoBoxGetYesButton,
     yesNoBoxGetNoButton,
-    yesNoBoxClose
+    yesNoBoxClose,
 } from "../utils/YesNoBox";
 import {
     post,
@@ -96,7 +84,7 @@ import {
     postContent,
     postError,
     hackProgressBarPost,
-    hackProgressPost
+    hackProgressPost,
 } from "./ui/postToTerminal";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Money } from "./ui/React/Money";
@@ -136,7 +124,7 @@ $(document).keydown(function(event) {
                 "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
-                ` ~${dir}]&gt;</span> ${command}`
+                ` ~${dir}]&gt;</span> ${command}`,
             );
 
             if (command.length > 0) {
@@ -393,7 +381,6 @@ let Terminal = {
 
             var inputLength = terminalInput.value.length;
             var start = terminalInput.selectionStart;
-            var end = terminalInput.selectionEnd;
             var inputText = terminalInput.value;
 
             switch(mod.toLowerCase()) {
@@ -436,7 +423,6 @@ let Terminal = {
 
             var inputLength = terminalInput.value.length;
             var start = terminalInput.selectionStart;
-            var end = terminalInput.selectionEnd;
 
             switch(loc.toLowerCase()) {
                 case "home":
@@ -1543,7 +1529,7 @@ let Terminal = {
                         spacesPid,
                         script.threads,
                         spacesThread,
-                        ramUsage
+                        ramUsage,
                     ].join("");
                     post(entry);
                 }
@@ -1778,7 +1764,6 @@ let Terminal = {
                 return;
             }
 
-            const s = Player.getCurrentServer();
             const scriptName = commandArray[1];
             let numThreads = 1;
             if (commandArray.length === 4 && commandArray[2] === "-t") {
@@ -1960,7 +1945,6 @@ let Terminal = {
                 postError(`Invalid destination. ${commandArray[2]} not found`);
                 return;
             }
-            const ip = destServer.ip;
             const currServ = Player.getCurrentServer();
 
             // Scp for lit files

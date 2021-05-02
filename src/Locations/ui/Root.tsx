@@ -136,12 +136,12 @@ export class LocationRoot extends React.Component<IProps, IState> {
         if (this.props.p.travel(to)) {
             this.setState({
                 inCity: true,
-                city: to
+                city: to,
             });
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         if (this.state.inCity) {
             return this.renderCity();
         } else {

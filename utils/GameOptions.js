@@ -23,7 +23,7 @@ function gameOptionsBoxInit() {
         gameOptionsBoxClose();
         return false;
     });
-};
+}
 
 document.addEventListener("DOMContentLoaded", gameOptionsBoxInit, false);
 

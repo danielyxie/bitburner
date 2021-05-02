@@ -11,15 +11,11 @@ import { post } from "../ui/postToTerminal";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../../utils/JSONReviver";
 import { getTimestamp } from "../../utils/helpers/getTimestamp";
 
 export class RunningScript {
-    // Initializes a RunningScript Object from a JSON save state
-    static fromJSON(value: any): RunningScript {
-        return Generic_fromJSON(RunningScript, value.data);
-    }
 
     // Script arguments
     args: any[] = [];
@@ -29,44 +25,44 @@ export class RunningScript {
     dataMap: IMap<number[]> = {};
 
     // Script filename
-    filename: string = "";
+    filename = "";
 
     // This script's logs. An array of log entries
     logs: string[] = [];
 
     // Flag indicating whether the logs have been updated since
     // the last time the UI was updated
-    logUpd: boolean = false;
+    logUpd = false;
 
     // Total amount of hacking experience earned from this script when offline
-    offlineExpGained: number = 0;
+    offlineExpGained = 0;
 
     // Total amount of money made by this script when offline
-    offlineMoneyMade: number = 0;
+    offlineMoneyMade = 0;
 
     // Number of seconds that the script has been running offline
-    offlineRunningTime: number = 0.01;
+    offlineRunningTime = 0.01;
 
     // Total amount of hacking experience earned from this script when online
-    onlineExpGained: number = 0;
+    onlineExpGained = 0;
 
     // Total amount of money made by this script when online
-    onlineMoneyMade: number = 0;
+    onlineMoneyMade = 0;
 
     // Number of seconds that this script has been running online
-    onlineRunningTime: number = 0.01;
+    onlineRunningTime = 0.01;
 
     // Process ID. Must be an integer and equals the PID of corresponding WorkerScript
-    pid: number = -1;
+    pid = -1;
 
     // How much RAM this script uses for ONE thread
-    ramUsage: number = 0;
+    ramUsage = 0;
 
     // IP of the server on which this script is running
-    server: string = "";
+    server = "";
 
     // Number of threads that this script is running with
-    threads: number = 1;
+    threads = 1;
 
     constructor(script: Script | null = null, args: any[] = []) {
         if (script == null) { return; }
@@ -91,7 +87,7 @@ export class RunningScript {
     }
 
     displayLog(): void {
-        for (var i = 0; i < this.logs.length; ++i) {
+        for (let i = 0; i < this.logs.length; ++i) {
             post(this.logs[i]);
         }
     }
@@ -101,7 +97,7 @@ export class RunningScript {
     }
 
     // Update the moneyStolen and numTimesHack maps when hacking
-    recordHack(serverIp: string, moneyGained: number, n: number=1) {
+    recordHack(serverIp: string, moneyGained: number, n=1): void {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -110,7 +106,7 @@ export class RunningScript {
     }
 
     // Update the grow map when calling grow()
-    recordGrow(serverIp: string, n: number=1) {
+    recordGrow(serverIp: string, n=1): void {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -118,7 +114,7 @@ export class RunningScript {
     }
 
     // Update the weaken map when calling weaken() {
-    recordWeaken(serverIp: string, n: number=1) {
+    recordWeaken(serverIp: string, n=1): void {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -128,6 +124,12 @@ export class RunningScript {
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("RunningScript", this);
+    }
+
+    // Initializes a RunningScript Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): RunningScript {
+        return Generic_fromJSON(RunningScript, value.data);
     }
 }
 

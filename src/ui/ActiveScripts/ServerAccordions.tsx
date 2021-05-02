@@ -47,14 +47,14 @@ export class ServerAccordions extends React.Component<IProps, IState> {
         this.rerender = this.rerender.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         WorkerScriptStartStopEventEmitter.addSubscriber({
             cb: this.rerender,
             id: subscriberId,
         })
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         WorkerScriptStartStopEventEmitter.removeSubscriber(subscriberId);
     }
 
@@ -81,14 +81,14 @@ export class ServerAccordions extends React.Component<IProps, IState> {
         this.serverToScriptMap = map;
     }
 
-    rerender() {
+    rerender(): void {
         this.updateServerToScriptsMap();
         this.setState((prevState) => {
             return { rerenderFlag: !prevState.rerenderFlag }
         });
     }
 
-    render() {
+    render(): React.ReactNode {
         const elems = Object.keys(this.serverToScriptMap).map((serverName) => {
             const data = this.serverToScriptMap[serverName];
             return (

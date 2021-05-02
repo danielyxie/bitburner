@@ -78,4 +78,4 @@ export enum LocationName {
 
     // Default name for Location objects
     Void                            = "The Void",
-};
+}

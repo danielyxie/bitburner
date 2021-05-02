@@ -12,8 +12,12 @@ interface ICreatePopupCloseButtonOptions {
     type?: string;
 }
 
-export function createPopupCloseButton(popup: Element | string, options: ICreatePopupCloseButtonOptions) {
-    let button: HTMLButtonElement;
+export function createPopupCloseButton(popup: Element | string, options: ICreatePopupCloseButtonOptions): HTMLButtonElement {
+    const button = createElement("button", {
+        class: options.class ? options.class : "popup-box-button",
+        display: options.display ? options.display : "inline-block",
+        innerText: options.innerText == null ? "Cancel" : options.innerText,
+    }) as HTMLButtonElement;
 
     function closePopupWithEscFn(e: any): void {
         if (e.keyCode === 27) {
@@ -21,28 +25,23 @@ export function createPopupCloseButton(popup: Element | string, options: ICreate
         }
     }
 
-    button = createElement("button", {
-        class: options.class ? options.class : "popup-box-button",
-        display: options.display ? options.display : "inline-block",
-        innerText: options.innerText == null ? "Cancel" : options.innerText,
-        clickListener: () => {
-            if (popup instanceof Element) {
-                removeElement(popup);
-            } else {
-                try {
-                    const popupEl = document.getElementById(popup);
-                    if (popupEl instanceof Element) {
-                        removeElement(popupEl);
-                    }
-                } catch(e) {
-                    console.error(`createPopupCloseButton() threw: ${e}`);
+    button.addEventListener("click", () => {
+        if (popup instanceof Element) {
+            removeElement(popup);
+        } else {
+            try {
+                const popupEl = document.getElementById(popup);
+                if (popupEl instanceof Element) {
+                    removeElement(popupEl);
                 }
+            } catch(e) {
+                console.error(`createPopupCloseButton() threw: ${e}`);
             }
+        }
 
-            document.removeEventListener("keydown", closePopupWithEscFn);
-            return false;
-        },
-    }) as HTMLButtonElement;
+        document.removeEventListener("keydown", closePopupWithEscFn);
+        return false;
+    });
 
     document.addEventListener("keydown", closePopupWithEscFn);
 

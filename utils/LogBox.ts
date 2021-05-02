@@ -42,18 +42,18 @@ function logBoxInit(): void {
     logBoxClose();
 
     document.removeEventListener("DOMContentLoaded", logBoxInit);
-};
+}
 
 document.addEventListener("DOMContentLoaded", logBoxInit);
 
-function logBoxClose() {
+function logBoxClose(): void {
     logBoxOpened = false;
     if (logBoxContainer instanceof HTMLElement) {
         logBoxContainer.style.display = "none";
     }
 }
 
-function logBoxOpen() {
+function logBoxOpen(): void {
     logBoxOpened = true;
 
     if (logBoxContainer instanceof HTMLElement) {
@@ -64,7 +64,7 @@ function logBoxOpen() {
 
 export let logBoxOpened = false;
 let logBoxCurrentScript: RunningScript | null = null;
-export function logBoxCreate(script: RunningScript) {
+export function logBoxCreate(script: RunningScript): void {
     logBoxCurrentScript = script;
 
     const killScriptBtn = clearEventListeners("log-box-kill-script");
@@ -92,7 +92,7 @@ export function logBoxCreate(script: RunningScript) {
     logBoxUpdateText();
 }
 
-export function logBoxUpdateText() {
+export function logBoxUpdateText(): void {
     if (!(logText instanceof HTMLElement)) { return; }
 
     if (logBoxCurrentScript && logBoxOpened && logBoxCurrentScript.logUpd) {

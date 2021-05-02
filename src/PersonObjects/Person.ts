@@ -1,6 +1,5 @@
 // Base class representing a person-like object
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CityName } from "../Locations/data/CityNames";
@@ -36,67 +35,67 @@ export abstract class Person {
     /**
      * Stats
      */
-    hacking_skill: number = 1;
-    strength: number = 1;
-    defense: number = 1;
-    dexterity: number = 1;
-    agility: number = 1;
-    charisma: number = 1;
-    intelligence: number = 1;
-    hp: number = 10;
-    max_hp: number = 10;
+    hacking_skill = 1;
+    strength = 1;
+    defense = 1;
+    dexterity = 1;
+    agility = 1;
+    charisma = 1;
+    intelligence = 1;
+    hp = 10;
+    max_hp = 10;
 
     /**
      * Experience
      */
-    hacking_exp: number = 0;
-    strength_exp: number = 0;
-    defense_exp: number = 0;
-    dexterity_exp: number = 0;
-    agility_exp: number = 0;
-    charisma_exp: number = 0;
-    intelligence_exp: number = 0;
+    hacking_exp = 0;
+    strength_exp = 0;
+    defense_exp = 0;
+    dexterity_exp = 0;
+    agility_exp = 0;
+    charisma_exp = 0;
+    intelligence_exp = 0;
 
     /**
      * Multipliers
      */
-    hacking_mult: number = 1;
-    strength_mult: number = 1;
-    defense_mult: number = 1;
-    dexterity_mult: number = 1;
-    agility_mult: number = 1;
-    charisma_mult: number = 1;
+    hacking_mult = 1;
+    strength_mult = 1;
+    defense_mult = 1;
+    dexterity_mult = 1;
+    agility_mult = 1;
+    charisma_mult = 1;
 
-    hacking_exp_mult: number = 1;
-    strength_exp_mult: number = 1;
-    defense_exp_mult: number = 1;
-    dexterity_exp_mult: number = 1;
-    agility_exp_mult: number = 1;
-    charisma_exp_mult: number = 1;
+    hacking_exp_mult = 1;
+    strength_exp_mult = 1;
+    defense_exp_mult = 1;
+    dexterity_exp_mult = 1;
+    agility_exp_mult = 1;
+    charisma_exp_mult = 1;
 
-    hacking_chance_mult: number = 1;
-    hacking_speed_mult: number = 1;
-    hacking_money_mult: number = 1;
-    hacking_grow_mult: number = 1;
+    hacking_chance_mult = 1;
+    hacking_speed_mult = 1;
+    hacking_money_mult = 1;
+    hacking_grow_mult = 1;
 
-    company_rep_mult: number = 1;
-    faction_rep_mult: number = 1;
+    company_rep_mult = 1;
+    faction_rep_mult = 1;
 
-    crime_money_mult: number = 1;
-    crime_success_mult: number = 1;
+    crime_money_mult = 1;
+    crime_success_mult = 1;
 
-    work_money_mult: number = 1;
+    work_money_mult = 1;
 
-    hacknet_node_money_mult: number = 1;
-    hacknet_node_purchase_cost_mult: number = 1;
-    hacknet_node_ram_cost_mult: number = 1;
-    hacknet_node_core_cost_mult: number = 1;
-    hacknet_node_level_cost_mult: number = 1;
+    hacknet_node_money_mult = 1;
+    hacknet_node_purchase_cost_mult = 1;
+    hacknet_node_ram_cost_mult = 1;
+    hacknet_node_core_cost_mult = 1;
+    hacknet_node_level_cost_mult = 1;
 
-    bladeburner_max_stamina_mult: number = 1;
-    bladeburner_stamina_gain_mult: number = 1;
-    bladeburner_analysis_mult: number = 1;
-    bladeburner_success_chance_mult : number = 1;
+    bladeburner_max_stamina_mult = 1;
+    bladeburner_stamina_gain_mult = 1;
+    bladeburner_analysis_mult = 1;
+    bladeburner_success_chance_mult  = 1;
 
     /**
      * Augmentations
@@ -109,12 +108,10 @@ export abstract class Person {
      */
     city: CityName = CityName.Sector12;
 
-    constructor() {}
-
     /**
      * Updates this object's multipliers for the given augmentation
      */
-    applyAugmentation(aug: Augmentation) {
+    applyAugmentation(aug: Augmentation): void {
         for (const mult in aug.mults) {
             if ((<any>this)[mult] == null) {
                 console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
@@ -128,7 +125,7 @@ export abstract class Person {
      * Given an experience amount and stat multiplier, calculates the
      * stat level. Stat-agnostic (same formula for every stat)
      */
-    calculateStat(exp: number, mult: number=1): number {
+    calculateStat(exp: number, mult=1): number {
         return calculateSkill(exp, mult);
     }
 

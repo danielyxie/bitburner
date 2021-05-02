@@ -16,7 +16,7 @@ import { Reviver } from "../../utils/JSONReviver";
  */
 export let AllServers: IMap<Server | HacknetServer> = {};
 
-export function ipExists(ip: string) {
+export function ipExists(ip: string): boolean {
 	return (AllServers[ip] != null);
 }
 
@@ -33,7 +33,7 @@ export function createUniqueRandomIp(): string {
 
 // Saftely add a Server to the AllServers map
 export function AddToAllServers(server: Server | HacknetServer): void {
-    var serverIp = server.ip;
+    const serverIp = server.ip;
     if (ipExists(serverIp)) {
         console.warn(`IP of server that's being added: ${serverIp}`);
         console.warn(`Hostname of the server thats being added: ${server.hostname}`);
@@ -58,7 +58,7 @@ interface IServerParams {
     [key: string]: any;
 }
 
-export function initForeignServers(homeComputer: Server) {
+export function initForeignServers(homeComputer: Server): void {
     /* Create a randomized network for all the foreign servers */
     //Groupings for creating a randomized network
     const networkLayers: Server[][] = [];
@@ -71,10 +71,10 @@ export function initForeignServers(homeComputer: Server) {
         "hackDifficulty",
         "moneyAvailable",
         "requiredHackingSkill",
-        "serverGrowth"
+        "serverGrowth",
     ];
 
-    const toNumber = (value: any) => {
+    const toNumber = (value: any): any => {
         switch (typeof value) {
             case 'number':
                 return value;
@@ -90,7 +90,7 @@ export function initForeignServers(homeComputer: Server) {
             hostname: metadata.hostname,
             ip: createUniqueRandomIp(),
             numOpenPortsRequired: metadata.numOpenPortsRequired,
-            organizationName: metadata.organizationName
+            organizationName: metadata.organizationName,
         };
 
         if (metadata.maxRamExponent !== undefined) {
@@ -119,14 +119,14 @@ export function initForeignServers(homeComputer: Server) {
     }
 
     /* Create a randomized network for all the foreign servers */
-    const linkComputers = (server1: Server, server2: Server) => {
+    const linkComputers = (server1: Server, server2: Server): void => {
         server1.serversOnNetwork.push(server2.ip);
         server2.serversOnNetwork.push(server1.ip);
     };
 
-    const getRandomArrayItem = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
+    const getRandomArrayItem = (arr: any[]): any => arr[Math.floor(Math.random() * arr.length)];
 
-    const linkNetworkLayers = (network1: Server[], selectServer: () => Server) => {
+    const linkNetworkLayers = (network1: Server[], selectServer: () => Server): void => {
         for (const server of network1) {
             linkComputers(server, selectServer());
         }
@@ -139,13 +139,13 @@ export function initForeignServers(homeComputer: Server) {
     }
 }
 
-export function prestigeAllServers() {
-    for (var member in AllServers) {
+export function prestigeAllServers(): void {
+    for (const member in AllServers) {
         delete AllServers[member];
     }
     AllServers = {};
 }
 
-export function loadAllServers(saveString: string) {
+export function loadAllServers(saveString: string): void {
     AllServers = JSON.parse(saveString, Reviver);
 }

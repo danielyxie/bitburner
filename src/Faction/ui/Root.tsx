@@ -69,7 +69,7 @@ const GangNames = [
     "The Dark Army",
     "Speakers for the Dead",
     "NiteSec",
-    "The Black Hand"
+    "The Black Hand",
 ];
 
 export class FactionRoot extends React.Component<IProps, IState> {
@@ -92,7 +92,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
         this.startSecurityWork = this.startSecurityWork.bind(this);
     }
 
-    manageGang() {
+    manageGang(): void {
         // If player already has a gang, just go to the gang UI
         if (this.props.p.inGang()) {
             return this.props.engine.loadGangContent();
@@ -146,7 +146,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
                        "create a Gang with, and each of these Factions have all Augmentations available.");
     }
 
-    rerender() {
+    rerender(): void {
         this.setState((prevState) => {
             return {
                 rerenderFlag: !prevState.rerenderFlag,
@@ -155,42 +155,42 @@ export class FactionRoot extends React.Component<IProps, IState> {
     }
 
     // Route to the main faction page
-    routeToMain() {
+    routeToMain(): void {
         this.setState({ purchasingAugs: false });
     }
 
     // Route to the purchase augmentation UI for this faction
-    routeToPurchaseAugs() {
+    routeToPurchaseAugs(): void {
         this.setState({ purchasingAugs: true });
     }
 
-    sleevePurchases() {
+    sleevePurchases(): void {
         createSleevePurchasesFromCovenantPopup(this.props.p);
     }
 
-    startFieldWork() {
+    startFieldWork(): void {
         this.props.p.startFactionFieldWork(this.props.faction);
     }
 
-    startHackingContracts() {
+    startHackingContracts(): void {
         this.props.p.startFactionHackWork(this.props.faction);
     }
 
-    startHackingMission() {
+    startHackingMission(): void {
         const fac = this.props.faction;
         this.props.engine.loadMissionContent();
         this.props.startHackingMissionFn(fac);
     }
 
-    startSecurityWork() {
+    startSecurityWork(): void {
         this.props.p.startFactionSecurityWork(this.props.faction);
     }
 
-    render() {
+    render(): React.ReactNode {
         return this.state.purchasingAugs ? this.renderAugmentationsPage() : this.renderMainPage();
     }
 
-    renderMainPage() {
+    renderMainPage(): React.ReactNode {
         const p = this.props.p;
         const faction = this.props.faction;
         const factionInfo = faction.getInfo();
@@ -288,7 +288,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
         )
     }
 
-    renderAugmentationsPage() {
+    renderAugmentationsPage(): React.ReactNode {
         return (
             <div>
                 <AugmentationsPage

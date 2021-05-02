@@ -21,7 +21,7 @@ export class CopyableText extends React.Component<IProps, IState> {
         }
     }
 
-    copy(e: React.MouseEvent<HTMLHeadingElement>) {
+    copy(): void {
         const copyText = document.createElement("textarea");
         copyText.value = this.props.value;
         document.body.appendChild(copyText);
@@ -52,7 +52,7 @@ export class CopyableText extends React.Component<IProps, IState> {
     }
 
 
-    render() {
+    render(): React.ReactNode {
         return (<span className={this.textClasses()} onClick={this.copy}>
             <b>{this.props.value}</b>
             <span className={this.tooltipClasses()}>Copied!</span>

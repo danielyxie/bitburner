@@ -17,7 +17,7 @@
  * Dave Goodchild, https://github.com/dlgoodchild
  */
 
-;( function() {
+( function() {
     // Polyfill for IE to use startsWith
     if (!String.prototype.startsWith) {
         String.prototype.startsWith = function(searchString, position){
@@ -161,7 +161,7 @@
                     + UTIL.getStyle( element, 'border-bottom-width', true )
                     + UTIL.getStyle( element, 'padding-top', true )
                     + UTIL.getStyle( element, 'padding-bottom', true )
-                    + nRoundingCompensation
+                    + nRoundingCompensation,
                 );
             }
         },
@@ -181,7 +181,7 @@
                     + UTIL.getStyle( element, 'border-right-width', true )
                     + UTIL.getStyle( element, 'padding-left', true )
                     + UTIL.getStyle( element, 'padding-right', true )
-                    + nRoundingCompensation
+                    + nRoundingCompensation,
                 );
             }
         },
@@ -195,7 +195,7 @@
                 strCssRule = strCssRule.replace(/\-(\w)/g,
                     function (strMatch, p1){
                         return p1.toUpperCase();
-                    }
+                    },
                 );
                 strValue = element.currentStyle[strCssRule];
             }
@@ -332,7 +332,7 @@
          */
         isNotLoading: function() {
             return ( this.loading.length === 0 );
-        }
+        },
     };
 
     /**
@@ -392,7 +392,7 @@
                 this.store[treeId] = null;
             }
             return this;
-        }
+        },
     };
 
     /**
@@ -513,7 +513,7 @@
                         function() {
                             root.toggleCollapse();
                         },
-                        this.CONFIG.animateOnInitDelay
+                        this.CONFIG.animateOnInitDelay,
                     );
                 }
 
@@ -531,7 +531,7 @@
                 setTimeout(
                     function() {
                         self.positionTree( callback );
-                    }, 10
+                    }, 10,
                 );
             }
             return this;
@@ -751,7 +751,7 @@
             var self = this,
                 treeSize = {
                     x: self.nodeDB.getMinMaxCoord('X', null, null),
-                    y: self.nodeDB.getMinMaxCoord('Y', null, null)
+                    y: self.nodeDB.getMinMaxCoord('Y', null, null),
                 },
 
                 treeWidth = treeSize.x.max - treeSize.x.min,
@@ -759,7 +759,7 @@
 
                 treeCenter = {
                     x: treeSize.x.max - treeWidth/2,
-                    y: treeSize.y.max - treeHeight/2
+                    y: treeSize.y.max - treeHeight/2,
                 };
 
             this.handleOverflow(treeWidth, treeHeight);
@@ -767,7 +767,7 @@
             var
                 containerCenter = {
                     x: self.drawArea.clientWidth/2,
-                    y: self.drawArea.clientHeight/2
+                    y: self.drawArea.clientHeight/2,
                 },
 
                 deltaX = containerCenter.x - treeCenter.x,
@@ -857,7 +857,7 @@
                 if (jq_drawArea.hasClass('ps-container')) { // znaci da je 'fancy' vec inicijaliziran, treba updateat
                     jq_drawArea.find('.Treant').css({
                         width: viewWidth,
-                        height: viewHeight
+                        height: viewHeight,
                     });
 
                     jq_drawArea.perfectScrollbar('update');
@@ -868,7 +868,7 @@
 
                     child.css({
                         width: viewWidth,
-                        height: viewHeight
+                        height: viewHeight,
                     });
 
                     mainContainer.perfectScrollbar();
@@ -948,7 +948,7 @@
                 {
                     path: pathString.charAt(0) === "_"?
                         pathString.substring(1):
-                        pathString // remove the "_" prefix if it exists
+                        pathString, // remove the "_" prefix if it exists
                 },
                 this.CONFIG.animation.connectorsSpeed,
                 this.CONFIG.animation.connectorsAnimation,
@@ -957,7 +957,7 @@
                         path.hide();
                         path.hidden = true;
                     }
-                }
+                },
             );
             return this;
         },
@@ -1064,7 +1064,7 @@
         calcLevelDim: function( node, level ) { // root node is on level 0
             this.levelMaxDim[level] = {
                 width: Math.max( this.levelMaxDim[level]? this.levelMaxDim[level].width: 0, node.width ),
-                height: Math.max( this.levelMaxDim[level]? this.levelMaxDim[level].height: 0, node.height )
+                height: Math.max( this.levelMaxDim[level]? this.levelMaxDim[level].height: 0, node.height ),
             };
             return this;
         },
@@ -1083,7 +1083,7 @@
          */
         root: function() {
             return this.nodeDB.get( 0 );
-        }
+        },
     };
 
     /**
@@ -1232,7 +1232,7 @@
                         else {
                             parent.children.splice(
                                 Math.max( position, parent.children.length - 1 ),
-                                0, node.id
+                                0, node.id,
                             );
                         }
                     }
@@ -1256,7 +1256,7 @@
 
             MinMax = MinMax || { // start with root node dimensions
                     min: parent[dim],
-                    max: parent[dim] + ( ( dim === 'X' )? parent.width: parent.height )
+                    max: parent[dim] + ( ( dim === 'X' )? parent.width: parent.height ),
                 };
 
             var i = parent.childrenCount();
@@ -1290,7 +1290,7 @@
                 }
             }
             return false;
-        }
+        },
     };
 
     /**
@@ -1622,7 +1622,7 @@
                     self.toggleCollapse();
 
                     self.getTreeConfig().callback.onAfterClickCollapseSwitch.apply( self, [ nodeSwitch, e ] );
-                }
+                },
             );
         },
 
@@ -1669,7 +1669,7 @@
                     },
                     ( oTree.CONFIG.animation.nodeSpeed > oTree.CONFIG.animation.connectorsSpeed )?
                         oTree.CONFIG.animation.nodeSpeed:
-                        oTree.CONFIG.animation.connectorsSpeed
+                        oTree.CONFIG.animation.connectorsSpeed,
                 );
             }
             return this;
@@ -1686,7 +1686,7 @@
             var tree = this.getTree(),
                 config = this.getTreeConfig(),
                 oNewState = {
-                    opacity: 0
+                    opacity: 0,
                 };
 
             if ( collapse_to_point ) {
@@ -1713,7 +1713,7 @@
                         oNewState, config.animation.nodeSpeed, config.animation.nodeAnimation,
                         function () {
                             this.style.visibility = 'hidden';
-                        }
+                        },
                     );
                 }
                 else {
@@ -1752,7 +1752,7 @@
                 oPath.animate(
                     { 'opacity': 0 },
                     oTree.CONFIG.animation.connectorsSpeed,
-                    oTree.CONFIG.animation.connectorsAnimation
+                    oTree.CONFIG.animation.connectorsAnimation,
                 );
             }
             return this;
@@ -1769,7 +1769,7 @@
             var oNewState = {
                     left: this.X,
                     top: this.Y,
-                    opacity: 1
+                    opacity: 1,
                 },
                 config = this.getTreeConfig();
 
@@ -1781,7 +1781,7 @@
                     function () {
                         // $.animate applies "overflow:hidden" to the node, remove it to avoid visual problems
                         this.style.overflow = "";
-                    }
+                    },
                 );
             }
             else {
@@ -1810,11 +1810,11 @@
                 oPath.animate(
                     { 'opacity': 1 },
                     oTree.CONFIG.animation.connectorsSpeed,
-                    oTree.CONFIG.animation.connectorsAnimation
+                    oTree.CONFIG.animation.connectorsAnimation,
                 );
             }
             return this;
-        }
+        },
     };
 
 
@@ -1868,8 +1868,8 @@
                     textElement.className =  "node-"+key;
                     textElement.appendChild(document.createTextNode(
                         this.text[key].val ? this.text[key].val :
-                        this.text[key] instanceof Object ? "'val' param missing!" : this.text[key]
-                    )
+                        this.text[key] instanceof Object ? "'val' param missing!" : this.text[key],
+                    ),
                     );
 
                     node.appendChild(textElement);
@@ -1941,7 +1941,7 @@
         }
         else {
             node.data = {
-                'treenode': this
+                'treenode': this,
             };
         }
 
@@ -2017,9 +2017,9 @@
         connectors: {
             type: 'curve', // 'curve' || 'step' || 'straight' || 'bCurve'
             style: {
-                stroke: 'black'
+                stroke: 'black',
             },
-            stackIndent: 15
+            stackIndent: 15,
         },
 
         node: { // each node inherits this, it can all be overridden in node config
@@ -2028,15 +2028,15 @@
             // drawLineThrough: false,
             // collapsable: false,
             link: {
-                target: '_self'
-            }
+                target: '_self',
+            },
         },
 
         animation: { // each node inherits this, it can all be overridden in node config
             nodeSpeed: 450,
             nodeAnimation: 'linear',
             connectorsSpeed: 450,
-            connectorsAnimation: 'linear'
+            connectorsAnimation: 'linear',
         },
 
         callback: {
@@ -2049,12 +2049,12 @@
             onToggleCollapseFinished: function ( treeNode, bIsCollapsed ) {}, // this = Tree
             onAfterClickCollapseSwitch: function( nodeSwitch, event ) {}, // this = TreeNode
             onBeforeClickCollapseSwitch: function( nodeSwitch, event ) {}, // this = TreeNode
-            onTreeLoaded: function( rootTreeNode ) {} // this = Tree
-        }
+            onTreeLoaded: function( rootTreeNode ) {}, // this = Tree
+        },
     };
 
     TreeNode.CONFIG = {
-        nodeHTMLclass: 'node'
+        nodeHTMLclass: 'node',
     };
 
     // #############################################
@@ -2068,7 +2068,7 @@
 
             this.jsonStructure = {
                 chart: null,
-                nodeStructure: null
+                nodeStructure: null,
             };
             //fist loop: find config, find root;
             while(i--) {
@@ -2141,7 +2141,7 @@
                     return i++;
                 };
             }
-        )()
+        )(),
     };
 
     /**

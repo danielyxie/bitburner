@@ -1,4 +1,3 @@
-import * as React from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Hashes } from "../../ui/React/Hashes";
 

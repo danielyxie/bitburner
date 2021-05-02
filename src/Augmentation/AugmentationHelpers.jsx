@@ -8,29 +8,13 @@ import { AugmentationsRoot } from "./ui/Root";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
-import { startWorkerScript } from "../NetscriptWorker";
 import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
 import { saveObject } from "../SaveObject";
-import { RunningScript } from "../Script/RunningScript";
-import { Script } from "../Script/Script";
-import { Server } from "../Server/Server";
-import { OwnedAugmentationsOrderSetting } from "../Settings/SettingEnums";
-import { Settings } from "../Settings/Settings";
 import { Page, routing } from "../ui/navigationTracking";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import { createAccordionElement } from "../../utils/uiHelpers/createAccordionElement";
-import {
-    Reviver,
-    Generic_toJSON,
-    Generic_fromJSON
-} from "../../utils/JSONReviver";
-import { formatNumber } from "../../utils/StringHelperFunctions";
 import { clearObject } from "../../utils/helpers/clearObject";
-import { createElement } from "../../utils/uiHelpers/createElement";
-import { isString } from "../../utils/helpers/isString";
-import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
 import { Money } from "../ui/React/Money";
 
 import React from "react";
@@ -1256,7 +1240,7 @@ function initAugmentations() {
 	// Daedalus
     const RedPill = new Augmentation({
         name:AugmentationNames.TheRedPill, repCost:1e6, moneyCost:0,
-        info:"It's time to leave the cave."
+        info:"It's time to leave the cave.",
     });
     RedPill.addToFactions(["Daedalus"]);
     if (augmentationExists(AugmentationNames.TheRedPill)) {
@@ -1556,7 +1540,7 @@ function initAugmentations() {
              and upload the assets.<br /><br />
              This augmentation:<br />
              Lets the player start with {Money(1e6)} after a reset.<br />
-             Lets the player start with the BruteSSH.exe program after a reset.</>
+             Lets the player start with the BruteSSH.exe program after a reset.</>,
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
@@ -2098,7 +2082,7 @@ export function displayAugmentationsContent(contentEl) {
             exportGameFn={saveObject.exportGame.bind(saveObject)}
             installAugmentationsFn={installAugmentations}
         />,
-        contentEl
+        contentEl,
     );
 }
 

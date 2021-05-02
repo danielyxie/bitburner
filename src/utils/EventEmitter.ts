@@ -31,19 +31,19 @@ export class EventEmitter {
         }
     }
 
-    addSubscriber(s: ISubscriber) {
+    addSubscriber(s: ISubscriber): void {
         this.subscribers[s.id] = s.cb;
     }
 
     emitEvent(...args: any[]): void {
         for (const s in this.subscribers) {
-            const cb = this.subscribers[s];
+            const sub = this.subscribers[s];
 
-            cb(args);
+            sub(args);
         }
     }
 
-    removeSubscriber(id: string) {
+    removeSubscriber(id: string): void {
         delete this.subscribers[id];
     }
 

@@ -46,7 +46,7 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed
  */
-export function numCycleForGrowth(server: Server, growth: number, p: IPlayer) {
+export function numCycleForGrowth(server: Server, growth: number, p: IPlayer): number {
     let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
     if (ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
         ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
@@ -60,7 +60,7 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer) {
 }
 
 //Applied server growth for a single server. Returns the percentage growth
-export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer) {
+export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer): number {
     let serverGrowth = calculateServerGrowth(server, threads, p);
     if (serverGrowth < 1) {
         console.warn("serverGrowth calculated to be less than 1");
@@ -90,7 +90,7 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
     return server.moneyAvailable / oldMoneyAvailable;
 }
 
-export function prestigeHomeComputer(homeComp: Server) {
+export function prestigeHomeComputer(homeComp: Server): void {
     const hasBitflume = homeComp.programs.includes(Programs.BitFlume.name);
 
     homeComp.programs.length = 0; //Remove programs
@@ -113,7 +113,7 @@ export function prestigeHomeComputer(homeComp: Server) {
 //Returns server object with corresponding hostname
 //    Relatively slow, would rather not use this a lot
 export function GetServerByHostname(hostname: string): Server | HacknetServer | null {
-    for (var ip in AllServers) {
+    for (const ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
             if (AllServers[ip].hostname == hostname) {
                 return AllServers[ip];
@@ -139,10 +139,10 @@ export function getServer(s: string): Server | HacknetServer | null {
 // Returns the i-th server on the specified server's network
 // A Server's serverOnNetwork property holds only the IPs. This function returns
 // the actual Server object
-export function getServerOnNetwork(server: Server, i: number) {
+export function getServerOnNetwork(server: Server, i: number): Server | HacknetServer | null {
     if (i > server.serversOnNetwork.length) {
         console.error("Tried to get server on network that was out of range");
-        return;
+        return null;
     }
 
     return AllServers[server.serversOnNetwork[i]];

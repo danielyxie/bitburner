@@ -6,7 +6,6 @@ import * as React from "react";
 
 import { Faction } from "../../Faction/Faction";
 import { FactionInfo } from "../../Faction/FactionInfo";
-import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { AutoupdatingParagraph } from "../../ui/React/AutoupdatingParagraph";
 import { ParagraphWithTooltip } from "../../ui/React/ParagraphWithTooltip";
@@ -48,7 +47,7 @@ export class Info extends React.Component<IProps, any> {
         return <>Reputation: {Reputation(this.props.faction.playerReputation)}</>
     }
 
-    render() {
+    render(): React.ReactNode {
         const favorTooltip = "Faction favor increases the rate at which you earn reputation for " +
                              "this faction by 1% per favor. Faction favor is gained whenever you " +
                              "reset after installing an Augmentation. The amount of " +

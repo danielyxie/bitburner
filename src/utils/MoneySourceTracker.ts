@@ -5,6 +5,7 @@
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class MoneySourceTracker {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     [key: string]: number | Function;
     
     bladeburner = 0;
@@ -49,6 +50,7 @@ export class MoneySourceTracker {
     }
 
     // Initiatizes a MoneySourceTracker object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     static fromJSON(value: any): MoneySourceTracker {
         return Generic_fromJSON(MoneySourceTracker, value.data);
     }

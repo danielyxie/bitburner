@@ -5,7 +5,7 @@ import { IMap } from "../types";
 
 export const CompanyPositions: IMap<CompanyPosition> = {};
 
-function addCompanyPosition(params: IConstructorParams) {
+function addCompanyPosition(params: IConstructorParams): void {
     if (CompanyPositions[params.name] != null) {
         console.warn(`Duplicate Company Position being defined: ${params.name}`);
     }

@@ -1,6 +1,6 @@
 
 export interface RNG {
-	random(): number
+	random(): number;
 }
 
 /*
@@ -9,16 +9,16 @@ export interface RNG {
  */
 class RNG0 implements RNG {
 	x: number;
-	m: number = 1024;
-	a: number = 341;
-	c: number = 1;
+	m = 1024;
+	a = 341;
+	c = 1;
 
 	constructor() {
 		this.x = 0;
 		this.reset();
 	}
 
-	step() {
+	step(): void {
 		this.x = (this.a*this.x+this.c) % this.m;
 	}
 
@@ -27,7 +27,7 @@ class RNG0 implements RNG {
 		return this.x/this.m;
 	}
 
-	reset() {
+	reset(): void {
 		this.x = (new Date()).getTime() % this.m;
 	}
 }
@@ -39,9 +39,9 @@ export const BadRNG: RNG0 = new RNG0();
  * The period is 6e12.
  */
 export class WHRNG implements RNG {
-	s1: number = 0;
-	s2: number = 0;
-	s3: number = 0;
+	s1 = 0;
+	s2 = 0;
+	s3 = 0;
 
 	constructor(totalPlaytime: number) {
 		// This one is seeded by the players total play time.
@@ -51,7 +51,7 @@ export class WHRNG implements RNG {
 		this.s3 = v;
 	}
 
-	step() {
+	step(): void {
 		this.s1 = (171 * this.s1) % 30269;
 		this.s2 = (172 * this.s2) % 30307;
 		this.s3 = (170 * this.s3) % 30323;

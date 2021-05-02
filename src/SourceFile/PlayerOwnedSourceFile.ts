@@ -1,9 +1,9 @@
 export class PlayerOwnedSourceFile {
     // Source-File level
-    lvl: number = 1;
+    lvl = 1;
 
     // Source-File number
-    n: number = 1;
+    n = 1;
 
     constructor(n: number, level: number) {
         this.n = n;

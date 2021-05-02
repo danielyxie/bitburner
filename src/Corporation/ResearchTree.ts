@@ -26,10 +26,10 @@ export class Node {
 
     // How much Scientific Research is needed for this
     // Necessary to show it on the UI
-    cost: number = 0;
+    cost = 0;
 
     // Whether or not this Research has been unlocked
-    researched: boolean = false;
+    researched = false;
 
     // Parent node in the tree
     // The parent node defines the prerequisite Research (there can only be one)
@@ -37,7 +37,7 @@ export class Node {
     parent: Node | null = null;
 
     // Name of the Research held in this Node
-    text: string = "";
+    text = "";
 
     constructor(p: IConstructorParams = {cost: 0, text: ""}) {
         if (ResearchMap[p.text] == null) {
@@ -56,21 +56,21 @@ export class Node {
         }
     }
 
-    addChild(n: Node) {
+    addChild(n: Node): void {
         this.children.push(n);
         n.parent = this;
     }
 
     // Return an object that describes a TreantJS-compatible markup/config for this Node
     // See: http://fperucic.github.io/treant-js/
-    createTreantMarkup(): object {
+    createTreantMarkup(): any {
         const childrenArray = [];
         for (let i = 0; i < this.children.length; ++i) {
             childrenArray.push(this.children[i].createTreantMarkup());
         }
 
         // Determine what css class this Node should have in the diagram
-        let htmlClass: string = "";
+        let htmlClass = "";
         if (this.researched) {
             htmlClass = "researched";
         } else if (this.parent && this.parent.researched === false) {
@@ -109,7 +109,7 @@ export class Node {
         return null;
     }
 
-    setParent(n: Node) {
+    setParent(n: Node): void {
         this.parent =  n;
     }
 }
@@ -124,11 +124,9 @@ export class ResearchTree {
     // Root Node
     root: Node | null = null;
 
-    constructor() {}
-
     // Return an object that contains a Tree markup for TreantJS (using the JSON approach)
     // See: http://fperucic.github.io/treant-js/
-    createTreantMarkup(): object {
+    createTreantMarkup(): any {
         if (this.root == null) { return {}; }
 
         const treeMarkup = this.root.createTreantMarkup();
@@ -205,7 +203,7 @@ export class ResearchTree {
 
     // Helper function for all the multiplier getter fns
     getMultiplierHelper(propName: string): number {
-        let res: number = 1;
+        let res = 1;
         if (this.root == null) { return res; }
 
         const queue: Node[] = [];

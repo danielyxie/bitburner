@@ -62,7 +62,6 @@ export class IndustryOffice extends BaseReactComponent {
 
         // Calculate how many NEW emplyoees we need to account for
         const currentNumEmployees = office.employees.length;
-        const newEmployees = currentNumEmployees - this.state.numEmployees;
 
         // Record the number of employees in each position, for NEW employees only
         for (let i = this.state.numEmployees; i < office.employees.length; ++i) {

@@ -42,7 +42,7 @@ const orderedITutorialSteps = [
     "HacknetNodesGoToWorldPage",
     "WorldDescription",
     "TutorialPageInfo",
-    "End"
+    "End",
 ]
 
 // Create an 'enum' for the Steps
@@ -500,13 +500,13 @@ function iTutorialEnd() {
         "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/guidesandtips/gettingstartedguideforbeginnerprogrammers.html' target='_blank'>Getting Started Guide</a>" +
         "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/' target='_blank'>Documentation</a><br><br>"  +
         "The Beginner's Guide to Hacking was added to your home computer! It contains some tips/pointers for starting out with the game. " +
-        "To read it, go to Terminal and enter<br><br>cat " + LiteratureNames.HackersStartingHandbook
+        "To read it, go to Terminal and enter<br><br>cat " + LiteratureNames.HackersStartingHandbook,
     });
     var gotitBtn = createElement("a", {
         class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
         clickListener:()=>{
             removeElementById(popupId);
-        }
+        },
     });
     createPopup(popupId, [txt, gotitBtn]);
 

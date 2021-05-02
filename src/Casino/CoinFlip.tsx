@@ -41,7 +41,7 @@ export class CoinFlip extends Game<IProps, IState> {
         this.updateInvestment = this.updateInvestment.bind(this);
     }
 
-    updateInvestment(e: React.FormEvent<HTMLInputElement>) {
+    updateInvestment(e: React.FormEvent<HTMLInputElement>): void {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
             investment = minPlay;
@@ -55,7 +55,7 @@ export class CoinFlip extends Game<IProps, IState> {
         this.setState({investment: investment});
     }
 
-    play(guess: string) {
+    play(guess: string): void {
         if(this.reachedLimit(this.props.p)) return;
         const v = BadRNG.random();
         let letter: string;
@@ -80,7 +80,7 @@ export class CoinFlip extends Game<IProps, IState> {
     }
 
 
-    render() {
+    render(): React.ReactNode {
         return <>
 <pre>
 +———————+<br />
@@ -89,7 +89,7 @@ export class CoinFlip extends Game<IProps, IState> {
 | |   | |<br />
 +———————+<br />
 </pre>
-        <span className="text">Play for: </span><input type="number" className='text-input' onChange={this.updateInvestment} value={this.state.investment} /><br />
+        <span className="text">Play for: </span><input type="number" className="text-input" onChange={this.updateInvestment} value={this.state.investment} /><br />
         <StdButton onClick={trusted(() => this.play('H'))} text={"Head!"} disabled={this.state.playLock} />
         <StdButton onClick={trusted(() => this.play('T'))} text={"Tail!"} disabled={this.state.playLock} />
         <h1>{this.state.status}</h1>

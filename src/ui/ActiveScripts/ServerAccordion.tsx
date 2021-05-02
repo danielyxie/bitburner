@@ -26,7 +26,7 @@ export function ServerAccordion(props: IProps): React.ReactElement {
     const paddedName = `${server.hostname}${" ".repeat(longestHostnameLength)}`.slice(0, Math.max(server.hostname.length, longestHostnameLength));
     const barOptions = {
         progress: server.ramUsed / server.maxRam,
-        totalTicks: 30
+        totalTicks: 30,
     };
     const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`;
 

@@ -50,7 +50,7 @@ export function killWorkerScript(script: RunningScript | WorkerScript | number, 
     }
 }
 
-function killWorkerScriptByPid(pid: number, rerenderUi: boolean=true): boolean {
+function killWorkerScriptByPid(pid: number, rerenderUi=true): boolean {
     const ws = workerScripts.get(pid);
     if (ws instanceof WorkerScript) {
         stopAndCleanUpWorkerScript(ws, rerenderUi);
@@ -61,7 +61,7 @@ function killWorkerScriptByPid(pid: number, rerenderUi: boolean=true): boolean {
     return false;
 }
 
-function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true): void {
+function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi=true): void {
     workerScript.env.stopFlag = true;
     killNetscriptDelay(workerScript);
     removeWorkerScript(workerScript, rerenderUi);
@@ -74,7 +74,7 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi: bool
  * @param {WorkerScript | number} - Identifier for WorkerScript. Either the object itself, or
  *                                  its index in the global workerScripts array
  */
-function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true): void {
+function removeWorkerScript(workerScript: WorkerScript, rerenderUi=true): void {
     if (workerScript instanceof WorkerScript) {
         const ip = workerScript.serverIp;
         const name = workerScript.name;
@@ -124,7 +124,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi: boolean=true
  * timed, blocked operation (like hack(), sleep(), etc.). This allows scripts to
  * be killed immediately even if they're in the middle of one of those long operations
  */
-function killNetscriptDelay(workerScript: WorkerScript) {
+function killNetscriptDelay(workerScript: WorkerScript): void {
     if (workerScript instanceof WorkerScript) {
         if (workerScript.delay) {
             clearTimeout(workerScript.delay);

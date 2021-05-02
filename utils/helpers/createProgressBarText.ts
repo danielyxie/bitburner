@@ -26,7 +26,7 @@ interface IProgressBarConfigurationMaterialized extends IProgressBarConfiguratio
  * e.g.:  [||||---------------]
  * @param params The configuration parameters for the progress bar
  */
-export function createProgressBarText(params: IProgressBarConfiguration) {
+export function createProgressBarText(params: IProgressBarConfiguration): string {
     // Default values
     const defaultParams: IProgressBarConfigurationMaterialized = {
         progress: 0,

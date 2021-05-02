@@ -1,7 +1,6 @@
 import { Augmentations } from "./Augmentation/Augmentations";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Faction } from "./Faction/Faction";
 import { Factions, factionExists } from "./Faction/Factions";
@@ -17,17 +16,19 @@ import { dialogBoxCreate } from "../utils/DialogBox";
 import {
     Reviver,
     Generic_toJSON,
-    Generic_fromJSON
+    Generic_fromJSON,
 } from "../utils/JSONReviver";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
-import { formatNumber } from "../utils/StringHelperFunctions";
+import {
+    formatNumber,
+    convertTimeMsToTimeElapsedString,
+} from "../utils/StringHelperFunctions";
 
 import { ConsoleHelpText } from "./Bladeburner/data/Help";
 import { City } from "./Bladeburner/City";
 import { BladeburnerConstants } from "./Bladeburner/data/Constants";
 import { Skill } from "./Bladeburner/Skill";
 import { Skills } from "./Bladeburner/Skills";
-import { SkillNames } from "./Bladeburner/data/SkillNames";
 import { Operation } from "./Bladeburner/Operation";
 import { BlackOperation } from "./Bladeburner/BlackOperation";
 import { BlackOperations } from "./Bladeburner/BlackOperations";
@@ -45,7 +46,6 @@ import { KEY } from "../utils/helpers/keyCodes";
 
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 import { appendLineBreaks } from "../utils/uiHelpers/appendLineBreaks";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElement } from "../utils/uiHelpers/removeElement";
@@ -236,7 +236,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(25, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.05,def:0.05,dex:0.35,agi:0.35,cha:0.1, int:0.05},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.9, int:1},
-        isStealth:true
+        isStealth:true,
     });
     this.contracts["Bounty Hunter"] = new Contract({
         name:"Bounty Hunter",
@@ -248,7 +248,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.15,def:0.15,dex:0.25,agi:0.25,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
-        isKill:true
+        isKill:true,
     });
     this.contracts["Retirement"] = new Contract({
         name:"Retirement",
@@ -260,7 +260,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
-        isKill:true
+        isKill:true,
     });
 
     this.operations["Investigation"] = new Operation({
@@ -275,7 +275,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.2,agi:0.1,cha:0.25, int:0.1},
         decays:{hack:0.85,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
-        isStealth:true
+        isStealth:true,
     });
     this.operations["Undercover Operation"] = new Operation({
         name:"Undercover Operation",
@@ -288,7 +288,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.2,str:0.05,def:0.05,dex:0.2,agi:0.2,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
-        isStealth:true
+        isStealth:true,
     });
     this.operations["Sting Operation"] = new Operation({
         name:"Sting Operation",
@@ -299,7 +299,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(1, 150), countGrowth:getRandomInt(3, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.25,agi:0.1,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.85,def:0.85,dex:0.85,agi:0.85,cha:0.7, int:0.9},
-        isStealth:true
+        isStealth:true,
     });
     this.operations["Raid"] = new Operation({
         name:"Raid",
@@ -311,7 +311,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(1, 150), countGrowth:getRandomInt(2, 40)/10,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
-        isKill:true
+        isKill:true,
     });
     this.operations["Stealth Retirement Operation"] = new Operation({
         name:"Stealth Retirement Operation",
@@ -323,7 +323,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
-        isStealth:true, isKill:true
+        isStealth:true, isKill:true,
     });
     this.operations["Assassination"] = new Operation({
         name:"Assassination",
@@ -335,7 +335,7 @@ Bladeburner.prototype.create = function() {
         count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.8},
-        isStealth:true, isKill:true
+        isStealth:true, isKill:true,
     });
 }
 
@@ -1271,7 +1271,7 @@ Bladeburner.prototype.createContent = function() {
                 DomElems.consoleInput.focus();
             }
             return false;
-        }
+        },
     });
     DomElems.consoleTable        = createElement("table", {class:"bladeburner-console-table"});
     DomElems.consoleInputRow     = createElement("tr", {class:"bladeburner-console-input-row", id:"bladeburner-console-input-row"});
@@ -1279,7 +1279,7 @@ Bladeburner.prototype.createContent = function() {
     DomElems.consoleInputHeader  = createElement("pre", {innerText:"> "});
     DomElems.consoleInput        = createElement("input", {
         type:"text", class:"bladeburner-console-input", tabIndex:1,
-        onfocus:() => {DomElems.consoleInput.value = DomElems.consoleInput.value}
+        onfocus:() => {DomElems.consoleInput.value = DomElems.consoleInput.value},
     });
 
     DomElems.consoleInputCell.appendChild(DomElems.consoleInputHeader);
@@ -1363,7 +1363,7 @@ Bladeburner.prototype.createOverviewContent = function() {
         innerText:"Est. Synthoid Population: ",
         display:"inline-block",
         tooltip:"This is your Bladeburner division's estimate of how many Synthoids exist " +
-                "in your current city."
+                "in your current city.",
     });
 
     DomElems.overviewEstPopHelpTip = createElement("div", {
@@ -1381,7 +1381,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                             "The Synthoid populations of cities can change due to your " +
                             "actions or random events. If random events occur, they will " +
                             "be logged in the Bladeburner Console.");
-        }
+        },
     });
 
     DomElems.overviewEstComms = createElement("p", {
@@ -1395,14 +1395,14 @@ Bladeburner.prototype.createOverviewContent = function() {
         innerText:"City Chaos: ",
         display:"inline-block",
         tooltip:"The city's chaos level due to tensions and conflicts between humans and Synthoids. " +
-                "Having too high of a chaos level can make contracts and operations harder."
+                "Having too high of a chaos level can make contracts and operations harder.",
     });
 
     DomElems.overviewBonusTime = createElement("p", {
       innerText: "Bonus time: ",
       display: "inline-block",
       tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
-               "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
+               "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed.",
     });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
 
@@ -1438,7 +1438,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                 innerText:"Cancel", class:"a-link-button",
                 clickListener:() => {
                     removeElementById(popupId); return false;
-                }
+                },
             }))
             popupArguments.push(createElement("p", { // Info Text
                 innerText:"Travel to a different city for your Bladeburner " +
@@ -1460,12 +1460,12 @@ Bladeburner.prototype.createOverviewContent = function() {
                         removeElementById(popupId);
                         inst.updateOverviewContent();
                         return false;
-                    }
+                    },
                 }));
             })(this, i);
             }
             createPopup(popupId, popupArguments);
-        }
+        },
     }));
 
     // Faction button
@@ -1493,7 +1493,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                     }
                 }
                 return false;
-            }
+            },
         }));
     }
 
@@ -1526,14 +1526,14 @@ Bladeburner.prototype.createActionAndSkillsContent = function() {
                     DomElems.currentTab = buttons[i].toLowerCase();
                     inst.createActionAndSkillsContent();
                     return false;
-                }
+                },
             }));
         }) (buttons, i, this, currTab);
     }
 
     // General info/description for each action
     DomElems.actionsAndSkillsDesc = createElement("p", {
-        display:"block", margin:"4px", padding:"4px"
+        display:"block", margin:"4px", padding:"4px",
     });
 
     // List for actions/skills
@@ -1578,7 +1578,7 @@ Bladeburner.prototype.createGeneralActionsContent = function() {
     for (var actionName in GeneralActions) {
         if (GeneralActions.hasOwnProperty(actionName)) {
             DomElems.generalActions[actionName] = createElement("div", {
-                class:"bladeburner-action", name:actionName
+                class:"bladeburner-action", name:actionName,
             });
             DomElems.actionsAndSkillsList.appendChild(DomElems.generalActions[actionName]);
         }
@@ -1600,7 +1600,7 @@ Bladeburner.prototype.createContractsContent = function() {
     for (var contractName in this.contracts) {
         if (this.contracts.hasOwnProperty(contractName)) {
             DomElems.contracts[contractName] = createElement("div", {
-                class:"bladeburner-action", name:contractName
+                class:"bladeburner-action", name:contractName,
             });
             DomElems.actionsAndSkillsList.appendChild(DomElems.contracts[contractName]);
         }
@@ -1629,7 +1629,7 @@ Bladeburner.prototype.createOperationsContent = function() {
     for (var operationName in this.operations) {
         if (this.operations.hasOwnProperty(operationName)) {
             DomElems.operations[operationName] = createElement("div", {
-                class:"bladeburner-action", name:operationName
+                class:"bladeburner-action", name:operationName,
             });
             DomElems.actionsAndSkillsList.appendChild(DomElems.operations[operationName]);
         }
@@ -1667,7 +1667,7 @@ Bladeburner.prototype.createBlackOpsContent = function() {
     for (var i = blackops.length-1; i >= 0 ; --i) {
       if (this.blackops[[blackops[i].name]] == null && i !== 0 && this.blackops[[blackops[i-1].name]] == null) {continue;} // If this one nor the next are completed then this isn't unlocked yet.
         DomElems.blackops[blackops[i].name] = createElement("div", {
-            class:"bladeburner-action", name:blackops[i].name
+            class:"bladeburner-action", name:blackops[i].name,
         });
         DomElems.actionsAndSkillsList.appendChild(DomElems.blackops[blackops[i].name]);
     }
@@ -1750,7 +1750,7 @@ Bladeburner.prototype.createSkillsContent = function() {
 
     // Skill Points
     DomElems.skillPointsDisplay = createElement("p", {
-        innerHTML:"<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>"
+        innerHTML:"<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>",
     });
     DomElems.actionAndSkillsDiv.appendChild(DomElems.skillPointsDisplay);
 
@@ -1758,7 +1758,7 @@ Bladeburner.prototype.createSkillsContent = function() {
     for (var skillName in Skills) {
         if (Skills.hasOwnProperty(skillName)) {
             DomElems.skills[skillName] = createElement("div", {
-                class:"bladeburner-action", name:skillName
+                class:"bladeburner-action", name:skillName,
             });
             DomElems.actionsAndSkillsList.appendChild(DomElems.skills[skillName]);
         }
@@ -1902,7 +1902,7 @@ Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
-            innerText:createProgressBarText({progress:progress})
+            innerText:createProgressBarText({progress:progress}),
         }));
     } else {
         // Start button
@@ -1915,13 +1915,13 @@ Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
                 this.startAction(this.action);
                 this.updateActionAndSkillsContent();
                 return false;
-            }
+            },
         }));
     }
 
     appendLineBreaks(el, 2);
     el.appendChild(createElement("pre", { // Info
-        innerHTML:action.desc, display:"inline-block"
+        innerHTML:action.desc, display:"inline-block",
     }));
 
 
@@ -1937,14 +1937,14 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
                              formatNumber(this.actionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
                           : action.name,
-        display:"inline-block"
+        display:"inline-block",
     }));
 
     if (isActive) { // Progress bar if its active
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
-            innerText:createProgressBarText({progress:progress})
+            innerText:createProgressBarText({progress:progress}),
         }));
     } else { // Start button
         el.appendChild(createElement("a", {
@@ -1956,7 +1956,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
                 this.startAction(this.action);
                 this.updateActionAndSkillsContent();
                 return false;
-            }
+            },
         }));
     }
 
@@ -1967,7 +1967,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline-block",
         innerText:"Level: " + action.level + " / " + action.maxLevel,
         tooltip:action.getSuccessesNeededForNextLevel(BladeburnerConstants.ContractSuccessesPerLevel) + " successes " +
-                "needed for next level"
+                "needed for next level",
     }));
     el.appendChild(createElement("a", {
         class: maxLevel ? "a-link-button-inactive" : "a-link-button", innerHTML:"&uarr;",
@@ -1979,7 +1979,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateContractsUIElement(el, action);
             return false;
-        }
+        },
     }));
     el.appendChild(createElement("a", {
         class: (action.level <= 1) ? "a-link-button-inactive" : "a-link-button", innerHTML:"&darr;",
@@ -1991,7 +1991,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateContractsUIElement(el, action);
             return false;
-        }
+        },
     }));
 
     var actionTime = action.getActionTime(this);
@@ -2011,7 +2011,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
     var autolevelCheckboxId = "bladeburner-" + action.name + "-autolevel-checkbox";
     el.appendChild(createElement("label", {
         for:autolevelCheckboxId, innerText:"Autolevel: ",color:"white",
-        tooltip:"Automatically increase contract level when possible"
+        tooltip:"Automatically increase contract level when possible",
     }));
 
     const checkboxInput = createElement("input", {
@@ -2035,14 +2035,14 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                              formatNumber(this.actionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
                            : action.name,
-        display:"inline-block"
+        display:"inline-block",
     }));
 
     if (isActive) { // Progress bar if its active
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
-            innerText:createProgressBarText({progress:progress})
+            innerText:createProgressBarText({progress:progress}),
         }));
     } else { // Start button and set Team Size button
         el.appendChild(createElement("a", {
@@ -2054,7 +2054,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                 this.startAction(this.action);
                 this.updateActionAndSkillsContent();
                 return false;
-            }
+            },
         }));
         el.appendChild(createElement("a", {
             innerText:"Set Team Size (Curr Size: " + formatNumber(action.teamCount, 0) + ")", class:"a-link-button",
@@ -2065,7 +2065,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                     innerText:"Enter the amount of team members you would like to take on these " +
                               "operations. If you do not have the specified number of team members, " +
                               "then as many as possible will be used. Note that team members may " +
-                              "be lost during operations."
+                              "be lost during operations.",
 
                 });
                 var input = createElement("input", {
@@ -2083,17 +2083,17 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                         }
                         removeElementById(popupId);
                         return false;
-                    }
+                    },
                 });
                 var cancelBtn = createElement("a", {
                     innerText:"Cancel", class:"a-link-button",
                     clickListener:() => {
                         removeElementById(popupId);
                         return false;
-                    }
+                    },
                 });
                 createPopup(popupId, [txt, input, setBtn, cancelBtn]);
-            }
+            },
         }));
     }
 
@@ -2104,7 +2104,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         display:"inline-block",
         innerText:"Level: " + action.level + " / " + action.maxLevel,
         tooltip:action.getSuccessesNeededForNextLevel(BladeburnerConstants.OperationSuccessesPerLevel) + " successes " +
-                "needed for next level"
+                "needed for next level",
     }));
     el.appendChild(createElement("a", {
         class: maxLevel ? "a-link-button-inactive" : "a-link-button", innerHTML:"&uarr;",
@@ -2116,7 +2116,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateOperationsUIElement(el, action);
             return false;
-        }
+        },
     }));
     el.appendChild(createElement("a", {
         class: (action.level <= 1) ? "a-link-button-inactive" : "a-link-button", innerHTML:"&darr;",
@@ -2128,11 +2128,10 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
             if (isActive) {this.startAction(this.action);} // Restart Action
             this.updateOperationsUIElement(el, action);
             return false;
-        }
+        },
     }));
 
     // General Info
-    var difficulty = action.getDifficulty();
     var actionTime = action.getActionTime(this);
     appendLineBreaks(el, 2);
     el.appendChild(createElement("pre", {
@@ -2150,7 +2149,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     var autolevelCheckboxId = "bladeburner-" + action.name + "-autolevel-checkbox";
     el.appendChild(createElement("label", {
         for:autolevelCheckboxId, innerText:"Autolevel: ",color:"white",
-        tooltip:"Automatically increase operation level when possible"
+        tooltip:"Automatically increase operation level when possible",
     }));
 
     const checkboxInput = createElement("input", {
@@ -2170,7 +2169,6 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     var isActive = el.classList.contains(ActiveActionCssClass);
     var isCompleted = (this.blackops[action.name] != null);
     var estimatedSuccessChance = action.getSuccessChance(this, {est:true});
-    var difficulty = action.getDifficulty();
     var actionTime = action.getActionTime(this);
     var hasReqdRank = this.rank >= action.reqdRank;
 
@@ -2194,7 +2192,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
         var progress = this.actionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
-            innerText:createProgressBarText({progress:progress})
+            innerText:createProgressBarText({progress:progress}),
         }));
     } else {
         el.appendChild(createElement("a", { // Start button
@@ -2206,7 +2204,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                 this.startAction(this.action);
                 this.updateActionAndSkillsContent();
                 return false;
-            }
+            },
         }));
         el.appendChild(createElement("a", { // Set Team Size Button
             innerText:"Set Team Size (Curr Size: " + formatNumber(action.teamCount, 0) + ")", class:"a-link-button",
@@ -2217,7 +2215,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                     innerText:"Enter the amount of team members you would like to take on this " +
                               "BlackOp. If you do not have the specified number of team members, " +
                               "then as many as possible will be used. Note that team members may " +
-                              "be lost during operations."
+                              "be lost during operations.",
 
                 });
                 var input = createElement("input", {
@@ -2235,17 +2233,17 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                         }
                         removeElementById(popupId);
                         return false;
-                    }
+                    },
                 });
                 var cancelBtn = createElement("a", {
                     innerText:"Cancel", class:"a-link-button",
                     clickListener:() => {
                         removeElementById(popupId);
                         return false;
-                    }
+                    },
                 });
                 createPopup(popupId, [txt, input, setBtn, cancelBtn]);
-            }
+            },
         }));
     }
 
@@ -2257,7 +2255,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     }));
     el.appendChild(createElement("p", {
         display:"block", color:hasReqdRank ? "white" : "red",
-        innerHTML:"Required Rank: " + formatNumber(action.reqdRank, 0) + "<br>"
+        innerHTML:"Required Rank: " + formatNumber(action.reqdRank, 0) + "<br>",
     }));
     el.appendChild(createElement("p", {
         display:"inline-block",
@@ -2297,7 +2295,7 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
             this.upgradeSkill(skill);
             this.createActionAndSkillsContent();
             return false;
-        }
+        },
     }));
     appendLineBreaks(el, 2);
     el.appendChild(createElement("p", {
@@ -2307,7 +2305,7 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
     if (maxLvl) {
         el.appendChild(createElement("p", {
             color:"red", display:"block",
-            innerText:"MAX LEVEL"
+            innerText:"MAX LEVEL",
         }));
     } else {
         el.appendChild(createElement("p", {
@@ -2508,7 +2506,7 @@ Bladeburner.prototype.executeAutomateConsoleCommand = function(args) {
             case "gen":
                 if (GeneralActions[val] != null) {
                     var action = new ActionIdentifier({
-                        type:ActionTypes[val], name:val
+                        type:ActionTypes[val], name:val,
                     });
                     if (highLow) {
                         this.automateActionHigh = action;
@@ -2524,7 +2522,7 @@ Bladeburner.prototype.executeAutomateConsoleCommand = function(args) {
             case "contracts":
                 if (this.contracts[val] != null) {
                     var action = new ActionIdentifier({
-                        type:ActionTypes.Contract, name:val
+                        type:ActionTypes.Contract, name:val,
                     });
                     if (highLow) {
                         this.automateActionHigh = action;
@@ -2542,7 +2540,7 @@ Bladeburner.prototype.executeAutomateConsoleCommand = function(args) {
             case "operation":
                 if (this.operations[val] != null) {
                     var action = new ActionIdentifier({
-                        type:ActionTypes.Operation, name:val
+                        type:ActionTypes.Operation, name:val,
                     });
                     if (highLow) {
                         this.automateActionHigh = action;
@@ -3210,7 +3208,7 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
         return -1;
     }
 
-    const sanitizedSize = Math.round(size);
+    let sanitizedSize = Math.round(size);
     if (isNaN(sanitizedSize) || sanitizedSize < 0) {
         workerScript.log("bladeburner.setTeamSize", `Invalid size: ${size}`);
         return -1;

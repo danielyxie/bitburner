@@ -42,15 +42,15 @@ export function StatsElement(sleeve: Sleeve): React.ReactElement {
                 </tr>
                 <tr>
                     <td className="character-int-cell">Shock: </td>
-                    <td className="character-int-cell" style={style}>{numeralWrapper.formatShock(100 - sleeve.shock)}</td>
+                    <td className="character-int-cell" style={style}>{numeralWrapper.formatSleeveShock(100 - sleeve.shock)}</td>
                 </tr>
                 <tr>
                     <td className="character-int-cell">Sync: </td>
-                    <td className="character-int-cell" style={style}>{numeralWrapper.formatSync(sleeve.sync)}</td>
+                    <td className="character-int-cell" style={style}>{numeralWrapper.formatSleeveSynchro(sleeve.sync)}</td>
                 </tr>
                 <tr>
                     <td className="character-int-cell">Memory: </td>
-                    <td className="character-int-cell" style={style}>{numeralWrapper.formatMemory(sleeve.memory)}</td>
+                    <td className="character-int-cell" style={style}>{numeralWrapper.formatSleeveMemory(sleeve.memory)}</td>
                 </tr>
             </tbody>
         </table>

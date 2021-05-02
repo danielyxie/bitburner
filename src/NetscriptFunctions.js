@@ -5,11 +5,10 @@ import * as libarg from 'arg';
 import { getRamCost } from "./Netscript/RamCostGenerator";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 
-import { Augmentation } from "./Augmentation/Augmentation";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
     augmentationExists,
-    installAugmentations
+    installAugmentations,
 } from "./Augmentation/AugmentationHelpers";
 import { prestigeAugmentation } from "./Prestige";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
@@ -17,7 +16,7 @@ import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { findCrime } from "./Crime/CrimeHelpers";
 import { Bladeburner } from "./Bladeburner";
 import { Company } from "./Company/Company";
-import { Companies, companyExists } from "./Company/Companies";
+import { Companies } from "./Company/Companies";
 import { CompanyPosition } from "./Company/CompanyPosition";
 import { CompanyPositions } from "./Company/CompanyPositions";
 import { CONSTANTS } from "./Constants";
@@ -28,22 +27,22 @@ import {
     calculatePercentMoneyHacked,
     calculateHackingTime,
     calculateGrowTime,
-    calculateWeakenTime
+    calculateWeakenTime,
 } from "./Hacking";
 import { calculateServerGrowth } from "./Server/formulas/grow";
 import {
     AllGangs,
     GangMemberUpgrades,
-    GangMemberTasks
+    GangMemberTasks,
+    Gang,
 } from "./Gang";
-import { Faction } from "./Faction/Faction";
 import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
 import { FactionWorkType } from "./Faction/FactionWorkTypeEnum";
 import {
     netscriptCanGrow,
     netscriptCanHack,
-    netscriptCanWeaken
+    netscriptCanWeaken,
 } from "./Hacking/netscriptCanHack";
 
 import {
@@ -74,7 +73,7 @@ import {
     calculateServerCost as HScalculateServerCost,
 } from "./Hacknet/formulas/HacknetServers";
 import { HacknetNodeConstants, HacknetServerConstants } from "./Hacknet/data/Constants";
-import { HacknetServer, MaxNumberHacknetServers } from "./Hacknet/HacknetServer";
+import { HacknetServer } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
 import { Terminal } from "./Terminal";
@@ -84,7 +83,6 @@ import  {
 } from "./PersonObjects/formulas/skill";
 
 import { Message } from "./Message/Message";
-import { Messages } from "./Message/MessageHelpers";
 import { inMission } from "./Missions";
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
@@ -94,15 +92,12 @@ import {
     findRunningScriptByPid,
 } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
-import { _getScriptUrls } from "./NetscriptJSEvaluator";
 import {
     AllServers,
     AddToAllServers,
     createUniqueRandomIp,
 } from "./Server/AllServers";
 import { RunningScript } from "./Script/RunningScript";
-import { startWorkerScript } from "./NetscriptWorker";
-import { Server } from "./Server/Server";
 import {
     GetServerByHostname,
     getServer,
@@ -114,9 +109,8 @@ import {
 import {
     getPurchaseServerCost,
     getPurchaseServerLimit,
-    getPurchaseServerMaxRam
+    getPurchaseServerMaxRam,
 } from "./Server/ServerPurchases";
-import { Settings } from "./Settings/Settings";
 import { SpecialServerIps } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import {
@@ -129,7 +123,6 @@ import {
     influenceStockThroughServerHack,
     influenceStockThroughServerGrow,
 } from "./StockMarket/PlayerInfluencing";
-import { Stock } from "./StockMarket/Stock";
 import {
     StockMarket,
     SymbolToStockMap,
@@ -146,18 +139,15 @@ import { PositionTypes } from "./StockMarket/data/PositionTypes";
 import { StockSymbols } from "./StockMarket/data/StockSymbols";
 import {
     getStockMarket4SDataCost,
-    getStockMarket4STixApiCost
+    getStockMarket4STixApiCost,
 } from "./StockMarket/StockMarketCosts";
 import { isValidFilePath } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
 import {
-    unknownBladeburnerActionErrorMessage
-} from"./NetscriptBladeburner";
-import { Gang } from "./Gang";
-import {
     NetscriptPorts,
     runScriptFromScript,
+    startWorkerScript,
 } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
@@ -172,18 +162,17 @@ import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
 import { Exploit } from './Exploits/Exploit.ts';
 
-import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { post } from "./ui/postToTerminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import {
+    formatNumber,
+    convertTimeMsToTimeElapsedString,
+} from "../utils/StringHelperFunctions";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { formatNumber, isHTML } from "../utils/StringHelperFunctions";
 import { logBoxCreate } from "../utils/LogBox";
 import { arrayToString } from "../utils/helpers/arrayToString";
-import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
 import { isString } from "../utils/helpers/isString";
 
 import { createElement } from "../utils/uiHelpers/createElement";
@@ -261,7 +250,7 @@ const possibleLogs = {
     setTerritoryWarfare: true,
 }
 
-const defaultInterpreter = new Interpreter('', function(){});
+const defaultInterpreter = new Interpreter('', () => undefined);
 
 // the acorn interpreter has a bug where it doesn't convert arrays correctly.
 // so we have to more or less copy it here.
@@ -351,7 +340,7 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeRejectMsg(
                 workerScript,
                 `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-                `This is probably a bug. Please report to game developer`
+                `This is probably a bug. Please report to game developer`,
             );
         }
 
@@ -489,7 +478,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 return null;
             }
-            let call = {line: "-1", func: "unknown"};;
+            let call = {line: "-1", func: "unknown"};
             let chromeCall = parseChromeStackline(stackline);
             if (chromeCall) {
                 call = chromeCall;
@@ -1343,7 +1332,7 @@ function NetscriptFunctions(workerScript) {
                 scriptname.forEach(function(script) {
                     if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
                         res = true;
-                    };
+                    }
                 });
                 return res;
             }
@@ -1965,7 +1954,7 @@ function NetscriptFunctions(workerScript) {
                 shares: shares,
                 price: price,
                 type: orderType,
-                pos: orderPos
+                pos: orderPos,
             };
             return cancelOrder(params, workerScript);
         },
@@ -2468,21 +2457,21 @@ function NetscriptFunctions(workerScript) {
                 threads: runningScript.threads,
             };
         },
-        getHackTime: function(ip, hack, int) {
+        getHackTime: function(ip) {
             updateDynamicRam("getHackTime", getRamCost("getHackTime"));
             const server = safeGetServer(ip, "getHackTime");
             if (failOnHacknetServer(server, "getHackTime")) { return Infinity; }
 
             return calculateHackingTime(server, Player); // Returns seconds
         },
-        getGrowTime: function(ip, hack, int) {
+        getGrowTime: function(ip) {
             updateDynamicRam("getGrowTime", getRamCost("getGrowTime"));
             const server = safeGetServer(ip, "getGrowTime");
             if (failOnHacknetServer(server, "getGrowTime")) { return Infinity; }
 
             return calculateGrowTime(server, Player); // Returns seconds
         },
-        getWeakenTime: function(ip, hack, int) {
+        getWeakenTime: function(ip) {
             updateDynamicRam("getWeakenTime", getRamCost("getWeakenTime"));
             const server = safeGetServer(ip, "getWeakenTime");
             if (failOnHacknetServer(server, "getWeakenTime")) { return Infinity; }
@@ -2570,7 +2559,7 @@ function NetscriptFunctions(workerScript) {
             const popupId = `prompt-popup-${txt.slice(0, 20)}`;
             const textElement = createElement("p", { innerHTML: txt });
 
-            return new Promise(function(resolve, reject) {
+            return new Promise(function(resolve) {
                 const yesBtn = createElement("button", {
                     class: "popup-box-button",
                     innerText: "Yes",
@@ -2598,7 +2587,7 @@ function NetscriptFunctions(workerScript) {
                 return Promise.resolve(false);
             }
             var s = safeGetServer(ip, "wget");
-            return new Promise(function(resolve, reject) {
+            return new Promise(function(resolve) {
                 $.get(url, function(data) {
                     let res;
                     if (isScriptFilename(target)) {
@@ -2832,7 +2821,7 @@ function NetscriptFunctions(workerScript) {
 
             var darkweb = safetlyCreateUniqueServer({
                 ip: createUniqueRandomIp(), hostname:"darkweb", organizationName:"",
-                isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1
+                isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1,
             });
             AddToAllServers(darkweb);
             SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
@@ -2943,7 +2932,7 @@ function NetscriptFunctions(workerScript) {
                 dexterity:      Player.dexterity,
                 agility:        Player.agility,
                 charisma:       Player.charisma,
-                intelligence:   Player.intelligence
+                intelligence:   Player.intelligence,
             }
         },
         getCharacterInformation: function() {
@@ -4087,7 +4076,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("getBonusTime", getRamCost("bladeburner", "getBonusTime"));
                 checkBladeburnerAccess("getBonusTime");
                 return Math.round(Player.bladeburner.storedCycles / 5);
-            }
+            },
         }, // End Bladeburner
 
         // Coding Contract API
@@ -4373,7 +4362,7 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
-            }
+            },
         }, // End sleeve
         formulas: {
             basic: {
@@ -4438,7 +4427,7 @@ function NetscriptFunctions(workerScript) {
                 constants: function() {
                     checkFormulasAccess("hacknetNodes.constants", 5);
                     return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
-                }
+                },
             },
             hacknetServers: {
                 hashGainRate: function(level, ram, cores, mult=1) {
@@ -4476,14 +4465,14 @@ function NetscriptFunctions(workerScript) {
                 constants: function() {
                     checkFormulasAccess("hacknetServers.constants", 9);
                     return Object.assign({}, HacknetServerConstants);
-                }
+                },
             },
         }, // end formulas
         heart: {
             // Easter egg function
             break: function() {
                 return Player.karma;
-            }
+            },
         },
         exploit: function() {
             Player.giveExploit(Exploit.UndocumentedFunctionCall);
@@ -4515,7 +4504,7 @@ function NetscriptFunctions(workerScript) {
                 ret[key.slice(2)] = value;
             }
             return ret;
-        }
+        },
     } // End return
 } // End NetscriptFunction()
 

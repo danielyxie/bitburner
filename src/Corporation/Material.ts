@@ -7,56 +7,52 @@ interface IConstructorParams {
 }
 
 export class Material {
-    // Initiatizes a Material object from a JSON save state.
-    static fromJSON(value: any): Material {
-        return Generic_fromJSON(Material, value.data);
-    }
 
     // Name of material
-    name: string = "InitName";
+    name = "InitName";
 
     // Amount of material owned
-    qty: number = 0;
+    qty = 0;
 
     // Material's "quality". Unbounded
-    qlt: number = 0;
+    qlt = 0;
 
     // How much demand the Material has in the market, and the range of possible
     // values for this "demand"
-    dmd: number = 0;
+    dmd = 0;
     dmdR: number[] = [0, 0];
 
     // How much competition there is for this Material in the market, and the range
     // of possible values for this "competition"
-    cmp: number = 0;
+    cmp = 0;
     cmpR: number[] = [0, 0];
 
     // Maximum volatility of this Materials stats
-    mv: number = 0;
+    mv = 0;
 
     // Markup. Determines how high of a price you can charge on the material
     // compared to the market price without suffering loss in # of sales
     // Quality is divided by this to determine markup limits
     // e,g, If mku is 10 and quality is 100 then you can markup prices by 100/10 = 10
-    mku: number = 0;
+    mku = 0;
 
     // How much of this material is being bought, sold, imported and produced every second
-    buy: number = 0;
-    sll: number = 0;
-    prd: number = 0;
-    imp: number = 0;
+    buy = 0;
+    sll = 0;
+    prd = 0;
+    imp = 0;
 
     // Exports of this material to another warehouse/industry
     exp: any[] = [];
 
     // Total amount of this material exported in the last cycle
-    totalExp: number = 0;
+    totalExp = 0;
 
     // Cost / sec to buy this material. AKA Market Price
-    bCost: number = 0;
+    bCost = 0;
 
     // Cost / sec to sell this material
-    sCost: number = 0;
+    sCost = 0;
 
     // Flags to keep track of whether production and/or sale of this material is limited
     // [Whether production/sale is limited, limit amount]
@@ -64,9 +60,9 @@ export class Material {
     sllman: any[] = [false, 0]; // Sale
 
     // Flags that signal whether automatic sale pricing through Market TA is enabled
-    marketTa1: boolean = false;
-    marketTa2: boolean = false;
-    marketTa2Price: number = 0;
+    marketTa1 = false;
+    marketTa2 = false;
+    marketTa2Price = 0;
 
     constructor(params: IConstructorParams = {}) {
         if (params.name) { this.name = params.name; }
@@ -166,7 +162,7 @@ export class Material {
         const compChange: number = 1 + compVolatility;
         if (Math.random() < 0.5) {
             this.cmp *= compChange;
-            if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]};
+            if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]}
             this.bCost *= (1 / priceChange); // Competition increases, so price goes down
         } else {
             this.cmp *= (1 / compChange);
@@ -191,6 +187,12 @@ export class Material {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("Material", this);
+    }
+
+    // Initiatizes a Material object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Material {
+        return Generic_fromJSON(Material, value.data);
     }
 }
 

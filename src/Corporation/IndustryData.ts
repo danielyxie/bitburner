@@ -4,8 +4,6 @@ import { getBaseResearchTreeCopy,
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
-import { Reviver } from "../../utils/JSONReviver";
-
 interface IIndustryMap<T> {
     Energy: T;
     Utilities: T;
@@ -107,7 +105,7 @@ export const IndustryDescriptions: IIndustryMap<string> = {
 
 // Map of available Research for each Industry. This data is held in a
 // ResearchTree object
-export let IndustryResearchTrees: IIndustryMap<ResearchTree> = {
+export const IndustryResearchTrees: IIndustryMap<ResearchTree> = {
     Energy: getBaseResearchTreeCopy(),
     Utilities: getBaseResearchTreeCopy(),
     Agriculture: getBaseResearchTreeCopy(),
@@ -124,7 +122,7 @@ export let IndustryResearchTrees: IIndustryMap<ResearchTree> = {
     RealEstate: getProductIndustryResearchTreeCopy(),
 }
 
-export function resetIndustryResearchTrees() {
+export function resetIndustryResearchTrees(): void {
     IndustryResearchTrees.Energy         = getBaseResearchTreeCopy();
     IndustryResearchTrees.Utilities      = getBaseResearchTreeCopy();
     IndustryResearchTrees.Agriculture    = getBaseResearchTreeCopy();

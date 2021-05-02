@@ -19,17 +19,13 @@ interface IConstructorParams {
 }
 
 export class Warehouse {
-    // Initiatizes a Warehouse object from a JSON save state.
-    static fromJSON(value: any): Warehouse {
-        return Generic_fromJSON(Warehouse, value.data);
-    }
 
     // Text that describes how the space in this Warehouse is being used
     // Used to create a tooltip in the UI
-    breakdown: string = "";
+    breakdown = "";
 
     // Warehouse's level, which affects its maximum size
-    level: number = 1;
+    level = 1;
 
     // City that this Warehouse is in
     loc: string;
@@ -41,19 +37,19 @@ export class Warehouse {
     size: number;
 
     // Amount of space currently used by warehouse
-    sizeUsed: number = 0;
+    sizeUsed = 0;
 
     // Whether Smart Supply is enabled for this Industry (the Industry that this Warehouse is for)
-    smartSupplyEnabled: boolean = false;
+    smartSupplyEnabled = false;
 
     // Flag that indicates whether Smart Supply accounts for imports when calculating
     // the amount fo purchase
-    smartSupplyConsiderExports: boolean = false;
+    smartSupplyConsiderExports = false;
 
     // Stores the amount of product to be produced. Used for Smart Supply unlock.
     // The production tracked by smart supply is always based on the previous cycle,
     // so it will always trail the "true" production by 1 cycle
-    smartSupplyStore: number = 0;
+    smartSupplyStore = 0;
 
     constructor(params: IConstructorParams = {}) {
         this.loc    = params.loc        ? params.loc    : "";
@@ -70,7 +66,7 @@ export class Warehouse {
             Drugs:      new Material({name: "Drugs"}),
             Robots:     new Material({name: "Robots"}),
             AICores:    new Material({name: "AI Cores"}),
-            RealEstate: new Material({name: "Real Estate"})
+            RealEstate: new Material({name: "Real Estate"}),
         }
 
         if (params.corp && params.industry) {
@@ -79,11 +75,11 @@ export class Warehouse {
     }
 
     // Re-calculate how much space is being used by this Warehouse
-    updateMaterialSizeUsed() {
+    updateMaterialSizeUsed(): void {
         this.sizeUsed = 0;
         this.breakdown = "";
         for (const matName in this.materials) {
-            var mat = this.materials[matName];
+            const mat = this.materials[matName];
             if (MaterialSizes.hasOwnProperty(matName)) {
                 this.sizeUsed += (mat.qty * MaterialSizes[matName]);
                 if (mat.qty > 0) {
@@ -96,7 +92,7 @@ export class Warehouse {
         }
     }
 
-    updateSize(corporation: IParent, industry: IParent) {
+    updateSize(corporation: IParent, industry: IParent): void {
         try {
             this.size = (this.level * 100)
                       * corporation.getStorageMultiplier()
@@ -109,6 +105,12 @@ export class Warehouse {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("Warehouse", this);
+    }
+
+    // Initiatizes a Warehouse object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Warehouse {
+        return Generic_fromJSON(Warehouse, value.data);
     }
 }
 

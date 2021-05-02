@@ -27,26 +27,26 @@ export class Accordion extends React.Component<IProps, IState> {
         }
     }
 
-    handleHeaderClick(e: React.MouseEvent<HTMLButtonElement>) {
+    handleHeaderClick(e: React.MouseEvent<HTMLButtonElement>): void {
         const elem = e.currentTarget;
         elem.classList.toggle("active");
 
         const panel: HTMLElement = elem.nextElementSibling as HTMLElement;
         const active = elem.classList.contains("active");
         if (active) {
-            panel!.style.display = "block";
+            panel.style.display = "block";
             this.setState({
                 panelOpened: true,
             });
         } else {
-            panel!.style.display = "none";
+            panel.style.display = "none";
             this.setState({
                 panelOpened: false,
             });
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         let className = "accordion-header";
         if (typeof this.props.headerClass === "string") {
             className = this.props.headerClass;
@@ -74,11 +74,11 @@ type IPanelProps = {
 }
 
 class AccordionPanel extends React.Component<IPanelProps, any> {
-    shouldComponentUpdate(nextProps: IPanelProps) {
+    shouldComponentUpdate(nextProps: IPanelProps): boolean {
         return this.props.opened || nextProps.opened;
     }
 
-    render() {
+    render(): React.ReactNode {
         let className = "accordion-panel"
         if (typeof this.props.panelClass === "string") {
             className = this.props.panelClass;

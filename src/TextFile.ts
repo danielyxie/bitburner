@@ -3,7 +3,7 @@ import { dialogBoxCreate } from "../utils/DialogBox";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../utils/JSONReviver";
 
 
@@ -11,13 +11,6 @@ import {
  * Represents a plain text file that is typically stored on a server.
  */
 export class TextFile {
-    /**
-     * Initiatizes a TextFile from a JSON save state.
-     */
-    static fromJSON(value: any): TextFile {
-        return Generic_fromJSON(TextFile, value.data);
-    }
-
     /**
      * The full file name.
      */
@@ -28,7 +21,7 @@ export class TextFile {
      */
     text: string;
 
-    constructor(fn: string = "", txt: string = "") {
+    constructor(fn = "", txt = "") {
         this.fn = (fn.endsWith(".txt") ? fn : `${fn}.txt`).replace(/\s+/g, "");
         this.text = txt;
     }
@@ -92,6 +85,14 @@ export class TextFile {
     write(txt: string): void {
         this.text = txt;
     }
+
+    /**
+     * Initiatizes a TextFile from a JSON save state.
+     */
+     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): TextFile {
+        return Generic_fromJSON(TextFile, value.data);
+    }
 }
 
 Reviver.constructors.TextFile = TextFile;
@@ -102,6 +103,7 @@ Reviver.constructors.TextFile = TextFile;
  * @param server The server object to look in
  * @returns The file object, or null if it couldn't find it.
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getTextFile(fn: string, server: any): TextFile | null {
     const filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
 
@@ -121,6 +123,7 @@ export function getTextFile(fn: string, server: any): TextFile | null {
  * @param server The server that the file should be created on.
  * @returns The instance of the file.
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createTextFile(fn: string, txt: string, server: any): TextFile | undefined {
     if (getTextFile(fn, server) !== null) {
         // This should probably be a `throw`...
@@ -133,19 +136,4 @@ export function createTextFile(fn: string, txt: string, server: any): TextFile |
     server.textFiles.push(file);
 
     return file;
-}
-
-/* tslint:disable-next-line:no-unused-variable */
-function deleteTextFile(fn: string, server: any): boolean {
-    const filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
-    /* tslint:disable-next-line:typedef */
-    for (let i = 0; i < server.textFiles.length; ++i) {
-        if (server.textFiles[i].fn === filename) {
-            server.textFiles.splice(i, 1);
-
-            return true;
-        }
-    }
-
-    return false;
 }

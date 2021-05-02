@@ -1,8 +1,8 @@
 import { dialogBoxCreate } from "../DialogBox";
 
 interface IError {
-    fileName?: string,
-    lineNumber?: number,
+    fileName?: string;
+    lineNumber?: number;
 }
 
 export function exceptionAlert(e: IError): void {

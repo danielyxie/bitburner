@@ -3,19 +3,15 @@ import { Reviver,
          Generic_fromJSON } from "../../utils/JSONReviver";
 
 export class Message {
-    // Initializes a Message Object from a JSON save state
-    static fromJSON(value: any): Message {
-        return Generic_fromJSON(Message, value.data);
-    }
 
     // Name of Message file
-    filename: string = "";
+    filename = "";
 
     // The text contains in the Message
-    msg: string = "";
+    msg = "";
 
     // Flag indicating whether this Message has been received by the player
-    recvd: boolean = false;
+    recvd = false;
 
     constructor(filename="", msg="") {
         this.filename   = filename;
@@ -26,6 +22,12 @@ export class Message {
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("Message", this);
+    }
+
+    // Initializes a Message Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Message {
+        return Generic_fromJSON(Message, value.data);
     }
 }
 

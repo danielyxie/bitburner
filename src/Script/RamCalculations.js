@@ -6,7 +6,7 @@
  * the way
  */
 import * as walk from "acorn-walk";
-import { parse, Node } from "acorn";
+import { parse } from "acorn";
 
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
@@ -247,7 +247,7 @@ function parseOnlyCalculateDeps(code, currentModule) {
     // walkDeeper is for doing recursive walks of expressions in composites that we handle.
     function commonVisitors() {
         return {
-            Identifier: (node, st, walkDeeper) => {
+            Identifier: (node, st) => {
                 if (objectPrototypeProperties.includes(node.name)) {return;}
                 addRef(st.key, node.name);
             },
@@ -282,7 +282,7 @@ function parseOnlyCalculateDeps(code, currentModule) {
     }
 
     walk.recursive(ast, {key: globalKey}, Object.assign({
-        ImportDeclaration: (node, st, walkDeeper) => {
+        ImportDeclaration: (node, st) => {
             const importModuleName = node.source.value;
             additionalModules.push(importModuleName);
 
@@ -301,8 +301,7 @@ function parseOnlyCalculateDeps(code, currentModule) {
                 }
             }
         },
-        FunctionDeclaration: (node, st, walkDeeper) => {
-            // Don't use walkDeeper, because we are changing the visitor set.
+        FunctionDeclaration: (node) => {
             const key = currentModule + "." + node.id.name;
             walk.recursive(node, {key: key}, commonVisitors());
         },
@@ -324,7 +323,7 @@ export async function calculateRamUsage(codeCopy, otherScripts) {
         loadedFns: {},
         env: {
             vars: RamCosts,
-        }
+        },
     }
 
     try {

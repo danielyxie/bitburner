@@ -10,7 +10,6 @@ import { IPlayer } from "../IPlayer";
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
@@ -22,7 +21,7 @@ import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 import { renderToStaticMarkup } from "react-dom/server"
 
-export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
+export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer): void {
     // Array of all owned Augmentations. Names only
     const ownedAugNames: string[] = sleeve.augmentations.map((e) => {return e.name});
 
@@ -73,7 +72,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             `that you have unlocked through Factions.<br><br>`,
             `When purchasing an Augmentation for a Duplicate Sleeve, they are immediately`,
             `installed. This means that the Duplicate Sleeve will immediately lose all of`,
-            `its stat experience.`
+            `its stat experience.`,
         ].join(" "),
     });
 
@@ -90,7 +89,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             [
                 `<h2>${aug.name}</h2><br>`,
                 `Cost: ${renderToStaticMarkup(Money(aug.startingCost))}<br><br>`,
-                `${aug.info}`
+                `${aug.info}`,
             ].join(" "),
             padding: "2px",
             clickListener: () => {
@@ -101,7 +100,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
                 } else {
                     dialogBoxCreate(`You cannot afford ${aug.name}`, false);
                 }
-            }
+            },
         }));
 
         popupElems.push(div);

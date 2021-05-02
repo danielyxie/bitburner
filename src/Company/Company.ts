@@ -25,12 +25,6 @@ const DefaultConstructorParams: IConstructorParams = {
 }
 
 export class Company {
-    /**
-     * Initiatizes a Company from a JSON save state.
-     */
-    static fromJSON(value: any): Company {
-        return Generic_fromJSON(Company, value.data);
-    }
 
     /**
      * Company name
@@ -136,7 +130,7 @@ export class Company {
     gainFavor(): void {
         if (this.favor == null) { this.favor = 0; }
         if (this.rolloverRep == null) { this.rolloverRep = 0; }
-        var res = this.getFavorGain();
+        const res = this.getFavorGain();
         if (res.length != 2) {
             console.error("Invalid result from getFavorGain() function");
             return;
@@ -169,6 +163,14 @@ export class Company {
      */
     toJSON(): any {
         return Generic_toJSON("Company", this);
+    }
+
+    /**
+     * Initiatizes a Company from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Company {
+        return Generic_fromJSON(Company, value.data);
     }
 }
 

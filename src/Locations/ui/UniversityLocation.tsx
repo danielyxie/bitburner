@@ -13,7 +13,6 @@ import { getServer }              from "../../Server/ServerHelpers";
 import { Server }                 from "../../Server/Server";
 import { SpecialServerIps }       from "../../Server/SpecialServerIps";
 
-import { numeralWrapper }   from "../../ui/numeralFormat";
 import { StdButton }        from "../../ui/React/StdButton";
 import { Money }            from "../../ui/React/Money";
 
@@ -26,7 +25,7 @@ export class UniversityLocation extends React.Component<IProps, any> {
     /**
      * Stores button styling that sets them all to block display
      */
-    btnStyle: object;
+    btnStyle: any;
 
     constructor(props: IProps) {
         super(props);
@@ -53,36 +52,36 @@ export class UniversityLocation extends React.Component<IProps, any> {
         return this.props.loc.costMult * discount;
     }
 
-    take(stat: string) {
+    take(stat: string): void {
         const loc = this.props.loc;
         this.props.p.startClass(this.calculateCost(), loc.expMult, stat);
     }
 
-    study() {
-        return this.take(CONSTANTS.ClassStudyComputerScience);
+    study(): void {
+        this.take(CONSTANTS.ClassStudyComputerScience);
     }
 
-    dataStructures() {
-        return this.take(CONSTANTS.ClassDataStructures);
+    dataStructures(): void {
+        this.take(CONSTANTS.ClassDataStructures);
     }
 
-    networks() {
-        return this.take(CONSTANTS.ClassNetworks);
+    networks(): void {
+        this.take(CONSTANTS.ClassNetworks);
     }
 
-    algorithms() {
-        return this.take(CONSTANTS.ClassAlgorithms);
+    algorithms(): void {
+        this.take(CONSTANTS.ClassAlgorithms);
     }
 
-    management() {
-        return this.take(CONSTANTS.ClassManagement);
+    management(): void {
+        this.take(CONSTANTS.ClassManagement);
     }
 
-    leadership() {
-        return this.take(CONSTANTS.ClassLeadership);
+    leadership(): void {
+        this.take(CONSTANTS.ClassLeadership);
     }
 
-    render() {
+    render(): React.ReactNode {
         const costMult: number = this.calculateCost();
 
         const dataStructuresCost = CONSTANTS.ClassDataStructuresBaseCost * costMult;

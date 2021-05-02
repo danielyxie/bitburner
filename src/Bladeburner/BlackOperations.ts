@@ -16,7 +16,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:50, rankLoss:10, hpLoss:100,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Zero"] = new BlackOperation({
         name:"Operation Zero",
@@ -33,7 +33,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:60, rankLoss:15, hpLoss:50,
         weights:{hack:0.2,str:0.15,def:0.15,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isStealth:true
+        isStealth:true,
     });
     BlackOperations["Operation X"] = new BlackOperation({
         name:"Operation X",
@@ -52,7 +52,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:75, rankLoss:15, hpLoss:100,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Titan"] = new BlackOperation({
         name:"Operation Titan",
@@ -70,7 +70,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:100, rankLoss:20, hpLoss:100,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Ares"] = new BlackOperation({
         name:"Operation Ares",
@@ -84,7 +84,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:125, rankLoss:20, hpLoss:200,
         weights:{hack:0,str:0.25,def:0.25,dex:0.25,agi:0.25,cha:0, int:0},
         decays:{hack:0,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Archangel"] = new BlackOperation({
         name:"Operation Archangel",
@@ -152,7 +152,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:750, rankLoss:60, hpLoss:1000,
         weights:{hack:0.05,str:0.2,def:0.2,dex:0.25,agi:0.25,cha:0, int:0.05},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Deckard"] = new BlackOperation({
         name:"Operation Deckard",
@@ -202,7 +202,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
          rankGain:2e3, rankLoss:150, hpLoss:1500,
          weights:{hack:0,str:0.24,def:0.24,dex:0.24,agi:0.24,cha:0, int:0.04},
          decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-         isKill:true
+         isKill:true,
     });
     BlackOperations["Operation Shoulder of Orion"] = new BlackOperation({
         name:"Operation Shoulder of Orion",
@@ -218,7 +218,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:2.5e3, rankLoss:500, hpLoss:1500,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isStealth:true
+        isStealth:true,
     });
     BlackOperations["Operation Hyron"] = new BlackOperation({
         name:"Operation Hyron",
@@ -240,7 +240,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:3e3, rankLoss:1e3, hpLoss:500,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Morpheus"] = new BlackOperation({
         name:"Operation Morpheus",
@@ -257,7 +257,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:4e3, rankLoss:1e3, hpLoss:100,
         weights:{hack:0.05,str:0.15,def:0.15,dex:0.3,agi:0.3,cha:0, int:0.05},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isStealth:true
+        isStealth:true,
     });
     BlackOperations["Operation Ion Storm"] = new BlackOperation({
         name:"Operation Ion Storm",
@@ -272,7 +272,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:5e3, rankLoss:1e3, hpLoss:5000,
         weights:{hack:0,str:0.24,def:0.24,dex:0.24,agi:0.24,cha:0, int:0.04},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Annihilus"] = new BlackOperation({
         name:"Operation Annihilus",
@@ -286,7 +286,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:7.5e3, rankLoss:1e3, hpLoss:10e3,
         weights:{hack:0,str:0.24,def:0.24,dex:0.24,agi:0.24,cha:0, int:0.04},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Ultron"] = new BlackOperation({
         name:"Operation Ultron",
@@ -306,7 +306,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
         rankGain:10e3, rankLoss:2e3, hpLoss:10e3,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.75},
-        isKill:true
+        isKill:true,
     });
     BlackOperations["Operation Centurion"] = new BlackOperation({
         name:"Operation Centurion",

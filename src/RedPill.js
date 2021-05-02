@@ -16,7 +16,7 @@ import {
     yesNoBoxCreate,
     yesNoBoxGetYesButton,
     yesNoBoxGetNoButton,
-    yesNoBoxClose
+    yesNoBoxClose,
 } from "../utils/YesNoBox";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";

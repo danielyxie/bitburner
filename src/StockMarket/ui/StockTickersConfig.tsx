@@ -25,9 +25,9 @@ export class StockTickersConfig extends React.Component<IProps, any> {
         super(props);
     }
 
-    renderDisplayModeButton() {
-        let txt: string = "";
-        let tooltip: string = "";
+    renderDisplayModeButton(): React.ReactNode {
+        let txt = "";
+        let tooltip = "";
         if (this.props.tickerDisplayMode === TickerDisplayMode.Portfolio) {
             txt = "Switch to 'All Stocks' Mode";
             tooltip = "Displays all stocks on the WSE";
@@ -45,7 +45,7 @@ export class StockTickersConfig extends React.Component<IProps, any> {
         )
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <div>
                 {this.renderDisplayModeButton()}

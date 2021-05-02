@@ -14,11 +14,11 @@ e.g.    10000 -> "10 seconds"
         120000 -> "2 minutes and 0 seconds"
 */
 function convertTimeMsToTimeElapsedString(time: number): string {
-    const millisecondsPerSecond: number = 1000;
-    const secondPerMinute: number = 60;
-    const minutesPerHours: number = 60;
+    const millisecondsPerSecond = 1000;
+    const secondPerMinute = 60;
+    const minutesPerHours = 60;
     const secondPerHours: number = secondPerMinute * minutesPerHours;
-    const hoursPerDays: number = 24;
+    const hoursPerDays = 24;
     const secondPerDay: number = secondPerHours * hoursPerDays;
 
     // Convert ms to seconds, since we only have second-level precision
@@ -35,7 +35,7 @@ function convertTimeMsToTimeElapsedString(time: number): string {
 
     const seconds: number = secTruncMinutes;
 
-    let res: string = "";
+    let res = "";
     if (days > 0) {res += `${days} days `; }
     if (hours > 0) {res += `${hours} hours `; }
     if (minutes > 0) {res += `${minutes} minutes `; }
@@ -54,7 +54,7 @@ function longestCommonStart(strings: string[]): string {
     const a1: string = A[0];
     const a2: string = A[A.length - 1];
     const L: number = a1.length;
-    let i: number = 0;
+    let i = 0;
     const areEqualCaseInsensitive: EqualityFunc<string> = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
     while (i < L && areEqualCaseInsensitive(a1.charAt(i), a2.charAt(i))) {
         i++;
@@ -92,10 +92,10 @@ function isHTML(str: string): boolean {
 
 // Generates a random alphanumeric string with N characters
 function generateRandomString(n: number): string {
-    let str: string = "";
-    const chars: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let str = "";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for (let i: number = 0; i < n; i++) {
+    for (let i = 0; i < n; i++) {
         str += chars.charAt(Math.floor(Math.random() * chars.length));
     }
 

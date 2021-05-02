@@ -12,8 +12,8 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 type IProps = {
-    aug: Augmentation,
-    level?: number | string | null,
+    aug: Augmentation;
+    level?: number | string | null;
 }
 
 export function AugmentationAccordion(props: IProps): React.ReactElement {

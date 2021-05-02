@@ -2,7 +2,7 @@
 module.exports = {
     plugins: [
         "stylelint-declaration-use-variable",
-        "stylelint-order" /*,
+        "stylelint-order", /*,
         "stylelint-scss" */
     ],
     rules: {
@@ -139,20 +139,20 @@ module.exports = {
                 "custom-properties",
                 {
                     type: "at-rule",
-                    name: "extend"
+                    name: "extend",
                 },
                 {
                     type: "at-rule",
-                    name: "include"
+                    name: "include",
                 },
                 "declarations",
                 "rules",
                 "at-rules",
-                "less-mixins"
+                "less-mixins",
             ],
             {
-                unspecified: "bottom"
-            }
+                unspecified: "bottom",
+            },
         ],
 //        "order/properties-order": [
 //            []
@@ -162,7 +162,7 @@ module.exports = {
             "grid-area",
             "grid-template",
             "grid-column",
-            "grid-row"
+            "grid-row",
         ],
         "property-case": "lower",
         "property-no-unknown": true,
@@ -236,7 +236,7 @@ module.exports = {
         "selector-attribute-operator-space-after": "never",
         "selector-attribute-operator-space-before": "never",
         "selector-attribute-operator-whitelist": [
-            "="
+            "=",
         ],
         "selector-attribute-quotes": "always",
         "selector-class-pattern": ".+",
@@ -264,9 +264,9 @@ module.exports = {
             true,
             {
                 ignore: [
-                    "attribute", "class"
-                ]
-            }
+                    "attribute", "class",
+                ],
+            },
         ],
         "selector-no-vendor-prefix": true,
         "selector-pseudo-class-blacklist": [],
@@ -284,7 +284,7 @@ module.exports = {
             "not",
             "last-child",
             "root",
-            "visited"
+            "visited",
         ],
         //"selector-pseudo-element-blacklist": [],
         "selector-pseudo-element-case": "lower",
@@ -315,7 +315,7 @@ module.exports = {
             "ms",
             "s",
             "vw",
-            "%"
+            "%",
         ],
 //        "value-keyword-case": "lower",
         "value-list-comma-newline-after": "always-multi-line",
@@ -323,6 +323,6 @@ module.exports = {
         "value-list-comma-space-after": "always-single-line",
         "value-list-comma-space-before": "never",
         "value-list-max-empty-lines": 0,
-        "value-no-vendor-prefix": true
-    }
+        "value-no-vendor-prefix": true,
+    },
 };

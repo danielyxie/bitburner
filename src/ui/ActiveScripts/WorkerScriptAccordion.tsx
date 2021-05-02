@@ -29,7 +29,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
     const logClickHandler = logBoxCreate.bind(null, scriptRef);
     const killScript = killWorkerScript.bind(null, scriptRef as any, scriptRef.server);
 
-    function killScriptClickHandler() {
+    function killScriptClickHandler(): void {
         killScript();
         dialogBoxCreate("Killing script");
     }

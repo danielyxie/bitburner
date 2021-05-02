@@ -156,7 +156,7 @@ export interface IPlayer {
     regenerateHp(amt: number): void;
     recordMoneySource(amt: number, source: string): void;
     setMoney(amt: number): void;
-    startBladeburner(p: object): void;
+    startBladeburner(p: any): void;
     startClass(costMult: number, expMult: number, className: string): void;
     startCorporation(corpName: string, additionalShares?: number): void;
     startCrime(crimeType: string,

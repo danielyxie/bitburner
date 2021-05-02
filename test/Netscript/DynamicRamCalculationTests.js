@@ -34,7 +34,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
     function runPotentiallyAsyncFunction(fn) {
         let res = fn();
         if (res instanceof Promise) {
-            res.catch(() => {});
+            res.catch(() => undefined);
         }
     }
 

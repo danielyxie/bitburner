@@ -37,45 +37,40 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
         }
     }
 
-    static getDerivedStateFromError(error: Error) {
-        return {
-            errorInfo: error.message,
-            hasError: true,
-        };
-    }
-
-    componentDidCatch(error: Error, info: IErrorInfo) {
+    componentDidCatch(error: Error, info: IErrorInfo): void {
         console.error(`Caught error in React ErrorBoundary. Component stack:`);
         console.error(info.componentStack);
     }
 
-    componentDidMount() {
-        const cb = () => {
+    componentDidMount(): void {
+        const cb = (): void => {
             this.setState({
                 hasError: false,
             });
         }
 
         if (this.hasEventEmitter()) {
-            this.props.eventEmitterForReset!.addSubscriber({
+            (this.props.eventEmitterForReset as EventEmitter).addSubscriber({
                 cb: cb,
-                id: this.props.id!,
+                id: (this.props.id as string),
             });
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         if (this.hasEventEmitter()) {
-            this.props.eventEmitterForReset!.removeSubscriber(this.props.id!);
+            (this.props.eventEmitterForReset as EventEmitter).removeSubscriber((this.props.id as string));
         }
     }
 
     hasEventEmitter(): boolean {
-        return this.props.eventEmitterForReset instanceof EventEmitter
-                && typeof this.props.id === "string";
+        return this.props.eventEmitterForReset != null && 
+                this.props.eventEmitterForReset instanceof EventEmitter &&
+                this.props.id != null && 
+                typeof this.props.id === "string";
     }
 
-    render() {
+    render(): React.ReactNode {
         if (this.state.hasError) {
             return (
                 <div style={styleMarkup}>
@@ -99,5 +94,12 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
         }
 
         return this.props.children;
+    }
+
+    static getDerivedStateFromError(error: Error): IState {
+        return {
+            errorInfo: error.message,
+            hasError: true,
+        };
     }
 }

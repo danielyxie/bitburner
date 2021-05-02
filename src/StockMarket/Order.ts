@@ -12,12 +12,6 @@ import {
 } from "../../utils/JSONReviver";
 
 export class Order {
-    /**
-     * Initializes a Order from a JSON save state
-     */
-    static fromJSON(value: any): Order {
-        return Generic_fromJSON(Order, value.data);
-    }
 
     readonly pos: PositionTypes;
     readonly price: number;
@@ -25,9 +19,9 @@ export class Order {
     readonly stockSymbol: string;
     readonly type: OrderTypes;
 
-    constructor(stockSymbol: string="", shares: number=0, price: number=0, typ: OrderTypes=OrderTypes.LimitBuy, pos: PositionTypes=PositionTypes.Long) {
+    constructor(stockSymbol="", shares=0, price=0, typ: OrderTypes=OrderTypes.LimitBuy, pos: PositionTypes=PositionTypes.Long) {
         // Validate arguments
-        let invalidArgs: boolean = false;
+        let invalidArgs = false;
         if (typeof shares !== "number" || typeof price !== "number") {
             invalidArgs = true;
         }
@@ -53,6 +47,14 @@ export class Order {
      */
     toJSON(): any {
         return Generic_toJSON("Order", this);
+    }
+
+    /**
+     * Initializes a Order from a JSON save state
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Order {
+        return Generic_fromJSON(Order, value.data);
     }
 }
 

@@ -2,10 +2,9 @@ import {
     loadAliases,
     loadGlobalAliases,
     Aliases,
-    GlobalAliases
+    GlobalAliases,
 } from "./Alias";
 import { Companies, loadCompanies } from "./Company/Companies";
-import { CompanyPosition } from "./Company/CompanyPosition";
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Factions, loadFactions } from "./Faction/Factions";
@@ -15,7 +14,7 @@ import { FconfSettings } from "./Fconf/FconfSettings";
 import { loadAllGangs, AllGangs } from "./Gang";
 import {
     hasHacknetServers,
-    processHacknetEarnings
+    processHacknetEarnings,
 } from "./Hacknet/HacknetHelpers";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { loadAllRunningScripts } from "./NetscriptWorker";
@@ -24,13 +23,12 @@ import { AllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import {
     loadSpecialServerIps,
-    SpecialServerIps
+    SpecialServerIps,
 } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
 import { createStatusText } from "./ui/createStatusText";
-import { numeralWrapper } from "./ui/numeralFormat";
 
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
@@ -41,7 +39,7 @@ import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import {
     Reviver,
     Generic_toJSON,
-    Generic_fromJSON
+    Generic_fromJSON,
 } from "../utils/JSONReviver";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
@@ -113,10 +111,6 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
 
     request.onerror = function(e) {
         console.error("Error saving game to IndexedDB: " + e);
-    }
-
-    request.onsuccess = function(e) {
-        // TODO anything here?
     }
 
     try {
@@ -467,13 +461,13 @@ function loadImportedGame(saveObj, saveString) {
     var popupId = "import-game-restart-game-notice";
     var txt = createElement("p", {
         innerText:"Imported game! You need to SAVE the game and then RELOAD the page " +
-                 "to make sure everything runs smoothly"
+                 "to make sure everything runs smoothly",
     });
     var gotitBtn = createElement("a", {
         class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
         clickListener:() => {
             removeElementById(popupId);
-        }
+        },
     });
     createPopup(popupId, [txt, gotitBtn]);
     gameOptionsBoxClose();
@@ -507,9 +501,6 @@ function loadImportedGame(saveObj, saveString) {
 
     // Hacknet Nodes offline progress
     var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
-    const hacknetProdInfo = hasHacknetServers() ?
-                            <>Hashes(offlineProductionFromHacknetNodes)} hashes</> :
-                            Money(offlineProductionFromHacknetNodes);
 
     // Passive faction rep gain offline
     processPassiveFactionRepGain(numCyclesOffline);
@@ -581,7 +572,7 @@ BitburnerSaveObject.prototype.deleteGame = function(db) {
 
     // Delete from indexedDB
     var request = db.transaction(["savestring"], "readwrite").objectStore("savestring").delete("save");
-    request.onsuccess = function(e) {
+    request.onsuccess = function() {
         console.log("Successfully deleted save from indexedDb");
     }
     request.onerror = function(e) {

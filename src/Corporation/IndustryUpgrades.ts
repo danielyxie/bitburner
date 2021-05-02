@@ -11,5 +11,5 @@ export const IndustryUpgrades: IMap<any[]> = {
             "this upgrade grants your company a static increase of 3 and 1 to its awareness and " +
             "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
             "by a random percentage between 1% and 3%. These effects are increased by other upgrades " +
-            "that increase the power of your advertising."]
+            "that increase the power of your advertising."],
 }

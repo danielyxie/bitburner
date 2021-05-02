@@ -1,6 +1,6 @@
 import { IMap } from "../../types";
 
-export let AugmentationNames: IMap<string> = {
+export const AugmentationNames: IMap<string> = {
     Targeting1:                         "Augmented Targeting I",
     Targeting2:                         "Augmented Targeting II",
     Targeting3:                         "Augmented Targeting III",

@@ -17,6 +17,4 @@ export class BaseReactComponent extends Component {
     routing() {
         return this.props.routing;
     }
-
-    render() {}
 }

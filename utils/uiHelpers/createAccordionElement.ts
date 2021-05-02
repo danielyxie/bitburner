@@ -24,7 +24,7 @@ interface IAccordionConfigurationParameters {
  * Creates both the header and panel element of an accordion and sets the click handler
  * @param params The creation parameters.
  */
-export function createAccordionElement(params: IAccordionConfigurationParameters) {
+export function createAccordionElement(params: IAccordionConfigurationParameters): any[] {
     const liElem: HTMLLIElement = createElement("li") as HTMLLIElement;
     const header: HTMLButtonElement = createElement("button", {
         class: "accordion-header",

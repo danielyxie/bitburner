@@ -490,7 +490,6 @@ function updateInfiltrationLevelText(inst) {
                            BitNodeMultipliers.InfiltrationMoney;
     }
 
-    var expMultiplier = 2 * inst.clearanceLevel / inst.maxClearanceLevel;
     // TODO: fix this to not rely on <pre> and whitespace for formatting...
     /* eslint-disable no-irregular-whitespace */
     document.getElementById("infiltration-level-text").innerHTML =

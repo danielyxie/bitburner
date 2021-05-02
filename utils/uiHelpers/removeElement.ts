@@ -2,7 +2,7 @@
  * For a given element, this function removes it AND its children
  * @param elem The element to remove.
  */
-export function removeElement(elem: Element | null) {
+export function removeElement(elem: Element | null): void {
     if (elem === null) {
         // tslint:disable-next-line:no-console
         console.debug("The element passed into 'removeElement' was null.");
