@@ -670,7 +670,7 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeErrorMsg('hack', canHack.msg);
         }
 
-        workerScript.log("hack", `Executing ${ip} in ${hackingTime.toFixed(3)} seconds (t=${threads})`);
+        workerScript.log("hack", `Executing ${ip} in ${convertTimeMsToTimeElapsedString(hackingTime*1000, true)} (t=${threads})`);
 
         return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
             if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
@@ -937,7 +937,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var growTime = calculateGrowTime(server, Player);
-            workerScript.log("grow", `Executing on '${server.hostname}' in ${formatNumber(growTime, 3)} seconds (t=${threads}).`);
+            workerScript.log("grow", `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(growTime*1000, true)} (t=${threads}).`);
             return netscriptDelay(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
@@ -988,7 +988,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var weakenTime = calculateWeakenTime(server, Player);
-            workerScript.log("weaken", `Executing on '${server.hostname}' in ${formatNumber(weakenTime, 3)} seconds (t=${threads})`);
+            workerScript.log("weaken", `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(weakenTime*1000, true)} (t=${threads})`);
             return netscriptDelay(weakenTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);

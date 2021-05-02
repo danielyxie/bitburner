@@ -583,7 +583,7 @@ let Terminal = {
             if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
             post("Server security level: " + numeralWrapper.formatServerSecurity(currServ.hackDifficulty));
             post("Chance to hack: " + numeralWrapper.formatPercentage(calculateHackingChance(currServ, Player)));
-            post("Time to hack: " + convertTimeMsToTimeElapsedString(calculateHackingTime(currServ, Player)*1000));
+            post("Time to hack: " + convertTimeMsToTimeElapsedString(calculateHackingTime(currServ, Player)*1000, true));
             postElement(<>Total money available on server: {Money(currServ.moneyAvailable)}</>);
             if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
 
@@ -2153,9 +2153,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post(`Netscript hack() execution time: ${convertTimeMsToTimeElapsedString(calculateHackingTime(targetServer, Player)*1000)}`);
-            post(`Netscript grow() execution time: ${convertTimeMsToTimeElapsedString(calculateGrowTime(targetServer, Player)*1000)}`);
-            post(`Netscript weaken() execution time: ${convertTimeMsToTimeElapsedString(calculateWeakenTime(targetServer, Player)*1000)}`);
+            post(`Netscript hack() execution time: ${convertTimeMsToTimeElapsedString(calculateHackingTime(targetServer, Player)*1000, true)}`);
+            post(`Netscript grow() execution time: ${convertTimeMsToTimeElapsedString(calculateGrowTime(targetServer, Player)*1000, true)}`);
+            post(`Netscript weaken() execution time: ${convertTimeMsToTimeElapsedString(calculateWeakenTime(targetServer, Player)*1000, true)}`);
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");
