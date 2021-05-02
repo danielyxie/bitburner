@@ -1619,7 +1619,7 @@ function NetscriptFunctions(workerScript) {
         },
         getBitNodeMultipliers: function() {
             updateDynamicRam("getBitNodeMultipliers", getRamCost("getBitNodeMultipliers"));
-            if (SourceFileFlags[5] <= 0) {
+            if (Player.bitNodeN !== 5 && SourceFileFlags[5] <= 0) {
                 throw makeRuntimeErrorMsg("getBitNodeMultipliers", "Requires Source-File 5 to run.");
             }
             let copy = Object.assign({}, BitNodeMultipliers);
