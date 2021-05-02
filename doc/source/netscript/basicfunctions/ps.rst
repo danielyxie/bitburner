@@ -24,7 +24,8 @@ ps() Netscript Function
     .. code-block:: javascript
 
         processes = ps("home");
-        for (let i = 0; i < ps.length; ++i) {
-            tprint(ps[i].filename + ' ' + ps[i].threads);
-            tprint(ps[i].args);
+        for (let i = 0; i < processes.length; ++i) {
+            tprint(processes[i].filename + ' ' + processes[i].threads);
+            tprint(processes[i].args);
+            tprint(processes[i].pid);
         }
