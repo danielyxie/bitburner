@@ -135,6 +135,10 @@ class DevMenuComponent extends Component {
         Player.getHomeComputer().maxRam *= 2;
     }
 
+    quickB1tFlum3() {
+        hackWorldDaemon(Player.bitNodeN, true, true);
+    }
+
     b1tflum3() {
         hackWorldDaemon(Player.bitNodeN, true);
     }
@@ -705,7 +709,8 @@ class DevMenuComponent extends Component {
             <button className="std-button" onClick={this.upgradeRam}>Upgrade Home Computer's RAM</button>
     </div>
     <div className="row">
-        <button className="std-button" onClick={this.b1tflum3}>Run bit_flum3.exe</button>
+        <button className="std-button" onClick={this.quickB1tFlum3}>Quick b1t_flum3.exe</button>
+        <button className="std-button" onClick={this.b1tflum3}>Run b1t_flum3.exe</button>
         <button className="std-button" onClick={this.hackW0r1dD43m0n}>Hack w0rld_d34m0n</button>
     </div>
     <div className="row">
