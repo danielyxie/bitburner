@@ -236,8 +236,7 @@ BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
                                         "To iterate is human, to recurse divine.<br><br>" +
                                         "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give you Source-File 12, or " +
                                         "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
-                                        "of Source-File 12 will increase all of your multipliers by 1%. This effect is multiplicative with itself. " +
-                                        "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
+                                        "of Source-File 12 lets you start any BitNodes with NeuroFlux Governor equal to the level of this source file.");
 // Books: Frontera, Shiner
 BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
 BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
