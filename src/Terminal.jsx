@@ -53,7 +53,11 @@ import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
-import { getCurrentEditor, findRunningScript } from "./Script/ScriptHelpers";
+import {
+    getCurrentEditor,
+    findRunningScript,
+    findRunningScriptByPid,
+} from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
 import { AllServers } from "./Server/AllServers";
 import {
@@ -1406,25 +1410,34 @@ let Terminal = {
                     if (commandArray.length < 2) {
                         postError("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
                     } else {
-                        const scriptName = Terminal.getFilepath(commandArray[1]);
-                        if (!isScriptFilename(scriptName)) {
-                            postError("tail can only be called on .script files (filename must end with .script)");
-                            return;
-                        }
+                        if(typeof commandArray[1] === 'string') {
+                            const scriptName = Terminal.getFilepath(commandArray[1]);
+                            if (!isScriptFilename(scriptName)) {
+                                postError("tail can only be called on .script, .ns, .js files, or by pid");
+                                return;
+                            }
 
-                        // Get script arguments
-                        const args = [];
-                        for (let i = 2; i < commandArray.length; ++i) {
-                            args.push(commandArray[i]);
-                        }
+                            // Get script arguments
+                            const args = [];
+                            for (let i = 2; i < commandArray.length; ++i) {
+                                args.push(commandArray[i]);
+                            }
 
-                        // Check that the script exists on this machine
-                        const runningScript = findRunningScript(scriptName, args, s);
-                        if (runningScript == null) {
-                            postError("No such script exists");
-                            return;
+                            // Check that the script exists on this machine
+                            const runningScript = findRunningScript(scriptName, args, s);
+                            if (runningScript == null) {
+                                postError("No such script exists");
+                                return;
+                            }
+                            logBoxCreate(runningScript);
+                        } else {
+                            const runningScript = findRunningScriptByPid(commandArray[1], Player.getCurrentServer());
+                            if (runningScript == null) {
+                                postError("No such script exists");
+                                return;
+                            }
+                            logBoxCreate(runningScript);
                         }
-                        logBoxCreate(runningScript);
                     }
                 } catch(e) {
                     Terminal.postThrownError(e);
