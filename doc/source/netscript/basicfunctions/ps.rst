@@ -15,7 +15,8 @@ ps() Netscript Function
         {
             filename: Script name,
             threads:  Number of threads script is running with,
-            args:     Script's arguments
+            args:     Script's arguments,
+            pid:      Script's pid
         }
 
     Example:
