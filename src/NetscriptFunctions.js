@@ -670,7 +670,7 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeErrorMsg('hack', canHack.msg);
         }
 
-        workerScript.log("hack", `Executing ${ip} in ${convertTimeMsToTimeElapsedString(hackingTime*1000, true)} (t=${threads})`);
+        workerScript.log("hack", `Executing ${ip} in ${convertTimeMsToTimeElapsedString(hackingTime*1000, true)} (t=${numeralWrapper.formatThreads(threads)})`);
 
         return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
             if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
@@ -706,7 +706,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                 Player.gainHackingExp(expGainedOnSuccess);
                 workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(expGainedOnSuccess)} exp (t=${threads})`);
+                workerScript.log("hack", `Successfully hacked '${server.hostname}' for ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(expGainedOnSuccess)} exp (t=${numeralWrapper.formatThreads(threads)})`);
                 server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
                 if (stock) {
                     influenceStockThroughServerHack(server, moneyGained);
@@ -719,7 +719,7 @@ function NetscriptFunctions(workerScript) {
                 // Player only gains 25% exp for failure?
                 Player.gainHackingExp(expGainedOnFailure);
                 workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} exp (t=${threads})`);
+                workerScript.log("hack", `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} exp (t=${numeralWrapper.formatThreads(threads)})`);
                 return Promise.resolve(0);
             }
         });
@@ -937,7 +937,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var growTime = calculateGrowTime(server, Player);
-            workerScript.log("grow", `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(growTime*1000, true)} (t=${threads}).`);
+            workerScript.log("grow", `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(growTime*1000, true)} (t=${numeralWrapper.formatThreads(threads)}).`);
             return netscriptDelay(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
@@ -950,7 +950,7 @@ function NetscriptFunctions(workerScript) {
                     expGain = 0;
                 }
                 const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
-                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${threads}).`);
+                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 if (stock) {
@@ -988,13 +988,13 @@ function NetscriptFunctions(workerScript) {
             }
 
             var weakenTime = calculateWeakenTime(server, Player);
-            workerScript.log("weaken", `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(weakenTime*1000, true)} (t=${threads})`);
+            workerScript.log("weaken", `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(weakenTime*1000, true)} (t=${numeralWrapper.formatThreads(threads)})`);
             return netscriptDelay(weakenTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
                 var expGain = calculateHackingExpGain(server, Player) * threads;
-                workerScript.log("weaken", `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${threads})`);
+                workerScript.log("weaken", `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads);
