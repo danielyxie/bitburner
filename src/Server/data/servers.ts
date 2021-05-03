@@ -1204,15 +1204,15 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 1,
     hostname: "n00dles",
-    literature: [LiteratureNames.Sector12Crime],
+    literature: [],
     maxRamExponent: 2,
     moneyAvailable: 70000,
     networkLayer: 1,
     numOpenPortsRequired: 0,
-    organizationName: LocationName.Sector12FoodNStuff,
+    organizationName: LocationName.NewTokyoNoodleBar,
     requiredHackingSkill: 1,
     serverGrowth: 3000,
-    specialName: LocationName.Sector12FoodNStuff,
+    specialName: LocationName.NewTokyoNoodleBar,
   },
   {
     hackDifficulty: 10,
