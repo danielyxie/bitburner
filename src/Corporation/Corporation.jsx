@@ -1365,6 +1365,11 @@ Industry.prototype.createResearchBox = function() {
         },
     }
 
+    // Construct the tree with Treant
+    // This is required for side effect.
+    // eslint-disable-next-line no-new
+    new Treant(markup);
+
     // Add Event Listeners for all Nodes
     const allResearch = researchTree.getAllNodes();
     for (let i = 0; i < allResearch.length; ++i) {
