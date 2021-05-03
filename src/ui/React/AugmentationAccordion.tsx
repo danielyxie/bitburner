@@ -24,10 +24,19 @@ export function AugmentationAccordion(props: IProps): React.ReactElement {
         }
     }
 
+    if(typeof props.aug.info === 'string') {
+        return (
+            <Accordion
+                headerContent={<>{displayName}</>}
+                panelContent={<p dangerouslySetInnerHTML={{__html: props.aug.info}}></p>}
+            />
+        )
+    }
+
     return (
         <Accordion
             headerContent={<>{displayName}</>}
-            panelContent={<p dangerouslySetInnerHTML={{__html: props.aug.info}}></p>}
+            panelContent={<p>{props.aug.info}</p>}
         />
     )
 }

@@ -368,5 +368,10 @@ function updateAugDescription(elems: IResleeveUIElems): void {
         return;
     }
 
-    elems.augDescription.innerHTML = aug.info;
+    let innerHTML = aug.info;
+    if(typeof innerHTML !== 'string') {
+        innerHTML = renderToStaticMarkup(innerHTML);
+    }
+
+    elems.augDescription.innerHTML = innerHTML;
 }

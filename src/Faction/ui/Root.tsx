@@ -264,11 +264,13 @@ export class FactionRoot extends React.Component<IProps, IState> {
                     />
                 }
                 {
-                    (!isPlayersGang && canDonate) &&
+                    !isPlayersGang &&
                     <DonateOption
                         faction={this.props.faction}
                         p={this.props.p}
                         rerender={this.rerender}
+                        favorToDonate={favorToDonate}
+                        disabled={!canDonate}
                     />
                 }
                 <Option

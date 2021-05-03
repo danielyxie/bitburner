@@ -13,7 +13,8 @@ Converts a date representing time in milliseconds to a string with the format H 
 e.g.    10000 -> "10 seconds"
         120000 -> "2 minutes and 0 seconds"
 */
-function convertTimeMsToTimeElapsedString(time: number): string {
+function convertTimeMsToTimeElapsedString(time: number, showMilli=false): string {
+    time = Math.floor(time);
     const millisecondsPerSecond = 1000;
     const secondPerMinute = 60;
     const minutesPerHours = 60;
@@ -33,7 +34,13 @@ function convertTimeMsToTimeElapsedString(time: number): string {
     const minutes: number = Math.floor(secTruncHours / secondPerMinute);
     const secTruncMinutes: number = secTruncHours % secondPerMinute;
 
-    const seconds: number = secTruncMinutes;
+    const milliTruncSec: string = (() => {
+        let str: string = `${time % millisecondsPerSecond}`;
+        while(str.length < 3) str = "0"+str;
+        return str;
+    })()
+
+    const seconds: string = showMilli ? `${secTruncMinutes}.${milliTruncSec}` : `${secTruncMinutes}`;
 
     let res = "";
     if (days > 0) {res += `${days} days `; }

@@ -49,7 +49,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
             panelClass="active-scripts-script-panel"
             panelContent={
                 <>
-                <pre>Threads: {props.workerScript.scriptRef.threads}</pre>
+                <pre>Threads: {numeralWrapper.formatThreads(props.workerScript.scriptRef.threads)}</pre>
                 <pre>Args: {arrayToString(props.workerScript.args)}</pre>
                 <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
                 <pre>Offline Time: {convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</pre>
