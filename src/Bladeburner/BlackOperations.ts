@@ -160,7 +160,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
              "technology in Operation K, we've discovered that a small group of " +
              "MK-VI Synthoids were able to make off with the schematics and design " +
              "of the technology before the Operation. It is almost a certainty that " +
-             "these Synthoids are some of the rogue MK-VI ones from the Synthoid Uprising." +
+             "these Synthoids are some of the rogue MK-VI ones from the Synthoid Uprising.<br><br>" +
              "The goal of Operation Deckard is to hunt down these Synthoids and retire " +
              "them. I don't need to tell you how critical this mission is.",
         baseDifficulty:20e3, reqdRank:40e3,
@@ -231,7 +231,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
              "means that the supercomputer may be able to reason abstractly " +
              "and become self-aware.<br><br>" +
              "I do not need to remind you why sentient-level AIs pose a serious " +
-             "thread to all of mankind.<br><br>" +
+             "threat to all of mankind.<br><br>" +
              "The research for this project is being conducted at one of Fulcrum " +
              "Technologies secret facilities in Aevum, codenamed 'Alpha Ranch'. " +
              "Infiltrate the compound, delete and destroy the work, and then find and kill the " +
