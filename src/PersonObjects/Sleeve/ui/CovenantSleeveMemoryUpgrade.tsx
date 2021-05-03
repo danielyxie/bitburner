@@ -35,7 +35,11 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
     }
 
     changePurchaseAmount(e: React.ChangeEvent<HTMLInputElement>): void {
-        const n: number = parseInt(e.target.value);
+        let n: number = parseInt(e.target.value);
+
+        if(isNaN(n)) n = 1;
+        const maxMemory = 100 - this.props.sleeve.memory;
+        if (n > maxMemory) n = maxMemory;
 
         this.setState({
             amt: n,
@@ -89,7 +93,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
                 <label htmlFor={inputId}>
                     Amount of memory to purchase (must be an integer):
                 </label>
-                <input id={inputId} onChange={this.changePurchaseAmount} type={"number"} value={isNaN(this.state.amt) ? this.state.amt.toString() : this.state.amt} />
+                <input className="text-input" id={inputId} onChange={this.changePurchaseAmount} type={"number"} value={this.state.amt} />
                 <br />
                 <StdButton disabled={purchaseBtnDisabled} onClick={this.purchaseMemory} text={purchaseBtnContent} />
             </div>
