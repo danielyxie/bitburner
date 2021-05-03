@@ -1709,6 +1709,18 @@ function NetscriptFunctions(workerScript) {
             workerScript.log("getServerRam", `returned [${formatNumber(server.maxRam, 2)}GB, ${formatNumber(server.ramUsed, 2)}GB]`);
             return [server.maxRam, server.ramUsed];
         },
+        getServerMaxRam: function(ip) {
+            updateDynamicRam("getServerMaxRam", getRamCost("getServerMaxRam"));
+            const server = safeGetServer(ip, "getServerMaxRam");
+            workerScript.log("getServerMaxRam", `returned ${formatNumber(server.maxRam, 2)}GB`);
+            return server.maxRam;
+        },
+        getServerUsedRam: function(ip) {
+            updateDynamicRam("getServerUsedRam", getRamCost("getServerUsedRam"));
+            const server = safeGetServer(ip, "getServerUsedRam");
+            workerScript.log("getServerUsedRam", `returned ${formatNumber(server.ramUsed, 2)}GB`);
+            return server.ramUsed;
+        },
         serverExists: function(ip) {
             updateDynamicRam("serverExists", getRamCost("serverExists"));
             return (getServer(ip) !== null);

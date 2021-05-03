@@ -3,6 +3,8 @@ getServerRam() Netscript Function
 
 .. js:function:: getServerRam(hostname)
 
+    .. warning:: This function is deprecated.
+
     :RAM cost: 0.1 GB
     :param string hostname: Hostname of target server.
     :returns: An array of 2 number, first number is the total RAM, second the

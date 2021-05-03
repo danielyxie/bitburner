@@ -54,7 +54,8 @@ This includes information such as function signatures, what they do, and their r
     getServerMinSecurityLevel() <basicfunctions/getServerMinSecurityLevel>
     getServerRequiredHackingLevel() <basicfunctions/getServerRequiredHackingLevel>
     getServerNumPortsRequired() <basicfunctions/getServerNumPortsRequired>
-    getServerRam() <basicfunctions/getServerRam>
+    getServerMaxRam() <basicfunctions/getServerMaxRam>
+    getServerUsedRam() <basicfunctions/getServerUsedRam>
     serverExists() <basicfunctions/serverExists>
     fileExists() <basicfunctions/fileExists>
     isRunning() <basicfunctions/isRunning>
@@ -90,3 +91,8 @@ This includes information such as function signatures, what they do, and their r
     wget() <basicfunctions/wget>
     getFavorToDonate() <basicfunctions/getFavorToDonate>
     flags() <basicfunctions/flags>
+
+.. toctree::
+    :caption: Deprecated:
+
+    getServerRam() <basicfunctions/getServerRam>
