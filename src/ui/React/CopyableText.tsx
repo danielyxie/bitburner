@@ -1,7 +1,13 @@
 import * as React from "react";
 
+export enum ClickableTag{
+    Tag_span,
+    Tag_h1
+}
+
 type IProps = {
     value: string;
+    tag: ClickableTag;
 }
 
 type IState = {
@@ -9,6 +15,11 @@ type IState = {
 }
 
 export class CopyableText extends React.Component<IProps, IState> {
+    public static defaultProps = {
+        //Default span to prevent destroying current clickables
+        tag: ClickableTag.Tag_span
+    };
+    
     constructor(props: IProps) {
         super(props);
 
@@ -53,9 +64,19 @@ export class CopyableText extends React.Component<IProps, IState> {
 
 
     render(): React.ReactNode {
-        return (<span className={this.textClasses()} onClick={this.copy}>
-            <b>{this.props.value}</b>
-            <span className={this.tooltipClasses()}>Copied!</span>
-        </span>);
+        switch (this.props.tag) {
+        case ClickableTag.Tag_h1:
+            return (
+                <h1 className={this.textClasses()} onClick={this.copy}>
+                    {this.props.value}
+                    <span className={this.tooltipClasses()}>Copied!</span>
+                </h1>)
+        case ClickableTag.Tag_span:
+            return (
+                <span className={this.textClasses()} onClick={this.copy}>
+                    <b>{this.props.value}</b>
+                    <span className={this.tooltipClasses()}>Copied!</span>
+                </span>)
+        }
     }
 }

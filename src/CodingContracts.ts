@@ -14,8 +14,10 @@ import {
 } from "../utils/JSONReviver";
 import { KEY } from "../utils/helpers/keyCodes";
 import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
+import { createPopup, removePopup } from "./ui/React/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { CodingContractPopup } from "./ui/React/CodingContractPopup";
+
 
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
@@ -171,57 +173,26 @@ export class CodingContract {
      * Creates a popup to prompt the player to solve the problem
      */
     async prompt(): Promise<CodingContractResult> {
-        // tslint:disable-next-line
-        return new Promise<CodingContractResult>((resolve) => {
-            const contractType: CodingContractType = CodingContractTypes[this.type];
-            const popupId = `coding-contract-prompt-popup-${this.fn}`;
-            const title: HTMLElement = createElement("h1", {
-                innerHTML: this.type,
-            });
-            const txt: HTMLElement = createElement("p", {
-                innerHTML: ["You are attempting to solve a Coding Contract. You have",
-                            `${this.getMaxNumTries() - this.tries} tries remaining,`,
-                            "after which the contract will self-destruct.<br><br>",
-                            `${contractType.desc(this.data).replace(/\n/g, "<br>")}`].join(" "),
-            });
-            let solveBtn: HTMLElement;
-            const cancelBtn = createElement("a", {
-                class: "a-link-button",
-                clickListener: () => {
+        const popupId = `coding-contract-prompt-popup-${this.fn}`;
+        return new Promise<CodingContractResult>((resolve, reject) => {
+            let popup = new CodingContractPopup({
+                c: this,
+                popupId: popupId,
+                onClose: () => {
                     resolve(CodingContractResult.Cancelled);
-                    removeElementById(popupId);
+                    removePopup(popupId);
                 },
-                innerText: "Cancel",
-            });
-            const answerInput = createElement("input", {
-                onkeydown: (e: any) => {
-                    if (e.keyCode === KEY.ENTER && answerInput.value !== "") {
-                        e.preventDefault();
-                        solveBtn.click();
-                    } else if (e.keyCode === KEY.ESC) {
-                        e.preventDefault();
-                        cancelBtn.click();
-                    }
-                },
-                placeholder: "Enter Solution here",
-                width: "50%",
-            }) as HTMLInputElement;
-            solveBtn = createElement("a", {
-                class: "a-link-button",
-                clickListener: () => {
-                    const answer: string = answerInput.value;
-                    if (this.isSolution(answer)) {
+                onAttempt: (val: string) => {
+                    console.log(`top; ${val}`);
+                    if (this.isSolution(val)) {
                         resolve(CodingContractResult.Success);
                     } else {
                         resolve(CodingContractResult.Failure);
                     }
-                    removeElementById(popupId);
-                },
-                innerText: "Solve",
+                    removePopup(popupId);
+                }
             });
-            const lineBreak: HTMLElement = createElement("br");
-            createPopup(popupId, [title, lineBreak, txt, lineBreak, lineBreak, answerInput, solveBtn, cancelBtn]);
-            answerInput.focus();
+            createPopup(popupId, CodingContractPopup, popup.props);
         });
     }
 
