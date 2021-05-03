@@ -33,12 +33,12 @@ export class Location {
     /**
      * Cost multiplier that influences how expensive a gym/university is
      */
-    costMult: number = 0;
+    costMult = 0;
 
     /**
      * Exp multiplier that influences how effective a gym/university is
      */
-    expMult: number = 0;
+    expMult = 0;
 
     /**
      * Companies can be infiltrated. This contains the data required for that
@@ -61,13 +61,13 @@ export class Location {
      * Tech vendors allow you to purchase servers.
      * This property defines the max RAM server you can purchase from this vendor
      */
-    techVendorMaxRam: number = 0;
+    techVendorMaxRam = 0;
 
     /**
      * Tech vendors allow you to purchase servers.
      * This property defines the max RAM server you can purchase from this vendor
      */
-    techVendorMinRam: number = 0;
+    techVendorMinRam = 0;
 
     constructor(p: IConstructorParams) {
         if (p.city)             { this.city = p.city; }

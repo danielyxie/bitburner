@@ -1,7 +1,7 @@
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
     augmentationExists,
-    initAugmentations
+    initAugmentations,
 } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
@@ -14,10 +14,8 @@ import { Engine } from "./engine";
 import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
-import { deleteGangDisplayContent } from "./Gang";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
-import { Message } from "./Message/Message";
-import { initMessages, Messages } from "./Message/MessageHelpers";
+import { initMessages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { resetPidCounter } from "./Netscript/Pid";
@@ -27,18 +25,17 @@ import {
     AllServers,
     AddToAllServers,
     initForeignServers,
-    prestigeAllServers
+    prestigeAllServers,
 } from "./Server/AllServers";
-import { Server } from "./Server/Server";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import {
     SourceFileFlags,
-    updateSourceFileFlags
+    updateSourceFileFlags,
 } from "./SourceFile/SourceFileFlags";
 import {
     SpecialServerIps,
     prestigeSpecialServerIps,
-    SpecialServerNames
+    SpecialServerNames,
 } from "./Server/SpecialServerIps";
 import {
     deleteStockMarket,
@@ -289,7 +286,7 @@ function prestigeSourceFile() {
             var popupId = "bladeburner-bitnode-start-nsa-notification";
             var txt = createElement("p", {
                 innerText:"Visit the National Security Agency (NSA) to apply for their Bladeburner " +
-                          "division! You will need 100 of each combat stat before doing this."
+                          "division! You will need 100 of each combat stat before doing this.",
             })
             var brEl = createElement("br");
             var okBtn = createElement("a", {
@@ -297,7 +294,7 @@ function prestigeSourceFile() {
                 clickListener:()=>{
                     removeElementById(popupId);
                     return false;
-                }
+                },
             });
             createPopup(popupId, [txt, brEl, okBtn]);
         }).catch(function(e) {
@@ -341,6 +338,11 @@ function prestigeSourceFile() {
         hserver.updateHashRate(Player.hacknet_node_money_mult);
         hserver.updateHashCapacity();
         updateHashManagerCapacity();
+    }
+
+    if(SourceFileFlags[12] > 0) {
+        Player.augmentations.push({name: AugmentationNames.NeuroFluxGovernor, level: SourceFileFlags[12]})
+        Player.reapplyAllAugmentations(true);
     }
 
     // Refresh Main Menu (the 'World' menu, specifically)

@@ -2,14 +2,14 @@ import { setTimeoutRef } from "../utils/SetTimeoutRef";
 import { getElementById } from "../../utils/uiHelpers/getElementById";
 import { Action } from "../types";
 
-const threeSeconds: number = 3000;
+const threeSeconds = 3000;
 let x: number | undefined;
 
 /**
  * Displays a status message to the player for approximately 3 seconds.
  * @param text The status text to display
  */
-export function createStatusText(text: string) {
+export function createStatusText(text: string): void {
     if (x !== undefined) {
         clearTimeout(x);
         // Likely not needed due to clearTimeout, but just in case...

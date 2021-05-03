@@ -22,12 +22,12 @@ export function loadGlobalAliases(saveString: string): void {
 
 // Prints all aliases to terminal
 export function printAliases(): void {
-    for (var name in Aliases) {
+    for (const name in Aliases) {
         if (Aliases.hasOwnProperty(name)) {
             post("alias " + name + "=" + Aliases[name]);
         }
     }
-    for (var name in GlobalAliases) {
+    for (const name in GlobalAliases) {
         if (GlobalAliases.hasOwnProperty(name)) {
             post("global alias " + name + "=" + GlobalAliases[name]);
         }
@@ -36,8 +36,8 @@ export function printAliases(): void {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global = false): boolean {
-    var re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
-    var matches = dec.match(re);
+    const re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
+    const matches = dec.match(re);
     if (matches == null || matches.length != 3) {return false;}
     if (global){
         addGlobalAlias(matches[1],matches[2]);
@@ -100,17 +100,17 @@ export function substituteAliases(origCommand: string): string {
         // For the unalias command, dont substite
         if (commandArray[0] === "unalias") { return commandArray.join(" "); }
 
-        var alias = getAlias(commandArray[0]);
+        const alias = getAlias(commandArray[0]);
         if (alias != null) {
             commandArray[0] = alias;
         } else {
-            var alias = getGlobalAlias(commandArray[0]);
+            const alias = getGlobalAlias(commandArray[0]);
             if (alias != null) {
                 commandArray[0] = alias;
             }
         }
-        for (var i = 0; i < commandArray.length; ++i) {
-            var alias = getGlobalAlias(commandArray[i]);
+        for (let i = 0; i < commandArray.length; ++i) {
+            const alias = getGlobalAlias(commandArray[i]);
             if (alias != null) {
                 commandArray[i] = alias;
             }

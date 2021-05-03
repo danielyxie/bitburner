@@ -29,7 +29,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
     const logClickHandler = logBoxCreate.bind(null, scriptRef);
     const killScript = killWorkerScript.bind(null, scriptRef as any, scriptRef.server);
 
-    function killScriptClickHandler() {
+    function killScriptClickHandler(): void {
         killScript();
         dialogBoxCreate("Killing script");
     }
@@ -49,7 +49,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
             panelClass="active-scripts-script-panel"
             panelContent={
                 <>
-                <pre>Threads: {props.workerScript.scriptRef.threads}</pre>
+                <pre>Threads: {numeralWrapper.formatThreads(props.workerScript.scriptRef.threads)}</pre>
                 <pre>Args: {arrayToString(props.workerScript.args)}</pre>
                 <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
                 <pre>Offline Time: {convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</pre>

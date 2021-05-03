@@ -7,8 +7,6 @@ import { post, postElement }                    from "../ui/postToTerminal";
 import { Money }                                from "../ui/React/Money";
 
 import { isValidIPAddress }                     from "../../utils/helpers/isValidIPAddress";
-import { formatNumber }                         from "../../utils/StringHelperFunctions";
-import { numeralWrapper } from "../ui/numeralFormat";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
@@ -29,27 +27,28 @@ export function checkIfConnectedToDarkweb(): void {
 export function executeDarkwebTerminalCommand(commandArray: string[]): void {
     if (commandArray.length == 0) {return;}
     switch (commandArray[0]) {
-        case "buy":
+        case "buy": {
             if (commandArray.length != 2) {
                 post("Incorrect number of arguments. Usage: ");
                 post("buy -l");
                 post("buy [item name]");
                 return;
             }
-            var arg = commandArray[1];
+            const arg = commandArray[1];
             if (arg == "-l") {
                 listAllDarkwebItems();
             } else {
                 buyDarkwebItem(arg);
             }
             break;
+        }
         default:
             post("Command not found");
             break;
     }
 }
 
-function listAllDarkwebItems() {
+function listAllDarkwebItems(): void {
     for(const key in DarkWebItems) {
         const item = DarkWebItems[key];
         postElement(<>{item.program} - {Money(item.price)} - {item.description}</>);

@@ -9,7 +9,7 @@ import { IMap } from "../types";
 
 export const HashUpgrades: IMap<HashUpgrade> = {};
 
-function createHashUpgrade(p: IConstructorParams) {
+function createHashUpgrade(p: IConstructorParams): void {
     HashUpgrades[p.name] = new HashUpgrade(p);
 }
 

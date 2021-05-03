@@ -5,7 +5,6 @@ import { Player } from "./Player";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { formatNumber } from "../utils/StringHelperFunctions";
-import { numeralWrapper } from "./ui/numeralFormat";
 import { Reputation } from "./ui/React/Reputation";
 
 import { addOffset } from "../utils/helpers/addOffset";
@@ -13,8 +12,6 @@ import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { isString } from "../utils/helpers/isString";
 
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
-
-import jsplumb from "jsplumb";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -65,7 +62,7 @@ let NodeTypes = {
     Database: "Database Node", // No actions available
     Spam: "Spam Node", // No actions Available
     Transfer: "Transfer Node", // Can Weaken, Scan, Fortify and Overflow
-    Shield: "Shield Node" // Can Fortify
+    Shield: "Shield Node", // Can Fortify
 }
 
 let NodeActions = {
@@ -252,7 +249,7 @@ HackingMission.prototype.init = function() {
         var stats = {
             atk: randMult * getRandomInt(80, 86),
             def: randMult * getRandomInt(5, 10),
-            hp: randMult * getRandomInt(210, 230)
+            hp: randMult * getRandomInt(210, 230),
         }
         this.enemyCores.push(new Node(NodeTypes.Core, stats));
         this.enemyCores[i].setControlledByEnemy();
@@ -262,7 +259,7 @@ HackingMission.prototype.init = function() {
         var stats = {
             atk: 0,
             def: randMult * getRandomInt(10, 20),
-            hp: randMult * getRandomInt(275, 300)
+            hp: randMult * getRandomInt(275, 300),
         }
         this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
         this.enemyNodes[i].setControlledByEnemy();
@@ -272,7 +269,7 @@ HackingMission.prototype.init = function() {
         var stats = {
             atk: 0,
             def: randMult * getRandomInt(30, 55),
-            hp: randMult * getRandomInt(210, 275)
+            hp: randMult * getRandomInt(210, 275),
         }
         var node = new Node(NodeTypes.Database, stats);
         node.setControlledByEnemy();
@@ -674,7 +671,7 @@ HackingMission.prototype.createMap = function() {
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(15, 45),
-                            hp: randMult * getRandomInt(200, 225)
+                            hp: randMult * getRandomInt(200, 225),
                         }
                         node = new Node(NodeTypes.Spam, stats);
                         break;
@@ -682,7 +679,7 @@ HackingMission.prototype.createMap = function() {
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(15, 45),
-                            hp: randMult * getRandomInt(250, 275)
+                            hp: randMult * getRandomInt(250, 275),
                         }
                         node = new Node(NodeTypes.Transfer, stats);
                         break;
@@ -691,7 +688,7 @@ HackingMission.prototype.createMap = function() {
                         var stats = {
                             atk: 0,
                             def: averageAttack * 1.1 + getRandomInt(30, 70),
-                            hp: randMult * getRandomInt(300, 320)
+                            hp: randMult * getRandomInt(300, 320),
                         }
                         node = new Node(NodeTypes.Shield, stats);
                         break;
@@ -783,11 +780,11 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
         return;
     }
 
-    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
-    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
+    let id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    let txtEl = document.getElementById(id + "-txt");
 
     // Set node classes based on type
-    var txt;
+    let txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
             txt = "CPU Core<br>" + "HP: " +
@@ -901,14 +898,13 @@ HackingMission.prototype.configurePlayerNodeElement = function(el) {
     if (nodeObj == null) {console.error("Failed getting Node object");}
 
     // Add event listener
-    var self = this;
-    function selectNodeWrapper() {
-        selectNode(self, el);
+    const selectNodeWrapper = () => {
+        selectNode(this, el);
     }
     el.addEventListener("click", selectNodeWrapper);
 
-    function multiselectNodeWrapper() {
-        multiselectNode(self, el);
+    const multiselectNodeWrapper = () => {
+        multiselectNode(this, el);
     }
     el.addEventListener("dblclick", multiselectNodeWrapper);
 
@@ -971,10 +967,10 @@ HackingMission.prototype.initJsPlumb = function() {
         PaintStyle: {
             gradient: { stops: [
                 [ 0, "#FFFFFF" ],
-                [ 1, "#FFFFFF" ]
+                [ 1, "#FFFFFF" ],
             ] },
             stroke: "#FFFFFF",
-            strokeWidth: 8
+            strokeWidth: 8,
         },
     });
 
@@ -986,7 +982,7 @@ HackingMission.prototype.initJsPlumb = function() {
             deleteEndpointsOnEmpty:true,
             maxConnections:1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
 
@@ -995,33 +991,33 @@ HackingMission.prototype.initJsPlumb = function() {
         instance.makeTarget(this.enemyCores[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
     for (var i = 0; i < this.enemyDatabases.length; ++i) {
         instance.makeTarget(this.enemyDatabases[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:["Flowchart"]
+            connector:["Flowchart"],
         });
     }
     for (var i = 0; i < this.enemyNodes.length; ++i) {
         instance.makeTarget(this.enemyNodes[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
     for (var i = 0; i < this.miscNodes.length; ++i) {
         instance.makeTarget(this.miscNodes[i].el, {
             maxConnections:-1,
             anchor:"Continuous",
-            connector:"Flowchart"
+            connector:"Flowchart",
         });
     }
 
     // Clicking a connection drops it
-    instance.bind("click", (conn, originalEvent) => {
+    instance.bind("click", (conn) => {
         // Cannot drop enemy's connections
         const sourceNode = this.getNodeFromElement(conn.source);
         if (sourceNode.enmyCtrl) { return; }
@@ -1051,7 +1047,7 @@ HackingMission.prototype.initJsPlumb = function() {
     });
 
     // Detach Connection events
-    instance.bind("connectionDetached", (info, originalEvent) => {
+    instance.bind("connectionDetached", (info) => {
         var sourceNode = this.getNodeFromElement(info.source);
         sourceNode.conn = null;
         var targetNode = this.getNodeFromElement(info.target);
@@ -1264,7 +1260,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
                 deleteEndpointsOnEmpty:true,
                 maxConnections:1,
                 anchor:"Continuous",
-                connector:"Flowchart"
+                connector:"Flowchart",
             });
         } else {
             targetNode.setControlledByEnemy();
@@ -1273,7 +1269,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             this.jsplumbinstance.makeTarget(targetNode.el, {
                 maxConnections:-1,
                 anchor:"Continuous",
-                connector:["Flowchart"]
+                connector:["Flowchart"],
             });
         }
 
@@ -1393,7 +1389,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                         // Create connection
                         nodeObj.conn = this.jsplumbinstance.connect({
                             source:nodeObj.el,
-                            target:node.el
+                            target:node.el,
                         });
                         ++node.targetedCount;
                     } else {
@@ -1409,7 +1405,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                             // Create connection
                             nodeObj.conn = this.jsplumbinstance.connect({
                                 source:nodeObj.el,
-                                target:node.el
+                                target:node.el,
                             });
                             ++node.targetedCount;
                         }

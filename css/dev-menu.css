@@ -1,36 +1,36 @@
 .add-exp-button {
-	margin-right: 0px;
+    margin-right: 0;
 }
 
 .remove-exp-button {
-	margin-left:0px;
+    margin-left:0;
 }
 
 .exp-input {
-	margin-right: 0px;
-	margin-left:0px;
+    margin-right: 0;
+    margin-left:0;
 	
-	margin-top: 5px;
-	margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 
-	padding: 2px 5px;
+    padding: 2px 5px;
 }
 
 .text-center {
-	margin: auto;
-	text-align: center;
-	vertical-align: middle;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .touch-right {
-	margin-right: 0px;
+    margin-right: 0;
 }
 
 .touch-left {
-	margin-left: 0px;
+    margin-left: 0;
 }
 
 .touch-sides {
-	margin-left: 0px;
-	margin-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
 }

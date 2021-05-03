@@ -4,37 +4,30 @@ import {
     getFirstParentDirectory,
     isInRootDirectory,
     isValidDirectoryPath,
-    isValidFilename,
     removeLeadingSlash,
-    removeTrailingSlash
+    removeTrailingSlash,
 } from "./Terminal/DirectoryHelpers";
 import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
 import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
 import { tabCompletion } from "./Terminal/tabCompletion";
 
 import {
-    Aliases,
-    GlobalAliases,
     parseAliasDeclaration,
     printAliases,
     removeAlias,
-    substituteAliases
+    substituteAliases,
 } from "./Alias";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import {
-    CodingContract,
     CodingContractResult,
-    CodingContractRewardType
 } from "./CodingContracts";
 import { CONSTANTS } from "./Constants";
 import { Programs } from "./Programs/Programs";
 import {
     executeDarkwebTerminalCommand,
-    checkIfConnectedToDarkweb
+    checkIfConnectedToDarkweb,
 } from "./DarkWeb/DarkWeb";
-import { DarkWebItems } from "./DarkWeb/DarkWebItems";
 import { Engine } from "./engine";
-import { parseFconfSettings, createFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import {
     calculateHackingChance,
@@ -42,13 +35,13 @@ import {
     calculatePercentMoneyHacked,
     calculateHackingTime,
     calculateGrowTime,
-    calculateWeakenTime
+    calculateWeakenTime,
 } from "./Hacking";
 import { HacknetServer } from "./Hacknet/HacknetServer";
 import {
     iTutorialNextStep,
     iTutorialSteps,
-    ITutorial
+    ITutorial,
 } from "./InteractiveTutorial";
 import { showLiterature } from "./Literature/LiteratureHelpers";
 import { Message } from "./Message/Message";
@@ -60,27 +53,26 @@ import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
-import { getCurrentEditor, findRunningScript } from "./Script/ScriptHelpers";
+import {
+    getCurrentEditor,
+    findRunningScript,
+    findRunningScriptByPid,
+} from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/ScriptHelpersTS";
 import { AllServers } from "./Server/AllServers";
-import { Server } from "./Server/Server";
 import {
     GetServerByHostname,
     getServer,
-    getServerOnNetwork
+    getServerOnNetwork,
 } from "./Server/ServerHelpers";
-import { Settings } from "./Settings/Settings";
 import {
     SpecialServerIps,
-    SpecialServerNames
+    SpecialServerNames,
 } from "./Server/SpecialServerIps";
-import { getTextFile } from "./TextFile";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { KEY } from "../utils/helpers/keyCodes";
-import { addOffset } from "../utils/helpers/addOffset";
-import { isString } from "../utils/helpers/isString";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { logBoxCreate } from "../utils/LogBox";
@@ -88,7 +80,7 @@ import {
     yesNoBoxCreate,
     yesNoBoxGetYesButton,
     yesNoBoxGetNoButton,
-    yesNoBoxClose
+    yesNoBoxClose,
 } from "../utils/YesNoBox";
 import {
     post,
@@ -96,7 +88,7 @@ import {
     postContent,
     postError,
     hackProgressBarPost,
-    hackProgressPost
+    hackProgressPost,
 } from "./ui/postToTerminal";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Money } from "./ui/React/Money";
@@ -136,7 +128,7 @@ $(document).keydown(function(event) {
                 "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
-                ` ~${dir}]&gt;</span> ${command}`
+                ` ~${dir}]&gt;</span> ${command}`,
             );
 
             if (command.length > 0) {
@@ -393,7 +385,6 @@ let Terminal = {
 
             var inputLength = terminalInput.value.length;
             var start = terminalInput.selectionStart;
-            var end = terminalInput.selectionEnd;
             var inputText = terminalInput.value;
 
             switch(mod.toLowerCase()) {
@@ -436,7 +427,6 @@ let Terminal = {
 
             var inputLength = terminalInput.value.length;
             var start = terminalInput.selectionStart;
-            var end = terminalInput.selectionEnd;
 
             switch(loc.toLowerCase()) {
                 case "home":
@@ -585,47 +575,26 @@ let Terminal = {
             let currServ = Player.getCurrentServer();
             const isHacknet = currServ instanceof HacknetServer;
             post(currServ.hostname + ": ");
-            post("Organization name: " + currServ.organizationName);
-            var rootAccess = "";
-            if (currServ.hasAdminRights) {rootAccess = "YES";}
-            else {rootAccess = "NO";}
-            post("Root Access: " + rootAccess);
-            if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
-            post("Server security level: " + numeralWrapper.formatServerSecurity(currServ.hackDifficulty));
-            post("Chance to hack: " + numeralWrapper.formatPercentage(calculateHackingChance(currServ, Player)));
-            post("Time to hack: " + convertTimeMsToTimeElapsedString(calculateHackingTime(currServ, Player)*1000));
-            postElement(<>Total money available on server: {Money(currServ.moneyAvailable)}</>);
-            if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
-
-            if (currServ.sshPortOpen) {
-                post("SSH port: Open")
-            } else {
-                post("SSH port: Closed")
-            }
-
-            if (currServ.ftpPortOpen) {
-                post("FTP port: Open")
-            } else {
-                post("FTP port: Closed")
-            }
-
-            if (currServ.smtpPortOpen) {
-                post("SMTP port: Open")
-            } else {
-                post("SMTP port: Closed")
-            }
-
-            if (currServ.httpPortOpen) {
-                post("HTTP port: Open")
-            } else {
-                post("HTTP port: Closed")
-            }
-
-            if (currServ.sqlPortOpen) {
-                post("SQL port: Open")
-            } else {
-                post("SQL port: Closed")
-            }
+            const org = currServ.organizationName
+            post("Organization name: " + (!isHacknet ? org : "Player"));
+            const admin = currServ.hasAdminRights;
+            post("Root Access: " + (!isHacknet ? "YES" : "NO"));
+            const hackingSkill = currServ.requiredHackingSkill
+            post("Required hacking skill: " + (!isHacknet ? hackingSkill : "N/A"));
+            const security = currServ.hackDifficulty;
+            post("Server security level: " + (!isHacknet ? numeralWrapper.formatServerSecurity(security) : "N/A"));
+            const hackingChance = calculateHackingChance(currServ, Player)
+            post("Chance to hack: " + (!isHacknet ? numeralWrapper.formatPercentage(hackingChance) : "N/A"));
+            const hackingTime = calculateHackingTime(currServ, Player)*1000;
+            post("Time to hack: " + (!isHacknet ? convertTimeMsToTimeElapsedString(hackingTime, true) : "N/A"));
+            postElement(<>Total money available on server: {!isHacknet ? Money(currServ.moneyAvailable) : "N/A"}</>);
+            const numPort = currServ.numOpenPortsRequired;
+            post("Required number of open ports for NUKE: " + (!isHacknet ? numPort : "N/A"));
+            post("SSH port: "+ (currServ.sshPortOpen ? "Open" : "Closed"))
+            post("FTP port: "+ (currServ.ftpPortOpen ? "Open" : "Closed"))
+            post("SMTP port: "+ (currServ.smtpPortOpen ? "Open" : "Closed"))
+            post("HTTP port: "+ (currServ.httpPortOpen ? "Open" : "Closed"))
+            post("SQL port: "+ (currServ.sqlPortOpen ? "Open" : "Closed"))
         }
         Terminal.analyzeFlag = false;
     },
@@ -1419,10 +1388,10 @@ let Terminal = {
                 try {
                     if (commandArray.length < 2) {
                         postError("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
-                    } else {
+                    } else if(typeof commandArray[1] === 'string') {
                         const scriptName = Terminal.getFilepath(commandArray[1]);
                         if (!isScriptFilename(scriptName)) {
-                            postError("tail can only be called on .script files (filename must end with .script)");
+                            postError("tail can only be called on .script, .ns, .js files, or by pid");
                             return;
                         }
 
@@ -1434,6 +1403,13 @@ let Terminal = {
 
                         // Check that the script exists on this machine
                         const runningScript = findRunningScript(scriptName, args, s);
+                        if (runningScript == null) {
+                            postError("No such script exists");
+                            return;
+                        }
+                        logBoxCreate(runningScript);
+                    } else {
+                        const runningScript = findRunningScriptByPid(commandArray[1], Player.getCurrentServer());
                         if (runningScript == null) {
                             postError("No such script exists");
                             return;
@@ -1543,7 +1519,7 @@ let Terminal = {
                         spacesPid,
                         script.threads,
                         spacesThread,
-                        ramUsage
+                        ramUsage,
                     ].join("");
                     post(entry);
                 }
@@ -1778,7 +1754,6 @@ let Terminal = {
                 return;
             }
 
-            const s = Player.getCurrentServer();
             const scriptName = commandArray[1];
             let numThreads = 1;
             if (commandArray.length === 4 && commandArray[2] === "-t") {
@@ -1960,7 +1935,6 @@ let Terminal = {
                 postError(`Invalid destination. ${commandArray[2]} not found`);
                 return;
             }
-            const ip = destServer.ip;
             const currServ = Player.getCurrentServer();
 
             // Scp for lit files
@@ -2152,13 +2126,19 @@ let Terminal = {
                 post("Invalid server IP/hostname");
                 return;
             }
+
+            if(targetServer instanceof HacknetServer) {
+                post(`${Programs.ServerProfiler.name} cannot be run on a Hacknet Server.`);
+                return
+            }
+
             post(targetServer.hostname + ":");
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post(`Netscript hack() execution time: ${convertTimeMsToTimeElapsedString(calculateHackingTime(targetServer, Player)*1000)}`);
-            post(`Netscript grow() execution time: ${convertTimeMsToTimeElapsedString(calculateGrowTime(targetServer, Player)*1000)}`);
-            post(`Netscript weaken() execution time: ${convertTimeMsToTimeElapsedString(calculateWeakenTime(targetServer, Player)*1000)}`);
+            post(`Netscript hack() execution time: ${convertTimeMsToTimeElapsedString(calculateHackingTime(targetServer, Player)*1000, true)}`);
+            post(`Netscript grow() execution time: ${convertTimeMsToTimeElapsedString(calculateGrowTime(targetServer, Player)*1000, true)}`);
+            post(`Netscript weaken() execution time: ${convertTimeMsToTimeElapsedString(calculateWeakenTime(targetServer, Player)*1000, true)}`);
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");

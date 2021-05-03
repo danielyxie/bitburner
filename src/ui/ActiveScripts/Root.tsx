@@ -20,7 +20,7 @@ export class ActiveScriptsRoot extends React.Component<IProps> {
         super(props);
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <>
                 <p>

@@ -7,7 +7,6 @@ import { BaseReactComponent } from "./BaseReactComponent";
 import { CityTabs } from "./CityTabs";
 import { Industry } from "./Industry";
 import { Overview } from "./Overview";
-import { overviewPage } from "./Routing";
 
 import { OfficeSpace } from "../Corporation";
 

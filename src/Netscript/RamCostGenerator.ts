@@ -23,6 +23,8 @@ export const RamCostConstants: IMap<number> = {
     ScriptGetHackingLevelRamCost: 0.05,
     ScriptGetMultipliersRamCost: 4.0,
     ScriptGetServerRamCost: 0.1,
+    ScriptGetServerMaxRam: 0.05,
+    ScriptGetServerUsedRam: 0.05,
     ScriptFileExistsRamCost: 0.1,
     ScriptIsRunningRamCost: 0.1,
     ScriptHacknetNodesRamCost: 4.0,
@@ -122,6 +124,8 @@ export const RamCosts: IMap<any> = {
     getServerGrowth: () => RamCostConstants.ScriptGetServerRamCost,
     getServerNumPortsRequired: () => RamCostConstants.ScriptGetServerRamCost,
     getServerRam: () => RamCostConstants.ScriptGetServerRamCost,
+    getServerMaxRam: () => RamCostConstants.ScriptGetServerMaxRam,
+    getServerUsedRam: () => RamCostConstants.ScriptGetServerUsedRam,
     serverExists: () => RamCostConstants.ScriptGetServerRamCost,
     fileExists: () => RamCostConstants.ScriptFileExistsRamCost,
     isRunning: () => RamCostConstants.ScriptIsRunningRamCost,
@@ -307,7 +311,7 @@ export const RamCosts: IMap<any> = {
     heart: {
         // Easter egg function
         break : () => 0,
-    }
+    },
 }
 
 export function getRamCost(...args: string[]): number {

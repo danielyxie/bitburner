@@ -7,11 +7,10 @@ import { isScriptFilename } from "./ScriptHelpersTS";
 import {CONSTANTS} from "../Constants";
 import {Engine} from "../engine";
 import { parseFconfSettings } from "../Fconf/Fconf";
-import { FconfSettings } from "../Fconf/FconfSettings";
 import {
     iTutorialSteps,
     iTutorialNextStep,
-    ITutorial
+    ITutorial,
 } from "../InteractiveTutorial";
 import { Player } from "../Player";
 import { AceEditor } from "../ScriptEditor/Ace";
@@ -28,11 +27,6 @@ import { Page, routing } from "../ui/navigationTracking";
 import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import {
-    Reviver,
-    Generic_toJSON,
-    Generic_fromJSON
-} from "../../utils/JSONReviver";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { createElement } from "../../utils/uiHelpers/createElement";
 
@@ -56,12 +50,12 @@ export function scriptEditorInit() {
                 editor.beautifyScript();
             }
             return false;
-        }
+        },
     });
 
     // Text that displays RAM calculation
     scriptEditorRamText = createElement("p", {
-        display:"inline-block", margin:"10px", id:"script-editor-status-text"
+        display:"inline-block", margin:"10px", id:"script-editor-status-text",
     });
 
     // Label for checkbox (defined below)
@@ -70,7 +64,7 @@ export function scriptEditorInit() {
         innerText:"Dynamic RAM Usage Checker", color:"white",
         tooltip:"Enable/Disable the dynamic RAM Usage display. You may " +
                 "want to disable it for very long scripts because there may be " +
-                "performance issues"
+                "performance issues",
     });
 
     // Checkbox for enabling/disabling dynamic RAM calculation
@@ -97,7 +91,7 @@ export function scriptEditorInit() {
         clickListener:()=>{
             saveAndCloseScriptEditor();
             return false;
-        }
+        },
     });
 
     // Add all buttons to the UI

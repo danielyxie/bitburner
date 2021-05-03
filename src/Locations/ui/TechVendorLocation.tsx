@@ -15,7 +15,6 @@ import { CONSTANTS }                    from "../../Constants";
 import { IPlayer }                      from "../../PersonObjects/IPlayer";
 import { getPurchaseServerCost }        from "../../Server/ServerPurchases";
 
-import { numeralWrapper }               from "../../ui/numeralFormat";
 import { StdButtonPurchased }           from "../../ui/React/StdButtonPurchased";
 import { StdButton }                    from "../../ui/React/StdButton";
 import { Money }                        from "../../ui/React/Money";
@@ -29,7 +28,7 @@ export class TechVendorLocation extends React.Component<IProps, any> {
     /**
      * Stores button styling that sets them all to block display
      */
-    btnStyle: object;
+    btnStyle: any;
 
     constructor(props: IProps) {
         super(props);
@@ -45,22 +44,22 @@ export class TechVendorLocation extends React.Component<IProps, any> {
         this.purchaseTorRouter = this.purchaseTorRouter.bind(this);
     }
 
-    createUpgradeHomeCoresPopup() {
+    createUpgradeHomeCoresPopup(): void {
         createUpgradeHomeCoresPopup(this.props.p);
     }
 
-    createUpgradeHomeRamPopup() {
+    createUpgradeHomeRamPopup(): void {
         createUpgradeHomeRamPopup(this.props.p);
     }
 
-    purchaseTorRouter() {
+    purchaseTorRouter(): void {
         purchaseTorRouter(this.props.p);
         this.setState({
             torPurchased: this.props.p.hasTorRouter(),
         });
     }
 
-    render() {
+    render(): React.ReactNode {
         const loc: Location = this.props.loc;
 
         const purchaseServerButtons: React.ReactNode[] = [];
@@ -72,7 +71,7 @@ export class TechVendorLocation extends React.Component<IProps, any> {
                     onClick={() => createPurchaseServerPopup(i, this.props.p)}
                     style={this.btnStyle}
                     text={<>Purchase {i}GB Server - {Money(cost)}</>}
-                />
+                />,
             )
         }
 

@@ -5,13 +5,13 @@ import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviv
 import { addOffset } from "../../utils/helpers/addOffset";
 
 export class ChangePopulationByCountParams {
-    estChange: number = 0;
-    estOffset: number = 0;
+    estChange = 0;
+    estOffset = 0;
 }
 
 export class ChangePopulationByPercentageParams {
-    nonZero: boolean = false;
-    changeEstEqually: boolean = false;
+    nonZero = false;
+    changeEstEqually = false;
 }
 
 export class City {
@@ -19,32 +19,32 @@ export class City {
     /**
      * Name of the city.
      */
-    name: string = "";
+    name = "";
 
     /**
      * Population of the city.
      */
-    pop: number = 0;
+    pop = 0;
 
     /**
      * Population estimation of the city.
      */
-    popEst: number = 0;
+    popEst = 0;
 
     /**
      * Number of communities in the city.
      */
-    comms: number = 0;
+    comms = 0;
 
     /**
      * Estimated number of communities in the city.
      */
-    commsEst: number = 0;
+    commsEst = 0;
 
     /**
      * Chaos level of the city.
      */
-    chaos: number = 0;
+    chaos = 0;
 
     constructor(name: string = BladeburnerConstants.CityNames[2]) {
         this.name = name;
@@ -84,7 +84,7 @@ export class City {
     /**
      * p is the percentage, not the multiplier (e.g. pass in p = 5 for 5%)
      */
-    improvePopulationEstimateByPercentage(p: number, skillMult: number=1): void {
+    improvePopulationEstimateByPercentage(p: number, skillMult=1): void {
         p = p*skillMult;
         if (isNaN(p)) {throw new Error("NaN passed into City.improvePopulationEstimateByPercentage()");}
         if (this.popEst < this.pop) {
@@ -97,7 +97,7 @@ export class City {
         }
     }
 
-    improveCommunityEstimate(n: number=1): void {
+    improveCommunityEstimate(n=1): void {
         if (isNaN(n)) {throw new Error("NaN passed into City.improveCommunityEstimate()");}
         if (this.commsEst < this.comms) {
             this.commsEst += n;
@@ -155,17 +155,18 @@ export class City {
     }
 
     /**
-     * Initiatizes a City object from a JSON save state.
-     */
-    static fromJSON(value: any): City {
-        return Generic_fromJSON(City, value.data);
-    }
-
-    /**
      * Serialize the current object to a JSON save state.
      */
     toJSON(): any {
         return Generic_toJSON("City", this);
+    }
+
+    /**
+     * Initiatizes a City object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): City {
+        return Generic_fromJSON(City, value.data);
     }
 }
 

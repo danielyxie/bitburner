@@ -286,13 +286,13 @@ describe("Terminal Directory Tests", function() {
     });
 
     describe("evaluateDirectoryPath()", function() {
-        const evaluateDirectoryPath = dirHelpers.evaluateDirectoryPath;
+        //const evaluateDirectoryPath = dirHelpers.evaluateDirectoryPath;
 
         // TODO
     });
 
     describe("evaluateFilePath()", function() {
-        const evaluateFilePath = dirHelpers.evaluateFilePath;
+        //const evaluateFilePath = dirHelpers.evaluateFilePath;
 
         // TODO
     })

@@ -6,7 +6,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 
 export const SourceFileFlags: number[] = Array(CONSTANTS.TotalNumBitNodes + 1); // Skip index 0
 
-export function updateSourceFileFlags(p: IPlayer) {
+export function updateSourceFileFlags(p: IPlayer): void {
     for (let i = 0; i < SourceFileFlags.length; ++i) {
         SourceFileFlags[i] = 0;
     }

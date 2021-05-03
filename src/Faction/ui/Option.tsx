@@ -14,7 +14,7 @@ type IProps = {
 }
 
 export class Option extends React.Component<IProps, any> {
-    render() {
+    render(): React.ReactNode {
         return (
             <div className={"faction-work-div"}>
                 <div className={"faction-work-div-wrapper"}>

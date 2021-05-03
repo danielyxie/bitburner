@@ -5,8 +5,6 @@ import * as React from "react";
 import { StatsTable } from "../../../ui/React/StatsTable";
 
 export function MoreEarningsContent(sleeve: Sleeve): React.ReactElement {
-    let style = {}
-    style = {textAlign: 'right'};
     return (<>
         {StatsTable([
             ['Money ', Money(sleeve.earningsForTask.money)],

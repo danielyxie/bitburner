@@ -95,7 +95,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 3,
         salaryMultiplier: 3,
@@ -107,7 +107,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 3,
         salaryMultiplier: 3,
@@ -119,7 +119,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 2.6,
         salaryMultiplier: 2.6,
@@ -131,7 +131,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 2.75,
         salaryMultiplier: 2.75,
@@ -143,7 +143,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 2.75,
         salaryMultiplier: 2.75,
@@ -155,7 +155,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 2.25,
         salaryMultiplier: 2.25,
@@ -167,7 +167,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 2.25,
         salaryMultiplier: 2.25,
@@ -179,7 +179,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 2.5,
         salaryMultiplier: 2.5,
@@ -191,7 +191,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 2.2,
         salaryMultiplier: 2.2,
@@ -202,7 +202,7 @@ export const companiesMetadata: IConstructorParams[] = [
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
-            AllBusinessPositions
+            AllBusinessPositions,
         ),
         expMultiplier: 2,
         salaryMultiplier: 2,
@@ -214,7 +214,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllSoftwareConsultantPositions,
-            AllBusinessPositions
+            AllBusinessPositions,
         ),
         expMultiplier: 1.8,
         salaryMultiplier: 1.8,
@@ -226,7 +226,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             CEOOnly,
             AllTechnologyPositions,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 1.75,
         salaryMultiplier: 1.75,
@@ -238,7 +238,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             CEOOnly,
             AllTechnologyPositions,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 1.8,
         salaryMultiplier: 1.8,
@@ -250,7 +250,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 1.8,
         salaryMultiplier: 1.8,
@@ -262,7 +262,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 1.9,
         salaryMultiplier: 1.9,
@@ -274,7 +274,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 2,
         salaryMultiplier: 2,
@@ -286,7 +286,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 1.9,
         salaryMultiplier: 1.9,
@@ -299,7 +299,7 @@ export const companiesMetadata: IConstructorParams[] = [
             CEOOnly,
             OperationsManagerOnly,
             AllTechnologyPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 1.7,
         salaryMultiplier: 1.7,
@@ -351,7 +351,7 @@ export const companiesMetadata: IConstructorParams[] = [
             AllTechnologyPositions,
             AllBusinessPositions,
             AllSoftwareConsultantPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 1.8,
         salaryMultiplier: 1.8,
@@ -364,7 +364,7 @@ export const companiesMetadata: IConstructorParams[] = [
             AllTechnologyPositions,
             AllBusinessPositions,
             AllSoftwareConsultantPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 1.75,
         salaryMultiplier: 1.75,
@@ -379,7 +379,7 @@ export const companiesMetadata: IConstructorParams[] = [
             SecurityEngineerPositions,
             AllITPositions,
             AllSecurityPositions,
-            AllAgentPositions
+            AllAgentPositions,
         ),
         expMultiplier: 2,
         salaryMultiplier: 2,
@@ -394,7 +394,7 @@ export const companiesMetadata: IConstructorParams[] = [
             SecurityEngineerPositions,
             AllITPositions,
             AllSecurityPositions,
-            AllAgentPositions
+            AllAgentPositions,
         ),
         expMultiplier: 2,
         salaryMultiplier: 2,
@@ -409,7 +409,7 @@ export const companiesMetadata: IConstructorParams[] = [
             AllITPositions,
             AllSecurityPositions,
             AllAgentPositions,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 1.5,
         salaryMultiplier: 1.5,
@@ -422,7 +422,7 @@ export const companiesMetadata: IConstructorParams[] = [
             AllTechnologyPositions,
             AllSoftwareConsultantPositions,
             AllBusinessPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 1.4,
         salaryMultiplier: 1.4,
@@ -433,7 +433,7 @@ export const companiesMetadata: IConstructorParams[] = [
         info: "",
         companyPositions: Object.assign({},
             SoftwarePositionsUpToLeadDeveloper,
-            BusinessPositionsUpToOperationsManager
+            BusinessPositionsUpToOperationsManager,
         ),
         expMultiplier: 1.3,
         salaryMultiplier: 1.3,
@@ -445,7 +445,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             SoftwarePositionsUpToLeadDeveloper,
             BusinessPositionsUpToOperationsManager,
-            AllSoftwareConsultantPositions
+            AllSoftwareConsultantPositions,
         ),
         expMultiplier: 1.5,
         salaryMultiplier: 1.5,
@@ -456,7 +456,7 @@ export const companiesMetadata: IConstructorParams[] = [
         info: "",
         companyPositions: Object.assign({},
             AllSecurityPositions,
-            SoftwarePositionsUpToLeadDeveloper
+            SoftwarePositionsUpToLeadDeveloper,
         ),
         expMultiplier: 1.3,
         salaryMultiplier: 1.3,
@@ -466,7 +466,7 @@ export const companiesMetadata: IConstructorParams[] = [
         name: LocationName.VolhavenSysCoreSecurities,
         info: "",
         companyPositions: Object.assign({},
-            AllTechnologyPositions
+            AllTechnologyPositions,
         ),
         expMultiplier: 1.3,
         salaryMultiplier: 1.3,
@@ -476,7 +476,7 @@ export const companiesMetadata: IConstructorParams[] = [
         name: LocationName.VolhavenCompuTek,
         info: "",
         companyPositions: Object.assign({},
-            AllTechnologyPositions
+            AllTechnologyPositions,
         ),
         expMultiplier: 1.2,
         salaryMultiplier: 1.2,
@@ -486,7 +486,7 @@ export const companiesMetadata: IConstructorParams[] = [
         name: LocationName.AevumNetLinkTechnologies,
         info: "",
         companyPositions: Object.assign({},
-            AllTechnologyPositions
+            AllTechnologyPositions,
         ),
         expMultiplier: 1.2,
         salaryMultiplier: 1.2,
@@ -509,7 +509,7 @@ export const companiesMetadata: IConstructorParams[] = [
         name: LocationName.Sector12FoodNStuff,
         info: "",
         companyPositions: Object.assign({},
-            EmployeeOnly, PartTimeEmployeeOnly
+            EmployeeOnly, PartTimeEmployeeOnly,
         ),
         expMultiplier: 1,
         salaryMultiplier: 1,
@@ -519,7 +519,7 @@ export const companiesMetadata: IConstructorParams[] = [
         name: LocationName.Sector12JoesGuns,
         info: "",
         companyPositions: Object.assign({},
-            EmployeeOnly, PartTimeEmployeeOnly
+            EmployeeOnly, PartTimeEmployeeOnly,
         ),
         expMultiplier: 1,
         salaryMultiplier: 1,
@@ -531,7 +531,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             AllSoftwarePositions,
             AllSoftwareConsultantPositions,
-            AllITPositions
+            AllITPositions,
         ),
         expMultiplier: 1.1,
         salaryMultiplier: 1.1,
@@ -541,7 +541,7 @@ export const companiesMetadata: IConstructorParams[] = [
         name: LocationName.NewTokyoNoodleBar,
         info: "",
         companyPositions: Object.assign({},
-            WaiterOnly, PartTimeWaiterOnly
+            WaiterOnly, PartTimeWaiterOnly,
         ),
         expMultiplier: 1,
         salaryMultiplier: 1,

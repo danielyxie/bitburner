@@ -22,7 +22,7 @@ export function PurchasedAugmentations(): React.ReactElement {
         augs.push(
             <li key={`${ownedAug.name}${ownedAug.level}`}>
                 <AugmentationAccordion aug={aug} level={level} />
-            </li>
+            </li>,
         )
     }
 

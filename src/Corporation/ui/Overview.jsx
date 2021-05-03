@@ -158,7 +158,7 @@ export class Overview extends BaseReactComponent {
             onClick: findInvestorsOnClick,
             style: "inline-block",
             text: "Find Investors",
-            tooltip: findInvestorsTooltip
+            tooltip: findInvestorsTooltip,
         });
         const goPublicBtn = this.createButton({
             class: "std-button",
@@ -167,7 +167,7 @@ export class Overview extends BaseReactComponent {
             text: "Go Public",
             tooltip: "Become a publicly traded and owned entity. Going public " +
                      "involves issuing shares for an IPO. Once you are a public " +
-                     "company, your shares will be traded on the stock market."
+                     "company, your shares will be traded on the stock market.",
         });
 
         return (

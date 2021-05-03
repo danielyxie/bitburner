@@ -1,8 +1,8 @@
 export class PlayerOwnedAugmentation {
-    level: number = 1;
-    name: string = "";
+    level = 1;
+    name = "";
 
-    constructor(name: string = "") {
+    constructor(name = "") {
         this.name = name;
     }
 }

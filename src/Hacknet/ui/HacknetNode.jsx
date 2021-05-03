@@ -16,7 +16,6 @@ import {
 
 import { Player } from "../../Player";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 

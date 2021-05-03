@@ -85,7 +85,7 @@ var Interpreter = function(code, opt_initFunc, lineOffset=0) {
  */
 Interpreter.PARSE_OPTIONS = {
   ecmaVersion: 5,
-  locations: true
+  locations: true,
 };
 
 /**
@@ -94,7 +94,7 @@ Interpreter.PARSE_OPTIONS = {
 Interpreter.READONLY_DESCRIPTOR = {
   configurable: true,
   enumerable: true,
-  writable: false
+  writable: false,
 };
 
 /**
@@ -103,7 +103,7 @@ Interpreter.READONLY_DESCRIPTOR = {
 Interpreter.NONENUMERABLE_DESCRIPTOR = {
   configurable: true,
   enumerable: false,
-  writable: true
+  writable: true,
 };
 
 /**
@@ -112,7 +112,7 @@ Interpreter.NONENUMERABLE_DESCRIPTOR = {
 Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR = {
   configurable: true,
   enumerable: false,
-  writable: false
+  writable: false,
 };
 
 /**
@@ -121,7 +121,7 @@ Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR = {
 Interpreter.VARIABLE_DESCRIPTOR = {
   configurable: false,
   enumerable: true,
-  writable: true
+  writable: true,
 };
 
 /**
@@ -312,7 +312,7 @@ Interpreter.prototype.initGlobalScope = function(scope) {
   var strFunctions = [
     [escape, 'escape'], [unescape, 'unescape'],
     [decodeURI, 'decodeURI'], [decodeURIComponent, 'decodeURIComponent'],
-    [encodeURI, 'encodeURI'], [encodeURIComponent, 'encodeURIComponent']
+    [encodeURI, 'encodeURI'], [encodeURIComponent, 'encodeURIComponent'],
   ];
   for (var i = 0; i < strFunctions.length; i++) {
     var wrapper = (function(nativeFunc) {
@@ -1985,8 +1985,8 @@ Interpreter.prototype.nativeToPseudo = function(nativeObj) {
           Array.prototype.slice.call(arguments)
           .map(function(i) {
             return interpreter.pseudoToNative(i);
-          })
-        )
+          }),
+        ),
       );
     };
     return this.createNativeFunction(wrapper, undefined);
@@ -2033,7 +2033,7 @@ Interpreter.prototype.pseudoToNative = function(pseudoObj, opt_cycles) {
 
   var cycles = opt_cycles || {
     pseudo: [],
-    native: []
+    native: [],
   };
   var i = cycles.pseudo.indexOf(pseudoObj);
   if (i !== -1) {
@@ -2610,7 +2610,7 @@ Interpreter.prototype.setValue = function(ref, value) {
    BREAK: 1,
    CONTINUE: 2,
    RETURN: 3,
-   THROW: 4
+   THROW: 4,
  };
 
 /**
@@ -2691,7 +2691,7 @@ Interpreter.prototype.unwind = function(type, value, label, lineNumberMsg="") {
       'ReferenceError': ReferenceError,
       'SyntaxError': SyntaxError,
       'TypeError': TypeError,
-      'URIError': URIError
+      'URIError': URIError,
     };
     var name = this.getProperty(value, 'name').toString();
     var message = this.getProperty(value, 'message').valueOf();
@@ -3485,7 +3485,7 @@ Interpreter.prototype['stepObjectExpression'] = function(stack, state, node) {
         configurable: true,
         enumerable: true,
         get: kinds['get'],
-        set: kinds['set']
+        set: kinds['set'],
       };
       this.setProperty(state.object_, key, null, descriptor);
     } else {

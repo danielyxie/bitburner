@@ -26,7 +26,7 @@ export function getSubdirectories(serv: BaseServer, dir: string): string[] {
     let t_dir = dir;
     if (!t_dir.endsWith("/")) { t_dir += "/"; }
 
-    function processFile(fn: string) {
+    function processFile(fn: string): void {
         if (t_dir === "/" && isInRootDirectory(fn)) {
             const subdir = getFirstParentDirectory(fn);
             if (subdir !== "/" && !res.includes(subdir)) {

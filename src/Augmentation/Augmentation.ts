@@ -9,7 +9,7 @@ import { Factions } from "../Faction/Factions";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 interface IConstructorParams {
-    info: string;
+    info: string | JSX.Element;
     isSpecial?: boolean;
     moneyCost: number;
     name: string;
@@ -49,31 +49,27 @@ interface IConstructorParams {
 }
 
 export class Augmentation {
-    // Initiatizes a Augmentation object from a JSON save state.
-    static fromJSON(value: any): Augmentation {
-        return Generic_fromJSON(Augmentation, value.data);
-    }
 
     // How much money this costs to buy
-    baseCost: number = 0;
+    baseCost = 0;
 
     // How much faction reputation is required to unlock this
-    baseRepRequirement: number = 0;
+    baseRepRequirement = 0;
 
     // Description of what this Aug is and what it does
-    info: string = "";
+    info: string | JSX.Element;
 
     // Any Augmentation not immediately available in BitNode-1 is special (e.g. Bladeburner augs)
-    isSpecial: boolean = false;
+    isSpecial = false;
 
     // Augmentation level - for repeatable Augs like NeuroFlux Governor
-    level: number = 0;
+    level = 0;
 
     // Name of Augmentation
-    name: string = "";
+    name = "";
 
     // Whether the player owns this Augmentation
-    owned: boolean = false;
+    owned = false;
 
     // Array of names of all prerequisites
     prereqs: string[] = [];
@@ -83,7 +79,7 @@ export class Augmentation {
     mults: IMap<number> = {}
 
     // Initial cost. Doesn't change when you purchase multiple Augmentation
-    startingCost: number = 0;
+    startingCost = 0;
 
     constructor(params: IConstructorParams={ info: "", moneyCost: 0, name: "", repCost: 0 }) {
         this.name = params.name;
@@ -141,7 +137,7 @@ export class Augmentation {
                 console.warn(`In Augmentation.addToFactions(), could not find faction with this name: ${factionList[i]}`);
                 continue;
             }
-            faction!.augmentations.push(this.name);
+            faction.augmentations.push(this.name);
         }
     }
 
@@ -154,7 +150,7 @@ export class Augmentation {
                     console.warn(`Invalid Faction object in addToAllFactions(). Key value: ${fac}`);
                     continue;
                 }
-                facObj!.augmentations.push(this.name);
+                facObj.augmentations.push(this.name);
             }
         }
     }
@@ -162,6 +158,12 @@ export class Augmentation {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("Augmentation", this);
+    }
+
+    // Initiatizes a Augmentation object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Augmentation {
+        return Generic_fromJSON(Augmentation, value.data);
     }
 }
 

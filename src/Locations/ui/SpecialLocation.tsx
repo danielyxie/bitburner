@@ -38,7 +38,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
     /**
      * Stores button styling that sets them all to block display
      */
-    btnStyle: object;
+    btnStyle: any;
 
     constructor(props: IProps) {
         super(props);
@@ -57,14 +57,14 @@ export class SpecialLocation extends React.Component<IProps, IState> {
     /**
      * Click handler for "Create Corporation" button at Sector-12 City Hall
      */
-    createCorporationPopup() {
+    createCorporationPopup(): void {
         createStartCorporationPopup(this.props.p);
     }
 
     /**
      * Click handler for Bladeburner button at Sector-12 NSA
      */
-    handleBladeburner() {
+    handleBladeburner(): void {
         const p = this.props.p;
         if (p.inBladeburner()) {
             // Enter Bladeburner division
@@ -91,7 +91,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
     /**
      * Click handler for Resleeving button at New Tokyo VitaLife
      */
-    handleResleeving() {
+    handleResleeving(): void {
         this.props.engine.loadResleevingContent();
     }
 
@@ -130,7 +130,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
         )
     }
 
-    render() {
+    render(): React.ReactNode {
         switch (this.props.loc.name) {
             case LocationName.NewTokyoVitaLife: {
                 return this.renderResleeving();

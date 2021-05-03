@@ -60,5 +60,4 @@ SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so t
                                                  "Level 1: 32%<br>" +
                                                  "Level 2: 48%<br>" +
                                                  "Level 3: 56%<br>");
-SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is multiplicative with itself. " +
-                                                 "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
+SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File lets the player start with Neuroflux Governor equal to the level of this Source-File.");

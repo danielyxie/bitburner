@@ -1,4 +1,14 @@
-export const ConsoleHelpText: {} = {
+export const ConsoleHelpText: {
+  helpList: string[];
+  automate: string[];
+  clear: string[];
+  cls: string[];
+  help: string[];
+  log: string[];
+  skill: string[];
+  start: string[];
+  stop: string[];
+} = {
     helpList: [
       "Use 'help [command]' to get more information about a particular Bladeburner console command.",
       "",
@@ -8,7 +18,7 @@ export const ConsoleHelpText: {} = {
       "    log [en/dis] [type]           Enable or disable logging for events and actions",
       "    skill [action] [name]         Level or display info about your Bladeburner skills",
       "    start [type] [name]           Start a Bladeburner action/task" ,
-      "    stop                          Stops your current Bladeburner action/task"
+      "    stop                          Stops your current Bladeburner action/task",
     ],
     automate: [
       "automate [var] [val] [hi/low]",
@@ -30,17 +40,17 @@ export const ConsoleHelpText: {} = {
       "Using the four console commands above will set the automation to perform Tracking contracts " +
       "if your stamina is 100 or higher, and then switch to Field Analysis if your stamina drops below " +
       "50. Note that when setting the action, the name of the action is CASE-SENSITIVE. It must " +
-      "exactly match whatever the name is in the UI."
+      "exactly match whatever the name is in the UI.",
     ],
     clear: [
       "clear",
       "",
-      "Clears the console"
+      "Clears the console",
     ],
     cls: [
       "cls",
       "",
-      "Clears the console"
+      "Clears the console",
     ],
     help: [
       "help [command]",
@@ -51,7 +61,7 @@ export const ConsoleHelpText: {} = {
       "",
       "    help automate",
       "",
-      "will display specific information about using the automate console command"
+      "will display specific information about using the automate console command",
     ],
     log: [
       "log [en/dis] [type]",
@@ -71,7 +81,7 @@ export const ConsoleHelpText: {} = {
       "Logging can be universally enabled/disabled using the 'all' keyword:",
       "",
       "    log dis all",
-      "    log en all"
+      "    log en all",
     ],
     skill: [
       "skill [action] [name]",
@@ -91,7 +101,7 @@ export const ConsoleHelpText: {} = {
       "",
       "This console command can also be used to level up skills:",
       "",
-      "    skill level [skill name]"
+      "    skill level [skill name]",
     ],
     start: [
       "start [type] [name]",
@@ -106,11 +116,11 @@ export const ConsoleHelpText: {} = {
       "Examples:",
       "",
       "    start contract Tracking",
-      "    start op 'Undercover Operation'"
+      "    start op 'Undercover Operation'",
     ],
     stop:[
       "stop",
       "",
-      "Stop your current action and go idle."
+      "Stop your current action and go idle.",
     ],
 }

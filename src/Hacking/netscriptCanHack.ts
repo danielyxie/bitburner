@@ -15,7 +15,7 @@ function baseCheck(server: Server, fnName: string): IReturnStatus {
     if (!("requiredHackingSkill" in server)) {
         return {
             res: false,
-            msg: `Cannot ${fnName} ${hostname} server because it is a Hacknet Node`
+            msg: `Cannot ${fnName} ${hostname} server because it is a Hacknet Node`,
         }
     }
 
@@ -33,7 +33,7 @@ export function netscriptCanHack(server: Server, p: IPlayer): IReturnStatus {
     const initialCheck = baseCheck(server, "hack");
     if (!initialCheck.res) { return initialCheck; }
 
-    let s = server;
+    const s = server;
     if (s.requiredHackingSkill > p.hacking_skill) {
         return {
             res: false,

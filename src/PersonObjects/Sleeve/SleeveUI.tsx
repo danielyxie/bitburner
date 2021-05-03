@@ -46,7 +46,6 @@ import { ReputationRate } from "../../ui/React/ReputationRate";
 import { StatsElement } from "./ui/StatsElement";
 import { MoreStatsContent } from "./ui/MoreStatsContent";
 import { MoreEarningsContent } from "./ui/MoreEarningsContent";
-import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { renderToStaticMarkup } from "react-dom/server"
 
@@ -91,7 +90,7 @@ const UIElems: IPageUIElems = {
 
 // Creates the UI for the entire Sleeves page
 let playerRef: IPlayer | null;
-export function createSleevesPage(p: IPlayer) {
+export function createSleevesPage(p: IPlayer): void {
     if (!routing.isOn(Page.Sleeves)) { return; }
 
     try {
@@ -117,7 +116,7 @@ export function createSleevesPage(p: IPlayer) {
             innerText: "FAQ",
             clickListener: () => {
                 dialogBoxCreate(SleeveFaq, false);
-            }
+            },
         });
 
         UIElems.docButton = createElement("a", {
@@ -134,7 +133,8 @@ export function createSleevesPage(p: IPlayer) {
         // Create UI modules for all Sleeve
         for (const sleeve of p.sleeves) {
             const sleeveUi = createSleeveUi(sleeve, p.sleeves);
-            UIElems.sleeveList.appendChild(sleeveUi.container!);
+            if(sleeveUi.container == null) throw new Error("sleeveUi.container is null in createSleevesPage()");
+            UIElems.sleeveList.appendChild(sleeveUi.container);
             UIElems.sleeves.push(sleeveUi);
         }
 
@@ -143,28 +143,33 @@ export function createSleevesPage(p: IPlayer) {
         UIElems.container.appendChild(UIElems.docButton);
         UIElems.container.appendChild(UIElems.sleeveList);
 
-        document.getElementById("entire-game-container")!.appendChild(UIElems.container);
+
+        const container = document.getElementById("entire-game-container");
+        if(container === null) throw new Error("entire-game-container not found in createSleevesPage()");
+        container.appendChild(UIElems.container);
     } catch(e) {
         exceptionAlert(e);
     }
 }
 
 // Updates the UI for the entire Sleeves page
-export function updateSleevesPage() {
+export function updateSleevesPage(): void {
     if (!routing.isOn(Page.Sleeves)) { return; }
+    if (playerRef === null) throw new Error("playerRef is null in updateSleevesPage()");
+    if (UIElems.sleeves === null) throw new Error("UIElems.sleeves is null in updateSleevesPage()");
 
-     try {
-         for (let i = 0; i < playerRef!.sleeves.length; ++i) {
-            const sleeve: Sleeve = playerRef!.sleeves[i];
-            const elems: ISleeveUIElems = UIElems.sleeves![i];
-            updateSleeveUi(sleeve!, elems!);
-         }
-     } catch(e) {
-         exceptionAlert(e);
-     }
+    try {
+        for (let i = 0; i < playerRef.sleeves.length; ++i) {
+            const sleeve: Sleeve = playerRef.sleeves[i];
+            const elems: ISleeveUIElems = UIElems.sleeves[i];
+            updateSleeveUi(sleeve, elems);
+        }
+    } catch(e) {
+        exceptionAlert(e);
+    }
 }
 
-export function clearSleevesPage() {
+export function clearSleevesPage(): void {
     if (UIElems.container instanceof HTMLElement) {
         removeElement(UIElems.container);
     }
@@ -212,13 +217,13 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         innerText: "More Stats",
         clickListener: () => {
             dialogBoxCreate(MoreStatsContent(sleeve));
-        }
+        },
     });
     elems.travelButton = createElement("button", {
         class: "std-button",
         innerText: "Travel",
         clickListener: () => {
-            const popupId: string = "sleeve-travel-popup";
+            const popupId = "sleeve-travel-popup";
             const popupArguments: HTMLElement[] = [];
             popupArguments.push(createPopupCloseButton(popupId, { class: "std-button" }));
             popupArguments.push(createElement("p", {
@@ -236,32 +241,34 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
                         class: "cmpy-mgmt-find-employee-option",
                         innerText: cityName,
                         clickListener: () => {
-                            if (!playerRef!.canAfford(CONSTANTS.TravelCost)) {
+                            if(playerRef == null) throw new Error("playerRef is null in popupArguments.click()");
+                            if (!playerRef.canAfford(CONSTANTS.TravelCost)) {
                                 dialogBoxCreate("You cannot afford to have this sleeve travel to another city", false);
                                 return false;
                             }
                             sleeve.city = cityName as CityName;
-                            playerRef!.loseMoney(CONSTANTS.TravelCost);
+                            playerRef.loseMoney(CONSTANTS.TravelCost);
                             sleeve.resetTaskStatus();
                             removeElementById(popupId);
                             updateSleeveUi(sleeve, elems);
                             updateSleeveTaskSelector(sleeve, elems, allSleeves);
                             return false;
-                        }
+                        },
                     }));
                 })(sleeve, cityName);
             }
 
             createPopup(popupId, popupArguments);
-        }
+        },
     });
     elems.purchaseAugsButton = createElement("button", {
         class: "std-button",
         display: "block",
         innerText: "Manage Augmentations",
         clickListener: () => {
-            createSleevePurchaseAugsPopup(sleeve, playerRef!);
-        }
+            if(playerRef == null) throw new Error("playerRef is null in purchaseAugsButton.click()");
+            createSleevePurchaseAugsPopup(sleeve, playerRef);
+        },
     });
     elems.statsPanel.appendChild(elems.stats);
     elems.statsPanel.appendChild(elems.moreStatsButton);
@@ -296,7 +303,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         innerText: "Set Task",
         clickListener: () => {
             setSleeveTask(sleeve, elems);
-        }
+        },
     });
     elems.taskPanel.appendChild(elems.taskSelector);
     elems.taskPanel.appendChild(elems.taskDetailsSelector);
@@ -312,7 +319,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         innerText: "More Earnings Info",
         clickListener: () => {
             dialogBoxCreate(MoreEarningsContent(sleeve));
-        }
+        },
     });
 
     elems.earningsPanel.appendChild(elems.currentEarningsInfo);
@@ -328,10 +335,14 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
 }
 
 // Updates the UI for a single Sleeve
-function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
+function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems): void {
     if (!routing.isOn(Page.Sleeves)) { return; }
+    if(playerRef == null) throw new Error("playerRef is null in updateSleeveUi()");
+    if(elems.taskProgressBar == null) throw new Error("elems.taskProgressBar is null");
+    if(elems.stats == null) throw new Error("elems.stats is null");
+    if(elems.currentEarningsInfo == null) throw new Error("elems.currentEarningsInfo is null");
 
-    ReactDOM.render(StatsElement(sleeve), elems.stats!);
+    ReactDOM.render(StatsElement(sleeve), elems.stats);
 
     if (sleeve.currentTask === SleeveTaskType.Crime) {
         const data = [
@@ -341,11 +352,11 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
             [`Defense Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.def), `(2x on success)`],
             [`Dexterity Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.dex), `(2x on success)`],
             [`Agility Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.agi), `(2x on success)`],
-            [`Charisma Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.cha), `(2x on success)`]
+            [`Charisma Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.cha), `(2x on success)`],
         ];
-        ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo!)
+        ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo)
 
-        elems.taskProgressBar!.innerText = createProgressBarText({
+        elems.taskProgressBar.innerText = createProgressBarText({
             progress: sleeve.currentTaskTime / sleeve.currentTaskMaxTime,
             totalTicks: 25,
         });
@@ -357,16 +368,15 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
             [`Defense Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.def)} / s`],
             [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.dex)} / s`],
             [`Agility Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.agi)} / s`],
-            [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.cha)} / s`]
+            [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * sleeve.gainRatesForTask.cha)} / s`],
         ];
-        let repGainText: string = "";
         if (sleeve.currentTask === SleeveTaskType.Company || sleeve.currentTask === SleeveTaskType.Faction) {
-            const repGain: number = sleeve.getRepGain(playerRef!);
+            const repGain: number = sleeve.getRepGain(playerRef);
             data.push([`Reputation:`, ReputationRate(5 * repGain)]);
         }
-        ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo!)
+        ReactDOM.render(EarningsTableElement('Earnings (Pre-Synchronization)', data), elems.currentEarningsInfo)
 
-        elems.taskProgressBar!.innerText = "";
+        elems.taskProgressBar.innerText = "";
     }
 }
 
@@ -376,18 +386,18 @@ const universitySelectorOptions: string[] = [
     "Networks",
     "Algorithms",
     "Management",
-    "Leadership"
+    "Leadership",
 ];
 
 const gymSelectorOptions: string[] = [
     "Train Strength",
     "Train Defense",
     "Train Dexterity",
-    "Train Agility"
+    "Train Agility",
 ];
 
 // Whenever a new task is selected, the "details" selector must update accordingly
-function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSleeves: Sleeve[]) {
+function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSleeves: Sleeve[]): void {
     if (playerRef == null) {
         throw new Error(`playerRef is null in updateSleeveTaskSelector()`);
     }
@@ -410,41 +420,50 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
         }
     }
 
+    if(elems.taskDetailsSelector === null) {
+        throw new Error("elems.taskDetailsSelector is null");
+    }
+    if(elems.taskDetailsSelector2 === null) {
+        throw new Error("elems.taskDetailsSelector is null");
+    }
+
+    
+
     // Reset Selectors
     removeChildrenFromElement(elems.taskDetailsSelector);
     removeChildrenFromElement(elems.taskDetailsSelector2);
-    elems.taskDetailsSelector2 = clearEventListeners(elems.taskDetailsSelector2!) as HTMLSelectElement;
+    elems.taskDetailsSelector2 = clearEventListeners(elems.taskDetailsSelector2) as HTMLSelectElement;
 
     const value: string = getSelectValue(elems.taskSelector);
     switch(value) {
-        case "Work for Company":
-            let companyCount: number = 0;
-            const allJobs: string[] = Object.keys(playerRef!.jobs!);
+        case "Work for Company": {
+            let companyCount = 0;
+            const allJobs: string[] = Object.keys(playerRef.jobs);
             for (let i = 0; i < allJobs.length; ++i) {
                 if (!forbiddenCompanies.includes(allJobs[i])) {
-                    elems.taskDetailsSelector!.add(createOptionElement(allJobs[i]));
+                    elems.taskDetailsSelector.add(createOptionElement(allJobs[i]));
 
                     // Set initial value of the 'Details' selector
                     if (sleeve.currentTaskLocation === allJobs[i]) {
-                        elems.taskDetailsSelector!.selectedIndex = companyCount;
+                        elems.taskDetailsSelector.selectedIndex = companyCount;
                     }
 
                     ++companyCount;
                 }
 
-                elems.taskDetailsSelector2!.add(createOptionElement("------"));
+                elems.taskDetailsSelector2.add(createOptionElement("------"));
             }
             break;
-        case "Work for Faction":
-            let factionCount: number = 0;
-            for (let i = 0; i < playerRef!.factions!.length; ++i) {
-                const fac: string = playerRef!.factions[i]!;
+        }
+        case "Work for Faction": {
+            let factionCount = 0;
+            for (const fac of playerRef.factions) {
                 if (!forbiddenFactions.includes(fac)) {
-                    elems.taskDetailsSelector!.add(createOptionElement(fac));
+                    elems.taskDetailsSelector.add(createOptionElement(fac));
 
                     // Set initial value of the 'Details' Selector
                     if (sleeve.currentTaskLocation === fac) {
-                        elems.taskDetailsSelector!.selectedIndex = factionCount;
+                        elems.taskDetailsSelector.selectedIndex = factionCount;
                     }
 
                     ++factionCount;
@@ -452,94 +471,98 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
             }
 
             // The available faction work types depends on the faction
-            elems.taskDetailsSelector!.addEventListener("change", () => {
-                const facName = getSelectValue(elems.taskDetailsSelector!);
+            elems.taskDetailsSelector.addEventListener("change", () => {
+                if(elems.taskDetailsSelector2 === null) 
+                    throw new Error("elems.taskDetailsSelector2 is null");
+                const facName = getSelectValue(elems.taskDetailsSelector);
                 const faction: Faction | null = Factions[facName];
                 if (faction == null) {
                     console.warn(`Invalid faction name when trying to update Sleeve Task Selector: ${facName}`);
                     return;
                 }
                 const facInfo = faction.getInfo();
-                removeChildrenFromElement(elems.taskDetailsSelector2!);
+                removeChildrenFromElement(elems.taskDetailsSelector2);
                 let numOptionsAdded = 0;
                 if (facInfo.offerHackingWork) {
-                    elems.taskDetailsSelector2!.add(createOptionElement("Hacking Contracts"));
+                    elems.taskDetailsSelector2.add(createOptionElement("Hacking Contracts"));
                     if (sleeve.factionWorkType === FactionWorkType.Hacking) {
-                        elems.taskDetailsSelector2!.selectedIndex = numOptionsAdded;
+                        elems.taskDetailsSelector2.selectedIndex = numOptionsAdded;
                     }
                     ++numOptionsAdded;
                 }
                 if (facInfo.offerFieldWork) {
-                    elems.taskDetailsSelector2!.add(createOptionElement("Field Work"));
+                    elems.taskDetailsSelector2.add(createOptionElement("Field Work"));
                     if (sleeve.factionWorkType === FactionWorkType.Field) {
-                        elems.taskDetailsSelector2!.selectedIndex = numOptionsAdded;
+                        elems.taskDetailsSelector2.selectedIndex = numOptionsAdded;
                     }
                     ++numOptionsAdded;
                 }
                 if (facInfo.offerSecurityWork) {
-                    elems.taskDetailsSelector2!.add(createOptionElement("Security Work"));
+                    elems.taskDetailsSelector2.add(createOptionElement("Security Work"));
                     if (sleeve.factionWorkType === FactionWorkType.Security) {
-                        elems.taskDetailsSelector2!.selectedIndex = numOptionsAdded;
+                        elems.taskDetailsSelector2.selectedIndex = numOptionsAdded;
                     }
                     ++numOptionsAdded;
                 }
             });
-            elems.taskDetailsSelector!.dispatchEvent(new Event("change"));
+            elems.taskDetailsSelector.dispatchEvent(new Event("change"));
             break;
-        case "Commit Crime":
+        }
+        case "Commit Crime": {
             let i = 0;
             for (const crimeLabel in Crimes) {
                 const name: string = Crimes[crimeLabel].name;
-                elems.taskDetailsSelector!.add(createOptionElement(name, crimeLabel));
+                elems.taskDetailsSelector.add(createOptionElement(name, crimeLabel));
 
                 // Set initial value for crime type
                 if (sleeve.crimeType === "") { continue; }
                 const crime: Crime | null = Crimes[sleeve.crimeType];
-                if (crime == null) { continue; }
-                if (name === crime!.name) {
-                    elems.taskDetailsSelector!.selectedIndex = i;
+                if (crime === null) { continue; }
+                if (name === crime.name) {
+                    elems.taskDetailsSelector.selectedIndex = i;
                 }
 
                 ++i;
             }
 
-            elems.taskDetailsSelector2!.add(createOptionElement("------"));
+            elems.taskDetailsSelector2.add(createOptionElement("------"));
             break;
+        }
         case "Take University Course":
             // First selector has class type
             for (let i = 0; i < universitySelectorOptions.length; ++i) {
-                elems.taskDetailsSelector!.add(createOptionElement(universitySelectorOptions[i]));
+                elems.taskDetailsSelector.add(createOptionElement(universitySelectorOptions[i]));
 
                 // Set initial value
                 if (sleeve.className === universitySelectorOptions[i]) {
-                    elems.taskDetailsSelector!.selectedIndex = i;
+                    elems.taskDetailsSelector.selectedIndex = i;
                 }
             }
 
             // Second selector has which university
             switch (sleeve.city) {
                 case CityName.Aevum:
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.AevumSummitUniversity));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.AevumSummitUniversity));
                     break;
                 case CityName.Sector12:
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.Sector12RothmanUniversity));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.Sector12RothmanUniversity));
                     break;
                 case CityName.Volhaven:
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.VolhavenZBInstituteOfTechnology));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.VolhavenZBInstituteOfTechnology));
                     break;
                 default:
-                    elems.taskDetailsSelector2!.add(createOptionElement("No university available in city!"));
+                    elems.taskDetailsSelector2.add(createOptionElement("No university available in city!"));
                     break;
             }
             break;
         case "Workout at Gym":
             // First selector has what stat is being trained
             for (let i = 0; i < gymSelectorOptions.length; ++i) {
-                elems.taskDetailsSelector!.add(createOptionElement(gymSelectorOptions[i]));
+                elems.taskDetailsSelector.add(createOptionElement(gymSelectorOptions[i]));
 
                 // Set initial value
                 if (sleeve.gymStatType === gymSelectorOptions[i]) {
-                    elems.taskDetailsSelector!.selectedIndex = i;
+                    elems.taskDetailsSelector.selectedIndex = i;
                 }
             }
 
@@ -547,32 +570,32 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
             // In this switch statement we also set the initial value of the second selector
             switch (sleeve.city) {
                 case CityName.Aevum:
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.AevumCrushFitnessGym));
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.AevumSnapFitnessGym));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.AevumCrushFitnessGym));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.AevumSnapFitnessGym));
 
                     // Set initial value
                     if (sleeve.currentTaskLocation === LocationName.AevumCrushFitnessGym) {
-                        elems.taskDetailsSelector2!.selectedIndex = 0;
+                        elems.taskDetailsSelector2.selectedIndex = 0;
                     } else if (sleeve.currentTaskLocation === LocationName.AevumSnapFitnessGym) {
-                        elems.taskDetailsSelector2!.selectedIndex = 1;
+                        elems.taskDetailsSelector2.selectedIndex = 1;
                     }
                     break;
                 case CityName.Sector12:
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.Sector12IronGym));
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.Sector12PowerhouseGym));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.Sector12IronGym));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.Sector12PowerhouseGym));
 
                     // Set initial value
                     if (sleeve.currentTaskLocation === LocationName.Sector12IronGym) {
-                        elems.taskDetailsSelector2!.selectedIndex = 0;
+                        elems.taskDetailsSelector2.selectedIndex = 0;
                     } else if (sleeve.currentTaskLocation === LocationName.Sector12PowerhouseGym) {
-                        elems.taskDetailsSelector2!.selectedIndex = 1;
+                        elems.taskDetailsSelector2.selectedIndex = 1;
                     }
                     break;
                 case CityName.Volhaven:
-                    elems.taskDetailsSelector2!.add(createOptionElement(LocationName.VolhavenMilleniumFitnessGym));
+                    elems.taskDetailsSelector2.add(createOptionElement(LocationName.VolhavenMilleniumFitnessGym));
                     break;
                 default:
-                    elems.taskDetailsSelector2!.add(createOptionElement("No gym available in city!"));
+                    elems.taskDetailsSelector2.add(createOptionElement("No gym available in city!"));
                     break;
             }
 
@@ -581,8 +604,8 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
         case "Synchronize":
         case "------":
             // No options in "Details" selector
-            elems.taskDetailsSelector!.add(createOptionElement("------"));
-            elems.taskDetailsSelector2!.add(createOptionElement("------"));
+            elems.taskDetailsSelector.add(createOptionElement("------"));
+            elems.taskDetailsSelector2.add(createOptionElement("------"));
             return;
         default:
             break;
@@ -594,37 +617,38 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
         if (playerRef == null) {
             throw new Error("playerRef is null in Sleeve UI's setSleeveTask()");
         }
+        if(elems.taskDescription == null) throw new Error("elems.taskDescription is null");
 
         const taskValue: string = getSelectValue(elems.taskSelector);
         const detailValue: string = getSelectValue(elems.taskDetailsSelector);
         const detailValue2: string = getSelectValue(elems.taskDetailsSelector2);
 
-        let res: boolean = false;
+        let res = false;
         switch(taskValue) {
             case "------":
-                elems.taskDescription!.innerText = "This sleeve is currently idle";
+                elems.taskDescription.innerText = "This sleeve is currently idle";
                 break;
             case "Work for Company":
-                res = sleeve.workForCompany(playerRef!, detailValue);
+                res = sleeve.workForCompany(playerRef, detailValue);
                 break;
             case "Work for Faction":
-                res = sleeve.workForFaction(playerRef!, detailValue, detailValue2);
+                res = sleeve.workForFaction(playerRef, detailValue, detailValue2);
                 break;
             case "Commit Crime":
-                res = sleeve.commitCrime(playerRef!, detailValue);
+                res = sleeve.commitCrime(playerRef, detailValue);
                 break;
             case "Take University Course":
-                res = sleeve.takeUniversityCourse(playerRef!, detailValue2, detailValue);
+                res = sleeve.takeUniversityCourse(playerRef, detailValue2, detailValue);
                 break;
             case "Workout at Gym":
-                res = sleeve.workoutAtGym(playerRef!, detailValue2, detailValue);
+                res = sleeve.workoutAtGym(playerRef, detailValue2, detailValue);
                 break;
             case "Shock Recovery":
                 sleeve.currentTask = SleeveTaskType.Recovery;
-                res = sleeve.shockRecovery(playerRef!);
+                res = sleeve.shockRecovery(playerRef);
                 break;
             case "Synchronize":
-                res = sleeve.synchronize(playerRef!);
+                res = sleeve.synchronize(playerRef);
                 break;
             default:
                 console.error(`Invalid/Unrecognized taskValue in setSleeveTask(): ${taskValue}`);
@@ -635,10 +659,10 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
         } else {
             switch (taskValue) {
                 case "Work for Faction":
-                    elems.taskDescription!.innerText = "Failed to assign sleeve to task. This is most likely because the selected faction does not offer the selected work type.";
+                    elems.taskDescription.innerText = "Failed to assign sleeve to task. This is most likely because the selected faction does not offer the selected work type.";
                     break;
                 default:
-                    elems.taskDescription!.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
+                    elems.taskDescription.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
                     break;
             }
 
@@ -648,8 +672,10 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
             updateSleevesPage();
 
             // Update the task selector for all sleeves by triggering a change event
-            for (const e of UIElems.sleeves!) {
-                e.taskSelector!.dispatchEvent(new Event('change'));
+            if(UIElems.sleeves == null) throw new Error("UIElems.sleeves is null");
+            for (const e of UIElems.sleeves) {
+                if(e.taskSelector == null) throw new Error("e.taskSelector is null");
+                e.taskSelector.dispatchEvent(new Event('change'));
             }
         }
 
@@ -670,32 +696,33 @@ function updateSleeveTaskDescription(sleeve: Sleeve, elems: ISleeveUIElems): voi
         const taskValue: string = getSelectValue(elems.taskSelector);
         const detailValue: string = getSelectValue(elems.taskDetailsSelector);
         const detailValue2: string = getSelectValue(elems.taskDetailsSelector2);
+        if(elems.taskDescription == null) throw new Error("elems.taskDescription should not be null")
 
         switch(taskValue) {
             case "------":
-                elems.taskDescription!.innerText = "This sleeve is currently idle";
+                elems.taskDescription.innerText = "This sleeve is currently idle";
                 break;
             case "Work for Company":
-                elems.taskDescription!.innerText = `This sleeve is currently working your job at ${sleeve.currentTaskLocation}.`;
+                elems.taskDescription.innerText = `This sleeve is currently working your job at ${sleeve.currentTaskLocation}.`;
                 break;
             case "Work for Faction":
-                elems.taskDescription!.innerText = `This sleeve is currently doing ${detailValue2} for ${sleeve.currentTaskLocation}.`;
+                elems.taskDescription.innerText = `This sleeve is currently doing ${detailValue2} for ${sleeve.currentTaskLocation}.`;
                 break;
             case "Commit Crime":
-                elems.taskDescription!.innerText = `This sleeve is currently attempting to ${Crimes[detailValue].type} (Success Rate: ${numeralWrapper.formatPercentage(Crimes[detailValue].successRate(sleeve))}).`;
+                elems.taskDescription.innerText = `This sleeve is currently attempting to ${Crimes[detailValue].type} (Success Rate: ${numeralWrapper.formatPercentage(Crimes[detailValue].successRate(sleeve))}).`;
                 break;
             case "Take University Course":
-                elems.taskDescription!.innerText = `This sleeve is currently studying/taking a course at ${sleeve.currentTaskLocation}.`;
+                elems.taskDescription.innerText = `This sleeve is currently studying/taking a course at ${sleeve.currentTaskLocation}.`;
                 break;
             case "Workout at Gym":
-                elems.taskDescription!.innerText = `This sleeve is currently working out at ${sleeve.currentTaskLocation}.`;
+                elems.taskDescription.innerText = `This sleeve is currently working out at ${sleeve.currentTaskLocation}.`;
                 break;
             case "Shock Recovery":
-                elems.taskDescription!.innerText = "This sleeve is currently set to focus on shock recovery. This causes " +
+                elems.taskDescription.innerText = "This sleeve is currently set to focus on shock recovery. This causes " +
                                                   "the Sleeve's shock to decrease at a faster rate.";
                 break;
             case "Synchronize":
-                elems.taskDescription!.innerText = "This sleeve is currently set to synchronize with the original consciousness. " +
+                elems.taskDescription.innerText = "This sleeve is currently set to synchronize with the original consciousness. " +
                                                   "This causes the Sleeve's synchronization to increase."
                 break;
             default:

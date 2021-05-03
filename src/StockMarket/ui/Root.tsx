@@ -20,7 +20,7 @@ export type placeOrderFn = (stock: Stock, shares: number, price: number, ordType
 type IProps = {
     buyStockLong: txFn;
     buyStockShort: txFn;
-    cancelOrder: (params: object) => void;
+    cancelOrder: (params: any) => void;
     eventEmitterForReset?: EventEmitter;
     initStockMarket: () => void;
     p: IPlayer;
@@ -53,7 +53,7 @@ export class StockMarketRoot extends React.Component<IProps, IState> {
         });
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <div>
                 <InfoAndPurchases

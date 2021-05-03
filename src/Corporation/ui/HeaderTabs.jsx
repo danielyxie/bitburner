@@ -4,8 +4,6 @@
 import React from "react";
 import { BaseReactComponent } from "./BaseReactComponent";
 
-import { overviewPage } from "./Routing";
-
 function HeaderTab(props) {
     let className = "cmpy-mgmt-header-tab";
     if (props.current) {
@@ -71,7 +69,7 @@ export class HeaderTabs extends BaseReactComponent {
                 {
                     this.renderTab({
                         onClick: this.eventHandler().createNewIndustryPopup.bind(this.eventHandler()),
-                        text: "Expand into new Industry"
+                        text: "Expand into new Industry",
                     })
                 }
             </div>

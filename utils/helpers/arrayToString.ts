@@ -5,7 +5,7 @@
  *  - Adds brackets around the array
  *  - Adds quotation marks around strings
  */
-export function arrayToString<T>(a: T[]) {
+export function arrayToString<T>(a: T[]): string {
     const vals: any[] = [];
     for (let i = 0; i < a.length; ++i) {
         let elem: any = a[i];

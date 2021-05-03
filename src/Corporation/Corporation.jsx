@@ -5,7 +5,6 @@ import { CorporationUpgrades }                          from "./data/Corporation
 import { EmployeePositions }                            from "./EmployeePositions";
 import { Industries,
          IndustryStartingCosts,
-         IndustryDescriptions,
          IndustryResearchTrees }                        from "./IndustryData";
 import { IndustryUpgrades }                             from "./IndustryUpgrades";
 import { Material }                                     from "./Material";
@@ -15,11 +14,8 @@ import { ResearchMap }                                  from "./ResearchMap";
 import { Warehouse }                                    from "./Warehouse";
 
 import { BitNodeMultipliers }                           from "../BitNode/BitNodeMultipliers";
-import { CONSTANTS }                                    from "../Constants";
-import { Factions }                                     from "../Faction/Factions";
 import { showLiterature }                               from "../Literature/LiteratureHelpers";
 import { LiteratureNames }                              from "../Literature/data/LiteratureNames";
-import { createCityMap }                                from "../Locations/Cities";
 import { CityName }                                     from "../Locations/data/CityNames";
 import { Player }                                       from "../Player";
 
@@ -29,7 +25,6 @@ import { Page, routing }                                from "../ui/navigationTr
 import { calculateEffectWithFactors }                   from "../utils/calculateEffectWithFactors";
 
 import { dialogBoxCreate }                              from "../../utils/DialogBox";
-import { clearSelector }                                from "../../utils/uiHelpers/clearSelector";
 import { Reviver,
          Generic_toJSON,
          Generic_fromJSON }                             from "../../utils/JSONReviver";
@@ -99,7 +94,6 @@ export const BaseMaxProducts                = 3;    // Initial value for maximum
 let researchTreeBoxOpened = false;
 let researchTreeBox = null;
 $(document).mousedown(function(event) {
-    const boxId = "corporation-research-popup-box";
     const contentId = "corporation-research-popup-box-content";
     if (researchTreeBoxOpened) {
         if ( $(event.target).closest("#" + contentId).get(0) == null ) {
@@ -111,7 +105,6 @@ $(document).mousedown(function(event) {
     }
 });
 
-var empManualAssignmentModeActive = false;
 function Industry(params={}) {
     this.offices = { //Maps locations to offices. 0 if no office at that location
         [CityName.Aevum]: 0,
@@ -122,7 +115,7 @@ function Industry(params={}) {
         }),
         [CityName.NewTokyo]: 0,
         [CityName.Ishima]: 0,
-        [CityName.Volhaven]: 0
+        [CityName.Volhaven]: 0,
     };
 
     this.name   = params.name ? params.name : 0;
@@ -183,7 +176,7 @@ function Industry(params={}) {
         }),
         [CityName.NewTokyo]: 0,
         [CityName.Ishima]: 0,
-        [CityName.Volhaven]: 0
+        [CityName.Volhaven]: 0,
     };
 
     this.init();
@@ -378,7 +371,7 @@ Industry.prototype.init = function() {
                 "Metal":    5,
                 "Energy":   5,
                 "Water":    2,
-                "Hardware": 4
+                "Hardware": 4,
             }
             this.prodMats = ["RealEstate"];
             this.makesProducts = true;
@@ -441,8 +434,7 @@ Industry.prototype.calculateProductionFactors = function() {
             continue;
         }
 
-        var materials = warehouse.materials,
-            office = this.offices[city];
+        var materials = warehouse.materials;
 
         var cityMult =  Math.pow(0.002 * materials.RealEstate.qty+1, this.reFac) *
                         Math.pow(0.002 * materials.Hardware.qty+1, this.hwFac) *
@@ -535,7 +527,7 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
 }
 
 // Process change in demand and competition for this industry's materials
-Industry.prototype.processMaterialMarket = function(marketCycles=1) {
+Industry.prototype.processMaterialMarket = function() {
     //References to prodMats and reqMats
     var reqMats = this.reqMats, prodMats = this.prodMats;
 
@@ -589,7 +581,7 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
 
 //Process production, purchase, and import/export of materials
 Industry.prototype.processMaterials = function(marketCycles=1, company) {
-    var revenue = 0, expenses = 0, industry = this;
+    var revenue = 0, expenses = 0;
     this.calculateProductionFactors();
 
     //At the start of the export state, set the imports of everything to 0
@@ -642,7 +634,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                         mat.qty += buyAmt;
                         expenses += (buyAmt * mat.bCost);
                     }
-                })(matName, industry);
+                })(matName, this);
                     this.updateWarehouseSizeUsed(warehouse);
                 }
             } //End process purchase of materials
@@ -1003,7 +995,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
         if (warehouse instanceof Warehouse) {
             switch(this.state) {
 
-            case "PRODUCTION":
+            case "PRODUCTION": {
             //Calculate the maximum production of this material based
             //on the office's productivity
             var maxProd = this.getOfficeProductivity(office, {forProduct:true})
@@ -1065,8 +1057,8 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             //Keep track of production Per second
             product.data[city][1] = prod * producableFrac / (SecsPerMarketCycle * marketCycles);
             break;
-
-            case "SALE":
+            }
+            case "SALE": {
             //Process sale of Products
             product.pCost = 0; //Estimated production cost
             for (var reqMatName in product.reqMats) {
@@ -1174,7 +1166,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                 product.data[city][2] = 0; //data[2] is sell property
             }
             break;
-
+            }
             case "START":
             case "PURCHASE":
             case "EXPORT":
@@ -1199,10 +1191,9 @@ Industry.prototype.discontinueProduct = function(product) {
 }
 
 Industry.prototype.upgrade = function(upgrade, refs) {
-    var corporation = refs.corporation, division = refs.division,
-        office = refs.office;
-    var upgN = upgrade[0], basePrice = upgrade[1], priceMult = upgrade[2],
-        upgradeBenefit = upgrade[3];
+    var corporation = refs.corporation;
+    var office = refs.office;
+    var upgN = upgrade[0];
     while (this.upgrades.length <= upgN) {this.upgrades.push(0);}
     ++this.upgrades[upgN];
 
@@ -1373,9 +1364,6 @@ Industry.prototype.createResearchBox = function() {
             "stroke-width": 2,
         },
     }
-
-    // Construct the tree with Treant
-    const treantTree = new Treant(markup);
 
     // Add Event Listeners for all Nodes
     const allResearch = researchTree.getAllNodes();
@@ -1620,7 +1608,7 @@ var OfficeSpaceTiers = {
     Basic: "Basic",
     Enhanced: "Enhanced",
     Luxurious: "Luxurious",
-    Extravagant: "Extravagant"
+    Extravagant: "Extravagant",
 }
 
 function OfficeSpace(params={}) {
@@ -1658,7 +1646,7 @@ OfficeSpace.prototype.atCapacity = function() {
 }
 
 OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
-    var corporation = parentRefs.corporation, industry = parentRefs.industry;
+    var industry = parentRefs.industry;
 
     // HRBuddy AutoRecruitment and training
     if (industry.hasResearch("HRBuddy-Recruitment") && !this.atCapacity()) {
@@ -1741,7 +1729,6 @@ OfficeSpace.prototype.calculateEmployeeProductivity = function(parentRefs) {
 
 //Takes care of UI as well
 OfficeSpace.prototype.findEmployees = function(parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.industry;
     if (this.atCapacity()) { return; }
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
@@ -1800,7 +1787,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
                 office.hireEmployee(employee, parentRefs);
                 removeElementById("cmpy-mgmt-hire-employee-popup");
                 return false;
-            }
+            },
         });
         return div;
     };
@@ -1812,7 +1799,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
         clickListener:() => {
             removeElementById("cmpy-mgmt-hire-employee-popup");
             return false;
-        }
+        },
     });
 
     var elems = [text,
@@ -1825,7 +1812,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
 }
 
 OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.industry;
+    var company = parentRefs.corporation;
     var yesBtn = yesNoTxtInpBoxGetYesButton(),
         noBtn = yesNoTxtInpBoxGetNoButton();
     yesBtn.innerHTML = "Hire";
@@ -1958,15 +1945,14 @@ Corporation.prototype.storeCycles = function(numCycles=1) {
 }
 
 Corporation.prototype.process = function() {
-    var corp = this;
     if (this.storedCycles >= CyclesPerIndustryStateCycle) {
         const state = this.getState();
         const marketCycles = 1;
         const gameCycles = (marketCycles * CyclesPerIndustryStateCycle);
         this.storedCycles -= gameCycles;
 
-        this.divisions.forEach(function(ind) {
-            ind.process(marketCycles, state, corp);
+        this.divisions.forEach((ind) => {
+            ind.process(marketCycles, state, this);
         });
 
         // Process cooldowns
@@ -2111,7 +2097,7 @@ Corporation.prototype.goPublic = function() {
         onkeyup:(e) => {
             e.preventDefault();
             if (e.keyCode === KEY.ENTER) {yesBtn.click();}
-        }
+        },
     });
     var br = createElement("br", {});
     yesBtn = createElement("a", {
@@ -2138,7 +2124,7 @@ Corporation.prototype.goPublic = function() {
             dialogBoxCreate(`You took your ${this.name} public and earned ` +
                             `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`);
             return false;
-        }
+        },
     });
     var noBtn = createElement("a", {
         class:"a-link-button",
@@ -2146,7 +2132,7 @@ Corporation.prototype.goPublic = function() {
         clickListener:() => {
             removeElementById(goPublicPopupId);
             return false;
-        }
+        },
     });
     createPopup(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
 }
@@ -2208,7 +2194,6 @@ Corporation.prototype.calculateShareSale = function(numShares) {
 
 Corporation.prototype.convertCooldownToString = function(cd) {
     // The cooldown value is based on game cycles. Convert to a simple string
-    const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
     const seconds = cd / 5;
 
     const SecondsPerMinute = 60;
@@ -2351,7 +2336,7 @@ Corporation.prototype.createUI = function() {
     companyManagementDiv = createElement("div", {
         id:"cmpy-mgmt-container",
         position:"fixed",
-        class:"generic-menupage-container"
+        class:"generic-menupage-container",
     });
     document.getElementById("entire-game-container").appendChild(companyManagementDiv);
 

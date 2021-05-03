@@ -12,7 +12,7 @@ import { IPlayer } from "../IPlayer";
 import {
     Person,
     ITaskTracker,
-    createTaskTracker
+    createTaskTracker,
 } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
@@ -39,23 +39,17 @@ import { LocationName } from "../../Locations/data/LocationNames";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
 export class Sleeve extends Person {
-    /**
-     * Initiatizes a Sleeve object from a JSON save state.
-     */
-    static fromJSON(value: any): Sleeve {
-        return Generic_fromJSON(Sleeve, value.data);
-    }
 
     /**
      * Stores the name of the class that the player is currently taking
      */
-    className: string = "";
+    className = "";
 
     /**
      * Stores the type of crime the sleeve is currently attempting
      * Must match the name of a Crime object
      */
-    crimeType: string = "";
+    crimeType = "";
 
     /**
      * Enum value for current task
@@ -70,17 +64,17 @@ export class Sleeve extends Person {
      * Crime: Money earned if successful
      * Class/Gym: Name of university/gym
      */
-    currentTaskLocation: string = "";
+    currentTaskLocation = "";
 
     /**
      * Maximum amount of time (in milliseconds) that can  be spent on current task.
      */
-    currentTaskMaxTime: number = 0;
+    currentTaskMaxTime = 0;
 
     /**
      * Milliseconds spent on current task
      */
-    currentTaskTime: number = 0;
+    currentTaskTime = 0;
 
     /**
      * Keeps track of experience earned for other sleeves
@@ -110,7 +104,7 @@ export class Sleeve extends Person {
     /**
      * String that stores what stat the sleeve is training at the gym
      */
-    gymStatType: string = "";
+    gymStatType = "";
 
     /**
      * Keeps track of events/notifications for this sleeve
@@ -120,7 +114,7 @@ export class Sleeve extends Person {
     /**
      * Clone retains 'memory' synchronization (and maybe exp?) upon prestige/installing Augs
      */
-    memory: number = 1;
+    memory = 1;
 
     /**
      * Sleeve shock. Number between 0 and 100
@@ -129,19 +123,19 @@ export class Sleeve extends Person {
      *
      * Reputation earned is also multiplied by shock%
      */
-    shock: number = 1;
+    shock = 1;
 
     /**
      * Stored number of game "loop" cycles
      */
-    storedCycles: number = 0;
+    storedCycles = 0;
 
     /**
      * Synchronization. Number between 0 and 100
      * When experience is earned  by sleeve, both the player and the sleeve get
      * sync% of the experience earned. Other sleeves get sync^2% of exp
      */
-    sync: number = 1;
+    sync = 1;
 
     constructor(p: IPlayer | null = null) {
         super();
@@ -228,7 +222,7 @@ export class Sleeve extends Person {
      * Earn experience for any stats (supports multiple)
      * This function also handles experience propogating to Player and other sleeves
      */
-    gainExperience(p: IPlayer, exp: ITaskTracker, numCycles: number=1, fromOtherSleeve: boolean=false): ITaskTracker {
+    gainExperience(p: IPlayer, exp: ITaskTracker, numCycles=1, fromOtherSleeve=false): ITaskTracker {
         // If the experience is coming from another sleeve, it is not multiplied by anything.
         // Also the player does not earn anything
         if (fromOtherSleeve) {
@@ -335,7 +329,7 @@ export class Sleeve extends Person {
     /**
      * Earn money for player
      */
-    gainMoney(p: IPlayer, task: ITaskTracker, numCycles: number=1): void {
+    gainMoney(p: IPlayer, task: ITaskTracker, numCycles=1): void {
         const gain: number = (task.money * numCycles);
         this.earningsForTask.money += gain;
         this.earningsForPlayer.money += gain;
@@ -373,10 +367,10 @@ export class Sleeve extends Person {
      */
     getRepGain(p: IPlayer): number {
         if (this.currentTask === SleeveTaskType.Faction) {
-            let favorMult: number = 1;
+            let favorMult = 1;
             const fac: Faction | null = Factions[this.currentTaskLocation];
             if (fac != null) {
-                favorMult = 1 + (fac!.favor / 100);
+                favorMult = 1 + (fac.favor / 100);
             }
 
             switch (this.factionWorkType) {
@@ -404,10 +398,10 @@ export class Sleeve extends Person {
                 return 0;
             }
 
-            const jobPerformance: number = companyPosition!.calculateJobPerformance(this.hacking_skill, this.strength,
+            const jobPerformance: number = companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
                                                                                    this.defense, this.dexterity,
                                                                                    this.agility, this.charisma);
-            const favorMult = 1 + (company!.favor / 100);
+            const favorMult = 1 + (company.favor / 100);
 
             return jobPerformance * this.company_rep_mult * favorMult;
         } else {
@@ -429,7 +423,7 @@ export class Sleeve extends Person {
     }
 
     log(entry: string): void {
-        const MaxLogSize: number = 50;
+        const MaxLogSize = 50;
         this.logs.push(entry);
         if (this.logs.length > MaxLogSize) {
             this.logs.shift();
@@ -439,7 +433,7 @@ export class Sleeve extends Person {
     /**
      * Called on every sleeve for a Source File prestige
      */
-    prestige(p: IPlayer) {
+    prestige(p: IPlayer): void {
         // Reset exp
         this.hacking_exp = 0;
         this.strength_exp = 0;
@@ -471,7 +465,7 @@ export class Sleeve extends Person {
      * Returns an object containing the amount of experience that should be
      * transferred to all other sleeves
      */
-    process(p: IPlayer, numCycles: number=1): ITaskTracker | null {
+    process(p: IPlayer, numCycles=1): ITaskTracker | null {
         // Only process once every second (5 cycles)
         const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
         this.storedCycles += numCycles;
@@ -504,7 +498,7 @@ export class Sleeve extends Person {
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
                 break;
-            case SleeveTaskType.Faction:
+            case SleeveTaskType.Faction: {
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
 
@@ -517,7 +511,8 @@ export class Sleeve extends Person {
 
                 fac.playerReputation += (this.getRepGain(p) * cyclesUsed);
                 break;
-            case SleeveTaskType.Company:
+            }
+            case SleeveTaskType.Company: {
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
 
@@ -527,8 +522,9 @@ export class Sleeve extends Person {
                     break;
                 }
 
-                company!.playerReputation += (this.getRepGain(p) * cyclesUsed);
+                company.playerReputation += (this.getRepGain(p) * cyclesUsed);
                 break;
+            }
             case SleeveTaskType.Recovery:
                 this.shock = Math.min(100, this.shock + (0.0002 * cyclesUsed));
                 break;
@@ -605,7 +601,7 @@ export class Sleeve extends Person {
 
         // Set exp/money multipliers based on which university.
         // Also check that the sleeve is in the right city
-        let costMult: number = 1;
+        let costMult = 1;
         switch (universityName.toLowerCase()) {
             case LocationName.AevumSummitUniversity.toLowerCase():
                 if (this.city !== CityName.Aevum) { return false; }
@@ -676,7 +672,7 @@ export class Sleeve extends Person {
 
     updateTaskGainRates(p: IPlayer): void {
         if (this.currentTask === SleeveTaskType.Class) {
-            let expMult: number = 1;
+            let expMult = 1;
             switch (this.currentTaskLocation.toLowerCase()) {
                 case LocationName.AevumSummitUniversity.toLowerCase():
                     expMult = 3;
@@ -720,7 +716,7 @@ export class Sleeve extends Person {
 
         if (this.currentTask === SleeveTaskType.Gym) {
             // Get gym exp multiplier
-            let expMult: number = 1;
+            let expMult = 1;
             switch (this.currentTaskLocation.toLowerCase()) {
                 case LocationName.AevumCrushFitnessGym.toLowerCase():
                     expMult = 2;
@@ -742,7 +738,7 @@ export class Sleeve extends Person {
             }
 
             // Set stat gain rate
-            const baseGymExp: number = 1;
+            const baseGymExp = 1;
             const totalExpMultiplier = p.hashManager.getTrainingMult() * expMult;
             const sanitizedStat: string = this.gymStatType.toLowerCase();
             if (sanitizedStat.includes("str")) {
@@ -889,7 +885,7 @@ export class Sleeve extends Person {
 
         // Set exp/money multipliers based on which university.
         // Also check that the sleeve is in the right city
-        let costMult: number = 1;
+        let costMult = 1;
         switch (gymName.toLowerCase()) {
             case LocationName.AevumCrushFitnessGym.toLowerCase():
                 if (this.city != CityName.Aevum) { return false; }
@@ -911,7 +907,7 @@ export class Sleeve extends Person {
                 this.currentTaskLocation = LocationName.Sector12PowerhouseGym;
                 costMult = 20;
                 break;
-            case LocationName.VolhavenMilleniumFitnessGym:
+            case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
                 if (this.city != CityName.Volhaven) { return false; }
                 this.currentTaskLocation = LocationName.VolhavenMilleniumFitnessGym;
                 costMult = 7;
@@ -946,6 +942,14 @@ export class Sleeve extends Person {
      */
     toJSON(): any {
         return Generic_toJSON("Sleeve", this);
+    }
+    
+    /**
+     * Initiatizes a Sleeve object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Sleeve {
+        return Generic_fromJSON(Sleeve, value.data);
     }
 }
 

@@ -6,16 +6,10 @@ import { Generic_fromJSON,
 export const AllCorporationStates: string[] = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
 
 export class CorporationState {
-    // Initiatizes a CorporationState object from a JSON save state.
-    static fromJSON(value: any): CorporationState {
-        return Generic_fromJSON(CorporationState, value.data);
-    }
 
     // Number representing what state the Corporation is in. The number
     // is an index for the array that holds all Corporation States
-    state: number = 0;
-
-    constructor() {}
+    state = 0;
 
     // Get the name of the current state
     // NOTE: This does NOT return the number stored in the 'state' property,
@@ -39,6 +33,12 @@ export class CorporationState {
     // Serialize the current object to a JSON save state.
     toJSON(): any {
         return Generic_toJSON("CorporationState", this);
+    }
+
+    // Initiatizes a CorporationState object from a JSON save state.
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): CorporationState {
+        return Generic_fromJSON(CorporationState, value.data);
     }
 }
 

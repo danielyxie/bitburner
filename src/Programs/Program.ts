@@ -11,7 +11,7 @@ export interface IProgramCreate {
 }
 
 export class Program {
-    name: string = "";
+    name = "";
     create: IProgramCreate | null;
 
     constructor(name: string, create: IProgramCreate | null) {

@@ -12,7 +12,7 @@ export function hasCorporation() {
 
 export function startCorporation(corpName, additionalShares=0) {
     this.corporation = new Corporation({
-        name: corpName
+        name: corpName,
     });
 
     this.corporation.totalShares += additionalShares;

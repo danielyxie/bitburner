@@ -4,18 +4,12 @@ import { FactionInfo,
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class Faction {
-    /**
-     * Initiatizes a Faction object from a JSON save state.
-     */
-    static fromJSON(value: any): Faction {
-        return Generic_fromJSON(Faction, value.data);
-    }
 
     /**
      * Flag signalling whether the player has already received an invitation
      * to this faction
      */
-    alreadyInvited: boolean = false;
+    alreadyInvited = false;
 
     /**
      * Holds names of all augmentations that this Faction offers
@@ -25,35 +19,35 @@ export class Faction {
     /**
      * Amount of favor the player has with this faction.
      */
-    favor: number = 0;
+    favor = 0;
 
     /**
      * Flag signalling whether player has been banned from this faction
      */
-    isBanned: boolean = false;
+    isBanned = false;
 
     /**
      * Flag signalling whether player is a member of this faction
      */
-    isMember: boolean = false;
+    isMember = false;
 
     /**
      * Name of faction
      */
-    name: string = "";
+    name = "";
 
     /**
      * Amount of reputation player has with this faction
      */
-    playerReputation: number = 0;
+    playerReputation = 0;
 
     /**
      * Reputation from the last "prestige" that was not converted to favor.
      * This reputation rolls over and is used for the next favor calculation
      */
-    rolloverRep: number = 0;
+    rolloverRep = 0;
 
-    constructor(name: string="") {
+    constructor(name="") {
         this.name = name;
     }
 
@@ -82,7 +76,7 @@ export class Faction {
     getFavorGain(): number[] {
         if (this.favor == null) { this.favor = 0; }
         if (this.rolloverRep == null) { this.rolloverRep = 0; }
-        var favorGain = 0, rep = this.playerReputation + this.rolloverRep;
+        let favorGain = 0, rep = this.playerReputation + this.rolloverRep;
         let reqdRep = CONSTANTS.FactionReputationToFavorBase *
                       Math.pow(CONSTANTS.FactionReputationToFavorMult, this.favor);
         while(rep > 0) {
@@ -102,6 +96,14 @@ export class Faction {
      */
     toJSON(): any {
         return Generic_toJSON("Faction", this);
+    }
+
+    /**
+     * Initiatizes a Faction object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Faction {
+        return Generic_fromJSON(Faction, value.data);
     }
 }
 

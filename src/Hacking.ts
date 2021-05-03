@@ -1,9 +1,7 @@
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-import { Player } from "./Player";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { Server } from "./Server/Server";
-import { HacknetServer } from "./Hacknet/HacknetServer";
 
 /**
  * Returns the chance the player has to successfully hack a server

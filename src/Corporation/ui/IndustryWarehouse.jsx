@@ -19,7 +19,6 @@ import { isString }                     from "../../../utils/helpers/isString";
 function ProductComponent(props) {
     const corp = props.corp;
     const division = props.division;
-    const warehouse = props.warehouse;
     const city = props.city;
     const product = props.product;
     const eventHandler = props.eventHandler;
@@ -202,15 +201,6 @@ function MaterialComponent(props) {
 
     // Total gain or loss of this material (per second)
     const totalGain = mat.buy + mat.prd + mat.imp - mat.sll - mat.totalExp;
-
-    // Competition and demand info, if they're unlocked
-    let cmpAndDmdText = "";
-    if (corp.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Demand: " + numeralWrapper.format(mat.dmd, nf);
-    }
-    if (corp.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Competition: " + numeralWrapper.format(mat.cmp, nf);
-    }
 
     // Flag that determines whether this industry is "new" and the current material should be
     // marked with flashing-red lights
@@ -511,7 +501,6 @@ export class IndustryWarehouse extends BaseReactComponent {
     }
 
     render() {
-        const corp = this.corp();
         const division = this.routing().currentDivision;
         if (division == null) {
             throw new Error(`Routing does not hold reference to the current Industry`);

@@ -5,11 +5,9 @@
  */
 import * as React from "react";
 
-import { CONSTANTS }                from "../../Constants";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
 import { getHospitalizationCost }   from "../../Hospital/Hospital";
 
-import { numeralWrapper }           from "../../ui/numeralFormat";
 import { AutoupdatingStdButton }    from "../../ui/React/AutoupdatingStdButton";
 import { Money }                    from "../../ui/React/Money";
 
@@ -27,7 +25,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
     /**
      * Stores button styling that sets them all to block display
      */
-    btnStyle: object;
+    btnStyle: any;
 
     constructor(props: IProps) {
         super(props);
@@ -65,7 +63,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
         dialogBoxCreate(<>You were healed to full health! The hospital billed you for {Money(cost)}</>);
     }
 
-    render() {
+    render(): React.ReactNode {
         const cost = this.getCost();
 
         return (

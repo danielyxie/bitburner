@@ -20,7 +20,6 @@ import { Player } from "../../Player";
 import { AllServers } from "../../Server/AllServers";
 
 import { createPopup } from "../../ui/React/createPopup";
-import { PopupCloseButton } from "../../ui/React/PopupCloseButton";
 
 export const PurchaseMultipliers = Object.freeze({
     "x1": 1,

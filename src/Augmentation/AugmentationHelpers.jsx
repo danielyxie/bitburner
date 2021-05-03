@@ -8,29 +8,13 @@ import { AugmentationsRoot } from "./ui/Root";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
-import { startWorkerScript } from "../NetscriptWorker";
 import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
 import { saveObject } from "../SaveObject";
-import { RunningScript } from "../Script/RunningScript";
-import { Script } from "../Script/Script";
-import { Server } from "../Server/Server";
-import { OwnedAugmentationsOrderSetting } from "../Settings/SettingEnums";
-import { Settings } from "../Settings/Settings";
 import { Page, routing } from "../ui/navigationTracking";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import { createAccordionElement } from "../../utils/uiHelpers/createAccordionElement";
-import {
-    Reviver,
-    Generic_toJSON,
-    Generic_fromJSON
-} from "../../utils/JSONReviver";
-import { formatNumber } from "../../utils/StringHelperFunctions";
 import { clearObject } from "../../utils/helpers/clearObject";
-import { createElement } from "../../utils/uiHelpers/createElement";
-import { isString } from "../../utils/helpers/isString";
-import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
 import { Money } from "../ui/React/Money";
 
 import React from "react";
@@ -76,7 +60,7 @@ function initAugmentations() {
              "This augmentation increases the player's dexterity by 10%.",
         dexterity_mult: 1.1,
     });
-    Targeting1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    Targeting1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Ishima",
                             "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.Targeting1)) {
         delete Augmentations[AugmentationNames.Targeting1];
@@ -91,7 +75,7 @@ function initAugmentations() {
         prereqs:[AugmentationNames.Targeting1],
         dexterity_mult: 1.2,
     });
-    Targeting2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    Targeting2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.Targeting2)) {
         delete Augmentations[AugmentationNames.Targeting2];
@@ -152,7 +136,7 @@ function initAugmentations() {
         strength_mult: 1.1,
         defense_mult: 1.1,
     });
-    CombatRib1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    CombatRib1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib1)) {
         delete Augmentations[AugmentationNames.CombatRib1];
@@ -168,7 +152,7 @@ function initAugmentations() {
         strength_mult: 1.14,
         defense_mult: 1.14,
     });
-    CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Volhaven",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib2)) {
         delete Augmentations[AugmentationNames.CombatRib2];
@@ -404,7 +388,7 @@ function initAugmentations() {
         info:"The body is injected with a chemical that artificially induces synaptic potentiation, " +
              "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's hacking speed by 2% <br>" +
+             "Increases the player's hacking speed by 2%.<br>" +
              "Increases the player's hacking chance by 5%.<br>" +
              "Increases the player's hacking experience gain rate by 5%.",
         hacking_speed_mult: 1.02,
@@ -444,7 +428,7 @@ function initAugmentations() {
              "This augmentation increases the player's hacking speed by 3%.",
         hacking_speed_mult: 1.03,
     });
-    SynapticEnhancement.addToFactions(["CyberSec"]);
+    SynapticEnhancement.addToFactions(["CyberSec", "Aevum"]);
     if (augmentationExists(AugmentationNames.SynapticEnhancement)) {
         delete Augmentations[AugmentationNames.SynapticEnhancement];
     }
@@ -772,7 +756,7 @@ function initAugmentations() {
              "when working for a company by 20%.",
         company_rep_mult: 1.2,
     });
-    NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing", "Ishima",
+    NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing",
                                            "Clarke Incorporated", "Four Sigma", "Bachman & Associates"]);
     if (augmentationExists(AugmentationNames.NuoptimalInjectorImplant)) {
         delete Augmentations[AugmentationNames.NuoptimalInjectorImplant];
@@ -1080,7 +1064,7 @@ function initAugmentations() {
         agility_exp_mult: 1.1,
         charisma_exp_mult: 1.1,
     });
-    Neurotrainer1.addToFactions(["CyberSec"]);
+    Neurotrainer1.addToFactions(["CyberSec", "Aevum"]);
     if (augmentationExists(AugmentationNames.Neurotrainer1)) {
         delete Augmentations[AugmentationNames.Neurotrainer1];
     }
@@ -1256,7 +1240,7 @@ function initAugmentations() {
 	// Daedalus
     const RedPill = new Augmentation({
         name:AugmentationNames.TheRedPill, repCost:1e6, moneyCost:0,
-        info:"It's time to leave the cave."
+        info:"It's time to leave the cave.",
     });
     RedPill.addToFactions(["Daedalus"]);
     if (augmentationExists(AugmentationNames.TheRedPill)) {
@@ -1332,7 +1316,7 @@ function initAugmentations() {
              "capable of psychoanalyzing and profiling the personality of " +
              "others using optical imaging software.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's charisma by 50%. <br>" +
+             "Increases the player's charisma by 50%.<br>" +
              "Increases the player's charisma experience gain rate by 50%.<br>" +
              "Increases the amount of reputation the player gains for a company by 25%.<br>" +
              "Increases the amount of reputation the player gains for a faction by 25%.",
@@ -1556,7 +1540,7 @@ function initAugmentations() {
              and upload the assets.<br /><br />
              This augmentation:<br />
              Lets the player start with {Money(1e6)} after a reset.<br />
-             Lets the player start with the BruteSSH.exe program after a reset.</>
+             Lets the player start with the BruteSSH.exe program after a reset.</>,
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
@@ -1743,7 +1727,7 @@ function initAugmentations() {
                  "to induce wakefulness and concentration, suppress fear, reduce empathy, and " +
                  "improve reflexes and memory-recall among other things.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases the player's sucess chance in Bladeburner contracts/operations by 3%.<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 3%.<br>" +
                  "Increases the player's effectiveness in Bladeburner Field Analysis by 5%.<br>" +
                  "Increases the player's Bladeburner stamina gain rate by 2%.",
             bladeburner_success_chance_mult: 1.03,
@@ -2098,7 +2082,7 @@ export function displayAugmentationsContent(contentEl) {
             exportGameFn={saveObject.exportGame.bind(saveObject)}
             installAugmentationsFn={installAugmentations}
         />,
-        contentEl
+        contentEl,
     );
 }
 

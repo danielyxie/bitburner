@@ -15,7 +15,7 @@ type IProps = {
     entryPosType: CompanyPosition;
     onClick: (e: React.MouseEvent<HTMLElement>) => void;
     p: IPlayer;
-    style?: object;
+    style?: any;
     text: string;
 }
 
@@ -28,14 +28,14 @@ export class ApplyToJobButton extends React.Component<IProps, any> {
 
     getJobRequirementTooltip(): string {
         const pos = this.props.p.getNextCompanyPosition(this.props.company, this.props.entryPosType);
-        if (pos == null) { return "" };
+        if (pos == null) { return "" }
 
         if (!this.props.company.hasPosition(pos)) { return ""; }
 
         return getJobRequirementText(this.props.company, pos, true);
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <StdButton
                 onClick={this.props.onClick}

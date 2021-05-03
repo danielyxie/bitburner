@@ -11,8 +11,8 @@ import { Accordion } from "./Accordion";
 import { SourceFile } from "../../SourceFile/SourceFile";
 
 type IProps = {
-    level: number,
-    sf: SourceFile,
+    level: number;
+    sf: SourceFile;
 }
 
 export function SourceFileAccordion(props: IProps): React.ReactElement {

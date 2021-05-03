@@ -7,7 +7,7 @@ import * as ReactDOM from "react-dom";
 let milestonesContainer: HTMLElement | null = null;
 
 (function(){
-    function setContainer() {
+    function setContainer(): void {
         milestonesContainer = document.getElementById("milestones-container");
         document.removeEventListener("DOMContentLoaded", setContainer);
     }
@@ -15,7 +15,7 @@ let milestonesContainer: HTMLElement | null = null;
     document.addEventListener("DOMContentLoaded", setContainer);
 })();
 
-export function displayMilestonesContent() {
+export function displayMilestonesContent(): void {
     if (!routing.isOn(Page.Milestones)) {
         return;
     }
@@ -23,7 +23,7 @@ export function displayMilestonesContent() {
     if (milestonesContainer instanceof HTMLElement) {
         ReactDOM.render(
             <Root player={Player}/>,
-            milestonesContainer
+            milestonesContainer,
         );
     }
 }

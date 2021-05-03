@@ -63,7 +63,7 @@ describe("Stock Market Tests", function() {
     };
 
     beforeEach(function() {
-        function construct() {
+        function construct(): void {
             stock = new Stock(ctorParams);
         }
 
@@ -73,13 +73,14 @@ describe("Stock Market Tests", function() {
     describe("Stock Class", function() {
         describe("constructor", function() {
             it("should have default parameters", function() {
-                let defaultStock: Stock;
-                function construct() {
-                    defaultStock = new Stock();
+                function construct(): void {
+                    new Stock(); // eslint-disable-line no-new
                 }
-
                 expect(construct).to.not.throw();
-                expect(defaultStock!.name).to.equal("");
+
+                const defaultStock = new Stock();
+                expect(defaultStock).to.not.equal(null);
+                expect(defaultStock.name).to.equal("");
             });
 
             it("should properly initialize props from parameters", function() {
@@ -99,7 +100,6 @@ describe("Stock Market Tests", function() {
             });
 
             it ("should properly initialize props from range-values", function() {
-                let stock: Stock;
                 const params = {
                     b: true,
                     initPrice: {
@@ -126,15 +126,18 @@ describe("Stock Market Tests", function() {
                     symbol: "mock",
                 };
 
-                function construct() {
-                    stock = new Stock(params);
+                function construct(): void {
+                    new Stock(params); // eslint-disable-line no-new
                 }
 
                 expect(construct).to.not.throw();
-                expect(stock!.price).to.be.within(params.initPrice.min, params.initPrice.max);
-                expect(stock!.mv).to.be.within(params.mv.min / params.mv.divisor, params.mv.max / params.mv.divisor);
-                expect(stock!.spreadPerc).to.be.within(params.spreadPerc.min / params.spreadPerc.divisor, params.spreadPerc.max / params.spreadPerc.divisor);
-                expect(stock!.shareTxForMovement).to.be.within(params.shareTxForMovement.min, params.shareTxForMovement.max);
+
+                const stock = new Stock(params);
+                expect(stock).not.equal(null);
+                expect(stock.price).to.be.within(params.initPrice.min, params.initPrice.max);
+                expect(stock.mv).to.be.within(params.mv.min / params.mv.divisor, params.mv.max / params.mv.divisor);
+                expect(stock.spreadPerc).to.be.within(params.spreadPerc.min / params.spreadPerc.divisor, params.spreadPerc.max / params.spreadPerc.divisor);
+                expect(stock.shareTxForMovement).to.be.within(params.shareTxForMovement.min, params.shareTxForMovement.max);
             });
 
             it("should round the 'totalShare' prop to the nearest 100k", function() {
@@ -569,17 +572,19 @@ describe("Stock Market Tests", function() {
 
     describe("Forecast Movement Processor Function", function() {
         // N = 1 is the original forecast
-        function getNthForecast(origForecast: number, n: number) {
+        function getNthForecast(origForecast: number, n: number): number {
             return origForecast - forecastChangePerPriceMovement * (n - 1);
         }
 
-        function getNthForecastForecast(origForecastForecast: number, n: number) {
+        function getNthForecastForecast(origForecastForecast: number, n: number): number {
             if (stock.otlkMagForecast > 50) {
                 const expected = origForecastForecast - (forecastChangePerPriceMovement * (n - 1) * (stock.mv / 100));
                 return expected < 50 ? 50 : expected;
             } else if (stock.otlkMagForecast < 50) {
                 const expected = origForecastForecast + (forecastChangePerPriceMovement * (n - 1) * (stock.mv / 100));
                 return expected > 50 ? 50 : expected;
+            } else {
+                return 50;
             }
         }
 
@@ -838,9 +843,10 @@ describe("Stock Market Tests", function() {
                 const cost = getBuyTransactionCost(stock, shares, PositionTypes.Long);
                 if (cost == null) {
                     expect.fail();
+                    return;
                 }
 
-                Player.setMoney(cost!);
+                Player.setMoney(cost);
 
                 expect(buyStock(stock, shares, null, suppressDialogOpt)).to.equal(true);
                 expect(stock.playerShares).to.equal(shares);
@@ -932,9 +938,10 @@ describe("Stock Market Tests", function() {
                 const cost = getBuyTransactionCost(stock, shares, PositionTypes.Short);
                 if (cost == null) {
                     expect.fail();
+                    return
                 }
 
-                Player.setMoney(cost!);
+                Player.setMoney(cost);
 
                 expect(shortStock(stock, shares, null, suppressDialogOpt)).to.equal(true);
                 expect(stock.playerShortShares).to.equal(shares);
@@ -1006,19 +1013,19 @@ describe("Stock Market Tests", function() {
 
     describe("Order Class", function() {
         it("should throw on invalid arguments", function() {
-            function invalid1() {
+            function invalid1(): Order {
                 return new Order({} as string, 1, 1, OrderTypes.LimitBuy, PositionTypes.Long);
             }
-            function invalid2() {
+            function invalid2(): Order {
                 return new Order("FOO", "z" as any as number, 0, OrderTypes.LimitBuy, PositionTypes.Short);
             }
-            function invalid3() {
+            function invalid3(): Order {
                 return new Order("FOO", 1, {} as number, OrderTypes.LimitBuy, PositionTypes.Short);
             }
-            function invalid4() {
+            function invalid4(): Order {
                 return new Order("FOO", 1, NaN, OrderTypes.LimitBuy, PositionTypes.Short);
             }
-            function invalid5() {
+            function invalid5(): Order {
                 return new Order("FOO", NaN, 0, OrderTypes.LimitBuy, PositionTypes.Short);
             }
 
@@ -1089,7 +1096,7 @@ describe("Stock Market Tests", function() {
                     shares: 1e3,
                     price: 9e3,
                     type: OrderTypes.LimitBuy,
-                    pos: PositionTypes.Long
+                    pos: PositionTypes.Long,
                 });
                 expect(res).to.equal(true);
                 expect(StockMarket["Orders"][stock.symbol]).to.have.lengthOf(0);
@@ -1107,7 +1114,7 @@ describe("Stock Market Tests", function() {
                     shares: 999,
                     price: 9e3,
                     type: OrderTypes.LimitBuy,
-                    pos: PositionTypes.Long
+                    pos: PositionTypes.Long,
                 });
                 expect(res2).to.equal(false);
                 expect(StockMarket["Orders"][stock.symbol]).to.have.lengthOf(1);
@@ -1130,20 +1137,20 @@ describe("Stock Market Tests", function() {
                 Player.setMoney(100e9);
 
                 processOrdersRefs = {
-                    rerenderFn: () => {},
+                    rerenderFn: () => undefined,
                     stockMarket: StockMarket as IStockMarket,
                     symbolToStockMap: SymbolToStockMap,
                 };
             });
 
-            function checkThatOrderExists(placeOrderRes?: boolean) {
+            function checkThatOrderExists(placeOrderRes?: boolean): void {
                 if (typeof placeOrderRes === "boolean") {
                     expect(placeOrderRes).to.equal(true);
                 }
                 expect(StockMarket["Orders"][stock.symbol]).to.have.lengthOf(1);
             }
 
-            function checkThatOrderExecuted() {
+            function checkThatOrderExecuted(): void {
                 expect(StockMarket["Orders"][stock.symbol]).to.have.lengthOf(0);
             }
 

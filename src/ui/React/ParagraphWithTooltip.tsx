@@ -4,13 +4,13 @@
 import * as React       from "react";
 
 export interface IParagraphWithTooltipProps {
-    style?: object;
+    style?: any;
     content: JSX.Element;
     tooltip: string;
 }
 
 export class ParagraphWithTooltip extends React.Component<IParagraphWithTooltipProps, any> {
-    render() {
+    render(): React.ReactNode {
         return (
             <p className={"tooltip"} style={this.props.style}>
                 {this.props.content}

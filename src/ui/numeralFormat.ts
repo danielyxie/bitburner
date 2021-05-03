@@ -53,6 +53,9 @@ class NumeralFormatter {
     }
 
     formatMoney(n: number): string {
+        if(n < 1000) {
+            return this.format(n, "$0.00");
+        }
         return this.format(n, "$0.000a");
     }
 
@@ -85,7 +88,7 @@ class NumeralFormatter {
         return this.format(n, formatter);
     }
 
-    formatServerSecurity(n: number, decimalPlaces = 2): string {
+    formatServerSecurity(n: number): string {
         return this.format(n, "0,0.000");
     }
 
@@ -101,15 +104,15 @@ class NumeralFormatter {
         return this.format(n, "0,0.00");
     }
 
-    formatShock(n: number): string {
+    formatSleeveShock(n: number): string {
         return this.format(n, "0,0.000");
     }
 
-    formatSync(n: number): string {
+    formatSleeveSynchro(n: number): string {
         return this.format(n, "0,0.000");
     }
 
-    formatMemory(n: number): string {
+    formatSleeveMemory(n: number): string {
         return this.format(n, "0");
     }
 
@@ -130,6 +133,10 @@ class NumeralFormatter {
 
     formatInfiltrationSecurity(n: number): string {
         return this.format(n, "0.000a");
+    }
+
+    formatThreads(n: number): string {
+        return this.format(n, "0,0");
     }
 }
 

@@ -17,8 +17,8 @@ export const MainMenuHeaders: IMainMenuHeaders = {
 }
 
 // Implements collapsible toggle feature when a header is clicked
-function toggleHeader(open: boolean, elems: HTMLElement[], links: HTMLElement[]) {
-    for (var i = 0; i < elems.length; ++i) {
+function toggleHeader(open: boolean, elems: HTMLElement[], links: HTMLElement[]): void {
+    for (let i = 0; i < elems.length; ++i) {
         if (open) {
             elems[i].style.opacity = "1";
             elems[i].style.maxHeight = elems[i].scrollHeight + "px";
@@ -28,7 +28,7 @@ function toggleHeader(open: boolean, elems: HTMLElement[], links: HTMLElement[])
         }
     }
 
-    for (var i = 0; i < links.length; ++i) {
+    for (let i = 0; i < links.length; ++i) {
         if (open) {
             links[i].style.opacity = "1";
             links[i].style.maxHeight = links[i].scrollHeight + "px";
@@ -48,7 +48,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
             throw new Error(`Failed to find element with id ${id} in initializeMainMenuHeaders()`);
         }
 
-        return elem!;
+        return elem;
     }
 
     try {
@@ -71,7 +71,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
             (this as any).classList.toggle("opened");
 
             const elems: HTMLElement[] = [terminal, createScript, activeScripts, createProgram];
-            const links: HTMLElement[] = [MainMenuLinks.Terminal!, MainMenuLinks.ScriptEditor!, MainMenuLinks.ActiveScripts!, MainMenuLinks.CreateProgram!];
+            const links: HTMLElement[] = [MainMenuLinks.Terminal, MainMenuLinks.ScriptEditor, MainMenuLinks.ActiveScripts, MainMenuLinks.CreateProgram];
             if (terminal.style.maxHeight) {
                 toggleHeader(false, elems, links);
                 createProgramNot.style.display = "none";
@@ -93,7 +93,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
             (this as any).classList.toggle("opened");
 
             const elems: HTMLElement[] = [stats, factions, augmentations, hacknetnodes, sleeves];
-            const links: HTMLElement[] = [MainMenuLinks.Stats!, MainMenuLinks.Factions!, MainMenuLinks.Augmentations!, MainMenuLinks.HacknetNodes!, MainMenuLinks.Sleeves!];
+            const links: HTMLElement[] = [MainMenuLinks.Stats, MainMenuLinks.Factions, MainMenuLinks.Augmentations, MainMenuLinks.HacknetNodes, MainMenuLinks.Sleeves];
             if (stats.style.maxHeight) {
                 toggleHeader(false, elems, links);
             } else {
@@ -120,7 +120,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
             (this as any).classList.toggle("opened");
 
             const elems: HTMLElement[] = [city, travel, job, stockmarket, bladeburner, corporation, gang];
-            const links: HTMLElement[] = [MainMenuLinks.City!, MainMenuLinks.Travel!, MainMenuLinks.Job!, MainMenuLinks.StockMarket!, MainMenuLinks.Bladeburner!, MainMenuLinks.Corporation!, MainMenuLinks.Gang!];
+            const links: HTMLElement[] = [MainMenuLinks.City, MainMenuLinks.Travel, MainMenuLinks.Job, MainMenuLinks.StockMarket, MainMenuLinks.Bladeburner, MainMenuLinks.Corporation, MainMenuLinks.Gang];
             if (city.style.maxHeight) {
                 toggleHeader(false, elems, links);
             } else {
@@ -136,7 +136,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
             (this as any).classList.toggle("opened");
 
             const elems: HTMLElement[] = [milestones, tutorial, options];
-            const links: HTMLElement[] = [MainMenuLinks.Milestones!, MainMenuLinks.Tutorial!, MainMenuLinks.Options!];
+            const links: HTMLElement[] = [MainMenuLinks.Milestones, MainMenuLinks.Tutorial, MainMenuLinks.Options];
 
             if (dev) {
                 elems.push(safeGetElement("dev-tab"));

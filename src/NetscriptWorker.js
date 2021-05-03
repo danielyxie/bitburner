@@ -21,10 +21,7 @@ import { NetscriptPort } from "./NetscriptPort";
 import { Player } from "./Player";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
-import {
-    findRunningScript,
-    scriptCalculateOfflineProduction,
-} from "./Script/ScriptHelpers";
+import { scriptCalculateOfflineProduction } from "./Script/ScriptHelpers";
 import { AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
@@ -32,12 +29,11 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { generate } from "escodegen";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { compareArrays } from "../utils/helpers/compareArrays";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { isString } from "../utils/StringHelperFunctions";
 
-import { parse, Node } from "acorn";
+import { parse } from "acorn";
 const walk = require("acorn-walk");
 
 // Netscript Ports are instantiated here
@@ -111,7 +107,7 @@ function startNetscript2Script(workerScript) {
                 return result;
             }
         }
-    };
+    }
 
     for (let prop in workerScript.env.vars) {
         if (typeof workerScript.env.vars[prop] !== "function") continue;
@@ -180,8 +176,8 @@ function startNetscript1Script(workerScript) {
                         let fnPromise = entry.apply(null, fnArgs);
                         fnPromise.then(function(res) {
                             cb(res);
-                        }).catch(function(e) {
-                            // Do nothing?
+                        }).catch(function(err) {
+                            console.error(err);
                         });
                     }
                     int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
@@ -330,7 +326,7 @@ function processNetscript1Imports(code, workerScript) {
                     FunctionDeclaration: (node) => {
                         fnNames.push(node.id.name);
                         fnDeclarations.push(node);
-                    }
+                    },
                 });
 
                 //Now we have to generate the code that would create the namespace
@@ -370,7 +366,7 @@ function processNetscript1Imports(code, workerScript) {
                         if (fnsToImport.includes(node.id.name)) {
                             fnDeclarations.push(node);
                         }
-                    }
+                    },
                 });
 
                 //Convert FunctionDeclarations into code
@@ -379,7 +375,7 @@ function processNetscript1Imports(code, workerScript) {
                     generatedCode += "\n";
                 });
             }
-        }
+        },
     });
 
     //If there are no imports, just return the original code
@@ -408,7 +404,7 @@ function processNetscript1Imports(code, workerScript) {
 
     var res = {
         code:       code,
-        lineOffset: lineOffset
+        lineOffset: lineOffset,
     }
     return res;
 }
@@ -443,8 +439,6 @@ export function startWorkerScript(runningScript, server) {
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
 export function createAndAddWorkerScript(runningScriptObj, server) {
-	const filename = runningScriptObj.filename;
-
 	// Update server's ram usage
     let threads = 1;
     if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -459,7 +453,7 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
             `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
             `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
             `the game and the script's RAM usage increased (either because of an update to the game or ` +
-            `your changes to the script.)`
+            `your changes to the script.)`,
         );
         return false;
     }
@@ -470,7 +464,7 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
     if (pid === -1) {
         throw new Error(
             `Failed to start script because could not find available PID. This is most ` +
-            `because you have too many scripts running.`
+            `because you have too many scripts running.`,
         );
     }
 

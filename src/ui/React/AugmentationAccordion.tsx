@@ -12,8 +12,8 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 type IProps = {
-    aug: Augmentation,
-    level?: number | string | null,
+    aug: Augmentation;
+    level?: number | string | null;
 }
 
 export function AugmentationAccordion(props: IProps): React.ReactElement {
@@ -24,10 +24,19 @@ export function AugmentationAccordion(props: IProps): React.ReactElement {
         }
     }
 
+    if(typeof props.aug.info === 'string') {
+        return (
+            <Accordion
+                headerContent={<>{displayName}</>}
+                panelContent={<p dangerouslySetInnerHTML={{__html: props.aug.info}}></p>}
+            />
+        )
+    }
+
     return (
         <Accordion
             headerContent={<>{displayName}</>}
-            panelContent={<p dangerouslySetInnerHTML={{__html: props.aug.info}}></p>}
+            panelContent={<p>{props.aug.info}</p>}
         />
     )
 }

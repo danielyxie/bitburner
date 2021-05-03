@@ -9,7 +9,7 @@ interface IStdButtonProps {
     disabled?: boolean;
     id?: string;
     onClick?: (e: React.MouseEvent<HTMLElement>) => any;
-    style?: object;
+    style?: any;
     text: string | JSX.Element;
     tooltip?: string | JSX.Element;
 }
@@ -33,13 +33,12 @@ export function StdButton(props: IStdButtonProps): React.ReactElement {
     let tooltip;
     if (hasTooltip) {
         if(typeof props.tooltip === 'string') {
-            let tooltipMarkup: IInnerHTMLMarkup | null;
-            tooltipMarkup = {
-                __html: props.tooltip!
+            const tooltipMarkup: IInnerHTMLMarkup = {
+                __html: props.tooltip,
             }
-            tooltip = <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup!}></span>
+            tooltip = <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup}></span>
         } else {
-            tooltip = <span className={"tooltiptext"}>{props.tooltip!}</span>
+            tooltip = <span className={"tooltiptext"}>{props.tooltip}</span>
         }
     }
 

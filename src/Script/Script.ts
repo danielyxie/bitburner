@@ -12,26 +12,22 @@ import { setTimeoutRef } from "../utils/SetTimeoutRef";
 import {
     Generic_fromJSON,
     Generic_toJSON,
-    Reviver
+    Reviver,
 } from "../../utils/JSONReviver";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
 let globalModuleSequenceNumber = 0;
 
 export class Script {
-    // Initializes a Script Object from a JSON save state
-    static fromJSON(value: any): Script {
-        return Generic_fromJSON(Script, value.data);
-    }
 
     // Code for this script
-    code: string = "";
+    code = "";
 
     // Filename for the script file
-    filename: string = "";
+    filename = "";
 
     // url of the script if any, only for NS2.
-    url: string = "";
+    url = "";
 
     // The dynamic module generated for this script when it is run.
     // This is only applicable for NetscriptJS
@@ -46,12 +42,12 @@ export class Script {
     dependencies: ScriptUrl[] = [];
 
     // Amount of RAM this Script requres to run
-    ramUsage: number = 0;
+    ramUsage = 0;
 
     // IP of server that this script is on.
-	server: string = "";
+	server = "";
 
-    constructor(fn: string="", code: string="", server: string="", otherScripts: Script[]=[]) {
+    constructor(fn="", code="", server="", otherScripts: Script[]=[]) {
     	this.filename 	= fn;
         this.code       = code;
         this.ramUsage   = 0;
@@ -59,7 +55,7 @@ export class Script {
         this.module     = "";
         this.moduleSequenceNumber = ++globalModuleSequenceNumber;
         if (this.code !== "") { this.updateRamUsage(otherScripts); }
-    };
+    }
 
     /**
      * Download the script as a file
@@ -70,7 +66,7 @@ export class Script {
         if (window.navigator.msSaveOrOpenBlob) {// IE10+
             window.navigator.msSaveOrOpenBlob(file, filename);
         } else { // Others
-            var a = document.createElement("a"),
+            const a = document.createElement("a"),
                     url = URL.createObjectURL(file);
             a.href = url;
             a.download = filename;
@@ -87,7 +83,7 @@ export class Script {
      * Marks this script as having been updated. It will be recompiled next time something tries
      * to exec it.
      */
-    markUpdated() {
+    markUpdated(): void {
         this.module = "";
         this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     }
@@ -107,7 +103,7 @@ export class Script {
                 console.error(`Failed to get Script filename DOM element`);
                 return;
             }
-    		this.filename = filenameElem!.value;
+    		this.filename = filenameElem.value;
     		this.server = serverIp;
     		this.updateRamUsage(otherScripts);
             this.markUpdated();
@@ -118,8 +114,8 @@ export class Script {
      * Calculates and updates the script's RAM usage based on its code
      * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
      */
-    async updateRamUsage(otherScripts: Script[]) {
-        var res = await calculateRamUsage(this.code, otherScripts);
+    async updateRamUsage(otherScripts: Script[]): Promise<void> {
+        const res = await calculateRamUsage(this.code, otherScripts);
         if (res > 0) {
             this.ramUsage = roundToTwo(res);
         }
@@ -128,6 +124,12 @@ export class Script {
     // Serialize the current object to a JSON save state
     toJSON(): any {
         return Generic_toJSON("Script", this);
+    }
+
+    // Initializes a Script Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Script {
+        return Generic_fromJSON(Script, value.data);
     }
 }
 

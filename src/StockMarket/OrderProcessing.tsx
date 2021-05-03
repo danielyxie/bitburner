@@ -39,7 +39,7 @@ export interface IProcessOrderRefs {
  * @param {IProcessOrderRefs} refs - References to objects/functions that are required for this function
  */
 export function processOrders(stock: Stock, orderType: OrderTypes, posType: PositionTypes, refs: IProcessOrderRefs): void {
-    let orderBook = refs.stockMarket["Orders"];
+    const orderBook = refs.stockMarket["Orders"];
     if (orderBook == null) {
         const orders: IOrderBook = {};
         for (const name in refs.stockMarket) {
@@ -101,7 +101,7 @@ export function processOrders(stock: Stock, orderType: OrderTypes, posType: Posi
  * @param {Order} order - Order being executed
  * @param {IProcessOrderRefs} refs - References to objects/functions that are required for this function
  */
-function executeOrder(order: Order, refs: IProcessOrderRefs) {
+function executeOrder(order: Order, refs: IProcessOrderRefs): void {
     const stock = refs.symbolToStockMap[order.stockSymbol];
     if (!(stock instanceof Stock)) {
         console.error(`Could not find stock for this order: ${order.stockSymbol}`);
@@ -115,7 +115,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs) {
     // emit popup dialog boxes. This options object configures the functions for that
     const opts = {
         rerenderFn: refs.rerenderFn,
-        suppressDialog: true
+        suppressDialog: true,
     }
 
     let res = true;

@@ -99,7 +99,7 @@ interface ICreateElementOptions extends
     tabIndex?: number;
 }
 
-function setElementAnchor(el: HTMLAnchorElement, params: ICreateElementAnchorOptions) {
+function setElementAnchor(el: HTMLAnchorElement, params: ICreateElementAnchorOptions): void {
     if (params.text !== undefined) {
         el.text = params.text;
     }
@@ -111,7 +111,7 @@ function setElementAnchor(el: HTMLAnchorElement, params: ICreateElementAnchorOpt
     }
 }
 
-function setElementInput(el: HTMLInputElement, params: ICreateElementInputOptions) {
+function setElementInput(el: HTMLInputElement, params: ICreateElementInputOptions): void {
     if (params.name !== undefined) {
         el.name = params.name;
     }
@@ -144,13 +144,13 @@ function setElementInput(el: HTMLInputElement, params: ICreateElementInputOption
     }
 }
 
-function setElementLabel(el: HTMLLabelElement, params: ICreateElementLabelOptions) {
+function setElementLabel(el: HTMLLabelElement, params: ICreateElementLabelOptions): void {
     if (params.for !== undefined) {
         el.htmlFor = params.for;
     }
 }
 
-function setElementListeners(el: HTMLElement, params: ICreateElementListenerOptions) {
+function setElementListeners(el: HTMLElement, params: ICreateElementListenerOptions): void {
     // tslint:disable:no-unbound-method
     if (params.clickListener !== undefined) {
         el.addEventListener("click", params.clickListener);
@@ -173,7 +173,7 @@ function setElementListeners(el: HTMLElement, params: ICreateElementListenerOpti
     // tslint:enable:no-unbound-method
 }
 
-function setElementStyle(el: HTMLElement, params: ICreateElementStyleOptions) {
+function setElementStyle(el: HTMLElement, params: ICreateElementStyleOptions): void {
     if (params.display !== undefined) {
         el.style.display = params.display;
     }
@@ -221,7 +221,7 @@ function setElementStyle(el: HTMLElement, params: ICreateElementStyleOptions) {
     }
 }
 
-function setElementTooltip(el: HTMLElement, params: ICreateElementTooltipOptions) {
+function setElementTooltip(el: HTMLElement, params: ICreateElementTooltipOptions): void {
     if (params.tooltip !== undefined && params.tooltip !== "")     {
         el.className += " tooltip";
         el.appendChild(createElement("span", {
@@ -254,7 +254,7 @@ function setElementTooltip(el: HTMLElement, params: ICreateElementTooltipOptions
  * @param tagName The HTML tag/element name
  * @param params Additional parameters to set on the element
  */
-export function createElement(tagName: string, params: ICreateElementOptions = {}) {
+export function createElement(tagName: string, params: ICreateElementOptions = {}): HTMLElement {
     const el: HTMLElement = document.createElement(tagName);
 
     if (params.id !== undefined) {

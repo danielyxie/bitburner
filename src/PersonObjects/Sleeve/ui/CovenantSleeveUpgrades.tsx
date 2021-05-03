@@ -17,7 +17,7 @@ interface IProps {
 }
 
 export class CovenantSleeveUpgrades extends React.Component<IProps, any> {
-    render() {
+    render(): React.ReactNode {
         return (
             <div className={"bladeburner-action"}>
                 <h1>Duplicate Sleeve {this.props.index}</h1>

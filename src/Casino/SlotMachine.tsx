@@ -20,7 +20,7 @@ type IState = {
 }
 
 // statically shuffled array of symbols.
-let symbols = ["D", "C", "$", "?", "♥", "A", "C", "B", "C", "E", "B", "E", "C",
+const symbols = ["D", "C", "$", "?", "♥", "A", "C", "B", "C", "E", "B", "E", "C",
     "*", "D", "♥", "B", "A", "A", "A", "C", "A", "D", "B", "E", "?", "D", "*",
     "@", "♥", "B", "E", "?"];
 
@@ -63,7 +63,7 @@ const maxPlay = 1e6;
 
 export class SlotMachine extends Game<IProps, IState> {
     rng: WHRNG;
-    interval: number = -1;
+    interval = -1;
 
     constructor(props: IProps) {
         super(props);
@@ -86,11 +86,11 @@ export class SlotMachine extends Game<IProps, IState> {
         this.updateInvestment = this.updateInvestment.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.interval = setInterval(this.step, 50);
     }
 
-    step() {
+    step(): void {
         let stoppedOne = false;
         const index = this.state.index.slice();
         for(const i in index) {
@@ -106,7 +106,7 @@ export class SlotMachine extends Game<IProps, IState> {
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
       clearInterval(this.interval);
     }
 
@@ -118,7 +118,7 @@ export class SlotMachine extends Game<IProps, IState> {
         ];
     }
 
-    play() {
+    play(): void {
         if(this.reachedLimit(this.props.p)) return;
         this.setState({status: 'playing'});
         this.win(this.props.p, -this.state.investment);
@@ -127,7 +127,7 @@ export class SlotMachine extends Game<IProps, IState> {
         setTimeout(this.lock, this.rng.random()*2000+1000);
     }
 
-    lock() {
+    lock(): void {
         this.setState({
             locks: [
                 Math.floor(this.rng.random()*symbols.length),
@@ -139,10 +139,10 @@ export class SlotMachine extends Game<IProps, IState> {
         })
     }
 
-    checkWinnings() {
+    checkWinnings(): void {
         const t = this.getTable();
         const getPaylineData = function(payline: number[][]): string[] {
-            let data = [];
+            const data = [];
             for(const point of payline) {
                 data.push(t[point[0]][point[1]]);
             }
@@ -176,14 +176,14 @@ export class SlotMachine extends Game<IProps, IState> {
         if(this.reachedLimit(this.props.p)) return;
     }
 
-    unlock() {
+    unlock(): void {
         this.setState({
             locks: [-1, -1, -1, -1, -1],
             canPlay: false,
         })
     }
 
-    updateInvestment(e: React.FormEvent<HTMLInputElement>) {
+    updateInvestment(e: React.FormEvent<HTMLInputElement>): void {
         let investment: number = parseInt(e.currentTarget.value);
         if (isNaN(investment)) {
             investment = minPlay;
@@ -197,7 +197,7 @@ export class SlotMachine extends Game<IProps, IState> {
         this.setState({investment: investment});
     }
 
-    render() {
+    render(): React.ReactNode {
         const t = this.getTable();
         return <>
 <pre>
@@ -209,7 +209,7 @@ export class SlotMachine extends Game<IProps, IState> {
 | | {symbols[(this.state.index[0]+1)%symbols.length]} | {symbols[(this.state.index[1]+1)%symbols.length]} | {symbols[(this.state.index[2]+1)%symbols.length]} | {symbols[(this.state.index[3]+1)%symbols.length]} | {symbols[(this.state.index[4]+1)%symbols.length]} | |<br />
 +———————————————————————+<br />
 </pre>
-        <input type="number" className='text-input' onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
+        <input type="number" className="text-input" onChange={this.updateInvestment} placeholder={"Amount to play"} value={this.state.investment} disabled={!this.state.canPlay} />
         <StdButton onClick={trusted(this.play)} text={"Spin!"} disabled={!this.state.canPlay} />
 <h1>{this.state.status}</h1>
 <h2>Pay lines</h2>

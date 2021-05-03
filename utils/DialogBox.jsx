@@ -31,7 +31,7 @@ function closeTopmostDialogBox() {
 }
 
 // Dialog box close buttons
-$(document).on('click', '.dialog-box-close-button', function( event ) {
+$(document).on('click', '.dialog-box-close-button', function() {
     closeTopmostDialogBox();
 });
 

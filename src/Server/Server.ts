@@ -25,45 +25,41 @@ export interface IConstructorParams {
 }
 
 export class Server extends BaseServer {
-    // Initializes a Server Object from a JSON save state
-    static fromJSON(value: any): Server {
-        return Generic_fromJSON(Server, value.data);
-    }
 
     // Flag indicating whether this server has a backdoor installed by a player
-    backdoorInstalled: boolean = false;
+    backdoorInstalled = false;
 
     // Initial server security level
     // (i.e. security level when the server was created)
-    baseDifficulty: number = 1;
+    baseDifficulty = 1;
 
     // Server Security Level
-    hackDifficulty: number = 1;
+    hackDifficulty = 1;
 
     // Minimum server security level that this server can be weakened to
-    minDifficulty: number = 1;
+    minDifficulty = 1;
 
     // How much money currently resides on the server and can be hacked
-    moneyAvailable: number = 0;
+    moneyAvailable = 0;
 
     // Maximum amount of money that this server can hold
-    moneyMax: number = 0;
+    moneyMax = 0;
 
     // Number of open ports required in order to gain admin/root access
-    numOpenPortsRequired: number = 5;
+    numOpenPortsRequired = 5;
 
     // How many ports are currently opened on the server
-    openPortCount: number = 0;
+    openPortCount = 0;
 
     // Flag indicating wehther this is a purchased server
-    purchasedByPlayer: boolean = false;
+    purchasedByPlayer = false;
 
     // Hacking level required to hack this server
-    requiredHackingSkill: number = 1;
+    requiredHackingSkill = 1;
 
     // Parameter that affects how effectively this server's money can
     // be increased using the grow() Netscript function
-    serverGrowth: number = 1;
+    serverGrowth = 1;
 
     constructor(params: IConstructorParams={hostname: "", ip: createRandomIp() }) {
         super(params);
@@ -91,7 +87,7 @@ export class Server extends BaseServer {
 
         //Port information, required for porthacking servers to get admin rights
         this.numOpenPortsRequired = params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
-    };
+    }
 
     /**
      * Ensures that the server's difficulty (server security) doesn't get too high
@@ -110,7 +106,7 @@ export class Server extends BaseServer {
      * @param n - Value by which to increase/decrease the server's minimum security
      * @param perc - Whether it should be changed by a percentage, or a flat value
      */
-    changeMinimumSecurity(n: number, perc: boolean=false): void {
+    changeMinimumSecurity(n: number, perc=false): void {
         if (perc) {
             this.minDifficulty *= n;
         } else {
@@ -126,7 +122,7 @@ export class Server extends BaseServer {
      * @param n - Value by which to change the server's maximum money
      * @param perc - Whether it should be changed by a percentage, or a flat value
      */
-    changeMaximumMoney(n: number, perc: boolean=false): void {
+    changeMaximumMoney(n: number, perc=false): void {
         if (perc) {
             this.moneyMax *= n;
         } else {
@@ -155,6 +151,12 @@ export class Server extends BaseServer {
      */
     toJSON(): any {
         return Generic_toJSON("Server", this);
+    }
+
+    // Initializes a Server Object from a JSON save state
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Server {
+        return Generic_fromJSON(Server, value.data);
     }
 }
 

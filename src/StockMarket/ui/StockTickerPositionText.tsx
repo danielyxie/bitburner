@@ -87,7 +87,7 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         const stock = this.props.stock;
 
         return (

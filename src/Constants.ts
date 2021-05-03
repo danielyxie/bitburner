@@ -5,7 +5,7 @@
  */
 import { IMap } from "./types";
 
-export let CONSTANTS: IMap<any> = {
+export const CONSTANTS: IMap<any> = {
     Version:                "0.51.6",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
@@ -268,5 +268,5 @@ export let CONSTANTS: IMap<any> = {
     * so many documentation and typos fixes (@Pimgd)
     * A corruption visual effect has been added to location with servers that
       have backdoor installed. (@dewint)
-    `
+    `,
 }
