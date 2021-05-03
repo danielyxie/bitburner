@@ -1453,6 +1453,11 @@ function NetscriptFunctions(workerScript) {
                 if (scriptname == destServer.scripts[i].filename) {
                     workerScript.log("scp", `WARNING: File '${scriptname}' overwritten on '${destServer.hostname}'`);
                     const oldScript = destServer.scripts[i];
+                    // If it's the exact same file don't actually perform the
+                    // copy to avoid recompiling uselessly. Players tend to scp
+                    // liberally.
+                    if(oldScript.code === sourceScript.code)
+                        return true;
                     oldScript.code = sourceScript.code;
                     oldScript.ramUsage = sourceScript.ramUsage;
                     oldScript.markUpdated();
