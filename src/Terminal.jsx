@@ -563,7 +563,15 @@ let Terminal = {
 
     finishBackdoor: function(cancelled = false) {
         if(!cancelled){
-            let server = Player.getCurrentServer();
+            const server = Player.getCurrentServer();
+            if (SpecialServerIps[SpecialServerNames.WorldDaemon] &&
+                SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip) {
+                if (Player.bitNodeN == null) {
+                    Player.bitNodeN = 1;
+                }
+                hackWorldDaemon(Player.bitNodeN);
+                return;
+            }
             server.backdoorInstalled = true;
             postElement(<>Backdoor successful!</>);
         }
