@@ -373,9 +373,10 @@ Description
 Source-File
     :Max Level: Infinity
 
-    Each level of Source-File 12 will increase all of your multipliers by 1%. This effect
-    is multiplicative with itself. In other words, level N of this Source-File will result
-    in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)
+    Each level of Source-File 12 will let you start with Neuroflux Governor
+    equal to the level of this Source-File.
+
+    This BitNode is meant to be done passively or when waiting for new content.
 
 Difficulty
     Initially very easy, but then it (obviously) becomes harder as you continue to do it.
@@ -396,27 +397,22 @@ For fast progression
 1. Repeat **BitNode-1: Source Genesis** until you max out its Source-File. Its Source-File
    is extremely powerful, as it raises all multipliers by a significant amount.
 
-2. Repeat **BitNode-12: The Recursion** several times. This BitNode will be extremely easy the
-   first few times you tackle it, and its Source-File raises all multipliers. Furthermore,
-   its effect stacks multiplicatively with itself and other Source-Files/Augmentations,
-   which gets better as time goes on
-
-3. Do **BitNode-5: Artificial Intelligence** once or twice. The intelligence stat it unlocks
+2. Do **BitNode-5: Artificial Intelligence** once or twice. The intelligence stat it unlocks
    will gradually build up as you continue to play the game, and will be helpful
    in the future. The Source-File also provides hacking multipliers, which are
    strong because hacking is typically one of the best ways of earning money.
 
-4. (Optional) Consider doing **BitNode-4: The Singularity**. Its Source-File does not directly make you
+3. (Optional) Consider doing **BitNode-4: The Singularity**. Its Source-File does not directly make you
    more powerful in any way, but it does unlock :ref:`netscript_singularityfunctions` which
    let you automate significantly more aspects of the game.
 
-5. Do **BitNode-3: Corporatocracy** once to unlock the Corporation mechanic. This mechanic
+4. Do **BitNode-3: Corporatocracy** once to unlock the Corporation mechanic. This mechanic
    has high profit potential.
 
-6. Do **BitNode-6: Bladeburners** once to unlock the Bladeburners mechanic. The Bladeburner
+5. Do **BitNode-6: Bladeburners** once to unlock the Bladeburners mechanic. The Bladeburner
    mechanic is useful for some of the future BitNodes (such as 9 and 10).
 
-7. Do **BitNode-9: Hacktocracy** to unlock the Hacknet Server mechanic. You can
+6. Do **BitNode-9: Hacktocracy** to unlock the Hacknet Server mechanic. You can
    consider repeating it as well, as its Level 2 and 3 effects are pretty helpful as well.
 
 .. todo:: To be continued as more BitNodes get added

@@ -53,7 +53,7 @@ class NumeralFormatter {
     }
 
     formatMoney(n: number): string {
-        if(n < 1000) {
+        if(Math.abs(n) < 1000) {
             return this.format(n, "$0.00");
         }
         return this.format(n, "$0.000a");

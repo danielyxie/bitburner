@@ -56,8 +56,3 @@ through destroying BitNodes is:
 
 * Source-Files
 * Scripts on the home computer
-
-BitNode Details
-^^^^^^^^^^^^^^^
-
-TODO
