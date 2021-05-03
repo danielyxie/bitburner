@@ -8,33 +8,27 @@
 import * as React       from "react";
 import *  as ReactDOM   from "react-dom";
 
-import { KEY } from "../../../utils/helpers/keyCodes";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
+import { IPopupButtonProps, PopupButton } from "./PopupButton";
 
-export interface IPopupCloseButtonProps {
+export interface IPopupCloseButtonProps extends IPopupButtonProps {
     class?: string;
     popup: HTMLElement | string;
     style?: any;
     text: string;
+    onClose: () => void;
 }
 
-export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, any> {
+export class PopupCloseButton extends PopupButton {
     constructor(props: IPopupCloseButtonProps) {
         super(props);
 
         this.closePopup = this.closePopup.bind(this);
-        this.keyListener = this.keyListener.bind(this);
-    }
-
-    componentDidMount(): void {
-        document.addEventListener("keydown", this.keyListener);
-    }
-
-    componentWillUnmount(): void {
-        document.removeEventListener("keydown", this.keyListener);
     }
 
     closePopup(): void {
+        if(this.props.onClose)
+            this.props.onClose();
         let popup: HTMLElement | null;
         if (typeof this.props.popup === "string") {
             popup = document.getElementById(this.props.popup);
@@ -42,16 +36,12 @@ export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, an
             popup = this.props.popup;
         }
 
-        // TODO Check if this is okay? This is essentially calling to unmount a parent component
+        // TODO Check if this is okay? This is essentially calling to unmount a
+        // parent component
         if (popup instanceof HTMLElement) {
-            ReactDOM.unmountComponentAtNode(popup); // Removes everything inside the wrapper container
+            // Removes everything inside the wrapper container
+            ReactDOM.unmountComponentAtNode(popup);
             removeElement(popup); // Removes the wrapper container
-        }
-    }
-
-    keyListener(e: KeyboardEvent): void {
-        if (e.keyCode === KEY.ESC) {
-            this.closePopup();
         }
     }
 
@@ -59,7 +49,10 @@ export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, an
         const className = this.props.class ? this.props.class : "std-button";
 
         return (
-            <button className={className} onClick={this.closePopup} style={this.props.style}>
+            <button
+                className={className}
+                onClick={this.closePopup}
+                style={this.props.style}>
                 {this.props.text}
             </button>
         )
