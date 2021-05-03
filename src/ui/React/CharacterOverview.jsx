@@ -15,8 +15,7 @@ export class CharacterOverviewComponent extends Component {
         );
 
         return (
-            <div id="character-overview-text">
-                <table>
+            <table>
                 <tbody>
                     <tr id="character-hp-wrapper">
                         <td className="character-hp-cell">Hp:</td><td id="character-hp-text" className="character-hp-cell character-stat-cell">{numeralWrapper.formatHp(Player.hp) + " / " + numeralWrapper.formatHp(Player.max_hp)}</td>
@@ -47,8 +46,7 @@ export class CharacterOverviewComponent extends Component {
                         intelligence
                     }
                  </tbody>
-                </table>
-            </div>
+            </table>
         )
     }
 }

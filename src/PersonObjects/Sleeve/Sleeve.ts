@@ -907,7 +907,7 @@ export class Sleeve extends Person {
                 this.currentTaskLocation = LocationName.Sector12PowerhouseGym;
                 costMult = 20;
                 break;
-            case LocationName.VolhavenMilleniumFitnessGym:
+            case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
                 if (this.city != CityName.Volhaven) { return false; }
                 this.currentTaskLocation = LocationName.VolhavenMilleniumFitnessGym;
                 costMult = 7;

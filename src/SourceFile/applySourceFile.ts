@@ -141,44 +141,9 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
             Player.company_rep_mult   *= incMult;
             break;
         }
-        case 12: { // The Recursion
-            const inc = Math.pow(1.01, srcFile.lvl);
-            const dec = Math.pow(0.99, srcFile.lvl);
-
-            Player.hacking_chance_mult *= inc;
-            Player.hacking_speed_mult  *= inc;
-            Player.hacking_money_mult  *= inc;
-            Player.hacking_grow_mult   *= inc;
-            Player.hacking_mult        *= inc;
-
-            Player.strength_mult       *= inc;
-            Player.defense_mult        *= inc;
-            Player.dexterity_mult      *= inc;
-            Player.agility_mult        *= inc;
-            Player.charisma_mult       *= inc;
-
-            Player.hacking_exp_mult    *= inc;
-            Player.strength_exp_mult   *= inc;
-            Player.defense_exp_mult    *= inc;
-            Player.dexterity_exp_mult  *= inc;
-            Player.agility_exp_mult    *= inc;
-            Player.charisma_exp_mult   *= inc;
-
-            Player.company_rep_mult    *= inc;
-            Player.faction_rep_mult    *= inc;
-
-            Player.crime_money_mult    *= inc;
-            Player.crime_success_mult  *= inc;
-
-            Player.hacknet_node_money_mult            *= inc;
-            Player.hacknet_node_purchase_cost_mult    *= dec;
-            Player.hacknet_node_ram_cost_mult         *= dec;
-            Player.hacknet_node_core_cost_mult        *= dec;
-            Player.hacknet_node_level_cost_mult       *= dec;
-
-            Player.work_money_mult    *= inc;
+        case 12: // The Recursion
+            // No effects, grants neuroflux.
             break;
-        }
         default:
             console.error(`Invalid source file number: ${srcFile.n}`);
             break;

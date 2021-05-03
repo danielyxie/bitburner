@@ -53,6 +53,9 @@ class NumeralFormatter {
     }
 
     formatMoney(n: number): string {
+        if(n < 1000) {
+            return this.format(n, "$0.00");
+        }
         return this.format(n, "$0.000a");
     }
 
@@ -130,6 +133,10 @@ class NumeralFormatter {
 
     formatInfiltrationSecurity(n: number): string {
         return this.format(n, "0.000a");
+    }
+
+    formatThreads(n: number): string {
+        return this.format(n, "0,0");
     }
 }
 

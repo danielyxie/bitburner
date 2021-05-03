@@ -58,13 +58,17 @@ function writeRedPillLetter(pElem, line, i=0) {
 }
 
 let redPillFlag = false;
-function hackWorldDaemon(currentNodeNumber, flume=false) {
+function hackWorldDaemon(currentNodeNumber, flume=false, quick=false) {
     // Clear Red Pill screen first
     var container = document.getElementById("red-pill-content");
     removeChildrenFromElement(container);
 
     redPillFlag = true;
     Engine.loadRedPillContent();
+
+    if(quick) {
+        return loadBitVerse(currentNodeNumber, flume, quick);
+    }
     return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
         return writeRedPillLine("[ERROR] Segmentation Fault");
     }).then(function() {
@@ -143,7 +147,7 @@ function giveSourceFile(bitNodeNumber) {
 // is destroyed. Updated every time loadBitVerse() is called
 let nextSourceFileFlags = [];
 
-function loadBitVerse(destroyedBitNodeNum, flume=false) {
+function loadBitVerse(destroyedBitNodeNum, flume=false, quick=false) {
     // Clear the screen
     const container = document.getElementById("red-pill-content");
     removeChildrenFromElement(container);
@@ -151,7 +155,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
     // Update NextSourceFileFlags
     nextSourceFileFlags = SourceFileFlags.slice();
     if (!flume) {
-        if (nextSourceFileFlags[destroyedBitNodeNum] < 3 && destroyedBitNodeNum !== 12)
+        if (nextSourceFileFlags[destroyedBitNodeNum] < 3)
             ++nextSourceFileFlags[destroyedBitNodeNum];
     }
 
@@ -219,6 +223,10 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
                 });
             }
         }(i)); // Immediate invocation closure
+    }
+
+    if(quick) {
+        return Promise.resolve(true);
     }
 
     // Create lore text

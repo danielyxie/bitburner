@@ -16,6 +16,8 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 
 type IProps = {
     faction: Faction;
+    disabled: boolean;
+    favorToDonate: number;
     p: IPlayer;
     rerender: () => void;
 }
@@ -36,9 +38,10 @@ export class DonateOption extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
+
         this.state = {
             donateAmt: 0,
-            status: <></>,
+            status: props.disabled ? <>Unlocked at {props.favorToDonate} favor with {props.faction.name}</> : <></>,
         }
 
         this.calculateRepGain = this.calculateRepGain.bind(this);
@@ -90,10 +93,17 @@ export class DonateOption extends React.Component<IProps, IState> {
         return (
             <div className={"faction-work-div"}>
                 <div className={"faction-work-div-wrapper"}>
-                    <input className="text-input" onChange={this.handleChange} placeholder={"Donation amount"} style={inputStyleMarkup} />
+                    <input
+                        className="text-input"
+                        onChange={this.handleChange}
+                        placeholder={"Donation amount"}
+                        style={inputStyleMarkup}
+                        disabled={this.props.disabled}
+                    />
                     <StdButton
                         onClick={this.donate}
                         text={"Donate Money"}
+                        disabled={this.props.disabled}
                     />
                     <p style={this.blockStyle}>{this.state.status}</p>
                 </div>

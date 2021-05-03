@@ -284,6 +284,16 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
             await expectNonZeroRamCost(f);
         });
 
+        it("getServerMaxRam()", async function() {
+            const f = ["getServerMaxRam"];
+            await expectNonZeroRamCost(f);
+        });
+
+        it("getServerUsedRam()", async function() {
+            const f = ["getServerUsedRam"];
+            await expectNonZeroRamCost(f);
+        });
+
         it("serverExists()", async function() {
             const f = ["serverExists"];
             await expectNonZeroRamCost(f);

@@ -9,7 +9,7 @@ import { Factions } from "../Faction/Factions";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 interface IConstructorParams {
-    info: string;
+    info: string | JSX.Element;
     isSpecial?: boolean;
     moneyCost: number;
     name: string;
@@ -57,7 +57,7 @@ export class Augmentation {
     baseRepRequirement = 0;
 
     // Description of what this Aug is and what it does
-    info = "";
+    info: string | JSX.Element;
 
     // Any Augmentation not immediately available in BitNode-1 is special (e.g. Bladeburner augs)
     isSpecial = false;

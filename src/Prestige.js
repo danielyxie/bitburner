@@ -340,6 +340,11 @@ function prestigeSourceFile() {
         updateHashManagerCapacity();
     }
 
+    if(SourceFileFlags[12] > 0) {
+        Player.augmentations.push({name: AugmentationNames.NeuroFluxGovernor, level: SourceFileFlags[12]})
+        Player.reapplyAllAugmentations(true);
+    }
+
     // Refresh Main Menu (the 'World' menu, specifically)
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();

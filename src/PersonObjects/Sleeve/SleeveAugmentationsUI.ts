@@ -55,10 +55,15 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer): void 
             continue;
         }
 
+        let tooltip = aug.info;
+        if(typeof tooltip !== 'string') {
+            tooltip = renderToStaticMarkup(tooltip);
+        }
+
         ownedAugsDiv.appendChild(createElement("div", {
             class: "gang-owned-upgrade", // Reusing a class from the Gang UI
             innerText: ownedAug,
-            tooltip: aug.info,
+            tooltip: tooltip,
         }))
     }
     popupElems.push(ownedAugsDiv);
@@ -83,13 +88,18 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer): void 
             class: "cmpy-mgmt-upgrade-div", // We'll reuse this CSS class
         });
 
+        let info = aug.info;
+        if(typeof info !== 'string') {
+            info = renderToStaticMarkup(info);
+        }
+
         div.appendChild(createElement("p", {
             fontSize: "12px",
             innerHTML:
             [
                 `<h2>${aug.name}</h2><br>`,
                 `Cost: ${renderToStaticMarkup(Money(aug.startingCost))}<br><br>`,
-                `${aug.info}`,
+                `${info}`,
             ].join(" "),
             padding: "2px",
             clickListener: () => {
