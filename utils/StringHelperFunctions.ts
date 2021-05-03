@@ -35,7 +35,7 @@ function convertTimeMsToTimeElapsedString(time: number, showMilli=false): string
     const secTruncMinutes: number = secTruncHours % secondPerMinute;
 
     const milliTruncSec: string = (() => {
-        let str: string = `${time % millisecondsPerSecond}`;
+        let str = `${time % millisecondsPerSecond}`;
         while(str.length < 3) str = "0"+str;
         return str;
     })()
