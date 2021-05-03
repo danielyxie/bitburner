@@ -3,9 +3,66 @@
 Changelog
 =========
 
+v0.51.7 - 2021-04-28 n00dles
+----------------------------
+
+**Tutorial servers**
+
+* All the tutorial servers have been reverted to their original value
+* The new server n00dles has been added as tutorial server.
+
+**Terminal**
+
+* 'tail' now accepts Pid.
+* 'analyze' now handles Hacknet Servers correctly.
+* 'ServerProfiler.exe' now handles Hacknet Servers correctly.
+
+**SF12**
+
+* Now makes you start with Neuroflux Governor equal to the level of the SF.
+
+**Netscript**
+
+* Deprecated 'getServerRam'.
+* 'getServerMaxRam' added to replace 'getServerRam'
+* 'getServerUsedRam' added to replace 'getServerRam'
+* 'getBitnodeMultipliers' is available inside BN5
+* Time logged by hack/grow/weaken now displays in human time.
+* thread count logged by hack/grow/weaken now displays with commas every
+  thousands place.
+
+**Donation**
+
+* Always visible but locked until favor requirements are reached.
+
+**Augmentations**
+
+* City factions has been rebalanced to give a reason to visit them all.
+
+**Sleeves**
+
+* Fix sleeves not being able to work at Volhavens gym.
+
+**Lint**
+
+* This shouldn't change anything but was like 10h of work. So I'm logging it.
+
+**Misc.**
+
+* Plethora of typo fixed (@Pimgd)
+* ps documentation fix (@Dawe)
+* The dev menu now has a quick bitflume option.
+* Fix SF -1 not being as powerful as intended.
+* Fix cashroot starter kit not displaying correctly.
+* Fix DOM element 'character-overview-text' being nested twice.
+* Hacknet documentation example fix.
+* Money amount under 1000 dont display 3 decimal anymore.
+* Fix nextSourceFile flag miscalculation on the bitverse (for Bn12)
+* Faction invite text says "Decide later"/"Join!" instead of "No"/"Yes"
+
 
 v0.51.6 - 2021-04-28 Backdoor! (Community)
--------
+------------------------------------------
 
 **Backdoor**
 

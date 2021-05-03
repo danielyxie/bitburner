@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.51.6",
+    Version:                "0.51.7",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,45 +228,61 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.6 - 2021-04-28 Backdoor! (Community)
+    v0.51.7 - 2021-04-28 n00dles
     -------
 
-    Backdoor
-    * a new terminal command, backdoor, has been added to help differentiate
-      between the terminal hack command and the netscript hack function. (@dewint)
+    Tutorial servers
+    
+    * All the tutorial servers have been reverted to their original value
+    * The new server n00dles has been added as tutorial server.
 
-    Milestones
-    * A new tab under the Help menu has been added to guide players through the
-      game.
+    Terminal
 
-    Servers
-    * foodnstuff, sigma-cosmetics, and joesguns have been rebalanced to help new players.
+    * 'tail' now accepts Pid.
+    * 'analyze' now handles Hacknet Servers correctly.
+    * 'ServerProfiler.exe' now handles Hacknet Servers correctly.
 
-    Casino
-    * Blackjack has been added (@BigD)
+    SF12
+
+    * Now makes you start with Neuroflux Governor equal to the level of the SF.
 
     Netscript
-    * 'prompt' now converts input to JSON.
-    * 'getRunningScript' is a new netscript function that returns a bunch of
-      data related to a running script.
 
-    Coding contracts
-    * trivial puzzles should no longer appear.
+    * Deprecated 'getServerRam'.
+    * 'getServerMaxRam' added to replace 'getServerRam'
+    * 'getServerUsedRam' added to replace 'getServerRam'
+    * 'getBitnodeMultipliers' is available inside BN5
+    * Time logged by hack/grow/weaken now displays in human time.
+    * thread count logged by hack/grow/weaken now displays with commas every
+      thousands place.
 
-    Infiltration
-    * All numbers are formatted like the rest of the game.
+    Donation
+
+    * Always visible but locked until favor requirements are reached.
+
+    Augmentations
+
+    * City factions has been rebalanced to give a reason to visit them all.
+
+    Sleeves
+
+    * Fix sleeves not being able to work at Volhavens gym.
+
+    Lint
+
+    * This shouldn't change anything but was like 10h of work.
 
     Misc.
-    * Server security is capped at 100.
-    * Added option to quit a job.
-    * 'cd' no longer works on unexistent folders.
-    * cd with no arguments brings you back to top level folder (@Andreas)
-    * 'softReset' documentation udpated.
-    * Money tracker now accounts for going to the hospital manually.
-    * codemirror is now the default editor (for new save files)
-    * fix typo in dark web help text (@Rodeth)
-    * so many documentation and typos fixes (@Pimgd)
-    * A corruption visual effect has been added to location with servers that
-      have backdoor installed. (@dewint)
+
+    * Plethora of typo fixed (@Pimgd)
+    * ps documentation fix (@Dawe)
+    * The dev menu now has a quick bitflume option.
+    * Fix SF -1 not being as powerful as intended.
+    * Fix cashroot starter kit not displaying correctly.
+    * Fix DOM element 'character-overview-text' being nested twice.
+    * Hacknet documentation example fix.
+    * Money amount under 1000 dont display 3 decimal anymore.
+    * Fix nextSourceFile flag miscalculation on the bitverse (for Bn12)
+    * Faction invite text says "Decide later"/"Join!" instead of "No"/"Yes"
     `,
 }
