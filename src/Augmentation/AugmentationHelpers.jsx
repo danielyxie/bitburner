@@ -60,7 +60,7 @@ function initAugmentations() {
              "This augmentation increases the player's dexterity by 10%.",
         dexterity_mult: 1.1,
     });
-    Targeting1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    Targeting1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Ishima",
                             "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.Targeting1)) {
         delete Augmentations[AugmentationNames.Targeting1];
@@ -75,7 +75,7 @@ function initAugmentations() {
         prereqs:[AugmentationNames.Targeting1],
         dexterity_mult: 1.2,
     });
-    Targeting2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    Targeting2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.Targeting2)) {
         delete Augmentations[AugmentationNames.Targeting2];
@@ -136,7 +136,7 @@ function initAugmentations() {
         strength_mult: 1.1,
         defense_mult: 1.1,
     });
-    CombatRib1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    CombatRib1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib1)) {
         delete Augmentations[AugmentationNames.CombatRib1];
@@ -152,7 +152,7 @@ function initAugmentations() {
         strength_mult: 1.14,
         defense_mult: 1.14,
     });
-    CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
+    CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Volhaven",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib2)) {
         delete Augmentations[AugmentationNames.CombatRib2];
@@ -428,7 +428,7 @@ function initAugmentations() {
              "This augmentation increases the player's hacking speed by 3%.",
         hacking_speed_mult: 1.03,
     });
-    SynapticEnhancement.addToFactions(["CyberSec"]);
+    SynapticEnhancement.addToFactions(["CyberSec", "Aevum"]);
     if (augmentationExists(AugmentationNames.SynapticEnhancement)) {
         delete Augmentations[AugmentationNames.SynapticEnhancement];
     }
@@ -756,7 +756,7 @@ function initAugmentations() {
              "when working for a company by 20%.",
         company_rep_mult: 1.2,
     });
-    NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing", "Ishima",
+    NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing",
                                            "Clarke Incorporated", "Four Sigma", "Bachman & Associates"]);
     if (augmentationExists(AugmentationNames.NuoptimalInjectorImplant)) {
         delete Augmentations[AugmentationNames.NuoptimalInjectorImplant];
@@ -1064,7 +1064,7 @@ function initAugmentations() {
         agility_exp_mult: 1.1,
         charisma_exp_mult: 1.1,
     });
-    Neurotrainer1.addToFactions(["CyberSec"]);
+    Neurotrainer1.addToFactions(["CyberSec", "Aevum"]);
     if (augmentationExists(AugmentationNames.Neurotrainer1)) {
         delete Augmentations[AugmentationNames.Neurotrainer1];
     }
@@ -1998,6 +1998,8 @@ function initAugmentations() {
     }
 
     Player.reapplyAllAugmentations();
+
+    console.log(Factions["Chongqing"])
 }
 
 //Resets an Augmentation during (re-initizliation)
