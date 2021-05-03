@@ -86,7 +86,7 @@ The following is an example of one way a script can be used to automate the
 purchasing and upgrading of Hacknet Nodes.
 
 This script attempts to purchase Hacknet Nodes until the player has a total of 8. Then
-it gradually upgrades those Node's to a minimum of level 140, 64 GB RAM, and 8 cores
+it gradually upgrades those Node's to a minimum of level 80, 16 GB RAM, and 8 cores
 
 .. code:: javascript
 
@@ -129,3 +129,16 @@ it gradually upgrades those Node's to a minimum of level 140, 64 GB RAM, and 8 c
     };
 
     print("All nodes upgraded to 16GB RAM");
+
+    for (var i = 0; i < cnt; i++) {
+        while (hacknet.getNodeStats(i).cores < 8) {
+            var cost = hacknet.getCoreUpgradeCost(i, 1);
+            while (myMoney() < cost) {
+                print("Need $" + cost + " . Have $" + myMoney());
+                sleep(3000);
+            }
+            res = hacknet.upgradeCore(i, 1);
+        };
+    };
+
+    print("All nodes upgraded to 8 cores");
