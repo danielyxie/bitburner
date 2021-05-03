@@ -1998,8 +1998,6 @@ function initAugmentations() {
     }
 
     Player.reapplyAllAugmentations();
-
-    console.log(Factions["Chongqing"])
 }
 
 //Resets an Augmentation during (re-initizliation)
