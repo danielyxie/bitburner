@@ -13,6 +13,11 @@ import { isString } from "../utils/helpers/isString";
 
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 
+// For some reason `jsplumb` needs to be imported exactly like this,
+// lowercase p, and later in the code used as `jsPlumb` uppercase P. wtf.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import jsplumb from "jsplumb";
+
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -822,7 +827,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
 }
 
 /**
- * Gets a Node DOM element's corresponding Node object using its
+ * Gets a Node DOM elements corresponding Node object using its
  * element id. Function accepts either the DOM element object or the ID as
  * an argument
  */
