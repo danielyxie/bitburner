@@ -12,6 +12,8 @@ import { Reputation } from "../../ui/React/Reputation";
 
 import { StdButton } from "../../ui/React/StdButton";
 
+import { numeralWrapper } from "../../ui/numeralFormat";
+
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
 type IProps = {
@@ -73,7 +75,7 @@ export class DonateOption extends React.Component<IProps, IState> {
     }
 
     handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        const amt = parseFloat(e.target.value);
+        const amt = numeralWrapper.parse(e.target.value);
 
         if (isNaN(amt)) {
             this.setState({
