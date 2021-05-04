@@ -138,6 +138,22 @@ class NumeralFormatter {
     formatThreads(n: number): string {
         return this.format(n, "0,0");
     }
+
+    parse(s: string): number {
+        // numeral library does not handle formats like 1e10 well (returns 110),
+        // so if both return a valid number, return the biggest one
+        const numeralValue = numeral(s).value();
+        const parsed = parseFloat(s);
+        if (isNaN(parsed) && numeralValue === null) {
+            return NaN;
+        } else if (isNaN(parsed)) {
+            return numeralValue;
+        } else if (numeralValue === null) {
+            return parsed;
+        } else {
+            return Math.max(numeralValue, parsed);
+        }
+    }
 }
 
 export const numeralWrapper = new NumeralFormatter();
