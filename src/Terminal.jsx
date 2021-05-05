@@ -965,7 +965,8 @@ let Terminal = {
                         }
 
                         const server = Player.getCurrentServer();
-                        if(!server.scripts.some(script => script.filename.startsWith(evaledDir))) {
+                        if(!server.scripts.some(script => script.filename.startsWith(evaledDir)) && 
+                            !server.textFiles.some(file => file.fn.startsWith(evaledDir))) {
                             postError("Invalid path. Failed to change directories");
                             return;
                         }
