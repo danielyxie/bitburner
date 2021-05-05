@@ -42,7 +42,7 @@ export class CodingContractPopup extends React.Component<IProps, IState>{
         const contractType: CodingContractType = CodingContractTypes[this.props.c.type];
         let description = [];
         for (const [i, value] of contractType.desc(this.props.c.data).split('\n').entries()) 
-            description.push(<span key={i}>{value}<br/></span>);
+            description.push(<span key={i} dangerouslySetInnerHTML={{__html: value+'<br />'}}></span>);
         return (
             <div>
                 <CopyableText value={this.props.c.type} tag={ClickableTag.Tag_h1} />

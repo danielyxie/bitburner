@@ -107,10 +107,10 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     {
         desc: (n: number): string => {
             return ["It is possible write four as a sum in exactly four different ways:\n\n",
-                    "    3 + 1\n",
-                    "    2 + 2\n",
-                    "    2 + 1 + 1\n",
-                    "    1 + 1 + 1 + 1\n\n",
+                    "&nbsp;&nbsp;&nbsp;&nbsp;3 + 1\n",
+                    "&nbsp;&nbsp;&nbsp;&nbsp;2 + 2\n",
+                    "&nbsp;&nbsp;&nbsp;&nbsp;2 + 1 + 1\n",
+                    "&nbsp;&nbsp;&nbsp;&nbsp;1 + 1 + 1 + 1\n\n",
                     `How many different ways can the number ${n} be written as a sum of at least`,
                     "two positive integers?"].join(" ");
         },
@@ -142,17 +142,17 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             }
             d += ["\nHere is an example of what spiral order should be:",
                   "\nExample:",
-                  "    [\n",
-                  "        [1, 2, 3],\n",
-                  "        [4, 5, 6],\n",
-                  "        [7, 8, 9]\n",
-                  "    ] should result in [1, 2, 3, 6, 9, 8 ,7, 4, 5]\n\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;[\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 3],\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4, 5, 6],\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7, 8, 9]\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;] should result in [1, 2, 3, 6, 9, 8 ,7, 4, 5]\n\n",
                   "Note that the matrix will not always be square:\n",
-                  "    [\n",
-                  "        [1, 2, 3, 4]\n",
-                  "        [5, 6, 7, 8]\n",
-                  "        [9, 10, 11, 12]\n",
-                  "    ] should result in [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7"].join(" ");
+                  "&nbsp;&nbsp;&nbsp;&nbsp;[\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 3, 4]\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5, 6, 7, 8]\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[9, 10, 11, 12]\n",
+                  "&nbsp;&nbsp;&nbsp;&nbsp;] should result in [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7"].join(" ");
 
             return d;
         },
