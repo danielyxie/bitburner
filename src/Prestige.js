@@ -234,6 +234,11 @@ function prestigeSourceFile() {
         }
     }
 
+    // Give levels of NeuroFluxGoverner for Source-File 12. Must be done here before Augmentations are recalculated
+    if (SourceFileFlags[12] > 0) {
+        Player.augmentations.push({name: AugmentationNames.NeuroFluxGovernor, level: SourceFileFlags[12]})
+    }
+
     // Re-initialize things - This will update any changes
     initFactions(); // Factions must be initialized before augmentations
     initAugmentations();    // Calls reapplyAllAugmentations() and resets Player multipliers
@@ -338,11 +343,6 @@ function prestigeSourceFile() {
         hserver.updateHashRate(Player.hacknet_node_money_mult);
         hserver.updateHashCapacity();
         updateHashManagerCapacity();
-    }
-
-    if(SourceFileFlags[12] > 0) {
-        Player.augmentations.push({name: AugmentationNames.NeuroFluxGovernor, level: SourceFileFlags[12]})
-        Player.reapplyAllAugmentations(true);
     }
 
     // Refresh Main Menu (the 'World' menu, specifically)
