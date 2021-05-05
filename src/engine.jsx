@@ -63,7 +63,7 @@ import {
     scriptEditorInit,
     updateScriptEditorContent,
 } from "./Script/ScriptHelpers";
-import { initForeignServers } from "./Server/AllServers";
+import { initForeignServers, AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
@@ -1542,8 +1542,10 @@ const Engine = {
 
         // DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
-            Player.getHomeComputer().runningScripts = [];
-            dialogBoxCreate("Forcefully deleted all running scripts on home computer. Please save and refresh page");
+            for(const hostname of Object.keys(AllServers)) {
+                AllServers[hostname].runningScripts = [];
+            }
+            dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
             gameOptionsBoxClose();
             return false;
         });
