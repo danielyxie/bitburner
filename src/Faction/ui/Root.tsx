@@ -264,7 +264,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
                     />
                 }
                 {
-                    !isPlayersGang &&
+                    !isPlayersGang && factionInfo.offersWork() && 
                     <DonateOption
                         faction={this.props.faction}
                         p={this.props.p}
