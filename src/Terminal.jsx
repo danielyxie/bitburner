@@ -535,6 +535,7 @@ let Terminal = {
                         Player.bitNodeN = 1;
                     }
                     hackWorldDaemon(Player.bitNodeN);
+                    Terminal.hackFlag = false;
                     return;
                 }
                 server.backdoorInstalled = true;
@@ -570,6 +571,7 @@ let Terminal = {
                     Player.bitNodeN = 1;
                 }
                 hackWorldDaemon(Player.bitNodeN);
+                Terminal.backdoorFlag = false;
                 return;
             }
             server.backdoorInstalled = true;
