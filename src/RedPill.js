@@ -324,8 +324,6 @@ function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume=fal
         document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
 
-        Terminal.hackFlag = false;
-
         prestigeSourceFile();
         yesNoBoxClose();
     });
