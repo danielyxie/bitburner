@@ -238,6 +238,11 @@ export function processPassiveFactionRepGain(numCycles) {
         if (!Factions.hasOwnProperty(name)) continue;
         const faction = Factions[name];
         if (!faction.isMember) continue;
+        // No passive rep for special factions
+        const info = faction.getInfo();
+        if(!info.offersWork()) continue;
+        // No passive rep for gangs.
+        if(Player.getGangName() === name) continue;
         // 0 favor = 1%/s
         // 50 favor = 6%/s
         // 100 favor = 11%/s

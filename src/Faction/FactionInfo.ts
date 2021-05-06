@@ -57,6 +57,13 @@ export class FactionInfo {
     this.augmentationPriceMult = 1;
     this.augmentationRepRequirementMult = 1;
   }
+
+  offersWork(): boolean {
+    return this.offerFieldWork || 
+      this.offerHackingMission || 
+      this.offerHackingWork || 
+      this.offerSecurityWork;
+  }
 }
 
 /**
