@@ -30,7 +30,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Join the faction hinted at in j1.msg",
+        title: "Join the faction hinted at in csec-test.msg",
         fulfilled: (p: IPlayer): boolean => {
             return p.factions.includes("CyberSec");
         },
@@ -42,7 +42,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Join the faction hinted at in j2.msg",
+        title: "Join the faction hinted at in nitesec-test.msg",
         fulfilled: (p: IPlayer): boolean => {
             return p.factions.includes("NiteSec");
         },
@@ -66,7 +66,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Join the faction hinted at in j4.msg",
+        title: "Join the faction hinted at in 19dfj3l1nd.msg",
         fulfilled: (p: IPlayer): boolean => {
             return p.factions.includes("BitRunners");
         },
@@ -78,8 +78,9 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Join the final faction",
+        title: "Complete fl1ght.exe",
         fulfilled: (p: IPlayer): boolean => {
+            // technically wrong but whatever
             return p.factions.includes("Daedalus");
         },
     },
