@@ -56,6 +56,15 @@ export function joinFaction(faction) {
             Factions[enemy].isBanned = true;
         }
     }
+    for (var i = 0; i < Player.factionInvitations.length; ++i) {
+        if (Player.factionInvitations[i] == faction.name || Factions[Player.factionInvitations[i]].isBanned) {
+            Player.factionInvitations.splice(i, 1);
+            i--;
+        }
+    }
+    if (routing.isOn(Page.Factions)) {
+        Engine.loadFactionsContent();
+    }
 }
 
 export function startHackingMission(faction) {

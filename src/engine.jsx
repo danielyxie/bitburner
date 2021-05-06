@@ -643,12 +643,6 @@ const Engine = {
                     clickListener: (e) => {
                         if (!e.isTrusted) { return false; }
                         joinFaction(Factions[factionName]);
-                        for (var i = 0; i < Player.factionInvitations.length; ++i) {
-                            if (Player.factionInvitations[i] == factionName || Factions[Player.factionInvitations[i]].isBanned) {
-                                Player.factionInvitations.splice(i, 1);
-                                i--;
-                            }
-                        }
                         Engine.displayFactionsInfo();
                         return false;
                     },
