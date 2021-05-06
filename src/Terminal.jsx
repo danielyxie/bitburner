@@ -586,7 +586,8 @@ let Terminal = {
             const org = currServ.organizationName
             post("Organization name: " + (!isHacknet ? org : "Player"));
             const admin = currServ.hasAdminRights;
-            post("Root Access: " + (!isHacknet ? "YES" : "NO"));
+            let hasAdminRights = !isHacknet && currServ.hasAdminRights || isHacknet;
+            post("Root Access: " + (hasAdminRights ? "YES" : "NO"));
             const hackingSkill = currServ.requiredHackingSkill
             post("Required hacking skill: " + (!isHacknet ? hackingSkill : "N/A"));
             const security = currServ.hackDifficulty;
@@ -965,7 +966,8 @@ let Terminal = {
                         }
 
                         const server = Player.getCurrentServer();
-                        if(!server.scripts.some(script => script.filename.startsWith(evaledDir))) {
+                        if(!server.scripts.some(script => script.filename.startsWith(evaledDir)) && 
+                            !server.textFiles.some(file => file.fn.startsWith(evaledDir))) {
                             postError("Invalid path. Failed to change directories");
                             return;
                         }
