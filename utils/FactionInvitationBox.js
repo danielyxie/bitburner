@@ -36,8 +36,6 @@ function factionInvitationBoxCreate(faction) {
         var i = Player.factionInvitations.findIndex((facName)=>{return facName === faction.name});
         if (i === -1) {
             console.error("Could not find faction in Player.factionInvitations");
-        } else {
-            Player.factionInvitations.splice(i, 1);
         }
         joinFaction(faction);
         factionInvitationBoxClose();
