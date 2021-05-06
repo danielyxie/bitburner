@@ -1700,10 +1700,14 @@ let Terminal = {
         }
 
         // Display all programs and scripts
-        let allFiles = [];
-        let folders = [];
+        const allPrograms = [];
+        const allScripts = [];
+        const allTextFiles = [];
+        const allContracts = [];
+        const allMessages = [];
+        const folders = [];
 
-        function handleFn(fn) {
+        function handleFn(fn, dest) {
             let parsedFn = fn;
             if (prefix) {
                 if (!fn.startsWith(prefix)) {
@@ -1732,29 +1736,53 @@ let Terminal = {
                 return;
             }
 
-            allFiles.push(parsedFn);
+            dest.push(parsedFn);
         }
 
         // Get all of the programs and scripts on the machine into one temporary array
         const s = Player.getCurrentServer();
-        for (const program of s.programs) handleFn(program);
-        for (const script of s.scripts) handleFn(script.filename);
-        for (const txt of s.textFiles) handleFn(txt.fn);
-        for (const contract of s.contracts) handleFn(contract.fn);
-        for (const msgOrLit of s.messages) (msgOrLit instanceof Message) ? handleFn(msgOrLit.filename) : handleFn(msgOrLit);
+        for (const program of s.programs) handleFn(program, allPrograms);
+        for (const script of s.scripts) handleFn(script.filename, allScripts);
+        for (const txt of s.textFiles) handleFn(txt.fn, allTextFiles);
+        for (const contract of s.contracts) handleFn(contract.fn, allContracts);
+        for (const msgOrLit of s.messages) (msgOrLit instanceof Message) ? handleFn(msgOrLit.filename, allMessages) : handleFn(msgOrLit, allMessages);
 
         // Sort the files/folders alphabetically then print each
-        allFiles.sort();
+        allPrograms.sort();
+        allScripts.sort();
+        allTextFiles.sort();
+        allContracts.sort();
+        allMessages.sort();
         folders.sort();
 
-        const config = { color: "#0000FF" };
-        for (const dir of folders) {
-            postContent(dir, config);
+        function postSegments(segments, config) {
+            const maxLength = Math.max(...segments.map(s => s.length))+1;
+            const filesPerRow = Math.floor(80 / maxLength);
+            for(let i = 0; i < segments.length; i++) {
+                let row = '';
+                for(let col = 0; col < filesPerRow; col++) {
+                    if(!(i < segments.length)) break;
+                    row += segments[i];
+                    row += " ".repeat((maxLength * (col+1)) - row.length);
+                    i++
+                }
+                postContent(row, config);
+            }
         }
 
-        for (const file of allFiles) {
-            postContent(file);
-        }
+
+        const config = { color: "#0000FF" };
+        postSegments(folders, config);
+        postElement(<br />);
+        postSegments(allMessages);
+        postElement(<br />);
+        postSegments(allTextFiles);
+        postElement(<br />);
+        postSegments(allPrograms);
+        postElement(<br />);
+        postSegments(allContracts);
+        postElement(<br />);
+        postSegments(allScripts);
     },
 
     executeMemCommand: function(commandArray) {
