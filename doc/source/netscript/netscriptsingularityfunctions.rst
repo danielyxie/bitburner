@@ -27,6 +27,7 @@ level 3, then you will be able to access all of the Singularity Functions.
     getCurrentServer() <singularityfunctions/getCurrentServer>
     connect() <singularityfunctions/connect>
     manualHack() <singularityfunctions/manualHack>
+    installBackdoor() <singularityfunctions/installBackdoor>
     getPlayer() <singularityfunctions/getPlayer>
     hospitalize() <singularityfunctions/hospitalize>
     isBusy() <singularityfunctions/isBusy>
