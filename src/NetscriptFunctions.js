@@ -2937,6 +2937,28 @@ function NetscriptFunctions(workerScript) {
             const server = Player.getCurrentServer();
             return hack(server.hostname, true);
         },
+        installBackdoor: function() {
+            updateDynamicRam("installBackdoor", getRamCost("installBackdoor"));
+            checkSingularityAccess("installBackdoor", 1);
+            const server = Player.getCurrentServer();
+            const installTime = calculateHackingTime(server, Player) / 4 * 1000;
+
+            // No root access or skill level too low
+            const canHack = netscriptCanHack(server, Player);
+            if (!canHack.res) {
+                throw makeRuntimeErrorMsg('installBackdoor', canHack.msg);
+            }
+
+            workerScript.log("installBackdoor", `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`);
+
+            return netscriptDelay(installTime, workerScript).then(function() {
+                    if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+                    workerScript.log("installBackdoor", `Successfully installed backdoor on '${server.hostname}'`);
+
+                    server.backdoorInstalled = true;
+                return Promise.resolve();
+            });
+        },
         getStats: function() {
             updateDynamicRam("getStats", getRamCost("getStats"));
             checkSingularityAccess("getStats", 1);
