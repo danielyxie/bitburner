@@ -60,7 +60,7 @@ export class Overview extends BaseReactComponent {
 
         let txt = "Total Funds: " + numeralWrapper.format(this.corp().funds.toNumber(), '$0.000a') + "<br>" +
                   "Total Revenue: " + numeralWrapper.format(this.corp().revenue.toNumber(), "$0.000a") + " / s<br>" +
-                  "Total Expenses: " + numeralWrapper.format(this.corp().expenses.toNumber(), "$0.000a") + "/ s<br>" +
+                  "Total Expenses: " + numeralWrapper.format(this.corp().expenses.toNumber(), "$0.000a") + " / s<br>" +
                   "Total Profits: " + profitStr + " / s<br>" +
                   dividendStr +
                   "Publicly Traded: " + (this.corp().public ? "Yes" : "No") + "<br>" +
