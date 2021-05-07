@@ -186,6 +186,7 @@ export const RamCosts: IMap<any> = {
     getCurrentServer: () => RamCostConstants.ScriptSingularityFn1RamCost,
     connect: () => RamCostConstants.ScriptSingularityFn1RamCost,
     manualHack: () => RamCostConstants.ScriptSingularityFn1RamCost,
+    installBackdoor: () => RamCostConstants.ScriptSingularityFn1RamCost,
     getStats: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
     getCharacterInformation: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
     getPlayer: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
