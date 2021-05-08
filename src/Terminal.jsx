@@ -625,7 +625,12 @@ let Terminal = {
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
 
         // Split commands and execute sequentially
-        commands = commands.split(";");
+        commands = commands
+            .match(/(?:'[^']*'|"[^"]*"|[^;"])*/g)
+            .map(substituteAliases)
+            .map(c => c.match(/(?:'[^']*'|"[^"]*"|[^;"])*/g))
+            .flat();
+        console.log(commands);
         for (let i = 0; i < commands.length; i++) {
             if(commands[i].match(/^\s*$/)) { continue; } // Don't run commands that only have whitespace
             Terminal.executeCommand(commands[i].trim());
@@ -726,9 +731,6 @@ let Terminal = {
             postError(`Cannot execute command (${command}) while an action is in progress`);
             return;
         }
-
-        // Process any aliases
-        command = substituteAliases(command);
 
         // Allow usage of ./
         if (command.startsWith("./")) {
@@ -873,7 +875,7 @@ let Terminal = {
                 if (commandArray.length === 3) {
                     if (commandArray[1] === "-g") {
                         if (parseAliasDeclaration(commandArray[2], true)) {
-                            post(`Set global alias ${commandArray[1]}`);
+                            post(`Set global alias ${commandArray[2]}`);
                             return;
                         }
                     }
