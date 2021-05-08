@@ -21,4 +21,4 @@ hackChance() Netscript Function
 
         server = getServer();
         server.hackDifficulty = server.minDifficulty;
-        tprint(hackChance(server, getPlayer()));
+        tprint(formulas.basic.hackChance(server, getPlayer()));

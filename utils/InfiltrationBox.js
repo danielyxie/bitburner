@@ -1,6 +1,6 @@
 import { dialogBoxCreate }          from "./DialogBox";
 import { clearEventListeners }      from "./uiHelpers/clearEventListeners";
-import { formatNumber }             from "./StringHelperFunctions";
+import { numeralWrapper }           from "../src/ui/numeralFormat";
 
 import { BitNodeMultipliers }       from "../src/BitNode/BitNodeMultipliers";
 import { CONSTANTS }                from "../src/Constants";
@@ -38,12 +38,12 @@ function infiltrationBoxCreate(inst) {
     Player.gainIntelligenceExp(inst.calcGainedIntelligenceExp());
 
     const expGainText = ["You gained:",
-                         `${formatNumber(inst.calcGainedHackingExp(), 3)} hacking exp`,
-                         `${formatNumber(inst.calcGainedStrengthExp(), 3)} str exp`,
-                         `${formatNumber(inst.calcGainedDefenseExp(), 3)} def exp`,
-                         `${formatNumber(inst.calcGainedDexterityExp(), 3)} dex exp`,
-                         `${formatNumber(inst.calcGainedAgilityExp(), 3)} agi exp`,
-                         `${formatNumber(inst.calcGainedCharismaExp(), 3)} cha exp`].join("\n");
+                         `${numeralWrapper.formatExp(inst.calcGainedHackingExp(), 3)} hacking exp`,
+                         `${numeralWrapper.formatExp(inst.calcGainedStrengthExp(), 3)} str exp`,
+                         `${numeralWrapper.formatExp(inst.calcGainedDefenseExp(), 3)} def exp`,
+                         `${numeralWrapper.formatExp(inst.calcGainedDexterityExp(), 3)} dex exp`,
+                         `${numeralWrapper.formatExp(inst.calcGainedAgilityExp(), 3)} agi exp`,
+                         `${numeralWrapper.formatExp(inst.calcGainedCharismaExp(), 3)} cha exp`].join("\n");
 
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
@@ -58,9 +58,9 @@ function infiltrationBoxCreate(inst) {
                    CONSTANTS.InfiltrationRepValue * BitNodeMultipliers.InfiltrationRep;
     var moneyValue = totalValue * CONSTANTS.InfiltrationMoneyValue * BitNodeMultipliers.InfiltrationMoney;
     infiltrationSetText("You can sell the classified documents and secrets " +
-                        "you stole from " + inst.companyName + " for <span class='money-gold'>$" +
-                        formatNumber(moneyValue, 2) + "</span> on the black market or you can give it " +
-                        "to a faction to gain <span class='light-yellow'>" + formatNumber(facValue, 3) + " reputation</span> with " +
+                        "you stole from " + inst.companyName + " for <span class='money-gold'>" +
+                        numeralWrapper.formatMoney(moneyValue) + "</span> on the black market or you can give it " +
+                        "to a faction to gain <span class='light-yellow'>" + numeralWrapper.formatReputation(facValue) + " reputation</span> with " +
                         "that faction.");
     var selector = document.getElementById("infiltration-faction-select");
     selector.innerHTML = "";
@@ -88,7 +88,7 @@ function infiltrationBoxCreate(inst) {
         Player.gainMoney(moneyValue);
         Player.recordMoneySource(moneyValue, "infiltration");
         dialogBoxCreate("You sold the classified information you stole from " + inst.companyName +
-                        " for <span class='money-gold'>$" + formatNumber(moneyValue, 2) + "</span> on the black market!<br><br>" +
+                        " for <span class='money-gold'>" + numeralWrapper.formatMoney(moneyValue) + "</span> on the black market!<br><br>" +
                         expGainText);
         infiltrationBoxClose();
         return false;
@@ -108,7 +108,7 @@ function infiltrationBoxCreate(inst) {
         }
         faction.playerReputation += facValue;
         dialogBoxCreate("You gave the classified information you stole from " + inst.companyName +
-                        " to " + facName + " and gained <span class='light-yellow'>" + formatNumber(facValue, 3) + " reputation</span> with the faction. <br><br>" +
+                        " to " + facName + " and gained <span class='light-yellow'>" + numeralWrapper.formatReputation(facValue) + " reputation</span> with the faction. <br><br>" +
                         expGainText);
         infiltrationBoxClose();
         return false;

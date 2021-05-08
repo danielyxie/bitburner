@@ -323,7 +323,7 @@ Source-File
     :Max Level: 3
 
     This Source-File unlocks Sleeve technology in other BitNodes.
-    Each level of this Source-File also grants you a Duplicate Sleeve
+    Each level of this Source-File also grants you a Duplicate Sleeve.
 
 Difficulty
     Hard

@@ -139,7 +139,7 @@ class NumeralFormatter {
         return this.format(n, "0,0");
     }
 
-    parse(s: string): number {
+    parseMoney(s: string): number {
         // numeral library does not handle formats like 1e10 well (returns 110),
         // so if both return a valid number, return the biggest one
         const numeralValue = numeral(s).value();

@@ -221,7 +221,7 @@ BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                         "The growth rate of servers is significantly reduced<br>" +
                                         "Weakening a server is twice as effective<br>" +
                                         "Company wages are decreased by 50%<br>" +
-                                        "Corporation valuations are 99% lower and are therefore significantly less profitable<br>" +
+                                        "Corporation valuations are 90% lower and are therefore significantly less profitable<br>" +
                                         "Hacknet Node production is significantly decreased<br>" +
                                         "Crime and Infiltration are more lucrative<br>" +
                                         "Augmentations are twice as expensive<br><br>" +

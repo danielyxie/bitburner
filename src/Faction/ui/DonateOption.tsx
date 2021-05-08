@@ -75,7 +75,7 @@ export class DonateOption extends React.Component<IProps, IState> {
     }
 
     handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        const amt = numeralWrapper.parse(e.target.value);
+        const amt = numeralWrapper.parseMoney(e.target.value);
 
         if (isNaN(amt)) {
             this.setState({
