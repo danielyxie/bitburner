@@ -1770,20 +1770,18 @@ let Terminal = {
                 }
                 postContent(row, config);
             }
+            if(segments.length > 0) {
+                postElement(<br />);
+            }
         }
 
 
         const config = { color: "#0000FF" };
         postSegments(folders, config);
-        postElement(<br />);
         postSegments(allMessages);
-        postElement(<br />);
         postSegments(allTextFiles);
-        postElement(<br />);
         postSegments(allPrograms);
-        postElement(<br />);
         postSegments(allContracts);
-        postElement(<br />);
         postSegments(allScripts);
     },
 
