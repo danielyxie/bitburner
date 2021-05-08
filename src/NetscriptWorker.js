@@ -417,8 +417,8 @@ function processNetscript1Imports(code, workerScript) {
  * @param {Server} server - Server on which the script is to be run
  * @returns {number} pid of started script
  */
-export function startWorkerScript(runningScript, server) {
-    if (createAndAddWorkerScript(runningScript, server)) {
+export function startWorkerScript(runningScript, server, parent) {
+    if (createAndAddWorkerScript(runningScript, server, parent)) {
         // Push onto runningScripts.
         // This has to come after createAndAddWorkerScript() because that fn updates RAM usage
         server.runScript(runningScript, Player.hacknet_node_money_mult);
@@ -438,7 +438,7 @@ export function startWorkerScript(runningScript, server) {
  * @param {Server} server - Server on which the script is to be run
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
-export function createAndAddWorkerScript(runningScriptObj, server) {
+export function createAndAddWorkerScript(runningScriptObj, server, parent) {
 	// Update server's ram usage
     let threads = 1;
     if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -489,6 +489,12 @@ export function createAndAddWorkerScript(runningScriptObj, server) {
     // Once the code finishes (either resolved or rejected, doesnt matter), set its
     // running status to false
     p.then(function(w) {
+        // On natural death, the earnings are transfered to the parent if it still exists.
+        if(parent && parent.running) {
+            parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
+            parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
+        }
+
         // If the WorkerScript is no longer "running", then this means its execution was
         // already stopped somewhere else (maybe by something like exit()). This prevents
         // the script from being cleaned up twice
@@ -643,7 +649,7 @@ export function runScriptFromScript(caller, server, scriptname, args, workerScri
                 let runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;
 
-                return startWorkerScript(runningScriptObj, server);
+                return startWorkerScript(runningScriptObj, server, workerScript);
             }
         }
     }
