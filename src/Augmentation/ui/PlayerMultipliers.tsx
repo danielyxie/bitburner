@@ -44,6 +44,18 @@ export function PlayerMultipliers(): React.ReactElement {
         </table>
     }
 
+    function BladeburnerMults(): React.ReactElement {
+        if(!Player.canAccessBladeburner()) return (<></>);
+        return (<>
+            {MultiplierTable([
+                ['Bladeburner Success Chance', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
+                ['Bladeburner Max Stamina', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
+                ['Bladeburner Stamina Gain', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
+                ['Bladeburner Field Analysis', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
+            ])}<br />
+        </>);
+    }
+
     return (
         <>
         <p><strong><u>Multipliers:</u></strong></p><br />
@@ -103,6 +115,8 @@ export function PlayerMultipliers(): React.ReactElement {
             ['Crime success ', Player.crime_success_mult, Player.crime_success_mult*mults.crime_success_mult],
             ['Crime money ', Player.crime_money_mult, Player.crime_money_mult*mults.crime_money_mult],
         ])}<br />
+
+        <BladeburnerMults />
         </>
     )
 }

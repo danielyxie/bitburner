@@ -21,4 +21,4 @@ growTime() Netscript Function
 
         server = getServer();
         server.hackDifficulty = server.minDifficulty;
-        tprint(growTime(server, getPlayer()));
+        tprint(formulas.basic.growTime(server, getPlayer()));

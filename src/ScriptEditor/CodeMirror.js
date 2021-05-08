@@ -178,7 +178,7 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                 netscriptFns.push(name);
 
                 //Get functions from namespaces
-                const namespaces = ["bladeburner", "hacknet", "codingcontract", "gang", "sleeve"];
+                const namespaces = ["bladeburner", "hacknet", "codingcontract", "gang", "sleeve", "heart", "formulas"];
                 if (namespaces.includes(name)) {
                     let namespace = fnsObj[name];
                     if (typeof namespace !== "object") {continue;}

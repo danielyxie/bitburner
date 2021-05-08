@@ -108,6 +108,18 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         </>
     }
 
+    function BladeburnerMults(): React.ReactElement {
+        if(!p.canAccessBladeburner()) return (<></>);
+        return (<>
+            <MultiplierTable rows={[
+                ['Bladeburner Success Chance', p.bladeburner_max_stamina_mult],
+                ['Bladeburner Max Stamina', p.bladeburner_stamina_gain_mult],
+                ['Bladeburner Stamina Gain', p.bladeburner_analysis_mult],
+                ['Bladeburner Field Analysis', p.bladeburner_success_chance_mult],
+            ]} /><br />
+        </>);
+    }
+
     function CurrentBitNode(): React.ReactElement {
         if(p.sourceFiles.length > 0) {
 
@@ -233,7 +245,9 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <MultiplierTable rows={[
                 ['Crime success', p.crime_success_mult],
                 ['Crime money', p.crime_money_mult, p.crime_money_mult*BitNodeMultipliers.CrimeMoney],
-            ]} /><br /><br />
+            ]} /><br />
+
+            <BladeburnerMults /><br />
 
             <b>Misc.</b><br /><br />
             <span>{`Servers owned: ${p.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span><br />

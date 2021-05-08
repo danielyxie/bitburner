@@ -21,4 +21,4 @@ hackTime() Netscript Function
 
         server = getServer();
         server.hackDifficulty = server.minDifficulty;
-        tprint(hackTime(server, getPlayer()));
+        tprint(formulas.basic.hackTime(server, getPlayer()));

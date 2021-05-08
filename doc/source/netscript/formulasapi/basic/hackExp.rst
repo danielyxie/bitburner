@@ -21,4 +21,4 @@ hackExp() Netscript Function
 
         server = getServer();
         server.hackDifficulty = 99.9;
-        tprint(hackExp(server, getPlayer()));
+        tprint(formulas.basic.hackExp(server, getPlayer()));

@@ -21,4 +21,4 @@ weakenTime() Netscript Function
 
         server = getServer();
         server.hackDifficulty = server.minDifficulty;
-        tprint(weakenTime(server, getPlayer()));
+        tprint(formulas.basic.weakenTime(server, getPlayer()));

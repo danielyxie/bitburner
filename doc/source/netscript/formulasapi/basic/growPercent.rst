@@ -20,4 +20,4 @@ growPercent() Netscript Function
 
     .. code-block:: javascript
 
-        tprint(growPercent(getServer(), 50, getPlayer()))
+        tprint(formulas.basic.growPercent(getServer(), 50, getPlayer()))
