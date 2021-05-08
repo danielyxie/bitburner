@@ -736,7 +736,7 @@ Bladeburner.prototype.completeAction = function() {
                         }
                     }
                     var logLossText = "";
-                    if (loss > 0)   {logLossText += "Lost " + formatNumber(loss, 3) + " rank.";}
+                    if (loss > 0)   {logLossText += "Lost " + formatNumber(loss, 3) + " rank. ";}
                     if (damage > 0) {logLossText += "Took " + formatNumber(damage, 0) + " damage.";}
                     if (isOperation && this.logging.ops) {
                         this.log(action.name + " failed! " + logLossText);

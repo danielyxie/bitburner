@@ -421,7 +421,9 @@ function processAllHacknetServerEarnings(numCycles) {
         // Also, update the hash rate before processing
         const hserver = AllServers[Player.hacknetNodes[i]];
         hserver.updateHashRate(Player.hacknet_node_money_mult);
-        hashes += hserver.process(numCycles);
+        const h = hserver.process(numCycles);
+        hserver.totalHashesGenerated += h;
+        hashes += h;
     }
 
     Player.hashManager.storeHashes(hashes);

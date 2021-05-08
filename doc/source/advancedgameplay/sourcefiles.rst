@@ -47,7 +47,7 @@ List of all Source-Files
 +------------------------------------+-------------------------------------------------------------------------------------+
 | BitNode-9: Coming Soon             |                                                                                     |
 +------------------------------------+-------------------------------------------------------------------------------------+
-| BitNode-10: Digital Carbon         | * Each level of this grants a Duplicate Sleeve                                      |
+| BitNode-10: Digital Carbon         | * Each level of this grants a Duplicate Sleeve.                                     |
 |                                    | * Allows the player to access the :ref:`netscript_sleeveapi` in other BitNodes      |
 +------------------------------------+-------------------------------------------------------------------------------------+
 | BitNode-11: The Big Crash          | * Company favor increases both the player's salary and reputation gain at that      |

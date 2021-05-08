@@ -22,4 +22,4 @@ hackPercent() Netscript Function
 
         server = getServer();
         server.hackDifficulty = server.minDifficulty;
-        tprint(hackPercent(server, getPlayer()));
+        tprint(formulas.basic.hackPercent(server, getPlayer()));

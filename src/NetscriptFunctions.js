@@ -3981,7 +3981,7 @@ function NetscriptFunctions(workerScript) {
             setActionAutolevel: function(type="", name="", autoLevel=true) {
                 updateDynamicRam("setActionAutolevel", getRamCost("bladeburner", "setActionAutolevel"));
                 checkBladeburnerAccess("setActionAutolevel");
-                const action = getBladeburnerActionObject("getActionCurrentLevel", type, name);
+                const action = getBladeburnerActionObject("setActionAutolevel", type, name);
                 action.autoLevel = autoLevel;
             },
             setActionLevel: function(type="", name="", level=1) {
@@ -3991,7 +3991,7 @@ function NetscriptFunctions(workerScript) {
                 if(level < 1 || level > action.maxLevel) {
                     throw makeRuntimeErrorMsg("bladeburner.setActionLevel", `Level must be between 1 and ${action.maxLevel}, is ${level}`)
                 }
-                actionObj.level = level;
+                action.level = level;
             },
             getRank: function() {
                 updateDynamicRam("getRank", getRamCost("bladeburner", "getRank"));

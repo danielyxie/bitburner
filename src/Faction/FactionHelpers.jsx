@@ -62,9 +62,6 @@ export function joinFaction(faction) {
             i--;
         }
     }
-    if (routing.isOn(Page.Factions)) {
-        Engine.loadFactionsContent();
-    }
 }
 
 export function startHackingMission(faction) {
