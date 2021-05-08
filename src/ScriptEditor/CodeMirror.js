@@ -189,7 +189,6 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                 }
             }
         }
-        netscriptFns.sort().reverse();
 
         CodeMirror.hint.netscript = function(editor) {
             const origList = CodeMirror.hint.javascript(editor) || {from: editor.getCursor(), to: editor.getCursor(), list: []};

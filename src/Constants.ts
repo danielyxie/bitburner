@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.51.7",
+    Version:                "0.51.8",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,61 +228,60 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.7 - 2021-04-28 n00dles
+    v0.51.8 - 2021-05-07 It was there all along (hydroflame)
     -------
 
-    Tutorial servers
-    
-    * All the tutorial servers have been reverted to their original value
-    * The new server n00dles has been added as tutorial server.
+    Servers
 
-    Terminal
-
-    * 'tail' now accepts Pid.
-    * 'analyze' now handles Hacknet Servers correctly.
-    * 'ServerProfiler.exe' now handles Hacknet Servers correctly.
-
-    SF12
-
-    * Now makes you start with Neuroflux Governor equal to the level of the SF.
+    * Update n00dles metadata
 
     Netscript
 
-    * Deprecated 'getServerRam'.
-    * 'getServerMaxRam' added to replace 'getServerRam'
-    * 'getServerUsedRam' added to replace 'getServerRam'
-    * 'getBitnodeMultipliers' is available inside BN5
-    * Time logged by hack/grow/weaken now displays in human time.
-    * thread count logged by hack/grow/weaken now displays with commas every
-      thousands place.
+    * 'hashGainRate' use the correct 'usedRam' and 'maxRam'
+    * Fix 'setActionAutolevel' logging.
+    * Fix 'setActionLevel' not working at all.
+    * Add 'installBackdoor' singularity function.
 
-    Donation
+    Hacknet
 
-    * Always visible but locked until favor requirements are reached.
+    * Fix Hacknet Servers total production always displaying 0
 
-    Augmentations
+    Documentation
 
-    * City factions has been rebalanced to give a reason to visit them all.
-
-    Sleeves
-
-    * Fix sleeves not being able to work at Volhavens gym.
-
-    Lint
-
-    * This shouldn't change anything but was like 10h of work.
+    * Updated guide to no longer recommend BN12.
+    * Fix documentation for maxNumNodes (@ModdedGamers)
+    * Fix typo in 'sourcefiles.rst'
+    * Fix typo in 'recommendedbitnodeorder.rst'
+    * Fix 'getServer' documentation missing 'server' argument.
+    * Fix missing ram cost in 'getData.rst'
+    * Fix basic formulas examples.
+    * Fix typo in BN11 description.
+    * Fix formatting issue in Bladeburner (@Pimgd)
 
     Misc.
 
-    * Plethora of typo fixed (@Pimgd)
-    * ps documentation fix (@Dawe)
-    * The dev menu now has a quick bitflume option.
-    * Fix SF -1 not being as powerful as intended.
-    * Fix cashroot starter kit not displaying correctly.
-    * Fix DOM element 'character-overview-text' being nested twice.
-    * Hacknet documentation example fix.
-    * Money amount under 1000 dont display 3 decimal anymore.
-    * Fix nextSourceFile flag miscalculation on the bitverse (for Bn12)
-    * Faction invite text says "Decide later"/"Join!" instead of "No"/"Yes"
+    * Fix negative money being displayed in full.
+    * Fix Hacking Missions not working.
+    * Fix Corporation tree not rendering.
+    * Fix script being needlessly recompiled. This should save real ram (not game ram)
+    * w0r1d_d43m0n can be backdoored
+    * Coding Contracts title is click-to-copy (@Rodeth)
+    * Covenant memory upgrade works better.
+    * Fix Neuroflux not being correctly calculated when entering BN with SF12.
+    * Delete Active Script now delete all active scripts, not just home.
+    * Now you can 'cd' in directories that only contain '.txt' files.
+    * Fix 'analyze' always saying players had root access
+    * Passive faction rep no longer builds for special factions.
+    * Donation option no longer appears for special factions.
+    * Rephrased some milestones.
+    * donation textbox now accepts money in the format '1b' and the like (@Dawe)
+    * Fix being able to join hated factions simultaneously. (@Dawe)
+    * 'ls' now displays files in multiple column. (Helps players with many files)
+    * Bladeburner multiplers now appear under Character>Stats and
+      Character>Augmentation when they are relevant.
+    * Fix missing functions syntax highlight in codemirror.
+    * Fix infiltration number formatting.
+    * script income transfers to parent on death. This helps keep track of
+      income for scripts that spawn short lived scripts.
     `,
 }
