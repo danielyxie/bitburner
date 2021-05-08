@@ -113,6 +113,7 @@
   },
   "scripts": {
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
+    "start:container": "webpack-dev-server --progress --env.devServer --mode development --env.runInContainer",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "build:test": "webpack --config webpack.config-test.js",
@@ -121,6 +122,7 @@
     "lint:style": "stylelint --fix ./css/*",
     "preinstall": "node ./scripts/engines-check.js",
     "test": "mochapack --webpack-config webpack.config-test.js -r jsdom-global/register ./test/index.js",
+    "test:container": "mochapack --webpack-config webpack.config-test.js --slow 2000 --timeout 10000 -r jsdom-global/register ./test/index.js",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development"
   },
