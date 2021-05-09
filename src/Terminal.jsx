@@ -1768,6 +1768,7 @@ let Terminal = {
                     row += " ".repeat((maxLength * (col+1)) - row.length);
                     i++
                 }
+                i--;
                 postContent(row, config);
             }
             if(segments.length > 0) {
