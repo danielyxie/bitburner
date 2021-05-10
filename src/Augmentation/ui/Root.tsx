@@ -10,6 +10,8 @@ import { PurchasedAugmentations } from "./PurchasedAugmentations";
 
 import { Player } from "../../Player";
 import { StdButton } from "../../ui/React/StdButton";
+import { LastExportBonus, canGetBonus } from "../../ExportBonus";
+import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 
 type IProps = {
     exportGameFn: () => void;
@@ -17,15 +19,31 @@ type IProps = {
 }
 
 type IState = {
-
+    rerender: boolean;
 }
 
 export class AugmentationsRoot extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
+        this.state = {
+            rerender: false,
+        };
+        this.export = this.export.bind(this);
+    }
+
+    export() {
+        this.props.exportGameFn();
+        this.setState({
+            rerender: !this.state.rerender,
+        });
     }
 
     render(): React.ReactNode {
+        function exportBonusStr(): string {
+            if(canGetBonus()) return "(+1 favor to all factions)";
+            return "";
+        }
+
         return (
             <div id="augmentations-content">
                 <h1>Purchased Augmentations</h1>
@@ -60,8 +78,8 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
 
                 <StdButton
                     addClasses="flashing-button"
-                    onClick={this.props.exportGameFn}
-                    text="Backup Save (Export)"
+                    onClick={this.export}
+                    text={`Backup Save ${exportBonusStr()}`}
                     tooltip="It's always a good idea to backup/export your save!"
                 />
                 <PurchasedAugmentations />

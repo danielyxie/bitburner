@@ -31,6 +31,7 @@ import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { createStatusText } from "./ui/createStatusText";
 
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
+import { LastExportBonus } from "./ExportBonus";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { gameOptionsBoxClose } from "../utils/GameOptions";
@@ -66,6 +67,7 @@ function BitburnerSaveObject() {
     this.FconfSettingsSave              = "";
     this.VersionSave                    = "";
     this.AllGangsSave                   = "";
+    this.LastExportBonus                = "";
 }
 
 BitburnerSaveObject.prototype.getSaveString = function() {
@@ -94,6 +96,7 @@ BitburnerSaveObject.prototype.getSaveString = function() {
     this.SettingsSave               = JSON.stringify(Settings);
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
+    this.LastExportBonus            = JSON.stringify(LastExportBonus);
     if (Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }

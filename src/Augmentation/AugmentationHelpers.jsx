@@ -12,6 +12,7 @@ import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
 import { saveObject } from "../SaveObject";
 import { Page, routing } from "../ui/navigationTracking";
+import { onExport } from "../ExportBonus";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { clearObject } from "../../utils/helpers/clearObject";
@@ -2077,9 +2078,14 @@ export function displayAugmentationsContent(contentEl) {
     if (!routing.isOn(Page.Augmentations)) { return; }
     if (!(contentEl instanceof HTMLElement)) { return; }
 
+    function backup() {
+        saveObject.exportGame();
+        onExport(Player);
+    }
+
     ReactDOM.render(
         <AugmentationsRoot
-            exportGameFn={saveObject.exportGame.bind(saveObject)}
+            exportGameFn={backup}
             installAugmentationsFn={installAugmentations}
         />,
         contentEl,
