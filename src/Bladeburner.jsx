@@ -382,22 +382,16 @@ Bladeburner.prototype.process = function() {
         this.stamina = Math.min(this.maxStamina, this.stamina);
 
         // Count increase for contracts/operations
-        for (var contractName in this.contracts) {
-            if (this.contracts.hasOwnProperty(contractName)) {
-                var contract = this.contracts[contractName];
-                contract.count += (seconds * contract.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
-            }
+        for (let contract of Object.values(this.contracts)) {
+            contract.count += (seconds * contract.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
         }
-        for (var operationName in this.operations) {
-            if (this.operations.hasOwnProperty(operationName)) {
-                var op = this.operations[operationName];
-                op.count += (seconds * op.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
-            }
+        for (let op of Object.values(this.operations)) {
+            op.count += (seconds * op.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
         }
 
         // Chaos goes down very slowly
-        for (var i = 0; i < BladeburnerConstants.CityNames.length; ++i) {
-            var city = this.cities[BladeburnerConstants.CityNames[i]];
+        for (let cityName of BladeburnerConstants.CityNames) {
+            var city = this.cities[cityName];
             if (!(city instanceof City)) {throw new Error("Invalid City object when processing passive chaos reduction in Bladeburner.process");}
             city.chaos -= (0.0001 * seconds);
             city.chaos = Math.max(0, city.chaos);
