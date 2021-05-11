@@ -236,6 +236,8 @@ const Engine = {
         characterInfo:                  null,
     },
 
+    indexedDb: undefined,
+
     // Time variables (milliseconds unix epoch time)
     _lastUpdate: new Date().getTime(),
     _idleSpeed: 200, // Speed (in ms) at which the main loop is updated
@@ -815,7 +817,7 @@ const Engine = {
                 Engine.Counters.autoSaveCounter = Infinity;
             } else {
                 Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
-                saveObject.saveGame(indexedDb);
+                saveObject.saveGame(Engine.indexedDb);
             }
         }
 
@@ -1468,13 +1470,13 @@ const Engine = {
         // Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
-            saveObject.saveGame(indexedDb);
+            saveObject.saveGame(Engine.indexedDb);
             return false;
         });
 
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
-            saveObject.deleteGame(indexedDb);
+            saveObject.deleteGame(Engine.indexedDb);
             return false;
         });
 
@@ -1485,7 +1487,7 @@ const Engine = {
 
         // Character Overview buttons
         document.getElementById("character-overview-save-button").addEventListener("click", function() {
-            saveObject.saveGame(indexedDb);
+            saveObject.saveGame(Engine.indexedDb);
             return false;
         });
 
@@ -1597,7 +1599,7 @@ const Engine = {
     },
 };
 
-var indexedDb, indexedDbRequest;
+var indexedDbRequest;
 window.onload = function() {
     if (!window.indexedDB) {
         return Engine.load(null); // Will try to load from localstorage
@@ -1617,8 +1619,8 @@ window.onload = function() {
     };
 
     indexedDbRequest.onsuccess = function(e) {
-        indexedDb = e.target.result;
-        var transaction = indexedDb.transaction(["savestring"]);
+        Engine.indexedDb = e.target.result;
+        var transaction = Engine.indexedDb.transaction(["savestring"]);
         var objectStore = transaction.objectStore("savestring");
         var request = objectStore.get("save");
         request.onerror = function(e) {

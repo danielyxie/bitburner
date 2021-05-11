@@ -460,75 +460,8 @@ function loadImportedGame(saveObj, saveString) {
             console.error("ERROR: Failed to parse AllGangsSave: " + e);
         }
     }
-
-    var popupId = "import-game-restart-game-notice";
-    var txt = createElement("p", {
-        innerText:"Imported game! You need to SAVE the game and then RELOAD the page " +
-                 "to make sure everything runs smoothly",
-    });
-    var gotitBtn = createElement("a", {
-        class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
-        clickListener:() => {
-            removeElementById(popupId);
-        },
-    });
-    createPopup(popupId, [txt, gotitBtn]);
-    gameOptionsBoxClose();
-
-    // Re-start game
-    Engine.setDisplayElements();    // Sets variables for important DOM elements
-    Engine.init();                  // Initialize buttons, work, etc.
-
-    // Calculate the number of cycles have elapsed while offline
-    Engine._lastUpdate = new Date().getTime();
-    var lastUpdate = Player.lastUpdate;
-    var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
-
-    // Process offline progress
-    var offlineProductionFromScripts = loadAllRunningScripts();    // This also takes care of offline production for those scripts
-    if (Player.isWorking) {
-        if (Player.workType == CONSTANTS.WorkTypeFaction) {
-            Player.workForFaction(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-            Player.createProgramWork(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-            Player.takeClass(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
-            Player.commitCrime(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-            Player.workPartTime(numCyclesOffline);
-        } else {
-            Player.work(numCyclesOffline);
-        }
-    }
-
-    // Hacknet Nodes offline progress
-    var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
-
-    // Passive faction rep gain offline
-    processPassiveFactionRepGain(numCyclesOffline);
-
-    // Update total playtime
-    var time = numCyclesOffline * Engine._idleSpeed;
-    if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
-    if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
-    if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
-    Player.totalPlaytime += time;
-    Player.playtimeSinceLastAug += time;
-    Player.playtimeSinceLastBitnode += time;
-
-    // Re-apply augmentations
-    Player.reapplyAllAugmentations();
-
-    // Clear terminal
-    $("#terminal tr:not(:last)").remove();
-
-    Player.lastUpdate = Engine._lastUpdate;
-    Engine.start(); // Run main game loop and Scripts loop
-    const timeOfflineString = convertTimeMsToTimeElapsedString(time);
-    dialogBoxCreate(<>Offline for {timeOfflineString}. While you were offline, your scripts 
-generated {Money(offlineProductionFromScripts)}
-and your Hacknet Nodes generated hacknetProdInfo</>);
+    saveObject.saveGame(Engine.indexedDb);
+    location.reload();
     return true;
 }
 
