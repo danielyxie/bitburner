@@ -32,6 +32,11 @@ import {
     processPassiveFactionRepGain,
     inviteToFaction,
 } from "./Faction/FactionHelpers";
+import { 
+    getHackingWorkRepGain,
+    getFactionSecurityWorkRepGain,
+    getFactionFieldWorkRepGain,
+} from "./PersonObjects/formulas/reputation";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import {
     hasHacknetServers,
@@ -91,6 +96,7 @@ import { Page, routing } from "./ui/navigationTracking";
 import { setSettingsLabels } from "./ui/setSettingsLabels";
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
+import { Reputation } from "./ui/React/Reputation";
 
 import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
@@ -1079,11 +1085,15 @@ const Engine = {
 
             // Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
-            var lastUpdate = Player.lastUpdate;
-            var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
+            const lastUpdate = Player.lastUpdate;
+            const timeOffline = Engine._lastUpdate - lastUpdate;
+            const numCyclesOffline = Math.floor(timeOffline / Engine._idleSpeed);
 
+            let offlineReputation = 0
+            const offlineHackingIncome = Player.moneySourceA.hacking/(Player.playtimeSinceLastAug)*timeOffline*0.75;
+            Player.gainMoney(offlineHackingIncome);
             // Process offline progress
-            var offlineProductionFromScripts = loadAllRunningScripts(); // This also takes care of offline production for those scripts
+            loadAllRunningScripts(); // This also takes care of offline production for those scripts
             if (Player.isWorking) {
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     Player.workForFaction(numCyclesOffline);
@@ -1097,6 +1107,31 @@ const Engine = {
                     Player.workPartTime(numCyclesOffline);
                 } else {
                     Player.work(numCyclesOffline);
+                }
+            } else {
+
+                for(let i = 0; i < Player.factions.length; i++) {
+                    const facName = Player.factions[i];
+                    if (!Factions.hasOwnProperty(facName)) continue;
+                    const faction = Factions[facName];
+                    if (!faction.isMember) continue;
+                    // No rep for special factions.
+                    const info = faction.getInfo();
+                    if(!info.offersWork()) continue;
+                    // No rep for gangs.
+                    if(Player.getGangName() === facName) continue;
+
+
+                    const hRep = getHackingWorkRepGain(Player, faction);
+                    const sRep = getFactionSecurityWorkRepGain(Player, faction);
+                    const fRep = getFactionFieldWorkRepGain(Player, faction); 
+                    // can be infinite, doesn't matter.
+                    const reputationRate = Math.max(hRep, sRep, fRep) / Player.factions.length;
+
+                    const rep = reputationRate *
+                        (numCyclesOffline);
+                    faction.playerReputation += rep
+                    offlineReputation += rep;
                 }
             }
 
@@ -1157,7 +1192,10 @@ const Engine = {
             removeLoadingScreen();
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
             dialogBoxCreate(<>
-                Offline for {timeOfflineString}. While you were offline, your scripts generated {Money(offlineProductionFromScripts)} and your Hacknet Nodes generated {hacknetProdInfo}.
+                Offline for {timeOfflineString}. While you were offline, your scripts
+                generated {Money(offlineHackingIncome)}, your Hacknet Nodes
+                generated {hacknetProdInfo} and you
+                gained {Reputation(offlineReputation)} divided amongst your factions.
             </>);
             // Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
@@ -1599,4 +1637,4 @@ window.onload = function() {
     }
 };
 
-export {Engine};
+export {Engine, indexedDb};

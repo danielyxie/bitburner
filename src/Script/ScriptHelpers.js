@@ -311,90 +311,51 @@ function saveAndCloseScriptEditor() {
 
 export function scriptCalculateOfflineProduction(runningScriptObj) {
 	//The Player object stores the last update time from when we were online
-	var thisUpdate = new Date().getTime();
-	var lastUpdate = Player.lastUpdate;
-	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
+	const thisUpdate = new Date().getTime();
+	const lastUpdate = Player.lastUpdate;
+	const timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
 
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
 	//4 hours (14400 sec) then we are completely confident in its ability
-	var confidence = (runningScriptObj.onlineRunningTime) / 14400;
+	let confidence = (runningScriptObj.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
 
     //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
 
     // Grow
-    for (var ip in runningScriptObj.dataMap) {
+    for (const ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
             if (runningScriptObj.dataMap[ip][2] == 0 || runningScriptObj.dataMap[ip][2] == null) {continue;}
-            var serv = AllServers[ip];
+            const serv = AllServers[ip];
             if (serv == null) {continue;}
-            var timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
-            runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            var growth = processSingleServerGrowth(serv, timesGrown, Player);
-            runningScriptObj.log(serv.hostname + " grown by " + numeralWrapper.format(growth * 100 - 100, '0.000000%') + " from grow() calls made while offline");
-        }
-    }
-
-    // Money from hacking
-    var totalOfflineProduction = 0;
-    for (var ip in runningScriptObj.dataMap) {
-        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.dataMap[ip][0] == 0 || runningScriptObj.dataMap[ip][0] == null) {continue;}
-            var serv = AllServers[ip];
-            if (serv == null) {continue;}
-            var production = 0.5 * runningScriptObj.dataMap[ip][0] / runningScriptObj.onlineRunningTime * timePassed;
-            production *= confidence;
-            if (production > serv.moneyAvailable) {
-                production = serv.moneyAvailable;
-            }
-            totalOfflineProduction += production;
-            Player.gainMoney(production);
-            Player.recordMoneySource(production, "hacking");
-            runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
-            serv.moneyAvailable -= production;
-            if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
-            if (isNaN(serv.moneyAvailable)) {serv.moneyAvailable = 0;}
+            const timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
+            runningScriptObj.log(`Called on ${serv.hostname} ${timesGrown} times while offline`);
+            const growth = processSingleServerGrowth(serv, timesGrown, Player);
+            runningScriptObj.log(`'${serv.hostname}' grown by ${numeralWrapper.format(growth * 100 - 100, '0.000000%')} while offline`);
         }
     }
 
     // Offline EXP gain
 	// A script's offline production will always be at most half of its online production.
-	var expGain = 0.5 * (runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime) * timePassed;
-	expGain *= confidence;
-
+	const expGain = confidence * (runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime) * timePassed;
 	Player.gainHackingExp(expGain);
 
 	// Update script stats
-	runningScriptObj.offlineMoneyMade += totalOfflineProduction;
 	runningScriptObj.offlineRunningTime += timePassed;
 	runningScriptObj.offlineExpGained += expGain;
 
-    // Fortify a server's security based on how many times it was hacked
-    for (var ip in runningScriptObj.dataMap) {
-        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.dataMap[ip][1] == 0 || runningScriptObj.dataMap[ip][1] == null) {continue;}
-            var serv = AllServers[ip];
-            if (serv == null) {continue;}
-            var timesHacked = Math.round(0.5 * runningScriptObj.dataMap[ip][1] / runningScriptObj.onlineRunningTime * timePassed);
-            runningScriptObj.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
-            serv.fortify(CONSTANTS.ServerFortifyAmount * timesHacked);
-        }
-    }
-
     // Weaken
-    for (var ip in runningScriptObj.dataMap) {
+    for (const ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
             if (runningScriptObj.dataMap[ip][3] == 0 || runningScriptObj.dataMap[ip][3] == null) {continue;}
-            var serv = AllServers[ip];
+            const serv = AllServers[ip];
             if (serv == null) {continue;}
-            var timesWeakened = Math.round(0.5 * runningScriptObj.dataMap[ip][3] / runningScriptObj.onlineRunningTime * timePassed);
-            runningScriptObj.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
+            const timesWeakened = Math.round(0.5 * runningScriptObj.dataMap[ip][3] / runningScriptObj.onlineRunningTime * timePassed);
+            runningScriptObj.log(`Called weaken() on ${serv.hostname} ${timesWeakened} times while offline`);
             serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
         }
     }
-
-    return totalOfflineProduction;
 }
 
 //Returns a RunningScript object matching the filename and arguments on the

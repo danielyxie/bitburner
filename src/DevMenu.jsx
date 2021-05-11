@@ -15,6 +15,8 @@ import { GetServerByHostname } from "./Server/ServerHelpers";
 import { hackWorldDaemon } from "./RedPill";
 import { StockMarket } from "./StockMarket/StockMarket";
 import { Stock } from "./StockMarket/Stock";
+import { Engine, indexedDb } from "./engine";
+import { saveObject } from "./SaveObject";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { createElement } from "../utils/uiHelpers/createElement";
@@ -641,6 +643,15 @@ class DevMenuComponent extends Component {
         }
     }
 
+    timeskip(time) {
+        return () => {
+            Player.lastUpdate -= time;
+            Engine._lastUpdate -= time;
+            saveObject.saveGame(indexedDb);
+            setTimeout(() => location.reload(), 1000);
+        };
+    }
+
     render() {
         let factions = [];
         for (const i in Factions) {
@@ -1209,6 +1220,19 @@ class DevMenuComponent extends Component {
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div className="row">
+        <div className="col">
+            <div className="row">
+                <h2>Offline time skip:</h2>
+            </div>
+            <div className="row">
+                <button className="std-button" onClick={this.timeskip(60*1000)}>1 minute</button>
+                <button className="std-button" onClick={this.timeskip(60*60*1000)}>1 hour</button>
+                <button className="std-button" onClick={this.timeskip(24*60*60*1000)}>1 day</button>
+            </div>
         </div>
     </div>
 

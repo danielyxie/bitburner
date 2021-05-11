@@ -564,7 +564,6 @@ export function updateOnlineScriptTimes(numCycles = 1) {
  * into worker scripts so that they will start running
  */
 export function loadAllRunningScripts() {
-    var total = 0;
     let skipScriptLoad = (window.location.href.toLowerCase().indexOf("?noscripts") !== -1);
     if (skipScriptLoad) { console.info("Skipping the load of any scripts during startup"); }
 	for (const property in AllServers) {
@@ -587,13 +586,11 @@ export function loadAllRunningScripts() {
     				createAndAddWorkerScript(server.runningScripts[j], server);
 
     				// Offline production
-    				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
+    				scriptCalculateOfflineProduction(server.runningScripts[j]);
     			}
             }
 		}
 	}
-
-    return total;
 }
 
 /**
