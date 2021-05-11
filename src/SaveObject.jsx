@@ -8,16 +8,10 @@ import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Factions, loadFactions } from "./Faction/Factions";
-import { processPassiveFactionRepGain } from "./Faction/FactionHelpers";
 import { loadFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import { loadAllGangs, AllGangs } from "./Gang";
-import {
-    hasHacknetServers,
-    processHacknetEarnings,
-} from "./Hacknet/HacknetHelpers";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
-import { loadAllRunningScripts } from "./NetscriptWorker";
 import { Player, loadPlayer } from "./Player";
 import { AllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
@@ -34,17 +28,12 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { LastExportBonus } from "./ExportBonus";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { gameOptionsBoxClose } from "../utils/GameOptions";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import {
     Reviver,
     Generic_toJSON,
     Generic_fromJSON,
 } from "../utils/JSONReviver";
-import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 import Decimal from "decimal.js";
 
@@ -288,22 +277,11 @@ function loadGame(saveString) {
 function loadImportedGame(saveObj, saveString) {
     var tempSaveObj = null;
     var tempPlayer = null;
-    var tempAllServers = null;
-    var tempCompanies = null;
-    var tempFactions = null;
-    var tempSpecialServerIps = null;
-    var tempAliases = null;
-    var tempGlobalAliases = null;
-    var tempMessages = null;
-    var tempStockMarket = null;
-    var tempAllGangs = null;
-    let tempCorporationResearchTrees = null;
 
     // Check to see if the imported save file can be parsed. If any
     // errors are caught it will fail
     try {
         var decodedSaveString = decodeURIComponent(escape(atob(saveString)));
-        tempSaveObj = new BitburnerSaveObject();
         tempSaveObj = JSON.parse(decodedSaveString, Reviver);
 
         tempPlayer = JSON.parse(tempSaveObj.PlayerSave, Reviver);
@@ -311,33 +289,27 @@ function loadImportedGame(saveObj, saveString) {
         // Parse Decimal.js objects
         tempPlayer.money = new Decimal(tempPlayer.money);
 
-        tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, Reviver);
-        tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, Reviver);
-        tempFactions            = JSON.parse(tempSaveObj.FactionsSave, Reviver);
-        tempSpecialServerIps    = JSON.parse(tempSaveObj.SpecialServerIpsSave, Reviver);
+        JSON.parse(tempSaveObj.AllServersSave, Reviver);
+        JSON.parse(tempSaveObj.CompaniesSave, Reviver);
+        JSON.parse(tempSaveObj.FactionsSave, Reviver);
+        JSON.parse(tempSaveObj.SpecialServerIpsSave, Reviver);
         if (tempSaveObj.hasOwnProperty("AliasesSave")) {
             try {
-                tempAliases         = JSON.parse(tempSaveObj.AliasesSave, Reviver);
+                JSON.parse(tempSaveObj.AliasesSave, Reviver);
             } catch(e) {
                 console.error(`Parsing Aliases save failed: ${e}`);
-                tempAliases = {};
             }
-        } else {
-            tempAliases = {};
         }
         if (tempSaveObj.hasOwnProperty("GlobalAliases")) {
             try {
-                tempGlobalAliases   = JSON.parse(tempSaveObj.AliasesSave, Reviver);
+                JSON.parse(tempSaveObj.AliasesSave, Reviver);
             } catch(e) {
                 console.error(`Parsing Global Aliases save failed: ${e}`);
-                tempGlobalAliases = {};
             }
-        } else {
-            tempGlobalAliases = {};
         }
         if (tempSaveObj.hasOwnProperty("MessagesSave")) {
             try {
-                tempMessages        = JSON.parse(tempSaveObj.MessagesSave, Reviver);
+                JSON.parse(tempSaveObj.MessagesSave, Reviver);
             } catch(e) {
                 console.error(`Parsing Messages save failed: ${e}`);
                 initMessages();
@@ -347,13 +319,10 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (saveObj.hasOwnProperty("StockMarketSave")) {
             try {
-                tempStockMarket     = JSON.parse(tempSaveObj.StockMarketSave, Reviver);
+                JSON.parse(tempSaveObj.StockMarketSave, Reviver);
             } catch(e) {
                 console.error(`Parsing StockMarket save failed: ${e}`);
-                tempStockMarket     = {};
             }
-        } else {
-            tempStockMarket = {};
         }
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
@@ -362,7 +331,6 @@ function loadImportedGame(saveObj, saveString) {
             } catch(e) {
                 console.error("Parsing Version save failed: " + e);
             }
-        } else {
         }
         if (tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
             try {
