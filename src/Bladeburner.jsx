@@ -2103,6 +2103,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                     },
                 });
                 createPopup(popupId, [txt, input, setBtn, cancelBtn]);
+                input.focus();
             },
         }));
     }
@@ -2254,6 +2255,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                     },
                 });
                 createPopup(popupId, [txt, input, setBtn, cancelBtn]);
+                input.focus();
             },
         }));
     }
