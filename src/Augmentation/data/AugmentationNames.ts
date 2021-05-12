@@ -84,7 +84,7 @@ export const AugmentationNames: IMap<string> = {
     NutriGen:                           "NutriGen Implant",
     INFRARet:                           "INFRARET Enhancement",
     DermaForce:                         "DermaForce Particle Barrier",
-    GrapheneBrachiBlades:               "Graphene BranchiBlades Upgrade",
+    GrapheneBrachiBlades:               "Graphene BrachiBlades Upgrade",
     GrapheneBionicArms:                 "Graphene Bionic Arms Upgrade",
     BrachiBlades:                       "BrachiBlades",
     BionicArms:                         "Bionic Arms",
