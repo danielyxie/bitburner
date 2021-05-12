@@ -179,77 +179,6 @@ import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
-const possibleLogs = {
-    ALL: true,
-    scan: true,
-    hack: true,
-    sleep: true,
-    disableLog: true,
-    enableLog: true,
-    grow: true,
-    weaken: true,
-    nuke: true,
-    brutessh: true,
-    ftpcrack: true,
-    relaysmtp: true,
-    httpworm: true,
-    sqlinject: true,
-    run:true,
-    exec:true,
-    spawn: true,
-    kill: true,
-    killall: true,
-    scp: true,
-    getHackingLevel: true,
-    getServerMoneyAvailable: true,
-    getServerSecurityLevel: true,
-    getServerBaseSecurityLevel: true,
-    getServerMinSecurityLevel: true,
-    getServerRequiredHackingLevel: true,
-    getServerMaxMoney: true,
-    getServerGrowth: true,
-    getServerNumPortsRequired: true,
-    getServerRam: true,
-
-    // TIX API
-    buyStock: true,
-    sellStock: true,
-    shortStock: true,
-    sellShort: true,
-    purchase4SMarketData: true,
-    purchase4SMarketDataTixApi: true,
-
-    // Singularity Functions
-    purchaseServer: true,
-    deleteServer: true,
-    universityCourse: true,
-    gymWorkout: true,
-    travelToCity: true,
-    purchaseTor: true,
-    purchaseProgram: true,
-    stopAction: true,
-    upgradeHomeRam: true,
-    workForCompany: true,
-    applyToCompany: true,
-    joinFaction: true,
-    workForFaction: true,
-    donateToFaction: true,
-    createProgram: true,
-    commitCrime: true,
-
-    // Bladeburner API
-    startAction: true,
-    upgradeSkill: true,
-    setTeamSize: true,
-    joinBladeburnerFaction: true,
-
-    // Gang API
-    recruitMember: true,
-    setMemberTask: true,
-    purchaseEquipment: true,
-    setTerritoryWarfare: true,
-}
-
 const defaultInterpreter = new Interpreter('', () => undefined);
 
 // the acorn interpreter has a bug where it doesn't convert arrays correctly.
@@ -739,7 +668,7 @@ function NetscriptFunctions(workerScript) {
         return out;
     }
 
-    return {
+    const functions = {
         hacknet : {
             numNodes : function() {
                 return Player.hacknetNodes.length;
@@ -4544,7 +4473,23 @@ function NetscriptFunctions(workerScript) {
             }
             return ret;
         },
-    } // End return
+    }
+
+    function getFunctionNames(obj) {
+        const functionNames = [];
+        for(const [key, value] of Object.entries(obj)){
+            if(typeof(value)=="function"){
+                functionNames.push(key);
+            }else if(typeof(value)=="object"){
+                functionNames.push(...getFunctionNames(value));
+            }
+        }
+        return functionNames;
+    }
+
+    const possibleLogs = Object.fromEntries(["ALL", ...getFunctionNames(functions)].map(a => [a, true]))
+
+    return functions;
 } // End NetscriptFunction()
 
 export { NetscriptFunctions };
