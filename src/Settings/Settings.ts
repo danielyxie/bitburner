@@ -74,6 +74,11 @@ interface IDefaultSettings {
      * Whether the user should be asked to confirm travelling between cities.
      */
     SuppressTravelConfirmation: boolean;
+
+    /**
+     * Whether the user should be displayed a popup message when his Bladeburner actions are cancelled.
+     */
+    SuppressBladeburnerPopup: boolean;
 }
 
 /**
@@ -122,6 +127,7 @@ const defaultSettings: IDefaultSettings = {
     SuppressHospitalizationPopup:        false,
     SuppressMessages:                    false,
     SuppressTravelConfirmation:          false,
+    SuppressBladeburnerPopup:            false,
 };
 
 /**
@@ -147,6 +153,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     SuppressHospitalizationPopup:        defaultSettings.SuppressHospitalizationPopup,
     SuppressMessages:                    defaultSettings.SuppressMessages,
     SuppressTravelConfirmation:          defaultSettings.SuppressTravelConfirmation,
+    SuppressBladeburnerPopup:            defaultSettings.SuppressBladeburnerPopup,
     init() {
         Object.assign(Settings, defaultSettings);
     },
