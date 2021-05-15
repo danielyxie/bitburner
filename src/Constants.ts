@@ -231,6 +231,10 @@ export const CONSTANTS: IMap<any> = {
     v0.51.9 - 2021-05-07 untitled yet
     -------
 
+    Alias
+    * several commands can be included in 1 alias. Recursive alias now work to
+      a depth of 10.
+
     Offline
 
     * Offline money gain has been reworked (it is more generous)

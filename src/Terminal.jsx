@@ -630,7 +630,6 @@ let Terminal = {
             .map(substituteAliases)
             .map(c => c.match(/(?:'[^']*'|"[^"]*"|[^;"])*/g))
             .flat();
-        console.log(commands);
         for (let i = 0; i < commands.length; i++) {
             if(commands[i].match(/^\s*$/)) { continue; } // Don't run commands that only have whitespace
             Terminal.executeCommand(commands[i].trim());
