@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.51.8",
+    Version:                "0.51.9",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,60 +228,19 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.8 - 2021-05-07 It was there all along (hydroflame)
+    v0.51.9 - 2021-05-07 untitled yet
     -------
 
-    Servers
+    Offline
 
-    * Update n00dles metadata
+    * Offline money gain has been reworked (it is more generous)
+    * If you're not working anywhere and go offline the game will work for you
+      at all your factions evenly.
 
-    Netscript
-
-    * 'hashGainRate' use the correct 'usedRam' and 'maxRam'
-    * Fix 'setActionAutolevel' logging.
-    * Fix 'setActionLevel' not working at all.
-    * Add 'installBackdoor' singularity function.
-
-    Hacknet
-
-    * Fix Hacknet Servers total production always displaying 0
-
-    Documentation
-
-    * Updated guide to no longer recommend BN12.
-    * Fix documentation for maxNumNodes (@ModdedGamers)
-    * Fix typo in 'sourcefiles.rst'
-    * Fix typo in 'recommendedbitnodeorder.rst'
-    * Fix 'getServer' documentation missing 'server' argument.
-    * Fix missing ram cost in 'getData.rst'
-    * Fix basic formulas examples.
-    * Fix typo in BN11 description.
-    * Fix formatting issue in Bladeburner (@Pimgd)
+    Export
+    * Exporting now gives +1 favor to all joined factions every 24h.
 
     Misc.
-
-    * Fix negative money being displayed in full.
-    * Fix Hacking Missions not working.
-    * Fix Corporation tree not rendering.
-    * Fix script being needlessly recompiled. This should save real ram (not game ram)
-    * w0r1d_d43m0n can be backdoored
-    * Coding Contracts title is click-to-copy (@Rodeth)
-    * Covenant memory upgrade works better.
-    * Fix Neuroflux not being correctly calculated when entering BN with SF12.
-    * Delete Active Script now delete all active scripts, not just home.
-    * Now you can 'cd' in directories that only contain '.txt' files.
-    * Fix 'analyze' always saying players had root access
-    * Passive faction rep no longer builds for special factions.
-    * Donation option no longer appears for special factions.
-    * Rephrased some milestones.
-    * donation textbox now accepts money in the format '1b' and the like (@Dawe)
-    * Fix being able to join hated factions simultaneously. (@Dawe)
-    * 'ls' now displays files in multiple column. (Helps players with many files)
-    * Bladeburner multiplers now appear under Character>Stats and
-      Character>Augmentation when they are relevant.
-    * Fix missing functions syntax highlight in codemirror.
-    * Fix infiltration number formatting.
-    * script income transfers to parent on death. This helps keep track of
-      income for scripts that spawn short lived scripts.
+    * ls now correctly lists all files.
     `,
 }
