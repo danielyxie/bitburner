@@ -525,10 +525,6 @@ function loadImportedGame(saveObj, saveString) {
 
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start(); // Run main game loop and Scripts loop
-    const timeOfflineString = convertTimeMsToTimeElapsedString(time);
-    dialogBoxCreate(<>Offline for {timeOfflineString}. While you were offline, your scripts 
-generated {Money(offlineProductionFromScripts)}
-and your Hacknet Nodes generated hacknetProdInfo</>);
     return true;
 }
 
