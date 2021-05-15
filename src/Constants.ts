@@ -233,7 +233,7 @@ export const CONSTANTS: IMap<any> = {
 
     Alias
     * several commands can be included in 1 alias. Recursive alias now work to
-      a depth of 10.
+      a depth of 10. (@Dawe)
 
     Offline
 
@@ -246,5 +246,6 @@ export const CONSTANTS: IMap<any> = {
 
     Misc.
     * ls now correctly lists all files.
+    * importing auto save+reloads (@Dawe)
     `,
 }
