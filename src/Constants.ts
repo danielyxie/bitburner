@@ -244,6 +244,9 @@ export const CONSTANTS: IMap<any> = {
     Export
     * Exporting now gives +1 favor to all joined factions every 24h.
 
+    Corp
+    * Self-fund with an invalid name no longer takes away 150b anyway.
+
     Misc.
     * ls now correctly lists all files.
     * importing auto save+reloads (@Dawe)
@@ -253,5 +256,6 @@ export const CONSTANTS: IMap<any> = {
       confirmation dialog.
     * Fix some ram not displayed as 0.00GB
     * Fix error message throw undefined variable error
+    * City hall now has some generic text if you can't create a corp yet.
     `,
 }

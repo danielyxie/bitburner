@@ -140,7 +140,6 @@ export function createStartCorporationPopup(p: IPlayer): void {
                 dialogBoxCreate("You don't have enough money to create a corporation! You need $150b");
                 return false;
             }
-            p.loseMoney(150e9);
 
             const companyName = nameInput.value;
             if (companyName == null || companyName == "") {
@@ -149,6 +148,7 @@ export function createStartCorporationPopup(p: IPlayer): void {
             }
 
             p.startCorporation(companyName);
+            p.loseMoney(150e9);
 
             const worldHeader = document.getElementById("world-menu-header");
             if (worldHeader instanceof HTMLElement) {
