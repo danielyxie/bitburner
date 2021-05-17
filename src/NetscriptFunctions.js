@@ -166,10 +166,7 @@ import { numeralWrapper } from "./ui/numeralFormat";
 import { post } from "./ui/postToTerminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
-import {
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { logBoxCreate } from "../utils/LogBox";
 import { arrayToString } from "../utils/helpers/arrayToString";
@@ -950,7 +947,7 @@ function NetscriptFunctions(workerScript) {
                     expGain = 0;
                 }
                 const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
-                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
+                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(logGrowPercent, 6)}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 if (stock) {
@@ -1663,28 +1660,28 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerSecurityLevel", getRamCost("getServerSecurityLevel"));
             const server = safeGetServer(ip, "getServerSecurityLevel");
             if (failOnHacknetServer(server, "getServerSecurityLevel")) { return 1; }
-            workerScript.log("getServerSecurityLevel", `returned ${formatNumber(server.hackDifficulty, 3)} for '${server.hostname}'`);
+            workerScript.log("getServerSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.hackDifficulty, 3)} for '${server.hostname}'`);
             return server.hackDifficulty;
         },
         getServerBaseSecurityLevel: function(ip) {
             updateDynamicRam("getServerBaseSecurityLevel", getRamCost("getServerBaseSecurityLevel"));
             const server = safeGetServer(ip, "getServerBaseSecurityLevel");
             if (failOnHacknetServer(server, "getServerBaseSecurityLevel")) { return 1; }
-            workerScript.log("getServerBaseSecurityLevel", `returned ${formatNumber(server.baseDifficulty, 3)} for '${server.hostname}'`);
+            workerScript.log("getServerBaseSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.baseDifficulty, 3)} for '${server.hostname}'`);
             return server.baseDifficulty;
         },
         getServerMinSecurityLevel: function(ip) {
             updateDynamicRam("getServerMinSecurityLevel", getRamCost("getServerMinSecurityLevel"));
             const server = safeGetServer(ip, "getServerMinSecurityLevel");
             if (failOnHacknetServer(server, "getServerMinSecurityLevel")) { return 1; }
-            workerScript.log("getServerMinSecurityLevel", `returned ${formatNumber(server.minDifficulty, 3)} for ${server.hostname}`);
+            workerScript.log("getServerMinSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.minDifficulty, 3)} for ${server.hostname}`);
             return server.minDifficulty;
         },
         getServerRequiredHackingLevel: function(ip) {
             updateDynamicRam("getServerRequiredHackingLevel", getRamCost("getServerRequiredHackingLevel"));
             const server = safeGetServer(ip, "getServerRequiredHackingLevel");
             if (failOnHacknetServer(server, "getServerRequiredHackingLevel")) { return 1; }
-            workerScript.log("getServerRequiredHackingLevel", `returned ${formatNumber(server.requiredHackingSkill, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerRequiredHackingLevel", `returned ${numeralWrapper.formatSkill(server.requiredHackingSkill, 0)} for '${server.hostname}'`);
             return server.requiredHackingSkill;
         },
         getServerMaxMoney: function(ip) {
@@ -1698,32 +1695,32 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerGrowth", getRamCost("getServerGrowth"));
             const server = safeGetServer(ip, "getServerGrowth");
             if (failOnHacknetServer(server, "getServerGrowth")) { return 1; }
-            workerScript.log("getServerGrowth", `returned ${formatNumber(server.serverGrowth, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerGrowth", `returned ${server.serverGrowth} for '${server.hostname}'`);
             return server.serverGrowth;
         },
         getServerNumPortsRequired: function(ip) {
             updateDynamicRam("getServerNumPortsRequired", getRamCost("getServerNumPortsRequired"));
             const server = safeGetServer(ip, "getServerNumPortsRequired");
             if (failOnHacknetServer(server, "getServerNumPortsRequired")) { return 5; }
-            workerScript.log("getServerNumPortsRequired", `returned ${formatNumber(server.numOpenPortsRequired, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerNumPortsRequired", `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
             return server.numOpenPortsRequired;
         },
         getServerRam: function(ip) {
             updateDynamicRam("getServerRam", getRamCost("getServerRam"));
             const server = safeGetServer(ip, "getServerRam");
-            workerScript.log("getServerRam", `returned [${formatNumber(server.maxRam, 2)}GB, ${formatNumber(server.ramUsed, 2)}GB]`);
+            workerScript.log("getServerRam", `returned [${numeralWrapper.formatRAM(server.maxRam, 2)}, ${numeralWrapper.formatRAM(server.ramUsed, 2)}]`);
             return [server.maxRam, server.ramUsed];
         },
         getServerMaxRam: function(ip) {
             updateDynamicRam("getServerMaxRam", getRamCost("getServerMaxRam"));
             const server = safeGetServer(ip, "getServerMaxRam");
-            workerScript.log("getServerMaxRam", `returned ${formatNumber(server.maxRam, 2)}GB`);
+            workerScript.log("getServerMaxRam", `returned ${numeralWrapper.formatRAM(server.maxRam, 2)}`);
             return server.maxRam;
         },
         getServerUsedRam: function(ip) {
             updateDynamicRam("getServerUsedRam", getRamCost("getServerUsedRam"));
             const server = safeGetServer(ip, "getServerUsedRam");
-            workerScript.log("getServerUsedRam", `returned ${formatNumber(server.ramUsed, 2)}GB`);
+            workerScript.log("getServerUsedRam", `returned ${numeralWrapper.formatRAM(server.ramUsed, 2)}`);
             return server.ramUsed;
         },
         serverExists: function(ip) {

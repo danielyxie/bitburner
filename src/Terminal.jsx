@@ -10,6 +10,7 @@ import {
 import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
 import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
 import { tabCompletion } from "./Terminal/tabCompletion";
+import { createFconf } from "./Fconf/Fconf";
 
 import {
     parseAliasDeclaration,
