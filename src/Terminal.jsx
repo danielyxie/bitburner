@@ -1313,9 +1313,17 @@ let Terminal = {
                 }
 
                 // Check programs
-                let delTarget = Terminal.getFilepath(commandArray[1]);
+                let delTarget, status;
+                try {
+                    delTarget = Terminal.getFilepath(commandArray[1]);
+                    status = s.removeFile(delTarget);
+                } catch(err) {
+                    status = {
+                        res: false,
+                        msg: 'No such file exists'
+                    };
+                }
 
-                const status = s.removeFile(delTarget);
                 if (!status.res) {
                     postError(status.msg);
                 }

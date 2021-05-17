@@ -258,5 +258,6 @@ export const CONSTANTS: IMap<any> = {
     * Fix some ram not displayed as 0.00GB
     * Fix error message throw undefined variable error
     * City hall now has some generic text if you can't create a corp yet.
+    * Deleting a file without extension now returns an appropriate error message.
     `,
 }
