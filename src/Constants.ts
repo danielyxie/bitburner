@@ -246,6 +246,7 @@ export const CONSTANTS: IMap<any> = {
 
     Corp
     * Self-fund with an invalid name no longer takes away 150b anyway.
+    * Can no longer export negative amount
 
     Misc.
     * ls now correctly lists all files.
