@@ -247,5 +247,11 @@ export const CONSTANTS: IMap<any> = {
     Misc.
     * ls now correctly lists all files.
     * importing auto save+reloads (@Dawe)
+    * Fix a bug where .fconf could not be created
+    * Fix formatting inconsistencies for some logs of netscript functions.
+    * Fix a bug where Cashroot starter kit would appear as [object Object] in 
+      confirmation dialog.
+    * Fix some ram not displayed as 0.00GB
+    * Fix error message throw undefined variable error
     `,
 }

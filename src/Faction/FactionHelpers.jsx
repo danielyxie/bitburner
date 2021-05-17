@@ -114,9 +114,13 @@ export function purchaseAugmentationBoxCreate(aug, fac) {
         yesNoBoxClose();
     });
 
+    let content = (<div dangerouslySetInnerHTML={{__html: aug.info}}></div>);
+    if(typeof aug.info !== 'string') {
+        content = <div>{aug.info}</div>
+    }
     yesNoBoxCreate(<>
         <h2>{aug.name}</h2><br />
-<div dangerouslySetInnerHTML={{__html: aug.info}}></div><br /><br />
+{content}<br /><br />
 <br />Would you like to purchase the {aug.name} Augmentation for&nbsp;
 {Money(aug.baseCost * factionInfo.augmentationPriceMult)}?
     </>);

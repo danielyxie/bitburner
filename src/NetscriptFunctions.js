@@ -226,8 +226,8 @@ function NetscriptFunctions(workerScript) {
                                        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
                                        ". This is probably because you somehow circumvented the static RAM "  +
                                        "calculation.<br><br>Please don't do that :(<br><br>" +
-                                       "Dynamic RAM Usage: " + workerScript.dynamicRamUsage + "<br>" +
-                                       "Static RAM Usage: " + workerScript.ramUsage);
+                                       "Dynamic RAM Usage: " + numeralWrapper.formatRAM(workerScript.dynamicRamUsage) + "<br>" +
+                                       "Static RAM Usage: " + numeralWrapper.formatRAM(workerScript.ramUsage));
         }
     };
 
@@ -1120,7 +1120,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("run", "Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
             if (isNaN(threads) || threads <= 0) {
-                throw makeRuntimeErrorMsg("run", `Invalid thread count. Must be numeric and > 0, is ${thread}`);
+                throw makeRuntimeErrorMsg("run", `Invalid thread count. Must be numeric and > 0, is ${threads}`);
             }
             var argsForNewScript = [];
             for (var i = 2; i < arguments.length; ++i) {
