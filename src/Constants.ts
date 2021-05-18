@@ -259,5 +259,6 @@ export const CONSTANTS: IMap<any> = {
     * Fix error message throw undefined variable error
     * City hall now has some generic text if you can't create a corp yet.
     * Deleting a file without extension now returns an appropriate error message.
+    * Fixed an issue where bladeburner would miscalculate the cost of hospitalization.
     `,
 }
