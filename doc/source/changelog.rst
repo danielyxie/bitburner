@@ -3,7 +3,7 @@
 Changelog
 =========
 
-v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame)
+v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame & community)
 ---------------------------------------------------------------
 
 **Alias**
@@ -57,7 +57,7 @@ v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame)
 * Money earned/spent by sleeves is now tracked under Character>Money
 
 
-v0.51.8 - 2021-05-07 It was there all along (hydroflame)
+v0.51.8 - 2021-05-07 It was there all along (hydroflame & community)
 --------------------------------------------------------
 
 **Servers**
@@ -113,7 +113,7 @@ v0.51.8 - 2021-05-07 It was there all along (hydroflame)
 * script income transfers to parent on death. This helps keep track of
   income for scripts that spawn short lived scripts.
 
-v0.51.7 - 2021-04-28 n00dles (hydroflame)
+v0.51.7 - 2021-04-28 n00dles (hydroflame & community)
 -----------------------------------------
 
 **Tutorial servers**
@@ -171,7 +171,7 @@ v0.51.7 - 2021-04-28 n00dles (hydroflame)
 * Faction invite text says "Decide later"/"Join!" instead of "No"/"Yes"
 
 
-v0.51.6 - 2021-04-28 Backdoor! (Community)
+v0.51.6 - 2021-04-28 Backdoor! (hydroflame & community)
 ------------------------------------------
 
 **Backdoor**
