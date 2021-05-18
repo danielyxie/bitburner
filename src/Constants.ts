@@ -248,6 +248,9 @@ export const CONSTANTS: IMap<any> = {
     * Self-fund with an invalid name no longer takes away 150b anyway.
     * Can no longer export negative amount
 
+    Bladeburner
+    * No longer waste overflowing time.
+
     Misc.
     * ls now correctly lists all files.
     * importing auto save+reloads (@Dawe)
