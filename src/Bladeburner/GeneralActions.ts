@@ -17,7 +17,7 @@ export const GeneralActions: IMap<Action> = {};
     actionName = "Field Analysis";
     GeneralActions[actionName] = new Action({
         name:actionName,
-        desc:"Mine and analyze Synthoid-related data. This improve the " +
+        desc:"Mine and analyze Synthoid-related data. This improves the " +
              "Bladeburner's unit intelligence on Synthoid locations and " +
              "activities. Completing this action will improve the accuracy " +
              "of your Synthoid population estimated in the current city.<br><br>" +
