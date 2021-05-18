@@ -15,7 +15,7 @@ import { GetServerByHostname } from "./Server/ServerHelpers";
 import { hackWorldDaemon } from "./RedPill";
 import { StockMarket } from "./StockMarket/StockMarket";
 import { Stock } from "./StockMarket/Stock";
-import { Engine, indexedDb } from "./engine";
+import { Engine } from "./engine";
 import { saveObject } from "./SaveObject";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
@@ -647,7 +647,7 @@ class DevMenuComponent extends Component {
         return () => {
             Player.lastUpdate -= time;
             Engine._lastUpdate -= time;
-            saveObject.saveGame(indexedDb);
+            saveObject.saveGame(Engine.indexedDb);
             setTimeout(() => location.reload(), 1000);
         };
     }

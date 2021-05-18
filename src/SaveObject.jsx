@@ -25,7 +25,7 @@ import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { createStatusText } from "./ui/createStatusText";
 
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
-import { LastExportBonus } from "./ExportBonus";
+import * as ExportBonus from "./ExportBonus";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
@@ -85,7 +85,7 @@ BitburnerSaveObject.prototype.getSaveString = function() {
     this.SettingsSave               = JSON.stringify(Settings);
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    this.LastExportBonus            = JSON.stringify(LastExportBonus);
+    this.LastExportBonus            = JSON.stringify(ExportBonus.LastExportBonus);
     if (Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
@@ -246,6 +246,16 @@ function loadGame(saveString) {
             console.error("ERROR: Failed to parse .fconf Settings.");
         }
     }
+    if (saveObj.hasOwnProperty("LastExportBonus")) {
+        try {
+            ExportBonus.LastExportBonus = JSON.parse(saveObj.LastExportBonus);
+        } catch(err) {
+            console.log(saveObj.LastExportBonus);
+            console.log(ExportBonus.LastExportBonus);
+            ExportBonus.LastExportBonus = (new Date()).getTime();
+            console.error("ERROR: Failed to parse .fconf Settings "+ err);
+        }
+    }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
@@ -322,6 +332,14 @@ function loadImportedGame(saveObj, saveString) {
                 JSON.parse(tempSaveObj.StockMarketSave, Reviver);
             } catch(e) {
                 console.error(`Parsing StockMarket save failed: ${e}`);
+            }
+        }
+        if (saveObj.hasOwnProperty("LastExportBonus")) {
+            try {
+                ExportBonus.LastExportBonus = JSON.parse(saveObj.LastExportBonus);
+            } catch(err) {
+                ExportBonus.LastExportBonus = (new Date()).getTime();
+                console.error("ERROR: Failed to parse .fconf Settings "+ err);
             }
         }
         if (tempSaveObj.hasOwnProperty("VersionSave")) {

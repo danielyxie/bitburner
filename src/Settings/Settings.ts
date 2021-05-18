@@ -111,6 +111,36 @@ interface ISettings extends IDefaultSettings {
      * What order the Augmentations should be displayed in when purchasing from a Faction
      */
     PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting;
+
+    /**
+     * Editor settings to highlight active line.
+     */
+    EditorHighlightActiveLine: boolean;
+    
+    /**
+     * Editor settings to show spaces and tabs.
+     */
+    EditorShowInvisibles: boolean;
+    
+    /**
+     * Editor settings to use tabs or 4 spaces.
+     */
+    EditorUseSoftTab: boolean;
+    
+    /**
+     * Editor settings to add matching bracket.
+     */
+    EditorAutoCloseBrackets: boolean;
+    
+    /**
+     * Editor settings to show linting (like missing semicolons)
+     */
+    EditorEnableLinting: boolean;
+    
+    /**
+     * Editor settings to add extra * when entering new line inside a /* comment.
+     */
+    EditorContinueComments: boolean;
 }
 
 const defaultSettings: IDefaultSettings = {
@@ -154,6 +184,12 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     SuppressMessages:                    defaultSettings.SuppressMessages,
     SuppressTravelConfirmation:          defaultSettings.SuppressTravelConfirmation,
     SuppressBladeburnerPopup:            defaultSettings.SuppressBladeburnerPopup,
+    EditorHighlightActiveLine:           true,
+    EditorShowInvisibles:                false,
+    EditorUseSoftTab:                    true,
+    EditorAutoCloseBrackets:             true,
+    EditorEnableLinting:                 true,
+    EditorContinueComments:              true,
     init() {
         Object.assign(Settings, defaultSettings);
     },

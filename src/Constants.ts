@@ -228,7 +228,7 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.9 - 2021-05-07 untitled yet
+    v0.51.9 - 2021-05-17 offline progress and exports!
     -------
 
     Alias
@@ -251,6 +251,12 @@ export const CONSTANTS: IMap<any> = {
     Bladeburner
     * No longer waste overflowing time.
 
+    Text Editors
+    * All settings will now be saved and loaded correctly.
+
+    Terminal
+    * 'scan' now works for servers that are more than 21 character long.
+
     Misc.
     * ls now correctly lists all files.
     * importing auto save+reloads (@Dawe)
@@ -264,7 +270,7 @@ export const CONSTANTS: IMap<any> = {
     * Deleting a file without extension now returns an appropriate error message.
     * Fixed an issue where bladeburner would miscalculate the cost of hospitalization.
     * It is now possible to suppress bladeburner "action stopped" popup.
-    * Updated several dependencies (who cares, I know)
+    * Updated several dependencies (big who cares, I know)
     * ls no longer prints lingering newline.
     * Money earned/spent by sleeves is now tracked under Character>Money
     `,

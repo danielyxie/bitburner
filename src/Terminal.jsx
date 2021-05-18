@@ -1881,30 +1881,27 @@ let Terminal = {
 
         // Displays available network connections using TCP
         const currServ = Player.getCurrentServer();
-        post("Hostname             IP                   Root Access");
-        for (let i = 0; i < currServ.serversOnNetwork.length; i++) {
-            // Add hostname
-            let entry = getServerOnNetwork(currServ, i);
-            if (entry == null) { continue; }
-            entry = entry.hostname;
-
-            // Calculate padding and add IP
-            let numSpaces = 21 - entry.length;
-            let spaces = Array(numSpaces+1).join(" ");
-            entry += spaces;
-            entry += getServerOnNetwork(currServ, i).ip;
-
-            // Calculate padding and add root access info
-            let hasRoot;
-            if (getServerOnNetwork(currServ, i).hasAdminRights) {
-                hasRoot = 'Y';
-            } else {
-                hasRoot = 'N';
+        const servers = currServ.serversOnNetwork.map((_, i) => {
+            const server = getServerOnNetwork(currServ, i);
+            return {
+                hostname: server.hostname,
+                ip: server.ip,
+                hasRoot: server.hasAdminRights ? "Y" : "N"
             }
-            numSpaces = 21 - getServerOnNetwork(currServ, i).ip.length;
-            spaces = Array(numSpaces+1).join(" ");
-            entry += spaces;
-            entry += hasRoot;
+        });
+        servers.unshift({
+            hostname: "Hostname",
+            ip: "IP",
+            hasRoot: "Root Access",
+        })
+        const maxHostname = Math.max(...servers.map(s => s.hostname.length));
+        const maxIP = Math.max(...servers.map(s => s.ip.length));
+        for(const server of servers) {
+            let entry = server.hostname;
+            entry += " ".repeat(maxHostname-server.hostname.length+1);
+            entry += server.ip;
+            entry += " ".repeat(maxIP-server.ip.length+1);
+            entry += server.hasRoot;
             post(entry);
         }
     },
