@@ -10,7 +10,7 @@
     "@types/numeral": "0.0.25",
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.8.2",
-    "acorn": "^6.2.0",
+    "acorn": "^6.4.1",
     "acorn-walk": "^6.2.0",
     "ajv": "^5.1.5",
     "ajv-keywords": "^2.0.0",
