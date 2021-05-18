@@ -38,8 +38,6 @@ function setSettingsLabels() {
     suppressBuyAugmentationConfirmation.checked = Settings.SuppressBuyAugmentationConfirmation;
     suppressHospitalizationPopup.checked = Settings.SuppressHospitalizationPopup;
     suppressBladeburnerPopup.checked = Settings.SuppressBladeburnerPopup;
-    suppressBladeburnerPopup.closest('fieldset').style.display =
-        Player.canAccessBladeburner() ? 'block' : 'none';
     setAutosaveLabel(autosaveInterval);
     disableHotkeys.checked = Settings.DisableHotkeys;
     disableASCIIArt.checked = Settings.CityListView;
