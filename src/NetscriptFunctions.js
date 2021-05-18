@@ -875,7 +875,7 @@ function NetscriptFunctions(workerScript) {
                 if (growthPercentage == 1) {
                     expGain = 0;
                 }
-                const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
+                const logGrowPercent = (moneyAfter/moneyBefore) - 1;
                 workerScript.log("grow", `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(logGrowPercent, 6)}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
