@@ -18,7 +18,7 @@
     "async": "^2.6.1",
     "autosize": "^4.0.2",
     "brace": "^0.11.1",
-    "codemirror": "^5.43.0",
+    "codemirror": "^5.58.2",
     "decimal.js": "7.2.3",
     "enhanced-resolve": "^4.0.0",
     "escodegen": "^1.11.0",
