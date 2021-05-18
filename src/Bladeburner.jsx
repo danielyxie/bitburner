@@ -24,6 +24,7 @@ import {
     convertTimeMsToTimeElapsedString,
 } from "../utils/StringHelperFunctions";
 
+import { Settings } from "./Settings/Settings";
 import { ConsoleHelpText } from "./Bladeburner/data/Help";
 import { City } from "./Bladeburner/City";
 import { BladeburnerConstants } from "./Bladeburner/data/Constants";
@@ -359,7 +360,9 @@ Bladeburner.prototype.process = function() {
                 msg += `<br><br>Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`
                 this.automateEnabled = false;
             }
-            dialogBoxCreate(msg);
+            if (!Settings.SuppressBladeburnerPopup) {
+                dialogBoxCreate(msg);
+            }
         }
         this.resetAction();
     }
