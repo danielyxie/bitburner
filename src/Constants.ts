@@ -264,5 +264,7 @@ export const CONSTANTS: IMap<any> = {
     * Deleting a file without extension now returns an appropriate error message.
     * Fixed an issue where bladeburner would miscalculate the cost of hospitalization.
     * It is now possible to suppress bladeburner "action stopped" popup.
+    * Updated several dependencies (who cares, I know)
+    * ls no longer prints lingering newline.
     `,
 }

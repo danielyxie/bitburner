@@ -1781,19 +1781,22 @@ let Terminal = {
                 i--;
                 postContent(row, config);
             }
-            if(segments.length > 0) {
-                postElement(<br />);
-            }
         }
 
 
         const config = { color: "#0000FF" };
-        postSegments(folders, config);
-        postSegments(allMessages);
-        postSegments(allTextFiles);
-        postSegments(allPrograms);
-        postSegments(allContracts);
-        postSegments(allScripts);
+        const groups = [
+            {segments: folders, config: config},
+            {segments: allMessages},
+            {segments: allTextFiles},
+            {segments: allPrograms},
+            {segments: allContracts},
+            {segments: allScripts},
+        ].filter((g) => g.segments.length > 0)
+        for(let i = 0; i < groups.length; i++) {
+            if(i !== 0) postElement(<br />);
+            postSegments(groups[i].segments, groups[i].config);
+        }
     },
 
     executeMemCommand: function(commandArray) {
