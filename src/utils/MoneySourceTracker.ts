@@ -19,6 +19,7 @@ export class MoneySourceTracker {
     hacknetnode = 0;
     hospitalization = 0;
     infiltration = 0;
+    sleeves = 0;
     stock = 0;
     total = 0;
     work = 0;

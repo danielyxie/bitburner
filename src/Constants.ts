@@ -266,5 +266,6 @@ export const CONSTANTS: IMap<any> = {
     * It is now possible to suppress bladeburner "action stopped" popup.
     * Updated several dependencies (who cares, I know)
     * ls no longer prints lingering newline.
+    * Money earned/spent by sleeves is now tracked under Character>Money
     `,
 }
