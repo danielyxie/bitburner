@@ -3,8 +3,61 @@
 Changelog
 =========
 
+v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame & community)
+---------------------------------------------------------------
 
-v0.51.8 - 2021-05-07 It was there all along (hydroflame)
+**Alias**
+
+* several commands can be included in 1 alias. Recursive alias now work to
+  a depth of 10. (@Dawe)
+
+**Offline**
+
+* Offline money gain has been reworked (it is more generous)
+* If you're not working anywhere and go offline the game will work for you
+  at all your factions evenly.
+
+**Export**
+
+* Exporting now gives +1 favor to all joined factions every 24h.
+
+**Corp**
+
+* Self-fund with an invalid name no longer takes away 150b anyway.
+* Can no longer export negative amount
+
+**Bladeburner**
+
+* No longer waste overflowing time.
+
+**Text Editors**
+
+* All settings will now be saved and loaded correctly.
+
+**Terminal**
+
+* 'scan' now works for servers that are more than 21 character long.
+
+**Misc.**
+
+* ls now correctly lists all files.
+* importing auto save+reloads (@Dawe)
+* Fix a bug where .fconf could not be created
+* Fix formatting inconsistencies for some logs of netscript functions.
+* Fix a bug where Cashroot starter kit would appear as [object Object] in 
+  confirmation dialog.
+* Fix some ram not displayed as 0.00GB
+* Fix error message throw undefined variable error
+* City hall now has some generic text if you can't create a corp yet.
+* Deleting a file without extension now returns an appropriate error message.
+* Fixed an issue where bladeburner would miscalculate the cost of hospitalization.
+* It is now possible to suppress bladeburner "action stopped" popup.
+* Updated several dependencies (big who cares, I know)
+* ls no longer prints lingering newline.
+* Money earned/spent by sleeves is now tracked under Character>Money
+
+
+v0.51.8 - 2021-05-07 It was there all along (hydroflame & community)
 --------------------------------------------------------
 
 **Servers**
@@ -60,8 +113,8 @@ v0.51.8 - 2021-05-07 It was there all along (hydroflame)
 * script income transfers to parent on death. This helps keep track of
   income for scripts that spawn short lived scripts.
 
-v0.51.7 - 2021-04-28 n00dles
-----------------------------
+v0.51.7 - 2021-04-28 n00dles (hydroflame & community)
+-----------------------------------------
 
 **Tutorial servers**
 
@@ -118,7 +171,7 @@ v0.51.7 - 2021-04-28 n00dles
 * Faction invite text says "Decide later"/"Join!" instead of "No"/"Yes"
 
 
-v0.51.6 - 2021-04-28 Backdoor! (Community)
+v0.51.6 - 2021-04-28 Backdoor! (hydroflame & community)
 ------------------------------------------
 
 **Backdoor**

@@ -1,0 +1,15 @@
+version: "3.4"
+services:
+    web:
+        image: bitburner:dev
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: dev
+        ports:
+        - "8000:8000"
+        volumes:
+        - ./src:/app/src
+        - ./css:/app/css
+        - ./utils:/app/utils
+        - ./test:/app/test

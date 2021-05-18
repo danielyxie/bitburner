@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.51.8",
+    Version:                "0.51.9",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -228,60 +228,50 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.8 - 2021-05-07 It was there all along (hydroflame)
+    v0.51.9 - 2021-05-17 offline progress and exports!
     -------
 
-    Servers
+    Alias
+    * several commands can be included in 1 alias. Recursive alias now work to
+      a depth of 10. (@Dawe)
 
-    * Update n00dles metadata
+    Offline
 
-    Netscript
+    * Offline money gain has been reworked (it is more generous)
+    * If you're not working anywhere and go offline the game will work for you
+      at all your factions evenly.
 
-    * 'hashGainRate' use the correct 'usedRam' and 'maxRam'
-    * Fix 'setActionAutolevel' logging.
-    * Fix 'setActionLevel' not working at all.
-    * Add 'installBackdoor' singularity function.
+    Export
+    * Exporting now gives +1 favor to all joined factions every 24h.
 
-    Hacknet
+    Corp
+    * Self-fund with an invalid name no longer takes away 150b anyway.
+    * Can no longer export negative amount
 
-    * Fix Hacknet Servers total production always displaying 0
+    Bladeburner
+    * No longer waste overflowing time.
 
-    Documentation
+    Text Editors
+    * All settings will now be saved and loaded correctly.
 
-    * Updated guide to no longer recommend BN12.
-    * Fix documentation for maxNumNodes (@ModdedGamers)
-    * Fix typo in 'sourcefiles.rst'
-    * Fix typo in 'recommendedbitnodeorder.rst'
-    * Fix 'getServer' documentation missing 'server' argument.
-    * Fix missing ram cost in 'getData.rst'
-    * Fix basic formulas examples.
-    * Fix typo in BN11 description.
-    * Fix formatting issue in Bladeburner (@Pimgd)
+    Terminal
+    * 'scan' now works for servers that are more than 21 character long.
 
     Misc.
-
-    * Fix negative money being displayed in full.
-    * Fix Hacking Missions not working.
-    * Fix Corporation tree not rendering.
-    * Fix script being needlessly recompiled. This should save real ram (not game ram)
-    * w0r1d_d43m0n can be backdoored
-    * Coding Contracts title is click-to-copy (@Rodeth)
-    * Covenant memory upgrade works better.
-    * Fix Neuroflux not being correctly calculated when entering BN with SF12.
-    * Delete Active Script now delete all active scripts, not just home.
-    * Now you can 'cd' in directories that only contain '.txt' files.
-    * Fix 'analyze' always saying players had root access
-    * Passive faction rep no longer builds for special factions.
-    * Donation option no longer appears for special factions.
-    * Rephrased some milestones.
-    * donation textbox now accepts money in the format '1b' and the like (@Dawe)
-    * Fix being able to join hated factions simultaneously. (@Dawe)
-    * 'ls' now displays files in multiple column. (Helps players with many files)
-    * Bladeburner multiplers now appear under Character>Stats and
-      Character>Augmentation when they are relevant.
-    * Fix missing functions syntax highlight in codemirror.
-    * Fix infiltration number formatting.
-    * script income transfers to parent on death. This helps keep track of
-      income for scripts that spawn short lived scripts.
+    * ls now correctly lists all files.
+    * importing auto save+reloads (@Dawe)
+    * Fix a bug where .fconf could not be created
+    * Fix formatting inconsistencies for some logs of netscript functions.
+    * Fix a bug where Cashroot starter kit would appear as [object Object] in 
+      confirmation dialog.
+    * Fix some ram not displayed as 0.00GB
+    * Fix error message throw undefined variable error
+    * City hall now has some generic text if you can't create a corp yet.
+    * Deleting a file without extension now returns an appropriate error message.
+    * Fixed an issue where bladeburner would miscalculate the cost of hospitalization.
+    * It is now possible to suppress bladeburner "action stopped" popup.
+    * Updated several dependencies (big who cares, I know)
+    * ls no longer prints lingering newline.
+    * Money earned/spent by sleeves is now tracked under Character>Money
     `,
 }

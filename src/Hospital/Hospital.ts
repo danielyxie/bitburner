@@ -19,7 +19,6 @@ export function getHospitalizationCost(p: IPlayer): number {
 export function calculateHospitalizationCost(p: IPlayer, damage: number): number {
 	const oldhp = p.hp;
 	p.hp -= damage
-	if (p.hp < 0) p.hp = 0;
 	const cost = getHospitalizationCost(p);
 	p.hp = oldhp;
 	return cost;

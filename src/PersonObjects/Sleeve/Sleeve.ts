@@ -334,6 +334,7 @@ export class Sleeve extends Person {
         this.earningsForTask.money += gain;
         this.earningsForPlayer.money += gain;
         p.gainMoney(gain);
+        p.recordMoneySource(gain, 'sleeves');
     }
 
     /**

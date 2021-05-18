@@ -166,10 +166,7 @@ import { numeralWrapper } from "./ui/numeralFormat";
 import { post } from "./ui/postToTerminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
-import {
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { logBoxCreate } from "../utils/LogBox";
 import { arrayToString } from "../utils/helpers/arrayToString";
@@ -178,77 +175,6 @@ import { isString } from "../utils/helpers/isString";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
-
-const possibleLogs = {
-    ALL: true,
-    scan: true,
-    hack: true,
-    sleep: true,
-    disableLog: true,
-    enableLog: true,
-    grow: true,
-    weaken: true,
-    nuke: true,
-    brutessh: true,
-    ftpcrack: true,
-    relaysmtp: true,
-    httpworm: true,
-    sqlinject: true,
-    run:true,
-    exec:true,
-    spawn: true,
-    kill: true,
-    killall: true,
-    scp: true,
-    getHackingLevel: true,
-    getServerMoneyAvailable: true,
-    getServerSecurityLevel: true,
-    getServerBaseSecurityLevel: true,
-    getServerMinSecurityLevel: true,
-    getServerRequiredHackingLevel: true,
-    getServerMaxMoney: true,
-    getServerGrowth: true,
-    getServerNumPortsRequired: true,
-    getServerRam: true,
-
-    // TIX API
-    buyStock: true,
-    sellStock: true,
-    shortStock: true,
-    sellShort: true,
-    purchase4SMarketData: true,
-    purchase4SMarketDataTixApi: true,
-
-    // Singularity Functions
-    purchaseServer: true,
-    deleteServer: true,
-    universityCourse: true,
-    gymWorkout: true,
-    travelToCity: true,
-    purchaseTor: true,
-    purchaseProgram: true,
-    stopAction: true,
-    upgradeHomeRam: true,
-    workForCompany: true,
-    applyToCompany: true,
-    joinFaction: true,
-    workForFaction: true,
-    donateToFaction: true,
-    createProgram: true,
-    commitCrime: true,
-
-    // Bladeburner API
-    startAction: true,
-    upgradeSkill: true,
-    setTeamSize: true,
-    joinBladeburnerFaction: true,
-
-    // Gang API
-    recruitMember: true,
-    setMemberTask: true,
-    purchaseEquipment: true,
-    setTerritoryWarfare: true,
-}
 
 const defaultInterpreter = new Interpreter('', () => undefined);
 
@@ -300,8 +226,8 @@ function NetscriptFunctions(workerScript) {
                                        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
                                        ". This is probably because you somehow circumvented the static RAM "  +
                                        "calculation.<br><br>Please don't do that :(<br><br>" +
-                                       "Dynamic RAM Usage: " + workerScript.dynamicRamUsage + "<br>" +
-                                       "Static RAM Usage: " + workerScript.ramUsage);
+                                       "Dynamic RAM Usage: " + numeralWrapper.formatRAM(workerScript.dynamicRamUsage) + "<br>" +
+                                       "Static RAM Usage: " + numeralWrapper.formatRAM(workerScript.ramUsage));
         }
     };
 
@@ -739,7 +665,7 @@ function NetscriptFunctions(workerScript) {
         return out;
     }
 
-    return {
+    const functions = {
         hacknet : {
             numNodes : function() {
                 return Player.hacknetNodes.length;
@@ -950,7 +876,7 @@ function NetscriptFunctions(workerScript) {
                     expGain = 0;
                 }
                 const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
-                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
+                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(logGrowPercent, 6)}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 if (stock) {
@@ -1194,7 +1120,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("run", "Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
             if (isNaN(threads) || threads <= 0) {
-                throw makeRuntimeErrorMsg("run", `Invalid thread count. Must be numeric and > 0, is ${thread}`);
+                throw makeRuntimeErrorMsg("run", `Invalid thread count. Must be numeric and > 0, is ${threads}`);
             }
             var argsForNewScript = [];
             for (var i = 2; i < arguments.length; ++i) {
@@ -1663,28 +1589,28 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerSecurityLevel", getRamCost("getServerSecurityLevel"));
             const server = safeGetServer(ip, "getServerSecurityLevel");
             if (failOnHacknetServer(server, "getServerSecurityLevel")) { return 1; }
-            workerScript.log("getServerSecurityLevel", `returned ${formatNumber(server.hackDifficulty, 3)} for '${server.hostname}'`);
+            workerScript.log("getServerSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.hackDifficulty, 3)} for '${server.hostname}'`);
             return server.hackDifficulty;
         },
         getServerBaseSecurityLevel: function(ip) {
             updateDynamicRam("getServerBaseSecurityLevel", getRamCost("getServerBaseSecurityLevel"));
             const server = safeGetServer(ip, "getServerBaseSecurityLevel");
             if (failOnHacknetServer(server, "getServerBaseSecurityLevel")) { return 1; }
-            workerScript.log("getServerBaseSecurityLevel", `returned ${formatNumber(server.baseDifficulty, 3)} for '${server.hostname}'`);
+            workerScript.log("getServerBaseSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.baseDifficulty, 3)} for '${server.hostname}'`);
             return server.baseDifficulty;
         },
         getServerMinSecurityLevel: function(ip) {
             updateDynamicRam("getServerMinSecurityLevel", getRamCost("getServerMinSecurityLevel"));
             const server = safeGetServer(ip, "getServerMinSecurityLevel");
             if (failOnHacknetServer(server, "getServerMinSecurityLevel")) { return 1; }
-            workerScript.log("getServerMinSecurityLevel", `returned ${formatNumber(server.minDifficulty, 3)} for ${server.hostname}`);
+            workerScript.log("getServerMinSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.minDifficulty, 3)} for ${server.hostname}`);
             return server.minDifficulty;
         },
         getServerRequiredHackingLevel: function(ip) {
             updateDynamicRam("getServerRequiredHackingLevel", getRamCost("getServerRequiredHackingLevel"));
             const server = safeGetServer(ip, "getServerRequiredHackingLevel");
             if (failOnHacknetServer(server, "getServerRequiredHackingLevel")) { return 1; }
-            workerScript.log("getServerRequiredHackingLevel", `returned ${formatNumber(server.requiredHackingSkill, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerRequiredHackingLevel", `returned ${numeralWrapper.formatSkill(server.requiredHackingSkill, 0)} for '${server.hostname}'`);
             return server.requiredHackingSkill;
         },
         getServerMaxMoney: function(ip) {
@@ -1698,32 +1624,32 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerGrowth", getRamCost("getServerGrowth"));
             const server = safeGetServer(ip, "getServerGrowth");
             if (failOnHacknetServer(server, "getServerGrowth")) { return 1; }
-            workerScript.log("getServerGrowth", `returned ${formatNumber(server.serverGrowth, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerGrowth", `returned ${server.serverGrowth} for '${server.hostname}'`);
             return server.serverGrowth;
         },
         getServerNumPortsRequired: function(ip) {
             updateDynamicRam("getServerNumPortsRequired", getRamCost("getServerNumPortsRequired"));
             const server = safeGetServer(ip, "getServerNumPortsRequired");
             if (failOnHacknetServer(server, "getServerNumPortsRequired")) { return 5; }
-            workerScript.log("getServerNumPortsRequired", `returned ${formatNumber(server.numOpenPortsRequired, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerNumPortsRequired", `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
             return server.numOpenPortsRequired;
         },
         getServerRam: function(ip) {
             updateDynamicRam("getServerRam", getRamCost("getServerRam"));
             const server = safeGetServer(ip, "getServerRam");
-            workerScript.log("getServerRam", `returned [${formatNumber(server.maxRam, 2)}GB, ${formatNumber(server.ramUsed, 2)}GB]`);
+            workerScript.log("getServerRam", `returned [${numeralWrapper.formatRAM(server.maxRam, 2)}, ${numeralWrapper.formatRAM(server.ramUsed, 2)}]`);
             return [server.maxRam, server.ramUsed];
         },
         getServerMaxRam: function(ip) {
             updateDynamicRam("getServerMaxRam", getRamCost("getServerMaxRam"));
             const server = safeGetServer(ip, "getServerMaxRam");
-            workerScript.log("getServerMaxRam", `returned ${formatNumber(server.maxRam, 2)}GB`);
+            workerScript.log("getServerMaxRam", `returned ${numeralWrapper.formatRAM(server.maxRam, 2)}`);
             return server.maxRam;
         },
         getServerUsedRam: function(ip) {
             updateDynamicRam("getServerUsedRam", getRamCost("getServerUsedRam"));
             const server = safeGetServer(ip, "getServerUsedRam");
-            workerScript.log("getServerUsedRam", `returned ${formatNumber(server.ramUsed, 2)}GB`);
+            workerScript.log("getServerUsedRam", `returned ${numeralWrapper.formatRAM(server.ramUsed, 2)}`);
             return server.ramUsed;
         },
         serverExists: function(ip) {
@@ -4544,7 +4470,23 @@ function NetscriptFunctions(workerScript) {
             }
             return ret;
         },
-    } // End return
+    }
+
+    function getFunctionNames(obj) {
+        const functionNames = [];
+        for(const [key, value] of Object.entries(obj)){
+            if(typeof(value)=="function"){
+                functionNames.push(key);
+            }else if(typeof(value)=="object"){
+                functionNames.push(...getFunctionNames(value));
+            }
+        }
+        return functionNames;
+    }
+
+    const possibleLogs = Object.fromEntries(["ALL", ...getFunctionNames(functions)].map(a => [a, true]))
+
+    return functions;
 } // End NetscriptFunction()
 
 export { NetscriptFunctions };

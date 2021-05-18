@@ -8,16 +8,10 @@ import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Factions, loadFactions } from "./Faction/Factions";
-import { processPassiveFactionRepGain } from "./Faction/FactionHelpers";
 import { loadFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
 import { loadAllGangs, AllGangs } from "./Gang";
-import {
-    hasHacknetServers,
-    processHacknetEarnings,
-} from "./Hacknet/HacknetHelpers";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
-import { loadAllRunningScripts } from "./NetscriptWorker";
 import { Player, loadPlayer } from "./Player";
 import { AllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
@@ -31,19 +25,15 @@ import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { createStatusText } from "./ui/createStatusText";
 
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
+import * as ExportBonus from "./ExportBonus";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { gameOptionsBoxClose } from "../utils/GameOptions";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import {
     Reviver,
     Generic_toJSON,
     Generic_fromJSON,
 } from "../utils/JSONReviver";
-import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 import Decimal from "decimal.js";
 
@@ -66,6 +56,7 @@ function BitburnerSaveObject() {
     this.FconfSettingsSave              = "";
     this.VersionSave                    = "";
     this.AllGangsSave                   = "";
+    this.LastExportBonus                = "";
 }
 
 BitburnerSaveObject.prototype.getSaveString = function() {
@@ -94,6 +85,7 @@ BitburnerSaveObject.prototype.getSaveString = function() {
     this.SettingsSave               = JSON.stringify(Settings);
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
+    this.LastExportBonus            = JSON.stringify(ExportBonus.LastExportBonus);
     if (Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
@@ -254,6 +246,16 @@ function loadGame(saveString) {
             console.error("ERROR: Failed to parse .fconf Settings.");
         }
     }
+    if (saveObj.hasOwnProperty("LastExportBonus")) {
+        try {
+            ExportBonus.LastExportBonus = JSON.parse(saveObj.LastExportBonus);
+        } catch(err) {
+            console.log(saveObj.LastExportBonus);
+            console.log(ExportBonus.LastExportBonus);
+            ExportBonus.LastExportBonus = (new Date()).getTime();
+            console.error("ERROR: Failed to parse .fconf Settings "+ err);
+        }
+    }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
@@ -285,22 +287,11 @@ function loadGame(saveString) {
 function loadImportedGame(saveObj, saveString) {
     var tempSaveObj = null;
     var tempPlayer = null;
-    var tempAllServers = null;
-    var tempCompanies = null;
-    var tempFactions = null;
-    var tempSpecialServerIps = null;
-    var tempAliases = null;
-    var tempGlobalAliases = null;
-    var tempMessages = null;
-    var tempStockMarket = null;
-    var tempAllGangs = null;
-    let tempCorporationResearchTrees = null;
 
     // Check to see if the imported save file can be parsed. If any
     // errors are caught it will fail
     try {
         var decodedSaveString = decodeURIComponent(escape(atob(saveString)));
-        tempSaveObj = new BitburnerSaveObject();
         tempSaveObj = JSON.parse(decodedSaveString, Reviver);
 
         tempPlayer = JSON.parse(tempSaveObj.PlayerSave, Reviver);
@@ -308,33 +299,27 @@ function loadImportedGame(saveObj, saveString) {
         // Parse Decimal.js objects
         tempPlayer.money = new Decimal(tempPlayer.money);
 
-        tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, Reviver);
-        tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, Reviver);
-        tempFactions            = JSON.parse(tempSaveObj.FactionsSave, Reviver);
-        tempSpecialServerIps    = JSON.parse(tempSaveObj.SpecialServerIpsSave, Reviver);
+        JSON.parse(tempSaveObj.AllServersSave, Reviver);
+        JSON.parse(tempSaveObj.CompaniesSave, Reviver);
+        JSON.parse(tempSaveObj.FactionsSave, Reviver);
+        JSON.parse(tempSaveObj.SpecialServerIpsSave, Reviver);
         if (tempSaveObj.hasOwnProperty("AliasesSave")) {
             try {
-                tempAliases         = JSON.parse(tempSaveObj.AliasesSave, Reviver);
+                JSON.parse(tempSaveObj.AliasesSave, Reviver);
             } catch(e) {
                 console.error(`Parsing Aliases save failed: ${e}`);
-                tempAliases = {};
             }
-        } else {
-            tempAliases = {};
         }
         if (tempSaveObj.hasOwnProperty("GlobalAliases")) {
             try {
-                tempGlobalAliases   = JSON.parse(tempSaveObj.AliasesSave, Reviver);
+                JSON.parse(tempSaveObj.AliasesSave, Reviver);
             } catch(e) {
                 console.error(`Parsing Global Aliases save failed: ${e}`);
-                tempGlobalAliases = {};
             }
-        } else {
-            tempGlobalAliases = {};
         }
         if (tempSaveObj.hasOwnProperty("MessagesSave")) {
             try {
-                tempMessages        = JSON.parse(tempSaveObj.MessagesSave, Reviver);
+                JSON.parse(tempSaveObj.MessagesSave, Reviver);
             } catch(e) {
                 console.error(`Parsing Messages save failed: ${e}`);
                 initMessages();
@@ -344,13 +329,18 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (saveObj.hasOwnProperty("StockMarketSave")) {
             try {
-                tempStockMarket     = JSON.parse(tempSaveObj.StockMarketSave, Reviver);
+                JSON.parse(tempSaveObj.StockMarketSave, Reviver);
             } catch(e) {
                 console.error(`Parsing StockMarket save failed: ${e}`);
-                tempStockMarket     = {};
             }
-        } else {
-            tempStockMarket = {};
+        }
+        if (saveObj.hasOwnProperty("LastExportBonus")) {
+            try {
+                ExportBonus.LastExportBonus = JSON.parse(saveObj.LastExportBonus);
+            } catch(err) {
+                ExportBonus.LastExportBonus = (new Date()).getTime();
+                console.error("ERROR: Failed to parse .fconf Settings "+ err);
+            }
         }
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
@@ -359,7 +349,6 @@ function loadImportedGame(saveObj, saveString) {
             } catch(e) {
                 console.error("Parsing Version save failed: " + e);
             }
-        } else {
         }
         if (tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
             try {
@@ -457,75 +446,8 @@ function loadImportedGame(saveObj, saveString) {
             console.error("ERROR: Failed to parse AllGangsSave: " + e);
         }
     }
-
-    var popupId = "import-game-restart-game-notice";
-    var txt = createElement("p", {
-        innerText:"Imported game! You need to SAVE the game and then RELOAD the page " +
-                 "to make sure everything runs smoothly",
-    });
-    var gotitBtn = createElement("a", {
-        class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
-        clickListener:() => {
-            removeElementById(popupId);
-        },
-    });
-    createPopup(popupId, [txt, gotitBtn]);
-    gameOptionsBoxClose();
-
-    // Re-start game
-    Engine.setDisplayElements();    // Sets variables for important DOM elements
-    Engine.init();                  // Initialize buttons, work, etc.
-
-    // Calculate the number of cycles have elapsed while offline
-    Engine._lastUpdate = new Date().getTime();
-    var lastUpdate = Player.lastUpdate;
-    var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
-
-    // Process offline progress
-    var offlineProductionFromScripts = loadAllRunningScripts();    // This also takes care of offline production for those scripts
-    if (Player.isWorking) {
-        if (Player.workType == CONSTANTS.WorkTypeFaction) {
-            Player.workForFaction(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-            Player.createProgramWork(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-            Player.takeClass(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
-            Player.commitCrime(numCyclesOffline);
-        } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-            Player.workPartTime(numCyclesOffline);
-        } else {
-            Player.work(numCyclesOffline);
-        }
-    }
-
-    // Hacknet Nodes offline progress
-    var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
-
-    // Passive faction rep gain offline
-    processPassiveFactionRepGain(numCyclesOffline);
-
-    // Update total playtime
-    var time = numCyclesOffline * Engine._idleSpeed;
-    if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
-    if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
-    if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
-    Player.totalPlaytime += time;
-    Player.playtimeSinceLastAug += time;
-    Player.playtimeSinceLastBitnode += time;
-
-    // Re-apply augmentations
-    Player.reapplyAllAugmentations();
-
-    // Clear terminal
-    $("#terminal tr:not(:last)").remove();
-
-    Player.lastUpdate = Engine._lastUpdate;
-    Engine.start(); // Run main game loop and Scripts loop
-    const timeOfflineString = convertTimeMsToTimeElapsedString(time);
-    dialogBoxCreate(<>Offline for {timeOfflineString}. While you were offline, your scripts 
-generated {Money(offlineProductionFromScripts)}
-and your Hacknet Nodes generated hacknetProdInfo</>);
+    saveObject.saveGame(Engine.indexedDb);
+    location.reload();
     return true;
 }
 

@@ -51,14 +51,14 @@ function addAlias(name: string, value: string): void {
     if (name in GlobalAliases) {
         delete GlobalAliases[name];
     }
-    Aliases[name] = value;
+    Aliases[name] = value.trim();
 }
 
 function addGlobalAlias(name: string, value: string): void {
     if (name in Aliases){
         delete Aliases[name];
     }
-    GlobalAliases[name] = value;
+    GlobalAliases[name] = value.trim();
 }
 
 function getAlias(name: string): string | null {
@@ -97,22 +97,29 @@ export function removeAlias(name: string): boolean {
 export function substituteAliases(origCommand: string): string {
     const commandArray = origCommand.split(" ");
     if (commandArray.length > 0){
-        // For the unalias command, dont substite
-        if (commandArray[0] === "unalias") { return commandArray.join(" "); }
+        // For the alias and unalias commands, dont substite
+        if (commandArray[0] === "unalias" || commandArray[0] === "alias") { return commandArray.join(" "); }
 
-        const alias = getAlias(commandArray[0]);
-        if (alias != null) {
-            commandArray[0] = alias;
-        } else {
-            const alias = getGlobalAlias(commandArray[0]);
+        let somethingSubstituted = true;
+        let depth = 0;
+
+        while(somethingSubstituted && depth < 10){
+            depth++;
+            somethingSubstituted = false
+            const alias = getAlias(commandArray[0])?.split(" ");
             if (alias != null) {
-                commandArray[0] = alias;
+                somethingSubstituted = true
+                commandArray.splice(0, 1, ...alias);
+                //commandArray[0] = alias;
             }
-        }
-        for (let i = 0; i < commandArray.length; ++i) {
-            const alias = getGlobalAlias(commandArray[i]);
-            if (alias != null) {
-                commandArray[i] = alias;
+            for (let i = 0; i < commandArray.length; ++i) {
+                const alias = getGlobalAlias(commandArray[i])?.split(" ");
+                if (alias != null) {
+                    somethingSubstituted = true
+                    commandArray.splice(i, 1, ...alias);
+                    i += alias.length - 1;
+                    //commandArray[i] = alias;
+                }
             }
         }
     }

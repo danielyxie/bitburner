@@ -108,7 +108,11 @@ export class SpecialLocation extends React.Component<IProps, IState> {
     }
 
     renderCreateCorporation(): React.ReactNode {
-        if (!this.props.p.canAccessCorporation()) { return null; }
+        if (!this.props.p.canAccessCorporation()) {
+            return <>
+                <p><i>A business man is yelling at a clerk. You should come back later.</i></p>
+            </>;
+        }
         return (
             <AutoupdatingStdButton
                 disabled={!this.props.p.canAccessCorporation() || this.props.p.hasCorporation()}

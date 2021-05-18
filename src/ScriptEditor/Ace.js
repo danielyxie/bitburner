@@ -233,19 +233,25 @@ class AceEditorWrapper extends ScriptEditor {
 
             // Highlight Active line
             const highlightActiveChkBox = safeClearEventListeners("script-editor-option-highlightactiveline", "Active Line Checkbox");
+            highlightActiveChkBox.checked = Settings.EditorHighlightActiveLine;
             highlightActiveChkBox.onchange = () => {
+                Settings.EditorHighlightActiveLine = highlightActiveChkBox.checked;
                 this.editor.setHighlightActiveLine(highlightActiveChkBox.checked);
             };
 
             // Show Invisibles
             const showInvisiblesChkBox = safeClearEventListeners("script-editor-option-showinvisibles", "Show Invisible Checkbox");
+            showInvisiblesChkBox.checked = Settings.EditorShowInvisibles;
             showInvisiblesChkBox.onchange = () => {
+                Settings.EditorShowInvisibles = showInvisiblesChkBox.checked;
                 this.editor.setShowInvisibles(showInvisiblesChkBox.checked);
             };
 
             // Use Soft Tab
             const softTabChkBox = safeClearEventListeners("script-editor-option-usesofttab", "Soft Tab Checkbox");
+            softTabChkBox.checked = Settings.EditorUseSoftTab;
             softTabChkBox.onchange = () => {
+                Settings.EditorUseSoftTab = softTabChkBox.checked;
                 this.editor.getSession().setUseSoftTabs(softTabChkBox.checked);
             };
 

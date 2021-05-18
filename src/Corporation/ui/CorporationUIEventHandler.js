@@ -320,7 +320,7 @@ export class CorporationEventHandler {
                     return false;
                 }
 
-                if (temp == null || isNaN(temp)) {
+                if (temp == null || isNaN(temp) || temp < 0) {
                     dialogBoxCreate("Invalid amount entered for export");
                     return;
                 }

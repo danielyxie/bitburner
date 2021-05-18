@@ -10,6 +10,7 @@ import {
 import { determineAllPossibilitiesForTabCompletion } from "./Terminal/determineAllPossibilitiesForTabCompletion";
 import { TerminalHelpText, HelpTexts } from "./Terminal/HelpText";
 import { tabCompletion } from "./Terminal/tabCompletion";
+import { createFconf } from "./Fconf/Fconf";
 
 import {
     parseAliasDeclaration,
@@ -625,7 +626,11 @@ let Terminal = {
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
 
         // Split commands and execute sequentially
-        commands = commands.split(";");
+        commands = commands
+            .match(/(?:'[^']*'|"[^"]*"|[^;"])*/g)
+            .map(substituteAliases)
+            .map(c => c.match(/(?:'[^']*'|"[^"]*"|[^;"])*/g))
+            .flat();
         for (let i = 0; i < commands.length; i++) {
             if(commands[i].match(/^\s*$/)) { continue; } // Don't run commands that only have whitespace
             Terminal.executeCommand(commands[i].trim());
@@ -726,9 +731,6 @@ let Terminal = {
             postError(`Cannot execute command (${command}) while an action is in progress`);
             return;
         }
-
-        // Process any aliases
-        command = substituteAliases(command);
 
         // Allow usage of ./
         if (command.startsWith("./")) {
@@ -873,7 +875,7 @@ let Terminal = {
                 if (commandArray.length === 3) {
                     if (commandArray[1] === "-g") {
                         if (parseAliasDeclaration(commandArray[2], true)) {
-                            post(`Set global alias ${commandArray[1]}`);
+                            post(`Set global alias ${commandArray[2]}`);
                             return;
                         }
                     }
@@ -1311,9 +1313,17 @@ let Terminal = {
                 }
 
                 // Check programs
-                let delTarget = Terminal.getFilepath(commandArray[1]);
+                let delTarget, status;
+                try {
+                    delTarget = Terminal.getFilepath(commandArray[1]);
+                    status = s.removeFile(delTarget);
+                } catch(err) {
+                    status = {
+                        res: false,
+                        msg: 'No such file exists'
+                    };
+                }
 
-                const status = s.removeFile(delTarget);
                 if (!status.res) {
                     postError(status.msg);
                 }
@@ -1771,19 +1781,22 @@ let Terminal = {
                 i--;
                 postContent(row, config);
             }
-            if(segments.length > 0) {
-                postElement(<br />);
-            }
         }
 
 
         const config = { color: "#0000FF" };
-        postSegments(folders, config);
-        postSegments(allMessages);
-        postSegments(allTextFiles);
-        postSegments(allPrograms);
-        postSegments(allContracts);
-        postSegments(allScripts);
+        const groups = [
+            {segments: folders, config: config},
+            {segments: allMessages},
+            {segments: allTextFiles},
+            {segments: allPrograms},
+            {segments: allContracts},
+            {segments: allScripts},
+        ].filter((g) => g.segments.length > 0)
+        for(let i = 0; i < groups.length; i++) {
+            if(i !== 0) postElement(<br />);
+            postSegments(groups[i].segments, groups[i].config);
+        }
     },
 
     executeMemCommand: function(commandArray) {
@@ -1868,30 +1881,27 @@ let Terminal = {
 
         // Displays available network connections using TCP
         const currServ = Player.getCurrentServer();
-        post("Hostname             IP                   Root Access");
-        for (let i = 0; i < currServ.serversOnNetwork.length; i++) {
-            // Add hostname
-            let entry = getServerOnNetwork(currServ, i);
-            if (entry == null) { continue; }
-            entry = entry.hostname;
-
-            // Calculate padding and add IP
-            let numSpaces = 21 - entry.length;
-            let spaces = Array(numSpaces+1).join(" ");
-            entry += spaces;
-            entry += getServerOnNetwork(currServ, i).ip;
-
-            // Calculate padding and add root access info
-            let hasRoot;
-            if (getServerOnNetwork(currServ, i).hasAdminRights) {
-                hasRoot = 'Y';
-            } else {
-                hasRoot = 'N';
+        const servers = currServ.serversOnNetwork.map((_, i) => {
+            const server = getServerOnNetwork(currServ, i);
+            return {
+                hostname: server.hostname,
+                ip: server.ip,
+                hasRoot: server.hasAdminRights ? "Y" : "N"
             }
-            numSpaces = 21 - getServerOnNetwork(currServ, i).ip.length;
-            spaces = Array(numSpaces+1).join(" ");
-            entry += spaces;
-            entry += hasRoot;
+        });
+        servers.unshift({
+            hostname: "Hostname",
+            ip: "IP",
+            hasRoot: "Root Access",
+        })
+        const maxHostname = Math.max(...servers.map(s => s.hostname.length));
+        const maxIP = Math.max(...servers.map(s => s.ip.length));
+        for(const server of servers) {
+            let entry = server.hostname;
+            entry += " ".repeat(maxHostname-server.hostname.length+1);
+            entry += server.ip;
+            entry += " ".repeat(maxIP-server.ip.length+1);
+            entry += server.hasRoot;
             post(entry);
         }
     },

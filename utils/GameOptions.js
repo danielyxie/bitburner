@@ -1,4 +1,5 @@
 /* GameOptions.js */
+import { Player } from "../src/Player";
 
 //Close box when clicking outside
 $(document).click(function(event) {
@@ -36,6 +37,11 @@ function gameOptionsBoxClose() {
 function gameOptionsBoxOpen() {
     var box = document.getElementById("game-options-container");
     box.style.display = "flex";
+
+    // special exception for bladeburner popup because it's only visible later.
+    document.getElementById("settingsSuppressBladeburnerPopup").
+        closest('fieldset').style.display =
+        Player.canAccessBladeburner() ? 'block' : 'none';
     setTimeout(function() {
         gameOptionsOpened = true;
     }, 500);

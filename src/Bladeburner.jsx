@@ -24,6 +24,7 @@ import {
     convertTimeMsToTimeElapsedString,
 } from "../utils/StringHelperFunctions";
 
+import { Settings } from "./Settings/Settings";
 import { ConsoleHelpText } from "./Bladeburner/data/Help";
 import { City } from "./Bladeburner/City";
 import { BladeburnerConstants } from "./Bladeburner/data/Constants";
@@ -158,6 +159,7 @@ function Bladeburner(params={}) {
     // These times are in seconds
     this.actionTimeToComplete   = 0; // 0 or -1 is an infinite running action (like training)
     this.actionTimeCurrent      = 0;
+    this.actionTimeOverflow     = 0;
 
     // ActionIdentifier Object
     var idleActionType = ActionTypes["Idle"];
@@ -358,7 +360,9 @@ Bladeburner.prototype.process = function() {
                 msg += `<br><br>Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`
                 this.automateEnabled = false;
             }
-            dialogBoxCreate(msg);
+            if (!Settings.SuppressBladeburnerPopup) {
+                dialogBoxCreate(msg);
+            }
         }
         this.resetAction();
     }
@@ -381,22 +385,16 @@ Bladeburner.prototype.process = function() {
         this.stamina = Math.min(this.maxStamina, this.stamina);
 
         // Count increase for contracts/operations
-        for (var contractName in this.contracts) {
-            if (this.contracts.hasOwnProperty(contractName)) {
-                var contract = this.contracts[contractName];
-                contract.count += (seconds * contract.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
-            }
+        for (let contract of Object.values(this.contracts)) {
+            contract.count += (seconds * contract.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
         }
-        for (var operationName in this.operations) {
-            if (this.operations.hasOwnProperty(operationName)) {
-                var op = this.operations[operationName];
-                op.count += (seconds * op.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
-            }
+        for (let op of Object.values(this.operations)) {
+            op.count += (seconds * op.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
         }
 
         // Chaos goes down very slowly
-        for (var i = 0; i < BladeburnerConstants.CityNames.length; ++i) {
-            var city = this.cities[BladeburnerConstants.CityNames[i]];
+        for (let cityName of BladeburnerConstants.CityNames) {
+            var city = this.cities[cityName];
             if (!(city instanceof City)) {throw new Error("Invalid City object when processing passive chaos reduction in Bladeburner.process");}
             city.chaos -= (0.0001 * seconds);
             city.chaos = Math.max(0, city.chaos);
@@ -406,7 +404,8 @@ Bladeburner.prototype.process = function() {
         this.randomEventCounter -= seconds;
         if (this.randomEventCounter <= 0) {
             this.randomEvent();
-            this.randomEventCounter = getRandomInt(240, 600);
+            // Add instead of setting because we might have gone over the required time for the event
+            this.randomEventCounter += getRandomInt(240, 600);
         }
 
         this.processAction(seconds);
@@ -664,8 +663,12 @@ Bladeburner.prototype.processAction = function(seconds) {
         throw new Error("Bladeburner.action is not an ActionIdentifier Object");
     }
 
-    this.actionTimeCurrent += seconds;
+    // If the previous action went past its completion time, add to the next action
+    // This is not added inmediatly in case the automation changes the action
+    this.actionTimeCurrent += seconds + this.actionTimeOverflow;
+    this.actionTimeOverflow = 0;
     if (this.actionTimeCurrent >= this.actionTimeToComplete) {
+        this.actionTimeOverflow = this.actionTimeCurrent - this.actionTimeToComplete;
         return this.completeAction();
     }
 }
@@ -1889,17 +1892,18 @@ Bladeburner.prototype.updateActionAndSkillsContent = function() {
 Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
     removeChildrenFromElement(el);
     var isActive = el.classList.contains(ActiveActionCssClass);
+    var computedActionTimeCurrent = Math.min(this.actionTimeCurrent+this.actionTimeOverflow,this.actionTimeToComplete);
 
     el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
-                             formatNumber(this.actionTimeCurrent, 0) + " / " +
+                             formatNumber(computedActionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
                           : action.name,
         display:"inline-block",
     }));
 
     if (isActive) { // Progress bar if its active
-        var progress = this.actionTimeCurrent / this.actionTimeToComplete;
+        var progress = computedActionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress}),
@@ -1931,17 +1935,18 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
     removeChildrenFromElement(el);
     var isActive = el.classList.contains(ActiveActionCssClass);
     var estimatedSuccessChance = action.getSuccessChance(this, {est:true});
+    var computedActionTimeCurrent = Math.min(this.actionTimeCurrent+this.actionTimeOverflow,this.actionTimeToComplete);
 
     el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
-                             formatNumber(this.actionTimeCurrent, 0) + " / " +
+                             formatNumber(computedActionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
                           : action.name,
         display:"inline-block",
     }));
 
     if (isActive) { // Progress bar if its active
-        var progress = this.actionTimeCurrent / this.actionTimeToComplete;
+        var progress = computedActionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress}),
@@ -2030,16 +2035,18 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     removeChildrenFromElement(el);
     var isActive = el.classList.contains(ActiveActionCssClass);
     var estimatedSuccessChance = action.getSuccessChance(this, {est:true});
+    var computedActionTimeCurrent = Math.min(this.actionTimeCurrent+this.actionTimeOverflow,this.actionTimeToComplete);
+
     el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
-                             formatNumber(this.actionTimeCurrent, 0) + " / " +
+                             formatNumber(computedActionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
                            : action.name,
         display:"inline-block",
     }));
 
     if (isActive) { // Progress bar if its active
-        var progress = this.actionTimeCurrent / this.actionTimeToComplete;
+        var progress = computedActionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress}),
@@ -2093,6 +2100,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
                     },
                 });
                 createPopup(popupId, [txt, input, setBtn, cancelBtn]);
+                input.focus();
             },
         }));
     }
@@ -2171,6 +2179,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     var estimatedSuccessChance = action.getSuccessChance(this, {est:true});
     var actionTime = action.getActionTime(this);
     var hasReqdRank = this.rank >= action.reqdRank;
+    var computedActionTimeCurrent = Math.min(this.actionTimeCurrent+this.actionTimeOverflow,this.actionTimeToComplete);
 
     // UI for Completed Black Op
     if (isCompleted) {
@@ -2182,14 +2191,14 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
 
     el.appendChild(createElement("h2", { // Header
         innerText:isActive ? action.name + " (IN PROGRESS - " +
-                             formatNumber(this.actionTimeCurrent, 0) + " / " +
+                             formatNumber(computedActionTimeCurrent, 0) + " / " +
                              formatNumber(this.actionTimeToComplete, 0) + ")"
                           : action.name,
         display:"inline-block",
     }));
 
     if (isActive) { // Progress bar if its active
-        var progress = this.actionTimeCurrent / this.actionTimeToComplete;
+        var progress = computedActionTimeCurrent / this.actionTimeToComplete;
         el.appendChild(createElement("p", {
             display:"block",
             innerText:createProgressBarText({progress:progress}),
@@ -2243,6 +2252,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
                     },
                 });
                 createPopup(popupId, [txt, input, setBtn, cancelBtn]);
+                input.focus();
             },
         }));
     }

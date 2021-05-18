@@ -74,6 +74,11 @@ interface IDefaultSettings {
      * Whether the user should be asked to confirm travelling between cities.
      */
     SuppressTravelConfirmation: boolean;
+
+    /**
+     * Whether the user should be displayed a popup message when his Bladeburner actions are cancelled.
+     */
+    SuppressBladeburnerPopup: boolean;
 }
 
 /**
@@ -106,6 +111,36 @@ interface ISettings extends IDefaultSettings {
      * What order the Augmentations should be displayed in when purchasing from a Faction
      */
     PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting;
+
+    /**
+     * Editor settings to highlight active line.
+     */
+    EditorHighlightActiveLine: boolean;
+    
+    /**
+     * Editor settings to show spaces and tabs.
+     */
+    EditorShowInvisibles: boolean;
+    
+    /**
+     * Editor settings to use tabs or 4 spaces.
+     */
+    EditorUseSoftTab: boolean;
+    
+    /**
+     * Editor settings to add matching bracket.
+     */
+    EditorAutoCloseBrackets: boolean;
+    
+    /**
+     * Editor settings to show linting (like missing semicolons)
+     */
+    EditorEnableLinting: boolean;
+    
+    /**
+     * Editor settings to add extra * when entering new line inside a /* comment.
+     */
+    EditorContinueComments: boolean;
 }
 
 const defaultSettings: IDefaultSettings = {
@@ -122,6 +157,7 @@ const defaultSettings: IDefaultSettings = {
     SuppressHospitalizationPopup:        false,
     SuppressMessages:                    false,
     SuppressTravelConfirmation:          false,
+    SuppressBladeburnerPopup:            false,
 };
 
 /**
@@ -147,6 +183,13 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     SuppressHospitalizationPopup:        defaultSettings.SuppressHospitalizationPopup,
     SuppressMessages:                    defaultSettings.SuppressMessages,
     SuppressTravelConfirmation:          defaultSettings.SuppressTravelConfirmation,
+    SuppressBladeburnerPopup:            defaultSettings.SuppressBladeburnerPopup,
+    EditorHighlightActiveLine:           true,
+    EditorShowInvisibles:                false,
+    EditorUseSoftTab:                    true,
+    EditorAutoCloseBrackets:             true,
+    EditorEnableLinting:                 true,
+    EditorContinueComments:              true,
     init() {
         Object.assign(Settings, defaultSettings);
     },
