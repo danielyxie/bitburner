@@ -1384,7 +1384,7 @@ function initAugmentations() {
              "Even though it contains no weapons, the advance tungsten titanium " +
              "alloy increases the users strength to unbelievable levels.<br><br>" +
              "This augmentation increases the player's strength by 300%.",
-        strength_mult: 3,
+        strength_mult: 2.70,
     });
     HydroflameLeftArm.addToFactions(["NWO"]);
     if (augmentationExists(AugmentationNames.HydroflameLeftArm)) {
