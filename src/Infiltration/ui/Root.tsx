@@ -39,6 +39,7 @@ export function Root(props: IProps) {
 
     return (<Game
         Player={props.Player}
+        Engine={props.Engine}
         Difficulty={props.Difficulty}
         MaxLevel={props.MaxLevel}
     />);

@@ -1,11 +1,18 @@
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { IEngine } from "../../IEngine";
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Countdown } from "./Countdown";
 import { DummyGame } from "./DummyGame";
+import { BracketGame } from "./BracketGame";
+import { SlashGame } from "./SlashGame";
+import { BackwardGame } from "./BackwardGame";
+import { BribeGame } from "./BribeGame";
+import { Victory } from "./Victory";
 
 interface IProps {
     Player: IPlayer;
+    Engine: IEngine;
     Difficulty: number;
     MaxLevel: number;
 }
@@ -16,6 +23,14 @@ enum Stage {
     Result,
     Sell,
 }
+
+const minigames = [
+    SlashGame,
+    DummyGame,
+    BracketGame,
+    BackwardGame,
+    BribeGame,
+]
 
 export function Game(props: IProps) {
     const [level, setLevel] = useState(1);
@@ -33,20 +48,41 @@ export function Game(props: IProps) {
     function failure() {
         setStage(Stage.Countdown);
         if(props.Player.takeDamage(10)) {
-            console.log('you dead son');
+            const menu = document.getElementById("mainmenu-container");
+            if(menu === null) throw new Error("mainmenu-container not found");
+            menu.style.visibility = "visible";
+            props.Engine.loadLocationContent();
         }
     }
 
     let stageComponent: React.ReactNode;
     switch(stage) {
     case Stage.Countdown:
-        stageComponent = <Countdown key={Stage.Countdown} onFinish={() =>setStage(Stage.Minigame)} />
+        stageComponent = (<Countdown onFinish={() =>setStage(Stage.Minigame)} />);
         break;
     case Stage.Minigame:
-        stageComponent = <DummyGame key={Stage.Minigame} onSuccess={success} onFailure={failure} difficulty={5} />
+        //const minigameId = Math.floor(Math.random()*minigames.length);
+        const minigameId = 4+0;
+        switch(minigameId) {
+        case 0:
+            stageComponent = (<SlashGame onSuccess={success} onFailure={failure} difficulty={5} />);
+            break;
+        case 1:
+            stageComponent = (<DummyGame onSuccess={success} onFailure={failure} difficulty={5} />);
+            break;
+        case 2:
+            stageComponent = (<BracketGame onSuccess={success} onFailure={failure} difficulty={5} />);
+            break;
+        case 3:
+            stageComponent = (<BackwardGame onSuccess={success} onFailure={failure} difficulty={5} />);
+            break;
+        case 4:
+            stageComponent = (<BribeGame onSuccess={success} onFailure={failure} difficulty={5} />);
+            break;
+        }
         break;
     case Stage.Sell:
-        stageComponent = <Countdown key={Stage.Sell} onFinish={() =>setStage(Stage.Countdown)} />
+        stageComponent = (<Victory Player={props.Player} Engine={props.Engine} />);
         break;
     }
 
@@ -54,7 +90,7 @@ export function Game(props: IProps) {
     return (<>
         <Grid container spacing={3}>
             <Grid item xs={3}>
-                <h3>Level: {level} / {props.MaxLevel}</h3>
+                <h3>Level: {level}&nbsp;/&nbsp;{props.MaxLevel}</h3>
             </Grid>
 
             <Grid item xs={12}>
