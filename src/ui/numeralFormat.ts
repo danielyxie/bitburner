@@ -56,7 +56,9 @@ class NumeralFormatter {
         if(Math.abs(n) < 1000) {
             return this.format(n, "$0.00");
         }
-        return this.format(n, "$0.000a");
+        const str = this.format(n, "$0.000a");
+        if(str === "$NaNt") return '$'+this.format(n, '0.000e0');
+        return str;
     }
 
     formatSkill(n: number): string {
