@@ -57,7 +57,7 @@ class NumeralFormatter {
             return this.format(n, "$0.00");
         }
         const str = this.format(n, "$0.000a");
-        if(str === "$NaNt") return '$'+this.format(n, '0.000e0');
+        if(str === "$NaNt") return '$'+this.format(n, '0.000e+0');
         return str;
     }
 
