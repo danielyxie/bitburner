@@ -53,6 +53,15 @@ class NumeralFormatter {
     }
 
     formatMoney(n: number): string {
+        if(numeral.options.currentLocale === "en") {
+            const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+            const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return '$'+this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+                }
+            }
+        }
         if(Math.abs(n) < 1000) {
             return this.format(n, "$0.00");
         }
