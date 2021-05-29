@@ -4442,6 +4442,19 @@ function NetscriptFunctions(workerScript) {
         exploit: function() {
             Player.giveExploit(Exploit.UndocumentedFunctionCall);
         },
+        bypass: function(doc) {
+            // reset both fields first
+            doc.completely_unused_field = undefined;
+            document.completely_unused_field = undefined;
+            // set one to true and check that it affected the other.
+            document.completely_unused_field = true;
+            console.log(workerScript.ramUsage);
+            if(doc.completely_unused_field && workerScript.ramUsage === 1.6) {
+                Player.giveExploit(Exploit.Bypass);
+            }
+            doc.completely_unused_field = undefined;
+            document.completely_unused_field = undefined;
+        },
         flags: function(data) {
             data = toNative(data);
             // We always want the help flag.
