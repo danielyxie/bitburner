@@ -17,7 +17,7 @@ type IState = {
 export class CopyableText extends React.Component<IProps, IState> {
     public static defaultProps = {
         //Default span to prevent destroying current clickables
-        tag: ClickableTag.Tag_span
+        tag: ClickableTag.Tag_span,
     };
     
     constructor(props: IProps) {

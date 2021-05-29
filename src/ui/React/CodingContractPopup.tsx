@@ -40,7 +40,7 @@ export class CodingContractPopup extends React.Component<IProps, IState>{
 
     render(): React.ReactNode {
         const contractType: CodingContractType = CodingContractTypes[this.props.c.type];
-        let description = [];
+        const description = [];
         for (const [i, value] of contractType.desc(this.props.c.data).split('\n').entries()) 
             description.push(<span key={i} dangerouslySetInnerHTML={{__html: value+'<br />'}}></span>);
         return (

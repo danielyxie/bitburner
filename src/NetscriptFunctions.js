@@ -4448,7 +4448,6 @@ function NetscriptFunctions(workerScript) {
             document.completely_unused_field = undefined;
             // set one to true and check that it affected the other.
             document.completely_unused_field = true;
-            console.log(workerScript.ramUsage);
             if(doc.completely_unused_field && workerScript.ramUsage === 1.6) {
                 Player.giveExploit(Exploit.Bypass);
             }

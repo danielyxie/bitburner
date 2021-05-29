@@ -181,7 +181,6 @@ export class BaseServer {
      * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
      */
     removeFile(fn: string): IReturnStatus {
-        console.log(`removing ${fn}`);
         if (fn.endsWith(".exe") || fn.match(/^.+\.exe-\d+(?:\.\d*)?%-INC$/) != null) {
             for (let i = 0; i < this.programs.length; ++i) {
                 if (this.programs[i] === fn) {

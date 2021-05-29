@@ -39,8 +39,8 @@ function gameOptionsBoxOpen() {
     box.style.display = "flex";
 
     // special exception for bladeburner popup because it's only visible later.
-    document.getElementById("settingsSuppressBladeburnerPopup").
-        closest('fieldset').style.display =
+    document.getElementById("settingsSuppressBladeburnerPopup")
+        .closest('fieldset').style.display =
         Player.canAccessBladeburner() ? 'block' : 'none';
     setTimeout(function() {
         gameOptionsOpened = true;

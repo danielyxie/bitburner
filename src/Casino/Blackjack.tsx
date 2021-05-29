@@ -193,9 +193,6 @@ export class Blackjack extends Game<Props, State> {
             const dealerHandValue = this.getTrueHandValue(newDealerHand);
             const playerHandValue = this.getTrueHandValue(this.state.playerHand);
 
-            console.log(`dealerHandValue: ${dealerHandValue}`);
-            console.log(`playerHandValue: ${playerHandValue}`);
-
             // We expect nobody to have busted. If someone busted, there is an error 
             // in our game logic
             if (dealerHandValue > 21 || playerHandValue > 21) {

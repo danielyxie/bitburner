@@ -223,11 +223,14 @@ Gang.prototype.process = function(numCycles=1, player) {
 
 Gang.prototype.processGains = function(numCycles=1, player) {
     // Get gains per cycle
-    var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
-    for (var i = 0; i < this.members.length; ++i) {
+    let moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
+    let justice = 0;
+    for (let i = 0; i < this.members.length; ++i) {
         respectGains += (this.members[i].calculateRespectGain(this));
-        wantedLevelGains += (this.members[i].calculateWantedLevelGain(this));
         moneyGains += (this.members[i].calculateMoneyGain(this));
+        const wantedLevelGain = this.members[i].calculateWantedLevelGain(this);
+        wantedLevelGains += wantedLevelGain;
+        if(wantedLevelGain < 0) justice++; // this member is lowering wanted.
     }
     this.respectGainRate = respectGains;
     this.wantedGainRate = wantedLevelGains;
@@ -241,7 +244,7 @@ Gang.prototype.processGains = function(numCycles=1, player) {
         if (!(fac instanceof Faction)) {
             dialogBoxCreate("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
         } else {
-            var favorMult = 1 + (fac.favor / 100);
+            let favorMult = 1 + (fac.favor / 100);
             fac.playerReputation += ((player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
         }
 
@@ -258,7 +261,7 @@ Gang.prototype.processGains = function(numCycles=1, player) {
         } else {
             const oldWanted = this.wanted;
             let newWanted = oldWanted + (wantedLevelGains * numCycles);
-
+            newWanted = newWanted * (1 - justice * 0.001); // safeguard
             // Prevent overflow
             if (wantedLevelGains <= 0 && newWanted > oldWanted) {
                 newWanted = 1;

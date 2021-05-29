@@ -1320,7 +1320,7 @@ let Terminal = {
                 } catch(err) {
                     status = {
                         res: false,
-                        msg: 'No such file exists'
+                        msg: 'No such file exists',
                     };
                 }
 
@@ -1886,7 +1886,7 @@ let Terminal = {
             return {
                 hostname: server.hostname,
                 ip: server.ip,
-                hasRoot: server.hasAdminRights ? "Y" : "N"
+                hasRoot: server.hasAdminRights ? "Y" : "N",
             }
         });
         servers.unshift({

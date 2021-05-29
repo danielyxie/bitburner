@@ -250,8 +250,6 @@ function loadGame(saveString) {
         try {
             ExportBonus.LastExportBonus = JSON.parse(saveObj.LastExportBonus);
         } catch(err) {
-            console.log(saveObj.LastExportBonus);
-            console.log(ExportBonus.LastExportBonus);
             ExportBonus.LastExportBonus = (new Date()).getTime();
             console.error("ERROR: Failed to parse .fconf Settings "+ err);
         }
