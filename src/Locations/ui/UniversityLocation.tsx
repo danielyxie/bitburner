@@ -45,7 +45,6 @@ export class UniversityLocation extends React.Component<IProps, any> {
 
     calculateCost(): number {
         const ip = SpecialServerIps.getIp(this.props.loc.name);
-        console.log(`ip: ${ip}`);
         const server = getServer(ip);
         if(server == null || !server.hasOwnProperty('backdoorInstalled')) return this.props.loc.costMult;
         const discount = (server as Server).backdoorInstalled? 0.9 : 1;

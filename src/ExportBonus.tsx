@@ -1,14 +1,11 @@
 import { Factions } from "./Faction/Factions";
 import { IPlayer } from "./PersonObjects/IPlayer";
 
-export let LastExportBonus: number = 0;
+export let LastExportBonus = 0;
 
 const bonusTimer = 24*60*60*1000; // 24h
 export function canGetBonus(): boolean {
     const now = (new Date()).getTime()
-    console.log(now);
-    console.log(LastExportBonus);
-    console.log(now - LastExportBonus);
     if(now - LastExportBonus > bonusTimer) return true;
     return false;
 }
