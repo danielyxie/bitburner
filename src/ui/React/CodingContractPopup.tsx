@@ -24,16 +24,21 @@ export class CodingContractPopup extends React.Component<IProps, IState>{
         this.onInputKeydown = this.onInputKeydown.bind(this);
     }
 
-    setAnswer(event: any) {
+    setAnswer(event: React.ChangeEvent<HTMLInputElement>): void {
         this.setState({ answer: event.target.value });
     }
 
-    onInputKeydown(e:any){
-        if (e.keyCode === KEY.ENTER && e.target.value !== "") {
-            e.preventDefault();
+    onInputKeydown(event: React.KeyboardEvent<HTMLInputElement>): void {
+        // React just won't cooperate on this one. 
+        // "React.KeyboardEvent<HTMLInputElement>" seems like the right type but
+        // whatever ...
+        const value = (event.target as any).value;
+
+        if (event.keyCode === KEY.ENTER && value !== "") {
+            event.preventDefault();
             this.props.onAttempt(this.state.answer);
-        } else if (e.keyCode === KEY.ESC) {
-            e.preventDefault();
+        } else if (event.keyCode === KEY.ESC) {
+            event.preventDefault();
             this.props.onClose();
         }
     }

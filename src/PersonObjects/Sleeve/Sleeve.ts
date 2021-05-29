@@ -529,7 +529,7 @@ export class Sleeve extends Person {
             case SleeveTaskType.Recovery:
                 this.shock = Math.min(100, this.shock + (0.0002 * cyclesUsed));
                 break;
-            case SleeveTaskType.Sync:
+            case SleeveTaskType.Synchro:
                 this.sync = Math.min(100, this.sync + (p.getIntelligenceBonus(0.5) * 0.0002 * cyclesUsed));
                 break;
             default:
@@ -586,7 +586,7 @@ export class Sleeve extends Person {
             this.resetTaskStatus();
         }
 
-        this.currentTask = SleeveTaskType.Sync;
+        this.currentTask = SleeveTaskType.Synchro;
         return true;
     }
 

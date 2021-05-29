@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 var path = require('path');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');

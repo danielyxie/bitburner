@@ -87,7 +87,7 @@ import 'codemirror/addon/lint/lint.css';
 import 'codemirror/addon/search/match-highlighter.js';
 import 'codemirror/addon/selection/active-line.js';
 
-window.JSHINT = require('jshint').JSHINT;
+import { JSHINT } from 'jshint';
 import './CodeMirrorNetscriptLint.js';
 
 import { NetscriptFunctions } from "../NetscriptFunctions";
@@ -99,6 +99,10 @@ import { clearEventListeners } from "../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../utils/uiHelpers/createOptionElement";
 import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
+
+(function() {
+    window.JSHINT = JSHINT;
+})();
 
 // Max number of invisibles to be shown in a group if the "Show Invisibles" option
 // is marked

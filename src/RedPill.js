@@ -8,7 +8,6 @@ import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SourceFiles } from "./SourceFile/SourceFiles";
-import { Terminal } from "./Terminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { dialogBoxCreate } from "../utils/DialogBox";

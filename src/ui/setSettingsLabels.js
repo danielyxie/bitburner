@@ -1,6 +1,5 @@
 import {Engine} from "../engine";
 import {Settings} from "../Settings/Settings";
-import {Player} from "../Player";
 import {numeralWrapper} from "./numeralFormat";
 
 

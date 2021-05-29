@@ -588,7 +588,6 @@ let Terminal = {
             post(currServ.hostname + ": ");
             const org = currServ.organizationName
             post("Organization name: " + (!isHacknet ? org : "Player"));
-            const admin = currServ.hasAdminRights;
             let hasAdminRights = !isHacknet && currServ.hasAdminRights || isHacknet;
             post("Root Access: " + (hasAdminRights ? "YES" : "NO"));
             const hackingSkill = currServ.requiredHackingSkill

@@ -17,3 +17,7 @@ export function onExport(p: IPlayer): void {
     }
     LastExportBonus = (new Date()).getTime();
 }
+
+export function setLastExportBonus(unixTime: number): void {
+    LastExportBonus = unixTime;
+}

@@ -10,8 +10,7 @@ import { PurchasedAugmentations } from "./PurchasedAugmentations";
 
 import { Player } from "../../Player";
 import { StdButton } from "../../ui/React/StdButton";
-import { LastExportBonus, canGetBonus } from "../../ExportBonus";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { canGetBonus } from "../../ExportBonus";
 
 type IProps = {
     exportGameFn: () => void;
@@ -31,7 +30,7 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
         this.export = this.export.bind(this);
     }
 
-    export() {
+    export(): void {
         this.props.exportGameFn();
         this.setState({
             rerender: !this.state.rerender,

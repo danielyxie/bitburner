@@ -34,7 +34,7 @@ import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { isString } from "../utils/StringHelperFunctions";
 
 import { parse } from "acorn";
-const walk = require("acorn-walk");
+import { simple as walksimple } from "acorn-walk";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts = [];
@@ -304,7 +304,7 @@ function processNetscript1Imports(code, workerScript) {
     let hasImports = false;
 
     // Walk over the tree and process ImportDeclaration nodes
-    walk.simple(ast, {
+    walksimple(ast, {
         ImportDeclaration: (node) => {
             hasImports = true;
             let scriptName = node.source.value;
@@ -322,7 +322,7 @@ function processNetscript1Imports(code, workerScript) {
                 let namespace = node.specifiers[0].local.name;
                 let fnNames         = []; //Names only
                 let fnDeclarations  = []; //FunctionDeclaration Node objects
-                walk.simple(scriptAst, {
+                walksimple(scriptAst, {
                     FunctionDeclaration: (node) => {
                         fnNames.push(node.id.name);
                         fnDeclarations.push(node);
@@ -361,7 +361,7 @@ function processNetscript1Imports(code, workerScript) {
 
                 //Walk through script and get FunctionDeclaration code for all specified fns
                 let fnDeclarations = [];
-                walk.simple(scriptAst, {
+                walksimple(scriptAst, {
                     FunctionDeclaration: (node) => {
                         if (fnsToImport.includes(node.id.name)) {
                             fnDeclarations.push(node);

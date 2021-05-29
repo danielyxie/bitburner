@@ -1,6 +1,7 @@
 /**
  * Webpack configuration for building unit tests
  */
+ /* eslint-disable @typescript-eslint/no-var-requires */
 var path = require('path');
 var webpack = require('webpack');
 

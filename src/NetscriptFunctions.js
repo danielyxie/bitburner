@@ -1,5 +1,4 @@
-const sprintf = require("sprintf-js").sprintf;
-const vsprintf = require("sprintf-js").vsprintf;
+import { vsprintf, sprintf } from 'sprintf-js';
 import * as libarg from 'arg';
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
@@ -4397,7 +4396,7 @@ function NetscriptFunctions(workerScript) {
             hacknetServers: {
                 hashGainRate: function(level, ramUsed, maxRam, cores, mult=1) {
                     checkFormulasAccess("hacknetServers.hashGainRate", 9);
-                    return HScalculateHashGainRate(level, ramUsed, maxRam, cores, mult=1);
+                    return HScalculateHashGainRate(level, ramUsed, maxRam, cores, mult);
                 },
                 levelUpgradeCost: function(startingLevel, extraLevels=1, costMult=1) {
                     checkFormulasAccess("hacknetServers.levelUpgradeCost", 9);
