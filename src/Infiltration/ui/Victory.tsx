@@ -30,6 +30,7 @@ export function Victory(props: IProps) {
     }
 
     function trade() {
+        if(faction === 'none') return;
         Factions[faction].playerReputation += 1e4;
         quitInfiltration();
     }

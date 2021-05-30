@@ -9,8 +9,6 @@ export function BribeGame(props: IMinigameProps) {
     const [choices, setChoices] = useState(makeChoices());
     const [index, setIndex] = useState(0);
 
-    console.log(index);
-
     function press(event: React.KeyboardEvent<HTMLElement>) {
         const k = event.keyCode;
         if(k === 32) {
@@ -34,10 +32,10 @@ export function BribeGame(props: IMinigameProps) {
             <KeyHandler onKeyDown={press} />
         </Grid>
         <Grid item xs={6}>
-            <p>Say something nice about the guard.</p>
-            <p>↑</p>
-            <p>{choices[index]}</p>
-            <p>↓</p>
+            <h1>Say something nice about the guard.</h1>
+            <h2>↑</h2>
+            <h2>{choices[index]}</h2>
+            <h2>↓</h2>
         </Grid>
     </Grid>)
 }
@@ -54,8 +52,14 @@ function shuffleArray(array: string[]) {
 function makeChoices(): string[] {
     const choices = [];
     choices.push(positive[Math.floor(Math.random()*positive.length)]);
-    for(let i = 0; i < 8; i++)
-        choices.push(negative[Math.floor(Math.random()*negative.length)]);
+    for(let i = 0; i < 8; i++) {
+        const option = negative[Math.floor(Math.random()*negative.length)];
+        if(choices.includes(option)) {
+            i--;
+            continue;
+        }
+        choices.push(option);
+    }
     shuffleArray(choices);
     return choices;
 }
