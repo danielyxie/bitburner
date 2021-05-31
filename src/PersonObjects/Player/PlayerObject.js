@@ -112,6 +112,7 @@ export function PlayerObject() {
 
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
+    this.focus = false;
     this.workType = "";
 
     this.currentWorkFactionName = "";

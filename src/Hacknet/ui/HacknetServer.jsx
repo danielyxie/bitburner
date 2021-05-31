@@ -18,6 +18,7 @@ import {
 } from "../HacknetHelpers";
 
 import { Player } from "../../Player";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { Money } from "../../ui/React/Money";
 import { Hashes } from "../../ui/React/Hashes";
@@ -172,7 +173,7 @@ export class HacknetServer extends React.Component {
                     </div>
                     <div className={"row"}>
                         <p>Hash Capacity:</p>
-                        <span className={"text"}>{node.hashCapacity}</span>
+                        <span className={"text"}>{Hashes(node.hashCapacity)}</span>
                     </div>
                     <div className={"row"}>
                         <p>Level:</p><span className={"text upgradable-info"}>{node.level}</span>

@@ -248,9 +248,9 @@ function loadGame(saveString) {
     }
     if (saveObj.hasOwnProperty("LastExportBonus")) {
         try {
-            ExportBonus.LastExportBonus = JSON.parse(saveObj.LastExportBonus);
+            ExportBonus.setLastExportBonus(JSON.parse(saveObj.LastExportBonus));
         } catch(err) {
-            ExportBonus.LastExportBonus = (new Date()).getTime();
+            ExportBonus.setLastExportBonus((new Date()).getTime());
             console.error("ERROR: Failed to parse .fconf Settings "+ err);
         }
     }
@@ -334,9 +334,9 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (saveObj.hasOwnProperty("LastExportBonus")) {
             try {
-                ExportBonus.LastExportBonus = JSON.parse(saveObj.LastExportBonus);
+                ExportBonus.setLastExportBonus(JSON.parse(saveObj.LastExportBonus));
             } catch(err) {
-                ExportBonus.LastExportBonus = (new Date()).getTime();
+                ExportBonus.setLastExportBonus((new Date()).getTime());
                 console.error("ERROR: Failed to parse .fconf Settings "+ err);
             }
         }

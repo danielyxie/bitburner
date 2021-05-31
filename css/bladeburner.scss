@@ -80,7 +80,7 @@
             transform: rotate(-45deg);
         }
     }
-    input[type=checkbox] {
+    input[type="checkbox"] {
         margin: 3px;
         visibility: hidden;
         &:checked + label:after {

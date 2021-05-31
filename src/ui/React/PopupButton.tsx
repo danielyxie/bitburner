@@ -14,7 +14,7 @@ import { removeElement } from "../../../utils/uiHelpers/removeElement";
 export interface IPopupButtonProps {
     class?: string;
     popup: HTMLElement | string;
-    style?: object;
+    style?: any;
     text: string;
     onClose?: () => void;
 }
@@ -26,15 +26,15 @@ export class PopupButton extends React.Component<IPopupButtonProps, any> {
         this.keyListener = this.keyListener.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         document.addEventListener("keydown", this.keyListener);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         document.removeEventListener("keydown", this.keyListener);
     }
 
-    handleClick() {
+    handleClick(): void {
         if(this.props.onClose)
             this.props.onClose();
         //We might be able to remove this?
@@ -52,7 +52,7 @@ export class PopupButton extends React.Component<IPopupButtonProps, any> {
         }
     }
 
-    keyListener(e: KeyboardEvent) {
+    keyListener(e: KeyboardEvent): void {
         //This doesn't really make sense, a button doesnt have to listen to escape IMO
         //Too affraid to remove it since im not sure what it will break.. But yuck.. 
         if (e.keyCode === KEY.ESC) {

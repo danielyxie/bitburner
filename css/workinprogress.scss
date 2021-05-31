@@ -26,7 +26,7 @@
     margin: 10px;
 }
 
-#work-in-progress-cancel-button {
+.work-button {
     @include borderRadius(12px);
     @include boxShadow(1px 1px 3px #000);
 
@@ -39,8 +39,8 @@
     border: 3px solid #fff;
 }
 
-#work-in-progress-cancel-button:hover,
-#work-in-progress-cancel-button:focus {
+.work-button:hover,
+.work-button:focus {
     color: #fff;
     text-decoration: none;
     cursor: pointer;
