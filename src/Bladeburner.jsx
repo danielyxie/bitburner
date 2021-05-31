@@ -574,6 +574,10 @@ Bladeburner.prototype.getActionObject = function(actionId) {
             return GeneralActions["Field Analysis"];
         case ActionTypes["Recruitment"]:
             return GeneralActions["Recruitment"];
+        case ActionTypes["Diplomacy"]:
+            return GeneralActions["Diplomacy"];
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            return GeneralActions["Hyperbolic Regeneration Chamber"];
         default:
             return null;
     }
@@ -3037,6 +3041,9 @@ Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScri
             return 30;
         case ActionTypes["Recruitment"]:
             return this.getRecruitmentTime();
+        case ActionTypes["Diplomacy"]:
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            return 60;
         default:
             workerScript.log("bladeburner.getActionTime", errorLogText);
             return -1;

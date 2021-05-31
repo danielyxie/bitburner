@@ -197,7 +197,10 @@ export class Overview extends BaseReactComponent {
         const sellSharesBtn = this.createButton({
             class: sellSharesClass,
             display: "inline-block",
-            onClick: sellSharesOnClick,
+            onClick: function(event) {
+                if(!event.isTrusted) return;
+                sellSharesOnClick(event);
+            },
             text: "Sell Shares",
             tooltip: sellSharesTooltip,
         });

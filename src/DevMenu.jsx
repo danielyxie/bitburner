@@ -548,6 +548,12 @@ class DevMenuComponent extends Component {
         }
     }
 
+    addTonsCorporationFunds() {
+        if(Player.corporation) {
+            Player.corporation.funds = Player.corporation.funds.plus(1e99);
+        }
+    }
+
     addTonsCorporationCycles() {
         if (Player.corporation) {
             Player.corporation.storedCycles = tonsP;
@@ -1127,6 +1133,9 @@ class DevMenuComponent extends Component {
             </div>
             <table>
                 <tbody>
+                    <tr>
+                        <td><button className="std-button" onClick={this.addTonsCorporationFunds}>Tons of funds</button></td>
+                    </tr>
                     <tr>
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsCorporationCycles}>Tons</button></td>

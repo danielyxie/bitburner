@@ -1097,6 +1097,7 @@ const Engine = {
             // Process offline progress
             loadAllRunningScripts(); // This also takes care of offline production for those scripts
             if (Player.isWorking) {
+                Player.focus = true;
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     Player.workForFaction(numCyclesOffline);
                 } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
@@ -1520,6 +1521,17 @@ const Engine = {
                     Player.finishWork(true);
                 }
             });
+
+            const focusButton = document.getElementById("work-in-progress-something-else-button");
+            focusButton.style.visibility = "hidden";
+            const focusable = [CONSTANTS.WorkTypeFaction, CONSTANTS.WorkTypeCompanyPartTime, CONSTANTS.WorkTypeCompany];
+            if(focusable.includes(Player.workType)) {
+                focusButton.style.visibility = "visible";
+                focusButton.addEventListener("click", function() {
+                    Player.stopFocusing();
+                });
+            }
+
             Engine.loadWorkInProgressContent();
         }
 

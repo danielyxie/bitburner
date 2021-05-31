@@ -512,7 +512,10 @@ export function queryStatFromString(str) {
 }
 
 /******* Working functions *******/
-export function resetWorkStatus() {
+export function resetWorkStatus(generalType, group, workType) {
+    if(generalType === this.workType && group === this.companyName) return;
+    if(generalType === this.workType && group === this.currentWorkFactionName && workType === this.factionWorkType) return;
+    if(this.isWorking) this.singularityStopWork();
     this.workHackExpGainRate    = 0;
     this.workStrExpGainRate     = 0;
     this.workDefExpGainRate     = 0;
@@ -544,12 +547,13 @@ export function resetWorkStatus() {
 }
 
 export function processWorkEarnings(numCycles=1) {
-    const hackExpGain = this.workHackExpGainRate * numCycles;
-    const strExpGain = this.workStrExpGainRate * numCycles;
-    const defExpGain = this.workDefExpGainRate * numCycles;
-    const dexExpGain = this.workDexExpGainRate * numCycles;
-    const agiExpGain = this.workAgiExpGainRate * numCycles;
-    const chaExpGain = this.workChaExpGainRate * numCycles;
+    const focusBonus = this.focus? 1 : 0.8;
+    const hackExpGain = focusBonus * this.workHackExpGainRate * numCycles;
+    const strExpGain = focusBonus * this.workStrExpGainRate * numCycles;
+    const defExpGain = focusBonus * this.workDefExpGainRate * numCycles;
+    const dexExpGain = focusBonus * this.workDexExpGainRate * numCycles;
+    const agiExpGain = focusBonus * this.workAgiExpGainRate * numCycles;
+    const chaExpGain = focusBonus * this.workChaExpGainRate * numCycles;
     const moneyGain = (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
 
     this.gainHackingExp(hackExpGain);
@@ -570,15 +574,16 @@ export function processWorkEarnings(numCycles=1) {
     this.workDexExpGained   += dexExpGain;
     this.workAgiExpGained   += agiExpGain;
     this.workChaExpGained   += chaExpGain;
-    this.workRepGained      += this.workRepGainRate * numCycles;
-    this.workMoneyGained    += this.workMoneyGainRate * numCycles;
-    this.workMoneyGained    -= this.workMoneyLossRate * numCycles;
+    this.workRepGained      += focusBonus * this.workRepGainRate * numCycles;
+    this.workMoneyGained    += focusBonus * this.workMoneyGainRate * numCycles;
+    this.workMoneyGained    -= focusBonus * this.workMoneyLossRate * numCycles;
 }
 
 /* Working for Company */
 export function startWork(companyName) {
-    this.resetWorkStatus();
+    this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
     this.isWorking = true;
+    this.focus = true;
     this.companyName = companyName;
     this.workType = CONSTANTS.WorkTypeCompany;
 
@@ -598,6 +603,14 @@ export function startWork(companyName) {
     newCancelButton.innerHTML = "Cancel Work";
     newCancelButton.addEventListener("click", () => {
         this.finishWork(true);
+        return false;
+    });
+
+    const focusButton = clearEventListeners("work-in-progress-something-else-button");
+    focusButton.style.visibility = "visible";
+    focusButton.innerHTML = "Do something else simultaneously";
+    focusButton.addEventListener("click", () => {
+        this.stopFocusing();
         return false;
     });
 
@@ -722,8 +735,9 @@ export function finishWork(cancelled, sing=false) {
 }
 
 export function startWorkPartTime(companyName) {
-    this.resetWorkStatus();
+    this.resetWorkStatus(CONSTANTS.WorkTypeCompanyPartTime, companyName);
     this.isWorking = true;
+    this.focus = true;
     this.companyName = companyName;
     this.workType = CONSTANTS.WorkTypeCompanyPartTime;
 
@@ -834,6 +848,20 @@ export function finishWorkPartTime(sing=false) {
     this.resetWorkStatus();
 }
 
+export function startFocusing() {
+    const mainMenu = document.getElementById("mainmenu-container");
+    mainMenu.style.visibility = "hidden";
+    this.focus = true;
+    Engine.loadWorkInProgressContent();
+}
+
+export function stopFocusing() {
+    const mainMenu = document.getElementById("mainmenu-container");
+    mainMenu.style.visibility = "visible";
+    this.focus = false;
+    Engine.loadTerminalContent();
+}
+
 /* Working for Faction */
 export function startFactionWork(faction) {
     //Update reputation gain rate to account for faction favor
@@ -843,15 +871,24 @@ export function startFactionWork(faction) {
     this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
     this.isWorking = true;
+    this.focus = true;
     this.workType = CONSTANTS.WorkTypeFaction;
     this.currentWorkFactionName = faction.name;
 
     this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
 
-    var cancelButton = clearEventListeners("work-in-progress-cancel-button");
+    const cancelButton = clearEventListeners("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Stop Faction Work";
     cancelButton.addEventListener("click", () => {
         this.finishFactionWork(true);
+        return false;
+    });
+
+    const focusButton = clearEventListeners("work-in-progress-something-else-button");
+    focusButton.style.visibility = "visible";
+    focusButton.innerHTML = "Do something else simultaneously";
+    focusButton.addEventListener("click", () => {
+        this.stopFocusing();
         return false;
     });
 
@@ -860,7 +897,7 @@ export function startFactionWork(faction) {
 }
 
 export function startFactionHackWork(faction) {
-    this.resetWorkStatus();
+    this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
     this.workHackExpGainRate = .15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult * this.getIntelligenceBonus(0.5);
@@ -872,7 +909,7 @@ export function startFactionHackWork(faction) {
 }
 
 export function startFactionFieldWork(faction) {
-    this.resetWorkStatus();
+    this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
 
     this.workHackExpGainRate    = .1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workStrExpGainRate     = .1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -889,7 +926,7 @@ export function startFactionFieldWork(faction) {
 }
 
 export function startFactionSecurityWork(faction) {
-    this.resetWorkStatus();
+    this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
     this.workHackExpGainRate    = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workStrExpGainRate     = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -1157,6 +1194,7 @@ export function getWorkRepGain() {
 export function startCreateProgramWork(programName, time, reqLevel) {
     this.resetWorkStatus();
     this.isWorking = true;
+    this.focus = true;
     this.workType = CONSTANTS.WorkTypeCreateProgram;
 
     //Time needed to complete work affected by hacking skill (linearly based on
@@ -1188,6 +1226,9 @@ export function startCreateProgramWork(programName, time, reqLevel) {
         this.finishCreateProgramWork(true);
         return false;
     });
+
+    const focusButton = clearEventListeners("work-in-progress-something-else-button");
+    focusButton.style.visibility = "hidden";
 
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
@@ -1247,6 +1288,7 @@ export function finishCreateProgramWork(cancelled) {
 export function startClass(costMult, expMult, className) {
     this.resetWorkStatus();
     this.isWorking = true;
+    this.focus = true;
     this.workType = CONSTANTS.WorkTypeStudyClass;
 
     this.className = className;
@@ -1402,6 +1444,7 @@ export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, c
 
     this.resetWorkStatus();
     this.isWorking = true;
+    this.focus = true;
     this.workType = CONSTANTS.WorkTypeCrime;
 
     if (singParams && singParams.workerscript) {
@@ -1420,12 +1463,15 @@ export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, c
     this.timeNeededToCompleteWork = time;
 
     //Remove all old event listeners from Cancel button
-    var newCancelButton = clearEventListeners("work-in-progress-cancel-button")
+    const newCancelButton = clearEventListeners("work-in-progress-cancel-button")
     newCancelButton.innerHTML = "Cancel crime"
     newCancelButton.addEventListener("click", () => {
         this.finishCrime(true);
         return false;
     });
+
+    const focusButton = clearEventListeners("work-in-progress-something-else-button");
+    focusButton.style.visibility = "hidden";
 
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
