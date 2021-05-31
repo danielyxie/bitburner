@@ -47,14 +47,13 @@
     text-align: right;
 }
 
-#character-hack-wrapper td,
-#character-agi-wrapper td {
-    border-bottom: 1px #aaa solid;
-    padding-bottom: 10px;
-}
-
 #character-str-wrapper td,
 #character-cha-wrapper td {
+    padding-top: 10px;
+}
+
+.character-divider td {
+    border-top: 1px #aaa solid;
     padding-top: 10px;
 }
 
@@ -69,6 +68,8 @@
 #character-int-wrapper   { color: $my-stat-int-color;   }
 .character-int-cell      { color: $my-stat-int-color;   }
 .character-combat-cell   { color: $my-stat-physical;    }
+#character-work-wrapper  { color: $my-stat-hack-color;   }
+.character-work-cell     { color: $my-stat-hack-color;   }
 
 .character-overview-btn {
     @include borderRadius(12px);

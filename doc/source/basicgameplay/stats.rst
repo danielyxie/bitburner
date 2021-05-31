@@ -124,6 +124,6 @@ Gain experience by:
 
 * Committing certain crimes
 * Infiltration
-* Working out at a gym
+* Studying at a university
 * Working a relevant job at a company
 * Doing Field work for a Faction

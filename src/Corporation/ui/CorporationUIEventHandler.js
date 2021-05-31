@@ -63,9 +63,14 @@ export class CorporationEventHandler {
         const txt = createElement("p", {
             innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation",
         });
-        const factionSelector = createElement("select", { margin:"3px" });
+        const factionSelector = createElement("select", { class: "dropdown", margin:"3px" });
         for (let i = 0; i < Player.factions.length; ++i) {
             const facName = Player.factions[i];
+
+            const faction = Factions[facName];
+            const info = faction.getInfo();
+            if(!info.offersWork()) continue;
+
             factionSelector.add(createElement("option", {
                 text: facName, value: facName,
             }));
@@ -73,6 +78,7 @@ export class CorporationEventHandler {
         var repGainText = createElement("p");
         var stockSharesInput;
         var moneyInput = createElement("input", {
+            class: "text-input",
             type:"number", placeholder:"Corporation funds", margin:"5px",
             inputListener:()=>{
                 var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -96,6 +102,7 @@ export class CorporationEventHandler {
             },
         });
         stockSharesInput = createElement("input", {
+            class: "text-input",
             type:"number", placeholder:"Stock Shares", margin: "5px",
             inputListener:()=>{
                 var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -595,7 +602,10 @@ export class CorporationEventHandler {
         const txt = createElement("p", {
             innerHTML: popupText,
         });
-        const designCity = createElement("select", { margin: "5px" });
+        const designCity = createElement("select", {
+            class: "dropdown",
+            margin: "5px",
+        });
         for (const cityName in division.offices) {
             if (division.offices[cityName] instanceof OfficeSpace) {
                 designCity.add(createElement("option", {
@@ -613,17 +623,20 @@ export class CorporationEventHandler {
             productNamePlaceholder = "Property Name";
         }
         var productNameInput = createElement("input", {
+            class: "text-input",
             margin: "5px",
             placeholder: productNamePlaceholder,
         });
         var lineBreak1 = createElement("br");
         var designInvestInput = createElement("input", {
+            class: "text-input",
             margin: "5px",
             placeholder: "Design investment",
             type: "number",
         });
         let confirmBtn;
         var marketingInvestInput = createElement("input", {
+            class: "text-input",
             margin: "5px",
             placeholder: "Marketing investment",
             type: "number",
@@ -636,8 +649,8 @@ export class CorporationEventHandler {
             class: "std-button",
             innerText: "Develop Product",
             clickListener: () => {
-                if (designInvestInput.value == null) { designInvestInput.value = 0; }
-                if (marketingInvestInput.value == null) { marketingInvestInput.value = 0; }
+                if (designInvestInput.value == null || designInvestInput.value < 0) { designInvestInput.value = 0; }
+                if (marketingInvestInput.value == null || marketingInvestInput.value < 0) { marketingInvestInput.value = 0; }
                 var designInvest = parseFloat(designInvestInput.value),
                     marketingInvest = parseFloat(marketingInvestInput.value);
                 if (productNameInput.value == null || productNameInput.value === "") {
@@ -1501,6 +1514,7 @@ export class CorporationEventHandler {
         });
         const profitIndicator = createElement("p");
         const input = createElement("input", {
+            class: "text-input",
             type:"number", placeholder:"Shares to sell", margin:"5px",
             inputListener: ()=> {
                 var numShares = Math.round(input.value);

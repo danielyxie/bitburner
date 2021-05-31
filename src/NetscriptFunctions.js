@@ -871,9 +871,6 @@ function NetscriptFunctions(workerScript) {
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = calculateHackingExpGain(server, Player) * threads;
-                if (growthPercentage == 1) {
-                    expGain = 0;
-                }
                 const logGrowPercent = (moneyAfter/moneyBefore) - 1;
                 workerScript.log("grow", `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(logGrowPercent, 6)}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
@@ -1581,7 +1578,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.log("getServerMoneyAvailable", `returned player's money: ${numeralWrapper.formatMoney(Player.money.toNumber())}`);
                 return Player.money.toNumber();
             }
-            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.formatMoney(server.moneyAvailable)} for '${server.hostname}`);
+            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.formatMoney(server.moneyAvailable)} for '${server.hostname}'`);
             return server.moneyAvailable;
         },
         getServerSecurityLevel: function(ip) {
@@ -2486,8 +2483,8 @@ function NetscriptFunctions(workerScript) {
 
             return numeralWrapper.format(parseFloat(n), format);
         },
-        tFormat: function(milliseconds) {
-            return convertTimeMsToTimeElapsedString(milliseconds);
+        tFormat: function(milliseconds, milliPrecision=false) {
+            return convertTimeMsToTimeElapsedString(milliseconds, milliPrecision);
         },
         getTimeSinceLastAug: function() {
             updateDynamicRam("getTimeSinceLastAug", getRamCost("getTimeSinceLastAug"));

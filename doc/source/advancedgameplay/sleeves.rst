@@ -50,7 +50,7 @@ Duplicate Sleeves. It is a numeral value between 1 and 100, and it affects how m
 is earned when the sleeve is performing a task.
 
 Let N be the sleeve's synchronization. When the sleeve earns experience by performing
-a task, both the sleeve and the player's original host consciousness of N% of the
+a task, both the sleeve and the player's original host consciousness gain N% of the
 amount of experience normally earned by the task. All of the player's other sleeves
 earn ((N/100)^2 * 100)% of the experience.
 

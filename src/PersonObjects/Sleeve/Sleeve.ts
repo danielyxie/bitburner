@@ -666,6 +666,11 @@ export class Sleeve extends Person {
             return false;
         }
 
+        // Verify that this sleeve does not already have that augmentation.
+        if(this.augmentations.some(a => a.name === aug.name)) {
+            return false;
+        }
+
         p.loseMoney(aug.startingCost);
         this.installAugmentation(aug);
         return true;

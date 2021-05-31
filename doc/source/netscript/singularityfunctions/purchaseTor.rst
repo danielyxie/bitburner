@@ -10,6 +10,6 @@ purchaseTor() Netscript Function
     This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this
     function is the same as if you were to manually purchase one.
 
-    This function will return true if it successfully purchase a TOR router and false otherwise.
+    This function will return true if it successfully purchased a TOR router and false otherwise.
 
     :RAM cost: 2 GB
