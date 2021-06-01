@@ -3,6 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
+import { random } from "../utils";
+
+import { Values } from "../debug";
 
 function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     switch(event.keyCode) {
@@ -23,7 +26,7 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
 }
 
 export function MinesweeperGame(props: IMinigameProps) {
-    const timer = 15000;
+    const timer = Values.Minesweeper.timer;
     const [minefield] = useState(generateMinefield());
     const [answer, setAnswer] = useState(generateEmptyField());
     const [pos, setPos] = useState([0, 0]);
@@ -102,15 +105,15 @@ function fieldEquals(a: boolean[][], b: boolean[][]): boolean {
 
 function generateEmptyField(): boolean[][] {
     const field = [];
-    for(let i = 0; i < 5; i++) {
-        field.push((new Array(5)).fill(false));
+    for(let i = 0; i < Values.Minesweeper.height; i++) {
+        field.push((new Array(Values.Minesweeper.width)).fill(false));
     }
     return field;
 }
 
 function generateMinefield(): boolean[][] {
     const field = generateEmptyField();
-    for(let i = 0; i < 6; i++) {
+    for(let i = 0; i < random(Values.Minesweeper.minemin, Values.Minesweeper.minemax); i++) {
         field[Math.floor(Math.random()*field.length)][Math.floor(Math.random()*field[0].length)] = true;
     }
     return field;

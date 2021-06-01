@@ -3,6 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
+import { random } from "../utils";
+
+import { Values } from "../debug";
 
 function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     switch(event.keyCode) {
@@ -23,7 +26,7 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
 }
 
 export function CheatCodeGame(props: IMinigameProps) {
-    const timer = 15000;
+    const timer = Values.CheatCode.timer;
     const [code, _] = useState(generateCode());
     const [index, setIndex] = useState(0);
 
@@ -50,7 +53,7 @@ export function CheatCodeGame(props: IMinigameProps) {
 function generateCode(): string {
     const arrows = ['←', '→', '↑', '↓'];
     let code = '';
-    for(let i = 0; i < 10; i++) {
+    for(let i = 0; i < random(Values.CheatCode.min, Values.CheatCode.max); i++) {
         let arrow = arrows[Math.floor(4*Math.random())];
         while(arrow === code[code.length-1]) arrow = arrows[Math.floor(4*Math.random())];
         code += arrow;

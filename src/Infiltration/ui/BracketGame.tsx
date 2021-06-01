@@ -3,10 +3,13 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
+import { random } from "../utils";
+
+import { Values } from "../debug";
 
 function generateLeft(): string {
     let str = "";
-    const length = Math.random()*3+2;
+    const length = random(Values.Bracket.min, Values.Bracket.max);
     for(let i = 0; i < length; i++) {
         str += ["[", '<', '(', '{'][Math.floor(Math.random()*4)];
     }
@@ -30,7 +33,7 @@ function match(left: string, right: string): boolean {
 }
 
 export function BracketGame(props: IMinigameProps) {
-    const timer = 7000;
+    const timer = Values.Bracket.timer;
     const [right, setRight] = useState("");
     const [left, setLeft] = useState(generateLeft());
 

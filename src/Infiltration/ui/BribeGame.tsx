@@ -3,9 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
+import { random } from "../utils";
+
+import { Values } from "../debug";
 
 export function BribeGame(props: IMinigameProps) {
-    const timer = 15000;
+    const timer = Values.Bribe.timer;
     const [choices, setChoices] = useState(makeChoices());
     const [index, setIndex] = useState(0);
 
@@ -52,7 +55,7 @@ function shuffleArray(array: string[]) {
 function makeChoices(): string[] {
     const choices = [];
     choices.push(positive[Math.floor(Math.random()*positive.length)]);
-    for(let i = 0; i < 8; i++) {
+    for(let i = 0; i < Values.Bribe.options; i++) {
         const option = negative[Math.floor(Math.random()*negative.length)];
         if(choices.includes(option)) {
             i--;

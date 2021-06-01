@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
+import { random } from "../utils";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 
+import { Values } from "../debug";
 
 export function SlashGame(props: IMinigameProps) {
-    const timer = 2000;
+    const timer = Values.Slash.timer;
     const [guarding, setGuarding] = useState(true);
 
     function press(event: React.KeyboardEvent<HTMLElement>) {
@@ -22,7 +24,7 @@ export function SlashGame(props: IMinigameProps) {
         let id2 = -1;
         const id = setTimeout(() => {
             setGuarding(false);
-            id2 = setTimeout(()=>setGuarding(true), Math.random()*250+250)
+            id2 = setTimeout(()=>setGuarding(true), random(Values.Slash.min, Values.Slash.max))
         }, Math.random()*1000+500);
         return () => {
             clearInterval(id);

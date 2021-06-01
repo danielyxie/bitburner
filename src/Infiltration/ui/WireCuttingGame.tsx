@@ -3,18 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
-/*
+import { random } from "../utils";
 
-| full
-. dotted
-/ slashed (stripped)
-- dashed
-  solid (empty)
-# pound wire
-
-colors
-
-*/
+import { Values } from "../debug";
 
 const types = [
     "|",
@@ -43,7 +34,7 @@ interface Question {
 }
 
 export function WireCuttingGame(props: IMinigameProps) {
-    const timer = 20000;
+    const timer = Values.WireCutting.timer;
     const [wires] = useState(generateWires());
     const [cutWires, setCutWires] = useState((new Array(wires.length)).fill(false));
     const [questions] = useState(generateQuestion(wires));
@@ -122,7 +113,7 @@ function randomColorQuestion(wires: Wire[]) {
 }
 
 function generateQuestion(wires: Wire[]): Question[] {
-    const numQuestions = Math.random()*2+1;
+    const numQuestions = Values.WireCutting.rules;
     const questionGenerators = [
         randomPositionQuestion,
         randomColorQuestion,
@@ -136,7 +127,7 @@ function generateQuestion(wires: Wire[]): Question[] {
 
 function generateWires(): Wire[] {
     const wires = [];
-    const numWires = Math.random()*3+6
+    const numWires = random(Values.WireCutting.wiresmin, Values.WireCutting.wiresmax);
     for(let i = 0; i < numWires; i++) {
         const wireColors = [colors[Math.floor(Math.random()*colors.length)]];
         if(Math.random() < 0.15) {

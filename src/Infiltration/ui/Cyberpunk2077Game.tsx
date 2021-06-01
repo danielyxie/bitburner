@@ -3,6 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
+import { random } from "../utils";
+
+import { Values } from "../debug";
 
 function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     switch(event.keyCode) {
@@ -23,7 +26,7 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
 }
 
 export function Cyberpunk2077Game(props: IMinigameProps) {
-    const timer = 15000;
+    const timer = Values.Cyberpunk.timer;
     const [grid] = useState(generatePuzzle());
     const [answer] = useState(generateAnswer(grid));
     const [index, setIndex] = useState(0);
@@ -88,7 +91,7 @@ export function Cyberpunk2077Game(props: IMinigameProps) {
 
 function generateAnswer(grid: string[][]): string[] {
     const answer = [];
-    const size = Math.random()*3+4;
+    const size = random(Values.Cyberpunk.min, Values.Cyberpunk.max);
     for(let i = 0; i < size; i++) {
         answer.push(grid[Math.floor(Math.random()*grid.length)][Math.floor(Math.random()*grid[0].length)]);
     }

@@ -3,9 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
+import { random } from "../utils";
+
+import { Values } from "../debug";
 
 export function BackwardGame(props: IMinigameProps) {
-    const timer = 15000;
+    const timer = Values.Backward.timer;
     const [answer, setAnswer] = useState(makeAnswer());
     const [guess, setGuess] = useState("");
 
@@ -37,7 +40,7 @@ export function BackwardGame(props: IMinigameProps) {
 }
 
 function makeAnswer(): string {
-    const length = 1 + Math.random()*2;
+    const length = random(Values.Backward.min, Values.Backward.max);
     let answer = "";
     for(let i = 0; i < length; i++) {
         if(i > 0) answer += " "

@@ -13,6 +13,8 @@ import { MinesweeperGame } from "./MinesweeperGame";
 import { WireCuttingGame } from "./WireCuttingGame";
 import { Victory } from "./Victory";
 
+import { Values } from "../debug";
+
 interface IProps {
     Player: IPlayer;
     Engine: IEngine;
@@ -80,7 +82,7 @@ export function Game(props: IProps) {
         break;
     case Stage.Minigame:
         //const MiniGame = minigames[Math.floor(Math.random()*minigames.length)];
-        const MiniGame = minigames[7];
+        const MiniGame = minigames[Values.GameId];
         stageComponent = (<MiniGame onSuccess={success} onFailure={failure} difficulty={5} />);
         break;
     case Stage.Sell:
