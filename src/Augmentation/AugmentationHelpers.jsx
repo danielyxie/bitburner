@@ -57,7 +57,7 @@ function initAugmentations() {
         name:AugmentationNames.Targeting1, moneyCost:3e6, repCost:2e3,
         info:"This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's " +
              "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information " +
-             "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies.<br><br>" +
+             "directly onto the retina. These enhancements allow the player to keep track of enemies more efficiently.<br><br>" +
              "This augmentation increases the player's dexterity by 10%.",
         dexterity_mult: 1.1,
     });
@@ -70,8 +70,8 @@ function initAugmentations() {
 
     const Targeting2 = new Augmentation({
         name:AugmentationNames.Targeting2, moneyCost:8.5e6, repCost:3.5e3,
-        info:"This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
+        info:"This is an upgraded version of the Augmented Targeting I cranial implant, which is capable of augmenting reality " +
+             "and enhancing the user's balance and hand-eye coordination.<br><br>" +
              "This augmentation increases the player's dexterity by 20%.",
         prereqs:[AugmentationNames.Targeting1],
         dexterity_mult: 1.2,
@@ -85,8 +85,8 @@ function initAugmentations() {
 
     const Targeting3 = new Augmentation({
         name:AugmentationNames.Targeting3, moneyCost:23e6, repCost:11e3,
-        info:"This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
+        info:"This is an upgraded version of the Augmented Targeting II cranial implant, which is capable of augmenting reality " +
+             "and enhancing the user's balance and hand-eye coordination.<br><br>" +
              "This augmentation increases the player's dexterity by 30%.",
         prereqs:[AugmentationNames.Targeting2],
         dexterity_mult: 1.3,
@@ -100,7 +100,7 @@ function initAugmentations() {
 
     const SyntheticHeart = new Augmentation({
         name:AugmentationNames.SyntheticHeart, moneyCost:575e6, repCost:300e3,
-        info:"This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood " +
+        info:"This advanced artificial heart, created from plasteel and graphene, is capable of pumping blood " +
              "at much higher efficiencies than a normal human heart.<br><br>" +
              "This augmentation increases the player's agility and strength by 50%.",
         agility_mult: 1.5,
@@ -146,7 +146,7 @@ function initAugmentations() {
 
     const CombatRib2 = new Augmentation({
         name:AugmentationNames.CombatRib2, repCost:7.5e3, moneyCost:13e6,
-        info:"This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " +
+        info:"This is an upgraded version of the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " +
              "drugs into the bloodstream.<br><br>" +
              "This augmentation increases the player's strength and defense by 14%.",
         prereqs:[AugmentationNames.CombatRib1],
@@ -162,7 +162,7 @@ function initAugmentations() {
 
     const CombatRib3 = new Augmentation({
         name:AugmentationNames.CombatRib3, repCost:14e3, moneyCost:24e6,
-        info:"This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " +
+        info:"This is an upgraded version of the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " +
              "drugs into the bloodstream.<br><br>" +
              "This augmentation increases the player's strength and defense by 18%.",
         prereqs:[AugmentationNames.CombatRib2],
