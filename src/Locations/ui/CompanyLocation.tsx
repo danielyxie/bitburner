@@ -198,6 +198,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
 
         const data = loc.infiltrationData;
         if (data == null) { return; }
+        this.props.p.singularityStopWork();
         beginInfiltration(this.props.locName, data.startingSecurityLevel, data.baseRewardValue, data.maxClearanceLevel, data.difficulty);
     }
 
