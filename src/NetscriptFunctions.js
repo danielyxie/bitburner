@@ -4432,6 +4432,7 @@ function NetscriptFunctions(workerScript) {
         heart: {
             // Easter egg function
             break: function() {
+                Player.giveExploit(Exploit.UndocumentedFunctionCall);
                 return Player.karma;
             },
         },
