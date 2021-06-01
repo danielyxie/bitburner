@@ -1366,6 +1366,9 @@ export function startClass(costMult, expMult, className) {
         return false;
     });
 
+    const focusButton = clearEventListeners("work-in-progress-something-else-button");
+    focusButton.style.visibility = "hidden";
+
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
