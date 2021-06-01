@@ -382,10 +382,10 @@ export const Literatures: IMap<Literature> = {};
 
     title   = "The New God";
     fn      = LiteratureNames.TheNewGod;
-    txt     = "Everyone has that moment in their life where they wonder about the bigger questions.<br><br>" +
-              "What's the point of all of this? What is my purpose?<br><br>" +
+    txt     = "Everyone has a moment in their life when they wonder about the bigger questions.<br><br>" +
+              "What's the point of all this? What is my purpose?<br><br>" +
               "Some people dare to think even bigger.<br><br>" +
-              "What will be the fate of the human race?<br><br>" +
+              "What will the fate of the human race be?<br><br>" +
               "We live in an era vastly different from that of even 15 or 20 years ago. We have gone " +
               "where no man has gone before. We have stripped ourselves of the tyranny of flesh.<br><br>" +
               "The Singularity is here. The merging of man and machine. This is where humanity evolves into " +
