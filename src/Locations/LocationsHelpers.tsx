@@ -200,7 +200,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer): void {
     const currentCores = p.getHomeComputer().cpuCores;
     if (currentCores >= 8) {
         dialogBoxCreate(<>
-            You've have the maximum amount of CPU cores on your home computer.
+            You have the maximum amount of CPU cores on your home computer.
         </>);
         return;
     }
@@ -245,7 +245,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer): void {
     yesNoBoxCreate(<>Would you like to purchase an additional CPU Core for your home computer? Each CPU Core 
 lets you start with an additional Core Node in Hacking Missions.<br /><br />
 Purchasing an additional core (for a total of {p.getHomeComputer().cpuCores + 1}) will 
-cost {Money(cost)}</>);
+cost {Money(cost)}.</>);
 }
 
 /**
@@ -263,7 +263,7 @@ export function createUpgradeHomeRamPopup(p: IPlayer): void {
     const homeComputer = p.getHomeComputer();
     if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
         dialogBoxCreate(<>
-            You've have the maximum amount of RAM on your home computer.
+            You have the maximum amount of RAM on your home computer.
         </>);
         return;
     }
@@ -282,7 +282,7 @@ export function createUpgradeHomeRamPopup(p: IPlayer): void {
     yesNoBoxCreate(<>
         Would you like to purchase additional RAM for your home computer? <br /><br />
         This will upgrade your RAM from {numeralWrapper.formatRAM(ram)} to {numeralWrapper.formatRAM(ram*2)}. <br /><br />
-        This will cost {Money(cost)}
+        This will cost {Money(cost)}.
     </>);
 }
 
@@ -293,11 +293,11 @@ export function createUpgradeHomeRamPopup(p: IPlayer): void {
  */
 export function purchaseTorRouter(p: IPlayer): void {
     if (p.hasTorRouter()) {
-        dialogBoxCreate(`You already have a TOR Router`);
+        dialogBoxCreate(`You already have a TOR Router!`);
         return;
     }
     if (!p.canAfford(CONSTANTS.TorRouterCost)) {
-        dialogBoxCreate("You cannot afford to purchase the Tor router");
+        dialogBoxCreate("You cannot afford to purchase the TOR router!");
         return;
     }
     p.loseMoney(CONSTANTS.TorRouterCost);
@@ -312,8 +312,8 @@ export function purchaseTorRouter(p: IPlayer): void {
     p.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     darkweb.serversOnNetwork.push(p.getHomeComputer().ip);
     dialogBoxCreate(
-        "You have purchased a Tor router!<br>" +
-        "You now have access to the dark web from your home computer<br>" +
+        "You have purchased a TOR router!<br>" +
+        "You now have access to the dark web from your home computer.<br>" +
         "Use the scan/scan-analyze commands to search for the dark web connection.",
     );
 }
