@@ -200,7 +200,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer): void {
     const currentCores = p.getHomeComputer().cpuCores;
     if (currentCores >= 8) {
         dialogBoxCreate(<>
-            You've have the maximum amount of CPU cores on your home computer.
+            You have the maximum amount of CPU cores on your home computer.
         </>);
         return;
     }
@@ -263,7 +263,7 @@ export function createUpgradeHomeRamPopup(p: IPlayer): void {
     const homeComputer = p.getHomeComputer();
     if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
         dialogBoxCreate(<>
-            You've have the maximum amount of RAM on your home computer.
+            You have the maximum amount of RAM on your home computer.
         </>);
         return;
     }
