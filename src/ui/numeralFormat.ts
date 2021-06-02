@@ -62,7 +62,7 @@ class NumeralFormatter {
     }
 
     formatHp(n: number): string {
-        return this.format(n, "0");
+        return this.format(n, "0,0");
     }
 
     formatMoney(n: number): string {
@@ -88,11 +88,37 @@ class NumeralFormatter {
     }
 
     formatExp(n: number): string {
-        return this.format(n, "0.000a");
+        const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+        const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+            }
+        }
+        
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatHashes(n: number): string {
-        return this.format(n, "0.000a");
+        const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+        const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+            }
+        }
+        
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatReputation(n: number): string {
@@ -130,7 +156,20 @@ class NumeralFormatter {
     }
 
     formatRespect(n: number): string {
-        return this.format(n, "0.00000a");
+        const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+        const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.00000')+extraNotations[i];
+            }
+        }
+        
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.00000");
+        }
+        const str = this.format(n, "0.00000a");
+        if(str === "NaNt") return this.format(n, '0.00000e+0');
+        return str;
     }
 
     formatWanted(n: number): string {
@@ -162,14 +201,37 @@ class NumeralFormatter {
     }
 
     formatShares(n: number): string {
-        if (n < 1000) {
+        const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+        const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+            }
+        }
+        
+        if(Math.abs(n) < 1000) {
             return this.format(n, "0");
         }
-        return this.format(n, "0.000a");
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatInfiltrationSecurity(n: number): string {
-        return this.format(n, "0.000a");
+        const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+        const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+            }
+        }
+        
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatThreads(n: number): string {
