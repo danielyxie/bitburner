@@ -16,6 +16,9 @@ import 'numeral/locales/ru';
 
 /* eslint-disable class-methods-use-this */
 
+const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+
 class NumeralFormatter {
     // Default Locale
     defaultLocale = "en";
@@ -54,8 +57,6 @@ class NumeralFormatter {
 
     formatMoney(n: number): string {
         if(numeral.options.currentLocale === "en") {
-            const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
-            const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
             for(let i = 0; i < extraFormats.length; i++) {
                 if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
                     return '$'+this.format(n/extraFormats[i], '0.000')+extraNotations[i];
@@ -75,15 +76,51 @@ class NumeralFormatter {
     }
 
     formatExp(n: number): string {
-        return this.format(n, "0.000a");
+        if(numeral.options.currentLocale === "en") {
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+                }
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatHashes(n: number): string {
-        return this.format(n, "0.000a");
+        if(numeral.options.currentLocale === "en") {
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+                }
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatReputation(n: number): string {
-        return this.format(n, "0.000a");
+        if(numeral.options.currentLocale === "en") {
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+                }
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatFavor(n: number): string {
@@ -104,11 +141,35 @@ class NumeralFormatter {
     }
 
     formatRespect(n: number): string {
-        return this.format(n, "0.00000a");
+        if(numeral.options.currentLocale === "en") {
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return this.format(n/extraFormats[i], '0.00000')+extraNotations[i];
+                }
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.00000");
+        }
+        const str = this.format(n, "0.00000a");
+        if(str === "NaNt") return this.format(n, '0.00000e+0');
+        return str;
     }
 
     formatWanted(n: number): string {
-        return this.format(n, "0.00000a");
+        if(numeral.options.currentLocale === "en") {
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return this.format(n/extraFormats[i], '0.00000')+extraNotations[i];
+                }
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.00000");
+        }
+        const str = this.format(n, "0.00000a");
+        if(str === "NaNt") return this.format(n, '0.00000e+0');
+        return str;
     }
 
     formatMultiplier(n: number): string {
@@ -136,14 +197,34 @@ class NumeralFormatter {
     }
 
     formatShares(n: number): string {
-        if (n < 1000) {
-            return this.format(n, "0");
+        if(numeral.options.currentLocale === "en") {
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+                }
+            }
         }
-        return this.format(n, "0.000a");
-    }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;    }
 
     formatInfiltrationSecurity(n: number): string {
-        return this.format(n, "0.000a");
+        if(numeral.options.currentLocale === "en") {
+            for(let i = 0; i < extraFormats.length; i++) {
+                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+                }
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatThreads(n: number): string {
