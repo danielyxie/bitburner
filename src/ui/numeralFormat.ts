@@ -96,7 +96,20 @@ class NumeralFormatter {
     }
 
     formatReputation(n: number): string {
-        return this.format(n, "0.000a");
+        const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+        const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
+            }
+        }
+        
+        if(Math.abs(n) < 1000) {
+            return this.format(n, "0.000");
+        }
+        const str = this.format(n, "0.000a");
+        if(str === "NaNt") return this.format(n, '0.000e+0');
+        return str;
     }
 
     formatFavor(n: number): string {
