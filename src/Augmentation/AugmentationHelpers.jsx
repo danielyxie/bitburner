@@ -77,9 +77,12 @@ function getRandomBonus() {
     ]
     
 
-    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/360)));
+    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/36)));
 
-    randomNumber.step();
+    for(let i = 0; i < 3; i++){
+        randomNumber.step();
+    }
+
     return (bonuses[Math.floor(bonuses.length * randomNumber.random())]);
 }
 
