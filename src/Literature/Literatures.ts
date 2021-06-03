@@ -411,7 +411,7 @@ export const Literatures: IMap<Literature> = {};
               "and powerful corporations in Asia, which has helped faciliate their recent rapid rise.";
     Literatures[fn] = new Literature(title, fn, txt);
     
-        title   = "Rumors";
+    title   = "Rumors";
     fn      = LiteratureNames.Rumors;
     txt     = "From: Jack Estin<br><br>" +
               "To: Yian Rokau<br><br>" +
