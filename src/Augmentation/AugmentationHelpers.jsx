@@ -40,7 +40,7 @@ function initAugmentations() {
 
     //Time-Based Augment Test
     const CircadianRhythm = new Augmentation({
-        name:AugmentationNames.CircadianRhythm, moneyCost: 0, repCost:0,
+        name:AugmentationNames.CircadianRhythm, moneyCost: 1e12, repCost:450e3,
         info:"An injection which improves your perception by a variable amount.<br><br>" +
              "This augmentation increases the player's hacking skill by a variable amount.",
         hacking_mult: (0.9 + 1.1 * (new WHRNG(Player.lastUpdate).random())),
