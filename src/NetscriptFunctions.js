@@ -2946,7 +2946,6 @@ function NetscriptFunctions(workerScript) {
         },
         getPlayer: function() {
             updateDynamicRam("getPlayer", getRamCost("getPlayer"));
-            checkSingularityAccess("getPlayer", 1);
 
             const data = {
                 hacking_skill:                   Player.hacking_skill,
