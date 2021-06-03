@@ -28,6 +28,12 @@ function AddToAugmentations(aug) {
     Augmentations[name] = aug;
 }
 
+function getRandomMultiplier(min, max) {
+    var randomNumber =  (new WHRNG(Player.lastUpdate));
+    randomNumber.step();
+    return (min + (max - min) * (randomNumber.random()));
+}
+
 function initAugmentations() {
     for (var name in Factions) {
         if (Factions.hasOwnProperty(name)) {
@@ -43,7 +49,7 @@ function initAugmentations() {
         name:AugmentationNames.CircadianRhythm, moneyCost: 1e12, repCost:450e3,
         info:"An injection which improves your perception by a variable amount.<br><br>" +
              "This augmentation increases the player's hacking skill by a variable amount.",
-        hacking_mult: (0.9 + 1.1 * (new WHRNG(Player.lastUpdate).random())),
+        hacking_mult: getRandomMultiplier(0.9, 2),
     });
     CircadianRhythm.addToFactions(["Illuminati"]);
     if (augmentationExists(AugmentationNames.CircadianRhythm)) {
