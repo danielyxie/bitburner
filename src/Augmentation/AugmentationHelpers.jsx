@@ -29,7 +29,7 @@ function AddToAugmentations(aug) {
 }
 
 function getRandomMultiplier(min, max) {
-    var randomNumber =  (new WHRNG(Player.lastUpdate));
+    let randomNumber = (new WHRNG(new Date().getHours()));
     randomNumber.step();
     return (min + (max - min) * (randomNumber.random()));
 }
@@ -55,12 +55,12 @@ function getRandomModifier() {
         "faction_rep_mult",
         "crime_money_mult",
         "crime_success_mult",
-        "hacknet_node_money_mult",
         "work_money_mult"];
 
-    var randomNumber =  (new WHRNG(Player.lastUpdate));
+    let randomNumber = (new WHRNG(new Date().getHours()));
+
     randomNumber.step();
-    return (multiplierTypes[Math.floor(multiplierTypes.length() * randomNumber.random())]);
+    return (multiplierTypes[Math.floor(multiplierTypes.length * randomNumber.random())]);
 }
 
 function initAugmentations() {
@@ -74,13 +74,16 @@ function initAugmentations() {
     clearObject(Augmentations);
 
     //Time-Based Augment Test
+    var randomMod = getRandomModifier();
+
     const CircadianRhythm = new Augmentation({
         name:AugmentationNames.CircadianRhythm, moneyCost: 1e12, repCost:450e3,
-        info:"An injection which improves your perception by a variable amount.<br><br>" +
-             "This augmentation increases the player's hacking skill by a variable amount.",
-        getRandomModifier(): getRandomMultiplier(0.85, 1.5),
+        info:"An prototype injection which modifies your circadian rhythm, leading to unexpected effects.<br><br>" +
+             "This augmentation increases or decreases a random skill by a random amount depending on install time.<br>" +
+             "Debug:" + randomMod + " by " + getRandomMultiplier(0.85, 1.5) + " " + Math.floor(Player.lastUpdate/360000),
+        [randomMod]: getRandomMultiplier(0.85, 1.5),
     });
-    CircadianRhythm.addToFactions(["Illuminati"]);
+    CircadianRhythm.addToFactions(["Speakers for the Dead"]);
     if (augmentationExists(AugmentationNames.CircadianRhythm)) {
         delete Augmentations[AugmentationNames.CircadianRhythm];
     }
