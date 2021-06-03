@@ -1,6 +1,7 @@
 import { IMap } from "../../types";
 
 export const AugmentationNames: IMap<string> = {
+    CircadianRhythm:                    "Circadian Modulator",
     Targeting1:                         "Augmented Targeting I",
     Targeting2:                         "Augmented Targeting II",
     Targeting3:                         "Augmented Targeting III",

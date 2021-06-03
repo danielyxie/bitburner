@@ -36,6 +36,19 @@ function initAugmentations() {
     //Reset Augmentations
     clearObject(Augmentations);
 
+    //Time-Based Augment Test
+    const CircadianRhythm = new Augmentation({
+        name:AugmentationNames.CircadianRhythm, moneyCost: 0, repCost:0,
+        info:"An injection which improves your perception by a variable amount.<br><br>" +
+             "This augmentation increases the player's hacking skill by a variable amount.",
+        hacking_mult: 1.08,
+    });
+    CircadianRhythm.addToFactions(["VitaLife"]);
+    if (augmentationExists(AugmentationNames.CircadianRhythm)) {
+        delete Augmentations[AugmentationNames.CircadianRhythm];
+    }
+    AddToAugmentations(CircadianRhythm);
+
     //Combat stat augmentations
     const HemoRecirculator = new Augmentation({
         name:AugmentationNames.HemoRecirculator, moneyCost: 9e6, repCost:4e3,
