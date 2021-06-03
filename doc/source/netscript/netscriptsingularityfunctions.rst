@@ -28,7 +28,6 @@ level 3, then you will be able to access all of the Singularity Functions.
     connect() <singularityfunctions/connect>
     manualHack() <singularityfunctions/manualHack>
     installBackdoor() <singularityfunctions/installBackdoor>
-    getPlayer() <singularityfunctions/getPlayer>
     hospitalize() <singularityfunctions/hospitalize>
     isBusy() <singularityfunctions/isBusy>
     stopAction() <singularityfunctions/stopAction>

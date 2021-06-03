@@ -61,7 +61,7 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
     const yesBtn = yesNoBoxGetYesButton();
     const noBtn = yesNoBoxGetNoButton();
     if (yesBtn == null || noBtn == null) {
-        console.warn(`Could nto find YesNo pop-up box buttons`);
+        console.warn(`Could not find YesNo pop-up box buttons`);
         return;
     }
 
@@ -90,7 +90,7 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
 export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
     const cost = getPurchaseServerCost(ram);
     if (cost === Infinity) {
-        dialogBoxCreate("Something went wrong when trying to purchase this server. Please contact developer");
+        dialogBoxCreate("Something went wrong when trying to purchase this server. Please contact developer.");
         return;
     }
 
@@ -137,7 +137,7 @@ export function createStartCorporationPopup(p: IPlayer): void {
         innerText: "Self-Fund",
         clickListener: () => {
             if (!p.canAfford(150e9)) {
-                dialogBoxCreate("You don't have enough money to create a corporation! You need $150b");
+                dialogBoxCreate("You don't have enough money to create a corporation! You need $150b.");
                 return false;
             }
 
@@ -155,7 +155,7 @@ export function createStartCorporationPopup(p: IPlayer): void {
                 worldHeader.click(); worldHeader.click();
             }
             dialogBoxCreate("Congratulations! You just self-funded your own corporation. You can visit " +
-                            "and manage your company in the City");
+                            "and manage your company in the City.");
             removeElementById(popupId);
             return false;
         },
@@ -179,7 +179,7 @@ export function createStartCorporationPopup(p: IPlayer): void {
             }
             dialogBoxCreate(
                 "Congratulations! You just started your own corporation with government seed money. " +
-                "You can visit and manage your company in the City",
+                "You can visit and manage your company in the City.",
             );
             removeElementById(popupId);
             return false;
@@ -200,7 +200,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer): void {
     const currentCores = p.getHomeComputer().cpuCores;
     if (currentCores >= 8) {
         dialogBoxCreate(<>
-            You've have the maximum amount of CPU cores on your home computer.
+            You have the maximum amount of CPU cores on your home computer.
         </>);
         return;
     }
@@ -263,7 +263,7 @@ export function createUpgradeHomeRamPopup(p: IPlayer): void {
     const homeComputer = p.getHomeComputer();
     if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
         dialogBoxCreate(<>
-            You've have the maximum amount of RAM on your home computer.
+            You have the maximum amount of RAM on your home computer.
         </>);
         return;
     }
@@ -293,11 +293,11 @@ export function createUpgradeHomeRamPopup(p: IPlayer): void {
  */
 export function purchaseTorRouter(p: IPlayer): void {
     if (p.hasTorRouter()) {
-        dialogBoxCreate(`You already have a TOR Router`);
+        dialogBoxCreate(`You already have a TOR Router!`);
         return;
     }
     if (!p.canAfford(CONSTANTS.TorRouterCost)) {
-        dialogBoxCreate("You cannot afford to purchase the Tor router");
+        dialogBoxCreate("You cannot afford to purchase the TOR router!");
         return;
     }
     p.loseMoney(CONSTANTS.TorRouterCost);
@@ -312,8 +312,8 @@ export function purchaseTorRouter(p: IPlayer): void {
     p.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     darkweb.serversOnNetwork.push(p.getHomeComputer().ip);
     dialogBoxCreate(
-        "You have purchased a Tor router!<br>" +
-        "You now have access to the dark web from your home computer<br>" +
+        "You have purchased a TOR router!<br>" +
+        "You now have access to the dark web from your home computer.<br>" +
         "Use the scan/scan-analyze commands to search for the dark web connection.",
     );
 }
