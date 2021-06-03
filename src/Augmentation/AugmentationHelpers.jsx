@@ -102,15 +102,18 @@ function initAugmentations() {
     const CircadianRhythm = new Augmentation({
         name:AugmentationNames.CircadianRhythm, moneyCost: 1e12, repCost:450e3,
         info:"An prototype injection which modifies your circadian rhythm, leading to unexpected effects.<br><br>" +
-             "This augmentation increases or decreases a random skill by a random amount depending on install time.<br>"
+             "This augmentation currently modifies these values:<br>"
     });
 
+    
     for (let i = 0; i < randomBonuses.length; i++) {
         console.log(`${randomBonuses[i]}`);
         CircadianRhythm.mults[randomBonuses[i][0]] = randomBonuses[i][1];
+        CircadianRhythm.info += `${randomBonuses[i][0]} by ${Math.round(100 * randomBonuses[i][1].toFixed(2))}%<br>`
     }
 
-    console.log(CircadianRhythm.mults);
+
+    console.log(CircadianRhythm.info);
 
     CircadianRhythm.addToFactions(["Speakers for the Dead"]);
     if (augmentationExists(AugmentationNames.CircadianRhythm)) {
