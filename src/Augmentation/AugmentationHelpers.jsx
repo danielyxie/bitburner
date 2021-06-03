@@ -35,7 +35,8 @@ function getRandomMultiplier(min, max) {
 }
 
 function getRandomModifier() {
-    var multiplierTypes = ["hacking_chance_mult",
+    var multiplierTypes = 
+        ["hacking_chance_mult",
         "hacking_speed_mult",
         "hacking_money_mult",
         "hacking_grow_mult",
@@ -63,6 +64,61 @@ function getRandomModifier() {
     return (multiplierTypes[Math.floor(multiplierTypes.length * randomNumber.random())]);
 }
 
+function getRandomBonus() {
+    var bonuses = 
+    [
+        [
+            ["hacking_chance_mult", 1.25], 
+            ["hacking_speed_mult", 1.15],
+            ["hacking_money_mult", 1.25],
+            ["hacking_grow_mult", 1.1],
+            
+        ],
+        [
+            ["strength_exp_mult", 1.15],
+            ["strength_exp_mult", 2]
+        ],
+        [
+            ["defense_mult", 1.15],
+            ["defense_exp_mult", 2]
+        ],
+        [
+            ["dexterity_mult", 1.15],
+            ["dexterity_exp_mult", 2]
+        ],
+        [
+            ["agility_mult", 1.15],
+            ["agility_exp_mult", 2]
+        ],
+        [
+            ["charisma_mult", 1.15],
+            ["charisma_exp_mult", 2]
+        ],
+        [
+            ["hacknet_node_money_mult", 1.2],
+            ["hacknet_node_purchase_cost_mult", 0.85],
+            ["hacknet_node_ram_cost_mult", 0.85],
+            ["hacknet_node_core_cost_mult", 0.85],
+            ["hacknet_node_level_cost_mult", 0.85]
+        ],
+        [
+            ["company_rep_mult", 1.25],
+            ["faction_rep_mult", 1.15],
+            ["work_money_mult", 1.3]
+        ],
+        [
+            ["crime_success_mult", 2],
+            ["crime_money_mult", 2],
+        ],
+    ]
+    
+
+    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/360)));
+
+    randomNumber.step();
+    return (bonuses[Math.floor(bonuses.length * randomNumber.random())]);
+}
+
 function initAugmentations() {
     for (var name in Factions) {
         if (Factions.hasOwnProperty(name)) {
@@ -75,14 +131,21 @@ function initAugmentations() {
 
     //Time-Based Augment Test
     var randomMod = getRandomModifier();
+    var randomBonuses = getRandomBonus();
 
     const CircadianRhythm = new Augmentation({
         name:AugmentationNames.CircadianRhythm, moneyCost: 1e12, repCost:450e3,
         info:"An prototype injection which modifies your circadian rhythm, leading to unexpected effects.<br><br>" +
-             "This augmentation increases or decreases a random skill by a random amount depending on install time.<br>" +
-             "Debug:" + randomMod + " by " + getRandomMultiplier(0.85, 1.5) + " " + Math.floor(Player.lastUpdate/3600000),
-        [randomMod]: getRandomMultiplier(0.85, 1.5),
+             "This augmentation increases or decreases a random skill by a random amount depending on install time.<br>"
     });
+
+    for (let i = 0; i < randomBonuses.length; i++) {
+        console.log(`${randomBonuses[i]}`);
+        CircadianRhythm.mults[randomBonuses[i][0]] = randomBonuses[i][1];
+    }
+
+    console.log(CircadianRhythm.mults);
+
     CircadianRhythm.addToFactions(["Speakers for the Dead"]);
     if (augmentationExists(AugmentationNames.CircadianRhythm)) {
         delete Augmentations[AugmentationNames.CircadianRhythm];
