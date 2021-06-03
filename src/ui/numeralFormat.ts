@@ -71,7 +71,7 @@ class NumeralFormatter {
     }
 
     formatMoney(n: number): string {
-        return "$" + this.formatAbsurdNumber
+        return "$" + this.formatAbsurdNumber(n, 3);
     }
 
     formatSkill(n: number): string {
