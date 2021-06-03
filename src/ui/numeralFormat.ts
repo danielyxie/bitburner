@@ -19,6 +19,7 @@ import 'numeral/locales/ru';
 const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
 const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
 
+
 class NumeralFormatter {
     // Default Locale
     defaultLocale = "en";
@@ -51,24 +52,26 @@ class NumeralFormatter {
         return this.format(n, "0.000a");
     }
 
+    formatAbsurdNumber(n: number, decimalPlaces: string): string {
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.'+'0'.repeat(decimalPlaces))+extraNotations[i];
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, '0.'+'0'.repeat(decimalPlaces));
+        }
+        const str = this.format(n, '0.'+'0'.repeat(decimalPlaces) + 'a');
+        if(str === "NaNt") return this.format(n, '0.' + ' '.repeat(decimalPlaces) + 'e+0');
+        return str;
+    }
+
     formatHp(n: number): string {
         return this.format(n, "0");
     }
 
     formatMoney(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return '$'+this.format(n/extraFormats[i], '0.000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "$0.00");
-        }
-        const str = this.format(n, "$0.000a");
-        if(str === "$NaNt") return '$'+this.format(n, '0.000e+0');
-        return str;
+        return "$" + this.formatAbsurdNumber
     }
 
     formatSkill(n: number): string {
@@ -76,51 +79,15 @@ class NumeralFormatter {
     }
 
     formatExp(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "0.000");
-        }
-        const str = this.format(n, "0.000a");
-        if(str === "NaNt") return this.format(n, '0.000e+0');
-        return str;
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatHashes(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "0.000");
-        }
-        const str = this.format(n, "0.000a");
-        if(str === "NaNt") return this.format(n, '0.000e+0');
-        return str;
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatReputation(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "0.000");
-        }
-        const str = this.format(n, "0.000a");
-        if(str === "NaNt") return this.format(n, '0.000e+0');
-        return str;
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatFavor(n: number): string {
@@ -141,35 +108,11 @@ class NumeralFormatter {
     }
 
     formatRespect(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return this.format(n/extraFormats[i], '0.00000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "0.00000");
-        }
-        const str = this.format(n, "0.00000a");
-        if(str === "NaNt") return this.format(n, '0.00000e+0');
-        return str;
+        return this.formatAbsurdNumber(n, 5);
     }
 
     formatWanted(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return this.format(n/extraFormats[i], '0.00000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "0.00000");
-        }
-        const str = this.format(n, "0.00000a");
-        if(str === "NaNt") return this.format(n, '0.00000e+0');
-        return str;
+        return this.formatAbsurdNumber(n, 5);
     }
 
     formatMultiplier(n: number): string {
@@ -197,34 +140,11 @@ class NumeralFormatter {
     }
 
     formatShares(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "0.000");
-        }
-        const str = this.format(n, "0.000a");
-        if(str === "NaNt") return this.format(n, '0.000e+0');
-        return str;    }
+        return this.formatAbsurdNumber(n, 3);
+    }
 
     formatInfiltrationSecurity(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return this.format(n/extraFormats[i], '0.000')+extraNotations[i];
-                }
-            }
-        }
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "0.000");
-        }
-        const str = this.format(n, "0.000a");
-        if(str === "NaNt") return this.format(n, '0.000e+0');
-        return str;
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatThreads(n: number): string {
