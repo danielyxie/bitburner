@@ -75,7 +75,10 @@ class NumeralFormatter {
     }
 
     formatSkill(n: number): string {
-        return this.format(n, "0,0");
+        if(n < 1e15){
+            return this.format(n, "0,0");
+        }
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatExp(n: number): string {
