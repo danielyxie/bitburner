@@ -28,42 +28,6 @@ function AddToAugmentations(aug) {
     Augmentations[name] = aug;
 }
 
-function getRandomMultiplier(min, max) {
-    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
-    randomNumber.step();
-    return (min + (max - min) * (randomNumber.random()));
-}
-
-function getRandomModifier() {
-    var multiplierTypes = 
-        ["hacking_chance_mult",
-        "hacking_speed_mult",
-        "hacking_money_mult",
-        "hacking_grow_mult",
-        "hacking_mult",
-        "strength_mult",
-        "defense_mult",
-        "dexterity_mult",
-        "agility_mult",
-        "charisma_mult",
-        "hacking_exp_mult",
-        "strength_exp_mult",
-        "defense_exp_mult",
-        "dexterity_exp_mult",
-        "agility_exp_mult",
-        "charisma_exp_mult",
-        "company_rep_mult",
-        "faction_rep_mult",
-        "crime_money_mult",
-        "crime_success_mult",
-        "work_money_mult"];
-
-    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
-
-    randomNumber.step();
-    return (multiplierTypes[Math.floor(multiplierTypes.length * randomNumber.random())]);
-}
-
 function getRandomBonus() {
     var bonuses = 
     [
@@ -130,7 +94,6 @@ function initAugmentations() {
     clearObject(Augmentations);
 
     //Time-Based Augment Test
-    var randomMod = getRandomModifier();
     var randomBonuses = getRandomBonus();
 
     const CircadianRhythm = new Augmentation({
