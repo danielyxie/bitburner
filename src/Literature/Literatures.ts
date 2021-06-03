@@ -410,6 +410,20 @@ export const Literatures: IMap<Literature> = {};
               "to take down this large new crime organization. Many believe that the Tetrads have infiltrated the governments " +
               "and powerful corporations in Asia, which has helped faciliate their recent rapid rise.";
     Literatures[fn] = new Literature(title, fn, txt);
+    
+        title   = "Rumors";
+    fn      = LiteratureNames.Rumors;
+    txt     = "From: Jack Estin<br><br>" +
+              "To: Yian Rokau<br><br>" +
+              "Man you should hear some of the crazy talk about this place.<br><br>" +
+              "I was hanging out at Rothman University in Sector-12 during my leave last weekend, " +
+              "video calling my wife and kids back home.<br><br>" +
+              "Anyway, there were two locals talking about that bat flu that wiped out a quarter of " +
+              "city a few years ago.<br><br>" +
+              "Apparently Four-Sigma is actually owned by a secret organization, and this is all part of " +
+              "some plan to control the population. There are even discussion forums and websites " +
+              "dedicated to this crap! Hah!;
+    Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The Secret War";
     fn      = LiteratureNames.TheSecretWar;
