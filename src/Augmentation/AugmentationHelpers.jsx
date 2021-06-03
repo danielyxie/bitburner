@@ -43,9 +43,9 @@ function initAugmentations() {
         name:AugmentationNames.CircadianRhythm, moneyCost: 0, repCost:0,
         info:"An injection which improves your perception by a variable amount.<br><br>" +
              "This augmentation increases the player's hacking skill by a variable amount.",
-        hacking_mult: (1 + new WHRNG(Player.lastUpdate).random()),
+        hacking_mult: (0.9 + 1.1 * (new WHRNG(Player.lastUpdate).random())),
     });
-    CircadianRhythm.addToFactions(["VitaLife"]);
+    CircadianRhythm.addToFactions(["Illuminati"]);
     if (augmentationExists(AugmentationNames.CircadianRhythm)) {
         delete Augmentations[AugmentationNames.CircadianRhythm];
     }
