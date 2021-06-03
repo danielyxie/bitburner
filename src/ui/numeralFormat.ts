@@ -67,7 +67,10 @@ class NumeralFormatter {
     }
 
     formatHp(n: number): string {
-        return this.format(n, "0");
+        if(n < 1e6){
+            return this.format(n, "0,0");
+        }
+        return this.formatAbsurdNumber(n, 3)
     }
 
     formatMoney(n: number): string {
