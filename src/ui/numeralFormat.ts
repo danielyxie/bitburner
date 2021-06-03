@@ -52,7 +52,7 @@ class NumeralFormatter {
         return this.format(n, "0.000a");
     }
 
-    formatAbsurdNumber(n: number, decimalPlaces: number): string {
+    formatAbsurdNumber(n: number, decimalPlaces = 3): string {
         for(let i = 0; i < extraFormats.length; i++) {
             if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
                 return this.format(n/extraFormats[i], '0.'+'0'.repeat(decimalPlaces))+extraNotations[i];
@@ -140,6 +140,9 @@ class NumeralFormatter {
     }
 
     formatShares(n: number): string {
+        if (n < 1000) {
+            return this.format(n, "0");
+        }
         return this.formatAbsurdNumber(n, 3);
     }
 
