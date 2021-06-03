@@ -34,6 +34,20 @@ function getRandomMultiplier(min, max) {
     return (min + (max - min) * (randomNumber.random()));
 }
 
+function getRandomModifier() {
+    var multiplierTypes = [
+        "hacking_chance_mult", 
+        "hacking_speed_mult",
+        "hacking_money_mult"
+        "hacking_grow_mult",
+        "hacking_mult",
+        "hacking_exp_mult"];
+
+    var randomNumber =  (new WHRNG(Player.lastUpdate));
+    randomNumber.step();
+    return (multiplierTypes[Math.floor(multiplierTypes.length() * randomNumber.random())]);
+}
+
 function initAugmentations() {
     for (var name in Factions) {
         if (Factions.hasOwnProperty(name)) {
@@ -49,7 +63,7 @@ function initAugmentations() {
         name:AugmentationNames.CircadianRhythm, moneyCost: 1e12, repCost:450e3,
         info:"An injection which improves your perception by a variable amount.<br><br>" +
              "This augmentation increases the player's hacking skill by a variable amount.",
-        hacking_mult: getRandomMultiplier(0.9, 2),
+        getRandomModifier(): getRandomMultiplier(0.9, 2),
     });
     CircadianRhythm.addToFactions(["Illuminati"]);
     if (augmentationExists(AugmentationNames.CircadianRhythm)) {
