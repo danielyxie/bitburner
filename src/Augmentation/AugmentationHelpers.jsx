@@ -29,7 +29,7 @@ function AddToAugmentations(aug) {
 }
 
 function getRandomMultiplier(min, max) {
-    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/360000)));
+    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
     randomNumber.step();
     return (min + (max - min) * (randomNumber.random()));
 }
@@ -57,7 +57,7 @@ function getRandomModifier() {
         "crime_success_mult",
         "work_money_mult"];
 
-    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/360000)));
+    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
 
     randomNumber.step();
     return (multiplierTypes[Math.floor(multiplierTypes.length * randomNumber.random())]);
@@ -80,7 +80,7 @@ function initAugmentations() {
         name:AugmentationNames.CircadianRhythm, moneyCost: 1e12, repCost:450e3,
         info:"An prototype injection which modifies your circadian rhythm, leading to unexpected effects.<br><br>" +
              "This augmentation increases or decreases a random skill by a random amount depending on install time.<br>" +
-             "Debug:" + randomMod + " by " + getRandomMultiplier(0.85, 1.5) + " " + Math.floor(Player.lastUpdate/360000),
+             "Debug:" + randomMod + " by " + getRandomMultiplier(0.85, 1.5) + " " + Math.floor(Player.lastUpdate/3600000),
         [randomMod]: getRandomMultiplier(0.85, 1.5),
     });
     CircadianRhythm.addToFactions(["Speakers for the Dead"]);
