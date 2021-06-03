@@ -29,7 +29,7 @@ function AddToAugmentations(aug) {
 }
 
 function getRandomMultiplier(min, max) {
-    let randomNumber = (new WHRNG(new Date().getHours()));
+    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/360000)));
     randomNumber.step();
     return (min + (max - min) * (randomNumber.random()));
 }
@@ -57,7 +57,7 @@ function getRandomModifier() {
         "crime_success_mult",
         "work_money_mult"];
 
-    let randomNumber = (new WHRNG(new Date().getHours()));
+    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/360000)));
 
     randomNumber.step();
     return (multiplierTypes[Math.floor(multiplierTypes.length * randomNumber.random())]);
