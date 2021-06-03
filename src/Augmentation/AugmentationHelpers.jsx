@@ -18,6 +18,8 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { clearObject } from "../../utils/helpers/clearObject";
 import { Money } from "../ui/React/Money";
 
+import { WHRNG } from "../Casino/RNG";
+
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -41,7 +43,7 @@ function initAugmentations() {
         name:AugmentationNames.CircadianRhythm, moneyCost: 0, repCost:0,
         info:"An injection which improves your perception by a variable amount.<br><br>" +
              "This augmentation increases the player's hacking skill by a variable amount.",
-        hacking_mult: 111.08,
+        hacking_mult: (1 + new WHRNG((new Date()).getMinutes() * 60 + (new Date()).getSeconds()).random()),
     });
     CircadianRhythm.addToFactions(["VitaLife"]);
     if (augmentationExists(AugmentationNames.CircadianRhythm)) {
