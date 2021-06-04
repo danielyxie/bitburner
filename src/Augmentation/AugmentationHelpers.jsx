@@ -101,7 +101,7 @@ function initAugmentations() {
 
     const CircadianRhythm = new Augmentation({
         name:AugmentationNames.CircadianRhythm, moneyCost: 1e9, repCost:4.5e3,
-        info:"An prototype injection which modifies your circadian rhythm, leading to unexpected effects.<br><br>" +
+        info:"A prototype injection which modifies your circadian rhythm, leading to varied effects.<br><br>" +
              "This augmentation currently modifies these values:<br>"
     });
 
