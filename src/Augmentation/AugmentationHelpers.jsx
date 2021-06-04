@@ -366,7 +366,7 @@ function initAugmentations() {
     const ArtificialBioNeuralNetwork = new Augmentation({
         name:AugmentationNames.ArtificialBioNeuralNetwork, repCost:110e3, moneyCost:600e6,
         info:"A network consisting of millions of nanoprocessors is embedded into the brain. " +
-             "The network is meant to mimic the way the brain solves a problem, withh each " +
+             "The network is meant to mimic the way the brain solves a problem, with each " +
              "nanoprocessor acting similar to the way a neuron would in a neural network. However, these " +
              "nanoprocessors are programmed to perform computations much faster than organic neurons, " +
              "allowing the user to solve much more complex problems at a much faster rate.<br><br>" +
