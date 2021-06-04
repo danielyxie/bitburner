@@ -309,6 +309,9 @@ function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume=fal
             // If player used flume, subtract 300 int exp. The prestigeSourceFile()
             // function below grants 300 int exp, so this allows sets net gain to 0
             Player.gainIntelligenceExp(-300);
+            if(SourceFileFlags[5] === 0) {
+                Player.intelligence = 0;
+            }
         }
         redPillFlag = false;
         var container = document.getElementById("red-pill-content");
