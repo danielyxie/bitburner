@@ -48,10 +48,10 @@ export function PlayerMultipliers(): React.ReactElement {
         if(!Player.canAccessBladeburner()) return (<></>);
         return (<>
             {MultiplierTable([
-                ['Bladeburner Success Chance', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
+                ['Bladeburner Success Chance', Player.bladeburner_success_chance_mult, Player.bladeburner_success_chance_mult*mults.bladeburner_success_chance_mult],
                 ['Bladeburner Max Stamina', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
-                ['Bladeburner Stamina Gain', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
-                ['Bladeburner Field Analysis', Player.bladeburner_max_stamina_mult, Player.bladeburner_max_stamina_mult*mults.bladeburner_max_stamina_mult],
+                ['Bladeburner Stamina Gain', Player.bladeburner_stamina_gain_mult, Player.bladeburner_stamina_gain_mult*mults.bladeburner_stamina_gain_mult],
+                ['Bladeburner Field Analysis', Player.bladeburner_analysis_mult, Player.bladeburner_analysis_mult*mults.bladeburner_analysis_mult],
             ])}<br />
         </>);
     }
