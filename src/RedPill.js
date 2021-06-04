@@ -311,6 +311,7 @@ function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume=fal
             Player.gainIntelligenceExp(-300);
             if(SourceFileFlags[5] === 0) {
                 Player.intelligence = 0;
+                Player.intelligence_exp = 0;
             }
         }
         redPillFlag = false;
