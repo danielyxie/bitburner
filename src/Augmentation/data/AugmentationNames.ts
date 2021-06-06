@@ -1,7 +1,6 @@
 import { IMap } from "../../types";
 
 export const AugmentationNames: IMap<string> = {
-    CircadianRhythm:                    "Circadian Modulator",
     Targeting1:                         "Augmented Targeting I",
     Targeting2:                         "Augmented Targeting II",
     Targeting3:                         "Augmented Targeting III",
@@ -79,6 +78,7 @@ export const AugmentationNames: IMap<string> = {
     PhotosyntheticCells:                "Photosynthetic Cells",
     Neurolink:                          "BitRunners Neurolink",
     TheBlackHand:                       "The Black Hand",
+    UnstableCircadianModulator:         "Unstable Circadian Modulator",
     CRTX42AA:                           "CRTX42-AA Gene Modification",
     Neuregen:                           "Neuregen Gene Modification",
     CashRoot:                           "CashRoot Starter Kit",

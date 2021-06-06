@@ -31,57 +31,81 @@ function AddToAugmentations(aug) {
 function getRandomBonus() {
     var bonuses = 
     [
-        [
-            ["hacking_chance_mult", 1.25], 
-            ["hacking_speed_mult", 1.15],
-            ["hacking_money_mult", 1.25],
-            ["hacking_grow_mult", 1.1],
-            
-        ],
-        [
-            ["strength_exp_mult", 1.15],
-            ["strength_exp_mult", 2]
-        ],
-        [
-            ["defense_mult", 1.15],
-            ["defense_exp_mult", 2]
-        ],
-        [
-            ["dexterity_mult", 1.15],
-            ["dexterity_exp_mult", 2]
-        ],
-        [
-            ["agility_mult", 1.15],
-            ["agility_exp_mult", 2]
-        ],
-        [
-            ["charisma_mult", 1.15],
-            ["charisma_exp_mult", 2]
-        ],
-        [
-            ["hacknet_node_money_mult", 1.2],
-            ["hacknet_node_purchase_cost_mult", 0.85],
-            ["hacknet_node_ram_cost_mult", 0.85],
-            ["hacknet_node_core_cost_mult", 0.85],
-            ["hacknet_node_level_cost_mult", 0.85]
-        ],
-        [
-            ["company_rep_mult", 1.25],
-            ["faction_rep_mult", 1.15],
-            ["work_money_mult", 1.3]
-        ],
-        [
-            ["crime_success_mult", 2],
-            ["crime_money_mult", 2],
-        ],
+        {
+            bonuses: {
+                hacking_chance_mult: 1.25,
+                hacking_speed_mult: 1.10,
+                hacking_money_mult: 1.25,
+                hacking_grow_mult: 1.1
+            },
+            description: "Increases the player's hacking chance by 25%.<br>" +
+                         "Increases the player's hacking speed by 10%.<br>" +
+                         "Increases the amount of money the player's gains from hacking by 25%.<br>" +
+                         "Increases the amount of money the player can inject into servers using grow() by 10%."
+        },
+        {
+            bonuses: {
+                hacking_mult: 1.15,
+                hacking_exp_mult: 2
+            },
+            description: "Increases the player's hacking skill by 15%.<br>" +
+                         "Increases the player's hacking experience gain rate by 100%."
+        },
+        {
+            bonuses: {
+                strength_mult: 1.25,
+                strength_exp_mult: 1.5,
+                defense_mult: 1.25,
+                defense_exp_mult: 1.5,
+                dexterity_mult: 1.25,
+                dexterity_exp_mult: 1.5,
+                agility_mult: 1.25,
+                agility_exp_mult: 1.5
+            },
+            description: "Increases all of the player's combat stats by 25%.<br>" +
+                         "Increases all of the player's combat stat experience gain rate by 100%."
+        },
+        {
+            bonuses: {
+                charisma_mult: 1.5,
+                charisma_exp_mult: 2
+            },
+            description: "This augmentation increases the player's charisma by 50%.<br>" +
+                         "Increases the player's charisma experience gain rate by 100%."
+        },
+        {
+            bonuses: {
+                hacknet_node_money_mult: 1.2,
+                hacknet_node_purchase_cost_mult: 0.85,
+                hacknet_node_ram_cost_mult: 0.85,
+                hacknet_node_core_cost_mult: 0.85,
+                hacknet_node_level_cost_mult: 0.85
+            },
+            description: "Increases the amount of money produced by Hacknet Nodes by 20%.<br>" +
+                         "Decreases all costs related to Hacknet Node by 15%."
+        },
+        {
+            bonuses: {
+                company_rep_mult: 1.25,
+                faction_rep_mult: 1.15,
+                work_money_mult: 1.7
+            },
+            description: "Increases the amount of money the player gains from working by 70%.<br>" +
+                         "Increases the amount of reputation the player gains when working for a company by 25%.<br>" +
+                         "Increases the amount of reputation the player gains for a faction by 15%."
+        },
+        {
+            bonuses: {
+                crime_success_mult: 2,
+                crime_money_mult: 2
+            },
+            description: "Increases the player's crime success rate by 100%.<br>" +
+                         "Increases the amount of money the player gains from crimes by 100%."
+        }
     ]
     
-
-    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
-
-    for(let i = 0; i < 3; i++){
-        randomNumber.step();
-    }
+    const randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
+    for(let i = 0; i < 5; i++) randomNumber.step();
 
     return (bonuses[Math.floor(bonuses.length * randomNumber.random())]);
 }
@@ -97,29 +121,23 @@ function initAugmentations() {
     clearObject(Augmentations);
 
     //Time-Based Augment Test
-    var randomBonuses = getRandomBonus();
+    const randomBonuses = getRandomBonus();
 
-    const CircadianRhythm = new Augmentation({
-        name:AugmentationNames.CircadianRhythm, moneyCost: 1e9, repCost:4.5e3,
-        info:"A prototype injection which modifies your circadian rhythm, leading to varied effects.<br><br>" +
-             "This augmentation currently modifies these values:<br>"
+    const UnstableCircadianModulator = new Augmentation({
+        name:AugmentationNames.UnstableCircadianModulator, moneyCost: 1e9, repCost:145e3,
+        info:"An experimental nanobot injection. Its unstable nature leads to unpredictable results based on your circadian rhythm.<br><br>" +
+             "This augmentation:<br>" + randomBonuses.description + "<br><br>For now ..."
     });
 
-    
-    for (let i = 0; i < randomBonuses.length; i++) {
-        console.log(`${randomBonuses[i]}`);
-        CircadianRhythm.mults[randomBonuses[i][0]] = randomBonuses[i][1];
-        CircadianRhythm.info += `${randomBonuses[i][0]} by ${Math.round(100 * randomBonuses[i][1].toFixed(2))}%<br>`
+    Object.keys(randomBonuses.bonuses).forEach(key => UnstableCircadianModulator.mults[key] = randomBonuses.bonuses[key]);
+
+
+
+    UnstableCircadianModulator.addToFactions(["Speakers for the Dead"]);
+    if (augmentationExists(AugmentationNames.UnstableCircadianModulator)) {
+        delete Augmentations[AugmentationNames.UnstableCircadianModulator];
     }
-
-
-    console.log(CircadianRhythm.info);
-
-    CircadianRhythm.addToFactions(["Speakers for the Dead"]);
-    if (augmentationExists(AugmentationNames.CircadianRhythm)) {
-        delete Augmentations[AugmentationNames.CircadianRhythm];
-    }
-    AddToAugmentations(CircadianRhythm);
+    AddToAugmentations(UnstableCircadianModulator);
 
     //Combat stat augmentations
     const HemoRecirculator = new Augmentation({
@@ -1467,8 +1485,9 @@ function initAugmentations() {
         info:"The left arm of a legendary BitRunner who ascended beyond this world. " +
              "It projects a light blue energy shield that protects the exposed inner parts. " +
              "Even though it contains no weapons, the advance tungsten titanium " +
-             "alloy increases the users strength to unbelievable levels.<br><br>" +
-             "This augmentation increases the player's strength by 300%.",
+             "alloy increases the users strength to unbelievable levels. The augmentation " +
+             "gets more powerful over time for seemingly no reason.<br><br>" +
+             "This augmentation increases the player's strength by 270%.",
         strength_mult: 2.70,
     });
     HydroflameLeftArm.addToFactions(["NWO"]);
