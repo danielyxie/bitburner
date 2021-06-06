@@ -18,12 +18,72 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { clearObject } from "../../utils/helpers/clearObject";
 import { Money } from "../ui/React/Money";
 
+import { WHRNG } from "../Casino/RNG";
+
 import React from "react";
 import ReactDOM from "react-dom";
 
 function AddToAugmentations(aug) {
     var name = aug.name;
     Augmentations[name] = aug;
+}
+
+function getRandomBonus() {
+    var bonuses = 
+    [
+        [
+            ["hacking_chance_mult", 1.25], 
+            ["hacking_speed_mult", 1.15],
+            ["hacking_money_mult", 1.25],
+            ["hacking_grow_mult", 1.1],
+            
+        ],
+        [
+            ["strength_exp_mult", 1.15],
+            ["strength_exp_mult", 2]
+        ],
+        [
+            ["defense_mult", 1.15],
+            ["defense_exp_mult", 2]
+        ],
+        [
+            ["dexterity_mult", 1.15],
+            ["dexterity_exp_mult", 2]
+        ],
+        [
+            ["agility_mult", 1.15],
+            ["agility_exp_mult", 2]
+        ],
+        [
+            ["charisma_mult", 1.15],
+            ["charisma_exp_mult", 2]
+        ],
+        [
+            ["hacknet_node_money_mult", 1.2],
+            ["hacknet_node_purchase_cost_mult", 0.85],
+            ["hacknet_node_ram_cost_mult", 0.85],
+            ["hacknet_node_core_cost_mult", 0.85],
+            ["hacknet_node_level_cost_mult", 0.85]
+        ],
+        [
+            ["company_rep_mult", 1.25],
+            ["faction_rep_mult", 1.15],
+            ["work_money_mult", 1.3]
+        ],
+        [
+            ["crime_success_mult", 2],
+            ["crime_money_mult", 2],
+        ],
+    ]
+    
+
+    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
+
+    for(let i = 0; i < 3; i++){
+        randomNumber.step();
+    }
+
+    return (bonuses[Math.floor(bonuses.length * randomNumber.random())]);
 }
 
 function initAugmentations() {
@@ -35,6 +95,31 @@ function initAugmentations() {
 
     //Reset Augmentations
     clearObject(Augmentations);
+
+    //Time-Based Augment Test
+    var randomBonuses = getRandomBonus();
+
+    const CircadianRhythm = new Augmentation({
+        name:AugmentationNames.CircadianRhythm, moneyCost: 1e9, repCost:4.5e3,
+        info:"A prototype injection which modifies your circadian rhythm, leading to varied effects.<br><br>" +
+             "This augmentation currently modifies these values:<br>"
+    });
+
+    
+    for (let i = 0; i < randomBonuses.length; i++) {
+        console.log(`${randomBonuses[i]}`);
+        CircadianRhythm.mults[randomBonuses[i][0]] = randomBonuses[i][1];
+        CircadianRhythm.info += `${randomBonuses[i][0]} by ${Math.round(100 * randomBonuses[i][1].toFixed(2))}%<br>`
+    }
+
+
+    console.log(CircadianRhythm.info);
+
+    CircadianRhythm.addToFactions(["Speakers for the Dead"]);
+    if (augmentationExists(AugmentationNames.CircadianRhythm)) {
+        delete Augmentations[AugmentationNames.CircadianRhythm];
+    }
+    AddToAugmentations(CircadianRhythm);
 
     //Combat stat augmentations
     const HemoRecirculator = new Augmentation({
