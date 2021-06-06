@@ -16,6 +16,10 @@ import 'numeral/locales/ru';
 
 /* eslint-disable class-methods-use-this */
 
+const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+
+
 class NumeralFormatter {
     // Default Locale
     defaultLocale = "en";
@@ -48,42 +52,48 @@ class NumeralFormatter {
         return this.format(n, "0.000a");
     }
 
-    formatHp(n: number): string {
-        return this.format(n, "0");
-    }
-
-    formatMoney(n: number): string {
-        if(numeral.options.currentLocale === "en") {
-            const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
-            const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
-            for(let i = 0; i < extraFormats.length; i++) {
-                if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
-                    return '$'+this.format(n/extraFormats[i], '0.000')+extraNotations[i];
-                }
+    formatAbsurdNumber(n: number, decimalPlaces = 3): string {
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.'+'0'.repeat(decimalPlaces))+extraNotations[i];
             }
         }
         if(Math.abs(n) < 1000) {
-            return this.format(n, "$0.00");
+            return this.format(n, '0.'+'0'.repeat(decimalPlaces));
         }
-        const str = this.format(n, "$0.000a");
-        if(str === "$NaNt") return '$'+this.format(n, '0.000e+0');
+        const str = this.format(n, '0.'+'0'.repeat(decimalPlaces) + 'a');
+        if(str === "NaNt") return this.format(n, '0.' + ' '.repeat(decimalPlaces) + 'e+0');
         return str;
     }
 
+    formatHp(n: number): string {
+        if(n < 1e6){
+            return this.format(n, "0,0");
+        }
+        return this.formatAbsurdNumber(n, 3)
+    }
+
+    formatMoney(n: number): string {
+        return "$" + this.formatAbsurdNumber(n, 3);
+    }
+
     formatSkill(n: number): string {
-        return this.format(n, "0,0");
+        if(n < 1e15){
+            return this.format(n, "0,0");
+        }
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatExp(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatHashes(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatReputation(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatFavor(n: number): string {
@@ -104,11 +114,11 @@ class NumeralFormatter {
     }
 
     formatRespect(n: number): string {
-        return this.format(n, "0.00000a");
+        return this.formatAbsurdNumber(n, 5);
     }
 
     formatWanted(n: number): string {
-        return this.format(n, "0.00000a");
+        return this.formatAbsurdNumber(n, 5);
     }
 
     formatMultiplier(n: number): string {
@@ -139,11 +149,11 @@ class NumeralFormatter {
         if (n < 1000) {
             return this.format(n, "0");
         }
-        return this.format(n, "0.000a");
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatInfiltrationSecurity(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatAbsurdNumber(n, 3);
     }
 
     formatThreads(n: number): string {
