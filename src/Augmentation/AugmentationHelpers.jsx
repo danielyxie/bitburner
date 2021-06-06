@@ -31,57 +31,81 @@ function AddToAugmentations(aug) {
 function getRandomBonus() {
     var bonuses = 
     [
-        [
-            ["hacking_chance_mult", 1.25], 
-            ["hacking_speed_mult", 1.15],
-            ["hacking_money_mult", 1.25],
-            ["hacking_grow_mult", 1.1],
-            
-        ],
-        [
-            ["strength_exp_mult", 1.15],
-            ["strength_exp_mult", 2]
-        ],
-        [
-            ["defense_mult", 1.15],
-            ["defense_exp_mult", 2]
-        ],
-        [
-            ["dexterity_mult", 1.15],
-            ["dexterity_exp_mult", 2]
-        ],
-        [
-            ["agility_mult", 1.15],
-            ["agility_exp_mult", 2]
-        ],
-        [
-            ["charisma_mult", 1.15],
-            ["charisma_exp_mult", 2]
-        ],
-        [
-            ["hacknet_node_money_mult", 1.2],
-            ["hacknet_node_purchase_cost_mult", 0.85],
-            ["hacknet_node_ram_cost_mult", 0.85],
-            ["hacknet_node_core_cost_mult", 0.85],
-            ["hacknet_node_level_cost_mult", 0.85]
-        ],
-        [
-            ["company_rep_mult", 1.25],
-            ["faction_rep_mult", 1.15],
-            ["work_money_mult", 1.3]
-        ],
-        [
-            ["crime_success_mult", 2],
-            ["crime_money_mult", 2],
-        ],
+        {
+            bonuses: {
+                hacking_chance_mult: 1.25,
+                hacking_speed_mult: 1.10,
+                hacking_money_mult: 1.25,
+                hacking_grow_mult: 1.1
+            },
+            description: "Increases the player's hacking chance by 25%.<br>" +
+                         "Increases the player's hacking speed by 10%.<br>" +
+                         "Increases the amount of money the player's gains from hacking by 25%.<br>" +
+                         "Increases the amount of money the player can inject into servers using grow() by 10%."
+        },
+        {
+            bonuses: {
+                hacking_mult: 1.15,
+                hacking_exp_mult: 2
+            },
+            description: "Increases the player's hacking skill by 15%.<br>" +
+                         "Increases the player's hacking experience gain rate by 100%."
+        },
+        {
+            bonuses: {
+                strength_mult: 1.25,
+                strength_exp_mult: 1.5,
+                defense_mult: 1.25,
+                defense_exp_mult: 1.5,
+                dexterity_mult: 1.25,
+                dexterity_exp_mult: 1.5,
+                agility_mult: 1.25,
+                agility_exp_mult: 1.5
+            },
+            description: "Increases all of the player's combat stats by 25%.<br>" +
+                         "Increases all of the player's combat stat experience gain rate by 100%."
+        },
+        {
+            bonuses: {
+                charisma_mult: 1.5,
+                charisma_exp_mult: 2
+            },
+            description: "This augmentation increases the player's charisma by 50%.<br>" +
+                         "Increases the player's charisma experience gain rate by 100%."
+        },
+        {
+            bonuses: {
+                hacknet_node_money_mult: 1.2,
+                hacknet_node_purchase_cost_mult: 0.85,
+                hacknet_node_ram_cost_mult: 0.85,
+                hacknet_node_core_cost_mult: 0.85,
+                hacknet_node_level_cost_mult: 0.85
+            },
+            description: "Increases the amount of money produced by Hacknet Nodes by 20%.<br>" +
+                         "Decreases all costs related to Hacknet Node by 15%."
+        },
+        {
+            bonuses: {
+                company_rep_mult: 1.25,
+                faction_rep_mult: 1.15,
+                work_money_mult: 1.7
+            },
+            description: "Increases the amount of money the player gains from working by 70%.<br>" +
+                         "Increases the amount of reputation the player gains when working for a company by 25%.<br>" +
+                         "Increases the amount of reputation the player gains for a faction by 15%."
+        },
+        {
+            bonuses: {
+                crime_success_mult: 2,
+                crime_money_mult: 2
+            },
+            description: "Increases the player's crime success rate by 100%.<br>" +
+                         "Increases the amount of money the player gains from crimes by 100%."
+        }
     ]
     
-
-    let randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
-
-    for(let i = 0; i < 3; i++){
-        randomNumber.step();
-    }
+    const randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
+    for(let i = 0; i < 5; i++) randomNumber.step();
 
     return (bonuses[Math.floor(bonuses.length * randomNumber.random())]);
 }
@@ -97,33 +121,27 @@ function initAugmentations() {
     clearObject(Augmentations);
 
     //Time-Based Augment Test
-    var randomBonuses = getRandomBonus();
+    const randomBonuses = getRandomBonus();
 
-    const CircadianRhythm = new Augmentation({
-        name:AugmentationNames.CircadianRhythm, moneyCost: 1e9, repCost:4.5e3,
-        info:"A prototype injection which modifies your circadian rhythm, leading to varied effects.<br><br>" +
-             "This augmentation currently modifies these values:<br>"
+    const UnstableCircadianModulator = new Augmentation({
+        name:AugmentationNames.UnstableCircadianModulator, moneyCost:5e9, repCost:3.625e5,
+        info:"An experimental nanobot injection. Its unstable nature leads to unpredictable results based on your circadian rhythm.<br><br>" +
+             "This augmentation:<br>" + randomBonuses.description + "<br><br>For now ..."
     });
 
-    
-    for (let i = 0; i < randomBonuses.length; i++) {
-        console.log(`${randomBonuses[i]}`);
-        CircadianRhythm.mults[randomBonuses[i][0]] = randomBonuses[i][1];
-        CircadianRhythm.info += `${randomBonuses[i][0]} by ${Math.round(100 * randomBonuses[i][1].toFixed(2))}%<br>`
+    Object.keys(randomBonuses.bonuses).forEach(key => UnstableCircadianModulator.mults[key] = randomBonuses.bonuses[key]);
+
+
+
+    UnstableCircadianModulator.addToFactions(["Speakers for the Dead"]);
+    if (augmentationExists(AugmentationNames.UnstableCircadianModulator)) {
+        delete Augmentations[AugmentationNames.UnstableCircadianModulator];
     }
-
-
-    console.log(CircadianRhythm.info);
-
-    CircadianRhythm.addToFactions(["Speakers for the Dead"]);
-    if (augmentationExists(AugmentationNames.CircadianRhythm)) {
-        delete Augmentations[AugmentationNames.CircadianRhythm];
-    }
-    AddToAugmentations(CircadianRhythm);
+    AddToAugmentations(UnstableCircadianModulator);
 
     //Combat stat augmentations
     const HemoRecirculator = new Augmentation({
-        name:AugmentationNames.HemoRecirculator, moneyCost: 9e6, repCost:4e3,
+        name:AugmentationNames.HemoRecirculator, moneyCost:4.5e7, repCost:1e4,
         info:"A heart implant that greatly increases the body's ability to effectively use and pump " +
              "blood.<br><br>" +
              "This augmentation increases all of the player's combat stats by 8%.",
@@ -139,7 +157,7 @@ function initAugmentations() {
     AddToAugmentations(HemoRecirculator);
 
     const Targeting1 = new Augmentation({
-        name:AugmentationNames.Targeting1, moneyCost:3e6, repCost:2e3,
+        name:AugmentationNames.Targeting1, moneyCost:1.5e7, repCost:5e3,
         info:"This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's " +
              "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information " +
              "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies.<br><br>" +
@@ -154,7 +172,7 @@ function initAugmentations() {
     AddToAugmentations(Targeting1);
 
     const Targeting2 = new Augmentation({
-        name:AugmentationNames.Targeting2, moneyCost:8.5e6, repCost:3.5e3,
+        name:AugmentationNames.Targeting2, moneyCost:4.25e7, repCost:8.75e3,
         info:"This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality " +
              "and enhances the user's balance and hand-eye coordination.<br><br>" +
              "This augmentation increases the player's dexterity by 20%.",
@@ -169,7 +187,7 @@ function initAugmentations() {
     AddToAugmentations(Targeting2);
 
     const Targeting3 = new Augmentation({
-        name:AugmentationNames.Targeting3, moneyCost:23e6, repCost:11e3,
+        name:AugmentationNames.Targeting3, moneyCost:1.15e8, repCost:2.75e4,
         info:"This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality " +
              "and enhances the user's balance and hand-eye coordination.<br><br>" +
              "This augmentation increases the player's dexterity by 30%.",
@@ -184,7 +202,7 @@ function initAugmentations() {
     AddToAugmentations(Targeting3);
 
     const SyntheticHeart = new Augmentation({
-        name:AugmentationNames.SyntheticHeart, moneyCost:575e6, repCost:300e3,
+        name:AugmentationNames.SyntheticHeart, moneyCost:2.875e9, repCost:7.5e5,
         info:"This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood " +
              "at much higher efficiencies than a normal human heart.<br><br>" +
              "This augmentation increases the player's agility and strength by 50%.",
@@ -199,7 +217,7 @@ function initAugmentations() {
     AddToAugmentations(SyntheticHeart);
 
     const SynfibrilMuscle = new Augmentation({
-        name:AugmentationNames.SynfibrilMuscle, repCost:175e3, moneyCost:225e6,
+        name:AugmentationNames.SynfibrilMuscle, repCost:4.375e5, moneyCost:1.125e9,
         info:"The myofibrils in human muscles are injected with special chemicals that react with the proteins inside " +
              "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic. " +
              "Scientists have named these artificially enhanced units 'synfibrils'.<br><br>" +
@@ -215,7 +233,7 @@ function initAugmentations() {
     AddToAugmentations(SynfibrilMuscle)
 
     const CombatRib1 = new Augmentation({
-        name:AugmentationNames.CombatRib1, repCost:3e3, moneyCost:4750000,
+        name:AugmentationNames.CombatRib1, repCost:7.5e3, moneyCost:2.375e7,
         info:"The human body's ribs are replaced with artificial ribs that automatically and continuously release cognitive " +
              "and performance-enhancing drugs into the bloodstream, improving the user's abilities in combat.<br><br>" +
              "This augmentation increases the player's strength and defense by 10%.",
@@ -230,7 +248,7 @@ function initAugmentations() {
     AddToAugmentations(CombatRib1);
 
     const CombatRib2 = new Augmentation({
-        name:AugmentationNames.CombatRib2, repCost:7.5e3, moneyCost:13e6,
+        name:AugmentationNames.CombatRib2, repCost:1.875e4, moneyCost:6.5e7,
         info:"This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " +
              "drugs into the bloodstream.<br><br>" +
              "This augmentation increases the player's strength and defense by 14%.",
@@ -246,7 +264,7 @@ function initAugmentations() {
     AddToAugmentations(CombatRib2);
 
     const CombatRib3 = new Augmentation({
-        name:AugmentationNames.CombatRib3, repCost:14e3, moneyCost:24e6,
+        name:AugmentationNames.CombatRib3, repCost:3.5e4, moneyCost:1.2e8,
         info:"This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " +
              "drugs into the bloodstream.<br><br>" +
              "This augmentation increases the player's strength and defense by 18%.",
@@ -262,7 +280,7 @@ function initAugmentations() {
     AddToAugmentations(CombatRib3);
 
     const NanofiberWeave = new Augmentation({
-        name:AugmentationNames.NanofiberWeave, repCost:15e3, moneyCost:25e6,
+        name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
         info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " +
              "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
              "This augmentation increases the player's strength and defense by 20%.",
@@ -277,7 +295,7 @@ function initAugmentations() {
     AddToAugmentations(NanofiberWeave);
 
     const SubdermalArmor = new Augmentation({
-        name:AugmentationNames.SubdermalArmor, repCost:350e3, moneyCost:650e6,
+        name:AugmentationNames.SubdermalArmor, repCost:8.75e5, moneyCost:3.25e9,
         info:"The NEMEAN Subdermal Weave is a thin, light-weight, graphene plating that houses a dilatant fluid. " +
              "The material is implanted underneath the skin, and is the most advanced form of defensive enhancement " +
              "that has ever been created. The dilatant fluid, despite being thin and light, is extremely effective " +
@@ -294,7 +312,7 @@ function initAugmentations() {
     AddToAugmentations(SubdermalArmor);
 
     const WiredReflexes = new Augmentation({
-        name:AugmentationNames.WiredReflexes, repCost:500, moneyCost:500e3,
+        name:AugmentationNames.WiredReflexes, repCost:1.25e3, moneyCost:2.5e6,
         info:"Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
              "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.<br><br>" +
              "This augmentation increases the player's agility and dexterity by 5%.",
@@ -309,7 +327,7 @@ function initAugmentations() {
     AddToAugmentations(WiredReflexes);
 
     const GrapheneBoneLacings = new Augmentation({
-        name:AugmentationNames.GrapheneBoneLacings, repCost:450e3, moneyCost:850e6,
+        name:AugmentationNames.GrapheneBoneLacings, repCost:1.125e6, moneyCost:4.25e9,
         info:"A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
              "their density and tensile strength.<br><br>" +
              "This augmentation increases the player's strength and defense by 70%.",
@@ -323,7 +341,7 @@ function initAugmentations() {
     AddToAugmentations(GrapheneBoneLacings);
 
     const BionicSpine = new Augmentation({
-        name:AugmentationNames.BionicSpine, repCost:18e3, moneyCost:25e6,
+        name:AugmentationNames.BionicSpine, repCost:4.5e4, moneyCost:1.25e8,
         info:"An artificial spine created from plasteel and carbon fibers that completely replaces the organic spine. " +
              "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " +
              "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " +
@@ -342,7 +360,7 @@ function initAugmentations() {
     AddToAugmentations(BionicSpine);
 
     const GrapheneBionicSpine = new Augmentation({
-        name:AugmentationNames.GrapheneBionicSpine, repCost:650e3, moneyCost:1200e6,
+        name:AugmentationNames.GrapheneBionicSpine, repCost:1.625e6, moneyCost:6e9,
         info:"An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene " +
              "material to make it much stronger and lighter.<br><br>" +
              "This augmentation increases all of the player's combat stats by 60%.",
@@ -359,7 +377,7 @@ function initAugmentations() {
     AddToAugmentations(GrapheneBionicSpine);
 
     const BionicLegs = new Augmentation({
-        name:AugmentationNames.BionicLegs, repCost:60e3, moneyCost:75e6,
+        name:AugmentationNames.BionicLegs, repCost:1.5e5, moneyCost:3.75e8,
         info:"Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs.<br><br>" +
              "This augmentation increases the player's agility by 60%.",
         agility_mult: 1.6,
@@ -372,7 +390,7 @@ function initAugmentations() {
     AddToAugmentations(BionicLegs);
 
     const GrapheneBionicLegs = new Augmentation({
-        name:AugmentationNames.GrapheneBionicLegs, repCost:300e3, moneyCost:900e6,
+        name:AugmentationNames.GrapheneBionicLegs, repCost:7.5e5, moneyCost:4.5e9,
         info:"An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene " +
              "material to make it much stronger and lighter.<br><br>" +
              "This augmentation increases the player's agility by 150%.",
@@ -387,7 +405,7 @@ function initAugmentations() {
 
     // Work stat augmentations
     const SpeechProcessor = new Augmentation({
-        name:AugmentationNames.SpeechProcessor, repCost:3e3, moneyCost:10e6,
+        name:AugmentationNames.SpeechProcessor, repCost:7.5e3, moneyCost:5e7,
         info:"A cochlear implant with an embedded computer that analyzes incoming speech. " +
              "The embedded computer processes characteristics of incoming speech, such as tone " +
              "and inflection, to pick up on subtle cues and aid in social interactions.<br><br>" +
@@ -402,7 +420,7 @@ function initAugmentations() {
     AddToAugmentations(SpeechProcessor);
 
     const TITN41Injection = new Augmentation({
-        name:AugmentationNames.TITN41Injection, repCost:10e3, moneyCost:38e6,
+        name:AugmentationNames.TITN41Injection, repCost:2.5e4, moneyCost:1.9e8,
         info:"TITN is a series of viruses that targets and alters the sequences of human DNA in genes that " +
              "control personality. The TITN-41 strain alters these genes so that the subject becomes more " +
              "outgoing and socialable.<br><br>" +
@@ -417,7 +435,7 @@ function initAugmentations() {
     AddToAugmentations(TITN41Injection);
 
     const EnhancedSocialInteractionImplant = new Augmentation({
-        name:AugmentationNames.EnhancedSocialInteractionImplant, repCost:150e3, moneyCost:275e6,
+        name:AugmentationNames.EnhancedSocialInteractionImplant, repCost:3.75e5, moneyCost:1.375e9,
         info:"A cranial implant that greatly assists in the user's ability to analyze social situations " +
              "and interactions. The system uses a wide variety of factors such as facial expression, body " +
              "language, and the voice's tone/inflection to determine the best course of action during social" +
@@ -436,7 +454,7 @@ function initAugmentations() {
 
     // Hacking augmentations
     const BitWire = new Augmentation({
-        name:AugmentationNames.BitWire, repCost:1500, moneyCost:2e6,
+        name:AugmentationNames.BitWire, repCost:3.75e3, moneyCost:1e7,
         info: "A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " +
               "capabilities.<br><br>" +
               "This augmentation increases the player's hacking skill by 5%.",
@@ -449,7 +467,7 @@ function initAugmentations() {
     AddToAugmentations(BitWire);
 
     const ArtificialBioNeuralNetwork = new Augmentation({
-        name:AugmentationNames.ArtificialBioNeuralNetwork, repCost:110e3, moneyCost:600e6,
+        name:AugmentationNames.ArtificialBioNeuralNetwork, repCost:2.75e5, moneyCost:3e9,
         info:"A network consisting of millions of nanoprocessors is embedded into the brain. " +
              "The network is meant to mimick the way a biological brain solves a problem, which each " +
              "nanoprocessor acting similar to the way a neuron would in a neural network. However, these " +
@@ -470,7 +488,7 @@ function initAugmentations() {
     AddToAugmentations(ArtificialBioNeuralNetwork);
 
     const ArtificialSynapticPotentiation = new Augmentation({
-        name:AugmentationNames.ArtificialSynapticPotentiation, repCost:2500, moneyCost:16e6,
+        name:AugmentationNames.ArtificialSynapticPotentiation, repCost:6.25e3, moneyCost:8e7,
         info:"The body is injected with a chemical that artificially induces synaptic potentiation, " +
              "otherwise known as the strengthening of synapses. This results in enhanced cognitive abilities.<br><br>" +
              "This augmentation:<br>" +
@@ -488,7 +506,7 @@ function initAugmentations() {
     AddToAugmentations(ArtificialSynapticPotentiation);
 
     const EnhancedMyelinSheathing = new Augmentation({
-        name:AugmentationNames.EnhancedMyelinSheathing, repCost:40e3, moneyCost:275e6,
+        name:AugmentationNames.EnhancedMyelinSheathing, repCost:1e5, moneyCost:1.375e9,
         info:"Electrical signals are used to induce a new, artificial form of myelinogensis in the human body. " +
              "This process results in the proliferation of new, synthetic myelin sheaths in the nervous " +
              "system. These myelin sheaths can propogate neuro-signals much faster than their organic " +
@@ -508,7 +526,7 @@ function initAugmentations() {
     AddToAugmentations(EnhancedMyelinSheathing);
 
     const SynapticEnhancement = new Augmentation({
-        name:AugmentationNames.SynapticEnhancement, repCost:800, moneyCost:1.5e6,
+        name:AugmentationNames.SynapticEnhancement, repCost:2e3, moneyCost:7.5e6,
         info:"A small cranial implant that continuously uses weak electric signals to stimulate the brain and " +
              "induce stronger synaptic activity. This improves the user's cognitive abilities.<br><br>" +
              "This augmentation increases the player's hacking speed by 3%.",
@@ -521,7 +539,7 @@ function initAugmentations() {
     AddToAugmentations(SynapticEnhancement);
 
     const NeuralRetentionEnhancement = new Augmentation({
-        name:AugmentationNames.NeuralRetentionEnhancement, repCost:8e3, moneyCost:50e6,
+        name:AugmentationNames.NeuralRetentionEnhancement, repCost:2e4, moneyCost:2.5e8,
         info:"Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
              "circuits, strengthening its ability to retain information.<br><br>" +
              "This augmentation increases the player's hacking experience gain rate by 25%.",
@@ -534,7 +552,7 @@ function initAugmentations() {
     AddToAugmentations(NeuralRetentionEnhancement);
 
     const DataJack = new Augmentation({
-        name:AugmentationNames.DataJack, repCost:45e3, moneyCost:90e6,
+        name:AugmentationNames.DataJack, repCost:1.125e5, moneyCost:4.5e8,
         info:"A brain implant that provides an interface for direct, wireless communication between a computer's main " +
              "memory and the mind. This implant allows the user to not only access a computer's memory, but also alter " +
              "and delete it.<br><br>" +
@@ -548,7 +566,7 @@ function initAugmentations() {
     AddToAugmentations(DataJack);
 
     const ENM = new Augmentation({
-        name:AugmentationNames.ENM, repCost:6e3, moneyCost:50e6,
+        name:AugmentationNames.ENM, repCost:1.5e4, moneyCost:2.5e8,
         info:"A thin device embedded inside the arm containing a wireless module capable of connecting " +
              "to nearby networks. Once connected, the Netburner Module is capable of capturing and " +
              "processing all of the traffic on that network. By itself, the Embedded Netburner Module does " +
@@ -565,7 +583,7 @@ function initAugmentations() {
     AddToAugmentations(ENM);
 
     const ENMCore = new Augmentation({
-        name:AugmentationNames.ENMCore, repCost:100e3, moneyCost:500e6,
+        name:AugmentationNames.ENMCore, repCost:2.5e5, moneyCost:2.5e9,
         info:"The Core library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
              "This upgrade allows the Embedded Netburner Module to generate its own data on a network.<br><br>" +
              "This augmentation:<br>" +
@@ -589,7 +607,7 @@ function initAugmentations() {
     AddToAugmentations(ENMCore);
 
     const ENMCoreV2 = new Augmentation({
-        name:AugmentationNames.ENMCoreV2, repCost:400e3, moneyCost:900e6,
+        name:AugmentationNames.ENMCoreV2, repCost:1e6, moneyCost:4.5e9,
         info:"The Core V2 library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
              "This upgraded firmware allows the Embedded Netburner Module to control the information on " +
              "a network by re-routing traffic, spoofing IP addresses, or altering the data inside network " +
@@ -615,7 +633,7 @@ function initAugmentations() {
     AddToAugmentations(ENMCoreV2);
 
     const ENMCoreV3 = new Augmentation({
-        name:AugmentationNames.ENMCoreV3, repCost:700e3, moneyCost:1500e6,
+        name:AugmentationNames.ENMCoreV3, repCost:1.75e6, moneyCost:7.5e9,
         info:"The Core V3 library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
              "This upgraded firmware allows the Embedded Netburner Module to seamlessly inject code into " +
              "any device on a network.<br><br>" +
@@ -640,7 +658,7 @@ function initAugmentations() {
     AddToAugmentations(ENMCoreV3);
 
     const ENMAnalyzeEngine = new Augmentation({
-        name:AugmentationNames.ENMAnalyzeEngine, repCost:250e3, moneyCost:1200e6,
+        name:AugmentationNames.ENMAnalyzeEngine, repCost:6.25e5, moneyCost:6e9,
         info:"Installs the Analyze Engine for the Embedded Netburner Module, which is a CPU cluster " +
              "that vastly outperforms the Netburner Module's native single-core processor.<br><br>" +
              "This augmentation increases the player's hacking speed by 10%.",
@@ -655,7 +673,7 @@ function initAugmentations() {
     AddToAugmentations(ENMAnalyzeEngine);
 
     const ENMDMA = new Augmentation({
-        name:AugmentationNames.ENMDMA, repCost:400e3, moneyCost:1400e6,
+        name:AugmentationNames.ENMDMA, repCost:1e6, moneyCost:7e9,
         info:"This implant installs a Direct Memory Access (DMA) controller into the " +
              "Embedded Netburner Module. This allows the Module to send and receive data " +
              "directly to and from the main memory of devices on a network.<br><br>" +
@@ -674,7 +692,7 @@ function initAugmentations() {
     AddToAugmentations(ENMDMA);
 
     const Neuralstimulator = new Augmentation({
-        name:AugmentationNames.Neuralstimulator, repCost:20e3, moneyCost:600e6,
+        name:AugmentationNames.Neuralstimulator, repCost:5e4, moneyCost:3e9,
         info:"A cranial implant that intelligently stimulates certain areas of the brain " +
              "in order to improve cognitive functions.<br><br>" +
              "This augmentation:<br>" +
@@ -694,7 +712,7 @@ function initAugmentations() {
     AddToAugmentations(Neuralstimulator);
 
     const NeuralAccelerator = new Augmentation({
-        name:AugmentationNames.NeuralAccelerator, repCost:80e3, moneyCost:350e6,
+        name:AugmentationNames.NeuralAccelerator, repCost:2e5, moneyCost:1.75e9,
         info:"A microprocessor that accelerates the processing " +
              "speed of biological neural networks. This is a cranial implant that is embedded inside the brain.<br><br>" +
              "This augmentation:<br>" +
@@ -712,7 +730,7 @@ function initAugmentations() {
     AddToAugmentations(NeuralAccelerator);
 
     const CranialSignalProcessorsG1 = new Augmentation({
-        name:AugmentationNames.CranialSignalProcessorsG1, repCost:4e3, moneyCost:14e6,
+        name:AugmentationNames.CranialSignalProcessorsG1, repCost:1e4, moneyCost:7e7,
         info:"The first generation of Cranial Signal Processors. Cranial Signal Processors " +
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
@@ -730,7 +748,7 @@ function initAugmentations() {
     AddToAugmentations(CranialSignalProcessorsG1);
 
     const CranialSignalProcessorsG2 = new Augmentation({
-        name:AugmentationNames.CranialSignalProcessorsG2, repCost:7500, moneyCost:25e6,
+        name:AugmentationNames.CranialSignalProcessorsG2, repCost:1.875e4, moneyCost:1.25e8,
         info:"The second generation of Cranial Signal Processors. Cranial Signal Processors " +
             "are a set of specialized microprocessors that are attached to " +
             "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
@@ -751,7 +769,7 @@ function initAugmentations() {
     AddToAugmentations(CranialSignalProcessorsG2);
 
     const CranialSignalProcessorsG3 = new Augmentation({
-        name:AugmentationNames.CranialSignalProcessorsG3, repCost:20e3, moneyCost:110e6,
+        name:AugmentationNames.CranialSignalProcessorsG3, repCost:5e4, moneyCost:5.5e8,
         info:"The third generation of Cranial Signal Processors. Cranial Signal Processors " +
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
@@ -772,7 +790,7 @@ function initAugmentations() {
     AddToAugmentations(CranialSignalProcessorsG3);
 
     const CranialSignalProcessorsG4 = new Augmentation({
-        name:AugmentationNames.CranialSignalProcessorsG4, repCost:50e3, moneyCost:220e6,
+        name:AugmentationNames.CranialSignalProcessorsG4, repCost:1.25e5, moneyCost:1.1e9,
         info:"The fourth generation of Cranial Signal Processors. Cranial Signal Processors " +
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
@@ -793,7 +811,7 @@ function initAugmentations() {
     AddToAugmentations(CranialSignalProcessorsG4);
 
     const CranialSignalProcessorsG5 = new Augmentation({
-        name:AugmentationNames.CranialSignalProcessorsG5, repCost:100e3, moneyCost:450e6,
+        name:AugmentationNames.CranialSignalProcessorsG5, repCost:2.5e5, moneyCost:2.25e9,
         info:"The fifth generation of Cranial Signal Processors. Cranial Signal Processors " +
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
@@ -814,7 +832,7 @@ function initAugmentations() {
     AddToAugmentations(CranialSignalProcessorsG5);
 
     const NeuronalDensification = new Augmentation({
-        name:AugmentationNames.NeuronalDensification, repCost:75e3, moneyCost:275e6,
+        name:AugmentationNames.NeuronalDensification, repCost:1.875e5, moneyCost:1.375e9,
         info:"The brain is surgically re-engineered to have increased neuronal density " +
              "by decreasing the neuron gap junction. Then, the body is genetically modified " +
              "to enhance the production and capabilities of its neural stem cells.<br><br>" +
@@ -834,7 +852,7 @@ function initAugmentations() {
 
     // Work Augmentations
     const NuoptimalInjectorImplant = new Augmentation({
-        name:AugmentationNames.NuoptimalInjectorImplant, repCost:2e3, moneyCost:4e6,
+        name:AugmentationNames.NuoptimalInjectorImplant, repCost:5e3, moneyCost:2e7,
         info:"This torso implant automatically injects nootropic supplements into " +
              "the bloodstream to improve memory, increase focus, and provide other " +
              "cognitive enhancements.<br><br>" +
@@ -850,7 +868,7 @@ function initAugmentations() {
     AddToAugmentations(NuoptimalInjectorImplant);
 
     const SpeechEnhancement = new Augmentation({
-        name:AugmentationNames.SpeechEnhancement, repCost:1e3, moneyCost:2.5e6,
+        name:AugmentationNames.SpeechEnhancement, repCost:2.5e3, moneyCost:1.25e7,
         info:"An advanced neural implant that improves your speaking abilities, making " +
              "you more convincing and likable in conversations and overall improving your " +
              "social interactions.<br><br>" +
@@ -868,7 +886,7 @@ function initAugmentations() {
     AddToAugmentations(SpeechEnhancement);
 
     const FocusWire = new Augmentation({
-        name:AugmentationNames.FocusWire, repCost:30e3, moneyCost:180e6,
+        name:AugmentationNames.FocusWire, repCost:7.5e4, moneyCost:9e8,
         info:"A cranial implant that stops procrastination by blocking specific neural pathways " +
              "in the brain.<br><br>" +
              "This augmentation:<br>" +
@@ -891,7 +909,7 @@ function initAugmentations() {
     AddToAugmentations(FocusWire)
 
     const PCDNI = new Augmentation({
-        name:AugmentationNames.PCDNI, repCost:150e3, moneyCost:750e6,
+        name:AugmentationNames.PCDNI, repCost:3.75e5, moneyCost:3.75e9,
         info:"Installs a Direct-Neural Interface jack into your arm that is compatible with most " +
              "computers. Connecting to a computer through this jack allows you to interface with " +
              "it using the brain's electrochemical signals.<br><br>" +
@@ -908,7 +926,7 @@ function initAugmentations() {
     AddToAugmentations(PCDNI);
 
     const PCDNIOptimizer = new Augmentation({
-        name:AugmentationNames.PCDNIOptimizer, repCost:200e3, moneyCost:900e6,
+        name:AugmentationNames.PCDNIOptimizer, repCost:5e5, moneyCost:4.5e9,
         info:"This is a submodule upgrade to the PC Direct-Neural Interface augmentation. It " +
              "improves the performance of the interface and gives the user more control options " +
              "to the connected computer.<br><br>" +
@@ -926,7 +944,7 @@ function initAugmentations() {
     AddToAugmentations(PCDNIOptimizer);
 
     const PCDNINeuralNetwork = new Augmentation({
-        name:AugmentationNames.PCDNINeuralNetwork, repCost:600e3, moneyCost:1500e6,
+        name:AugmentationNames.PCDNINeuralNetwork, repCost:1.5e6, moneyCost:7.5e9,
         info:"This is an additional installation that upgrades the functionality of the " +
              "PC Direct-Neural Interface augmentation. When connected to a computer, " +
              "The NeuroNet Injector upgrade allows the user to use his/her own brain's " +
@@ -947,7 +965,7 @@ function initAugmentations() {
     AddToAugmentations(PCDNINeuralNetwork);
 
     const ADRPheromone1 = new Augmentation({
-        name:AugmentationNames.ADRPheromone1, repCost:1500, moneyCost:3.5e6,
+        name:AugmentationNames.ADRPheromone1, repCost:3.75e3, moneyCost:1.75e7,
         info:"The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
              "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " +
              "triggers feelings of admiration and approval in other people.<br><br>" +
@@ -962,7 +980,7 @@ function initAugmentations() {
     AddToAugmentations(ADRPheromone1);
 
     const ADRPheromone2 = new Augmentation({
-        name:AugmentationNames.ADRPheromone2, repCost:25e3, moneyCost:110e6,
+        name:AugmentationNames.ADRPheromone2, repCost:6.25e4, moneyCost:5.5e8,
         info:"The body is genetically re-engineered so that it produces the ADR-V2 pheromone, " +
              "which is similar to but more potent than ADR-V1. This pheromone, when excreted, " +
              "triggers feelings of admiration, approval, and respect in others.<br><br>" +
@@ -977,7 +995,7 @@ function initAugmentations() {
     AddToAugmentations(ADRPheromone2);
 
     const ShadowsSimulacrum = new Augmentation({
-        name: AugmentationNames.ShadowsSimulacrum, repCost: 15e3, moneyCost: 80e6,
+        name: AugmentationNames.ShadowsSimulacrum, repCost:3.75e4, moneyCost:4e8,
         info: "A crude but functional matter phase-shifter module that is embedded " +
               "in the brainstem and cerebellum. This augmentation was developed by " +
               "criminal organizations and allows the user to project and control holographic " +
@@ -995,7 +1013,7 @@ function initAugmentations() {
 
     // HacknetNode Augmentations
     const HacknetNodeCPUUpload = new Augmentation({
-        name:AugmentationNames.HacknetNodeCPUUpload, repCost:1500, moneyCost:2.2e6,
+        name:AugmentationNames.HacknetNodeCPUUpload, repCost:3.75e3, moneyCost:1.1e7,
         info:"Uploads the architecture and design details of a Hacknet Node's CPU into " +
              "the brain. This allows the user to engineer custom hardware and software  " +
              "for the Hacknet Node that provides better performance.<br><br>" +
@@ -1012,7 +1030,7 @@ function initAugmentations() {
     AddToAugmentations(HacknetNodeCPUUpload);
 
     const HacknetNodeCacheUpload = new Augmentation({
-        name:AugmentationNames.HacknetNodeCacheUpload, repCost:1e3, moneyCost:1.1e6,
+        name:AugmentationNames.HacknetNodeCacheUpload, repCost:2.5e3, moneyCost:5.5e6,
         info:"Uploads the architecture and design details of a Hacknet Node's main-memory cache " +
              "into the brain. This allows the user to engineer custom cache hardware for the  " +
              "Hacknet Node that offers better performance.<br><br>" +
@@ -1029,7 +1047,7 @@ function initAugmentations() {
     AddToAugmentations(HacknetNodeCacheUpload);
 
     const HacknetNodeNICUpload = new Augmentation({
-        name:AugmentationNames.HacknetNodeNICUpload, repCost:750, moneyCost:900e3,
+        name:AugmentationNames.HacknetNodeNICUpload, repCost:1.875e3, moneyCost:4.5e6,
         info:"Uploads the architecture and design details of a Hacknet Node's Network Interface Card (NIC) " +
              "into the brain. This allows the user to engineer a custom NIC for the Hacknet Node that " +
              "offers better performance.<br><br>" +
@@ -1046,7 +1064,7 @@ function initAugmentations() {
     AddToAugmentations(HacknetNodeNICUpload);
 
     const HacknetNodeKernelDNI = new Augmentation({
-        name:AugmentationNames.HacknetNodeKernelDNI, repCost:3e3, moneyCost:8e6,
+        name:AugmentationNames.HacknetNodeKernelDNI, repCost:7.5e3, moneyCost:4e7,
         info:"Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " +
              "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's " +
              "electrochemical signals.<br><br>" +
@@ -1060,7 +1078,7 @@ function initAugmentations() {
     AddToAugmentations(HacknetNodeKernelDNI);
 
     const HacknetNodeCoreDNI = new Augmentation({
-        name:AugmentationNames.HacknetNodeCoreDNI, repCost:5e3, moneyCost:12e6,
+        name:AugmentationNames.HacknetNodeCoreDNI, repCost:1.25e4, moneyCost:6e7,
         info:"Installs a Direct-Neural Interface jack into the arm that is capable of connecting " +
              "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " +
              "the mind's electrochemical signals.<br><br>" +
@@ -1075,7 +1093,7 @@ function initAugmentations() {
 
     //Misc/Hybrid augmentations
     const NeuroFluxGovernor = new Augmentation({
-        name:AugmentationNames.NeuroFluxGovernor, repCost:500, moneyCost: 750e3,
+        name:AugmentationNames.NeuroFluxGovernor, repCost:1.25e3, moneyCost:3.75e6,
         info:"A device that is embedded in the back of the neck. The NeuroFlux Governor " +
              "monitors and regulates nervous impulses coming to and from the spinal column, " +
              "essentially 'governing' the body. By doing so, it improves the functionality of the " +
@@ -1128,8 +1146,8 @@ function initAugmentations() {
         }
     }
     let mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-    NeuroFluxGovernor.baseRepRequirement = 500 * mult * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
-    NeuroFluxGovernor.baseCost = 750e3 * mult * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
+    NeuroFluxGovernor.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
+    NeuroFluxGovernor.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
     if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
     }
@@ -1137,7 +1155,7 @@ function initAugmentations() {
     AddToAugmentations(NeuroFluxGovernor);
 
     const Neurotrainer1 = new Augmentation({
-        name:AugmentationNames.Neurotrainer1, repCost:400, moneyCost:800e3,
+        name:AugmentationNames.Neurotrainer1, repCost:1e3, moneyCost:4e6,
         info:"A decentralized cranial implant that improves the brain's ability to learn. It is " +
              "installed by releasing millions of nanobots into the human brain, each of which " +
              "attaches to a different neural pathway to enhance the brain's ability to retain " +
@@ -1157,7 +1175,7 @@ function initAugmentations() {
     AddToAugmentations(Neurotrainer1);
 
     const Neurotrainer2 = new Augmentation({
-        name:AugmentationNames.Neurotrainer2, repCost:4e3, moneyCost:9e6,
+        name:AugmentationNames.Neurotrainer2, repCost:1e4, moneyCost:4.5e7,
         info:"A decentralized cranial implant that improves the brain's ability to learn. This " +
              "is a more powerful version of the Neurotrainer I augmentation, but it does not " +
              "require Neurotrainer I to be installed as a prerequisite.<br><br>" +
@@ -1176,7 +1194,7 @@ function initAugmentations() {
     AddToAugmentations(Neurotrainer2);
 
     const Neurotrainer3 = new Augmentation({
-        name:AugmentationNames.Neurotrainer3, repCost:10e3, moneyCost:26e6,
+        name:AugmentationNames.Neurotrainer3, repCost:2.5e4, moneyCost:1.3e8,
         info:"A decentralized cranial implant that improves the brain's ability to learn. This " +
              "is a more powerful version of the Neurotrainer I and Neurotrainer II augmentation, " +
              "but it does not require either of them to be installed as a prerequisite.<br><br>" +
@@ -1195,7 +1213,7 @@ function initAugmentations() {
     AddToAugmentations(Neurotrainer3);
 
     const Hypersight = new Augmentation({
-        name:AugmentationNames.Hypersight, repCost:60e3, moneyCost:550e6,
+        name:AugmentationNames.Hypersight, repCost:1.5e5, moneyCost:2.75e9,
         info:"A bionic eye implant that grants sight capabilities far beyond those of a natural human. " +
              "Embedded circuitry within the implant provides the ability to detect heat and movement " +
              "through solid objects such as wells, thus providing 'x-ray vision'-like capabilities.<br><br>" +
@@ -1214,7 +1232,7 @@ function initAugmentations() {
     AddToAugmentations(Hypersight);
 
     const LuminCloaking1 = new Augmentation({
-        name:AugmentationNames.LuminCloaking1, repCost:600, moneyCost:1e6,
+        name:AugmentationNames.LuminCloaking1, repCost:1.5e3, moneyCost:5e6,
         info:"A skin implant that reinforces the skin with highly-advanced synthetic cells. These " +
              "cells, when powered, have a negative refractive index. As a result, they bend light " +
              "around the skin, making the user much harder to see from the naked eye.<br><br>" +
@@ -1231,7 +1249,7 @@ function initAugmentations() {
     AddToAugmentations(LuminCloaking1);
 
     const LuminCloaking2 = new Augmentation({
-        name:AugmentationNames.LuminCloaking2, repCost:2e3, moneyCost:6e6,
+        name:AugmentationNames.LuminCloaking2, repCost:5e3, moneyCost:3e7,
         info:"This is a more advanced version of the LuminCloaking-V2 augmentation. This skin implant " +
              "reinforces the skin with highly-advanced synthetic cells. These " +
              "cells, when powered, are capable of not only bending light but also of bending heat, " +
@@ -1252,7 +1270,7 @@ function initAugmentations() {
     AddToAugmentations(LuminCloaking2);
 
     const SmartSonar = new Augmentation({
-        name:AugmentationNames.SmartSonar, repCost:9e3, moneyCost:15e6,
+        name:AugmentationNames.SmartSonar, repCost:2.25e4, moneyCost:7.5e7,
         info:"A cochlear implant that helps the player detect and locate enemies " +
              "using sound propagation.<br><br>" +
              "This augmentation:<br>" +
@@ -1270,7 +1288,7 @@ function initAugmentations() {
     AddToAugmentations(SmartSonar);
 
     const PowerRecirculator = new Augmentation({
-        name:AugmentationNames.PowerRecirculator, repCost:10e3, moneyCost:36e6,
+        name:AugmentationNames.PowerRecirculator, repCost:2.5e4, moneyCost:1.8e8,
         info:"The body's nerves are attached with polypyrrole nanocircuits that " +
              "are capable of capturing wasted energy (in the form of heat) " +
              "and converting it back into usable power.<br><br>" +
@@ -1303,7 +1321,7 @@ function initAugmentations() {
 
 	// Illuminati
     const QLink = new Augmentation({
-        name:AugmentationNames.QLink, repCost:750e3, moneyCost:5e12,
+        name:AugmentationNames.QLink, repCost:1.875e6, moneyCost:2.5e13,
         info:"A brain implant that wirelessly connects you to the Illuminati's " +
              "quantum supercomputer, allowing you to access and use its incredible " +
              "computing power.<br><br>" +
@@ -1325,7 +1343,7 @@ function initAugmentations() {
 
 	// Daedalus
     const RedPill = new Augmentation({
-        name:AugmentationNames.TheRedPill, repCost:1e6, moneyCost:0,
+        name:AugmentationNames.TheRedPill, repCost:2.5e6, moneyCost:0e0,
         info:"It's time to leave the cave.",
     });
     RedPill.addToFactions(["Daedalus"]);
@@ -1336,7 +1354,7 @@ function initAugmentations() {
 
 	// Covenant
     const SPTN97 = new Augmentation({
-        name:AugmentationNames.SPTN97, repCost:500e3, moneyCost:975e6,
+        name:AugmentationNames.SPTN97, repCost:1.25e6, moneyCost:4.875e9,
         info:"The SPTN-97 gene is injected into the genome. The SPTN-97 gene is an " +
              "artificially-synthesized gene that was developed by DARPA to create " +
              "super-soldiers through genetic modification. The gene was outlawed in " +
@@ -1358,7 +1376,7 @@ function initAugmentations() {
 
 	// ECorp
     const HiveMind = new Augmentation({
-        name:AugmentationNames.HiveMind, repCost:600e3, moneyCost:1100e6,
+        name:AugmentationNames.HiveMind, repCost:1.5e6, moneyCost:5.5e9,
         info:"A brain implant developed by ECorp. They do not reveal what " +
              "exactly the implant does, but they promise that it will greatly " +
              "enhance your abilities.",
@@ -1372,7 +1390,7 @@ function initAugmentations() {
 
 	// MegaCorp
     const CordiARCReactor = new Augmentation({
-        name:AugmentationNames.CordiARCReactor, repCost:450e3, moneyCost:1000e6,
+        name:AugmentationNames.CordiARCReactor, repCost:1.125e6, moneyCost:5e9,
         info:"The thoracic cavity is equipped with a small chamber designed " +
              "to hold and sustain hydrogen plasma. The plasma is used to generate " +
              "fusion power through nuclear fusion, providing limitless amount of clean " +
@@ -1397,7 +1415,7 @@ function initAugmentations() {
 
 	// BachmanAndAssociates
     const SmartJaw = new Augmentation({
-        name:AugmentationNames.SmartJaw, repCost:150e3, moneyCost:550e6,
+        name:AugmentationNames.SmartJaw, repCost:3.75e5, moneyCost:2.75e9,
         info:"A bionic jaw that contains advanced hardware and software " +
              "capable of psychoanalyzing and profiling the personality of " +
              "others using optical imaging software.<br><br>" +
@@ -1419,7 +1437,7 @@ function initAugmentations() {
 
 	// BladeIndustries
     const Neotra = new Augmentation({
-        name:AugmentationNames.Neotra, repCost:225e3, moneyCost:575e6,
+        name:AugmentationNames.Neotra, repCost:5.625e5, moneyCost:2.875e9,
         info:"A highly-advanced techno-organic drug that is injected into the skeletal " +
              "and integumentary system. The drug permanently modifies the DNA of the " +
              "body's skin and bone cells, granting them the ability to repair " +
@@ -1436,7 +1454,7 @@ function initAugmentations() {
 
 	// NWO
     const Xanipher = new Augmentation({
-        name:AugmentationNames.Xanipher, repCost:350e3, moneyCost:850e6,
+        name:AugmentationNames.Xanipher, repCost:8.75e5, moneyCost:4.25e9,
         info:"A concoction of advanced nanobots that is orally ingested into the " +
              "body. These nanobots induce physiological change and significantly " +
              "improve the body's functioning in all aspects.<br><br>" +
@@ -1463,12 +1481,13 @@ function initAugmentations() {
     AddToAugmentations(Xanipher);
 
     const HydroflameLeftArm = new Augmentation({
-        name:AugmentationNames.HydroflameLeftArm, repCost:500e3, moneyCost:500e9,
+        name:AugmentationNames.HydroflameLeftArm, repCost:1.25e6, moneyCost:2.5e12,
         info:"The left arm of a legendary BitRunner who ascended beyond this world. " +
              "It projects a light blue energy shield that protects the exposed inner parts. " +
              "Even though it contains no weapons, the advance tungsten titanium " +
-             "alloy increases the users strength to unbelievable levels.<br><br>" +
-             "This augmentation increases the player's strength by 300%.",
+             "alloy increases the users strength to unbelievable levels. The augmentation " +
+             "gets more powerful over time for seemingly no reason.<br><br>" +
+             "This augmentation increases the player's strength by 270%.",
         strength_mult: 2.70,
     });
     HydroflameLeftArm.addToFactions(["NWO"]);
@@ -1481,7 +1500,7 @@ function initAugmentations() {
 
     // ClarkeIncorporated
     const nextSENS = new Augmentation({
-        name:AugmentationNames.nextSENS, repCost:175e3, moneyCost:385e6,
+        name:AugmentationNames.nextSENS, repCost:4.375e5, moneyCost:1.925e9,
         info:"The body is genetically re-engineered to maintain a state " +
              "of negligible senescence, preventing the body from " +
              "deteriorating with age.<br><br>" +
@@ -1501,7 +1520,7 @@ function initAugmentations() {
 
 	// OmniTekIncorporated
     const OmniTekInfoLoad = new Augmentation({
-        name:AugmentationNames.OmniTekInfoLoad, repCost:250e3, moneyCost:575e6,
+        name:AugmentationNames.OmniTekInfoLoad, repCost:6.25e5, moneyCost:2.875e9,
         info:"OmniTek's data and information repository is uploaded " +
              "into your brain, enhancing your programming and " +
              "hacking abilities.<br><br>" +
@@ -1522,7 +1541,7 @@ function initAugmentations() {
 
 	// KuaiGongInternational
     const PhotosyntheticCells = new Augmentation({
-        name:AugmentationNames.PhotosyntheticCells, repCost:225e3, moneyCost:550e6,
+        name:AugmentationNames.PhotosyntheticCells, repCost:5.625e5, moneyCost:2.75e9,
         info:"Chloroplasts are added to epidermal stem cells and are applied " +
              "to the body using a skin graft. The result is photosynthetic " +
              "skin cells, allowing users to generate their own energy " +
@@ -1540,7 +1559,7 @@ function initAugmentations() {
 
 	// BitRunners
     const Neurolink = new Augmentation({
-        name:AugmentationNames.Neurolink, repCost:350e3, moneyCost:875e6,
+        name:AugmentationNames.Neurolink, repCost:8.75e5, moneyCost:4.375e9,
         info:"A brain implant that provides a high-bandwidth, direct neural link between your " +
              "mind and BitRunners' data servers, which reportedly contain " +
              "the largest database of hacking tools and information in the world.<br><br>" +
@@ -1563,7 +1582,7 @@ function initAugmentations() {
 
 	// BlackHand
     const TheBlackHand = new Augmentation({
-        name:AugmentationNames.TheBlackHand, repCost:40e3, moneyCost:110e6,
+        name:AugmentationNames.TheBlackHand, repCost:1e5, moneyCost:5.5e8,
         info:"A highly advanced bionic hand. This prosthetic not only " +
              "enhances strength and dexterity but it is also embedded " +
              "with hardware and firmware that lets the user connect to, access and hack " +
@@ -1587,7 +1606,7 @@ function initAugmentations() {
 
 	// NiteSec
     const CRTX42AA = new Augmentation({
-        name:AugmentationNames.CRTX42AA, repCost:18e3, moneyCost:45e6,
+        name:AugmentationNames.CRTX42AA, repCost:4.5e4, moneyCost:2.25e8,
         info:"The CRTX42-AA gene is injected into the genome. " +
              "The CRTX42-AA is an artificially-synthesized gene that targets the visual and prefrontal " +
              "cortex and improves cognitive abilities.<br><br>" +
@@ -1605,7 +1624,7 @@ function initAugmentations() {
 
 	// Chongqing
     const Neuregen = new Augmentation({
-        name:AugmentationNames.Neuregen, repCost:15e3, moneyCost:75e6,
+        name:AugmentationNames.Neuregen, repCost:3.75e4, moneyCost:3.75e8,
         info:"A drug that genetically modifies the neurons in the brain. " +
              "The result is that these neurons never die and continuously " +
              "regenerate and strengthen themselves.<br><br>" +
@@ -1620,7 +1639,7 @@ function initAugmentations() {
 
 	// Sector12
     const CashRoot = new Augmentation({
-        name:AugmentationNames.CashRoot, repCost:5e3, moneyCost:25e6,
+        name:AugmentationNames.CashRoot, repCost:1.25e4, moneyCost:1.25e8,
         info:<>A collection of digital assets saved on a small chip. The chip is implanted 
              into your wrist. A small jack in the chip allows you to connect it to a computer 
              and upload the assets.<br /><br />
@@ -1636,7 +1655,7 @@ function initAugmentations() {
 
 	// NewTokyo
     const NutriGen = new Augmentation({
-        name:AugmentationNames.NutriGen, repCost:2500, moneyCost:500e3,
+        name:AugmentationNames.NutriGen, repCost:6.25e3, moneyCost:2.5e6,
         info:"A thermo-powered artificial nutrition generator. Endogenously " +
              "synthesizes glucose, amino acids, and vitamins and redistributes them " +
              "across the body. The device is powered by the body's naturally wasted " +
@@ -1659,7 +1678,7 @@ function initAugmentations() {
 
     // Ishima
     const INFRARet = new Augmentation({
-        name:AugmentationNames.INFRARet, repCost:3e3, moneyCost:6e6,
+        name:AugmentationNames.INFRARet, repCost:7.5e3, moneyCost:3e7,
         info:"A retina implant consisting of a tiny chip that sits behind the " +
              "retina. This implant lets people visually detect infrared radiation.<br><br>"  +
              "This augmentation:<br>" +
@@ -1678,7 +1697,7 @@ function initAugmentations() {
 
 	// Volhaven
     const DermaForce = new Augmentation({
-        name:AugmentationNames.DermaForce, repCost:6e3, moneyCost:10e6,
+        name:AugmentationNames.DermaForce, repCost:1.5e4, moneyCost:5e7,
         info:"A synthetic skin is grafted onto the body. The skin consists of " +
              "millions of nanobots capable of projecting high-density muon beams, " +
              "creating an energy barrier around the user.<br><br>" +
@@ -1693,7 +1712,7 @@ function initAugmentations() {
 
 	// SpeakersForTheDead
     const GrapheneBrachiBlades = new Augmentation({
-        name:AugmentationNames.GrapheneBrachiBlades, repCost:90e3, moneyCost:500e6,
+        name:AugmentationNames.GrapheneBrachiBlades, repCost:2.25e5, moneyCost:2.5e9,
         info:"An upgrade to the BrachiBlades augmentation. It infuses " +
              "the retractable blades with an advanced graphene material " +
              "to make them much stronger and lighter.<br><br>" +
@@ -1715,7 +1734,7 @@ function initAugmentations() {
 
 	// DarkArmy
     const GrapheneBionicArms = new Augmentation({
-        name:AugmentationNames.GrapheneBionicArms, repCost:200e3, moneyCost:750e6,
+        name:AugmentationNames.GrapheneBionicArms, repCost:5e5, moneyCost:3.75e9,
         info:"An upgrade to the Bionic Arms augmentation. It infuses the " +
              "prosthetic arms with an advanced graphene material " +
              "to make them much stronger and lighter.<br><br>" +
@@ -1732,7 +1751,7 @@ function initAugmentations() {
 
 	// TheSyndicate
     const BrachiBlades = new Augmentation({
-        name:AugmentationNames.BrachiBlades, repCost:5e3, moneyCost:18e6,
+        name:AugmentationNames.BrachiBlades, repCost:1.25e4, moneyCost:9e7,
         info:"A set of retractable plasteel blades are implanted in the arm, underneath the skin.<br><br>" +
              "This augmentation:<br>" +
              "Increases the player's strength and defense by 15%.<br>" +
@@ -1751,7 +1770,7 @@ function initAugmentations() {
 
     // Tetrads
     const BionicArms = new Augmentation({
-        name:AugmentationNames.BionicArms, repCost:25e3, moneyCost:55e6,
+        name:AugmentationNames.BionicArms, repCost:6.25e4, moneyCost:2.75e8,
         info:"Cybernetic arms created from plasteel and carbon fibers that completely replace " +
              "the user's organic arms.<br><br>" +
              "This augmentation increases the user's strength and dexterity by 30%.",
@@ -1766,7 +1785,7 @@ function initAugmentations() {
 
 	// TianDiHui
     const SNA = new Augmentation({
-        name:AugmentationNames.SNA, repCost:2500, moneyCost:6e6,
+        name:AugmentationNames.SNA, repCost:6.25e3, moneyCost:3e7,
         info:"A cranial implant that affects the user's personality, making them better " +
              "at negotiation in social situations.<br><br>" +
              "This augmentation:<br>" +
@@ -1787,7 +1806,7 @@ function initAugmentations() {
     const BladeburnersFactionName = "Bladeburners";
     if (factionExists(BladeburnersFactionName)) {
         const EsperEyewear = new Augmentation({
-            name:AugmentationNames.EsperEyewear, repCost:500, moneyCost:33e6,
+            name:AugmentationNames.EsperEyewear, repCost:1.25e3, moneyCost:1.65e8,
             info:"Ballistic-grade protective and retractable eyewear that was designed specially " +
                  "for Bladeburner units. This " +
                  "is implanted by installing a mechanical frame in the skull's orbit. " +
@@ -1807,7 +1826,7 @@ function initAugmentations() {
         resetAugmentation(EsperEyewear);
 
         const EMS4Recombination = new Augmentation({
-            name:AugmentationNames.EMS4Recombination, repCost: 1e3, moneyCost:55e6,
+            name:AugmentationNames.EMS4Recombination, repCost:2.5e3, moneyCost:2.75e8,
             info:"A DNA recombination of the EMS-4 Gene. This genetic engineering " +
                  "technique was originally used on Bladeburners during the Synthoid uprising " +
                  "to induce wakefulness and concentration, suppress fear, reduce empathy, and " +
@@ -1825,7 +1844,7 @@ function initAugmentations() {
         resetAugmentation(EMS4Recombination);
 
         const OrionShoulder = new Augmentation({
-            name:AugmentationNames.OrionShoulder, repCost:2.5e3, moneyCost:110e6,
+            name:AugmentationNames.OrionShoulder, repCost:6.25e3, moneyCost:5.5e8,
             info:"A bionic shoulder augmentation for the right shoulder. Using cybernetics, " +
                  "the ORION-MKIV shoulder enhances the strength and dexterity " +
                  "of the user's right arm. It also provides protection due to its " +
@@ -1844,7 +1863,7 @@ function initAugmentations() {
         resetAugmentation(OrionShoulder);
 
         const HyperionV1 = new Augmentation({
-            name:AugmentationNames.HyperionV1, repCost: 5e3, moneyCost:550e6,
+            name:AugmentationNames.HyperionV1, repCost:1.25e4, moneyCost:2.75e9,
             info:"A pair of mini plasma cannons embedded into the hands. The Hyperion is capable " +
                  "of rapidly firing bolts of high-density plasma. The weapon is meant to " +
                  "be used against augmented enemies as the ionized " +
@@ -1859,7 +1878,7 @@ function initAugmentations() {
         resetAugmentation(HyperionV1);
 
         const HyperionV2 = new Augmentation({
-            name:AugmentationNames.HyperionV2, repCost:10e3, moneyCost:1.1e9,
+            name:AugmentationNames.HyperionV2, repCost:2.5e4, moneyCost:5.5e9,
             info:"A pair of mini plasma cannons embedded into the hands. This augmentation " +
                  "is more advanced and powerful than the original V1 model. This V2 model is " +
                  "more power-efficiency, more accurate, and can fire plasma bolts at a much " +
@@ -1873,7 +1892,7 @@ function initAugmentations() {
         resetAugmentation(HyperionV2);
 
         const GolemSerum = new Augmentation({
-            name:AugmentationNames.GolemSerum, repCost:12.5e3, moneyCost:2.2e9,
+            name:AugmentationNames.GolemSerum, repCost:3.125e4, moneyCost:1.1e10,
             info:"A serum that permanently enhances many aspects of a human's capabilities, " +
                  "including strength, speed, immune system performance, and mitochondrial efficiency. The " +
                  "serum was originally developed by the Chinese military in an attempt to " +
@@ -1892,7 +1911,7 @@ function initAugmentations() {
         resetAugmentation(GolemSerum);
 
         const VangelisVirus = new Augmentation({
-            name:AugmentationNames.VangelisVirus, repCost:7.5e3, moneyCost:550e6,
+            name:AugmentationNames.VangelisVirus, repCost:1.875e4, moneyCost:2.75e9,
             info:"A synthetic symbiotic virus that is injected into the human brain tissue. The Vangelis virus " +
                  "heightens the senses and focus of its host, and also enhances its intuition.<br><br>" +
                  "This augmentation:<br>" +
@@ -1908,7 +1927,7 @@ function initAugmentations() {
         resetAugmentation(VangelisVirus);
 
         const VangelisVirus3 = new Augmentation({
-            name:AugmentationNames.VangelisVirus3, repCost:15e3, moneyCost:2.2e9,
+            name:AugmentationNames.VangelisVirus3, repCost:3.75e4, moneyCost:1.1e10,
             info:"An improved version of Vangelis, a synthetic symbiotic virus that is " +
                  "injected into the human brain tissue. On top of the benefits of the original " +
                  "virus, this also grants an accelerated healing factor and enhanced " +
@@ -1928,7 +1947,7 @@ function initAugmentations() {
         resetAugmentation(VangelisVirus3);
 
         const INTERLINKED = new Augmentation({
-            name:AugmentationNames.INTERLINKED, repCost:10e3, moneyCost:1.1e9,
+            name:AugmentationNames.INTERLINKED, repCost:2.5e4, moneyCost:5.5e9,
             info:"The DNA is genetically modified to enhance the human's body " +
                  "extracellular matrix (ECM). This improves the ECM's ability to " +
                  "structurally support the body and grants heightened strength and " +
@@ -1947,7 +1966,7 @@ function initAugmentations() {
         resetAugmentation(INTERLINKED);
 
         const BladeRunner = new Augmentation({
-            name:AugmentationNames.BladeRunner, repCost:8e3, moneyCost:1.65e9,
+            name:AugmentationNames.BladeRunner, repCost:2e4, moneyCost:8.25e9,
             info:"A cybernetic foot augmentation that was specially created for Bladeburners " +
                  "during the Synthoid Uprising. The organic musculature of the human foot " +
                  "is enhanced with flexible carbon nanotube matrices that are controlled by " +
@@ -1965,7 +1984,7 @@ function initAugmentations() {
         resetAugmentation(BladeRunner);
 
         const BladeArmor = new Augmentation({
-            name:AugmentationNames.BladeArmor, repCost:5e3, moneyCost:275e6,
+            name:AugmentationNames.BladeArmor, repCost:1.25e4, moneyCost:1.375e9,
             info:"A powered exoskeleton suit (exosuit) designed as armor for Bladeburner units. This " +
                  "exoskeleton is incredibly adaptable and can protect the wearer from blunt, piercing, " +
                  "concussive, thermal, chemical, and electric trauma. It also enhances the user's " +
@@ -1986,7 +2005,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmor);
 
         const BladeArmorPowerCells = new Augmentation({
-            name:AugmentationNames.BladeArmorPowerCells, repCost:7.5e3, moneyCost:550e6,
+            name:AugmentationNames.BladeArmorPowerCells, repCost:1.875e4, moneyCost:2.75e9,
             info:"Upgrades the BLADE-51b Tesla Armor with Ion Power Cells, which are capable of " +
                  "more efficiently storing and using power.<br><br>" +
                  "This augmentation:<br>" +
@@ -2003,7 +2022,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorPowerCells);
 
         const BladeArmorEnergyShielding = new Augmentation({
-            name:AugmentationNames.BladeArmorEnergyShielding, repCost:8.5e3, moneyCost:1.1e9,
+            name:AugmentationNames.BladeArmorEnergyShielding, repCost:2.125e4, moneyCost:5.5e9,
             info:"Upgrades the BLADE-51b Tesla Armor with a plasma energy propulsion system " +
                  "that is capable of projecting an energy shielding force field.<br><br>" +
                  "This augmentation:<br>" +
@@ -2018,7 +2037,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorEnergyShielding);
 
         const BladeArmorUnibeam = new Augmentation({
-            name:AugmentationNames.BladeArmorUnibeam, repCost:12.5e3, moneyCost:3.3e9,
+            name:AugmentationNames.BladeArmorUnibeam, repCost:3.125e4, moneyCost:1.65e10,
             info:"Upgrades the BLADE-51b Tesla Armor with a concentrated deuterium-fluoride laser " +
                  "weapon. It's precision an accuracy makes it useful for quickly neutralizing " +
                  "threats while keeping casualties to a minimum.<br><br>" +
@@ -2031,7 +2050,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorUnibeam);
 
         const BladeArmorOmnibeam = new Augmentation({
-            name:AugmentationNames.BladeArmorOmnibeam, repCost:25e3, moneyCost:5.5e9,
+            name:AugmentationNames.BladeArmorOmnibeam, repCost:6.25e4, moneyCost:2.75e10,
             info:"Upgrades the BLADE-51b Tesla Armor Unibeam augmentation to use " +
                  "multiple-fiber system. The upgraded weapon uses multiple fiber laser " +
                  "modules that combine together to form a single, more powerful beam of up to " +
@@ -2045,7 +2064,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorOmnibeam);
 
         const BladeArmorIPU = new Augmentation({
-            name:AugmentationNames.BladeArmorIPU, repCost: 6e3, moneyCost:220e6,
+            name:AugmentationNames.BladeArmorIPU, repCost:1.5e4, moneyCost:1.1e9,
             info:"Upgrades the BLADE-51b Tesla Armor with an AI Information Processing " +
                  "Unit that was specially designed to analyze Synthoid related data and " +
                  "information.<br><br>" +
@@ -2061,7 +2080,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorIPU);
 
         const BladesSimulacrum = new Augmentation({
-            name:AugmentationNames.BladesSimulacrum, repCost: 500, moneyCost: 30e9,
+            name:AugmentationNames.BladesSimulacrum, repCost:1.25e3, moneyCost:1.5e11,
             info:"A highly-advanced matter phase-shifter module that is embedded "  +
                  "in the brainstem and cerebellum. This augmentation allows " +
                  "the user to project and control a holographic simulacrum within an " +

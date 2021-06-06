@@ -746,7 +746,7 @@ class DevMenuComponent extends Component {
                         <td><span className="text text-center">All:</span></td>
                         <td>
                             <button className="std-button tooltip" onClick={this.tonsOfExp}>Tons of exp<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button>
-                            <button className="std-button tooltip" onClick={this.resetAllExp}>Reset<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button>
+                            <button className="std-button tooltip" onClick={this.resetAllExp}>Reset<span className="tooltiptext">Reset all experience to 0</span></button>
                             </td>
                     </tr>
                     <tr>
