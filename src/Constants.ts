@@ -51,8 +51,6 @@ export const CONSTANTS: IMap<any> = {
     PurchasedServerMaxRam: 1048576, // 2^20
 
     // Augmentation Constants
-    AugmentationCostMultiplier: 5,  // Used for balancing costs without having to readjust every Augmentation cost
-    AugmentationRepMultiplier: 2.5, // Used for balancing rep cost without having to readjust every value
     MultipleAugMultiplier: 1.9,
 
     // TOR Router
