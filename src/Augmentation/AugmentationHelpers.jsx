@@ -36,20 +36,20 @@ function getRandomBonus() {
                 hacking_chance_mult: 1.25,
                 hacking_speed_mult: 1.10,
                 hacking_money_mult: 1.25,
-                hacking_grow_mult: 1.1
+                hacking_grow_mult: 1.1,
             },
             description: "Increases the player's hacking chance by 25%.<br>" +
                          "Increases the player's hacking speed by 10%.<br>" +
                          "Increases the amount of money the player's gains from hacking by 25%.<br>" +
-                         "Increases the amount of money the player can inject into servers using grow() by 10%."
+                         "Increases the amount of money the player can inject into servers using grow() by 10%.",
         },
         {
             bonuses: {
                 hacking_mult: 1.15,
-                hacking_exp_mult: 2
+                hacking_exp_mult: 2,
             },
             description: "Increases the player's hacking skill by 15%.<br>" +
-                         "Increases the player's hacking experience gain rate by 100%."
+                         "Increases the player's hacking experience gain rate by 100%.",
         },
         {
             bonuses: {
@@ -60,18 +60,18 @@ function getRandomBonus() {
                 dexterity_mult: 1.25,
                 dexterity_exp_mult: 1.5,
                 agility_mult: 1.25,
-                agility_exp_mult: 1.5
+                agility_exp_mult: 1.5,
             },
             description: "Increases all of the player's combat stats by 25%.<br>" +
-                         "Increases all of the player's combat stat experience gain rate by 100%."
+                         "Increases all of the player's combat stat experience gain rate by 100%.",
         },
         {
             bonuses: {
                 charisma_mult: 1.5,
-                charisma_exp_mult: 2
+                charisma_exp_mult: 2,
             },
             description: "This augmentation increases the player's charisma by 50%.<br>" +
-                         "Increases the player's charisma experience gain rate by 100%."
+                         "Increases the player's charisma experience gain rate by 100%.",
         },
         {
             bonuses: {
@@ -79,29 +79,29 @@ function getRandomBonus() {
                 hacknet_node_purchase_cost_mult: 0.85,
                 hacknet_node_ram_cost_mult: 0.85,
                 hacknet_node_core_cost_mult: 0.85,
-                hacknet_node_level_cost_mult: 0.85
+                hacknet_node_level_cost_mult: 0.85,
             },
             description: "Increases the amount of money produced by Hacknet Nodes by 20%.<br>" +
-                         "Decreases all costs related to Hacknet Node by 15%."
+                         "Decreases all costs related to Hacknet Node by 15%.",
         },
         {
             bonuses: {
                 company_rep_mult: 1.25,
                 faction_rep_mult: 1.15,
-                work_money_mult: 1.7
+                work_money_mult: 1.7,
             },
             description: "Increases the amount of money the player gains from working by 70%.<br>" +
                          "Increases the amount of reputation the player gains when working for a company by 25%.<br>" +
-                         "Increases the amount of reputation the player gains for a faction by 15%."
+                         "Increases the amount of reputation the player gains for a faction by 15%.",
         },
         {
             bonuses: {
                 crime_success_mult: 2,
-                crime_money_mult: 2
+                crime_money_mult: 2,
             },
             description: "Increases the player's crime success rate by 100%.<br>" +
-                         "Increases the amount of money the player gains from crimes by 100%."
-        }
+                         "Increases the amount of money the player gains from crimes by 100%.",
+        },
     ]
     
     const randomNumber = (new WHRNG(Math.floor(Player.lastUpdate/3600000)));
@@ -126,7 +126,7 @@ function initAugmentations() {
     const UnstableCircadianModulator = new Augmentation({
         name:AugmentationNames.UnstableCircadianModulator, moneyCost:5e9, repCost:3.625e5,
         info:"An experimental nanobot injection. Its unstable nature leads to unpredictable results based on your circadian rhythm.<br><br>" +
-             "This augmentation:<br>" + randomBonuses.description + "<br><br>For now ..."
+             "This augmentation:<br>" + randomBonuses.description + "<br><br>For now ...",
     });
 
     Object.keys(randomBonuses.bonuses).forEach(key => UnstableCircadianModulator.mults[key] = randomBonuses.bonuses[key]);

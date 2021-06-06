@@ -1,5 +1,4 @@
 // Class definition for a single Augmentation object
-import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
