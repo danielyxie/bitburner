@@ -52,7 +52,11 @@ class NumeralFormatter {
         return this.format(n, "0.000a");
     }
 
-    formatAbsurdNumber(n: number, decimalPlaces = 3): string {
+    // TODO: leverage numeral.js to do it. This function also implies you can
+    // use this format in some text field but you can't. ( "1t" will parse but
+    // "1s" will not)
+    formatReallyBigNumber(n: number, decimalPlaces = 3): string {
+        if(n === Infinity) return "∞";
         for(let i = 0; i < extraFormats.length; i++) {
             if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
                 return this.format(n/extraFormats[i], '0.'+'0'.repeat(decimalPlaces))+extraNotations[i];
@@ -70,30 +74,30 @@ class NumeralFormatter {
         if(n < 1e6){
             return this.format(n, "0,0");
         }
-        return this.formatAbsurdNumber(n, 3)
+        return this.formatReallyBigNumber(n);
     }
 
     formatMoney(n: number): string {
-        return "$" + this.formatAbsurdNumber(n, 3);
+        return "$" + this.formatReallyBigNumber(n);
     }
 
     formatSkill(n: number): string {
         if(n < 1e15){
             return this.format(n, "0,0");
         }
-        return this.formatAbsurdNumber(n, 3);
+        return this.formatReallyBigNumber(n);
     }
 
     formatExp(n: number): string {
-        return this.formatAbsurdNumber(n, 3);
+        return this.formatReallyBigNumber(n);
     }
 
     formatHashes(n: number): string {
-        return this.formatAbsurdNumber(n, 3);
+        return this.formatReallyBigNumber(n);
     }
 
     formatReputation(n: number): string {
-        return this.formatAbsurdNumber(n, 3);
+        return this.formatReallyBigNumber(n);
     }
 
     formatFavor(n: number): string {
@@ -114,11 +118,11 @@ class NumeralFormatter {
     }
 
     formatRespect(n: number): string {
-        return this.formatAbsurdNumber(n, 5);
+        return this.formatReallyBigNumber(n, 5);
     }
 
     formatWanted(n: number): string {
-        return this.formatAbsurdNumber(n, 5);
+        return this.formatReallyBigNumber(n, 5);
     }
 
     formatMultiplier(n: number): string {
@@ -149,11 +153,11 @@ class NumeralFormatter {
         if (n < 1000) {
             return this.format(n, "0");
         }
-        return this.formatAbsurdNumber(n, 3);
+        return this.formatReallyBigNumber(n);
     }
 
     formatInfiltrationSecurity(n: number): string {
-        return this.formatAbsurdNumber(n, 3);
+        return this.formatReallyBigNumber(n);
     }
 
     formatThreads(n: number): string {
