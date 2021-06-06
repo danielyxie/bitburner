@@ -305,10 +305,28 @@ function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume=fal
     yesBtn.addEventListener("click", function() {
         if (!flume) {
             giveSourceFile(destroyedBitNode);
+            if (newBitNode === 5) {
+                if(Player.intelligence === 0) {
+                    Player.intelligence = 1;
+                    Player.updateSkillLevels();
+                }
+            }
+            
         } else {
             // If player used flume, subtract 300 int exp. The prestigeSourceFile()
             // function below grants 300 int exp, so this allows sets net gain to 0
             Player.gainIntelligenceExp(-300);
+            if(SourceFileFlags[5] === 0 || newBitNode !== 5) {
+                Player.intelligence = 0;
+                Player.intelligence_exp = 0;
+                Player.updateSkillLevels();
+            }
+            if (newBitNode === 5) {
+                if(Player.intelligence === 0) {
+                    Player.intelligence = 1;
+                    Player.updateSkillLevels();
+                }
+            }
         }
         redPillFlag = false;
         var container = document.getElementById("red-pill-content");
