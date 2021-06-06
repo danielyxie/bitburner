@@ -660,7 +660,7 @@ export function work(numCycles) {
 
     const penalty = this.cancelationPenalty();
 
-    const penaltyString = penalty === 0.5 ? 'half' : 'three quarter'
+    const penaltyString = penalty === 0.5 ? 'half' : 'three-quarters'
 
     var elem = document.getElementById("work-in-progress-text");
     ReactDOM.render(<>
@@ -1701,7 +1701,7 @@ export function applyForJob(entryPosType, sing=false) {
     if (!this.isQualified(company, pos)) {
         var reqText = getJobRequirementText(company, pos);
         if (sing) {return false;}
-        dialogBoxCreate("Unforunately, you do not qualify for this position<br>" + reqText);
+        dialogBoxCreate("Unforunately, you do not qualify for this position.<br>" + reqText);
         return;
     }
 
@@ -1727,14 +1727,14 @@ export function applyForJob(entryPosType, sing=false) {
             var nextPos = getNextCompanyPositionHelper(pos);
             if (nextPos == null) {
                 if (sing) {return false;}
-                dialogBoxCreate("You are already at the highest position for your field! No promotion available");
+                dialogBoxCreate("You are already at the highest position for your field! No promotion available.");
             } else if (company.hasPosition(nextPos)) {
                 if (sing) {return false;}
                 var reqText = getJobRequirementText(company, nextPos);
                 dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
             } else {
                 if (sing) {return false;}
-                dialogBoxCreate("You are already at the highest position for your field! No promotion available");
+                dialogBoxCreate("You are already at the highest position for your field! No promotion available.");
             }
             return; //Same job, do nothing
         }
@@ -1745,6 +1745,17 @@ export function applyForJob(entryPosType, sing=false) {
 
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();
+
+    this.workHackExpGained = 0;
+    this.workStrExpGained = 0;
+    this.workDefExpGained = 0;
+    this.workDexExpGained = 0;
+    this.workAgiExpGained = 0;
+    this.workChaExpGained = 0;
+    this.workRepGained = 0;
+    this.workMoneyGained = 0;
+
+    this.resetWorkStatus();
 
     if (sing) { return true; }
 
