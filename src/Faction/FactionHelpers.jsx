@@ -190,8 +190,8 @@ export function purchaseAugmentation(aug, fac, sing=false) {
             var nextLevel = getNextNeurofluxLevel();
             --nextLevel;
             var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-            aug.baseRepRequirement = 500 * mult * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
-            aug.baseCost = 750e3 * mult * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
+            aug.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
+            aug.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
 
             for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
                 aug.baseCost *= CONSTANTS.MultipleAugMultiplier;
