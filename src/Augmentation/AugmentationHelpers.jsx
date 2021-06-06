@@ -461,7 +461,7 @@ function initAugmentations() {
     const ArtificialSynapticPotentiation = new Augmentation({
         name:AugmentationNames.ArtificialSynapticPotentiation, repCost:2500, moneyCost:16e6,
         info:"The body is injected with a chemical that artificially induces synaptic potentiation, " +
-             "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.<br><br>" +
+             "otherwise known as the strengthening of synapses. This results in enhanced cognitive abilities.<br><br>" +
              "This augmentation:<br>" +
              "Increases the player's hacking speed by 2%.<br>" +
              "Increases the player's hacking chance by 5%.<br>" +

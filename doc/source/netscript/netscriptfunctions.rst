@@ -46,6 +46,7 @@ This includes information such as function signatures, what they do, and their r
     getHackingLevel() <basicfunctions/getHackingLevel>
     getHackingMultipliers() <basicfunctions/getHackingMultipliers>
     getHacknetMultipliers() <basicfunctions/getHacknetMultipliers>
+    getPlayer() <basicfunctions/getPlayer>
     getServerMoneyAvailable() <basicfunctions/getServerMoneyAvailable>
     getServerMaxMoney() <basicfunctions/getServerMaxMoney>
     getServerGrowth() <basicfunctions/getServerGrowth>

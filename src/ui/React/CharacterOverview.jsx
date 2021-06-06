@@ -37,7 +37,7 @@ export class CharacterOverviewComponent extends Component {
             <table>
                 <tbody>
                     <tr id="character-hp-wrapper">
-                        <td className="character-hp-cell">Hp:</td><td id="character-hp-text" className="character-hp-cell character-stat-cell">{numeralWrapper.formatHp(Player.hp) + " / " + numeralWrapper.formatHp(Player.max_hp)}</td>
+                        <td className="character-hp-cell">HP:</td><td id="character-hp-text" className="character-hp-cell character-stat-cell">{numeralWrapper.formatHp(Player.hp) + " / " + numeralWrapper.formatHp(Player.max_hp)}</td>
                     </tr>
                     <tr id="character-money-wrapper">
                         <td className="character-money-cell">Money:&nbsp;</td><td id="character-money-text" className="character-money-cell character-stat-cell">{numeralWrapper.formatMoney(Player.money.toNumber())}</td>

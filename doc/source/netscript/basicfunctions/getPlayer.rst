@@ -5,8 +5,6 @@ getPlayer() Netscript Function
 
     :RAM cost: 0.5 GB
 
-    If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.
-
     The result of this function can be passed to the :doc:`formulas API<../netscriptformulasapi>`.
 
     Returns an object with the Player's stats. The object has the following properties::

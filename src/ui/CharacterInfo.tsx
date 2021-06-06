@@ -80,7 +80,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     }
 
     function Intelligence(): React.ReactElement {
-        if (p.intelligence > 0) {
+        if (p.intelligence > 0 && (p.bitNodeN === 5 || SourceFileFlags[5] > 0)) {
             return <tr key="5">
                 <td>Intelligence:</td>
                 <td style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.intelligence)}</td>
