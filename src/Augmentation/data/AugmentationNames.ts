@@ -78,6 +78,7 @@ export const AugmentationNames: IMap<string> = {
     PhotosyntheticCells:                "Photosynthetic Cells",
     Neurolink:                          "BitRunners Neurolink",
     TheBlackHand:                       "The Black Hand",
+    UnstableCircadianModulator:         "Unstable Circadian Modulator",
     CRTX42AA:                           "CRTX42-AA Gene Modification",
     Neuregen:                           "Neuregen Gene Modification",
     CashRoot:                           "CashRoot Starter Kit",
