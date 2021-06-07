@@ -4386,7 +4386,7 @@ function NetscriptFunctions(workerScript) {
                 },
                 constants: function() {
                     checkFormulasAccess("hacknetNodes.constants", 5);
-                    return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
+                    return Object.assign({}, HacknetNodeConstants);
                 },
             },
             hacknetServers: {
