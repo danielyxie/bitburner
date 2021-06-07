@@ -18,7 +18,6 @@ import {
 } from "../HacknetHelpers";
 
 import { Player } from "../../Player";
-import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { Money } from "../../ui/React/Money";
 import { Hashes } from "../../ui/React/Hashes";
