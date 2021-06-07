@@ -159,7 +159,7 @@ function initAugmentations() {
     const Targeting1 = new Augmentation({
         name:AugmentationNames.Targeting1, moneyCost:1.5e7, repCost:5e3,
         info:"A cranial implant that is embedded within the inner ear structures and optic nerves. It regulates " +
-             "and enhances balance and hand-eye coordination. <br><br>" +
+             "and enhances balance and hand-eye coordination.<br><br>" +
              "This augmentation increases dexterity by 10%.",
         dexterity_mult: 1.1,
     });
