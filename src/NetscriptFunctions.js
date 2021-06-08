@@ -867,7 +867,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); // It can be grown even if it has no money
-                var growthPercentage = processSingleServerGrowth(server, threads, Player);
+                processSingleServerGrowth(server, threads, Player);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = calculateHackingExpGain(server, Player) * threads;
@@ -4386,7 +4386,7 @@ function NetscriptFunctions(workerScript) {
                 },
                 constants: function() {
                     checkFormulasAccess("hacknetNodes.constants", 5);
-                    return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
+                    return Object.assign({}, HacknetNodeConstants);
                 },
             },
             hacknetServers: {

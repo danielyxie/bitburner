@@ -1678,6 +1678,7 @@ export function hospitalize() {
 //The 'sing' argument designates whether or not this is being called from
 //the applyToCompany() Netscript Singularity function
 export function applyForJob(entryPosType, sing=false) {
+    this.finishWork(true);
     // Get current company and job
     let currCompany = null;
     if (this.companyName !== "") {
@@ -1745,17 +1746,6 @@ export function applyForJob(entryPosType, sing=false) {
 
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();
-
-    this.workHackExpGained = 0;
-    this.workStrExpGained = 0;
-    this.workDefExpGained = 0;
-    this.workDexExpGained = 0;
-    this.workAgiExpGained = 0;
-    this.workChaExpGained = 0;
-    this.workRepGained = 0;
-    this.workMoneyGained = 0;
-
-    this.resetWorkStatus();
 
     if (sing) { return true; }
 
