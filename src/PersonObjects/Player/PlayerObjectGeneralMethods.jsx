@@ -1740,7 +1740,6 @@ export function applyForJob(entryPosType, sing=false) {
         }
     }
 
-    this.companyName = company.name;
     this.jobs[company.name] = pos.name;
 
     document.getElementById("world-menu-header").click();
@@ -1863,7 +1862,6 @@ export function applyForEmployeeJob(sing=false) {
 export function applyForPartTimeEmployeeJob(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
-        this.companyName = company.name;
         this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
