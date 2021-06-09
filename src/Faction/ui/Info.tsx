@@ -79,8 +79,7 @@ export class Info extends React.Component<IProps, any> {
                     By doing so you will earn reputation for your faction. You will also gain
                     reputation passively over time, although at a very slow rate. Earning
                     reputation will allow you to purchase Augmentations through this faction, which
-                    are powerful upgrades that enhance your abilities. Note that you cannot use your
-                    terminal or create scripts when you are performing a task!
+                    are powerful upgrades that enhance your abilities.
                 </p>
             </div>
         )
