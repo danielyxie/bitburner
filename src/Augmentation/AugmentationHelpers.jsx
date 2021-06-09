@@ -280,8 +280,8 @@ function initAugmentations() {
 
     const NanofiberWeave = new Augmentation({
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
-        info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " +
-             "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
+        info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning " +
+             "which improves it's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
              "This augmentation increases strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -313,8 +313,8 @@ function initAugmentations() {
     const WiredReflexes = new Augmentation({
         name:AugmentationNames.WiredReflexes, repCost:1.25e3, moneyCost:2.5e6,
         info:"Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
-             "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.<br><br>" +
-             "This augmentation increases the player's agility and dexterity by 5%.",
+             "supercharging neurons throughout the body, increasing reflex speed.<br><br>" +
+             "This augmentation increases agility and dexterity by 5%.",
         agility_mult: 1.05,
         dexterity_mult: 1.05,
     });
@@ -327,9 +327,9 @@ function initAugmentations() {
 
     const GrapheneBoneLacings = new Augmentation({
         name:AugmentationNames.GrapheneBoneLacings, repCost:1.125e6, moneyCost:4.25e9,
-        info:"A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
-             "their density and tensile strength.<br><br>" +
-             "This augmentation increases the player's strength and defense by 70%.",
+        info:"Graphene is grafted and fused into the skeletal structure, significantly increasing " +
+             "bone density and tensile strength.<br><br>" +
+             "This augmentation increases strength and defense by 70%.",
         strength_mult: 1.7,
         defense_mult: 1.7,
     });
