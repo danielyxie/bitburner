@@ -144,7 +144,7 @@ function initAugmentations() {
         name:AugmentationNames.HemoRecirculator, moneyCost:4.5e7, repCost:1e4,
         info:"A heart implant that greatly increases the body's ability to effectively use and pump " +
              "blood.<br><br>" +
-             "This augmentation increases all of the player's combat stats by 8%.",
+             "This augmentation increases all combat stats by 8%.",
         strength_mult: 1.08,
         defense_mult: 1.08,
         agility_mult: 1.08,
@@ -158,10 +158,9 @@ function initAugmentations() {
 
     const Targeting1 = new Augmentation({
         name:AugmentationNames.Targeting1, moneyCost:1.5e7, repCost:5e3,
-        info:"This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's " +
-             "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information " +
-             "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies.<br><br>" +
-             "This augmentation increases the player's dexterity by 10%.",
+        info:"A cranial implant that is embedded within the inner ear structures and optic nerves. It regulates " +
+             "and enhances balance and hand-eye coordination.<br><br>" +
+             "This augmentation increases dexterity by 10%.",
         dexterity_mult: 1.1,
     });
     Targeting1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Ishima",
@@ -173,9 +172,9 @@ function initAugmentations() {
 
     const Targeting2 = new Augmentation({
         name:AugmentationNames.Targeting2, moneyCost:4.25e7, repCost:8.75e3,
-        info:"This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
-             "This augmentation increases the player's dexterity by 20%.",
+        info:"An upgraded version of the 'Augmented Targeting' implant that adds the ability to " +
+             "lock-on and track threats.<br><br>" +
+             "This augmentation increases dexterity by 20%.",
         prereqs:[AugmentationNames.Targeting1],
         dexterity_mult: 1.2,
     });
@@ -188,9 +187,9 @@ function initAugmentations() {
 
     const Targeting3 = new Augmentation({
         name:AugmentationNames.Targeting3, moneyCost:1.15e8, repCost:2.75e4,
-        info:"This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
-             "This augmentation increases the player's dexterity by 30%.",
+        info:"The latest version of the 'Augmented Targeting' implant is capable of augmenting reality " +
+             "by digitally displaying weaknesses and vital signs of threats.<br><br>" +
+             "This augmentation increases dexterity by 30%.",
         prereqs:[AugmentationNames.Targeting2],
         dexterity_mult: 1.3,
     });
@@ -203,9 +202,9 @@ function initAugmentations() {
 
     const SyntheticHeart = new Augmentation({
         name:AugmentationNames.SyntheticHeart, moneyCost:2.875e9, repCost:7.5e5,
-        info:"This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood " +
-             "at much higher efficiencies than a normal human heart.<br><br>" +
-             "This augmentation increases the player's agility and strength by 50%.",
+        info:"This advanced artificial heart, created from plasteel and graphene, is capable of pumping blood " +
+             "more efficiently than an organic heart.<br><br>" +
+             "This augmentation increases agility and strength by 50%.",
         agility_mult: 1.5,
         strength_mult: 1.5,
     });
@@ -221,7 +220,7 @@ function initAugmentations() {
         info:"The myofibrils in human muscles are injected with special chemicals that react with the proteins inside " +
              "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic. " +
              "Scientists have named these artificially enhanced units 'synfibrils'.<br><br>" +
-             "This augmentation increases the player's strength and defense by 30%.",
+             "This augmentation increases strength and defense by 30%.",
         strength_mult: 1.3,
         defense_mult: 1.3,
     });
@@ -234,9 +233,9 @@ function initAugmentations() {
 
     const CombatRib1 = new Augmentation({
         name:AugmentationNames.CombatRib1, repCost:7.5e3, moneyCost:2.375e7,
-        info:"The human body's ribs are replaced with artificial ribs that automatically and continuously release cognitive " +
-             "and performance-enhancing drugs into the bloodstream, improving the user's abilities in combat.<br><br>" +
-             "This augmentation increases the player's strength and defense by 10%.",
+        info:"The rib cage is augmented to continuously release boosters into the bloodstream " +
+             "which increase the oxygen-carrying capacity of blood.<br><br>" +
+             "This augmentation increases strength and defense by 10%.",
         strength_mult: 1.1,
         defense_mult: 1.1,
     });
@@ -249,9 +248,9 @@ function initAugmentations() {
 
     const CombatRib2 = new Augmentation({
         name:AugmentationNames.CombatRib2, repCost:1.875e4, moneyCost:6.5e7,
-        info:"This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " +
-             "drugs into the bloodstream.<br><br>" +
-             "This augmentation increases the player's strength and defense by 14%.",
+        info:"An upgraded version of the 'Combat Rib' augmentation that adds potent stimulants which " +
+             "improve focus and endurance while decreasing reaction time and fatigue.<br><br>" +
+             "This augmentation increases strength and defense by 14%.",
         prereqs:[AugmentationNames.CombatRib1],
         strength_mult: 1.14,
         defense_mult: 1.14,
@@ -265,9 +264,9 @@ function initAugmentations() {
 
     const CombatRib3 = new Augmentation({
         name:AugmentationNames.CombatRib3, repCost:3.5e4, moneyCost:1.2e8,
-        info:"This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " +
-             "drugs into the bloodstream.<br><br>" +
-             "This augmentation increases the player's strength and defense by 18%.",
+        info:"The latest version of the 'Combat Rib' augmentation releases advanced anabolic steroids that " +
+             "improve muscle mass and physical performance while being safe and free of side effects.<br><br>" +
+             "This augmentation increases strength and defense by 18%.",
         prereqs:[AugmentationNames.CombatRib2],
         strength_mult: 1.18,
         defense_mult: 1.18,
@@ -283,7 +282,7 @@ function initAugmentations() {
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
         info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " +
              "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
-             "This augmentation increases the player's strength and defense by 20%.",
+             "This augmentation increases strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
     });
@@ -301,7 +300,7 @@ function initAugmentations() {
              "that has ever been created. The dilatant fluid, despite being thin and light, is extremely effective " +
              "at stopping piercing blows and reducing blunt trauma. The properties of graphene allow the plating to " +
              "mitigate damage from any fire or electrical traumas.<br><br>" +
-             "This augmentation increases the player's defense by 120%.",
+             "This augmentation increases defense by 120%.",
         defense_mult: 2.2,
     });
     SubdermalArmor.addToFactions(["The Syndicate", "Fulcrum Secret Technologies", "Illuminati", "Daedalus",
