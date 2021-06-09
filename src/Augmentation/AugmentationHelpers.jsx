@@ -281,7 +281,7 @@ function initAugmentations() {
     const NanofiberWeave = new Augmentation({
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
         info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning " +
-             "which improves it's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
+             "which improves it's ability to regenerate and protect the body from external stresses and forces.<br><br>" +
              "This augmentation increases strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -313,7 +313,7 @@ function initAugmentations() {
     const WiredReflexes = new Augmentation({
         name:AugmentationNames.WiredReflexes, repCost:1.25e3, moneyCost:2.5e6,
         info:"Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
-             "supercharging neurons throughout the body, increasing reflex speed.<br><br>" +
+             "supercharging the spread of neurons in the body, increasing reflex speed.<br><br>" +
              "This augmentation increases agility and dexterity by 5%.",
         agility_mult: 1.05,
         dexterity_mult: 1.05,
