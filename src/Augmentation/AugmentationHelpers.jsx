@@ -378,7 +378,7 @@ function initAugmentations() {
     const BionicLegs = new Augmentation({
         name:AugmentationNames.BionicLegs, repCost:1.5e5, moneyCost:3.75e8,
         info:"Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs.<br><br>" +
-             "This augmentation increases the player's agility by 60%.",
+             "This augmentation increases agility by 60%.",
         agility_mult: 1.6,
     });
     BionicLegs.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
