@@ -129,7 +129,7 @@ export class HacknetRoot extends React.Component {
 
         return (
             <div>
-                <h1>Hacknet Nodes</h1>
+                <h1>Hacknet {hasHacknetServers() ? "Servers" : "Nodes"}</h1>
                 <GeneralInfo />
 
                 <PurchaseButton cost={purchaseCost} multiplier={this.state.purchaseMultiplier} onClick={this.handlePurchaseButtonClick} />
