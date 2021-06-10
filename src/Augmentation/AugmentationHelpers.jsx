@@ -281,7 +281,7 @@ function initAugmentations() {
     const NanofiberWeave = new Augmentation({
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
         info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning " +
-             "which improves it's ability to regenerate and protect the body from external stresses and forces.<br><br>" +
+             "which improves its ability to regenerate and protect the body from external stresses and forces.<br><br>" +
              "This augmentation increases strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -1422,8 +1422,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases charisma by 50%.<br>" +
              "Increases charisma experience gain by 50%.<br>" +
-             "Increases the amount of reputation gained for a company by 25%.<br>" +
-             "Increases the amount of reputation gained for a faction by 25%.",
+             "Increases the amount of reputation gained from factions and companies 25%.",
         charisma_mult: 1.5,
         charisma_exp_mult: 1.5,
         company_rep_mult: 1.25,
@@ -1504,7 +1503,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered to maintain a state " +
              "of negligible senescence, preventing the body from " +
              "deteriorating with age.<br><br>" +
-             "This augmentation increases stats by 20%.",
+             "This augmentation increases all stats by 20%.",
         hacking_mult: 1.2,
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -1814,8 +1813,7 @@ function initAugmentations() {
              "at negotiation in social situations.<br><br>" +
              "This augmentation:<br>" +
              "Increases the amount of money the player earns at a company by 10%.<br>" +
-             "Increases the amount of reputation gained when working for a " +
-             "company or faction by 15%.",
+             "Increases the amount of reputation gained from factions and companies 15%.",
         work_money_mult: 1.1,
         company_rep_mult: 1.15,
         faction_rep_mult: 1.15,
