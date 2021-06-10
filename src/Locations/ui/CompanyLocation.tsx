@@ -192,8 +192,12 @@ export class CompanyLocation extends React.Component<IProps, IState> {
     startInfiltration(e: React.MouseEvent<HTMLElement>): void {
         if (!e.isTrusted) { return; }
         const loc = this.location;
+        if (!loc.infiltrationData) {
+            console.error(`trying to start infiltration at ${this.props.locName} but the infiltrationData is null`);
+            return;
+        }
 
-        this.props.engine.loadInfiltrationContent(this.props.locName, 1, 5);
+        this.props.engine.loadInfiltrationContent(this.props.locName, loc.infiltrationData.startingSecurityLevel, loc.infiltrationData.maxClearanceLevel);
 
         const data = loc.infiltrationData;
         if (data == null) { return; }

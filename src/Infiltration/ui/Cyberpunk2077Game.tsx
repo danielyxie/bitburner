@@ -4,8 +4,27 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
+import { interpolate } from "./Difficulty";
 
-import { Values } from "../debug";
+interface Difficulty {
+    [key: string]: number;
+    timer: number;
+    min: number;
+    max: number;
+}
+
+const difficulties: {
+    Trivial: Difficulty;
+    Normal: Difficulty;
+    Hard: Difficulty;
+    Impossible: Difficulty;
+} = {
+    Trivial: {timer: 12500, min:6, max:8},
+    Normal: {timer: 10000, min:4, max:6},
+    Hard: {timer: 7500, min:5, max:5},
+    Impossible: {timer: 7000, min:6, max:7},
+}
+
 
 function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     switch(event.keyCode) {
@@ -26,9 +45,11 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
 }
 
 export function Cyberpunk2077Game(props: IMinigameProps) {
-    const timer = Values.Cyberpunk.timer;
+    const difficulty: Difficulty = {timer: 0, min: 0, max: 0};
+    interpolate(difficulties, props.difficulty, difficulty);
+    const timer = difficulty.timer;
     const [grid] = useState(generatePuzzle());
-    const [answer] = useState(generateAnswer(grid));
+    const [answer] = useState(generateAnswer(grid, difficulty));
     const [index, setIndex] = useState(0);
     const [pos, setPos] = useState([0, 0]);
 
@@ -65,8 +86,6 @@ export function Cyberpunk2077Game(props: IMinigameProps) {
             setIndex(index+1);
             if(answer.length === index+1) props.onSuccess();
         }
-
-        // 32
     }
 
     return (<Grid container spacing={3}>
@@ -89,9 +108,9 @@ export function Cyberpunk2077Game(props: IMinigameProps) {
     </Grid>)
 }
 
-function generateAnswer(grid: string[][]): string[] {
+function generateAnswer(grid: string[][], difficulty: Difficulty): string[] {
     const answer = [];
-    const size = random(Values.Cyberpunk.min, Values.Cyberpunk.max);
+    const size = random(difficulty.min, difficulty.max);
     for(let i = 0; i < size; i++) {
         answer.push(grid[Math.floor(Math.random()*grid.length)][Math.floor(Math.random()*grid[0].length)]);
     }

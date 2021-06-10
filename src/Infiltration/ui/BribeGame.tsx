@@ -4,12 +4,31 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
+import { interpolate } from "./Difficulty";
 
-import { Values } from "../debug";
+interface Difficulty {
+    [key: string]: number;
+    timer: number;
+    size: number;
+}
+
+const difficulties: {
+    Trivial: Difficulty;
+    Normal: Difficulty;
+    Hard: Difficulty;
+    Impossible: Difficulty;
+} = {
+    Trivial: {timer: 12000, size: 6},
+    Normal: {timer: 9000, size: 8},
+    Hard: {timer: 5000, size: 9},
+    Impossible: {timer: 2500, size: 12},
+}
 
 export function BribeGame(props: IMinigameProps) {
-    const timer = Values.Bribe.timer;
-    const [choices, setChoices] = useState(makeChoices());
+    const difficulty: Difficulty = {timer: 0, size: 0};
+    interpolate(difficulties, props.difficulty, difficulty);
+    const timer = difficulty.timer;
+    const [choices, setChoices] = useState(makeChoices(difficulty));
     const [index, setIndex] = useState(0);
 
     function press(event: React.KeyboardEvent<HTMLElement>) {
@@ -52,10 +71,10 @@ function shuffleArray(array: string[]) {
     }
 }
 
-function makeChoices(): string[] {
+function makeChoices(difficulty: Difficulty): string[] {
     const choices = [];
     choices.push(positive[Math.floor(Math.random()*positive.length)]);
-    for(let i = 0; i < Values.Bribe.options; i++) {
+    for(let i = 0; i < difficulty.size; i++) {
         const option = negative[Math.floor(Math.random()*negative.length)];
         if(choices.includes(option)) {
             i--;

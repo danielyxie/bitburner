@@ -6,11 +6,16 @@ import { StdButton } from "../../ui/React/StdButton";
 import Grid from '@material-ui/core/Grid';
 import { MuiPaper } from '../../ui/React/MuiPaper';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import { Money } from "../../ui/React/Money";
+import { Reputation } from "../../ui/React/Reputation";
 
 
 interface IProps {
     Player: IPlayer;
     Engine: IEngine;
+    StartingDifficulty: number;
+    Difficulty: number;
+    MaxLevel: number;
 }
 
 export function Victory(props: IProps) {
@@ -23,15 +28,23 @@ export function Victory(props: IProps) {
         props.Engine.loadLocationContent();
     }
 
+    const repGain = Math.pow(props.Difficulty+1, 1.1)*
+        Math.pow(props.StartingDifficulty, 1.2)*
+        1e3;
+
+    const moneyGain = Math.pow(props.Difficulty+1, 2)*
+        Math.pow(props.StartingDifficulty, 3)*
+        800e3;
+
     function sell() {
-        props.Player.gainMoney(1e9);
-        props.Player.recordMoneySource(1e9, 'infiltration');
+        props.Player.gainMoney(moneyGain);
+        props.Player.recordMoneySource(moneyGain, 'infiltration');
         quitInfiltration();
     }
 
     function trade() {
         if(faction === 'none') return;
-        Factions[faction].playerReputation += 1e4;
+        Factions[faction].playerReputation += repGain;
         quitInfiltration();
     }
 
@@ -50,10 +63,10 @@ export function Victory(props: IProps) {
                     <option key={'none'} value={'none'}>{'none'}</option>
                     {props.Player.factions.filter(f => Factions[f].getInfo().offersWork()).map(f => <option key={f} value={f}>{f}</option>)}
                 </select>
-                <StdButton onClick={trade} text={"Trade for reputation"} />
+                <StdButton onClick={trade} text={<>{"Trade for "}{Reputation(repGain)}{" reputation"}</>} />
             </Grid>
             <Grid item xs={3}>
-                <StdButton onClick={sell} text={"Sell for money"} />
+                <StdButton onClick={sell} text={<>{"Sell for "}{Money(moneyGain)}</>} />
             </Grid>
             <Grid item xs={3}>
                 <StdButton onClick={quitInfiltration} text={"Quit"} />

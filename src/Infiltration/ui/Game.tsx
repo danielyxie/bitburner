@@ -13,11 +13,10 @@ import { MinesweeperGame } from "./MinesweeperGame";
 import { WireCuttingGame } from "./WireCuttingGame";
 import { Victory } from "./Victory";
 
-import { Values } from "../debug";
-
 interface IProps {
     Player: IPlayer;
     Engine: IEngine;
+    StartingDifficulty: number;
     Difficulty: number;
     MaxLevel: number;
 }
@@ -58,7 +57,7 @@ export function Game(props: IProps) {
     function pushResult(win: boolean): void {
         setResults(old => {
             let next = old;
-            next += win? "✓" : "✗";
+            next += win ? "✓" : "✗";
             if(next.length > 15) next = next.slice(1);
             return next;
         })
@@ -67,7 +66,7 @@ export function Game(props: IProps) {
     function failure(): void {
         setStage(Stage.Countdown);
         pushResult(false);
-        if(props.Player.takeDamage(10)) {
+        if(props.Player.takeDamage(props.StartingDifficulty*3)) {
             const menu = document.getElementById("mainmenu-container");
             if(menu === null) throw new Error("mainmenu-container not found");
             menu.style.visibility = "visible";
@@ -82,20 +81,24 @@ export function Game(props: IProps) {
         break;
     case Stage.Minigame:
         //const MiniGame = minigames[Math.floor(Math.random()*minigames.length)];
-        const MiniGame = minigames[Values.GameId];
-        stageComponent = (<MiniGame onSuccess={success} onFailure={failure} difficulty={5} />);
+        const MiniGame = minigames[2];
+        stageComponent = (<MiniGame onSuccess={success} onFailure={failure} difficulty={props.Difficulty+level/50} />);
         break;
     case Stage.Sell:
-        stageComponent = (<Victory Player={props.Player} Engine={props.Engine} />);
+        stageComponent = (<Victory Player={props.Player} Engine={props.Engine} StartingDifficulty={props.StartingDifficulty} Difficulty={props.Difficulty} MaxLevel={props.MaxLevel} />);
         break;
     }
 
+
+    function Progress() {
+        return <h4><span style={{color: "gray"}}>{results.slice(0, results.length-1)}</span>{results[results.length-1]}</h4>
+    }
 
     return (<>
         <Grid container spacing={3}>
             <Grid item xs={3}>
                 <h3>Level: {level}&nbsp;/&nbsp;{props.MaxLevel}</h3>
-                <h4>{results}</h4>
+                <Progress />
             </Grid>
 
             <Grid item xs={12}>

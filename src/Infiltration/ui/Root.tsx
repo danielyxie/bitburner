@@ -11,6 +11,7 @@ interface IProps {
     Player: IPlayer;
     Engine: IEngine;
     Location: string;
+    StartingDifficulty: number;
     Difficulty: number;
     MaxLevel: number;
 }
@@ -40,6 +41,7 @@ export function Root(props: IProps) {
     return (<Game
         Player={props.Player}
         Engine={props.Engine}
+        StartingDifficulty={props.StartingDifficulty}
         Difficulty={props.Difficulty}
         MaxLevel={props.MaxLevel}
     />);

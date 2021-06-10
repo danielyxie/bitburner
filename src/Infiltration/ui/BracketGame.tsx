@@ -4,12 +4,30 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
+import { interpolate } from "./Difficulty";
 
-import { Values } from "../debug";
+interface Difficulty {
+    [key: string]: number;
+    timer: number;
+    min: number;
+    max: number;
+}
 
-function generateLeft(): string {
+const difficulties: {
+    Trivial: Difficulty;
+    Normal: Difficulty;
+    Hard: Difficulty;
+    Impossible: Difficulty;
+} = {
+    Trivial: {timer:8000, min: 2, max: 3},
+    Normal: {timer:6000, min: 4, max: 5},
+    Hard: {timer:4000, min: 4, max: 6},
+    Impossible: {timer: 2500, min: 7, max: 7},
+}
+
+function generateLeft(difficulty: Difficulty): string {
     let str = "";
-    const length = random(Values.Bracket.min, Values.Bracket.max);
+    const length = random(difficulty.min, difficulty.max);
     for(let i = 0; i < length; i++) {
         str += ["[", '<', '(', '{'][Math.floor(Math.random()*4)];
     }
@@ -33,9 +51,11 @@ function match(left: string, right: string): boolean {
 }
 
 export function BracketGame(props: IMinigameProps) {
-    const timer = Values.Bracket.timer;
+    const difficulty: Difficulty = {timer:0, min: 0, max: 0};
+    interpolate(difficulties, props.difficulty, difficulty);
+    const timer = difficulty.timer;
     const [right, setRight] = useState("");
-    const [left, setLeft] = useState(generateLeft());
+    const [left, setLeft] = useState(generateLeft(difficulty));
 
     function press(event: React.KeyboardEvent<HTMLElement>) {
         const char = getChar(event);

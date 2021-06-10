@@ -4,8 +4,27 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
+import { interpolate } from "./Difficulty";
 
-import { Values } from "../debug";
+interface Difficulty {
+    [key: string]: number;
+    timer: number;
+    width: number;
+    height: number;
+    mines: number;
+}
+
+const difficulties: {
+    Trivial: Difficulty;
+    Normal: Difficulty;
+    Hard: Difficulty;
+    Impossible: Difficulty;
+} = {
+    Trivial: {timer: 15000, width: 3, height: 3, mines: 4},
+    Normal: {timer: 15000, width: 4, height: 4, mines: 7},
+    Hard: {timer: 15000, width: 5, height: 5, mines: 11},
+    Impossible: {timer: 15000, width: 6, height: 6, mines: 15},
+}
 
 function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     switch(event.keyCode) {
@@ -26,9 +45,11 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
 }
 
 export function MinesweeperGame(props: IMinigameProps) {
-    const timer = Values.Minesweeper.timer;
-    const [minefield] = useState(generateMinefield());
-    const [answer, setAnswer] = useState(generateEmptyField());
+    const difficulty: Difficulty = {timer: 0, width: 0, height: 0, mines: 0};
+    interpolate(difficulties, props.difficulty, difficulty);
+    const timer = difficulty.timer;
+    const [minefield] = useState(generateMinefield(difficulty));
+    const [answer, setAnswer] = useState(generateEmptyField(difficulty));
     const [pos, setPos] = useState([0, 0]);
     const [memoryPhase, setMemoryPhase] = useState(true);
 
@@ -103,18 +124,24 @@ function fieldEquals(a: boolean[][], b: boolean[][]): boolean {
     return count(a) === count(b);
 }
 
-function generateEmptyField(): boolean[][] {
+function generateEmptyField(difficulty: Difficulty): boolean[][] {
     const field = [];
-    for(let i = 0; i < Values.Minesweeper.height; i++) {
-        field.push((new Array(Values.Minesweeper.width)).fill(false));
+    for(let i = 0; i < difficulty.height; i++) {
+        field.push((new Array(difficulty.width)).fill(false));
     }
     return field;
 }
 
-function generateMinefield(): boolean[][] {
-    const field = generateEmptyField();
-    for(let i = 0; i < random(Values.Minesweeper.minemin, Values.Minesweeper.minemax); i++) {
-        field[Math.floor(Math.random()*field.length)][Math.floor(Math.random()*field[0].length)] = true;
+function generateMinefield(difficulty: Difficulty): boolean[][] {
+    const field = generateEmptyField(difficulty);
+    for(let i = 0; i < difficulty.mines; i++) {
+        const x = Math.floor(Math.random()*field.length);
+        const y = Math.floor(Math.random()*field[0].length);
+        if (field[x][y]) {
+            i--;
+            continue;
+        }
+        field[x][y] = true;
     }
     return field;
 }
