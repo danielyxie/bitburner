@@ -34,7 +34,7 @@ export function Victory(props: IProps) {
 
     const moneyGain = Math.pow(props.Difficulty+1, 2)*
         Math.pow(props.StartingDifficulty, 3)*
-        800e3;
+        400e3;
 
     function sell() {
         props.Player.gainMoney(moneyGain);

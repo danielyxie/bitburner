@@ -43,6 +43,22 @@ export function Game(props: IProps) {
     const [level, setLevel] = useState(1);
     const [stage, setStage] = useState(Stage.Countdown);
     const [results, setResults] = useState('');
+    const [lastGames, setLastGames] = useState([-1, -1]);
+
+    function nextGameId(): number {
+        let id = lastGames[0];
+        while(lastGames.includes(id)) {
+            id = Math.floor(Math.random()*minigames.length);
+        }
+        return id;
+    }
+
+    const [gameId, setGameId] = useState(nextGameId());
+
+    function setupNextGame(): void {
+        setGameId(nextGameId());
+        setLastGames([lastGames[1], gameId]);
+    }
 
     function success(): void {
         pushResult(true);
@@ -52,6 +68,7 @@ export function Game(props: IProps) {
             setStage(Stage.Countdown);
             setLevel(level+1);
         }
+        setupNextGame();
     }
 
     function pushResult(win: boolean): void {
@@ -72,6 +89,7 @@ export function Game(props: IProps) {
             menu.style.visibility = "visible";
             props.Engine.loadLocationContent();
         }
+        setupNextGame();
     }
 
     let stageComponent: React.ReactNode;
@@ -80,7 +98,7 @@ export function Game(props: IProps) {
         stageComponent = (<Countdown onFinish={() =>setStage(Stage.Minigame)} />);
         break;
     case Stage.Minigame:
-        const MiniGame = minigames[Math.floor(Math.random()*minigames.length)];
+        const MiniGame = minigames[gameId];
         stageComponent = (<MiniGame onSuccess={success} onFailure={failure} difficulty={props.Difficulty+level/50} />);
         break;
     case Stage.Sell:

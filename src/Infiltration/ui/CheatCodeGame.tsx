@@ -64,7 +64,7 @@ export function CheatCodeGame(props: IMinigameProps) {
         <GameTimer millis={timer} onExpire={props.onFailure} />
         <Grid item xs={12}>
             <h1 className={"noselect"}>Enter the Code!</h1>
-            <p style={{fontSize: '50px'}}>{code[index]}</p>
+            <p style={{fontSize: '5em'}}>{code[index]}</p>
             <KeyHandler onKeyDown={press} />
         </Grid>
     </Grid>)
