@@ -475,7 +475,7 @@ function initAugmentations() {
              "allowing the user to solve much more complex problems at a much faster rate.<br><br>" +
              "This augmentation:<br>" +
              "Increases hacking speed by 3%.<br>" +
-             "Increases the amount of money gains from hacking by 15%.<br>" +
+             "Increases the amount of money gained from hacking by 15%.<br>" +
              "Increases hacking skill by 12%.",
         hacking_speed_mult: 1.03,
         hacking_money_mult: 1.15,
@@ -1099,7 +1099,7 @@ function initAugmentations() {
              "essentially 'governing' the body. By doing so, it improves the functionality of the " +
              "body's nervous system.<br><br>" +
              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation " +
-             "increases multipliers by 1%.",
+             "increases ALL multipliers by 1%.",
         hacking_chance_mult: 1.01,
         hacking_speed_mult: 1.01,
         hacking_money_mult: 1.01,
@@ -1568,7 +1568,7 @@ function initAugmentations() {
              "Increases hacking experience gain rate by 20%.<br>" +
              "Increases chance of successfully performing a hack by 10%.<br>" +
              "Increases hacking speed by 5%.<br>" +
-             "Lets the player start with the FTPCrack.exe and relaySMTP.exe programs after a reset.",
+             "Provides the FTPCrack.exe and relaySMTP.exe programs after a reset.",
         hacking_mult: 1.15,
         hacking_exp_mult: 1.2,
         hacking_chance_mult: 1.1,
@@ -1640,12 +1640,12 @@ function initAugmentations() {
 	// Sector12
     const CashRoot = new Augmentation({
         name:AugmentationNames.CashRoot, repCost:1.25e4, moneyCost:1.25e8,
-        info:<>A collection of digital assets saved on a small chip. The chip is implanted 
-             into your wrist. A small jack in the chip allows you to connect it to a computer 
-             and upload the assets.<br /><br />
-             This augmentation:<br />
-             Lets the player start with {Money(1e6)} after a reset.<br />
-             Lets the player start with the BruteSSH.exe program after a reset.</>,
+        info:"A collection of digital assets saved on a small chip. The chip is implanted " +
+             "into the wrist. A small jack in the chip allows it to be connected to a computer " +
+             "so that the assets can be uploaded.<br><br>" +
+             "This augmentation:<br>"
+             "Provides {Money(1e6)} after a reset." +
+             "Provides the BruteSSH.exe program after a reset. ",
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
