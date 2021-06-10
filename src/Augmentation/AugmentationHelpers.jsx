@@ -755,7 +755,7 @@ function initAugmentations() {
             "so that the brain doesn't have to.<br><br>" +
             "This augmentation:<br>" +
             "Increases hacking speed by 2%.<br>" +
-            "Increases chance of successfully performing a hack by 5%.<br>" +
+            "Increases the chance of successfully performing a hack by 5%.<br>" +
             "Increases hacking skill by 7%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG1],
         hacking_speed_mult: 1.02,
@@ -798,7 +798,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases hacking speed by 2%.<br>" +
              "Increases the amount of money gained from hacking by 20%.<br>" +
-             "Increases the amount of money the player can inject into servers using grow() by 25%.",
+             "Increases the amount of money that can be injected into servers using grow() by 25%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG3],
         hacking_speed_mult: 1.02,
         hacking_money_mult: 1.2,
@@ -819,7 +819,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases hacking skill by 30%.<br>" +
              "Increases the amount of money gained from hacking by 25%.<br>" +
-             "Increases the amount of money the player can inject into servers using grow() by 75%.",
+             "Increases the amount of money that can be injected into servers using grow() by 75%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG4],
         hacking_mult: 1.3,
         hacking_money_mult: 1.25,
