@@ -660,7 +660,7 @@ export function work(numCycles) {
 
     const penalty = this.cancelationPenalty();
 
-    const penaltyString = penalty === 0.5 ? 'half' : 'three quarter'
+    const penaltyString = penalty === 0.5 ? 'half' : 'three-quarters'
 
     var elem = document.getElementById("work-in-progress-text");
     ReactDOM.render(<>
