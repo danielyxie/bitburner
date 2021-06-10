@@ -82,7 +82,7 @@ function getRandomBonus() {
                 hacknet_node_level_cost_mult: 0.85,
             },
             description: "Increases the amount of money produced by Hacknet Nodes by 20%.<br>" +
-                         "Decreases all costs related to Hacknet Node by 15%.",
+                         "Decreases all costs related to Hacknet Nodes by 15%.",
         },
         {
             bonuses: {
@@ -92,7 +92,7 @@ function getRandomBonus() {
             },
             description: "Increases the amount of money gained from working by 70%.<br>" +
                          "Increases the amount of reputation gained from companies by 25%.<br>" +
-                         "Increases the amount of reputation gained for a faction by 15%.",
+                         "Increases the amount of reputation gained from factions by 15%.",
         },
         {
             bonuses: {
