@@ -37,7 +37,10 @@ export function Intro(props: IProps) {
                 the maximum level rewards you with intel you can trade for money
                 or reputation.</p>
                 <br />
-                <p>No game require use of the mouse</p>
+                <p>The minigames you play are randomly selected. It might take you
+                few tries to get used to them.</p>
+                <br />
+                <p>No game require use of the mouse.</p>
                 <br />
                 <p>Spacebar is the default action/confirm button.</p>
                 <br />

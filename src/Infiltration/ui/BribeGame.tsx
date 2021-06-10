@@ -50,14 +50,13 @@ export function BribeGame(props: IMinigameProps) {
     return (<Grid container spacing={3}>
         <GameTimer millis={timer} onExpire={props.onFailure} />
         <Grid item xs={12}>
-            <h1 className={"noselect"}>Be diplomatic!</h1>
+            <h1>Say something nice about the guard.</h1>
             <KeyHandler onKeyDown={press} />
         </Grid>
         <Grid item xs={6}>
-            <h1>Say something nice about the guard.</h1>
-            <h2>↑</h2>
-            <h2>{choices[index]}</h2>
-            <h2>↓</h2>
+            <h2 style={{fontSize: "2em"}}>↑</h2>
+            <h2 style={{fontSize: "2em"}}>{choices[index]}</h2>
+            <h2 style={{fontSize: "2em"}}>↓</h2>
         </Grid>
     </Grid>)
 }

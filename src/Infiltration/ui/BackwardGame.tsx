@@ -5,6 +5,7 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
 import { interpolate } from "./Difficulty";
+import { BlinkingCursor } from "./BlinkingCursor";
 
 interface Difficulty {
     [key: string]: number;
@@ -21,14 +22,14 @@ const difficulties: {
 } = {
     Trivial: {timer: 16000, min: 3, max: 4},
     Normal: {timer: 12500, min: 2, max: 3},
-    Hard: {timer: 15000, min: 3, max: 5},
-    Impossible: {timer: 10000, min: 4, max: 4},
+    Hard: {timer: 15000, min: 3, max: 4},
+    Impossible: {timer: 8000, min: 4, max: 4},
 }
 
 export function BackwardGame(props: IMinigameProps) {
     // const difficulty: Difficulty = {timer: 0, min: 0, max: 0};
     // interpolate(difficulties, props.difficulty, difficulty);
-    const difficulty = difficulties.Hard;
+    const difficulty = difficulties.Trivial;
     const timer = difficulty.timer;
     const [answer, setAnswer] = useState(makeAnswer(difficulty));
     const [guess, setGuess] = useState("");
@@ -55,7 +56,7 @@ export function BackwardGame(props: IMinigameProps) {
             <p style={{transform: 'scaleX(-1)'}}>{answer}</p>
         </Grid>
         <Grid item xs={6}>
-            <p>{guess}_</p>
+            <p>{guess}<BlinkingCursor /></p>
         </Grid>
     </Grid>)
 }

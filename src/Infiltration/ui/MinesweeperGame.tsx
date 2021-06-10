@@ -127,7 +127,7 @@ function fieldEquals(a: boolean[][], b: boolean[][]): boolean {
 function generateEmptyField(difficulty: Difficulty): boolean[][] {
     const field = [];
     for(let i = 0; i < difficulty.height; i++) {
-        field.push((new Array(difficulty.width)).fill(false));
+        field.push((new Array(Math.round(difficulty.width))).fill(false));
     }
     return field;
 }

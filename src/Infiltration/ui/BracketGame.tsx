@@ -5,6 +5,7 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
 import { interpolate } from "./Difficulty";
+import { BlinkingCursor } from "./BlinkingCursor";
 
 interface Difficulty {
     [key: string]: number;
@@ -76,8 +77,8 @@ export function BracketGame(props: IMinigameProps) {
     return (<Grid container spacing={3}>
         <GameTimer millis={timer} onExpire={props.onFailure} />
         <Grid item xs={12}>
-            <h1 className={"noselect"}>Match the brackets</h1>
-            <p style={{fontSize: '5em'}}>{`${left}${right}`}</p>
+            <h1 className={"noselect"}>Close the brackets</h1>
+            <p style={{fontSize: '5em'}}>{`${left}${right}`}<BlinkingCursor /></p>
             <KeyHandler onKeyDown={press} />
         </Grid>
     </Grid>)

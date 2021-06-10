@@ -1,0 +1,56 @@
+@import "theme";
+
+.blinking-cursor {
+  font-weight: 100;
+  color: #2E3D48;
+  -webkit-animation: 1s cursorblink step-end infinite;
+  -moz-animation: 1s cursorblink step-end infinite;
+  -ms-animation: 1s cursorblink step-end infinite;
+  -o-animation: 1s cursorblink step-end infinite;
+  animation: 1s cursorblink step-end infinite;
+}
+
+@keyframes "cursorblink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: $hacker-green;
+  }
+}
+
+@-moz-keyframes cursorblink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: $hacker-green;
+  }
+}
+
+@-webkit-keyframes "cursorblink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: $hacker-green;
+  }
+}
+
+@-ms-keyframes "cursorblink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: $hacker-green;
+  }
+}
+
+@-o-keyframes "cursorblink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: $hacker-green;
+  }
+}

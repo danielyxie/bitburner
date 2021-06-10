@@ -80,8 +80,7 @@ export function Game(props: IProps) {
         stageComponent = (<Countdown onFinish={() =>setStage(Stage.Minigame)} />);
         break;
     case Stage.Minigame:
-        //const MiniGame = minigames[Math.floor(Math.random()*minigames.length)];
-        const MiniGame = minigames[2];
+        const MiniGame = minigames[Math.floor(Math.random()*minigames.length)];
         stageComponent = (<MiniGame onSuccess={success} onFailure={failure} difficulty={props.Difficulty+level/50} />);
         break;
     case Stage.Sell:
