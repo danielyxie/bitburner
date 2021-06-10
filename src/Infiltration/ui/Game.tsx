@@ -54,8 +54,6 @@ export function Game(props: IProps) {
         while(ids.includes(id)) {
             id = Math.floor(Math.random()*minigames.length);
         }
-        console.log(ids);
-        console.log(id);
         return id;
     }
 

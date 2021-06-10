@@ -8,6 +8,7 @@ import { MuiPaper } from '../../ui/React/MuiPaper';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 
 interface IProps {
@@ -28,13 +29,15 @@ export function Victory(props: IProps) {
         props.Engine.loadLocationContent();
     }
 
+    const levelBonus = props.MaxLevel*Math.pow(1.01, props.MaxLevel);
+
     const repGain = Math.pow(props.Difficulty+1, 1.1)*
         Math.pow(props.StartingDifficulty, 1.2)*
-        1e3;
+        30*levelBonus*BitNodeMultipliers.InfiltrationRep;
 
     const moneyGain = Math.pow(props.Difficulty+1, 2)*
         Math.pow(props.StartingDifficulty, 3)*
-        400e3;
+        3e3*levelBonus*BitNodeMultipliers.InfiltrationMoney;
 
     function sell() {
         props.Player.gainMoney(moneyGain);

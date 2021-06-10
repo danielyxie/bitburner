@@ -45,7 +45,7 @@ const colors = [
 
 const colorNames: any = {
     "red": "red",
-    "#FFC107": "green",
+    "#FFC107": "yellow",
     "blue": "blue",
     "white": "white",
 }
