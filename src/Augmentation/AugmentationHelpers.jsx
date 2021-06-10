@@ -341,11 +341,11 @@ function initAugmentations() {
 
     const BionicSpine = new Augmentation({
         name:AugmentationNames.BionicSpine, repCost:4.5e4, moneyCost:1.25e8,
-        info:"An artificial spine created from plasteel and carbon fibers that completely replaces the organic spine. " +
-             "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " +
-             "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " +
-             "greatly improved senses and reaction speeds.<br><br>" +
-             "This augmentation increases all of the player's combat stats by 15%.",
+        info:"Plasteel and carbon fibers completely replace organic spine. " +
+             "This new, stronger, spine is capable of stimulating and regulating " +
+             "neural signals passing through spinal cord, improving senses and reaction speed. " +
+             "The 'Bionic Spince' also interfaces with all other 'Bionic' implants.<br><br>" +
+             "This augmentation increases all combat stats by 15%.",
         strength_mult: 1.15,
         defense_mult: 1.15,
         agility_mult: 1.15,
@@ -360,9 +360,9 @@ function initAugmentations() {
 
     const GrapheneBionicSpine = new Augmentation({
         name:AugmentationNames.GrapheneBionicSpine, repCost:1.625e6, moneyCost:6e9,
-        info:"An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene " +
-             "material to make it much stronger and lighter.<br><br>" +
-             "This augmentation increases all of the player's combat stats by 60%.",
+        info:"An upgrade to the 'Bionic Spine' augmentation. It fuses the spine with an advanced graphene " +
+             "making it more durable and lighter and supercharges all body functions.<br><br>" +
+             "This augmentation increases all combat stats by 60%.",
         prereqs:[AugmentationNames.BionicSpine],
         strength_mult: 1.6,
         defense_mult: 1.6,
@@ -377,7 +377,8 @@ function initAugmentations() {
 
     const BionicLegs = new Augmentation({
         name:AugmentationNames.BionicLegs, repCost:1.5e5, moneyCost:3.75e8,
-        info:"Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs.<br><br>" +
+        info:"Organics legs are surgically removed and replaced with cybernetic legs created from plasteel and " +
+             "carbon fibers that provide increased running ability.<br><br>" +
              "This augmentation increases agility by 60%.",
         agility_mult: 1.6,
     });
@@ -390,9 +391,9 @@ function initAugmentations() {
 
     const GrapheneBionicLegs = new Augmentation({
         name:AugmentationNames.GrapheneBionicLegs, repCost:7.5e5, moneyCost:4.5e9,
-        info:"An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene " +
-             "material to make it much stronger and lighter.<br><br>" +
-             "This augmentation increases the player's agility by 150%.",
+        info:"An upgrade to the 'Bionic Legs' augmentation. It fuses the implant with an advanced graphene " +
+             "material greatly enhancing jumping ability.<br><br>" +
+             "This augmentation increases gility by 150%.",
         prereqs: [AugmentationNames.BionicLegs],
         agility_mult: 2.5,
     });
@@ -408,7 +409,7 @@ function initAugmentations() {
         info:"A cochlear implant with an embedded computer that analyzes incoming speech. " +
              "The embedded computer processes characteristics of incoming speech, such as tone " +
              "and inflection, to pick up on subtle cues and aid in social interactions.<br><br>" +
-             "This augmentation increases the player's charisma by 20%.",
+             "This augmentation increases charisma by 20%.",
         charisma_mult: 1.2,
     });
     SpeechProcessor.addToFactions(["Tian Di Hui", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
@@ -420,10 +421,10 @@ function initAugmentations() {
 
     const TITN41Injection = new Augmentation({
         name:AugmentationNames.TITN41Injection, repCost:2.5e4, moneyCost:1.9e8,
-        info:"TITN is a series of viruses that targets and alters the sequences of human DNA in genes that " +
+        info:"TITN is a series of viruses that target and alter genes in human DNA that " +
              "control personality. The TITN-41 strain alters these genes so that the subject becomes more " +
              "outgoing and socialable.<br><br>" +
-             "This augmentation increases the player's charisma and charisma experience gain rate by 15%.",
+             "This augmentation increases charisma and charisma experience gain rate by 15%.",
         charisma_mult: 1.15,
         charisma_exp_mult: 1.15,
     });
@@ -435,12 +436,12 @@ function initAugmentations() {
 
     const EnhancedSocialInteractionImplant = new Augmentation({
         name:AugmentationNames.EnhancedSocialInteractionImplant, repCost:3.75e5, moneyCost:1.375e9,
-        info:"A cranial implant that greatly assists in the user's ability to analyze social situations " +
+        info:"A cranial implant that greatly assists in the ability to analyze social situations " +
              "and interactions. The system uses a wide variety of factors such as facial expressions, body " +
-             "language, and the voice tone, and inflection to determine the best course of action during social" +
+             "language, voice tone, and inflection to determine the best course of action during social" +
              "situations. The implant also uses deep learning software to continuously learn new behavior" +
              "patterns and how to best respond.<br><br>" +
-             "This augmentation increases the player's charisma and charisma experience gain rate by 60%.",
+             "This augmentation increases charisma and charisma experience gain rate by 60%.",
         charisma_mult: 1.6,
         charisma_exp_mult: 1.6,
     });
@@ -456,7 +457,7 @@ function initAugmentations() {
         name:AugmentationNames.BitWire, repCost:3.75e3, moneyCost:1e7,
         info: "A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " +
               "capabilities.<br><br>" +
-              "This augmentation increases the player's hacking skill by 5%.",
+              "This augmentation increases hacking skill by 5%.",
         hacking_mult: 1.05,
     });
     BitWire.addToFactions(["CyberSec", "NiteSec"]);
@@ -491,9 +492,9 @@ function initAugmentations() {
         info:"The body is injected with a chemical that artificially induces synaptic potentiation, " +
              "otherwise known as the strengthening of synapses. This results in enhanced cognitive abilities.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's hacking speed by 2%.<br>" +
-             "Increases the player's hacking chance by 5%.<br>" +
-             "Increases the player's hacking experience gain rate by 5%.",
+             "Increases the hacking speed by 2%.<br>" +
+             "Increases the hacking chance by 5%.<br>" +
+             "Increases the hacking experience gain rate by 5%.",
         hacking_speed_mult: 1.02,
         hacking_chance_mult: 1.05,
         hacking_exp_mult: 1.05,
@@ -511,9 +512,9 @@ function initAugmentations() {
              "system. These myelin sheaths can propogate neuro-signals much faster than their organic " +
              "counterparts, leading to greater processing speeds and better brain function.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's hacking speed by 3%.<br>" +
-             "Increases the player's hacking skill by 8%.<br>" +
-             "Increases the player's hacking experience gain rate by 10%.",
+             "Increases the hacking speed by 3%.<br>" +
+             "Increases the hacking skill by 8%.<br>" +
+             "Increases the hacking experience gain rate by 10%.",
         hacking_speed_mult: 1.03,
         hacking_exp_mult: 1.1,
         hacking_mult: 1.08,
