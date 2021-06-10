@@ -43,6 +43,13 @@ const colors = [
     "white",
 ]
 
+const colorNames: any = {
+    "red": "red",
+    "#FFC107": "green",
+    "blue": "blue",
+    "white": "white",
+}
+
 interface Wire {
     tpe: string;
     colors: string[];
@@ -126,7 +133,7 @@ function randomColorQuestion(wires: Wire[]) {
     const cutColor = wires[index].colors[0];
     return {
         toString: (): string => {
-            return `Cut all wires colored ${cutColor}.`; // todo, the array is a length
+            return `Cut all wires colored ${colorNames[cutColor]}.`;
         },
         shouldCut: (wire: Wire, i: number):boolean => {
             return wire.colors.includes(cutColor);
