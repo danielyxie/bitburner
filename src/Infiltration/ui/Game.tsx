@@ -81,7 +81,7 @@ export function Game(props: IProps) {
         break;
     case Stage.Minigame:
         const MiniGame = minigames[Math.floor(Math.random()*minigames.length)];
-        stageComponent = (<MiniGame onSuccess={success} onFailure={failure} difficulty={props.Difficulty+level/50} />);
+        stageComponent = (<Cyberpunk2077Game onSuccess={success} onFailure={failure} difficulty={props.Difficulty+level/50} />);
         break;
     case Stage.Sell:
         stageComponent = (<Victory Player={props.Player} Engine={props.Engine} StartingDifficulty={props.StartingDifficulty} Difficulty={props.Difficulty} MaxLevel={props.MaxLevel} />);

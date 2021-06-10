@@ -9,8 +9,9 @@ import { interpolate } from "./Difficulty";
 interface Difficulty {
     [key: string]: number;
     timer: number;
-    min: number;
-    max: number;
+    width: number;
+    height: number;
+    symbols: number;
 }
 
 const difficulties: {
@@ -19,10 +20,10 @@ const difficulties: {
     Hard: Difficulty;
     Impossible: Difficulty;
 } = {
-    Trivial: {timer: 12500, min:6, max:8},
-    Normal: {timer: 10000, min:4, max:6},
-    Hard: {timer: 7500, min:5, max:5},
-    Impossible: {timer: 7000, min:6, max:7},
+    Trivial: {timer: 12500, width: 3, height: 3, symbols: 6},
+    Normal: {timer: 15000, width: 4, height: 4, symbols: 7},
+    Hard: {timer: 12500, width: 5, height: 5, symbols: 8},
+    Impossible: {timer: 10000, width: 6, height: 6, symbols: 9},
 }
 
 
@@ -45,10 +46,10 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
 }
 
 export function Cyberpunk2077Game(props: IMinigameProps) {
-    const difficulty: Difficulty = {timer: 0, min: 0, max: 0};
+    const difficulty: Difficulty = {timer: 0, width: 0, height: 0, symbols: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
-    const [grid] = useState(generatePuzzle());
+    const [grid] = useState(generatePuzzle(difficulty));
     const [answer] = useState(generateAnswer(grid, difficulty));
     const [index, setIndex] = useState(0);
     const [pos, setPos] = useState([0, 0]);
@@ -88,21 +89,22 @@ export function Cyberpunk2077Game(props: IMinigameProps) {
         }
     }
 
+    const fontSize = "2em";
     return (<Grid container spacing={3}>
         <GameTimer millis={timer} onExpire={props.onFailure} />
         <Grid item xs={12}>
             <h1 className={"noselect"}>Match the symbols!</h1>
-            <h2>Target:{answer.map((a, i) => {
+            <h2 style={{fontSize: fontSize}}>Targets: {answer.map((a, i) => {
                 if(i == index)
-                    return <span style={{color: 'blue'}}>{a}&nbsp;</span>
-                return <span>{a}&nbsp;</span>
+                    return <span key={`${i}`} style={{fontSize: "1em", color: 'blue'}}>{a}&nbsp;</span>
+                return <span key={`${i}`} style={{fontSize: "1em"}}>{a}&nbsp;</span>
             })}</h2>
             <br />
-            {grid.map((line, y) => <><pre>{line.map((cell, x) => {
+            {grid.map((line, y) => <div key={y}><pre>{line.map((cell, x) => {
                 if(x == pos[0] && y == pos[1])
-                    return <span style={{color: 'blue'}}>{cell}&nbsp;</span>
-                return <span>{cell}&nbsp;</span>
-            })}</pre><br /></>)}
+                    return <span key={`${x}${y}`} style={{fontSize: fontSize, color: 'blue'}}>{cell}&nbsp;</span>
+                return <span key={`${x}${y}`} style={{fontSize: fontSize}}>{cell}&nbsp;</span>
+            })}</pre><br /></div>)}
             <KeyHandler onKeyDown={press} />
         </Grid>
     </Grid>)
@@ -110,8 +112,7 @@ export function Cyberpunk2077Game(props: IMinigameProps) {
 
 function generateAnswer(grid: string[][], difficulty: Difficulty): string[] {
     const answer = [];
-    const size = random(difficulty.min, difficulty.max);
-    for(let i = 0; i < size; i++) {
+    for(let i = 0; i < Math.round(difficulty.symbols); i++) {
         answer.push(grid[Math.floor(Math.random()*grid.length)][Math.floor(Math.random()*grid[0].length)]);
     }
     return answer;
@@ -121,11 +122,11 @@ function randChar(): string {
     return "ABCDEF0123456789"[Math.floor(Math.random()*16)];
 }
 
-function generatePuzzle(): string[][] {
+function generatePuzzle(difficulty: Difficulty): string[][] {
     const puzzle = [];
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < Math.round(difficulty.height); i++) {
         const line = [];
-        for(let j = 0; j < 5; j++) {
+        for(let j = 0; j < Math.round(difficulty.width); j++) {
             line.push(randChar()+randChar());
         }
         puzzle.push(line);
