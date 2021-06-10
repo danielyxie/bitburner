@@ -1673,31 +1673,31 @@ function initAugmentations() {
     AddToAugmentations(NutriGen);
 
 	// Aevum
-    const PCMatrix = new Augmentation({
-        name:AugmentationNames.PCMatrix, repCost:5e4, moneyCost:5e8,
-        info:"A 'Probability Computation Matrix' is installed in the frontal cortex. This implant" +
-             "uses advanced mathematical algorithims to rapidly identify and compute statistical" +
-             "outcomes of nearly every situation. The use of this implant is outlawed for use in" +
-             "Aevum's casino.<br><br>"+
-             "This augmentation:<br>" +
-             "Increases all combat stats by 7%",
-             "Increases experience gain rate for all combat stats by 7%.",
-             "Increases the amount of money produced by Hacknet Nodes by 7%.<br>" +
-             "Decreases the cost of purchasing a Hacknet Node by 7%.<br>" +
-             "Increases crime success rate by 7%.<br>" +
-             "Increases the amount of money gained from crimes by 7%., +
-        strength_mult: 1.07,
-        defense_mult: 1.07,
-        dexterity_mult: 1.07,
-        agility_mult: 1.07,
-        strength_exp_mult: 1.07,
-        defense_exp_mult: 1.07,
-        dexterity_exp_mult: 1.07,
-        agility_exp_mult: 1.07,
-        hacknet_node_money_mult: 1.07,
-        hacknet_node_purchase_cost_mult: 0.07,
-        crime_success_mult: 1.07,
-        crime_money_mult: 1.07,
+    //const PCMatrix = new Augmentation({
+    //    name:AugmentationNames.PCMatrix, repCost:5e4, moneyCost:5e8,
+    //    info:"A 'Probability Computation Matrix' is installed in the frontal cortex. This implant" +
+    //         "uses advanced mathematical algorithims to rapidly identify and compute statistical" +
+    //         "outcomes of nearly every situation. The use of this implant is outlawed for use in" +
+    //         "Aevum's casino.<br><br>"+
+    //         "This augmentation:<br>" +
+    //         "Increases all combat stats by 7%",
+    //         "Increases experience gain rate for all combat stats by 7%.",
+    //         "Increases the amount of money produced by Hacknet Nodes by 7%.<br>" +
+    //         "Decreases the cost of purchasing a Hacknet Node by 7%.<br>" +
+    //         "Increases crime success rate by 7%.<br>" +
+    //         "Increases the amount of money gained from crimes by 7%., +
+    //    strength_mult: 1.07,
+    //    defense_mult: 1.07,
+    //    dexterity_mult: 1.07,
+    //    agility_mult: 1.07,
+    //    strength_exp_mult: 1.07,
+    //   defense_exp_mult: 1.07,
+    //    dexterity_exp_mult: 1.07,
+    //    agility_exp_mult: 1.07,
+    //    hacknet_node_money_mult: 1.07,
+    //    hacknet_node_purchase_cost_mult: 0.07,
+    //    crime_success_mult: 1.07,
+    //    crime_money_mult: 1.07,
     });
 
     // Ishima
