@@ -41,7 +41,7 @@ function getRandomBonus() {
             description: "Increases hacking chance by 25%.<br>" +
                          "Increases hacking speed by 10%.<br>" +
                          "Increases the amount of money gained from hacking by 25%.<br>" +
-                         "Increases the amount of money that can be inject into servers using grow() by 10%.",
+                         "Increases the amount of money that can be injected into servers using grow() by 10%.",
         },
         {
             bonuses: {
