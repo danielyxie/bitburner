@@ -49,7 +49,7 @@ function getRandomBonus() {
                 hacking_exp_mult: 2,
             },
             description: "Increases hacking skill by 15%.<br>" +
-                         "Increases hacking experience gain rate by 100%.",
+                         "Increases hacking experience gain by 100%.",
         },
         {
             bonuses: {
@@ -63,7 +63,7 @@ function getRandomBonus() {
                 agility_exp_mult: 1.5,
             },
             description: "Increases combat stats by 25%.<br>" +
-                         "Increases combat stat experience gain rate by 100%.",
+                         "Increases combat stat experience gain by 100%.",
         },
         {
             bonuses: {
@@ -71,7 +71,7 @@ function getRandomBonus() {
                 charisma_exp_mult: 2,
             },
             description: "This augmentation increases charisma by 50%.<br>" +
-                         "Increases charisma experience gain rate by 100%.",
+                         "Increases charisma experience gain by 100%.",
         },
         {
             bonuses: {
@@ -91,7 +91,7 @@ function getRandomBonus() {
                 work_money_mult: 1.7,
             },
             description: "Increases the amount of money gained from working by 70%.<br>" +
-                         "Increases the amount of reputation gained when working for a company by 25%.<br>" +
+                         "Increases the amount of reputation gained from companies by 25%.<br>" +
                          "Increases the amount of reputation gained for a faction by 15%.",
         },
         {
@@ -343,7 +343,7 @@ function initAugmentations() {
         name:AugmentationNames.BionicSpine, repCost:4.5e4, moneyCost:1.25e8,
         info:"Plasteel and carbon fibers completely replace organic spine. " +
              "This new, stronger, spine is capable of stimulating and regulating " +
-             "neural signals passing through spinal cord, improving senses and reaction speed. " +
+             "neural signals passing through the spinal cord, improving senses and reaction speed. " +
              "The 'Bionic Spince' also interfaces with all other 'Bionic' implants.<br><br>" +
              "This augmentation increases all combat stats by 15%.",
         strength_mult: 1.15,
@@ -360,8 +360,8 @@ function initAugmentations() {
 
     const GrapheneBionicSpine = new Augmentation({
         name:AugmentationNames.GrapheneBionicSpine, repCost:1.625e6, moneyCost:6e9,
-        info:"An upgrade to the 'Bionic Spine' augmentation. It fuses the spine with an advanced graphene " +
-             "making it more durable and lighter and supercharges all body functions.<br><br>" +
+        info:"An upgrade to the 'Bionic Spine' augmentation. The spine is now fused with graphene " +
+             "to enhance durability while supercharging all body functions.<br><br>" +
              "This augmentation increases all combat stats by 60%.",
         prereqs:[AugmentationNames.BionicSpine],
         strength_mult: 1.6,
@@ -393,7 +393,7 @@ function initAugmentations() {
         name:AugmentationNames.GrapheneBionicLegs, repCost:7.5e5, moneyCost:4.5e9,
         info:"An upgrade to the 'Bionic Legs' augmentation. It fuses the implant with an advanced graphene " +
              "material greatly enhancing jumping ability.<br><br>" +
-             "This augmentation increases gility by 150%.",
+             "This augmentation increases agility by 150%.",
         prereqs: [AugmentationNames.BionicLegs],
         agility_mult: 2.5,
     });
@@ -424,7 +424,7 @@ function initAugmentations() {
         info:"TITN is a series of viruses that target and alter genes in human DNA that " +
              "control personality. The TITN-41 strain alters these genes so that the subject becomes more " +
              "outgoing and socialable.<br><br>" +
-             "This augmentation increases charisma and charisma experience gain rate by 15%.",
+             "This augmentation increases charisma and charisma experience gain by 15%.",
         charisma_mult: 1.15,
         charisma_exp_mult: 1.15,
     });
@@ -441,7 +441,7 @@ function initAugmentations() {
              "language, voice tone, and inflection to determine the best course of action during social" +
              "situations. The implant also uses deep learning software to continuously learn new behavior" +
              "patterns and how to best respond.<br><br>" +
-             "This augmentation increases charisma and charisma experience gain rate by 60%.",
+             "This augmentation increases charisma and charisma experience gain by 60%.",
         charisma_mult: 1.6,
         charisma_exp_mult: 1.6,
     });
@@ -494,7 +494,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the hacking speed by 2%.<br>" +
              "Increases the hacking chance by 5%.<br>" +
-             "Increases the hacking experience gain rate by 5%.",
+             "Increases the hacking experience gain by 5%.",
         hacking_speed_mult: 1.02,
         hacking_chance_mult: 1.05,
         hacking_exp_mult: 1.05,
@@ -514,7 +514,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the hacking speed by 3%.<br>" +
              "Increases the hacking skill by 8%.<br>" +
-             "Increases the hacking experience gain rate by 10%.",
+             "Increases the hacking experience gain by 10%.",
         hacking_speed_mult: 1.03,
         hacking_exp_mult: 1.1,
         hacking_mult: 1.08,
@@ -542,7 +542,7 @@ function initAugmentations() {
         name:AugmentationNames.NeuralRetentionEnhancement, repCost:2e4, moneyCost:2.5e8,
         info:"Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
              "circuits, strengthening the ability to retain information.<br><br>" +
-             "This augmentation increases hacking experience gain rate by 25%.",
+             "This augmentation increases hacking experience gain by 25%.",
         hacking_exp_mult: 1.25,
     });
     NeuralRetentionEnhancement.addToFactions(["NiteSec"]);
@@ -590,7 +590,7 @@ function initAugmentations() {
              "Increases hacking speed by 3%.<br>" +
              "Increases the amount of money gained from hacking by 10%.<br>" +
              "Increases chance of successfully performing a hack by 3%.<br>" +
-             "Increases hacking experience gain rate by 7%.<br>" +
+             "Increases hacking experience gain by 7%.<br>" +
              "Increases hacking skill by 7%.",
         prereqs:[AugmentationNames.ENM],
         hacking_speed_mult: 1.03,
@@ -616,7 +616,7 @@ function initAugmentations() {
              "Increases hacking speed by 5%.<br>" +
              "Increases the amount of money gained from hacking by 30%.<br>" +
              "Increases chance of successfully performing a hack by 5%.<br>" +
-             "Increases hacking experience gain rate by 15%.<br>" +
+             "Increases hacking experience gain by 15%.<br>" +
              "Increases hacking skill by 8%.",
         prereqs:[AugmentationNames.ENMCore],
         hacking_speed_mult: 1.05,
@@ -641,7 +641,7 @@ function initAugmentations() {
              "Increases hacking speed by 5%.<br>" +
              "Increases the amount of money gained from hacking by 40%.<br>" +
              "Increases chance of successfully performing a hack by 10%.<br>" +
-             "Increases hacking experience gain rate by 25%.<br>" +
+             "Increases hacking experience gain by 25%.<br>" +
              "Increases hacking skill by 10%.",
         prereqs:[AugmentationNames.ENMCoreV2],
         hacking_speed_mult: 1.05,
@@ -698,7 +698,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases hacking speed by 2%.<br>" +
              "Increases chance of successfully performing a hack by 10%.<br>" +
-             "Increases hacking experience gain rate by 12%.",
+             "Increases hacking experience gain by 12%.",
         hacking_speed_mult: 1.02,
         hacking_chance_mult: 1.1,
         hacking_exp_mult: 1.12,
@@ -717,7 +717,7 @@ function initAugmentations() {
              "speed of biological neural networks. This is a cranial implant that is embedded inside the brain.<br><br>" +
              "This augmentation:<br>" +
              "Increases hacking skill by 10%.<br>" +
-             "Increases hacking experience gain rate by 15%.<br>" +
+             "Increases hacking experience gain by 15%.<br>" +
              "Increases the amount of money gained from hacking by 20%.",
         hacking_mult: 1.1,
         hacking_exp_mult: 1.15,
@@ -838,7 +838,7 @@ function initAugmentations() {
              "to enhance the production and capabilities of its neural stem cells.<br><br>" +
              "This augmentation:<br>" +
              "Increases hacking skill by 15%.<br>" +
-             "Increases hacking experience gain rate by 10%.<br>"+
+             "Increases hacking experience gain by 10%.<br>"+
              "Increases hacking speed by 3%.",
         hacking_mult: 1.15,
         hacking_exp_mult: 1.1,
@@ -857,7 +857,7 @@ function initAugmentations() {
              "the bloodstream to improve memory, increase focus, and provide other " +
              "cognitive enhancements.<br><br>" +
              "This augmentation increases the amount of reputation gained " +
-             "when working for a company by 20%.",
+             "from companies by 20%.",
         company_rep_mult: 1.2,
     });
     NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing",
@@ -874,7 +874,7 @@ function initAugmentations() {
              "social interactions.<br><br>" +
              "This augmentation:<br>" +
              "Increases charisma by 10%.<br>" +
-             "Increases the amount of reputation gained when working for a company by 10%.",
+             "Increases the amount of reputation gained from companies by 10%.",
         company_rep_mult: 1.1,
         charisma_mult: 1.1,
     });
@@ -892,7 +892,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases all experience gains by 5%.<br>" +
              "Increases the amount of money gained from working by 20%.<br>" +
-             "Increases the amount of reputation gained when working for a company by 10%.",
+             "Increases the amount of reputation gained from companies by 10%.",
         hacking_exp_mult: 1.05,
         strength_exp_mult: 1.05,
         defense_exp_mult: 1.05,
@@ -914,7 +914,7 @@ function initAugmentations() {
              "computers. Connecting to a computer through this jack allows you to interface with " +
              "it using the brain's electrochemical signals.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the amount of reputation gained when working for a company by 30%.<br>" +
+             "Increases the amount of reputation gained from companies by 30%.<br>" +
              "Increases hacking skill by 8%.",
         company_rep_mult: 1.3,
         hacking_mult: 1.08,
@@ -931,7 +931,7 @@ function initAugmentations() {
              "improves the performance of the interface and gives the user more control options " +
              "to a connected computer.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the amount of reputation gained when working for a company by 75%.<br>" +
+             "Increases the amount of reputation gained from companies by 75%.<br>" +
              "Increases hacking skill by 10%.",
         prereqs:[AugmentationNames.PCDNI],
         company_rep_mult: 1.75,
@@ -950,7 +950,7 @@ function initAugmentations() {
              "The Neural Network upgrade allows the user to use their own brain's " +
              "processing power to aid the computer in computational tasks.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the amount of reputation gained when working for a company by 100%.<br>" +
+             "Increases the amount of reputation gained from companies by 100%.<br>" +
              "Increases hacking skill by 10%.<br>" +
              "Increases hacking speed by 5%.",
         prereqs:[AugmentationNames.PCDNI],
@@ -969,7 +969,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
              "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " +
              "triggers feelings of admiration and approval in other people.<br><br>" +
-             "This augmentation increases the amount of reputation gained when working for a faction or company by 10%.",
+             "This augmentation increases the amount of reputation gained from factions and companies by 10%.",
         company_rep_mult: 1.1,
         faction_rep_mult: 1.1,
     });
@@ -984,7 +984,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered so that it produces the ADR-V2 pheromone, " +
              "which is similar to but more potent than ADR-V1. This pheromone, when excreted, " +
              "triggers feelings of admiration, approval, and respect in others.<br><br>" +
-             "This augmentation increases the amount of reputation gained when working for a faction or company by 20%.",
+             "This augmentation increases the amount of reputation gained from factions and companies by 20%.",
         company_rep_mult: 1.2,
         faction_rep_mult: 1.2,
     });
@@ -1001,7 +1001,7 @@ function initAugmentations() {
               "criminal organizations and allows the user to project and control holographic " +
               "simulacrums within a large radius. These simulacrums are commonly used for " +
               "espionage and surveillance work.<br><br>" +
-              "This augmentation increases the amount of reputation gained when working for a faction or company by 15%.",
+              "This augmentation increases the amount of reputation gained from factions and companies by 15%.",
         company_rep_mult: 1.15,
         faction_rep_mult: 1.15,
     });
@@ -1160,7 +1160,7 @@ function initAugmentations() {
              "installed by releasing millions of nanobots into the human brain, each of which " +
              "attaches to a different neural pathway to enhance the brain's ability to retain " +
              "and retrieve information.<br><br>" +
-             "This augmentation increases experience gain rate for all stats by 10%.",
+             "This augmentation increases experience gain for all stats by 10%.",
         hacking_exp_mult: 1.1,
         strength_exp_mult: 1.1,
         defense_exp_mult: 1.1,
@@ -1179,7 +1179,7 @@ function initAugmentations() {
         info:"A decentralized cranial implant that improves the brain's ability to learn. This " +
              "is a more powerful version of the Neurotrainer I augmentation, but it does not " +
              "require Neurotrainer I to be installed as a prerequisite.<br><br>" +
-             "This augmentation increases experience gain rate for all stats by 15%.",
+             "This augmentation increases experience gain for all stats by 15%.",
         hacking_exp_mult: 1.15,
         strength_exp_mult: 1.15,
         defense_exp_mult: 1.15,
@@ -1198,7 +1198,7 @@ function initAugmentations() {
         info:"A decentralized cranial implant that improves the brain's ability to learn. This " +
              "is a more powerful version of the Neurotrainer I and Neurotrainer II augmentation, " +
              "but it does not require either of them to be installed as a prerequisite.<br><br>" +
-             "This augmentation increases experience gain rate for all stats by 20%.",
+             "This augmentation increases experience gain for all stats by 20%.",
         hacking_exp_mult: 1.2,
         strength_exp_mult: 1.2,
         defense_exp_mult: 1.2,
@@ -1275,7 +1275,7 @@ function initAugmentations() {
              "using sound propagation.<br><br>" +
              "This augmentation:<br>" +
              "Increases dexterity by 10%.<br>" +
-             "Increases dexterity experience gain rate by 15%.<br>" +
+             "Increases dexterity experience gain by 15%.<br>" +
              "Increases the amount of money gained from crimes by 25%.",
         dexterity_mult: 1.1,
         dexterity_exp_mult: 1.15,
@@ -1294,7 +1294,7 @@ function initAugmentations() {
              "and converting it back into usable power.<br><br>" +
              "This augmentation:<br>" +
              "Increases stats by 5%.<br>" +
-             "Increases experience gain rate for all stats by 10%.",
+             "Increases experience gain for all stats by 10%.",
         hacking_mult: 1.05,
         strength_mult: 1.05,
         defense_mult: 1.05,
@@ -1397,7 +1397,7 @@ function initAugmentations() {
              "energy for the body.<br><br>" +
              "This augmentation:<br>" +
              "Increases combat stats by 35%.<br>" +
-             "Increases combat stat experience gain rate by 35%.",
+             "Increases combat stat experience gain by 35%.",
         strength_mult: 1.35,
         defense_mult: 1.35,
         dexterity_mult: 1.35,
@@ -1421,7 +1421,7 @@ function initAugmentations() {
              "others using optical imaging software.<br><br>" +
              "This augmentation:<br>" +
              "Increases charisma by 50%.<br>" +
-             "Increases charisma experience gain rate by 50%.<br>" +
+             "Increases charisma experience gain by 50%.<br>" +
              "Increases the amount of reputation gained for a company by 25%.<br>" +
              "Increases the amount of reputation gained for a faction by 25%.",
         charisma_mult: 1.5,
@@ -1460,7 +1460,7 @@ function initAugmentations() {
              "improve the body's functioning in all aspects.<br><br>" +
              "This augmentation:<br>" +
              "Increases stats by 20%.<br>" +
-             "Increases experience gain rate for all stats by 15%.",
+             "Increases experience gain for all stats by 15%.",
         hacking_mult: 1.2,
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -1526,7 +1526,7 @@ function initAugmentations() {
              "hacking abilities.<br><br>" +
              "This augmentation:<br>" +
              "Increases hacking skill by 20%.<br>" +
-             "Increases hacking experience gain rate by 25%.",
+             "Increases hacking experience gain by 25%.",
         hacking_mult: 1.2,
         hacking_exp_mult: 1.25,
     });
@@ -1565,7 +1565,7 @@ function initAugmentations() {
              "the largest database of hacking tools and information in the world.<br><br>" +
              "This augmentation:<br>" +
              "Increases hacking skill by 15%.<br>" +
-             "Increases hacking experience gain rate by 20%.<br>" +
+             "Increases hacking experience gain by 20%.<br>" +
              "Increases chance of successfully performing a hack by 10%.<br>" +
              "Increases hacking speed by 5%.<br>" +
              "Provides the FTPCrack.exe and relaySMTP.exe programs after a reset.",
@@ -1612,7 +1612,7 @@ function initAugmentations() {
              "cortex and improves cognitive abilities.<br><br>" +
              "This augmentation:<br>" +
              "Improves hacking skill by 8%.<br>" +
-             "Improves hacking experience gain rate by 15%.",
+             "Improves hacking experience gain by 15%.",
         hacking_mult: 1.08,
         hacking_exp_mult: 1.15,
     });
@@ -1628,7 +1628,7 @@ function initAugmentations() {
         info:"A drug that genetically modifies the neurons in the brain " +
              "resulting in neurons never die, continuously " +
              "regenerate, and strengthen themselves.<br><br>" +
-             "This augmentation increases hacking experience gain rate by 40%.",
+             "This augmentation increases hacking experience gain by 40%.",
         hacking_exp_mult: 1.4,
     });
     Neuregen.addToFactions(["Chongqing"]);
@@ -1660,7 +1660,7 @@ function initAugmentations() {
              "synthesizes glucose, amino acids, and vitamins and redistributes them " +
              "across the body. The device is powered by the body's naturally wasted " +
              "energy in the form of heat.<br><br>" +
-             "This augmentation increases experience gain rate for all combat stats by 20%.",
+             "This augmentation increases experience gain for all combat stats by 20%.",
         strength_exp_mult: 1.2,
         defense_exp_mult: 1.2,
         dexterity_exp_mult: 1.2,
@@ -1681,7 +1681,7 @@ function initAugmentations() {
     //         "Aevum's casino.<br><br>"+
     //         "This augmentation:<br>" +
     //         "Increases all combat stats by 7%",
-    //         "Increases experience gain rate for all combat stats by 7%.",
+    //         "Increases experience gain for all combat stats by 7%.",
     //         "Increases the amount of money produced by Hacknet Nodes by 7%.<br>" +
     //         "Decreases the cost of purchasing a Hacknet Node by 7%.<br>" +
     //         "Increases crime success rate by 7%.<br>" +
@@ -1858,7 +1858,7 @@ function initAugmentations() {
                  "This augmentation:<br>" +
                  "Increases success chance in Bladeburner contracts/operations by 3%.<br>" +
                  "Increases effectiveness in Bladeburner Field Analysis by 5%.<br>" +
-                 "Increases Bladeburner stamina gain rate by 2%.",
+                 "Increases Bladeburner stamina gain by 2%.",
             bladeburner_success_chance_mult: 1.03,
             bladeburner_analysis_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.02,
@@ -1923,7 +1923,7 @@ function initAugmentations() {
                  "create super soldiers.<br><br>" +
                  "This augmentation:<br>" +
                  "Increases combat stats by 7%.<br>" +
-                 "Increases Bladeburner stamina gain rate by 5%.<br>",
+                 "Increases Bladeburner stamina gain by 5%.<br>",
             strength_mult: 1.07,
             defense_mult: 1.07,
             dexterity_mult: 1.07,
@@ -1941,7 +1941,7 @@ function initAugmentations() {
                  "This augmentation:<br>" +
                  "Increases effectiveness in Bladeburner Field Analysis by 10%.<br>" +
                  "Increases success chance in Bladeburner contracts/operations by 4%.<br>" +
-                 "Increases dexterity experience gain rate by 10%.",
+                 "Increases dexterity experience gain by 10%.",
             dexterity_exp_mult: 1.1,
             bladeburner_analysis_mult: 1.1,
             bladeburner_success_chance_mult: 1.04,
@@ -1958,7 +1958,7 @@ function initAugmentations() {
                  "reflexes.<br><br>" +
                  "This augmentation:<br>" +
                  "Increases effectiveness in Bladeburner Field Analysis by 15%.<br>" +
-                 "Increases defense and dexterity experience gain rate by 10%.<br>" +
+                 "Increases defense and dexterity experience gain by 10%.<br>" +
                  "Increases success chance in Bladeburner contracts/operations by 5%.",
             prereqs:[AugmentationNames.VangelisVirus],
             defense_exp_mult: 1.1,
@@ -1977,7 +1977,7 @@ function initAugmentations() {
                  "structurally support the body and grants heightened strength and " +
                  "durability.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases experience gain rate for all combat stats by 5%.<br>" +
+                 "Increases experience gain for all combat stats by 5%.<br>" +
                  "Increases Bladeburner max stamina by 10%.",
             strength_exp_mult: 1.05,
             defense_exp_mult: 1.05,
@@ -1998,7 +1998,7 @@ function initAugmentations() {
                  "This augmentation:<br>" +
                  "Increases agility by 5%.<br>" +
                  "Increases Bladeburner max stamina by 5%.<br>" +
-                 "Increases Bladeburner stamina gain rate by 5%.<br>",
+                 "Increases Bladeburner stamina gain by 5%.<br>",
             agility_mult: 1.05,
             bladeburner_max_stamina_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.05,
@@ -2015,7 +2015,7 @@ function initAugmentations() {
                  "physical abilities.<br><br>" +
                  "This augmentation:<br>" +
                  "Increases combat stats by 4%.<br>" +
-                 "Increases Bladeburner stamina gain rate by 2%.<br>" +
+                 "Increases Bladeburner stamina gain by 2%.<br>" +
                  "Increases success chance in Bladeburner contracts/operations by 3%.",
             strength_mult: 1.04,
             defense_mult: 1.04,
@@ -2034,7 +2034,7 @@ function initAugmentations() {
                  "more efficiently storing and using power.<br><br>" +
                  "This augmentation:<br>" +
                  "Increases success chance in Bladeburner contracts/operations by 5%.<br>" +
-                 "Increases Bladeburner stamina gain rate by 2%.<br>" +
+                 "Increases Bladeburner stamina gain by 2%.<br>" +
                  "Increases Bladeburner max stamina by 5%.",
             prereqs:[AugmentationNames.BladeArmor],
             bladeburner_success_chance_mult: 1.05,
