@@ -40,7 +40,6 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
         }
         setIndex(index+1);
         if(index+1 >= code.length) props.onSuccess();
-        event.preventDefault();
     }
 
     return (<Grid container spacing={3}>

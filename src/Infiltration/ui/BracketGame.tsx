@@ -26,7 +26,7 @@ const difficulties: {
     Impossible: {timer: 2500, min: 7, max: 7},
 }
 
-function generateLeft(difficulty: Difficulty): string {
+function generateLeftSide(difficulty: Difficulty): string {
     let str = "";
     const length = random(difficulty.min, difficulty.max);
     for(let i = 0; i < length; i++) {
@@ -56,7 +56,7 @@ export function BracketGame(props: IMinigameProps): React.ReactElement {
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
     const [right, setRight] = useState("");
-    const [left] = useState(generateLeft(difficulty));
+    const [left] = useState(generateLeftSide(difficulty));
 
     function press(event: React.KeyboardEvent<HTMLElement>): void {
         event.preventDefault();
@@ -70,9 +70,7 @@ export function BracketGame(props: IMinigameProps): React.ReactElement {
             props.onSuccess();
             return;
         }
-        setRight(old => {
-            return old+char;
-        })
+        setRight(right+char);
     }
 
     return (<Grid container spacing={3}>
