@@ -376,7 +376,7 @@ function NetscriptFunctions(workerScript) {
     const makeRuntimeErrorMsg = function(caller, msg) {
         const stack = (new Error()).stack.split('\n').slice(1);
         const scripts = workerScript.getServer().scripts;
-        let userstack = [];
+        const userstack = [];
         for(const stackline of stack) {
             let filename;
             for(const script of scripts) {
@@ -398,13 +398,12 @@ function NetscriptFunctions(workerScript) {
                 const lineMatch = line.match(lineRe);
                 const funcMatch = line.match(funcRe);
                 if(lineMatch && funcMatch) {
-                    let func = funcMatch[1];
-                    return {line: lineMatch[1], func: func};
+                    return {line: lineMatch[1], func: funcMatch[1]};
                 }
                 return null;
             }
             let call = {line: "-1", func: "unknown"};
-            let chromeCall = parseChromeStackline(stackline);
+            const chromeCall = parseChromeStackline(stackline);
             if (chromeCall) {
                 call = chromeCall;
             }
@@ -430,7 +429,8 @@ function NetscriptFunctions(workerScript) {
         }
 
         workerScript.log(caller, msg);
-        const rejectMsg = `${caller}: ${msg}<br><br>Stack:<br>${userstack.join('<br>')}`
+        let rejectMsg = `${caller}: ${msg}`
+        if(userstack.length !== 0) rejectMsg += `<br><br>Stack:<br>${userstack.join('<br>')}`;
         return makeRuntimeRejectMsg(workerScript, rejectMsg);
     }
 
