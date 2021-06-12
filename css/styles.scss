@@ -234,9 +234,9 @@ a:visited {
 
 #status-text-container {
     background-color: transparent;
-    position:absolute;
-    top:0;
-    left:50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
 }
 
 #status-text {
@@ -371,14 +371,15 @@ a:visited {
 
 .noscrollbar {
     -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    /* stylelint-disable-next-line property-no-unknown */
+    scrollbar-width: none;  /* Firefox https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width */
 }
 
 .noscrollbar::-webkit-scrollbar {
     display: none;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
     filter: invert(1) sepia(1) hue-rotate(41deg) brightness(100%) saturate(10);
 }
 
@@ -397,7 +398,6 @@ input[type=checkbox] {
     transition: opacity 0.2s;
     margin: 3px;
 }
-
 
 .optionRange::-webkit-slider-thumb {
     -webkit-appearance: none;

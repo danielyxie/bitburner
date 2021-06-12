@@ -8,7 +8,6 @@ import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SourceFiles } from "./SourceFile/SourceFiles";
-import { Terminal } from "./Terminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
@@ -135,7 +134,7 @@ function giveSourceFile(bitNodeNumber) {
     } else {
         var playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
         Player.sourceFiles.push(playerSrcFile);
-        if (bitNodeNumber === 5) { // Artificial Intelligence
+        if (bitNodeNumber === 5 && Player.intelligence === 0) { // Artificial Intelligence
             Player.intelligence = 1;
         }
         dialogBoxCreate("You received a Source-File for destroying a Bit Node!<br><br>" +
@@ -307,12 +306,16 @@ function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume=fal
         if (!flume) {
             giveSourceFile(destroyedBitNode);
         } else {
-            // If player used flume, subtract 300 int exp. The prestigeSourceFile()
-            // function below grants 300 int exp, so this allows sets net gain to 0
-            Player.gainIntelligenceExp(-300);
+            if(SourceFileFlags[5] === 0 && newBitNode !== 5) {
+                Player.intelligence = 0;
+                Player.intelligence_exp = 0;
+            }
+        }
+        if (newBitNode === 5 && Player.intelligence === 0) {
+            Player.intelligence = 1;
         }
         redPillFlag = false;
-        var container = document.getElementById("red-pill-content");
+        const container = document.getElementById("red-pill-content");
         removeChildrenFromElement(container);
 
         // Set new Bit Node
@@ -324,7 +327,7 @@ function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume=fal
         document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
 
-        prestigeSourceFile();
+        prestigeSourceFile(flume);
         yesNoBoxClose();
     });
     const noBtn = yesNoBoxGetNoButton();

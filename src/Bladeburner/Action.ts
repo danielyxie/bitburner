@@ -164,10 +164,12 @@ export class Action implements IAction {
     }
 
     // For actions that have teams. To be implemented by subtypes.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getTeamSuccessBonus(inst: IBladeburner): number {
         return 1;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getActionTypeSkillSuccessBonus(inst: IBladeburner): number {
         return 1;
     }

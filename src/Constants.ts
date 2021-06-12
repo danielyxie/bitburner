@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.51.8",
+    Version:                "0.52.0",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -51,8 +51,6 @@ export const CONSTANTS: IMap<any> = {
     PurchasedServerMaxRam: 1048576, // 2^20
 
     // Augmentation Constants
-    AugmentationCostMultiplier: 5,  // Used for balancing costs without having to readjust every Augmentation cost
-    AugmentationRepMultiplier: 2.5, // Used for balancing rep cost without having to readjust every value
     MultipleAugMultiplier: 1.9,
 
     // TOR Router
@@ -228,60 +226,43 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.8 - 2021-05-07 It was there all along (hydroflame)
+    v0.52.0 - 2021-06-12 Infiltration 2.0 (hydroflame)
     -------
 
-    Servers
+    Terminal
+    * tail is smarter. It automatically assume the only possible options in some
+      cases.
 
-    * Update n00dles metadata
+    Intelligence
+    * Now available when starting BN5 instead of after beating it for the first
+      time.
+    * Nerf the effect of intelligence on reputation gain.
+
+    Augmentation
+    * Added a new augmentation, the 'Unstable Circadian Modulator', whose
+      gimmick is that its stats are randomized every hour.
 
     Netscript
+    * 'getPlayer' is not a singularity function anymore.
+    * 'hacknetNodes.constants' returns the correct values.
+    * 'createGang' has been added.
+    * 'inGang' has been added.
 
-    * 'hashGainRate' use the correct 'usedRam' and 'maxRam'
-    * Fix 'setActionAutolevel' logging.
-    * Fix 'setActionLevel' not working at all.
-    * Add 'installBackdoor' singularity function.
-
-    Hacknet
-
-    * Fix Hacknet Servers total production always displaying 0
-
-    Documentation
-
-    * Updated guide to no longer recommend BN12.
-    * Fix documentation for maxNumNodes (@ModdedGamers)
-    * Fix typo in 'sourcefiles.rst'
-    * Fix typo in 'recommendedbitnodeorder.rst'
-    * Fix 'getServer' documentation missing 'server' argument.
-    * Fix missing ram cost in 'getData.rst'
-    * Fix basic formulas examples.
-    * Fix typo in BN11 description.
-    * Fix formatting issue in Bladeburner (@Pimgd)
+    Tutorial
+    * Updated the tutorial. Made it look cleaner, fixed typos, etc.
 
     Misc.
+    * Fix many typos in literature (@kwazygloo)
+    * Fix being able to unfocus from gym and university.
+    * Fix being able to do hacking missions while unfocused.
+    * Fix many typos in Augmentation descriptions (@kwazygloo)
+    * More numbers handle absurdly large values. (@Tesseract1234567890)
+    * Fix many typos (@Tesseract1234567890)
+    * Fixed an issue that caused a UI desync when sleeves were set to workout
+      stats other than strength at the gym.
+    * Fix weird alignment of donation text box and button. (@Tesseract1234567890)
+    * Fixed an issue where reputation could be transfered to new jobs when unfocused.
+    * Empty stack traces should no longer appear.
 
-    * Fix negative money being displayed in full.
-    * Fix Hacking Missions not working.
-    * Fix Corporation tree not rendering.
-    * Fix script being needlessly recompiled. This should save real ram (not game ram)
-    * w0r1d_d43m0n can be backdoored
-    * Coding Contracts title is click-to-copy (@Rodeth)
-    * Covenant memory upgrade works better.
-    * Fix Neuroflux not being correctly calculated when entering BN with SF12.
-    * Delete Active Script now delete all active scripts, not just home.
-    * Now you can 'cd' in directories that only contain '.txt' files.
-    * Fix 'analyze' always saying players had root access
-    * Passive faction rep no longer builds for special factions.
-    * Donation option no longer appears for special factions.
-    * Rephrased some milestones.
-    * donation textbox now accepts money in the format '1b' and the like (@Dawe)
-    * Fix being able to join hated factions simultaneously. (@Dawe)
-    * 'ls' now displays files in multiple column. (Helps players with many files)
-    * Bladeburner multiplers now appear under Character>Stats and
-      Character>Augmentation when they are relevant.
-    * Fix missing functions syntax highlight in codemirror.
-    * Fix infiltration number formatting.
-    * script income transfers to parent on death. This helps keep track of
-      income for scripts that spawn short lived scripts.
     `,
 }

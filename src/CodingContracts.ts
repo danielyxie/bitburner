@@ -12,10 +12,7 @@ import {
     Generic_toJSON,
     Reviver,
 } from "../utils/JSONReviver";
-import { KEY } from "../utils/helpers/keyCodes";
-import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup, removePopup } from "./ui/React/createPopup";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
 import { CodingContractPopup } from "./ui/React/CodingContractPopup";
 
 
@@ -174,8 +171,8 @@ export class CodingContract {
      */
     async prompt(): Promise<CodingContractResult> {
         const popupId = `coding-contract-prompt-popup-${this.fn}`;
-        return new Promise<CodingContractResult>((resolve, reject) => {
-            let popup = new CodingContractPopup({
+        return new Promise<CodingContractResult>((resolve) => {
+            const popup = new CodingContractPopup({
                 c: this,
                 popupId: popupId,
                 onClose: () => {
@@ -183,14 +180,13 @@ export class CodingContract {
                     removePopup(popupId);
                 },
                 onAttempt: (val: string) => {
-                    console.log(`top; ${val}`);
                     if (this.isSolution(val)) {
                         resolve(CodingContractResult.Success);
                     } else {
                         resolve(CodingContractResult.Failure);
                     }
                     removePopup(popupId);
-                }
+                },
             });
             createPopup(popupId, CodingContractPopup, popup.props);
         });

@@ -1,5 +1,4 @@
-const sprintf = require("sprintf-js").sprintf;
-const vsprintf = require("sprintf-js").vsprintf;
+import { vsprintf, sprintf } from 'sprintf-js';
 import * as libarg from 'arg';
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
@@ -166,10 +165,7 @@ import { numeralWrapper } from "./ui/numeralFormat";
 import { post } from "./ui/postToTerminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
-import {
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { logBoxCreate } from "../utils/LogBox";
 import { arrayToString } from "../utils/helpers/arrayToString";
@@ -183,77 +179,6 @@ import {
     Fragments,
     FragmentById,
 } from "./CotMG/Fragment";
-
-const possibleLogs = {
-    ALL: true,
-    scan: true,
-    hack: true,
-    sleep: true,
-    disableLog: true,
-    enableLog: true,
-    grow: true,
-    weaken: true,
-    nuke: true,
-    brutessh: true,
-    ftpcrack: true,
-    relaysmtp: true,
-    httpworm: true,
-    sqlinject: true,
-    run:true,
-    exec:true,
-    spawn: true,
-    kill: true,
-    killall: true,
-    scp: true,
-    getHackingLevel: true,
-    getServerMoneyAvailable: true,
-    getServerSecurityLevel: true,
-    getServerBaseSecurityLevel: true,
-    getServerMinSecurityLevel: true,
-    getServerRequiredHackingLevel: true,
-    getServerMaxMoney: true,
-    getServerGrowth: true,
-    getServerNumPortsRequired: true,
-    getServerRam: true,
-
-    // TIX API
-    buyStock: true,
-    sellStock: true,
-    shortStock: true,
-    sellShort: true,
-    purchase4SMarketData: true,
-    purchase4SMarketDataTixApi: true,
-
-    // Singularity Functions
-    purchaseServer: true,
-    deleteServer: true,
-    universityCourse: true,
-    gymWorkout: true,
-    travelToCity: true,
-    purchaseTor: true,
-    purchaseProgram: true,
-    stopAction: true,
-    upgradeHomeRam: true,
-    workForCompany: true,
-    applyToCompany: true,
-    joinFaction: true,
-    workForFaction: true,
-    donateToFaction: true,
-    createProgram: true,
-    commitCrime: true,
-
-    // Bladeburner API
-    startAction: true,
-    upgradeSkill: true,
-    setTeamSize: true,
-    joinBladeburnerFaction: true,
-
-    // Gang API
-    recruitMember: true,
-    setMemberTask: true,
-    purchaseEquipment: true,
-    setTerritoryWarfare: true,
-}
 
 const defaultInterpreter = new Interpreter('', () => undefined);
 
@@ -305,8 +230,8 @@ function NetscriptFunctions(workerScript) {
                                        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
                                        ". This is probably because you somehow circumvented the static RAM "  +
                                        "calculation.<br><br>Please don't do that :(<br><br>" +
-                                       "Dynamic RAM Usage: " + workerScript.dynamicRamUsage + "<br>" +
-                                       "Static RAM Usage: " + workerScript.ramUsage);
+                                       "Dynamic RAM Usage: " + numeralWrapper.formatRAM(workerScript.dynamicRamUsage) + "<br>" +
+                                       "Static RAM Usage: " + numeralWrapper.formatRAM(workerScript.ramUsage));
         }
     };
 
@@ -456,7 +381,7 @@ function NetscriptFunctions(workerScript) {
     const makeRuntimeErrorMsg = function(caller, msg) {
         const stack = (new Error()).stack.split('\n').slice(1);
         const scripts = workerScript.getServer().scripts;
-        let userstack = [];
+        const userstack = [];
         for(const stackline of stack) {
             let filename;
             for(const script of scripts) {
@@ -478,13 +403,12 @@ function NetscriptFunctions(workerScript) {
                 const lineMatch = line.match(lineRe);
                 const funcMatch = line.match(funcRe);
                 if(lineMatch && funcMatch) {
-                    let func = funcMatch[1];
-                    return {line: lineMatch[1], func: func};
+                    return {line: lineMatch[1], func: funcMatch[1]};
                 }
                 return null;
             }
             let call = {line: "-1", func: "unknown"};
-            let chromeCall = parseChromeStackline(stackline);
+            const chromeCall = parseChromeStackline(stackline);
             if (chromeCall) {
                 call = chromeCall;
             }
@@ -510,7 +434,8 @@ function NetscriptFunctions(workerScript) {
         }
 
         workerScript.log(caller, msg);
-        const rejectMsg = `${caller}: ${msg}<br><br>Stack:<br>${userstack.join('<br>')}`
+        let rejectMsg = `${caller}: ${msg}`
+        if(userstack.length !== 0) rejectMsg += `<br><br>Stack:<br>${userstack.join('<br>')}`;
         return makeRuntimeRejectMsg(workerScript, rejectMsg);
     }
 
@@ -750,7 +675,7 @@ function NetscriptFunctions(workerScript) {
         return out;
     }
 
-    return {
+    const functions = {
         hacknet : {
             numNodes : function() {
                 return Player.hacknetNodes.length;
@@ -953,15 +878,12 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); // It can be grown even if it has no money
-                var growthPercentage = processSingleServerGrowth(server, threads, Player);
+                processSingleServerGrowth(server, threads, Player);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = calculateHackingExpGain(server, Player) * threads;
-                if (growthPercentage == 1) {
-                    expGain = 0;
-                }
-                const logGrowPercent = (moneyAfter/moneyBefore)*100 - 100;
-                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${formatNumber(logGrowPercent, 6)}%. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
+                const logGrowPercent = (moneyAfter/moneyBefore) - 1;
+                workerScript.log("grow", `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(logGrowPercent, 6)}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)}).`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 if (stock) {
@@ -1205,7 +1127,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("run", "Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
             if (isNaN(threads) || threads <= 0) {
-                throw makeRuntimeErrorMsg("run", `Invalid thread count. Must be numeric and > 0, is ${thread}`);
+                throw makeRuntimeErrorMsg("run", `Invalid thread count. Must be numeric and > 0, is ${threads}`);
             }
             var argsForNewScript = [];
             for (var i = 2; i < arguments.length; ++i) {
@@ -1667,35 +1589,35 @@ function NetscriptFunctions(workerScript) {
                 workerScript.log("getServerMoneyAvailable", `returned player's money: ${numeralWrapper.formatMoney(Player.money.toNumber())}`);
                 return Player.money.toNumber();
             }
-            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.formatMoney(server.moneyAvailable)} for '${server.hostname}`);
+            workerScript.log("getServerMoneyAvailable", `returned ${numeralWrapper.formatMoney(server.moneyAvailable)} for '${server.hostname}'`);
             return server.moneyAvailable;
         },
         getServerSecurityLevel: function(ip) {
             updateDynamicRam("getServerSecurityLevel", getRamCost("getServerSecurityLevel"));
             const server = safeGetServer(ip, "getServerSecurityLevel");
             if (failOnHacknetServer(server, "getServerSecurityLevel")) { return 1; }
-            workerScript.log("getServerSecurityLevel", `returned ${formatNumber(server.hackDifficulty, 3)} for '${server.hostname}'`);
+            workerScript.log("getServerSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.hackDifficulty, 3)} for '${server.hostname}'`);
             return server.hackDifficulty;
         },
         getServerBaseSecurityLevel: function(ip) {
             updateDynamicRam("getServerBaseSecurityLevel", getRamCost("getServerBaseSecurityLevel"));
             const server = safeGetServer(ip, "getServerBaseSecurityLevel");
             if (failOnHacknetServer(server, "getServerBaseSecurityLevel")) { return 1; }
-            workerScript.log("getServerBaseSecurityLevel", `returned ${formatNumber(server.baseDifficulty, 3)} for '${server.hostname}'`);
+            workerScript.log("getServerBaseSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.baseDifficulty, 3)} for '${server.hostname}'`);
             return server.baseDifficulty;
         },
         getServerMinSecurityLevel: function(ip) {
             updateDynamicRam("getServerMinSecurityLevel", getRamCost("getServerMinSecurityLevel"));
             const server = safeGetServer(ip, "getServerMinSecurityLevel");
             if (failOnHacknetServer(server, "getServerMinSecurityLevel")) { return 1; }
-            workerScript.log("getServerMinSecurityLevel", `returned ${formatNumber(server.minDifficulty, 3)} for ${server.hostname}`);
+            workerScript.log("getServerMinSecurityLevel", `returned ${numeralWrapper.formatServerSecurity(server.minDifficulty, 3)} for ${server.hostname}`);
             return server.minDifficulty;
         },
         getServerRequiredHackingLevel: function(ip) {
             updateDynamicRam("getServerRequiredHackingLevel", getRamCost("getServerRequiredHackingLevel"));
             const server = safeGetServer(ip, "getServerRequiredHackingLevel");
             if (failOnHacknetServer(server, "getServerRequiredHackingLevel")) { return 1; }
-            workerScript.log("getServerRequiredHackingLevel", `returned ${formatNumber(server.requiredHackingSkill, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerRequiredHackingLevel", `returned ${numeralWrapper.formatSkill(server.requiredHackingSkill, 0)} for '${server.hostname}'`);
             return server.requiredHackingSkill;
         },
         getServerMaxMoney: function(ip) {
@@ -1709,32 +1631,32 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getServerGrowth", getRamCost("getServerGrowth"));
             const server = safeGetServer(ip, "getServerGrowth");
             if (failOnHacknetServer(server, "getServerGrowth")) { return 1; }
-            workerScript.log("getServerGrowth", `returned ${formatNumber(server.serverGrowth, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerGrowth", `returned ${server.serverGrowth} for '${server.hostname}'`);
             return server.serverGrowth;
         },
         getServerNumPortsRequired: function(ip) {
             updateDynamicRam("getServerNumPortsRequired", getRamCost("getServerNumPortsRequired"));
             const server = safeGetServer(ip, "getServerNumPortsRequired");
             if (failOnHacknetServer(server, "getServerNumPortsRequired")) { return 5; }
-            workerScript.log("getServerNumPortsRequired", `returned ${formatNumber(server.numOpenPortsRequired, 0)} for '${server.hostname}'`);
+            workerScript.log("getServerNumPortsRequired", `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
             return server.numOpenPortsRequired;
         },
         getServerRam: function(ip) {
             updateDynamicRam("getServerRam", getRamCost("getServerRam"));
             const server = safeGetServer(ip, "getServerRam");
-            workerScript.log("getServerRam", `returned [${formatNumber(server.maxRam, 2)}GB, ${formatNumber(server.ramUsed, 2)}GB]`);
+            workerScript.log("getServerRam", `returned [${numeralWrapper.formatRAM(server.maxRam, 2)}, ${numeralWrapper.formatRAM(server.ramUsed, 2)}]`);
             return [server.maxRam, server.ramUsed];
         },
         getServerMaxRam: function(ip) {
             updateDynamicRam("getServerMaxRam", getRamCost("getServerMaxRam"));
             const server = safeGetServer(ip, "getServerMaxRam");
-            workerScript.log("getServerMaxRam", `returned ${formatNumber(server.maxRam, 2)}GB`);
+            workerScript.log("getServerMaxRam", `returned ${numeralWrapper.formatRAM(server.maxRam, 2)}`);
             return server.maxRam;
         },
         getServerUsedRam: function(ip) {
             updateDynamicRam("getServerUsedRam", getRamCost("getServerUsedRam"));
             const server = safeGetServer(ip, "getServerUsedRam");
-            workerScript.log("getServerUsedRam", `returned ${formatNumber(server.ramUsed, 2)}GB`);
+            workerScript.log("getServerUsedRam", `returned ${numeralWrapper.formatRAM(server.ramUsed, 2)}`);
             return server.ramUsed;
         },
         serverExists: function(ip) {
@@ -2572,8 +2494,8 @@ function NetscriptFunctions(workerScript) {
 
             return numeralWrapper.format(parseFloat(n), format);
         },
-        tFormat: function(milliseconds) {
-            return convertTimeMsToTimeElapsedString(milliseconds);
+        tFormat: function(milliseconds, milliPrecision=false) {
+            return convertTimeMsToTimeElapsedString(milliseconds, milliPrecision);
         },
         getTimeSinceLastAug: function() {
             updateDynamicRam("getTimeSinceLastAug", getRamCost("getTimeSinceLastAug"));
@@ -3035,7 +2957,6 @@ function NetscriptFunctions(workerScript) {
         },
         getPlayer: function() {
             updateDynamicRam("getPlayer", getRamCost("getPlayer"));
-            checkSingularityAccess("getPlayer", 1);
 
             const data = {
                 hacking_skill:                   Player.hacking_skill,
@@ -3693,6 +3614,30 @@ function NetscriptFunctions(workerScript) {
 
         // Gang API
         gang: {
+            createGang: function(faction) {
+                updateDynamicRam("createGang", getRamCost("gang", "createGang"));
+                // this list is copied from Faction/ui/Root.tsx
+                const GangNames = [
+                    "Slum Snakes",
+                    "Tetrads",
+                    "The Syndicate",
+                    "The Dark Army",
+                    "Speakers for the Dead",
+                    "NiteSec",
+                    "The Black Hand",
+                ];
+                if(!Player.canAccessGang() || !GangNames.includes(faction)) return false;
+                if (Player.inGang()) return false;
+                if(!Player.factions.includes(faction)) return false;
+
+                const isHacking = (faction === "NiteSec" || faction === "The Black Hand");
+                Player.startGang(faction, isHacking);
+                return true;
+            },
+            inGang: function() {
+                updateDynamicRam("inGang", getRamCost("gang", "inGang"));
+                return Player.inGang();
+            },
             getMemberNames: function() {
                 updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
                 checkGangApiAccess("getMemberNames");
@@ -4534,13 +4479,13 @@ function NetscriptFunctions(workerScript) {
                 },
                 constants: function() {
                     checkFormulasAccess("hacknetNodes.constants", 5);
-                    return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
+                    return Object.assign({}, HacknetNodeConstants);
                 },
             },
             hacknetServers: {
                 hashGainRate: function(level, ramUsed, maxRam, cores, mult=1) {
                     checkFormulasAccess("hacknetServers.hashGainRate", 9);
-                    return HScalculateHashGainRate(level, ramUsed, maxRam, cores, mult=1);
+                    return HScalculateHashGainRate(level, ramUsed, maxRam, cores, mult);
                 },
                 levelUpgradeCost: function(startingLevel, extraLevels=1, costMult=1) {
                     checkFormulasAccess("hacknetServers.levelUpgradeCost", 9);
@@ -4585,6 +4530,18 @@ function NetscriptFunctions(workerScript) {
         exploit: function() {
             Player.giveExploit(Exploit.UndocumentedFunctionCall);
         },
+        bypass: function(doc) {
+            // reset both fields first
+            doc.completely_unused_field = undefined;
+            document.completely_unused_field = undefined;
+            // set one to true and check that it affected the other.
+            document.completely_unused_field = true;
+            if(doc.completely_unused_field && workerScript.ramUsage === 1.6) {
+                Player.giveExploit(Exploit.Bypass);
+            }
+            doc.completely_unused_field = undefined;
+            document.completely_unused_field = undefined;
+        },
         flags: function(data) {
             data = toNative(data);
             // We always want the help flag.
@@ -4613,7 +4570,23 @@ function NetscriptFunctions(workerScript) {
             }
             return ret;
         },
-    } // End return
+    }
+
+    function getFunctionNames(obj) {
+        const functionNames = [];
+        for(const [key, value] of Object.entries(obj)){
+            if(typeof(value)=="function"){
+                functionNames.push(key);
+            }else if(typeof(value)=="object"){
+                functionNames.push(...getFunctionNames(value));
+            }
+        }
+        return functionNames;
+    }
+
+    const possibleLogs = Object.fromEntries(["ALL", ...getFunctionNames(functions)].map(a => [a, true]))
+
+    return functions;
 } // End NetscriptFunction()
 
 export { NetscriptFunctions };

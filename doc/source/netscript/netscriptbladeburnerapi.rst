@@ -92,7 +92,7 @@ its type and name. The following are valid values when specifying the action's t
     * blackop
     * blackops
 
-**General Actions (Training, Field Analysis, Recruitment)**
+**General Actions (Training, Field Analysis, etc)**
     * general
     * general action
     * gen

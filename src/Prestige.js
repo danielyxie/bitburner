@@ -190,7 +190,7 @@ function prestigeAugmentation() {
 
 
 // Prestige by destroying Bit Node and gaining a Source File
-function prestigeSourceFile() {
+function prestigeSourceFile(flume) {
     initBitNodeMultipliers(Player);
     updateSourceFileFlags(Player);
 
@@ -364,7 +364,8 @@ function prestigeSourceFile() {
     document.getElementById("world-menu-header").click();
 
     // Gain int exp
-    Player.gainIntelligenceExp(300);
+    if(SourceFileFlags[5] !== 0 && !flume)
+        Player.gainIntelligenceExp(300);
 
     resetPidCounter();
 }

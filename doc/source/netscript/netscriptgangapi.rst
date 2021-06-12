@@ -25,6 +25,8 @@ In :ref:`netscriptjs`::
 .. toctree::
     :caption: API Functions:
 
+    createGang() <gangapi/createGang>
+    inGang() <gangapi/inGang>
     getMemberNames() <gangapi/getMemberNames>
     getGangInformation() <gangapi/getGangInformation>
     getOtherGangInformation() <gangapi/getOtherGangInformation>

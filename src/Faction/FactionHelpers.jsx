@@ -114,9 +114,13 @@ export function purchaseAugmentationBoxCreate(aug, fac) {
         yesNoBoxClose();
     });
 
+    let content = (<div dangerouslySetInnerHTML={{__html: aug.info}}></div>);
+    if(typeof aug.info !== 'string') {
+        content = <div>{aug.info}</div>
+    }
     yesNoBoxCreate(<>
         <h2>{aug.name}</h2><br />
-<div dangerouslySetInnerHTML={{__html: aug.info}}></div><br /><br />
+{content}<br /><br />
 <br />Would you like to purchase the {aug.name} Augmentation for&nbsp;
 {Money(aug.baseCost * factionInfo.augmentationPriceMult)}?
     </>);
@@ -186,8 +190,8 @@ export function purchaseAugmentation(aug, fac, sing=false) {
             var nextLevel = getNextNeurofluxLevel();
             --nextLevel;
             var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-            aug.baseRepRequirement = 500 * mult * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
-            aug.baseCost = 750e3 * mult * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
+            aug.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
+            aug.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
 
             for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
                 aug.baseCost *= CONSTANTS.MultipleAugMultiplier;

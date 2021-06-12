@@ -123,8 +123,8 @@ export const Literatures: IMap<Literature> = {};
     txt     = "Starting a few decades ago, there was a massive global movement towards the generation of renewable energy in an effort to " +
               "combat global warming and climate change. The shift towards renewable energy was a big success, or so it seemed. In 2045 " +
               "a staggering 80% of the world's energy came from non-renewable fossil fuels. Now, about three decades later, that " +
-              "number is down to only 15%. Most of the world's energy now comes from nuclear power and renwable sources such as " +
-              "solar and geothermal. Unfortunately, these efforts were not the huge success that they seem to be.<br><br>"  +
+              "number is down to only 15%. Most of the world's energy now comes from nuclear power and renewable sources such as " +
+              "solar and geothermal energy. Unfortunately, these efforts were not the huge success that they seem to be.<br><br>"  +
               "Since 2045 primary energy use has soared almost tenfold. This was mainly due to growing urban populations and " +
               "the rise of increasingly advanced (and power-hungry) technology that has become ubiquitous in our lives. So, " +
               "despite the fact that the percentage of our energy that comes from fossil fuels has drastically decreased, " +
@@ -142,8 +142,8 @@ export const Literatures: IMap<Literature> = {};
 
     title   = "Alpha and Omega";
     fn      = LiteratureNames.AlphaOmega;
-    txt     = "Then we saw a new heaven and a new earth, for our first heaven and earth had gone away, and our sea was no more. " +
-              "And we saw a new holy city, new Aeria, coming down out of this new heaven, prepared as a bride adorned for her husband. " +
+    txt     = "Then we saw a new Heaven and a new Earth, for our first Heaven and Earth had gone away, and our sea was no more. " +
+              "And we saw a new holy city, new Aeria, coming down out of this new Heaven, prepared as a bride adorned for her husband. " +
               "And we heard a loud voice saying, 'Behold, the new dwelling place of the Gods. We will dwell with them, and they " +
               "will be our people, and we will be with them as their Gods. We will wipe away every tear from their eyes, and death " +
               "shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things " +
@@ -169,8 +169,8 @@ export const Literatures: IMap<Literature> = {};
               "by robots and machines that handle our day-to-day activities such as autonomous transportation and scheduling. " +
               "If we consider the pace at which this technology has advanced and assume that these developments continue, it's " +
               "reasonable to assume that at some point in the future our technology would be advanced enough that " +
-              "we could create simulations that are indistinguishable from reality. However, if this is a reasonable outcome " +
-              "of continued technological advancement, then it is very likely that such a scenario has already happened. <br><br>" +
+              "we could create simulations that are indistinguishable from reality. However, if continued technological advancement " +
+              "is a reasonable outcome, then it is very likely that such a scenario has already happened. <br><br>" +
               "Statistically speaking, somewhere out there in the infinite universe there is an advanced, intelligent species " +
               "that already has such technology. Who's to say that they haven't already created such a virtual reality: our own?";
     Literatures[fn] = new Literature(title, fn, txt);
@@ -199,7 +199,7 @@ export const Literatures: IMap<Literature> = {};
               "drug company, or OmniTek Incorporated, the global leader in intelligent and autonomous robots. But there's one company " +
               "that has seen a rapid rise in the last year and is poised to dominate not only the East, but the entire world: TaiYang Digital.<br><br>" +
               "TaiYang Digital is a Chinese internet-technology corporation that provides services such as " +
-              "online advertising, search, gaming, media, entertainment, and cloud computing/storage. Its name TaiYang comes from the Chinese word " +
+              "online advertising, search engines, gaming, media, entertainment, and cloud computing/storage. Its name TaiYang comes from the Chinese word " +
               "for 'sun'. In Chinese culture, the sun is a 'yang' symbol " +
               "associated with life, heat, masculinity, and heaven.<br><br>" +
               "The company was founded " +
@@ -217,15 +217,15 @@ export const Literatures: IMap<Literature> = {};
 
     title   = "Democracy is Dead: The Fall of an Empire";
     fn      = LiteratureNames.DemocracyIsDead;
-    txt     = "They rose from the shadows in the street<br>From the places where the oppressed meet<br>" +
-              "Their cries echoed loudly through the air<br>As they once did in Tiananmen Square<br>" +
-              "Loudness in the silence, Darkness in the light<br>They came forth with power and might<br>" +
-              "Once the beacon of democracy, America was first<br>Its pillars of society destroyed and dispersed<br>" +
-              "Soon the cries rose everywhere, with revolt and riot<br>Until one day, finally, all was quiet<br>" +
-              "From the ashes rose a new order, corporatocracy was its name<br>" +
-              "Rome, Mongol, Byzantine, all of history is just the same<br>" +
-              "For man will never change in a fundamental way<br>" +
-              "And now democracy is dead, in the USA";
+    txt     = "They rose from the shadows in the street.<br>From the places where the oppressed meet.<br>" +
+              "Their cries echoed loudly through the air.<br>As they once did in Tiananmen Square.<br>" +
+              "Loudness in the silence, Darkness in the light.<br>They came forth with power and might.<br>" +
+              "Once the beacon of democracy, America was first.<br>Its pillars of society destroyed and dispersed.<br>" +
+              "Soon the cries rose everywhere, with revolt and riot.<br>Until one day, finally, all was quiet.<br>" +
+              "From the ashes rose a new order, corporatocracy was its name.<br>" +
+              "Rome, Mongol, Byzantine, all of history is just the same.<br>" +
+              "For man will never change in a fundamental way.<br>" +
+              "And now democracy is dead, in the USA.";
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "Figures Show Rising Crime Rates in Sector-12";
@@ -382,15 +382,15 @@ export const Literatures: IMap<Literature> = {};
 
     title   = "The New God";
     fn      = LiteratureNames.TheNewGod;
-    txt     = "Everyone has that moment in their life where they wonder about the bigger questions<br><br>" +
-              "What's the point of all of this? What is my purpose?<br><br>" +
-              "Some people dare to think even bigger<br><br>" +
-              "What will be the fate of the human race?<br><br>" +
-              "We live in an era vastly different from that of even 15 or 20 years ago. We have gone " +
-              "where no man has gone before. We have stripped ourselves of the tyranny of flesh.<br><br>" +
-              "The Singularity is here. The merging of man and machine. This is where humanity evolves into " +
-              "something greater. This is our future<br><br>" +
-              "Embrace it, and you will obey a new god. The God in the Machine";
+    txt     = "Everyone has a moment in their life when they wonder about the bigger questions.<br><br>" +
+              "What's the point of all this? What is my purpose?<br><br>" +
+              "Some people dare to think even bigger.<br><br>" +
+              "What will the fate of the human race be?<br><br>" +
+              "We live in an era vastly different from that of 15 or even 20 years ago. We have gone " +
+              "beyond the limits of humanity. We have stripped ourselves of the tyranny of flesh.<br><br>" +
+              "The Singularity is here. The merging of man and machine. This is where humanity evolves into "
+              "something greater. This is our future.<br><br>" +
+              "Embrace it, and you will obey a new god. The God in the Machine.";
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "The New Triads";

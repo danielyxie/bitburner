@@ -1,20 +1,20 @@
 import { ScriptEditor } from "./ScriptEditor";
 
-const ace = require('brace');
+import ace from 'brace';
 
-require('brace/mode/javascript');
-require('./AceNetscriptMode');
-require('brace/theme/chaos');
-require('brace/theme/chrome');
-require('brace/theme/monokai');
-require('brace/theme/solarized_dark');
-require('brace/theme/solarized_light');
-require('brace/theme/terminal');
-require('brace/theme/twilight');
-require('brace/theme/xcode');
-require("brace/keybinding/vim");
-require("brace/keybinding/emacs");
-require("brace/ext/language_tools");
+import 'brace/mode/javascript';
+import './AceNetscriptMode';
+import 'brace/theme/chaos';
+import 'brace/theme/chrome';
+import 'brace/theme/monokai';
+import 'brace/theme/solarized_dark';
+import 'brace/theme/solarized_light';
+import 'brace/theme/terminal';
+import 'brace/theme/twilight';
+import 'brace/theme/xcode';
+import "brace/keybinding/vim";
+import "brace/keybinding/emacs";
+import "brace/ext/language_tools";
 
 import { NetscriptFunctions } from "../NetscriptFunctions";
 import { Settings } from "../Settings/Settings";
@@ -233,19 +233,25 @@ class AceEditorWrapper extends ScriptEditor {
 
             // Highlight Active line
             const highlightActiveChkBox = safeClearEventListeners("script-editor-option-highlightactiveline", "Active Line Checkbox");
+            highlightActiveChkBox.checked = Settings.EditorHighlightActiveLine;
             highlightActiveChkBox.onchange = () => {
+                Settings.EditorHighlightActiveLine = highlightActiveChkBox.checked;
                 this.editor.setHighlightActiveLine(highlightActiveChkBox.checked);
             };
 
             // Show Invisibles
             const showInvisiblesChkBox = safeClearEventListeners("script-editor-option-showinvisibles", "Show Invisible Checkbox");
+            showInvisiblesChkBox.checked = Settings.EditorShowInvisibles;
             showInvisiblesChkBox.onchange = () => {
+                Settings.EditorShowInvisibles = showInvisiblesChkBox.checked;
                 this.editor.setShowInvisibles(showInvisiblesChkBox.checked);
             };
 
             // Use Soft Tab
             const softTabChkBox = safeClearEventListeners("script-editor-option-usesofttab", "Soft Tab Checkbox");
+            softTabChkBox.checked = Settings.EditorUseSoftTab;
             softTabChkBox.onchange = () => {
+                Settings.EditorUseSoftTab = softTabChkBox.checked;
                 this.editor.getSession().setUseSoftTabs(softTabChkBox.checked);
             };
 

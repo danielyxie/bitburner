@@ -1,5 +1,4 @@
 // Class definition for a single Augmentation object
-import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -86,8 +85,8 @@ export class Augmentation {
         this.info = params.info;
         this.prereqs = params.prereqs ? params.prereqs : [];
 
-        this.baseRepRequirement = params.repCost * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
-        this.baseCost = params.moneyCost * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
+        this.baseRepRequirement = params.repCost * BitNodeMultipliers.AugmentationRepCost;
+        this.baseCost = params.moneyCost * BitNodeMultipliers.AugmentationMoneyCost;
         this.startingCost = this.baseCost;
 
         if (params.isSpecial) {

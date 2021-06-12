@@ -591,7 +591,7 @@ function updateInfiltrationButtons(inst, scenario) {
                 "Attempt to kill the security guard. You have a " +
                 numeralWrapper.formatPercentage(killChance, 2) + " chance of success. " +
                 "If you succeed, the security level will increase by 5%. If you fail, " +
-                "the security level will decrease by 10%. </span>";
+                "the security level will increase by 10%. </span>";
 
             document.getElementById("infiltration-knockout").innerHTML = "Knockout" +
                 "<span class='tooltiptext'>" +

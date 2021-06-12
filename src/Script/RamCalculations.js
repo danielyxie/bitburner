@@ -78,6 +78,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
             let code;
             if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) {
                 try {
+                    // eslint-disable-next-line no-await-in-loop
                     const module = await eval('import(nextModule)');
                     code = "";
                     for (const prop in module) {

@@ -74,7 +74,7 @@ export const FactionInfos: IMap<FactionInfo> = {
   // Endgame
   Illuminati: new FactionInfo(
     "Humanity never changes. No matter how civilized society becomes, it will eventually fall back into chaos. " +
-    "And from this chaos, we are the Invisible hand that guides them to order. ",
+    "And from this chaos, we are the invisible hand that guides them to order. ",
     [],
     true,
     true,
@@ -112,7 +112,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true),
 
   MegaCorp: new FactionInfo(
-    "MegaCorp does things that others don't. We imagine. We create. We invent. We build things that others have " +
+    "MegaCorp does what no other dares to do. We imagine. We create. We invent. We create what others have " +
     "never even dreamed of. Our work fills the world's needs for food, water, power, and transporation on an " +
     "unprecendented scale, in ways that no other company can.<br>" +
     "<br>" +
@@ -126,7 +126,7 @@ export const FactionInfos: IMap<FactionInfo> = {
   "Bachman & Associates": new FactionInfo(
     "Where Law and Business meet - thats where we are.<br>" +
     "<br>" +
-    "Legal Insight - Business Instinct - Experience Innovation",
+    "Legal Insight - Business Instinct - Innovative Experience.",
     [],
     true,
     true,
@@ -134,7 +134,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true),
 
   "Blade Industries": new FactionInfo(
-    "Augmentation is salvation",
+    "Augmentation is Salvation.",
     [],
     true,
     true,
@@ -142,8 +142,8 @@ export const FactionInfos: IMap<FactionInfo> = {
     true),
 
   NWO: new FactionInfo(
-    "The human being does not truly desire freedom. It wants to be observed, understood, and judged. It wants to " +
-    "be given purpose and direction in its life. That is why humans created God. And that is why humans created " +
+    "Humans don't truly desire freedom. They want to be observed, understood, and judged. They want to " +
+    "be given purpose and direction in life. That is why they created God. And that is why they created " +
     "civilization - not because of willingness, but because of a need to be incorporated into higher orders of " +
     "structure and meaning.",
     [],
@@ -153,7 +153,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true),
 
   "Clarke Incorporated": new FactionInfo(
-    "Unlocking the power of the genome",
+    "The Power of the Genome - Unlocked.",
     [],
     true,
     true,
@@ -161,7 +161,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true),
 
   "OmniTek Incorporated": new FactionInfo(
-    "Simply put, our mission is to design and build robots that make a difference",
+    "Simply put, our mission is to design and build robots that make a difference.",
     [],
     true,
     true,
@@ -203,7 +203,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     "leave behind their bits, mere traces of seemingly meaningless fragments of information. But these bits can be " +
     "reconstructed. Transformed. Used.<br>" +
     "<br>" +
-    "Those who run the bits, run the world",
+    "Those who run the bits, run the world.",
     [],
     true,
     true,
@@ -266,7 +266,7 @@ export const FactionInfos: IMap<FactionInfo> = {
 
   // City factions, essentially governments
   Aevum: new FactionInfo(
-    "The Silicon City",
+    "The Silicon City.",
     [
       "Chongqing",
       "New Tokyo",
@@ -278,7 +278,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true),
   Chongqing: new FactionInfo(
-    "Serve the people",
+    "Serve the People.",
     [
       "Sector-12",
       "Aevum",
@@ -289,7 +289,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true),
   Ishima: new FactionInfo(
-    "The East Asian Order of the Future",
+    "The East Asian Order of the Future.",
     [
       "Sector-12",
       "Aevum",
@@ -300,7 +300,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true),
   "New Tokyo": new FactionInfo(
-    "Asia's World City",
+    "Asia's World City.",
     [
       "Sector-12",
       "Aevum",
@@ -311,7 +311,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true),
   "Sector-12": new FactionInfo(
-    "The City of the Future",
+    "The City of the Future.",
     [
       "Chongqing",
       "New Tokyo",
@@ -323,7 +323,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true),
   Volhaven: new FactionInfo(
-    "Benefit, Honour, and Glory",
+    "Benefit, Honor, and Glory.",
     [
       "Chongqing",
       "Sector-12",
@@ -338,7 +338,7 @@ export const FactionInfos: IMap<FactionInfo> = {
 
   // Criminal Organizations/Gangs
   "Speakers for the Dead": new FactionInfo(
-    "It is better to reign in hell than to serve in heaven.",
+    "It is better to reign in Hell than to serve in Heaven.",
     [],
     true,
     true,
@@ -346,7 +346,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true),
 
   "The Dark Army": new FactionInfo(
-    "The World doesn't care about right or wrong. It's all about power.",
+    "The World doesn't care about right or wrong. It only cares about power.",
     [],
     true,
     true,
@@ -354,7 +354,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false),
 
   "The Syndicate": new FactionInfo(
-    "Honor holds you back",
+    "Honor holds you back.",
     [],
     true,
     true,
@@ -374,7 +374,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false),
 
   Tetrads: new FactionInfo(
-    "Following the Mandate of Heaven and Carrying out the Way",
+    "Following the mandate of Heaven and carrying out the way.",
     [],
     false,
     false,
@@ -399,7 +399,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false),
 
   "Tian Di Hui": new FactionInfo(
-    "Obey Heaven and Work Righteousness",
+    "Obey Heaven and work righteously.",
     [],
     true,
     true,
@@ -407,10 +407,10 @@ export const FactionInfos: IMap<FactionInfo> = {
     true),
 
   CyberSec: new FactionInfo(
-    "The Internet is the first thing that humanity has built that humanity doesn’t understand, the largest " +
-    "experiment in anarchy that we have ever had. And as the world becomes increasingly dominated by the internet, " +
+    "The Internet is the first thing that was built that we don't fully understand, the largest " +
+    "experiment in anarchy that we have ever had. And as the world becomes increasingly dominated by it, " +
     "society approaches the brink of total chaos. We serve only to protect society, to protect humanity, to " +
-    "protect the world from its imminent collapse.",
+    "protect the world from imminent collapse.",
     [],
     true,
     true,

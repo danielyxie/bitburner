@@ -178,6 +178,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
 
     startHackingMission(): void {
         const fac = this.props.faction;
+        this.props.p.singularityStopWork();
         this.props.engine.loadMissionContent();
         this.props.startHackingMissionFn(fac);
     }

@@ -334,6 +334,7 @@ export class Sleeve extends Person {
         this.earningsForTask.money += gain;
         this.earningsForPlayer.money += gain;
         p.gainMoney(gain);
+        p.recordMoneySource(gain, 'sleeves');
     }
 
     /**
@@ -528,7 +529,7 @@ export class Sleeve extends Person {
             case SleeveTaskType.Recovery:
                 this.shock = Math.min(100, this.shock + (0.0002 * cyclesUsed));
                 break;
-            case SleeveTaskType.Sync:
+            case SleeveTaskType.Synchro:
                 this.sync = Math.min(100, this.sync + (p.getIntelligenceBonus(0.5) * 0.0002 * cyclesUsed));
                 break;
             default:
@@ -585,7 +586,7 @@ export class Sleeve extends Person {
             this.resetTaskStatus();
         }
 
-        this.currentTask = SleeveTaskType.Sync;
+        this.currentTask = SleeveTaskType.Synchro;
         return true;
     }
 
@@ -662,6 +663,11 @@ export class Sleeve extends Person {
 
     tryBuyAugmentation(p: IPlayer, aug: Augmentation): boolean {
         if (!p.canAfford(aug.startingCost)) {
+            return false;
+        }
+
+        // Verify that this sleeve does not already have that augmentation.
+        if(this.augmentations.some(a => a.name === aug.name)) {
             return false;
         }
 

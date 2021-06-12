@@ -366,13 +366,14 @@ a:visited {
 .noscrollbar {
   -ms-overflow-style: none;
   /* IE and Edge */
+  /* stylelint-disable-next-line property-no-unknown */
   scrollbar-width: none;
-  /* Firefox */ }
+  /* Firefox https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width */ }
 
 .noscrollbar::-webkit-scrollbar {
   display: none; }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   filter: invert(1) sepia(1) hue-rotate(41deg) brightness(100%) saturate(10); }
 
 .optionCheckbox {
@@ -784,13 +785,12 @@ button {
 .character-stat-cell {
   text-align: right; }
 
-#character-hack-wrapper td,
-#character-agi-wrapper td {
-  border-bottom: 1px #aaa solid;
-  padding-bottom: 10px; }
-
 #character-str-wrapper td,
 #character-cha-wrapper td {
+  padding-top: 10px; }
+
+.character-divider td {
+  border-top: 1px #aaa solid;
   padding-top: 10px; }
 
 #character-hp-wrapper {
@@ -825,6 +825,12 @@ button {
 
 .character-combat-cell {
   color: #faffdf; }
+
+#character-work-wrapper {
+  color: #adff2f; }
+
+.character-work-cell {
+  color: #adff2f; }
 
 .character-overview-btn {
   -webkit-border-radius: 12px;
@@ -1526,7 +1532,7 @@ button {
   width: 70%;
   margin: 10px; }
 
-#work-in-progress-cancel-button {
+.work-button {
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   border-radius: 12px;
@@ -1541,8 +1547,8 @@ button {
   padding: 5px;
   border: 3px solid #fff; }
 
-#work-in-progress-cancel-button:hover,
-#work-in-progress-cancel-button:focus {
+.work-button:hover,
+.work-button:focus {
   color: #fff;
   text-decoration: none;
   cursor: pointer; }
@@ -1812,6 +1818,22 @@ button {
 #interactive-tutorial-next {
   float: right;
   padding: 4px; }
+
+.interactive-tutorial-command {
+  background-color: #000;
+  color: #adff2f;
+  white-space: nowrap; }
+
+.interactive-tutorial-code {
+  background-color: #272822;
+  color: white;
+  padding: 3px; }
+
+.interactive-tutorial-tab {
+  background-color: #555;
+  color: #e6e6e6;
+  padding: 3px;
+  box-shadow: 0 0 3px #000; }
 
 /* COLORS */
 /* Attributes */
@@ -2322,10 +2344,10 @@ button {
       border-right: none;
       opacity: 0;
       transform: rotate(-45deg); }
-  .bbcheckbox input[type=checkbox] {
+  .bbcheckbox input[type="checkbox"] {
     margin: 3px;
     visibility: hidden; }
-    .bbcheckbox input[type=checkbox]:checked + label:after {
+    .bbcheckbox input[type="checkbox"]:checked + label:after {
       opacity: 1; }
 
 /* Bladeburner Console */
@@ -2513,6 +2535,7 @@ button {
 .Treant > .unlocked:hover {
   background-color: #666; }
 
+/* stylelint-disable */
 /*!
  * Bootstrap Grid v4.1.2 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
@@ -4991,10 +5014,7 @@ html {
   margin-left: 0; }
 
 .exp-input {
-  margin-right: 0;
-  margin-left: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 5px 0 5px 0;
   padding: 2px 5px; }
 
 .text-center {

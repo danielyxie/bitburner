@@ -172,7 +172,7 @@ export class HacknetServer extends React.Component {
                     </div>
                     <div className={"row"}>
                         <p>Hash Capacity:</p>
-                        <span className={"text"}>{node.hashCapacity}</span>
+                        <span className={"text"}>{Hashes(node.hashCapacity)}</span>
                     </div>
                     <div className={"row"}>
                         <p>Level:</p><span className={"text upgradable-info"}>{node.level}</span>

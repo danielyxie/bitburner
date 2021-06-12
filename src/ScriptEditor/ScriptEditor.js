@@ -1,7 +1,7 @@
 import { CursorPositions } from './CursorPositions';
 
 // Base Script Editor class for the Ace/CodeMirror/etc. wrappers
-const beautify = require('js-beautify').js_beautify;
+import { js_beautify as beautify } from 'js-beautify';
 
 export class ScriptEditor {
     constructor() {

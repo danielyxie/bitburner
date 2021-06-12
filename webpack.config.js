@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 var path = require('path');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -5,6 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
     const isDevServer = (env || {}).devServer === true;
+    const runInContainer = (env || {}).runInContainer === true;
     const isDevelopment = argv.mode === 'development';
     const outputDirectory = isDevServer ? "dist-dev" : "dist";
     const entries = {};
@@ -20,6 +22,22 @@ module.exports = (env, argv) => {
         chunkOrigins: false,
         colors: true,
         entrypoints: true,
+    }
+
+    const devServerSettings = {
+        port: 8000,
+        publicPath: `/`,
+        stats: statsConfig,
+    };
+
+    // By default, the webpack-dev-server is not exposed outside of localhost.
+    // When running in a container we need it accessible externally.
+    if (runInContainer) {
+        devServerSettings.disableHostCheck = true;
+        devServerSettings.host = '0.0.0.0';
+        devServerSettings.watchOptions = {
+            poll: true,
+        }
     }
 
     return {
@@ -131,11 +149,7 @@ module.exports = (env, argv) => {
                 },
             },
         },
-        devServer: {
-            port: 8000,
-            publicPath: `/`,
-            stats: statsConfig,
-        },
+        devServer: devServerSettings,
         resolve: {
             extensions: [
                 ".tsx",

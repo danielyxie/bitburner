@@ -16,6 +16,10 @@ import 'numeral/locales/ru';
 
 /* eslint-disable class-methods-use-this */
 
+const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
+const extraNotations = ['q', 'Q', 's', 'S', 'o', 'n'];
+
+
 class NumeralFormatter {
     // Default Locale
     defaultLocale = "en";
@@ -48,31 +52,52 @@ class NumeralFormatter {
         return this.format(n, "0.000a");
     }
 
+    // TODO: leverage numeral.js to do it. This function also implies you can
+    // use this format in some text field but you can't. ( "1t" will parse but
+    // "1s" will not)
+    formatReallyBigNumber(n: number, decimalPlaces = 3): string {
+        if(n === Infinity) return "∞";
+        for(let i = 0; i < extraFormats.length; i++) {
+            if(extraFormats[i] < n && n <= extraFormats[i]*1000) {
+                return this.format(n/extraFormats[i], '0.'+'0'.repeat(decimalPlaces))+extraNotations[i];
+            }
+        }
+        if(Math.abs(n) < 1000) {
+            return this.format(n, '0.'+'0'.repeat(decimalPlaces));
+        }
+        const str = this.format(n, '0.'+'0'.repeat(decimalPlaces) + 'a');
+        if(str === "NaNt") return this.format(n, '0.' + ' '.repeat(decimalPlaces) + 'e+0');
+        return str;
+    }
+
     formatHp(n: number): string {
-        return this.format(n, "0");
+        if(n < 1e6){
+            return this.format(n, "0,0");
+        }
+        return this.formatReallyBigNumber(n);
     }
 
     formatMoney(n: number): string {
-        if(Math.abs(n) < 1000) {
-            return this.format(n, "$0.00");
-        }
-        return this.format(n, "$0.000a");
+        return "$" + this.formatReallyBigNumber(n);
     }
 
     formatSkill(n: number): string {
-        return this.format(n, "0,0");
+        if(n < 1e15){
+            return this.format(n, "0,0");
+        }
+        return this.formatReallyBigNumber(n);
     }
 
     formatExp(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatReallyBigNumber(n);
     }
 
     formatHashes(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatReallyBigNumber(n);
     }
 
     formatReputation(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatReallyBigNumber(n);
     }
 
     formatFavor(n: number): string {
@@ -93,11 +118,11 @@ class NumeralFormatter {
     }
 
     formatRespect(n: number): string {
-        return this.format(n, "0.00000a");
+        return this.formatReallyBigNumber(n, 5);
     }
 
     formatWanted(n: number): string {
-        return this.format(n, "0.00000a");
+        return this.formatReallyBigNumber(n, 5);
     }
 
     formatMultiplier(n: number): string {
@@ -128,11 +153,11 @@ class NumeralFormatter {
         if (n < 1000) {
             return this.format(n, "0");
         }
-        return this.format(n, "0.000a");
+        return this.formatReallyBigNumber(n);
     }
 
     formatInfiltrationSecurity(n: number): string {
-        return this.format(n, "0.000a");
+        return this.formatReallyBigNumber(n);
     }
 
     formatThreads(n: number): string {

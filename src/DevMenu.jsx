@@ -14,8 +14,9 @@ import { AllServers } from "./Server/AllServers";
 import { GetServerByHostname } from "./Server/ServerHelpers";
 import { hackWorldDaemon } from "./RedPill";
 import { StockMarket } from "./StockMarket/StockMarket";
+import { Bladeburner } from "./Bladeburner";
 import { Stock } from "./StockMarket/Stock";
-import { Engine, indexedDb } from "./engine";
+import { Engine } from "./engine";
 import { saveObject } from "./SaveObject";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
@@ -143,6 +144,10 @@ class DevMenuComponent extends Component {
 
     b1tflum3() {
         hackWorldDaemon(Player.bitNodeN, true);
+    }
+
+    quickHackW0r1dD43m0n() {
+        hackWorldDaemon(Player.bitNodeN, false, true);
     }
 
     hackW0r1dD43m0n() {
@@ -548,6 +553,12 @@ class DevMenuComponent extends Component {
         }
     }
 
+    addTonsCorporationFunds() {
+        if(Player.corporation) {
+            Player.corporation.funds = Player.corporation.funds.plus(1e99);
+        }
+    }
+
     addTonsCorporationCycles() {
         if (Player.corporation) {
             Player.corporation.storedCycles = tonsP;
@@ -647,7 +658,7 @@ class DevMenuComponent extends Component {
         return () => {
             Player.lastUpdate -= time;
             Engine._lastUpdate -= time;
-            saveObject.saveGame(indexedDb);
+            saveObject.saveGame(Engine.indexedDb);
             setTimeout(() => location.reload(), 1000);
         };
     }
@@ -702,7 +713,6 @@ class DevMenuComponent extends Component {
             contractTypes.push(<option key={name} value={name}>{name}</option>);
         }
 
-
         return (
 <div className="col">
     <div className="row">
@@ -716,12 +726,13 @@ class DevMenuComponent extends Component {
             <button className="std-button" onClick={this.addMoney(1e9)}>Add $1b</button>
             <button className="std-button" onClick={this.addMoney(1e12)}>Add $1t</button>
             <button className="std-button" onClick={this.addMoney(1e15)}>Add $1000t</button>
-            <button className="std-button" onClick={this.addMoney(1e27)}>Add $1e27</button>
+            <button className="std-button" onClick={this.addMoney(1e99)}>Add $1e99</button>
             <button className="std-button" onClick={this.upgradeRam}>Upgrade Home Computer's RAM</button>
     </div>
     <div className="row">
         <button className="std-button" onClick={this.quickB1tFlum3}>Quick b1t_flum3.exe</button>
         <button className="std-button" onClick={this.b1tflum3}>Run b1t_flum3.exe</button>
+        <button className="std-button" onClick={this.quickHackW0r1dD43m0n}>Quick w0rld_d34m0n</button>
         <button className="std-button" onClick={this.hackW0r1dD43m0n}>Hack w0rld_d34m0n</button>
     </div>
     <div className="row">
@@ -735,7 +746,7 @@ class DevMenuComponent extends Component {
                         <td><span className="text text-center">All:</span></td>
                         <td>
                             <button className="std-button tooltip" onClick={this.tonsOfExp}>Tons of exp<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button>
-                            <button className="std-button tooltip" onClick={this.resetAllExp}>Reset<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button>
+                            <button className="std-button tooltip" onClick={this.resetAllExp}>Reset<span className="tooltiptext">Reset all experience to 0</span></button>
                             </td>
                     </tr>
                     <tr>
@@ -1060,6 +1071,7 @@ class DevMenuComponent extends Component {
         </div>
     </div>
 
+    {Player.bladeburner instanceof Bladeburner &&
     <div className="row">
         <div className="col">
             <div className="row">
@@ -1095,7 +1107,9 @@ class DevMenuComponent extends Component {
             </table>
         </div>
     </div>
+    }
 
+    {Player.inGang() && 
     <div className="row">
         <div className="col">
             <div className="row">
@@ -1119,7 +1133,9 @@ class DevMenuComponent extends Component {
             </table>
         </div>
     </div>
+    }
 
+    {Player.hasCorporation() &&
     <div className="row">
         <div className="col">
             <div className="row">
@@ -1127,6 +1143,9 @@ class DevMenuComponent extends Component {
             </div>
             <table>
                 <tbody>
+                    <tr>
+                        <td><button className="std-button" onClick={this.addTonsCorporationFunds}>Tons of funds</button></td>
+                    </tr>
                     <tr>
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsCorporationCycles}>Tons</button></td>
@@ -1143,6 +1162,7 @@ class DevMenuComponent extends Component {
             </table>
         </div>
     </div>
+    }
 
 
     <div className="row">
@@ -1172,7 +1192,7 @@ class DevMenuComponent extends Component {
         </div>
     </div>
 
-
+    {Player.hasWseAccount &&
     <div className="row">
         <div className="col">
             <div className="row">
@@ -1199,8 +1219,9 @@ class DevMenuComponent extends Component {
             </table>
         </div>
     </div>
+    }
 
-
+    {Player.sleeves.length > 0 &&
     <div className="row">
         <div className="col">
             <div className="row">
@@ -1222,6 +1243,7 @@ class DevMenuComponent extends Component {
             </table>
         </div>
     </div>
+    }
 
     <div className="row">
         <div className="col">

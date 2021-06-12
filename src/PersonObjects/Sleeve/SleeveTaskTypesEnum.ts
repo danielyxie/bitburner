@@ -10,5 +10,5 @@ export enum SleeveTaskType {
     Class,
     Gym,
     Recovery,
-    Sync,
+    Synchro,
 }

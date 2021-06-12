@@ -70,7 +70,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <span id="augmentations-notification" class="notification-off"> </span>
             </li>
             <li id="hacknet-nodes-tab" class="mainmenu-accordion-panel">
-                <button id="hacknet-nodes-menu-link"> Hacknet Nodes </button>
+                <button id="hacknet-nodes-menu-link"> Hacknet </button>
             </li>
             <li id="sleeves-tab" class="mainmenu-accordion-panel">
                 <button id="sleeves-menu-link"> Sleeves </button>
@@ -372,7 +372,8 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
     <div id="work-in-progress-container" class="generic-fullscreen-container">
         <p id="work-in-progress-text"> </p>
 
-        <button id="work-in-progress-cancel-button"> Cancel Work </button>
+        <button id="work-in-progress-cancel-button" class="work-button"> Cancel Work </button>
+        <button id="work-in-progress-something-else-button" class="work-button"> Do something else simultaneously </button>
     </div>
 
     <!-- Red Pill Container -->
@@ -524,6 +525,16 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                         </span>
                     </label>
                     <input class="optionCheckbox" type="checkbox" name="settingsSuppressHospitalizationPopup" id="settingsSuppressHospitalizationPopup">
+                </fieldset>
+
+                <!-- Suppress Bladeburner popups -->
+                <fieldset>
+                    <label for="settingsSuppressBladeburnerPopup" class="tooltip">Suppress Bladeburner Popup:
+                        <span class="tooltiptext">
+                            If this is set, then having your Bladeburner actions interrupted by being busy with something else will not display a popup message.
+                        </span>
+                    </label>
+                    <input class="optionCheckbox" type="checkbox" name="settingsSuppressBladeburnerPopup" id="settingsSuppressBladeburnerPopup">
                 </fieldset>
 
                 <!-- Disable Terminal and Navigation Shortcuts -->

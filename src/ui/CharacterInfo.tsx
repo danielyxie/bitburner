@@ -61,6 +61,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         if (src.infiltration)    { parts.push([`Infiltration:`, Money(src.infiltration)]) }
         if (src.stock)           { parts.push([`Stock Market:`, Money(src.stock)]) }
         if (src.casino)          { parts.push([`Casino:`, Money(src.casino)]) }
+        if (src.sleeves)         { parts.push([`Sleeves:`, Money(src.sleeves)]) }
 
         return StatsTable(parts, "");
     }
@@ -79,7 +80,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     }
 
     function Intelligence(): React.ReactElement {
-        if (p.intelligence > 0) {
+        if (p.intelligence > 0 && (p.bitNodeN === 5 || SourceFileFlags[5] > 0)) {
             return <tr key="5">
                 <td>Intelligence:</td>
                 <td style={{textAlign: 'right'}}>{numeralWrapper.formatSkill(p.intelligence)}</td>

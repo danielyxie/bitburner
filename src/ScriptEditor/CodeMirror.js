@@ -87,7 +87,7 @@ import 'codemirror/addon/lint/lint.css';
 import 'codemirror/addon/search/match-highlighter.js';
 import 'codemirror/addon/selection/active-line.js';
 
-window.JSHINT = require('jshint').JSHINT;
+import { JSHINT } from 'jshint';
 import './CodeMirrorNetscriptLint.js';
 
 import { NetscriptFunctions } from "../NetscriptFunctions";
@@ -99,6 +99,10 @@ import { clearEventListeners } from "../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../utils/uiHelpers/createOptionElement";
 import { removeChildrenFromElement } from "../../utils/uiHelpers/removeChildrenFromElement";
+
+(function() {
+    window.JSHINT = JSHINT;
+})();
 
 // Max number of invisibles to be shown in a group if the "Show Invisibles" option
 // is marked
@@ -375,14 +379,18 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
 
             // Highlight Active line
             const highlightActiveChkBox = safeClearEventListeners("script-editor-option-highlightactiveline", "Active Line Checkbox");
+            highlightActiveChkBox.checked = Settings.EditorHighlightActiveLine;
             highlightActiveChkBox.onchange = () => {
+                Settings.EditorHighlightActiveLine = highlightActiveChkBox.checked;
                 this.editor.setOption("styleActiveLine", highlightActiveChkBox.checked);
             };
             highlightActiveChkBox.onchange();
 
             // Show Invisibles
             const showInvisiblesChkBox = safeClearEventListeners("script-editor-option-showinvisibles", "Show Invisible Checkbox");
+            showInvisiblesChkBox.checked = Settings.EditorShowInvisibles;
             showInvisiblesChkBox.onchange = () => {
+                Settings.EditorShowInvisibles = showInvisiblesChkBox.checked;
                 const overlayMode = {
                     name: 'invisibles',
                     token:  function(stream) {
@@ -428,7 +436,9 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
 
             //Use Soft Tab
             const softTabChkBox = safeClearEventListeners("script-editor-option-usesofttab", "Soft Tab Checkbox");
+            softTabChkBox.checked = Settings.EditorUseSoftTab;
             softTabChkBox.onchange = () => {
+                Settings.EditorUseSoftTab = softTabChkBox.checked;
                 this.editor.setOption("indentWithTabs", !softTabChkBox.checked);
                 if (softTabChkBox.checked) {
                     this.editor.addKeyMap({
@@ -482,13 +492,14 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             }));
 
             const flex1Checkbox = createElement("input", {
-                checked: true,
+                checked: Settings.EditorAutoCloseBrackets,
                 id: flex1Id,
                 name: flex1Id,
                 type: "checkbox",
             });
             flex1Fieldset.appendChild(flex1Checkbox);
             flex1Checkbox.onchange = () => {
+                Settings.EditorAutoCloseBrackets = flex1Checkbox.checked;
                 this.editor.setOption("autoCloseBrackets", flex1Checkbox.checked);
             };
             flex1Checkbox.onchange();
@@ -502,7 +513,7 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             }));
 
             const flex2Checkbox = createElement("input", {
-                checked: true,
+                checked: Settings.EditorEnableLinting,
                 id: flex2Id,
                 name: flex2Id,
                 type: "checkbox",
@@ -510,8 +521,10 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             flex2Fieldset.appendChild(flex2Checkbox);
             flex2Checkbox.onchange = () => {
                 if (flex2Checkbox.checked) {
+                    Settings.EditorEnableLinting = true;
                     this.editor.setOption("lint", CodeMirror.lint.netscript);
                 } else {
+                    Settings.EditorEnableLinting = false;
                     this.editor.setOption("lint", false);
                 }
             }
@@ -526,13 +539,14 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             }));
 
             const flex3Checkbox = createElement("input", {
-                checked: true,
+                checked: Settings.EditorContinueComments,
                 id: flex3Id,
                 name: flex3Id,
                 type: "checkbox",
             });
             flex3Fieldset.appendChild(flex3Checkbox);
             flex3Checkbox.onchange = () => {
+                Settings.EditorContinueComments = flex3Checkbox.checked;
                 this.editor.setOption("continueComments", flex3Checkbox.checked);
             }
             flex3Checkbox.onchange();

@@ -1,6 +1,5 @@
 import {Engine} from "../engine";
 import {Settings} from "../Settings/Settings";
-
 import {numeralWrapper} from "./numeralFormat";
 
 
@@ -21,6 +20,7 @@ function setSettingsLabels() {
     const suppressTravelConfirmation = document.getElementById("settingsSuppressTravelConfirmation");
     const suppressBuyAugmentationConfirmation = document.getElementById("settingsSuppressBuyAugmentationConfirmation");
     const suppressHospitalizationPopup = document.getElementById("settingsSuppressHospitalizationPopup");
+    const suppressBladeburnerPopup = document.getElementById("settingsSuppressBladeburnerPopup");
     const autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     const disableHotkeys = document.getElementById("settingsDisableHotkeys");
     const disableASCIIArt = document.getElementById("settingsDisableASCIIArt");
@@ -36,6 +36,7 @@ function setSettingsLabels() {
     suppressTravelConfirmation.checked = Settings.SuppressTravelConfirmation;
     suppressBuyAugmentationConfirmation.checked = Settings.SuppressBuyAugmentationConfirmation;
     suppressHospitalizationPopup.checked = Settings.SuppressHospitalizationPopup;
+    suppressBladeburnerPopup.checked = Settings.SuppressBladeburnerPopup;
     setAutosaveLabel(autosaveInterval);
     disableHotkeys.checked = Settings.DisableHotkeys;
     disableASCIIArt.checked = Settings.CityListView;
@@ -97,6 +98,10 @@ function setSettingsLabels() {
 
     suppressHospitalizationPopup.onclick = function() {
         Settings.SuppressHospitalizationPopup = this.checked;
+    }
+
+    suppressBladeburnerPopup.onclick = function() {
+        Settings.SuppressBladeburnerPopup = this.checked;
     }
 
     disableHotkeys.onclick = function() {
