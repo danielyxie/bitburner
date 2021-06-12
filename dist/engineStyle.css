@@ -1260,6 +1260,11 @@ button {
 #create-program-list {
   width: 70%; }
 
+/* Stormtech lab */
+#stormtech-lab-container {
+  position: fixed;
+  padding-top: 10px; }
+
 /* Factions and Faction (Single Faction page) */
 #factions-container {
   position: fixed;
@@ -1813,6 +1818,22 @@ button {
 #interactive-tutorial-next {
   float: right;
   padding: 4px; }
+
+.interactive-tutorial-command {
+  background-color: #000;
+  color: #adff2f;
+  white-space: nowrap; }
+
+.interactive-tutorial-code {
+  background-color: #272822;
+  color: white;
+  padding: 3px; }
+
+.interactive-tutorial-tab {
+  background-color: #555;
+  color: #e6e6e6;
+  padding: 3px;
+  box-shadow: 0 0 3px #000; }
 
 /* COLORS */
 /* Attributes */
@@ -5036,6 +5057,26 @@ html {
   position: fixed;
   padding: 6px;
   width: 60%; }
+
+.staneksgift_row {
+  padding: 0;
+  margin: 0; }
+
+.staneksgift_cell {
+  width: 25px;
+  height: 25px;
+  background-color: #808080;
+  font-color: white;
+  padding: 0px;
+  margin: 0px;
+  border: 1px solid black;
+  float: left; }
+
+.staneksgift_cell:first-child {
+  clear: left; }
+
+.staneksgift_container {
+  position: fixed; }
 
 
 /*# sourceMappingURL=engineStyle.css.map*/

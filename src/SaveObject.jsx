@@ -21,6 +21,7 @@ import {
 } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
+import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
 import { createStatusText } from "./ui/createStatusText";
 
@@ -86,6 +87,7 @@ BitburnerSaveObject.prototype.getSaveString = function() {
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     this.LastExportBonus            = JSON.stringify(ExportBonus.LastExportBonus);
+    this.StaneksGiftSave            = JSON.stringify(staneksGift);
     if (Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
@@ -186,6 +188,13 @@ function loadGame(saveString) {
     loadCompanies(saveObj.CompaniesSave);
     loadFactions(saveObj.FactionsSave);
     loadSpecialServerIps(saveObj.SpecialServerIpsSave);
+    if(saveObj.hasOwnProperty("StaneksGiftSave")) {
+        loadStaneksGift(saveObj.StaneksGiftSave);
+        if(typeof staneksGift.width === 'number') loadStaneksGift("");
+    } else {
+        console.warn(`Could not load Staneks Gift from save`);
+        loadStaneksGift("");
+    }
 
     if (saveObj.hasOwnProperty("AliasesSave")) {
         try {
@@ -370,6 +379,14 @@ function loadImportedGame(saveObj, saveString) {
     loadCompanies(saveObj.CompaniesSave);
     loadFactions(saveObj.FactionsSave);
     loadSpecialServerIps(saveObj.SpecialServerIpsSave);
+    if(saveObj.hasOwnProperty("StaneksGiftSave")) {
+        loadStaneksGift(saveObj.StaneksGiftSave);
+        if(typeof staneksGift.width === 'number') loadStaneksGift("");
+        if(typeof staneksGift.width === 'number') loadStaneksGift("");
+    } else {
+        console.warn(`Could not load Staneks Gift from save`);
+        loadStaneksGift("");
+    }
 
     if (saveObj.hasOwnProperty("AliasesSave")) {
         try {

@@ -504,4 +504,9 @@ export const LocationsMetadata: IConstructorParams[] = [
         name: LocationName.WorldStockExchange,
         types: [LocationType.StockMarket],
     },
+    {
+        city: CityName.Chongqing,
+        name: LocationName.ChongqingChurchOfTheMachineGod,
+        types: [LocationType.Special],
+    },
 ];

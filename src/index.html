@@ -50,6 +50,9 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <button id="create-program-menu-link"> Create Program </button>
                 <span id="create-program-notification" class="notification-off"> </span>
             </li>
+            <li id="staneks-gift-tab" class="mainmenu-accordion-panel">
+                <button id="staneks-gift-menu-link"> Stanek's Gift </button>
+            </li>
 
             <!-- Character dropdown -->
             <li id="character-menu-header-li">
@@ -211,8 +214,8 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <!-- React Component -->
     </div>
 
-	<!-- Create a program(executable) -->
-	<div id="create-program-container" class="generic-menupage-container">
+    <!-- Create a program(executable) -->
+    <div id="create-program-container" class="generic-menupage-container">
         <p id="create-program-page-text">
             This page displays any programs that you are able to create. Writing the code for a program takes time, which
             can vary based on how complex the program is. If you are working on creating a program you can cancel
@@ -220,7 +223,11 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         </p>
 
         <ul id="create-program-list"></ul>
-	</div>
+    </div>
+
+    <!-- Storm tech lab -->
+    <div id="staneks-gift-container" class="generic-menupage-container">
+    </div>
 
 	<!-- Factions -->
 	<div id="factions-container" class="generic-menupage-container"></div>

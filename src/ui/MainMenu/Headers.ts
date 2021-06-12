@@ -1,6 +1,7 @@
 // Implement the collapsible main menu headers
 import { MainMenuLinks } from "./Links";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface IMainMenuHeaders {
     Hacking:    HTMLElement | null;
@@ -65,13 +66,15 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
             const activeScripts: HTMLElement    = safeGetElement("active-scripts-tab");
             const createProgram: HTMLElement    = safeGetElement("create-program-tab");
             const createProgramNot: HTMLElement = safeGetElement("create-program-notification");
+            const staneksGift: HTMLElement      = safeGetElement("staneks-gift-tab");
 
+            staneksGift.style.display   = p.augmentations.some(aug => aug.name === AugmentationNames.StaneksGift) ? "list-item" : "none";
             createProgram.style.display = p.firstProgramAvailable ? "list-item" : "none";
 
             (this as any).classList.toggle("opened");
 
-            const elems: HTMLElement[] = [terminal, createScript, activeScripts, createProgram];
-            const links: HTMLElement[] = [MainMenuLinks.Terminal, MainMenuLinks.ScriptEditor, MainMenuLinks.ActiveScripts, MainMenuLinks.CreateProgram];
+            const elems: HTMLElement[] = [terminal, createScript, activeScripts, createProgram, staneksGift];
+            const links: HTMLElement[] = [MainMenuLinks.Terminal, MainMenuLinks.ScriptEditor, MainMenuLinks.ActiveScripts, MainMenuLinks.CreateProgram, MainMenuLinks.StaneksGift];
             if (terminal.style.maxHeight) {
                 toggleHeader(false, elems, links);
                 createProgramNot.style.display = "none";
