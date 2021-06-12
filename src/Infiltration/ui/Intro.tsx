@@ -1,9 +1,8 @@
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IEngine } from "../../IEngine";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StdButton } from "../../ui/React/StdButton";
 import Grid from '@material-ui/core/Grid';
-import { MuiPaper } from '../../ui/React/MuiPaper';
 
 interface IProps {
     Player: IPlayer;
@@ -22,7 +21,7 @@ function diffStr(d: number): string {
     return "impossible";
 }
 
-export function Intro(props: IProps) {
+export function Intro(props: IProps): React.ReactElement {
     return (<>
         <Grid container spacing={3}>
             <Grid item xs={10}>

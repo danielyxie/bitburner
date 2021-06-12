@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 
 interface Difficulty {
@@ -45,7 +44,7 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     return '';
 }
 
-export function Cyberpunk2077Game(props: IMinigameProps) {
+export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {timer: 0, width: 0, height: 0, symbols: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
@@ -54,7 +53,7 @@ export function Cyberpunk2077Game(props: IMinigameProps) {
     const [index, setIndex] = useState(0);
     const [pos, setPos] = useState([0, 0]);
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         event.preventDefault();
         const move = [0, 0];
         const arrow = getArrow(event);

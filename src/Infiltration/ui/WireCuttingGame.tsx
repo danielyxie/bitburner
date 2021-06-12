@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
@@ -60,7 +60,7 @@ interface Question {
     shouldCut: (wire: Wire, index: number) => boolean;
 }
 
-export function WireCuttingGame(props: IMinigameProps) {
+export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {timer: 0, wiresmin: 0, wiresmax: 0, rules: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
@@ -68,7 +68,7 @@ export function WireCuttingGame(props: IMinigameProps) {
     const [cutWires, setCutWires] = useState((new Array(wires.length)).fill(false));
     const [questions] = useState(generateQuestion(wires, difficulty));
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         event.preventDefault();
         const wireNum = parseInt(event.key);
         
@@ -116,7 +116,7 @@ export function WireCuttingGame(props: IMinigameProps) {
     </Grid>)
 }
 
-function randomPositionQuestion(wires: Wire[]) {
+function randomPositionQuestion(wires: Wire[]): Question {
     const index = Math.floor(Math.random() * wires.length);
     return {
         toString: (): string => {
@@ -124,20 +124,20 @@ function randomPositionQuestion(wires: Wire[]) {
         },
         shouldCut: (wire: Wire, i: number): boolean => {
             return index === i;
-        }
+        },
     }
 }
 
-function randomColorQuestion(wires: Wire[]) {
+function randomColorQuestion(wires: Wire[]): Question {
     const index = Math.floor(Math.random() * wires.length);
     const cutColor = wires[index].colors[0];
     return {
         toString: (): string => {
             return `Cut all wires colored ${colorNames[cutColor]}.`;
         },
-        shouldCut: (wire: Wire, i: number):boolean => {
+        shouldCut: (wire: Wire): boolean => {
             return wire.colors.includes(cutColor);
-        }
+        },
     }
 }
 

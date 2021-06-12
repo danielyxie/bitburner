@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 
 interface Difficulty {
@@ -44,7 +43,7 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     return '';
 }
 
-export function MinesweeperGame(props: IMinigameProps) {
+export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {timer: 0, width: 0, height: 0, mines: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
@@ -53,7 +52,7 @@ export function MinesweeperGame(props: IMinigameProps) {
     const [pos, setPos] = useState([0, 0]);
     const [memoryPhase, setMemoryPhase] = useState(true);
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         event.preventDefault();
         if(memoryPhase) return;
         const move = [0, 0];

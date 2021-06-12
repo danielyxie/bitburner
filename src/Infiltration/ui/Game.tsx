@@ -39,7 +39,7 @@ const minigames = [
     WireCuttingGame,
 ]
 
-export function Game(props: IProps) {
+export function Game(props: IProps): React.ReactElement {
     const [level, setLevel] = useState(1);
     const [stage, setStage] = useState(Stage.Countdown);
     const [results, setResults] = useState('');
@@ -102,17 +102,18 @@ export function Game(props: IProps) {
     case Stage.Countdown:
         stageComponent = (<Countdown onFinish={() =>setStage(Stage.Minigame)} />);
         break;
-    case Stage.Minigame:
+    case Stage.Minigame: {
         const MiniGame = minigames[gameIds.id];
         stageComponent = (<MiniGame onSuccess={success} onFailure={failure} difficulty={props.Difficulty+level/50} />);
         break;
+    }
     case Stage.Sell:
         stageComponent = (<Victory Player={props.Player} Engine={props.Engine} StartingDifficulty={props.StartingDifficulty} Difficulty={props.Difficulty} MaxLevel={props.MaxLevel} />);
         break;
     }
 
 
-    function Progress() {
+    function Progress(): React.ReactElement {
         return <h4><span style={{color: "gray"}}>{results.slice(0, results.length-1)}</span>{results[results.length-1]}</h4>
     }
 

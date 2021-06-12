@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 
-const TimerProgress = withStyles(theme => ({
+const TimerProgress = withStyles(() => ({
   bar: {
     transition: "none",
     backgroundColor: "#adff2f",
-  }
+  },
 }))(LinearProgress);
 
 interface IProps {
@@ -15,7 +15,7 @@ interface IProps {
     onExpire: () => void;
 }
 
-export function GameTimer(props: IProps) {
+export function GameTimer(props: IProps): React.ReactElement {
     const [v, setV] = useState(100);
 
     const tick = 200;

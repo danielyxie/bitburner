@@ -31,7 +31,7 @@ type IState = {
 
 const inputStyleMarkup = {
     margin: "5px",
-    height: "26px"
+    height: "26px",
 }
 
 export class DonateOption extends React.Component<IProps, IState> {

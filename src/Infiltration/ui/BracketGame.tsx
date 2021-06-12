@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
@@ -51,14 +51,14 @@ function match(left: string, right: string): boolean {
         (left === '{' && right === '}');
 }
 
-export function BracketGame(props: IMinigameProps) {
+export function BracketGame(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {timer:0, min: 0, max: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
     const [right, setRight] = useState("");
-    const [left, setLeft] = useState(generateLeft(difficulty));
+    const [left] = useState(generateLeft(difficulty));
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         const char = getChar(event);
         if(!char) return;
         if(!match(left[left.length-right.length-1], char)) {

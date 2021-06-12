@@ -5,7 +5,7 @@ interface IProps {
     onFinish: () => void;
 }
 
-export function Countdown(props: IProps) {
+export function Countdown(props: IProps): React.ReactElement {
     const [x, setX] = useState(3);
     useEffect(() => {
         if(x === 0) {

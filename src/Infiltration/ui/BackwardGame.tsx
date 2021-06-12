@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
@@ -26,15 +26,14 @@ const difficulties: {
     Impossible: {timer: 8000, min: 4, max: 4},
 }
 
-export function BackwardGame(props: IMinigameProps) {
-    // const difficulty: Difficulty = {timer: 0, min: 0, max: 0};
-    // interpolate(difficulties, props.difficulty, difficulty);
-    const difficulty = difficulties.Trivial;
+export function BackwardGame(props: IMinigameProps): React.ReactElement {
+    const difficulty: Difficulty = {timer: 0, min: 0, max: 0};
+    interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
-    const [answer, setAnswer] = useState(makeAnswer(difficulty));
+    const [answer] = useState(makeAnswer(difficulty));
     const [guess, setGuess] = useState("");
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         if(event.keyCode === 16) return;
         const nextGuess = guess + event.key.toUpperCase();
         if(!answer.startsWith(nextGuess)) {

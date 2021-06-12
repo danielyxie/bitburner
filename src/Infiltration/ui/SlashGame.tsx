@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { random } from "../utils";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
@@ -23,12 +22,12 @@ const difficulties: {
     Impossible: {window: 150},
 }
 
-export function SlashGame(props: IMinigameProps) {
+export function SlashGame(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {window: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const [guarding, setGuarding] = useState(true);
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         if(event.keyCode !== 32) return;
         if(guarding) {
             props.onFailure();

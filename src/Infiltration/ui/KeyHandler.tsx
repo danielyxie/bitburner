@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 interface IProps {
     onKeyDown: (event: React.KeyboardEvent<HTMLElement>) => void;
 }
 
-export function KeyHandler(props: IProps) {
+export function KeyHandler(props: IProps): React.ReactElement {
     let elem: any;
     useEffect(() => elem.focus());
 

@@ -4,8 +4,6 @@ import { Factions } from "../../Faction/Factions";
 import React, { useState } from 'react';
 import { StdButton } from "../../ui/React/StdButton";
 import Grid from '@material-ui/core/Grid';
-import { MuiPaper } from '../../ui/React/MuiPaper';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
@@ -19,10 +17,10 @@ interface IProps {
     MaxLevel: number;
 }
 
-export function Victory(props: IProps) {
+export function Victory(props: IProps): React.ReactElement {
     const [faction, setFaction] = useState('none');
 
-    function quitInfiltration() {
+    function quitInfiltration(): void {
         const menu = document.getElementById("mainmenu-container");
         if(!menu) throw new Error('mainmenu-container somehow null');
         menu.style.visibility = "visible";
@@ -39,19 +37,19 @@ export function Victory(props: IProps) {
         Math.pow(props.StartingDifficulty, 3)*
         3e3*levelBonus*BitNodeMultipliers.InfiltrationMoney;
 
-    function sell() {
+    function sell(): void {
         props.Player.gainMoney(moneyGain);
         props.Player.recordMoneySource(moneyGain, 'infiltration');
         quitInfiltration();
     }
 
-    function trade() {
+    function trade(): void {
         if(faction === 'none') return;
         Factions[faction].playerReputation += repGain;
         quitInfiltration();
     }
 
-    function changeDropdown(event: React.ChangeEvent<HTMLSelectElement>) {
+    function changeDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
          setFaction(event.target.value);
     }
 

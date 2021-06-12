@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 
 interface Difficulty {
@@ -24,14 +23,14 @@ const difficulties: {
     Impossible: {timer: 2500, size: 12},
 }
 
-export function BribeGame(props: IMinigameProps) {
+export function BribeGame(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {timer: 0, size: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
-    const [choices, setChoices] = useState(makeChoices(difficulty));
+    const [choices] = useState(makeChoices(difficulty));
     const [index, setIndex] = useState(0);
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         const k = event.keyCode;
         if(k === 32) {
             if(positive.includes(choices[index])) props.onSuccess();
@@ -61,10 +60,10 @@ export function BribeGame(props: IMinigameProps) {
     </Grid>)
 }
 
-function shuffleArray(array: string[]) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
+function shuffleArray(array: string[]): void {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
@@ -43,14 +43,14 @@ function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
     return '';
 }
 
-export function CheatCodeGame(props: IMinigameProps) {
+export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {timer: 0, min: 0, max: 0};
     interpolate(difficulties, props.difficulty, difficulty);
     const timer = difficulty.timer;
-    const [code, _] = useState(generateCode(difficulty));
+    const [code] = useState(generateCode(difficulty));
     const [index, setIndex] = useState(0);
 
-    function press(event: React.KeyboardEvent<HTMLElement>) {
+    function press(event: React.KeyboardEvent<HTMLElement>): void {
         if(code[index] !== getArrow(event)) {
             props.onFailure();
             return;

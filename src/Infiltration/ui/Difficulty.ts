@@ -25,8 +25,8 @@ export function interpolate(settings: DifficultySettings, n: number, out: Diffic
         return a;
     }
     if(n < 0) return lerpD(settings.Trivial, settings.Trivial, 0);
-    if(0 <= n && n < 1) return lerpD(settings.Trivial, settings.Normal, n);
-    if(1 <= n && n < 2) return lerpD(settings.Normal, settings.Hard, n-1);
-    if(2 <= n && n < 3) return lerpD(settings.Hard, settings.Impossible, n-2);
+    if(n >= 0 && n < 1) return lerpD(settings.Trivial, settings.Normal, n);
+    if(n >= 1 && n < 2) return lerpD(settings.Normal, settings.Hard, n-1);
+    if(n >= 2 && n < 3) return lerpD(settings.Hard, settings.Impossible, n-2);
     return lerpD(settings.Impossible, settings.Impossible, 0);
 }
