@@ -742,8 +742,8 @@ let Terminal = {
 
         /****************** Interactive Tutorial Terminal Commands ******************/
         if (ITutorial.isRunning) {
-            var foodnstuffServ = GetServerByHostname("foodnstuff");
-            if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
+            var n00dlesServ = GetServerByHostname("n00dles");
+            if (n00dlesServ == null) {throw new Error("Could not get n00dles server"); return;}
 
             switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
@@ -780,11 +780,11 @@ let Terminal = {
             case iTutorialSteps.TerminalConnect:
                 if (commandArray.length == 2) {
                     if ((commandArray[0] == "connect") &&
-                        (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
+                        (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.ip)) {
                         Player.getCurrentServer().isConnectedTo = false;
-                        Player.currentServer = foodnstuffServ.ip;
+                        Player.currentServer = n00dlesServ.ip;
                         Player.getCurrentServer().isConnectedTo = true;
-                        post("Connected to foodnstuff");
+                        post("Connected to n00dles");
                         iTutorialNextStep();
                     } else {post("Wrong command! Try again!"); return;}
                 } else {post("Bad command. Please follow the tutorial");}
@@ -804,8 +804,8 @@ let Terminal = {
             case iTutorialSteps.TerminalNuke:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
-                    foodnstuffServ.hasAdminRights = true;
-                    post("NUKE successful! Gained root access to foodnstuff");
+                    n00dlesServ.hasAdminRights = true;
+                    post("NUKE successful! Gained root access to n00dles");
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -817,8 +817,8 @@ let Terminal = {
                 break;
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
-                    commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    Engine.loadScriptEditorContent("foodnstuff.script", "");
+                    commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
+                    Engine.loadScriptEditorContent("n00dles.script", "");
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -830,16 +830,16 @@ let Terminal = {
                 break;
             case iTutorialSteps.TerminalRunScript:
                 if (commandArray.length == 2 &&
-                    commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
+                    commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
                     Terminal.runScript(commandArray);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.ActiveScriptsToTerminal:
                 if (commandArray.length == 2 &&
-                    commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
+                    commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
                     // Check that the script exists on this machine
-                    var runningScript = findRunningScript("foodnstuff.script", [], Player.getCurrentServer());
+                    var runningScript = findRunningScript("n00dles.script", [], Player.getCurrentServer());
                     if (runningScript == null) {
                         post("Error: No such script exists");
                         return;
