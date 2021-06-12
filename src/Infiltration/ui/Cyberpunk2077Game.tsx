@@ -4,6 +4,7 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
+import { getArrow } from "../utils";
 
 interface Difficulty {
     [key: string]: number;
@@ -23,25 +24,6 @@ const difficulties: {
     Normal: {timer: 15000, width: 4, height: 4, symbols: 7},
     Hard: {timer: 12500, width: 5, height: 5, symbols: 8},
     Impossible: {timer: 10000, width: 6, height: 6, symbols: 9},
-}
-
-
-function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
-    switch(event.keyCode) {
-    case 38:
-    case 87:
-        return "↑";
-    case 65:
-    case 37:
-        return "←";
-    case 40:
-    case 83:
-        return "↓";
-    case 39:
-    case 68:
-        return "→";
-    }
-    return '';
 }
 
 export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {

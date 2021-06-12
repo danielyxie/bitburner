@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
+import { random, getArrow } from "../utils";
 import { interpolate } from "./Difficulty";
 
 interface Difficulty {
@@ -25,24 +25,6 @@ const difficulties: {
     Impossible: {timer: 3000, min: 9, max: 9},
 }
 
-function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
-    switch(event.keyCode) {
-    case 38:
-    case 87:
-        return "↑";
-    case 65:
-    case 37:
-        return "←";
-    case 40:
-    case 83:
-        return "↓";
-    case 39:
-    case 68:
-        return "→";
-    }
-    return '';
-}
-
 export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
     const difficulty: Difficulty = {timer: 0, min: 0, max: 0};
     interpolate(difficulties, props.difficulty, difficulty);
@@ -51,6 +33,7 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
     const [index, setIndex] = useState(0);
 
     function press(event: React.KeyboardEvent<HTMLElement>): void {
+        event.preventDefault();
         if(code[index] !== getArrow(event)) {
             props.onFailure();
             return;

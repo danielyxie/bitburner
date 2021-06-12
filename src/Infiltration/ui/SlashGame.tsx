@@ -28,6 +28,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
     const [guarding, setGuarding] = useState(true);
 
     function press(event: React.KeyboardEvent<HTMLElement>): void {
+        event.preventDefault();
         if(event.keyCode !== 32) return;
         if(guarding) {
             props.onFailure();

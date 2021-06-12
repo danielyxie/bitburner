@@ -34,15 +34,12 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
     const [guess, setGuess] = useState("");
 
     function press(event: React.KeyboardEvent<HTMLElement>): void {
+        event.preventDefault();
         if(event.keyCode === 16) return;
         const nextGuess = guess + event.key.toUpperCase();
-        if(!answer.startsWith(nextGuess)) {
-            props.onFailure();
-        } else if (answer === nextGuess) {
-            props.onSuccess();
-        } else {
-            setGuess(nextGuess);
-        }
+        if(!answer.startsWith(nextGuess)) props.onFailure();
+        else if (answer === nextGuess) props.onSuccess();
+        else setGuess(nextGuess);
     }
 
     return (<Grid container spacing={3}>

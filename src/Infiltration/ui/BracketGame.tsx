@@ -59,6 +59,7 @@ export function BracketGame(props: IMinigameProps): React.ReactElement {
     const [left] = useState(generateLeft(difficulty));
 
     function press(event: React.KeyboardEvent<HTMLElement>): void {
+        event.preventDefault();
         const char = getChar(event);
         if(!char) return;
         if(!match(left[left.length-right.length-1], char)) {
