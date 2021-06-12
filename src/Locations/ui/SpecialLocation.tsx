@@ -103,9 +103,9 @@ export class SpecialLocation extends React.Component<IProps, IState> {
         if (!p.factions.includes("Church of the Machine God")) {
             joinFaction(Factions["Church of the Machine God"]);
         }
-        if (!p.augmentations.some(a => a.name === AugmentationNames.StaneksGift) &&
-            !p.queuedAugmentations.some(a => a.name === AugmentationNames.StaneksGift)) {
-            p.queueAugmentation(AugmentationNames.StaneksGift);
+        if (!p.augmentations.some(a => a.name === AugmentationNames.StaneksGift1) &&
+            !p.queuedAugmentations.some(a => a.name === AugmentationNames.StaneksGift1)) {
+            p.queueAugmentation(AugmentationNames.StaneksGift1);
         }
 
         this.props.engine.loadFactionContent();

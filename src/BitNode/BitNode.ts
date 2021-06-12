@@ -240,7 +240,7 @@ BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
 BitNodes["BitNode13"] = new BitNode(13, "They're lunatics", "1 step back, 2 steps forward",
                                         "With the invention of Augmentations in the 2040s a religious group known as the Church of the Machine God has rallied far more support than anyone would have hoped.<br><br>" +
                                         "Their leader, Allison \"Mother\" Stanek is said to have created her own Augmentation whose power goes beyond any other." +
-                                        "Find her in Chongquin and gain her trust.<br><br>" +
+                                        " Find her in Chongquin and gain her trust.<br><br>" +
                                         "In this BitNode:<br><br>" +
                                         "Every is significantly reduced<br>" +
                                         "Stanek's Gift power is significantly increased.<br><br>" +
