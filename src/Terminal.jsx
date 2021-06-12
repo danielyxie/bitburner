@@ -53,6 +53,7 @@ import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStart
 import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";
+import { compareArrays } from "../utils/helpers/compareArrays";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import {
     getCurrentEditor,
@@ -1422,13 +1423,46 @@ let Terminal = {
                             args.push(commandArray[i]);
                         }
 
-                        // Check that the script exists on this machine
-                        const runningScript = findRunningScript(scriptName, args, s);
-                        if (runningScript == null) {
-                            postError("No such script exists");
+                        // go over all the running scripts. If there's a perfect
+                        // match, use it!
+                        for (var i = 0; i < s.runningScripts.length; ++i) {
+                            if (s.runningScripts[i].filename === scriptName &&
+                                compareArrays(s.runningScripts[i].args, args)) {
+                                logBoxCreate(s.runningScripts[i]);
+                                return;
+                            }
+                        }
+
+                        // Find all scripts that are potential candidates.
+                        const candidates = [];
+                        for (var i = 0; i < s.runningScripts.length; ++i) {
+                            // only scripts that have more arguments (equal arguments is already caught)
+                            if(s.runningScripts[i].args.length < args.length) continue;
+                            // make a smaller copy of the args.
+                            const args2 = s.runningScripts[i].args.slice(0, args.length);
+                            if (s.runningScripts[i].filename === scriptName &&
+                                compareArrays(args2, args)) {
+                                candidates.push(s.runningScripts[i]);
+                            }
+                        }
+
+                        // If there's only 1 possible choice, use that.
+                        if(candidates.length === 1) {
+                            logBoxCreate(candidates[0]);
                             return;
                         }
-                        logBoxCreate(runningScript);
+
+                        // otherwise lists all possible conflicting choices.
+                        if(candidates.length > 1) {
+                            postError("Found several potential candidates:");
+                            for(const candidate of candidates)
+                                postError(`${candidate.filename} ${candidate.args.join(' ')}`);
+                            postError("Script arguments need to be specified.");
+                            return;
+                        }
+
+                        // if there's no candidate then we just don't know.
+                        postError("No such script exists.");
                     } else {
                         const runningScript = findRunningScriptByPid(commandArray[1], Player.getCurrentServer());
                         if (runningScript == null) {
