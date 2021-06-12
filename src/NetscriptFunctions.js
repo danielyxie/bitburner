@@ -3603,6 +3603,30 @@ function NetscriptFunctions(workerScript) {
 
         // Gang API
         gang: {
+            createGang: function(faction) {
+                updateDynamicRam("createGang", getRamCost("gang", "createGang"));
+                // this list is copied from Faction/ui/Root.tsx
+                const GangNames = [
+                    "Slum Snakes",
+                    "Tetrads",
+                    "The Syndicate",
+                    "The Dark Army",
+                    "Speakers for the Dead",
+                    "NiteSec",
+                    "The Black Hand",
+                ];
+                if(!Player.canAccessGang() || !GangNames.includes(faction)) return false;
+                if (Player.inGang()) return false;
+                if(!Player.factions.includes(faction)) return false;
+
+                const isHacking = (faction === "NiteSec" || faction === "The Black Hand");
+                Player.startGang(faction, isHacking);
+                return true;
+            },
+            inGang: function() {
+                updateDynamicRam("inGang", getRamCost("gang", "inGang"));
+                return Player.inGang();
+            },
             getMemberNames: function() {
                 updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
                 checkGangApiAccess("getMemberNames");

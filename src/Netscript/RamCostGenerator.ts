@@ -223,6 +223,8 @@ export const RamCosts: IMap<any> = {
 
     // Gang API
     gang : {
+        createGang: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
+        inGang: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
         getMemberNames: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
         getGangInformation: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
         getOtherGangInformation: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
