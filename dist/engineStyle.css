@@ -1355,33 +1355,8 @@ button {
 /* Infiltration */
 #infiltration-container {
   position: fixed;
-  padding: 6px; }
-  #infiltration-container span {
-    margin: 0;
-    padding: 0; }
-
-#infiltration-left-panel,
-#infiltration-right-panel {
-  display: inline-block;
-  border: 1px solid #fff;
-  width: 35%;
-  height: 75%;
-  top: 10px;
-  overflow-y: auto;
-  overflow-x: auto; }
-
-#infiltration-faction-select {
-  color: #fff; }
-
-#infiltration-left-panel p,
-#infiltration-right-panel p {
-  margin: 4px; }
-
-#infiltration-buttons {
-  margin-top: 20px; }
-
-#infiltration-buttons .a-link-button {
-  display: inline; }
+  margin: 5px;
+  width: 70%; }
 
 /**
  * Styling for the Augmentations UI. This is the page that displays all of the
@@ -5036,6 +5011,47 @@ html {
   position: fixed;
   padding: 6px;
   width: 60%; }
+
+/* COLORS */
+/* Attributes */
+.blinking-cursor {
+  font-weight: 100;
+  color: #2E3D48;
+  -webkit-animation: 1s cursorblink step-end infinite;
+  -moz-animation: 1s cursorblink step-end infinite;
+  -ms-animation: 1s cursorblink step-end infinite;
+  -o-animation: 1s cursorblink step-end infinite;
+  animation: 1s cursorblink step-end infinite; }
+
+@keyframes "cursorblink" {
+  from, to {
+    color: transparent; }
+  50% {
+    color: #adff2f; } }
+
+@-moz-keyframes cursorblink {
+  from, to {
+    color: transparent; }
+  50% {
+    color: #adff2f; } }
+
+@-webkit-keyframes "cursorblink" {
+  from, to {
+    color: transparent; }
+  50% {
+    color: #adff2f; } }
+
+@-ms-keyframes "cursorblink" {
+  from, to {
+    color: transparent; }
+  50% {
+    color: #adff2f; } }
+
+@-o-keyframes "cursorblink" {
+  from, to {
+    color: transparent; }
+  50% {
+    color: #adff2f; } }
 
 
 /*# sourceMappingURL=engineStyle.css.map*/
