@@ -376,7 +376,7 @@ function NetscriptFunctions(workerScript) {
     const makeRuntimeErrorMsg = function(caller, msg) {
         const stack = (new Error()).stack.split('\n').slice(1);
         const scripts = workerScript.getServer().scripts;
-        let userstack = [];
+        const userstack = [];
         for(const stackline of stack) {
             let filename;
             for(const script of scripts) {
@@ -398,13 +398,12 @@ function NetscriptFunctions(workerScript) {
                 const lineMatch = line.match(lineRe);
                 const funcMatch = line.match(funcRe);
                 if(lineMatch && funcMatch) {
-                    let func = funcMatch[1];
-                    return {line: lineMatch[1], func: func};
+                    return {line: lineMatch[1], func: funcMatch[1]};
                 }
                 return null;
             }
             let call = {line: "-1", func: "unknown"};
-            let chromeCall = parseChromeStackline(stackline);
+            const chromeCall = parseChromeStackline(stackline);
             if (chromeCall) {
                 call = chromeCall;
             }
@@ -430,7 +429,8 @@ function NetscriptFunctions(workerScript) {
         }
 
         workerScript.log(caller, msg);
-        const rejectMsg = `${caller}: ${msg}<br><br>Stack:<br>${userstack.join('<br>')}`
+        let rejectMsg = `${caller}: ${msg}`
+        if(userstack.length !== 0) rejectMsg += `<br><br>Stack:<br>${userstack.join('<br>')}`;
         return makeRuntimeRejectMsg(workerScript, rejectMsg);
     }
 
@@ -3603,6 +3603,30 @@ function NetscriptFunctions(workerScript) {
 
         // Gang API
         gang: {
+            createGang: function(faction) {
+                updateDynamicRam("createGang", getRamCost("gang", "createGang"));
+                // this list is copied from Faction/ui/Root.tsx
+                const GangNames = [
+                    "Slum Snakes",
+                    "Tetrads",
+                    "The Syndicate",
+                    "The Dark Army",
+                    "Speakers for the Dead",
+                    "NiteSec",
+                    "The Black Hand",
+                ];
+                if(!Player.canAccessGang() || !GangNames.includes(faction)) return false;
+                if (Player.inGang()) return false;
+                if(!Player.factions.includes(faction)) return false;
+
+                const isHacking = (faction === "NiteSec" || faction === "The Black Hand");
+                Player.startGang(faction, isHacking);
+                return true;
+            },
+            inGang: function() {
+                updateDynamicRam("inGang", getRamCost("gang", "inGang"));
+                return Player.inGang();
+            },
             getMemberNames: function() {
                 updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
                 checkGangApiAccess("getMemberNames");
@@ -4386,7 +4410,7 @@ function NetscriptFunctions(workerScript) {
                 },
                 constants: function() {
                     checkFormulasAccess("hacknetNodes.constants", 5);
-                    return Object.assign({}, HacknetNodeConstants, HacknetServerConstants);
+                    return Object.assign({}, HacknetNodeConstants);
                 },
             },
             hacknetServers: {

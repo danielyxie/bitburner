@@ -53,6 +53,7 @@ import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStart
 import { Player } from "./Player";
 import { hackWorldDaemon } from "./RedPill";
 import { RunningScript } from "./Script/RunningScript";
+import { compareArrays } from "../utils/helpers/compareArrays";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import {
     getCurrentEditor,
@@ -742,8 +743,8 @@ let Terminal = {
 
         /****************** Interactive Tutorial Terminal Commands ******************/
         if (ITutorial.isRunning) {
-            var foodnstuffServ = GetServerByHostname("foodnstuff");
-            if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
+            var n00dlesServ = GetServerByHostname("n00dles");
+            if (n00dlesServ == null) {throw new Error("Could not get n00dles server"); return;}
 
             switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
@@ -780,11 +781,11 @@ let Terminal = {
             case iTutorialSteps.TerminalConnect:
                 if (commandArray.length == 2) {
                     if ((commandArray[0] == "connect") &&
-                        (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
+                        (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.ip)) {
                         Player.getCurrentServer().isConnectedTo = false;
-                        Player.currentServer = foodnstuffServ.ip;
+                        Player.currentServer = n00dlesServ.ip;
                         Player.getCurrentServer().isConnectedTo = true;
-                        post("Connected to foodnstuff");
+                        post("Connected to n00dles");
                         iTutorialNextStep();
                     } else {post("Wrong command! Try again!"); return;}
                 } else {post("Bad command. Please follow the tutorial");}
@@ -804,8 +805,8 @@ let Terminal = {
             case iTutorialSteps.TerminalNuke:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
-                    foodnstuffServ.hasAdminRights = true;
-                    post("NUKE successful! Gained root access to foodnstuff");
+                    n00dlesServ.hasAdminRights = true;
+                    post("NUKE successful! Gained root access to n00dles");
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -817,8 +818,8 @@ let Terminal = {
                 break;
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
-                    commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    Engine.loadScriptEditorContent("foodnstuff.script", "");
+                    commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
+                    Engine.loadScriptEditorContent("n00dles.script", "");
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -830,16 +831,16 @@ let Terminal = {
                 break;
             case iTutorialSteps.TerminalRunScript:
                 if (commandArray.length == 2 &&
-                    commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
+                    commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
                     Terminal.runScript(commandArray);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.ActiveScriptsToTerminal:
                 if (commandArray.length == 2 &&
-                    commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
+                    commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
                     // Check that the script exists on this machine
-                    var runningScript = findRunningScript("foodnstuff.script", [], Player.getCurrentServer());
+                    var runningScript = findRunningScript("n00dles.script", [], Player.getCurrentServer());
                     if (runningScript == null) {
                         post("Error: No such script exists");
                         return;
@@ -1422,13 +1423,46 @@ let Terminal = {
                             args.push(commandArray[i]);
                         }
 
-                        // Check that the script exists on this machine
-                        const runningScript = findRunningScript(scriptName, args, s);
-                        if (runningScript == null) {
-                            postError("No such script exists");
+                        // go over all the running scripts. If there's a perfect
+                        // match, use it!
+                        for (var i = 0; i < s.runningScripts.length; ++i) {
+                            if (s.runningScripts[i].filename === scriptName &&
+                                compareArrays(s.runningScripts[i].args, args)) {
+                                logBoxCreate(s.runningScripts[i]);
+                                return;
+                            }
+                        }
+
+                        // Find all scripts that are potential candidates.
+                        const candidates = [];
+                        for (var i = 0; i < s.runningScripts.length; ++i) {
+                            // only scripts that have more arguments (equal arguments is already caught)
+                            if(s.runningScripts[i].args.length < args.length) continue;
+                            // make a smaller copy of the args.
+                            const args2 = s.runningScripts[i].args.slice(0, args.length);
+                            if (s.runningScripts[i].filename === scriptName &&
+                                compareArrays(args2, args)) {
+                                candidates.push(s.runningScripts[i]);
+                            }
+                        }
+
+                        // If there's only 1 possible choice, use that.
+                        if(candidates.length === 1) {
+                            logBoxCreate(candidates[0]);
                             return;
                         }
-                        logBoxCreate(runningScript);
+
+                        // otherwise lists all possible conflicting choices.
+                        if(candidates.length > 1) {
+                            postError("Found several potential candidates:");
+                            for(const candidate of candidates)
+                                postError(`${candidate.filename} ${candidate.args.join(' ')}`);
+                            postError("Script arguments need to be specified.");
+                            return;
+                        }
+
+                        // if there's no candidate then we just don't know.
+                        postError("No such script exists.");
                     } else {
                         const runningScript = findRunningScriptByPid(commandArray[1], Player.getCurrentServer());
                         if (runningScript == null) {

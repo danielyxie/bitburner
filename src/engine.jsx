@@ -32,6 +32,7 @@ import {
     processPassiveFactionRepGain,
     inviteToFaction,
 } from "./Faction/FactionHelpers";
+import { displayInfiltrationContent } from "./Infiltration/Helper";
 import { 
     getHackingWorkRepGain,
     getFactionSecurityWorkRepGain,
@@ -419,10 +420,13 @@ const Engine = {
         routing.navigateTo(Page.CinematicText);
     },
 
-    loadInfiltrationContent: function() {
+    loadInfiltrationContent: function(name, difficulty, maxLevel) {
         Engine.hideAllContent();
+        const mainMenu = document.getElementById("mainmenu-container");
+        mainMenu.style.visibility = "hidden";
         Engine.Display.infiltrationContent.style.display = "block";
         routing.navigateTo(Page.Infiltration);
+        displayInfiltrationContent(this, Player, name, difficulty, maxLevel);
     },
 
     loadStockMarketContent: function() {
@@ -501,6 +505,8 @@ const Engine = {
 
         Engine.Display.activeScriptsContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);
+        Engine.Display.infiltrationContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.infiltrationContent);
 
         clearHacknetNodesUI();
         Engine.Display.createProgramContent.style.display = "none";
@@ -522,7 +528,6 @@ const Engine = {
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
         Engine.Display.cinematicTextContent.style.display = "none";
-        Engine.Display.infiltrationContent.style.display = "none";
         Engine.Display.stockMarketContent.style.display = "none";
         Engine.Display.missionContent.style.display = "none";
         if (document.getElementById("gang-container")) {

@@ -561,7 +561,7 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
                 elems.taskDetailsSelector.add(createOptionElement(gymSelectorOptions[i]));
 
                 // Set initial value
-                if (sleeve.gymStatType === gymSelectorOptions[i]) {
+                if (sleeve.gymStatType === gymSelectorOptions[i].substring(6, 9).toLowerCase()) {
                     elems.taskDetailsSelector.selectedIndex = i;
                 }
             }

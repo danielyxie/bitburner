@@ -2157,15 +2157,31 @@ function installAugmentations() {
         dialogBoxCreate("You have not purchased any Augmentations to install!");
         return false;
     }
-    var augmentationList = "";
-    for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
-        var aug = Augmentations[Player.queuedAugmentations[i].name];
+    let augmentationList = "";
+    let nfgIndex = -1;
+    for(let i = Player.queuedAugmentations.length-1; i >= 0; i--) {
+        if(Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+            nfgIndex = i;
+            break;
+        }
+    }
+    for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
+        const ownedAug = Player.queuedAugmentations[i];
+        const aug = Augmentations[ownedAug.name];
         if (aug == null) {
-            console.error(`Invalid augmentation: ${Player.queuedAugmentations[i].name}`);
+            console.error(`Invalid augmentation: ${ownedAug.name}`);
             continue;
         }
+
+        if(ownedAug.name === AugmentationNames.NeuroFluxGovernor
+            && i !== nfgIndex) continue;
+
+        let level = null;
+        if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
+            level = ` - ${ownedAug.level}`;
+        }
         applyAugmentation(Player.queuedAugmentations[i]);
-        augmentationList += (aug.name + "<br>");
+        augmentationList += (aug.name + level + "<br>");
     }
     Player.queuedAugmentations = [];
     dialogBoxCreate("You slowly drift to sleep as scientists put you under in order " +

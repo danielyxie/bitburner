@@ -176,6 +176,7 @@ export interface IPlayer {
     startGang(facName: string, isHacking: boolean): void;
     startWork(companyName: string): void;
     startWorkPartTime(companyName: string): void;
+    takeDamage(amt: number): boolean;
     travel(to: CityName): boolean;
     giveExploit(exploit: Exploit): void;
     queryStatFromString(str: string): number;

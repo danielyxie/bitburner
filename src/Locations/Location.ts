@@ -6,8 +6,6 @@ import { LocationName } from "./data/LocationNames";
 import { LocationType } from "./LocationTypeEnum";
 
 interface IInfiltrationMetadata {
-    baseRewardValue: number;
-    difficulty: number;
     maxClearanceLevel: number;
     startingSecurityLevel: number;
 }

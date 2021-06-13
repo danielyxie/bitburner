@@ -69,3 +69,22 @@
     float: right;
     padding: 4px;
 }
+
+.interactive-tutorial-command {
+    background-color: #000;
+    color: $hacker-green;
+    white-space: nowrap;
+}
+
+.interactive-tutorial-code {
+    background-color: #272822;
+    color: white;
+    padding: 3px;
+}
+
+.interactive-tutorial-tab {
+    background-color: #555;
+    color: #e6e6e6;
+    padding: 3px;
+    box-shadow: 0 0 3px #000;
+}

@@ -394,6 +394,7 @@ export function loseMoney(money) {
         console.error("NaN passed into Player.loseMoney()");
         return;
     }
+    if(this.money.eq(Infinity) && money === Infinity) return;
     this.money = this.money.minus(money);
 }
 
@@ -660,7 +661,7 @@ export function work(numCycles) {
 
     const penalty = this.cancelationPenalty();
 
-    const penaltyString = penalty === 0.5 ? 'half' : 'three quarter'
+    const penaltyString = penalty === 0.5 ? 'half' : 'three-quarters'
 
     var elem = document.getElementById("work-in-progress-text");
     ReactDOM.render(<>
@@ -1740,7 +1741,6 @@ export function applyForJob(entryPosType, sing=false) {
         }
     }
 
-    this.companyName = company.name;
     this.jobs[company.name] = pos.name;
 
     document.getElementById("world-menu-header").click();
@@ -1863,7 +1863,6 @@ export function applyForEmployeeJob(sing=false) {
 export function applyForPartTimeEmployeeJob(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
-        this.companyName = company.name;
         this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();

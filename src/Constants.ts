@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.51.10",
+    Version:                "0.52.0",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -226,40 +226,46 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.51.10 - 2021-05-31 Focus Mark, Focus! (hydroflame)
+    v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame)
     -------
 
-    Focus
-    * You can now use the terminal and write scripts while working for factions
-      but you will gain reputation at a slower rate.
+    Infiltration
+    * Completely reworked. Not the same mechanic at all.
 
-    SF -1
-    * Added a new SF -1: Bypass
+    Terminal
+    * tail is smarter. It automatically assume the only possible options in some
+      cases.
 
-    Gang
-    * "Vigilante justice"/"Ethical hacking" now reduces wanted level by a very
-      small percentage as well an absolute value.
+    Intelligence
+    * Now available when starting BN5 instead of after beating it for the first
+      time.
+    * Nerf the effect of intelligence on reputation gain.
+
+    Augmentation
+    * Added a new augmentation, the 'Unstable Circadian Modulator', whose
+      gimmick is that its stats are randomized every hour.
 
     Netscript
-    * 'tFormat' now has a second argument to display with millisecond precision.
-    * 'purchaseSleeveAug' can no longer purchase the same aug over and over for
-      the same sleeve.
-    * fix typo in logging for 'getServerSecurityLevel'
-    * Fixed some weird issue where very rarely you would get 0 exp from 'grow'
-    * 'getActionTime' now returns correct values for Diplomacy and Regeneration.
+    * 'getPlayer' is not a singularity function anymore.
+    * 'hacknetNodes.constants' returns the correct values.
+    * 'createGang' has been added.
+    * 'inGang' has been added.
 
-    Corporations
-    * Fixed an exploit where you could get nearly infinite corporation funds by
-      entering negative numbers in textboxes.
-    * Fixed an exploit where shares could be sold again by clicking the
-      "sell share" button via scripts.
-
-    Documentation
-    * typo fix in purchaseTor
-    * typo fix in basicgameplay/stats
+    Tutorial
+    * Updated the tutorial. Made it look cleaner, fixed typos, etc.
 
     Misc.
-    * Very large number will no longer appear as "$NaNt"
-    * Hash capacity now displays in the "big number" format.
+    * Fix many typos in literature (@kwazygloo)
+    * Fix being able to unfocus from gym and university.
+    * Fix being able to do hacking missions while unfocused.
+    * Fix many typos in Augmentation descriptions (@kwazygloo)
+    * More numbers handle absurdly large values. (@Tesseract1234567890)
+    * Fix many typos (@Tesseract1234567890)
+    * Fixed an issue that caused a UI desync when sleeves were set to workout
+      stats other than strength at the gym.
+    * Fix weird alignment of donation text box and button. (@Tesseract1234567890)
+    * Fixed an issue where reputation could be transfered to new jobs when unfocused.
+    * Empty stack traces should no longer appear.
+    * Purchasing anything with Infinity money doesn't result in NaN.
     `,
 }

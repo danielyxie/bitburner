@@ -29,11 +29,10 @@ export function PlayerInfo(props) {
             {Money(Player.money.toNumber())}<br />
 
             {
-                hasServers &&
-                <><span>Hashes: {Hashes(Player.hashManager.hashes)} / {Hashes(Player.hashManager.capacity)}</span><br /></>
+                hasServers && <><span>Hashes: {Hashes(Player.hashManager.hashes)} / {Hashes(Player.hashManager.capacity)}</span><br /></>
             }
 
-            <span>Total Hacknet Node Production: </span>
+            <span>Total Hacknet {hasServers ? 'Server' : 'Node'} Production: </span>
             {prod}
         </p>
     )

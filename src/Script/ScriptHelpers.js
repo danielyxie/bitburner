@@ -231,12 +231,12 @@ function saveAndCloseScriptEditor() {
 
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
         //Make sure filename + code properly follow tutorial
-        if (filename !== "foodnstuff.script") {
-            dialogBoxCreate("Leave the script name as 'foodnstuff'!");
+        if (filename !== "n00dles.script") {
+            dialogBoxCreate("Leave the script name as 'n00dles'!");
             return;
         }
         code = code.replace(/\s/g, "");
-        if (code.indexOf("while(true){hack('foodnstuff');}") == -1) {
+        if (code.indexOf("while(true){hack('n00dles');}") == -1) {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
             return;
         }
