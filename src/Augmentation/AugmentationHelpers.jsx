@@ -2176,7 +2176,7 @@ function installAugmentations() {
         if(ownedAug.name === AugmentationNames.NeuroFluxGovernor
             && i !== nfgIndex) continue;
 
-        let level = null;
+        let level = "";
         if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
             level = ` - ${ownedAug.level}`;
         }
