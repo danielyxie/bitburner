@@ -226,8 +226,11 @@ export const CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.52.0 - 2021-06-12 Infiltration 2.0 (hydroflame)
+    v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame)
     -------
+
+    Infiltration
+    * Completely reworked. Not the same mechanic at all.
 
     Terminal
     * tail is smarter. It automatically assume the only possible options in some

@@ -3,6 +3,55 @@
 Changelog
 =========
 
+v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame & community)
+--------------------------------------------------------------
+
+**Infiltration**
+
+* Completely reworked. Not the same mechanic at all.
+
+**Terminal**
+
+* tail is smarter. It automatically assume the only possible options in some
+  cases.
+
+**Intelligence**
+
+* Now available when starting BN5 instead of after beating it for the first
+  time.
+* Nerf the effect of intelligence on reputation gain.
+
+**Augmentation**
+
+* Added a new augmentation, the 'Unstable Circadian Modulator', whose
+  gimmick is that its stats are randomized every hour.
+
+**Netscript**
+
+* 'getPlayer' is not a singularity function anymore.
+* 'hacknetNodes.constants' returns the correct values.
+* 'createGang' has been added.
+* 'inGang' has been added.
+
+**Tutorial**
+
+* Updated the tutorial. Made it look cleaner, fixed typos, etc.
+
+**Misc.**
+
+* Fix many typos in literature (@kwazygloo)
+* Fix being able to unfocus from gym and university.
+* Fix being able to do hacking missions while unfocused.
+* Fix many typos in Augmentation descriptions (@kwazygloo)
+* More numbers handle absurdly large values. (@Tesseract1234567890)
+* Fix many typos (@Tesseract1234567890)
+* Fixed an issue that caused a UI desync when sleeves were set to workout
+  stats other than strength at the gym.
+* Fix weird alignment of donation text box and button. (@Tesseract1234567890)
+* Fixed an issue where reputation could be transfered to new jobs when unfocused.
+* Empty stack traces should no longer appear.
+* Purchasing anything with Infinity money doesn't result in NaN.
+
 v0.51.10 - 2021-05-31 Focus Mark, Focus! (hydroflame)
 -----------------------------------------------------
 
