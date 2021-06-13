@@ -199,6 +199,10 @@ export const LocationsMetadata: IConstructorParams[] = [
     },
     {
         city: CityName.NewTokyo,
+        infiltrationData: {
+            maxClearanceLevel: 5,
+            startingSecurityLevel: 2.5,
+        },
         name: LocationName.NewTokyoNoodleBar,
         types: [LocationType.Company],
     },
