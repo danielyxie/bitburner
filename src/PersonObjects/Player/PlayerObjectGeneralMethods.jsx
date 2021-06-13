@@ -394,6 +394,7 @@ export function loseMoney(money) {
         console.error("NaN passed into Player.loseMoney()");
         return;
     }
+    if(this.money.eq(Infinity) && money === Infinity) return;
     this.money = this.money.minus(money);
 }
 

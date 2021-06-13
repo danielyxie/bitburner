@@ -263,6 +263,6 @@ export const CONSTANTS: IMap<any> = {
     * Fix weird alignment of donation text box and button. (@Tesseract1234567890)
     * Fixed an issue where reputation could be transfered to new jobs when unfocused.
     * Empty stack traces should no longer appear.
-
+    * Purchasing anything with Infinity money doesn't result in NaN.
     `,
 }
