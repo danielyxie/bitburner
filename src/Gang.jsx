@@ -1635,7 +1635,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     // Gang member content divided into 3 panels:
     // Panel 1 - Shows member's stats & Ascension stuff
     const statsDiv = createElement("div", {
-        class: "gang-member-info-div",
+        class: "gang-member-info-div tooltip",
         id: name + "gang-member-stats",
         tooltipsmall: [`Hk: x${numeralWrapper.formatMultiplier(memberObj.hack_mult * memberObj.hack_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.hack_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.hack_asc_mult)} Asc)`,
                        `St: x${numeralWrapper.formatMultiplier(memberObj.str_mult * memberObj.str_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.str_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.str_asc_mult)} Asc)`,
@@ -1645,70 +1645,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
                        `Ch: x${numeralWrapper.formatMultiplier(memberObj.cha_mult * memberObj.cha_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.cha_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.cha_asc_mult)} Asc)`].join("<br>"),
     });
     UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
-    const statsP = createElement("pre", {
-        display: "inline",
-        id: name + "gang-member-stats-text",
-    });
-    const brElement = createElement("br");
-    const ascendButton = createElement("button", {
-        class: "accordion-button",
-        innerText: "Ascend",
-        clickListener: () => {
-            const popupId = `gang-management-ascend-member ${memberObj.name}`;
-            const ascendBenefits = memberObj.getAscensionResults();
-            const txt = createElement("pre", {
-               innerText: ["Are you sure you want to ascend this member? They will lose all of",
-                           "their non-Augmentation upgrades and their stats will reset back to 1.",
-                           "",
-                           `Furthermore, your gang will lose ${numeralWrapper.formatRespect(memberObj.earnedRespect)} respect`,
-                           "",
-                           "In return, they will gain the following permanent boost to stat multipliers:\n",
-                           `Hacking: +${numeralWrapper.formatPercentage(ascendBenefits.hack)}`,
-                           `Strength: +${numeralWrapper.formatPercentage(ascendBenefits.str)}`,
-                           `Defense: +${numeralWrapper.formatPercentage(ascendBenefits.def)}`,
-                           `Dexterity: +${numeralWrapper.formatPercentage(ascendBenefits.dex)}`,
-                           `Agility: +${numeralWrapper.formatPercentage(ascendBenefits.agi)}`,
-                           `Charisma: +${numeralWrapper.formatPercentage(ascendBenefits.cha)}`].join("\n"),
-            });
-            const confirmBtn = createElement("button", {
-                class: "std-button",
-                clickListener: () => {
-                    this.ascendMember(memberObj);
-                    this.updateGangMemberDisplayElement(memberObj);
-                    removeElementById(popupId);
-                    return false;
-                },
-                innerText: "Ascend",
-            });
-            const cancelBtn = createElement("button", {
-                class: "std-button",
-                clickListener: () => {
-                    removeElementById(popupId);
-                    return false;
-                },
-                innerText: "Cancel",
-            });
-            createPopup(popupId, [txt, confirmBtn, cancelBtn]);
-        },
-    });
-    const ascendHelpTip = createElement("div", {
-        class: "help-tip",
-        clickListener: () => {
-            dialogBoxCreate(["Ascending a Gang Member resets the member's progress and stats in exchange",
-                             "for a permanent boost to their stat multipliers.",
-                             "<br><br>The additional stat multiplier that the Gang Member gains upon ascension",
-                             "is based on the amount of multipliers the member has from non-Augmentation Equipment.",
-                             "<br><br>Upon ascension, the member will lose all of its non-Augmentation Equipment and your",
-                             "gang will lose respect equal to the total respect earned by the member."].join(" "));
-        },
-        innerText: "?",
-        marginTop: "5px",
-    });
-
-    statsDiv.appendChild(statsP);
-    statsDiv.appendChild(brElement);
-    statsDiv.appendChild(ascendButton);
-    statsDiv.appendChild(ascendHelpTip);
+    ReactDOM.render(<Panel1  gang={this} member={memberObj} />, statsDiv);
 
     // Panel 2 - Task Selection & Info
     const taskDiv = createElement("div", {
