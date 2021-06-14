@@ -13,14 +13,13 @@ export function Panel2(props: IProps): React.ReactElement {
     const [currentTask, setCurrentTask] = useState(props.member.task);
 
     useEffect(() => {
-        const id = setInterval(() => {setRerender(old => !old); console.log('rendering');}, 1000);
+        const id = setInterval(() => setRerender(old => !old), 1000);
         return () => clearInterval(id);
     }, []);
 
     function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
         const task = event.target.value;
         props.member.assignToTask(task);
-        props.gang.setGangMemberTaskDescription(props.member, task);
         props.gang.updateGangContent();
         setCurrentTask(task);
     }

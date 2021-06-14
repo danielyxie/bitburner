@@ -51,6 +51,7 @@ import { GangMemberTask } from "./Gang/GangMemberTask";
 
 import { Panel1 } from "./Gang/ui/Panel1";
 import { Panel2 } from "./Gang/ui/Panel2";
+import { Panel3 } from "./Gang/ui/Panel3";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -1140,6 +1141,9 @@ export function unmount() {
         if(UIElems.gangMemberPanels[name]["taskDiv"]) {
             ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]["taskDiv"]);
         }
+        if(UIElems.gangMemberPanels[name]["taskDescDiv"]) {
+            ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]["taskDescDiv"]);
+        }
     }
 }
 
@@ -1619,16 +1623,12 @@ Gang.prototype.updateGangContent = function() {
             UIElems.gangRecruitRequirementText.style.display = "inline-block";
             UIElems.gangRecruitRequirementText.innerHTML = `${formatNumber(respectCost, 2)} respect needed to recruit next member`;
         }
-
-        // Update information for each gang member
-        for (let i = 0; i < this.members.length; ++i) {
-            this.updateGangMemberDisplayElement(this.members[i]);
-        }
     }
 }
 
 // Takes in a GangMember object
 Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
+    // TODO(hydroflame): you're working on this.
     if (!UIElems.gangContentCreated) { return; }
     const name = memberObj.name;
 
@@ -1667,101 +1667,23 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
         UIElems.gangMemberPanels[name]["taskDiv"] = taskDiv;
         ReactDOM.render(<Panel2  gang={this} member={memberObj} />, taskDiv);
     }
-    
-    // const taskSelector = createElement("select", {
-    //     class: "dropdown",
-    //     id: name + "gang-member-task-selector",
-    // });
-
-    // // Get an array of the name of all tasks that are applicable for this Gang
-    // let tasks = this.getAllTaskNames();
-    // tasks.unshift("---");
-
-    // // Create selector for Gang member task
-    // for (var i = 0; i < tasks.length; ++i) {
-    //     var option = document.createElement("option");
-    //     option.text = tasks[i];
-    //     taskSelector.add(option);
-    // }
-    // taskSelector.addEventListener("change", () => {
-    //     var task = taskSelector.options[taskSelector.selectedIndex].text;
-    //     memberObj.assignToTask(task);
-    //     this.setGangMemberTaskDescription(memberObj, task);
-    //     this.updateGangContent();
-    // });
-
-    // // Set initial task in selector
-
-    // var gainInfo = createElement("div", {id:name + "gang-member-gain-info"});
-    // taskDiv.appendChild(taskSelector);
-    // taskDiv.appendChild(gainInfo);
 
     // Panel 3 - for Description of task
-    var taskDescDiv = createElement("div", {
-        class:"gang-member-info-div",
-        id: name + "gang-member-task-desc",
-    });
-
-    var taskDescP = createElement("p", {
-        display:"inline",
-        id: name + "gang-member-task-description",
-    });
-    taskDescDiv.appendChild(taskDescP);
+    let taskDescDiv = document.getElementById(name + "-gang-member-task-description");
+    if(!taskDescDiv) {
+        taskDescDiv = createElement("div", {
+            class:"gang-member-info-div",
+            id: name + "gang-member-task-desc",
+        });
+        UIElems.gangMemberPanels[name]["taskDescDiv"] = taskDescDiv;
+        ReactDOM.render(<Panel3 member={memberObj} />, taskDescDiv);
+    }
 
     gangMemberDiv.appendChild(statsDiv);
     gangMemberDiv.appendChild(taskDiv);
     gangMemberDiv.appendChild(taskDescDiv);
 
     UIElems.gangMemberList.appendChild(li);
-    this.setGangMemberTaskDescription(memberObj, memberObj.task); //Initialize description, TODO doesnt work rn
-    this.updateGangMemberDisplayElement(memberObj);
-}
-
-Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
-    if (!UIElems.gangContentCreated) { return; }
-    var name = memberObj.name;
-
-    // Update info about gang member's earnings/gains
-    var gainInfo = document.getElementById(name + "gang-member-gain-info");
-    if (gainInfo) {
-        const data = [
-            [`Money:`, MoneyRate(5*memberObj.calculateMoneyGain(this))],
-            [`Respect:`, `${numeralWrapper.formatRespect(5*memberObj.calculateRespectGain(this))} / sec`],
-            [`Wanted Level:`, `${numeralWrapper.formatWanted(5*memberObj.calculateWantedLevelGain(this))} / sec`],
-            [`Total Respect:`, `${numeralWrapper.formatRespect(memberObj.earnedRespect)}`],
-        ];
-        ReactDOM.render(StatsTable(data), gainInfo);
-    }
-
-    // Update selector to have the correct task
-    const taskSelector = document.getElementById(name + "gang-member-task-selector");
-    if (taskSelector) {
-        let tasks = this.getAllTaskNames();
-        tasks.unshift("---");
-
-        if (GangMemberTasks.hasOwnProperty(memberObj.task)) {
-            const taskName = memberObj.task;
-            let taskIndex = 0;
-            for (let i = 0; i < tasks.length; ++i) {
-                if (taskName === tasks[i]) {
-                    taskIndex = i;
-                    break;
-                }
-            }
-            taskSelector.selectedIndex = taskIndex;
-        }
-    }
-}
-
-Gang.prototype.setGangMemberTaskDescription = function(memberObj, taskName) {
-    const name = memberObj.name;
-    const taskDesc = document.getElementById(name + "gang-member-task-description");
-    if (taskDesc) {
-        var task = GangMemberTasks[taskName];
-        if (task == null) { task = GangMemberTasks["Unassigned"]; }
-        var desc = task.desc;
-        taskDesc.innerHTML = desc;
-    }
 }
 
 Gang.prototype.clearUI = function() {
