@@ -50,6 +50,7 @@ import { GangMemberTasks } from "./Gang/GangMemberTasks";
 import { GangMemberTask } from "./Gang/GangMemberTask";
 
 import { Panel1 } from "./Gang/ui/Panel1";
+import { Panel2 } from "./Gang/ui/Panel2";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -1130,6 +1131,18 @@ const UIElems = {
     gangTerritoryInfoText: null,
 }
 
+export function unmount() {
+    for(const name of Object.keys(UIElems.gangMemberPanels)) {
+        if(!UIElems.gangMemberPanels[name]) continue
+        if(UIElems.gangMemberPanels[name]["statsDiv"]) {
+            ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]["statsDiv"]);
+        }
+        if(UIElems.gangMemberPanels[name]["taskDiv"]) {
+            ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]["taskDiv"]);
+        }
+    }
+}
+
 Gang.prototype.displayGangContent = function(player) {
     if (!UIElems.gangContentCreated || UIElems.gangContainer == null) {
         UIElems.gangContentCreated = true;
@@ -1634,64 +1647,56 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
 
     // Gang member content divided into 3 panels:
     // Panel 1 - Shows member's stats & Ascension stuff
-    const statsDiv = createElement("div", {
-        class: "gang-member-info-div tooltip",
-        id: name + "gang-member-stats",
-        tooltipsmall: [`Hk: x${numeralWrapper.formatMultiplier(memberObj.hack_mult * memberObj.hack_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.hack_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.hack_asc_mult)} Asc)`,
-                       `St: x${numeralWrapper.formatMultiplier(memberObj.str_mult * memberObj.str_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.str_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.str_asc_mult)} Asc)`,
-                       `Df: x${numeralWrapper.formatMultiplier(memberObj.def_mult * memberObj.def_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.def_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.def_asc_mult)} Asc)`,
-                       `Dx: x${numeralWrapper.formatMultiplier(memberObj.dex_mult * memberObj.dex_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.dex_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.dex_asc_mult)} Asc)`,
-                       `Ag: x${numeralWrapper.formatMultiplier(memberObj.agi_mult * memberObj.agi_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.agi_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.agi_asc_mult)} Asc)`,
-                       `Ch: x${numeralWrapper.formatMultiplier(memberObj.cha_mult * memberObj.cha_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.cha_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.cha_asc_mult)} Asc)`].join("<br>"),
-    });
-    UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
-    ReactDOM.render(<Panel1  gang={this} member={memberObj} />, statsDiv);
+    let statsDiv = document.getElementById(name + "-gang-member-stats");
+    if(!statsDiv) {
+        statsDiv = createElement("div", {
+            class: "gang-member-info-div tooltip",
+            id: name + "-gang-member-stats",
+        });
+        UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
+        ReactDOM.render(<Panel1  gang={this} member={memberObj} />, statsDiv);
+    }
 
     // Panel 2 - Task Selection & Info
-    const taskDiv = createElement("div", {
-        class:"gang-member-info-div",
-        id: name + "gang-member-task",
-    });
-    const taskSelector = createElement("select", {
-        class: "dropdown",
-        id: name + "gang-member-task-selector",
-    });
-
-    // Get an array of the name of all tasks that are applicable for this Gang
-    let tasks = this.getAllTaskNames();
-    tasks.unshift("---");
-
-    // Create selector for Gang member task
-    for (var i = 0; i < tasks.length; ++i) {
-        var option = document.createElement("option");
-        option.text = tasks[i];
-        taskSelector.add(option);
+    let taskDiv = document.getElementById(name + "-gang-member-task");
+    if(!taskDiv) {
+        taskDiv = createElement("div", {
+            class:"gang-member-info-div",
+            id: name + "-gang-member-task",
+        });
+        UIElems.gangMemberPanels[name]["taskDiv"] = taskDiv;
+        ReactDOM.render(<Panel2  gang={this} member={memberObj} />, taskDiv);
     }
-    taskSelector.addEventListener("change", () => {
-        var task = taskSelector.options[taskSelector.selectedIndex].text;
-        memberObj.assignToTask(task);
-        this.setGangMemberTaskDescription(memberObj, task);
-        this.updateGangContent();
-    });
+    
+    // const taskSelector = createElement("select", {
+    //     class: "dropdown",
+    //     id: name + "gang-member-task-selector",
+    // });
 
-    // Set initial task in selector
-    if (GangMemberTasks.hasOwnProperty(memberObj.task)) {
-        var taskName = memberObj.task;
-        var taskIndex = 0;
-        for (let i = 0; i < tasks.length; ++i) {
-            if (taskName === tasks[i]) {
-                taskIndex = i;
-                break;
-            }
-        }
-        taskSelector.selectedIndex = taskIndex;
-    }
+    // // Get an array of the name of all tasks that are applicable for this Gang
+    // let tasks = this.getAllTaskNames();
+    // tasks.unshift("---");
 
-    var gainInfo = createElement("div", {id:name + "gang-member-gain-info"});
-    taskDiv.appendChild(taskSelector);
-    taskDiv.appendChild(gainInfo);
+    // // Create selector for Gang member task
+    // for (var i = 0; i < tasks.length; ++i) {
+    //     var option = document.createElement("option");
+    //     option.text = tasks[i];
+    //     taskSelector.add(option);
+    // }
+    // taskSelector.addEventListener("change", () => {
+    //     var task = taskSelector.options[taskSelector.selectedIndex].text;
+    //     memberObj.assignToTask(task);
+    //     this.setGangMemberTaskDescription(memberObj, task);
+    //     this.updateGangContent();
+    // });
 
-    // Panel for Description of task
+    // // Set initial task in selector
+
+    // var gainInfo = createElement("div", {id:name + "gang-member-gain-info"});
+    // taskDiv.appendChild(taskSelector);
+    // taskDiv.appendChild(gainInfo);
+
+    // Panel 3 - for Description of task
     var taskDescDiv = createElement("div", {
         class:"gang-member-info-div",
         id: name + "gang-member-task-desc",
@@ -1708,40 +1713,13 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     gangMemberDiv.appendChild(taskDescDiv);
 
     UIElems.gangMemberList.appendChild(li);
-    this.setGangMemberTaskDescription(memberObj, taskName); //Initialize description, TODO doesnt work rn
+    this.setGangMemberTaskDescription(memberObj, memberObj.task); //Initialize description, TODO doesnt work rn
     this.updateGangMemberDisplayElement(memberObj);
 }
 
 Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     if (!UIElems.gangContentCreated) { return; }
     var name = memberObj.name;
-
-    // Update stats + exp
-    var stats = document.getElementById(name + "gang-member-stats-text");
-    if (stats) {
-        stats.innerText =
-            [`Hacking: ${formatNumber(memberObj.hack, 0)} (${numeralWrapper.formatExp(memberObj.hack_exp)} exp)`,
-             `Strength: ${formatNumber(memberObj.str, 0)} (${numeralWrapper.formatExp(memberObj.str_exp)} exp)`,
-             `Defense: ${formatNumber(memberObj.def, 0)} (${numeralWrapper.formatExp(memberObj.def_exp)} exp)`,
-             `Dexterity: ${formatNumber(memberObj.dex, 0)} (${numeralWrapper.formatExp(memberObj.dex_exp)} exp)`,
-             `Agility: ${formatNumber(memberObj.agi, 0)} (${numeralWrapper.formatExp(memberObj.agi_exp)} exp)`,
-             `Charisma: ${formatNumber(memberObj.cha, 0)} (${numeralWrapper.formatExp(memberObj.cha_exp)} exp)`].join("\n");
-    }
-
-    // Update tooltip for stat multipliers
-    const panel = UIElems.gangMemberPanels[name];
-    if (panel) {
-        const statsDiv = panel["statsDiv"];
-        if (statsDiv) {
-            statsDiv.firstChild.innerHTML =
-                [`Hk: x${numeralWrapper.formatMultiplier(memberObj.hack_mult * memberObj.hack_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.hack_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.hack_asc_mult)} Asc)`,
-                `St: x${numeralWrapper.formatMultiplier(memberObj.str_mult * memberObj.str_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.str_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.str_asc_mult)} Asc)`,
-                `Df: x${numeralWrapper.formatMultiplier(memberObj.def_mult * memberObj.def_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.def_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.def_asc_mult)} Asc)`,
-                `Dx: x${numeralWrapper.formatMultiplier(memberObj.dex_mult * memberObj.dex_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.dex_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.dex_asc_mult)} Asc)`,
-                `Ag: x${numeralWrapper.formatMultiplier(memberObj.agi_mult * memberObj.agi_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.agi_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.agi_asc_mult)} Asc)`,
-                `Ch: x${numeralWrapper.formatMultiplier(memberObj.cha_mult * memberObj.cha_asc_mult)}(x${numeralWrapper.formatMultiplier(memberObj.cha_mult)} Eq, x${numeralWrapper.formatMultiplier(memberObj.cha_asc_mult)} Asc)`].join("<br>");
-        }
-    }
 
     // Update info about gang member's earnings/gains
     var gainInfo = document.getElementById(name + "gang-member-gain-info");

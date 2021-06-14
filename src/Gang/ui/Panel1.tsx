@@ -1,5 +1,4 @@
-import * as React from "react";
-import { GangMember } from "../GangMember";
+import React, { useState, useEffect } from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -52,6 +51,13 @@ interface IProps {
 }
 
 export function Panel1(props: IProps): React.ReactElement {
+    const [rerender, setRerender] = useState(false);
+
+    useEffect(() => {
+        const id = setInterval(() => setRerender(old => !old), 1000);
+        return () => clearInterval(id);
+    }, []);
+
     function ascend() {
         const popupId = `gang-management-ascend-member ${props.member.name}`;
         createPopup(popupId, ascendPopup, {
