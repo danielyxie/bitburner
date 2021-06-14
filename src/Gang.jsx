@@ -52,6 +52,8 @@ import { GangMemberTask } from "./Gang/GangMemberTask";
 import { Panel1 } from "./Gang/ui/Panel1";
 import { Panel2 } from "./Gang/ui/Panel2";
 import { Panel3 } from "./Gang/ui/Panel3";
+import { GangMemberAccordionContent } from "./Gang/ui/GangMemberAccordionContent";
+import { GangMemberAccordion } from "./Gang/ui/GangMemberAccordion";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -1134,16 +1136,8 @@ const UIElems = {
 
 export function unmount() {
     for(const name of Object.keys(UIElems.gangMemberPanels)) {
-        if(!UIElems.gangMemberPanels[name]) continue
-        if(UIElems.gangMemberPanels[name]["statsDiv"]) {
-            ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]["statsDiv"]);
-        }
-        if(UIElems.gangMemberPanels[name]["taskDiv"]) {
-            ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]["taskDiv"]);
-        }
-        if(UIElems.gangMemberPanels[name]["taskDescDiv"]) {
-            ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]["taskDescDiv"]);
-        }
+        if(!UIElems.gangMemberPanels[name]) continue;
+        ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]);
     }
 }
 
@@ -1631,58 +1625,14 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     // TODO(hydroflame): you're working on this.
     if (!UIElems.gangContentCreated) { return; }
     const name = memberObj.name;
+    const id = `${name}-gang-member-accordion`;
+    if(document.getElementById(id)) return;
 
     // Clear/Update the UIElems map to keep track of this gang member's panel
     UIElems.gangMemberPanels[name] = {};
-
-    // Create the accordion
-    var accordion = createAccordionElement({
-        id: name + "gang-member",
-        hdrText: name,
-    });
-    const li = accordion[0];
-    const gangMemberDiv = accordion[2];
-
-    UIElems.gangMemberPanels[name]["panel"] = gangMemberDiv;
-
-    // Gang member content divided into 3 panels:
-    // Panel 1 - Shows member's stats & Ascension stuff
-    let statsDiv = document.getElementById(name + "-gang-member-stats");
-    if(!statsDiv) {
-        statsDiv = createElement("div", {
-            class: "gang-member-info-div tooltip",
-            id: name + "-gang-member-stats",
-        });
-        UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
-        ReactDOM.render(<Panel1  gang={this} member={memberObj} />, statsDiv);
-    }
-
-    // Panel 2 - Task Selection & Info
-    let taskDiv = document.getElementById(name + "-gang-member-task");
-    if(!taskDiv) {
-        taskDiv = createElement("div", {
-            class:"gang-member-info-div",
-            id: name + "-gang-member-task",
-        });
-        UIElems.gangMemberPanels[name]["taskDiv"] = taskDiv;
-        ReactDOM.render(<Panel2  gang={this} member={memberObj} />, taskDiv);
-    }
-
-    // Panel 3 - for Description of task
-    let taskDescDiv = document.getElementById(name + "-gang-member-task-description");
-    if(!taskDescDiv) {
-        taskDescDiv = createElement("div", {
-            class:"gang-member-info-div",
-            id: name + "gang-member-task-desc",
-        });
-        UIElems.gangMemberPanels[name]["taskDescDiv"] = taskDescDiv;
-        ReactDOM.render(<Panel3 member={memberObj} />, taskDescDiv);
-    }
-
-    gangMemberDiv.appendChild(statsDiv);
-    gangMemberDiv.appendChild(taskDiv);
-    gangMemberDiv.appendChild(taskDescDiv);
-
+    const li = createElement("li", {id: id});
+    ReactDOM.render(<GangMemberAccordion gang={this} member={memberObj} />, li);
+    UIElems.gangMemberPanels[name] = li;
     UIElems.gangMemberList.appendChild(li);
 }
 

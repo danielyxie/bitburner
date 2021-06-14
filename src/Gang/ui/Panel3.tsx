@@ -9,7 +9,10 @@ export function Panel3(props: IProps): React.ReactElement {
     const [rerender, setRerender] = useState(false);
 
     useEffect(() => {
-        const id = setInterval(() => setRerender(old => !old), 1000);
+        const id = setInterval(() => {
+            setRerender(old => !old);
+            console.log('render');
+        }, 1000);
         return () => clearInterval(id);
     }, []);
 
