@@ -31,7 +31,7 @@ function getGameContainer(): void {
 document.addEventListener("DOMContentLoaded", getGameContainer);
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function createPopup(id: string, rootComponent: ReactComponent, props: any): HTMLElement | null {
+export function createPopup<T>(id: string, rootComponent: (props: T) => React.ReactElement, props: T): HTMLElement | null {
     let container = document.getElementById(id);
     if (container == null) {
         container = createElement("div", {

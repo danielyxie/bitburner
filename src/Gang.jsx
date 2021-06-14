@@ -4,8 +4,8 @@
  * balance point to keep them from running out of control
 */
 
-import { gangMemberTasksMetadata } from "./data/gangmembertasks";
-import { gangMemberUpgradesMetadata } from "./data/gangmemberupgrades";
+import { gangMemberTasksMetadata } from "./Gang/data/tasks";
+import { gangMemberUpgradesMetadata } from "./Gang/data/upgrades";
 
 import { Engine } from "./engine";
 import { Faction } from "./Faction/Faction";
@@ -42,15 +42,18 @@ import { Money } from "./ui/React/Money";
 import { MoneyRate } from "./ui/React/MoneyRate";
 import { Reputation } from "./ui/React/Reputation";
 
+// import { GangMember as GM } from "./Gang/GangMember";
+import { GangMemberUpgrade } from "./Gang/GangMemberUpgrade";
+import { GangMemberUpgrades } from "./Gang/GangMemberUpgrades";
+import { GangConstants } from "./Gang/data/Constants";
+import { GangMemberTasks } from "./Gang/GangMemberTasks";
+import { GangMemberTask } from "./Gang/GangMemberTask";
+
+import { Panel1 } from "./Gang/ui/Panel1";
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { renderToStaticMarkup } from "react-dom/server"
-
-// Constants
-const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
-const MaximumGangMembers = 30;
-const CyclesPerTerritoryAndPowerUpdate = 100;
-const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
 
 // Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
@@ -245,7 +248,7 @@ Gang.prototype.processGains = function(numCycles=1, player) {
             dialogBoxCreate("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
         } else {
             let favorMult = 1 + (fac.favor / 100);
-            fac.playerReputation += ((player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
+            fac.playerReputation += ((player.faction_rep_mult * gain * favorMult) / GangConstants.GangRespectToReputationRatio);
         }
 
         // Keep track of respect gained per member
@@ -289,8 +292,8 @@ function calculateTerritoryGain(winGang, loseGang) {
 
 Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     this.storedTerritoryAndPowerCycles += numCycles;
-    if (this.storedTerritoryAndPowerCycles < CyclesPerTerritoryAndPowerUpdate) { return; }
-    this.storedTerritoryAndPowerCycles -= CyclesPerTerritoryAndPowerUpdate;
+    if (this.storedTerritoryAndPowerCycles < GangConstants.CyclesPerTerritoryAndPowerUpdate) { return; }
+    this.storedTerritoryAndPowerCycles -= GangConstants.CyclesPerTerritoryAndPowerUpdate;
 
     // Process power first
     const gangName = this.facName;
@@ -380,7 +383,7 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
 }
 
 Gang.prototype.canRecruitMember = function() {
-    if (this.members.length >= MaximumGangMembers) { return false; }
+    if (this.members.length >= GangConstants.MaximumGangMembers) { return false; }
     return (this.respect >= this.getRespectNeededToRecruitMember());
 }
 
@@ -848,12 +851,12 @@ GangMember.prototype.getAscensionResults = function() {
     // Subtract 1 because we're only interested in the actual "bonus" part
     const eff = this.getAscensionEfficiency();
     return {
-        hack: (Math.max(0, hack - 1) * AscensionMultiplierRatio * eff.hack),
-        str:  (Math.max(0, str - 1) * AscensionMultiplierRatio * eff.str),
-        def:  (Math.max(0, def - 1) * AscensionMultiplierRatio * eff.def),
-        dex:  (Math.max(0, dex - 1) * AscensionMultiplierRatio * eff.dex),
-        agi:  (Math.max(0, agi - 1) * AscensionMultiplierRatio * eff.agi),
-        cha:  (Math.max(0, cha - 1) * AscensionMultiplierRatio * eff.cha),
+        hack: (Math.max(0, hack - 1) * GangConstants.AscensionMultiplierRatio * eff.hack),
+        str:  (Math.max(0, str - 1) * GangConstants.AscensionMultiplierRatio * eff.str),
+        def:  (Math.max(0, def - 1) * GangConstants.AscensionMultiplierRatio * eff.def),
+        dex:  (Math.max(0, dex - 1) * GangConstants.AscensionMultiplierRatio * eff.dex),
+        agi:  (Math.max(0, agi - 1) * GangConstants.AscensionMultiplierRatio * eff.agi),
+        cha:  (Math.max(0, cha - 1) * GangConstants.AscensionMultiplierRatio * eff.cha),
     }
 }
 
@@ -893,136 +896,6 @@ GangMember.fromJSON = function(value) {
 }
 
 Reviver.constructors.GangMember = GangMember;
-
-// Defines tasks that Gang Members can work on
-function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
-                        params={baseRespect: 0, baseWanted: 0, baseMoney: 0,
-                                hackWeight: 0, strWeight: 0, defWeight: 0,
-                                dexWeight: 0, agiWeight: 0, chaWeight: 0,
-                                difficulty: 0}) {
-    this.name = name;
-    this.desc = desc;
-
-    // Flags that describe whether this Task is applicable for Hacking/Combat gangs
-    this.isHacking = isHacking;
-    this.isCombat = isCombat;
-
-    // Base gain rates for respect/wanted/money
-    this.baseRespect    = params.baseRespect ? params.baseRespect   : 0;
-    this.baseWanted     = params.baseWanted  ? params.baseWanted    : 0;
-    this.baseMoney      = params.baseMoney   ? params.baseMoney     : 0;
-
-    // Weighting for the effect that each stat has on the tasks effectiveness.
-    // Weights must add up to 100
-    this.hackWeight     = params.hackWeight ? params.hackWeight : 0;
-    this.strWeight      = params.strWeight  ? params.strWeight  : 0;
-    this.defWeight      = params.defWeight  ? params.defWeight  : 0;
-    this.dexWeight      = params.dexWeight  ? params.dexWeight  : 0;
-    this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
-    this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
-
-    if (Math.round(this.hackWeight + this.strWeight + this.defWeight + this.dexWeight + this.agiWeight + this.chaWeight) != 100) {
-        console.error(`GangMemberTask ${this.name} weights do not add up to 100`);
-    }
-
-    // 1 - 100
-    this.difficulty     = params.difficulty ? params.difficulty : 1;
-
-    // Territory Factors. Exponential factors that dictate how territory affects gains
-    // Formula: Territory Mutiplier = (Territory * 100) ^ factor / 100
-    // So factor should be > 1 if something should scale exponentially with territory
-    // and should be < 1 if it should have diminshing returns
-    this.territory      = params.territory ? params.territory : {money: 1, respect: 1, wanted: 1};
-}
-
-GangMemberTask.prototype.toJSON = function() {
-	return Generic_toJSON("GangMemberTask", this);
-}
-
-GangMemberTask.fromJSON = function(value) {
-	return Generic_fromJSON(GangMemberTask, value.data);
-}
-
-Reviver.constructors.GangMemberTask = GangMemberTask;
-
-export const GangMemberTasks = {};
-
-function addGangMemberTask(name, desc, isHacking, isCombat, params) {
-    GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);
-}
-
-gangMemberTasksMetadata.forEach((e) => {
-    addGangMemberTask(e.name, e.desc, e.isHacking, e.isCombat, e.params);
-});
-
-function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
-    this.name = name;
-    this.cost = cost;
-    this.type = type; //w = weapon, a = armor, v = vehicle, r = rootkit, g = Aug
-    this.mults = mults;
-
-    this.createDescription();
-}
-
-GangMemberUpgrade.prototype.getCost = function(gang) {
-    const discount = gang.getDiscount();
-    return this.cost / discount;
-}
-
-GangMemberUpgrade.prototype.createDescription = function() {
-    const lines = ["Increases:"];
-    if (this.mults.str != null) {
-        lines.push(`* Strength by ${Math.round((this.mults.str - 1) * 100)}%`);
-    }
-    if (this.mults.def != null) {
-        lines.push(`* Defense by ${Math.round((this.mults.def - 1) * 100)}%`);
-    }
-    if (this.mults.dex != null) {
-        lines.push(`* Dexterity by ${Math.round((this.mults.dex - 1) * 100)}%`);
-    }
-    if (this.mults.agi != null) {
-        lines.push(`* Agility by ${Math.round((this.mults.agi - 1) * 100)}%`);
-    }
-    if (this.mults.cha != null) {
-        lines.push(`* Charisma by ${Math.round((this.mults.cha - 1) * 100)}%`);
-    }
-    if (this.mults.hack != null) {
-        lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)}%`);
-    }
-    this.desc = lines.join("<br>");
-}
-
-// Passes in a GangMember object
-GangMemberUpgrade.prototype.apply = function(member) {
-    if (this.mults.str != null)     { member.str_mult *= this.mults.str; }
-    if (this.mults.def != null)     { member.def_mult *= this.mults.def; }
-    if (this.mults.dex != null)     { member.dex_mult *= this.mults.dex; }
-    if (this.mults.agi != null)     { member.agi_mult *= this.mults.agi; }
-    if (this.mults.cha != null)     { member.cha_mult *= this.mults.cha; }
-    if (this.mults.hack != null)    { member.hack_mult *= this.mults.hack; }
-    return;
-}
-
-GangMemberUpgrade.prototype.toJSON = function() {
-	return Generic_toJSON("GangMemberUpgrade", this);
-}
-
-GangMemberUpgrade.fromJSON = function(value) {
-	return Generic_fromJSON(GangMemberUpgrade, value.data);
-}
-
-Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
-
-// Initialize Gang Member Upgrades
-export const GangMemberUpgrades = {}
-
-function addGangMemberUpgrade(name, cost, type, mults) {
-    GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);
-}
-
-gangMemberUpgradesMetadata.forEach((e) => {
-    addGangMemberUpgrade(e.name, e.cost, e.upgType, e.mults);
-});
 
 // Create a pop-up box that lets player purchase upgrades
 Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
@@ -1721,7 +1594,7 @@ Gang.prototype.updateGangContent = function() {
         const respectCost = this.getRespectNeededToRecruitMember();
 
         const btn = UIElems.gangRecruitMemberButton;
-        if (numMembers >= MaximumGangMembers) {
+        if (numMembers >= GangConstants.MaximumGangMembers) {
             btn.className = "a-link-button-inactive";
             UIElems.gangRecruitRequirementText.style.display = "inline-block";
             UIElems.gangRecruitRequirementText.innerHTML = "You have reached the maximum amount of gang members";

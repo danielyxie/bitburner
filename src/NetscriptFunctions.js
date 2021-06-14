@@ -31,10 +31,10 @@ import {
 import { calculateServerGrowth } from "./Server/formulas/grow";
 import {
     AllGangs,
-    GangMemberUpgrades,
-    GangMemberTasks,
     Gang,
 } from "./Gang";
+import { GangMemberTasks } from "./Gang/GangMemberTasks";
+import { GangMemberUpgrades } from "./Gang/GangMemberUpgrades";
 import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
 import { FactionWorkType } from "./Faction/FactionWorkTypeEnum";
