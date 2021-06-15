@@ -2173,6 +2173,7 @@ function installAugmentations() {
             continue;
         }
 
+        applyAugmentation(Player.queuedAugmentations[i]);
         if(ownedAug.name === AugmentationNames.NeuroFluxGovernor
             && i !== nfgIndex) continue;
 
@@ -2180,7 +2181,6 @@ function installAugmentations() {
         if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
             level = ` - ${ownedAug.level}`;
         }
-        applyAugmentation(Player.queuedAugmentations[i]);
         augmentationList += (aug.name + level + "<br>");
     }
     Player.queuedAugmentations = [];
