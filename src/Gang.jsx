@@ -1519,6 +1519,8 @@ Gang.prototype.updateGangContent = function() {
             }
         }
     } else {
+        // TODO(hydroflame): you're working here
+
         // Update information for overall gang
         if (UIElems.gangInfo instanceof Element) {
             var faction = Factions[this.facName];
@@ -1617,12 +1619,13 @@ Gang.prototype.updateGangContent = function() {
             UIElems.gangRecruitRequirementText.style.display = "inline-block";
             UIElems.gangRecruitRequirementText.innerHTML = `${formatNumber(respectCost, 2)} respect needed to recruit next member`;
         }
+
+        // TODO(hydroflame): TO HERE
     }
 }
 
 // Takes in a GangMember object
 Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
-    // TODO(hydroflame): you're working on this.
     if (!UIElems.gangContentCreated) { return; }
     const name = memberObj.name;
     const id = `${name}-gang-member-accordion`;
