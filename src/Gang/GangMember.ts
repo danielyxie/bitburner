@@ -5,6 +5,7 @@ import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GangConstants } from "./data/Constants";
 import { AllGangs } from "./AllGangs";
+import { IGang } from "./IGang";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class GangMember {
@@ -92,7 +93,7 @@ export class GangMember {
         return GangMemberTasks["Unassigned"];
     }
 
-    calculateRespectGain(gang: any): number {
+    calculateRespectGain(gang: IGang): number {
         const task = this.getTask();
         if (task.baseRespect === 0) return 0;
         let statWeight = (task.hackWeight/100) * this.hack +
@@ -109,7 +110,7 @@ export class GangMember {
         return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
     }
 
-    calculateWantedLevelGain(gang: any): number {
+    calculateWantedLevelGain(gang: IGang): number {
         const task = this.getTask();
         if (task.baseWanted === 0) return 0;
         let statWeight = (task.hackWeight / 100) * this.hack +
@@ -133,7 +134,7 @@ export class GangMember {
         }
     }
 
-    calculateMoneyGain(gang: any): number {
+    calculateMoneyGain(gang: IGang): number {
         const task = this.getTask();
         if (task.baseMoney === 0) return 0;
         let statWeight =    (task.hackWeight/100) * this.hack +
@@ -164,7 +165,7 @@ export class GangMember {
         this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
     }
 
-    recordEarnedRespect(numCycles = 1, gang: any): void {
+    recordEarnedRespect(numCycles = 1, gang: IGang): void {
         this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
     }
 
@@ -239,7 +240,7 @@ export class GangMember {
         this.cha_mult = 1;
         for (let i = 0; i < this.augmentations.length; ++i) {
             const aug = GangMemberUpgrades[this.augmentations[i]];
-            aug.apply(this);
+            this.applyUpgrade(aug);
         }
 
         // Clear exp and recalculate stats
@@ -264,7 +265,16 @@ export class GangMember {
         };
     }
 
-    buyUpgrade(upg: GangMemberUpgrade, player: IPlayer, gang: any): boolean {
+    applyUpgrade(upg: GangMemberUpgrade): void {
+        if (upg.mults.str != null)  { this.str_mult *= upg.mults.str; }
+        if (upg.mults.def != null)  { this.def_mult *= upg.mults.def; }
+        if (upg.mults.dex != null)  { this.dex_mult *= upg.mults.dex; }
+        if (upg.mults.agi != null)  { this.agi_mult *= upg.mults.agi; }
+        if (upg.mults.cha != null)  { this.cha_mult *= upg.mults.cha; }
+        if (upg.mults.hack != null) { this.hack_mult *= upg.mults.hack; }
+    }
+
+    buyUpgrade(upg: GangMemberUpgrade, player: IPlayer, gang: IGang): boolean {
         if (typeof upg === 'string') {
             upg = GangMemberUpgrades[upg];
         }
@@ -276,14 +286,14 @@ export class GangMember {
             return false;
         }
 
-        if (player.money.lt(upg.getCost(gang))) { return false; }
-        player.loseMoney(upg.getCost(gang));
+        if (player.money.lt(gang.getUpgradeCost(upg))) { return false; }
+        player.loseMoney(gang.getUpgradeCost(upg));
         if (upg.type === "g") {
             this.augmentations.push(upg.name);
         } else {
             this.upgrades.push(upg.name);
         }
-        upg.apply(this);
+        this.applyUpgrade(upg);
         return true;
     }
 

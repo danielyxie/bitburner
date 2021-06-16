@@ -17,10 +17,6 @@ export class GangMemberUpgrade {
         this.desc = this.createDescription();
     }
 
-    getCost(gang: any): number {
-        return this.cost / gang.getDiscount();
-    }
-
     createDescription(): string {
         const lines = ["Increases:"];
         if (this.mults.str != null) {
@@ -42,16 +38,6 @@ export class GangMemberUpgrade {
             lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)}%`);
         }
         return lines.join("<br>");
-    }
-
-    // Passes in a GangMember object
-    apply(member: any): void {
-        if (this.mults.str != null)  { member.str_mult *= this.mults.str; }
-        if (this.mults.def != null)  { member.def_mult *= this.mults.def; }
-        if (this.mults.dex != null)  { member.dex_mult *= this.mults.dex; }
-        if (this.mults.agi != null)  { member.agi_mult *= this.mults.agi; }
-        if (this.mults.cha != null)  { member.cha_mult *= this.mults.cha; }
-        if (this.mults.hack != null) { member.hack_mult *= this.mults.hack; }
     }
 
     // User friendly version of type.

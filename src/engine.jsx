@@ -32,6 +32,7 @@ import {
     processPassiveFactionRepGain,
     inviteToFaction,
 } from "./Faction/FactionHelpers";
+import { displayGangContent, clearGangUI } from "./Gang/Helpers";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import { 
     getHackingWorkRepGain,
@@ -439,7 +440,7 @@ const Engine = {
     loadGangContent: function() {
         Engine.hideAllContent();
         if (document.getElementById("gang-container") || Player.inGang()) {
-            Player.gang.displayGangContent(Player);
+            displayGangContent(this, Player.gang, Player);
             routing.navigateTo(Page.Gang);
         } else {
             Engine.loadTerminalContent();
@@ -534,7 +535,7 @@ const Engine = {
         }
 
         if (Player.inGang()) {
-            Player.gang.clearUI();
+            clearGangUI();
         }
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();

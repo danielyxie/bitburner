@@ -1,5 +1,5 @@
 import { Factions } from "../../Faction/Factions";
-import { Gang } from "../../Gang";
+import { Gang } from "../../Gang/Gang";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 

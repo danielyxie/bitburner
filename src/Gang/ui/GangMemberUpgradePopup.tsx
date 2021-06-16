@@ -25,7 +25,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
     for (const upgName in GangMemberUpgrades) {
         if (GangMemberUpgrades.hasOwnProperty(upgName)) {
             const upg = GangMemberUpgrades[upgName];
-            if (props.player.money.lt(upg.getCost(props.gang))) continue;
+            if (props.player.money.lt(props.gang.getUpgradeCost(upg))) continue;
             if (props.member.upgrades.includes(upgName) || props.member.augmentations.includes(upgName)) continue;
             switch (upg.type) {
                 case "w":
@@ -63,7 +63,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
             setRerender(old => !old);
         }
         return (<a key={upg.name} className="a-link-button tooltip" style={{margin:"2px",  padding:"2px", display:"block", fontSize:"11px"}} onClick={onClick}>
-            {upg.name} - {Money(upg.getCost(props.gang))}
+            {upg.name} - {Money(props.gang.getUpgradeCost(upg))}
             <span className={left?"tooltiptextleft":"tooltiptext"} dangerouslySetInnerHTML={{__html: upg.desc}} />
         </a>);
     }
