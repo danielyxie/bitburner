@@ -11,15 +11,13 @@ interface IAscendProps {
 }
 
 function ascendPopup(props: IAscendProps): React.ReactElement {
-    function confirm() {
+    function confirm(): void {
         props.gang.ascendMember(props.member);
         removePopup(props.popupId);
-        return false;
     }
 
-    function cancel() {
+    function cancel(): void {
         removePopup(props.popupId);
-        return false;
     }
 
     const ascendBenefits = props.member.getAscensionResults();
@@ -32,12 +30,12 @@ their non-Augmentation upgrades and their stats will reset back to 1.<br />
 Furthermore, your gang will lose {numeralWrapper.formatRespect(props.member.earnedRespect)} respect<br />
 <br />
 In return, they will gain the following permanent boost to stat multipliers:<br />
-Hacking:   +{numeralWrapper.formatPercentage(ascendBenefits.hack)}<br />
-Strength:  +{numeralWrapper.formatPercentage(ascendBenefits.str)}<br />
-Defense:   +{numeralWrapper.formatPercentage(ascendBenefits.def)}<br />
-Dexterity: +{numeralWrapper.formatPercentage(ascendBenefits.dex)}<br />
-Agility:   +{numeralWrapper.formatPercentage(ascendBenefits.agi)}<br />
-Charisma:  +{numeralWrapper.formatPercentage(ascendBenefits.cha)}<br />
+Hacking:   +{numeralWrapper.formatPercentage(ascendBenefits.hack/100)}<br />
+Strength:  +{numeralWrapper.formatPercentage(ascendBenefits.str/100)}<br />
+Defense:   +{numeralWrapper.formatPercentage(ascendBenefits.def/100)}<br />
+Dexterity: +{numeralWrapper.formatPercentage(ascendBenefits.dex/100)}<br />
+Agility:   +{numeralWrapper.formatPercentage(ascendBenefits.agi/100)}<br />
+Charisma:  +{numeralWrapper.formatPercentage(ascendBenefits.cha/100)}<br />
         </pre>
         <button className="std-button" onClick={confirm}>Ascend</button>
         <button className="std-button" onClick={cancel}>Cancel</button>
@@ -50,14 +48,14 @@ interface IProps {
 }
 
 export function Panel1(props: IProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
 
     useEffect(() => {
         const id = setInterval(() => setRerender(old => !old), 1000);
         return () => clearInterval(id);
     }, []);
 
-    function ascend() {
+    function ascend(): void {
         const popupId = `gang-management-ascend-member ${props.member.name}`;
         createPopup(popupId, ascendPopup, {
             member: props.member,

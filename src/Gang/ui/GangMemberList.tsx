@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export function GangMemberList(props: IProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
     const [filter, setFilter] = useState("");
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export function GangMemberList(props: IProps): React.ReactElement {
         <input className="text-input" placeholder="Filter gang member" style={{margin: "5px", padding: "5px"}} value={filter} onChange={onChange} />
         <a className="a-link-button" style={{display: 'inline-block'}} onClick={openUpgradePopup}>Manage Equipment</a>
         <ul>
-            {members().map((member: any, i : number) => <li key={member.name}>
+            {members().map((member: any) => <li key={member.name}>
                 <Accordion
                     panelInitiallyOpened={true}
                     headerContent={<>{member.name}</>}

@@ -79,7 +79,7 @@ function Recruitment(props: IProps): React.ReactElement {
     if (numMembers >= GangConstants.MaximumGangMembers) {
         return (<></>);
     } else if (props.gang.canRecruitMember()) {
-        function onClick() {
+        function onClick(): void {
             const popupId = "recruit-gang-member-popup";
             createPopup(popupId, recruitPopup, {
                 gang: props.gang,
@@ -120,7 +120,7 @@ function BonusTime(props: IProps): React.ReactElement {
 }
 
 export function GangStats(props: IProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
 
     useEffect(() => {
         const id = setInterval(() => setRerender(old => !old), 1000);

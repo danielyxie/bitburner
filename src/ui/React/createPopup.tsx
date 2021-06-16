@@ -14,8 +14,6 @@ import { Popup } from "./Popup";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
-type ReactComponent = new(...args: any[]) => React.Component<any, any>;
-
 let gameContainer: HTMLElement;
 
 function getGameContainer(): void {

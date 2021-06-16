@@ -7,7 +7,7 @@ export class GangMemberUpgrade {
     desc: string;
     mults: IMults;
 
-    constructor(name: string = "", cost: number = 0, type: string = "w", mults: IMults = {}) {
+    constructor(name = "", cost = 0, type = "w", mults: IMults = {}) {
         this.name = name;
         this.cost = cost;
         //w = weapon, a = armor, v = vehicle, r = rootkit, g = Aug
@@ -17,7 +17,7 @@ export class GangMemberUpgrade {
         this.desc = this.createDescription();
     }
 
-    getCost(gang: any) {
+    getCost(gang: any): number {
         return this.cost / gang.getDiscount();
     }
 
@@ -45,7 +45,7 @@ export class GangMemberUpgrade {
     }
 
     // Passes in a GangMember object
-    apply(member: any) {
+    apply(member: any): void {
         if (this.mults.str != null)  { member.str_mult *= this.mults.str; }
         if (this.mults.def != null)  { member.def_mult *= this.mults.def; }
         if (this.mults.dex != null)  { member.dex_mult *= this.mults.dex; }

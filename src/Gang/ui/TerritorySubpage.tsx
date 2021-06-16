@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export function TerritorySubpage(props: IProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
 
     useEffect(() => {
         const id = setInterval(() => setRerender(old => !old), 1000);
@@ -25,13 +25,12 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
 
     function formatTerritoryP(n: number): string {
         const v = n * 100;
-        let displayNumber;
-        if (n <= 0) {
+        if (v <= 0) {
             return formatNumber(0, 2);
-        } else if (n >= 100) {
+        } else if (v >= 100) {
             return formatNumber(100, 2);
         } else {
-            return formatNumber(n, 2);
+            return formatNumber(v, 2);
         }
     }
 
@@ -116,37 +115,3 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
     </div>);
 }
 
-/*
-
-let gangNames = Object.keys(AllGangs).filter(g => g != this.facName);
-gangNames.unshift(this.facName);
-for (const gangname of gangNames) {
-    if (AllGangs.hasOwnProperty(gangname)) {
-        const gangTerritoryInfo = AllGangs[gangname];
-        let territory = gangTerritoryInfo.territory * 100;
-
-        //Fix some rounding issues graphically
-        let displayNumber;
-        if (territory <= 0) {
-            displayNumber = formatNumber(0, 2);
-        } else if (territory >= 100) {
-            displayNumber = formatNumber(100, 2);
-        } else {
-            displayNumber = formatNumber(territory, 2);
-        }
-
-        if (gangname === this.facName) {
-            let newHTML = `<b><u>${gangname}</u></b><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
-            newHTML += `Territory: ${displayNumber}%<br><br>`;
-            UIElems.gangTerritoryInfoText.innerHTML += newHTML;
-        } else {
-            const clashVictoryChance = playerPower / (gangTerritoryInfo.power + playerPower);
-            let newHTML = `<u>${gangname}</u><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
-            newHTML += `Territory: ${displayNumber}%<br>`;
-            newHTML += `Chance to win clash with this gang: ${numeralWrapper.formatPercentage(clashVictoryChance, 3)}<br><br>`;
-            UIElems.gangTerritoryInfoText.innerHTML += newHTML;
-        }
-    }
-}
-
-*/

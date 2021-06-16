@@ -4,15 +4,10 @@
  * balance point to keep them from running out of control
 */
 
-import { gangMemberTasksMetadata } from "./Gang/data/tasks";
-import { gangMemberUpgradesMetadata } from "./Gang/data/upgrades";
-
 import { Engine } from "./engine";
 import { Faction } from "./Faction/Faction";
 import { Factions } from "./Faction/Factions";
-import { displayFactionContent } from "./Faction/FactionHelpers";
 
-import { Page, routing } from "./ui/navigationTracking";
 import { numeralWrapper } from "./ui/numeralFormat";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
@@ -21,53 +16,25 @@ import {
     Generic_toJSON,
     Generic_fromJSON,
 } from "../utils/JSONReviver";
-import {
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../utils/StringHelperFunctions";
 
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { KEY } from "../utils/helpers/keyCodes";
 
-import { createAccordionElement } from "../utils/uiHelpers/createAccordionElement";
 import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
-import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../utils/uiHelpers/removeElement";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
-import { StatsTable } from "./ui/React/StatsTable";
-import { Money } from "./ui/React/Money";
-import { MoneyRate } from "./ui/React/MoneyRate";
-import { Reputation } from "./ui/React/Reputation";
-
-// import { GangMember as GM } from "./Gang/GangMember";
 import { GangMemberUpgrade } from "./Gang/GangMemberUpgrade";
 import { GangMemberUpgrades } from "./Gang/GangMemberUpgrades";
 import { GangConstants } from "./Gang/data/Constants";
 import { GangMemberTasks } from "./Gang/GangMemberTasks";
 import { GangMemberTask } from "./Gang/GangMemberTask";
 
-import { ManagementSubpage } from "./Gang/ui/ManagementSubpage";
-import { TerritorySubpage } from "./Gang/ui/TerritorySubpage";
-import { GangStats } from "./Gang/ui/GangStats";
 import { AllGangs } from "./Gang/AllGangs";
 import { Root } from "./Gang/ui/Root";
+import { GangMember } from "./Gang/GangMember";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { renderToStaticMarkup } from "react-dom/server"
-
-const GangNames = [
-    "Slum Snakes",
-    "Tetrads",
-    "The Syndicate",
-    "The Dark Army",
-    "Speakers for the Dead",
-    "NiteSec",
-    "The Black Hand",
-];
 
 /**
  * @param facName {string} Name of corresponding faction
@@ -189,12 +156,6 @@ Gang.prototype.processGains = function(numCycles=1, player) {
     }
 }
 
-function calculateTerritoryGain(winGang, loseGang) {
-    const powerBonus = Math.max(1, 1+Math.log(AllGangs[winGang].power/AllGangs[loseGang].power)/Math.log(50));
-    const gains = Math.min(AllGangs[loseGang].territory, powerBonus*0.0001*(Math.random()+.5))
-    return gains;
-}
-
 Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     this.storedTerritoryAndPowerCycles += numCycles;
     if (this.storedTerritoryAndPowerCycles < GangConstants.CyclesPerTerritoryAndPowerUpdate) { return; }
@@ -233,13 +194,13 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     }
 
     // Then process territory
-    for (let i = 0; i < GangNames.length; ++i) {
-        const others = GangNames.filter((e) => {
-            return e !== GangNames[i];
+    for (let i = 0; i < GangConstants.Names.length; ++i) {
+        const others = GangConstants.Names.filter((e) => {
+            return e !== GangConstants.Names[i];
         });
         const other = getRandomInt(0, others.length - 1);
 
-        const thisGang = GangNames[i];
+        const thisGang = GangConstants.Names[i];
         const otherGang = others[other];
 
         // If either of the gangs involved in this clash is the player, determine
@@ -496,297 +457,11 @@ Gang.fromJSON = function(value) {
 
 Reviver.constructors.Gang = Gang;
 
-function GangMember(name) {
-    this.name   = name;
-    this.task   = "Unassigned";
-
-    this.earnedRespect = 0;
-
-    this.hack   = 1;
-    this.str    = 1;
-    this.def    = 1;
-    this.dex    = 1;
-    this.agi    = 1;
-    this.cha    = 1;
-
-    this.hack_exp   = 0;
-    this.str_exp    = 0;
-    this.def_exp    = 0;
-    this.dex_exp    = 0;
-    this.agi_exp    = 0;
-    this.cha_exp    = 0;
-
-    this.hack_mult  = 1;
-    this.str_mult   = 1;
-    this.def_mult   = 1;
-    this.dex_mult   = 1;
-    this.agi_mult   = 1;
-    this.cha_mult   = 1;
-
-    this.hack_asc_mult  = 1;
-    this.str_asc_mult   = 1;
-    this.def_asc_mult   = 1;
-    this.dex_asc_mult   = 1;
-    this.agi_asc_mult   = 1;
-    this.cha_asc_mult   = 1;
-
-    this.upgrades = [];         // Names of upgrades
-    this.augmentations = [];    // Names of augmentations only
+function calculateTerritoryGain(winGang, loseGang) {
+    const powerBonus = Math.max(1, 1+Math.log(AllGangs[winGang].power/AllGangs[loseGang].power)/Math.log(50));
+    const gains = Math.min(AllGangs[loseGang].territory, powerBonus*0.0001*(Math.random()+.5))
+    return gains;
 }
-
-// Same skill calculation formula as Player
-GangMember.prototype.calculateSkill = function(exp, mult=1) {
-    return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
-}
-
-GangMember.prototype.updateSkillLevels = function() {
-    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult * this.hack_asc_mult);
-    this.str    = this.calculateSkill(this.str_exp, this.str_mult * this.str_asc_mult);
-    this.def    = this.calculateSkill(this.def_exp, this.def_mult * this.def_asc_mult);
-    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult * this.dex_asc_mult);
-    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult * this.agi_asc_mult);
-    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult * this.cha_asc_mult);
-}
-
-GangMember.prototype.calculatePower = function() {
-    return (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95;
-}
-
-GangMember.prototype.assignToTask = function(taskName) {
-    if (GangMemberTasks.hasOwnProperty(taskName)) {
-        this.task = taskName;
-        return true;
-    } else {
-        this.task = "Unassigned";
-        return false;
-    }
-}
-
-GangMember.prototype.unassignFromTask = function() {
-    this.task = "Unassigned";
-}
-
-GangMember.prototype.getTask = function() {
-    // Backwards compatibility
-    if (this.task instanceof GangMemberTask) {
-        this.task = this.task.name;
-    }
-
-    if (GangMemberTasks.hasOwnProperty(this.task)) {
-        return GangMemberTasks[this.task];
-    }
-    return GangMemberTasks["Unassigned"];
-}
-
-// Gains are per cycle
-GangMember.prototype.calculateRespectGain = function(gang) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (4 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
-    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
-    var respectMult = gang.getWantedPenalty();
-    return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
-}
-
-GangMember.prototype.calculateWantedLevelGain = function(gang) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) { return 0; }
-    let statWeight = (task.hackWeight / 100) * this.hack +
-                     (task.strWeight / 100) * this.str +
-                     (task.defWeight / 100) * this.def +
-                     (task.dexWeight / 100) * this.dex +
-                     (task.agiWeight / 100) * this.agi +
-                     (task.chaWeight / 100) * this.cha;
-    statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
-    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
-    if (task.baseWanted < 0) {
-        return 0.4 * task.baseWanted * statWeight * territoryMult;
-    } else {
-        const calc = 7 * task.baseWanted / (Math.pow(3 * statWeight * territoryMult, 0.8));
-
-        // Put an arbitrary cap on this to prevent wanted level from rising too fast if the
-        // denominator is very small. Might want to rethink formula later
-        return Math.min(100, calc);
-    }
-}
-
-GangMember.prototype.calculateMoneyGain = function(gang) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (3.2 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
-    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
-    var respectMult = gang.getWantedPenalty();
-    return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
-}
-
-GangMember.prototype.gainExperience = function(numCycles=1) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task === GangMemberTasks["Unassigned"]) {return;}
-    const difficultyMult = Math.pow(task.difficulty, 0.9);
-    const difficultyPerCycles = difficultyMult * numCycles;
-    const weightDivisor = 1500;
-    this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles;
-    this.str_exp    += (task.strWeight / weightDivisor) * difficultyPerCycles;
-    this.def_exp    += (task.defWeight / weightDivisor) * difficultyPerCycles;
-    this.dex_exp    += (task.dexWeight / weightDivisor) * difficultyPerCycles;
-    this.agi_exp    += (task.agiWeight / weightDivisor) * difficultyPerCycles;
-    this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
-}
-
-GangMember.prototype.recordEarnedRespect = function(numCycles=1, gang) {
-    this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
-}
-
-GangMember.prototype.ascend = function() {
-    const res = this.getAscensionResults();
-    const hackAscMult = res.hack;
-    const strAscMult =  res.str;
-    const defAscMult =  res.def;
-    const dexAscMult =  res.dex;
-    const agiAscMult =  res.agi;
-    const chaAscMult =  res.cha;
-    this.hack_asc_mult += hackAscMult;
-    this.str_asc_mult += strAscMult;
-    this.def_asc_mult += defAscMult;
-    this.dex_asc_mult += dexAscMult;
-    this.agi_asc_mult += agiAscMult;
-    this.cha_asc_mult += chaAscMult;
-
-    // Remove upgrades. Then re-calculate multipliers and stats
-    this.upgrades.length = 0;
-    this.hack_mult = 1;
-    this.str_mult = 1;
-    this.def_mult = 1;
-    this.dex_mult = 1;
-    this.agi_mult = 1;
-    this.cha_mult = 1;
-    for (let i = 0; i < this.augmentations.length; ++i) {
-        let aug = GangMemberUpgrades[this.augmentations[i]];
-        aug.apply(this);
-    }
-
-    // Clear exp and recalculate stats
-    this.hack_exp = 0;
-    this.str_exp = 0;
-    this.def_exp = 0;
-    this.dex_exp = 0;
-    this.agi_exp = 0;
-    this.cha_exp = 0;
-    this.updateSkillLevels();
-
-    const respectToDeduct = this.earnedRespect;
-    this.earnedRespect = 0;
-    return {
-        respect: respectToDeduct,
-        hack: hackAscMult,
-        str: strAscMult,
-        def: defAscMult,
-        dex: dexAscMult,
-        agi: agiAscMult,
-        cha: chaAscMult,
-    };
-}
-
-GangMember.prototype.getAscensionEfficiency = function() {
-    function formula(mult) {
-        return 1/(1+Math.log(mult)/Math.log(20));
-    }
-    return {
-        hack: formula(this.hack_asc_mult),
-        str: formula(this.str_asc_mult),
-        def: formula(this.def_asc_mult),
-        dex: formula(this.dex_asc_mult),
-        agi: formula(this.agi_asc_mult),
-        cha: formula(this.cha_asc_mult),
-    };
-}
-
-// Returns the multipliers that would be gained from ascension
-GangMember.prototype.getAscensionResults = function() {
-    /**
-     * Calculate ascension bonus to stat multipliers.
-     * This is based on the current number of multipliers from Non-Augmentation upgrades
-     * + Ascension Bonus = N% of current bonus from Augmentations
-     */
-    let hack = 1;
-    let str = 1;
-    let def = 1;
-    let dex = 1;
-    let agi = 1;
-    let cha = 1;
-    for (let i = 0; i < this.upgrades.length; ++i) {
-        let upg = GangMemberUpgrades[this.upgrades[i]];
-        if (upg.mults.hack != null) { hack *= upg.mults.hack; }
-        if (upg.mults.str != null)  { str *= upg.mults.str; }
-        if (upg.mults.def != null)  { def *= upg.mults.def; }
-        if (upg.mults.dex != null)  { dex *= upg.mults.dex; }
-        if (upg.mults.agi != null)  { agi *= upg.mults.agi; }
-        if (upg.mults.cha != null)  { cha *= upg.mults.cha; }
-    }
-
-    // Subtract 1 because we're only interested in the actual "bonus" part
-    const eff = this.getAscensionEfficiency();
-    return {
-        hack: (Math.max(0, hack - 1) * GangConstants.AscensionMultiplierRatio * eff.hack),
-        str:  (Math.max(0, str - 1) * GangConstants.AscensionMultiplierRatio * eff.str),
-        def:  (Math.max(0, def - 1) * GangConstants.AscensionMultiplierRatio * eff.def),
-        dex:  (Math.max(0, dex - 1) * GangConstants.AscensionMultiplierRatio * eff.dex),
-        agi:  (Math.max(0, agi - 1) * GangConstants.AscensionMultiplierRatio * eff.agi),
-        cha:  (Math.max(0, cha - 1) * GangConstants.AscensionMultiplierRatio * eff.cha),
-    }
-}
-
-GangMember.prototype.buyUpgrade = function(upg, player, gang) {
-    if (typeof upg === 'string') {
-        upg = GangMemberUpgrades[upg];
-    }
-    if (!(upg instanceof GangMemberUpgrade)) {
-        return false;
-    }
-    // Prevent purchasing of already-owned upgrades
-    if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) {
-        return false;
-    }
-
-    if (player.money.lt(upg.getCost(gang))) { return false; }
-    player.loseMoney(upg.getCost(gang));
-    if (upg.type === "g") {
-        this.augmentations.push(upg.name);
-    } else {
-        this.upgrades.push(upg.name);
-    }
-    upg.apply(this);
-    return true;
-}
-
-GangMember.prototype.toJSON = function() {
-	return Generic_toJSON("GangMember", this);
-}
-
-GangMember.fromJSON = function(value) {
-	return Generic_fromJSON(GangMember, value.data);
-}
-
-Reviver.constructors.GangMember = GangMember;
-
 // Gang UI Dom Elements
 const UIElems = {
     gangContentCreated:     false,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { GangStats } from "./GangStats";
 import { GangMemberList } from "./GangMemberList";

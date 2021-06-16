@@ -12,10 +12,6 @@ type IProps = {
     onAttempt: (answer: string) => void;
 }
 
-type IState = {
-    answer: string;
-}
-
 export function CodingContractPopup(props: IProps): React.ReactElement {
     const [answer, setAnswer] = useState("");
 

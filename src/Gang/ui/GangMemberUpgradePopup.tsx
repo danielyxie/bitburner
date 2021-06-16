@@ -14,7 +14,7 @@ interface IPanelProps {
 }
 
 function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
     // Upgrade buttons. Only show upgrades that can be afforded
     const weaponUpgrades: GangMemberUpgrade[] = [];
     const armorUpgrades: GangMemberUpgrade[] = [];
@@ -57,7 +57,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
         </div>);
     }
 
-    function upgradeButton(upg: GangMemberUpgrade, left: boolean = false): React.ReactElement {
+    function upgradeButton(upg: GangMemberUpgrade, left = false): React.ReactElement {
         function onClick(): void {
             props.member.buyUpgrade(upg, props.player, props.gang);
             setRerender(old => !old);
@@ -112,7 +112,7 @@ interface IProps {
 }
 
 export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
     const [filter, setFilter] = useState("");
 
     function closePopup(): void {
@@ -137,39 +137,3 @@ export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
         {props.gang.members.map((member: any) => <GangMemberUpgradePanel key={member.name} player={props.player} gang={props.gang} member={member} />)}
     </>);
 }
-
-/*
-
-// Add buttons to purchase each upgrade
-const upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades, augUpgrades];
-const divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv, augDiv];
-for (let i = 0; i < upgrades.length; ++i) {
-    let upgradeArray = upgrades[i];
-    let div = divs[i];
-    for (let j = 0; j < upgradeArray.length; ++j) {
-        let upg = upgradeArray[j];
-        (function (upg, div, memberObj, i, gang) {
-            let createElementParams = {
-                innerHTML: `${upg.name} - ${renderToStaticMarkup(Money(upg.getCost(gang)))}`,
-                class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
-                fontSize:"11px",
-                clickListener:() => {
-                    memberObj.buyUpgrade(upg, player, gangObj);
-                    return false;
-                },
-            }
-
-            // For the last two divs, tooltip should be on the left
-            if (i >= 3) {
-                createElementParams.tooltipleft = upg.desc;
-            } else {
-                createElementParams.tooltip = upg.desc;
-            }
-            div.appendChild(createElement("a", createElementParams));
-        })(upg, div, this, i, gangObj);
-    }
-}
-
-createPopup(boxId, UIElems.gangMemberUpgradeBoxElements)
-
-*/

@@ -5,7 +5,7 @@ export interface IMults {
     dex?: number;
     agi?: number;
     cha?: number;
-};
+}
 
 /**
  * Defines the parameters that can be used to initialize and describe a GangMemberUpgrade

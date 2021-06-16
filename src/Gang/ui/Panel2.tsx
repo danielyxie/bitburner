@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export function Panel2(props: IProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
     const [currentTask, setCurrentTask] = useState(props.member.task);
 
     useEffect(() => {

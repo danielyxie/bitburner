@@ -6,7 +6,7 @@ interface IProps {
 }
 
 export function Panel3(props: IProps): React.ReactElement {
-    const [rerender, setRerender] = useState(false);
+    const setRerender = useState(false)[1];
 
     useEffect(() => {
         const id = setInterval(() => {

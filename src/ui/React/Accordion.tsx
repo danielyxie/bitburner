@@ -27,7 +27,7 @@ export class Accordion extends React.Component<IProps, IState> {
         }
     }
 
-    handleHeaderClick(e: React.MouseEvent<HTMLButtonElement>): void {
+    handleHeaderClick(): void {
         this.setState({
             panelOpened: !this.state.panelOpened,
         });

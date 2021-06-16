@@ -38,7 +38,7 @@ export let AllGangs: {
     },
 }
 
-export function resetGangs() {
+export function resetGangs(): void {
     AllGangs = {
         "Slum Snakes" : {
             power: 1,
@@ -71,6 +71,6 @@ export function resetGangs() {
     }
 }
 
-export function loadAllGangs(saveString: string) {
+export function loadAllGangs(saveString: string): void {
     AllGangs = JSON.parse(saveString, Reviver);
 }
