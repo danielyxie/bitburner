@@ -48,7 +48,7 @@ export class GangMember {
         this.name   = name;
     }
 
-    calculateSkill(exp: number, mult: number = 1): number {
+    calculateSkill(exp: number, mult = 1): number {
         return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
     }
 
@@ -95,7 +95,7 @@ export class GangMember {
     calculateRespectGain(gang: any): number {
         const task = this.getTask();
         if (task.baseRespect === 0) return 0;
-        var statWeight = (task.hackWeight/100) * this.hack +
+        let statWeight = (task.hackWeight/100) * this.hack +
                          (task.strWeight/100) * this.str +
                          (task.defWeight/100) * this.def +
                          (task.dexWeight/100) * this.dex +
@@ -150,7 +150,7 @@ export class GangMember {
         return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
     }
 
-    gainExperience(numCycles: number = 1): void {
+    gainExperience(numCycles = 1): void {
         const task = this.getTask();
         if (task === GangMemberTasks["Unassigned"]) return;
         const difficultyMult = Math.pow(task.difficulty, 0.9);
@@ -164,7 +164,7 @@ export class GangMember {
         this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
     }
 
-    recordEarnedRespect(numCycles: number = 1, gang: any): void {
+    recordEarnedRespect(numCycles = 1, gang: any): void {
         this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
     }
 
@@ -179,7 +179,7 @@ export class GangMember {
         let agi = 1;
         let cha = 1;
         for (let i = 0; i < this.upgrades.length; ++i) {
-            let upg = GangMemberUpgrades[this.upgrades[i]];
+            const upg = GangMemberUpgrades[this.upgrades[i]];
             if (upg.mults.hack != null) { hack *= upg.mults.hack; }
             if (upg.mults.str != null)  { str *= upg.mults.str; }
             if (upg.mults.def != null)  { def *= upg.mults.def; }
@@ -238,7 +238,7 @@ export class GangMember {
         this.agi_mult = 1;
         this.cha_mult = 1;
         for (let i = 0; i < this.augmentations.length; ++i) {
-            let aug = GangMemberUpgrades[this.augmentations[i]];
+            const aug = GangMemberUpgrades[this.augmentations[i]];
             aug.apply(this);
         }
 

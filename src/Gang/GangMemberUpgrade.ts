@@ -53,4 +53,22 @@ export class GangMemberUpgrade {
         if (this.mults.cha != null)  { member.cha_mult *= this.mults.cha; }
         if (this.mults.hack != null) { member.hack_mult *= this.mults.hack; }
     }
+
+    // User friendly version of type.
+    getType(): string {
+        switch (this.type) {
+            case "w":
+                return "Weapon";
+            case "a":
+                return "Armor";
+            case "v":
+                return "Vehicle";
+            case "r":
+                return "Rootkit";
+            case "g":
+                return "Augmentation";
+            default:
+                return "";
+        }
+    }
 }

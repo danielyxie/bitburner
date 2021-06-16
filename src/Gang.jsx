@@ -23,11 +23,9 @@ import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { removeElement } from "../utils/uiHelpers/removeElement";
 
-import { GangMemberUpgrade } from "./Gang/GangMemberUpgrade";
 import { GangMemberUpgrades } from "./Gang/GangMemberUpgrades";
 import { GangConstants } from "./Gang/data/Constants";
 import { GangMemberTasks } from "./Gang/GangMemberTasks";
-import { GangMemberTask } from "./Gang/GangMemberTask";
 
 import { AllGangs } from "./Gang/AllGangs";
 import { Root } from "./Gang/ui/Root";
@@ -417,34 +415,9 @@ Gang.prototype.getAllTaskNames = function() {
     return tasks;
 }
 
-Gang.prototype.getAllUpgradeNames = function() {
-    return Object.keys(GangMemberUpgrades);
-}
-
 Gang.prototype.getUpgradeCost = function(upgName) {
     if (GangMemberUpgrades[upgName] == null) { return Infinity; }
     return GangMemberUpgrades[upgName].getCost(this);
-}
-
-// Returns a player-friendly string stating the type of the specified upgrade
-Gang.prototype.getUpgradeType = function(upgName) {
-    const upg = GangMemberUpgrades[upgName];
-    if (upg == null) { return ""; }
-
-    switch (upg.type) {
-        case "w":
-            return "Weapon";
-        case "a":
-            return "Armor";
-        case "v":
-            return "Vehicle";
-        case "r":
-            return "Rootkit";
-        case "g":
-            return "Augmentation";
-        default:
-            return "";
-    }
 }
 
 Gang.prototype.toJSON = function() {

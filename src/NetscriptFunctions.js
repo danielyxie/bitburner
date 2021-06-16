@@ -3741,7 +3741,7 @@ function NetscriptFunctions(workerScript) {
             getEquipmentNames: function() {
                 updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
                 checkGangApiAccess("getEquipmentNames");
-                return Player.gang.getAllUpgradeNames();
+                return Object.keys(GangMemberUpgrades);
             },
             getEquipmentCost: function(equipName) {
                 updateDynamicRam("getEquipmentCost", getRamCost("gang", "getEquipmentCost"));
@@ -3751,7 +3751,9 @@ function NetscriptFunctions(workerScript) {
             getEquipmentType: function(equipName) {
                 updateDynamicRam("getEquipmentType", getRamCost("gang", "getEquipmentType"));
                 checkGangApiAccess("getEquipmentType");
-                return Player.gang.getUpgradeType(equipName);
+                const upg = GangMemberUpgrades[equipName];
+                if (upg == null) return "";
+                return upg.getType();
             },
             getEquipmentStats: function(equipName) {
                 updateDynamicRam("getEquipmentStats", getRamCost("gang", "getEquipmentStats"));
