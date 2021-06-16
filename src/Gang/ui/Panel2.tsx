@@ -20,7 +20,6 @@ export function Panel2(props: IProps): React.ReactElement {
     function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
         const task = event.target.value;
         props.member.assignToTask(task);
-        props.gang.updateGangContent();
         setCurrentTask(task);
     }
 

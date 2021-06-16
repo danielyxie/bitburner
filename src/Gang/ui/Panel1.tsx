@@ -13,7 +13,6 @@ interface IAscendProps {
 function ascendPopup(props: IAscendProps): React.ReactElement {
     function confirm() {
         props.gang.ascendMember(props.member);
-        props.gang.updateGangMemberDisplayElement(props.member);
         removePopup(props.popupId);
         return false;
     }

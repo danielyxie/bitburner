@@ -49,11 +49,10 @@ import { GangConstants } from "./Gang/data/Constants";
 import { GangMemberTasks } from "./Gang/GangMemberTasks";
 import { GangMemberTask } from "./Gang/GangMemberTask";
 
-import { Panel1 } from "./Gang/ui/Panel1";
-import { Panel2 } from "./Gang/ui/Panel2";
-import { Panel3 } from "./Gang/ui/Panel3";
-import { GangMemberAccordionContent } from "./Gang/ui/GangMemberAccordionContent";
-import { GangMemberAccordion } from "./Gang/ui/GangMemberAccordion";
+import { ManagementSubpage } from "./Gang/ui/ManagementSubpage";
+import { TerritorySubpage } from "./Gang/ui/TerritorySubpage";
+import { GangStats } from "./Gang/ui/GangStats";
+import { AllGangs } from "./Gang/AllGangs";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -75,20 +74,6 @@ $(document).keydown(function(event) {
     }
 });
 
-// Delete upgrade box when clicking outside
-$(document).mousedown(function(event) {
-    var contentId = "gang-member-upgrade-popup-box-content";
-    if (UIElems.gangMemberUpgradeBoxOpened) {
-        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
-            //Delete the box
-            removeElement(UIElems.gangMemberUpgradeBox);
-            UIElems.gangMemberUpgradeBox = null;
-            UIElems.gangMemberUpgradeBoxContent = null;
-            UIElems.gangMemberUpgradeBoxOpened = false;
-            UIElems.gangMemberUpgradeBoxElements = null;
-        }
-    }
-});
 
 const GangNames = [
     "Slum Snakes",
@@ -99,74 +84,6 @@ const GangNames = [
     "NiteSec",
     "The Black Hand",
 ];
-
-export let AllGangs = {
-    "Slum Snakes" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "Tetrads" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Syndicate" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Dark Army" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "Speakers for the Dead" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "NiteSec" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Black Hand" : {
-        power: 1,
-        territory: 1/7,
-    },
-}
-
-export function resetGangs() {
-    AllGangs = {
-        "Slum Snakes" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "Tetrads" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Syndicate" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Dark Army" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "Speakers for the Dead" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "NiteSec" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Black Hand" : {
-            power: 1,
-            territory: 1/7,
-        },
-    }
-}
-
-export function loadAllGangs(saveString) {
-    AllGangs = JSON.parse(saveString, Reviver);
-}
 
 /**
  * @param facName {string} Name of corresponding faction
@@ -412,10 +329,6 @@ Gang.prototype.recruitMember = function(name) {
 
     let member = new GangMember(name);
     this.members.push(member);
-    if (routing.isOn(Page.Gang)) {
-        this.createGangMemberDisplayElement(member);
-        this.updateGangContent();
-    }
     return true;
 }
 
@@ -488,10 +401,6 @@ Gang.prototype.killMember = function(memberObj) {
         dialogBoxCreate(`${memberObj.name} was killed in a gang clash! You lost ${lostRespect} respect`);
     }
 
-    // Update UI
-    if (routing.isOn(Page.Gang)) {
-        this.displayGangMemberList();
-    }
 }
 
 Gang.prototype.ascendMember = function(memberObj, workerScript) {
@@ -519,9 +428,6 @@ Gang.prototype.ascendMember = function(memberObj, workerScript) {
                              `Charisma: ${numeralWrapper.formatPercentage(res.cha, 3)}`].join("<br>"));
         } else {
             workerScript.log(`Ascended Gang member ${memberObj.name}`);
-        }
-        if (routing.isOn(Page.Gang)) {
-            this.displayGangMemberList();
         }
         return res;
     } catch(e) {
@@ -884,10 +790,6 @@ GangMember.prototype.buyUpgrade = function(upg, player, gang) {
         this.upgrades.push(upg.name);
     }
     upg.apply(this);
-    if (routing.isOn(Page.Gang) && UIElems.gangMemberUpgradeBoxOpened) {
-        var initFilterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        gang.createGangMemberUpgradeBox(player, initFilterValue);
-    }
     return true;
 }
 
@@ -900,197 +802,6 @@ GangMember.fromJSON = function(value) {
 }
 
 Reviver.constructors.GangMember = GangMember;
-
-// Create a pop-up box that lets player purchase upgrades
-Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
-    const boxId = "gang-member-upgrade-popup-box";
-    if (UIElems.gangMemberUpgradeBoxOpened) {
-        // Already opened, refreshing
-        if (UIElems.gangMemberUpgradeBoxElements == null || UIElems.gangMemberUpgradeBox == null || UIElems.gangMemberUpgradeBoxContent == null) {
-            console.error("Refreshing Gang member upgrade box throws error because required elements are null");
-            return;
-        }
-
-        for (var i = 2; i < UIElems.gangMemberUpgradeBoxElements.length; ++i) {
-            removeElement(UIElems.gangMemberUpgradeBoxElements[i]);
-        }
-        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
-
-        var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < this.members.length; ++i) {
-            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
-                var newPanel = this.members[i].createGangMemberUpgradePanel(this, player);
-                UIElems.gangMemberUpgradeBoxContent.appendChild(newPanel);
-                UIElems.gangMemberUpgradeBoxElements.push(newPanel);
-            }
-        }
-    } else {
-        // New popup
-        UIElems.gangMemberUpgradeBoxFilter = createElement("input", {
-            type:"text", placeholder:"Filter gang members",
-            class: "text-input",
-            value:initialFilter,
-            onkeyup:() => {
-                var filterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-                this.createGangMemberUpgradeBox(player, filterValue);
-            },
-        });
-
-        UIElems.gangMemberUpgradeBoxDiscount = createElement("p", {
-            innerText: "Discount: -" + numeralWrapper.formatPercentage(1 - 1 / this.getDiscount()),
-            marginLeft: "6px",
-            tooltip: "You get a discount on equipment and upgrades based on your gang's " +
-                     "respect and power. More respect and power leads to more discounts.",
-        });
-
-        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
-
-        var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < this.members.length; ++i) {
-            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
-                UIElems.gangMemberUpgradeBoxElements.push(this.members[i].createGangMemberUpgradePanel(this, player));
-            }
-        }
-
-        UIElems.gangMemberUpgradeBox = createPopup(boxId, UIElems.gangMemberUpgradeBoxElements);
-        UIElems.gangMemberUpgradeBoxContent = document.getElementById(boxId + "-content");
-        UIElems.gangMemberUpgradeBoxOpened = true;
-    }
-}
-
-// Create upgrade panels for each individual Gang Member
-GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
-    var container = createElement("div", {
-        border:"1px solid white",
-    });
-
-    var header = createElement("h1", {
-        innerText: this.name + " (" + this.task + ")",
-    });
-    container.appendChild(header);
-
-    var text = createElement("pre", {
-        fontSize:"14px", display: "inline-block", width:"20%",
-        innerText:
-            "Hack: " + this.hack + " (x" + formatNumber(this.hack_mult * this.hack_asc_mult, 2) + ")\n" +
-            "Str:  " + this.str  + " (x" + formatNumber(this.str_mult * this.str_asc_mult, 2) + ")\n" +
-            "Def:  " + this.def  + " (x" + formatNumber(this.def_mult * this.def_asc_mult, 2) + ")\n" +
-            "Dex:  " + this.dex  + " (x" + formatNumber(this.dex_mult * this.dex_asc_mult, 2) + ")\n" +
-            "Agi:  " + this.agi  + " (x" + formatNumber(this.agi_mult * this.agi_asc_mult, 2) + ")\n" +
-            "Cha:  " + this.cha  + " (x" + formatNumber(this.cha_mult * this.cha_asc_mult, 2) + ")\n",
-    });
-
-    // Already purchased upgrades
-    const ownedUpgradesElements = [];
-    function pushOwnedUpgrade(upgName) {
-        const upg = GangMemberUpgrades[upgName];
-        if (upg == null) {
-            console.error(`Could not find GangMemberUpgrade object for name ${upgName}`);
-            return;
-        }
-        ownedUpgradesElements.push(createElement("div", {
-            class:      "gang-owned-upgrade",
-            innerText:  upgName,
-            tooltip:    upg.desc,
-        }));
-    }
-    for (const upgName of this.upgrades)        { pushOwnedUpgrade(upgName); }
-    for (const upgName of this.augmentations)   { pushOwnedUpgrade(upgName); }
-
-    var ownedUpgrades = createElement("div", {
-        class:      "gang-owned-upgrades-div",
-        innerText:  "Purchased Upgrades:",
-    });
-    for (const elem of ownedUpgradesElements) { ownedUpgrades.appendChild(elem); }
-    container.appendChild(text);
-    container.appendChild(ownedUpgrades);
-    container.appendChild(createElement("br", {}));
-
-    // Upgrade buttons. Only show upgrades that can be afforded
-    const weaponUpgrades = [];
-    const armorUpgrades = [];
-    const vehicleUpgrades = [];
-    const rootkitUpgrades = [];
-    const augUpgrades = [];
-
-    for (let upgName in GangMemberUpgrades) {
-        if (GangMemberUpgrades.hasOwnProperty(upgName)) {
-            let upg = GangMemberUpgrades[upgName];
-            if (player.money.lt(upg.getCost(gangObj))) { continue; }
-            if (this.upgrades.includes(upgName) || this.augmentations.includes(upgName)) { continue; }
-            switch (upg.type) {
-                case "w":
-                    weaponUpgrades.push(upg);
-                    break;
-                case "a":
-                    armorUpgrades.push(upg);
-                    break;
-                case "v":
-                    vehicleUpgrades.push(upg);
-                    break;
-                case "r":
-                    rootkitUpgrades.push(upg);
-                    break;
-                case "g":
-                    augUpgrades.push(upg);
-                    break;
-                default:
-                    console.error(`ERROR: Invalid Gang Member Upgrade Type: ${upg.type}`);
-            }
-        }
-    }
-
-    // Create separate columns for each upgrade type
-    const weaponDiv   = createElement("div", {width: "20%", display: "inline-block"});
-    const armorDiv    = createElement("div", {width: "20%", display: "inline-block"});
-    const vehicleDiv  = createElement("div", {width: "20%", display: "inline-block"});
-    const rootkitDiv  = createElement("div", {width: "20%", display: "inline-block"});
-    const augDiv      = createElement("div", {width: "20%", display: "inline-block"});
-
-    // Add a title/labe for each column
-    weaponDiv.appendChild(createElement("h2", {innerText: "Weapons"}));
-    armorDiv.appendChild(createElement("h2", {innerText: "Armor"}));
-    vehicleDiv.appendChild(createElement("h2", {innerText: "Vehicles"}));
-    rootkitDiv.appendChild(createElement("h2", {innerText: "Rootkits"}));
-    augDiv.appendChild(createElement("h2", {innerText: "Augmentations"}));
-
-    // Add buttons to purchase each upgrade
-    const upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades, augUpgrades];
-    const divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv, augDiv];
-    for (let i = 0; i < upgrades.length; ++i) {
-        let upgradeArray = upgrades[i];
-        let div = divs[i];
-        for (let j = 0; j < upgradeArray.length; ++j) {
-            let upg = upgradeArray[j];
-            (function (upg, div, memberObj, i, gang) {
-                let createElementParams = {
-                    innerHTML: `${upg.name} - ${renderToStaticMarkup(Money(upg.getCost(gang)))}`,
-                    class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
-                    fontSize:"11px",
-                    clickListener:() => {
-                        memberObj.buyUpgrade(upg, player, gangObj);
-                        return false;
-                    },
-                }
-
-                // For the last two divs, tooltip should be on the left
-                if (i >= 3) {
-                    createElementParams.tooltipleft = upg.desc;
-                } else {
-                    createElementParams.tooltip = upg.desc;
-                }
-                div.appendChild(createElement("a", createElementParams));
-            })(upg, div, this, i, gangObj);
-        }
-    }
-
-    container.appendChild(weaponDiv);
-    container.appendChild(armorDiv);
-    container.appendChild(vehicleDiv);
-    container.appendChild(rootkitDiv);
-    container.appendChild(augDiv);
-    return container;
-}
 
 // Gang UI Dom Elements
 const UIElems = {
@@ -1105,33 +816,8 @@ const UIElems = {
     gangTerritorySubpage:   null,
 
     // Gang Management Subpage Elements
-    gangDesc:                   null,
-    gangInfo:                   null,
-    gangRecruitMemberButton:    null,
-    gangRecruitRequirementText: null,
-    gangExpandAllButton:        null,
-    gangCollapseAllButton:      null,
     gangMemberFilter:           null,
-    gangManageEquipmentButton:  null,
-    gangMemberList:             null,
     gangMemberPanels:           {},
-
-    // Gang Equipment Upgrade Elements
-    gangMemberUpgradeBoxOpened:     false,
-    gangMemberUpgradeBox:           null,
-    gangMemberUpgradeBoxContent:    null,
-    gangMemberUpgradeBoxFilter:     null,
-    gangMemberUpgradeBoxDiscount:   null,
-    gangMemberUpgradeBoxElements:   null,
-
-    // Gang Territory Elements
-    gangTerritoryDescText: null,
-    gangTerritoryWarfareCheckbox: null,
-    gangTerritoryWarfareCheckboxLabel: null,
-    gangTerritoryWarfareClashChance: null,
-    gangTerritoryDeathNotifyCheckbox: null,
-    gangTerritoryDeathNotifyCheckboxLabel: null,
-    gangTerritoryInfoText: null,
 }
 
 export function unmount() {
@@ -1174,7 +860,6 @@ Gang.prototype.displayGangContent = function(player) {
                 UIElems.managementButton.classList.toggle("a-link-button");
                 UIElems.territoryButton.classList.toggle("a-link-button-inactive");
                 UIElems.territoryButton.classList.toggle("a-link-button");
-                this.updateGangContent();
                 return false;
             },
         })
@@ -1188,7 +873,6 @@ Gang.prototype.displayGangContent = function(player) {
                 UIElems.managementButton.classList.toggle("a-link-button");
                 UIElems.territoryButton.classList.toggle("a-link-button-inactive");
                 UIElems.territoryButton.classList.toggle("a-link-button");
-                this.updateGangContent();
                 return false;
             },
         });
@@ -1196,459 +880,31 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.gangContainer.appendChild(UIElems.territoryButton);
 
         // Subpage for managing gang members
-        UIElems.gangManagementSubpage = createElement("div", {
-            display:"block", id:"gang-management-subpage",
-        });
-
-        var lowerWantedTask = "";
-        if (this.isHackingGang) {
-            lowerWantedTask = "Ethical Hacking";
-        } else {
-            lowerWantedTask = "Vigilante Justice";
-        }
-        UIElems.gangDesc = createElement("p", {width:"70%",
-            innerHTML:
-            "This page is used to manage your gang members and get an overview of your  " +
-            "gang's stats.<br><br>" +
-            "If a gang member is not earning much money or respect, the task that you " +
-            "have assigned to that member might be too difficult. Consider training that " +
-            "member's stats or choosing an easier task. The tasks closer to the " +
-            "top of the dropdown list are generally easier. Alternatively, the gang member's " +
-            "low production might be due to the fact that your wanted level is too high. " +
-            "Consider assigning a few members to the '" + lowerWantedTask + "' " +
-            "task to lower your wanted level. <br><br>" +
-            "Installing Augmentations does NOT reset your progress with your Gang. " +
-            "Furthermore, after installing Augmentations, you will " +
-            "automatically be a member of whatever Faction you created your gang with.<br><br>" +
-            "You can also manage your gang programmatically through Netscript using the Gang API",
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangDesc);
-
-        UIElems.gangInfo = createElement("p", {id:"gang-info", width:"70%"});
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangInfo);
-
-        UIElems.gangRecruitMemberButton = createElement("a", {
-            id: "gang-management-recruit-member-btn", class:"a-link-button-inactive",
-            innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
-            clickListener:() => {
-                const popupId = "recruit-gang-member-popup";
-
-                let yesBtn;
-                const txt = createElement("p", {
-                    innerText:"Please enter a name for your new Gang member:",
-                });
-                const br = createElement("br");
-                const nameInput = createElement("input", {
-                    onkeyup: (e) => {
-                        if (e.keyCode === KEY.ENTER) { yesBtn.click(); }
-                    },
-                    placeholder: "Name must be unique",
-                    type: "text",
-                    class:"text-input",
-                });
-                yesBtn = createElement("a", {
-                    class: "std-button",
-                    clickListener: () => {
-                        let name = nameInput.value;
-                        if (name === "") {
-                            dialogBoxCreate("You must enter a name for your Gang member!");
-                            return false;
-                        }
-                        if (!this.canRecruitMember()) {
-                            dialogBoxCreate("You cannot recruit another Gang member!");
-                            return false;
-                        }
-
-                        // At this point, the only way this can fail is if you already
-                        // have a gang member with the same name
-                        if (!this.recruitMember(name)) {
-                            dialogBoxCreate("You already have a gang member with this name!");
-                            return false;
-                        }
-
-                        removeElementById(popupId);
-                        return false;
-                    },
-                    innerText: "Recruit Gang Member",
-                });
-                const noBtn = createElement("a", {
-                    class: "std-button",
-                    clickListener: () => {
-                        removeElementById(popupId);
-                        return false;
-                    },
-                    innerText: "Cancel",
-                });
-                createPopup(popupId, [txt, br, nameInput, yesBtn, noBtn]);
-                nameInput.focus();
-            },
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitMemberButton);
-
-        // Text for how much reputation is required for recruiting next memberList
-        UIElems.gangRecruitRequirementText = createElement("p", {
-            color:"red",
-            id: "gang-recruit-requirement-text",
-            margin: "10px",
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitRequirementText);
-
-        // Gang Member List management buttons (Expand/Collapse All, select a single member)
-        UIElems.gangManagementSubpage.appendChild(createElement("br", {}));
-        UIElems.gangExpandAllButton = createElement("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Expand All",
-            clickListener:() => {
-                var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
-                for (var i = 0; i < allHeaders.length; ++i) {
-                    var hdr = allHeaders[i];
-                    if (!hdr.classList.contains("active")) {
-                        hdr.click();
-                    }
-                }
-                return false;
-            },
-        });
-        UIElems.gangCollapseAllButton = createElement("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Collapse All",
-            clickListener:() => {
-                var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
-                for (var i = 0; i < allHeaders.length; ++i) {
-                    var hdr = allHeaders[i];
-                    if (hdr.classList.contains("active")) {
-                        hdr.click();
-                    }
-                }
-                return false;
-            },
-        });
-        UIElems.gangMemberFilter = createElement("input", {
-            type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
-            class:"text-input",
-            onkeyup:() => {
-                this.displayGangMemberList();
-            },
-        });
-        UIElems.gangManageEquipmentButton = createElement("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Manage Equipment",
-            clickListener: () => {
-                this.createGangMemberUpgradeBox(player);
-            },
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangExpandAllButton);
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangCollapseAllButton);
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangMemberFilter);
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangManageEquipmentButton);
-
-        // Gang Member list
-        UIElems.gangMemberList = createElement("ul", {id:"gang-member-list"});
-        this.displayGangMemberList();
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangMemberList);
+        UIElems.gangManagementSubpage = createElement("div");
+        UIElems.gangContainer.appendChild(UIElems.gangManagementSubpage);
+        ReactDOM.render(<ManagementSubpage gang={this} player={player} />, UIElems.gangManagementSubpage);
 
         // Subpage for seeing gang territory information
         UIElems.gangTerritorySubpage = createElement("div", {
             id:"gang-territory-subpage", display:"none",
         });
 
-        // Info text for territory page
-        UIElems.gangTerritoryDescText = createElement("p", {
-            width:"70%",
-            innerHTML:
-            "This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
-            "which represents how much of the total territory you control.<br><br>" +
-            "Every ~20 seconds, your gang has a chance to 'clash' with other gangs. Your chance " +
-            "to win a clash depends on your gang's power, which is listed in the display below. " +
-            "Your gang's power slowly accumulates over time. The accumulation rate is determined by the stats " +
-            "of all Gang members you have assigned to the 'Territory Warfare' task. Gang members that are not " +
-            "assigned to this task do not contribute to your gang's power. Your gang also loses a small amount " +
-            "of power whenever you lose a clash<br><br>" +
-            "NOTE: Gang members assigned to 'Territory Warfare' can be killed during clashes. This can happen regardless of whether you win " +
-            "or lose the clash. A gang member being killed results in both respect and power loss for your gang.<br><br>" +
-            "The amount of territory you have affects all aspects of your Gang members' production, including " +
-            "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>",
-        });
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDescText);
-
-        // Checkbox for Engaging in Territory Warfare
-        UIElems.gangTerritoryWarfareCheckbox = createElement("input", {
-            display: "inline-block",
-            id: "gang-management-territory-warfare-checkbox",
-            changeListener: () => {
-                this.territoryWarfareEngaged = UIElems.gangTerritoryWarfareCheckbox.checked;
-            },
-            margin: "2px",
-            type: "checkbox",
-        });
-        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
-
-        UIElems.gangTerritoryWarfareCheckboxLabel = createElement("label", {
-            color: "white",
-            display: "inline-block",
-            for: "gang-management-territory-warfare-checkbox",
-            innerText: "Engage in Territory Warfare",
-            tooltip: "Engaging in Territory Warfare sets your clash chance to 100%. " +
-                     "Disengaging will cause your clash chance to gradually decrease until " +
-                     "it reaches 0%",
-        });
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckbox);
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckboxLabel);
-
-        // Territory Clash chance
-        UIElems.gangTerritorySubpage.appendChild(createElement("br"));
-        UIElems.gangTerritoryWarfareClashChance = createElement("p", {display: "inline-block"});
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareClashChance);
-
-        UIElems.gangTerritorySubpage.appendChild(createElement("div", {
-            class: "help-tip",
-            display: "inline-block",
-            innerText: "?",
-            clickListener: () => {
-                dialogBoxCreate("This percentage represents the chance you have of 'clashing' with " +
-                                "with another gang. If you do not wish to gain/lose territory, " +
-                                "then keep this percentage at 0% by not engaging in territory " +
-                                "warfare.")
-            },
-        }));
-
-        // Checkbox for whether player wants to be notified of gang member death
-        UIElems.gangTerritoryDeathNotifyCheckbox = createElement("input", {
-            display: "inline-block",
-            id: "gang-management-notify-member-death-checkbox",
-            changeListener: () => {
-                this.notifyMemberDeath = UIElems.gangTerritoryDeathNotifyCheckbox.checked;
-            },
-            margin: "2px",
-            type: "checkbox",
-        });
-        UIElems.gangTerritoryDeathNotifyCheckbox.checked = this.notifyMemberDeath;
-
-        UIElems.gangTerritoryDeathNotifyCheckboxLabel = createElement("label", {
-            color: "white",
-            display: "inline-block",
-            for: "gang-management-notify-member-death-checkbox",
-            innerText: "Notify about Gang Member Deaths",
-            tooltip: "If this is enabled, then you will receive a pop-up notifying you " +
-                     "whenever one of your Gang Members dies in a territory clash.",
-        });
-        UIElems.gangTerritorySubpage.appendChild(createElement("br"));
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckbox);
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckboxLabel);
-
-        // Territory info (percentages of territory owned for each gang)
-        UIElems.gangTerritorySubpage.appendChild(createElement("br"));
-        var territoryBorder = createElement("fieldset", {
-            display:"block",
-            margin: "6px",
-            width:"50%",
-        });
-
-        UIElems.gangTerritoryInfoText = createElement("p");
-
-        territoryBorder.appendChild(UIElems.gangTerritoryInfoText);
-        UIElems.gangTerritorySubpage.appendChild(territoryBorder);
+        ReactDOM.render(<TerritorySubpage gang={this} player={player} />, UIElems.gangTerritorySubpage);
 
         UIElems.gangContainer.appendChild(UIElems.gangTerritorySubpage);
-        UIElems.gangContainer.appendChild(UIElems.gangManagementSubpage);
+
         document.getElementById("entire-game-container").appendChild(UIElems.gangContainer);
     }
     UIElems.gangContainer.style.display = "block";
-    this.updateGangContent();
-}
-
-Gang.prototype.displayGangMemberList = function() {
-    removeChildrenFromElement(UIElems.gangMemberList);
-    UIElems.gangMemberPanels = {};
-    const members = this.members;
-    const filter = UIElems.gangMemberFilter.value.toString();
-    for (var i = 0; i < members.length; ++i) {
-        if (members[i].name.indexOf(filter) > -1 || members[i].task.indexOf(filter) > -1) {
-            this.createGangMemberDisplayElement(members[i]);
-        }
-    }
-}
-
-Gang.prototype.updateGangContent = function() {
-    if (!UIElems.gangContentCreated) { return; }
-
-    if (UIElems.gangMemberUpgradeBoxOpened) {
-        UIElems.gangMemberUpgradeBoxDiscount.childNodes[0].nodeValue =
-            "Discount: -" + numeralWrapper.formatPercentage(1 - 1 / this.getDiscount());
-    }
-
-    if (UIElems.gangTerritorySubpage.style.display === "block") {
-        // Territory Warfare Clash Chance
-        UIElems.gangTerritoryWarfareClashChance.innerText =
-            `Territory Clash Chance: ${numeralWrapper.formatPercentage(this.territoryClashChance, 3)}`;
-
-        // Engaged in Territory Warfare checkbox
-        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
-
-        // Update territory information
-        UIElems.gangTerritoryInfoText.innerHTML = "";
-        const playerPower = AllGangs[this.facName].power;
-        let gangNames = Object.keys(AllGangs).filter(g => g != this.facName);
-        gangNames.unshift(this.facName);
-        for (const gangname of gangNames) {
-            if (AllGangs.hasOwnProperty(gangname)) {
-                const gangTerritoryInfo = AllGangs[gangname];
-                let territory = gangTerritoryInfo.territory * 100;
-
-                //Fix some rounding issues graphically
-                let displayNumber;
-                if (territory <= 0) {
-                    displayNumber = formatNumber(0, 2);
-                } else if (territory >= 100) {
-                    displayNumber = formatNumber(100, 2);
-                } else {
-                    displayNumber = formatNumber(territory, 2);
-                }
-
-                if (gangname === this.facName) {
-                    let newHTML = `<b><u>${gangname}</u></b><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
-                    newHTML += `Territory: ${displayNumber}%<br><br>`;
-                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
-                } else {
-                    const clashVictoryChance = playerPower / (gangTerritoryInfo.power + playerPower);
-                    let newHTML = `<u>${gangname}</u><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
-                    newHTML += `Territory: ${displayNumber}%<br>`;
-                    newHTML += `Chance to win clash with this gang: ${numeralWrapper.formatPercentage(clashVictoryChance, 3)}<br><br>`;
-                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
-                }
-            }
-        }
-    } else {
-        // TODO(hydroflame): you're working here
-
-        // Update information for overall gang
-        if (UIElems.gangInfo instanceof Element) {
-            var faction = Factions[this.facName];
-            var rep;
-            if (!(faction instanceof Faction)) {
-                rep = "ERROR";
-            } else {
-                rep = faction.playerReputation;
-            }
-            removeChildrenFromElement(UIElems.gangInfo);
-            UIElems.gangInfo.appendChild(createElement("p", { // Respect
-                display: "inline-block",
-                innerText: "Respect: " + numeralWrapper.formatRespect(this.respect) +
-                           " (" + numeralWrapper.formatRespect(5*this.respectGainRate) + " / sec)",
-                tooltip: "Represents the amount of respect your gang has from other gangs and criminal " +
-                         "organizations. Your respect affects the amount of money " +
-                         "your gang members will earn, and also determines how much " +
-                         "reputation you are earning with your gang's corresponding Faction.",
-            }));
-            UIElems.gangInfo.appendChild(createElement("br"));
-
-            UIElems.gangInfo.appendChild(createElement("p", { // Wanted level
-                display: "inline-block",
-                innerText: "Wanted Level: " + numeralWrapper.formatWanted(this.wanted) +
-                           " (" + numeralWrapper.formatWanted(5*this.wantedGainRate) + " / sec)",
-                tooltip: "Represents how much the gang is wanted by law enforcement. The higher " +
-                         "your gang's wanted level, the harder it will be for your gang members " +
-                         "to make money and earn respect. Note that the minimum wanted level is 1.",
-            }));
-            UIElems.gangInfo.appendChild(createElement("br"));
-
-            var wantedPenalty = this.getWantedPenalty();
-            wantedPenalty = (1 - wantedPenalty) * 100;
-            UIElems.gangInfo.appendChild(createElement("p", { // Wanted Level multiplier
-                display: "inline-block",
-                innerText: `Wanted Level Penalty: -${formatNumber(wantedPenalty, 2)}%`,
-                tooltip: "Penalty for respect and money gain rates due to Wanted Level",
-            }));
-            UIElems.gangInfo.appendChild(createElement("br"));
-
-            const d0 = createElement("div");
-            ReactDOM.render(<p style={{'display': 'inline-block'}}>Money gain rate: {MoneyRate(5 * this.moneyGainRate)}</p>, d0);
-            UIElems.gangInfo.appendChild(d0);
-            UIElems.gangInfo.appendChild(createElement("br"));
-
-            // Fix some rounding issues graphically
-            var territoryMult = AllGangs[this.facName].territory * 100;
-            let displayNumber;
-            if (territoryMult <= 0) {
-                displayNumber = formatNumber(0, 2);
-            } else if (territoryMult >= 100) {
-                displayNumber = formatNumber(100, 2);
-            } else {
-                displayNumber = formatNumber(territoryMult, 2);
-            }
-            UIElems.gangInfo.appendChild(createElement("p", {  // Territory multiplier
-                display: "inline-block",
-                innerText: `Territory: ${formatNumber(displayNumber, 3)}%`,
-                tooltip: "The percentage of total territory your Gang controls",
-            }));
-            UIElems.gangInfo.appendChild(createElement("br"));
-
-            const d1 = createElement("div");
-            ReactDOM.render(<p style={{'display': 'inline-block'}}>Faction reputation: {Reputation(rep)}</p>, d1);
-            UIElems.gangInfo.appendChild(d1);
-            UIElems.gangInfo.appendChild(createElement("br"));
-
-            const CyclesPerSecond = 1000 / Engine._idleSpeed;
-            if (this.storedCycles / CyclesPerSecond*1000 > 5000) {
-                UIElems.gangInfo.appendChild(createElement("p", { // Stored Cycles
-                    innerText: `Bonus time: ${convertTimeMsToTimeElapsedString(this.storedCycles / CyclesPerSecond*1000)}`,
-                    display: "inline-block",
-                    tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
-                             "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
-                }));
-                UIElems.gangInfo.appendChild(createElement("br"));
-            }
-        } else {
-            console.error("gang-info DOM element DNE");
-        }
-
-        // Toggle the 'Recruit member button' if valid
-        const numMembers = this.members.length;
-        const respectCost = this.getRespectNeededToRecruitMember();
-
-        const btn = UIElems.gangRecruitMemberButton;
-        if (numMembers >= GangConstants.MaximumGangMembers) {
-            btn.className = "a-link-button-inactive";
-            UIElems.gangRecruitRequirementText.style.display = "inline-block";
-            UIElems.gangRecruitRequirementText.innerHTML = "You have reached the maximum amount of gang members";
-        } else if (this.canRecruitMember()) {
-            btn.className = "a-link-button";
-            UIElems.gangRecruitRequirementText.style.display = "none";
-        } else {
-            btn.className = "a-link-button-inactive";
-            UIElems.gangRecruitRequirementText.style.display = "inline-block";
-            UIElems.gangRecruitRequirementText.innerHTML = `${formatNumber(respectCost, 2)} respect needed to recruit next member`;
-        }
-
-        // TODO(hydroflame): TO HERE
-    }
-}
-
-// Takes in a GangMember object
-Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
-    if (!UIElems.gangContentCreated) { return; }
-    const name = memberObj.name;
-    const id = `${name}-gang-member-accordion`;
-    if(document.getElementById(id)) return;
-
-    // Clear/Update the UIElems map to keep track of this gang member's panel
-    UIElems.gangMemberPanels[name] = {};
-    const li = createElement("li", {id: id});
-    ReactDOM.render(<GangMemberAccordion gang={this} member={memberObj} />, li);
-    UIElems.gangMemberPanels[name] = li;
-    UIElems.gangMemberList.appendChild(li);
 }
 
 Gang.prototype.clearUI = function() {
     if (UIElems.gangContainer instanceof Element) { removeElement(UIElems.gangContainer); }
-
-    if (UIElems.gangMemberUpgradeBox instanceof Element) { removeElement(UIElems.gangMemberUpgradeBox); }
 
     for (const prop in UIElems) {
         UIElems[prop] = null;
     }
 
     UIElems.gangContentCreated = false;
-    UIElems.gangMemberUpgradeBoxOpened = false;
     UIElems.gangMemberPanels = {};
 }

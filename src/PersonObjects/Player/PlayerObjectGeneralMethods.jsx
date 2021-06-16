@@ -18,7 +18,7 @@ import { Engine } from "../../engine";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { displayFactionContent } from "../../Faction/FactionHelpers";
-import { resetGangs } from "../../Gang";
+import { resetGangs } from "../../Gang/AllGangs";
 import { hasHacknetServers } from "../../Hacknet/HacknetHelpers";
 import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";

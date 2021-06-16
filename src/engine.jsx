@@ -868,9 +868,7 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (routing.isOn(Page.Gang) && Player.inGang()) {
-                Player.gang.updateGangContent();
-            } else if (routing.isOn(Page.ScriptEditor)) {
+            if (routing.isOn(Page.ScriptEditor)) {
                 updateScriptEditorContent();
             }
             Engine.Counters.updateDisplaysLong = 15;

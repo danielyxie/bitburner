@@ -29,10 +29,8 @@ import {
     calculateWeakenTime,
 } from "./Hacking";
 import { calculateServerGrowth } from "./Server/formulas/grow";
-import {
-    AllGangs,
-    Gang,
-} from "./Gang";
+import { Gang } from "./Gang";
+import { AllGangs } from "./Gang/AllGangs";
 import { GangMemberTasks } from "./Gang/GangMemberTasks";
 import { GangMemberUpgrades } from "./Gang/GangMemberUpgrades";
 import { Factions, factionExists } from "./Faction/Factions";
