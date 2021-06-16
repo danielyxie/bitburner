@@ -53,27 +53,11 @@ import { ManagementSubpage } from "./Gang/ui/ManagementSubpage";
 import { TerritorySubpage } from "./Gang/ui/TerritorySubpage";
 import { GangStats } from "./Gang/ui/GangStats";
 import { AllGangs } from "./Gang/AllGangs";
+import { Root } from "./Gang/ui/Root";
 
 import React from "react";
 import ReactDOM from "react-dom";
 import { renderToStaticMarkup } from "react-dom/server"
-
-// Switch between territory and management screen with 1 and 2
-$(document).keydown(function(event) {
-    if (routing.isOn(Page.Gang) && event.altKey) {
-        if (UIElems.gangMemberFilter != null && UIElems.gangMemberFilter === document.activeElement) {return;}
-        if (event.keyCode === KEY["1"]) {
-            if(UIElems.gangTerritorySubpage.style.display === "block") {
-                UIElems.managementButton.click();
-            }
-        } else if (event.keyCode === KEY["2"]) {
-            if (UIElems.gangManagementSubpage.style.display === "block") {
-                UIElems.territoryButton.click();
-            }
-        }
-    }
-});
-
 
 const GangNames = [
     "Slum Snakes",
@@ -805,26 +789,8 @@ Reviver.constructors.GangMember = GangMember;
 
 // Gang UI Dom Elements
 const UIElems = {
-    // Main elems
     gangContentCreated:     false,
     gangContainer:          null,
-    managementButton:       null,
-    territoryButton:        null,
-
-    // Subpages
-    gangManagementSubpage:  null,
-    gangTerritorySubpage:   null,
-
-    // Gang Management Subpage Elements
-    gangMemberFilter:           null,
-    gangMemberPanels:           {},
-}
-
-export function unmount() {
-    for(const name of Object.keys(UIElems.gangMemberPanels)) {
-        if(!UIElems.gangMemberPanels[name]) continue;
-        ReactDOM.unmountComponentAtNode(UIElems.gangMemberPanels[name]);
-    }
 }
 
 Gang.prototype.displayGangContent = function(player) {
@@ -836,62 +802,7 @@ Gang.prototype.displayGangContent = function(player) {
             id:"gang-container", class:"generic-menupage-container",
         });
 
-        // Get variables
-        var facName = this.facName;
-
-        // Back button
-        UIElems.gangContainer.appendChild(createElement("a", {
-            class:"a-link-button", display:"inline-block", innerText:"Back",
-            clickListener:() => {
-                Engine.loadFactionContent();
-                displayFactionContent(facName);
-                return false;
-            },
-        }));
-
-        // Buttons to switch between panels
-        UIElems.managementButton = createElement("a", {
-            id:"gang-management-subpage-button", class:"a-link-button-inactive",
-            display:"inline-block", innerHTML: "Gang Management (Alt+1)",
-            clickListener:() => {
-                UIElems.gangManagementSubpage.style.display = "block";
-                UIElems.gangTerritorySubpage.style.display = "none";
-                UIElems.managementButton.classList.toggle("a-link-button-inactive");
-                UIElems.managementButton.classList.toggle("a-link-button");
-                UIElems.territoryButton.classList.toggle("a-link-button-inactive");
-                UIElems.territoryButton.classList.toggle("a-link-button");
-                return false;
-            },
-        })
-        UIElems.territoryButton = createElement("a", {
-            id:"gang-territory-subpage-button", class:"a-link-button",
-            display:"inline-block", innerHTML:"Gang Territory (Alt+2)",
-            clickListener:() => {
-                UIElems.gangManagementSubpage.style.display = "none";
-                UIElems.gangTerritorySubpage.style.display = "block";
-                UIElems.managementButton.classList.toggle("a-link-button-inactive");
-                UIElems.managementButton.classList.toggle("a-link-button");
-                UIElems.territoryButton.classList.toggle("a-link-button-inactive");
-                UIElems.territoryButton.classList.toggle("a-link-button");
-                return false;
-            },
-        });
-        UIElems.gangContainer.appendChild(UIElems.managementButton);
-        UIElems.gangContainer.appendChild(UIElems.territoryButton);
-
-        // Subpage for managing gang members
-        UIElems.gangManagementSubpage = createElement("div");
-        UIElems.gangContainer.appendChild(UIElems.gangManagementSubpage);
-        ReactDOM.render(<ManagementSubpage gang={this} player={player} />, UIElems.gangManagementSubpage);
-
-        // Subpage for seeing gang territory information
-        UIElems.gangTerritorySubpage = createElement("div", {
-            id:"gang-territory-subpage", display:"none",
-        });
-
-        ReactDOM.render(<TerritorySubpage gang={this} player={player} />, UIElems.gangTerritorySubpage);
-
-        UIElems.gangContainer.appendChild(UIElems.gangTerritorySubpage);
+        ReactDOM.render(<Root engine={Engine} gang={this} player={player} />, UIElems.gangContainer);
 
         document.getElementById("entire-game-container").appendChild(UIElems.gangContainer);
     }
@@ -906,5 +817,4 @@ Gang.prototype.clearUI = function() {
     }
 
     UIElems.gangContentCreated = false;
-    UIElems.gangMemberPanels = {};
 }
