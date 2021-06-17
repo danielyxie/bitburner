@@ -1,3 +1,7 @@
+/**
+ * React Component for the content of the popup before the player confirms the
+ * ascension of a gang member.
+ */
 import React from "react";
 import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";

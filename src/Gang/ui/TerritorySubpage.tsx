@@ -1,3 +1,6 @@
+/**
+ * React Component for the territory subpage.
+ */
 import React from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";

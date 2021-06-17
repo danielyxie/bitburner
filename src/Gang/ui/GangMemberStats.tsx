@@ -1,3 +1,7 @@
+/**
+ * React Component for the first part of a gang member details.
+ * Contains skills and exp.
+ */
 import React from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
@@ -46,7 +50,7 @@ Dx: x{numeralWrapper.formatMultiplier(props.member.dex_mult * props.member.dex_a
 Ag: x{numeralWrapper.formatMultiplier(props.member.agi_mult * props.member.agi_asc_mult)}(x{numeralWrapper.formatMultiplier(props.member.agi_mult)} Eq, x{numeralWrapper.formatMultiplier(props.member.agi_asc_mult)} Asc)<br />
 Ch: x{numeralWrapper.formatMultiplier(props.member.cha_mult * props.member.cha_asc_mult)}(x{numeralWrapper.formatMultiplier(props.member.cha_mult)} Eq, x{numeralWrapper.formatMultiplier(props.member.cha_asc_mult)} Asc)
         </span>
-        <pre id={`${props.member.name}gang-member-stats-text`}>
+        <pre>
 Hacking: {formatNumber(props.member.hack, 0)} ({numeralWrapper.formatExp(props.member.hack_exp)} exp)<br />
 Strength: {formatNumber(props.member.str, 0)} ({numeralWrapper.formatExp(props.member.str_exp)} exp)<br />
 Defense: {formatNumber(props.member.def, 0)} ({numeralWrapper.formatExp(props.member.def_exp)} exp)<br />

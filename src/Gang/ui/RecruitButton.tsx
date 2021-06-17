@@ -1,3 +1,6 @@
+/**
+ * React Component for the recruitment button and text on the gang main page.
+ */
 import React from "react";
 import { Gang } from "../Gang";
 import { RecruitPopup } from "./RecruitPopup";

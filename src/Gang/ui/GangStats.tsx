@@ -1,3 +1,7 @@
+/**
+ * React Component for the stats related to the gang, like total respect and
+ * money per second.
+ */
 import React from "react";
 import { Factions } from "../../Faction/Factions";
 import { Gang } from "../Gang";

@@ -1,3 +1,7 @@
+/**
+ * React Component for the middle part of the gang member accordion. Contains
+ * the task selector as well as some stats.
+ */
 import React, { useState } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StatsTable } from "../../ui/React/StatsTable";

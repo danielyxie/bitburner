@@ -1,3 +1,6 @@
+/**
+ * React Component for the popup that manages gang members upgrades
+ */
 import React, { useState, useEffect } from "react";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -34,7 +37,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
     const rootkitUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Rootkit);
     const augUpgrades = filterUpgrades(props.member.augmentations, UpgradeType.Augmentation);
 
-    function purchased(upgName: string): React.ReactElement {
+    function purchasedUpgrade(upgName: string): React.ReactElement {
         const upg = GangMemberUpgrades[upgName]
         return (<div key={upgName} className="gang-owned-upgrade tooltip">
             {upg.name}
@@ -64,8 +67,8 @@ Agi:  {props.member.agi} (x{formatNumber(props.member.agi_mult * props.member.ag
 Cha:  {props.member.cha} (x{formatNumber(props.member.cha_mult * props.member.cha_asc_mult, 2)})
         </pre>
         <div className="gang-owned-upgrades-div">
-        Purchased Upgrades: {props.member.upgrades.map((upg: string) => purchased(upg))}
-        {props.member.augmentations.map((upg: string) => purchased(upg))}
+        Purchased Upgrades: {props.member.upgrades.map((upg: string) => purchasedUpgrade(upg))}
+        {props.member.augmentations.map((upg: string) => purchasedUpgrade(upg))}
         </div>
         <div style={{width: "20%", display: "inline-block"}}>
             <h2>Weapons</h2>

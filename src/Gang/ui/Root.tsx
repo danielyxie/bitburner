@@ -1,3 +1,6 @@
+/**
+ * React Component for all the gang stuff.
+ */
 import React, { useState, useEffect } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { ManagementSubpage } from "./ManagementSubpage";

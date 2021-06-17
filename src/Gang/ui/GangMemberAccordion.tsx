@@ -1,3 +1,6 @@
+/**
+ * React Component for a gang member on the management subpage.
+ */
 import React from "react";
 import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";

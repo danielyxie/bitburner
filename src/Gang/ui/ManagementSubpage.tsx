@@ -1,3 +1,6 @@
+/**
+ * React Component for the subpage that manages gang members, the main page.
+ */
 import React from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { GangStats } from "./GangStats";

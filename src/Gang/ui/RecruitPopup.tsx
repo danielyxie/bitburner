@@ -1,3 +1,6 @@
+/**
+ * React Component for the popup used to recruit new gang members.
+ */
 import React, { useState } from "react";
 import { Gang } from "../Gang";
 import { removePopup } from "../../ui/React/createPopup";

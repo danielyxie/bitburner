@@ -1,3 +1,6 @@
+/**
+ * React Component for the list of gang members on the management subpage.
+ */
 import React, { useState } from "react";
 import { GangMemberUpgradePopup } from "./GangMemberUpgradePopup";
 import { GangMemberAccordion } from "./GangMemberAccordion";
@@ -25,7 +28,7 @@ export function GangMemberList(props: IProps): React.ReactElement {
         });
     }
 
-    function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    function onFilterChange(event: React.ChangeEvent<HTMLInputElement>): void {
         setFilter(event.target.value);
     }
 
@@ -42,7 +45,7 @@ export function GangMemberList(props: IProps): React.ReactElement {
             placeholder="Filter gang member"
             style={{margin: "5px", padding: "5px"}}
             value={filter}
-            onChange={onChange} />
+            onChange={onFilterChange} />
         <a
             className="a-link-button"
             style={{display: 'inline-block'}}

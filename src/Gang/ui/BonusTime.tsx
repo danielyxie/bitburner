@@ -1,3 +1,6 @@
+/**
+ * React Component for displaying the bonus time remaining.
+ */
 import * as React from "react";
 import { Gang } from "../Gang";
 import { CONSTANTS } from "../../Constants";

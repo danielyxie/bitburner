@@ -1,3 +1,7 @@
+/**
+ * React Component for the content of the accordion of gang members on the 
+ * management subpage.
+ */
 import React, { useState } from "react";
 import { GangMemberStats } from "./GangMemberStats";
 import { TaskSelector } from "./TaskSelector";
