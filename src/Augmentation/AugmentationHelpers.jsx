@@ -90,7 +90,7 @@ function getRandomBonus() {
                 faction_rep_mult: 1.15,
                 work_money_mult: 1.7,
             },
-            description: "Increases money gained by working by 70%.<br>" +
+            description: "Increases money gained from working by 70%.<br>" +
                          "Increases reputation gain from companies by 25%.<br>" +
                          "Increases reputation gain from factions by 15%.",
         },
