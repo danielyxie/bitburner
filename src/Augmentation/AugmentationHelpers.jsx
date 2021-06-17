@@ -1636,12 +1636,12 @@ function initAugmentations() {
 	// Sector12
     const CashRoot = new Augmentation({
         name:AugmentationNames.CashRoot, repCost:1.25e4, moneyCost:1.25e8,
-        info:"A collection of digital assets saved on a small chip implanted into the wrist." +
-             "A small jack in the chip automatically uploads the assets when " +
-             "connected to a computer.<br><br>" +
-             "This augmentation:<br>" +
-             "Provides {Money(1e6)} after a reset.<br>" +
-             "Provides BruteSSH.exe after a reset.",
+        info:<>A collection of digital assets saved on a small chip implanted into the wrist. 
+             A small jack in the chip automatically uploads the assets when connected
+             to a computer.<br /><br />
+             This augmentation:<br />
+             Provides {Money(1e6)} after a reset.<br />
+             Provides BruteSSH.exe after a reset.</>,
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
