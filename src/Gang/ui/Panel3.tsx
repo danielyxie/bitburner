@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { GangMemberTasks } from "../GangMemberTasks";
+import { GangMember } from "../GangMember";
 
 interface IProps {
-    member: any;
+    member: GangMember;
 }
 
 export function Panel3(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
-
-    useEffect(() => {
-        const id = setInterval(() => {
-            setRerender(old => !old);
-        }, 1000);
-        return () => clearInterval(id);
-    }, []);
-
     const task = GangMemberTasks[props.member.task];
     const desc = task ? task.desc: GangMemberTasks["Unassigned"].desc;
 

@@ -1,3 +1,4 @@
+import { ITaskParams } from "../ITaskParams";
 /* tslint:disable:max-line-length */
 
 /**
@@ -29,7 +30,7 @@ export interface IGangMemberTaskMetadata {
      * An object containing weighting parameters for the task. These parameters are used for
      * various calculations (respect gain, wanted gain, etc.)
      */
-    params?: any;
+    params: ITaskParams;
 }
 
 /**
@@ -254,7 +255,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         name: "Train Combat",
         params: {
             strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 25,
-            difficulty: 5,
+            difficulty: 200,
         },
     },
     {
@@ -262,7 +263,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isCombat: true,
         isHacking: true,
         name: "Train Hacking",
-        params: {hackWeight: 100, difficulty: 8},
+        params: {hackWeight: 100, difficulty: 45},
     },
     {
         desc: "Assign this gang member to train their charisma",

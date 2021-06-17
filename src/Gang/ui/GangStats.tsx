@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Factions } from "../../Faction/Factions";
+import { Gang } from "../Gang";
 
 import { 
     formatNumber,
@@ -14,7 +15,7 @@ import { createPopup, removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
 interface IRecruitPopupProps {
-    gang: any;
+    gang: Gang;
     popupId: string;
 }
 
@@ -45,12 +46,12 @@ function recruitPopup(props: IRecruitPopupProps): React.ReactElement {
         removePopup(props.popupId);
     }
 
-    function onKeyUp(event: any): void {
+    function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
         if(event.keyCode === 13) recruit();
         if(event.keyCode === 27) cancel();
     }
 
-    function onChange(event: any): void {
+    function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
         setName(event.target.value);
     }
 
@@ -68,7 +69,7 @@ function recruitPopup(props: IRecruitPopupProps): React.ReactElement {
 }
 
 interface IProps {
-    gang: any;
+    gang: Gang;
 }
 
 function Recruitment(props: IProps): React.ReactElement {
@@ -120,13 +121,6 @@ function BonusTime(props: IProps): React.ReactElement {
 }
 
 export function GangStats(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
-
-    useEffect(() => {
-        const id = setInterval(() => setRerender(old => !old), 1000);
-        return () => clearInterval(id);
-    }, []);
-
     const territoryMult = AllGangs[props.gang.facName].territory * 100;
     let territoryStr;
     if (territoryMult <= 0) {

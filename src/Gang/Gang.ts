@@ -24,6 +24,7 @@ import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangConstants } from "./data/Constants";
 import { CONSTANTS } from "../Constants";
 import { GangMemberTasks } from "./GangMemberTasks";
+import { IAscensionResult } from "./IAscensionResult";
 
 import { AllGangs } from "./AllGangs";
 import { GangMember } from "./GangMember";
@@ -53,7 +54,7 @@ export class Gang {
 
     notifyMemberDeath: boolean;
 
-    constructor(facName: string = "", hacking: boolean = false) {
+    constructor(facName = "", hacking = false) {
         this.facName    = facName;
         this.members    = [];
         this.wanted     = 1;
@@ -87,7 +88,7 @@ export class Gang {
         return AllGangs[this.facName].territory;
     }
 
-    process(numCycles: number = 1, player: IPlayer): void {
+    process(numCycles = 1, player: IPlayer): void {
         const CyclesPerSecond = 1000 / CONSTANTS._idleSpeed;
 
         if (isNaN(numCycles)) {
@@ -110,7 +111,7 @@ export class Gang {
     }
 
 
-    processGains(numCycles: number = 1, player: IPlayer): void {
+    processGains(numCycles = 1, player: IPlayer): void {
         // Get gains per cycle
         let moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
         let justice = 0;
@@ -170,7 +171,7 @@ export class Gang {
         }
     }
 
-    processTerritoryAndPowerGains(numCycles: number = 1): void {
+    processTerritoryAndPowerGains(numCycles = 1): void {
         this.storedTerritoryAndPowerCycles += numCycles;
         if (this.storedTerritoryAndPowerCycles < GangConstants.CyclesPerTerritoryAndPowerUpdate) { return; }
         this.storedTerritoryAndPowerCycles -= GangConstants.CyclesPerTerritoryAndPowerUpdate;
@@ -268,14 +269,14 @@ export class Gang {
         }
     }
 
-    processExperienceGains(numCycles: number = 1): void {
+    processExperienceGains(numCycles = 1): void {
         for (let i = 0; i < this.members.length; ++i) {
             this.members[i].gainExperience(numCycles);
             this.members[i].updateSkillLevels();
         }
     }
 
-    clash(won: boolean = false): void {
+    clash(won = false): void {
         // Determine if a gang member should die
         let baseDeathChance = 0.01;
         if (won) { baseDeathChance /= 2; }
@@ -370,14 +371,8 @@ export class Gang {
 
     }
 
-    ascendMember(member: GangMember, workerScript: WorkerScript): void {
+    ascendMember(member: GangMember, workerScript?: WorkerScript): IAscensionResult {
         try {
-            
-            // res is an object with the following format:
-            // {
-            //  respect: Amount of respect to deduct
-            //  hack/str/def/dex/agi/cha: Ascension multipliers gained for each stat
-            // }
             const res = member.ascend();
             this.respect = Math.max(1, this.respect - res.respect);
             if (workerScript == null) {
@@ -399,9 +394,8 @@ export class Gang {
         } catch(e) {
             if (workerScript == null) {
                 exceptionAlert(e);
-            } else {
-                throw e; // Re-throw, will be caught in the Netscript Function
             }
+            throw e; // Re-throw, will be caught in the Netscript Function
         }
     }
 

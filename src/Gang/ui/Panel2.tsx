@@ -2,25 +2,23 @@ import React, { useState, useEffect } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StatsTable } from "../../ui/React/StatsTable";
 import { MoneyRate } from "../../ui/React/MoneyRate";
+import { Gang } from "../Gang";
+import { GangMember } from "../GangMember";
 
 interface IProps {
-    member: any;
-    gang: any;
+    member: GangMember;
+    gang: Gang;
+    onTaskChange: () => void;
 }
 
 export function Panel2(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
     const [currentTask, setCurrentTask] = useState(props.member.task);
-
-    useEffect(() => {
-        const id = setInterval(() => setRerender(old => !old), 1000);
-        return () => clearInterval(id);
-    }, []);
 
     function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
         const task = event.target.value;
         props.member.assignToTask(task);
         setCurrentTask(task);
+        props.onTaskChange();
     }
 
     const tasks = props.gang.getAllTaskNames();
@@ -39,7 +37,7 @@ export function Panel2(props: IProps): React.ReactElement {
             id={`${props.member.name}-gang-member-task-selector`}
             value={currentTask}>
             <option key={0} value={"---"}>---</option>
-            {tasks.map((task: any, i: number) => <option key={i+1} value={task}>{task}</option>)}
+            {tasks.map((task: string, i: number) => <option key={i+1} value={task}>{task}</option>)}
         </select>
         <div id={`${name}-gang-member-gain-info`}>{StatsTable(data, null)}</div>
     </>);

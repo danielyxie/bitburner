@@ -6,10 +6,12 @@ import { GangMemberUpgrade } from "../GangMemberUpgrade";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
 import { removePopup } from "../../ui/React/createPopup";
+import { GangMember } from "../GangMember";
+import { Gang } from "../Gang";
 
 interface IPanelProps {
-    member: any;
-    gang: any;
+    member: GangMember;
+    gang: Gang;
     player: IPlayer;
 }
 
@@ -79,8 +81,8 @@ Agi:  {props.member.agi} (x{formatNumber(props.member.agi_mult * props.member.ag
 Cha:  {props.member.cha} (x{formatNumber(props.member.cha_mult * props.member.cha_asc_mult, 2)})
         </pre>
         <div className="gang-owned-upgrades-div">
-        Purchased Upgrades: {props.member.upgrades.map((upg: any) => purchased(upg))}
-        {props.member.augmentations.map((upg: any) => purchased(upg))}
+        Purchased Upgrades: {props.member.upgrades.map((upg: string) => purchased(upg))}
+        {props.member.augmentations.map((upg: string) => purchased(upg))}
         </div>
         <div style={{width: "20%", display: "inline-block"}}>
             <h2>Weapons</h2>
@@ -106,7 +108,7 @@ Cha:  {props.member.cha} (x{formatNumber(props.member.cha_mult * props.member.ch
 }
 
 interface IProps {
-    gang: any;
+    gang: Gang;
     player: IPlayer;
     popupId: string;
 }
@@ -115,16 +117,17 @@ export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
     const setRerender = useState(false)[1];
     const [filter, setFilter] = useState("");
 
-    function closePopup(): void {
+    function closePopup(this: Window, ev: KeyboardEvent): void {
+        if(ev.keyCode !== 27) return;
         removePopup(props.popupId);
     }
 
     useEffect(() => {
-        window.addEventListener('keydown', closePopup);
+        window.addEventListener<'keydown'>('keydown', closePopup);
         const id = setInterval(() => setRerender(old => !old), 1000);
         return () => {
             clearInterval(id);
-            window.removeEventListener('keydown', closePopup);
+            window.removeEventListener<'keydown'>('keydown', closePopup);
         }
     }, []);
 
@@ -134,6 +137,6 @@ export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
             Discount: -{numeralWrapper.formatPercentage(1 - 1 / props.gang.getDiscount())}
             <span className="tooltiptext">You get a discount on equipment and upgrades based on your gang's respect and power. More respect and power leads to more discounts.</span>
         </p>
-        {props.gang.members.map((member: any) => <GangMemberUpgradePanel key={member.name} player={props.player} gang={props.gang} member={member} />)}
+        {props.gang.members.map((member: GangMember) => <GangMemberUpgradePanel key={member.name} player={props.player} gang={props.gang} member={member} />)}
     </>);
 }

@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { GangStats } from "./GangStats";
+import { Gang } from "../Gang";
 import { GangMemberList } from "./GangMemberList";
 
 interface IProps {
-    gang: any;
+    gang: Gang;
     player: IPlayer;
 }
 

@@ -34,6 +34,7 @@ export function displayGangContent(engine: IEngine, gang: Gang, player: IPlayer)
 }
 
 export function clearGangUI(): void {
+    if(UIElems.gangContainer) UIElems.gangContainer.style.display = 'none';
     if (UIElems.gangContainer instanceof Element) ReactDOM.unmountComponentAtNode(UIElems.gangContainer);
     UIElems.gangContainer = null;
     UIElems.gangContentCreated = false;

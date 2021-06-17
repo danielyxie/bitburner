@@ -2,11 +2,21 @@ import { GangMemberTask } from "./GangMemberTask";
 import { GangMemberTasks } from "./GangMemberTasks";
 import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMemberUpgrades } from "./GangMemberUpgrades";
+import { IAscensionResult } from "./IAscensionResult";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GangConstants } from "./data/Constants";
 import { AllGangs } from "./AllGangs";
 import { IGang } from "./IGang";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+
+interface IMults {
+    hack: number;
+    str: number;
+    def: number;
+    dex: number;
+    agi: number;
+    cha: number;
+}
 
 export class GangMember {
     name: string;
@@ -67,13 +77,12 @@ export class GangMember {
     }
 
     assignToTask(taskName: string): boolean {
-        if (GangMemberTasks.hasOwnProperty(taskName)) {
-            this.task = taskName;
-            return true;
-        } else {
+        if (!GangMemberTasks.hasOwnProperty(taskName)) {
             this.task = "Unassigned";
             return false;
         }
+        this.task = taskName;
+        return true;
     }
 
     unassignFromTask(): void {
@@ -151,25 +160,37 @@ export class GangMember {
         return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
     }
 
+    expMult(): IMults {
+        return {
+            hack: (this.hack_mult-1)/10+1,
+            str: (this.str_mult-1)/10+1,
+            def: (this.def_mult-1)/10+1,
+            dex: (this.dex_mult-1)/10+1,
+            agi: (this.agi_mult-1)/10+1,
+            cha: (this.cha_mult-1)/10+1,
+        };
+    }
+
     gainExperience(numCycles = 1): void {
         const task = this.getTask();
         if (task === GangMemberTasks["Unassigned"]) return;
         const difficultyMult = Math.pow(task.difficulty, 0.9);
         const difficultyPerCycles = difficultyMult * numCycles;
         const weightDivisor = 1500;
-        this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles;
-        this.str_exp    += (task.strWeight / weightDivisor) * difficultyPerCycles;
-        this.def_exp    += (task.defWeight / weightDivisor) * difficultyPerCycles;
-        this.dex_exp    += (task.dexWeight / weightDivisor) * difficultyPerCycles;
-        this.agi_exp    += (task.agiWeight / weightDivisor) * difficultyPerCycles;
-        this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
+        const expMult = this.expMult();
+        this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles * expMult.hack;
+        this.str_exp    += (task.strWeight / weightDivisor) * difficultyPerCycles * expMult.str;
+        this.def_exp    += (task.defWeight / weightDivisor) * difficultyPerCycles * expMult.def;
+        this.dex_exp    += (task.dexWeight / weightDivisor) * difficultyPerCycles * expMult.dex;
+        this.agi_exp    += (task.agiWeight / weightDivisor) * difficultyPerCycles * expMult.agi;
+        this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles * expMult.cha;
     }
 
     recordEarnedRespect(numCycles = 1, gang: IGang): void {
         this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
     }
 
-    getAscensionResults(): any {
+    getAscensionResults(): IMults {
         //Calculate ascension bonus to stat multipliers.
         //This is based on the current number of multipliers from Non-Augmentation upgrades
         //+ Ascension Bonus = N% of current bonus from Augmentations
@@ -201,7 +222,7 @@ export class GangMember {
         }
     }
 
-    getAscensionEfficiency(): any {
+    getAscensionEfficiency(): IMults {
         function formula(mult: number): number {
             return 1/(1+Math.log(mult)/Math.log(20));
         }
@@ -215,7 +236,7 @@ export class GangMember {
         };
     }
 
-    ascend(): any {
+    ascend(): IAscensionResult {
         const res = this.getAscensionResults();
         const hackAscMult = res.hack;
         const strAscMult =  res.str;
@@ -275,12 +296,6 @@ export class GangMember {
     }
 
     buyUpgrade(upg: GangMemberUpgrade, player: IPlayer, gang: IGang): boolean {
-        if (typeof upg === 'string') {
-            upg = GangMemberUpgrades[upg];
-        }
-        if (!(upg instanceof GangMemberUpgrade)) {
-            return false;
-        }
         // Prevent purchasing of already-owned upgrades
         if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) {
             return false;

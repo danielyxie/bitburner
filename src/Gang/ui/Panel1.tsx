@@ -3,10 +3,12 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createPopup, removePopup } from "../../ui/React/createPopup";
+import { Gang } from "../Gang";
+import { GangMember } from "../GangMember";
 
 interface IAscendProps {
-    member: any;
-    gang: any;
+    member: GangMember;
+    gang: Gang;
     popupId: string;
 }
 
@@ -43,17 +45,11 @@ Charisma:  +{numeralWrapper.formatPercentage(ascendBenefits.cha/100)}<br />
 }
 
 interface IProps {
-    member: any;
-    gang: any;
+    member: GangMember;
+    gang: Gang;
 }
 
 export function Panel1(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
-
-    useEffect(() => {
-        const id = setInterval(() => setRerender(old => !old), 1000);
-        return () => clearInterval(id);
-    }, []);
 
     function ascend(): void {
         const popupId = `gang-management-ascend-member ${props.member.name}`;

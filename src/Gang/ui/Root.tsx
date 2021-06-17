@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
 import { IEngine } from "../../IEngine";
+import { Gang } from "../Gang";
 import { displayFactionContent } from "../../Faction/FactionHelpers";
 
 interface IProps {
-    gang: any;
+    gang: Gang;
     player: IPlayer;
     engine: IEngine;
 }
 
 export function Root(props: IProps): React.ReactElement {
     const [management, setManagement] = useState(true);
+    const setRerender = useState(false)[1];
+
+    useEffect(() => {
+        const id = setInterval(() => setRerender(old => !old), 1000);
+        return () => clearInterval(id);
+    }, []);
 
     function back(): void {
         props.engine.loadFactionContent();

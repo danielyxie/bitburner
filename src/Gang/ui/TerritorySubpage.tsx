@@ -3,19 +3,13 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { AllGangs } from "../AllGangs";
+import { Gang } from "../Gang";
 
 interface IProps {
-    gang: any;
+    gang: Gang;
 }
 
 export function TerritorySubpage(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
-
-    useEffect(() => {
-        const id = setInterval(() => setRerender(old => !old), 1000);
-        return () => clearInterval(id);
-    }, []);
-
     function openWarfareHelp(): void {
         dialogBoxCreate("This percentage represents the chance you have of 'clashing' with " +
                         "with another gang. If you do not wish to gain/lose territory, " +
