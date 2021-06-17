@@ -6,7 +6,7 @@ import React from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { createPopup, removePopup } from "../../ui/React/createPopup";
+import { createPopup } from "../../ui/React/createPopup";
 import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";
 import { AscensionPopup } from "./AscensionPopup";

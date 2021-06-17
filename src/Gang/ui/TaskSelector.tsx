@@ -38,11 +38,11 @@ export function TaskSelector(props: IProps): React.ReactElement {
         <select
             onChange={onChange}
             className="dropdown"
-            id={`${props.member.name}-gang-member-task-selector`}
             value={currentTask}>
             <option key={0} value={"---"}>---</option>
-            {tasks.map((task: string, i: number) => <option key={i+1} value={task}>{task}</option>)}
+            {tasks.map((task: string, i: number) =>
+                <option key={i+1} value={task}>{task}</option>)}
         </select>
-        <div id={`${name}-gang-member-gain-info`}>{StatsTable(data, null)}</div>
+        <div>{StatsTable(data, null)}</div>
     </>);
 }

@@ -80,8 +80,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
             id="warfare"
             type="checkbox"
             style={{display: "inline-block", margin: "2px"}}
-            onChange={(event)=> 
-                props.gang.territoryWarfareEngaged = event.target.checked}/>
+            onChange={(event)=> props.gang.territoryWarfareEngaged = event.target.checked}/>
         <label
             htmlFor="warfare"
             className="tooltip"
@@ -108,8 +107,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
             id="notify"
             type="checkbox"
             style={{display: "inline-block", margin: "2px"}}
-            onChange={(event)=>
-                props.gang.notifyMemberDeath = event.target.checked}/>
+            onChange={(event)=> props.gang.notifyMemberDeath = event.target.checked}/>
         <label htmlFor="warfare" className="tooltip" style={{color: "white", display: 'inline-block'}}>
             Notify about Gang Member Deaths
             <span className="tooltiptext" style={{display: "inline-block"}}>

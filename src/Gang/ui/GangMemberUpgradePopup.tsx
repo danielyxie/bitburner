@@ -45,7 +45,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
         </div>);
     }
 
-    function upgradeButton(upg: GangMemberUpgrade, left: boolean = false): React.ReactElement {
+    function upgradeButton(upg: GangMemberUpgrade, left = false): React.ReactElement {
         function onClick(): void {
             props.member.buyUpgrade(upg, props.player, props.gang);
             setRerender(old => !old);
@@ -131,8 +131,7 @@ export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
                 discounts.
             </span>
         </p>
-        {props.gang.members.map((member: GangMember) =>
-            <GangMemberUpgradePanel
+        {props.gang.members.map((member: GangMember) => <GangMemberUpgradePanel
                 key={member.name}
                 player={props.player}
                 gang={props.gang}
