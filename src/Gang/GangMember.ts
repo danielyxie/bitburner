@@ -73,7 +73,12 @@ export class GangMember {
     }
 
     calculatePower(): number {
-        return (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95;
+        return (this.hack +
+                this.str +
+                this.def +
+                this.dex +
+                this.agi +
+                this.cha) / 95;
     }
 
     assignToTask(taskName: string): boolean {
@@ -134,13 +139,12 @@ export class GangMember {
         if (isNaN(territoryMult) || territoryMult <= 0) return 0;
         if (task.baseWanted < 0) {
             return 0.4 * task.baseWanted * statWeight * territoryMult;
-        } else {
-            const calc = 7 * task.baseWanted / (Math.pow(3 * statWeight * territoryMult, 0.8));
-
-            // Put an arbitrary cap on this to prevent wanted level from rising too fast if the
-            // denominator is very small. Might want to rethink formula later
-            return Math.min(100, calc);
         }
+        const calc = 7 * task.baseWanted / (Math.pow(3 * statWeight * territoryMult, 0.8));
+
+        // Put an arbitrary cap on this to prevent wanted level from rising too fast if the
+        // denominator is very small. Might want to rethink formula later
+        return Math.min(100, calc);
     }
 
     calculateMoneyGain(gang: IGang): number {
@@ -202,12 +206,12 @@ export class GangMember {
         let cha = 1;
         for (let i = 0; i < this.upgrades.length; ++i) {
             const upg = GangMemberUpgrades[this.upgrades[i]];
-            if (upg.mults.hack != null) { hack *= upg.mults.hack; }
-            if (upg.mults.str != null)  { str *= upg.mults.str; }
-            if (upg.mults.def != null)  { def *= upg.mults.def; }
-            if (upg.mults.dex != null)  { dex *= upg.mults.dex; }
-            if (upg.mults.agi != null)  { agi *= upg.mults.agi; }
-            if (upg.mults.cha != null)  { cha *= upg.mults.cha; }
+            if (upg.mults.hack != null) hack *= upg.mults.hack;
+            if (upg.mults.str != null)  str *= upg.mults.str;
+            if (upg.mults.def != null)  def *= upg.mults.def;
+            if (upg.mults.dex != null)  dex *= upg.mults.dex;
+            if (upg.mults.agi != null)  agi *= upg.mults.agi;
+            if (upg.mults.cha != null)  cha *= upg.mults.cha;
         }
 
         // Subtract 1 because we're only interested in the actual "bonus" part
@@ -287,21 +291,20 @@ export class GangMember {
     }
 
     applyUpgrade(upg: GangMemberUpgrade): void {
-        if (upg.mults.str != null)  { this.str_mult *= upg.mults.str; }
-        if (upg.mults.def != null)  { this.def_mult *= upg.mults.def; }
-        if (upg.mults.dex != null)  { this.dex_mult *= upg.mults.dex; }
-        if (upg.mults.agi != null)  { this.agi_mult *= upg.mults.agi; }
-        if (upg.mults.cha != null)  { this.cha_mult *= upg.mults.cha; }
-        if (upg.mults.hack != null) { this.hack_mult *= upg.mults.hack; }
+        if (upg.mults.str != null)  this.str_mult *= upg.mults.str;
+        if (upg.mults.def != null)  this.def_mult *= upg.mults.def;
+        if (upg.mults.dex != null)  this.dex_mult *= upg.mults.dex;
+        if (upg.mults.agi != null)  this.agi_mult *= upg.mults.agi;
+        if (upg.mults.cha != null)  this.cha_mult *= upg.mults.cha;
+        if (upg.mults.hack != null) this.hack_mult *= upg.mults.hack;
     }
 
     buyUpgrade(upg: GangMemberUpgrade, player: IPlayer, gang: IGang): boolean {
         // Prevent purchasing of already-owned upgrades
-        if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) {
-            return false;
-        }
+        if (this.augmentations.includes(upg.name) ||
+            this.upgrades.includes(upg.name)) return false;
 
-        if (player.money.lt(gang.getUpgradeCost(upg))) { return false; }
+        if (player.money.lt(gang.getUpgradeCost(upg))) return false;
         player.loseMoney(gang.getUpgradeCost(upg));
         if (upg.type === "g") {
             this.augmentations.push(upg.name);
