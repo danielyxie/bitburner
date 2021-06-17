@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StatsTable } from "../../ui/React/StatsTable";
 import { MoneyRate } from "../../ui/React/MoneyRate";
@@ -11,7 +11,7 @@ interface IProps {
     onTaskChange: () => void;
 }
 
-export function Panel2(props: IProps): React.ReactElement {
+export function TaskSelector(props: IProps): React.ReactElement {
     const [currentTask, setCurrentTask] = useState(props.member.task);
 
     function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {

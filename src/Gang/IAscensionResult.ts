@@ -6,4 +6,4 @@ export interface IAscensionResult {
     dex: number;
     agi: number;
     cha: number;
-};
+}

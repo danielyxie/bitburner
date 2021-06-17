@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
@@ -11,13 +11,13 @@ interface IProps {
 
 export function TerritorySubpage(props: IProps): React.ReactElement {
     function openWarfareHelp(): void {
-        dialogBoxCreate("This percentage represents the chance you have of 'clashing' with " +
-                        "with another gang. If you do not wish to gain/lose territory, " +
-                        "then keep this percentage at 0% by not engaging in territory " +
-                        "warfare.")
+        dialogBoxCreate("This percentage represents the chance you have of " +
+                        "'clashing' with with another gang. If you do not " +
+                        "wish to gain/lose territory, then keep this " +
+                        "percentage at 0% by not engaging in territory warfare.");
     }
 
-    function formatTerritoryP(n: number): string {
+    function formatTerritory(n: number): string {
         const v = n * 100;
         if (v <= 0) {
             return formatNumber(0, 2);
@@ -35,7 +35,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
         return (<span key={name}>
             <u>{name}</u><br />
             Power: {formatNumber(power, 6)}<br />
-            Territory: {formatTerritoryP(AllGangs[name].territory)}%<br />
+            Territory: {formatTerritory(AllGangs[name].territory)}%<br />
             Chance to win clash with this gang: {numeralWrapper.formatPercentage(clashVictoryChance, 3)}<br />
             <br />
         </span>);
@@ -72,8 +72,17 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
             <br />
             <br />
         </p>
-        <input checked={props.gang.territoryWarfareEngaged} id="warfare" type="checkbox" style={{display: "inline-block", margin: "2px"}} onChange={(event)=> props.gang.territoryWarfareEngaged = event.target.checked}/>
-        <label htmlFor="warfare" className="tooltip" style={{color: "white", display: 'inline-block'}}>
+        <input
+            checked={props.gang.territoryWarfareEngaged}
+            id="warfare"
+            type="checkbox"
+            style={{display: "inline-block", margin: "2px"}}
+            onChange={(event)=> 
+                props.gang.territoryWarfareEngaged = event.target.checked}/>
+        <label
+            htmlFor="warfare"
+            className="tooltip"
+            style={{color: "white", display: 'inline-block'}}>
             Engage in Territory Warfare
             <span className="tooltiptext" style={{display: "inline-block"}}>
                 Engaging in Territory Warfare sets your clash chance to 100%.
@@ -85,10 +94,19 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
         <p style={{display: 'inline-block'}}>
             Territory Clash Chance: {numeralWrapper.formatPercentage(props.gang.territoryClashChance, 3)}
         </p>
-        <div className="help-tip" style={{display: "inline-block"}} onClick={openWarfareHelp}>?</div>
+        <div
+            className="help-tip"
+            style={{display: "inline-block"}}
+            onClick={openWarfareHelp}>?</div>
         <br />
 
-        <input checked={props.gang.notifyMemberDeath} id="notify" type="checkbox" style={{display: "inline-block", margin: "2px"}} onChange={(event)=> props.gang.notifyMemberDeath = event.target.checked}/>
+        <input
+            checked={props.gang.notifyMemberDeath}
+            id="notify"
+            type="checkbox"
+            style={{display: "inline-block", margin: "2px"}}
+            onChange={(event)=>
+                props.gang.notifyMemberDeath = event.target.checked}/>
         <label htmlFor="warfare" className="tooltip" style={{color: "white", display: 'inline-block'}}>
             Notify about Gang Member Deaths
             <span className="tooltiptext" style={{display: "inline-block"}}>
@@ -101,7 +119,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
             <p>
                 <b><u>{props.gang.facName}</u></b><br />
                 Power: {formatNumber(AllGangs[props.gang.facName].power, 6)}<br />
-                Territory: {formatTerritoryP(AllGangs[props.gang.facName].territory)}%<br />
+                Territory: {formatTerritory(AllGangs[props.gang.facName].territory)}%<br />
                 <br />
                 {gangNames.map(name => otherGangTerritory(name))}
             </p>

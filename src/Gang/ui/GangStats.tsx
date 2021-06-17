@@ -1,123 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Factions } from "../../Faction/Factions";
 import { Gang } from "../Gang";
 
-import { 
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
+import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { Reputation } from "../../ui/React/Reputation";
 import { AllGangs } from "../AllGangs";
-import { GangConstants } from "../data/Constants";
-import { createPopup, removePopup } from "../../ui/React/createPopup";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
-
-interface IRecruitPopupProps {
-    gang: Gang;
-    popupId: string;
-}
-
-function recruitPopup(props: IRecruitPopupProps): React.ReactElement {
-    const [name, setName] = useState("");
-
-    function recruit(): void {
-        if (name === "") {
-            dialogBoxCreate("You must enter a name for your Gang member!");
-            return;
-        }
-        if (!props.gang.canRecruitMember()) {
-            dialogBoxCreate("You cannot recruit another Gang member!");
-            return;
-        }
-
-        // At this point, the only way this can fail is if you already
-        // have a gang member with the same name
-        if (!props.gang.recruitMember(name)) {
-            dialogBoxCreate("You already have a gang member with this name!");
-            return;
-        }
-
-        removePopup(props.popupId);
-    }
-
-    function cancel(): void {
-        removePopup(props.popupId);
-    }
-
-    function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
-        if(event.keyCode === 13) recruit();
-        if(event.keyCode === 27) cancel();
-    }
-
-    function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        setName(event.target.value);
-    }
-
-    return (<>
-        <p>Enter a name for your new Gang member:</p><br />
-        <input autoFocus
-            onKeyUp={onKeyUp}
-            onChange={onChange}
-            className="text-input"
-            type="text"
-            placeholder="unique name" />
-        <a className="std-button" onClick={recruit}>Recruit Gang Member</a>
-        <a className="std-button" onClick={cancel}>Cancel</a>
-    </>);
-}
+import { BonusTime } from "./BonusTime";
 
 interface IProps {
     gang: Gang;
-}
-
-function Recruitment(props: IProps): React.ReactElement {
-    // Toggle the 'Recruit member button' if valid
-    const numMembers = props.gang.members.length;
-    const respectCost = props.gang.getRespectNeededToRecruitMember();
-
-    if (numMembers >= GangConstants.MaximumGangMembers) {
-        return (<></>);
-    } else if (props.gang.canRecruitMember()) {
-        function onClick(): void {
-            const popupId = "recruit-gang-member-popup";
-            createPopup(popupId, recruitPopup, {
-                gang: props.gang,
-                popupId: popupId,
-            });
-        }
-        return (<>
-            <a className="a-link-button"
-                onClick={onClick}
-                style={{display: 'inline-block', margin: '10px'}}>
-                Recruit Gang Member
-            </a>
-        </>);
-    }
-    return (<>
-        <a className="a-link-button-inactive"
-            style={{display: 'inline-block', margin: '10px'}}>
-            Recruit Gang Member
-        </a>
-        <p style={{margin: '10px', color: 'red', display: 'inline-block'}}>
-            {formatNumber(respectCost, 2)} respect needed to recruit next member
-        </p>
-    </>);
-}
-
-function BonusTime(props: IProps): React.ReactElement {
-    const CyclesPerSecond = 1000 / 200;
-    if (props.gang.storedCycles / CyclesPerSecond*1000 <= 5000) return <></>;
-    return (<>
-        <p className="tooltip" style={{display: "inline-block"}}>
-            Bonus time: {convertTimeMsToTimeElapsedString(props.gang.storedCycles / CyclesPerSecond*1000)}
-            <span className="tooltiptext">
-                You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed
-            </span>
-        </p>
-        <br />
-    </>);
 }
 
 export function GangStats(props: IProps): React.ReactElement {
@@ -171,7 +64,5 @@ export function GangStats(props: IProps): React.ReactElement {
         </p>
         <br />
         <BonusTime gang={props.gang} />
-        <br />
-        <Recruitment gang={props.gang} />
     </>);
 }

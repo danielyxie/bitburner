@@ -1,16 +1,15 @@
-import { IMults } from "./data/upgrades";
+import { IMults, UpgradeType } from "./data/upgrades";
 
 export class GangMemberUpgrade {
     name: string;
     cost: number;
-    type: string;
+    type: UpgradeType;
     desc: string;
     mults: IMults;
 
-    constructor(name = "", cost = 0, type = "w", mults: IMults = {}) {
+    constructor(name = "", cost = 0, type: UpgradeType = UpgradeType.Weapon, mults: IMults = {}) {
         this.name = name;
         this.cost = cost;
-        //w = weapon, a = armor, v = vehicle, r = rootkit, g = Aug
         this.type = type;
         this.mults = mults;
 
@@ -43,15 +42,15 @@ export class GangMemberUpgrade {
     // User friendly version of type.
     getType(): string {
         switch (this.type) {
-            case "w":
+            case UpgradeType.Weapon:
                 return "Weapon";
-            case "a":
+            case UpgradeType.Armor:
                 return "Armor";
-            case "v":
+            case UpgradeType.Vehicle:
                 return "Vehicle";
-            case "r":
+            case UpgradeType.Rootkit:
                 return "Rootkit";
-            case "g":
+            case UpgradeType.Augmentation:
                 return "Augmentation";
             default:
                 return "";

@@ -27,9 +27,18 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     return (<>
-        <a className="a-link-button" style={{display: "inline-block"}} onClick={back}>Back</a>
-        <a className={management?"a-link-button-inactive":"a-link-button"} style={{display: "inline-block"}} onClick={() => setManagement(true)}>Gang Management</a>
-        <a className={!management?"a-link-button-inactive":"a-link-button"} style={{display: "inline-block"}} onClick={() => setManagement(false)}>Gang Territory</a>
+        <a className="a-link-button" style={{display: "inline-block"}}
+            onClick={back}>Back</a>
+        <a className={management?"a-link-button-inactive":"a-link-button"}
+            style={{display: "inline-block"}}
+            onClick={() => setManagement(true)}>
+            Gang Management
+        </a>
+        <a className={!management?"a-link-button-inactive":"a-link-button"}
+            style={{display: "inline-block"}}
+            onClick={() => setManagement(false)}>
+            Gang Territory
+        </a>
         {management ? 
         <ManagementSubpage gang={props.gang} player={props.player} /> :
         <TerritorySubpage gang={props.gang} />}

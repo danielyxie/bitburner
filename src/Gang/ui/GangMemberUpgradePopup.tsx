@@ -8,6 +8,7 @@ import { Money } from "../../ui/React/Money";
 import { removePopup } from "../../ui/React/createPopup";
 import { GangMember } from "../GangMember";
 import { Gang } from "../Gang";
+import { UpgradeType } from "../data/upgrades";
 
 interface IPanelProps {
     member: GangMember;
@@ -17,49 +18,31 @@ interface IPanelProps {
 
 function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
     const setRerender = useState(false)[1];
-    // Upgrade buttons. Only show upgrades that can be afforded
-    const weaponUpgrades: GangMemberUpgrade[] = [];
-    const armorUpgrades: GangMemberUpgrade[] = [];
-    const vehicleUpgrades: GangMemberUpgrade[] = [];
-    const rootkitUpgrades: GangMemberUpgrade[] = [];
-    const augUpgrades: GangMemberUpgrade[] = [];
-
-    for (const upgName in GangMemberUpgrades) {
-        if (GangMemberUpgrades.hasOwnProperty(upgName)) {
+    function filterUpgrades(list: string[], type: UpgradeType): GangMemberUpgrade[] {
+        return Object.keys(GangMemberUpgrades).filter((upgName: string) => {
             const upg = GangMemberUpgrades[upgName];
-            if (props.player.money.lt(props.gang.getUpgradeCost(upg))) continue;
-            if (props.member.upgrades.includes(upgName) || props.member.augmentations.includes(upgName)) continue;
-            switch (upg.type) {
-                case "w":
-                    weaponUpgrades.push(upg);
-                    break;
-                case "a":
-                    armorUpgrades.push(upg);
-                    break;
-                case "v":
-                    vehicleUpgrades.push(upg);
-                    break;
-                case "r":
-                    rootkitUpgrades.push(upg);
-                    break;
-                case "g":
-                    augUpgrades.push(upg);
-                    break;
-                default:
-                    console.error(`ERROR: Invalid Gang Member Upgrade Type: ${upg.type}`);
-            }
-        }
+            if (props.player.money.lt(props.gang.getUpgradeCost(upg)))
+                return false;
+            if(upg.type !== type) return false;
+            if(list.includes(upgName)) return false;
+            return true;
+        }).map((upgName: string) => GangMemberUpgrades[upgName]);
     }
+    const weaponUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Weapon);
+    const armorUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Armor);
+    const vehicleUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Vehicle);
+    const rootkitUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Rootkit);
+    const augUpgrades = filterUpgrades(props.member.augmentations, UpgradeType.Augmentation);
 
-    function purchased(name: string): React.ReactElement {
-        const upg = GangMemberUpgrades[name]
-        return (<div key={name} className="gang-owned-upgrade tooltip">
+    function purchased(upgName: string): React.ReactElement {
+        const upg = GangMemberUpgrades[upgName]
+        return (<div key={upgName} className="gang-owned-upgrade tooltip">
             {upg.name}
             <span className="tooltiptext" dangerouslySetInnerHTML={{__html: upg.desc}} />
         </div>);
     }
 
-    function upgradeButton(upg: GangMemberUpgrade, left = false): React.ReactElement {
+    function upgradeButton(upg: GangMemberUpgrade, left: boolean = false): React.ReactElement {
         function onClick(): void {
             props.member.buyUpgrade(upg, props.player, props.gang);
             setRerender(old => !old);
@@ -132,11 +115,25 @@ export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
     }, []);
 
     return (<>
-        <input className="text-input" value={filter} placeholder="Filter gang member" onChange={event => setFilter(event.target.value)} />
+        <input
+            className="text-input"
+            value={filter}
+            placeholder="Filter gang member"
+            onChange={event => setFilter(event.target.value)} />
         <p className="tooltip" style={{marginLeft: '6px', display: 'inline-block'}}>
             Discount: -{numeralWrapper.formatPercentage(1 - 1 / props.gang.getDiscount())}
-            <span className="tooltiptext">You get a discount on equipment and upgrades based on your gang's respect and power. More respect and power leads to more discounts.</span>
+            <span className="tooltiptext">
+                You get a discount on equipment and upgrades based on your
+                gang's respect and power. More respect and power leads to more
+                discounts.
+            </span>
         </p>
-        {props.gang.members.map((member: GangMember) => <GangMemberUpgradePanel key={member.name} player={props.player} gang={props.gang} member={member} />)}
+        {props.gang.members.map((member: GangMember) =>
+            <GangMemberUpgradePanel
+                key={member.name}
+                player={props.player}
+                gang={props.gang}
+                member={member} />)
+        }
     </>);
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { GangMemberTasks } from "../GangMemberTasks";
 import { GangMember } from "../GangMember";
 
@@ -6,7 +6,7 @@ interface IProps {
     member: GangMember;
 }
 
-export function Panel3(props: IProps): React.ReactElement {
+export function TaskDescription(props: IProps): React.ReactElement {
     const task = GangMemberTasks[props.member.task];
     const desc = task ? task.desc: GangMemberTasks["Unassigned"].desc;
 

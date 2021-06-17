@@ -1,59 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createPopup, removePopup } from "../../ui/React/createPopup";
 import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";
-
-interface IAscendProps {
-    member: GangMember;
-    gang: Gang;
-    popupId: string;
-}
-
-function ascendPopup(props: IAscendProps): React.ReactElement {
-    function confirm(): void {
-        props.gang.ascendMember(props.member);
-        removePopup(props.popupId);
-    }
-
-    function cancel(): void {
-        removePopup(props.popupId);
-    }
-
-    const ascendBenefits = props.member.getAscensionResults();
-
-    return (<>
-        <pre>
-Are you sure you want to ascend this member? They will lose all of<br />
-their non-Augmentation upgrades and their stats will reset back to 1.<br />
-<br />
-Furthermore, your gang will lose {numeralWrapper.formatRespect(props.member.earnedRespect)} respect<br />
-<br />
-In return, they will gain the following permanent boost to stat multipliers:<br />
-Hacking:   +{numeralWrapper.formatPercentage(ascendBenefits.hack/100)}<br />
-Strength:  +{numeralWrapper.formatPercentage(ascendBenefits.str/100)}<br />
-Defense:   +{numeralWrapper.formatPercentage(ascendBenefits.def/100)}<br />
-Dexterity: +{numeralWrapper.formatPercentage(ascendBenefits.dex/100)}<br />
-Agility:   +{numeralWrapper.formatPercentage(ascendBenefits.agi/100)}<br />
-Charisma:  +{numeralWrapper.formatPercentage(ascendBenefits.cha/100)}<br />
-        </pre>
-        <button className="std-button" onClick={confirm}>Ascend</button>
-        <button className="std-button" onClick={cancel}>Cancel</button>
-    </>);
-}
+import { AscensionPopup } from "./AscensionPopup";
 
 interface IProps {
     member: GangMember;
     gang: Gang;
 }
 
-export function Panel1(props: IProps): React.ReactElement {
-
+export function GangMemberStats(props: IProps): React.ReactElement {
     function ascend(): void {
         const popupId = `gang-management-ascend-member ${props.member.name}`;
-        createPopup(popupId, ascendPopup, {
+        createPopup(popupId, AscensionPopup, {
             member: props.member,
             gang: props.gang,
             popupId: popupId,
@@ -85,12 +47,12 @@ Ag: x{numeralWrapper.formatMultiplier(props.member.agi_mult * props.member.agi_a
 Ch: x{numeralWrapper.formatMultiplier(props.member.cha_mult * props.member.cha_asc_mult)}(x{numeralWrapper.formatMultiplier(props.member.cha_mult)} Eq, x{numeralWrapper.formatMultiplier(props.member.cha_asc_mult)} Asc)
         </span>
         <pre id={`${props.member.name}gang-member-stats-text`}>
-        Hacking: {formatNumber(props.member.hack, 0)} ({numeralWrapper.formatExp(props.member.hack_exp)} exp)<br />
-        Strength: {formatNumber(props.member.str, 0)} ({numeralWrapper.formatExp(props.member.str_exp)} exp)<br />
-        Defense: {formatNumber(props.member.def, 0)} ({numeralWrapper.formatExp(props.member.def_exp)} exp)<br />
-        Dexterity: {formatNumber(props.member.dex, 0)} ({numeralWrapper.formatExp(props.member.dex_exp)} exp)<br />
-        Agility: {formatNumber(props.member.agi, 0)} ({numeralWrapper.formatExp(props.member.agi_exp)} exp)<br />
-        Charisma: {formatNumber(props.member.cha, 0)} ({numeralWrapper.formatExp(props.member.cha_exp)} exp)<br />
+Hacking: {formatNumber(props.member.hack, 0)} ({numeralWrapper.formatExp(props.member.hack_exp)} exp)<br />
+Strength: {formatNumber(props.member.str, 0)} ({numeralWrapper.formatExp(props.member.str_exp)} exp)<br />
+Defense: {formatNumber(props.member.def, 0)} ({numeralWrapper.formatExp(props.member.def_exp)} exp)<br />
+Dexterity: {formatNumber(props.member.dex, 0)} ({numeralWrapper.formatExp(props.member.dex_exp)} exp)<br />
+Agility: {formatNumber(props.member.agi, 0)} ({numeralWrapper.formatExp(props.member.agi_exp)} exp)<br />
+Charisma: {formatNumber(props.member.cha, 0)} ({numeralWrapper.formatExp(props.member.cha_exp)} exp)<br />
         </pre>
         <br />
         <button className="accordion-button" onClick={ascend}>Ascend</button>
