@@ -195,65 +195,24 @@ export class GangMember {
     }
 
     getAscensionResults(): IMults {
-        //Calculate ascension bonus to stat multipliers.
-        //This is based on the current number of multipliers from Non-Augmentation upgrades
-        //+ Ascension Bonus = N% of current bonus from Augmentations
-        let hack = 1;
-        let str = 1;
-        let def = 1;
-        let dex = 1;
-        let agi = 1;
-        let cha = 1;
-        for (let i = 0; i < this.upgrades.length; ++i) {
-            const upg = GangMemberUpgrades[this.upgrades[i]];
-            if (upg.mults.hack != null) hack *= upg.mults.hack;
-            if (upg.mults.str != null)  str *= upg.mults.str;
-            if (upg.mults.def != null)  def *= upg.mults.def;
-            if (upg.mults.dex != null)  dex *= upg.mults.dex;
-            if (upg.mults.agi != null)  agi *= upg.mults.agi;
-            if (upg.mults.cha != null)  cha *= upg.mults.cha;
-        }
-
-        // Subtract 1 because we're only interested in the actual "bonus" part
-        const eff = this.getAscensionEfficiency();
         return {
-            hack: (Math.max(0, hack - 1) * GangConstants.AscensionMultiplierRatio * eff.hack),
-            str:  (Math.max(0, str - 1) * GangConstants.AscensionMultiplierRatio * eff.str),
-            def:  (Math.max(0, def - 1) * GangConstants.AscensionMultiplierRatio * eff.def),
-            dex:  (Math.max(0, dex - 1) * GangConstants.AscensionMultiplierRatio * eff.dex),
-            agi:  (Math.max(0, agi - 1) * GangConstants.AscensionMultiplierRatio * eff.agi),
-            cha:  (Math.max(0, cha - 1) * GangConstants.AscensionMultiplierRatio * eff.cha),
+            hack: this.hack_exp,
+            str:  this.str_exp,
+            def:  this.def_exp,
+            dex:  this.dex_exp,
+            agi:  this.agi_exp,
+            cha:  this.cha_exp,
         }
-    }
-
-    getAscensionEfficiency(): IMults {
-        function formula(mult: number): number {
-            return 1/(1+Math.log(mult)/Math.log(20));
-        }
-        return {
-            hack: formula(this.hack_asc_mult),
-            str: formula(this.str_asc_mult),
-            def: formula(this.def_asc_mult),
-            dex: formula(this.dex_asc_mult),
-            agi: formula(this.agi_asc_mult),
-            cha: formula(this.cha_asc_mult),
-        };
     }
 
     ascend(): IAscensionResult {
         const res = this.getAscensionResults();
-        const hackAscMult = res.hack;
-        const strAscMult =  res.str;
-        const defAscMult =  res.def;
-        const dexAscMult =  res.dex;
-        const agiAscMult =  res.agi;
-        const chaAscMult =  res.cha;
-        this.hack_asc_mult += hackAscMult;
-        this.str_asc_mult += strAscMult;
-        this.def_asc_mult += defAscMult;
-        this.dex_asc_mult += dexAscMult;
-        this.agi_asc_mult += agiAscMult;
-        this.cha_asc_mult += chaAscMult;
+        this.hack_asc_mult += res.hack;
+        this.str_asc_mult += res.str;
+        this.def_asc_mult += res.def;
+        this.dex_asc_mult += res.dex;
+        this.agi_asc_mult += res.agi;
+        this.cha_asc_mult += res.cha;
 
         // Remove upgrades. Then re-calculate multipliers and stats
         this.upgrades.length = 0;
@@ -281,12 +240,12 @@ export class GangMember {
         this.earnedRespect = 0;
         return {
             respect: respectToDeduct,
-            hack: hackAscMult,
-            str: strAscMult,
-            def: defAscMult,
-            dex: dexAscMult,
-            agi: agiAscMult,
-            cha: chaAscMult,
+            hack: res.hack,
+            str: res.str,
+            def: res.def,
+            dex: res.dex,
+            agi: res.agi,
+            cha: res.cha,
         };
     }
 

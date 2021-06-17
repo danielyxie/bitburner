@@ -18,7 +18,10 @@ export function GangMemberAccordionContent(props: IProps): React.ReactElement {
     const setRerender = useState(false)[1];
     return (<>
         <div className={"gang-member-info-div tooltip"}>
-            <GangMemberStats gang={props.gang} member={props.member} />
+            <GangMemberStats
+                onAscend={()=>setRerender(old => !old)}
+                gang={props.gang}
+                member={props.member} />
         </div>
         <div className={"gang-member-info-div"}>
             <TaskSelector

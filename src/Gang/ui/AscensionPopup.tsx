@@ -12,11 +12,13 @@ interface IProps {
     member: GangMember;
     gang: Gang;
     popupId: string;
+    onAscend: () => void;
 }
 
 export function AscensionPopup(props: IProps): React.ReactElement {
     function confirm(): void {
         props.gang.ascendMember(props.member);
+        props.onAscend();
         removePopup(props.popupId);
     }
 

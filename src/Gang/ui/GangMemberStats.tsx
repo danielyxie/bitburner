@@ -14,6 +14,7 @@ import { AscensionPopup } from "./AscensionPopup";
 interface IProps {
     member: GangMember;
     gang: Gang;
+    onAscend: () => void;
 }
 
 export function GangMemberStats(props: IProps): React.ReactElement {
@@ -23,6 +24,7 @@ export function GangMemberStats(props: IProps): React.ReactElement {
             member: props.member,
             gang: props.gang,
             popupId: popupId,
+            onAscend: props.onAscend,
         });
     }
 
