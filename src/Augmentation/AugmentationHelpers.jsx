@@ -172,8 +172,8 @@ function initAugmentations() {
 
     const Targeting2 = new Augmentation({
         name:AugmentationNames.Targeting2, moneyCost:4.25e7, repCost:8.75e3,
-        info:"An upgraded version of the 'Augmented Targeting' implant that adds the ability to " +
-             "lock-on and track threats.<br><br>" +
+        info:"This upgraded version of the 'Augmented Targeting' implant is capable of augmenting " +
+             "reality by digitally displaying weaknesses and vital signs of threats.<br><br>" +
              "This augmentation increases dexterity by 20%.",
         prereqs:[AugmentationNames.Targeting1],
         dexterity_mult: 1.2,
@@ -187,8 +187,8 @@ function initAugmentations() {
 
     const Targeting3 = new Augmentation({
         name:AugmentationNames.Targeting3, moneyCost:1.15e8, repCost:2.75e4,
-        info:"The latest version of the 'Augmented Targeting' implant is capable of augmenting reality " +
-             "by digitally displaying weaknesses and vital signs of threats.<br><br>" +
+        info:"The latest version of the 'Augmented Targeting' implant adds the ability to " +
+             "lock-on and track threats.<br><br>" +
              "This augmentation increases dexterity by 30%.",
         prereqs:[AugmentationNames.Targeting2],
         dexterity_mult: 1.3,
@@ -313,7 +313,7 @@ function initAugmentations() {
     const WiredReflexes = new Augmentation({
         name:AugmentationNames.WiredReflexes, repCost:1.25e3, moneyCost:2.5e6,
         info:"Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
-             "supercharging the spread of neurons in the body, increasing reflex speed.<br><br>" +
+             "supercharging the spread of neural signals, increasing reflex speed.<br><br>" +
              "This augmentation increases agility and dexterity by 5%.",
         agility_mult: 1.05,
         dexterity_mult: 1.05,
@@ -342,7 +342,7 @@ function initAugmentations() {
     const BionicSpine = new Augmentation({
         name:AugmentationNames.BionicSpine, repCost:4.5e4, moneyCost:1.25e8,
         info:"Plasteel and carbon fibers completely replace the organic spine. " +
-             "This new, stronger, spine is capable of stimulating and regulating " +
+             "This highly advanced spine is capable of stimulating and regulating " +
              "neural signals passing through the spinal cord, improving senses and reaction speed. " +
              "The 'Bionic Spine' also interfaces with all other 'Bionic' implants.<br><br>" +
              "This augmentation increases all combat stats by 15%.",
@@ -377,8 +377,7 @@ function initAugmentations() {
 
     const BionicLegs = new Augmentation({
         name:AugmentationNames.BionicLegs, repCost:1.5e5, moneyCost:3.75e8,
-        info:"Organics legs are surgically removed and replaced with cybernetic legs created from plasteel and " +
-             "carbon fibers that enhance running ability.<br><br>" +
+        info:"These cybernetic legs, created from plasteel and carbon fibers, enhance running ability.<br><br>" +
              "This augmentation increases agility by 60%.",
         agility_mult: 1.6,
     });
@@ -392,7 +391,7 @@ function initAugmentations() {
     const GrapheneBionicLegs = new Augmentation({
         name:AugmentationNames.GrapheneBionicLegs, repCost:7.5e5, moneyCost:4.5e9,
         info:"An upgrade to the 'Bionic Legs' augmentation. It fuses the implant with an advanced graphene " +
-             "material greatly enhancing jumping ability.<br><br>" +
+             "material that greatly enhances jumping ability.<br><br>" +
              "This augmentation increases agility by 150%.",
         prereqs: [AugmentationNames.BionicLegs],
         agility_mult: 2.5,
@@ -570,7 +569,7 @@ function initAugmentations() {
         info:"A thin device embedded inside the arm containing a wireless module capable of connecting, " +
              "capturing, and processing all traffic on any network it connects with. " +
              "By itself, the Embedded Netburner Module does not do much, but a variety of powerful upgrades" +
-             "can be installed that enhance its ability to control traffic on the network.<br><br> " +
+             "can be installed that enhance its ability to control traffic on the network.<br><br>" +
              "This augmentation increases hacking skill by 8%.",
         hacking_mult: 1.08,
     });
@@ -855,8 +854,7 @@ function initAugmentations() {
         info:"This torso implant automatically injects nootropic supplements into " +
              "the bloodstream to improve memory, increase focus, and provide other " +
              "cognitive enhancements.<br><br>" +
-             "This augmentation increases reputation gain" +
-             "from companies by 20%.",
+             "This augmentation increases reputation gain from companies by 20%.",
         company_rep_mult: 1.2,
     });
     NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing",
@@ -889,7 +887,7 @@ function initAugmentations() {
              "in the brain.<br><br>" +
              "This augmentation:<br>" +
              "Increases all experience gained by 5%.<br>" +
-             "Increases money gained by working by 20%.<br>" +
+             "Increases money gained from working by 20%.<br>" +
              "Increases reputation gain from companies by 10%.",
         hacking_exp_mult: 1.05,
         strength_exp_mult: 1.05,
@@ -1609,8 +1607,8 @@ function initAugmentations() {
              "The CRTX42-AA is an artificially-synthesized gene that targets the visual and prefrontal " +
              "cortex and improves cognitive abilities.<br><br>" +
              "This augmentation:<br>" +
-             "Improves hacking skill by 8%.<br>" +
-             "Improves hacking experience gain by 15%.",
+             "Increases hacking skill by 8%.<br>" +
+             "Increases hacking experience gain by 15%.",
         hacking_mult: 1.08,
         hacking_exp_mult: 1.15,
     });
@@ -1638,12 +1636,12 @@ function initAugmentations() {
 	// Sector12
     const CashRoot = new Augmentation({
         name:AugmentationNames.CashRoot, repCost:1.25e4, moneyCost:1.25e8,
-        info:<>A collection of digital assets saved on a small chip. The chip is implanted 
-             into your wrist. A small jack in the chip allows you to connect it to a computer 
-             and upload the assets.<br /><br />
-             This augmentation:<br />
-             "Provides {Money(1e6)} after a reset." +
-             "Provides BruteSSH.exe after a reset. ",
+        info:"A collection of digital assets saved on a small chip implanted into the wrist." +
+             "A small jack in the chip automatically uploads the assets when " +
+             "connected to a computer.<br><br>
+             "This augmentation:<br>" +
+             "Provides {Money(1e6)} after a reset.<br>" +
+             "Provides BruteSSH.exe after a reset.",
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
@@ -1787,9 +1785,8 @@ function initAugmentations() {
         info:"A cranial implant that affects the user's personality, making them better " +
              "at negotiation in social situations.<br><br>" +
              "This augmentation:<br>" +
-             "Increases money the player earns at a company by 10%.<br>" +
-             "Increases reputation gain when working for a " +
-             "company or faction by 15%.",
+             "Increases money gained from working by 10%.<br>" +
+             "Increases reputation gain from factions and companies by 15%.",
         work_money_mult: 1.1,
         company_rep_mult: 1.15,
         faction_rep_mult: 1.15,
