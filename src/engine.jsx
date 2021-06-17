@@ -32,7 +32,7 @@ import {
     processPassiveFactionRepGain,
     inviteToFaction,
 } from "./Faction/FactionHelpers";
-import { displayGangContent, clearGangUI } from "./Gang/Helpers";
+import { displayGangContent } from "./Gang/Helpers";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import { 
     getHackingWorkRepGain,
@@ -228,6 +228,7 @@ const Engine = {
         tutorialContent:                null,
         infiltrationContent:            null,
         stockMarketContent:             null,
+        gangContent:                    null,
         locationContent:                null,
         workInProgressContent:          null,
         redPillContent:                 null,
@@ -439,9 +440,10 @@ const Engine = {
 
     loadGangContent: function() {
         Engine.hideAllContent();
-        if (document.getElementById("gang-container") || Player.inGang()) {
-            displayGangContent(this, Player.gang, Player);
+        if (Player.inGang()) {
+            Engine.Display.gangContent.style.display = "block";
             routing.navigateTo(Page.Gang);
+            displayGangContent(this, Player.gang, Player);
         } else {
             Engine.loadTerminalContent();
             routing.navigateTo(Page.Terminal);
@@ -524,6 +526,9 @@ const Engine = {
 
         Engine.Display.locationContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
+        
+        Engine.Display.gangContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.gangContent);
 
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
@@ -534,9 +539,6 @@ const Engine = {
             document.getElementById("gang-container").style.display = "none";
         }
 
-        if (Player.inGang()) {
-            clearGangUI();
-        }
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();
         }
@@ -570,6 +572,7 @@ const Engine = {
         MainMenuLinks.Travel.classList.remove("active");
         MainMenuLinks.Job.classList.remove("active");
         MainMenuLinks.StockMarket.classList.remove("active");
+        MainMenuLinks.Gang.classList.remove("active");
         MainMenuLinks.Bladeburner.classList.remove("active");
         MainMenuLinks.Corporation.classList.remove("active");
         MainMenuLinks.Gang.classList.remove("active");
@@ -1321,6 +1324,9 @@ const Engine = {
         Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
         Engine.Display.stockMarketContent.style.display = "none";
 
+        Engine.Display.gangContent = document.getElementById("gang-container");
+        Engine.Display.gangContent.style.display = "none";
+
         Engine.Display.missionContent = document.getElementById("mission-container");
         Engine.Display.missionContent.style.display = "none";
 
@@ -1449,6 +1455,7 @@ const Engine = {
 
         MainMenuLinks.Gang.addEventListener("click", function() {
             Engine.loadGangContent();
+            MainMenuLinks.Gang.classList.add('active');
             return false;
         });
 

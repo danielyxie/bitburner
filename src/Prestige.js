@@ -14,7 +14,6 @@ import { Engine } from "./engine";
 import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
-import { clearGangUI } from "./Gang/Helpers";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
 import { initMessages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";

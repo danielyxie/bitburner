@@ -40,8 +40,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
             className="dropdown"
             value={currentTask}>
             <option key={0} value={"---"}>---</option>
-            {tasks.map((task: string, i: number) =>
-                <option key={i+1} value={task}>{task}</option>)}
+            {tasks.map((task: string, i: number) => <option key={i+1} value={task}>{task}</option>)}
         </select>
         <div>{StatsTable(data, null)}</div>
     </>);
