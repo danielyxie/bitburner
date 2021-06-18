@@ -76,7 +76,7 @@ function containsAllStrings(arr: string[]): boolean {
 }
 
 // Formats a number with commas and a specific number of decimal digits
-function formatNumber(num: number, numFractionDigits: number): string {
+function formatNumber(num: number, numFractionDigits: number = 0): string {
     return num.toLocaleString(undefined, {
         maximumFractionDigits: numFractionDigits,
         minimumFractionDigits: numFractionDigits,

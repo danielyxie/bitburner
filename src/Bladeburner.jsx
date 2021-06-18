@@ -53,10 +53,22 @@ import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
 import { SkillElem } from "./Bladeburner/ui/SkillElem";
+import { SkillList } from "./Bladeburner/ui/SkillList";
 import { BlackOpElem } from "./Bladeburner/ui/BlackOpElem";
+import { BlackOpList } from "./Bladeburner/ui/BlackOpList";
 import { OperationElem } from "./Bladeburner/ui/OperationElem";
+import { OperationList } from "./Bladeburner/ui/OperationList";
 import { ContractElem } from "./Bladeburner/ui/ContractElem";
+import { ContractList } from "./Bladeburner/ui/ContractList";
 import { GeneralActionElem } from "./Bladeburner/ui/GeneralActionElem";
+import { GeneralActionList } from "./Bladeburner/ui/GeneralActionList";
+import { GeneralActionPage } from "./Bladeburner/ui/GeneralActionPage";
+import { ContractPage } from "./Bladeburner/ui/ContractPage";
+import { OperationPage } from "./Bladeburner/ui/OperationPage";
+import { BlackOpPage } from "./Bladeburner/ui/BlackOpPage";
+import { SkillPage } from "./Bladeburner/ui/SkillPage";
+import { Stats } from "./Bladeburner/ui/Stats";
+
 import { StatsTable } from "./ui/React/StatsTable";
 import { CopyableText } from "./ui/React/CopyableText";
 import { Money } from "./ui/React/Money";
@@ -1554,19 +1566,24 @@ Bladeburner.prototype.createActionAndSkillsContent = function() {
 
     switch(currTab) {
         case "general":
-            this.createGeneralActionsContent();
+            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
+            ReactDOM.render(<GeneralActionPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
             break;
         case "contracts":
-            this.createContractsContent();
+            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
+            ReactDOM.render(<ContractPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
             break;
         case "operations":
-            this.createOperationsContent();
+            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
+            ReactDOM.render(<OperationPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
             break;
         case "blackops":
-            this.createBlackOpsContent();
+            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
+            ReactDOM.render(<BlackOpPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
             break;
         case "skills":
-            this.createSkillsContent();
+            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
+            ReactDOM.render(<SkillPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
             break;
         default:
             throw new Error("Invalid value for DomElems.currentTab in Bladeburner.createActionAndSkillsContent");
@@ -1577,351 +1594,18 @@ Bladeburner.prototype.createActionAndSkillsContent = function() {
     DomElems.actionAndSkillsDiv.appendChild(DomElems.actionsAndSkillsList);
 }
 
-Bladeburner.prototype.createGeneralActionsContent = function() {
-    if (DomElems.actionsAndSkillsList == null || DomElems.actionsAndSkillsDesc == null) {
-        throw new Error("Bladeburner.createGeneralActionsContent called with either " +
-                        "DomElems.actionsAndSkillsList or DomElems.actionsAndSkillsDesc = null");
-    }
-
-    DomElems.actionsAndSkillsDesc.innerText =
-        "These are generic actions that will assist you in your Bladeburner " +
-        "duties. They will not affect your Bladeburner rank in any way."
-
-    for (var actionName in GeneralActions) {
-        if (GeneralActions.hasOwnProperty(actionName)) {
-            DomElems.generalActions[actionName] = createElement("div", {
-                class:"bladeburner-action", name:actionName,
-            });
-            DomElems.actionsAndSkillsList.appendChild(DomElems.generalActions[actionName]);
-        }
-    }
-}
-
-Bladeburner.prototype.createContractsContent = function() {
-    if (DomElems.actionsAndSkillsList == null || DomElems.actionsAndSkillsDesc == null) {
-        throw new Error("Bladeburner.createContractsContent called with either " +
-                        "DomElems.actionsAndSkillsList or DomElems.actionsAndSkillsDesc = null");
-    }
-
-    DomElems.actionsAndSkillsDesc.innerHTML =
-        "Complete contracts in order to increase your Bladeburner rank and earn money. " +
-        "Failing a contract will cause you to lose HP, which can lead to hospitalization.<br><br>" +
-        "You can unlock higher-level contracts by successfully completing them. " +
-        "Higher-level contracts are more difficult, but grant more rank, experience, and money.";
-
-    for (var contractName in this.contracts) {
-        if (this.contracts.hasOwnProperty(contractName)) {
-            DomElems.contracts[contractName] = createElement("div", {
-                class:"bladeburner-action", name:contractName,
-            });
-            DomElems.actionsAndSkillsList.appendChild(DomElems.contracts[contractName]);
-        }
-    }
-}
-
-Bladeburner.prototype.createOperationsContent = function() {
-    if (DomElems.actionsAndSkillsList == null || DomElems.actionsAndSkillsDesc == null) {
-        throw new Error("Bladeburner.createOperationsContent called with either " +
-                        "DomElems.actionsAndSkillsList or DomElems.actionsAndSkillsDesc = null");
-    }
-
-    DomElems.actionsAndSkillsDesc.innerHTML =
-        "Carry out operations for the Bladeburner division. " +
-        "Failing an operation will reduce your Bladeburner rank. It will also " +
-        "cause you to lose HP, which can lead to hospitalization. In general, " +
-        "operations are harder and more punishing than contracts, " +
-        "but are also more rewarding.<br><br>" +
-        "Operations can affect the chaos level and Synthoid population of your " +
-        "current city. The exact effects vary between different Operations.<br><br>" +
-        "For operations, you can use a team. You must first recruit team members. " +
-        "Having a larger team will improves your chances of success.<br><br>" +
-        "You can unlock higher-level operations by successfully completing them. " +
-        "Higher-level operations are more difficult, but grant more rank and experience.";
-
-    for (var operationName in this.operations) {
-        if (this.operations.hasOwnProperty(operationName)) {
-            DomElems.operations[operationName] = createElement("div", {
-                class:"bladeburner-action", name:operationName,
-            });
-            DomElems.actionsAndSkillsList.appendChild(DomElems.operations[operationName]);
-        }
-    }
-}
-
-Bladeburner.prototype.createBlackOpsContent = function() {
-
-    if (DomElems.actionsAndSkillsList == null || DomElems.actionsAndSkillsDesc == null) {
-        throw new Error("Bladeburner.createBlackOpsContent called with either " +
-                        "DomElems.actionsAndSkillsList or DomElems.actionsAndSkillsDesc = null");
-    }
-    
-
-    DomElems.actionsAndSkillsDesc.innerHTML =
-        "Black Operations (Black Ops) are special, one-time covert operations. " +
-        "Each Black Op must be unlocked successively by completing " +
-        "the one before it.<br><br>" +
-        "<b>Your ultimate goal to climb through the ranks of Bladeburners is to complete " +
-        "all of the Black Ops.</b><br><br>" +
-        "Like normal operations, you may use a team for Black Ops. Failing " +
-        "a black op will incur heavy HP and rank losses.";
-
-    // Put Black Operations in sequence of required rank
-    var blackops = [];
-    for (var blackopName in BlackOperations) {
-        if (BlackOperations.hasOwnProperty(blackopName)) {
-            blackops.push(BlackOperations[blackopName]);
-        }
-    }
-    blackops.sort(function(a, b) {
-        return (a.reqdRank - b.reqdRank);
-    });
-
-    for (var i = blackops.length-1; i >= 0 ; --i) {
-      if (this.blackops[[blackops[i].name]] == null && i !== 0 && this.blackops[[blackops[i-1].name]] == null) {continue;} // If this one nor the next are completed then this isn't unlocked yet.
-        DomElems.blackops[blackops[i].name] = createElement("div", {
-            class:"bladeburner-action", name:blackops[i].name,
-        });
-        DomElems.actionsAndSkillsList.appendChild(DomElems.blackops[blackops[i].name]);
-    }
-}
-
-Bladeburner.prototype.createSkillsContent = function() {
-    if (DomElems.actionsAndSkillsList == null || DomElems.actionsAndSkillsDesc == null) {
-        throw new Error("Bladeburner.createSkillsContent called with either " +
-                        "DomElems.actionsAndSkillsList or DomElems.actionsAndSkillsDesc = null");
-    }
-
-    // Display Current multipliers
-    DomElems.actionsAndSkillsDesc.innerHTML =
-        "You will gain one skill point every " + BladeburnerConstants.RanksPerSkillPoint + " ranks.<br><br>" +
-        "Note that when upgrading a skill, the benefit for that skill is additive. " +
-        "However, the effects of different skills with each other is multiplicative.<br><br>"
-    var multKeys = Object.keys(this.skillMultipliers);
-    for (var i = 0; i < multKeys.length; ++i) {
-        var mult = this.skillMultipliers[multKeys[i]];
-        if (mult && mult !== 1) {
-            mult = formatNumber(mult, 3);
-            switch(multKeys[i]) {
-                case "successChanceAll":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Total Success Chance: x" + mult + "<br>";
-                    break;
-                case "successChanceStealth":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Stealth Success Chance: x" + mult + "<br>";
-                    break;
-                case "successChanceKill":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Retirement Success Chance: x" + mult + "<br>";
-                    break;
-                case "successChanceContract":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Contract Success Chance: x" + mult + "<br>";
-                    break;
-                case "successChanceOperation":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Operation Success Chance: x" + mult + "<br>";
-                    break;
-                case "successChanceEstimate":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Synthoid Data Estimate: x" + mult + "<br>";
-                    break;
-                case "actionTime":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Action Time: x" + mult + "<br>";
-                    break;
-                case "effHack":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Hacking Skill: x" + mult + "<br>";
-                    break;
-                case "effStr":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Strength: x" + mult + "<br>";
-                    break;
-                case "effDef":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Defense: x" + mult + "<br>";
-                    break;
-                case "effDex":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Dexterity: x" + mult + "<br>";
-                    break;
-                case "effAgi":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Agility: x" + mult + "<br>";
-                    break;
-                case "effCha":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Charisma: x" + mult + "<br>";
-                    break;
-                case "effInt":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Intelligence: x" + mult + "<br>";
-                    break;
-                case "stamina":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Stamina: x" + mult + "<br>";
-                    break;
-                case "money":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Contract Money: x" + mult + "<br>";
-                    break;
-                case "expGain":
-                    DomElems.actionsAndSkillsDesc.innerHTML += "Exp Gain: x" + mult + "<br>";
-                    break;
-                default:
-                    console.warn(`Unrecognized SkillMult Key: ${multKeys[i]}`);
-                    break;
-            }
-        }
-    }
-
-    // Skill Points
-    DomElems.skillPointsDisplay = createElement("p", {
-        innerHTML:"<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>",
-    });
-    DomElems.actionAndSkillsDiv.appendChild(DomElems.skillPointsDisplay);
-
-    // UI Element for each skill
-    for (var skillName in Skills) {
-        if (Skills.hasOwnProperty(skillName)) {
-            DomElems.skills[skillName] = createElement("div", {
-                class:"bladeburner-action", name:skillName,
-            });
-            DomElems.actionsAndSkillsList.appendChild(DomElems.skills[skillName]);
-        }
-    }
-}
-
 Bladeburner.prototype.updateContent = function() {
     this.updateOverviewContent();
-    this.updateActionAndSkillsContent();
 }
 
 Bladeburner.prototype.updateOverviewContent = function() {
-    if (!routing.isOn(Page.Bladeburner)) {return;}
-    DomElems.overviewRank.childNodes[0].nodeValue = "Rank: " + formatNumber(this.rank, 2);
-    DomElems.overviewStamina.innerText = "Stamina: " + formatNumber(this.stamina, 3) + " / " + formatNumber(this.maxStamina, 3);
-    ReactDOM.render(<>
-        Stamina Penalty: {formatNumber((1-this.calculateStaminaPenalty())*100, 1)}%<br /><br />
-        Team Size: {formatNumber(this.teamSize, 0)}<br />
-        Team Members Lost: {formatNumber(this.teamLost, 0)}<br /><br />
-        Num Times Hospitalized: {this.numHosp}<br />
-        Money Lost From Hospitalizations: {Money(this.moneyLost)}<br /><br />
-        Current City: {this.city}<br />
-    </>, DomElems.overviewGen1);
-
-    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + numeralWrapper.formatPopulation(this.getCurrentCity().popEst);
-    DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + formatNumber(this.getCurrentCity().comms, 0);
-    DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
-    DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);
-    DomElems.overviewBonusTime.childNodes[0].nodeValue = "Bonus time: " + convertTimeMsToTimeElapsedString(this.storedCycles/BladeburnerConstants.CyclesPerSecond*1000);
-    ReactDOM.render(StatsTable([
-        ["Aug. Success Chance mult: ", formatNumber(Player.bladeburner_success_chance_mult*100, 1) + "%"],
-        ["Aug. Max Stamina mult: ", formatNumber(Player.bladeburner_max_stamina_mult*100, 1) + "%"],
-        ["Aug. Stamina Gain mult: ", formatNumber(Player.bladeburner_stamina_gain_mult*100, 1) + "%"],
-        ["Aug. Field Analysis mult: ", formatNumber(Player.bladeburner_analysis_mult*100, 1) + "%"],
-    ]), DomElems.overviewAugMults);
+    if (!routing.isOn(Page.Bladeburner)) return;
+    ReactDOM.render(<Stats bladeburner={this} player={Player} />, DomElems.overviewDiv);
 }
 
-Bladeburner.prototype.updateActionAndSkillsContent = function() {
-    if (DomElems.currentTab == null) {DomElems.currentTab = "general";}
-    switch(DomElems.currentTab.toLowerCase()) {
-        case "general":
-            var actionElems = Object.keys(DomElems.generalActions);
-            for (var i = 0; i < actionElems.length; ++i) {
-                var actionElem = DomElems.generalActions[actionElems[i]];
-                var name = actionElem.name;
-                var actionObj = GeneralActions[name];
-                if (actionObj == null) {
-                    throw new Error("Could not find Object " + name + " in Bladeburner.updateActionAndSkillsContent()");
-                }
-                if (this.action.type === ActionTypes[name]) {
-                    actionElem.classList.add(ActiveActionCssClass);
-                } else {
-                    actionElem.classList.remove(ActiveActionCssClass);
-                }
-                this.updateGeneralActionsUIElement(actionElem, actionObj);
-            }
-            break;
-        case "contracts":
-            var contractElems = Object.keys(DomElems.contracts);
-            for (var i = 0; i < contractElems.length; ++i) {
-                var contractElem = DomElems.contracts[contractElems[i]];
-                var name = contractElem.name;
-                if (this.action.type === ActionTypes["Contract"] && name === this.action.name) {
-                    contractElem.classList.add(ActiveActionCssClass);
-                } else {
-                    contractElem.classList.remove(ActiveActionCssClass);
-                }
-                var contract = this.contracts[name];
-                if (contract == null) {
-                    throw new Error("Could not find Contract " + name + " in Bladeburner.updateActionAndSkillsContent()");
-                }
-                this.updateContractsUIElement(contractElem, contract);
-            }
-            break;
-        case "operations":
-            var operationElems = Object.keys(DomElems.operations);
-            for (var i = 0; i < operationElems.length; ++i) {
-                var operationElem = DomElems.operations[operationElems[i]];
-                var name = operationElem.name;
-                if (this.action.type === ActionTypes["Operation"] && name === this.action.name) {
-                    operationElem.classList.add(ActiveActionCssClass);
-                } else {
-                    operationElem.classList.remove(ActiveActionCssClass);
-                }
-                var operation = this.operations[name];
-                if (operation == null) {
-                    throw new Error("Could not find Operation " + name + " in Bladeburner.updateActionAndSkillsContent()");
-                }
-                this.updateOperationsUIElement(operationElem, operation);
-            }
-            break;
-        case "blackops":
-            var blackopsElems = Object.keys(DomElems.blackops);
-            for (var i = 0; i < blackopsElems.length; ++i) {
-                var blackopElem = DomElems.blackops[blackopsElems[i]];
-                var name = blackopElem.name;
-                if (this.action.type === ActionTypes["BlackOperation"] && name === this.action.name) {
-                    blackopElem.classList.add(ActiveActionCssClass);
-                } else {
-                    blackopElem.classList.remove(ActiveActionCssClass);
-                }
-                var blackop = BlackOperations[name];
-                if (blackop == null) {
-                    throw new Error("Could not find BlackOperation " + name + " in Bladeburner.updateActionAndSkillsContent()");
-                }
-                this.updateBlackOpsUIElement(blackopElem, blackop);
-            }
-            break;
-        case "skills":
-            DomElems.skillPointsDisplay.innerHTML = "<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>";
-
-            var skillElems = Object.keys(DomElems.skills);
-            for (var i = 0; i < skillElems.length; ++i) {
-                var skillElem = DomElems.skills[skillElems[i]];
-                var name = skillElem.name;
-                var skill = Skills[name];
-                if (skill == null) {
-                    throw new Error("Could not find Skill " + name + " in Bladeburner.updateActionAndSkillsContent()");
-                }
-                this.updateSkillsUIElement(skillElem, skill);
-            }
-            break;
-        default:
-            throw new Error("Invalid value for DomElems.currentTab in Bladeburner.createActionAndSkillsContent");
-    }
-}
-
-Bladeburner.prototype.updateGeneralActionsUIElement = function(el, action) {
-    ReactDOM.unmountComponentAtNode(el);
-    ReactDOM.render(<GeneralActionElem bladeburner={this} action={action} />, el);
-}
-
-Bladeburner.prototype.updateContractsUIElement = function(el, action) {
-    ReactDOM.unmountComponentAtNode(el);
-    ReactDOM.render(<ContractElem bladeburner={this} action={action} />, el);
-}
-
-Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
-    ReactDOM.unmountComponentAtNode(el);
-    ReactDOM.render(<OperationElem bladeburner={this} action={action} />, el);
-}
-
-Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
-    ReactDOM.unmountComponentAtNode(el);
-    ReactDOM.render(<BlackOpElem bladeburner={this} action={action} />, el);
-}
-
-Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
-    ReactDOM.unmountComponentAtNode(el);
-    ReactDOM.render(<SkillElem bladeburner={this} skill={skill} />, el);
-}
+////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////HYDRO END OF UI//////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // Bladeburner Console Window
 Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
@@ -2382,7 +2066,6 @@ Bladeburner.prototype.executeStartConsoleCommand = function(args) {
                 this.action.type = ActionTypes[name];
                 this.action.name = name;
                 this.startAction(this.action);
-                this.updateActionAndSkillsContent();
             } else {
                 this.postToConsole("Invalid action name specified: " + args[2]);
             }
@@ -2393,7 +2076,6 @@ Bladeburner.prototype.executeStartConsoleCommand = function(args) {
                 this.action.type = ActionTypes.Contract;
                 this.action.name = name;
                 this.startAction(this.action);
-                this.updateActionAndSkillsContent();
             } else {
                 this.postToConsole("Invalid contract name specified: " + args[2]);
             }
@@ -2406,7 +2088,6 @@ Bladeburner.prototype.executeStartConsoleCommand = function(args) {
                 this.action.type = ActionTypes.Operation;
                 this.action.name = name;
                 this.startAction(this.action);
-                this.updateActionAndSkillsContent();
             } else {
                 this.postToConsole("Invalid Operation name specified: " + args[2]);
             }
@@ -2419,7 +2100,6 @@ Bladeburner.prototype.executeStartConsoleCommand = function(args) {
                 this.action.type = ActionTypes.BlackOperation;
                 this.action.name = name;
                 this.startAction(this.action);
-                this.updateActionAndSkillsContent();
             } else {
                 this.postToConsole("Invalid BlackOp name specified: " + args[2]);
             }

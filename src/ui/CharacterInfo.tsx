@@ -63,7 +63,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         if (src.casino)          { parts.push([`Casino:`, Money(src.casino)]) }
         if (src.sleeves)         { parts.push([`Sleeves:`, Money(src.sleeves)]) }
 
-        return StatsTable(parts, "");
+        return StatsTable(parts);
     }
 
     function openMoneyModal(): void {
@@ -254,7 +254,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <span>{`Servers owned: ${p.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span><br />
             <Hacknet />
             <span>{`Augmentations installed: ${p.augmentations.length}`}</span><br /><br />
-            {StatsTable(timeRows, null)}
+            {StatsTable(timeRows)}
             <br />
             <CurrentBitNode />
         </pre>
