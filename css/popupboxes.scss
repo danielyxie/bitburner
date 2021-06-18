@@ -23,6 +23,7 @@
     width: 70%;
     max-height: 80%;
     overflow-y: auto;
+    z-index: 11; /* Sit on top of the container */
     color: var(--my-font-color);
 }
 

@@ -33,12 +33,17 @@ export function createPopup<T>(id: string, rootComponent: (props: T) => React.Re
     let container = document.getElementById(id);
     if (container == null) {
         function onClick(this: HTMLElement, event: MouseEvent): any {
-            //console.log(this.id);
+            if(!event.srcElement) return;
+            if(!(event.srcElement instanceof HTMLElement)) return;
+            const clickedId = (event.srcElement as HTMLElement).id;
+            if(clickedId !== id) return;
+            removePopup(id);
         }
         container = createElement("div", {
             class: "popup-box-container",
             display: "flex",
             id: id,
+            backgroundColor: 'rgba(0,0,0,0.5)',
             clickListener: onClick,
         });
 
