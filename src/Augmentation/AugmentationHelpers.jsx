@@ -566,7 +566,7 @@ function initAugmentations() {
         name:AugmentationNames.ENM, repCost:1.5e4, moneyCost:2.5e8,
         info:"A thin device embedded inside the arm containing a wireless module capable of connecting, " +
              "capturing, and processing all traffic on any network it connects with. " +
-             "By itself, the Embedded Netburner Module does not do much, but a variety of powerful upgrades" +
+             "By itself, the Embedded Netburner Module does not do much, but a variety of powerful upgrades " +
              "can be installed that enhance its ability to control traffic on the network.<br><br>" +
              "Increases hacking skill by 8%.",
         hacking_mult: 1.08,
