@@ -1681,20 +1681,20 @@ function initAugmentations() {
              "uses advanced mathematical algorithims to rapidly identify and compute statistical " +
              "outcomes of nearly every situation. The use of this implant is outlawed for use in " +
              "Aevum's casino.<br><br>" +
-             "Increases charisma by 7%.<br>" +
-             "Increases charisma experience gain by 7%.<br>" +
-             "Increases money gained from working by 7%.<br>" +
-             "Increases reputation gain from factions and companies by 7%.<br>" +
-             "Increases crime success rate by 7%.<br>" +
-             "Increases money gained from committing crimes by 7%.<br>" +
+             "Increases charisma by 7.77%.<br>" +
+             "Increases charisma experience gain by 7.77%.<br>" +
+             "Increases money gained from working by 77.7%.<br>" +
+             "Increases reputation gain from factions and companies by 7.77%.<br>" +
+             "Increases crime success rate by 7.77%.<br>" +
+             "Increases money gained from committing crimes by 7.77%.<br>" +
              "Provides DeepscanV1.exe and AutoLink.exe after a reset.",
-        charisma_mult: 1.07,
-        charisma_exp_mult: 1.07,
-        work_money_mult: 1.07,
-        faction_rep_mult: 1.07,
-        company_rep_mult: 1.07,
-        crime_success_mult: 1.07,
-        crime_money_mult: 1.07,
+        charisma_mult: 1.0777,
+        charisma_exp_mult: 1.0777,
+        work_money_mult: 1.777,
+        faction_rep_mult: 1.0777,
+        company_rep_mult: 1.0777,
+        crime_success_mult: 1.0777,
+        crime_money_mult: 1.0777,
     });
     PCMatrix.addToFactions(["Aevum"]);
     if (augmentationExists(AugmentationNames.PCMatrix)) {
