@@ -45,12 +45,12 @@ export class GangMember {
     agi_mult = 1;
     cha_mult = 1;
 
-    hack_asc_mult = 1;
-    str_asc_mult = 1;
-    def_asc_mult = 1;
-    dex_asc_mult = 1;
-    agi_asc_mult = 1;
-    cha_asc_mult = 1;
+    hack_asc_points = 0;
+    str_asc_points = 0;
+    def_asc_points = 0;
+    dex_asc_points = 0;
+    agi_asc_points = 0;
+    cha_asc_points = 0;
 
     upgrades: string[] = []; // Names of upgrades
     augmentations: string[] = []; // Names of augmentations only
@@ -63,13 +63,17 @@ export class GangMember {
         return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
     }
 
+    calculateAscensionMult(points: number): number {
+        return Math.max(Math.pow(points/2000, 0.9), 1);
+    }
+
     updateSkillLevels(): void {
-        this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult * this.hack_asc_mult);
-        this.str    = this.calculateSkill(this.str_exp, this.str_mult * this.str_asc_mult);
-        this.def    = this.calculateSkill(this.def_exp, this.def_mult * this.def_asc_mult);
-        this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult * this.dex_asc_mult);
-        this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult * this.agi_asc_mult);
-        this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult * this.cha_asc_mult);
+        this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult * this.calculateAscensionMult(this.hack_asc_points));
+        this.str    = this.calculateSkill(this.str_exp, this.str_mult * this.calculateAscensionMult(this.str_asc_points));
+        this.def    = this.calculateSkill(this.def_exp, this.def_mult * this.calculateAscensionMult(this.def_asc_points));
+        this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult * this.calculateAscensionMult(this.dex_asc_points));
+        this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult * this.calculateAscensionMult(this.agi_asc_points));
+        this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult * this.calculateAscensionMult(this.cha_asc_points));
     }
 
     calculatePower(): number {
@@ -194,25 +198,47 @@ export class GangMember {
         this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
     }
 
-    getAscensionResults(): IMults {
+    getGainedAscensionPoints(): IMults {
         return {
-            hack: this.hack_exp,
-            str:  this.str_exp,
-            def:  this.def_exp,
-            dex:  this.dex_exp,
-            agi:  this.agi_exp,
-            cha:  this.cha_exp,
+            hack: Math.max(this.hack_exp - 1000, 0),
+            str:  Math.max(this.str_exp - 1000, 0),
+            def:  Math.max(this.def_exp - 1000, 0),
+            dex:  Math.max(this.dex_exp - 1000, 0),
+            agi:  Math.max(this.agi_exp - 1000, 0),
+            cha:  Math.max(this.cha_exp - 1000, 0),
+        }
+    }
+
+    canAscend(): boolean {
+        const points = this.getGainedAscensionPoints();
+        return points.hack > 0 ||
+                points.str > 0 ||
+                points.def > 0 ||
+                points.dex > 0 ||
+                points.agi > 0 ||
+                points.cha > 0;
+    }
+
+    getAscensionResults(): IMults {
+        const points = this.getGainedAscensionPoints();
+        return {
+            hack: this.calculateAscensionMult(this.hack_asc_points+points.hack)/this.calculateAscensionMult(this.hack_asc_points),
+            str:  this.calculateAscensionMult(this.str_asc_points+points.str)/this.calculateAscensionMult(this.str_asc_points),
+            def:  this.calculateAscensionMult(this.def_asc_points+points.def)/this.calculateAscensionMult(this.def_asc_points),
+            dex:  this.calculateAscensionMult(this.dex_asc_points+points.dex)/this.calculateAscensionMult(this.dex_asc_points),
+            agi:  this.calculateAscensionMult(this.agi_asc_points+points.agi)/this.calculateAscensionMult(this.agi_asc_points),
+            cha:  this.calculateAscensionMult(this.cha_asc_points+points.cha)/this.calculateAscensionMult(this.cha_asc_points),
         }
     }
 
     ascend(): IAscensionResult {
         const res = this.getAscensionResults();
-        this.hack_asc_mult += res.hack;
-        this.str_asc_mult += res.str;
-        this.def_asc_mult += res.def;
-        this.dex_asc_mult += res.dex;
-        this.agi_asc_mult += res.agi;
-        this.cha_asc_mult += res.cha;
+        this.hack_asc_points += this.hack_exp;
+        this.str_asc_points += this.str_exp;
+        this.def_asc_points += this.def_exp;
+        this.dex_asc_points += this.dex_exp;
+        this.agi_asc_points += this.agi_exp;
+        this.cha_asc_points += this.cha_exp;
 
         // Remove upgrades. Then re-calculate multipliers and stats
         this.upgrades.length = 0;

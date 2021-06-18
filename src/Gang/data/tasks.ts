@@ -255,7 +255,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         name: "Train Combat",
         params: {
             strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 25,
-            difficulty: 200,
+            difficulty: 100,
         },
     },
     {

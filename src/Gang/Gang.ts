@@ -350,19 +350,7 @@ export class Gang {
         try {
             const res = member.ascend();
             this.respect = Math.max(1, this.respect - res.respect);
-            if (workerScript == null) {
-                dialogBoxCreate([`You ascended ${member.name}!`,
-                                 "",
-                                 `Your gang lost ${numeralWrapper.formatRespect(res.respect)} respect`,
-                                 "",
-                                 `${member.name} gained the following stat multipliers for ascending:`,
-                                 `Hacking: ${numeralWrapper.formatPercentage(res.hack, 3)}`,
-                                 `Strength: ${numeralWrapper.formatPercentage(res.str, 3)}`,
-                                 `Defense: ${numeralWrapper.formatPercentage(res.def, 3)}`,
-                                 `Dexterity: ${numeralWrapper.formatPercentage(res.dex, 3)}`,
-                                 `Agility: ${numeralWrapper.formatPercentage(res.agi, 3)}`,
-                                 `Charisma: ${numeralWrapper.formatPercentage(res.cha, 3)}`].join("<br>"));
-            } else {
+            if (workerScript) {
                 workerScript.log('ascend', `Ascended Gang member ${member.name}`);
             }
             return res;

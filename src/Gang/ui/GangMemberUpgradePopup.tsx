@@ -56,15 +56,23 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
         </a>);
     }
 
+    const asc = {
+        hack: props.member.calculateAscensionMult(props.member.hack_asc_points),
+        str: props.member.calculateAscensionMult(props.member.str_asc_points),
+        def: props.member.calculateAscensionMult(props.member.def_asc_points),
+        dex: props.member.calculateAscensionMult(props.member.dex_asc_points),
+        agi: props.member.calculateAscensionMult(props.member.agi_asc_points),
+        cha: props.member.calculateAscensionMult(props.member.cha_asc_points),
+    };
     return (<div style={{border: '1px solid white'}}>
         <h1>{props.member.name}({props.member.task})</h1>
         <pre style={{fontSize:"14px", display: "inline-block", width:"20%"}}>
-Hack: {props.member.hack} (x{formatNumber(props.member.hack_mult * props.member.hack_asc_mult, 2)})<br />
-Str:  {props.member.str} (x{formatNumber(props.member.str_mult * props.member.str_asc_mult, 2)})<br />
-Def:  {props.member.def} (x{formatNumber(props.member.def_mult * props.member.def_asc_mult, 2)})<br />
-Dex:  {props.member.dex} (x{formatNumber(props.member.dex_mult * props.member.dex_asc_mult, 2)})<br />
-Agi:  {props.member.agi} (x{formatNumber(props.member.agi_mult * props.member.agi_asc_mult, 2)})<br />
-Cha:  {props.member.cha} (x{formatNumber(props.member.cha_mult * props.member.cha_asc_mult, 2)})
+Hack: {props.member.hack} (x{formatNumber(props.member.hack_mult * asc.hack, 2)})<br />
+Str:  {props.member.str} (x{formatNumber(props.member.str_mult * asc.str, 2)})<br />
+Def:  {props.member.def} (x{formatNumber(props.member.def_mult * asc.def, 2)})<br />
+Dex:  {props.member.dex} (x{formatNumber(props.member.dex_mult * asc.dex, 2)})<br />
+Agi:  {props.member.agi} (x{formatNumber(props.member.agi_mult * asc.agi, 2)})<br />
+Cha:  {props.member.cha} (x{formatNumber(props.member.cha_mult * asc.cha, 2)})
         </pre>
         <div className="gang-owned-upgrades-div">
         Purchased Upgrades: {props.member.upgrades.map((upg: string) => purchasedUpgrade(upg))}
