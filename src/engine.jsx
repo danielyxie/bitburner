@@ -475,6 +475,7 @@ const Engine = {
                 Engine.hideAllContent();
                 routing.navigateTo(Page.Bladeburner);
                 Player.bladeburner.createContent();
+                MainMenuLinks.Bladeburner.classList.add("active");
             } catch(e) {
                 exceptionAlert(e);
             }
