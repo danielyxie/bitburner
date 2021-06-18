@@ -3785,6 +3785,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
                 checkGangApiAccess("ascendMember");
                 const member = getGangMember("ascendMember", name);
+                if(!member.canAscend()) return;
                 return Player.gang.ascendMember(member, workerScript);
             },
             setTerritoryWarfare: function(engage) {

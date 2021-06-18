@@ -32,13 +32,18 @@ document.addEventListener("DOMContentLoaded", getGameContainer);
 export function createPopup<T>(id: string, rootComponent: (props: T) => React.ReactElement, props: T): HTMLElement | null {
     let container = document.getElementById(id);
     if (container == null) {
+        function onClick(this: HTMLElement, event: MouseEvent): any {
+            //console.log(this.id);
+        }
         container = createElement("div", {
             class: "popup-box-container",
             display: "flex",
             id: id,
+            clickListener: onClick,
         });
 
         gameContainer.appendChild(container);
+
     }
 
     ReactDOM.render(<Popup content={rootComponent} id={id} props={props} />, container);
@@ -51,9 +56,10 @@ export function createPopup<T>(id: string, rootComponent: (props: T) => React.Re
  */
 export function removePopup(id: string): void {
     const content = document.getElementById(`${id}`);
-    if (content == null) { return; }
+    if (content == null) return;
 
     ReactDOM.unmountComponentAtNode(content);
 
     removeElementById(id);
+    removeElementById(`${id}-close`);
 }

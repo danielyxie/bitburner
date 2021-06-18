@@ -233,12 +233,13 @@ export class GangMember {
 
     ascend(): IAscensionResult {
         const res = this.getAscensionResults();
-        this.hack_asc_points += this.hack_exp;
-        this.str_asc_points += this.str_exp;
-        this.def_asc_points += this.def_exp;
-        this.dex_asc_points += this.dex_exp;
-        this.agi_asc_points += this.agi_exp;
-        this.cha_asc_points += this.cha_exp;
+        const points = this.getGainedAscensionPoints();
+        this.hack_asc_points += points.hack;
+        this.str_asc_points += points.str;
+        this.def_asc_points += points.def;
+        this.dex_asc_points += points.dex;
+        this.agi_asc_points += points.agi;
+        this.cha_asc_points += points.cha;
 
         // Remove upgrades. Then re-calculate multipliers and stats
         this.upgrades.length = 0;
