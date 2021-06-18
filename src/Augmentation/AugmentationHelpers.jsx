@@ -1389,8 +1389,7 @@ function initAugmentations() {
              "others using optical imaging software.<br><br>" +
              "Increases charisma by 50%.<br>" +
              "Increases charisma experience gain by 50%.<br>" +
-             "Increases reputation gain from companies by 25%.<br>" +
-             "Increases reputation gain from factions by 25%.",
+             "Increases reputation gain from factions and companies by 25%.",
         charisma_mult: 1.5,
         charisma_exp_mult: 1.5,
         company_rep_mult: 1.25,
