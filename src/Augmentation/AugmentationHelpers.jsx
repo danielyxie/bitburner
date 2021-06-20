@@ -41,7 +41,7 @@ function getRandomBonus() {
             description: "Increases the player's hacking chance by 25%.<br>" +
                          "Increases the player's hacking speed by 10%.<br>" +
                          "Increases the amount of money the player's gains from hacking by 25%.<br>" +
-                         "Increases the amount of money the player can inject into servers using grow() by 10%.",
+                         "Improves grow() by 10%.",
         },
         {
             bonuses: {
@@ -797,7 +797,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the player's hacking speed by 2%.<br>" +
              "Increases the amount of money the player gains from hacking by 20%.<br>" +
-             "Increases the amount of money the player can inject into servers using grow() by 25%.",
+             "Improves grow() by 25%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG3],
         hacking_speed_mult: 1.02,
         hacking_money_mult: 1.2,
@@ -818,7 +818,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the player's hacking skill by 30%.<br>" +
              "Increases the amount of money the player gains from hacking by 25%.<br>" +
-             "Increases the amount of money the player can inject into servers using grow() by 75%.",
+             "Improves grow() by 75%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG4],
         hacking_mult: 1.3,
         hacking_money_mult: 1.25,
