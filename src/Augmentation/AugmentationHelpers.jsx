@@ -54,13 +54,13 @@ function getRandomBonus() {
         {
             bonuses: {
                 strength_mult: 1.25,
-                strength_exp_mult: 1.5,
+                strength_exp_mult: 2,
                 defense_mult: 1.25,
-                defense_exp_mult: 1.5,
+                defense_exp_mult: 2,
                 dexterity_mult: 1.25,
-                dexterity_exp_mult: 1.5,
+                dexterity_exp_mult: 2,
                 agility_mult: 1.25,
-                agility_exp_mult: 1.5,
+                agility_exp_mult: 2,
             },
             description: "Increases all of the player's combat stats by 25%.<br>" +
                          "Increases all of the player's combat stat experience gain rate by 100%.",
