@@ -158,9 +158,8 @@ function initAugmentations() {
 
     const Targeting1 = new Augmentation({
         name:AugmentationNames.Targeting1, moneyCost:1.5e7, repCost:5e3,
-        info:"This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's " +
-             "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information " +
-             "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies.<br><br>" +
+        info:"A cranial implant that is embedded within the inner ear structures and optic nerves. It regulates " +
+             "and enhances balance and hand-eye coordination.<br><br>" +
              "This augmentation increases the player's dexterity by 10%.",
         dexterity_mult: 1.1,
     });
@@ -173,8 +172,8 @@ function initAugmentations() {
 
     const Targeting2 = new Augmentation({
         name:AugmentationNames.Targeting2, moneyCost:4.25e7, repCost:8.75e3,
-        info:"This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
+        info:"This upgraded version of the 'Augmented Targeting' implant is capable of augmenting " +
+             "reality by digitally displaying weaknesses and vital signs of threats.<br><br>" +
              "This augmentation increases the player's dexterity by 20%.",
         prereqs:[AugmentationNames.Targeting1],
         dexterity_mult: 1.2,
@@ -188,8 +187,8 @@ function initAugmentations() {
 
     const Targeting3 = new Augmentation({
         name:AugmentationNames.Targeting3, moneyCost:1.15e8, repCost:2.75e4,
-        info:"This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
+        info:"The latest version of the 'Augmented Targeting' implant adds the ability to " +
+             "lock-on and track threats.<br><br>" +
              "This augmentation increases the player's dexterity by 30%.",
         prereqs:[AugmentationNames.Targeting2],
         dexterity_mult: 1.3,
