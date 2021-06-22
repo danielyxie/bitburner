@@ -282,7 +282,7 @@ function initAugmentations() {
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
         info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning, " +
              "which improves regeneration and extracellular homeostasis.<br><br>" +
-             "Increases strength and defense by 20%.",
+             "This augmentation increases strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
     });
