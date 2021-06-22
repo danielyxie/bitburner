@@ -280,9 +280,9 @@ function initAugmentations() {
 
     const NanofiberWeave = new Augmentation({
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
-        info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " +
-             "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
-             "This augmentation increases the player's strength and defense by 20%.",
+        info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning, " +
+             "which improves regeneration and extracellular homeostasis.<br><br>" +
+             "Increases strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
     });
@@ -313,7 +313,7 @@ function initAugmentations() {
     const WiredReflexes = new Augmentation({
         name:AugmentationNames.WiredReflexes, repCost:1.25e3, moneyCost:2.5e6,
         info:"Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
-             "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.<br><br>" +
+             "supercharging the spread of neural signals, increasing reflex speed.<br><br>" +
              "This augmentation increases the player's agility and dexterity by 5%.",
         agility_mult: 1.05,
         dexterity_mult: 1.05,
@@ -327,8 +327,8 @@ function initAugmentations() {
 
     const GrapheneBoneLacings = new Augmentation({
         name:AugmentationNames.GrapheneBoneLacings, repCost:1.125e6, moneyCost:4.25e9,
-        info:"A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
-             "their density and tensile strength.<br><br>" +
+        info:"Graphene is grafted and infused into the skeletal structure, " +
+             "enhancing bone density and tensile strength.<br><br>" +
              "This augmentation increases the player's strength and defense by 70%.",
         strength_mult: 1.7,
         defense_mult: 1.7,
@@ -341,10 +341,10 @@ function initAugmentations() {
 
     const BionicSpine = new Augmentation({
         name:AugmentationNames.BionicSpine, repCost:4.5e4, moneyCost:1.25e8,
-        info:"An artificial spine created from plasteel and carbon fibers that completely replaces the organic spine. " +
-             "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " +
-             "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " +
-             "greatly improved senses and reaction speeds.<br><br>" +
+        info:"The spine is reconstructed using plasteel and carbon fibers. " +
+             "It is now capable of stimulating and regulating neural signals " +
+             "passing through the spinal cord, improving senses and reaction speed. " +
+             "The 'Bionic Spine' also interfaces with all other 'Bionic' implants.<br><br>" +
              "This augmentation increases all of the player's combat stats by 15%.",
         strength_mult: 1.15,
         defense_mult: 1.15,
@@ -360,8 +360,8 @@ function initAugmentations() {
 
     const GrapheneBionicSpine = new Augmentation({
         name:AugmentationNames.GrapheneBionicSpine, repCost:1.625e6, moneyCost:6e9,
-        info:"An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene " +
-             "material to make it much stronger and lighter.<br><br>" +
+        info:"An upgrade to the 'Bionic Spine' augmentation. The spine is fused with graphene " +
+             "enhancing durability and supercharging all body functions.<br><br>" +
              "This augmentation increases all of the player's combat stats by 60%.",
         prereqs:[AugmentationNames.BionicSpine],
         strength_mult: 1.6,
@@ -377,7 +377,7 @@ function initAugmentations() {
 
     const BionicLegs = new Augmentation({
         name:AugmentationNames.BionicLegs, repCost:1.5e5, moneyCost:3.75e8,
-        info:"Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs.<br><br>" +
+        info:"Cybernetic legs, created from plasteel and carbon fibers, enhance running speed.<br><br>" +
              "This augmentation increases the player's agility by 60%.",
         agility_mult: 1.6,
     });
@@ -390,8 +390,8 @@ function initAugmentations() {
 
     const GrapheneBionicLegs = new Augmentation({
         name:AugmentationNames.GrapheneBionicLegs, repCost:7.5e5, moneyCost:4.5e9,
-        info:"An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene " +
-             "material to make it much stronger and lighter.<br><br>" +
+        info:"An upgrade to the 'Bionic Legs' augmentation. The legs are fused " +
+             "with graphene, greatly enhancing jumping ability.<br><br>" +
              "This augmentation increases the player's agility by 150%.",
         prereqs: [AugmentationNames.BionicLegs],
         agility_mult: 2.5,
