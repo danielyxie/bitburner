@@ -327,7 +327,7 @@ function initAugmentations() {
 
     const GrapheneBoneLacings = new Augmentation({
         name:AugmentationNames.GrapheneBoneLacings, repCost:1.125e6, moneyCost:4.25e9,
-        info:"Graphene is grafted and infused into the skeletal structure, " +
+        info:"Graphene is grafted and fused into the skeletal structure, " +
              "enhancing bone density and tensile strength.<br><br>" +
              "This augmentation increases the player's strength and defense by 70%.",
         strength_mult: 1.7,
