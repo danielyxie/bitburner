@@ -281,7 +281,7 @@ function initAugmentations() {
     const NanofiberWeave = new Augmentation({
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
         info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning, " +
-             "which improves regeneration and extracellular homeostasis.<br><br>" +
+             "which improves its regenerative and extracellular homeostasis abilities.<br><br>" +
              "This augmentation increases the player's strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -313,7 +313,7 @@ function initAugmentations() {
     const WiredReflexes = new Augmentation({
         name:AugmentationNames.WiredReflexes, repCost:1.25e3, moneyCost:2.5e6,
         info:"Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
-             "supercharging the spread of neural signals, increasing reflex speed.<br><br>" +
+             "supercharging the spread of neural signals and increasing reflex speed.<br><br>" +
              "This augmentation increases the player's agility and dexterity by 5%.",
         agility_mult: 1.05,
         dexterity_mult: 1.05,
@@ -361,7 +361,7 @@ function initAugmentations() {
     const GrapheneBionicSpine = new Augmentation({
         name:AugmentationNames.GrapheneBionicSpine, repCost:1.625e6, moneyCost:6e9,
         info:"An upgrade to the 'Bionic Spine' augmentation. The spine is fused with graphene " +
-             "enhancing durability and supercharging all body functions.<br><br>" +
+             "which enhances durability and supercharges all body functions.<br><br>" +
              "This augmentation increases all of the player's combat stats by 60%.",
         prereqs:[AugmentationNames.BionicSpine],
         strength_mult: 1.6,
