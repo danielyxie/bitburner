@@ -7,8 +7,8 @@ brutessh() Netscript Function
 
     :param string hostname: Hostname of the target server.
 
-    Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist
-    on your home computer.
+    Runs the ``BruteSSH.exe`` program on the target server. ``BruteSSH.exe``
+    must exist on your home computer.
 
     Examples:
 

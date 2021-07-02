@@ -9,7 +9,8 @@ levelUpgradeCost() Netscript Function
     :param number costMult: Aug multiplier that reduces cost. Defaults to ``1``.
     :returns: Money required to go from ``startingLevel`` to ``startingLevel+extraLevels``.
 
-    You must have Source-File 5-1 in order to use this function.
+    If you are not in BitNode-5, then you must have Source-File 5-1 in order to
+    use this function.
 
     This function calculates the cost of upgrading levels from any level to any level.
 

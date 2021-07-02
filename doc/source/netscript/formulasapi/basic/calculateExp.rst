@@ -8,15 +8,18 @@ calculateExp() Netscript Function
     :param number mult: Assume a specific skill multipler (not exp multiplier).
     :returns: number of exp required to reach given ``skillLevel`` with that multiplier.
 
-    You must have Source-File 5-1 in order to use this function.
+    If you are not in BitNode-5, then you must have Source-File 5-1 in order to
+    use this function.
 
-    This function calculates the amount of experience needed to reach level the given ``skillLevel``.
+    This function calculates the amount of experience needed to reach the given
+    ``skillLevel``.
 
     Examples:
 
     .. code-block:: javascript
 
-        nextHacking = getStats().hacking+1;
+        player = getPlayer();
+        nextHacking = player.hacking_skill+1;
         nextExp = formulas.basic.calculateExp(nextHacking);
-        missingExp = nextExp - getCharacterInformation().hackingExp;
+        missingExp = nextExp - player.hacking_exp;
         tprint("Missing " + missingExp + " to reach next hacking level");

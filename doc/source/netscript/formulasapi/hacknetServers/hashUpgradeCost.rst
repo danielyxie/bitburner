@@ -8,7 +8,9 @@ hashUpgradeCost() Netscript Function
     :param number level: Level of the upgrade.
     :returns: Amount of Hash.
 
-    You must have Source-File 5-1 and Source-File 9-1 in order to use this function.
+    If you are not in BitNode-5, then you must have Source-File 5-1 in order to
+    use this function. In addition, if you are not in BitNode-9, then you must
+    have Source-File 9-1 in order to use this function.
 
     This function calculates amount of Hash require to buy level ``level`` of upgrade ``upgName``.
 
