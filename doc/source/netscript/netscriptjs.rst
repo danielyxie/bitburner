@@ -159,18 +159,21 @@ importing other NetscriptJS scripts::
         this.args       = params.args    ? params.args : [];
     }
 
-    ScriptJob.prototype.run = async function(ns) {
+    ScriptJob.prototype.run = function(ns) {
         let runArgs = [this.fn, this.threads].concat(this.args);
-        await ns.run.apply(this, runArgs);
+        if (!ns.run.apply(this, runArgs)) {
+            throw new Error("Unable to run " + this.fn + " on " +ns.getHostname());
+        }
         tprintColored("Running " + this.fn + " on " + ns.getHostname(), "blue");
     }
 
-    ScriptJob.prototype.exec = async function(ns, target) {
+    ScriptJob.prototype.exec = function(ns, target) {
         ns.scp(this.fn, target);
 
         let execArgs = [this.fn, target, this.threads].concat(this.args);
-        await ns.exec.apply(this, execArgs);
-
+        if (!ns.exec.apply(this, execArgs)) {
+            throw new Error("Unable to execute " + this.fn + " on " + target);
+        }
         tprintColored("Executing " + this.fn + " on " + target, "blue");
     }
 
@@ -182,8 +185,8 @@ importing other NetscriptJS scripts::
                 threads:    1,
                 args:       ["foodnstuff"]
             });
-            await job.run(ns);
-            await job.exec(ns, "foodnstuff");
+            job.run(ns);
+            job.exec(ns, "foodnstuff");
         } catch (e) {
             ns.tprint("Exception thrown in scriptScheduler.ns: " + e);
         }
