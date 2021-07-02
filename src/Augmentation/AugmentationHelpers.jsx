@@ -82,7 +82,7 @@ function getRandomBonus() {
                 hacknet_node_level_cost_mult: 0.85,
             },
             description: "Increases money produced from Hacknet Nodes by 20%.<br>" +
-                         "Decreases all costs related to Hacknet Nodes by 15%.",
+                         "Decreases all upgrade costs of Hacknet Nodes by 15%.",
         },
         {
             bonuses: {
@@ -1005,9 +1005,8 @@ function initAugmentations() {
         info:"Uploads the architecture and design details of a Hacknet Node's CPU into " +
              "the brain. This allows the user to engineer custom hardware and software  " +
              "for the Hacknet Node that provides better performance.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of money produced by Hacknet Nodes by 15%.<br>" +
-             "Decreases the cost of purchasing a Hacknet Node by 15%.",
+             "Increases money produced from Hacknet Nodes by 15%.<br>" +
+             "Decreases the purchase cost of Hacknet Nodes by 15%.",
          hacknet_node_money_mult: 1.15,
          hacknet_node_purchase_cost_mult: 0.85,
     });
@@ -1022,9 +1021,8 @@ function initAugmentations() {
         info:"Uploads the architecture and design details of a Hacknet Node's main-memory cache " +
              "into the brain. This allows the user to engineer custom cache hardware for the  " +
              "Hacknet Node that offers better performance.<br><br>" +
-             "This augmentation:<br> " +
-             "Increases the amount of money produced by Hacknet Nodes by 10%.<br>" +
-             "Decreases the cost of leveling up a Hacknet Node by 15%.",
+             "Increases money produced from Hacknet Nodes by 10%.<br>" +
+             "Decreases the purchase cost of Hacknet Nodes by 15%.",
         hacknet_node_money_mult: 1.10,
         hacknet_node_level_cost_mult: 0.85,
     });
@@ -1039,9 +1037,8 @@ function initAugmentations() {
         info:"Uploads the architecture and design details of a Hacknet Node's Network Interface Card (NIC) " +
              "into the brain. This allows the user to engineer a custom NIC for the Hacknet Node that " +
              "offers better performance.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of money produced by Hacknet Nodes by 10%.<br>" +
-             "Decreases the cost of purchasing a Hacknet Node by 10%.",
+             "Increases money produced from Hacknet Nodes by 10%.<br>" +
+             "Decreases the purchase cost of Hacknet Nodes by 10%.",
         hacknet_node_money_mult: 1.1,
         hacknet_node_purchase_cost_mult: 0.9,
     });
@@ -1056,7 +1053,7 @@ function initAugmentations() {
         info:"Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " +
              "Hacknet Node. This lets the user access and manipulate the Node's kernel using " +
              "electrochemical signals.<br><br>" +
-             "This augmentation increases the amount of money produced by Hacknet Nodes by 25%.",
+             "Increases money produced from Hacknet Nodes by 25%.",
         hacknet_node_money_mult: 1.25,
     });
     HacknetNodeKernelDNI.addToFactions(["Netburners"]);
@@ -1070,7 +1067,7 @@ function initAugmentations() {
         info:"Installs a Direct-Neural Interface jack into the arm that is capable of connecting " +
              "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " +
              "electrochemical signals.<br><br>" +
-             "This augmentation increases the amount of money produced by Hacknet Nodes by 45%.",
+             "Increases money produced from Hacknet Nodes by 45%.",
         hacknet_node_money_mult: 1.45,
     });
     HacknetNodeCoreDNI.addToFactions(["Netburners"]);
@@ -1086,8 +1083,7 @@ function initAugmentations() {
              "monitors and regulates nervous impulses coming to and from the spinal column, " +
              "essentially 'governing' the body. By doing so, it improves the functionality of the " +
              "body's nervous system.<br><br>" +
-             "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation " +
-             "increases ALL of the player's multipliers by 1%.",
+             "Each level increases all multipliers by 1%.",
         hacking_chance_mult: 1.01,
         hacking_speed_mult: 1.01,
         hacking_money_mult: 1.01,
@@ -1148,7 +1144,7 @@ function initAugmentations() {
              "installed by releasing millions of nanobots into the human brain, each of which " +
              "attaches to a different neural pathway to enhance the brain's ability to retain " +
              "and retrieve information.<br><br>" +
-             "This augmentation increases the player's experience gain rate for all stats by 10%.",
+             "Increases experience gain for all stats by 10%.",
         hacking_exp_mult: 1.1,
         strength_exp_mult: 1.1,
         defense_exp_mult: 1.1,
@@ -1167,7 +1163,7 @@ function initAugmentations() {
         info:"A decentralized cranial implant that improves the brain's ability to learn. This " +
              "is a more powerful version of the Neurotrainer I augmentation, but it does not " +
              "require Neurotrainer I to be installed as a prerequisite.<br><br>" +
-             "This augmentation increases the player's experience gain rate for all stats by 15%.",
+             "Increases experience gain for all stats by 15%.",
         hacking_exp_mult: 1.15,
         strength_exp_mult: 1.15,
         defense_exp_mult: 1.15,
@@ -1186,7 +1182,7 @@ function initAugmentations() {
         info:"A decentralized cranial implant that improves the brain's ability to learn. This " +
              "is a more powerful version of the Neurotrainer I and Neurotrainer II augmentation, " +
              "but it does not require either of them to be installed as a prerequisite.<br><br>" +
-             "This augmentation increases the player's experience gain rate for all stats by 20%.",
+             "Increases experience gain for all stats by 20%.",
         hacking_exp_mult: 1.2,
         strength_exp_mult: 1.2,
         defense_exp_mult: 1.2,
@@ -1205,10 +1201,9 @@ function initAugmentations() {
         info:"A bionic eye implant that grants sight capabilities far beyond those of a natural human. " +
              "Embedded circuitry within the implant provides the ability to detect heat and movement " +
              "through solid objects such as walls, thus providing 'x-ray vision'-like capabilities.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's dexterity by 40%.<br>" +
-             "Increases the player's hacking speed by 3%.<br>" +
-             "Increases the amount of money the player gains from hacking by 10%.",
+             "Increases Dexterity by 40%.<br>" +
+             "Increases Hacking speed by 3%.<br>" +
+             "Increases money gained from Hacking by 10%.",
         dexterity_mult: 1.4,
         hacking_speed_mult: 1.03,
         hacking_money_mult: 1.1,
@@ -1224,9 +1219,8 @@ function initAugmentations() {
         info:"A skin implant that reinforces the skin with highly-advanced synthetic cells. These " +
              "cells, when powered, have a negative refractive index. As a result, they bend light " +
              "around the skin, making the user much harder to see to the naked eye.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's agility by 5%.<br>" +
-             "Increases the amount of money the player gains from crimes by 10%.",
+             "Increases Agility by 5%.<br>" +
+             "Increases money gained from committing crimes by 10%.",
         agility_mult: 1.05,
         crime_money_mult: 1.1,
     });
@@ -1241,11 +1235,10 @@ function initAugmentations() {
         info:"This is a more advanced version of the LuminCloaking-V2 augmentation. This skin implant " +
              "reinforces the skin with highly-advanced synthetic cells. These " +
              "cells, when powered, are capable of not only bending light but also of bending heat, " +
-             "making the user more resilient as well as stealthy.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's agility by 10%.<br>" +
-             "Increases the player's defense by 10%.<br>" +
-             "Increases the amount of money the player gains from crimes by 25%.",
+             "making the user more resilient as well as stealthy.<br><br>" ++
+             "Increases Agility by 10%.<br>" +
+             "Increases Defense by 10%.<br>" +
+             "Increases money gained from committing crimes by 25%.",
 	    prereqs:[AugmentationNames.LuminCloaking1],
         agility_mult: 1.1,
         defense_mult: 1.1,
@@ -1261,10 +1254,9 @@ function initAugmentations() {
         name:AugmentationNames.SmartSonar, repCost:2.25e4, moneyCost:7.5e7,
         info:"A cochlear implant that helps the player detect and locate enemies " +
              "using sound propagation.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's dexterity by 10%.<br>" +
-             "Increases the player's dexterity experience gain rate by 15%.<br>" +
-             "Increases the amount of money the player gains from crimes by 25%.",
+             "Increases Dexterity by 10%.<br>" +
+             "Increases Dexterity experience gain by 15%.<br>" +
+             "Increases money gained from committing crimes by 25%.",
         dexterity_mult: 1.1,
         dexterity_exp_mult: 1.15,
         crime_money_mult: 1.25,
@@ -1280,9 +1272,8 @@ function initAugmentations() {
         info:"The body's nerves are attached with polypyrrole nanocircuits that " +
              "are capable of capturing wasted energy, in the form of heat, " +
              "and converting it back into usable power.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases all of the player's stats by 5%.<br>" +
-             "Increases the player's experience gain rate for all stats by 10%.",
+             "Increases all stats by 5%.<br>" +
+             "Increases experience gain for all stats by 10%.",
         hacking_mult: 1.05,
         strength_mult: 1.05,
         defense_mult: 1.05,
@@ -1313,11 +1304,10 @@ function initAugmentations() {
         info:"A brain implant that wirelessly connects you to the Illuminati's " +
              "quantum supercomputer, allowing you to access and use its incredible " +
              "computing power.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking skill by 75%.<br>" +
-             "Increases the player's hacking speed by 100%.<br>" +
-             "Increases the player's chance of successfully performing a hack by 150%.<br>" +
-             "Increases the amount of money the player gains from hacking by 300%.",
+             "Increases Hacking by 75%.<br>" +
+             "Increases Hacking speed by 100%.<br>" +
+             "Increases Hacking success chance by 150%.<br>" +
+             "Increases money gained from Hacking by 300%.",
         hacking_mult: 1.75,
         hacking_speed_mult: 2,
         hacking_chance_mult: 2.5,
@@ -1347,9 +1337,8 @@ function initAugmentations() {
              "artificially-synthesized gene that was developed by DARPA to create " +
              "super-soldiers through genetic modification. The gene was outlawed in " +
              "2056.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases all of the player's combat stats by 75%.<br>" +
-             "Increases the player's hacking skill by 15%.",
+             "Increases all combat stats by 75%.<br>" +
+             "Increases Hacking by 15%.",
         strength_mult: 1.75,
         defense_mult: 1.75,
         dexterity_mult: 1.75,
@@ -1383,9 +1372,8 @@ function initAugmentations() {
              "to hold and sustain hydrogen plasma. The plasma is used to generate " +
              "fusion power through nuclear fusion, providing limitless amounts of clean " +
              "energy for the body.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases all of the player's combat stats by 35%.<br>" +
-             "Increases all of the player's combat stat experience gain rate by 35%.",
+             "Increases all combat stats by 35%.<br>" +
+             "Increases experience gain for all combat stats by 35%.",
         strength_mult: 1.35,
         defense_mult: 1.35,
         dexterity_mult: 1.35,
@@ -1407,11 +1395,9 @@ function initAugmentations() {
         info:"A bionic jaw that contains advanced hardware and software " +
              "capable of psychoanalyzing and profiling the personality of " +
              "others using optical imaging software.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's charisma by 50%.<br>" +
-             "Increases the player's charisma experience gain rate by 50%.<br>" +
-             "Increases the amount of reputation the player gains for a company by 25%.<br>" +
-             "Increases the amount of reputation the player gains for a faction by 25%.",
+             "Increases Charisma by 50%.<br>" +
+             "Increases Charisma experience gain by 50%.<br>" +
+             "Increases reputation gain from factions and companies by 25%.",
         charisma_mult: 1.5,
         charisma_exp_mult: 1.5,
         company_rep_mult: 1.25,
@@ -1430,7 +1416,8 @@ function initAugmentations() {
              "and integumentary system. The drug permanently modifies the DNA of the " +
              "body's skin and bone cells, granting them the ability to repair " +
              "and restructure themselves.<br><br>" +
-             "This augmentation increases the player's strength and defense by 55%.",
+             "Increases Strength by 55%.<br>" +
+             "Increases Defense by 55%.",
         strength_mult: 1.55,
         defense_mult: 1.55,
     });
@@ -1446,9 +1433,8 @@ function initAugmentations() {
         info:"A concoction of advanced nanobots that is orally ingested into the " +
              "body. These nanobots induce physiological changes and significantly " +
              "improve the body's functioning in all aspects.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases all of the player's stats by 20%.<br>" +
-             "Increases the player's experience gain rate for all stats by 15%.",
+             "Increases all stats by 20%.<br>" +
+             "Increases experience gain for all stats by 15%.",
         hacking_mult: 1.2,
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -1475,7 +1461,7 @@ function initAugmentations() {
              "Even though it contains no weapons, the advanced tungsten titanium " +
              "alloy increases the users strength to unbelievable levels. The augmentation " +
              "gets more powerful over time for seemingly no reason.<br><br>" +
-             "This augmentation increases the player's strength by 270%.",
+             "Increases Strength by 270%.",
         strength_mult: 2.70,
     });
     HydroflameLeftArm.addToFactions(["NWO"]);
@@ -1492,7 +1478,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered to maintain a state " +
              "of negligible senescence, preventing the body from " +
              "deteriorating with age.<br><br>" +
-             "This augmentation increases all of the player's stats by 20%.",
+             "Increases all stats by 20%.",
         hacking_mult: 1.2,
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -1512,9 +1498,8 @@ function initAugmentations() {
         info:"OmniTek's data and information repository is uploaded " +
              "into your brain, enhancing your programming and " +
              "hacking abilities.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking skill by 20%.<br>" +
-             "Increases the player's hacking experience gain rate by 25%.",
+             "Increases Hacking by 20%.<br>" +
+             "Increases Hacking experience gain by 25%.",
         hacking_mult: 1.2,
         hacking_exp_mult: 1.25,
     });
@@ -1534,7 +1519,9 @@ function initAugmentations() {
              "to the body using a skin graft. The result is photosynthetic " +
              "skin cells, allowing users to generate their own energy " +
              "and nutrition using solar power.<br><br>" +
-             "This augmentation increases the player's strength, defense, and agility by 40%.",
+             "Increases Strength by 40%.<br>" +
+             "Increases Defense by 40%.<br>" +
+             "Increases Agility by 40%.",
             strength_mult: 1.4,
             defense_mult: 1.4,
             agility_mult: 1.4,
@@ -1551,12 +1538,11 @@ function initAugmentations() {
         info:"A brain implant that provides a high-bandwidth, direct neural link between your " +
              "mind and the BitRunners' data servers, which reportedly contain " +
              "the largest database of hacking tools and information in the world.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking skill by 15%.<br>" +
-             "Increases the player's hacking experience gain rate by 20%.<br>" +
-             "Increases the player's chance of successfully performing a hack by 10%.<br>" +
-             "Increases the player's hacking speed by 5%.<br>" +
-             "Lets the player start with the FTPCrack.exe and relaySMTP.exe programs after a reset.",
+             "Increases Hacking by 15%.<br>" +
+             "Increases Hacking experience gain by 20%.<br>" +
+             "Increases Hacking success chance by 10%.<br>" +
+             "Increases Hacking speed by 5%.<br>" +
+             "Provides FTPCrack.exe and relaySMTP.exe after a reset.",
         hacking_mult: 1.15,
         hacking_exp_mult: 1.2,
         hacking_chance_mult: 1.1,
@@ -1575,11 +1561,11 @@ function initAugmentations() {
              "enhances strength and dexterity but it is also embedded " +
              "with hardware and firmware that lets the user connect to, access, and hack " +
              "devices and machines by just touching them.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's strength and dexterity by 15%.<br>" +
-             "Increases the player's hacking skill by 10%.<br>" +
-             "Increases the player's hacking speed by 2%.<br>" +
-             "Increases the amount of money the player gains from hacking by 10%.",
+             "Increases Strength by 15%.<br>" +
+             "Increases Dexterity by 15%.<br>" +
+             "Increases Hacking by 10%.<br>" +
+             "Increases Hacking speed by 2%.<br>" +
+             "Increases money gained from Hacking by 10%.",
         strength_mult: 1.15,
         dexterity_mult: 1.15,
         hacking_mult: 1.1,
@@ -1598,9 +1584,8 @@ function initAugmentations() {
         info:"The CRTX42-AA gene is injected into the genome. " +
              "The CRTX42-AA is an artificially-synthesized gene that targets the visual and prefrontal " +
              "cortex and improves cognitive abilities.<br><br>" +
-             "This augmentation:<br>" +
-             "Improves the player's hacking skill by 8%.<br>" +
-             "Improves the player's hacking experience gain rate by 15%.",
+             "Increases Hacking by 8%.<br>" +
+             "Increases Hacking experience gain by 15%.",
         hacking_mult: 1.08,
         hacking_exp_mult: 1.15,
     });
@@ -1616,7 +1601,7 @@ function initAugmentations() {
         info:"A drug that genetically modifies the neurons in the brain " +
              "resulting in neurons never die, continuously " +
              "regenerate, and strengthen themselves.<br><br>" +
-             "This augmentation increases the player's hacking experience gain rate by 40%.",
+             "Increases Hacking experience gain by 40%.",
         hacking_exp_mult: 1.4,
     });
     Neuregen.addToFactions(["Chongqing"]);
@@ -1631,9 +1616,8 @@ function initAugmentations() {
         info:<>A collection of digital assets saved on a small chip. The chip is implanted 
              into your wrist. A small jack in the chip allows you to connect it to a computer 
              and upload the assets.<br /><br />
-             This augmentation:<br />
-             Lets the player start with {Money(1e6)} after a reset.<br />
-             Lets the player start with the BruteSSH.exe program after a reset.</>,
+             Provides {Money(1e6)} after a reset.<br />
+             Provides BruteSSH.exe after a reset.</>,
     });
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
@@ -1648,7 +1632,7 @@ function initAugmentations() {
              "synthesizes glucose, amino acids, and vitamins and redistributes them " +
              "across the body. The device is powered by the body's naturally wasted " +
              "energy in the form of heat.<br><br>" +
-             "This augmentation increases the player's experience gain rate for all combat stats by 20%.",
+             "Increases experience gain for all combat stats by 20%.",
         strength_exp_mult: 1.2,
         defense_exp_mult: 1.2,
         dexterity_exp_mult: 1.2,
@@ -1669,10 +1653,9 @@ function initAugmentations() {
         name:AugmentationNames.INFRARet, repCost:7.5e3, moneyCost:3e7,
         info:"A tiny chip that sits behind the retinae. This implant lets the" +
              "user visually detect infrared radiation.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's crime success rate by 25%.<br>" +
-             "Increases the amount of money the player gains from crimes by 10%.<br>" +
-             "Increases the player's dexterity by 10%.",
+             "Increases crime success rate by 25%.<br>" +
+             "Increases money gained from committing crimes by 10%.<br>" +
+             "Increases Dexterity by 10%.",
         crime_success_mult: 1.25,
         crime_money_mult: 1.1,
         dexterity_mult: 1.1,
