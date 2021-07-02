@@ -26,7 +26,8 @@ SourceFiles["SourceFile5"] = new SourceFile(5, "This Source-File grants a specia
                                                "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't " +
                                                "know when you gain experience and how much). Higher Intelligence levels will boost your production " +
                                                "for many actions in the game. In addition, this Source-File will unlock the getBitNodeMultipliers() " +
-                                               "Netscript function, and will raise all of your hacking-related multipliers by:<br><br> " +
+                                               "and getServer() Netscript functions, as well as the formulas API, and will raise all of your " +
+                                               "hacking-related multipliers by:<br><br> " +
                                                "Level 1: 8%<br>" +
                                                "Level 2: 12%<br>" +
                                                "Level 3: 14%");
