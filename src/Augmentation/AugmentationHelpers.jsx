@@ -1249,7 +1249,7 @@ function initAugmentations() {
 
     const LuminCloaking2 = new Augmentation({
         name:AugmentationNames.LuminCloaking2, repCost:5e3, moneyCost:3e7,
-        info:"This is a more advanced version of the LuminCloaking-V2 augmentation. This skin implant " +
+        info:"This is a more advanced version of the LuminCloaking-V1 augmentation. This skin implant " +
              "reinforces the skin with highly-advanced synthetic cells. These " +
              "cells, when powered, are capable of not only bending light but also of bending heat, " +
              "making the user more resilient as well as stealthy.<br><br>" +
@@ -1486,7 +1486,7 @@ function initAugmentations() {
              "Even though it contains no weapons, the advanced tungsten titanium " +
              "alloy increases the users strength to unbelievable levels. The augmentation " +
              "gets more powerful over time for seemingly no reason.<br><br>" +
-             "This augmentation increases the player's strength by 270%.",
+             "This augmentation increases the player's strength by 170%.",
         strength_mult: 2.70,
     });
     HydroflameLeftArm.addToFactions(["NWO"]);
