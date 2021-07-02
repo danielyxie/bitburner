@@ -466,7 +466,7 @@ function initAugmentations() {
         name:AugmentationNames.BitWire, repCost:3.75e3, moneyCost:1e7,
         info: "A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " +
               "capabilities.<br><br>" +
-              "This augmentation increases the player's hacking skill by 5%.",
+              "Increases Hacking by 5%.",
         hacking_mult: 1.05,
     });
     BitWire.addToFactions(["CyberSec", "NiteSec"]);
@@ -482,10 +482,9 @@ function initAugmentations() {
              "nanoprocessor acting similar to the way a neuron would in a neural network. However, these " +
              "nanoprocessors are programmed to perform computations much faster than organic neurons, " +
              "allowing the user to solve much more complex problems at a much faster rate.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 3%.<br>" +
-             "Increases the amount of money the player's gains from hacking by 15%.<br>" +
-             "Increases the player's hacking skill by 12%.",
+             "Increases Hacking speed by 3%.<br>" +
+             "Increases money gained from Hacking by 15%.<br>" +
+             "Increases Hacking by 12%.",
         hacking_speed_mult: 1.03,
         hacking_money_mult: 1.15,
         hacking_mult: 1.12,
@@ -500,10 +499,9 @@ function initAugmentations() {
         name:AugmentationNames.ArtificialSynapticPotentiation, repCost:6.25e3, moneyCost:8e7,
         info:"The body is injected with a chemical that artificially induces synaptic potentiation, " +
              "otherwise known as the strengthening of synapses. This results in enhanced cognitive abilities.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 2%.<br>" +
-             "Increases the player's hacking chance by 5%.<br>" +
-             "Increases the player's hacking experience gain rate by 5%.",
+             "Increases Hacking speed by 2%.<br>" +
+             "Increases Hacking success chance by 5%.<br>" +
+             "Increases Hacking experience gain by 5%.",
         hacking_speed_mult: 1.02,
         hacking_chance_mult: 1.05,
         hacking_exp_mult: 1.05,
@@ -520,10 +518,9 @@ function initAugmentations() {
              "This process results in the proliferation of new, synthetic myelin sheaths in the nervous " +
              "system. These myelin sheaths can propogate neuro-signals much faster than their organic " +
              "counterparts, leading to greater processing speeds and better brain function.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 3%.<br>" +
-             "Increases the player's hacking skill by 8%.<br>" +
-             "Increases the player's hacking experience gain rate by 10%.",
+             "Increases Hacking speed by 3%.<br>" +
+             "Increases Hacking by 8%.<br>" +
+             "Increases Hacking experience gain by 10%.",
         hacking_speed_mult: 1.03,
         hacking_exp_mult: 1.1,
         hacking_mult: 1.08,
@@ -538,7 +535,7 @@ function initAugmentations() {
         name:AugmentationNames.SynapticEnhancement, repCost:2e3, moneyCost:7.5e6,
         info:"A small cranial implant that continuously uses weak electrical signals to stimulate the brain and " +
              "induce stronger synaptic activity. This improves the user's cognitive abilities.<br><br>" +
-             "This augmentation increases the player's hacking speed by 3%.",
+             "Increases Hacking speed by 3%.",
         hacking_speed_mult: 1.03,
     });
     SynapticEnhancement.addToFactions(["CyberSec", "Aevum"]);
@@ -551,7 +548,7 @@ function initAugmentations() {
         name:AugmentationNames.NeuralRetentionEnhancement, repCost:2e4, moneyCost:2.5e8,
         info:"Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
              "circuits, strengthening the ability to retain information.<br><br>" +
-             "This augmentation increases the player's hacking experience gain rate by 25%.",
+             "Increases Hacking experience gain by 25%.",
         hacking_exp_mult: 1.25,
     });
     NeuralRetentionEnhancement.addToFactions(["NiteSec"]);
@@ -565,7 +562,7 @@ function initAugmentations() {
         info:"A brain implant that provides an interface for direct, wireless communication between a computer's main " +
              "memory and the mind. This implant allows the user to not only access a computer's memory, but also alter " +
              "and delete it.<br><br>" +
-             "This augmentation increases the amount of money the player gains from hacking by 25%.",
+             "Increases money gained from Hacking by 25%.",
         hacking_money_mult: 1.25,
     });
     DataJack.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo"]);
@@ -581,7 +578,7 @@ function initAugmentations() {
              "processing all of the traffic on that network. By itself, the Embedded Netburner Module does " +
              "not do much, but a variety of very powerful upgrades can be installed that allow you to fully " +
              "control the traffic on a network.<br><br>" +
-             "This augmentation increases the player's hacking skill by 8%.",
+             "Increases Hacking by 8%.",
         hacking_mult: 1.08,
     });
     ENM.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "ECorp", "MegaCorp",
@@ -595,12 +592,11 @@ function initAugmentations() {
         name:AugmentationNames.ENMCore, repCost:2.5e5, moneyCost:2.5e9,
         info:"The Core library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
              "This upgrade allows the Embedded Netburner Module to generate its own data on a network.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 3%.<br>" +
-             "Increases the amount of money the player gains from hacking by 10%.<br>" +
-             "Increases the player's chance of successfully performing a hack by 3%.<br>" +
-             "Increases the player's hacking experience gain rate by 7%.<br>" +
-             "Increases the player's hacking skill by 7%.",
+             "Increases Hacking speed by 3%.<br>" +
+             "Increases money gained from Hacking by 10%.<br>" +
+             "Increases Hacking success chance by 3%.<br>" +
+             "Increases Hacking experience gain by 7%.<br>" +
+             "Increases Hacking by 7%.",
         prereqs:[AugmentationNames.ENM],
         hacking_speed_mult: 1.03,
         hacking_money_mult: 1.1,
@@ -621,12 +617,11 @@ function initAugmentations() {
              "This upgraded firmware allows the Embedded Netburner Module to control information on " +
              "a network by re-routing traffic, spoofing IP addresses, and altering the data inside network " +
              "packets.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 5%.<br>" +
-             "Increases the amount of money the player gains from hacking by 30%.<br>" +
-             "Increases the player's chance of successfully performing a hack by 5%.<br>" +
-             "Increases the player's hacking experience gain rate by 15%.<br>" +
-             "Increases the player's hacking skill by 8%.",
+             "Increases Hacking speed by 5%.<br>" +
+             "Increases money gained from Hacking by 30%.<br>" +
+             "Increases Hacking success chance by 5%.<br>" +
+             "Increases Hacking experience gain by 15%.<br>" +
+             "Increases Hacking by 8%.",
         prereqs:[AugmentationNames.ENMCore],
         hacking_speed_mult: 1.05,
         hacking_money_mult: 1.3,
@@ -646,12 +641,11 @@ function initAugmentations() {
         info:"The Core V3 library is an implant that upgrades the firmware of the Embedded Netburner Module. " +
              "This upgraded firmware allows the Embedded Netburner Module to seamlessly inject code into " +
              "any device on a network.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 5%.<br>" +
-             "Increases the amount of money the player gains from hacking by 40%.<br>" +
-             "Increases the player's chance of successfully performing a hack by 10%.<br>" +
-             "Increases the player's hacking experience gain rate by 25%.<br>" +
-             "Increases the player's hacking skill by 10%.",
+             "Increases Hacking speed by 5%.<br>" +
+             "Increases money gained from Hacking by 40%.<br>" +
+             "Increases Hacking success chance by 10%.<br>" +
+             "Increases Hacking experience gain by 25%.<br>" +
+             "Increases Hacking by 10%.",
         prereqs:[AugmentationNames.ENMCoreV2],
         hacking_speed_mult: 1.05,
         hacking_money_mult: 1.4,
@@ -670,7 +664,7 @@ function initAugmentations() {
         name:AugmentationNames.ENMAnalyzeEngine, repCost:6.25e5, moneyCost:6e9,
         info:"Installs the Analyze Engine for the Embedded Netburner Module, which is a CPU cluster " +
              "that vastly outperforms the Netburner Module's native single-core processor.<br><br>" +
-             "This augmentation increases the player's hacking speed by 10%.",
+             "Increases Hacking speed by 10%.",
         prereqs:[AugmentationNames.ENM],
         hacking_speed_mult: 1.1,
     });
@@ -686,9 +680,8 @@ function initAugmentations() {
         info:"This implant installs a Direct Memory Access (DMA) controller into the " +
              "Embedded Netburner Module. This allows the Module to send and receive data " +
              "directly to and from the main memory of devices on a network.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of money the player gains from hacking by 40%.<br>"  +
-             "Increases the player's chance of successfully performing a hack by 20%.",
+             "Increases money gained from Hacking by 40%.<br>"  +
+             "Increases Hacking success chance by 20%.",
         prereqs:[AugmentationNames.ENM],
         hacking_money_mult: 1.4,
         hacking_chance_mult: 1.2,
@@ -704,10 +697,9 @@ function initAugmentations() {
         name:AugmentationNames.Neuralstimulator, repCost:5e4, moneyCost:3e9,
         info:"A cranial implant that intelligently stimulates certain areas of the brain " +
              "in order to improve cognitive functions.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 2%.<br>" +
-             "Increases the player's chance of successfully performing a hack by 10%.<br>" +
-             "Increases the player's hacking experience gain rate by 12%.",
+             "Increases Hacking speed by 2%.<br>" +
+             "Increases Hacking success chance by 10%.<br>" +
+             "Increases Hacking experience gain by 12%.",
         hacking_speed_mult: 1.02,
         hacking_chance_mult: 1.1,
         hacking_exp_mult: 1.12,
@@ -724,10 +716,9 @@ function initAugmentations() {
         name:AugmentationNames.NeuralAccelerator, repCost:2e5, moneyCost:1.75e9,
         info:"A microprocessor that accelerates the processing " +
              "speed of biological neural networks. This is a cranial implant that is embedded inside the brain.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking skill by 10%.<br>" +
-             "Increases the player's hacking experience gain rate by 15%.<br>" +
-             "Increases the amount of money the player gains from hacking by 20%.",
+             "Increases Hacking by 10%.<br>" +
+             "Increases Hacking experience gain by 15%.<br>" +
+             "Increases money gained from Hacking by 20%.",
         hacking_mult: 1.1,
         hacking_exp_mult: 1.15,
         hacking_money_mult: 1.2,
@@ -744,9 +735,8 @@ function initAugmentations() {
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
              "so that the brain doesn't have to.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 1%.<br>" +
-             "Increases the player's hacking skill by 5%.",
+             "Increases Hacking speed by 1%.<br>" +
+             "Increases Hacking by 5%.",
         hacking_speed_mult: 1.01,
         hacking_mult: 1.05,
     });
@@ -762,10 +752,9 @@ function initAugmentations() {
             "are a set of specialized microprocessors that are attached to " +
             "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
             "so that the brain doesn't have to.<br><br>" +
-            "This augmentation:<br>" +
-            "Increases the player's hacking speed by 2%.<br>" +
-            "Increases the player's chance of successfully performing a hack by 5%.<br>" +
-            "Increases the player's hacking skill by 7%.",
+            "Increases Hacking speed by 2%.<br>" +
+            "Increases Hacking success chance by 5%.<br>" +
+            "Increases Hacking by 7%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG1],
         hacking_speed_mult: 1.02,
         hacking_chance_mult: 1.05,
@@ -783,10 +772,9 @@ function initAugmentations() {
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
              "so that the brain doesn't have to.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 2%.<br>" +
-             "Increases the amount of money the player gains from hacking by 15%.<br>" +
-             "Increases the player's hacking skill by 9%.",
+             "Increases Hacking speed by 2%.<br>" +
+             "Increases money gained from Hacking by 15%.<br>" +
+             "Increases Hacking by 9%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG2],
         hacking_speed_mult: 1.02,
         hacking_money_mult: 1.15,
@@ -804,9 +792,8 @@ function initAugmentations() {
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
              "so that the brain doesn't have to.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking speed by 2%.<br>" +
-             "Increases the amount of money the player gains from hacking by 20%.<br>" +
+             "Increases Hacking speed by 2%.<br>" +
+             "Increases money gained from Hacking by 20%.<br>" +
              "Improves grow() by 25%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG3],
         hacking_speed_mult: 1.02,
@@ -825,9 +812,8 @@ function initAugmentations() {
              "are a set of specialized microprocessors that are attached to " +
              "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
              "so that the brain doesn't have to.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking skill by 30%.<br>" +
-             "Increases the amount of money the player gains from hacking by 25%.<br>" +
+             "Increases Hacking by 30%.<br>" +
+             "Increases money gained from Hacking by 25%.<br>" +
              "Improves grow() by 75%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG4],
         hacking_mult: 1.3,
@@ -845,10 +831,9 @@ function initAugmentations() {
         info:"The brain is surgically re-engineered to have increased neuronal density " +
              "by decreasing the neuron gap junction. Then, the body is genetically modified " +
              "to enhance the production and capabilities of its neural stem cells.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's hacking skill by 15%.<br>" +
-             "Increases the player's hacking experience gain rate by 10%.<br>"+
-             "Increases the player's hacking speed by 3%.",
+             "Increases Hacking by 15%.<br>" +
+             "Increases Hacking experience gain by 10%.<br>"+
+             "Increases Hacking speed by 3%.",
         hacking_mult: 1.15,
         hacking_exp_mult: 1.1,
         hacking_speed_mult: 1.03,
@@ -865,8 +850,7 @@ function initAugmentations() {
         info:"This torso implant automatically injects nootropic supplements into " +
              "the bloodstream to improve memory, increase focus, and provide other " +
              "cognitive enhancements.<br><br>" +
-             "This augmentation increases the amount of reputation the player gains " +
-             "when working for a company by 20%.",
+             "Increases reputation gain from companies by 20%.",
         company_rep_mult: 1.2,
     });
     NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing",
@@ -881,9 +865,8 @@ function initAugmentations() {
         info:"An advanced neural implant that improves your speaking abilities, making " +
              "you more convincing and likable in conversations and overall improving your " +
              "social interactions.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's charisma by 10%.<br>" +
-             "Increases the amount of reputation the player gains when working for a company by 10%.",
+             "Increases Charisma by 10%.<br>" +
+             "Increases reputation gain from companies by 10%.",
         company_rep_mult: 1.1,
         charisma_mult: 1.1,
     });
@@ -898,10 +881,9 @@ function initAugmentations() {
         name:AugmentationNames.FocusWire, repCost:7.5e4, moneyCost:9e8,
         info:"A cranial implant that stops procrastination by blocking specific neural pathways " +
              "in the brain.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases all experience gains by 5%.<br>" +
-             "Increases the amount of money the player gains from working by 20%.<br>" +
-             "Increases the amount of reputation the player gains when working for a company by 10%.",
+             "Increases experience gain for all stats by 5%.<br>" +
+             "Increases money gained from working by 20%.<br>" +
+             "Increases reputation gain from companies by 10%.",
         hacking_exp_mult: 1.05,
         strength_exp_mult: 1.05,
         defense_exp_mult: 1.05,
@@ -922,9 +904,8 @@ function initAugmentations() {
         info:"Installs a Direct-Neural Interface jack into your arm that is compatible with most " +
              "computers. Connecting to a computer through this jack allows you to interface with " +
              "it using the brain's electrochemical signals.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of reputation the player gains when working for a company by 30%.<br>" +
-             "Increases the player's hacking skill by 8%.",
+             "Increases reputation gain from companies by 30%.<br>" +
+             "Increases Hacking by 8%.",
         company_rep_mult: 1.3,
         hacking_mult: 1.08,
     });
@@ -939,9 +920,8 @@ function initAugmentations() {
         info:"This is a submodule upgrade to the PC Direct-Neural Interface augmentation. It " +
              "improves the performance of the interface and gives the user more control options " +
              "to a connected computer.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of reputation the player gains when working for a company by 75%.<br>" +
-             "Increases the player's hacking skill by 10%.",
+             "Increases reputation gain from companies by 75%.<br>" +
+             "Increases Hacking by 10%.",
         prereqs:[AugmentationNames.PCDNI],
         company_rep_mult: 1.75,
         hacking_mult: 1.1,
@@ -958,10 +938,9 @@ function initAugmentations() {
              "PC Direct-Neural Interface augmentation. When connected to a computer, " +
              "The Neural Network upgrade allows the user to use their own brain's " +
              "processing power to aid the computer in computational tasks.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of reputation the player gains when working for a company by 100%.<br>" +
-             "Increases the player's hacking skill by 10%.<br>" +
-             "Increases the player's hacking speed by 5%.",
+             "Increases reputation gain from companies by 100%.<br>" +
+             "Increases Hacking by 10%.<br>" +
+             "Increases Hacking speed by 5%.",
         prereqs:[AugmentationNames.PCDNI],
         company_rep_mult: 2,
         hacking_mult: 1.1,
@@ -978,7 +957,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
              "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " +
              "triggers feelings of admiration and approval in other people.<br><br>" +
-             "This augmentation increases the amount of reputation the player gains when working for a faction or company by 10%.",
+             "Increases reputation gain from factions and companies by 10%.",
         company_rep_mult: 1.1,
         faction_rep_mult: 1.1,
     });
@@ -993,7 +972,7 @@ function initAugmentations() {
         info:"The body is genetically re-engineered so that it produces the ADR-V2 pheromone, " +
              "which is similar to but more potent than ADR-V1. This pheromone, when excreted, " +
              "triggers feelings of admiration, approval, and respect in others.<br><br>" +
-             "This augmentation increases the amount of reputation the player gains when working for a faction or company by 20%.",
+             "Increases reputation gain from factions and companies by 20%.",
         company_rep_mult: 1.2,
         faction_rep_mult: 1.2,
     });
@@ -1010,7 +989,7 @@ function initAugmentations() {
               "criminal organizations and allows the user to project and control holographic " +
               "simulacrums within a large radius. These simulacrums are commonly used for " +
               "espionage and surveillance work.<br><br>" +
-              "This augmentation increases the amount of reputation the player gains when working for a faction or company by 15%.",
+              "Increases reputation gain from factions and companies by 15%.",
         company_rep_mult: 1.15,
         faction_rep_mult: 1.15,
     });
