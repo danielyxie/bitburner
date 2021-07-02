@@ -9,7 +9,7 @@ scp() Netscript Function
         Hostname of the source server, which is the server from which the file will be copied.
         This argument is optional and if it's omitted the source will be the current server.
     :param string destination: Hostname of the destination server, which is the server to which the file will be copied.
-    :returns: ``true`` is the copy was a success.
+    :returns: ``true`` if the copy was a success.
 
     Copies a script or literature (.lit) file(s) to another server. The
     ``files`` argument can be either a string specifying a single file to copy,

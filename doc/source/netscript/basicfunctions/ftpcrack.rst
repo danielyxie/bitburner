@@ -10,7 +10,6 @@ ftpcrack() Netscript Function
     Runs the ``FTPCrack.exe`` program on the target server. ``FTPCrack.exe``
     must exist on your home computer.
 
-
     Examples:
 
     .. code-block:: javascript
