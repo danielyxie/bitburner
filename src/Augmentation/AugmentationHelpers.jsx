@@ -1673,8 +1673,6 @@ function initAugmentations() {
     AddToAugmentations(NutriGen);
 
 	// Aevum
-    // TODO Later Something that lets you learn advanced math...this increases int
-    // and profits as a trader/from trading
     const PCMatrix = new Augmentation({
         name:AugmentationNames.PCMatrix, repCost:1e4, moneyCost:1e7,
         info:"A 'Probability Computation Matrix' is installed in the frontal cortex. This implant " +
