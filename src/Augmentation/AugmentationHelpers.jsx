@@ -1672,7 +1672,7 @@ function initAugmentations() {
         info:"Synthetic skin that is grafted onto the body. This skin consists of " +
              "millions of nanobots capable of projecting high-density muon beams, " +
              "creating an energy barrier around the user.<br><br>" +
-             "This augmentation increases the player's defense by 40%.",
+             "Increases Defense by 40%.",
         defense_mult: 1.4,
     });
     DermaForce.addToFactions(["Volhaven"]);
@@ -1687,10 +1687,10 @@ function initAugmentations() {
         info:"An upgrade to the BrachiBlades augmentation. It infuses " +
              "the retractable blades with an advanced graphene material " +
              "making them stronger and lighter.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's strength and defense by 40%.<br>" +
-             "Increases the player's crime success rate by 10%.<br>" +
-             "Increases the amount of money the player gains from crimes by 30%.",
+             "Increases Strength by 40%.<br>" +
+             "Increases Defense by 40%.<br>" +
+             "Increases crime success rate by 10%.<br>" +
+             "Increases money gained from committing crimes by 30%.",
         prereqs:[AugmentationNames.BrachiBlades],
         strength_mult: 1.4,
         defense_mult: 1.4,
@@ -1709,7 +1709,8 @@ function initAugmentations() {
         info:"An upgrade to the Bionic Arms augmentation. It infuses the " +
              "prosthetic arms with an advanced graphene material " +
              "to make them stronger and lighter.<br><br>" +
-             "This augmentation increases the player's strength and dexterity by 85%.",
+             "Increases Strength by 85%.<br>" +
+             "Increases Dexterity by 85%.",
         prereqs:[AugmentationNames.BionicArms],
         strength_mult: 1.85,
         dexterity_mult: 1.85,
@@ -1724,10 +1725,10 @@ function initAugmentations() {
     const BrachiBlades = new Augmentation({
         name:AugmentationNames.BrachiBlades, repCost:1.25e4, moneyCost:9e7,
         info:"A set of retractable plasteel blades that are implanted in the arm, underneath the skin.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the player's strength and defense by 15%.<br>" +
-             "Increases the player's crime success rate by 10%.<br>" +
-             "Increases the amount of money the player gains from crimes by 15%.",
+             "Increases Strength by 15%.<br>" +
+             "Increases Defense by 15%.<br>" +
+             "Increases crime success rate by 10%.<br>" +
+             "Increases money gained from committing crimes by 15%.",
         strength_mult: 1.15,
         defense_mult: 1.15,
         crime_success_mult: 1.1,
@@ -1744,7 +1745,8 @@ function initAugmentations() {
         name:AugmentationNames.BionicArms, repCost:6.25e4, moneyCost:2.75e8,
         info:"Cybernetic arms created from plasteel and carbon fibers that completely replace " +
              "the user's organic arms.<br><br>" +
-             "This augmentation increases the user's strength and dexterity by 30%.",
+             "Increases Strength by 30%.<br>" +
+             "Increases Dexterity by 30%.",
         strength_mult: 1.3,
         dexterity_mult: 1.3,
     });
@@ -1759,10 +1761,8 @@ function initAugmentations() {
         name:AugmentationNames.SNA, repCost:6.25e3, moneyCost:3e7,
         info:"A cranial implant that affects the user's personality, making them better " +
              "at negotiation in social situations.<br><br>" +
-             "This augmentation:<br>" +
-             "Increases the amount of money the player earns at a company by 10%.<br>" +
-             "Increases the amount of reputation the player gains when working for a " +
-             "company or faction by 15%.",
+             "Increases money gained from working by 10%.<br>" +
+             "Increases reputation gain from factions and companies by 15%.",
         work_money_mult: 1.1,
         company_rep_mult: 1.15,
         faction_rep_mult: 1.15,
@@ -1786,9 +1786,8 @@ function initAugmentations() {
                  "against debris, shrapnel, lasers, blinding flashes, and gas. It is also " +
                  "embedded with a data processing chip that can be programmed to display an " +
                  "AR HUD to assist the user in field missions.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 3%.<br>" +
-                 "Increases the player's dexterity by 5%.",
+                 "Increases Dexterity by 5%.<br>" +
+                 "Increases success chance in Bladeburner Contracts and Operations by 3%.",
             bladeburner_success_chance_mult: 1.03,
             dexterity_mult: 1.05,
             isSpecial: true,
@@ -1802,10 +1801,9 @@ function initAugmentations() {
                  "technique was originally used on Bladeburners during the Synthoid uprising " +
                  "to induce wakefulness and concentration, suppress fear, reduce empathy, " +
                  "improve reflexes, and improve memory among other things.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 3%.<br>" +
-                 "Increases the player's effectiveness in Bladeburner Field Analysis by 5%.<br>" +
-                 "Increases the player's Bladeburner stamina gain rate by 2%.",
+                 "Increases success chance in Bladeburner Contracts and Operations by 3%.<br>" +
+                 "Increases Bladeburner Field Analysis effectiveness by 5%.<br>" +
+                 "Increases Bladeburner Stamina gain by 2%.",
             bladeburner_success_chance_mult: 1.03,
             bladeburner_analysis_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.02,
@@ -1820,10 +1818,10 @@ function initAugmentations() {
                  "the ORION-MKIV shoulder enhances the strength and dexterity " +
                  "of the user's right arm. It also provides protection due to its " +
                  "crystallized graphene plating.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's defense by 5%.<br>" +
-                 "Increases the player's strength and dexterity by 5%.<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 4%.",
+                 "Increases Strength by 5%.<br>" +
+                 "Increases Defense by 5%.<br>" +
+                 "Increases Dexterity by 5%.<br>" +
+                 "Increases success chance in Bladeburner Contracts and Operations by 4%.",
             defense_mult: 1.05,
             strength_mult: 1.05,
             dexterity_mult: 1.05,
@@ -1841,7 +1839,7 @@ function initAugmentations() {
                  "nature of the plasma disrupts the electrical systems of Augmentations. However, " +
                  "it can also be effective against non-augmented enemies due to its high temperature " +
                  "and concussive force.<br><br>" +
-                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 6%.",
+                 "Increases success chance in Bladeburner Contracts and Operations by 6%.",
             bladeburner_success_chance_mult: 1.06,
             isSpecial: true,
         });
@@ -1854,7 +1852,7 @@ function initAugmentations() {
                  "is more advanced and powerful than the original V1 model. This V2 model is " +
                  "more power-efficient, more accurate, and can fire plasma bolts at a much " +
                  "higher velocity than the V1 model.<br><br>" +
-                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 8%.",
+                 "Increases success chance in Bladeburner Contracts and Operations by 8%.",
             prereqs:[AugmentationNames.HyperionV1],
             bladeburner_success_chance_mult: 1.08,
             isSpecial: true,
@@ -1868,9 +1866,8 @@ function initAugmentations() {
                  "including strength, speed, immune system enhancements, and mitochondrial efficiency. The " +
                  "serum was originally developed by the Chinese military in an attempt to " +
                  "create super soldiers.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases all of the player's combat stats by 7%.<br>" +
-                 "Increases the player's Bladeburner stamina gain rate by 5%.<br>",
+                 "Increases all combat stats by 7%.<br>" +
+                 "Increases Bladeburner Stamina gain by 5%.<br>",
             strength_mult: 1.07,
             defense_mult: 1.07,
             dexterity_mult: 1.07,
@@ -1885,10 +1882,9 @@ function initAugmentations() {
             name:AugmentationNames.VangelisVirus, repCost:1.875e4, moneyCost:2.75e9,
             info:"A synthetic symbiotic virus that is injected into human brain tissue. The Vangelis virus " +
                  "heightens the senses and focus of its host, and also enhances its intuition.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's effectiveness in Bladeburner Field Analysis by 10%.<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 4%.<br>" +
-                 "Increases the player's dexterity experience gain rate by 10%.",
+                 "Increases Dexterity experience gain by 10%.<br>" +
+                 "Increases Bladeburner Field Analysis effectiveness by 10%.<br>" +
+                 "Increases success chance in Bladeburner Contracts and Operations by 4%.",
             dexterity_exp_mult: 1.1,
             bladeburner_analysis_mult: 1.1,
             bladeburner_success_chance_mult: 1.04,
@@ -1903,10 +1899,10 @@ function initAugmentations() {
                  "injected into human brain tissue. On top of the benefits of the original " +
                  "virus, this also grants an accelerated healing factor and enhanced " +
                  "reflexes.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's effectiveness in Bladeburner Field Analysis by 15%.<br>" +
-                 "Increases the player's defense and dexterity experience gain rate by 10%.<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 5%.",
+                 "Increases Defense experience gain by 10%.<br>" +
+                 "Increases Dexterity experience gain by 10%.<br>" +
+                 "Increases Bladeburner Field Analysis effectiveness by 15%.<br>" +
+                 "Increases success chance in Bladeburner Contracts and Operations by 5%.",
             prereqs:[AugmentationNames.VangelisVirus],
             defense_exp_mult: 1.1,
             dexterity_exp_mult: 1.1,
@@ -1923,9 +1919,8 @@ function initAugmentations() {
                  "extracellular matrix (ECM). This improves the ECM's ability to " +
                  "structurally support the body and grants heightened strength and " +
                  "durability.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's experience gain rate for all combat stats by 5%.<br>" +
-                 "Increases the player's Bladeburner max stamina by 10%.",
+                 "Increases experience gain for all combat stats by 5%.<br>" +
+                 "Increases Bladeburner Stamina by 10%.",
             strength_exp_mult: 1.05,
             defense_exp_mult: 1.05,
             dexterity_exp_mult: 1.05,
@@ -1942,10 +1937,9 @@ function initAugmentations() {
                  "during the Synthoid Uprising. The organic musculature of the human foot " +
                  "is enhanced with flexible carbon nanotube matrices that are controlled by " +
                  "intelligent servo-motors.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's agility by 5%.<br>" +
-                 "Increases the player's Bladeburner max stamina by 5%.<br>" +
-                 "Increases the player's Bladeburner stamina gain rate by 5%.<br>",
+                 "Increases Agility by 5%.<br>" +
+                 "Increases Bladeburner Stamina by 5%.<br>" +
+                 "Increases Bladeburner Stamina gain by 5%.<br>",
             agility_mult: 1.05,
             bladeburner_max_stamina_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.05,
@@ -1960,10 +1954,9 @@ function initAugmentations() {
                  "exoskeleton is incredibly adaptable and can protect the wearer from blunt, piercing, " +
                  "concussive, thermal, chemical, and electric trauma. It also enhances the user's " +
                  "physical abilities.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases all of the player's combat stats by 4%.<br>" +
-                 "Increases the player's Bladeburner stamina gain rate by 2%.<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 3%.",
+                 "Increases all combat stats by 4%.<br>" +
+                 "Increases Bladeburner Stamina gain by 2%.<br>" +
+                 "Increases success chance in Bladeburner Contracts and Operations by 3%.",
             strength_mult: 1.04,
             defense_mult: 1.04,
             dexterity_mult: 1.04,
@@ -1979,10 +1972,9 @@ function initAugmentations() {
             name:AugmentationNames.BladeArmorPowerCells, repCost:1.875e4, moneyCost:2.75e9,
             info:"Upgrades the BLADE-51b Tesla Armor with Ion Power Cells, which are capable of " +
                  "more efficiently storing and using power.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 5%.<br>" +
-                 "Increases the player's Bladeburner stamina gain rate by 2%.<br>" +
-                 "Increases the player's Bladeburner max stamina by 5%.",
+                 "Increases success chance in Bladeburner Contracts and Operations by 5%.<br>" +
+                 "Increases Bladeburner Stamina by 5%.<br>" +
+                 "Increases Bladeburner Stamina gain by 2%.",
             prereqs:[AugmentationNames.BladeArmor],
             bladeburner_success_chance_mult: 1.05,
             bladeburner_stamina_gain_mult: 1.02,
@@ -1996,9 +1988,8 @@ function initAugmentations() {
             name:AugmentationNames.BladeArmorEnergyShielding, repCost:2.125e4, moneyCost:5.5e9,
             info:"Upgrades the BLADE-51b Tesla Armor with a plasma energy propulsion system " +
                  "that is capable of projecting an energy shielding force field.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's defense by 5%.<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 6%.",
+                 "Increases Defense by 5%.<br>" +
+                 "Increases success chance in Bladeburner Contracts and Operations by 6%.",
             prereqs:[AugmentationNames.BladeArmor],
             defense_mult: 1.05,
             bladeburner_success_chance_mult: 1.06,
@@ -2012,7 +2003,7 @@ function initAugmentations() {
             info:"Upgrades the BLADE-51b Tesla Armor with a concentrated deuterium-fluoride laser " +
                  "weapon. It's precision and accuracy makes it useful for quickly neutralizing " +
                  "threats while keeping casualties to a minimum.<br><br>" +
-                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 8%.",
+                 "Increases success chance in Bladeburner Contracts and Operations by 8%.",
             prereqs:[AugmentationNames.BladeArmor],
             bladeburner_success_chance_mult: 1.08,
             isSpecial: true,
@@ -2026,7 +2017,7 @@ function initAugmentations() {
                  "multiple-fiber system. This upgraded weapon uses multiple fiber laser " +
                  "modules that combine together to form a single, more powerful beam of up to " +
                  "2000MW.<br><br>" +
-                 "This augmentation increases the player's success chance in Bladeburner contracts/operations by 10%.",
+                 "Increases success chance in Bladeburner Contracts and Operations by 10%.",
             prereqs:[AugmentationNames.BladeArmorUnibeam],
             bladeburner_success_chance_mult: 1.1,
             isSpecial: true,
@@ -2039,9 +2030,8 @@ function initAugmentations() {
             info:"Upgrades the BLADE-51b Tesla Armor with an AI Information Processing " +
                  "Unit that was specially designed to analyze Synthoid related data and " +
                  "information.<br><br>" +
-                 "This augmentation:<br>" +
-                 "Increases the player's effectiveness in Bladeburner Field Analysis by 15%.<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 2%.",
+                 "Increases Bladeburner Field Analysis effectiveness by 15%.<br>" +
+                 "Increases success chance in Bladeburner Contracts and Operations by 2%.",
             prereqs:[AugmentationNames.BladeArmor],
             bladeburner_analysis_mult: 1.15,
             bladeburner_success_chance_mult: 1.02,
@@ -2057,8 +2047,7 @@ function initAugmentations() {
                  "the user to project and control a holographic simulacrum within an " +
                  "extremely large radius. These specially-modified holograms were specifically " +
                  "weaponized by Bladeburner units to be used against Synthoids.<br><br>"  +
-                 "This augmentation allows you to perform Bladeburner actions and other " +
-                 "actions (such as working, commiting crimes, etc.) at the same time.",
+                 "Allows the simultaneous performance of Bladeburner actions and other actions.",
             isSpecial: true,
         });
         BladesSimulacrum.addToFactions([BladeburnersFactionName]);
