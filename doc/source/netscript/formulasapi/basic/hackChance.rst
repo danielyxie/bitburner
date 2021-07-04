@@ -20,6 +20,6 @@ hackChance() Netscript Function
 
     .. code-block:: javascript
 
-        server = getServer();
+        var server = getServer();
         server.hackDifficulty = server.minDifficulty;
         tprint(formulas.basic.hackChance(server, getPlayer()));

@@ -18,8 +18,8 @@ calculateExp() Netscript Function
 
     .. code-block:: javascript
 
-        player = getPlayer();
-        nextHacking = player.hacking_skill+1;
-        nextExp = formulas.basic.calculateExp(nextHacking);
-        missingExp = nextExp - player.hacking_exp;
+        var player = getPlayer();
+        var nextHacking = player.hacking_skill+1;
+        var nextExp = formulas.basic.calculateExp(nextHacking);
+        var missingExp = nextExp - player.hacking_exp;
         tprint("Missing " + missingExp + " to reach next hacking level");

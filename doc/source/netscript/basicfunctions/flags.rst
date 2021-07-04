@@ -22,7 +22,7 @@ flags() Netscript Function
 
     .. code-block:: javascript
 
-        /* example.script
+        // example.script
         var data = flags([
             ['delay', 0], // a default number means this flag is a number
             ['server', 'foodnstuff'], //  a default string means this flag is a string
@@ -30,7 +30,7 @@ flags() Netscript Function
             ['help', false], // a default boolean means this flag is a boolean
         ]);
         tprint(data);
-        */
+        /*
         [home ~/]> run example.script
         {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":false}
         [home ~/]> run example.script --delay 3000
@@ -43,3 +43,4 @@ flags() Netscript Function
         {"_":["hello","world"],"help":false,"delay":3000,"server":"harakiri-sushi","exclude":["a","b"]}
         [home ~/]> run example.script --help
         {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":true}
+        */
