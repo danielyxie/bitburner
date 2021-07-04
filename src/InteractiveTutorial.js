@@ -288,7 +288,7 @@ function iTutorialEvaluateStep() {
         break;
     case iTutorialSteps.TerminalRunScript:
         Engine.loadTerminalContent();
-        iTutorialSetText("We have 16GB of free RAM on this machine, which is enough to run our " +
+        iTutorialSetText("We have 4GB of free RAM on this machine, which is enough to run our " +
                          "script. Let's run our script using <code class='interactive-tutorial-command'>run n00dles.script</code>.");
         nextBtn.style.display = "none"; // next step triggered by terminal commmand
         break;
