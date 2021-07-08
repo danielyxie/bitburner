@@ -1672,8 +1672,32 @@ function initAugmentations() {
     AddToAugmentations(NutriGen);
 
 	// Aevum
-    // TODO Later Something that lets you learn advanced math...this increases int
-    // and profits as a trader/from trading
+    const PCMatrix = new Augmentation({
+        name:AugmentationNames.PCMatrix, repCost:1e4, moneyCost:1e7,
+        info:"A 'Probability Computation Matrix' is installed in the frontal cortex. This implant " +
+             "uses advanced mathematical algorithims to rapidly identify and compute statistical " +
+             "outcomes of nearly every situation. The use of this implant is outlawed for use in " +
+             "Aevum's casino.<br><br>" +
+             "Increases charisma by 7.77%.<br>" +
+             "Increases charisma experience gain by 7.77%.<br>" +
+             "Increases money gained from working by 77.7%.<br>" +
+             "Increases reputation gain from factions and companies by 7.77%.<br>" +
+             "Increases crime success rate by 7.77%.<br>" +
+             "Increases money gained from committing crimes by 7.77%.<br>" +
+             "Provides DeepscanV1.exe and AutoLink.exe after a reset.",
+        charisma_mult: 1.0777,
+        charisma_exp_mult: 1.0777,
+        work_money_mult: 1.777,
+        faction_rep_mult: 1.0777,
+        company_rep_mult: 1.0777,
+        crime_success_mult: 1.0777,
+        crime_money_mult: 1.0777,
+    });
+    PCMatrix.addToFactions(["Aevum"]);
+    if (augmentationExists(AugmentationNames.PCMatrix)) {
+        delete Augmentations[AugmentationNames.PCMatrix];
+    }
+    AddToAugmentations(PCMatrix);
 
     // Ishima
     const INFRARet = new Augmentation({
