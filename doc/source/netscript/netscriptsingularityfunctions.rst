@@ -3,22 +3,17 @@
 Netscript Singularity Functions
 ===============================
 
-The Singularity Functions are a special set of Netscript functions. These functions allow you to control
-many additional aspects of the game through scripts, such as working for factions/companies, purchasing/installing Augmentations,
-and creating programs.
+.. warning:: This page contains spoilers for the game.
+
+The Singularity Functions are a special set of Netscript functions that allow the player to control additional aspects of the game such as working for factions/companies, purchasing/installing Augmentations, and creating programs.
 
 The Singularity Functions are **not** immediately available to the player and must be unlocked later in the game.
 
-.. warning:: This page contains spoilers for the game
-
-The Singularity Functions are unlocked in BitNode-4. If you are in BitNode-4, then you will automatically have access to all of these functions.
-You can use the Singularity Functions in other BitNodes if and only if you have the Source-File for BitNode-4 (aka Source-File 4). Each level of
-Source-File 4 will open up additional Singularity Functions that you can use in other BitNodes. If your Source-File 4 is upgraded all the way to
-level 3, then you will be able to access all of the Singularity Functions.
+The player has access to all of these functions while in BitNode-4. Completing BitNode-4 and gaining its source-file unlocks certain Singularity Functions for use in other BitNodes, with all functions accessible at level 3. 
 
 .. toctree::
-    :caption: Functions:
-
+    :caption:  Level 1 Functions
+    
     universityCourse() <singularityfunctions/universityCourse>
     gymWorkout() <singularityfunctions/gymWorkout>
     travelToCity() <singularityfunctions/travelToCity>
@@ -30,6 +25,10 @@ level 3, then you will be able to access all of the Singularity Functions.
     installBackdoor() <singularityfunctions/installBackdoor>
     hospitalize() <singularityfunctions/hospitalize>
     isBusy() <singularityfunctions/isBusy>
+    
+.. toctree::
+    :caption:  Level 2 Functions
+    
     stopAction() <singularityfunctions/stopAction>
     upgradeHomeRam() <singularityfunctions/upgradeHomeRam>
     getUpgradeHomeRamCost() <singularityfunctions/getUpgradeHomeRamCost>
@@ -44,6 +43,10 @@ level 3, then you will be able to access all of the Singularity Functions.
     getFactionRep() <singularityfunctions/getFactionRep>
     getFactionFavor() <singularityfunctions/getFactionFavor>
     getFactionFavorGain() <singularityfunctions/getFactionFavorGain>
+    
+.. toctree::
+    :caption:  Level 3 Functions
+    
     donateToFaction() <singularityfunctions/donateToFaction>
     createProgram() <singularityfunctions/createProgram>
     commitCrime() <singularityfunctions/commitCrime>
