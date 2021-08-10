@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
     formatNumber,
     convertTimeMsToTimeElapsedString,
@@ -13,6 +13,7 @@ interface IProps {
 }
 
 export function BlackOpElem(props: IProps): React.ReactElement {
+    const setRerender = useState(false)[1];
     const isCompleted = (props.bladeburner.blackops[props.action.name] != null);
     if(isCompleted) {
         return (
@@ -29,7 +30,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
         props.bladeburner.action.type = ActionTypes.BlackOperation;
         props.bladeburner.action.name = props.action.name;
         props.bladeburner.startAction(props.bladeburner.action);
-        props.bladeburner.updateActionAndSkillsContent();
+        setRerender(old => !old);
     }
 
     function onTeam() {

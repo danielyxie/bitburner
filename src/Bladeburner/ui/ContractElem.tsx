@@ -26,7 +26,6 @@ export function ContractElem(props: IProps): React.ReactElement {
         props.bladeburner.action.type = ActionTypes.Contract;
         props.bladeburner.action.name = props.action.name;
         props.bladeburner.startAction(props.bladeburner.action);
-        props.bladeburner.updateActionAndSkillsContent();
         setRerender(old => !old);
     }
 

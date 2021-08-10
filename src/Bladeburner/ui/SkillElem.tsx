@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 
 interface IProps {
     skill: any;
     bladeburner: any;
+    onUpgrade: () => void;
 }
 
 export function SkillElem(props: IProps): React.ReactElement {
@@ -22,7 +23,7 @@ export function SkillElem(props: IProps): React.ReactElement {
         if (props.bladeburner.skillPoints < pointCost) return;
         props.bladeburner.skillPoints -= pointCost;
         props.bladeburner.upgradeSkill(props.skill);
-        props.bladeburner.createActionAndSkillsContent();
+        props.onUpgrade();
     }
 
     return (<>

@@ -52,27 +52,104 @@ export function Stats(props: IProps): React.ReactElement {
                         "be logged in the Bladeburner Console.");
     }
 
-    return (<p>
-        Rank: {formatNumber(props.bladeburner.rank, 2)}<br />
-        Stamina: {formatNumber(props.bladeburner.stamina, 3)} / {formatNumber(props.bladeburner.maxStamina, 3)}
+    function openTravel() {
+        // var popupId = "bladeburner-travel-popup-cancel-btn";
+        // var popupArguments = [];
+        // popupArguments.push(createElement("a", { // Cancel Button
+        //     innerText:"Cancel", class:"a-link-button",
+        //     clickListener:() => {
+        //         removeElementById(popupId); return false;
+        //     },
+        // }))
+        // popupArguments.push(createElement("p", { // Info Text
+        //     innerText:"Travel to a different city for your Bladeburner " +
+        //               "activities. This does not cost any money. The city you are " +
+        //               "in for your Bladeburner duties does not affect " +
+        //               "your location in the game otherwise",
+        // }));
+        // for (var i = 0; i < BladeburnerConstants.CityNames.length; ++i) {
+        // (function(inst, i) {
+        //     popupArguments.push(createElement("div", {
+        //         // Reusing this css class...it adds a border and makes it
+        //         // so that background color changes when you hover
+        //         class:"cmpy-mgmt-find-employee-option",
+        //         innerText:BladeburnerConstants.CityNames[i],
+        //         clickListener:() => {
+        //             inst.city = BladeburnerConstants.CityNames[i];
+        //             removeElementById(popupId);
+        //             inst.updateOverviewContent();
+        //             return false;
+        //         },
+        //     }));
+        // })(this, i);
+        // }
+        // createPopup(popupId, popupArguments);
+    }
+
+    function openFaction() {
+        // if (bladeburnerFac.isMember) {
+        //     Engine.loadFactionContent();
+        //     displayFactionContent(bladeburnersFactionName);
+        // } else {
+        //     if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
+        //         joinFaction(bladeburnerFac);
+        //         dialogBoxCreate("Congratulations! You were accepted into the Bladeburners faction");
+        //         removeChildrenFromElement(DomElems.overviewDiv);
+        //         this.createOverviewContent();
+        //     } else {
+        //         dialogBoxCreate("You need a rank of 25 to join the Bladeburners Faction!")
+        //     }
+        // }
+    }
+
+    return (<>
+        <p className="tooltip" style={{display: 'inline-block'}}>
+            Rank: {formatNumber(props.bladeburner.rank, 2)}
+            <span className="tooltiptext">Your rank within the Bladeburner division.</span>
+        </p><br />
+        <p>Stamina: {formatNumber(props.bladeburner.stamina, 3)} / {formatNumber(props.bladeburner.maxStamina, 3)}</p>
         <div className="help-tip" onClick={openStaminaHelp}>?</div><br />
-        Est. Synthoid Population: {numeralWrapper.formatPopulation(props.bladeburner.getCurrentCity().popEst)}
+        <p>Stamina Penalty: {formatNumber((1-props.bladeburner.calculateStaminaPenalty())*100, 1)}%</p><br />
+        <p>Team Size: {formatNumber(props.bladeburner.teamSize, 0)}</p>
+        <p>Team Members Lost: {formatNumber(props.bladeburner.teamLost, 0)}</p><br />
+        <p>Num Times Hospitalized: {props.bladeburner.numHosp}</p>
+        <p>Money Lost From Hospitalizations: {Money(props.bladeburner.moneyLost)}</p><br />
+        <p>Current City: {props.bladeburner.city}</p>
+        <p className="tooltip" style={{display: 'inline-block'}}>
+            Est. Synthoid Population: {numeralWrapper.formatPopulation(props.bladeburner.getCurrentCity().popEst)}
+            <span className="tooltiptext">This is your Bladeburner division's estimate of how many Synthoids exist in your current city.</span>
+        </p>
         <div className="help-tip" onClick={openPopulationHelp}>?</div><br />
-        Est. Synthoid Communities: {formatNumber(props.bladeburner.getCurrentCity().comms, 0)}<br />
-        City Chaos: {formatNumber(props.bladeburner.getCurrentCity().chaos)}<br />
-        Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}<br />
-        Bonus time: {convertTimeMsToTimeElapsedString(props.bladeburner.storedCycles/BladeburnerConstants.CyclesPerSecond*1000)}<br />
-        Stamina Penalty: {formatNumber((1-props.bladeburner.calculateStaminaPenalty())*100, 1)}%<br /><br />
-        Team Size: {formatNumber(props.bladeburner.teamSize, 0)}<br />
-        Team Members Lost: {formatNumber(props.bladeburner.teamLost, 0)}<br /><br />
-        Num Times Hospitalized: {props.bladeburner.numHosp}<br />
-        Money Lost From Hospitalizations: {Money(props.bladeburner.moneyLost)}<br /><br />
-        Current City: {props.bladeburner.city}<br />
+        <p className="tooltip" style={{display: 'inline-block'}}>
+            Est. Synthoid Communities: {formatNumber(props.bladeburner.getCurrentCity().comms, 0)}
+            <span className="tooltiptext">This is your Bladeburner divison's estimate of how many Synthoid communities exist in your current city.</span>
+        </p><br />
+        <p className="tooltip" style={{display: 'inline-block'}}>
+            City Chaos: {formatNumber(props.bladeburner.getCurrentCity().chaos)}
+            <span className="tooltiptext">The city's chaos level due to tensions and conflicts between humans and Synthoids. Having too high of a chaos level can make contracts and operations harder.</span>
+        </p><br />
+        <br />
+        <p className="tooltip" style={{display: 'inline-block'}}>
+            Bonus time: {convertTimeMsToTimeElapsedString(props.bladeburner.storedCycles/BladeburnerConstants.CyclesPerSecond*1000)}<br />
+            <span className="tooltiptext">
+                You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser).
+                Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed.
+            </span>
+        </p>
+        <p>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</p><br />
         {StatsTable([
             ["Aug. Success Chance mult: ", formatNumber(props.player.bladeburner_success_chance_mult*100, 1) + "%"],
             ["Aug. Max Stamina mult: ", formatNumber(props.player.bladeburner_max_stamina_mult*100, 1) + "%"],
             ["Aug. Stamina Gain mult: ", formatNumber(props.player.bladeburner_stamina_gain_mult*100, 1) + "%"],
             ["Aug. Field Analysis mult: ", formatNumber(props.player.bladeburner_analysis_mult*100, 1) + "%"],
         ])}
-    </p>);
+        <br />
+        <a onClick={openTravel} className="a-link-button" style={{display:"inline-block"}}>Travel</a>
+        <a onClick={openFaction} className="a-link-button tooltip" style={{display:"inline-block"}}>
+            <span className="tooltiptext">Apply to the Bladeburner Faction, or go to the faction page if you are already a member</span>
+            Faction
+        </a>
+        <br />
+        <br />
+    </>);
 }

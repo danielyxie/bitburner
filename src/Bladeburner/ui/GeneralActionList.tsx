@@ -12,13 +12,6 @@ interface IProps {
 }
 
 export function GeneralActionList(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
-
-    useEffect(() => {
-        const id = setInterval(() => setRerender(old => !old), 1000);
-        return () => clearInterval(id);
-    }, []);
-
     const actions: Action[] = [];
     for (const name in GeneralActions) {
         if (GeneralActions.hasOwnProperty(name)) {

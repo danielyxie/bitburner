@@ -26,7 +26,6 @@ export function OperationElem(props: IProps): React.ReactElement {
         props.bladeburner.action.type = ActionTypes.Operation;
         props.bladeburner.action.name = props.action.name;
         props.bladeburner.startAction(props.bladeburner.action);
-        props.bladeburner.updateActionAndSkillsContent();
         setRerender(old => !old);
     }
 

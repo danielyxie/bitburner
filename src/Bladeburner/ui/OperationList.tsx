@@ -11,13 +11,6 @@ interface IProps {
 }
 
 export function OperationList(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
-
-    useEffect(() => {
-        const id = setInterval(() => setRerender(old => !old), 1000);
-        return () => clearInterval(id);
-    }, []);
-
     const names = Object.keys(props.bladeburner.operations);
     const operations = props.bladeburner.operations;
     return (<>

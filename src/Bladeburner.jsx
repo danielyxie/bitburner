@@ -68,6 +68,8 @@ import { OperationPage } from "./Bladeburner/ui/OperationPage";
 import { BlackOpPage } from "./Bladeburner/ui/BlackOpPage";
 import { SkillPage } from "./Bladeburner/ui/SkillPage";
 import { Stats } from "./Bladeburner/ui/Stats";
+import { AllPages } from "./Bladeburner/ui/AllPages";
+import { Console } from "./Bladeburner/ui/Console";
 
 import { StatsTable } from "./ui/React/StatsTable";
 import { CopyableText } from "./ui/React/CopyableText";
@@ -443,9 +445,6 @@ Bladeburner.prototype.process = function() {
             }
         }
 
-        if (routing.isOn(Page.Bladeburner)) {
-            this.updateContent();
-        }
     }
 }
 
@@ -807,10 +806,6 @@ Bladeburner.prototype.completeAction = function() {
                     if (action.name === "Operation Daedalus") {
                         this.resetAction();
                         return hackWorldDaemon(Player.bitNodeN);
-                    }
-
-                    if (routing.isOn(Page.Bladeburner)) {
-                        this.createActionAndSkillsContent();
                     }
 
                     if (this.logging.blackops) {
@@ -1228,7 +1223,6 @@ Bladeburner.prototype.initializeDomElementRefs = function() {
 
         overviewDiv:        null, // Overview of stats that stays fixed on left
         actionAndSkillsDiv: null, // Panel for different sections (contracts, ops, skills)
-        currentTab:         null, // Contracts, Operations, Black Ops, Skills
 
         consoleDiv:         null,
         consoleTable:       null,
@@ -1236,29 +1230,6 @@ Bladeburner.prototype.initializeDomElementRefs = function() {
         consoleInputCell:   null, // td
         consoleInputHeader: null, // "> "
         consoleInput:       null, // Actual input element
-
-        // Overview Content
-        overviewRank:               null,
-        overviewStamina:            null,
-        overviewStaminaHelpTip:     null,
-        overviewGen1:               null, // Stamina Penalty, Team, Hospitalized stats, current city
-        overviewEstPop:             null,
-        overviewEstPopHelpTip:      null,
-        overviewEstComms:           null,
-        overviewChaos:              null,
-        overviewSkillPoints:        null,
-        overviewBonusTime:          null,
-        overviewAugMults:           null,
-
-        // Actions and Skills Content
-        actionsAndSkillsDesc:   null,
-        actionsAndSkillsList:   null, // ul element of all UI elements in this panel
-        generalActions:     {},
-        contracts:          {},
-        operations:         {},
-        blackops:           {},
-        skills:             {},
-        skillPointsDisplay: null,
     };
 }
 
@@ -1282,10 +1253,8 @@ Bladeburner.prototype.createContent = function() {
         border:"1px solid white", margin:"6px", padding:"6px",
     });
 
-    DomElems.currentTab = "general";
-
-    this.createOverviewContent();
-    this.createActionAndSkillsContent();
+    ReactDOM.render(<Stats bladeburner={this} player={Player} />, DomElems.overviewDiv);
+    ReactDOM.render(<AllPages bladeburner={this} />, DomElems.actionAndSkillsDiv);
 
     // Console
     DomElems.consoleDiv          = createElement("div", {
@@ -1297,31 +1266,12 @@ Bladeburner.prototype.createContent = function() {
             return false;
         },
     });
-    DomElems.consoleTable        = createElement("table", {class:"bladeburner-console-table"});
-    DomElems.consoleInputRow     = createElement("tr", {class:"bladeburner-console-input-row", id:"bladeburner-console-input-row"});
-    DomElems.consoleInputCell    = createElement("td", {class:"bladeburner-console-input-cell"});
-    DomElems.consoleInputHeader  = createElement("pre", {innerText:"> "});
-    DomElems.consoleInput        = createElement("input", {
-        type:"text", class:"bladeburner-console-input", tabIndex:1,
-        onfocus:() => {DomElems.consoleInput.value = DomElems.consoleInput.value},
-    });
-
-    DomElems.consoleInputCell.appendChild(DomElems.consoleInputHeader);
-    DomElems.consoleInputCell.appendChild(DomElems.consoleInput);
-    DomElems.consoleInputRow.appendChild(DomElems.consoleInputCell);
-    DomElems.consoleTable.appendChild(DomElems.consoleInputRow);
-    DomElems.consoleDiv.appendChild(DomElems.consoleTable);
+    ReactDOM.render(<Console bladeburner={this} />, DomElems.consoleDiv);
 
     DomElems.overviewConsoleParentDiv.appendChild(DomElems.overviewDiv);
     DomElems.overviewConsoleParentDiv.appendChild(DomElems.consoleDiv);
     DomElems.bladeburnerDiv.appendChild(DomElems.overviewConsoleParentDiv);
     DomElems.bladeburnerDiv.appendChild(DomElems.actionAndSkillsDiv);
-
-
-    // legend
-    const legend = createElement("div")
-    legend.innerHTML = `<span class="text">${stealthIcon}= This action requires stealth, ${killIcon} = This action involves retirement</span>`
-    DomElems.bladeburnerDiv.appendChild(legend);
 
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
@@ -1333,8 +1283,6 @@ Bladeburner.prototype.createContent = function() {
             this.postToConsole(this.consoleLogs[i], false);
         }
     }
-
-    DomElems.consoleInput.focus();
 }
 
 Bladeburner.prototype.clearContent = function() {
@@ -1346,290 +1294,35 @@ Bladeburner.prototype.clearContent = function() {
     this.initializeDomElementRefs();
 }
 
-Bladeburner.prototype.createOverviewContent = function() {
-    if (DomElems.overviewDiv == null) {
-        throw new Error("Bladeburner.createOverviewContent() called with DomElems.overviewDiv = null");
-    }
-
-    DomElems.overviewRank = createElement("p", {
-        innerText:"Rank: ",
-        display:"inline-block",
-        tooltip:"Your rank within the Bladeburner division",
-    });
-
-    DomElems.overviewStamina = createElement("p", {
-        display:"inline-block",
-    });
-
-    DomElems.overviewStaminaHelpTip = createElement("div", {
-        class:"help-tip",
-        innerText:"?",
-        clickListener: () => {
-            dialogBoxCreate("Performing actions will use up your stamina.<br><br>" +
-                            "Your max stamina is determined primarily by your agility stat.<br><br>" +
-                            "Your stamina gain rate is determined by both your agility and your " +
-                            "max stamina. Higher max stamina leads to a higher gain rate.<br><br>" +
-                            "Once your " +
-                            "stamina falls below 50% of its max value, it begins to negatively " +
-                            "affect the success rate of your contracts/operations. This penalty " +
-                            "is shown in the overview panel. If the penalty is 15%, then this means " +
-                            "your success rate would be multipled by 85% (100 - 15).<br><br>" +
-                            "Your max stamina and stamina gain rate can also be increased by " +
-                            "training, or through skills and Augmentation upgrades.");
-        },
-    });
-
-    DomElems.overviewGen1 = createElement("p", {
-        display:"block",
-    });
-
-    DomElems.overviewEstPop = createElement("p", {
-        innerText:"Est. Synthoid Population: ",
-        display:"inline-block",
-        tooltip:"This is your Bladeburner division's estimate of how many Synthoids exist " +
-                "in your current city.",
-    });
-
-    DomElems.overviewEstPopHelpTip = createElement("div", {
-        innerText:"?", class:"help-tip",
-        clickListener:() => {
-            dialogBoxCreate("The success rate of your contracts/operations depends on " +
-                            "the population of Synthoids in your current city. " +
-                            "The success rate that is shown to you is only an estimate, " +
-                            "and it is based on your Synthoid population estimate.<br><br>" +
-                            "Therefore, it is important that this Synthoid population estimate " +
-                            "is accurate so that you have a better idea of your " +
-                            "success rate for contracts/operations. Certain " +
-                            "actions will increase the accuracy of your population " +
-                            "estimate.<br><br>" +
-                            "The Synthoid populations of cities can change due to your " +
-                            "actions or random events. If random events occur, they will " +
-                            "be logged in the Bladeburner Console.");
-        },
-    });
-
-    DomElems.overviewEstComms = createElement("p", {
-        innerText:"Est. Synthoid Communities: ",
-        display:"inline-block",
-        tooltip:"This is your Bladeburner divison's estimate of how many Synthoid " +
-                "communities exist in your current city.",
-    });
-
-    DomElems.overviewChaos = createElement("p", {
-        innerText:"City Chaos: ",
-        display:"inline-block",
-        tooltip:"The city's chaos level due to tensions and conflicts between humans and Synthoids. " +
-                "Having too high of a chaos level can make contracts and operations harder.",
-    });
-
-    DomElems.overviewBonusTime = createElement("p", {
-      innerText: "Bonus time: ",
-      display: "inline-block",
-      tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
-               "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed.",
-    });
-    DomElems.overviewSkillPoints = createElement("p", {display:"block"});
-
-
-    DomElems.overviewAugMults = createElement("div", {display:"block"});
-
-
-    DomElems.overviewDiv.appendChild(DomElems.overviewRank);
-    appendLineBreaks(DomElems.overviewDiv, 1);
-    DomElems.overviewDiv.appendChild(DomElems.overviewStamina);
-    DomElems.overviewDiv.appendChild(DomElems.overviewStaminaHelpTip);
-    DomElems.overviewDiv.appendChild(DomElems.overviewGen1);
-    DomElems.overviewDiv.appendChild(DomElems.overviewEstPop);
-    DomElems.overviewDiv.appendChild(DomElems.overviewEstPopHelpTip);
-    appendLineBreaks(DomElems.overviewDiv, 1);
-    DomElems.overviewDiv.appendChild(DomElems.overviewEstComms);
-    appendLineBreaks(DomElems.overviewDiv, 1);
-    DomElems.overviewDiv.appendChild(DomElems.overviewChaos);
-    appendLineBreaks(DomElems.overviewDiv, 2);
-    DomElems.overviewDiv.appendChild(DomElems.overviewBonusTime);
-    DomElems.overviewDiv.appendChild(DomElems.overviewSkillPoints);
-    appendLineBreaks(DomElems.overviewDiv, 1);
-    DomElems.overviewDiv.appendChild(DomElems.overviewAugMults);
-
-    // Travel to new city button
-    appendLineBreaks(DomElems.overviewDiv, 1);
-    DomElems.overviewDiv.appendChild(createElement("a", {
-        innerHTML:"Travel", class:"a-link-button", display:"inline-block",
-        clickListener:() => {
-            var popupId = "bladeburner-travel-popup-cancel-btn";
-            var popupArguments = [];
-            popupArguments.push(createElement("a", { // Cancel Button
-                innerText:"Cancel", class:"a-link-button",
-                clickListener:() => {
-                    removeElementById(popupId); return false;
-                },
-            }))
-            popupArguments.push(createElement("p", { // Info Text
-                innerText:"Travel to a different city for your Bladeburner " +
-                          "activities. This does not cost any money. The city you are " +
-                          "in for your Bladeburner duties does not affect " +
-                          "your location in the game otherwise",
-            }));
-            for (var i = 0; i < BladeburnerConstants.CityNames.length; ++i) {
-            (function(inst, i) {
-                popupArguments.push(createElement("div", {
-                    /**
-                     * Reusing this css class...it adds a border and makes it
-                     * so that background color changes when you hover
-                     */
-                    class:"cmpy-mgmt-find-employee-option",
-                    innerText:BladeburnerConstants.CityNames[i],
-                    clickListener:() => {
-                        inst.city = BladeburnerConstants.CityNames[i];
-                        removeElementById(popupId);
-                        inst.updateOverviewContent();
-                        return false;
-                    },
-                }));
-            })(this, i);
-            }
-            createPopup(popupId, popupArguments);
-        },
-    }));
-
-    // Faction button
-    const bladeburnersFactionName = "Bladeburners";
-    if (factionExists(bladeburnersFactionName)) {
-        var bladeburnerFac = Factions[bladeburnersFactionName];
-        if (!(bladeburnerFac instanceof Faction)) {
-            throw new Error("Could not properly get Bladeburner Faction object in Bladeburner UI Overview Faction button");
-        }
-        DomElems.overviewDiv.appendChild(createElement("a", {
-            innerText:"Faction", class:"a-link-button", display:"inline-block",
-            tooltip:"Apply to the Bladeburner Faction, or go to the faction page if you are already a member",
-            clickListener:() => {
-                if (bladeburnerFac.isMember) {
-                    Engine.loadFactionContent();
-                    displayFactionContent(bladeburnersFactionName);
-                } else {
-                    if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
-                        joinFaction(bladeburnerFac);
-                        dialogBoxCreate("Congratulations! You were accepted into the Bladeburners faction");
-                        removeChildrenFromElement(DomElems.overviewDiv);
-                        this.createOverviewContent();
-                    } else {
-                        dialogBoxCreate("You need a rank of 25 to join the Bladeburners Faction!")
-                    }
-                }
-                return false;
-            },
-        }));
-    }
-
-    DomElems.overviewDiv.appendChild(createElement("br"));
-    DomElems.overviewDiv.appendChild(createElement("br"));
-
-    this.updateOverviewContent();
-}
-
-Bladeburner.prototype.createActionAndSkillsContent = function() {
-    if (DomElems.currentTab == null) {DomElems.currentTab = "general";}
-
-    removeChildrenFromElement(DomElems.actionAndSkillsDiv);
-    clearObject(DomElems.generalActions);
-    clearObject(DomElems.contracts);
-    clearObject(DomElems.operations);
-    clearObject(DomElems.blackops);
-    clearObject(DomElems.skills);
-
-    //Navigation buttons
-    var currTab = DomElems.currentTab.toLowerCase();
-    var buttons = ["General", "Contracts", "Operations", "BlackOps", "Skills"];
-    for (var i = 0; i < buttons.length; ++i) {
-        (function(buttons, i, inst, currTab) {
-
-            DomElems.actionAndSkillsDiv.appendChild(createElement("a", {
-                innerText:buttons[i],
-                class:currTab === buttons[i].toLowerCase() ? "bladeburner-nav-button-inactive" : "bladeburner-nav-button",
-                clickListener:() => {
-                    DomElems.currentTab = buttons[i].toLowerCase();
-                    inst.createActionAndSkillsContent();
-                    return false;
-                },
-            }));
-        }) (buttons, i, this, currTab);
-    }
-
-    // General info/description for each action
-    DomElems.actionsAndSkillsDesc = createElement("p", {
-        display:"block", margin:"4px", padding:"4px",
-    });
-
-    // List for actions/skills
-    removeChildrenFromElement(DomElems.actionsAndSkillsList);
-    DomElems.actionsAndSkillsList = createElement("ul");
-
-    switch(currTab) {
-        case "general":
-            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
-            ReactDOM.render(<GeneralActionPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
-            break;
-        case "contracts":
-            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
-            ReactDOM.render(<ContractPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
-            break;
-        case "operations":
-            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
-            ReactDOM.render(<OperationPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
-            break;
-        case "blackops":
-            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
-            ReactDOM.render(<BlackOpPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
-            break;
-        case "skills":
-            ReactDOM.unmountComponentAtNode(DomElems.actionsAndSkillsDesc);
-            ReactDOM.render(<SkillPage bladeburner={this} />, DomElems.actionsAndSkillsDesc);
-            break;
-        default:
-            throw new Error("Invalid value for DomElems.currentTab in Bladeburner.createActionAndSkillsContent");
-    }
-    this.updateContent();
-
-    DomElems.actionAndSkillsDiv.appendChild(DomElems.actionsAndSkillsDesc);
-    DomElems.actionAndSkillsDiv.appendChild(DomElems.actionsAndSkillsList);
-}
-
-Bladeburner.prototype.updateContent = function() {
-    this.updateOverviewContent();
-}
-
-Bladeburner.prototype.updateOverviewContent = function() {
-    if (!routing.isOn(Page.Bladeburner)) return;
-    ReactDOM.render(<Stats bladeburner={this} player={Player} />, DomElems.overviewDiv);
-}
-
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////HYDRO END OF UI//////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 // Bladeburner Console Window
 Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
     const MaxConsoleEntries = 100;
-    if (saveToLogs === true) {
+    if (saveToLogs) {
         this.consoleLogs.push(input);
         if (this.consoleLogs.length > MaxConsoleEntries) {
             this.consoleLogs.shift();
         }
     }
-
-    if (input == null || DomElems.consoleDiv == null) {return;}
-    $("#bladeburner-console-input-row").before('<tr><td class="bladeburner-console-line" style="color: var(--my-font-color); white-space:pre-wrap;">' + input + '</td></tr>');
-
-    if (DomElems.consoleTable.childNodes.length > MaxConsoleEntries) {
-        DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
-    }
-
-	this.updateConsoleScroll();
 }
 
-Bladeburner.prototype.updateConsoleScroll = function() {
-    DomElems.consoleDiv.scrollTop = DomElems.consoleDiv.scrollHeight;
-}
 
 Bladeburner.prototype.resetConsoleInput = function() {
     DomElems.consoleInput.value = "";
@@ -2035,7 +1728,6 @@ Bladeburner.prototype.executeSkillConsoleCommand = function(args) {
                     this.skillPoints -= pointCost;
                     this.upgradeSkill(skill);
                     this.log(skill.name + " upgraded to Level " + this.skills[skillName]);
-                    this.createActionAndSkillsContent();
                 } else {
                     this.postToConsole("You do not have enough Skill Points to upgrade this. You need " + formatNumber(pointCost, 0));
                 }
@@ -2441,9 +2133,6 @@ Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript
 
     this.skillPoints -= cost;
     this.upgradeSkill(skill);
-    if (routing.isOn(Page.Bladeburner) && DomElems.currentTab.toLowerCase() === "skills") {
-        this.createActionAndSkillsContent();
-    }
     workerScript.log("bladeburner.upgradeSkill", `'${skillName}' upgraded to level ${this.skills[skillName]}`);
     return true;
 }
@@ -2514,10 +2203,6 @@ Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript)
     } else if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
         joinFaction(bladeburnerFac);
         workerScript.log("bladeburner.joinBladeburnerFaction", "Joined Bladeburners faction.");
-        if (routing.isOn(Page.Bladeburner)) {
-            removeChildrenFromElement(DomElems.overviewDiv);
-            this.createOverviewContent();
-        }
         return true;
     } else {
         workerScript.log("bladeburner.joinBladeburnerFaction", `You do not have the required rank (${this.rank}/${BladeburnerConstants.RankNeededForFaction}).`);
