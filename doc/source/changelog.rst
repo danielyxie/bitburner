@@ -3,6 +3,12 @@
 Changelog
 =========
 
+v0.52.1 - 2021-07-10 bugfixing (hydroflame)
+-------------------------------------------
+
+**Misc.**
+* Fix game crash/corruption when quitting a job while working for it unfocused.
+
 v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame & community)
 --------------------------------------------------------------
 

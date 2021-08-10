@@ -1785,6 +1785,7 @@ export function getNextCompanyPosition(company, entryPosType) {
 }
 
 export function quitJob(company) {
+    this.isWorking = false;
     this.companyName = "";
     delete this.jobs[company];
 }
