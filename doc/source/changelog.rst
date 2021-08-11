@@ -8,6 +8,14 @@ v0.52.1 - 2021-07-10 bugfixing (hydroflame)
 
 **Misc.**
 * Fix game crash/corruption when quitting a job while working for it unfocused.
+* Fix typo in corporation Market Data.
+* Fix typo in docs for hackPercent.
+* The tutorial encourages the players to connect to home before creating `n00dles.script`
+* The dark web `buy` command now accepts `-1` (one) and `--list` instead of just
+ `-l`. Helps some confused players.
+* Character overview screen no longer hidden on the corporation screen.
+* Infiltration difficulty display is now more explicit (It's a big arrow instead
+ of just one word.)
 
 v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame & community)
 --------------------------------------------------------------

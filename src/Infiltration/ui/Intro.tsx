@@ -21,6 +21,25 @@ function diffStr(d: number): string {
     return "impossible";
 }
 
+function arrowPart(color: string, length: number): JSX.Element {
+    let arrow = "";
+    if(length <= 0) length = 0;
+    else if(length > 13) length = 13;
+    else {
+        length--;
+        arrow = ">";
+    }
+    return <span style={{color: color}}>{"=".repeat(length)}{arrow}{" ".repeat(13-arrow.length-length)}</span>
+}
+
+function coloredArrow(difficulty: number): JSX.Element {
+    if(difficulty === 0) {
+        return <span style={{color: 'white'}}>{'>'}{" ".repeat(38)}</span>
+    } else {
+        return <>{arrowPart('white', difficulty*13)}{arrowPart('orange', (difficulty-1)*13)}{arrowPart('red', (difficulty-2)*13)}</>
+    }
+}
+
 export function Intro(props: IProps): React.ReactElement {
     return (<>
         <Grid container spacing={3}>
@@ -28,7 +47,13 @@ export function Intro(props: IProps): React.ReactElement {
                 <h1>Infiltrating {props.Location}</h1>
             </Grid>
             <Grid item xs={10}>
-                <h2>Difficulty: {diffStr(props.Difficulty)}, Maximum level: {props.MaxLevel}</h2>
+                <h2>Maximum level: {props.MaxLevel}</h2>
+            </Grid>
+            <Grid item xs={10}>
+                
+<pre>[{coloredArrow(props.Difficulty)}]</pre>
+<pre> ^            ^            ^           ^</pre>
+<pre> Trivial    Normal        Hard    Impossible</pre>
             </Grid>
             <Grid item xs={10}>
                 <p>Infiltration is a series of short minigames that get
