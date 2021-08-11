@@ -16,6 +16,9 @@ v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
 * Character overview screen no longer hidden on the corporation screen.
 * Infiltration difficulty display is now more explicit (It's a big arrow instead
  of just one word.)
+* Fix wrong ram value in tutorial. (@MageKing17)
+* Plenty of augmentation description cleanup (@Kwazygloo)
+* Plenty of typo/description fixed (@MageKing17)
 * Cleanup description of singularity function on readthedocs (@PurePandemonium)
 * Fix bug when autolinking a server while backdooring (@schroederIT)
 
