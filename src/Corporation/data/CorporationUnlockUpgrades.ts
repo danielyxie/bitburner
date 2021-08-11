@@ -23,7 +23,7 @@ export const CorporationUnlockUpgrades: IMap<any[]> = {
     "3":  [3, 5e9, "Market Data - Competition",
                     "Mine and analyze market data to determine how much competition there is on the market " +
                     "for all resources. The competition attribute, which affects sales, will be displayed for " +
-                    "for every material and product."],
+                    "every material and product."],
     "4":  [4, 10e9, "VeChain",
                     "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
                     "This upgrade will allow you to view a wide array of useful statistics about your " +

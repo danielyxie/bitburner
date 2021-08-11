@@ -15,7 +15,7 @@ hackPercent() Netscript Function
     Player can be acquired with the :doc:`getPlayer<../../basicfunctions/getPlayer>` function.
 
     This function calculates the percentage of money hacked from a server.
-    Multiply this by thread count to know calculate the percentage for more than 1 thread.
+    Multiply this by thread count to calculate the percentage for more than 1 thread.
 
     Examples:
 

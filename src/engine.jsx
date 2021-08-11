@@ -458,7 +458,6 @@ const Engine = {
     loadCorporationContent: function() {
         if (Player.corporation instanceof Corporation) {
             Engine.hideAllContent();
-            document.getElementById("character-overview-wrapper").style.visibility = "hidden";
             routing.navigateTo(Page.Corporation);
             Player.corporation.createUI();
         }
