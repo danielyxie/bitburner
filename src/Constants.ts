@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.0",
+    Version:                "0.52.1",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -224,48 +224,25 @@ export const CONSTANTS: IMap<any> = {
     // BitNode/Source-File related stuff
     TotalNumBitNodes: 24,
 
-    LatestUpdate:
-    `
-    v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame)
-    -------
+    LatestUpdate: `
+    v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
+    -------------------------------------------
 
-    Infiltration
-    * Completely reworked. Not the same mechanic at all.
+    **Misc.**
 
-    Terminal
-    * tail is smarter. It automatically assume the only possible options in some
-      cases.
-
-    Intelligence
-    * Now available when starting BN5 instead of after beating it for the first
-      time.
-    * Nerf the effect of intelligence on reputation gain.
-
-    Augmentation
-    * Added a new augmentation, the 'Unstable Circadian Modulator', whose
-      gimmick is that its stats are randomized every hour.
-
-    Netscript
-    * 'getPlayer' is not a singularity function anymore.
-    * 'hacknetNodes.constants' returns the correct values.
-    * 'createGang' has been added.
-    * 'inGang' has been added.
-
-    Tutorial
-    * Updated the tutorial. Made it look cleaner, fixed typos, etc.
-
-    Misc.
-    * Fix many typos in literature (@kwazygloo)
-    * Fix being able to unfocus from gym and university.
-    * Fix being able to do hacking missions while unfocused.
-    * Fix many typos in Augmentation descriptions (@kwazygloo)
-    * More numbers handle absurdly large values. (@Tesseract1234567890)
-    * Fix many typos (@Tesseract1234567890)
-    * Fixed an issue that caused a UI desync when sleeves were set to workout
-      stats other than strength at the gym.
-    * Fix weird alignment of donation text box and button. (@Tesseract1234567890)
-    * Fixed an issue where reputation could be transfered to new jobs when unfocused.
-    * Empty stack traces should no longer appear.
-    * Purchasing anything with Infinity money doesn't result in NaN.
-    `,
+    * Fix game crash/corruption when quitting a job while working for it unfocused.
+    * Fix typo in corporation Market Data.
+    * Fix typo in docs for hackPercent.
+    * The tutorial encourages the players to connect to home before creating 'n00dles.script'
+    * The dark web 'buy' command now accepts '-1' (one) and '--list' instead of just
+     '-l'. Helps some confused players.
+    * Character overview screen no longer hidden on the corporation screen.
+    * Infiltration difficulty display is now more explicit (It's a big arrow instead
+     of just one word.)
+    * Fix wrong ram value in tutorial. (@MageKing17)
+    * Plenty of augmentation description cleanup (@Kwazygloo)
+    * Plenty of typo/description fixed (@MageKing17)
+    * Cleanup description of singularity function on readthedocs (@PurePandemonium)
+    * Fix bug when autolinking a server while backdooring (@schroederIT)
+`,
 }

@@ -7,6 +7,7 @@ v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
 -------------------------------------------
 
 **Misc.**
+
 * Fix game crash/corruption when quitting a job while working for it unfocused.
 * Fix typo in corporation Market Data.
 * Fix typo in docs for hackPercent.
