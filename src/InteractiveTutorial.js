@@ -259,7 +259,7 @@ function iTutorialEvaluateStep() {
         Engine.loadTerminalContent();
         iTutorialSetText("Hacking is the core mechanic of the game and is necessary for progressing. However, " +
                          "you don't want to be hacking manually the entire time. You can automate your hacking " +
-                         "by writing scripts!<br><br>To create a new script or edit an existing one, you can use the <code class='interactive-tutorial-command'>nano</code> " +
+                         "by writing scripts!<br><br>First go to your home server with the <code class='interactive-tutorial-command'>home</code> command.<br><br>To create a new script or edit an existing one, you can use the <code class='interactive-tutorial-command'>nano</code> " +
                          "command. Scripts must end with the <code class='interactive-tutorial-command'>.script</code> extension. Let's make a script now by " +
                          "entering <code class='interactive-tutorial-command'>nano n00dles.script</code> after the hack command finishes running (Sidenote: Pressing ctrl + c" +
                          " will end a command like hack early)");
@@ -288,7 +288,7 @@ function iTutorialEvaluateStep() {
         break;
     case iTutorialSteps.TerminalRunScript:
         Engine.loadTerminalContent();
-        iTutorialSetText("We have 16GB of free RAM on this machine, which is enough to run our " +
+        iTutorialSetText("We have 4GB of free RAM on this machine, which is enough to run our " +
                          "script. Let's run our script using <code class='interactive-tutorial-command'>run n00dles.script</code>.");
         nextBtn.style.display = "none"; // next step triggered by terminal commmand
         break;

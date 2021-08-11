@@ -8,7 +8,6 @@ sleep() Netscript Function
 
     Suspends the script for n milliseconds.
 
-
     Example:
 
     .. code-block:: javascript

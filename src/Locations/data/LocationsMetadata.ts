@@ -441,10 +441,3 @@ export const LocationsMetadata: IConstructorParams[] = [
         types: [LocationType.StockMarket],
     },
 ];
-
-(function(){
-    for(const loc of LocationsMetadata) {
-        if(!loc || !loc.infiltrationData) continue
-        console.log(loc.infiltrationData.startingSecurityLevel+2);
-    }
-})();

@@ -6,8 +6,8 @@ httpworm() Netscript Function
     :RAM cost: 0.05 GB
     :param string hostname: Hostname of the target server.
 
-    Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist
-    on your home computer.
+    Runs the ``HTTPWorm.exe`` program on the target server. ``HTTPWorm.exe``
+    must exist on your home computer.
 
     Example:
 

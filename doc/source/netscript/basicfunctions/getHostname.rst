@@ -11,4 +11,3 @@ getHostname() Netscript Function
     .. code-block:: javascript
 
         getHostname(); // returns: "foodnstuff"
-        

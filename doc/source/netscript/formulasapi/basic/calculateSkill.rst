@@ -8,7 +8,8 @@ calculateSkill() Netscript Function
     :param number mult: Assume a specific skill multipler (not exp multiplier).
     :returns: skillLevel that ``exp`` would reach with that multiplier.
 
-    You must have Source-File 5-1 in order to use this function.
+    If you are not in BitNode-5, then you must have Source-File 5-1 in order to
+    use this function.
 
     This function calculates the skillLevel that the given amount of ``exp`` would reach.
 

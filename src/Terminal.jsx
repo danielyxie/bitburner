@@ -1993,7 +1993,7 @@ let Terminal = {
             (function() {
             var hostname = links[i].innerHTML.toString();
             links[i].onclick = function() {
-                if (Terminal.analyzeFlag || Terminal.hackFlag) {return;}
+                if (Terminal.analyzeFlag || Terminal.hackFlag || Terminal.backdoorFlag) {return;}
                 Terminal.connectToServer(hostname);
             }
             }());// Immediate invocation

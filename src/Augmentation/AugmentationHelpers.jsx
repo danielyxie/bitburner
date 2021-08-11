@@ -41,7 +41,7 @@ function getRandomBonus() {
             description: "Increases the player's hacking chance by 25%.<br>" +
                          "Increases the player's hacking speed by 10%.<br>" +
                          "Increases the amount of money the player's gains from hacking by 25%.<br>" +
-                         "Increases the amount of money the player can inject into servers using grow() by 10%.",
+                         "Improves grow() by 10%.",
         },
         {
             bonuses: {
@@ -54,13 +54,13 @@ function getRandomBonus() {
         {
             bonuses: {
                 strength_mult: 1.25,
-                strength_exp_mult: 1.5,
+                strength_exp_mult: 2,
                 defense_mult: 1.25,
-                defense_exp_mult: 1.5,
+                defense_exp_mult: 2,
                 dexterity_mult: 1.25,
-                dexterity_exp_mult: 1.5,
+                dexterity_exp_mult: 2,
                 agility_mult: 1.25,
-                agility_exp_mult: 1.5,
+                agility_exp_mult: 2,
             },
             description: "Increases all of the player's combat stats by 25%.<br>" +
                          "Increases all of the player's combat stat experience gain rate by 100%.",
@@ -158,9 +158,8 @@ function initAugmentations() {
 
     const Targeting1 = new Augmentation({
         name:AugmentationNames.Targeting1, moneyCost:1.5e7, repCost:5e3,
-        info:"This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's " +
-             "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information " +
-             "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies.<br><br>" +
+        info:"A cranial implant that is embedded within the inner ear structures and optic nerves. It regulates " +
+             "and enhances balance and hand-eye coordination.<br><br>" +
              "This augmentation increases the player's dexterity by 10%.",
         dexterity_mult: 1.1,
     });
@@ -173,8 +172,8 @@ function initAugmentations() {
 
     const Targeting2 = new Augmentation({
         name:AugmentationNames.Targeting2, moneyCost:4.25e7, repCost:8.75e3,
-        info:"This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
+        info:"This upgraded version of the 'Augmented Targeting' implant is capable of augmenting " +
+             "reality by digitally displaying weaknesses and vital signs of threats.<br><br>" +
              "This augmentation increases the player's dexterity by 20%.",
         prereqs:[AugmentationNames.Targeting1],
         dexterity_mult: 1.2,
@@ -188,8 +187,8 @@ function initAugmentations() {
 
     const Targeting3 = new Augmentation({
         name:AugmentationNames.Targeting3, moneyCost:1.15e8, repCost:2.75e4,
-        info:"This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality " +
-             "and enhances the user's balance and hand-eye coordination.<br><br>" +
+        info:"The latest version of the 'Augmented Targeting' implant adds the ability to " +
+             "lock-on and track threats.<br><br>" +
              "This augmentation increases the player's dexterity by 30%.",
         prereqs:[AugmentationNames.Targeting2],
         dexterity_mult: 1.3,
@@ -203,8 +202,8 @@ function initAugmentations() {
 
     const SyntheticHeart = new Augmentation({
         name:AugmentationNames.SyntheticHeart, moneyCost:2.875e9, repCost:7.5e5,
-        info:"This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood " +
-             "at much higher efficiencies than a normal human heart.<br><br>" +
+        info:"This advanced artificial heart, created from plasteel and graphene, is capable of pumping blood " +
+             "more efficiently than an organic heart.<br><br>" +
              "This augmentation increases the player's agility and strength by 50%.",
         agility_mult: 1.5,
         strength_mult: 1.5,
@@ -234,8 +233,8 @@ function initAugmentations() {
 
     const CombatRib1 = new Augmentation({
         name:AugmentationNames.CombatRib1, repCost:7.5e3, moneyCost:2.375e7,
-        info:"The human body's ribs are replaced with artificial ribs that automatically and continuously release cognitive " +
-             "and performance-enhancing drugs into the bloodstream, improving the user's abilities in combat.<br><br>" +
+        info:"The rib cage is augmented to continuously release boosters into the bloodstream " +
+             "which increase the oxygen-carrying capacity of blood.<br><br>" +
              "This augmentation increases the player's strength and defense by 10%.",
         strength_mult: 1.1,
         defense_mult: 1.1,
@@ -249,8 +248,8 @@ function initAugmentations() {
 
     const CombatRib2 = new Augmentation({
         name:AugmentationNames.CombatRib2, repCost:1.875e4, moneyCost:6.5e7,
-        info:"This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " +
-             "drugs into the bloodstream.<br><br>" +
+        info:"An upgraded version of the 'Combat Rib' augmentation that adds potent stimulants which " +
+             "improve focus and endurance while decreasing reaction time and fatigue.<br><br>" +
              "This augmentation increases the player's strength and defense by 14%.",
         prereqs:[AugmentationNames.CombatRib1],
         strength_mult: 1.14,
@@ -265,8 +264,8 @@ function initAugmentations() {
 
     const CombatRib3 = new Augmentation({
         name:AugmentationNames.CombatRib3, repCost:3.5e4, moneyCost:1.2e8,
-        info:"This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " +
-             "drugs into the bloodstream.<br><br>" +
+        info:"The latest version of the 'Combat Rib' augmentation releases advanced anabolic steroids that " +
+             "improve muscle mass and physical performance while being safe and free of side effects.<br><br>" +
              "This augmentation increases the player's strength and defense by 18%.",
         prereqs:[AugmentationNames.CombatRib2],
         strength_mult: 1.18,
@@ -281,8 +280,8 @@ function initAugmentations() {
 
     const NanofiberWeave = new Augmentation({
         name:AugmentationNames.NanofiberWeave, repCost:3.75e4, moneyCost:1.25e8,
-        info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " +
-             "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
+        info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning, " +
+             "which improves its regenerative and extracellular homeostasis abilities.<br><br>" +
              "This augmentation increases the player's strength and defense by 20%.",
         strength_mult: 1.2,
         defense_mult: 1.2,
@@ -314,7 +313,7 @@ function initAugmentations() {
     const WiredReflexes = new Augmentation({
         name:AugmentationNames.WiredReflexes, repCost:1.25e3, moneyCost:2.5e6,
         info:"Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " +
-             "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.<br><br>" +
+             "supercharging the spread of neural signals and increasing reflex speed.<br><br>" +
              "This augmentation increases the player's agility and dexterity by 5%.",
         agility_mult: 1.05,
         dexterity_mult: 1.05,
@@ -328,8 +327,8 @@ function initAugmentations() {
 
     const GrapheneBoneLacings = new Augmentation({
         name:AugmentationNames.GrapheneBoneLacings, repCost:1.125e6, moneyCost:4.25e9,
-        info:"A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
-             "their density and tensile strength.<br><br>" +
+        info:"Graphene is grafted and fused into the skeletal structure, " +
+             "enhancing bone density and tensile strength.<br><br>" +
              "This augmentation increases the player's strength and defense by 70%.",
         strength_mult: 1.7,
         defense_mult: 1.7,
@@ -342,10 +341,10 @@ function initAugmentations() {
 
     const BionicSpine = new Augmentation({
         name:AugmentationNames.BionicSpine, repCost:4.5e4, moneyCost:1.25e8,
-        info:"An artificial spine created from plasteel and carbon fibers that completely replaces the organic spine. " +
-             "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " +
-             "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " +
-             "greatly improved senses and reaction speeds.<br><br>" +
+        info:"The spine is reconstructed using plasteel and carbon fibers. " +
+             "It is now capable of stimulating and regulating neural signals " +
+             "passing through the spinal cord, improving senses and reaction speed. " +
+             "The 'Bionic Spine' also interfaces with all other 'Bionic' implants.<br><br>" +
              "This augmentation increases all of the player's combat stats by 15%.",
         strength_mult: 1.15,
         defense_mult: 1.15,
@@ -361,8 +360,8 @@ function initAugmentations() {
 
     const GrapheneBionicSpine = new Augmentation({
         name:AugmentationNames.GrapheneBionicSpine, repCost:1.625e6, moneyCost:6e9,
-        info:"An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene " +
-             "material to make it much stronger and lighter.<br><br>" +
+        info:"An upgrade to the 'Bionic Spine' augmentation. The spine is fused with graphene " +
+             "which enhances durability and supercharges all body functions.<br><br>" +
              "This augmentation increases all of the player's combat stats by 60%.",
         prereqs:[AugmentationNames.BionicSpine],
         strength_mult: 1.6,
@@ -378,7 +377,7 @@ function initAugmentations() {
 
     const BionicLegs = new Augmentation({
         name:AugmentationNames.BionicLegs, repCost:1.5e5, moneyCost:3.75e8,
-        info:"Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs.<br><br>" +
+        info:"Cybernetic legs, created from plasteel and carbon fibers, enhance running speed.<br><br>" +
              "This augmentation increases the player's agility by 60%.",
         agility_mult: 1.6,
     });
@@ -391,8 +390,8 @@ function initAugmentations() {
 
     const GrapheneBionicLegs = new Augmentation({
         name:AugmentationNames.GrapheneBionicLegs, repCost:7.5e5, moneyCost:4.5e9,
-        info:"An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene " +
-             "material to make it much stronger and lighter.<br><br>" +
+        info:"An upgrade to the 'Bionic Legs' augmentation. The legs are fused " +
+             "with graphene, greatly enhancing jumping ability.<br><br>" +
              "This augmentation increases the player's agility by 150%.",
         prereqs: [AugmentationNames.BionicLegs],
         agility_mult: 2.5,
@@ -798,7 +797,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the player's hacking speed by 2%.<br>" +
              "Increases the amount of money the player gains from hacking by 20%.<br>" +
-             "Increases the amount of money the player can inject into servers using grow() by 25%.",
+             "Improves grow() by 25%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG3],
         hacking_speed_mult: 1.02,
         hacking_money_mult: 1.2,
@@ -819,7 +818,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the player's hacking skill by 30%.<br>" +
              "Increases the amount of money the player gains from hacking by 25%.<br>" +
-             "Increases the amount of money the player can inject into servers using grow() by 75%.",
+             "Improves grow() by 75%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG4],
         hacking_mult: 1.3,
         hacking_money_mult: 1.25,
@@ -1250,7 +1249,7 @@ function initAugmentations() {
 
     const LuminCloaking2 = new Augmentation({
         name:AugmentationNames.LuminCloaking2, repCost:5e3, moneyCost:3e7,
-        info:"This is a more advanced version of the LuminCloaking-V2 augmentation. This skin implant " +
+        info:"This is a more advanced version of the LuminCloaking-V1 augmentation. This skin implant " +
              "reinforces the skin with highly-advanced synthetic cells. These " +
              "cells, when powered, are capable of not only bending light but also of bending heat, " +
              "making the user more resilient as well as stealthy.<br><br>" +
@@ -1487,7 +1486,7 @@ function initAugmentations() {
              "Even though it contains no weapons, the advanced tungsten titanium " +
              "alloy increases the users strength to unbelievable levels. The augmentation " +
              "gets more powerful over time for seemingly no reason.<br><br>" +
-             "This augmentation increases the player's strength by 270%.",
+             "This augmentation increases the player's strength by 170%.",
         strength_mult: 2.70,
     });
     HydroflameLeftArm.addToFactions(["NWO"]);

@@ -8,7 +8,6 @@ write() Netscript Function
     :param string data: Data to write
     :param string mode: Defines the write mode. Only valid when writing to text files or scripts.
 
-
     This function can be used to either write data to a port, a text file
     (.txt), or a script (.script, .js, .ns)
 

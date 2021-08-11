@@ -44,9 +44,6 @@ tail() Netscript Function
         // Open logs from process with id 42
         tail(42);
 
-        // Open logs from process with id 42 on the foodnstuff server
-        tail(42, "foodnstuff");
-
 .. js:function:: tail()
 
     :RAM cost: 0 GB

@@ -6,19 +6,20 @@ hackChance() Netscript Function
     :RAM cost: 0 GB
     :param server server: The server to hack.
     :param player player: The player.
-    :returns: The change to hack that server. between 0 and 1.
+    :returns: The chance to hack that server, between 0 and 1.
 
-    You must have Source-File 5-1 in order to use this function.
+    If you are not in BitNode-5, then you must have Source-File 5-1 in order to
+    use this function.
 
     Server can be acquired with the :doc:`getServer<../../advancedfunctions/getServer>` function.
-    Player can be acquired with the :doc:`getPlayer<../../singularityfunctions/getPlayer>` function.
+    Player can be acquired with the :doc:`getPlayer<../../basicfunctions/getPlayer>` function.
 
-    This function calculates percentage chance to hack a server.
+    This function calculates the probability to successfully hack a server.
 
     Examples:
 
     .. code-block:: javascript
 
-        server = getServer();
+        var server = getServer();
         server.hackDifficulty = server.minDifficulty;
         tprint(formulas.basic.hackChance(server, getPlayer()));

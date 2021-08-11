@@ -8,10 +8,11 @@ growTime() Netscript Function
     :param player player: The player.
     :returns: The time it takes to grow this server. In seconds.
 
-    You must have Source-File 5-1 in order to use this function.
+    If you are not in BitNode-5, then you must have Source-File 5-1 in order to
+    use this function.
 
     Server can be acquired with the :doc:`getServer<../../advancedfunctions/getServer>` function.
-    Player can be acquired with the :doc:`getPlayer<../../singularityfunctions/getPlayer>` function.
+    Player can be acquired with the :doc:`getPlayer<../../basicfunctions/getPlayer>` function.
 
     This function calculates the amount of time it takes to grow a server.
 

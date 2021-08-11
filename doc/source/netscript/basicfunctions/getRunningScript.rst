@@ -4,7 +4,7 @@ getRunningScript() Netscript Function
 .. js:function:: getRunningScript()
 
     :RAM cost: 0.3 GB
-    :returns: Script object or null if not found
+    :returns: Script object or null if not found.
 
     The object has the following properties:
 
@@ -64,8 +64,8 @@ getRunningScript() Netscript Function
 .. js:function:: getRunningScript(pid)
 
     :RAM cost: 0.3 GB
-    :param number pid: PID of the script
-    :returns: Script object or null if not found
+    :param number pid: PID of the script.
+    :returns: Script object or null if not found.
 
     Examples:
 
@@ -73,13 +73,13 @@ getRunningScript() Netscript Function
 
         getRunningScript(42); // get the script with pid 42.
 
-.. js:function:: getRunningScript(fn, hostname[, args])
+.. js:function:: getRunningScript(fn, hostname[, args...])
 
     :RAM cost: 0.3 GB
-    :param number fn: filename of the target script
-    :param number hostname: hostname of the server running the script
-    :param number args: arguments to the script.
-    :returns: Script object or null if not found
+    :param number fn: Filename of the target script.
+    :param number hostname: Hostname of the server running the script.
+    :param number args...: Arguments that the script is running with.
+    :returns: Script object or null if not found.
 
     Examples:
 

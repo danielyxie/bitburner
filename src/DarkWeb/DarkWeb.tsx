@@ -35,7 +35,7 @@ export function executeDarkwebTerminalCommand(commandArray: string[]): void {
                 return;
             }
             const arg = commandArray[1];
-            if (arg == "-l") {
+            if (arg == "-l" || arg == "-1" || arg == "--list") {
                 listAllDarkwebItems();
             } else {
                 buyDarkwebItem(arg);
