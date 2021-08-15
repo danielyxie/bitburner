@@ -137,6 +137,12 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
             btnTxt += ` - Level ${getNextNeurofluxLevel()}`;
         }
 
+        let tooltip = <></>;
+        if(typeof this.aug.info === "string")
+            tooltip = <><span dangerouslySetInnerHTML={{__html: this.aug.info}} /><br /><br />{this.aug.stats}</>
+        else
+            tooltip = <>{this.aug.info}<br /><br />{this.aug.stats}</>
+
         return (
             <li>
                 <span style={spanStyleMarkup}>
@@ -145,7 +151,7 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
                         onClick={this.handleClick}
                         style={inlineStyleMarkup}
                         text={btnTxt}
-                        tooltip={this.aug.info}
+                        tooltip={tooltip}
                     />
                     <p style={txtStyle}>{status}</p>
                 </span>

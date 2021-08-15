@@ -76,6 +76,7 @@ class DevMenuComponent extends Component {
 
         this.setSF = this.setSF.bind(this);
         this.setAllSF = this.setAllSF.bind(this);
+        this.clearExploits = this.clearExploits.bind(this);
         this.processStocks = this.processStocks.bind(this);
         this.setStockPrice = this.setStockPrice.bind(this);
         this.viewStockCaps = this.viewStockCaps.bind(this);
@@ -376,6 +377,10 @@ class DevMenuComponent extends Component {
                 this.setSF(validSFN[i], sfLvl)();
             }
         }
+    }
+
+    clearExploits() {
+        Player.exploits = [];
     }
 
     addProgram() {
@@ -953,6 +958,12 @@ class DevMenuComponent extends Component {
             </div>
             <table>
                 <tbody>
+                    <tr>
+                        <td><span className="text">Exploits:</span></td>
+                        <td>
+                            <button className="std-button touch-right" onClick={this.clearExploits()}>Clear</button>
+                        </td>
+                    </tr>
                     <tr key={'sf-all'}>
                         <td><span className="text">All:</span></td>
                         <td>

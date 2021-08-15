@@ -28,7 +28,7 @@ export function AugmentationAccordion(props: IProps): React.ReactElement {
         return (
             <Accordion
                 headerContent={<>{displayName}</>}
-                panelContent={<p dangerouslySetInnerHTML={{__html: props.aug.info}}></p>}
+                panelContent={<p><span dangerouslySetInnerHTML={{__html: props.aug.info}} /><br /><br />{props.aug.stats}</p>}
             />
         )
     }
@@ -36,7 +36,7 @@ export function AugmentationAccordion(props: IProps): React.ReactElement {
     return (
         <Accordion
             headerContent={<>{displayName}</>}
-            panelContent={<p>{props.aug.info}</p>}
+            panelContent={<p>{props.aug.info}<br /><br />{props.aug.stats}</p>}
         />
     )
 }
