@@ -62,6 +62,9 @@ interface ICreateElementStyleOptions {
     visibility?: string;
     whiteSpace?: string;
     width?: string;
+    height?: string;
+    top?: string;
+    left?: string;
 }
 
 /**
@@ -209,6 +212,15 @@ function setElementStyle(el: HTMLElement, params: ICreateElementStyleOptions): v
     }
     if (params.width !== undefined) {
         el.style.width = params.width;
+    }
+    if (params.height !== undefined) {
+        el.style.height = params.height;
+    }
+    if (params.top !== undefined) {
+        el.style.top = params.top;
+    }
+    if (params.left !== undefined) {
+        el.style.left = params.left;
     }
     if (params.backgroundColor !== undefined) {
         el.style.backgroundColor = params.backgroundColor;

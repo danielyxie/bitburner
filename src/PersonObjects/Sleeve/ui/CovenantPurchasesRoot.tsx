@@ -2,7 +2,7 @@
  * Root React component for the popup that lets player purchase Duplicate
  * Sleeves and Sleeve-related upgrades from The Covenant
  */
-import * as React from "react";
+import React, { useState } from 'react';
 
 import { CovenantSleeveUpgrades }       from "./CovenantSleeveUpgrades";
 
@@ -21,91 +21,73 @@ import { dialogBoxCreate }              from "../../../../utils/DialogBox";
 interface IProps {
     closeFn: () => void;
     p: IPlayer;
-    rerender: () => void;
 }
 
-interface IState {
-    update: number;
-}
-
-export class CovenantPurchasesRoot extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
-
-        this.state = {
-            update: 0,
-        }
-
-        this.rerender = this.rerender.bind(this);
-    }
+export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
+    const [update, setUpdate] = useState(0);
 
     /**
      * Get the cost to purchase a new Duplicate Sleeve
      */
-    purchaseCost(): number {
-        return (this.props.p.sleevesFromCovenant + 1) * BaseCostPerSleeve;
+    function purchaseCost(): number {
+        return (props.p.sleevesFromCovenant + 1) * BaseCostPerSleeve;
     }
 
     /**
      * Force a rerender by just changing an arbitrary state value
      */
-    rerender(): void {
-        this.setState((state: IState) => ({
-            update: state.update + 1,
-        }));
+    function rerender(): void {
+        setUpdate(update + 1);
     }
 
-    render(): React.ReactNode {
-        // Purchasing a new Duplicate Sleeve
-        let purchaseDisabled = false;
-        if (!this.props.p.canAfford(this.purchaseCost())) {
-            purchaseDisabled = true;
-        }
-        if (this.props.p.sleevesFromCovenant >= MaxSleevesFromCovenant) {
-            purchaseDisabled = true;
-        }
-        const purchaseOnClick = (): void => {
-            if (this.props.p.sleevesFromCovenant >= MaxSleevesFromCovenant) { return; }
-            
-            if (this.props.p.canAfford(this.purchaseCost())) {
-                this.props.p.loseMoney(this.purchaseCost());
-                this.props.p.sleevesFromCovenant += 1;
-                this.props.p.sleeves.push(new Sleeve(this.props.p));
-                this.rerender();
-            } else {
-                dialogBoxCreate(`You cannot afford to purchase a Duplicate Sleeve`, false);
-            }
-        }
+    // Purchasing a new Duplicate Sleeve
+    let purchaseDisabled = false;
+    if (!props.p.canAfford(purchaseCost())) {
+        purchaseDisabled = true;
+    }
+    if (props.p.sleevesFromCovenant >= MaxSleevesFromCovenant) {
+        purchaseDisabled = true;
+    }
 
-        // Purchasing Upgrades for Sleeves
-        const upgradePanels = [];
-        for (let i = 0; i < this.props.p.sleeves.length; ++i) {
-            const sleeve = this.props.p.sleeves[i];
-            upgradePanels.push(
-                <CovenantSleeveUpgrades {...this.props} sleeve={sleeve} index={i} rerender={this.rerender} key={i} />,
-            )
+    function purchaseOnClick(): void {
+        if (props.p.sleevesFromCovenant >= MaxSleevesFromCovenant) return;
+        
+        if (props.p.canAfford(purchaseCost())) {
+            props.p.loseMoney(purchaseCost());
+            props.p.sleevesFromCovenant += 1;
+            props.p.sleeves.push(new Sleeve(props.p));
+            rerender();
+        } else {
+            dialogBoxCreate(`You cannot afford to purchase a Duplicate Sleeve`, false);
         }
+    }
 
-        return (
-            <div>
-                <PopupCloseButton popup={PopupId} text={"Close"} />
-                <p>
-                    Would you like to purchase an additional Duplicate Sleeve from The Covenant
-                    for {Money(this.purchaseCost())}?
-                </p>
-                <br />
-                <p>
-                    These Duplicate Sleeves are permanent (they persist through BitNodes). You can
-                    purchase a total of {MaxSleevesFromCovenant} from The Covenant.
-                </p>
-                <StdButton disabled={purchaseDisabled} onClick={purchaseOnClick} text={"Purchase"} />
-                <br /><br />
-                <p>
-                    Here, you can also purchase upgrades for your Duplicate Sleeves. These upgrades
-                    are also permanent, meaning they persist across BitNodes.
-                </p>
-                {upgradePanels}
-            </div>
+    // Purchasing Upgrades for Sleeves
+    const upgradePanels = [];
+    for (let i = 0; i < props.p.sleeves.length; ++i) {
+        const sleeve = props.p.sleeves[i];
+        upgradePanels.push(
+            <CovenantSleeveUpgrades {...props} sleeve={sleeve} index={i} rerender={rerender} key={i} />,
         )
     }
+
+    return (<div>
+        <PopupCloseButton popup={PopupId} text={"Close"} />
+        <p>
+            Would you like to purchase an additional Duplicate Sleeve from The Covenant
+            for {Money(purchaseCost())}?
+        </p>
+        <br />
+        <p>
+            These Duplicate Sleeves are permanent (they persist through BitNodes). You can
+            purchase a total of {MaxSleevesFromCovenant} from The Covenant.
+        </p>
+        <StdButton disabled={purchaseDisabled} onClick={purchaseOnClick} text={"Purchase"} />
+        <br /><br />
+        <p>
+            Here, you can also purchase upgrades for your Duplicate Sleeves. These upgrades
+            are also permanent, meaning they persist across BitNodes.
+        </p>
+        {upgradePanels}
+    </div>);
 }

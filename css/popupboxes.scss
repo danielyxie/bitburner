@@ -1,5 +1,6 @@
 @import "mixins";
 @import "theme";
+@import "styles";
 
 /* Pop-up boxes */
 .popup-box-container {
@@ -23,6 +24,7 @@
     width: 70%;
     max-height: 80%;
     overflow-y: auto;
+    z-index: 11; /* Sit on top of the container */
     color: var(--my-font-color);
 }
 
@@ -87,6 +89,7 @@
 .dialog-box-close-button {
     @include borderRadius(12px);
     @include boxShadow(1px 1px 3px #000);
+    @extend .noselect;
 
     float: right;
     color: #aaa;

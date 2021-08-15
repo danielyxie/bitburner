@@ -5,15 +5,13 @@
  */
 import * as React from "react";
 
-type ReactComponent = new(...args: any[]) => React.Component<any, any>
-
-interface IProps {
-    content: ReactComponent;
+interface IProps<T> {
+    content: (props: T) => React.ReactElement;
     id: string;
-    props: any;
+    props: T;
 }
 
-export function Popup(props: IProps): React.ReactElement {
+export function Popup<T>(props: IProps<T>): React.ReactElement {
     return (
         <div className={"popup-box-content"} id={`${props.id}-content`}>
             {React.createElement(props.content, props.props)}

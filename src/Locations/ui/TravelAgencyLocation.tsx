@@ -44,7 +44,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
         }
 
         return (
-            <div>
+            <div className="noselect">
                 <p>
                     From here, you can travel to any other city! A ticket
                     costs {Money(CONSTANTS.TravelCost)}.
