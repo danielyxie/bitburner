@@ -60,5 +60,9 @@ SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so t
                                                  " increases the player's company salary and reputation gain multipliers by:<br><br>" +
                                                  "Level 1: 32%<br>" +
                                                  "Level 2: 48%<br>" +
-                                                 "Level 3: 56%<br>");
+                                                 "Level 3: 56%<br><br>" +
+                                                 "It also reduces the price increase for every aug bought by:<br><br>"+
+                                                 "Level 1: 4%<br>"+
+                                                 "Level 2: 6%<br>"+
+                                                 "Level 3: 7%");
 SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File lets the player start with Neuroflux Governor equal to the level of this Source-File.");

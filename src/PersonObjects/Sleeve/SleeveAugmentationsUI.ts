@@ -59,6 +59,8 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer): void 
         if(typeof tooltip !== 'string') {
             tooltip = renderToStaticMarkup(tooltip);
         }
+        tooltip += "<br /><br />";
+        tooltip += renderToStaticMarkup(aug.stats);
 
         ownedAugsDiv.appendChild(createElement("div", {
             class: "gang-owned-upgrade", // Reusing a class from the Gang UI
@@ -92,6 +94,8 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer): void 
         if(typeof info !== 'string') {
             info = renderToStaticMarkup(info);
         }
+        info += "<br /><br />";
+        info += renderToStaticMarkup(aug.stats);
 
         div.appendChild(createElement("p", {
             fontSize: "12px",

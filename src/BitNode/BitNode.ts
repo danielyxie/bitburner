@@ -231,7 +231,11 @@ BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                         "This Source-File also increases the player's company salary and reputation gain multipliers by:<br><br>" +
                                         "Level 1: 32%<br>" +
                                         "Level 2: 48%<br>" +
-                                        "Level 3: 56%");
+                                        "Level 3: 56%<br><br>" +
+                                        "It also reduces the price increase for every aug bought by:<br><br>"+
+                                        "Level 1: 4%<br>"+
+                                        "Level 2: 6%<br>"+
+                                        "Level 3: 7%");
 BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
                                         "To iterate is human, to recurse divine.<br><br>" +
                                         "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give you Source-File 12, or " +

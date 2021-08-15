@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.1",
+    Version:                "0.52.2",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -225,24 +225,18 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
+    v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
     -------------------------------------------
 
-    **Misc.**
+    ** Source-Files **
 
-    * Fix game crash/corruption when quitting a job while working for it unfocused.
-    * Fix typo in corporation Market Data.
-    * Fix typo in docs for hackPercent.
-    * The tutorial encourages the players to connect to home before creating 'n00dles.script'
-    * The dark web 'buy' command now accepts '-1' (one) and '--list' instead of just
-     '-l'. Helps some confused players.
-    * Character overview screen no longer hidden on the corporation screen.
-    * Infiltration difficulty display is now more explicit (It's a big arrow instead
-     of just one word.)
-    * Fix wrong ram value in tutorial. (@MageKing17)
-    * Plenty of augmentation description cleanup (@Kwazygloo)
-    * Plenty of typo/description fixed (@MageKing17)
-    * Cleanup description of singularity function on readthedocs (@PurePandemonium)
-    * Fix bug when autolinking a server while backdooring (@schroederIT)
+    * Source-File 11 now also provides a small reduction to the price increase
+      multiplier.
+
+    ** Augmentations **
+
+    * New Augmentation offered by Aevum, themed around 777 and offers some basic
+      programs.
+    * Augmentation descriptions are now more concise and consistent.
 `,
 }

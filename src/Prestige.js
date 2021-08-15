@@ -97,6 +97,11 @@ function prestigeAugmentation() {
         Player.setMoney(1e6);
         homeComp.programs.push(Programs.BruteSSHProgram.name);
     }
+    if (augmentationExists(AugmentationNames.PCMatrix) &&
+        Augmentations[AugmentationNames.PCMatrix].owned) {
+        homeComp.programs.push(Programs.DeepscanV1.name);
+        homeComp.programs.push(Programs.AutoLink.name);
+    }
 
     // Re-create foreign servers
     initForeignServers(Player.getHomeComputer());

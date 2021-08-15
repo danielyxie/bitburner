@@ -1082,12 +1082,13 @@ const Engine = {
             initBitNodeMultipliers(Player);
             Engine.setDisplayElements();    // Sets variables for important DOM elements
             Engine.init();                  // Initialize buttons, work, etc.
+            updateSourceFileFlags(Player);
             initAugmentations();            // Also calls Player.reapplyAllAugmentations()
             Player.reapplyAllSourceFiles();
             if (Player.hasWseAccount) {
                 initSymbolToStockMap();
             }
-            updateSourceFileFlags(Player);
+            
 
             // Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();

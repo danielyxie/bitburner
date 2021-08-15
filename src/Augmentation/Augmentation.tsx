@@ -1,14 +1,18 @@
 // Class definition for a single Augmentation object
+import * as React from "react";
 import { IMap } from "../types";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
+import { numeralWrapper } from "../ui/numeralFormat";
+import { Money } from "../ui/React/Money";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 interface IConstructorParams {
     info: string | JSX.Element;
+    stats?: JSX.Element;
     isSpecial?: boolean;
     moneyCost: number;
     name: string;
@@ -45,6 +49,129 @@ interface IConstructorParams {
     bladeburner_stamina_gain_mult?: number;
     bladeburner_analysis_mult?: number;
     bladeburner_success_chance_mult?: number;
+
+    startingMoney?: number;
+    programs?: string[];
+}
+
+function generateStatsDescription(mults: IMap<number>, programs?: string[], startingMoney?: number): JSX.Element {
+    const f = (x: number, decimals: number = 0) => {
+        // look, I don't know how to make a "smart decimals"
+        // todo, make it smarter
+        if(x === 1.0777-1) return "7.77%";
+        if(x === 1.777-1) return "77.7%";
+        return numeralWrapper.formatPercentage(x, decimals);
+    };
+    let desc = <>Effects:</>;
+
+    if(mults.hacking_mult &&
+        mults.hacking_mult == mults.strength_mult &&
+        mults.hacking_mult == mults.defense_mult &&
+        mults.hacking_mult == mults.dexterity_mult &&
+        mults.hacking_mult == mults.agility_mult &&
+        mults.hacking_mult == mults.charisma_mult){
+        desc = <>{desc}<br />+{f(mults.hacking_mult-1)} all skills</>
+    } else {
+        if(mults.hacking_mult)
+            desc = <>{desc}<br />+{f(mults.hacking_mult-1)} hacking skill</>
+
+        if(mults.strength_mult &&
+            mults.strength_mult == mults.defense_mult &&
+            mults.strength_mult == mults.dexterity_mult &&
+            mults.strength_mult == mults.agility_mult) {
+            desc = <>{desc}<br />+{f(mults.strength_mult-1)} combat skills</>
+        } else {
+            if(mults.strength_mult)
+                desc = <>{desc}<br />+{f(mults.strength_mult-1)} strength skill</>
+            if(mults.defense_mult)
+                desc = <>{desc}<br />+{f(mults.defense_mult-1)} defense skill</>
+            if(mults.dexterity_mult)
+                desc = <>{desc}<br />+{f(mults.dexterity_mult-1)} dexterity skill</>
+            if(mults.agility_mult)
+                desc = <>{desc}<br />+{f(mults.agility_mult-1)} agility skill</>
+        }
+        if(mults.charisma_mult)
+            desc = <>{desc}<br />+{f(mults.charisma_mult-1)} Charisma skill</>
+    }
+
+    if(mults.hacking_exp_mult && 
+        mults.hacking_exp_mult === mults.strength_exp_mult &&
+        mults.hacking_exp_mult === mults.defense_exp_mult &&
+        mults.hacking_exp_mult === mults.dexterity_exp_mult &&
+        mults.hacking_exp_mult === mults.agility_exp_mult &&
+        mults.hacking_exp_mult === mults.charisma_exp_mult) {
+        desc = <>{desc}<br />+{f(mults.hacking_exp_mult-1)} exp for all skills</>
+    } else {
+        if(mults.hacking_exp_mult)
+            desc = <>{desc}<br />+{f(mults.hacking_exp_mult-1)} hacking exp</>
+
+        if(mults.strength_exp_mult && 
+            mults.strength_exp_mult === mults.defense_exp_mult &&
+            mults.strength_exp_mult === mults.dexterity_exp_mult &&
+            mults.strength_exp_mult === mults.agility_exp_mult) {
+            desc = <>{desc}<br />+{f(mults.strength_exp_mult-1)} combat exp</>
+        } else {
+            if(mults.strength_exp_mult)
+                desc = <>{desc}<br />+{f(mults.strength_exp_mult-1)} strength exp</>
+            if(mults.defense_exp_mult)
+                desc = <>{desc}<br />+{f(mults.defense_exp_mult-1)} defense exp</>
+            if(mults.dexterity_exp_mult)
+                desc = <>{desc}<br />+{f(mults.dexterity_exp_mult-1)} dexterity exp</>
+            if(mults.agility_exp_mult)
+                desc = <>{desc}<br />+{f(mults.agility_exp_mult-1)} agility exp</>
+        }
+        if(mults.charisma_exp_mult)
+            desc = <>{desc}<br />+{f(mults.charisma_exp_mult-1)} charisma exp</>
+    }
+
+    if(mults.hacking_speed_mult)
+        desc = <>{desc}<br />+{f(mults.hacking_speed_mult-1)} faster hacking</>
+    if(mults.hacking_chance_mult)
+        desc = <>{desc}<br />+{f(mults.hacking_chance_mult-1)} hack() success chance</>
+    if(mults.hacking_money_mult)
+        desc = <>{desc}<br />+{f(mults.hacking_money_mult-1)} hack() power</>
+    if(mults.hacking_grow_mult)
+        desc = <>{desc}<br />+{f(mults.hacking_grow_mult-1)} grow() power</>
+
+    if(mults.faction_rep_mult &&
+        mults.faction_rep_mult === mults.company_rep_mult) {
+        desc = <>{desc}<br />+{f(mults.faction_rep_mult-1)} reputation from factions and companies</>
+    } else {
+        if(mults.faction_rep_mult)
+            desc = <>{desc}<br />+{f(mults.faction_rep_mult-1)} reputation from factions</>
+        if(mults.company_rep_mult)
+            desc = <>{desc}<br />+{f(mults.company_rep_mult-1)} reputation from companies</>
+    }
+
+    if(mults.crime_money_mult)
+        desc = <>{desc}<br />+{f(mults.crime_money_mult-1)} crime money</>
+    if(mults.crime_success_mult)
+        desc = <>{desc}<br />+{f(mults.crime_success_mult-1)} crime success rate</>
+    if(mults.work_money_mult)
+        desc = <>{desc}<br />+{f(mults.work_money_mult-1)} work money</>
+
+    if(mults.hacknet_node_money_mult)
+        desc = <>{desc}<br />+{f(mults.hacknet_node_money_mult-1)} hacknet production</>
+    if(mults.hacknet_node_purchase_cost_mult)
+        desc = <>{desc}<br />-{f(-(mults.hacknet_node_purchase_cost_mult-1))} hacknet nodes cost</>
+    if(mults.hacknet_node_level_cost_mult)
+        desc = <>{desc}<br />-{f(-(mults.hacknet_node_level_cost_mult-1))} hacknet nodes upgrade cost</>
+
+    if(mults.bladeburner_max_stamina_mult)
+        desc = <>{desc}<br />+{f(mults.bladeburner_max_stamina_mult-1)} Bladeburner Max Stamina</>
+    if(mults.bladeburner_stamina_gain_mult)
+        desc = <>{desc}<br />+{f(mults.bladeburner_stamina_gain_mult-1)} Bladeburner Stamina gain</>
+    if(mults.bladeburner_analysis_mult)
+        desc = <>{desc}<br />+{f(mults.bladeburner_analysis_mult-1)} Bladeburner Field Analysis effectiveness</>
+    if(mults.bladeburner_success_chance_mult)
+        desc = <>{desc}<br />+{f(mults.bladeburner_success_chance_mult-1)} Bladeburner Contracts and Operations success chance</>
+
+    if(startingMoney)
+        desc = <>{desc}<br />Start with {Money(startingMoney)} after installing Augmentations.</>
+
+    if(programs)
+        desc = <>{desc}<br />Start with {programs.join(' and ')} after installing Augmentations.</>
+    return desc;
 }
 
 export class Augmentation {
@@ -57,6 +184,9 @@ export class Augmentation {
 
     // Description of what this Aug is and what it does
     info: string | JSX.Element;
+
+    // Description of the stats, often autogenerated, sometimes manually written.
+    stats: JSX.Element;
 
     // Any Augmentation not immediately available in BitNode-1 is special (e.g. Bladeburner augs)
     isSpecial = false;
@@ -126,6 +256,11 @@ export class Augmentation {
         if (params.bladeburner_stamina_gain_mult) { this.mults.bladeburner_stamina_gain_mult = params.bladeburner_stamina_gain_mult; }
         if (params.bladeburner_analysis_mult) { this.mults.bladeburner_analysis_mult = params.bladeburner_analysis_mult; }
         if (params.bladeburner_success_chance_mult) { this.mults.bladeburner_success_chance_mult = params.bladeburner_success_chance_mult; }
+
+        if(params.stats)
+            this.stats = params.stats;
+        else 
+            this.stats = generateStatsDescription(this.mults, params.programs, params.startingMoney);
     }
 
     // Adds this Augmentation to the specified Factions
