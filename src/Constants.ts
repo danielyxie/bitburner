@@ -248,5 +248,6 @@ export const CONSTANTS: IMap<any> = {
     * Many UI element are now "noselect" protected.
     * Fixed an issue where you could join the same faction twice via script and
       UI simultaneously.
+    * Factions list screen converted to React.
 `,
 }
