@@ -62,7 +62,7 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
         if(x === 1.777-1) return "77.7%";
         return numeralWrapper.formatPercentage(x, decimals);
     };
-    let desc = <>This augmentation: </>;
+    let desc = <>Effects:</>;
 
     if(mults.hacking_mult &&
         mults.hacking_mult == mults.strength_mult &&
@@ -70,28 +70,28 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
         mults.hacking_mult == mults.dexterity_mult &&
         mults.hacking_mult == mults.agility_mult &&
         mults.hacking_mult == mults.charisma_mult){
-        desc = <>{desc}<br />- Increases all skills by {f(mults.hacking_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.hacking_mult-1)} all skills</>
     } else {
         if(mults.hacking_mult)
-            desc = <>{desc}<br />- Increases Hacking by {f(mults.hacking_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.hacking_mult-1)} hacking skill</>
 
         if(mults.strength_mult &&
             mults.strength_mult == mults.defense_mult &&
             mults.strength_mult == mults.dexterity_mult &&
             mults.strength_mult == mults.agility_mult) {
-            desc = <>{desc}<br />- Increases all combat skills by {f(mults.strength_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.strength_mult-1)} combat skills</>
         } else {
             if(mults.strength_mult)
-                desc = <>{desc}<br />- Increases Strength by {f(mults.strength_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.strength_mult-1)} strength skill</>
             if(mults.defense_mult)
-                desc = <>{desc}<br />- Increases Defense by {f(mults.defense_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.defense_mult-1)} defense skill</>
             if(mults.dexterity_mult)
-                desc = <>{desc}<br />- Increases Dexterity by {f(mults.dexterity_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.dexterity_mult-1)} dexterity skill</>
             if(mults.agility_mult)
-                desc = <>{desc}<br />- Increases Agility by {f(mults.agility_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.agility_mult-1)} agility skill</>
         }
         if(mults.charisma_mult)
-            desc = <>{desc}<br />- Increases Charisma by {f(mults.charisma_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.charisma_mult-1)} Charisma skill</>
     }
 
     if(mults.hacking_exp_mult && 
@@ -100,77 +100,77 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
         mults.hacking_exp_mult === mults.dexterity_exp_mult &&
         mults.hacking_exp_mult === mults.agility_exp_mult &&
         mults.hacking_exp_mult === mults.charisma_exp_mult) {
-        desc = <>{desc}<br />- Increases experience gain for all skills by {f(mults.hacking_exp_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.hacking_exp_mult-1)} exp for all skills</>
     } else {
         if(mults.hacking_exp_mult)
-            desc = <>{desc}<br />- Increases Hacking experience gain by {f(mults.hacking_exp_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.hacking_exp_mult-1)} hacking exp</>
 
         if(mults.strength_exp_mult && 
             mults.strength_exp_mult === mults.defense_exp_mult &&
             mults.strength_exp_mult === mults.dexterity_exp_mult &&
             mults.strength_exp_mult === mults.agility_exp_mult) {
-            desc = <>{desc}<br />- Increases experience gain for all combat skills by {f(mults.strength_exp_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.strength_exp_mult-1)} combat exp</>
         } else {
             if(mults.strength_exp_mult)
-                desc = <>{desc}<br />- Increases Strength experience gain by {f(mults.strength_exp_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.strength_exp_mult-1)} strength exp</>
             if(mults.defense_exp_mult)
-                desc = <>{desc}<br />- Increases Defense experience gain by {f(mults.defense_exp_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.defense_exp_mult-1)} defense exp</>
             if(mults.dexterity_exp_mult)
-                desc = <>{desc}<br />- Increases Dexterity experience gain by {f(mults.dexterity_exp_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.dexterity_exp_mult-1)} dexterity exp</>
             if(mults.agility_exp_mult)
-                desc = <>{desc}<br />- Increases Agility experience gain by {f(mults.agility_exp_mult-1)}</>
+                desc = <>{desc}<br />+{f(mults.agility_exp_mult-1)} agility exp</>
         }
         if(mults.charisma_exp_mult)
-            desc = <>{desc}<br />- Increases Charisma experience gain by {f(mults.charisma_exp_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.charisma_exp_mult-1)} charisma exp</>
     }
 
     if(mults.hacking_speed_mult)
-        desc = <>{desc}<br />- Increases Hacking speed by {f(mults.hacking_speed_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.hacking_speed_mult-1)} faster hacking</>
     if(mults.hacking_chance_mult)
-        desc = <>{desc}<br />- Increases hack() success chance by {f(mults.hacking_chance_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.hacking_chance_mult-1)} hack() success chance</>
     if(mults.hacking_money_mult)
-        desc = <>{desc}<br />- Increases hack() power by {f(mults.hacking_money_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.hacking_money_mult-1)} hack() power</>
     if(mults.hacking_grow_mult)
-        desc = <>{desc}<br />- Increases grow() by {f(mults.hacking_grow_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.hacking_grow_mult-1)} grow() power</>
 
     if(mults.faction_rep_mult &&
         mults.faction_rep_mult === mults.company_rep_mult) {
-        desc = <>{desc}<br />- Increases reputation gain from factions and companies by {f(mults.faction_rep_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.faction_rep_mult-1)} reputation from factions and companies</>
     } else {
         if(mults.faction_rep_mult)
-            desc = <>{desc}<br />- Increases reputation gain from factions by {f(mults.faction_rep_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.faction_rep_mult-1)} reputation from factions</>
         if(mults.company_rep_mult)
-            desc = <>{desc}<br />- Increases reputation gain from companies by {f(mults.company_rep_mult-1)}</>
+            desc = <>{desc}<br />+{f(mults.company_rep_mult-1)} reputation from companies</>
     }
 
     if(mults.crime_money_mult)
-        desc = <>{desc}<br />- Increases money gained from committing crimes by {f(mults.crime_money_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.crime_money_mult-1)} crime money</>
     if(mults.crime_success_mult)
-        desc = <>{desc}<br />- Increases crime success rate by {f(mults.crime_success_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.crime_success_mult-1)} crime success rate</>
     if(mults.work_money_mult)
-        desc = <>{desc}<br />- Increases money gained from working by {f(mults.work_money_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.work_money_mult-1)} work money</>
 
     if(mults.hacknet_node_money_mult)
-        desc = <>{desc}<br />- Increases Hacknet production by {f(mults.hacknet_node_money_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.hacknet_node_money_mult-1)} hacknet production</>
     if(mults.hacknet_node_purchase_cost_mult)
-        desc = <>{desc}<br />- Decreases the purchase cost of Hacknet Nodes by {f(-(mults.hacknet_node_purchase_cost_mult-1))}</>
+        desc = <>{desc}<br />-{f(-(mults.hacknet_node_purchase_cost_mult-1))} hacknet nodes cost</>
     if(mults.hacknet_node_level_cost_mult)
-        desc = <>{desc}<br />- Decreases the upgrade cost of Hacknet Nodes by {f(-(mults.hacknet_node_level_cost_mult-1))}</>
+        desc = <>{desc}<br />-{f(-(mults.hacknet_node_level_cost_mult-1))} hacknet nodes upgrade cost</>
 
     if(mults.bladeburner_max_stamina_mult)
-        desc = <>{desc}<br />- Increases Bladeburner Max Stamina by {f(mults.bladeburner_max_stamina_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.bladeburner_max_stamina_mult-1)} Bladeburner Max Stamina</>
     if(mults.bladeburner_stamina_gain_mult)
-        desc = <>{desc}<br />- Increases Bladeburner Stamina gain by {f(mults.bladeburner_stamina_gain_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.bladeburner_stamina_gain_mult-1)} Bladeburner Stamina gain</>
     if(mults.bladeburner_analysis_mult)
-        desc = <>{desc}<br />- Increases Bladeburner Field Analysis effectiveness by {f(mults.bladeburner_analysis_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.bladeburner_analysis_mult-1)} Bladeburner Field Analysis effectiveness</>
     if(mults.bladeburner_success_chance_mult)
-        desc = <>{desc}<br />- Increases success chance in Bladeburner Contracts and Operations by {f(mults.bladeburner_success_chance_mult-1)}</>
+        desc = <>{desc}<br />+{f(mults.bladeburner_success_chance_mult-1)} Bladeburner Contracts and Operations success chance</>
 
     if(startingMoney)
-        desc = <>{desc}<br />- Provides {Money(startingMoney)} after a reset.</>
+        desc = <>{desc}<br />Start with {Money(startingMoney)} after installing Augmentations.</>
 
     if(programs)
-        desc = <>{desc}<br />- Provides {programs.join(' and ')} after a reset.</>
+        desc = <>{desc}<br />Start with {programs.join(' and ')} after installing Augmentations.</>
     return desc;
 }
 
