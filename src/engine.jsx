@@ -32,6 +32,10 @@ import {
     processPassiveFactionRepGain,
     inviteToFaction,
 } from "./Faction/FactionHelpers";
+import {
+    FactionList,
+} from "./Faction/ui/FactionList";
+import { displayGangContent } from "./Gang/Helpers";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import { 
     getHackingWorkRepGain,
@@ -199,9 +203,6 @@ $(document).keydown(function(e) {
 });
 
 const Engine = {
-    version: "",
-    Debug: true,
-
     // Clickable objects
     Clickables: {
         // Main menu buttons
@@ -227,6 +228,7 @@ const Engine = {
         tutorialContent:                null,
         infiltrationContent:            null,
         stockMarketContent:             null,
+        gangContent:                    null,
         locationContent:                null,
         workInProgressContent:          null,
         redPillContent:                 null,
@@ -302,8 +304,11 @@ const Engine = {
     loadFactionsContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.display = "block";
-        Engine.displayFactionsInfo();
         routing.navigateTo(Page.Factions);
+        ReactDOM.render(
+            <FactionList player={Player} engine={this} />,
+            Engine.Display.factionsContent,
+        )
         MainMenuLinks.Factions.classList.add("active");
     },
 
@@ -438,9 +443,10 @@ const Engine = {
 
     loadGangContent: function() {
         Engine.hideAllContent();
-        if (document.getElementById("gang-container") || Player.inGang()) {
-            Player.gang.displayGangContent(Player);
+        if (Player.inGang()) {
+            Engine.Display.gangContent.style.display = "block";
             routing.navigateTo(Page.Gang);
+            displayGangContent(this, Player.gang, Player);
         } else {
             Engine.loadTerminalContent();
             routing.navigateTo(Page.Terminal);
@@ -511,6 +517,7 @@ const Engine = {
         Engine.Display.createProgramContent.style.display = "none";
 
         Engine.Display.factionsContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.factionsContent);
 
         Engine.Display.factionContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
@@ -523,6 +530,9 @@ const Engine = {
 
         Engine.Display.locationContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
+        
+        Engine.Display.gangContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.gangContent);
 
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
@@ -533,9 +543,6 @@ const Engine = {
             document.getElementById("gang-container").style.display = "none";
         }
 
-        if (Player.inGang()) {
-            Player.gang.clearUI();
-        }
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();
         }
@@ -569,6 +576,7 @@ const Engine = {
         MainMenuLinks.Travel.classList.remove("active");
         MainMenuLinks.Job.classList.remove("active");
         MainMenuLinks.StockMarket.classList.remove("active");
+        MainMenuLinks.Gang.classList.remove("active");
         MainMenuLinks.Bladeburner.classList.remove("active");
         MainMenuLinks.Corporation.classList.remove("active");
         MainMenuLinks.Gang.classList.remove("active");
@@ -593,78 +601,6 @@ const Engine = {
     /// Display character info
     updateCharacterInfo: function() {
         ReactDOM.render(CharacterInfo(Player), Engine.Display.characterInfo)
-    },
-
-    // TODO Refactor this into Faction implementation
-    displayFactionsInfo: function() {
-        removeChildrenFromElement(Engine.Display.factionsContent);
-
-        // Factions
-        Engine.Display.factionsContent.appendChild(createElement("h1", {
-            innerText:"Factions",
-        }));
-        Engine.Display.factionsContent.appendChild(createElement("p", {
-            innerText:"Lists all factions you have joined",
-        }));
-        var factionsList = createElement("ul");
-        Engine.Display.factionsContent.appendChild(createElement("br"));
-
-        // Add a button for each faction you are a member of
-        for (var i = 0; i < Player.factions.length; ++i) {
-            (function () {
-                var factionName = Player.factions[i];
-
-                factionsList.appendChild(createElement("a", {
-                    class:"a-link-button", innerText:factionName, padding:"4px", margin:"4px",
-                    display:"inline-block",
-                    clickListener: () => {
-                        Engine.loadFactionContent();
-                        displayFactionContent(factionName);
-                        return false;
-                    },
-                }));
-                factionsList.appendChild(createElement("br"));
-            }()); // Immediate invocation
-        }
-        Engine.Display.factionsContent.appendChild(factionsList);
-        Engine.Display.factionsContent.appendChild(createElement("br"));
-
-        // Invited Factions
-        Engine.Display.factionsContent.appendChild(createElement("h1", {
-            innerText:"Outstanding Faction Invitations",
-        }));
-        Engine.Display.factionsContent.appendChild(createElement("p", {
-            width:"70%",
-            innerText:"Lists factions you have been invited to. You can accept " +
-                      "these faction invitations at any time.",
-        }));
-        var invitationsList = createElement("ul");
-
-        // Add a button to accept for each faction you have invitiations for
-        for (var i = 0; i < Player.factionInvitations.length; ++i) {
-            (function () {
-                var factionName = Player.factionInvitations[i];
-
-                var item = createElement("li", {padding:"6px", margin:"6px"});
-                item.appendChild(createElement("p", {
-                    innerText:factionName, display:"inline", margin:"4px", padding:"4px",
-                }));
-                item.appendChild(createElement("a", {
-                    innerText:"Accept Faction Invitation",
-                    class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
-                    clickListener: (e) => {
-                        if (!e.isTrusted) { return false; }
-                        joinFaction(Factions[factionName]);
-                        Engine.displayFactionsInfo();
-                        return false;
-                    },
-                }));
-
-                invitationsList.appendChild(item);
-            }());
-        }
-
-        Engine.Display.factionsContent.appendChild(invitationsList);
     },
 
     // Main Game Loop
@@ -866,9 +802,7 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (routing.isOn(Page.Gang) && Player.inGang()) {
-                Player.gang.updateGangContent();
-            } else if (routing.isOn(Page.ScriptEditor)) {
+            if (routing.isOn(Page.ScriptEditor)) {
                 updateScriptEditorContent();
             }
             Engine.Counters.updateDisplaysLong = 15;
@@ -1322,6 +1256,9 @@ const Engine = {
         Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
         Engine.Display.stockMarketContent.style.display = "none";
 
+        Engine.Display.gangContent = document.getElementById("gang-container");
+        Engine.Display.gangContent.style.display = "none";
+
         Engine.Display.missionContent = document.getElementById("mission-container");
         Engine.Display.missionContent.style.display = "none";
 
@@ -1450,6 +1387,7 @@ const Engine = {
 
         MainMenuLinks.Gang.addEventListener("click", function() {
             Engine.loadGangContent();
+            MainMenuLinks.Gang.classList.add('active');
             return false;
         });
 

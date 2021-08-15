@@ -14,8 +14,6 @@ import { Popup } from "./Popup";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
-type ReactComponent = new(...args: any[]) => React.Component<any, any>;
-
 let gameContainer: HTMLElement;
 
 function getGameContainer(): void {
@@ -31,16 +29,26 @@ function getGameContainer(): void {
 document.addEventListener("DOMContentLoaded", getGameContainer);
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function createPopup(id: string, rootComponent: ReactComponent, props: any): HTMLElement | null {
+export function createPopup<T>(id: string, rootComponent: (props: T) => React.ReactElement, props: T): HTMLElement | null {
     let container = document.getElementById(id);
     if (container == null) {
+        function onClick(this: HTMLElement, event: MouseEvent): any {
+            if(!event.srcElement) return;
+            if(!(event.srcElement instanceof HTMLElement)) return;
+            const clickedId = (event.srcElement as HTMLElement).id;
+            if(clickedId !== id) return;
+            removePopup(id);
+        }
         container = createElement("div", {
             class: "popup-box-container",
             display: "flex",
             id: id,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            clickListener: onClick,
         });
 
         gameContainer.appendChild(container);
+
     }
 
     ReactDOM.render(<Popup content={rootComponent} id={id} props={props} />, container);
@@ -53,9 +61,10 @@ export function createPopup(id: string, rootComponent: ReactComponent, props: an
  */
 export function removePopup(id: string): void {
     const content = document.getElementById(`${id}`);
-    if (content == null) { return; }
+    if (content == null) return;
 
     ReactDOM.unmountComponentAtNode(content);
 
     removeElementById(id);
+    removeElementById(`${id}-close`);
 }

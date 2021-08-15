@@ -29,12 +29,10 @@ import {
     calculateWeakenTime,
 } from "./Hacking";
 import { calculateServerGrowth } from "./Server/formulas/grow";
-import {
-    AllGangs,
-    GangMemberUpgrades,
-    GangMemberTasks,
-    Gang,
-} from "./Gang";
+import { Gang } from "./Gang/Gang";
+import { AllGangs } from "./Gang/AllGangs";
+import { GangMemberTasks } from "./Gang/GangMemberTasks";
+import { GangMemberUpgrades } from "./Gang/GangMemberUpgrades";
 import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
 import { FactionWorkType } from "./Faction/FactionWorkTypeEnum";
@@ -3743,17 +3741,21 @@ function NetscriptFunctions(workerScript) {
             getEquipmentNames: function() {
                 updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
                 checkGangApiAccess("getEquipmentNames");
-                return Player.gang.getAllUpgradeNames();
+                return Object.keys(GangMemberUpgrades);
             },
             getEquipmentCost: function(equipName) {
                 updateDynamicRam("getEquipmentCost", getRamCost("gang", "getEquipmentCost"));
                 checkGangApiAccess("getEquipmentCost");
-                return Player.gang.getUpgradeCost(equipName);
+                const upg = GangMemberUpgrades[equipName];
+                if(upg === null) return Infinity;
+                return Player.gang.getUpgradeCost(upg);
             },
             getEquipmentType: function(equipName) {
                 updateDynamicRam("getEquipmentType", getRamCost("gang", "getEquipmentType"));
                 checkGangApiAccess("getEquipmentType");
-                return Player.gang.getUpgradeType(equipName);
+                const upg = GangMemberUpgrades[equipName];
+                if (upg == null) return "";
+                return upg.getType();
             },
             getEquipmentStats: function(equipName) {
                 updateDynamicRam("getEquipmentStats", getRamCost("gang", "getEquipmentStats"));
@@ -3768,7 +3770,9 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));
                 checkGangApiAccess("purchaseEquipment");
                 const member = getGangMember("purchaseEquipment", memberName);
-                const res = member.buyUpgrade(equipName, Player, Player.gang);
+                const equipment = GangMemberUpgrades[equipName];
+                if(!equipment) return false;
+                const res = member.buyUpgrade(equipment, Player, Player.gang);
                 if (res) {
                     workerScript.log("purchaseEquipment", `Purchased '${equipName}' for Gang member '${memberName}'`);
                 } else {
@@ -3781,6 +3785,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
                 checkGangApiAccess("ascendMember");
                 const member = getGangMember("ascendMember", name);
+                if(!member.canAscend()) return;
                 return Player.gang.ascendMember(member, workerScript);
             },
             setTerritoryWarfare: function(engage) {

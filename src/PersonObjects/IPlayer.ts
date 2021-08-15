@@ -31,6 +31,7 @@ export interface IPlayer {
     corporation: any;
     currentServer: string;
     factions: string[];
+    factionInvitations: string[];
     firstProgramAvailable: boolean;
     firstTimeTraveled: boolean;
     hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server

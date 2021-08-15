@@ -36,6 +36,10 @@ li {
     list-style-type: none;
 }
 
+br {
+    @extend .noselect;
+}
+
 #entire-game-container {
     background-color: transparent;
 }

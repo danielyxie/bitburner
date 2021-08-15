@@ -3,6 +3,28 @@
 Changelog
 =========
 
+v0.52.3 - 2021-07-15 Gangs were OP (hydroflame)
+-------------------------------------------
+
+** Gang **
+
+* Significant rework. Ascension is now based on exp gained.
+* All upgrades give exp bonuses.
+* Maximum gang members reduced to 12.
+* Respect required to recruit sharply increased.
+* Rewritten in React, the UI should be smoother and less laggy now.
+
+** Infiltration **
+
+* Now isTrusted protected.
+
+** Misc. **
+
+* Many UI element are now "noselect" protected.
+* Fixed an issue where you could join the same faction twice via script and
+  UI simultaneously.
+* Factions list screen converted to React.
+
 v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
 -------------------------------------------
 
