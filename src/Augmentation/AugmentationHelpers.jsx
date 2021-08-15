@@ -14,6 +14,7 @@ import { saveObject } from "../SaveObject";
 import { Page, routing } from "../ui/navigationTracking";
 import { onExport } from "../ExportBonus";
 import { Programs } from "../Programs/Programs";
+import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { clearObject } from "../../utils/helpers/clearObject";
@@ -1391,7 +1392,6 @@ function initAugmentations() {
     }
     AddToAugmentations(PhotosyntheticCells);
 
-    console.log(Programs);
 	// BitRunners
     const Neurolink = new Augmentation({
         name:AugmentationNames.Neurolink, repCost:8.75e5, moneyCost:4.375e9,
@@ -1493,7 +1493,7 @@ function initAugmentations() {
 
 	// Aevum
     const PCMatrix = new Augmentation({
-        name:AugmentationNames.PCMatrix, repCost:1e4, moneyCost:1e7,
+        name:AugmentationNames.PCMatrix, repCost:100e3, moneyCost:2e9,
         info:"A 'Probability Computation Matrix' is installed in the frontal cortex. This implant " +
              "uses advanced mathematical algorithims to rapidly identify and compute statistical " +
              "outcomes of nearly every situation.",
@@ -1865,8 +1865,13 @@ function initAugmentations() {
         resetAugmentation(BladesSimulacrum);
     }
 
+    try {
+        console.log([1, 0.96, 0.94, 0.93][SourceFileFlags[11]]);
+    } catch(err) {
+        console.log(err);
+    }
     // Update costs based on how many have been purchased
-    mult = Math.pow(CONSTANTS.MultipleAugMultiplier, Player.queuedAugmentations.length);
+    mult = Math.pow(CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]], Player.queuedAugmentations.length);
     for (var name in Augmentations) {
         if (Augmentations.hasOwnProperty(name)) {
             Augmentations[name].baseCost *= mult;

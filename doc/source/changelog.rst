@@ -3,6 +3,20 @@
 Changelog
 =========
 
+v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
+-------------------------------------------
+
+** Source-Files **
+
+* Source-File 11 now also provides a small reduction to the price increase
+  multiplier.
+
+** Augmentations **
+
+* New Augmentation offered by Aevum, themed around 777 and offers some basic
+  programs.
+* Augmentation descriptions are now more concise and consistent.
+
 v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
 -------------------------------------------
 
