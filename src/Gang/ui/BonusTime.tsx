@@ -17,7 +17,7 @@ export function BonusTime(props: IProps): React.ReactElement {
     return (<>
         <p className="tooltip" style={{display: "inline-block"}}>
             Bonus time: {convertTimeMsToTimeElapsedString(bonusMillis)}
-            <span className="tooltiptext">
+            <span className="tooltiptext noselect">
                 You gain bonus time while offline or when the game is inactive
                 (e.g. when the tab is throttled by the browser). Bonus time
                 makes the Gang mechanic progress faster, up to 5x the normal

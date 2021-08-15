@@ -40,7 +40,7 @@ export function GangMemberList(props: IProps): React.ReactElement {
             gang={props.gang} />
         <br />
         <input
-            className="text-input"
+            className="text-input noselect"
             placeholder="Filter gang member"
             style={{margin: "5px", padding: "5px"}}
             value={filter}

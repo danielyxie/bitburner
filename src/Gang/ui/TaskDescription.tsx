@@ -14,5 +14,5 @@ export function TaskDescription(props: IProps): React.ReactElement {
     const task = GangMemberTasks[props.member.task];
     const desc = task ? task.desc: GangMemberTasks["Unassigned"].desc;
 
-    return (<p className="inline" dangerouslySetInnerHTML={{__html: desc}} />);
+    return (<p className="inline noselect" dangerouslySetInnerHTML={{__html: desc}} />);
 }

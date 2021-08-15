@@ -1865,11 +1865,6 @@ function initAugmentations() {
         resetAugmentation(BladesSimulacrum);
     }
 
-    try {
-        console.log([1, 0.96, 0.94, 0.93][SourceFileFlags[11]]);
-    } catch(err) {
-        console.log(err);
-    }
     // Update costs based on how many have been purchased
     mult = Math.pow(CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]], Player.queuedAugmentations.length);
     for (var name in Augmentations) {

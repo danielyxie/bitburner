@@ -47,7 +47,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
     const gangNames = Object.keys(AllGangs).filter(g => g != props.gang.facName);
 
     return (<div style={{width: '70%'}}>
-        <p>
+        <p className="noselect">
             This page shows how much territory your Gang controls. This
             statistic is listed as a percentage, which represents how much of
             the total territory you control.
@@ -83,7 +83,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
             onChange={(event)=> props.gang.territoryWarfareEngaged = event.target.checked}/>
         <label
             htmlFor="warfare"
-            className="tooltip"
+            className="tooltip noselect"
             style={{color: "white", display: 'inline-block'}}>
             Engage in Territory Warfare
             <span className="tooltiptext" style={{display: "inline-block"}}>
@@ -97,7 +97,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
             Territory Clash Chance: {numeralWrapper.formatPercentage(props.gang.territoryClashChance, 3)}
         </p>
         <div
-            className="help-tip"
+            className="help-tip noselect"
             style={{display: "inline-block"}}
             onClick={openWarfareHelp}>?</div>
         <br />
@@ -108,7 +108,7 @@ export function TerritorySubpage(props: IProps): React.ReactElement {
             type="checkbox"
             style={{display: "inline-block", margin: "2px"}}
             onChange={(event)=> props.gang.notifyMemberDeath = event.target.checked}/>
-        <label htmlFor="warfare" className="tooltip" style={{color: "white", display: 'inline-block'}}>
+        <label htmlFor="warfare" className="tooltip noselect" style={{color: "white", display: 'inline-block'}}>
             Notify about Gang Member Deaths
             <span className="tooltiptext" style={{display: "inline-block"}}>
                 If this is enabled, then you will receive a pop-up notifying you

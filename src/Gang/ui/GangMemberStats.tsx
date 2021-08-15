@@ -70,8 +70,8 @@ Charisma: {formatNumber(props.member.cha, 0)} ({numeralWrapper.formatExp(props.m
         </pre>
         <br />
         { props.member.canAscend() && <>
-        <button className="accordion-button" onClick={ascend}>Ascend</button>
-        <div className="help-tip" style={{marginTop: "5px"}} onClick={openAscensionHelp}>?</div>
+        <button className="accordion-button noselect" onClick={ascend}>Ascend</button>
+        <div className="help-tip noselect" style={{marginTop: "5px"}} onClick={openAscensionHelp}>?</div>
         </>}
     </>);
 }

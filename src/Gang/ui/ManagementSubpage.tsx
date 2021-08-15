@@ -14,7 +14,7 @@ interface IProps {
 
 export function ManagementSubpage(props: IProps): React.ReactElement {
     return (<div style={{display: 'block'}}>
-        <p style={{width: "70%"}}>
+        <p className="noselect" style={{width: "70%"}}>
             This page is used to manage your gang members and get an overview of
             your gang's stats.
             <br />

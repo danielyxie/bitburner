@@ -37,7 +37,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
     return (<>
         <select
             onChange={onChange}
-            className="dropdown"
+            className="dropdown noselect"
             value={currentTask}>
             <option key={0} value={"---"}>---</option>
             {tasks.map((task: string, i: number) => <option key={i+1} value={task}>{task}</option>)}

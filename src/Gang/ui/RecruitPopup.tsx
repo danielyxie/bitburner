@@ -50,11 +50,11 @@ export function RecruitPopup(props: IRecruitPopupProps): React.ReactElement {
     }
 
     return (<>
-        <p>Enter a name for your new Gang member:</p><br />
+        <p className="noselect">Enter a name for your new Gang member:</p><br />
         <input autoFocus
             onKeyUp={onKeyUp}
             onChange={onChange}
-            className="text-input"
+            className="text-input noselect"
             type="text"
             placeholder="unique name" />
         <a className="std-button" onClick={recruit}>Recruit Gang Member</a>

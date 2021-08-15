@@ -64,7 +64,7 @@ export class GangMember {
     }
 
     calculateAscensionMult(points: number): number {
-        return Math.max(Math.pow(points/2000, 0.9), 1);
+        return Math.max(Math.pow(points/4000, 0.7), 1);
     }
 
     updateSkillLevels(): void {
@@ -170,12 +170,12 @@ export class GangMember {
 
     expMult(): IMults {
         return {
-            hack: (this.hack_mult-1)/10+1,
-            str: (this.str_mult-1)/10+1,
-            def: (this.def_mult-1)/10+1,
-            dex: (this.dex_mult-1)/10+1,
-            agi: (this.agi_mult-1)/10+1,
-            cha: (this.cha_mult-1)/10+1,
+            hack: (this.hack_mult-1)/4+1,
+            str: (this.str_mult-1)/4+1,
+            def: (this.def_mult-1)/4+1,
+            dex: (this.dex_mult-1)/4+1,
+            agi: (this.agi_mult-1)/4+1,
+            cha: (this.cha_mult-1)/4+1,
         };
     }
 

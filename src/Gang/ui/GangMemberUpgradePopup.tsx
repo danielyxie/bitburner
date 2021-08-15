@@ -74,27 +74,27 @@ Dex:  {props.member.dex} (x{formatNumber(props.member.dex_mult * asc.dex, 2)})<b
 Agi:  {props.member.agi} (x{formatNumber(props.member.agi_mult * asc.agi, 2)})<br />
 Cha:  {props.member.cha} (x{formatNumber(props.member.cha_mult * asc.cha, 2)})
         </pre>
-        <div className="gang-owned-upgrades-div">
+        <div className="gang-owned-upgrades-div noselect">
         Purchased Upgrades: {props.member.upgrades.map((upg: string) => purchasedUpgrade(upg))}
         {props.member.augmentations.map((upg: string) => purchasedUpgrade(upg))}
         </div>
-        <div style={{width: "20%", display: "inline-block"}}>
+        <div className="noselect" style={{width: "20%", display: "inline-block"}}>
             <h2>Weapons</h2>
             {weaponUpgrades.map(upg => upgradeButton(upg))}
         </div>
-        <div style={{width: "20%", display: "inline-block"}}>
+        <div className="noselect" style={{width: "20%", display: "inline-block"}}>
             <h2>Armor</h2>
             {armorUpgrades.map(upg => upgradeButton(upg))}
         </div>
-        <div style={{width: "20%", display: "inline-block"}}>
+        <div className="noselect" style={{width: "20%", display: "inline-block"}}>
             <h2>Vehicles</h2>
             {vehicleUpgrades.map(upg => upgradeButton(upg))}
         </div>
-        <div style={{width: "20%", display: "inline-block"}}>
+        <div className="noselect" style={{width: "20%", display: "inline-block"}}>
             <h2>Rootkits</h2>
             {rootkitUpgrades.map(upg => upgradeButton(upg, true))}
         </div>
-        <div style={{width: "20%", display: "inline-block"}}>
+        <div className="noselect" style={{width: "20%", display: "inline-block"}}>
             <h2>Augmentations</h2>
             {augUpgrades.map(upg => upgradeButton(upg, true))}
         </div>
@@ -127,13 +127,13 @@ export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
 
     return (<>
         <input
-            className="text-input"
+            className="text-input noselect"
             value={filter}
             placeholder="Filter gang member"
             onChange={event => setFilter(event.target.value)} />
         <p className="tooltip" style={{marginLeft: '6px', display: 'inline-block'}}>
             Discount: -{numeralWrapper.formatPercentage(1 - 1 / props.gang.getDiscount())}
-            <span className="tooltiptext">
+            <span className="tooltiptext noselect">
                 You get a discount on equipment and upgrades based on your
                 gang's respect and power. More respect and power leads to more
                 discounts.

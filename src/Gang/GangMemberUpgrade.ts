@@ -1,4 +1,5 @@
 import { IMults, UpgradeType } from "./data/upgrades";
+import { numeralWrapper } from "../ui/numeralFormat";
 
 export class GangMemberUpgrade {
     name: string;
@@ -17,24 +18,30 @@ export class GangMemberUpgrade {
     }
 
     createDescription(): string {
-        const lines = ["Increases:"];
+        const lines = ["Effects:"];
         if (this.mults.str != null) {
-            lines.push(`* Strength by ${Math.round((this.mults.str - 1) * 100)}%`);
+            lines.push(`+${numeralWrapper.formatPercentage(this.mults.str-1, 0)} strength skill`);
+            lines.push(`+${numeralWrapper.formatPercentage((this.mults.str-1)/4, 2)} strength exp`);
         }
         if (this.mults.def != null) {
-            lines.push(`* Defense by ${Math.round((this.mults.def - 1) * 100)}%`);
+            lines.push(`+${numeralWrapper.formatPercentage(this.mults.def-1, 0)} defense skill`);
+            lines.push(`+${numeralWrapper.formatPercentage((this.mults.def-1)/4, 2)} defense exp`);
         }
         if (this.mults.dex != null) {
-            lines.push(`* Dexterity by ${Math.round((this.mults.dex - 1) * 100)}%`);
+            lines.push(`+${numeralWrapper.formatPercentage(this.mults.dex-1, 0)} dexterity skill`);
+            lines.push(`+${numeralWrapper.formatPercentage((this.mults.dex-1)/4, 2)} dexterity exp`);
         }
         if (this.mults.agi != null) {
-            lines.push(`* Agility by ${Math.round((this.mults.agi - 1) * 100)}%`);
+            lines.push(`+${numeralWrapper.formatPercentage(this.mults.agi-1, 0)} agility skill`);
+            lines.push(`+${numeralWrapper.formatPercentage((this.mults.agi-1)/4, 2)} agility exp`);
         }
         if (this.mults.cha != null) {
-            lines.push(`* Charisma by ${Math.round((this.mults.cha - 1) * 100)}%`);
+            lines.push(`+${numeralWrapper.formatPercentage(this.mults.cha-1, 0)} charisma skill`);
+            lines.push(`+${numeralWrapper.formatPercentage((this.mults.cha-1)/4, 2)} charisma exp`);
         }
         if (this.mults.hack != null) {
-            lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)}%`);
+            lines.push(`+${numeralWrapper.formatPercentage(this.mults.hack-1, 0)} hacking skill`);
+            lines.push(`+${numeralWrapper.formatPercentage((this.mults.hack-1)/4, 2)} hacking exp`);
         }
         return lines.join("<br>");
     }

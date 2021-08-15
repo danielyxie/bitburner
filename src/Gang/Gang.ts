@@ -293,7 +293,7 @@ export class Gang {
         if (this.members.length < numFreeMembers) return 0;
 
         const i = this.members.length - (numFreeMembers - 1);
-        return Math.round(0.9 * Math.pow(i, 3) + Math.pow(i, 2));
+        return Math.pow(5, i);
     }
 
     recruitMember(name: string): boolean {

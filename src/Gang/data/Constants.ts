@@ -7,7 +7,7 @@ export const GangConstants: {
 } = {
      // Respect is divided by this to get rep gain
     GangRespectToReputationRatio: 25,
-    MaximumGangMembers: 30,
+    MaximumGangMembers: 12,
     CyclesPerTerritoryAndPowerUpdate: 100,
      // Portion of upgrade multiplier that is kept after ascending
     AscensionMultiplierRatio: .15,
