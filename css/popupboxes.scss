@@ -1,5 +1,6 @@
 @import "mixins";
 @import "theme";
+@import "styles";
 
 /* Pop-up boxes */
 .popup-box-container {
@@ -88,6 +89,7 @@
 .dialog-box-close-button {
     @include borderRadius(12px);
     @include boxShadow(1px 1px 3px #000);
+    @extend .noselect;
 
     float: right;
     color: #aaa;

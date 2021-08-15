@@ -65,7 +65,7 @@ export class LocationCity extends React.Component<IProps, any> {
             elems.push(<pre key={i}>{lineElems(lines[i])}</pre>)
         }
 
-        return elems;
+        return <div className="noselect">{elems}</div>;
     }
 
     listCity(): React.ReactNode {

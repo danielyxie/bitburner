@@ -46,6 +46,7 @@ export function inviteToFaction(faction) {
 }
 
 export function joinFaction(faction) {
+    if(faction.isMember) return;
 	faction.isMember = true;
     Player.factions.push(faction.name);
     const factionInfo = faction.getInfo();
