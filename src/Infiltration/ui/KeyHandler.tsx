@@ -8,6 +8,11 @@ export function KeyHandler(props: IProps): React.ReactElement {
     let elem: any;
     useEffect(() => elem.focus());
 
+    function onKeyDown(event: React.KeyboardEvent<HTMLElement>): void {
+        if(!event.isTrusted) return;
+        props.onKeyDown(event);
+    }
+
     // invisible autofocused element that eats all the keypress for the minigames.
-    return (<div tabIndex={1} ref={c => elem = c} onKeyDown={props.onKeyDown} />)
+    return (<div tabIndex={1} ref={c => elem = c} onKeyDown={onKeyDown} />)
 }

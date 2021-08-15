@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.2",
+    Version:                "0.52.3",
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -225,18 +225,25 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
+    v0.52.3 - 2021-07-XX Gangs were OP (hydroflame)
     -------------------------------------------
 
-    ** Source-Files **
+    ** Gang **
 
-    * Source-File 11 now also provides a small reduction to the price increase
-      multiplier.
+    * Significant rework. Ascension is now based on exp gained.
+    * All upgrades give exp bonuses.
+    * Maximum gang members reduced to 12.
+    * Respect required to recruit sharply increased.
+    * Rewritten in React, the UI should be smoother and less laggy now.
 
-    ** Augmentations **
+    ** Infiltration **
 
-    * New Augmentation offered by Aevum, themed around 777 and offers some basic
-      programs.
-    * Augmentation descriptions are now more concise and consistent.
+    * Now isTrusted protected.
+
+    ** Misc. **
+
+    * Many UI element are now "noselect" protected.
+    * Fixed an issue where you could join the same faction twice via script and
+      UI simultaneously.
 `,
 }
