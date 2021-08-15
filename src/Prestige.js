@@ -333,7 +333,7 @@ function prestigeSourceFile(flume) {
         deleteStockMarket();
     }
 
-    if (Player.inGang()) { Player.gang.clearUI(); }
+    if (Player.inGang()) clearGangUI();
     Player.gang = null;
     Player.corporation = null; resetIndustryResearchTrees();
     Player.bladeburner = null;

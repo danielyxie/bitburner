@@ -1,5 +1,6 @@
 @import "mixins";
 @import "theme";
+@import "styles";
 
 /**
  * Styling for all buttons
@@ -16,17 +17,13 @@ button {
 
 .a-link-button,
 .std-button {
+    @extend .noselect;
     text-decoration: none;
     background-color: #555;
     color: #fff;
     padding: 3px 5px;
     margin: 5px;
     border: 1px solid #333;
-
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
 
     &:hover {
         background-color: #666;
@@ -68,6 +65,7 @@ button {
 
 .a-link-button-bought,
 .std-button-bought {
+    @extend .noselect;
     text-decoration: none;
     background-color: #0a0;
     color: #fff;

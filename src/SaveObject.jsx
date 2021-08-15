@@ -10,7 +10,7 @@ import { Engine } from "./engine";
 import { Factions, loadFactions } from "./Faction/Factions";
 import { loadFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
-import { loadAllGangs, AllGangs } from "./Gang";
+import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
 import { AllServers, loadAllServers } from "./Server/AllServers";

@@ -100,7 +100,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     return (<Grid container spacing={3}>
         <GameTimer millis={timer} onExpire={props.onFailure} />
         <Grid item xs={12}>
-            <h1 className={"noselect"}>Cut the wires with the following properties!</h1>
+            <h1 className={"noselect"}>Cut the wires with the following properties! (keyboard 1 to 9)</h1>
             {questions.map((question, i) => <h3 key={i}>{question.toString()}</h3>)}
             <pre>{(new Array(wires.length)).fill(0).map((_, i) => <span key={i}>&nbsp;{i+1}&nbsp;&nbsp;&nbsp;&nbsp;</span>)}</pre>
             {(new Array(8)).fill(0).map((_, i) => <div key={i}>
