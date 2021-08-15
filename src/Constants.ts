@@ -228,7 +228,7 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.3 - 2021-07-XX Gangs were OP (hydroflame)
+    v0.52.3 - 2021-07-15 Gangs were OP (hydroflame)
     -------------------------------------------
 
     ** Gang **
