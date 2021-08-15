@@ -1261,7 +1261,7 @@ Bladeburner.prototype.createContent = function() {
     });
 
     DomElems.actionAndSkillsDiv = createElement("div", {
-        height:"60%", width:"70%", display:"block",
+        width:"70%", display:"block",
         border:"1px solid white", margin:"6px", padding:"6px",
     });
 
