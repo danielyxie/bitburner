@@ -11,7 +11,6 @@ import { createPopup } from "../../ui/React/createPopup";
 import { TeamSizePopup } from "./TeamSizePopup";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { startAction } from "../Bladeburner";
 
 interface IProps {
     bladeburner: IBladeburner;
@@ -31,7 +30,7 @@ export function OperationElem(props: IProps): React.ReactElement {
     function onStart() {
         props.bladeburner.action.type = ActionTypes.Operation;
         props.bladeburner.action.name = props.action.name;
-        startAction(props.bladeburner, props.player, props.bladeburner.action);
+        props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 
@@ -46,13 +45,13 @@ export function OperationElem(props: IProps): React.ReactElement {
 
     function increaseLevel() {
         ++props.action.level;
-        if (isActive) startAction(props.bladeburner, props.player, props.bladeburner.action);
+        if (isActive) props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 
     function decreaseLevel() {
         --props.action.level;
-        if (isActive) startAction(props.bladeburner, props.player, props.bladeburner.action);
+        if (isActive) props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 

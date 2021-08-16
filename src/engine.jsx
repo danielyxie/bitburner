@@ -884,7 +884,7 @@ const Engine = {
             }
             if (Player.bladeburner instanceof Bladeburner) {
                 try {
-                    ProcessBladeburner(Player.bladeburner, Player);
+                    Player.bladeburner.process(Player);
                 } catch(e) {
                     exceptionAlert("Exception caught in Bladeburner.process(): " + e);
                 }

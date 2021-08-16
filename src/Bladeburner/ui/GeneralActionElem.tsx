@@ -10,8 +10,6 @@ import { BladeburnerConstants } from "../data/Constants";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
-import { startAction } from "../Bladeburner";
-
 interface IProps {
     bladeburner: IBladeburner;
     player: IPlayer;
@@ -26,7 +24,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
     function onStart() {
         props.bladeburner.action.type = ActionTypes[(props.action.name as string)];
         props.bladeburner.action.name = props.action.name;
-        startAction(props.bladeburner, props.player, props.bladeburner.action);
+        props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 

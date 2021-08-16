@@ -10,7 +10,6 @@ import { createPopup } from "../../ui/React/createPopup";
 import { TeamSizePopup } from "./TeamSizePopup";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { startAction } from "../Bladeburner";
 
 interface IProps {
     bladeburner: IBladeburner;
@@ -35,7 +34,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
     function onStart() {
         props.bladeburner.action.type = ActionTypes.BlackOperation;
         props.bladeburner.action.name = props.action.name;
-        startAction(props.bladeburner, props.player, props.bladeburner.action);
+        props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 
