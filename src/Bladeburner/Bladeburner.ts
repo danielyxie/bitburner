@@ -8,6 +8,8 @@ import { ActionIdentifier } from "./ActionIdentifier";
 import { ActionTypes } from "./data/ActionTypes";
 import { BlackOperations } from "./BlackOperations";
 import { BlackOperation } from "./BlackOperation";
+import { Operation } from "./Operation";
+import { Contract } from "./Contract";
 import { GeneralActions } from "./GeneralActions";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { Skills } from "./Skills";
@@ -25,7 +27,14 @@ import { addOffset } from "../../utils/helpers/addOffset";
 import { Faction } from "../Faction/Faction";
 import { Factions, factionExists } from "../Faction/Factions";
 import { calculateHospitalizationCost } from "../Hospital/Hospital";
-import { hackWorldDaemon } from "../RedPill";
+import { hackWorldDaemon, redPillFlag } from "../RedPill";
+import { dialogBoxCreate } from "../../utils/DialogBox";
+import { Settings } from "../Settings/Settings";
+import { Augmentations } from "../Augmentation/Augmentations";
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { getTimestamp } from "../../utils/helpers/getTimestamp";
+import { joinFaction } from "../Faction/FactionHelpers";
+import { WorkerScript } from "../Netscript/WorkerScript";
 
 export function getActionIdFromTypeAndName(bladeburner: IBladeburner, type: string = "", name: string = ""): IActionIdentifier | null {
     if (type === "" || name === "") {return null;}
@@ -548,7 +557,7 @@ export function executeConsoleCommand(bladeburner: IBladeburner, player: IPlayer
             executeStartConsoleCommand(bladeburner, player, args);
             break;
         case "stop":
-            bladeburner.resetAction();
+            resetAction(bladeburner);
             break;
         default:
             bladeburner.postToConsole("Invalid console command");
@@ -1309,5 +1318,598 @@ export function startAction(bladeburner: IBladeburner, player: IPlayer, actionId
         default:
             throw new Error("Invalid Action Type in startAction(Bladeburner,player, ): " + actionId.type);
             break;
+    }
+}
+
+export function calculateStaminaPenalty(bladeburner: IBladeburner): number {
+    return Math.min(1, bladeburner.stamina / (0.5 * bladeburner.maxStamina));
+}
+
+export function calculateStaminaGainPerSecond(bladeburner: IBladeburner, player: IPlayer): number {
+    const effAgility = player.agility * bladeburner.skillMultipliers.effAgi;
+    const maxStaminaBonus = bladeburner.maxStamina / BladeburnerConstants.MaxStaminaToGainFactor;
+    const gain = (BladeburnerConstants.StaminaGainPerSecond + maxStaminaBonus) * Math.pow(effAgility, 0.17);
+    return gain * (bladeburner.skillMultipliers.stamina * player.bladeburner_stamina_gain_mult);
+}
+
+export function calculateMaxStamina(bladeburner: IBladeburner, player: IPlayer) {
+    const effAgility = player.agility * bladeburner.skillMultipliers.effAgi;
+    let maxStamina = (Math.pow(effAgility, 0.8) + bladeburner.staminaBonus) *
+      bladeburner.skillMultipliers.stamina *
+      player.bladeburner_max_stamina_mult;
+    if (bladeburner.maxStamina !== maxStamina) {
+      const oldMax = bladeburner.maxStamina;
+      bladeburner.maxStamina = maxStamina;
+      bladeburner.stamina = bladeburner.maxStamina * bladeburner.stamina / oldMax;
+    }
+    if (isNaN(maxStamina)) {throw new Error("Max Stamina calculated to be NaN in Bladeburner.calculateMaxStamina()");}
+}
+
+export function create(bladeburner: IBladeburner): void {
+    bladeburner.contracts["Tracking"] = new Contract({
+        name:"Tracking",
+        desc:"Identify and locate Synthoids. This contract involves reconnaissance " +
+             "and information-gathering ONLY. Do NOT engage. Stealth is of the utmost importance.<br><br>" +
+             "Successfully completing Tracking contracts will slightly improve your Synthoid population estimate for " +
+             "whatever city you are currently in.",
+        baseDifficulty:125,difficultyFac:1.02,rewardFac:1.041,
+        rankGain:0.3, hpLoss:0.5,
+        count:getRandomInt(25, 150), countGrowth:getRandomInt(5, 75)/10,
+        weights:{hack:0,str:0.05,def:0.05,dex:0.35,agi:0.35,cha:0.1, int:0.05},
+        decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.9, int:1},
+        isStealth:true,
+    });
+    bladeburner.contracts["Bounty Hunter"] = new Contract({
+        name:"Bounty Hunter",
+        desc:"Hunt down and capture fugitive Synthoids. These Synthoids are wanted alive.<br><br>" +
+             "Successfully completing a Bounty Hunter contract will lower the population in your " +
+             "current city, and will also increase its chaos level.",
+        baseDifficulty:250, difficultyFac:1.04,rewardFac:1.085,
+        rankGain:0.9, hpLoss:1,
+        count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
+        weights:{hack:0,str:0.15,def:0.15,dex:0.25,agi:0.25,cha:0.1, int:0.1},
+        decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
+        isKill:true,
+    });
+    bladeburner.contracts["Retirement"] = new Contract({
+        name:"Retirement",
+        desc:"Hunt down and retire (kill) rogue Synthoids.<br><br>" +
+             "Successfully completing a Retirement contract will lower the population in your current " +
+             "city, and will also increase its chaos level.",
+        baseDifficulty:200, difficultyFac:1.03, rewardFac:1.065,
+        rankGain:0.6, hpLoss:1,
+        count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
+        weights:{hack:0,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0.1, int:0.1},
+        decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
+        isKill:true,
+    });
+
+    bladeburner.operations["Investigation"] = new Operation({
+        name:"Investigation",
+        desc:"As a field agent, investigate and identify Synthoid " +
+             "populations, movements, and operations.<br><br>Successful " +
+             "Investigation ops will increase the accuracy of your " +
+             "synthoid data.<br><br>" +
+             "You will NOT lose HP from failed Investigation ops.",
+        baseDifficulty:400, difficultyFac:1.03,rewardFac:1.07,reqdRank:25,
+        rankGain:2.2, rankLoss:0.2,
+        count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
+        weights:{hack:0.25,str:0.05,def:0.05,dex:0.2,agi:0.1,cha:0.25, int:0.1},
+        decays:{hack:0.85,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
+        isStealth:true,
+    });
+    bladeburner.operations["Undercover Operation"] = new Operation({
+        name:"Undercover Operation",
+        desc:"Conduct undercover operations to identify hidden " +
+             "and underground Synthoid communities and organizations.<br><br>" +
+             "Successful Undercover ops will increase the accuracy of your synthoid " +
+             "data.",
+        baseDifficulty:500, difficultyFac:1.04, rewardFac:1.09, reqdRank:100,
+        rankGain:4.4, rankLoss:0.4, hpLoss:2,
+        count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
+        weights:{hack:0.2,str:0.05,def:0.05,dex:0.2,agi:0.2,cha:0.2, int:0.1},
+        decays:{hack:0.8,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
+        isStealth:true,
+    });
+    bladeburner.operations["Sting Operation"] = new Operation({
+        name:"Sting Operation",
+        desc:"Conduct a sting operation to bait and capture particularly " +
+             "notorious Synthoid criminals.",
+        baseDifficulty:650, difficultyFac:1.04, rewardFac:1.095, reqdRank:500,
+        rankGain:5.5, rankLoss:0.5, hpLoss:2.5,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(3, 40)/10,
+        weights:{hack:0.25,str:0.05,def:0.05,dex:0.25,agi:0.1,cha:0.2, int:0.1},
+        decays:{hack:0.8,str:0.85,def:0.85,dex:0.85,agi:0.85,cha:0.7, int:0.9},
+        isStealth:true,
+    });
+    bladeburner.operations["Raid"] = new Operation({
+        name:"Raid",
+        desc:"Lead an assault on a known Synthoid community. Note that " +
+             "there must be an existing Synthoid community in your current city " +
+             "in order for this Operation to be successful.",
+        baseDifficulty:800, difficultyFac:1.045, rewardFac:1.1, reqdRank:3000,
+        rankGain:55,rankLoss:2.5,hpLoss:50,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(2, 40)/10,
+        weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
+        decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
+        isKill:true,
+    });
+    bladeburner.operations["Stealth Retirement Operation"] = new Operation({
+        name:"Stealth Retirement Operation",
+        desc:"Lead a covert operation to retire Synthoids. The " +
+             "objective is to complete the task without " +
+             "drawing any attention. Stealth and discretion are key.",
+        baseDifficulty:1000, difficultyFac:1.05, rewardFac:1.11, reqdRank:20e3,
+        rankGain:22, rankLoss:2, hpLoss:10,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
+        weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
+        decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
+        isStealth:true, isKill:true,
+    });
+    bladeburner.operations["Assassination"] = new Operation({
+        name:"Assassination",
+        desc:"Assassinate Synthoids that have been identified as " +
+             "important, high-profile social and political leaders " +
+             "in the Synthoid communities.",
+        baseDifficulty:1500, difficultyFac:1.06, rewardFac:1.14, reqdRank:50e3,
+        rankGain:44, rankLoss:4, hpLoss:5,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
+        weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
+        decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.8},
+        isStealth:true, isKill:true,
+    });
+}
+
+export function process(bladeburner: IBladeburner, player: IPlayer): void {
+    // Edge case condition...if Operation Daedalus is complete trigger the BitNode
+    if (redPillFlag === false && bladeburner.blackops.hasOwnProperty("Operation Daedalus")) {
+        return hackWorldDaemon(player.bitNodeN);
+    }
+
+    // If the Player starts doing some other actions, set action to idle and alert
+    if (Augmentations[AugmentationNames.BladesSimulacrum].owned === false && player.isWorking) {
+        if (bladeburner.action.type !== ActionTypes["Idle"]) {
+            let msg = "Your Bladeburner action was cancelled because you started doing something else.";
+            if (bladeburner.automateEnabled) {
+                msg += `<br><br>Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`
+                bladeburner.automateEnabled = false;
+            }
+            if (!Settings.SuppressBladeburnerPopup) {
+                dialogBoxCreate(msg);
+            }
+        }
+        resetAction(bladeburner);
+    }
+
+    // If the Player has no Stamina, set action to idle
+    if (bladeburner.stamina <= 0) {
+        bladeburner.log("Your Bladeburner action was cancelled because your stamina hit 0");
+        resetAction(bladeburner);
+    }
+
+    // A 'tick' for this mechanic is one second (= 5 game cycles)
+    if (bladeburner.storedCycles >= BladeburnerConstants.CyclesPerSecond) {
+        let seconds = Math.floor(bladeburner.storedCycles / BladeburnerConstants.CyclesPerSecond);
+        seconds = Math.min(seconds, 5); // Max of 5 'ticks'
+        bladeburner.storedCycles -= seconds * BladeburnerConstants.CyclesPerSecond;
+
+        // Stamina
+        calculateMaxStamina(bladeburner, player);
+        bladeburner.stamina += (calculateStaminaGainPerSecond(bladeburner, player) * seconds);
+        bladeburner.stamina = Math.min(bladeburner.maxStamina, bladeburner.stamina);
+
+        // Count increase for contracts/operations
+        for (const contract of (Object.values(bladeburner.contracts) as Contract[])) {
+            contract.count += (seconds * contract.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
+        }
+        for (const op of (Object.values(bladeburner.operations) as Operation[])) {
+            op.count += (seconds * op.countGrowth/BladeburnerConstants.ActionCountGrowthPeriod);
+        }
+
+        // Chaos goes down very slowly
+        for (const cityName of BladeburnerConstants.CityNames) {
+            const city = bladeburner.cities[cityName];
+            if (!(city instanceof City)) {throw new Error("Invalid City object when processing passive chaos reduction in Bladeburner.process");}
+            city.chaos -= (0.0001 * seconds);
+            city.chaos = Math.max(0, city.chaos);
+        }
+
+        // Random Events
+        bladeburner.randomEventCounter -= seconds;
+        if (bladeburner.randomEventCounter <= 0) {
+            randomEvent(bladeburner);
+            // Add instead of setting because we might have gone over the required time for the event
+            bladeburner.randomEventCounter += getRandomInt(240, 600);
+        }
+
+        processAction(bladeburner, player, seconds);
+
+        // Automation
+        if (bladeburner.automateEnabled) {
+            // Note: Do NOT set bladeburner.action = bladeburner.automateActionHigh/Low since it creates a reference
+            if (bladeburner.stamina <= bladeburner.automateThreshLow) {
+                if (bladeburner.action.name !== bladeburner.automateActionLow.name || bladeburner.action.type !== bladeburner.automateActionLow.type) {
+                    bladeburner.action = new ActionIdentifier({type: bladeburner.automateActionLow.type, name: bladeburner.automateActionLow.name});
+                    startAction(bladeburner, player, bladeburner.action);
+                }
+            } else if (bladeburner.stamina >= bladeburner.automateThreshHigh) {
+                if (bladeburner.action.name !== bladeburner.automateActionHigh.name || bladeburner.action.type !== bladeburner.automateActionHigh.type) {
+                    bladeburner.action = new ActionIdentifier({type: bladeburner.automateActionHigh.type, name: bladeburner.automateActionHigh.name});
+                    startAction(bladeburner, player, bladeburner.action);
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+export function prestige(bladeburner: IBladeburner): void {
+    resetAction(bladeburner);
+    const bladeburnerFac = Factions["Bladeburners"];
+    if (bladeburner.rank >= BladeburnerConstants.RankNeededForFaction) {
+        joinFaction(bladeburnerFac);
+    }
+}
+
+export function storeCycles(bladeburner: IBladeburner, numCycles: number = 1): void {
+    bladeburner.storedCycles += numCycles;
+}
+
+export function getCurrentCity(bladeburner: IBladeburner): City {
+    const city = bladeburner.cities[bladeburner.city];
+    if (!(city instanceof City)) {
+        throw new Error("Bladeburner.getCurrentCity() did not properly return a City object");
+    }
+    return city;
+}
+
+export function upgradeSkill(bladeburner: IBladeburner, skill: Skill) {
+    // This does NOT handle deduction of skill points
+    const skillName = skill.name;
+    if (bladeburner.skills[skillName]) {
+        ++bladeburner.skills[skillName];
+    } else {
+        bladeburner.skills[skillName] = 1;
+    }
+    if (isNaN(bladeburner.skills[skillName]) || bladeburner.skills[skillName] < 0) {
+        throw new Error("Level of Skill " + skillName + " is invalid: " + bladeburner.skills[skillName]);
+    }
+    updateSkillMultipliers(bladeburner);
+}
+
+// Bladeburner Console Window
+export function postToConsole(bladeburner: IBladeburner, input: string, saveToLogs: boolean = true) {
+    const MaxConsoleEntries = 100;
+    if (saveToLogs) {
+        bladeburner.consoleLogs.push(input);
+        if (bladeburner.consoleLogs.length > MaxConsoleEntries) {
+            bladeburner.consoleLogs.shift();
+        }
+    }
+}
+
+export function log(bladeburner: IBladeburner, input: string) {
+    // Adds a timestamp and then just calls postToConsole
+    bladeburner.postToConsole(`[${getTimestamp()}] ${input}`);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// Netscript Fns /////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+export function getTypeAndNameFromActionId(bladeburner: IBladeburner, actionId: IActionIdentifier) {
+    const res = {type: '', name: ''};
+    const types = Object.keys(ActionTypes);
+    for (let i = 0; i < types.length; ++i) {
+        if (actionId.type === ActionTypes[types[i]]) {
+            res.type = types[i];
+            break;
+        }
+    }
+    if (res.type == null) {res.type = "Idle";}
+
+    res.name = actionId.name != null ? actionId.name : "Idle";
+    return res;
+}
+export function getContractNamesNetscriptFn(bladeburner: IBladeburner) {
+    return Object.keys(bladeburner.contracts);
+}
+export function getOperationNamesNetscriptFn(bladeburner: IBladeburner) {
+    return Object.keys(bladeburner.operations);
+}
+export function getBlackOpNamesNetscriptFn(bladeburner: IBladeburner) {
+    return Object.keys(BlackOperations);
+}
+export function getGeneralActionNamesNetscriptFn(bladeburner: IBladeburner) {
+    return Object.keys(GeneralActions);
+}
+export function getSkillNamesNetscriptFn(bladeburner: IBladeburner) {
+    return Object.keys(Skills);
+}
+export function startActionNetscriptFn(bladeburner: IBladeburner, player: IPlayer, type: string, name: string, workerScript: WorkerScript) {
+  const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = getActionIdFromTypeAndName(bladeburner, type, name);
+    if (actionId == null) {
+        workerScript.log("bladeburner.startAction", errorLogText);
+        return false;
+    }
+
+    // Special logic for Black Ops
+    if (actionId.type === ActionTypes["BlackOp"]) {
+        // Can't start a BlackOp if you don't have the required rank
+        const action = getActionObject(bladeburner, actionId);
+        if(action == null) throw new Error('Action not found ${actionId.type}, ${actionId.name}');
+        if(!(action instanceof BlackOperation)) throw new Error(`Action should be BlackOperation but isn't`);
+        const blackOp = (action as BlackOperation);
+        if (action.reqdRank > bladeburner.rank) {
+            workerScript.log("bladeburner.startAction", `Insufficient rank to start Black Op '${actionId.name}'.`);
+            return false;
+        }
+
+        // Can't start a BlackOp if its already been done
+        if (bladeburner.blackops[actionId.name] != null) {
+            workerScript.log("bladeburner.startAction", `Black Op ${actionId.name} has already been completed.`);
+            return false;
+        }
+
+        // Can't start a BlackOp if you haven't done the one before it
+        var blackops = [];
+        for (const nm in BlackOperations) {
+            if (BlackOperations.hasOwnProperty(nm)) {
+                blackops.push(nm);
+            }
+        }
+        blackops.sort(function(a, b) {
+            return (BlackOperations[a].reqdRank - BlackOperations[b].reqdRank); // Sort black ops in intended order
+        });
+
+        let i = blackops.indexOf(actionId.name);
+        if (i === -1) {
+            workerScript.log("bladeburner.startAction", `Invalid Black Op: '${name}'`);
+            return false;
+        }
+
+        if (i > 0 && bladeburner.blackops[blackops[i-1]] == null) {
+            workerScript.log("bladeburner.startAction", `Preceding Black Op must be completed before starting '${actionId.name}'.`);
+            return false;
+        }
+    }
+
+    try {
+        startAction(bladeburner, player, actionId);
+        workerScript.log("bladeburner.startAction", `Starting bladeburner action with type '${type}' and name ${name}"`);
+        return true;
+    } catch(e) {
+        resetAction(bladeburner);
+        workerScript.log("bladeburner.startAction", errorLogText);
+        return false;
+    }
+}
+export function getActionTimeNetscriptFn(bladeburner: IBladeburner, player: IPlayer, type: string, name: string, workerScript: WorkerScript) {
+  const errorLogText = `Invalid action: type='${type}' name='${name}'`
+    const actionId = getActionIdFromTypeAndName(bladeburner, type, name);
+    if (actionId == null) {
+        workerScript.log("bladeburner.getActionTime", errorLogText);
+        return -1;
+    }
+
+    const actionObj = getActionObject(bladeburner, actionId);
+    if (actionObj == null) {
+        workerScript.log("bladeburner.getActionTime", errorLogText);
+        return -1;
+    }
+
+    switch (actionId.type) {
+        case ActionTypes["Contract"]:
+        case ActionTypes["Operation"]:
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]:
+            return actionObj.getActionTime(bladeburner);
+        case ActionTypes["Training"]:
+        case ActionTypes["Field Analysis"]:
+        case ActionTypes["FieldAnalysis"]:
+            return 30;
+        case ActionTypes["Recruitment"]:
+            return getRecruitmentTime(bladeburner, player);
+        case ActionTypes["Diplomacy"]:
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            return 60;
+        default:
+            workerScript.log("bladeburner.getActionTime", errorLogText);
+            return -1;
+    }
+}
+export function getActionEstimatedSuccessChanceNetscriptFn(bladeburner: IBladeburner, player: IPlayer, type: string, name: string, workerScript: WorkerScript) {
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`
+    const actionId = getActionIdFromTypeAndName(bladeburner, type, name);
+    if (actionId == null) {
+        workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
+        return -1;
+    }
+
+    const actionObj = getActionObject(bladeburner, actionId);
+    if (actionObj == null) {
+        workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
+        return -1;
+    }
+
+    switch (actionId.type) {
+        case ActionTypes["Contract"]:
+        case ActionTypes["Operation"]:
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]:
+            return actionObj.getSuccessChance(bladeburner, {est:true});
+        case ActionTypes["Training"]:
+        case ActionTypes["Field Analysis"]:
+        case ActionTypes["FieldAnalysis"]:
+            return 1;
+        case ActionTypes["Recruitment"]:
+            return getRecruitmentSuccessChance(bladeburner, player);
+        default:
+            workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
+            return -1;
+    }
+}
+export function getActionCountRemainingNetscriptFn(bladeburner: IBladeburner, type: string, name: string, workerScript: WorkerScript) {
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = getActionIdFromTypeAndName(bladeburner, type, name);
+    if (actionId == null) {
+        workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
+        return -1;
+    }
+
+    const actionObj = getActionObject(bladeburner, actionId);
+    if (actionObj == null) {
+        workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
+        return -1;
+    }
+
+    switch (actionId.type) {
+        case ActionTypes["Contract"]:
+        case ActionTypes["Operation"]:
+            return Math.floor( actionObj.count );
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]:
+            if (bladeburner.blackops[name] != null) {
+                return 0;
+            } else {
+                return 1;
+            }
+        case ActionTypes["Training"]:
+        case ActionTypes["Field Analysis"]:
+        case ActionTypes["FieldAnalysis"]:
+            return Infinity;
+        default:
+            workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
+            return -1;
+    }
+}
+export function getSkillLevelNetscriptFn(bladeburner: IBladeburner, skillName: string, workerScript: WorkerScript) {
+    if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
+        workerScript.log("bladeburner.getSkillLevel", `Invalid skill: '${skillName}'`);
+        return -1;
+    }
+
+    if (bladeburner.skills[skillName] == null) {
+        return 0;
+    } else {
+        return bladeburner.skills[skillName];
+    }
+}
+export function getSkillUpgradeCostNetscriptFn(bladeburner: IBladeburner, skillName: string, workerScript: WorkerScript) {
+    if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
+        workerScript.log("bladeburner.getSkillUpgradeCost", `Invalid skill: '${skillName}'`);
+        return -1;
+    }
+
+    const skill = Skills[skillName];
+    if (bladeburner.skills[skillName] == null) {
+        return skill.calculateCost(0);
+    } else {
+        return skill.calculateCost(bladeburner.skills[skillName]);
+    }
+}
+export function upgradeSkillNetscriptFn(bladeburner: IBladeburner, skillName: string, workerScript: WorkerScript) {
+    const errorLogText = `Invalid skill: '${skillName}'`;
+    if (!Skills.hasOwnProperty(skillName)) {
+        workerScript.log("bladeburner.upgradeSkill", errorLogText);
+        return false;
+    }
+
+    const skill = Skills[skillName];
+    let currentLevel = 0;
+    if (bladeburner.skills[skillName] && !isNaN(bladeburner.skills[skillName])) {
+        currentLevel = bladeburner.skills[skillName];
+    }
+    const cost = skill.calculateCost(currentLevel);
+
+    if(skill.maxLvl && currentLevel >= skill.maxLvl) {
+      workerScript.log("bladeburner.upgradeSkill", `Skill '${skillName}' is already maxed.`);
+      return false;
+    }
+
+    if (bladeburner.skillPoints < cost) {
+        workerScript.log("bladeburner.upgradeSkill", `You do not have enough skill points to upgrade ${skillName} (You have ${bladeburner.skillPoints}, you need ${cost})`);
+        return false;
+    }
+
+    bladeburner.skillPoints -= cost;
+    bladeburner.upgradeSkill(skill);
+    workerScript.log("bladeburner.upgradeSkill", `'${skillName}' upgraded to level ${bladeburner.skills[skillName]}`);
+    return true;
+}
+export function getTeamSizeNetscriptFn(bladeburner: IBladeburner, type: string, name: string, workerScript: WorkerScript): number {
+    if (type === "" && name === "") {
+        return bladeburner.teamSize;
+    }
+
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = getActionIdFromTypeAndName(bladeburner, type, name);
+    if (actionId == null) {
+        workerScript.log("bladeburner.getTeamSize", errorLogText);
+        return -1;
+    }
+
+    const actionObj = getActionObject(bladeburner, actionId);
+    if (actionObj == null) {
+        workerScript.log("bladeburner.getTeamSize", errorLogText);
+        return -1;
+    }
+
+    if (actionId.type === ActionTypes["Operation"] ||
+        actionId.type === ActionTypes["BlackOp"]   ||
+        actionId.type === ActionTypes["BlackOperation"]) {
+        return actionObj.teamCount;
+    } else {
+        return 0;
+    }
+}
+export function setTeamSizeNetscriptFn(bladeburner: IBladeburner, type: string, name: string, size: number, workerScript: WorkerScript): number {
+    const errorLogText = `Invalid action: type='${type}' name='${name}'`;
+    const actionId = getActionIdFromTypeAndName(bladeburner, type, name);
+    if (actionId == null) {
+        workerScript.log("bladeburner.setTeamSize", errorLogText);
+        return -1;
+    }
+
+    if (actionId.type !== ActionTypes["Operation"] &&
+        actionId.type !== ActionTypes["BlackOp"]   &&
+        actionId.type !== ActionTypes["BlackOperation"]) {
+        workerScript.log("bladeburner.setTeamSize", "Only valid for 'Operations' and 'BlackOps'");
+        return -1;
+    }
+
+    const actionObj = getActionObject(bladeburner, actionId);
+    if (actionObj == null) {
+        workerScript.log("bladeburner.setTeamSize", errorLogText);
+        return -1;
+    }
+
+    let sanitizedSize = Math.round(size);
+    if (isNaN(sanitizedSize) || sanitizedSize < 0) {
+        workerScript.log("bladeburner.setTeamSize", `Invalid size: ${size}`);
+        return -1;
+    }
+    if (bladeburner.teamSize < sanitizedSize) {sanitizedSize = bladeburner.teamSize;}
+    actionObj.teamCount = sanitizedSize;
+    workerScript.log("bladeburner.setTeamSize", `Team size for '${name}' set to ${sanitizedSize}.`);
+    return sanitizedSize;
+}
+export function joinBladeburnerFactionNetscriptFn(bladeburner: IBladeburner, workerScript: WorkerScript): boolean {
+    var bladeburnerFac = Factions["Bladeburners"];
+    if (bladeburnerFac.isMember) {
+        return true;
+    } else if (bladeburner.rank >= BladeburnerConstants.RankNeededForFaction) {
+        joinFaction(bladeburnerFac);
+        workerScript.log("bladeburner.joinBladeburnerFaction", "Joined Bladeburners faction.");
+        return true;
+    } else {
+        workerScript.log("bladeburner.joinBladeburnerFaction", `You do not have the required rank (${bladeburner.rank}/${BladeburnerConstants.RankNeededForFaction}).`);
+        return false;
     }
 }

@@ -43,6 +43,7 @@ export interface IPlayer {
     homeComputer: string;
     hp: number;
     jobs: IMap<string>;
+    isWorking: boolean;
     karma: number;
     location: LocationName;
     max_hp: number;

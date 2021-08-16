@@ -18,6 +18,7 @@ import {
     initBitNodeMultipliers,
 } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner";
+import { process as ProcessBladeburner } from "./Bladeburner/Bladeburner";
 import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
 import { cinematicTextFlag } from "./CinematicText";
 import { generateRandomContract } from "./CodingContractGenerator";
@@ -883,7 +884,7 @@ const Engine = {
             }
             if (Player.bladeburner instanceof Bladeburner) {
                 try {
-                    Player.bladeburner.process();
+                    ProcessBladeburner(Player.bladeburner, Player);
                 } catch(e) {
                     exceptionAlert("Exception caught in Bladeburner.process(): " + e);
                 }
