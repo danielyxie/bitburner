@@ -17,7 +17,7 @@ import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import {
     initBitNodeMultipliers,
 } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { process as ProcessBladeburner } from "./Bladeburner/Bladeburner";
 import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
 import { cinematicTextFlag } from "./CinematicText";

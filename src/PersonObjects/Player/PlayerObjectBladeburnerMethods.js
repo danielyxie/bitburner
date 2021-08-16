@@ -1,4 +1,4 @@
-import { Bladeburner } from "../../Bladeburner";
+import { Bladeburner } from "../../Bladeburner/Bladeburner";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 export function canAccessBladeburner() {
@@ -13,5 +13,5 @@ export function inBladeburner() {
 }
 
 export function startBladeburner() {
-    this.bladeburner = new Bladeburner({ new: true });
+    this.bladeburner = new Bladeburner(this);
 }

@@ -1,23 +1,32 @@
 import { IActionIdentifier } from "./IActionIdentifier";
 import { City } from "./City";
 import { Skill } from "./Skill";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { WorkerScript } from "../Netscript/WorkerScript";
 
 export interface IBladeburner {
     numHosp: number;
     moneyLost: number;
     rank: number;
     maxRank: number;
+
     skillPoints: number;
     totalSkillPoints: number;
+
     teamSize: number;
     teamLost: number;
     hpLost: number;
+
     storedCycles: number;
+
     randomEventCounter: number;
+
     actionTimeToComplete: number;
     actionTimeCurrent: number;
     actionTimeOverflow: number;
+
     action: IActionIdentifier;
+
     cities: any;
     city: string;
     skills: any;
@@ -39,11 +48,30 @@ export interface IBladeburner {
 
     getCurrentCity(): City;
     calculateStaminaPenalty(): number;
-    startAction(action: IActionIdentifier): void;
+    startAction(player: IPlayer, action: IActionIdentifier): void;
     upgradeSkill(skill: Skill): void;
-    executeConsoleCommands(command: string): void;
+    executeConsoleCommands(player: IPlayer, command: string): void;
     postToConsole(input: string, saveToLogs?: boolean): void;
     log(input: string): void;
     resetAction(): void;
     clearConsole(): void;
+
+    prestige(): void;
+    storeCycles(numCycles?: number): void;
+    getTypeAndNameFromActionId(actionId: IActionIdentifier): {type: string, name: string};
+    getContractNamesNetscriptFn(): string[];
+    getOperationNamesNetscriptFn(): string[];
+    getBlackOpNamesNetscriptFn(): string[];
+    getGeneralActionNamesNetscriptFn(): string[];
+    getSkillNamesNetscriptFn(): string[];
+    startActionNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): boolean;
+    getActionTimeNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number;
+    getActionEstimatedSuccessChanceNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number;
+    getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
+    getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number;
+    getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number;
+    upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean;
+    getTeamSizeNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
+    setTeamSizeNetscriptFn(type: string, name: string, size: number, workerScript: WorkerScript): number;
+    joinBladeburnerFactionNetscriptFn(workerScript: WorkerScript): boolean;
 }

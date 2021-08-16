@@ -2,6 +2,11 @@
     Here we have a bunch of functions converted to typescript, eventually they
     will go back into a Bladeburner class.
 */
+import {
+    Reviver,
+    Generic_toJSON,
+    Generic_fromJSON,
+} from "../../utils/JSONReviver";
 import { IBladeburner } from "./IBladeburner";
 import { IActionIdentifier } from "./IActionIdentifier";
 import { ActionIdentifier } from "./ActionIdentifier";
@@ -35,6 +40,197 @@ import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { getTimestamp } from "../../utils/helpers/getTimestamp";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
+
+export class Bladeburner implements IBladeburner {
+    numHosp: number = 0;
+    moneyLost: number = 0;
+    rank: number = 0;
+    maxRank: number = 0;
+
+    skillPoints: number = 0;
+    totalSkillPoints: number = 0;
+
+    teamSize: number = 0;
+    teamLost: number = 0;
+    hpLost: number = 0;
+
+    storedCycles: number = 0;
+
+    randomEventCounter: number = getRandomInt(240, 600);
+
+    actionTimeToComplete: number = 0;
+    actionTimeCurrent: number = 0;
+    actionTimeOverflow: number = 0;
+
+    action: IActionIdentifier = new ActionIdentifier({type: ActionTypes["Idle"]});
+
+    cities: any = {};
+    city: string = BladeburnerConstants.CityNames[2];
+    skills: any = {};
+    skillMultipliers: any = {};
+    staminaBonus: number = 0;
+    maxStamina: number = 0;
+    stamina: number = 0;
+    contracts: any = {};
+    operations: any = {};
+    blackops: any = {};
+    logging: any = {
+        general:true,
+        contracts:true,
+        ops:true,
+        blackops:true,
+        events:true,
+    };
+    automateEnabled: boolean = false;
+    automateActionHigh: IActionIdentifier = new ActionIdentifier({type: ActionTypes["Idle"]});
+    automateThreshHigh: number = 0;
+    automateActionLow: IActionIdentifier = new ActionIdentifier({type: ActionTypes["Idle"]});
+    automateThreshLow: number = 0;
+    consoleHistory: string[] = [];
+    consoleLogs: string[] = [
+        "Bladeburner Console",
+        "Type 'help' to see console commands",
+    ];
+
+    constructor(player?: IPlayer) {
+        for (var i = 0; i < BladeburnerConstants.CityNames.length; ++i) {
+            this.cities[BladeburnerConstants.CityNames[i]] =  new City(BladeburnerConstants.CityNames[i]);
+        }
+
+        updateSkillMultipliers(this); // Calls resetSkillMultipliers()
+
+        // Max Stamina is based on stats and Bladeburner-specific bonuses
+        if(player)
+            calculateMaxStamina(this, player);
+        this.stamina = this.maxStamina;
+        create(this);
+    }
+
+    getCurrentCity(): City {
+        return getCurrentCity(this);
+    }
+
+    calculateStaminaPenalty(): number {
+        return calculateStaminaPenalty(this);
+    }
+
+    startAction(player: IPlayer, action: IActionIdentifier): void {
+        startAction(this, player, action);
+    }
+
+    upgradeSkill(skill: Skill): void {
+        upgradeSkill(this, skill);
+    }
+
+    executeConsoleCommands(player: IPlayer, command: string): void {
+        executeConsoleCommands(this, player, command);
+    }
+
+    postToConsole(input: string, saveToLogs?: boolean): void {
+        postToConsole(this, input, saveToLogs);
+    }
+
+    log(input: string): void {
+        log(this, input);
+    }
+
+    resetAction(): void {
+        resetAction(this);
+    }
+
+    clearConsole(): void {
+        clearConsole(this);
+    }
+
+    prestige(): void {
+        prestige(this);
+    }
+
+    storeCycles(numCycles?: number): void {
+        storeCycles(this, numCycles);
+    }
+
+    getTypeAndNameFromActionId(actionId: IActionIdentifier): {type: string, name: string} {
+        return getTypeAndNameFromActionId(this, actionId);
+    }
+
+    getContractNamesNetscriptFn(): string[] {
+        return getContractNamesNetscriptFn(this);
+    }
+
+    getOperationNamesNetscriptFn(): string[] {
+        return getOperationNamesNetscriptFn(this);
+    }
+
+    getBlackOpNamesNetscriptFn(): string[] {
+        return getBlackOpNamesNetscriptFn(this);
+    }
+
+    getGeneralActionNamesNetscriptFn(): string[] {
+        return getGeneralActionNamesNetscriptFn(this);
+    }
+
+    getSkillNamesNetscriptFn(): string[] {
+        return getSkillNamesNetscriptFn(this);
+    }
+
+    startActionNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): boolean {
+        return startActionNetscriptFn(this, player, type, name, workerScript);
+    }
+
+    getActionTimeNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number {
+        return getActionTimeNetscriptFn(this, player, type, name, workerScript);
+    }
+
+    getActionEstimatedSuccessChanceNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number {
+        return getActionEstimatedSuccessChanceNetscriptFn(this, player, type, name, workerScript);
+    }
+
+    getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number {
+        return getActionCountRemainingNetscriptFn(this, type, name, workerScript);
+    }
+
+    getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number {
+        return getSkillLevelNetscriptFn(this, skillName, workerScript);
+    }
+
+    getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number {
+        return getSkillUpgradeCostNetscriptFn(this, skillName, workerScript);
+    }
+
+    upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean {
+        return upgradeSkillNetscriptFn(this, skillName, workerScript);
+    }
+
+    getTeamSizeNetscriptFn(type: string, name: string, workerScript: WorkerScript): number {
+        return getTeamSizeNetscriptFn(this, type, name, workerScript);
+    }
+
+    setTeamSizeNetscriptFn(type: string, name: string, size: number, workerScript: WorkerScript): number {
+        return setTeamSizeNetscriptFn(this, type, name, size, workerScript);
+    }
+
+    joinBladeburnerFactionNetscriptFn(workerScript: WorkerScript): boolean {
+        return joinBladeburnerFactionNetscriptFn(this, workerScript);
+    }
+
+    /**
+     * Serialize the current object to a JSON save state.
+     */
+    toJSON(): any {
+        return Generic_toJSON("Bladeburner", this);
+    }
+
+    /**
+     * Initiatizes a Bladeburner object from a JSON save state.
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    static fromJSON(value: any): Bladeburner {
+        return Generic_fromJSON(Bladeburner, value.data);
+    }
+}
+
+Reviver.constructors.Bladeburner = Bladeburner;
 
 export function getActionIdFromTypeAndName(bladeburner: IBladeburner, type: string = "", name: string = ""): IActionIdentifier | null {
     if (type === "" || name === "") {return null;}
@@ -134,7 +330,7 @@ export function executeStartConsoleCommand(bladeburner: IBladeburner, player: IP
             if (GeneralActions[name] != null) {
                 bladeburner.action.type = ActionTypes[name];
                 bladeburner.action.name = name;
-                startAction(bladeburner,player, bladeburner.action);
+                startAction(bladeburner, player, bladeburner.action);
             } else {
                 bladeburner.postToConsole("Invalid action name specified: " + args[2]);
             }
@@ -144,7 +340,7 @@ export function executeStartConsoleCommand(bladeburner: IBladeburner, player: IP
             if (bladeburner.contracts[name] != null) {
                 bladeburner.action.type = ActionTypes.Contract;
                 bladeburner.action.name = name;
-                startAction(bladeburner,player, bladeburner.action);
+                startAction(bladeburner, player, bladeburner.action);
             } else {
                 bladeburner.postToConsole("Invalid contract name specified: " + args[2]);
             }
@@ -1602,7 +1798,7 @@ export function log(bladeburner: IBladeburner, input: string) {
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Netscript Fns /////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-export function getTypeAndNameFromActionId(bladeburner: IBladeburner, actionId: IActionIdentifier) {
+export function getTypeAndNameFromActionId(bladeburner: IBladeburner, actionId: IActionIdentifier): {type: string, name: string} {
     const res = {type: '', name: ''};
     const types = Object.keys(ActionTypes);
     for (let i = 0; i < types.length; ++i) {
@@ -1616,19 +1812,19 @@ export function getTypeAndNameFromActionId(bladeburner: IBladeburner, actionId: 
     res.name = actionId.name != null ? actionId.name : "Idle";
     return res;
 }
-export function getContractNamesNetscriptFn(bladeburner: IBladeburner) {
+export function getContractNamesNetscriptFn(bladeburner: IBladeburner): string[] {
     return Object.keys(bladeburner.contracts);
 }
-export function getOperationNamesNetscriptFn(bladeburner: IBladeburner) {
+export function getOperationNamesNetscriptFn(bladeburner: IBladeburner): string[] {
     return Object.keys(bladeburner.operations);
 }
-export function getBlackOpNamesNetscriptFn(bladeburner: IBladeburner) {
+export function getBlackOpNamesNetscriptFn(bladeburner: IBladeburner): string[] {
     return Object.keys(BlackOperations);
 }
-export function getGeneralActionNamesNetscriptFn(bladeburner: IBladeburner) {
+export function getGeneralActionNamesNetscriptFn(bladeburner: IBladeburner): string[] {
     return Object.keys(GeneralActions);
 }
-export function getSkillNamesNetscriptFn(bladeburner: IBladeburner) {
+export function getSkillNamesNetscriptFn(bladeburner: IBladeburner): string[] {
     return Object.keys(Skills);
 }
 export function startActionNetscriptFn(bladeburner: IBladeburner, player: IPlayer, type: string, name: string, workerScript: WorkerScript) {

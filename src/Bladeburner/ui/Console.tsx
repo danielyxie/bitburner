@@ -50,7 +50,7 @@ export function Console(props: IProps): React.ReactElement {
             event.currentTarget.value = "";
             if (command.length > 0) {
                 props.bladeburner.postToConsole("> " + command);
-                props.bladeburner.executeConsoleCommands(command);
+                props.bladeburner.executeConsoleCommands(props.player, command);
                 setConsoleHistoryIndex(props.bladeburner.consoleHistory.length);
                 rerender();
             }

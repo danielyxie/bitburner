@@ -14,7 +14,7 @@ import { AllServers } from "./Server/AllServers";
 import { GetServerByHostname } from "./Server/ServerHelpers";
 import { hackWorldDaemon } from "./RedPill";
 import { StockMarket } from "./StockMarket/StockMarket";
-import { Bladeburner } from "./Bladeburner";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Stock } from "./StockMarket/Stock";
 import { Engine } from "./engine";
 import { saveObject } from "./SaveObject";
