@@ -52,97 +52,16 @@ import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElement } from "../utils/uiHelpers/removeElement";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
 
-import { SkillElem } from "./Bladeburner/ui/SkillElem";
-import { SkillList } from "./Bladeburner/ui/SkillList";
-import { BlackOpElem } from "./Bladeburner/ui/BlackOpElem";
-import { BlackOpList } from "./Bladeburner/ui/BlackOpList";
-import { OperationElem } from "./Bladeburner/ui/OperationElem";
-import { OperationList } from "./Bladeburner/ui/OperationList";
-import { ContractElem } from "./Bladeburner/ui/ContractElem";
-import { ContractList } from "./Bladeburner/ui/ContractList";
-import { GeneralActionElem } from "./Bladeburner/ui/GeneralActionElem";
-import { GeneralActionList } from "./Bladeburner/ui/GeneralActionList";
-import { GeneralActionPage } from "./Bladeburner/ui/GeneralActionPage";
-import { ContractPage } from "./Bladeburner/ui/ContractPage";
-import { OperationPage } from "./Bladeburner/ui/OperationPage";
-import { BlackOpPage } from "./Bladeburner/ui/BlackOpPage";
-import { SkillPage } from "./Bladeburner/ui/SkillPage";
 import { Stats } from "./Bladeburner/ui/Stats";
 import { AllPages } from "./Bladeburner/ui/AllPages";
 import { Console } from "./Bladeburner/ui/Console";
+import { Root } from "./Bladeburner/ui/Root";
 
 import { StatsTable } from "./ui/React/StatsTable";
 import { CopyableText } from "./ui/React/CopyableText";
 import { Money } from "./ui/React/Money";
 import React from "react";
 import ReactDOM from "react-dom";
-
-const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 166 132"  style="fill:#adff2f;"><g><path d="M132.658-0.18l-24.321,24.321c-7.915-2.71-16.342-4.392-25.087-4.392c-45.84,0-83,46-83,46   s14.1,17.44,35.635,30.844L12.32,120.158l12.021,12.021L144.68,11.841L132.658-0.18z M52.033,80.445   c-2.104-4.458-3.283-9.438-3.283-14.695c0-19.054,15.446-34.5,34.5-34.5c5.258,0,10.237,1.179,14.695,3.284L52.033,80.445z"/><path d="M134.865,37.656l-18.482,18.482c0.884,3.052,1.367,6.275,1.367,9.612c0,19.055-15.446,34.5-34.5,34.5   c-3.337,0-6.56-0.483-9.611-1.367l-10.124,10.124c6.326,1.725,12.934,2.743,19.735,2.743c45.84,0,83-46,83-46   S153.987,50.575,134.865,37.656z"/></g></svg>&nbsp;`
-const killIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="-22 0 511 511.99561" style="fill:#adff2f;"><path d="m.496094 466.242188 39.902344-39.902344 45.753906 45.753906-39.898438 39.902344zm0 0"/><path d="m468.421875 89.832031-1.675781-89.832031-300.265625 300.265625 45.753906 45.753906zm0 0"/><path d="m95.210938 316.785156 16.84375 16.847656h.003906l83.65625 83.65625 22.753906-22.753906-100.503906-100.503906zm0 0"/><path d="m101.445312 365.300781-39.902343 39.902344 45.753906 45.753906 39.902344-39.902343-39.90625-39.902344zm0 0"/></svg>`
-
-// DOM related variables
-const ActiveActionCssClass = "bladeburner-active-action";
-
-// Console related stuff
-let consoleHistoryIndex = 0;
-
-// Keypresses for Console
-$(document).keydown(function(event) {
-    if (routing.isOn(Page.Bladeburner)) {
-        if (!(Player.bladeburner instanceof Bladeburner)) { return; }
-        let consoleHistory = Player.bladeburner.consoleHistory;
-
-        if (event.keyCode === KEY.ENTER) {
-            event.preventDefault();
-            var command = DomElems.consoleInput.value;
-            if (command.length > 0) {
-                Player.bladeburner.postToConsole("> " + command);
-                Player.bladeburner.resetConsoleInput();
-                Player.bladeburner.executeConsoleCommands(command);
-            }
-        }
-
-        if (event.keyCode === KEY.UPARROW) {
-            if (DomElems.consoleInput == null) {return;}
-            var i = consoleHistoryIndex;
-            var len = consoleHistory.length;
-
-            if (len === 0) {return;}
-            if (i < 0 || i > len) {
-                consoleHistoryIndex = len;
-            }
-
-            if (i !== 0) {
-                --consoleHistoryIndex;
-            }
-
-            var prevCommand = consoleHistory[consoleHistoryIndex];
-            DomElems.consoleInput.value = prevCommand;
-            setTimeoutRef(function(){DomElems.consoleInput.selectionStart = DomElems.consoleInput.selectionEnd = 10000; }, 0);
-        }
-
-        if (event.keyCode === KEY.DOWNARROW) {
-            if (DomElems.consoleInput == null) {return;}
-            var i = consoleHistoryIndex;
-            var len = consoleHistory.length;
-
-            if (len == 0) {return;}
-            if (i < 0 || i > len) {
-                consoleHistoryIndex = len;
-            }
-
-            // Latest command, put nothing
-            if (i == len || i == len-1) {
-                consoleHistoryIndex = len;
-                DomElems.consoleInput.value = "";
-            } else {
-                ++consoleHistoryIndex;
-                var prevCommand = consoleHistory[consoleHistoryIndex];
-                DomElems.consoleInput.value = prevCommand;
-            }
-        }
-    }
-});
 
 function ActionIdentifier(params={}) {
     if (params.name) {this.name = params.name;}
@@ -1216,67 +1135,19 @@ let DomElems = {};
 
 Bladeburner.prototype.initializeDomElementRefs = function() {
     DomElems = {
-        bladeburnerDiv:     null,
-
-        // Main Divs
-        overviewConsoleParentDiv:  null,
-
-        overviewDiv:        null, // Overview of stats that stays fixed on left
-        actionAndSkillsDiv: null, // Panel for different sections (contracts, ops, skills)
-
-        consoleDiv:         null,
-        consoleTable:       null,
-        consoleInputRow:    null, // tr
-        consoleInputCell:   null, // td
-        consoleInputHeader: null, // "> "
-        consoleInput:       null, // Actual input element
+        bladeburnerDiv: null,
     };
 }
 
 Bladeburner.prototype.createContent = function() {
-    DomElems.bladeburnerDiv = createElement("div", {
-        id:"bladeburner-container", position:"fixed", class:"generic-menupage-container",
-    });
+    DomElems.bladeburnerDiv = createElement("div");
 
-    // Parent Div for Overview and Console
-    DomElems.overviewConsoleParentDiv = createElement("div", {
-        height:"60%", display:"block", position:"relative",
-    });
-
-    // Overview and Action/Skill pane
-    DomElems.overviewDiv = createElement("div", {
-        width:"30%", display:"inline-block", border:"1px solid white",
-    });
-
-    DomElems.actionAndSkillsDiv = createElement("div", {
-        width:"70%", display:"block",
-        border:"1px solid white", margin:"6px", padding:"6px",
-    });
-
-    ReactDOM.render(<Stats bladeburner={this} player={Player} />, DomElems.overviewDiv);
-    ReactDOM.render(<AllPages bladeburner={this} />, DomElems.actionAndSkillsDiv);
-
-    // Console
-    DomElems.consoleDiv          = createElement("div", {
-        class:"bladeburner-console-div",
-        clickListener:() => {
-            if (DomElems.consoleInput instanceof Element) {
-                DomElems.consoleInput.focus();
-            }
-            return false;
-        },
-    });
-    ReactDOM.render(<Console bladeburner={this} />, DomElems.consoleDiv);
-
-    DomElems.overviewConsoleParentDiv.appendChild(DomElems.overviewDiv);
-    DomElems.overviewConsoleParentDiv.appendChild(DomElems.consoleDiv);
-    DomElems.bladeburnerDiv.appendChild(DomElems.overviewConsoleParentDiv);
-    DomElems.bladeburnerDiv.appendChild(DomElems.actionAndSkillsDiv);
+    ReactDOM.render(<Root bladeburner={this} player={Player} engine={Engine} />, DomElems.bladeburnerDiv);
 
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
     if (this.consoleLogs.length === 0) {
-        this.postToConsole("Bladeburner Console BETA");
+        this.postToConsole("Bladeburner Console");
         this.postToConsole("Type 'help' to see console commands");
     } else {
         for (let i = 0; i < this.consoleLogs.length; ++i) {
@@ -1323,16 +1194,7 @@ Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
     }
 }
 
-
-Bladeburner.prototype.resetConsoleInput = function() {
-    DomElems.consoleInput.value = "";
-}
-
 Bladeburner.prototype.clearConsole = function() {
-    while (DomElems.consoleTable.childNodes.length > 1) {
-        DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
-    }
-
     this.consoleLogs.length = 0;
 }
 
@@ -1351,7 +1213,6 @@ Bladeburner.prototype.executeConsoleCommands = function(commands) {
                 this.consoleHistory.splice(0, 1);
             }
         }
-        consoleHistoryIndex = this.consoleHistory.length;
 
         const arrayOfCommands = commands.split(";");
         for (let i = 0; i < arrayOfCommands.length; ++i) {

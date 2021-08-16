@@ -7,6 +7,8 @@ import {
 } from "../../../utils/StringHelperFunctions";
 import { stealthIcon, killIcon } from "../data/Icons";
 import { BladeburnerConstants } from "../data/Constants";
+import { createPopup } from "../../ui/React/createPopup";
+import { TeamSizePopup } from "./TeamSizePopup";
 
 interface IProps {
     bladeburner: any;
@@ -30,40 +32,12 @@ export function OperationElem(props: IProps): React.ReactElement {
     }
 
     function onTeam() {
-        // var popupId = "bladeburner-operation-set-team-size-popup";
-        // var txt = createElement("p", {
-        //     innerText:"Enter the amount of team members you would like to take on these " +
-        //               "operations. If you do not have the specified number of team members, " +
-        //               "then as many as possible will be used. Note that team members may " +
-        //               "be lost during operations.",
-
-        // });
-        // var input = createElement("input", {
-        //     type:"number", placeholder: "Team size", class: "text-input",
-        // });
-        // var setBtn = createElement("a", {
-        //     innerText:"Confirm", class:"a-link-button",
-        //     clickListener:() => {
-        //         var num = Math.round(parseFloat(input.value));
-        //         if (isNaN(num) || num < 0) {
-        //             dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric, positive)")
-        //         } else {
-        //             action.teamCount = num;
-        //             this.updateOperationsUIElement(el, action);
-        //         }
-        //         removeElementById(popupId);
-        //         return false;
-        //     },
-        // });
-        // var cancelBtn = createElement("a", {
-        //     innerText:"Cancel", class:"a-link-button",
-        //     clickListener:() => {
-        //         removeElementById(popupId);
-        //         return false;
-        //     },
-        // });
-        // createPopup(popupId, [txt, input, setBtn, cancelBtn]);
-        // input.focus();
+        const popupId = "bladeburner-operation-set-team-size-popup";
+        createPopup(popupId, TeamSizePopup, {
+            bladeburner: props.bladeburner,
+            action: props.action,
+            popupId: popupId,
+        });
     }
 
     function increaseLevel() {

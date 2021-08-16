@@ -25,18 +25,16 @@ export function BlackOpList(props: IProps): React.ReactElement {
         return (a.reqdRank - b.reqdRank);
     });
 
-    blackops = blackops.filter((blackop: BlackOperation, i: number) => 
-        !(props.bladeburner.blackops[blackops[i].name] == null &&
+    blackops = blackops.filter((blackop: BlackOperation, i: number) => !(props.bladeburner.blackops[blackops[i].name] == null &&
             i !== 0 &&
             props.bladeburner.blackops[blackops[i-1].name] == null));
 
     blackops = blackops.reverse();
 
     return (<>
-        {blackops.map((blackop: BlackOperation) => 
-            <li key={blackop.name} className="bladeburner-action">
+        {blackops.map((blackop: BlackOperation) => <li key={blackop.name} className="bladeburner-action">
                 <BlackOpElem bladeburner={props.bladeburner} action={blackop} />
-            </li>
+            </li>,
         )}
     </>);
 }

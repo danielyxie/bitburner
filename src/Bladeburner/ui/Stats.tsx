@@ -5,13 +5,23 @@ import {
 } from "../../../utils/StringHelperFunctions";
 import { BladeburnerConstants } from "../data/Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { IEngine } from "../../IEngine";
 import { Money } from "../../ui/React/Money";
 import { StatsTable } from "../../ui/React/StatsTable";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { createPopup } from "../../ui/React/createPopup";
+import { Factions } from "../../Faction/Factions";
+import {
+    joinFaction,
+    displayFactionContent,
+} from "../../Faction/FactionHelpers";
+
+import { TravelPopup } from "./TravelPopup";
 
 interface IProps {
     bladeburner: any;
+    engine: IEngine;
     player: IPlayer;
 }
 
@@ -53,53 +63,26 @@ export function Stats(props: IProps): React.ReactElement {
     }
 
     function openTravel() {
-        // var popupId = "bladeburner-travel-popup-cancel-btn";
-        // var popupArguments = [];
-        // popupArguments.push(createElement("a", { // Cancel Button
-        //     innerText:"Cancel", class:"a-link-button",
-        //     clickListener:() => {
-        //         removeElementById(popupId); return false;
-        //     },
-        // }))
-        // popupArguments.push(createElement("p", { // Info Text
-        //     innerText:"Travel to a different city for your Bladeburner " +
-        //               "activities. This does not cost any money. The city you are " +
-        //               "in for your Bladeburner duties does not affect " +
-        //               "your location in the game otherwise",
-        // }));
-        // for (var i = 0; i < BladeburnerConstants.CityNames.length; ++i) {
-        // (function(inst, i) {
-        //     popupArguments.push(createElement("div", {
-        //         // Reusing this css class...it adds a border and makes it
-        //         // so that background color changes when you hover
-        //         class:"cmpy-mgmt-find-employee-option",
-        //         innerText:BladeburnerConstants.CityNames[i],
-        //         clickListener:() => {
-        //             inst.city = BladeburnerConstants.CityNames[i];
-        //             removeElementById(popupId);
-        //             inst.updateOverviewContent();
-        //             return false;
-        //         },
-        //     }));
-        // })(this, i);
-        // }
-        // createPopup(popupId, popupArguments);
+        const popupId = "bladeburner-travel-popup";
+        createPopup(popupId, TravelPopup, {
+            bladeburner: props.bladeburner,
+            popupId: popupId,
+        });
     }
 
     function openFaction() {
-        // if (bladeburnerFac.isMember) {
-        //     Engine.loadFactionContent();
-        //     displayFactionContent(bladeburnersFactionName);
-        // } else {
-        //     if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
-        //         joinFaction(bladeburnerFac);
-        //         dialogBoxCreate("Congratulations! You were accepted into the Bladeburners faction");
-        //         removeChildrenFromElement(DomElems.overviewDiv);
-        //         this.createOverviewContent();
-        //     } else {
-        //         dialogBoxCreate("You need a rank of 25 to join the Bladeburners Faction!")
-        //     }
-        // }
+        const faction = Factions["Bladeburners"];
+        if (faction.isMember) {
+            props.engine.loadFactionContent();
+            displayFactionContent("Bladeburners");
+        } else {
+            if (props.bladeburner.rank >= BladeburnerConstants.RankNeededForFaction) {
+                joinFaction(faction);
+                dialogBoxCreate("Congratulations! You were accepted into the Bladeburners faction");
+            } else {
+                dialogBoxCreate("You need a rank of 25 to join the Bladeburners Faction!")
+            }
+        }
     }
 
     return (<>
