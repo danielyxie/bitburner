@@ -5,9 +5,10 @@ import { OperationPage } from "./OperationPage";
 import { BlackOpPage } from "./BlackOpPage";
 import { SkillPage } from "./SkillPage";
 import { stealthIcon, killIcon } from "../data/Icons";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function AllPages(props: IProps): React.ReactElement {

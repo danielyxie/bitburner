@@ -6,9 +6,10 @@ import {
 import { GeneralActionElem } from "./GeneralActionElem";
 import { Action } from "../Action";
 import { GeneralActions } from "../GeneralActions";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function GeneralActionList(props: IProps): React.ReactElement {

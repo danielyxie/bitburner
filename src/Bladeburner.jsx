@@ -36,6 +36,7 @@ import { BlackOperations } from "./Bladeburner/BlackOperations";
 import { Contract } from "./Bladeburner/Contract";
 import { GeneralActions } from "./Bladeburner/GeneralActions";
 import { ActionTypes } from "./Bladeburner/data/ActionTypes";
+import { ActionIdentifier } from "./Bladeburner/ActionIdentifier";
 
 import { addOffset } from "../utils/helpers/addOffset";
 import { clearObject } from "../utils/helpers/clearObject";
@@ -62,21 +63,6 @@ import { CopyableText } from "./ui/React/CopyableText";
 import { Money } from "./ui/React/Money";
 import React from "react";
 import ReactDOM from "react-dom";
-
-function ActionIdentifier(params={}) {
-    if (params.name) {this.name = params.name;}
-    if (params.type) {this.type = params.type;}
-}
-
-ActionIdentifier.prototype.toJSON = function() {
-    return Generic_toJSON("ActionIdentifier", this);
-}
-
-ActionIdentifier.fromJSON = function(value) {
-    return Generic_fromJSON(ActionIdentifier, value.data);
-}
-
-Reviver.constructors.ActionIdentifier = ActionIdentifier;
 
 function Bladeburner(params={}) {
     this.numHosp        = 0; // Number of hospitalizations
@@ -149,10 +135,12 @@ function Bladeburner(params={}) {
 
     // Console command history
     this.consoleHistory = [];
-    this.consoleLogs = [];
+    this.consoleLogs = [
+        "Bladeburner Console",
+        "Type 'help' to see console commands",
+    ];
 
     // Initialization
-    this.initializeDomElementRefs();
     if (params.new) {this.create();}
 }
 
@@ -1130,58 +1118,6 @@ Bladeburner.prototype.triggerMigration = function(sourceCityName) {
     sourceCity.pop -= count;
     destCity.pop += count;
 }
-
-let DomElems = {};
-
-Bladeburner.prototype.initializeDomElementRefs = function() {
-    DomElems = {
-        bladeburnerDiv: null,
-    };
-}
-
-Bladeburner.prototype.createContent = function() {
-    DomElems.bladeburnerDiv = createElement("div");
-
-    ReactDOM.render(<Root bladeburner={this} player={Player} engine={Engine} />, DomElems.bladeburnerDiv);
-
-    document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
-
-    if (this.consoleLogs.length === 0) {
-        this.postToConsole("Bladeburner Console");
-        this.postToConsole("Type 'help' to see console commands");
-    } else {
-        for (let i = 0; i < this.consoleLogs.length; ++i) {
-            this.postToConsole(this.consoleLogs[i], false);
-        }
-    }
-}
-
-Bladeburner.prototype.clearContent = function() {
-    if (DomElems.bladeburnerDiv instanceof Element) {
-        removeChildrenFromElement(DomElems.bladeburnerDiv);
-        removeElement(DomElems.bladeburnerDiv);
-    }
-    clearObject(DomElems);
-    this.initializeDomElementRefs();
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////HYDRO END OF UI//////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 
 // Bladeburner Console Window
 Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {

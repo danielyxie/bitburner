@@ -5,15 +5,16 @@ import { AllPages } from "./AllPages";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IEngine } from "../../IEngine";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
     engine: IEngine;
     player: IPlayer;
 }
 
 export function Root(props: IProps): React.ReactElement {
-    return (<div id="bladeburner-container" className="generic-menupage-container" style={{position:"fixed"}}>
+    return (<div id="bladeburner-container">
         <div style={{height:"60%", display:"block", position:"relative"}}>
             <div style={{height: '100%', width:"30%", display:"inline-block", border:"1px solid white"}}>
                 <Stats bladeburner={props.bladeburner} player={props.player} engine={props.engine} />

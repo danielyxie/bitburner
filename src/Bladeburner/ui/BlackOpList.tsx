@@ -9,9 +9,10 @@ import { stealthIcon, killIcon } from "../data/Icons";
 import { BlackOperations } from "../BlackOperations";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOpElem } from "./BlackOpElem";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function BlackOpList(props: IProps): React.ReactElement {

@@ -1,9 +1,10 @@
 import React from "react";
 import { removePopup } from "../../ui/React/createPopup";
 import { BladeburnerConstants } from "../data/Constants";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
     popupId: string;
 }
 

@@ -7,9 +7,10 @@ import {
 } from "../../../utils/StringHelperFunctions";
 import { stealthIcon, killIcon } from "../data/Icons";
 import { BladeburnerConstants } from "../data/Constants";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
     action: any;
 }
 

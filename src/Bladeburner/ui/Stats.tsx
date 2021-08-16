@@ -16,11 +16,12 @@ import {
     joinFaction,
     displayFactionContent,
 } from "../../Faction/FactionHelpers";
+import { IBladeburner } from "../IBladeburner";
 
 import { TravelPopup } from "./TravelPopup";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
     engine: IEngine;
     player: IPlayer;
 }

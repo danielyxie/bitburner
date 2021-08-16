@@ -5,9 +5,10 @@ import {
 } from "../../../utils/StringHelperFunctions";
 import { OperationElem } from "./OperationElem";
 import { Operation } from "../Operation";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function OperationList(props: IProps): React.ReactElement {

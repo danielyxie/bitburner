@@ -9,9 +9,10 @@ import { stealthIcon, killIcon } from "../data/Icons";
 import { BladeburnerConstants } from "../data/Constants";
 import { createPopup } from "../../ui/React/createPopup";
 import { TeamSizePopup } from "./TeamSizePopup";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
     action: any;
 }
 

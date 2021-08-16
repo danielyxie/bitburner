@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { IBladeburner } from "../IBladeburner";
 
 interface ILineProps {
     content: any;
@@ -11,7 +12,7 @@ function Line(props: ILineProps): React.ReactElement {
 }
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function Console(props: IProps): React.ReactElement {
@@ -45,7 +46,7 @@ export function Console(props: IProps): React.ReactElement {
             const command = event.currentTarget.value;
             event.currentTarget.value = "";
             if (command.length > 0) {
-                props.bladeburner.postToConsole("> " + command);
+                props.bladeburner.postToConsole("> " + command, true);
                 props.bladeburner.executeConsoleCommands(command);
                 setConsoleHistoryIndex(props.bladeburner.consoleHistory.length);
                 rerender();

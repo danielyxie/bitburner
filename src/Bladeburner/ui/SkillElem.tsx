@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
     skill: any;
-    bladeburner: any;
+    bladeburner: IBladeburner;
     onUpgrade: () => void;
 }
 

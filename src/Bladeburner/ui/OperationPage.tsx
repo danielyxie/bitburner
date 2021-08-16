@@ -1,8 +1,9 @@
 import * as React from "react";
 import { OperationList } from "./OperationList";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function OperationPage(props: IProps): React.ReactElement {

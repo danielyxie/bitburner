@@ -1,8 +1,9 @@
 import * as React from "react";
 import { BlackOpList } from "./BlackOpList";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function BlackOpPage(props: IProps): React.ReactElement {

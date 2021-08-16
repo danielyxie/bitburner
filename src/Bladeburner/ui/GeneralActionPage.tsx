@@ -1,8 +1,9 @@
 import * as React from "react";
 import { GeneralActionList } from "./GeneralActionList";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function GeneralActionPage(props: IProps): React.ReactElement {

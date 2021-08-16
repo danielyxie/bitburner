@@ -5,9 +5,10 @@ import {
 } from "../../../utils/StringHelperFunctions";
 import { ContractElem } from "./ContractElem";
 import { Contract } from "../Contract";
+import { IBladeburner } from "../IBladeburner";
 
 interface IProps {
-    bladeburner: any;
+    bladeburner: IBladeburner;
 }
 
 export function ContractList(props: IProps): React.ReactElement {

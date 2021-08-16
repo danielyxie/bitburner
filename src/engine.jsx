@@ -36,6 +36,7 @@ import {
     FactionList,
 } from "./Faction/ui/FactionList";
 import { displayGangContent } from "./Gang/Helpers";
+import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import { 
     getHackingWorkRepGain,
@@ -229,6 +230,7 @@ const Engine = {
         infiltrationContent:            null,
         stockMarketContent:             null,
         gangContent:                    null,
+        bladeburnerContent:             null,
         locationContent:                null,
         workInProgressContent:          null,
         redPillContent:                 null,
@@ -470,16 +472,15 @@ const Engine = {
     },
 
     loadBladeburnerContent: function() {
-        if (Player.bladeburner instanceof Bladeburner) {
-            try {
-                Engine.hideAllContent();
-                routing.navigateTo(Page.Bladeburner);
-                Player.bladeburner.createContent();
-                MainMenuLinks.Bladeburner.classList.add("active");
-            } catch(e) {
-                exceptionAlert(e);
-            }
-        }
+        if (!(Player.bladeburner instanceof Bladeburner)) return;
+        Engine.hideAllContent();
+        routing.navigateTo(Page.Bladeburner);
+        Engine.Display.bladeburnerContent.style.display = "block";
+        ReactDOM.render(
+            <BladeburnerRoot bladeburner={Player.bladeburner} player={Player} engine={this} />,
+            Engine.Display.bladeburnerContent,
+        );
+        MainMenuLinks.Bladeburner.classList.add("active");
     },
 
     loadSleevesContent: function() {
@@ -535,6 +536,9 @@ const Engine = {
         Engine.Display.gangContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.gangContent);
 
+        Engine.Display.bladeburnerContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.bladeburnerContent);
+
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
         Engine.Display.cinematicTextContent.style.display = "none";
@@ -546,10 +550,6 @@ const Engine = {
 
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();
-        }
-
-        if (Player.bladeburner instanceof Bladeburner) {
-            Player.bladeburner.clearContent();
         }
 
         clearResleevesPage();
@@ -1259,6 +1259,9 @@ const Engine = {
 
         Engine.Display.gangContent = document.getElementById("gang-container");
         Engine.Display.gangContent.style.display = "none";
+
+        Engine.Display.bladeburnerContent = document.getElementById("gang-container");
+        Engine.Display.bladeburnerContent.style.display = "none";
 
         Engine.Display.missionContent = document.getElementById("mission-container");
         Engine.Display.missionContent.style.display = "none";
