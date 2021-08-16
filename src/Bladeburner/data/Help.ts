@@ -1,4 +1,5 @@
 export const ConsoleHelpText: {
+  [key: string]: string[];
   helpList: string[];
   automate: string[];
   clear: string[];

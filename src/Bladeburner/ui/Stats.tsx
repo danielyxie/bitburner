@@ -16,7 +16,7 @@ import {
     joinFaction,
     displayFactionContent,
 } from "../../Faction/FactionHelpers";
-import { IBladeburner } from "../IBladeburner";
+import { IBladeburner } from "../IBladeburner"
 
 import { TravelPopup } from "./TravelPopup";
 

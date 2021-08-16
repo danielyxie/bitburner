@@ -1,3 +1,4 @@
+import { IActionIdentifier } from "./IActionIdentifier";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 interface IParams {
@@ -5,9 +6,9 @@ interface IParams {
     type?: number;
 }
 
-export class ActionIdentifier {
-    name?: string;
-    type?: number;
+export class ActionIdentifier implements IActionIdentifier {
+    name: string = "";
+    type: number = -1;
 
     constructor(params: IParams = {}) {
         if (params.name) this.name = params.name;

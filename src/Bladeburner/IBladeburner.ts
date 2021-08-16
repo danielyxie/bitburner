@@ -29,9 +29,9 @@ export interface IBladeburner {
     blackops: any;
     logging: any;
     automateEnabled: boolean;
-    automateActionHigh: number;
+    automateActionHigh: IActionIdentifier;
     automateThreshHigh: number;
-    automateActionLow: number;
+    automateActionLow: IActionIdentifier;
     automateThreshLow: number;
     consoleHistory: string[];
     consoleLogs: string[];
@@ -41,5 +41,8 @@ export interface IBladeburner {
     startAction(action: IActionIdentifier): void;
     upgradeSkill(skill: Skill): void;
     executeConsoleCommands(command: string): void;
-    postToConsole(input: string, saveToLogs: boolean): void;
+    postToConsole(input: string, saveToLogs?: boolean): void;
+    log(input: string): void;
+    resetAction(): void;
+    clearConsole(): void;
 }

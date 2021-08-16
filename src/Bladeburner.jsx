@@ -25,7 +25,6 @@ import {
 } from "../utils/StringHelperFunctions";
 
 import { Settings } from "./Settings/Settings";
-import { ConsoleHelpText } from "./Bladeburner/data/Help";
 import { City } from "./Bladeburner/City";
 import { BladeburnerConstants } from "./Bladeburner/data/Constants";
 import { Skill } from "./Bladeburner/Skill";
@@ -63,6 +62,25 @@ import { CopyableText } from "./ui/React/CopyableText";
 import { Money } from "./ui/React/Money";
 import React from "react";
 import ReactDOM from "react-dom";
+
+import {
+    getActionIdFromTypeAndName,
+    executeStartConsoleCommand,
+    executeSkillConsoleCommand,
+    executeLogConsoleCommand,
+    executeHelpConsoleCommand,
+    executeAutomateConsoleCommand,
+    parseCommandArguments,
+    executeConsoleCommand,
+    executeConsoleCommands,
+    triggerMigration,
+    triggerPotentialMigration,
+    randomEvent,
+    gainActionStats,
+    getDiplomacyEffectiveness,
+    getRecruitmentSuccessChance,
+    getRecruitmentTime,
+} from "./Bladeburner/Bladeburner";
 
 function Bladeburner(params={}) {
     this.numHosp        = 0; // Number of hospitalizations
@@ -329,7 +347,7 @@ Bladeburner.prototype.process = function() {
         // Random Events
         this.randomEventCounter -= seconds;
         if (this.randomEventCounter <= 0) {
-            this.randomEvent();
+            randomEvent(this);
             // Add instead of setting because we might have gone over the required time for the event
             this.randomEventCounter += getRandomInt(240, 600);
         }
@@ -564,7 +582,7 @@ Bladeburner.prototype.startAction = function(actionId) {
             }
             break;
         case ActionTypes["Recruitment"]:
-            this.actionTimeToComplete = this.getRecruitmentTime();
+            this.actionTimeToComplete = getRecruitmentTime(this, Player);
             break;
         case ActionTypes["Training"]:
         case ActionTypes["FieldAnalysis"]:
@@ -620,7 +638,7 @@ Bladeburner.prototype.completeAction = function() {
 
                 // Process Contract/Operation success/failure
                 if (action.attempt(this)) {
-                    this.gainActionStats(action, true);
+                    gainActionStats(this, Player, action, true);
                     ++action.successes;
                     --action.count;
 
@@ -648,7 +666,7 @@ Bladeburner.prototype.completeAction = function() {
                     }
                     isOperation ? this.completeOperation(true) : this.completeContract(true);
                 } else {
-                    this.gainActionStats(action, false);
+                    gainActionStats(this, Player, action, false);
                     ++action.failures;
                     var loss = 0, damage = 0;
                     if (action.rankLoss) {
@@ -699,7 +717,7 @@ Bladeburner.prototype.completeAction = function() {
                 var teamCount = action.teamCount, teamLossMax;
 
                 if (action.attempt(this)) {
-                    this.gainActionStats(action, true);
+                    gainActionStats(this, Player, action, true);
                     action.count = 0;
                     this.blackops[action.name] = true;
                     var rankGain = 0;
@@ -719,7 +737,7 @@ Bladeburner.prototype.completeAction = function() {
                         this.log(action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank");
                     }
                 } else {
-                    this.gainActionStats(action, false);
+                    gainActionStats(this, Player, action, false);
                     var rankLoss = 0, damage = 0;
                     if (action.rankLoss) {
                         rankLoss = addOffset(action.rankLoss, 10);
@@ -801,7 +819,7 @@ Bladeburner.prototype.completeAction = function() {
             this.startAction(this.action); // Repeat action
             break;
         case ActionTypes["Recruitment"]:
-            var successChance = this.getRecruitmentSuccessChance();
+            var successChance = getRecruitmentSuccessChance(this, Player);
             if (Math.random() < successChance) {
                 var expGain = 2 * BladeburnerConstants.BaseStatGain * this.actionTimeToComplete;
                 Player.gainCharismaExp(expGain);
@@ -819,7 +837,7 @@ Bladeburner.prototype.completeAction = function() {
             this.startAction(this.action); // Repeat action
             break;
         case ActionTypes["Diplomacy"]:
-            var eff = this.getDiplomacyEffectiveness();
+            var eff = getDiplomacyEffectiveness(this, Player);
             this.getCurrentCity().chaos *= eff;
             if (this.getCurrentCity().chaos < 0) { this.getCurrentCity().chaos = 0; }
             if (this.logging.general) {
@@ -903,7 +921,7 @@ Bladeburner.prototype.completeOperation = function(success) {
                     city.improveCommunityEstimate(1);
                 }
             } else {
-                this.triggerPotentialMigration(this.city, 0.1);
+                triggerPotentialMigration(this, this.city, 0.1);
             }
             break;
         case "Undercover Operation":
@@ -913,7 +931,7 @@ Bladeburner.prototype.completeOperation = function(success) {
                     city.improveCommunityEstimate(1);
                 }
             } else {
-                this.triggerPotentialMigration(this.city, 0.15);
+                triggerPotentialMigration(this, this.city, 0.15);
             }
             break;
         case "Sting Operation":
@@ -950,174 +968,10 @@ Bladeburner.prototype.completeOperation = function(success) {
     }
 }
 
-Bladeburner.prototype.getRecruitmentTime = function() {
-    var effCharisma = Player.charisma * this.skillMultipliers.effCha;
-    var charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
-    return Math.max(10, Math.round(BladeburnerConstants.BaseRecruitmentTimeNeeded - charismaFactor));
-}
 
-Bladeburner.prototype.getRecruitmentSuccessChance = function() {
-    return Math.pow(Player.charisma, 0.45) / (this.teamSize + 1);
-}
-
-Bladeburner.prototype.getDiplomacyEffectiveness = function() {
-    // Returns a decimal by which the city's chaos level should be multiplied (e.g. 0.98)
-    const CharismaLinearFactor = 1e3;
-    const CharismaExponentialFactor = 0.045;
-
-    const charismaEff = Math.pow(Player.charisma, CharismaExponentialFactor) + Player.charisma / CharismaLinearFactor;
-    return (100 - charismaEff) / 100;
-}
-
-/**
- * Process stat gains from Contracts, Operations, and Black Operations
- * @param action(Action obj) - Derived action class
- * @param success(bool) - Whether action was successful
- */
-Bladeburner.prototype.gainActionStats = function(action, success) {
-    var difficulty = action.getDifficulty();
-
-    /**
-     * Gain multiplier based on difficulty. If this changes then the
-     * same variable calculated in completeAction() needs to change too
-     */
-    var difficultyMult = Math.pow(difficulty, BladeburnerConstants.DiffMultExponentialFactor) + difficulty / BladeburnerConstants.DiffMultLinearFactor;
-
-    var time = this.actionTimeToComplete;
-    var successMult = success ? 1 : 0.5;
-
-    var unweightedGain = time * BladeburnerConstants.BaseStatGain * successMult * difficultyMult;
-    var unweightedIntGain = time * BladeburnerConstants.BaseIntGain * successMult * difficultyMult;
-    const skillMult = this.skillMultipliers.expGain;
-    Player.gainHackingExp(unweightedGain    * action.weights.hack * Player.hacking_exp_mult * skillMult);
-    Player.gainStrengthExp(unweightedGain   * action.weights.str  * Player.strength_exp_mult * skillMult);
-    Player.gainDefenseExp(unweightedGain    * action.weights.def  * Player.defense_exp_mult * skillMult);
-    Player.gainDexterityExp(unweightedGain  * action.weights.dex  * Player.dexterity_exp_mult * skillMult);
-    Player.gainAgilityExp(unweightedGain    * action.weights.agi  * Player.agility_exp_mult * skillMult);
-    Player.gainCharismaExp(unweightedGain   * action.weights.cha  * Player.charisma_exp_mult * skillMult);
-    let intExp = unweightedIntGain * action.weights.int * skillMult;
-    if (intExp > 1) {
-        intExp = Math.pow(intExp, 0.8);
-    }
-    Player.gainIntelligenceExp(intExp);
-}
-
-Bladeburner.prototype.randomEvent = function() {
-    var chance = Math.random();
-
-    // Choose random source/destination city for events
-    var sourceCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    var sourceCity = this.cities[sourceCityName];
-    if (!(sourceCity instanceof City)) {
-        throw new Error("sourceCity was not a City object in Bladeburner.randomEvent()");
-    }
-
-    var destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    while (destCityName === sourceCityName) {
-        destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    }
-    var destCity = this.cities[destCityName];
-
-    if (!(sourceCity instanceof City) || !(destCity instanceof City)) {
-        throw new Error("sourceCity/destCity was not a City object in Bladeburner.randomEvent()");
-    }
-
-    if (chance <= 0.05) {
-        // New Synthoid Community, 5%
-        ++sourceCity.comms;
-        var percentage = getRandomInt(10, 20) / 100;
-        var count = Math.round(sourceCity.pop * percentage);
-        sourceCity.pop += count;
-        if (this.logging.events) {
-            this.log("Intelligence indicates that a new Synthoid community was formed in a city");
-        }
-    } else if (chance <= 0.1) {
-        // Synthoid Community Migration, 5%
-        if (sourceCity.comms <= 0) {
-            // If no comms in source city, then instead trigger a new Synthoid community event
-            ++sourceCity.comms;
-            var percentage = getRandomInt(10, 20) / 100;
-            var count = Math.round(sourceCity.pop * percentage);
-            sourceCity.pop += count;
-            if (this.logging.events) {
-                this.log("Intelligence indicates that a new Synthoid community was formed in a city");
-            }
-        } else {
-            --sourceCity.comms;
-            ++destCity.comms;
-
-            // Change pop
-            var percentage = getRandomInt(10, 20) / 100;
-            var count = Math.round(sourceCity.pop * percentage);
-            sourceCity.pop -= count;
-            destCity.pop += count;
-
-            if (this.logging.events) {
-                this.log("Intelligence indicates that a Synthoid community migrated from " + sourceCityName + " to some other city");
-            }
-        }
-    } else if  (chance <= 0.3) {
-        // New Synthoids (non community), 20%
-        var percentage = getRandomInt(8, 24) / 100;
-        var count = Math.round(sourceCity.pop * percentage);
-        sourceCity.pop += count;
-        if (this.logging.events) {
-            this.log("Intelligence indicates that the Synthoid population of " + sourceCityName + " just changed significantly");
-        }
-    } else if (chance <= 0.5) {
-        // Synthoid migration (non community) 20%
-        this.triggerMigration(sourceCityName);
-        if (this.logging.events) {
-            this.log("Intelligence indicates that a large number of Synthoids migrated from " + sourceCityName + " to some other city");
-        }
-    } else if (chance <= 0.7) {
-        // Synthoid Riots (+chaos), 20%
-        sourceCity.chaos += 1;
-        sourceCity.chaos *= (1 + getRandomInt(5, 20) / 100);
-        if (this.logging.events) {
-            this.log("Tensions between Synthoids and humans lead to riots in " + sourceCityName + "! Chaos increased");
-        }
-    } else if (chance <= 0.9) {
-        // Less Synthoids, 20%
-        var percentage = getRandomInt(8, 20) / 100;
-        var count = Math.round(sourceCity.pop * percentage);
-        sourceCity.pop -= count;
-        if (this.logging.events) {
-            this.log("Intelligence indicates that the Synthoid population of " + sourceCityName + " just changed significantly");
-        }
-    }
-    // 10% chance of nothing happening
-}
-
-Bladeburner.prototype.triggerPotentialMigration = function(sourceCityName, chance) {
-    if (chance == null || isNaN(chance)) {
-        console.error("Invalid 'chance' parameter passed into Bladeburner.triggerPotentialMigration()");
-    }
-    if (chance > 1) {chance /= 100;}
-    if (Math.random() < chance) {this.triggerMigration(sourceCityName);}
-}
-
-Bladeburner.prototype.triggerMigration = function(sourceCityName) {
-    var destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    while (destCityName === sourceCityName) {
-        destCityName = BladeburnerConstants.CityNames[getRandomInt(0, 5)];
-    }
-    var destCity    = this.cities[destCityName];
-    var sourceCity  = this.cities[sourceCityName];
-    if (destCity == null || sourceCity == null) {
-        throw new Error("Failed to find City with name: " + destCityName);
-    }
-    var rand = Math.random(), percentage = getRandomInt(3, 15) / 100;
-
-    if (rand < 0.05 && sourceCity.comms > 0) { // 5% chance for community migration
-        percentage *= getRandomInt(2, 4); // Migration increases population change
-        --sourceCity.comms;
-        ++destCity.comms;
-    }
-    var count = Math.round(sourceCity.pop * percentage);
-    sourceCity.pop -= count;
-    destCity.pop += count;
-}
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////Unconvertable for now//////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // Bladeburner Console Window
 Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
@@ -1130,10 +984,6 @@ Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
     }
 }
 
-Bladeburner.prototype.clearConsole = function() {
-    this.consoleLogs.length = 0;
-}
-
 Bladeburner.prototype.log = function(input) {
     // Adds a timestamp and then just calls postToConsole
     this.postToConsole(`[${getTimestamp()}] ${input}`);
@@ -1141,547 +991,12 @@ Bladeburner.prototype.log = function(input) {
 
 // Handles a potential series of commands (comm1; comm2; comm3;)
 Bladeburner.prototype.executeConsoleCommands = function(commands) {
-    try {
-        // Console History
-        if (this.consoleHistory[this.consoleHistory.length-1] != commands) {
-            this.consoleHistory.push(commands);
-            if (this.consoleHistory.length > 50) {
-                this.consoleHistory.splice(0, 1);
-            }
-        }
-
-        const arrayOfCommands = commands.split(";");
-        for (let i = 0; i < arrayOfCommands.length; ++i) {
-            this.executeConsoleCommand(arrayOfCommands[i]);
-        }
-    } catch(e) {
-        exceptionAlert(e);
-    }
+    executeConsoleCommands(this, commands);
 }
 
-// Execute a single console command
-Bladeburner.prototype.executeConsoleCommand = function(command) {
-    command = command.trim();
-    command = command.replace(/\s\s+/g, ' '); // Replace all whitespace w/ a single space
-
-    var args = this.parseCommandArguments(command);
-    if (args.length <= 0) {return;} // Log an error?
-
-    switch(args[0].toLowerCase()) {
-        case "automate":
-            this.executeAutomateConsoleCommand(args);
-            break;
-        case "clear":
-        case "cls":
-            this.clearConsole();
-            break;
-        case "help":
-            this.executeHelpConsoleCommand(args);
-            break;
-        case "log":
-            this.executeLogConsoleCommand(args);
-            break;
-        case "skill":
-            this.executeSkillConsoleCommand(args);
-            break;
-        case "start":
-            this.executeStartConsoleCommand(args);
-            break;
-        case "stop":
-            this.resetAction();
-            break;
-        default:
-            this.postToConsole("Invalid console command");
-            break;
-    }
-}
-
-Bladeburner.prototype.parseCommandArguments = function(command) {
-    /**
-     * Returns an array with command and its arguments in each index.
-     * e.g. skill "blade's intuition" foo returns [skill, blade's intuition, foo]
-     * The input to this fn will be trimmed and will have all whitespace replaced w/ a single space
-     */
-    const args = [];
-    let start = 0, i = 0;
-    while (i < command.length) {
-        const c = command.charAt(i);
-        if (c === '"') { // Double quotes
-            const endQuote = command.indexOf('"', i+1);
-            if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
-                args.push(command.substr(i+1, (endQuote - i - 1)));
-                if (endQuote === command.length-1) {
-                    start = i = endQuote+1;
-                } else {
-                    start = i = endQuote+2; // Skip the space
-                }
-                continue;
-            }
-        } else if (c === "'") { // Single quotes, same thing as above
-            const endQuote = command.indexOf("'", i+1);
-            if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
-                args.push(command.substr(i+1, (endQuote - i - 1)));
-                if (endQuote === command.length-1) {
-                    start = i = endQuote+1;
-                } else {
-                    start = i = endQuote+2; // Skip the space
-                }
-                continue;
-            }
-        } else if (c === " ") {
-            args.push(command.substr(start, i-start));
-            start = i+1;
-        }
-        ++i;
-    }
-    if (start !== i) {args.push(command.substr(start, i-start));}
-    return args;
-}
-
-Bladeburner.prototype.executeAutomateConsoleCommand = function(args) {
-    if (args.length !== 2 && args.length !== 4) {
-        this.postToConsole("Invalid use of 'automate' command: automate [var] [val] [hi/low]. Use 'help automate' for more info");
-        return;
-    }
-
-    // Enable/Disable
-    if (args.length === 2) {
-        var flag = args[1];
-        if (flag.toLowerCase() === "status") {
-            this.postToConsole("Automation: " + (this.automateEnabled ? "enabled" : "disabled"));
-            if (this.automateEnabled) {
-                this.postToConsole("When your stamina drops to " + formatNumber(this.automateThreshLow, 0) +
-                                   ", you will automatically switch to " + this.automateActionLow.name +
-                                   ". When your stamina recovers to " +
-                                   formatNumber(this.automateThreshHigh, 0) + ", you will automatically " +
-                                   "switch to " + this.automateActionHigh.name + ".");
-            }
-
-        } else if (flag.toLowerCase().includes("en")) {
-            if (!(this.automateActionLow instanceof ActionIdentifier) ||
-                !(this.automateActionHigh instanceof ActionIdentifier)) {
-                return this.log("Failed to enable automation. Actions were not set");
-            }
-            this.automateEnabled = true;
-            this.log("Bladeburner automation enabled");
-        } else if (flag.toLowerCase().includes("d")) {
-            this.automateEnabled = false;
-            this.log("Bladeburner automation disabled");
-        } else {
-            this.log("Invalid argument for 'automate' console command: " + args[1]);
-        }
-        return;
-    }
-
-    // Set variables
-    if (args.length === 4) {
-        var variable = args[1], val = args[2];
-
-        var highLow = false; // True for high, false for low
-        if (args[3].toLowerCase().includes("hi")) {highLow = true;}
-
-        switch (variable) {
-            case "general":
-            case "gen":
-                if (GeneralActions[val] != null) {
-                    var action = new ActionIdentifier({
-                        type:ActionTypes[val], name:val,
-                    });
-                    if (highLow) {
-                        this.automateActionHigh = action;
-                    } else {
-                        this.automateActionLow = action;
-                    }
-                    this.log("Automate (" + (highLow ? "HIGH" : "LOW") + ") action set to " + val);
-                } else {
-                    this.postToConsole("Invalid action name specified: " + val);
-                }
-                break;
-            case "contract":
-            case "contracts":
-                if (this.contracts[val] != null) {
-                    var action = new ActionIdentifier({
-                        type:ActionTypes.Contract, name:val,
-                    });
-                    if (highLow) {
-                        this.automateActionHigh = action;
-                    } else {
-                        this.automateActionLow = action;
-                    }
-                    this.log("Automate (" + (highLow ? "HIGH" : "LOW") + ") action set to " + val);
-                } else {
-                    this.postToConsole("Invalid contract name specified: " + val);
-                }
-                break;
-            case "ops":
-            case "op":
-            case "operations":
-            case "operation":
-                if (this.operations[val] != null) {
-                    var action = new ActionIdentifier({
-                        type:ActionTypes.Operation, name:val,
-                    });
-                    if (highLow) {
-                        this.automateActionHigh = action;
-                    } else {
-                        this.automateActionLow = action;
-                    }
-                    this.log("Automate (" + (highLow ? "HIGH" : "LOW") + ") action set to " + val);
-                } else {
-                    this.postToConsole("Invalid Operation name specified: " + val);
-                }
-                break;
-            case "stamina":
-                if (isNaN(val)) {
-                    this.postToConsole("Invalid value specified for stamina threshold (must be numeric): " + val);
-                } else {
-                    if (highLow) {
-                        this.automateThreshHigh = Number(val);
-                    } else {
-                        this.automateThreshLow = Number(val);
-                    }
-                    this.log("Automate (" + (highLow ? "HIGH" : "LOW") + ") stamina threshold set to " + val);
-                }
-                break;
-            default:
-                break;
-        }
-
-        return;
-    }
-}
-
-Bladeburner.prototype.executeHelpConsoleCommand = function(args) {
-    if (args.length === 1) {
-      for(const line of ConsoleHelpText.helpList){
-        this.postToConsole(line);
-      }
-    } else {
-        for (var i = 1; i < args.length; ++i) {
-            const helpText = ConsoleHelpText[args[i]];
-            for(const line of helpText){
-                this.postToConsole(line);
-            }
-        }
-    }
-}
-
-Bladeburner.prototype.executeLogConsoleCommand = function(args) {
-    if (args.length < 3) {
-        this.postToConsole("Invalid usage of log command: log [enable/disable] [action/event]");
-        this.postToConsole("Use 'help log' for more details and examples");
-        return;
-    }
-
-    var flag = true;
-    if (args[1].toLowerCase().includes("d")) {flag = false;} // d for disable
-
-    switch (args[2].toLowerCase()) {
-        case "general":
-        case "gen":
-            this.logging.general = flag;
-            this.log("Logging " + (flag ? "enabled" : "disabled") + " for general actions");
-            break;
-        case "contract":
-        case "contracts":
-            this.logging.contracts = flag;
-            this.log("Logging " + (flag ? "enabled" : "disabled") + " for Contracts");
-            break;
-        case "ops":
-        case "op":
-        case "operations":
-        case "operation":
-            this.logging.ops = flag;
-            this.log("Logging " + (flag ? "enabled" : "disabled") + " for Operations");
-            break;
-        case "blackops":
-        case "blackop":
-        case "black operations":
-        case "black operation":
-            this.logging.blackops = flag;
-            this.log("Logging " + (flag ? "enabled" : "disabled") + " for BlackOps");
-            break;
-        case "event":
-        case "events":
-            this.logging.events = flag;
-            this.log("Logging " + (flag ? "enabled" : "disabled") + " for events");
-            break;
-        case "all":
-            this.logging.general = flag;
-            this.logging.contracts = flag;
-            this.logging.ops = flag;
-            this.logging.blackops = flag;
-            this.logging.events = flag;
-            this.log("Logging " + (flag ? "enabled" : "disabled") + " for everything");
-            break;
-        default:
-            this.postToConsole("Invalid action/event type specified: " + args[2]);
-            this.postToConsole("Examples of valid action/event identifiers are: [general, contracts, ops, blackops, events]");
-            break;
-    }
-}
-
-Bladeburner.prototype.executeSkillConsoleCommand = function(args) {
-    switch (args.length) {
-        case 1:
-            // Display Skill Help Command
-            this.postToConsole("Invalid usage of 'skill' console command: skill [action] [name]");
-            this.postToConsole("Use 'help skill' for more info");
-            break;
-        case 2:
-            if (args[1].toLowerCase() === "list") {
-                // List all skills and their level
-                this.postToConsole("Skills: ");
-                var skillNames = Object.keys(Skills);
-                for(var i = 0; i < skillNames.length; ++i) {
-                    var skill = Skills[skillNames[i]];
-                    var level = 0;
-                    if (this.skills[skill.name] != null) {level = this.skills[skill.name];}
-                    this.postToConsole(skill.name + ": Level " + formatNumber(level, 0));
-                }
-                this.postToConsole(" ");
-                this.postToConsole("Effects: ");
-                var multKeys = Object.keys(this.skillMultipliers);
-                for (var i = 0; i < multKeys.length; ++i) {
-                    var mult = this.skillMultipliers[multKeys[i]];
-                    if (mult && mult !== 1) {
-                        mult = formatNumber(mult, 3);
-                        switch(multKeys[i]) {
-                            case "successChanceAll":
-                                this.postToConsole("Total Success Chance: x" + mult);
-                                break;
-                            case "successChanceStealth":
-                                this.postToConsole("Stealth Success Chance: x" + mult);
-                                break;
-                            case "successChanceKill":
-                                this.postToConsole("Retirement Success Chance: x" + mult);
-                                break;
-                            case "successChanceContract":
-                                this.postToConsole("Contract Success Chance: x" + mult);
-                                break;
-                            case "successChanceOperation":
-                                this.postToConsole("Operation Success Chance: x" + mult);
-                                break;
-                            case "successChanceEstimate":
-                                this.postToConsole("Synthoid Data Estimate: x" + mult);
-                                break;
-                            case "actionTime":
-                                this.postToConsole("Action Time: x" + mult);
-                                break;
-                            case "effHack":
-                                this.postToConsole("Hacking Skill: x" + mult);
-                                break;
-                            case "effStr":
-                                this.postToConsole("Strength: x" + mult);
-                                break;
-                            case "effDef":
-                                this.postToConsole("Defense: x" + mult);
-                                break;
-                            case "effDex":
-                                this.postToConsole("Dexterity: x" + mult);
-                                break;
-                            case "effAgi":
-                                this.postToConsole("Agility: x" + mult);
-                                break;
-                            case "effCha":
-                                this.postToConsole("Charisma: x" + mult);
-                                break;
-                            case "effInt":
-                                this.postToConsole("Intelligence: x" + mult);
-                                break;
-                            case "stamina":
-                                this.postToConsole("Stamina: x" + mult);
-                                break;
-                            default:
-                                console.warn(`Unrecognized SkillMult Key: ${multKeys[i]}`);
-                                break;
-                        }
-                    }
-                }
-            } else {
-                this.postToConsole("Invalid usage of 'skill' console command: skill [action] [name]");
-                this.postToConsole("Use 'help skill' for more info");
-            }
-            break;
-        case 3:
-            var skillName = args[2];
-            var skill = Skills[skillName];
-            if (skill == null || !(skill instanceof Skill)) {
-                return this.postToConsole("Invalid skill name (Note that this is case-sensitive): " + skillName);
-            }
-            if (args[1].toLowerCase() === "list") {
-                let level = 0;
-                if (this.skills[skill.name] !== undefined) {
-                    level = this.skills[skill.name];
-                }
-                this.postToConsole(skill.name + ": Level " + formatNumber(level), 0);
-            } else if (args[1].toLowerCase() === "level") {
-                var currentLevel = 0;
-                if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
-                    currentLevel = this.skills[skillName];
-                }
-                var pointCost = skill.calculateCost(currentLevel);
-                if (this.skillPoints >= pointCost) {
-                    this.skillPoints -= pointCost;
-                    this.upgradeSkill(skill);
-                    this.log(skill.name + " upgraded to Level " + this.skills[skillName]);
-                } else {
-                    this.postToConsole("You do not have enough Skill Points to upgrade this. You need " + formatNumber(pointCost, 0));
-                }
-
-            } else {
-                this.postToConsole("Invalid usage of 'skill' console command: skill [action] [name]");
-                this.postToConsole("Use 'help skill' for more info");
-            }
-            break;
-        default:
-            this.postToConsole("Invalid usage of 'skill' console command: skill [action] [name]");
-            this.postToConsole("Use 'help skill' for more info");
-            break;
-    }
-}
-
-Bladeburner.prototype.executeStartConsoleCommand = function(args) {
-    if (args.length !== 3) {
-        this.postToConsole("Invalid usage of 'start' console command: start [type] [name]");
-        this.postToConsole("Use 'help start' for more info");
-        return;
-    }
-    var name = args[2];
-    switch (args[1].toLowerCase()) {
-        case "general":
-        case "gen":
-            if (GeneralActions[name] != null) {
-                this.action.type = ActionTypes[name];
-                this.action.name = name;
-                this.startAction(this.action);
-            } else {
-                this.postToConsole("Invalid action name specified: " + args[2]);
-            }
-            break;
-        case "contract":
-        case "contracts":
-            if (this.contracts[name] != null) {
-                this.action.type = ActionTypes.Contract;
-                this.action.name = name;
-                this.startAction(this.action);
-            } else {
-                this.postToConsole("Invalid contract name specified: " + args[2]);
-            }
-            break;
-        case "ops":
-        case "op":
-        case "operations":
-        case "operation":
-            if (this.operations[name] != null) {
-                this.action.type = ActionTypes.Operation;
-                this.action.name = name;
-                this.startAction(this.action);
-            } else {
-                this.postToConsole("Invalid Operation name specified: " + args[2]);
-            }
-            break;
-        case "blackops":
-        case "blackop":
-        case "black operations":
-        case "black operation":
-            if (BlackOperations[name] != null) {
-                this.action.type = ActionTypes.BlackOperation;
-                this.action.name = name;
-                this.startAction(this.action);
-            } else {
-                this.postToConsole("Invalid BlackOp name specified: " + args[2]);
-            }
-            break;
-        default:
-            this.postToConsole("Invalid action/event type specified: " + args[1]);
-            this.postToConsole("Examples of valid action/event identifiers are: [general, contract, op, blackop]");
-            break;
-    }
-}
-
-Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
-    if (type === "" || name === "") {return null;}
-    var action = new ActionIdentifier();
-    var convertedType = type.toLowerCase().trim();
-    var convertedName = name.toLowerCase().trim();
-    switch (convertedType) {
-        case "contract":
-        case "contracts":
-        case "contr":
-            action.type = ActionTypes["Contract"];
-            if (this.contracts.hasOwnProperty(name)) {
-                action.name = name;
-                return action;
-            } else {
-                return null;
-            }
-            break;
-        case "operation":
-        case "operations":
-        case "op":
-        case "ops":
-            action.type = ActionTypes["Operation"];
-            if (this.operations.hasOwnProperty(name)) {
-                action.name = name;
-                return action;
-            } else {
-                return null;
-            }
-            break;
-        case "blackoperation":
-        case "black operation":
-        case "black operations":
-        case "black op":
-        case "black ops":
-        case "blackop":
-        case "blackops":
-            action.type = ActionTypes["BlackOp"];
-            if (BlackOperations.hasOwnProperty(name)) {
-                action.name = name;
-                return action;
-            } else {
-                return null;
-            }
-            break;
-        case "general":
-        case "general action":
-        case "gen":
-            break;
-        default:
-            return null;
-    }
-
-    if (convertedType.startsWith("gen")) {
-        switch (convertedName) {
-            case "training":
-                action.type = ActionTypes["Training"];
-                action.name = "Training";
-                break;
-            case "recruitment":
-            case "recruit":
-                action.type = ActionTypes["Recruitment"];
-                action.name = "Recruitment";
-                break;
-            case "field analysis":
-            case "fieldanalysis":
-                action.type = ActionTypes["Field Analysis"];
-                action.name = "Field Analysis";
-                break;
-            case "diplomacy":
-                action.type = ActionTypes["Diplomacy"];
-                action.name = "Diplomacy";
-                break;
-            case "hyperbolic regeneration chamber":
-                action.type = ActionTypes["Hyperbolic Regeneration Chamber"];
-                action.name = "Hyperbolic Regeneration Chamber";
-                break;
-            default:
-                return null;
-        }
-        return action;
-    }
-}
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////Netscript Fns//////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 Bladeburner.prototype.getTypeAndNameFromActionId = function(actionId) {
     var res = {};
@@ -1720,7 +1035,7 @@ Bladeburner.prototype.getSkillNamesNetscriptFn = function() {
 
 Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript) {
   const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-    const actionId = this.getActionIdFromTypeAndName(type, name);
+    const actionId = getActionIdFromTypeAndName(this, type, name);
     if (actionId == null) {
         workerScript.log("bladeburner.startAction", errorLogText);
         return false;
@@ -1777,7 +1092,7 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
 
 Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScript) {
   const errorLogText = `Invalid action: type='${type}' name='${name}'`
-    const actionId = this.getActionIdFromTypeAndName(type, name);
+    const actionId = getActionIdFromTypeAndName(this, type, name);
     if (actionId == null) {
         workerScript.log("bladeburner.getActionTime", errorLogText);
         return -1;
@@ -1800,7 +1115,7 @@ Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScri
         case ActionTypes["FieldAnalysis"]:
             return 30;
         case ActionTypes["Recruitment"]:
-            return this.getRecruitmentTime();
+            return getRecruitmentTime(this, Player);
         case ActionTypes["Diplomacy"]:
         case ActionTypes["Hyperbolic Regeneration Chamber"]:
             return 60;
@@ -1812,7 +1127,7 @@ Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScri
 
 Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type, name, workerScript) {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`
-    const actionId = this.getActionIdFromTypeAndName(type, name);
+    const actionId = getActionIdFromTypeAndName(this, type, name);
     if (actionId == null) {
         workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
         return -1;
@@ -1835,7 +1150,7 @@ Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type
         case ActionTypes["FieldAnalysis"]:
             return 1;
         case ActionTypes["Recruitment"]:
-            return this.getRecruitmentSuccessChance();
+            return getRecruitmentSuccessChance(this, Player);
         default:
             workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
             return -1;
@@ -1844,7 +1159,7 @@ Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type
 
 Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, workerScript) {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-    const actionId = this.getActionIdFromTypeAndName(type, name);
+    const actionId = getActionIdFromTypeAndName(this, type, name);
     if (actionId == null) {
         workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
         return -1;
@@ -1940,7 +1255,7 @@ Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript
     }
 
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-    const actionId = this.getActionIdFromTypeAndName(type, name);
+    const actionId = getActionIdFromTypeAndName(this, type, name);
     if (actionId == null) {
         workerScript.log("bladeburner.getTeamSize", errorLogText);
         return -1;
@@ -1963,7 +1278,7 @@ Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript
 
 Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, workerScript) {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-    const actionId = this.getActionIdFromTypeAndName(type, name);
+    const actionId = getActionIdFromTypeAndName(this, type, name);
     if (actionId == null) {
         workerScript.log("bladeburner.setTeamSize", errorLogText);
         return -1;
