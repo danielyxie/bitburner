@@ -80,6 +80,15 @@ import {
     getDiplomacyEffectiveness,
     getRecruitmentSuccessChance,
     getRecruitmentTime,
+    resetSkillMultipliers,
+    updateSkillMultipliers,
+    resetAction,
+    getActionObject,
+    completeOperation,
+    completeContract,
+    completeAction,
+    processAction,
+    startAction,
 } from "./Bladeburner/Bladeburner";
 
 function Bladeburner(params={}) {
@@ -116,7 +125,7 @@ function Bladeburner(params={}) {
     // Map of SkillNames -> level
     this.skills = {};
     this.skillMultipliers = {};
-    this.updateSkillMultipliers(); // Calls resetSkillMultipliers()
+    updateSkillMultipliers(this); // Calls resetSkillMultipliers()
 
     // Max Stamina is based on stats and Bladeburner-specific bonuses
     this.staminaBonus   = 0;    // Gained from training
@@ -163,7 +172,7 @@ function Bladeburner(params={}) {
 }
 
 Bladeburner.prototype.prestige = function() {
-    this.resetAction();
+    resetAction(this);
     var bladeburnerFac = Factions["Bladeburners"];
     if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
         joinFaction(bladeburnerFac);
@@ -289,7 +298,6 @@ Bladeburner.prototype.storeCycles = function(numCycles=1) {
     this.storedCycles += numCycles;
 }
 
-
 Bladeburner.prototype.process = function() {
     // Edge case condition...if Operation Daedalus is complete trigger the BitNode
     if (redPillFlag === false && this.blackops.hasOwnProperty("Operation Daedalus")) {
@@ -308,13 +316,13 @@ Bladeburner.prototype.process = function() {
                 dialogBoxCreate(msg);
             }
         }
-        this.resetAction();
+        resetAction(this);
     }
 
     // If the Player has no Stamina, set action to idle
     if (this.stamina <= 0) {
         this.log("Your Bladeburner action was cancelled because your stamina hit 0");
-        this.resetAction();
+        resetAction(this);
     }
 
     // A 'tick' for this mechanic is one second (= 5 game cycles)
@@ -352,7 +360,7 @@ Bladeburner.prototype.process = function() {
             this.randomEventCounter += getRandomInt(240, 600);
         }
 
-        this.processAction(seconds);
+        processAction(this, Player, seconds);
 
         // Automation
         if (this.automateEnabled) {
@@ -360,12 +368,12 @@ Bladeburner.prototype.process = function() {
             if (this.stamina <= this.automateThreshLow) {
                 if (this.action.name !== this.automateActionLow.name || this.action.type !== this.automateActionLow.type) {
                     this.action = new ActionIdentifier({type: this.automateActionLow.type, name: this.automateActionLow.name});
-                    this.startAction(this.action);
+                    startAction(this, Player, this.action);
                 }
             } else if (this.stamina >= this.automateThreshHigh) {
                 if (this.action.name !== this.automateActionHigh.name || this.action.type !== this.automateActionHigh.type) {
                     this.action = new ActionIdentifier({type: this.automateActionHigh.type, name: this.automateActionHigh.name});
-                    this.startAction(this.action);
+                    startAction(this, Player, this.action);
                 }
             }
         }
@@ -397,89 +405,12 @@ Bladeburner.prototype.calculateStaminaPenalty = function() {
     return Math.min(1, this.stamina / (0.5 * this.maxStamina));
 }
 
-Bladeburner.prototype.changeRank = function(change) {
-    if (isNaN(change)) {throw new Error("NaN passed into Bladeburner.changeRank()");}
-    this.rank += change;
-    if (this.rank < 0) {this.rank = 0;}
-    this.maxRank = Math.max(this.rank, this.maxRank);
-
-    var bladeburnersFactionName = "Bladeburners";
-    if (factionExists(bladeburnersFactionName)) {
-        var bladeburnerFac = Factions[bladeburnersFactionName];
-        if (!(bladeburnerFac instanceof Faction)) {
-            throw new Error("Could not properly get Bladeburner Faction object in Bladeburner UI Overview Faction button");
-        }
-        if (bladeburnerFac.isMember) {
-            var favorBonus = 1 + (bladeburnerFac.favor / 100);
-            bladeburnerFac.playerReputation += (BladeburnerConstants.RankToFactionRepFactor * change * Player.faction_rep_mult * favorBonus);
-        }
-    }
-
-    // Gain skill points
-    var rankNeededForSp = (this.totalSkillPoints+1) * BladeburnerConstants.RanksPerSkillPoint;
-    if (this.maxRank >= rankNeededForSp) {
-        // Calculate how many skill points to gain
-        var gainedSkillPoints = Math.floor((this.maxRank - rankNeededForSp) / BladeburnerConstants.RanksPerSkillPoint + 1);
-        this.skillPoints += gainedSkillPoints;
-        this.totalSkillPoints += gainedSkillPoints;
-    }
-}
-
 Bladeburner.prototype.getCurrentCity = function() {
     var city = this.cities[this.city];
     if (!(city instanceof City)) {
         throw new Error("Bladeburner.getCurrentCity() did not properly return a City object");
     }
     return city;
-}
-
-Bladeburner.prototype.resetSkillMultipliers = function() {
-    this.skillMultipliers = {
-        successChanceAll: 1,
-        successChanceStealth: 1,
-        successChanceKill: 1,
-        successChanceContract: 1,
-        successChanceOperation: 1,
-        successChanceEstimate: 1,
-        actionTime: 1,
-        effHack: 1,
-        effStr: 1,
-        effDef: 1,
-        effDex: 1,
-        effAgi: 1,
-        effCha: 1,
-        effInt: 1,
-        stamina: 1,
-        money: 1,
-        expGain: 1,
-    };
-}
-
-Bladeburner.prototype.updateSkillMultipliers = function() {
-    this.resetSkillMultipliers();
-    for (var skillName in this.skills) {
-        if (this.skills.hasOwnProperty(skillName)) {
-            var skill = Skills[skillName];
-            if (skill == null) {
-                throw new Error("Could not find Skill Object for: " + skillName);
-            }
-            var level = this.skills[skillName];
-            if (level == null || level <= 0) {continue;} //Not upgraded
-
-            var multiplierNames = Object.keys(this.skillMultipliers);
-            for (var i = 0; i < multiplierNames.length; ++i) {
-                var multiplierName = multiplierNames[i];
-                if (skill[multiplierName] != null && !isNaN(skill[multiplierName])) {
-                    var value = skill[multiplierName] * level;
-                    var multiplierValue = 1 + (value / 100);
-                    if (multiplierName === "actionTime") {
-                        multiplierValue = 1 - (value / 100);
-                    }
-                    this.skillMultipliers[multiplierName] *= multiplierValue;
-                }
-            }
-        }
-    }
 }
 
 Bladeburner.prototype.upgradeSkill = function(skill) {
@@ -493,35 +424,7 @@ Bladeburner.prototype.upgradeSkill = function(skill) {
     if (isNaN(this.skills[skillName]) || this.skills[skillName] < 0) {
         throw new Error("Level of Skill " + skillName + " is invalid: " + this.skills[skillName]);
     }
-    this.updateSkillMultipliers();
-}
-
-Bladeburner.prototype.getActionObject = function(actionId) {
-    /**
-     * Given an ActionIdentifier object, returns the corresponding
-     * GeneralAction, Contract, Operation, or BlackOperation object
-     */
-    switch (actionId.type) {
-        case ActionTypes["Contract"]:
-            return this.contracts[actionId.name];
-        case ActionTypes["Operation"]:
-            return this.operations[actionId.name];
-        case ActionTypes["BlackOp"]:
-        case ActionTypes["BlackOperation"]:
-            return BlackOperations[actionId.name];
-        case ActionTypes["Training"]:
-            return GeneralActions["Training"];
-        case ActionTypes["Field Analysis"]:
-            return GeneralActions["Field Analysis"];
-        case ActionTypes["Recruitment"]:
-            return GeneralActions["Recruitment"];
-        case ActionTypes["Diplomacy"]:
-            return GeneralActions["Diplomacy"];
-        case ActionTypes["Hyperbolic Regeneration Chamber"]:
-            return GeneralActions["Hyperbolic Regeneration Chamber"];
-        default:
-            return null;
-    }
+    updateSkillMultipliers(this);
 }
 
 // Sets the player to the "IDLE" action
@@ -529,448 +432,8 @@ Bladeburner.prototype.resetAction = function() {
     this.action = new ActionIdentifier({type:ActionTypes.Idle});
 }
 
-Bladeburner.prototype.startAction = function(actionId) {
-    if (actionId == null) {return;}
-    this.action = actionId;
-    this.actionTimeCurrent = 0;
-    switch (actionId.type) {
-        case ActionTypes["Idle"]:
-            this.actionTimeToComplete = 0;
-            break;
-        case ActionTypes["Contract"]:
-            try {
-                var action = this.getActionObject(actionId);
-                if (action == null) {
-                    throw new Error("Failed to get Contract Object for: " + actionId.name);
-                }
-                if (action.count < 1) {return this.resetAction();}
-                this.actionTimeToComplete = action.getActionTime(this);
-            } catch(e) {
-                exceptionAlert(e);
-            }
-            break;
-        case ActionTypes["Operation"]:
-            try {
-                var action = this.getActionObject(actionId);
-                if (action == null) {
-                    throw new Error ("Failed to get Operation Object for: " + actionId.name);
-                }
-                if (action.count < 1) {return this.resetAction();}
-                if (actionId.name === "Raid" && this.getCurrentCity().commsEst === 0) {return this.resetAction();}
-                this.actionTimeToComplete = action.getActionTime(this);
-            } catch(e) {
-                exceptionAlert(e);
-            }
-            break;
-        case ActionTypes["BlackOp"]:
-        case ActionTypes["BlackOperation"]:
-            try {
-                // Safety measure - don't repeat BlackOps that are already done
-                if (this.blackops[actionId.name] != null) {
-                    this.resetAction();
-                    this.log("Error: Tried to start a Black Operation that had already been completed");
-                    break;
-                }
-
-                var action = this.getActionObject(actionId);
-                if (action == null) {
-                    throw new Error("Failed to get BlackOperation object for: " + actionId.name);
-                }
-                this.actionTimeToComplete = action.getActionTime(this);
-            } catch(e) {
-                exceptionAlert(e);
-            }
-            break;
-        case ActionTypes["Recruitment"]:
-            this.actionTimeToComplete = getRecruitmentTime(this, Player);
-            break;
-        case ActionTypes["Training"]:
-        case ActionTypes["FieldAnalysis"]:
-        case ActionTypes["Field Analysis"]:
-            this.actionTimeToComplete = 30;
-            break;
-        case ActionTypes["Diplomacy"]:
-        case ActionTypes["Hyperbolic Regeneration Chamber"]:
-            this.actionTimeToComplete = 60;
-            break;
-        default:
-            throw new Error("Invalid Action Type in Bladeburner.startAction(): " + actionId.type);
-            break;
-    }
-}
-
-Bladeburner.prototype.processAction = function(seconds) {
-    if (this.action.type === ActionTypes["Idle"]) {return;}
-    if (this.actionTimeToComplete <= 0) {
-        throw new Error(`Invalid actionTimeToComplete value: ${this.actionTimeToComplete}, type; ${this.action.type}`);
-    }
-    if (!(this.action instanceof ActionIdentifier)) {
-        throw new Error("Bladeburner.action is not an ActionIdentifier Object");
-    }
-
-    // If the previous action went past its completion time, add to the next action
-    // This is not added inmediatly in case the automation changes the action
-    this.actionTimeCurrent += seconds + this.actionTimeOverflow;
-    this.actionTimeOverflow = 0;
-    if (this.actionTimeCurrent >= this.actionTimeToComplete) {
-        this.actionTimeOverflow = this.actionTimeCurrent - this.actionTimeToComplete;
-        return this.completeAction();
-    }
-}
-
-Bladeburner.prototype.completeAction = function() {
-    switch (this.action.type) {
-        case ActionTypes["Contract"]:
-        case ActionTypes["Operation"]:
-            try {
-                var isOperation = (this.action.type === ActionTypes["Operation"]);
-                var action = this.getActionObject(this.action);
-                if (action == null) {
-                    throw new Error("Failed to get Contract/Operation Object for: " + this.action.name);
-                }
-                var difficulty = action.getDifficulty();
-                var difficultyMultiplier = Math.pow(difficulty, BladeburnerConstants.DiffMultExponentialFactor) + difficulty / BladeburnerConstants.DiffMultLinearFactor;
-                var rewardMultiplier = Math.pow(action.rewardFac, action.level-1);
-
-                // Stamina loss is based on difficulty
-                this.stamina -= (BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier);
-                if (this.stamina < 0) {this.stamina = 0;}
-
-                // Process Contract/Operation success/failure
-                if (action.attempt(this)) {
-                    gainActionStats(this, Player, action, true);
-                    ++action.successes;
-                    --action.count;
-
-                    // Earn money for contracts
-                    var moneyGain = 0;
-                    if (!isOperation) {
-                        moneyGain = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
-                        Player.gainMoney(moneyGain);
-                        Player.recordMoneySource(moneyGain, "bladeburner");
-                    }
-
-                    if (isOperation) {
-                        action.setMaxLevel(BladeburnerConstants.OperationSuccessesPerLevel);
-                    } else {
-                        action.setMaxLevel(BladeburnerConstants.ContractSuccessesPerLevel);
-                    }
-                    if (action.rankGain) {
-                        var gain = addOffset(action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank, 10);
-                        this.changeRank(gain);
-                        if (isOperation && this.logging.ops) {
-                            this.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
-                        } else if (!isOperation && this.logging.contracts) {
-                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeralWrapper.formatMoney(moneyGain));
-                        }
-                    }
-                    isOperation ? this.completeOperation(true) : this.completeContract(true);
-                } else {
-                    gainActionStats(this, Player, action, false);
-                    ++action.failures;
-                    var loss = 0, damage = 0;
-                    if (action.rankLoss) {
-                        loss = addOffset(action.rankLoss * rewardMultiplier, 10);
-                        this.changeRank(-1 * loss);
-                    }
-                    if (action.hpLoss) {
-                        damage = action.hpLoss * difficultyMultiplier;
-                        damage = Math.ceil(addOffset(damage, 10));
-                        this.hpLost += damage;
-                        const cost = calculateHospitalizationCost(Player, damage);
-                        if (Player.takeDamage(damage)) {
-                            ++this.numHosp;
-                            this.moneyLost += cost;
-                        }
-                    }
-                    var logLossText = "";
-                    if (loss > 0)   {logLossText += "Lost " + formatNumber(loss, 3) + " rank. ";}
-                    if (damage > 0) {logLossText += "Took " + formatNumber(damage, 0) + " damage.";}
-                    if (isOperation && this.logging.ops) {
-                        this.log(action.name + " failed! " + logLossText);
-                    } else if (!isOperation && this.logging.contracts) {
-                        this.log(action.name + " contract failed! " + logLossText);
-                    }
-                    isOperation ? this.completeOperation(false) : this.completeContract(false);
-                }
-                if (action.autoLevel) {action.level = action.maxLevel;} // Autolevel
-                this.startAction(this.action); // Repeat action
-            } catch(e) {
-                exceptionAlert(e);
-            }
-            break;
-        case ActionTypes["BlackOp"]:
-        case ActionTypes["BlackOperation"]:
-            try {
-                var action = this.getActionObject(this.action);
-                if (action == null || !(action instanceof BlackOperation)) {
-                    throw new Error("Failed to get BlackOperation Object for: " + this.action.name);
-                }
-                var difficulty = action.getDifficulty();
-                var difficultyMultiplier = Math.pow(difficulty, BladeburnerConstants.DiffMultExponentialFactor) + difficulty / BladeburnerConstants.DiffMultLinearFactor;
-
-                // Stamina loss is based on difficulty
-                this.stamina -= (BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier);
-                if (this.stamina < 0) {this.stamina = 0;}
-
-                // Team loss variables
-                var teamCount = action.teamCount, teamLossMax;
-
-                if (action.attempt(this)) {
-                    gainActionStats(this, Player, action, true);
-                    action.count = 0;
-                    this.blackops[action.name] = true;
-                    var rankGain = 0;
-                    if (action.rankGain) {
-                        rankGain = addOffset(action.rankGain * BitNodeMultipliers.BladeburnerRank, 10);
-                        this.changeRank(rankGain);
-                    }
-                    teamLossMax = Math.ceil(teamCount/2);
-
-                    // Operation Daedalus
-                    if (action.name === "Operation Daedalus") {
-                        this.resetAction();
-                        return hackWorldDaemon(Player.bitNodeN);
-                    }
-
-                    if (this.logging.blackops) {
-                        this.log(action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank");
-                    }
-                } else {
-                    gainActionStats(this, Player, action, false);
-                    var rankLoss = 0, damage = 0;
-                    if (action.rankLoss) {
-                        rankLoss = addOffset(action.rankLoss, 10);
-                        this.changeRank(-1 * rankLoss);
-                    }
-                    if (action.hpLoss) {
-                        damage = action.hpLoss * difficultyMultiplier;
-                        damage = Math.ceil(addOffset(damage, 10));
-                        const cost = calculateHospitalizationCost(Player, damage);
-                        if (Player.takeDamage(damage)) {
-                            ++this.numHosp;
-                            this.moneyLost += cost;
-                        }
-                    }
-                    teamLossMax = Math.floor(teamCount);
-
-                    if (this.logging.blackops) {
-                        this.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took " + formatNumber(damage, 0) + " damage");
-                    }
-                }
-
-                this.resetAction(); // Stop regardless of success or fail
-
-                // Calculate team lossses
-                if (teamCount >= 1) {
-                    var losses = getRandomInt(1, teamLossMax);
-                    this.teamSize -= losses;
-                    this.teamLost += losses;
-                    if (this.logging.blackops) {
-                        this.log("You lost " + formatNumber(losses, 0) + " team members during " + action.name);
-                    }
-                }
-            } catch(e) {
-                exceptionAlert(e);
-            }
-            break;
-        case ActionTypes["Training"]:
-            this.stamina -= (0.5 * BladeburnerConstants.BaseStaminaLoss);
-            var strExpGain = 30 * Player.strength_exp_mult,
-                defExpGain = 30 * Player.defense_exp_mult,
-                dexExpGain = 30 * Player.dexterity_exp_mult,
-                agiExpGain = 30 * Player.agility_exp_mult,
-                staminaGain = 0.04 * this.skillMultipliers.stamina;
-            Player.gainStrengthExp(strExpGain);
-            Player.gainDefenseExp(defExpGain);
-            Player.gainDexterityExp(dexExpGain);
-            Player.gainAgilityExp(agiExpGain);
-            this.staminaBonus += (staminaGain);
-            if (this.logging.general) {
-                this.log("Training completed. Gained: " +
-                         formatNumber(strExpGain, 1) + " str exp, " +
-                         formatNumber(defExpGain, 1) + " def exp, " +
-                         formatNumber(dexExpGain, 1) + " dex exp, " +
-                         formatNumber(agiExpGain, 1) + " agi exp, " +
-                         formatNumber(staminaGain, 3) + " max stamina");
-            }
-            this.startAction(this.action); // Repeat action
-            break;
-        case ActionTypes["FieldAnalysis"]:
-        case ActionTypes["Field Analysis"]:
-            // Does not use stamina. Effectiveness depends on hacking, int, and cha
-            var eff = 0.04 * Math.pow(Player.hacking_skill, 0.3) +
-                      0.04 * Math.pow(Player.intelligence, 0.9) +
-                      0.02 * Math.pow(Player.charisma, 0.3);
-            eff *= Player.bladeburner_analysis_mult;
-            if (isNaN(eff) || eff < 0) {
-                throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
-            }
-            var hackingExpGain  = 20 * Player.hacking_exp_mult,
-                charismaExpGain = 20 * Player.charisma_exp_mult;
-            Player.gainHackingExp(hackingExpGain);
-            Player.gainIntelligenceExp(BladeburnerConstants.BaseIntGain);
-            Player.gainCharismaExp(charismaExpGain);
-            this.changeRank(0.1 * BitNodeMultipliers.BladeburnerRank);
-            this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
-            if (this.logging.general) {
-                this.log("Field analysis completed. Gained 0.1 rank, " + formatNumber(hackingExpGain, 1) + " hacking exp, and " + formatNumber(charismaExpGain, 1) + " charisma exp");
-            }
-            this.startAction(this.action); // Repeat action
-            break;
-        case ActionTypes["Recruitment"]:
-            var successChance = getRecruitmentSuccessChance(this, Player);
-            if (Math.random() < successChance) {
-                var expGain = 2 * BladeburnerConstants.BaseStatGain * this.actionTimeToComplete;
-                Player.gainCharismaExp(expGain);
-                ++this.teamSize;
-                if (this.logging.general) {
-                    this.log("Successfully recruited a team member! Gained " + formatNumber(expGain, 1) + " charisma exp");
-                }
-            } else {
-                var expGain = BladeburnerConstants.BaseStatGain * this.actionTimeToComplete;
-                Player.gainCharismaExp(expGain);
-                if (this.logging.general) {
-                    this.log("Failed to recruit a team member. Gained " + formatNumber(expGain, 1) + " charisma exp");
-                }
-            }
-            this.startAction(this.action); // Repeat action
-            break;
-        case ActionTypes["Diplomacy"]:
-            var eff = getDiplomacyEffectiveness(this, Player);
-            this.getCurrentCity().chaos *= eff;
-            if (this.getCurrentCity().chaos < 0) { this.getCurrentCity().chaos = 0; }
-            if (this.logging.general) {
-                this.log(`Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(1 - eff)}`);
-            }
-            this.startAction(this.action); // Repeat Action
-            break;
-        case ActionTypes["Hyperbolic Regeneration Chamber"]: {
-            Player.regenerateHp(BladeburnerConstants.HrcHpGain);
-
-            const staminaGain = this.maxStamina * (BladeburnerConstants.HrcStaminaGain / 100);
-            this.stamina = Math.min(this.maxStamina, this.stamina + staminaGain);
-            this.startAction(this.action);
-            if (this.logging.general) {
-                this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${BladeburnerConstants.HrcHpGain} HP and gained ${numeralWrapper.formatStamina(staminaGain)} stamina`);
-            }
-            break;
-        }
-        default:
-            console.error(`Bladeburner.completeAction() called for invalid action: ${this.action.type}`);
-            break;
-    }
-}
-
-Bladeburner.prototype.completeContract = function(success) {
-    if (this.action.type !== ActionTypes.Contract) {
-        throw new Error("completeContract() called even though current action is not a Contract");
-    }
-    var city = this.getCurrentCity();
-    if (success) {
-        switch (this.action.name) {
-            case "Tracking":
-                // Increase estimate accuracy by a relatively small amount
-                city.improvePopulationEstimateByCount(getRandomInt(100, 1e3));
-                break;
-            case "Bounty Hunter":
-                city.changePopulationByCount(-1, {estChange:-1});
-                city.changeChaosByCount(0.02);
-                break;
-            case "Retirement":
-                city.changePopulationByCount(-1, {estChange:-1});
-                city.changeChaosByCount(0.04);
-                break;
-            default:
-                throw new Error("Invalid Action name in completeContract: " + this.action.name);
-        }
-    }
-}
-
-Bladeburner.prototype.completeOperation = function(success) {
-    if (this.action.type !== ActionTypes.Operation) {
-        throw new Error("completeOperation() called even though current action is not an Operation");
-    }
-    var action = this.getActionObject(this.action);
-    if (action == null) {
-        throw new Error("Failed to get Contract/Operation Object for: " + this.action.name);
-    }
-
-    // Calculate team losses
-    var teamCount = action.teamCount, max;
-    if (teamCount >= 1) {
-        if (success) {
-            max = Math.ceil(teamCount/2);
-        } else {
-            max = Math.floor(teamCount)
-        }
-        var losses = getRandomInt(0, max);
-        this.teamSize -= losses;
-        this.teamLost += losses;
-        if (this.logging.ops && losses > 0) {
-            this.log("Lost " + formatNumber(losses, 0) + " team members during this " + action.name);
-        }
-    }
-
-    var city = this.getCurrentCity();
-    switch (action.name) {
-        case "Investigation":
-            if (success) {
-                city.improvePopulationEstimateByPercentage(0.4 * this.skillMultipliers.successChanceEstimate);
-                if (Math.random() < (0.02 * this.skillMultipliers.successChanceEstimate)) {
-                    city.improveCommunityEstimate(1);
-                }
-            } else {
-                triggerPotentialMigration(this, this.city, 0.1);
-            }
-            break;
-        case "Undercover Operation":
-            if (success) {
-                city.improvePopulationEstimateByPercentage(0.8 * this.skillMultipliers.successChanceEstimate);
-                if (Math.random() < (0.02 * this.skillMultipliers.successChanceEstimate)) {
-                    city.improveCommunityEstimate(1);
-                }
-            } else {
-                triggerPotentialMigration(this, this.city, 0.15);
-            }
-            break;
-        case "Sting Operation":
-            if (success) {
-                city.changePopulationByPercentage(-0.1, {changeEstEqually:true, nonZero:true});
-            }
-            city.changeChaosByCount(0.1);
-            break;
-        case "Raid":
-            if (success) {
-                city.changePopulationByPercentage(-1, {changeEstEqually:true, nonZero:true});
-                --city.comms;
-                --city.commsEst;
-            } else {
-                var change = getRandomInt(-10, -5) / 10;
-                city.changePopulationByPercentage(change, {nonZero:true});
-            }
-            city.changeChaosByPercentage(getRandomInt(1, 5));
-            break;
-        case "Stealth Retirement Operation":
-            if (success) {
-                city.changePopulationByPercentage(-0.5, {changeEstEqually:true,nonZero:true});
-            }
-            city.changeChaosByPercentage(getRandomInt(-3, -1));
-            break;
-        case "Assassination":
-            if (success) {
-                city.changePopulationByCount(-1, {estChange:-1});
-            }
-            city.changeChaosByPercentage(getRandomInt(-5, 5));
-            break;
-        default:
-            throw new Error("Invalid Action name in completeOperation: " + this.action.name);
-    }
-}
-
-
 ////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////Unconvertable for now//////////////////////////////
+//////////////////////////// Unconvertable for now /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 // Bladeburner Console Window
@@ -995,7 +458,7 @@ Bladeburner.prototype.executeConsoleCommands = function(commands) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////Netscript Fns//////////////////////////////////
+//////////////////////////////// Netscript Fns /////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 Bladeburner.prototype.getTypeAndNameFromActionId = function(actionId) {
@@ -1044,7 +507,7 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
     // Special logic for Black Ops
     if (actionId.type === ActionTypes["BlackOp"]) {
         // Can't start a BlackOp if you don't have the required rank
-        let action = this.getActionObject(actionId);
+        let action = getActionObject(this, actionId);
         if (action.reqdRank > this.rank) {
             workerScript.log("bladeburner.startAction", `Insufficient rank to start Black Op '${actionId.name}'.`);
             return false;
@@ -1080,11 +543,11 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
     }
 
     try {
-        this.startAction(actionId);
+        startAction(this, Player, actionId);
         workerScript.log("bladeburner.startAction", `Starting bladeburner action with type '${type}' and name ${name}"`);
         return true;
     } catch(e) {
-        this.resetAction();
+        resetAction(this);
         workerScript.log("bladeburner.startAction", errorLogText);
         return false;
     }
@@ -1098,7 +561,7 @@ Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScri
         return -1;
     }
 
-    const actionObj = this.getActionObject(actionId);
+    const actionObj = getActionObject(this, actionId);
     if (actionObj == null) {
         workerScript.log("bladeburner.getActionTime", errorLogText);
         return -1;
@@ -1133,7 +596,7 @@ Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type
         return -1;
     }
 
-    const actionObj = this.getActionObject(actionId);
+    const actionObj = getActionObject(this, actionId);
     if (actionObj == null) {
         workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
         return -1;
@@ -1165,7 +628,7 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
         return -1;
     }
 
-    const actionObj = this.getActionObject(actionId);
+    const actionObj = getActionObject(this, actionId);
     if (actionObj == null) {
         workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
         return -1;
@@ -1261,7 +724,7 @@ Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript
         return -1;
     }
 
-    const actionObj = this.getActionObject(actionId);
+    const actionObj = getActionObject(this, actionId);
     if (actionObj == null) {
         workerScript.log("bladeburner.getTeamSize", errorLogText);
         return -1;
@@ -1291,7 +754,7 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
         return -1;
     }
 
-    const actionObj = this.getActionObject(actionId);
+    const actionObj = getActionObject(this, actionId);
     if (actionObj == null) {
         workerScript.log("bladeburner.setTeamSize", errorLogText);
         return -1;

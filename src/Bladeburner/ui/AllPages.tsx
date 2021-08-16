@@ -6,9 +6,11 @@ import { BlackOpPage } from "./BlackOpPage";
 import { SkillPage } from "./SkillPage";
 import { stealthIcon, killIcon } from "../data/Icons";
 import { IBladeburner } from "../IBladeburner";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     bladeburner: IBladeburner;
+    player: IPlayer;
 }
 
 export function AllPages(props: IProps): React.ReactElement {
@@ -36,10 +38,10 @@ export function AllPages(props: IProps): React.ReactElement {
         <Header name={'BlackOps'} />
         <Header name={'Skills'} />
         <div style={{display:"block", margin:"4px", padding:"4px"}}>
-            {page === 'General' && <GeneralActionPage bladeburner={props.bladeburner} />}
-            {page === 'Contracts' && <ContractPage bladeburner={props.bladeburner} />}
-            {page === 'Operations' && <OperationPage bladeburner={props.bladeburner} />}
-            {page === 'BlackOps' && <BlackOpPage bladeburner={props.bladeburner} />}
+            {page === 'General' && <GeneralActionPage bladeburner={props.bladeburner} player={props.player} />}
+            {page === 'Contracts' && <ContractPage bladeburner={props.bladeburner} player={props.player} />}
+            {page === 'Operations' && <OperationPage bladeburner={props.bladeburner} player={props.player} />}
+            {page === 'BlackOps' && <BlackOpPage bladeburner={props.bladeburner} player={props.player} />}
             {page === 'Skills' && <SkillPage bladeburner={props.bladeburner} />}
         </div>
         <span className="text">{stealthIcon}= This action requires stealth, {killIcon} = This action involves retirement</span>

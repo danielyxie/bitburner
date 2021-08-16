@@ -1,9 +1,11 @@
 import * as React from "react";
 import { BlackOpList } from "./BlackOpList";
 import { IBladeburner } from "../IBladeburner";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     bladeburner: IBladeburner;
+    player: IPlayer;
 }
 
 export function BlackOpPage(props: IProps): React.ReactElement {
@@ -21,6 +23,6 @@ export function BlackOpPage(props: IProps): React.ReactElement {
             Like normal operations, you may use a team for Black Ops. Failing 
             a black op will incur heavy HP and rank losses.
         </p>
-        <BlackOpList bladeburner={props.bladeburner} />
+        <BlackOpList bladeburner={props.bladeburner} player={props.player} />
     </>);
 }

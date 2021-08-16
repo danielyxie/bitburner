@@ -7,9 +7,11 @@ import { GeneralActionElem } from "./GeneralActionElem";
 import { Action } from "../Action";
 import { GeneralActions } from "../GeneralActions";
 import { IBladeburner } from "../IBladeburner";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     bladeburner: IBladeburner;
+    player: IPlayer;
 }
 
 export function GeneralActionList(props: IProps): React.ReactElement {
@@ -21,7 +23,7 @@ export function GeneralActionList(props: IProps): React.ReactElement {
     }
     return (<>
         {actions.map((action: Action) => <li key={action.name} className="bladeburner-action">
-                <GeneralActionElem bladeburner={props.bladeburner} action={action} />
+                <GeneralActionElem bladeburner={props.bladeburner} action={action} player={props.player} />
             </li>,
         )}
     </>);

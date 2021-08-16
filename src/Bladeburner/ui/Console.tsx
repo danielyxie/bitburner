@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IBladeburner } from "../IBladeburner";
 
+import { IPlayer } from "../../PersonObjects/IPlayer";
+
 interface ILineProps {
     content: any;
 }
@@ -13,6 +15,7 @@ function Line(props: ILineProps): React.ReactElement {
 
 interface IProps {
     bladeburner: IBladeburner;
+    player: IPlayer;
 }
 
 export function Console(props: IProps): React.ReactElement {

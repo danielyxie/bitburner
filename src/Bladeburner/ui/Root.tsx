@@ -19,10 +19,10 @@ export function Root(props: IProps): React.ReactElement {
             <div style={{height: '100%', width:"30%", display:"inline-block", border:"1px solid white"}}>
                 <Stats bladeburner={props.bladeburner} player={props.player} engine={props.engine} />
             </div>
-            <Console bladeburner={props.bladeburner} />
+            <Console bladeburner={props.bladeburner} player={props.player} />
         </div>
         <div style={{width:"70%", display:"block", border:"1px solid white", marginTop:"6px", padding: "6px", position:"relative"}}>
-            <AllPages bladeburner={props.bladeburner} />
+            <AllPages bladeburner={props.bladeburner} player={props.player} />
         </div>
     </div>);
 }

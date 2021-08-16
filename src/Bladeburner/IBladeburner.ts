@@ -11,6 +11,7 @@ export interface IBladeburner {
     totalSkillPoints: number;
     teamSize: number;
     teamLost: number;
+    hpLost: number;
     storedCycles: number;
     randomEventCounter: number;
     actionTimeToComplete: number;

@@ -7,6 +7,7 @@ import { IActionIdentifier } from "./IActionIdentifier";
 import { ActionIdentifier } from "./ActionIdentifier";
 import { ActionTypes } from "./data/ActionTypes";
 import { BlackOperations } from "./BlackOperations";
+import { BlackOperation } from "./BlackOperation";
 import { GeneralActions } from "./GeneralActions";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { Skills } from "./Skills";
@@ -18,6 +19,13 @@ import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { BladeburnerConstants } from "./data/Constants";
+import { numeralWrapper } from "../ui/numeralFormat";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { addOffset } from "../../utils/helpers/addOffset";
+import { Faction } from "../Faction/Faction";
+import { Factions, factionExists } from "../Faction/Factions";
+import { calculateHospitalizationCost } from "../Hospital/Hospital";
+import { hackWorldDaemon } from "../RedPill";
 
 export function getActionIdFromTypeAndName(bladeburner: IBladeburner, type: string = "", name: string = ""): IActionIdentifier | null {
     if (type === "" || name === "") {return null;}
@@ -104,7 +112,7 @@ export function getActionIdFromTypeAndName(bladeburner: IBladeburner, type: stri
     return null;
 }
 
-export function executeStartConsoleCommand(bladeburner: IBladeburner, args: string[]): void {
+export function executeStartConsoleCommand(bladeburner: IBladeburner, player: IPlayer, args: string[]): void {
     if (args.length !== 3) {
         bladeburner.postToConsole("Invalid usage of 'start' console command: start [type] [name]");
         bladeburner.postToConsole("Use 'help start' for more info");
@@ -117,7 +125,7 @@ export function executeStartConsoleCommand(bladeburner: IBladeburner, args: stri
             if (GeneralActions[name] != null) {
                 bladeburner.action.type = ActionTypes[name];
                 bladeburner.action.name = name;
-                bladeburner.startAction(bladeburner.action);
+                startAction(bladeburner,player, bladeburner.action);
             } else {
                 bladeburner.postToConsole("Invalid action name specified: " + args[2]);
             }
@@ -127,7 +135,7 @@ export function executeStartConsoleCommand(bladeburner: IBladeburner, args: stri
             if (bladeburner.contracts[name] != null) {
                 bladeburner.action.type = ActionTypes.Contract;
                 bladeburner.action.name = name;
-                bladeburner.startAction(bladeburner.action);
+                startAction(bladeburner,player, bladeburner.action);
             } else {
                 bladeburner.postToConsole("Invalid contract name specified: " + args[2]);
             }
@@ -139,7 +147,7 @@ export function executeStartConsoleCommand(bladeburner: IBladeburner, args: stri
             if (bladeburner.operations[name] != null) {
                 bladeburner.action.type = ActionTypes.Operation;
                 bladeburner.action.name = name;
-                bladeburner.startAction(bladeburner.action);
+                startAction(bladeburner,player, bladeburner.action);
             } else {
                 bladeburner.postToConsole("Invalid Operation name specified: " + args[2]);
             }
@@ -151,7 +159,7 @@ export function executeStartConsoleCommand(bladeburner: IBladeburner, args: stri
             if (BlackOperations[name] != null) {
                 bladeburner.action.type = ActionTypes.BlackOperation;
                 bladeburner.action.name = name;
-                bladeburner.startAction(bladeburner.action);
+                startAction(bladeburner,player, bladeburner.action);
             } else {
                 bladeburner.postToConsole("Invalid BlackOp name specified: " + args[2]);
             }
@@ -512,7 +520,7 @@ export function parseCommandArguments(command: string): string[] {
     return args;
 }
 
-export function executeConsoleCommand(bladeburner: IBladeburner, command: string) {
+export function executeConsoleCommand(bladeburner: IBladeburner, player: IPlayer, command: string) {
     command = command.trim();
     command = command.replace(/\s\s+/g, ' '); // Replace all whitespace w/ a single space
 
@@ -537,7 +545,7 @@ export function executeConsoleCommand(bladeburner: IBladeburner, command: string
             executeSkillConsoleCommand(bladeburner, args);
             break;
         case "start":
-            executeStartConsoleCommand(bladeburner, args);
+            executeStartConsoleCommand(bladeburner, player, args);
             break;
         case "stop":
             bladeburner.resetAction();
@@ -549,7 +557,7 @@ export function executeConsoleCommand(bladeburner: IBladeburner, command: string
 }
 
 // Handles a potential series of commands (comm1; comm2; comm3;)
-export function executeConsoleCommands(bladeburner: IBladeburner, commands: string): void {
+export function executeConsoleCommands(bladeburner: IBladeburner, player: IPlayer, commands: string): void {
     try {
         // Console History
         if (bladeburner.consoleHistory[bladeburner.consoleHistory.length-1] != commands) {
@@ -561,7 +569,7 @@ export function executeConsoleCommands(bladeburner: IBladeburner, commands: stri
 
         const arrayOfCommands = commands.split(";");
         for (let i = 0; i < arrayOfCommands.length; ++i) {
-            executeConsoleCommand(bladeburner, arrayOfCommands[i]);
+            executeConsoleCommand(bladeburner, player, arrayOfCommands[i]);
         }
     } catch(e) {
         exceptionAlert(e);
@@ -741,4 +749,565 @@ export function getRecruitmentTime(bladeburner: IBladeburner, player: IPlayer): 
     const effCharisma = player.charisma * bladeburner.skillMultipliers.effCha;
     const charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
     return Math.max(10, Math.round(BladeburnerConstants.BaseRecruitmentTimeNeeded - charismaFactor));
+}
+
+export function resetSkillMultipliers(bladeburner: IBladeburner): void {
+    bladeburner.skillMultipliers = {
+        successChanceAll: 1,
+        successChanceStealth: 1,
+        successChanceKill: 1,
+        successChanceContract: 1,
+        successChanceOperation: 1,
+        successChanceEstimate: 1,
+        actionTime: 1,
+        effHack: 1,
+        effStr: 1,
+        effDef: 1,
+        effDex: 1,
+        effAgi: 1,
+        effCha: 1,
+        effInt: 1,
+        stamina: 1,
+        money: 1,
+        expGain: 1,
+    };
+}
+
+export function updateSkillMultipliers(bladeburner: IBladeburner): void {
+    resetSkillMultipliers(bladeburner);
+    for (const skillName in bladeburner.skills) {
+        if (bladeburner.skills.hasOwnProperty(skillName)) {
+            const skill = Skills[skillName];
+            if (skill == null) {
+                throw new Error("Could not find Skill Object for: " + skillName);
+            }
+            const level = bladeburner.skills[skillName];
+            if (level == null || level <= 0) {continue;} //Not upgraded
+
+            const multiplierNames = Object.keys(bladeburner.skillMultipliers);
+            for (let i = 0; i < multiplierNames.length; ++i) {
+                const multiplierName = multiplierNames[i];
+                if (skill.getMultiplier(multiplierName) != null && !isNaN(skill.getMultiplier(multiplierName))) {
+                    const value = skill.getMultiplier(multiplierName) * level;
+                    let multiplierValue = 1 + (value / 100);
+                    if (multiplierName === "actionTime") {
+                        multiplierValue = 1 - (value / 100);
+                    }
+                    bladeburner.skillMultipliers[multiplierName] *= multiplierValue;
+                }
+            }
+        }
+    }
+}
+
+
+// Sets the player to the "IDLE" action
+export function resetAction(bladeburner: IBladeburner): void {
+    bladeburner.action = new ActionIdentifier({type:ActionTypes.Idle});
+}
+
+export function completeOperation(bladeburner: IBladeburner, success: boolean): void {
+    if (bladeburner.action.type !== ActionTypes.Operation) {
+        throw new Error("completeOperation() called even though current action is not an Operation");
+    }
+    const action = getActionObject(bladeburner, bladeburner.action);
+    if (action == null) {
+        throw new Error("Failed to get Contract/Operation Object for: " + bladeburner.action.name);
+    }
+
+    // Calculate team losses
+    const teamCount = action.teamCount;
+    if (teamCount >= 1) {
+        let max;
+        if (success) {
+            max = Math.ceil(teamCount/2);
+        } else {
+            max = Math.floor(teamCount)
+        }
+        const losses = getRandomInt(0, max);
+        bladeburner.teamSize -= losses;
+        bladeburner.teamLost += losses;
+        if (bladeburner.logging.ops && losses > 0) {
+            bladeburner.log("Lost " + formatNumber(losses, 0) + " team members during this " + action.name);
+        }
+    }
+
+    const city = bladeburner.getCurrentCity();
+    switch (action.name) {
+        case "Investigation":
+            if (success) {
+                city.improvePopulationEstimateByPercentage(0.4 * bladeburner.skillMultipliers.successChanceEstimate);
+                if (Math.random() < (0.02 * bladeburner.skillMultipliers.successChanceEstimate)) {
+                    city.improveCommunityEstimate(1);
+                }
+            } else {
+                triggerPotentialMigration(bladeburner, bladeburner.city, 0.1);
+            }
+            break;
+        case "Undercover Operation":
+            if (success) {
+                city.improvePopulationEstimateByPercentage(0.8 * bladeburner.skillMultipliers.successChanceEstimate);
+                if (Math.random() < (0.02 * bladeburner.skillMultipliers.successChanceEstimate)) {
+                    city.improveCommunityEstimate(1);
+                }
+            } else {
+                triggerPotentialMigration(bladeburner, bladeburner.city, 0.15);
+            }
+            break;
+        case "Sting Operation":
+            if (success) {
+                city.changePopulationByPercentage(-0.1, {changeEstEqually:true, nonZero:true});
+            }
+            city.changeChaosByCount(0.1);
+            break;
+        case "Raid":
+            if (success) {
+                city.changePopulationByPercentage(-1, {changeEstEqually:true, nonZero:true});
+                --city.comms;
+                --city.commsEst;
+            } else {
+                const change = getRandomInt(-10, -5) / 10;
+                city.changePopulationByPercentage(change, {nonZero:true, changeEstEqually:false});
+            }
+            city.changeChaosByPercentage(getRandomInt(1, 5));
+            break;
+        case "Stealth Retirement Operation":
+            if (success) {
+                city.changePopulationByPercentage(-0.5, {changeEstEqually:true,nonZero:true});
+            }
+            city.changeChaosByPercentage(getRandomInt(-3, -1));
+            break;
+        case "Assassination":
+            if (success) {
+                city.changePopulationByCount(-1, {estChange:-1, estOffset: 0});
+            }
+            city.changeChaosByPercentage(getRandomInt(-5, 5));
+            break;
+        default:
+            throw new Error("Invalid Action name in completeOperation: " + bladeburner.action.name);
+    }
+}
+
+export function getActionObject(bladeburner: IBladeburner, actionId: IActionIdentifier): IAction | null {
+    /**
+     * Given an ActionIdentifier object, returns the corresponding
+     * GeneralAction, Contract, Operation, or BlackOperation object
+     */
+    switch (actionId.type) {
+        case ActionTypes["Contract"]:
+            return bladeburner.contracts[actionId.name];
+        case ActionTypes["Operation"]:
+            return bladeburner.operations[actionId.name];
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]:
+            return BlackOperations[actionId.name];
+        case ActionTypes["Training"]:
+            return GeneralActions["Training"];
+        case ActionTypes["Field Analysis"]:
+            return GeneralActions["Field Analysis"];
+        case ActionTypes["Recruitment"]:
+            return GeneralActions["Recruitment"];
+        case ActionTypes["Diplomacy"]:
+            return GeneralActions["Diplomacy"];
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            return GeneralActions["Hyperbolic Regeneration Chamber"];
+        default:
+            return null;
+    }
+}
+
+export function completeContract(bladeburner: IBladeburner, success: boolean): void {
+    if (bladeburner.action.type !== ActionTypes.Contract) {
+        throw new Error("completeContract() called even though current action is not a Contract");
+    }
+    var city = bladeburner.getCurrentCity();
+    if (success) {
+        switch (bladeburner.action.name) {
+            case "Tracking":
+                // Increase estimate accuracy by a relatively small amount
+                city.improvePopulationEstimateByCount(getRandomInt(100, 1e3));
+                break;
+            case "Bounty Hunter":
+                city.changePopulationByCount(-1, {estChange:-1, estOffset: 0});
+                city.changeChaosByCount(0.02);
+                break;
+            case "Retirement":
+                city.changePopulationByCount(-1, {estChange:-1, estOffset: 0});
+                city.changeChaosByCount(0.04);
+                break;
+            default:
+                throw new Error("Invalid Action name in completeContract: " + bladeburner.action.name);
+        }
+    }
+}
+
+export function completeAction(bladeburner: IBladeburner, player: IPlayer): void {
+    switch (bladeburner.action.type) {
+        case ActionTypes["Contract"]:
+        case ActionTypes["Operation"]: {
+            try {
+                const isOperation = (bladeburner.action.type === ActionTypes["Operation"]);
+                const action = getActionObject(bladeburner, bladeburner.action);
+                if (action == null) {
+                    throw new Error("Failed to get Contract/Operation Object for: " + bladeburner.action.name);
+                }
+                const difficulty = action.getDifficulty();
+                const difficultyMultiplier = Math.pow(difficulty, BladeburnerConstants.DiffMultExponentialFactor) + difficulty / BladeburnerConstants.DiffMultLinearFactor;
+                const rewardMultiplier = Math.pow(action.rewardFac, action.level-1);
+
+                // Stamina loss is based on difficulty
+                bladeburner.stamina -= (BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier);
+                if (bladeburner.stamina < 0) {bladeburner.stamina = 0;}
+
+                // Process Contract/Operation success/failure
+                if (action.attempt(bladeburner)) {
+                    gainActionStats(bladeburner, player, action, true);
+                    ++action.successes;
+                    --action.count;
+
+                    // Earn money for contracts
+                    let moneyGain = 0;
+                    if (!isOperation) {
+                        moneyGain = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * bladeburner.skillMultipliers.money;
+                        player.gainMoney(moneyGain);
+                        player.recordMoneySource(moneyGain, "bladeburner");
+                    }
+
+                    if (isOperation) {
+                        action.setMaxLevel(BladeburnerConstants.OperationSuccessesPerLevel);
+                    } else {
+                        action.setMaxLevel(BladeburnerConstants.ContractSuccessesPerLevel);
+                    }
+                    if (action.rankGain) {
+                        const gain = addOffset(action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank, 10);
+                        changeRank(bladeburner, player, gain);
+                        if (isOperation && bladeburner.logging.ops) {
+                            bladeburner.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
+                        } else if (!isOperation && bladeburner.logging.contracts) {
+                            bladeburner.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeralWrapper.formatMoney(moneyGain));
+                        }
+                    }
+                    isOperation ? completeOperation(bladeburner, true) : completeContract(bladeburner, true);
+                } else {
+                    gainActionStats(bladeburner, player, action, false);
+                    ++action.failures;
+                    let loss = 0, damage = 0;
+                    if (action.rankLoss) {
+                        loss = addOffset(action.rankLoss * rewardMultiplier, 10);
+                        changeRank(bladeburner, player, -1 * loss);
+                    }
+                    if (action.hpLoss) {
+                        damage = action.hpLoss * difficultyMultiplier;
+                        damage = Math.ceil(addOffset(damage, 10));
+                        bladeburner.hpLost += damage;
+                        const cost = calculateHospitalizationCost(player, damage);
+                        if (player.takeDamage(damage)) {
+                            ++bladeburner.numHosp;
+                            bladeburner.moneyLost += cost;
+                        }
+                    }
+                    let logLossText = "";
+                    if (loss > 0)   {logLossText += "Lost " + formatNumber(loss, 3) + " rank. ";}
+                    if (damage > 0) {logLossText += "Took " + formatNumber(damage, 0) + " damage.";}
+                    if (isOperation && bladeburner.logging.ops) {
+                        bladeburner.log(action.name + " failed! " + logLossText);
+                    } else if (!isOperation && bladeburner.logging.contracts) {
+                        bladeburner.log(action.name + " contract failed! " + logLossText);
+                    }
+                    isOperation ? completeOperation(bladeburner, false) : completeContract(bladeburner, false);
+                }
+                if (action.autoLevel) {action.level = action.maxLevel;} // Autolevel
+                startAction(bladeburner,player, bladeburner.action); // Repeat action
+            } catch(e) {
+                exceptionAlert(e);
+            }
+            break;
+        }
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]: {
+            try {
+                const action = getActionObject(bladeburner, bladeburner.action);
+                if (action == null || !(action instanceof BlackOperation)) {
+                    throw new Error("Failed to get BlackOperation Object for: " + bladeburner.action.name);
+                }
+                const difficulty = action.getDifficulty();
+                const difficultyMultiplier = Math.pow(difficulty, BladeburnerConstants.DiffMultExponentialFactor) + difficulty / BladeburnerConstants.DiffMultLinearFactor;
+
+                // Stamina loss is based on difficulty
+                bladeburner.stamina -= (BladeburnerConstants.BaseStaminaLoss * difficultyMultiplier);
+                if (bladeburner.stamina < 0) {bladeburner.stamina = 0;}
+
+                // Team loss variables
+                const teamCount = action.teamCount;
+                let teamLossMax;
+
+                if (action.attempt(bladeburner)) {
+                    gainActionStats(bladeburner, player, action, true);
+                    action.count = 0;
+                    bladeburner.blackops[action.name] = true;
+                    let rankGain = 0;
+                    if (action.rankGain) {
+                        rankGain = addOffset(action.rankGain * BitNodeMultipliers.BladeburnerRank, 10);
+                        changeRank(bladeburner, player, rankGain);
+                    }
+                    teamLossMax = Math.ceil(teamCount/2);
+
+                    // Operation Daedalus
+                    if (action.name === "Operation Daedalus") {
+                        resetAction(bladeburner);
+                        return hackWorldDaemon(player.bitNodeN);
+                    }
+
+                    if (bladeburner.logging.blackops) {
+                        bladeburner.log(action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank");
+                    }
+                } else {
+                    gainActionStats(bladeburner, player, action, false);
+                    let rankLoss = 0;
+                    let damage = 0;
+                    if (action.rankLoss) {
+                        rankLoss = addOffset(action.rankLoss, 10);
+                        changeRank(bladeburner, player, -1 * rankLoss);
+                    }
+                    if (action.hpLoss) {
+                        damage = action.hpLoss * difficultyMultiplier;
+                        damage = Math.ceil(addOffset(damage, 10));
+                        const cost = calculateHospitalizationCost(player, damage);
+                        if (player.takeDamage(damage)) {
+                            ++bladeburner.numHosp;
+                            bladeburner.moneyLost += cost;
+                        }
+                    }
+                    teamLossMax = Math.floor(teamCount);
+
+                    if (bladeburner.logging.blackops) {
+                        bladeburner.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took " + formatNumber(damage, 0) + " damage");
+                    }
+                }
+
+                resetAction(bladeburner); // Stop regardless of success or fail
+
+                // Calculate team lossses
+                if (teamCount >= 1) {
+                    const losses = getRandomInt(1, teamLossMax);
+                    bladeburner.teamSize -= losses;
+                    bladeburner.teamLost += losses;
+                    if (bladeburner.logging.blackops) {
+                        bladeburner.log("You lost " + formatNumber(losses, 0) + " team members during " + action.name);
+                    }
+                }
+            } catch(e) {
+                exceptionAlert(e);
+            }
+            break;
+        }
+        case ActionTypes["Training"]: {
+            bladeburner.stamina -= (0.5 * BladeburnerConstants.BaseStaminaLoss);
+            const strExpGain = 30 * player.strength_exp_mult,
+                defExpGain = 30 * player.defense_exp_mult,
+                dexExpGain = 30 * player.dexterity_exp_mult,
+                agiExpGain = 30 * player.agility_exp_mult,
+                staminaGain = 0.04 * bladeburner.skillMultipliers.stamina;
+            player.gainStrengthExp(strExpGain);
+            player.gainDefenseExp(defExpGain);
+            player.gainDexterityExp(dexExpGain);
+            player.gainAgilityExp(agiExpGain);
+            bladeburner.staminaBonus += (staminaGain);
+            if (bladeburner.logging.general) {
+                bladeburner.log("Training completed. Gained: " +
+                         formatNumber(strExpGain, 1) + " str exp, " +
+                         formatNumber(defExpGain, 1) + " def exp, " +
+                         formatNumber(dexExpGain, 1) + " dex exp, " +
+                         formatNumber(agiExpGain, 1) + " agi exp, " +
+                         formatNumber(staminaGain, 3) + " max stamina");
+            }
+            startAction(bladeburner,player, bladeburner.action); // Repeat action
+            break;
+        }
+        case ActionTypes["FieldAnalysis"]:
+        case ActionTypes["Field Analysis"]: {
+            // Does not use stamina. Effectiveness depends on hacking, int, and cha
+            let eff = 0.04 * Math.pow(player.hacking_skill, 0.3) +
+                      0.04 * Math.pow(player.intelligence, 0.9) +
+                      0.02 * Math.pow(player.charisma, 0.3);
+            eff *= player.bladeburner_analysis_mult;
+            if (isNaN(eff) || eff < 0) {
+                throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
+            }
+            const hackingExpGain  = 20 * player.hacking_exp_mult,
+                charismaExpGain = 20 * player.charisma_exp_mult;
+            player.gainHackingExp(hackingExpGain);
+            player.gainIntelligenceExp(BladeburnerConstants.BaseIntGain);
+            player.gainCharismaExp(charismaExpGain);
+            changeRank(bladeburner, player, 0.1 * BitNodeMultipliers.BladeburnerRank);
+            bladeburner.getCurrentCity().improvePopulationEstimateByPercentage(eff * bladeburner.skillMultipliers.successChanceEstimate);
+            if (bladeburner.logging.general) {
+                bladeburner.log("Field analysis completed. Gained 0.1 rank, " + formatNumber(hackingExpGain, 1) + " hacking exp, and " + formatNumber(charismaExpGain, 1) + " charisma exp");
+            }
+            startAction(bladeburner,player, bladeburner.action); // Repeat action
+            break;
+        }
+        case ActionTypes["Recruitment"]: {
+            const successChance = getRecruitmentSuccessChance(bladeburner, player);
+            if (Math.random() < successChance) {
+                const expGain = 2 * BladeburnerConstants.BaseStatGain * bladeburner.actionTimeToComplete;
+                player.gainCharismaExp(expGain);
+                ++bladeburner.teamSize;
+                if (bladeburner.logging.general) {
+                    bladeburner.log("Successfully recruited a team member! Gained " + formatNumber(expGain, 1) + " charisma exp");
+                }
+            } else {
+                const expGain = BladeburnerConstants.BaseStatGain * bladeburner.actionTimeToComplete;
+                player.gainCharismaExp(expGain);
+                if (bladeburner.logging.general) {
+                    bladeburner.log("Failed to recruit a team member. Gained " + formatNumber(expGain, 1) + " charisma exp");
+                }
+            }
+            startAction(bladeburner,player, bladeburner.action); // Repeat action
+            break;
+        }
+        case ActionTypes["Diplomacy"]: {
+            let eff = getDiplomacyEffectiveness(bladeburner, player);
+            bladeburner.getCurrentCity().chaos *= eff;
+            if (bladeburner.getCurrentCity().chaos < 0) { bladeburner.getCurrentCity().chaos = 0; }
+            if (bladeburner.logging.general) {
+                bladeburner.log(`Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(1 - eff)}`);
+            }
+            startAction(bladeburner,player, bladeburner.action); // Repeat Action
+            break;
+        }
+        case ActionTypes["Hyperbolic Regeneration Chamber"]: {
+            player.regenerateHp(BladeburnerConstants.HrcHpGain);
+
+            const staminaGain = bladeburner.maxStamina * (BladeburnerConstants.HrcStaminaGain / 100);
+            bladeburner.stamina = Math.min(bladeburner.maxStamina, bladeburner.stamina + staminaGain);
+            startAction(bladeburner,player, bladeburner.action);
+            if (bladeburner.logging.general) {
+                bladeburner.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${BladeburnerConstants.HrcHpGain} HP and gained ${numeralWrapper.formatStamina(staminaGain)} stamina`);
+            }
+            break;
+        }
+        default:
+            console.error(`Bladeburner.completeAction() called for invalid action: ${bladeburner.action.type}`);
+            break;
+    }
+}
+
+export function changeRank(bladeburner: IBladeburner, player: IPlayer, change: number): void {
+    if (isNaN(change)) {throw new Error("NaN passed into Bladeburner.changeRank()");}
+    bladeburner.rank += change;
+    if (bladeburner.rank < 0) {bladeburner.rank = 0;}
+    bladeburner.maxRank = Math.max(bladeburner.rank, bladeburner.maxRank);
+
+    var bladeburnersFactionName = "Bladeburners";
+    if (factionExists(bladeburnersFactionName)) {
+        var bladeburnerFac = Factions[bladeburnersFactionName];
+        if (!(bladeburnerFac instanceof Faction)) {
+            throw new Error("Could not properly get Bladeburner Faction object in Bladeburner UI Overview Faction button");
+        }
+        if (bladeburnerFac.isMember) {
+            var favorBonus = 1 + (bladeburnerFac.favor / 100);
+            bladeburnerFac.playerReputation += (BladeburnerConstants.RankToFactionRepFactor * change * player.faction_rep_mult * favorBonus);
+        }
+    }
+
+    // Gain skill points
+    var rankNeededForSp = (bladeburner.totalSkillPoints+1) * BladeburnerConstants.RanksPerSkillPoint;
+    if (bladeburner.maxRank >= rankNeededForSp) {
+        // Calculate how many skill points to gain
+        var gainedSkillPoints = Math.floor((bladeburner.maxRank - rankNeededForSp) / BladeburnerConstants.RanksPerSkillPoint + 1);
+        bladeburner.skillPoints += gainedSkillPoints;
+        bladeburner.totalSkillPoints += gainedSkillPoints;
+    }
+}
+
+export function processAction(bladeburner: IBladeburner, player: IPlayer, seconds: number): void {
+    if (bladeburner.action.type === ActionTypes["Idle"]) return;
+    if (bladeburner.actionTimeToComplete <= 0) {
+        throw new Error(`Invalid actionTimeToComplete value: ${bladeburner.actionTimeToComplete}, type; ${bladeburner.action.type}`);
+    }
+    if (!(bladeburner.action instanceof ActionIdentifier)) {
+        throw new Error("Bladeburner.action is not an ActionIdentifier Object");
+    }
+
+    // If the previous action went past its completion time, add to the next action
+    // This is not added inmediatly in case the automation changes the action
+    bladeburner.actionTimeCurrent += seconds + bladeburner.actionTimeOverflow;
+    bladeburner.actionTimeOverflow = 0;
+    if (bladeburner.actionTimeCurrent >= bladeburner.actionTimeToComplete) {
+        bladeburner.actionTimeOverflow = bladeburner.actionTimeCurrent - bladeburner.actionTimeToComplete;
+        return completeAction(bladeburner, player);
+    }
+}
+
+export function startAction(bladeburner: IBladeburner, player: IPlayer, actionId: IActionIdentifier): void {
+    if (actionId == null) return;
+    bladeburner.action = actionId;
+    bladeburner.actionTimeCurrent = 0;
+    switch (actionId.type) {
+        case ActionTypes["Idle"]:
+            bladeburner.actionTimeToComplete = 0;
+            break;
+        case ActionTypes["Contract"]:
+            try {
+                const action = getActionObject(bladeburner, actionId);
+                if (action == null) {
+                    throw new Error("Failed to get Contract Object for: " + actionId.name);
+                }
+                if (action.count < 1) {return resetAction(bladeburner);}
+                bladeburner.actionTimeToComplete = action.getActionTime(bladeburner);
+            } catch(e) {
+                exceptionAlert(e);
+            }
+            break;
+        case ActionTypes["Operation"]: {
+            try {
+                const action = getActionObject(bladeburner, actionId);
+                if (action == null) {
+                    throw new Error ("Failed to get Operation Object for: " + actionId.name);
+                }
+                if (action.count < 1) {return resetAction(bladeburner);}
+                if (actionId.name === "Raid" && bladeburner.getCurrentCity().commsEst === 0) {return resetAction(bladeburner);}
+                bladeburner.actionTimeToComplete = action.getActionTime(bladeburner);
+            } catch(e) {
+                exceptionAlert(e);
+            }
+            break;
+        }
+        case ActionTypes["BlackOp"]:
+        case ActionTypes["BlackOperation"]: {
+            try {
+                // Safety measure - don't repeat BlackOps that are already done
+                if (bladeburner.blackops[actionId.name] != null) {
+                    resetAction(bladeburner);
+                    bladeburner.log("Error: Tried to start a Black Operation that had already been completed");
+                    break;
+                }
+
+                const action = getActionObject(bladeburner, actionId);
+                if (action == null) {
+                    throw new Error("Failed to get BlackOperation object for: " + actionId.name);
+                }
+                bladeburner.actionTimeToComplete = action.getActionTime(bladeburner);
+            } catch(e) {
+                exceptionAlert(e);
+            }
+            break;
+        }
+        case ActionTypes["Recruitment"]:
+            bladeburner.actionTimeToComplete = getRecruitmentTime(bladeburner, player);
+            break;
+        case ActionTypes["Training"]:
+        case ActionTypes["FieldAnalysis"]:
+        case ActionTypes["Field Analysis"]:
+            bladeburner.actionTimeToComplete = 30;
+            break;
+        case ActionTypes["Diplomacy"]:
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            bladeburner.actionTimeToComplete = 60;
+            break;
+        default:
+            throw new Error("Invalid Action Type in startAction(Bladeburner,player, ): " + actionId.type);
+            break;
+    }
 }
