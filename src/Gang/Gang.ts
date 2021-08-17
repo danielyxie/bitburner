@@ -122,7 +122,7 @@ export class Gang {
             moneyGains += (this.members[i].calculateMoneyGain(this));
             const wantedLevelGain = this.members[i].calculateWantedLevelGain(this);
             wantedLevelGains += wantedLevelGain;
-            if(wantedLevelGain < 0) justice++; // this member is lowering wanted.
+            if(this.members[i].getTask().baseWanted < 0) justice++; // this member is lowering wanted.
         }
         this.respectGainRate = respectGains;
         this.wantedGainRate = wantedLevelGains;
