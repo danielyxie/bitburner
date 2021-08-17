@@ -219,7 +219,7 @@ export class Bladeburner implements IBladeburner {
         }
     }
 
-    postToConsole(input: string, saveToLogs?: boolean): void {
+    postToConsole(input: string, saveToLogs: boolean = true): void {
         const MaxConsoleEntries = 100;
         if (saveToLogs) {
             this.consoleLogs.push(input);
@@ -969,7 +969,6 @@ export class Bladeburner implements IBladeburner {
             effDex: 1,
             effAgi: 1,
             effCha: 1,
-            effInt: 1,
             stamina: 1,
             money: 1,
             expGain: 1,
