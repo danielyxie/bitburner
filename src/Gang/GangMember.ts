@@ -122,7 +122,7 @@ export class GangMember {
                          (task.chaWeight/100) * this.cha;
         statWeight -= (4 * task.difficulty);
         if (statWeight <= 0) return 0;
-        const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100;
+        const territoryMult = Math.max(0.005, Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100);
         if (isNaN(territoryMult) || territoryMult <= 0) return 0;
         const respectMult = gang.getWantedPenalty();
         return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
@@ -139,7 +139,7 @@ export class GangMember {
                          (task.chaWeight / 100) * this.cha;
         statWeight -= (3.5 * task.difficulty);
         if (statWeight <= 0) return 0;
-        const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
+        const territoryMult = Math.max(0.005, Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100);
         if (isNaN(territoryMult) || territoryMult <= 0) return 0;
         if (task.baseWanted < 0) {
             return 0.4 * task.baseWanted * statWeight * territoryMult;
@@ -160,9 +160,10 @@ export class GangMember {
                             (task.dexWeight/100) * this.dex +
                             (task.agiWeight/100) * this.agi +
                             (task.chaWeight/100) * this.cha;
+
         statWeight -= (3.2 * task.difficulty);
         if (statWeight <= 0) return 0;
-        const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100;
+        const territoryMult = Math.max(0.005, Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100);
         if (isNaN(territoryMult) || territoryMult <= 0) return 0;
         const respectMult = gang.getWantedPenalty();
         return 5 * task.baseMoney * statWeight * territoryMult * respectMult;

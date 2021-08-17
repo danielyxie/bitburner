@@ -323,7 +323,7 @@ export class Gang {
                 this.members[i].task !== "Territory Warfare") continue;
             memberTotal += this.members[i].calculatePower();
         }
-        return (0.015 * this.getTerritory() * memberTotal);
+        return (0.015 * Math.max(0.002, this.getTerritory()) * memberTotal);
     }
 
 
