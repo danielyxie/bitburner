@@ -24,7 +24,7 @@ export function TravelPopup(props: IProps): React.ReactElement {
         {BladeburnerConstants.CityNames.map(city => 
             // Reusing this css class...it adds a border and makes it
             // so that background color changes when you hover
-            <div className="cmpy-mgmt-find-employee-option"
+            <div key={city} className="cmpy-mgmt-find-employee-option"
                 onClick={() => travel(city)}>
                 {city}
             </div>)}

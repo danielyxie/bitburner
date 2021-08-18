@@ -124,7 +124,7 @@ export class Skill {
         if(name === "stamina") return this.stamina;
         if(name === "money") return this.money;
         if(name === "expGain") return this.expGain;
-        return 1;
+        return 0;
     }
 }
 
