@@ -608,9 +608,9 @@ const Engine = {
     // Main Game Loop
     idleTimer: function() {
         // Get time difference
-        var _thisUpdate = new Date().getTime();
-        var diff = _thisUpdate - Engine._lastUpdate;
-        var offset = diff % Engine._idleSpeed;
+        const _thisUpdate = new Date().getTime();
+        let diff = _thisUpdate - Engine._lastUpdate;
+        const offset = diff % Engine._idleSpeed;
 
         // Divide this by cycle time to determine how many cycles have elapsed since last update
         diff = Math.floor(diff / Engine._idleSpeed);
@@ -626,7 +626,7 @@ const Engine = {
     },
 
     updateGame: function(numCycles = 1) {
-        var time = numCycles * Engine._idleSpeed;
+        const time = numCycles * Engine._idleSpeed;
         if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
         if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
         if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
