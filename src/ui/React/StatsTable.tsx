@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function StatsTable(rows: any[][], title: string | null): React.ReactElement {
+export function StatsTable(rows: any[][], title?: string): React.ReactElement {
     let titleElem = <></>
     if (title) {
         titleElem = <><h2><u>{title}</u></h2><br /></>;

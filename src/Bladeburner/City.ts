@@ -4,14 +4,14 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { addOffset } from "../../utils/helpers/addOffset";
 
-export class ChangePopulationByCountParams {
-    estChange = 0;
-    estOffset = 0;
+interface IChangePopulationByCountParams {
+    estChange: number;
+    estOffset: number;
 }
 
-export class ChangePopulationByPercentageParams {
-    nonZero = false;
-    changeEstEqually = false;
+interface IChangePopulationByPercentageParams {
+    nonZero: boolean;
+    changeEstEqually: boolean;
 }
 
 export class City {
@@ -113,7 +113,7 @@ export class City {
      *  estChange(int): How much the estimate should change by
      *  estOffset(int): Add offset to estimate (offset by percentage)
      */
-    changePopulationByCount(n: number, params: ChangePopulationByCountParams=new ChangePopulationByCountParams()): void {
+    changePopulationByCount(n: number, params: IChangePopulationByCountParams = {estChange: 0, estOffset: 0}): void {
         if (isNaN(n)) {throw new Error("NaN passed into City.changePopulationByCount()");}
         this.pop += n;
         if (params.estChange && !isNaN(params.estChange)) {this.popEst += params.estChange;}
@@ -129,7 +129,7 @@ export class City {
      *  changeEstEqually(bool) - Change the population estimate by an equal amount
      *  nonZero (bool)         - Set to true to ensure that population always changes by at least 1
      */
-    changePopulationByPercentage(p: number, params: ChangePopulationByPercentageParams=new ChangePopulationByPercentageParams()): number {
+    changePopulationByPercentage(p: number, params: IChangePopulationByPercentageParams={nonZero: false, changeEstEqually: false}): number {
         if (isNaN(p)) {throw new Error("NaN passed into City.changePopulationByPercentage()");}
         if (p === 0) {return 0;}
         let change = Math.round(this.pop * (p/100));

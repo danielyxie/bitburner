@@ -13,7 +13,7 @@ import { prestigeAugmentation } from "./Prestige";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { findCrime } from "./Crime/CrimeHelpers";
-import { Bladeburner } from "./Bladeburner";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Company } from "./Company/Company";
 import { Companies } from "./Company/Companies";
 import { CompanyPosition } from "./Company/CompanyPosition";
@@ -4046,7 +4046,7 @@ function NetscriptFunctions(workerScript) {
                         return true; // Already member
                     } else if (Player.strength >= 100 && Player.defense >= 100 &&
                                Player.dexterity >= 100 && Player.agility >= 100) {
-                        Player.bladeburner = new Bladeburner({new:true});
+                        Player.bladeburner = new Bladeburner();
                         workerScript.log("joinBladeburnerDivision", "You have been accepted into the Bladeburner division");
 
                         const worldHeader = document.getElementById("world-menu-header");
