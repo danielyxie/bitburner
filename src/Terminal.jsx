@@ -98,6 +98,7 @@ import { Money } from "./ui/React/Money";
 import autosize from "autosize";
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
+import * as libarg from 'arg';
 import React from "react";
 
 
@@ -2378,28 +2379,18 @@ let Terminal = {
         }
 
         const server = Player.getCurrentServer();
-
-        let numThreads = 1;
-        const args = [];
         const scriptName = Terminal.getFilepath(commandArray[1]);
 
-        if (commandArray.length > 2) {
-            if (commandArray.length >= 4 && commandArray[2] == "-t") {
-                numThreads = Math.round(parseFloat(commandArray[3]));
-                if (isNaN(numThreads) || numThreads < 1) {
-                    postError("Invalid number of threads specified. Number of threads must be greater than 0");
-                    return;
-                }
-                for (let i = 4; i < commandArray.length; ++i) {
-                    args.push(commandArray[i]);
-                }
-            } else {
-                for (let i = 2; i < commandArray.length; ++i) {
-                    args.push(commandArray[i])
-                }
-            }
+        const runArgs = {'--tail': Boolean, '-t': Number};
+        const flags = libarg(runArgs, {permissive: true, argv: commandArray.slice(2)});
+        const threadFlag = Math.round(parseFloat(flags['-t']));
+        const tailFlag = flags['--tail'] === true;
+        if(flags['-t'] !== undefined && (threadFlag < 0 || isNaN(threadFlag))) {
+            postError("Invalid number of threads specified. Number of threads must be greater than 0");
+            return;
         }
-
+        const numThreads = !isNaN(threadFlag) && threadFlag > 0 ? threadFlag : 1;
+        const args = flags['_'];
 
         // Check if this script is already running
         if (findRunningScript(scriptName, args, server) != null) {
@@ -2408,33 +2399,41 @@ let Terminal = {
         }
 
         // Check if the script exists and if it does run it
-        for (var i = 0; i < server.scripts.length; i++) {
-            if (server.scripts[i].filename === scriptName) {
-                // Check for admin rights and that there is enough RAM availble to run
-                var script = server.scripts[i];
-                var ramUsage = script.ramUsage * numThreads;
-                var ramAvailable = server.maxRam - server.ramUsed;
-
-                if (server.hasAdminRights == false) {
-                    post("Need root access to run script");
-                    return;
-                } else if (ramUsage > ramAvailable){
-                    post("This machine does not have enough RAM to run this script with " +
-                         numThreads + " threads. Script requires " + ramUsage + "GB of RAM");
-                    return;
-                } else {
-                    // Able to run script
-                    var runningScriptObj = new RunningScript(script, args);
-                    runningScriptObj.threads = numThreads;
-
-                    if (startWorkerScript(runningScriptObj, server)) {
-                        post(`Running script with ${numThreads} thread(s), pid ${runningScriptObj.pid} and args: ${arrayToString(args)}.`);
-                    } else {
-                        postError(`Failed to start script`);
-                    }
-                    return;
-                }
+        for (let i = 0; i < server.scripts.length; i++) {
+            if (server.scripts[i].filename !== scriptName) {
+                continue
             }
+            // Check for admin rights and that there is enough RAM availble to run
+            const script = server.scripts[i];
+            const ramUsage = script.ramUsage * numThreads;
+            const ramAvailable = server.maxRam - server.ramUsed;
+
+            if (!server.hasAdminRights) {
+                post("Need root access to run script");
+                return;
+            }
+
+            if (ramUsage > ramAvailable){
+                post("This machine does not have enough RAM to run this script with " +
+                     numThreads + " threads. Script requires " + ramUsage + "GB of RAM");
+                return;
+            }
+
+            // Able to run script
+            const runningScript = new RunningScript(script, args);
+            runningScript.threads = numThreads;
+
+            const success = startWorkerScript(runningScript, server);
+            if (!success) {
+                postError(`Failed to start script`);
+                return
+            }
+
+            post(`Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${arrayToString(args)}.`);
+            if(tailFlag) {
+                logBoxCreate(runningScript)
+            }
+            return;
         }
 
         post("ERROR: No such script");

@@ -44,8 +44,6 @@ export class HashUpgrade {
     // The meaning varies between different upgrades
     value = 0;
 
-    effectText: (level: number) => JSX.Element | null = () => null;
-
     constructor(p: IConstructorParams) {
         if (p.cost != null) { this.cost = p.cost; }
         if (p.effectText != null) { this.effectText = p.effectText; }
@@ -56,6 +54,9 @@ export class HashUpgrade {
         this.name = p.name;
         this.value = p.value;
     }
+
+    // Functions that returns the UI element to display the effect of this upgrade.
+    effectText: (level: number) => JSX.Element | null = () => null;
 
     getCost(levels: number): number {
         if (typeof this.cost === "number") { return this.cost; }

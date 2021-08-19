@@ -313,7 +313,8 @@ export function scriptCalculateOfflineProduction(runningScriptObj) {
             if (serv == null) {continue;}
             const timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
             runningScriptObj.log(`Called on ${serv.hostname} ${timesGrown} times while offline`);
-            const growth = processSingleServerGrowth(serv, timesGrown, Player);
+            const host = AllServers[runningScriptObj.server];
+            const growth = processSingleServerGrowth(serv, timesGrown, Player, host.cpuCores);
             runningScriptObj.log(`'${serv.hostname}' grown by ${numeralWrapper.format(growth * 100 - 100, '0.000000%')} while offline`);
         }
     }
@@ -333,9 +334,11 @@ export function scriptCalculateOfflineProduction(runningScriptObj) {
             if (runningScriptObj.dataMap[ip][3] == 0 || runningScriptObj.dataMap[ip][3] == null) {continue;}
             const serv = AllServers[ip];
             if (serv == null) {continue;}
+            const host = AllServers[runningScriptObj.server];
             const timesWeakened = Math.round(0.5 * runningScriptObj.dataMap[ip][3] / runningScriptObj.onlineRunningTime * timePassed);
             runningScriptObj.log(`Called weaken() on ${serv.hostname} ${timesWeakened} times while offline`);
-            serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
+            const coreBonus = 1+(host.cpuCores-1)/16;
+            serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened * coreBonus);
         }
     }
 }

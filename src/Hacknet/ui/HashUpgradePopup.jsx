@@ -11,7 +11,6 @@ import { Player }               from "../../Player";
 
 import { numeralWrapper }       from "../../ui/numeralFormat";
 
-import { PopupCloseButton }     from "../../ui/React/PopupCloseButton";
 import { ServerDropdown,
          ServerType }           from "../../ui/React/ServerDropdown"
 
