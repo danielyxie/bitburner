@@ -1,12 +1,13 @@
 growPercent() Netscript Function
 =================================
 
-.. js:function:: growPercent(server, threads, player)
+.. js:function:: growPercent(server, threads, player, cores)
 
     :RAM cost: 0 GB
     :param server server: The server that receives the growth.
     :param number threads: The number of thread that would be used.
     :param player player: The player.
+    :param number cores: The amount of cores on the host computer.
     :returns: The amount the server's money would be multiplied by with these
         parameters.
 

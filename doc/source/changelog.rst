@@ -3,6 +3,32 @@
 Changelog
 =========
 
+v0.52.5 - 2021-07-19 CPU cores are useful!? (hydroflame)
+-------------------------------------------
+
+** Terminal ** 
+
+* When executing 'run SCRIPT' any script can now add '--tail' to
+  automatically bring up the logs.
+
+** Netscript ** 
+
+* The 'flags' function now works with single letter flags but they only take
+  one dash.
+* Fix several broken bladeburner netscript functions.
+* Fix gang.getMemberInformation returning inconsistent data after the gang
+  rework.
+
+** CPU Cores **
+
+* CPU Cores on the home computer now provide a bonus to grow() money gain
+  and makes weaken lower more security. Only for scripts running on 'home'
+
+** Misc. **
+
+* Fix weird scrolling in the new Bladeburner React console.
+* nerf noodle bar
+
 v0.52.4 - 2021-07-19 Bladeburner in React (hydroflame)
 -------------------------------------------
 

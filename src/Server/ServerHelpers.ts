@@ -60,8 +60,8 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer): n
 }
 
 //Applied server growth for a single server. Returns the percentage growth
-export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer): number {
-    let serverGrowth = calculateServerGrowth(server, threads, p);
+export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer, cores: number = 1): number {
+    let serverGrowth = calculateServerGrowth(server, threads, p, cores);
     if (serverGrowth < 1) {
         console.warn("serverGrowth calculated to be less than 1");
         serverGrowth = 1;

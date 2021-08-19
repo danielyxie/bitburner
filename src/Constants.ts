@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.4",
+    Version:                "0.52.5",
 
     // Speed (in ms) at which the main loop is updated
     _idleSpeed: 200,
@@ -228,26 +228,30 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.4 - 2021-07-19 Bladeburner in React (hydroflame)
+    v0.52.5 - 2021-07-19 CPU cores are useful!? (hydroflame)
     -------------------------------------------
 
-    ** Bladeburner **
+    ** Terminal ** 
 
-    * The entire UI was rebuild in React. It should be more responsive
+    * When executing 'run SCRIPT' any script can now add '--tail' to
+      automatically bring up the logs.
 
-    ** Hacknet ** 
+    ** Netscript ** 
 
-    * Displays how many time each hash upgrade was bought.
-    * Displays cummulative effect of the upgrade.
-    * Removed "Close" button from hash upgrade menu.
+    * The 'flags' function now works with single letter flags but they only take
+      one dash.
+    * Fix several broken bladeburner netscript functions.
+    * Fix gang.getMemberInformation returning inconsistent data after the gang
+      rework.
+
+    ** CPU Cores **
+
+    * CPU Cores on the home computer now provide a bonus to grow() money gain
+      and makes weaken lower more security. Only for scripts running on 'home'
 
     ** Misc. **
 
-    * More popup/modals have dark background, can be dismissed by clicking
-      outside, or by pressing escape.
-    * Small reword in the guide.
-    * Fix several typos in the bladeburner documentation.
-    * Linting (no one cares except the dev)
+    * Fix weird scrolling in the new Bladeburner React console.
     * nerf noodle bar
 `,
 }

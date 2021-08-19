@@ -204,7 +204,7 @@ export const LocationsMetadata: IConstructorParams[] = [
             startingSecurityLevel: 2.5,
         },
         name: LocationName.NewTokyoNoodleBar,
-        types: [LocationType.Company],
+        types: [LocationType.Company, LocationType.Special],
     },
     {
         city: CityName.NewTokyo,

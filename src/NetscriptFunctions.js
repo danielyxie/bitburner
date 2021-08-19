@@ -853,6 +853,8 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("grow", `Invalid IP/hostname: ${ip}.`);
             }
 
+            const host = getServer(workerScript.serverIp);
+
             // No root access or skill level too low
             const canHack = netscriptCanGrow(server);
             if (!canHack.res) {
@@ -865,7 +867,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); // It can be grown even if it has no money
-                processSingleServerGrowth(server, threads, Player);
+                processSingleServerGrowth(server, threads, Player, host.cpuCores);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = calculateHackingExpGain(server, Player) * threads;
@@ -896,7 +898,7 @@ function NetscriptFunctions(workerScript) {
             if (ip === undefined) {
                 throw makeRuntimeErrorMsg("weaken", "Takes 1 argument.");
             }
-            var server = getServer(ip);
+            const server = getServer(ip);
             if (server == null) {
                 throw makeRuntimeErrorMsg("weaken", `Invalid IP/hostname: ${ip}`);
             }
@@ -907,13 +909,15 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeErrorMsg("weaken", canHack.msg);
             }
 
-            var weakenTime = calculateWeakenTime(server, Player);
+            const weakenTime = calculateWeakenTime(server, Player);
             workerScript.log("weaken", `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(weakenTime*1000, true)} (t=${numeralWrapper.formatThreads(threads)})`);
             return netscriptDelay(weakenTime * 1000, workerScript).then(function() {
-                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                server.weaken(CONSTANTS.ServerWeakenAmount * threads);
+                if (workerScript.env.stopFlag) return Promise.reject(workerScript);
+                const host = getServer(workerScript.serverIp);
+                const coreBonus = 1+(host.cpuCores-1)/16;
+                server.weaken(CONSTANTS.ServerWeakenAmount * threads * coreBonus);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
-                var expGain = calculateHackingExpGain(server, Player) * threads;
+                const expGain = calculateHackingExpGain(server, Player) * threads;
                 workerScript.log("weaken", `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`);
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
@@ -3671,24 +3675,35 @@ function NetscriptFunctions(workerScript) {
                     dex:           member.dex,
                     agi:           member.agi,
                     cha:           member.cha,
+
                     hack_exp:      member.hack_exp,
                     str_exp:       member.str_exp,
                     def_exp:       member.def_exp,
                     dex_exp:       member.dex_exp,
                     agi_exp:       member.agi_exp,
                     cha_exp:       member.cha_exp,
+
                     hack_mult:     member.hack_mult,
                     str_mult:      member.str_mult,
                     def_mult:      member.def_mult,
                     dex_mult:      member.dex_mult,
                     agi_mult:      member.agi_mult,
                     cha_mult:      member.cha_mult,
-                    hack_asc_mult: member.hack_asc_mult,
-                    str_asc_mult:  member.str_asc_mult,
-                    def_asc_mult:  member.def_asc_mult,
-                    dex_asc_mult:  member.dex_asc_mult,
-                    agi_asc_mult:  member.agi_asc_mult,
-                    cha_asc_mult:  member.cha_asc_mult,
+
+                    hack_asc_mult: member.calculateAscensionMult(member.hack_asc_points),
+                    str_asc_mult:  member.calculateAscensionMult(member.str_asc_points),
+                    def_asc_mult:  member.calculateAscensionMult(member.def_asc_points),
+                    dex_asc_mult:  member.calculateAscensionMult(member.dex_asc_points),
+                    agi_asc_mult:  member.calculateAscensionMult(member.agi_asc_points),
+                    cha_asc_mult:  member.calculateAscensionMult(member.cha_asc_points),
+
+                    hack_asc_points: member.hack_asc_points,
+                    str_asc_points: member.str_asc_points,
+                    def_asc_points: member.def_asc_points,
+                    dex_asc_points: member.dex_asc_points,
+                    agi_asc_points: member.agi_asc_points,
+                    cha_asc_points: member.cha_asc_points,
+
                     upgrades:      member.upgrades.slice(),
                     augmentations: member.augmentations.slice(),
                 }
@@ -4375,9 +4390,9 @@ function NetscriptFunctions(workerScript) {
                     checkFormulasAccess("basic.hackPercent", 5);
                     return calculatePercentMoneyHacked(server, player);
                 },
-                growPercent: function(server, threads, player) {
+                growPercent: function(server, threads, player, cores = 1) {
                     checkFormulasAccess("basic.growPercent", 5);
-                    return calculateServerGrowth(server, threads, player);
+                    return calculateServerGrowth(server, threads, player, cores);
                 },
                 hackTime: function(server, player) {
                     checkFormulasAccess("basic.hackTime", 5);
@@ -4492,17 +4507,19 @@ function NetscriptFunctions(workerScript) {
                 } else if(Array.isArray(d[1])) {
                     t = [String];
                 }
-                args['--'+d[0]] = t
+                const numDashes = d[0].length > 1 ? 2 : 1;
+                args['-'.repeat(numDashes)+d[0]] = t
             }
             const ret = libarg(args, {argv: workerScript.args});
             for(const d of data) {
-                if(!ret.hasOwnProperty('--'+d[0])) ret[d[0]] = d[1];
+                if(!ret.hasOwnProperty('--'+d[0]) || !ret.hasOwnProperty('-'+d[0])) ret[d[0]] = d[1];
             }
             for(const key of Object.keys(ret)) {
-                if(!key.startsWith('--')) continue;
+                if(!key.startsWith('-')) continue;
                 const value = ret[key];
                 delete ret[key];
-                ret[key.slice(2)] = value;
+                const numDashes = key.length === 2 ? 1 : 2;
+                ret[key.slice(numDashes)] = value;
             }
             return ret;
         },
