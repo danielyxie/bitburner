@@ -18,8 +18,6 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { clearObject } from "../../utils/helpers/clearObject";
-import { Money } from "../ui/React/Money";
-import { CorruptableText } from "../ui/React/CorruptableText";
 
 import { WHRNG } from "../Casino/RNG";
 

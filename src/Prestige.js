@@ -5,7 +5,7 @@ import {
 } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { writeCinematicText } from "./CinematicText";
 import { Companies, initCompanies } from "./Company/Companies";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";

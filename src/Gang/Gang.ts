@@ -8,8 +8,6 @@
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 
-import { numeralWrapper } from "../ui/numeralFormat";
-
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import {
     Reviver,

@@ -17,7 +17,7 @@ import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import {
     initBitNodeMultipliers,
 } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
 import { cinematicTextFlag } from "./CinematicText";
 import { generateRandomContract } from "./CodingContractGenerator";
@@ -27,8 +27,6 @@ import { CONSTANTS } from "./Constants";
 import { createDevMenu, closeDevMenu } from "./DevMenu";
 import { Factions, initFactions } from "./Faction/Factions";
 import {
-    displayFactionContent,
-    joinFaction,
     processPassiveFactionRepGain,
     inviteToFaction,
 } from "./Faction/FactionHelpers";
@@ -36,6 +34,7 @@ import {
     FactionList,
 } from "./Faction/ui/FactionList";
 import { displayGangContent } from "./Gang/Helpers";
+import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import { 
     getHackingWorkRepGain,
@@ -109,8 +108,6 @@ import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
-import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
-import { createElement } from "../utils/uiHelpers/createElement";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
 import { KEY } from "../utils/helpers/keyCodes";
@@ -229,6 +226,7 @@ const Engine = {
         infiltrationContent:            null,
         stockMarketContent:             null,
         gangContent:                    null,
+        bladeburnerContent:             null,
         locationContent:                null,
         workInProgressContent:          null,
         redPillContent:                 null,
@@ -470,15 +468,15 @@ const Engine = {
     },
 
     loadBladeburnerContent: function() {
-        if (Player.bladeburner instanceof Bladeburner) {
-            try {
-                Engine.hideAllContent();
-                routing.navigateTo(Page.Bladeburner);
-                Player.bladeburner.createContent();
-            } catch(e) {
-                exceptionAlert(e);
-            }
-        }
+        if (!(Player.bladeburner instanceof Bladeburner)) return;
+        Engine.hideAllContent();
+        routing.navigateTo(Page.Bladeburner);
+        Engine.Display.bladeburnerContent.style.display = "block";
+        ReactDOM.render(
+            <BladeburnerRoot bladeburner={Player.bladeburner} player={Player} engine={this} />,
+            Engine.Display.bladeburnerContent,
+        );
+        MainMenuLinks.Bladeburner.classList.add("active");
     },
 
     loadSleevesContent: function() {
@@ -534,6 +532,9 @@ const Engine = {
         Engine.Display.gangContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.gangContent);
 
+        Engine.Display.bladeburnerContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.bladeburnerContent);
+
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
         Engine.Display.cinematicTextContent.style.display = "none";
@@ -545,10 +546,6 @@ const Engine = {
 
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();
-        }
-
-        if (Player.bladeburner instanceof Bladeburner) {
-            Player.bladeburner.clearContent();
         }
 
         clearResleevesPage();
@@ -606,9 +603,9 @@ const Engine = {
     // Main Game Loop
     idleTimer: function() {
         // Get time difference
-        var _thisUpdate = new Date().getTime();
-        var diff = _thisUpdate - Engine._lastUpdate;
-        var offset = diff % Engine._idleSpeed;
+        const _thisUpdate = new Date().getTime();
+        let diff = _thisUpdate - Engine._lastUpdate;
+        const offset = diff % Engine._idleSpeed;
 
         // Divide this by cycle time to determine how many cycles have elapsed since last update
         diff = Math.floor(diff / Engine._idleSpeed);
@@ -624,7 +621,7 @@ const Engine = {
     },
 
     updateGame: function(numCycles = 1) {
-        var time = numCycles * Engine._idleSpeed;
+        const time = numCycles * Engine._idleSpeed;
         if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
         if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
         if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
@@ -882,7 +879,7 @@ const Engine = {
             }
             if (Player.bladeburner instanceof Bladeburner) {
                 try {
-                    Player.bladeburner.process();
+                    Player.bladeburner.process(Player);
                 } catch(e) {
                     exceptionAlert("Exception caught in Bladeburner.process(): " + e);
                 }
@@ -1258,6 +1255,9 @@ const Engine = {
 
         Engine.Display.gangContent = document.getElementById("gang-container");
         Engine.Display.gangContent.style.display = "none";
+
+        Engine.Display.bladeburnerContent = document.getElementById("gang-container");
+        Engine.Display.bladeburnerContent.style.display = "none";
 
         Engine.Display.missionContent = document.getElementById("mission-container");
         Engine.Display.missionContent.style.display = "none";

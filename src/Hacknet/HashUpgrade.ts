@@ -8,6 +8,7 @@ export interface IConstructorParams {
     hasTargetServer?: boolean;
     name: string;
     value: number;
+    effectText?: (level: number) => JSX.Element | null;
 }
 
 export class HashUpgrade {
@@ -43,8 +44,11 @@ export class HashUpgrade {
     // The meaning varies between different upgrades
     value = 0;
 
+    effectText: (level: number) => JSX.Element | null = () => null;
+
     constructor(p: IConstructorParams) {
         if (p.cost != null) { this.cost = p.cost; }
+        if (p.effectText != null) { this.effectText = p.effectText; }
 
         this.costPerLevel = p.costPerLevel;
         this.desc = p.desc;

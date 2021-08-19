@@ -28,8 +28,7 @@ export function FactionList(props: IProps): React.ReactElement {
         <p>Lists all factions you have joined</p>
         <br />
         <ul>
-            {props.player.factions.map((faction: string) => 
-                <li key={faction}><a
+            {props.player.factions.map((faction: string) => <li key={faction}><a
                     className="a-link-button"
                     onClick={() => openFaction(faction)}
                     style={{padding:"4px", margin:"4px", display:"inline-block"}}>{faction}
@@ -39,8 +38,7 @@ export function FactionList(props: IProps): React.ReactElement {
         <h1>Outstanding Faction Invitations</h1>
         <p style={{width: '70%'}}>Lists factions you have been invited to. You can accept these faction invitations at any time.</p>
         <ul>
-            {props.player.factionInvitations.map((faction: string) => 
-                <li  key={faction} style={{padding:"6px", margin:"6px"}}>
+            {props.player.factionInvitations.map((faction: string) => <li  key={faction} style={{padding:"6px", margin:"6px"}}>
                     <p style={{display:"inline", margin:"4px", padding:"4px"}}>{faction}</p>
                     <a
                         className="a-link-button"

@@ -103,5 +103,28 @@ export class Skill {
     calculateCost(currentLevel: number): number {
         return Math.floor((this.baseCost + (currentLevel * this.costInc)) * BitNodeMultipliers.BladeburnerSkillCost);
     }
+
+    getMultiplier(name: string): number {
+        if(name === "successChanceAll") return this.successChanceAll;
+        if(name === "successChanceStealth") return this.successChanceStealth;
+        if(name === "successChanceKill") return this.successChanceKill;
+        if(name === "successChanceContract") return this.successChanceContract;
+        if(name === "successChanceOperation") return this.successChanceOperation;
+        if(name === "successChanceEstimate") return this.successChanceEstimate;
+
+        if(name === "actionTime") return this.actionTime;
+
+        if(name === "effHack") return this.effHack;
+        if(name === "effStr") return this.effStr;
+        if(name === "effDef") return this.effDef;
+        if(name === "effDex") return this.effDex;
+        if(name === "effAgi") return this.effAgi;
+        if(name === "effCha") return this.effCha;
+
+        if(name === "stamina") return this.stamina;
+        if(name === "money") return this.money;
+        if(name === "expGain") return this.expGain;
+        return 0;
+    }
 }
 

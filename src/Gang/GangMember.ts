@@ -4,7 +4,6 @@ import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IAscensionResult } from "./IAscensionResult";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { GangConstants } from "./data/Constants";
 import { AllGangs } from "./AllGangs";
 import { IGang } from "./IGang";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";

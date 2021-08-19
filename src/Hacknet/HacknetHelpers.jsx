@@ -542,7 +542,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
             case "Exchange for Bladeburner Rank": {
                 // This will throw if player isnt in Bladeburner
                 try {
-                    Player.bladeburner.changeRank(upg.value);
+                    Player.bladeburner.changeRank(Player, upg.value);
                 } catch(e) {
                     Player.hashManager.refundUpgrade(upgName);
                     return false;

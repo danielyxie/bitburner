@@ -43,6 +43,7 @@ export interface IPlayer {
     homeComputer: string;
     hp: number;
     jobs: IMap<string>;
+    isWorking: boolean;
     karma: number;
     location: LocationName;
     max_hp: number;
@@ -136,6 +137,7 @@ export interface IPlayer {
     gainDexterityExp(exp: number): void;
     gainAgilityExp(exp: number): void;
     gainCharismaExp(exp: number): void;
+    gainIntelligenceExp(exp: number): void;
     gainMoney(money: number): void;
     getCurrentServer(): Server;
     getGangFaction(): Faction;

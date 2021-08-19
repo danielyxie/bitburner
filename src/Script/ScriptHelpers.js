@@ -30,7 +30,7 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { createElement } from "../../utils/uiHelpers/createElement";
 
-var scriptEditorRamCheck = null, scriptEditorRamText = null;
+var scriptEditorRamText = null;
 export function scriptEditorInit() {
     // Wrapper container that holds all the buttons below the script editor
     const wrapper = document.getElementById("script-editor-buttons-wrapper");
@@ -58,22 +58,6 @@ export function scriptEditorInit() {
         display:"inline-block", margin:"10px", id:"script-editor-status-text",
     });
 
-    // Label for checkbox (defined below)
-    const checkboxLabel = createElement("label", {
-        for:"script-editor-ram-check", margin:"4px", marginTop: "8px",
-        innerText:"Dynamic RAM Usage Checker", color:"white",
-        tooltip:"Enable/Disable the dynamic RAM Usage display. You may " +
-                "want to disable it for very long scripts because there may be " +
-                "performance issues",
-    });
-
-    // Checkbox for enabling/disabling dynamic RAM calculation
-    scriptEditorRamCheck = createElement("input", {
-        type:"checkbox", name:"script-editor-ram-check", id:"script-editor-ram-check",
-        margin:"4px", marginTop: "8px",
-    });
-    scriptEditorRamCheck.checked = true;
-
     // Link to Netscript documentation
     const documentationButton = createElement("a", {
         class: "std-button",
@@ -98,8 +82,6 @@ export function scriptEditorInit() {
     wrapper.appendChild(beautifyButton);
     wrapper.appendChild(closeButton);
     wrapper.appendChild(scriptEditorRamText);
-    wrapper.appendChild(scriptEditorRamCheck);
-    wrapper.appendChild(checkboxLabel);
     wrapper.appendChild(documentationButton);
 
     // Initialize editors
@@ -170,8 +152,8 @@ export function getCurrentEditor() {
 //Updates RAM usage in script
 export async function updateScriptEditorContent() {
     var filename = document.getElementById("script-editor-filename").value;
-    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !isScriptFilename(filename)) {
-        scriptEditorRamText.innerText = "N/A";
+    if (!isScriptFilename(filename)) {
+        scriptEditorRamText.innerText = "RAM: N/A";
         return;
     }
 

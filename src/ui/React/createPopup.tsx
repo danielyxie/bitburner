@@ -16,20 +16,27 @@ import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 let gameContainer: HTMLElement;
 
-function getGameContainer(): void {
-    const container = document.getElementById("entire-game-container");
-    if (container == null) {
-        throw new Error(`Failed to find game container DOM element`)
+(function() {
+    function getGameContainer(): void {
+        const container = document.getElementById("entire-game-container");
+        if (container == null) {
+            throw new Error(`Failed to find game container DOM element`)
+        }
+
+        gameContainer = container;
+        document.removeEventListener("DOMContentLoaded", getGameContainer);
     }
 
-    gameContainer = container;
-    document.removeEventListener("DOMContentLoaded", getGameContainer);
-}
+    document.addEventListener("DOMContentLoaded", getGameContainer);
+})();
 
-document.addEventListener("DOMContentLoaded", getGameContainer);
+// This variable is used to avoid setting the semi-transparent background
+// several times on top of one another. Sometimes there's several popup at once.
+let deepestPopupId = "";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createPopup<T>(id: string, rootComponent: (props: T) => React.ReactElement, props: T): HTMLElement | null {
+    
     let container = document.getElementById(id);
     if (container == null) {
         function onClick(this: HTMLElement, event: MouseEvent): any {
@@ -39,19 +46,20 @@ export function createPopup<T>(id: string, rootComponent: (props: T) => React.Re
             if(clickedId !== id) return;
             removePopup(id);
         }
+        const backgroundColor = deepestPopupId === "" ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)';
         container = createElement("div", {
             class: "popup-box-container",
             display: "flex",
             id: id,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            backgroundColor: backgroundColor,
             clickListener: onClick,
         });
 
         gameContainer.appendChild(container);
-
     }
 
-    ReactDOM.render(<Popup content={rootComponent} id={id} props={props} />, container);
+    if(deepestPopupId === "") deepestPopupId = id;
+    ReactDOM.render(<Popup content={rootComponent} id={id} props={props} removePopup={removePopup} />, container);
 
     return container;
 }
@@ -67,4 +75,5 @@ export function removePopup(id: string): void {
 
     removeElementById(id);
     removeElementById(`${id}-close`);
+    if(id === deepestPopupId) deepestPopupId = "";
 }

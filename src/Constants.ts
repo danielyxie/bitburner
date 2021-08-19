@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.3",
+    Version:                "0.52.4",
 
     // Speed (in ms) at which the main loop is updated
     _idleSpeed: 200,
@@ -228,26 +228,26 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.3 - 2021-07-15 Gangs were OP (hydroflame)
+    v0.52.4 - 2021-07-19 Bladeburner in React (hydroflame)
     -------------------------------------------
 
-    ** Gang **
+    ** Bladeburner **
 
-    * Significant rework. Ascension is now based on exp gained.
-    * All upgrades give exp bonuses.
-    * Maximum gang members reduced to 12.
-    * Respect required to recruit sharply increased.
-    * Rewritten in React, the UI should be smoother and less laggy now.
+    * The entire UI was rebuild in React. It should be more responsive
 
-    ** Infiltration **
+    ** Hacknet ** 
 
-    * Now isTrusted protected.
+    * Displays how many time each hash upgrade was bought.
+    * Displays cummulative effect of the upgrade.
+    * Removed "Close" button from hash upgrade menu.
 
     ** Misc. **
 
-    * Many UI element are now "noselect" protected.
-    * Fixed an issue where you could join the same faction twice via script and
-      UI simultaneously.
-    * Factions list screen converted to React.
+    * More popup/modals have dark background, can be dismissed by clicking
+      outside, or by pressing escape.
+    * Small reword in the guide.
+    * Fix several typos in the bladeburner documentation.
+    * Linting (no one cares except the dev)
+    * nerf noodle bar
 `,
 }
