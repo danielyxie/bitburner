@@ -3855,7 +3855,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("startAction", getRamCost("bladeburner", "startAction"));
                 checkBladeburnerAccess("startAction");
                 try {
-                    return Player.bladeburner.startActionNetscriptFn(type, name, workerScript);
+                    return Player.bladeburner.startActionNetscriptFn(Player, type, name, workerScript);
                 } catch(e) {
                     throw makeRuntimeErrorMsg("bladeburner.startAction", e);
                 }
@@ -3874,7 +3874,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("getActionTime", getRamCost("bladeburner", "getActionTime"));
                 checkBladeburnerAccess("getActionTime");
                 try {
-                    return Player.bladeburner.getActionTimeNetscriptFn(type, name, workerScript);
+                    return Player.bladeburner.getActionTimeNetscriptFn(Player, type, name, workerScript);
                 } catch(e) {
                     throw makeRuntimeErrorMsg("bladeburner.getActionTime", e);
                 }
@@ -3883,7 +3883,7 @@ function NetscriptFunctions(workerScript) {
                 updateDynamicRam("getActionEstimatedSuccessChance", getRamCost("bladeburner", "getActionEstimatedSuccessChance"));
                 checkBladeburnerAccess("getActionEstimatedSuccessChance");
                 try {
-                    return Player.bladeburner.getActionEstimatedSuccessChanceNetscriptFn(type, name, workerScript);
+                    return Player.bladeburner.getActionEstimatedSuccessChanceNetscriptFn(Player, type, name, workerScript);
                 } catch(e) {
                     throw makeRuntimeErrorMsg("bladeburner.getActionEstimatedSuccessChance", e);
                 }
