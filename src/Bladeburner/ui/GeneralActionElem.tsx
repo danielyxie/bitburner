@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import {
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
-import { stealthIcon, killIcon } from "../data/Icons";
-import { BladeburnerConstants } from "../data/Constants";
+import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
@@ -21,7 +16,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
     const isActive = props.action.name === props.bladeburner.action.name;
     const computedActionTimeCurrent = Math.min(props.bladeburner.actionTimeCurrent+props.bladeburner.actionTimeOverflow, props.bladeburner.actionTimeToComplete);
 
-    function onStart() {
+    function onStart(): void {
         props.bladeburner.action.type = ActionTypes[(props.action.name as string)];
         props.bladeburner.action.name = props.action.name;
         props.bladeburner.startAction(props.player, props.bladeburner.action);

@@ -59,7 +59,7 @@ export interface IBladeburner {
 
     prestige(): void;
     storeCycles(numCycles?: number): void;
-    getTypeAndNameFromActionId(actionId: IActionIdentifier): {type: string, name: string};
+    getTypeAndNameFromActionId(actionId: IActionIdentifier): {type: string; name: string};
     getContractNamesNetscriptFn(): string[];
     getOperationNamesNetscriptFn(): string[];
     getBlackOpNamesNetscriptFn(): string[];

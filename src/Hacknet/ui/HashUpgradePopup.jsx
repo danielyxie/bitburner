@@ -54,6 +54,8 @@ class HashUpgrade extends React.Component {
         const hashManager = this.props.hashManager;
         const upg = this.props.upg;
         const cost = hashManager.getUpgradeCost(upg.name);
+        const level = hashManager.upgrades[upg.name];
+        const effect = upg.effectText(level);
 
         // Purchase button
         const canPurchase = hashManager.hashes >= cost;
@@ -63,11 +65,13 @@ class HashUpgrade extends React.Component {
         return (
             <div className={"bladeburner-action"}>
                 <CopyableText value={upg.name} />
-                <p>Cost: {Hashes(cost)}</p>
+                <p>Cost: {Hashes(cost)}, Bought: {level} times</p>
+                
                 <p>{upg.desc}</p>
                 <button className={btnClass} onClick={this.purchase}>
                     Purchase
                 </button>
+                {level > 0 && effect && <p>{effect}</p>}
                 {
                     upg.hasTargetServer &&
                     <ServerDropdown
@@ -119,7 +123,6 @@ export class HashUpgradePopup extends React.Component {
 
         return (
             <div>
-                <PopupCloseButton popup={this.props.popupId} text={"Close"} />
                 <p>Spend your hashes on a variety of different upgrades</p>
                 <p>Hashes: {numeralWrapper.formatHashes(this.state.totalHashes)}</p>
                 {upgradeElems}

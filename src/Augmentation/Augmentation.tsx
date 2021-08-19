@@ -55,7 +55,7 @@ interface IConstructorParams {
 }
 
 function generateStatsDescription(mults: IMap<number>, programs?: string[], startingMoney?: number): JSX.Element {
-    const f = (x: number, decimals = 0) => {
+    const f = (x: number, decimals = 0): string => {
         // look, I don't know how to make a "smart decimals"
         // todo, make it smarter
         if(x === 1.0777-1) return "7.77%";

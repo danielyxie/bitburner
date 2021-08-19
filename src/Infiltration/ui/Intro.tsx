@@ -14,13 +14,6 @@ interface IProps {
     cancel: () => void;
 }
 
-function diffStr(d: number): string {
-    if(d<=0.5) return "trivial";
-    if(d<=1.5) return "normal";
-    if(d<=2.5) return "hard";
-    return "impossible";
-}
-
 function arrowPart(color: string, length: number): JSX.Element {
     let arrow = "";
     if(length <= 0) length = 0;

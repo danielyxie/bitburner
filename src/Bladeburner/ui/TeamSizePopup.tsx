@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { removePopup } from "../../ui/React/createPopup";
-import { BladeburnerConstants } from "../data/Constants";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { Action } from "../Action";
 import { IBladeburner } from "../IBladeburner";

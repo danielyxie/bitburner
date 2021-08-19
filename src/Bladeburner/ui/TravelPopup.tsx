@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export function TravelPopup(props: IProps): React.ReactElement {
-    function travel(city: string) {
+    function travel(city: string): void {
         props.bladeburner.city = city;
         removePopup(props.popupId);
     }
@@ -21,12 +21,12 @@ export function TravelPopup(props: IProps): React.ReactElement {
             in for your Bladeburner duties does not affect
             your location in the game otherwise.
         </p>
-        {BladeburnerConstants.CityNames.map(city => 
+        {BladeburnerConstants.CityNames.map(city =>  {
             // Reusing this css class...it adds a border and makes it
             // so that background color changes when you hover
-            <div key={city} className="cmpy-mgmt-find-employee-option"
+            return <div key={city} className="cmpy-mgmt-find-employee-option"
                 onClick={() => travel(city)}>
                 {city}
-            </div>)}
+            </div>})}
     </>);
 }

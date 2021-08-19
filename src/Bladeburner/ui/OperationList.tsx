@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
+import React from "react";
 import { OperationElem } from "./OperationElem";
-import { Operation } from "../Operation";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 

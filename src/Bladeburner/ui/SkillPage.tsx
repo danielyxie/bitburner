@@ -13,7 +13,7 @@ export function SkillPage(props: IProps): React.ReactElement {
     const setRerender = useState(false)[1];
     const mults = props.bladeburner.skillMultipliers;
 
-    function valid(mult: any) {
+    function valid(mult: any): boolean {
         return mult && mult !== 1
     }
 

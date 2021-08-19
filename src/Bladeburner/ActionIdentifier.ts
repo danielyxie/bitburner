@@ -7,8 +7,8 @@ interface IParams {
 }
 
 export class ActionIdentifier implements IActionIdentifier {
-    name: string = "";
-    type: number = -1;
+    name = "";
+    type = -1;
 
     constructor(params: IParams = {}) {
         if (params.name) this.name = params.name;

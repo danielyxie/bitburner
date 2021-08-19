@@ -32,7 +32,7 @@ let gameContainer: HTMLElement;
 
 // This variable is used to avoid setting the semi-transparent background
 // several times on top of one another. Sometimes there's several popup at once.
-let deepestPopupId: string = "";
+let deepestPopupId = "";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createPopup<T>(id: string, rootComponent: (props: T) => React.ReactElement, props: T): HTMLElement | null {

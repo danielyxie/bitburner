@@ -31,14 +31,14 @@ export function BlackOpElem(props: IProps): React.ReactElement {
     const hasReqdRank = props.bladeburner.rank >= props.action.reqdRank;
     const computedActionTimeCurrent = Math.min(props.bladeburner.actionTimeCurrent+props.bladeburner.actionTimeOverflow, props.bladeburner.actionTimeToComplete);
 
-    function onStart() {
+    function onStart(): void {
         props.bladeburner.action.type = ActionTypes.BlackOperation;
         props.bladeburner.action.name = props.action.name;
         props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 
-    function onTeam() {
+    function onTeam(): void {
         const popupId = "bladeburner-operation-set-team-size-popup";
         createPopup(popupId, TeamSizePopup, {
             bladeburner: props.bladeburner,

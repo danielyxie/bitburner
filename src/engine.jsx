@@ -18,7 +18,6 @@ import {
     initBitNodeMultipliers,
 } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
-import { process as ProcessBladeburner } from "./Bladeburner/Bladeburner";
 import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
 import { cinematicTextFlag } from "./CinematicText";
 import { generateRandomContract } from "./CodingContractGenerator";
@@ -28,8 +27,6 @@ import { CONSTANTS } from "./Constants";
 import { createDevMenu, closeDevMenu } from "./DevMenu";
 import { Factions, initFactions } from "./Faction/Factions";
 import {
-    displayFactionContent,
-    joinFaction,
     processPassiveFactionRepGain,
     inviteToFaction,
 } from "./Faction/FactionHelpers";
@@ -111,8 +108,6 @@ import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
-import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
-import { createElement } from "../utils/uiHelpers/createElement";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
 import { KEY } from "../utils/helpers/keyCodes";

@@ -25,12 +25,12 @@ export function Console(props: IProps): React.ReactElement {
     const [consoleHistoryIndex, setConsoleHistoryIndex] = useState(props.bladeburner.consoleHistory.length);
 
     // TODO: Figure out how to actually make the scrolling work correctly.
-    function scrollToBottom() {
+    function scrollToBottom(): void {
         if(lastRef.current)
             lastRef.current.scrollTop = lastRef.current.scrollHeight;
     }
 
-    function rerender() {
+    function rerender(): void {
         setRerender(old => !old);
     }
 

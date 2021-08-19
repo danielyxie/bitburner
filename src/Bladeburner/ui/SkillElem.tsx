@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
@@ -20,7 +20,7 @@ export function SkillElem(props: IProps): React.ReactElement {
     const canLevel = props.bladeburner.skillPoints >= pointCost;
     const maxLvl = props.skill.maxLvl ? currentLevel >= props.skill.maxLvl : false;
 
-    function onClick() {
+    function onClick(): void {
         if (props.bladeburner.skillPoints < pointCost) return;
         props.bladeburner.skillPoints -= pointCost;
         props.bladeburner.upgradeSkill(props.skill);

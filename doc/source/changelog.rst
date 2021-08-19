@@ -3,6 +3,28 @@
 Changelog
 =========
 
+v0.52.4 - 2021-07-19 Bladeburner in React (hydroflame)
+-------------------------------------------
+
+** Bladeburner **
+
+* The entire UI was rebuild in React. It should be more responsive
+
+** Hacknet ** 
+
+* Displays how many time each hash upgrade was bought.
+* Displays cummulative effect of the upgrade.
+* Removed "Close" button from hash upgrade menu.
+
+** Misc. **
+
+* More popup/modals have dark background, can be dismissed by clicking
+  outside, or by pressing escape.
+* Small reword in the guide.
+* Fix several typos in the bladeburner documentation.
+* Linting (no one cares except the dev)
+* nerf noodle bar
+
 v0.52.3 - 2021-07-15 Gangs were OP (hydroflame)
 -------------------------------------------
 
@@ -24,6 +46,7 @@ v0.52.3 - 2021-07-15 Gangs were OP (hydroflame)
 * Fixed an issue where you could join the same faction twice via script and
   UI simultaneously.
 * Factions list screen converted to React.
+* nerf noodle bar
 
 v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
 -------------------------------------------
@@ -38,6 +61,10 @@ v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
 * New Augmentation offered by Aevum, themed around 777 and offers some basic
   programs.
 * Augmentation descriptions are now more concise and consistent.
+
+** Misc. ** 
+
+* nerf noodle bar
 
 v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
 -------------------------------------------
@@ -58,6 +85,7 @@ v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
 * Plenty of typo/description fixed (@MageKing17)
 * Cleanup description of singularity function on readthedocs (@PurePandemonium)
 * Fix bug when autolinking a server while backdooring (@schroederIT)
+* nerf noodle bar
 
 v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame & community)
 --------------------------------------------------------------
@@ -107,6 +135,7 @@ v0.52.0 - 2021-06-13 Infiltration 2.0 (hydroflame & community)
 * Fixed an issue where reputation could be transfered to new jobs when unfocused.
 * Empty stack traces should no longer appear.
 * Purchasing anything with Infinity money doesn't result in NaN.
+* nerf noodle bar
 
 v0.51.10 - 2021-05-31 Focus Mark, Focus! (hydroflame)
 -----------------------------------------------------
@@ -150,6 +179,7 @@ v0.51.10 - 2021-05-31 Focus Mark, Focus! (hydroflame)
 
 * Very large number will no longer appear as "$NaNt"
 * Hash capacity now displays in the "big number" format.
+* nerf noodle bar
 
 v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame & community)
 ---------------------------------------------------------------
@@ -203,6 +233,7 @@ v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame & community)
 * Updated several dependencies (big who cares, I know)
 * ls no longer prints lingering newline.
 * Money earned/spent by sleeves is now tracked under Character>Money
+* nerf noodle bar
 
 
 v0.51.8 - 2021-05-07 It was there all along (hydroflame & community)
@@ -260,6 +291,7 @@ v0.51.8 - 2021-05-07 It was there all along (hydroflame & community)
 * Fix infiltration number formatting.
 * script income transfers to parent on death. This helps keep track of
   income for scripts that spawn short lived scripts.
+* nerf noodle bar
 
 v0.51.7 - 2021-04-28 n00dles (hydroflame & community)
 -----------------------------------------
@@ -317,6 +349,7 @@ v0.51.7 - 2021-04-28 n00dles (hydroflame & community)
 * Money amount under 1000 dont display 3 decimal anymore.
 * Fix nextSourceFile flag miscalculation on the bitverse (for Bn12)
 * Faction invite text says "Decide later"/"Join!" instead of "No"/"Yes"
+* nerf noodle bar
 
 
 v0.51.6 - 2021-04-28 Backdoor! (hydroflame & community)
@@ -367,6 +400,7 @@ v0.51.6 - 2021-04-28 Backdoor! (hydroflame & community)
 * so many documentation and typos fixes (@Pimgd)
 * A corruption visual effect has been added to location with servers that
   have backdoor installed. (@dewint)
+* nerf noodle bar
 
 
 v0.51.5 - 2021-04-20 Flags! (hydroflame)
@@ -391,6 +425,7 @@ v0.51.5 - 2021-04-20 Flags! (hydroflame)
 * Souce-File typo fix
 * Fix 'while you were away' screen.
 * Bladeburner team size can no longer be set to negative amounts.
+* nerf noodle bar
 
 v0.51.4 - 2021-04-19 Manual hacking is fun (hydroflame)
 -------------------------------------------------------
@@ -426,6 +461,7 @@ v0.51.4 - 2021-04-19 Manual hacking is fun (hydroflame)
 * The text editor now remembers the location of your cursor and restores it.
 * skills are recalculated instantly.
 * Fix typo in Operation Zero description.
+* nerf noodle bar
 
 v0.51.3 - 2021-04-16 Y'all broke it on the first day (hydroflame)
 -----------------------------------------------------------------
@@ -467,6 +503,7 @@ v0.51.3 - 2021-04-16 Y'all broke it on the first day (hydroflame)
 * Hacknet node names is easier to handle for screen readers.
 * Money spent on classes is now tracked independently of work money.
 * running coding contract from the terminal will display its name.
+* nerf noodle bar
 
 v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
 ----------------------------------------------
@@ -481,6 +518,7 @@ v0.51.2 - 2021-04-09 Vegas, Baby! (hydroflame)
 * Link to discord added under options
 * 'getMemberInformation' doc updated, oops
 * tech vendor now handle max ram and cores.
+* nerf noodle bar
 
 v0.51.1 - 2021-04-06 Bugfixes because the author of the last patch sucks (it's hydroflame)
 ------------------------------------------------------------------------------------------
@@ -512,6 +550,7 @@ v0.51.1 - 2021-04-06 Bugfixes because the author of the last patch sucks (it's h
 
 * 'fl1ght.exe' will no longer suggest the combat path. Related faction
   requirements unchanged.
+* nerf noodle bar
 
 v0.51.0 - 2021-03-31 Formulas (hydroflame)
 ------------------------------------------
@@ -538,6 +577,10 @@ v0.51.0 - 2021-03-31 Formulas (hydroflame)
 
 * Certain UI elements are now 'click-to-copy'
 
+** Misc. **
+
+* nerf noodle bar
+
 v0.50.2 - 2021-03-25 Everyone asked for this one. (hydroflame)
 --------------------------------------------------------------
 
@@ -555,6 +598,7 @@ v0.50.2 - 2021-03-25 Everyone asked for this one. (hydroflame)
 
 * New shortcut, Alt + b, brings you to bladeburner
 * New shortcut, Alt + g, brings you to gang
+* nerf noodle bar
 
 v0.50.1 - 2021-03-22 (hydroflame)
 ---------------------------------
@@ -577,6 +621,7 @@ v0.50.1 - 2021-03-22 (hydroflame)
 **Misc.**
 
 * Minor spacing in stats tables.
+* nerf noodle bar
 
 v0.50.0 - 2021-03-20 Intelligence (hydroflame)
 ----------------------------------------------
@@ -597,6 +642,7 @@ v0.50.0 - 2021-03-20 Intelligence (hydroflame)
 * number formatting
 * remove wiki button in Hacking Missions.
 * Fix NaN displayed when very very large numbers are reached.
+* nerf noodle bar
 
 v0.49.2 - 2021-03-13 (hydroflame)
 ---------------------------------
@@ -634,6 +680,7 @@ v0.49.2 - 2021-03-13 (hydroflame)
 **Misc.**
 
 * Fix issue where the effective stats under Character>Stats were being calculated.
+* nerf noodle bar
 
 v0.49.0 - 2021-03-11 Source-File -1 (hydroflame)
 ------------------------------------------------
@@ -661,6 +708,7 @@ v0.49.0 - 2021-03-11 Source-File -1 (hydroflame)
 
 * Minor formatting under Hacking>Active Scripts
 * option menu colors now match the rest of the game, kinda.
+* nerf noodle bar
 
 
 v0.48.0 - ASCII - 2021-03-07 (hydroflame)
@@ -708,6 +756,7 @@ v0.48.0 - ASCII - 2021-03-07 (hydroflame)
     has bought but not installed
 * Character>Factions has a badge indicating how many factions have pending
     invites.
+* nerf noodle bar
 
 v0.47.2 - 7/15/2019
 -------------------

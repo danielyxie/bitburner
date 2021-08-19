@@ -63,7 +63,7 @@ export function Stats(props: IProps): React.ReactElement {
                         "be logged in the Bladeburner Console.");
     }
 
-    function openTravel() {
+    function openTravel(): void {
         const popupId = "bladeburner-travel-popup";
         createPopup(popupId, TravelPopup, {
             bladeburner: props.bladeburner,
@@ -71,7 +71,7 @@ export function Stats(props: IProps): React.ReactElement {
         });
     }
 
-    function openFaction() {
+    function openFaction(): void {
         const faction = Factions["Bladeburners"];
         if (faction.isMember) {
             props.engine.loadFactionContent();

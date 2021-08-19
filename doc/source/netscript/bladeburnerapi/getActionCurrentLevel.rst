@@ -12,4 +12,4 @@ getActionCurrentLevel() Netscript Function
 
     .. code-block:: javascript
 
-        bladeburner.getActionCountRemaining("Contracts", "Tracking"); // returns: 7
+        bladeburner.getActionCurrentLevel("Contracts", "Tracking"); // returns: 9

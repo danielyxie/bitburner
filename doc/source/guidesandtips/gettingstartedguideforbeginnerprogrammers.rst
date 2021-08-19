@@ -636,7 +636,7 @@ This tells me that I can reach :code:`CSEC` by going through :code:`iron-gym`::
     from CSEC once you hit 50 hacking, you cannot actually pass their test
     until your hacking is high enough to install a backdoor on their server.
 
-After you are connected to the :code:`CSEC` server, you can hack it. Note that this
+After you are connected to the :code:`CSEC` server, you can backdoor it. Note that this
 server requires one open port in order to gain root access. We can open the SSH port
 using the :code:`BruteSSH.exe` program we created earlier. In |Terminal|::
 

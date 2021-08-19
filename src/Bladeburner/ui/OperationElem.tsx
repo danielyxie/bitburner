@@ -27,14 +27,14 @@ export function OperationElem(props: IProps): React.ReactElement {
     const actionTime = props.action.getActionTime(props.bladeburner);
     const autolevelCheckboxId = `bladeburner-${props.action.name}-autolevel-checkbox`;
 
-    function onStart() {
+    function onStart(): void {
         props.bladeburner.action.type = ActionTypes.Operation;
         props.bladeburner.action.name = props.action.name;
         props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 
-    function onTeam() {
+    function onTeam(): void {
         const popupId = "bladeburner-operation-set-team-size-popup";
         createPopup(popupId, TeamSizePopup, {
             bladeburner: props.bladeburner,
@@ -43,19 +43,19 @@ export function OperationElem(props: IProps): React.ReactElement {
         });
     }
 
-    function increaseLevel() {
+    function increaseLevel(): void {
         ++props.action.level;
         if (isActive) props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 
-    function decreaseLevel() {
+    function decreaseLevel(): void {
         --props.action.level;
         if (isActive) props.bladeburner.startAction(props.player, props.bladeburner.action);
         setRerender(old => !old);
     }
 
-    function onAutolevel(event: React.ChangeEvent<HTMLInputElement>) {
+    function onAutolevel(event: React.ChangeEvent<HTMLInputElement>): void {
         props.action.autoLevel = event.target.checked;
         setRerender(old => !old);
     }

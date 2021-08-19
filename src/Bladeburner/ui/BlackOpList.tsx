@@ -1,11 +1,4 @@
-import * as React from "react";
-import {
-    formatNumber,
-    convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
-import { ActionTypes } from "../data/ActionTypes";
-import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import { stealthIcon, killIcon } from "../data/Icons";
+import React from "react";
 import { BlackOperations } from "../BlackOperations";
 import { BlackOperation } from "../BlackOperation";
 import { BlackOpElem } from "./BlackOpElem";
