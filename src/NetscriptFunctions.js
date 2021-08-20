@@ -172,6 +172,7 @@ import { isString } from "../utils/helpers/isString";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 
 const defaultInterpreter = new Interpreter('', () => undefined);
 
@@ -2149,7 +2150,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 return port.write(data);
             } else if (isString(port)) { // Write to script or text file
-                const fn = port;
+                const fn = removeLeadingSlash(port);
                 if (!isValidFilePath(fn)) {
                     throw makeRuntimeErrorMsg("write", `Invalid filepath: ${fn}`);
                 }

@@ -254,4 +254,9 @@ export const CONSTANTS: IMap<any> = {
     * Fix weird scrolling in the new Bladeburner React console.
     * nerf noodle bar
 `,
+
+// hotfix
+// Remove dollar sign in blade contract UI element
+// Can no longer create file that break the filesystem.
+// Milestones now call the faction CyberSec instead of CSEC
 }
