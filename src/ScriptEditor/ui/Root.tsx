@@ -201,6 +201,27 @@ export function Root(props: IProps): React.ReactElement {
         editorRef.current.focus();
     }
 
+    function beforeMount(monaco: any): void {
+
+        // extra libraries
+        const libSource = `
+export declare function upgradeHomeRam(): number;
+export declare function getUpgradeHomeRamCost(): number;
+export declare function workForCompany(companyName: string): boolean;
+export declare function applyToCompany(companyName: string, field: string): boolean;
+export declare function getCompanyRep(companyName: string): number;
+export declare function getCompanyFavor(companyName: string): number;
+export declare function getCompanyFavorGain(companyName: string): number;
+export declare function checkFactionInvitations(): string[];
+export declare function joinFaction(name: string): boolean;
+export declare function workForFaction(name: string, type: string): boolean;
+export declare function getFactionRep(name: string): number;
+export declare function getFactionFavor(name: string): number;`;
+
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource);
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource);
+    }
+
     return (<div id="script-editor-wrapper">
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag" className="noselect"> <strong style={{backgroundColor:'#555'}}>Script name: </strong></p>
@@ -208,6 +229,7 @@ export function Root(props: IProps): React.ReactElement {
             <StdButton text={"options"} onClick={openOptions} />
         </div>
         <Editor
+            beforeMount={beforeMount}
             onMount={onMount}
             loading={<p>Loading script editor!</p>}
             height="80%"
