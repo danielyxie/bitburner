@@ -19,7 +19,7 @@ import { calculateRamUsage } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../../ScriptEditor/CursorPositions";
-import * as NetscriptDefinitions from "../NetscriptDefinitions";
+import { libSource } from "../NetscriptDefinitions";
 
 interface IProps {
     filename: string;
@@ -202,24 +202,8 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     function beforeMount(monaco: any): void {
-
-        // extra libraries
-        const libSource = `
-export declare function upgradeHomeRam(): number;
-export declare function getUpgradeHomeRamCost(): number;
-export declare function workForCompany(companyName: string): boolean;
-export declare function applyToCompany(companyName: string, field: string): boolean;
-export declare function getCompanyRep(companyName: string): number;
-export declare function getCompanyFavor(companyName: string): number;
-export declare function getCompanyFavorGain(companyName: string): number;
-export declare function checkFactionInvitations(): string[];
-export declare function joinFaction(name: string): boolean;
-export declare function workForFaction(name: string, type: string): boolean;
-export declare function getFactionRep(name: string): number;
-export declare function getFactionFavor(name: string): number;`;
-
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource);
-        monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource);
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
     }
 
     return (<div id="script-editor-wrapper">
@@ -233,7 +217,7 @@ export declare function getFactionFavor(name: string): number;`;
             onMount={onMount}
             loading={<p>Loading script editor!</p>}
             height="80%"
-            defaultLanguage="javascript"
+            defaultLanguage="typescript"
             defaultValue={code}
             value={code}
             onChange={updateCode}
