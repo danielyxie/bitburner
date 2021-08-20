@@ -19,6 +19,7 @@ import { calculateRamUsage } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../../ScriptEditor/CursorPositions";
+import * as NetscriptDefinitions from "../NetscriptDefinitions";
 
 interface IProps {
     filename: string;
