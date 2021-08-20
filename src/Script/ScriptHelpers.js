@@ -13,8 +13,6 @@ import {
     ITutorial,
 } from "../InteractiveTutorial";
 import { Player } from "../Player";
-import { AceEditor } from "../ScriptEditor/Ace";
-import { CodeMirrorEditor } from "../ScriptEditor/CodeMirror";
 import { CursorPositions } from "../ScriptEditor/CursorPositions";
 import { AllServers } from "../Server/AllServers";
 import { processSingleServerGrowth } from "../Server/ServerHelpers";
@@ -29,20 +27,6 @@ import { numeralWrapper } from "../ui/numeralFormat";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { createElement } from "../../utils/uiHelpers/createElement";
-
-var scriptEditorRamText = null;
-
-export function getCurrentEditor() {
-    switch (Settings.Editor) {
-        case EditorSetting.Ace:
-            return AceEditor;
-        case EditorSetting.CodeMirror:
-            return CodeMirrorEditor;
-        default:
-            throw new Error(`Invalid Editor Setting: ${Settings.Editor}`);
-            return null;
-    }
-}
 
 // TODO(hydroflame): move to Monaco mount/unmount
 //Define key commands in script editor (ctrl o to save + close, etc.)
