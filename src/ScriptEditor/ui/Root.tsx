@@ -31,6 +31,7 @@ interface IProps {
 // https://github.com/Microsoft/monaco-editor/issues/1415
 // https://microsoft.github.io/monaco-editor/api/modules/monaco.languages.html
 // https://www.npmjs.com/package/@monaco-editor/react#development-playground
+// https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
 
 export function Root(props: IProps): React.ReactElement {
     const editorRef = useRef<IStandaloneCodeEditor | null>(null);
