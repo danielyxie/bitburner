@@ -66,7 +66,7 @@ import {
 } from "./Programs/ProgramHelpers";
 import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
-import { Root as ScriptEditorRoot } from "./Monaco/ui/Root";
+import { Root as ScriptEditorRoot } from "./ScriptEditor/ui/Root";
 import { initForeignServers, AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
