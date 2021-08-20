@@ -784,10 +784,6 @@ const Engine = {
                 updateSleevesPage();
             }
 
-            if (logBoxOpened) {
-                logBoxUpdateText();
-            }
-
             Engine.Counters.updateDisplays = 3;
         }
 
