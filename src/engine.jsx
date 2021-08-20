@@ -71,6 +71,7 @@ import {
     scriptEditorInit,
     updateScriptEditorContent,
 } from "./Script/ScriptHelpers";
+import { Root as ScriptEditorRoot } from "./Monaco/ui/Root";
 import { initForeignServers, AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
@@ -260,14 +261,16 @@ const Engine = {
     loadScriptEditorContent: function(filename = "", code = "") {
         Engine.hideAllContent();
         Engine.Display.scriptEditorContent.style.display = "block";
-        try {
-            getCurrentEditor().openScript(filename, code);
-        } catch(e) {
-            exceptionAlert(e);
-        }
-
-        updateScriptEditorContent();
         routing.navigateTo(Page.ScriptEditor);
+
+
+        const monaco = document.getElementById('monaco-editor');
+        //https://www.npmjs.com/package/@monaco-editor/react#development-playground
+        ReactDOM.render(
+            <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
+            Engine.Display.scriptEditorContent,
+        );
+        
         MainMenuLinks.ScriptEditor.classList.add("active");
     },
 
@@ -504,6 +507,7 @@ const Engine = {
         Engine.Display.terminalContent.style.display = "none";
         Engine.Display.characterContent.style.display = "none";
         Engine.Display.scriptEditorContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.scriptEditorContent);
 
         Engine.Display.activeScriptsContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);

@@ -100,6 +100,7 @@ import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import * as libarg from 'arg';
 import React from "react";
+import ReactDOM from 'react-dom';
 
 
 function postNetburnerText() {

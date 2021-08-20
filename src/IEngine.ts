@@ -13,4 +13,5 @@ export interface IEngine {
     loadMissionContent: () => void;
     loadResleevingContent: () => void;
     loadStockMarketContent: () => void;
+    loadTerminalContent: () => void;
 }
