@@ -66,11 +66,6 @@ import {
 } from "./Programs/ProgramHelpers";
 import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
-import {
-    getCurrentEditor,
-    scriptEditorInit,
-    updateScriptEditorContent,
-} from "./Script/ScriptHelpers";
 import { Root as ScriptEditorRoot } from "./Monaco/ui/Root";
 import { initForeignServers, AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
@@ -135,13 +130,6 @@ import ReactDOM from "react-dom";
  */
 $(document).keydown(function(e) {
     if (Settings.DisableHotkeys === true) {return;}
-
-    // These hotkeys should be disabled if the player is writing scripts
-    try {
-        if (getCurrentEditor().isFocused()) {
-            return;
-        }
-    } catch(error) {}
 
     if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
         if (e.keyCode == KEY.T && e.altKey) {
@@ -797,13 +785,6 @@ const Engine = {
             Engine.Counters.updateDisplaysMed = 9;
         }
 
-        if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (routing.isOn(Page.ScriptEditor)) {
-                updateScriptEditorContent();
-            }
-            Engine.Counters.updateDisplaysLong = 15;
-        }
-
         if (Engine.Counters.createProgramNotifications <= 0) {
             var num = getNumAvailableCreateProgram();
             var elem = document.getElementById("create-program-notification");
@@ -1207,7 +1188,6 @@ const Engine = {
         }
         // Initialize labels on game settings
         setSettingsLabels();
-        scriptEditorInit();
         Terminal.resetTerminalInput();
     },
 

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StdButton } from "../../ui/React/StdButton";
 import Editor from "@monaco-editor/react";
+import * as monaco from "monaco-editor";
+import IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 import { createPopup } from "../../ui/React/createPopup";
 import { ConfigPopup } from "./ConfigPopup";
 import { Config } from "./Config";
@@ -16,6 +18,7 @@ import { TextFile } from "../../TextFile";
 import { calculateRamUsage } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { CursorPositions } from "../../ScriptEditor/CursorPositions";
 
 interface IProps {
     filename: string;
@@ -30,13 +33,22 @@ interface IProps {
 // https://www.npmjs.com/package/@monaco-editor/react#development-playground
 
 export function Root(props: IProps): React.ReactElement {
+    const editorRef = useRef<IStandaloneCodeEditor | null>(null);
     const [filename, setFilename] = useState(props.filename);
     const [code, setCode] = useState<string>(props.code);
     const [ram, setRAM] = useState('');
     const [config, setConfig] = useState<Config>({theme: 'vs-dark'});
 
     function save(): void {
-        //CursorPositions.saveCursor(filename, cursor);
+        if(editorRef.current !== null) {
+            const position = editorRef.current.getPosition();
+            if(position !== null) {
+                CursorPositions.saveCursor(filename, {
+                    row: position.lineNumber,
+                    column: position.column,
+                });
+            }
+        }
 
         // TODO(hydroflame): re-enable the tutorial.
         // if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
@@ -141,42 +153,46 @@ export function Root(props: IProps): React.ReactElement {
 
     function updateCode(newCode?: string): void {
         if(newCode === undefined) return;
-
         setCode(newCode);
     }
 
-    useEffect(() => {
-        async function updateRAM() {
-            const codeCopy = code.repeat(1);
-            const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
-            if (ramUsage > 0) {
-                console.log(ramUsage);
-                setRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
-                return;
-            }
-            switch (ramUsage) {
-                case RamCalculationErrorCode.ImportError: {
-                    setRAM("RAM: Import Error");
-                    break;
-                }
-                case RamCalculationErrorCode.URLImportError: {
-                    setRAM("RAM: HTTP Import Error");
-                    break;
-                }
-                case RamCalculationErrorCode.SyntaxError: 
-                default: {
-                    setRAM("RAM: Syntax Error");
-                    break;
-                }
-            }
-            return new Promise<void>(() => undefined);
+    async function updateRAM(): Promise<void> {
+        const codeCopy = code+"";
+        const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
+        if (ramUsage > 0) {
+            setRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
+            return;
         }
-        const id = setInterval(() => {
-            console.log(code);
-            updateRAM();
-        }, 10000);
+        switch (ramUsage) {
+            case RamCalculationErrorCode.ImportError: {
+                setRAM("RAM: Import Error");
+                break;
+            }
+            case RamCalculationErrorCode.URLImportError: {
+                setRAM("RAM: HTTP Import Error");
+                break;
+            }
+            case RamCalculationErrorCode.SyntaxError: 
+            default: {
+                setRAM("RAM: Syntax Error");
+                break;
+            }
+        }
+        return new Promise<void>(() => undefined);
+    }
+
+    useEffect(() => {
+        const id = setInterval(updateRAM, 1000);
         return () => clearInterval(id);
-    }, []);
+    }, [code]);
+
+    function onMount(editor: IStandaloneCodeEditor): void {
+        editorRef.current = editor;
+        if(editorRef.current === null) return;
+        const position = CursorPositions.getCursor(filename);
+        editorRef.current.setPosition({lineNumber: position.row, column: position.column});
+        editorRef.current.focus();
+    }
 
     return (<div id="script-editor-wrapper">
         <div id="script-editor-filename-wrapper">
@@ -185,6 +201,7 @@ export function Root(props: IProps): React.ReactElement {
             <StdButton text={"config"} onClick={openConfig} />
         </div>
         <Editor
+            onMount={onMount}
             loading={<p>Loading script editor!</p>}
             height="80%"
             defaultLanguage="javascript"

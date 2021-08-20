@@ -35,6 +35,7 @@
     "loader-runner": "^2.3.0",
     "loader-utils": "^1.1.0",
     "memory-fs": "~0.4.1",
+    "monaco-editor": "^0.27.0",
     "node-sass": "^6.0.1",
     "normalize.css": "^8.0.0",
     "numeral": "2.0.6",
