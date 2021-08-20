@@ -1742,6 +1742,7 @@ export function applyForJob(entryPosType, sing=false) {
     }
 
     this.jobs[company.name] = pos.name;
+    this.companyName = this.location;
 
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();

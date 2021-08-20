@@ -107,6 +107,8 @@ export class CompanyLocation extends React.Component<IProps, IState> {
             employedHere: false,
         }
 
+        this.props.p.location = props.locName;
+
         this.checkIfEmployedHere(false);
     }
 
