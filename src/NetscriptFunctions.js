@@ -138,7 +138,7 @@ import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost,
 } from "./StockMarket/StockMarketCosts";
-import { isValidFilePath } from "./Terminal/DirectoryHelpers";
+import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
 import {
@@ -172,7 +172,6 @@ import { isString } from "../utils/helpers/isString";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
-import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 
 const defaultInterpreter = new Interpreter('', () => undefined);
 

@@ -7,7 +7,6 @@ import {
     convertTimeMsToTimeElapsedString,
     replaceAt,
 } from "../utils/StringHelperFunctions";
-import { logBoxUpdateText, logBoxOpened } from "../utils/LogBox";
 import { Augmentations } from "./Augmentation/Augmentations";
 import {
     initAugmentations,

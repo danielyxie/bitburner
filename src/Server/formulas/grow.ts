@@ -3,7 +3,7 @@ import { Server } from "../Server";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
-export function calculateServerGrowth(server: Server, threads: number, p: IPlayer, cores: number = 1): number {
+export function calculateServerGrowth(server: Server, threads: number, p: IPlayer, cores = 1): number {
     const numServerGrowthCycles = Math.max(Math.floor(threads), 0);
 
     //Get adjusted growth rate, which accounts for server security

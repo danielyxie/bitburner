@@ -3,14 +3,8 @@ import ReactDOM from "react-dom";
 import { killWorkerScript } from "../src/Netscript/killWorkerScript";
 import { RunningScript } from "../src/Script/RunningScript";
 
-import { clearEventListeners } from "./uiHelpers/clearEventListeners";
-import { arrayToString } from "./helpers/arrayToString";
 import { createElement } from "./uiHelpers/createElement";
 import { removeElementById } from "./uiHelpers/removeElementById";
-import Grid from '@material-ui/core/Grid';
-
-
-import { KEY } from "./helpers/keyCodes";
 
 let gameContainer: HTMLElement;
 
@@ -36,9 +30,8 @@ interface IProps {
 
 function ScriptLogPopup(props: IProps): React.ReactElement {
     const setRerender = useState(false)[1];
-    const [pos, setPos] = useState([0, 0]);
 
-    function rerender() {
+    function rerender(): void {
         setRerender(old => !old);
     }
 
@@ -78,11 +71,11 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
             props.container.style.bottom='';
             x=event.clientX;
             y=event.clientY;
-        };
-        function mouseUp(event: MouseEvent): void {
+        }
+        function mouseUp(): void {
             document.removeEventListener('mouseup', mouseUp)
             document.removeEventListener('mousemove', mouseMove)
-        };
+        }
         document.addEventListener('mouseup', mouseUp)
         document.addEventListener('mousemove', mouseMove)
     }
@@ -101,7 +94,6 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
     </>);
 }
 
-let logBoxCurrentScript: RunningScript | null = null;
 export function logBoxCreate(script: RunningScript): void {
     const id = script.filename+script.args.map((x: any): string => `${x}`).join('');
     const container = createElement("div", {
