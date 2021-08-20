@@ -2,6 +2,14 @@ export const libSource = `interface NS {
     args: string[];
     /**
      * Example documentation for scan.
+     * Example documentation for scan.
+     * Example documentation for scan.
+     * Example documentation for scan.
+     * Example documentation for scan.
+     * Example documentation for scan.
+     * Example documentation for scan.
+     * Example documentation for scan.
+     * Example documentation for scan.
      */
     scan(ip: string, hostnames: boolean): string[];
     hack(ip: string, threads: number, stock: boolean): Promise<string>;

@@ -202,6 +202,25 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     function beforeMount(monaco: any): void {
+        monaco.languages.registerCompletionItemProvider('javascript', {
+            provideCompletionItems: () => {
+                return { suggestions: [
+                    {
+                        label: 'upgradeHomeRam',
+                        kind: monaco.languages.CompletionItemKind.Function,
+                        insertText: 'upgradeHomeRam()',
+                        documentation: 'Hello javascript documentation',
+                    },
+                    {
+                        label: 'connect',
+                        kind: monaco.languages.CompletionItemKind.Function,
+                        insertText: 'connect(${1:server})',
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Hello javascript documentation',
+                    },
+                ] };
+            }
+        });
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
         monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
     }
@@ -217,7 +236,7 @@ export function Root(props: IProps): React.ReactElement {
             onMount={onMount}
             loading={<p>Loading script editor!</p>}
             height="80%"
-            defaultLanguage="typescript"
+            defaultLanguage="javascript"
             defaultValue={code}
             value={code}
             onChange={updateCode}
