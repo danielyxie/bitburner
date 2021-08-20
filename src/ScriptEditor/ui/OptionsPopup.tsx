@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
-import { Config } from "./Config";
+import { Options } from "./Options";
 import { StdButton } from "../../ui/React/StdButton";
 import { removePopup } from "../../ui/React/createPopup";
 
 interface IProps {
     id: string;
-    config: Config;
-    save: (config: Config) => void;
+    options: Options;
+    save: (options: Options) => void;
 }
 
-export function ConfigPopup(props: IProps): React.ReactElement {
-    const [config, setConfig] = useState<Config>(props.config);
+export function OptionsPopup(props: IProps): React.ReactElement {
+    const [options, setOptions] = useState<Options>(props.options);
     function save() {
-        props.save(config);
+        props.save(options);
         removePopup(props.id);
     }
 
     function setTheme(event: React.ChangeEvent<HTMLSelectElement>): void {
-        setConfig(old => {
+        setOptions(old => {
             old.theme = event.target.value;
             return old;
         });
     }
 
     return (<>
-        <select className="dropdown" onChange={setTheme} defaultValue={config.theme}>
+        <p>Theme</p>
+        <select className="dropdown" onChange={setTheme} defaultValue={options.theme}>
             <option value="vs-dark">vs-dark</option>
             <option value="light">light</option>
         </select>

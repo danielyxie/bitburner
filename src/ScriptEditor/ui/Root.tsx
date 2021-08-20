@@ -4,8 +4,8 @@ import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 import { createPopup } from "../../ui/React/createPopup";
-import { ConfigPopup } from "./ConfigPopup";
-import { Config } from "./Config";
+import { OptionsPopup } from "./OptionsPopup";
+import { Options } from "./Options";
 import { js_beautify as beautifyCode } from 'js-beautify';
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -37,7 +37,7 @@ export function Root(props: IProps): React.ReactElement {
     const [filename, setFilename] = useState(props.filename);
     const [code, setCode] = useState<string>(props.code);
     const [ram, setRAM] = useState('');
-    const [config, setConfig] = useState<Config>({theme: 'vs-dark'});
+    const [options, setOptions] = useState<Options>({theme: 'vs-dark', insertSpaces: false});
 
     function save(): void {
         if(editorRef.current !== null) {
@@ -133,6 +133,7 @@ export function Root(props: IProps): React.ReactElement {
 
     function beautify(): void {
         setCode(code => beautifyCode(code, {
+            indent_with_tabs: !options.insertSpaces,
             indent_size: 4,
             brace_style: "preserve-inline",
         }));
@@ -142,12 +143,15 @@ export function Root(props: IProps): React.ReactElement {
         setFilename(event.target.value);
     }
 
-    function openConfig(): void {
-        const id="script-editor-config-options-popup";
-        createPopup(id, ConfigPopup, {
+    function openOptions(): void {
+        const id="script-editor-options-popup";
+        createPopup(id, OptionsPopup, {
             id: id,
-            config: {theme: config.theme},
-            save: (config: Config) => setConfig(config),
+            options: {
+                theme: options.theme,
+                insertSpaces: options.insertSpaces,
+            },
+            save: (options: Options) => setOptions(options),
         });
     }
 
@@ -196,9 +200,9 @@ export function Root(props: IProps): React.ReactElement {
 
     return (<div id="script-editor-wrapper">
         <div id="script-editor-filename-wrapper">
-            <p id="script-editor-filename-tag"> <strong style={{backgroundColor:'#555'}}>Script name: </strong></p>
+            <p id="script-editor-filename-tag" className="noselect"> <strong style={{backgroundColor:'#555'}}>Script name: </strong></p>
             <input id="script-editor-filename" type="text" maxLength={100} tabIndex={1} value={filename} onChange={onFilenameChange} />
-            <StdButton text={"config"} onClick={openConfig} />
+            <StdButton text={"options"} onClick={openOptions} />
         </div>
         <Editor
             onMount={onMount}
@@ -209,7 +213,7 @@ export function Root(props: IProps): React.ReactElement {
             value={code}
             onChange={updateCode}
             theme="vs-dark"
-            options={config}
+            options={options}
         />
         <div id="script-editor-buttons-wrapper">
             <StdButton text={"Beautify"} onClick={beautify} />
