@@ -23,6 +23,11 @@ import { libSource } from "../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
+import {
+    iTutorialNextStep,
+    ITutorial,
+    iTutorialSteps,
+} from "../../InteractiveTutorial";
 
 let symbols: string[] = [];
 (function() {
@@ -81,35 +86,34 @@ export function Root(props: IProps): React.ReactElement {
         }
 
         // TODO(hydroflame): re-enable the tutorial.
-        // if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
-        //     //Make sure filename + code properly follow tutorial
-        //     if (filename !== "n00dles.script") {
-        //         dialogBoxCreate("Leave the script name as 'n00dles'!");
-        //         return;
-        //     }
-        //     code = code.replace(/\s/g, "");
-        //     if (code.indexOf("while(true){hack('n00dles');}") == -1) {
-        //         dialogBoxCreate("Please copy and paste the code from the tutorial!");
-        //         return;
-        //     }
+        if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
+            //Make sure filename + code properly follow tutorial
+            if (filename !== "n00dles.script") {
+                dialogBoxCreate("Leave the script name as 'n00dles'!");
+                return;
+            }
+            if (code.replace(/\s/g, "").indexOf("while(true){hack('n00dles');}") == -1) {
+                dialogBoxCreate("Please copy and paste the code from the tutorial!");
+                return;
+            }
 
-        //     //Save the script
-        //     let s = Player.getCurrentServer();
-        //     for (var i = 0; i < s.scripts.length; i++) {
-        //         if (filename == s.scripts[i].filename) {
-        //             s.scripts[i].saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
-        //             Engine.loadTerminalContent();
-        //             return iTutorialNextStep();
-        //         }
-        //     }
+            //Save the script
+            const s = props.player.getCurrentServer();
+            for (let i = 0; i < s.scripts.length; i++) {
+                if (filename == s.scripts[i].filename) {
+                    s.scripts[i].saveScript(code, props.player.currentServer, props.player.getCurrentServer().scripts);
+                    props.engine.loadTerminalContent();
+                    return iTutorialNextStep();
+                }
+            }
 
-        //     // If the current script does NOT exist, create a new one
-        //     let script = new Script();
-        //     script.saveScript(getCurrentEditor().getCode(), Player.currentServer, Player.getCurrentServer().scripts);
-        //     s.scripts.push(script);
+            // If the current script does NOT exist, create a new one
+            let script = new Script();
+            script.saveScript(code, props.player.currentServer, props.player.getCurrentServer().scripts);
+            s.scripts.push(script);
 
-        //     return iTutorialNextStep();
-        // }
+            return iTutorialNextStep();
+        }
 
         if (filename == "") {
             dialogBoxCreate("You must specify a filename!");

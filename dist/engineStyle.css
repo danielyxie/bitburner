@@ -2433,7 +2433,6 @@ input[type="checkbox"] {
   justify-content: space-between; }
 
 .log-box-log-container {
-  max-width: 400px;
   overflow-y: auto; }
 
 .log-box-button {
