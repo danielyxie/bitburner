@@ -55,12 +55,11 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
 
     function drag(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
         event.preventDefault();
-        //console.log(props.container.clientWidth);
-        //console.log(props.container.clientHeight);
         let x = event.clientX;
         let y = event.clientY;
+        console.log(props.container.clientWidth);
         let left = props.container.offsetLeft+props.container.clientWidth/2;
-        let top = props.container.offsetTop+props.container.clientHeight/2;
+        let top = props.container.offsetTop+props.container.clientWidth/5;
         function mouseMove(event: MouseEvent): void {
             left+=event.clientX-x;
             top+=event.clientY-y;
