@@ -2149,9 +2149,13 @@ function NetscriptFunctions(workerScript) {
                 }
                 return port.write(data);
             } else if (isString(port)) { // Write to script or text file
-                const fn = removeLeadingSlash(port);
+                let fn = port;
                 if (!isValidFilePath(fn)) {
                     throw makeRuntimeErrorMsg("write", `Invalid filepath: ${fn}`);
+                }
+
+                if(fn.lastIndexOf("/") === 0) {
+                    fn = removeLeadingSlash(fn);
                 }
 
                 // Coerce 'data' to be a string
