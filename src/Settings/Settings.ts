@@ -145,7 +145,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
         Object.assign(Settings, defaultSettings);
     },
     load(saveString: string) {
-        console.log(saveString);
         Object.assign(Settings, JSON.parse(saveString));
     },
 };
