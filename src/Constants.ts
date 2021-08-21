@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.5",
+    Version:                "0.52.6",
 
     // Speed (in ms) at which the main loop is updated
     _idleSpeed: 200,
@@ -228,35 +228,26 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.5 - 2021-07-19 CPU cores are useful!? (hydroflame)
+    v0.52.6 - 2021-07-21 Logboxes and VS-code (hydroflame)
     -------------------------------------------
 
-    ** Terminal ** 
+    ** Text Editor **
 
-    * When executing 'run SCRIPT' any script can now add '--tail' to
-      automatically bring up the logs.
+    * Ace and Codemirror have been removed in favor of monaco (web version of
+      vs-code). The options are a bit lackluster but more will be added as
+      feedback comes.
 
-    ** Netscript ** 
+    ** Log boxes **
 
-    * The 'flags' function now works with single letter flags but they only take
-      one dash.
-    * Fix several broken bladeburner netscript functions.
-    * Fix gang.getMemberInformation returning inconsistent data after the gang
-      rework.
-
-    ** CPU Cores **
-
-    * CPU Cores on the home computer now provide a bonus to grow() money gain
-      and makes weaken lower more security. Only for scripts running on 'home'
+    * Multiple log boxes can be opened at once. They can be moved around the
+      screen. (but the movement behavior is a bit weird.)
 
     ** Misc. **
 
-    * Fix weird scrolling in the new Bladeburner React console.
+    * Job promotion now correctly updates the UI.
+    * Milestones now call the faction CyberSec instead of CSEC
+    * Can no longer create file that break the filesystem.
+    * Remove dollar sign in blade contract UI element
     * nerf noodle bar
 `,
-
-// hotfix
-// Remove dollar sign in blade contract UI element
-// Can no longer create file that break the filesystem.
-// Milestones now call the faction CyberSec instead of CSEC
 }

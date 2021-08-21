@@ -3,6 +3,28 @@
 Changelog
 =========
 
+v0.52.6 - 2021-07-21 Logboxes and VS-code (hydroflame)
+-------------------------------------------
+
+** Text Editor **
+
+* Ace and Codemirror have been removed in favor of monaco (web version of
+  vs-code). The options are a bit lackluster but more will be added as
+  feedback comes.
+
+** Log boxes **
+
+* Multiple log boxes can be opened at once. They can be moved around the
+  screen. (but the movement behavior is a bit weird.)
+
+** Misc. **
+
+* Job promotion now correctly updates the UI.
+* Milestones now call the faction CyberSec instead of CSEC
+* Can no longer create file that break the filesystem.
+* Remove dollar sign in blade contract UI element
+* nerf noodle bar
+
 v0.52.5 - 2021-07-19 CPU cores are useful!? (hydroflame)
 -------------------------------------------
 
