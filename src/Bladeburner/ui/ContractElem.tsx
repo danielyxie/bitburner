@@ -93,7 +93,7 @@ export function ContractElem(props: IProps): React.ReactElement {
         <pre style={{display: 'inline-block'}}>
 <span dangerouslySetInnerHTML={{__html: props.action.desc}} />
 <br /><br />
-Estimated success chance: {formatNumber(estimatedSuccessChance*100, 1)}% {props.action.isStealth?stealthIcon:<></>}${props.action.isKill?killIcon:<></>}<br />
+Estimated success chance: {formatNumber(estimatedSuccessChance*100, 1)}% {props.action.isStealth?stealthIcon:<></>}{props.action.isKill?killIcon:<></>}<br />
 Time Required: {convertTimeMsToTimeElapsedString(actionTime*1000)}<br />
 Contracts remaining: {Math.floor(props.action.count)}<br />
 Successes: {props.action.successes}<br />

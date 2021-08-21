@@ -36,7 +36,7 @@ export const Milestones: Milestone[] = [
         },
     },
     {
-        title: "Install all the Augmentations from CSEC",
+        title: "Install all the Augmentations from CyberSec",
         fulfilled: (p: IPlayer): boolean => {
             return allFactionAugs(p, Factions["CyberSec"]);
         },

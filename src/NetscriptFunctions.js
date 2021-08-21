@@ -138,7 +138,7 @@ import {
     getStockMarket4SDataCost,
     getStockMarket4STixApiCost,
 } from "./StockMarket/StockMarketCosts";
-import { isValidFilePath } from "./Terminal/DirectoryHelpers";
+import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
 import {
@@ -2149,7 +2149,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 return port.write(data);
             } else if (isString(port)) { // Write to script or text file
-                const fn = port;
+                const fn = removeLeadingSlash(port);
                 if (!isValidFilePath(fn)) {
                     throw makeRuntimeErrorMsg("write", `Invalid filepath: ${fn}`);
                 }

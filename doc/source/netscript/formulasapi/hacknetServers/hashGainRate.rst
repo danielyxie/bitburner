@@ -8,7 +8,7 @@ hashGainRate() Netscript Function
     :param number ramUsed: ram used on the server.
     :param number maxRam: max ram of the server.
     :param number core: cores of the server.
-    :returns: Money per second that a server with those stats would gain per second.
+    :returns: Hashes per second that a server with those stats would gain.
 
     If you are not in BitNode-5, then you must have Source-File 5-1 in order to
     use this function. In addition, if you are not in BitNode-9, then you must
