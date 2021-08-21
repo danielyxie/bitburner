@@ -57,6 +57,11 @@ interface IProps {
     engine: IEngine;
 };
 
+
+/*
+
+*/
+
 // How to load function definition in monaco
 // https://github.com/Microsoft/monaco-editor/issues/1415
 // https://microsoft.github.io/monaco-editor/api/modules/monaco.languages.html
@@ -230,6 +235,19 @@ export function Root(props: IProps): React.ReactElement {
         return () => clearInterval(id);
     }, [code]);
 
+    useEffect(() => {
+        function maybeSave(event: KeyboardEvent) {
+            if (Settings.DisableHotkeys) return;
+            //Ctrl + b
+            if (event.keyCode == 66 && (event.ctrlKey || event.metaKey)) {
+                event.preventDefault();
+                save();
+            }
+        }
+        document.addEventListener('keydown', maybeSave);
+        return () => document.removeEventListener('keydown', maybeSave);
+    })
+
     function onMount(editor: IStandaloneCodeEditor): void {
         editorRef.current = editor;
         if(editorRef.current === null) return;
@@ -257,7 +275,6 @@ export function Root(props: IProps): React.ReactElement {
         monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
     }
 
-    console.log(options);
     return (<div id="script-editor-wrapper">
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag" className="noselect"> <strong style={{backgroundColor:'#555'}}>Script name: </strong></p>

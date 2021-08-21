@@ -28,19 +28,6 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { createElement } from "../../utils/uiHelpers/createElement";
 
-// TODO(hydroflame): move to Monaco mount/unmount
-//Define key commands in script editor (ctrl o to save + close, etc.)
-$(document).keydown(function(e) {
-    if (Settings.DisableHotkeys === true) {return;}
-	if (routing.isOn(Page.ScriptEditor)) {
-		//Ctrl + b
-        if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
-            e.preventDefault();
-			saveAndCloseScriptEditor(); // deleted function
-        }
-	}
-});
-
 export function scriptCalculateOfflineProduction(runningScriptObj) {
 	//The Player object stores the last update time from when we were online
 	const thisUpdate = new Date().getTime();
