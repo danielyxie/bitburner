@@ -1342,18 +1342,6 @@ button {
 #script-editor-container {
   background-color: transparent; }
 
-#ace-editor {
-  margin: 10px;
-  height: 80%;
-  width: 100%;
-  margin-left: 6px;
-  padding-left: 6px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border: 2px solid var(--my-highlight-color);
-  z-index: 1;
-  font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman"; }
-
 /* This temp element is used for auto adjusting filename field */
 .tmp-element {
   visibility: hidden;
@@ -1375,7 +1363,6 @@ button {
 
 #script-editor-filename-wrapper {
   background-color: #555;
-  margin-left: 6px;
   margin-right: 0;
   padding-left: 6px;
   width: 100%;
@@ -1428,18 +1415,15 @@ button {
   #script-editor-options-panel fieldset input {
     margin: 2px; }
 
-/* Specific overrides for Ace Editor */
-.ace_line,
-.ace_line * {
-  background-color: transparent;
-  margin: 0;
-  padding: 0; }
+.editor-options-container {
+  display: flex;
+  flex-flow: column; }
 
-.ace_text-input {
-  font-size: 16px;
-  background-color: transparent; }
-
-/* Specified overrides for Code mirror Editor are defined in codemirror-override.scss */
+.editor-options-line {
+  display: flex;
+  flex: row nowrap;
+  align-items: center;
+  justify-content: start; }
 
 /* COLORS */
 /* Attributes */

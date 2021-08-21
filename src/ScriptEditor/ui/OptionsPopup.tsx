@@ -10,26 +10,30 @@ interface IProps {
 }
 
 export function OptionsPopup(props: IProps): React.ReactElement {
-    const [options, setOptions] = useState<Options>(props.options);
+    const [theme, setTheme] = useState(props.options.theme);
+    const [insertSpaces, setInsertSpaces] = useState(props.options.insertSpaces);
+
     function save() {
-        props.save(options);
+        props.save({
+            theme: theme,
+            insertSpaces: insertSpaces,
+        });
         removePopup(props.id);
     }
 
-    function setTheme(event: React.ChangeEvent<HTMLSelectElement>): void {
-        setOptions(old => {
-            old.theme = event.target.value;
-            return old;
-        });
-    }
-
-    return (<>
-        <p>Theme</p>
-        <select className="dropdown" onChange={setTheme} defaultValue={options.theme}>
-            <option value="vs-dark">vs-dark</option>
-            <option value="light">light</option>
-        </select>
+    return (<div className="editor-options-container noselect">
+        <div className="editor-options-line">
+            <p>Theme: </p>
+            <select className="dropdown" onChange={event => setTheme(event.target.value)} defaultValue={theme}>
+                <option value="vs-dark">vs-dark</option>
+                <option value="light">light</option>
+            </select>
+        </div>
+        <div className="editor-options-line">
+            <p>Use whitespace over tabs: </p>
+            <input type="checkbox" onChange={event => setInsertSpaces(event.target.checked)} checked={insertSpaces} />
+        </div>
         <br />
-        <StdButton text={"Save"} onClick={save} />
-    </>);
+        <StdButton style={{width: '50px'}} text={"Save"} onClick={save} />
+    </div>);
 }

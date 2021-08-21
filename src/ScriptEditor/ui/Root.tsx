@@ -20,6 +20,30 @@ import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../../ScriptEditor/CursorPositions";
 import { libSource } from "../NetscriptDefinitions";
+import { NetscriptFunctions } from "../../NetscriptFunctions";
+import { WorkerScript } from "../../Netscript/WorkerScript";
+import { Settings } from "../../Settings/Settings";
+
+let symbols: string[] = [];
+(function() {
+    const ns = NetscriptFunctions(({} as WorkerScript));
+
+    function populate(ns: any): string[] {
+        let symbols: string[] = [];
+        const keys = Object.keys(ns);
+        for(const key of keys) {
+            if(typeof ns[key] === 'object') {
+                symbols.push(key);
+                symbols = symbols.concat(populate(ns[key]));
+            }
+            if(typeof ns[key] === 'function') {
+                symbols.push(key);
+            }
+        }
+        return symbols;
+    }
+    symbols = populate(ns);
+})();
 
 interface IProps {
     filename: string;
@@ -40,7 +64,10 @@ export function Root(props: IProps): React.ReactElement {
     const [filename, setFilename] = useState(props.filename);
     const [code, setCode] = useState<string>(props.code);
     const [ram, setRAM] = useState('');
-    const [options, setOptions] = useState<Options>({theme: 'vs-dark', insertSpaces: false});
+    const [options, setOptions] = useState<Options>({
+        theme: Settings.MonacoTheme,
+        insertSpaces: Settings.MonacoInsertSpaces,
+    });
 
     function save(): void {
         if(editorRef.current !== null) {
@@ -148,13 +175,19 @@ export function Root(props: IProps): React.ReactElement {
 
     function openOptions(): void {
         const id="script-editor-options-popup";
+        const newOptions = {
+            theme: '',
+            insertSpaces: false,
+        };
+        Object.assign(newOptions, options);
         createPopup(id, OptionsPopup, {
             id: id,
-            options: {
-                theme: options.theme,
-                insertSpaces: options.insertSpaces,
-            },
-            save: (options: Options) => setOptions(options),
+            options: newOptions,
+            save: (options: Options) => {
+                setOptions(options);
+                Settings.MonacoTheme = options.theme;
+                Settings.MonacoInsertSpaces = options.insertSpaces;
+            }
         });
     }
 
@@ -204,27 +237,23 @@ export function Root(props: IProps): React.ReactElement {
     function beforeMount(monaco: any): void {
         monaco.languages.registerCompletionItemProvider('javascript', {
             provideCompletionItems: () => {
-                return { suggestions: [
-                    {
-                        label: 'upgradeHomeRam',
+                const suggestions = [];
+                 for(const symbol of symbols) {
+                    suggestions.push({
+                        label: symbol,
                         kind: monaco.languages.CompletionItemKind.Function,
-                        insertText: 'upgradeHomeRam()',
-                        documentation: 'Hello javascript documentation',
-                    },
-                    {
-                        label: 'connect',
-                        kind: monaco.languages.CompletionItemKind.Function,
-                        insertText: 'connect(${1:server})',
+                        insertText: symbol,
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        documentation: 'Hello javascript documentation',
-                    },
-                ] };
+                    });
+                }
+                return { suggestions: suggestions };
             }
         });
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
         monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
     }
 
+    console.log(options);
     return (<div id="script-editor-wrapper">
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag" className="noselect"> <strong style={{backgroundColor:'#555'}}>Script name: </strong></p>
@@ -240,7 +269,7 @@ export function Root(props: IProps): React.ReactElement {
             defaultValue={code}
             value={code}
             onChange={updateCode}
-            theme="vs-dark"
+            theme={options.theme}
             options={options}
         />
         <div id="script-editor-buttons-wrapper">

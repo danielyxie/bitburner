@@ -123,11 +123,8 @@
             <input id="script-editor-filename" type="text" maxlength="100" tabindex="1"/>
         </div>
 
-        <div id="ace-editor"></div>
-        <form id="codemirror-form-wrapper"><textarea id="codemirror-editor"></textarea></form>
-        <div id="codemirror-vim-command-display-wrapper">
-            Key Buffer: <span id="codemirror-vim-command-display"></span>
-        </div>
+        <div id="monaco-editor"></div>
+
 
         <div id="script-editor-buttons-wrapper"></div> <!-- Buttons below script editor -->
         </div> <!-- End wrapper -->
@@ -173,6 +170,14 @@
             <fieldset id="script-editor-option-flex4-fieldset"></fieldset>
 
         </div> <!-- End script editor options panel -->
+
+
+        <!-- TODO(hydroflame): remove this once Monaco is implemented -->
+        <div id="ace-editor" style="display: none"></div>
+        <form id="codemirror-form-wrapper" style="display: none"><textarea id="codemirror-editor"></textarea></form>
+        <div id="codemirror-vim-command-display-wrapper" style="display: none">
+            Key Buffer: <span id="codemirror-vim-command-display"></span>
+        </div>
 	</div>
 
 	<!-- Terminal page -->
