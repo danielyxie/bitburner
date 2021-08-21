@@ -56,7 +56,6 @@ import { RunningScript } from "./Script/RunningScript";
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import {
-    getCurrentEditor,
     findRunningScript,
     findRunningScriptByPid,
 } from "./Script/ScriptHelpers";
@@ -100,6 +99,7 @@ import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import * as libarg from 'arg';
 import React from "react";
+import ReactDOM from 'react-dom';
 
 
 function postNetburnerText() {
@@ -1887,7 +1887,6 @@ let Terminal = {
 }`;
                     }
                     Engine.loadScriptEditorContent(filepath, code);
-                    getCurrentEditor().setCursor({row: 1, column: 4});
                 } else {
                     Engine.loadScriptEditorContent(filepath, script.code);
                 }

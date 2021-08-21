@@ -66,11 +66,7 @@ import {
 } from "./Programs/ProgramHelpers";
 import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
-import {
-    getCurrentEditor,
-    scriptEditorInit,
-    updateScriptEditorContent,
-} from "./Script/ScriptHelpers";
+import { Root as ScriptEditorRoot } from "./ScriptEditor/ui/Root";
 import { initForeignServers, AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
@@ -134,13 +130,6 @@ import ReactDOM from "react-dom";
  */
 $(document).keydown(function(e) {
     if (Settings.DisableHotkeys === true) {return;}
-
-    // These hotkeys should be disabled if the player is writing scripts
-    try {
-        if (getCurrentEditor().isFocused()) {
-            return;
-        }
-    } catch(error) {}
 
     if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
         if (e.keyCode == KEY.T && e.altKey) {
@@ -260,14 +249,16 @@ const Engine = {
     loadScriptEditorContent: function(filename = "", code = "") {
         Engine.hideAllContent();
         Engine.Display.scriptEditorContent.style.display = "block";
-        try {
-            getCurrentEditor().openScript(filename, code);
-        } catch(e) {
-            exceptionAlert(e);
-        }
-
-        updateScriptEditorContent();
         routing.navigateTo(Page.ScriptEditor);
+
+
+        const monaco = document.getElementById('monaco-editor');
+        //https://www.npmjs.com/package/@monaco-editor/react#development-playground
+        ReactDOM.render(
+            <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
+            Engine.Display.scriptEditorContent,
+        );
+        
         MainMenuLinks.ScriptEditor.classList.add("active");
     },
 
@@ -504,6 +495,7 @@ const Engine = {
         Engine.Display.terminalContent.style.display = "none";
         Engine.Display.characterContent.style.display = "none";
         Engine.Display.scriptEditorContent.style.display = "none";
+        ReactDOM.unmountComponentAtNode(Engine.Display.scriptEditorContent);
 
         Engine.Display.activeScriptsContent.style.display = "none";
         ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);
@@ -791,13 +783,6 @@ const Engine = {
                 Engine.updateCharacterInfo();
             }
             Engine.Counters.updateDisplaysMed = 9;
-        }
-
-        if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (routing.isOn(Page.ScriptEditor)) {
-                updateScriptEditorContent();
-            }
-            Engine.Counters.updateDisplaysLong = 15;
         }
 
         if (Engine.Counters.createProgramNotifications <= 0) {
@@ -1203,7 +1188,6 @@ const Engine = {
         }
         // Initialize labels on game settings
         setSettingsLabels();
-        scriptEditorInit();
         Terminal.resetTerminalInput();
     },
 
