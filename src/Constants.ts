@@ -6,7 +6,10 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.0",
+    Version:                "0.52.7",
+
+    // Speed (in ms) at which the main loop is updated
+    _idleSpeed: 200,
 
     /** Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
      * and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -224,45 +227,38 @@ export const CONSTANTS: IMap<any> = {
     // BitNode/Source-File related stuff
     TotalNumBitNodes: 24,
 
-    LatestUpdate:
-    `
-    v0.52.0 - 2021-06-12 Infiltration 2.0 (hydroflame)
-    -------
+    LatestUpdate: `
+    v0.52.7 - 2021-07-21 Fixing the previous patch tbh (hydroflame)
+    -------------------------------------------
 
-    Terminal
-    * tail is smarter. It automatically assume the only possible options in some
-      cases.
+    ** Netscript ** 
 
-    Intelligence
-    * Now available when starting BN5 instead of after beating it for the first
-      time.
-    * Nerf the effect of intelligence on reputation gain.
+    * API BREAKING CHANGE: getActionEstimatedSuccessChance now returns a pair of
+      value to reflect the UI changes. I'm very sorry.
 
-    Augmentation
-    * Added a new augmentation, the 'Unstable Circadian Modulator', whose
-      gimmick is that its stats are randomized every hour.
+    ** Bladeburner **
 
-    Netscript
-    * 'getPlayer' is not a singularity function anymore.
-    * 'hacknetNodes.constants' returns the correct values.
-    * 'createGang' has been added.
-    * 'inGang' has been added.
+    * General actions now display time required.
+    * Recruitment now displays success chance.
+    * All other success chance now display a range instead of a single value
+      The real value is guaranteed to be within that range.
 
-    Tutorial
-    * Updated the tutorial. Made it look cleaner, fixed typos, etc.
+    ** Misc. **
 
-    Misc.
-    * Fix many typos in literature (@kwazygloo)
-    * Fix being able to unfocus from gym and university.
-    * Fix being able to do hacking missions while unfocused.
-    * Fix many typos in Augmentation descriptions (@kwazygloo)
-    * More numbers handle absurdly large values. (@Tesseract1234567890)
-    * Fix many typos (@Tesseract1234567890)
-    * Fixed an issue that caused a UI desync when sleeves were set to workout
-      stats other than strength at the gym.
-    * Fix weird alignment of donation text box and button. (@Tesseract1234567890)
-    * Fixed an issue where reputation could be transfered to new jobs when unfocused.
-    * Empty stack traces should no longer appear.
+    * Fix tutorial not working after Monaco upate
+    * Fix logbox logs not taking up the whole logbox
+    * Fix script editor shortcut (ctrl+b)
+    * Fix Corporation popup appearing in the wrong order, hiding one of them
+    * Fix error when loading Corp
+    * Fix logbox dragging (smoother now)
+    * Fix logbox name collision
+    * Fix logbox allowing to open the same box multiple times
+    * Fix netscript write.
+    * nerf noodle bar
+`,
 
-    `,
+/*
+
+
+*/
 }

@@ -3,17 +3,27 @@
  *
  * Takes in a prop for rendering the content inside the popup
  */
-import * as React from "react";
+import React, { useEffect } from "react";
 
-type ReactComponent = new(...args: any[]) => React.Component<any, any>
-
-interface IProps {
-    content: ReactComponent;
+interface IProps<T> {
+    content: (props: T) => React.ReactElement;
     id: string;
-    props: any;
+    props: T;
+    removePopup: (id: string) => void;
 }
 
-export function Popup(props: IProps): React.ReactElement {
+export function Popup<T>(props: IProps<T>): React.ReactElement {
+    function keyDown(event: KeyboardEvent): void {
+        if(event.key === 'Escape') props.removePopup(props.id);
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', keyDown);
+        return () => {
+            document.removeEventListener('keydown', keyDown);
+        }
+    });
+
     return (
         <div className={"popup-box-content"} id={`${props.id}-content`}>
             {React.createElement(props.content, props.props)}

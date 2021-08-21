@@ -17,9 +17,8 @@ run() Netscript Function
     scripts located on the current server (the server running the script that
     calls this function).
 
-    .. warning:: Running this function with a ``numThreads`` argument of 0 will
-        return 0 without running the script. However, running this function with
-        a negative ``numThreads`` argument will cause a runtime error.
+    .. warning:: Running this function with a ``numThreads`` argument of 0 or
+                 less will cause a runtime error.
 
     The simplest way to use the :doc:`run<run>` command is to call it with just
     the script name. The following example will run ``foo.script``

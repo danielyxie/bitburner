@@ -15,4 +15,3 @@ getScriptExpGain() Netscript Function
 
     .. note:: A script is uniquely identified by both its name and its
         arguments.
-

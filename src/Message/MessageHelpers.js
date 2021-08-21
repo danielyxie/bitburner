@@ -7,7 +7,7 @@ import { Player } from "../Player";
 import { redPillFlag } from "../RedPill";
 import { GetServerByHostname } from "../Server/ServerHelpers";
 import { Settings } from "../Settings/Settings";
-import { dialogBoxCreate, dialogBoxOpened} from "../../utils/DialogBox";
+import { dialogBoxCreate} from "../../utils/DialogBox";
 import { Reviver } from "../../utils/JSONReviver";
 
 //Sends message to player, including a pop up
@@ -59,12 +59,10 @@ function checkForMessagesToSend() {
     }
 
     if (redpill && redpillOwned && Player.sourceFiles.length === 0 && !redPillFlag && !inMission) {
-        if (!dialogBoxOpened) {
-            sendMessage(redpill, true);
-        }
+        sendMessage(redpill, true);
     } else if (redpill && redpillOwned) {
         //If player has already destroyed a BitNode, message is not forced
-        if (!redPillFlag && !inMission && !dialogBoxOpened) {
+        if (!redPillFlag && !inMission) {
             sendMessage(redpill);
         }
     } else if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {

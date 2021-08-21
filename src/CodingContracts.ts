@@ -172,7 +172,7 @@ export class CodingContract {
     async prompt(): Promise<CodingContractResult> {
         const popupId = `coding-contract-prompt-popup-${this.fn}`;
         return new Promise<CodingContractResult>((resolve) => {
-            const popup = new CodingContractPopup({
+            createPopup(popupId, CodingContractPopup, {
                 c: this,
                 popupId: popupId,
                 onClose: () => {
@@ -188,7 +188,6 @@ export class CodingContract {
                     removePopup(popupId);
                 },
             });
-            createPopup(popupId, CodingContractPopup, popup.props);
         });
     }
 

@@ -86,23 +86,6 @@ interface IDefaultSettings {
  */
 interface ISettings extends IDefaultSettings {
     /**
-     * Which editor should be used (CodeMirror or Ace)?
-     */
-    Editor: EditorSetting;
-
-    /**
-     * The keybinding to use in the script editor.
-     * TODO: This should really be an enum of allowed values.
-     */
-    EditorKeybinding: AceKeybindingSetting | CodeMirrorKeybindingSetting;
-
-    /**
-     * The theme used in the script editor.
-     * TODO: This should really be an enum of allowed values.
-     */
-    EditorTheme: string | CodeMirrorThemeSetting;
-
-    /**
      * What order the player's owned Augmentations/Source Files should be displayed in
      */
     OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting;
@@ -112,35 +95,10 @@ interface ISettings extends IDefaultSettings {
      */
     PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting;
 
-    /**
-     * Editor settings to highlight active line.
-     */
-    EditorHighlightActiveLine: boolean;
-    
-    /**
-     * Editor settings to show spaces and tabs.
-     */
-    EditorShowInvisibles: boolean;
-    
-    /**
-     * Editor settings to use tabs or 4 spaces.
-     */
-    EditorUseSoftTab: boolean;
-    
-    /**
-     * Editor settings to add matching bracket.
-     */
-    EditorAutoCloseBrackets: boolean;
-    
-    /**
-     * Editor settings to show linting (like missing semicolons)
-     */
-    EditorEnableLinting: boolean;
-    
-    /**
-     * Editor settings to add extra * when entering new line inside a /* comment.
-     */
-    EditorContinueComments: boolean;
+    MonacoTheme: string;
+
+    MonacoInsertSpaces: boolean;
+
 }
 
 const defaultSettings: IDefaultSettings = {
@@ -170,9 +128,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     DisableASCIIArt:                     defaultSettings.DisableASCIIArt,
     DisableHotkeys:                      defaultSettings.DisableHotkeys,
     DisableTextEffects:                  defaultSettings.DisableTextEffects,
-    Editor:                              EditorSetting.CodeMirror,
-    EditorKeybinding:                    CodeMirrorKeybindingSetting.Default,
-    EditorTheme:                         "Monokai",
     Locale:                              "en",
     MaxLogCapacity:                      defaultSettings.MaxLogCapacity,
     MaxPortCapacity:                     defaultSettings.MaxPortCapacity,
@@ -184,12 +139,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     SuppressMessages:                    defaultSettings.SuppressMessages,
     SuppressTravelConfirmation:          defaultSettings.SuppressTravelConfirmation,
     SuppressBladeburnerPopup:            defaultSettings.SuppressBladeburnerPopup,
-    EditorHighlightActiveLine:           true,
-    EditorShowInvisibles:                false,
-    EditorUseSoftTab:                    true,
-    EditorAutoCloseBrackets:             true,
-    EditorEnableLinting:                 true,
-    EditorContinueComments:              true,
+    MonacoTheme:                         'vs-dark',
+    MonacoInsertSpaces:                  false,
     init() {
         Object.assign(Settings, defaultSettings);
     },

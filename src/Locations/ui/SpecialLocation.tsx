@@ -51,6 +51,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
 
         this.btnStyle = { display: "block" };
 
+        this.renderNoodleBar = this.renderNoodleBar.bind(this);
         this.createCorporationPopup = this.createCorporationPopup.bind(this);
         this.handleBladeburner = this.handleBladeburner.bind(this);
         this.handleResleeving = this.handleResleeving.bind(this);
@@ -129,6 +130,18 @@ export class SpecialLocation extends React.Component<IProps, IState> {
                 text={text}
             />
         )
+    }
+
+    renderNoodleBar(): React.ReactNode {
+        function EatNoodles(): void {
+            dialogBoxCreate(<>You ate some delicious noodles and feel refreshed.</>)
+        }
+
+        return (<StdButton
+            onClick={EatNoodles}
+            style={this.btnStyle}
+            text={'Eat noodles'}
+        />)
     }
 
     renderCreateCorporation(): React.ReactNode {
@@ -256,6 +269,9 @@ export class SpecialLocation extends React.Component<IProps, IState> {
             }
             case LocationName.ChongqingChurchOfTheMachineGod: {
                 return this.renderCotMG();
+            }
+            case LocationName.NewTokyoNoodleBar: {
+                return this.renderNoodleBar();
             }
             default:
                 console.error(`Location ${this.props.loc.name} doesn't have any special properties`);

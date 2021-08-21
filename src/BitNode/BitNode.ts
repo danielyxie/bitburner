@@ -111,8 +111,8 @@ BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "Posthuman",
                                       "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't know " +
                                       "when you gain experience and how much). Higher Intelligence levels will boost your production for many actions " +
                                       "in the game. <br><br>" +
-                                      "In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function, " +
-                                      "and will also raise all of your hacking-related multipliers by:<br><br>" +
+                                      "In addition, this Source-File will unlock the getBitNodeMultipliers() and getServer() Netscript functions, " +
+                                      "as well as the formulas API, and will also raise all of your hacking-related multipliers by:<br><br>" +
                                       "Level 1: 8%<br>" +
                                       "Level 2: 12%<br>" +
                                       "Level 3: 14%");
@@ -231,7 +231,11 @@ BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                         "This Source-File also increases the player's company salary and reputation gain multipliers by:<br><br>" +
                                         "Level 1: 32%<br>" +
                                         "Level 2: 48%<br>" +
-                                        "Level 3: 56%");
+                                        "Level 3: 56%<br><br>" +
+                                        "It also reduces the price increase for every aug bought by:<br><br>"+
+                                        "Level 1: 4%<br>"+
+                                        "Level 2: 6%<br>"+
+                                        "Level 3: 7%");
 BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
                                         "To iterate is human, to recurse divine.<br><br>" +
                                         "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give you Source-File 12, or " +

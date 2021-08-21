@@ -8,6 +8,7 @@ export interface IConstructorParams {
     hasTargetServer?: boolean;
     name: string;
     value: number;
+    effectText?: (level: number) => JSX.Element | null;
 }
 
 export class HashUpgrade {
@@ -45,6 +46,7 @@ export class HashUpgrade {
 
     constructor(p: IConstructorParams) {
         if (p.cost != null) { this.cost = p.cost; }
+        if (p.effectText != null) { this.effectText = p.effectText; }
 
         this.costPerLevel = p.costPerLevel;
         this.desc = p.desc;
@@ -52,6 +54,9 @@ export class HashUpgrade {
         this.name = p.name;
         this.value = p.value;
     }
+
+    // Functions that returns the UI element to display the effect of this upgrade.
+    effectText: (level: number) => JSX.Element | null = () => null;
 
     getCost(levels: number): number {
         if (typeof this.cost === "number") { return this.cost; }

@@ -20,6 +20,7 @@ import {
     getFactionSecurityWorkRepGain,
     getFactionFieldWorkRepGain,
 } from "../PersonObjects/formulas/reputation";
+import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { Page, routing } from "../ui/navigationTracking";
 import { dialogBoxCreate } from "../../utils/DialogBox";
@@ -45,6 +46,7 @@ export function inviteToFaction(faction) {
 }
 
 export function joinFaction(faction) {
+    if(faction.isMember) return;
 	faction.isMember = true;
     Player.factions.push(faction.name);
     const factionInfo = faction.getInfo();
@@ -194,13 +196,13 @@ export function purchaseAugmentation(aug, fac, sing=false) {
             aug.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
 
             for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
-                aug.baseCost *= CONSTANTS.MultipleAugMultiplier;
+                aug.baseCost *= (CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]]);
             }
         }
 
         for (var name in Augmentations) {
             if (Augmentations.hasOwnProperty(name)) {
-                Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier;
+                Augmentations[name].baseCost *= (CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]]);
             }
         }
 

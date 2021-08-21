@@ -19,9 +19,8 @@ exec() Netscript Function
     the :doc:`run<run>` function except that it can be used to run a script on any
     server, instead of just the current server.
 
-    .. warning:: Running this function with a ``numThreads`` argument of 0 will return 0 without
-                 running the script. However, running this function with a negative *numThreads*
-                 argument will cause a runtime error.
+    .. warning:: Running this function with a ``numThreads`` argument of 0 or
+                 less will cause a runtime error.
 
     The simplest way to use the :doc:`exec<exec>` command is to call it with
     just the script name and the target server. The following example will try

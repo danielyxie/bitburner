@@ -12,7 +12,7 @@ getActionCountRemaining() Netscript Function
     This function will return 'Infinity' for actions such as 'Training' and
     'Field Analysis'.
     This function will return 1 for BlackOps not yet completed regardless of
-    wether the player has the required rank to attempt the mission or not.
+    whether the player has the required rank to attempt the mission or not.
 
     Example:
 

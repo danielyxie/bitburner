@@ -5,7 +5,7 @@ import {
 } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
-import { Bladeburner } from "./Bladeburner";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { writeCinematicText } from "./CinematicText";
 import { Companies, initCompanies } from "./Company/Companies";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
@@ -96,6 +96,11 @@ function prestigeAugmentation() {
         Augmentations[AugmentationNames.CashRoot].owned) {
         Player.setMoney(1e6);
         homeComp.programs.push(Programs.BruteSSHProgram.name);
+    }
+    if (augmentationExists(AugmentationNames.PCMatrix) &&
+        Augmentations[AugmentationNames.PCMatrix].owned) {
+        homeComp.programs.push(Programs.DeepscanV1.name);
+        homeComp.programs.push(Programs.AutoLink.name);
     }
 
     // Re-create foreign servers
@@ -342,7 +347,7 @@ function prestigeSourceFile(flume) {
         deleteStockMarket();
     }
 
-    if (Player.inGang()) { Player.gang.clearUI(); }
+    if (Player.inGang()) clearGangUI();
     Player.gang = null;
     Player.corporation = null; resetIndustryResearchTrees();
     Player.bladeburner = null;

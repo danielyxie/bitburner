@@ -9,7 +9,8 @@ moneyGainRate() Netscript Function
     :param number core: cores of the node.
     :returns: Money per second that a node with those stats would gain per second.
 
-    You must have Source-File 5-1 in order to use this function.
+    If you are not in BitNode-5, then you must have Source-File 5-1 in order to
+    use this function.
 
     This function calculates the money rate of a node with the given stats.
 

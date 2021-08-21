@@ -13,7 +13,6 @@ getGrowTime() Netscript Function
     The function takes in an optional ``hackLvl`` parameter that can be
     specified to see what the grow time would be at different hacking levels.
 
-
     Example:
 
     .. code-block:: javascript

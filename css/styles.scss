@@ -17,6 +17,8 @@ body {
 p,
 pre,
 h2,
+h3,
+h4,
 .text,
 td {
     color: var(--my-font-color);
@@ -34,6 +36,10 @@ ul {
 
 li {
     list-style-type: none;
+}
+
+br {
+    @extend .noselect;
 }
 
 #entire-game-container {

@@ -9,8 +9,8 @@ getScriptLogs() Netscript Function
     :param args...: Arguments to identify which scripts to get logs for
     :returns: Array of string, each line being a logged line. Chronological.
 
-.. note:: There is a maximum number of lines that a script stores in its logs.
-    This is configurable in the game's options.
+    .. note:: There is a maximum number of lines that a script stores in its logs.
+        This is configurable in the game's options.
 
     If the function is called with no arguments, it will return the current
     script's logs.

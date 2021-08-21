@@ -156,38 +156,6 @@
 /* Infiltration */
 #infiltration-container {
     position: fixed;
-    padding: 6px;
-
-    span {
-        margin: 0;
-        padding: 0;
-    }
-}
-
-#infiltration-left-panel,
-#infiltration-right-panel {
-    display: inline-block;
-    border: 1px solid #fff;
-    width: 35%;
-    height: 75%;
-    top: 10px;
-    overflow-y: auto;
-    overflow-x: auto;
-}
-
-#infiltration-faction-select {
-    color: #fff;
-}
-
-#infiltration-left-panel p,
-#infiltration-right-panel p {
-    margin: 4px;
-}
-
-#infiltration-buttons {
-    margin-top: 20px;
-}
-
-#infiltration-buttons .a-link-button {
-    display: inline;
+    margin: 5px;
+    width: 70%;
 }

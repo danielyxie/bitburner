@@ -14,7 +14,7 @@ import { AllServers } from "./Server/AllServers";
 import { GetServerByHostname } from "./Server/ServerHelpers";
 import { hackWorldDaemon } from "./RedPill";
 import { StockMarket } from "./StockMarket/StockMarket";
-import { Bladeburner } from "./Bladeburner";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Stock } from "./StockMarket/Stock";
 import { Engine } from "./engine";
 import { saveObject } from "./SaveObject";
@@ -76,6 +76,7 @@ class DevMenuComponent extends Component {
 
         this.setSF = this.setSF.bind(this);
         this.setAllSF = this.setAllSF.bind(this);
+        this.clearExploits = this.clearExploits.bind(this);
         this.processStocks = this.processStocks.bind(this);
         this.setStockPrice = this.setStockPrice.bind(this);
         this.viewStockCaps = this.viewStockCaps.bind(this);
@@ -376,6 +377,10 @@ class DevMenuComponent extends Component {
                 this.setSF(validSFN[i], sfLvl)();
             }
         }
+    }
+
+    clearExploits() {
+        Player.exploits = [];
     }
 
     addProgram() {
@@ -726,7 +731,7 @@ class DevMenuComponent extends Component {
             <button className="std-button" onClick={this.addMoney(1e9)}>Add $1b</button>
             <button className="std-button" onClick={this.addMoney(1e12)}>Add $1t</button>
             <button className="std-button" onClick={this.addMoney(1e15)}>Add $1000t</button>
-            <button className="std-button" onClick={this.addMoney(1e99)}>Add $1e99</button>
+            <button className="std-button" onClick={this.addMoney(Infinity)}>Add $Infinity</button>
             <button className="std-button" onClick={this.upgradeRam}>Upgrade Home Computer's RAM</button>
     </div>
     <div className="row">
@@ -953,6 +958,12 @@ class DevMenuComponent extends Component {
             </div>
             <table>
                 <tbody>
+                    <tr>
+                        <td><span className="text">Exploits:</span></td>
+                        <td>
+                            <button className="std-button touch-right" onClick={this.clearExploits()}>Clear</button>
+                        </td>
+                    </tr>
                     <tr key={'sf-all'}>
                         <td><span className="text">All:</span></td>
                         <td>

@@ -11,8 +11,8 @@ getData() Netscript Function
         contract type.
 
     Get the data associated with the specific Coding Contract. Note that this is
-    not the same as the contract's description. This is just the data that
-    the contract wants you to act on in order to solve
+    not the same as the contract's description; this is just the data that
+    the contract wants you to act on in order to solve.
 
     Example:
 

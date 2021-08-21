@@ -13,6 +13,5 @@ export const BaseCostPerSleeve = 10e12;
 export const PopupId = "covenant-sleeve-purchases-popup";
 
 export function createSleevePurchasesFromCovenantPopup(p: IPlayer): void {
-    const removePopupFn = removePopup.bind(null, PopupId);
-    createPopup(PopupId, CovenantPurchasesRoot, { p: p, closeFn: removePopupFn });
+    createPopup(PopupId, CovenantPurchasesRoot, { p: p, closeFn: () => removePopup(PopupId) });
 }

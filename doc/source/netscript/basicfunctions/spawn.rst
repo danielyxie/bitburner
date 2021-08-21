@@ -16,6 +16,8 @@ spawn() Netscript Function
     current one. This function can only be used to run scripts on the local
     server.
 
+    .. warning:: Running this function with a ``numThreads`` argument of 0 or
+                 less will cause a runtime error.
 
     Example:
 

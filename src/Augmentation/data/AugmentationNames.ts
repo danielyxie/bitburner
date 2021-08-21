@@ -47,6 +47,7 @@ export const AugmentationNames: IMap<string> = {
     PCDNI:                              "PC Direct-Neural Interface",
     PCDNIOptimizer:                     "PC Direct-Neural Interface Optimization Submodule",
     PCDNINeuralNetwork:                 "PC Direct-Neural Interface NeuroNet Injector",
+    PCMatrix:                           "PCMatrix",
     ADRPheromone1:                      "ADR-V1 Pheromone Gene",
     ADRPheromone2:                      "ADR-V2 Pheromone Gene",
     ShadowsSimulacrum:                  "The Shadow's Simulacrum",

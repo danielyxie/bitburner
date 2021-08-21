@@ -18,7 +18,7 @@ import { Engine } from "../../engine";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { displayFactionContent } from "../../Faction/FactionHelpers";
-import { resetGangs } from "../../Gang";
+import { resetGangs } from "../../Gang/AllGangs";
 import { hasHacknetServers } from "../../Hacknet/HacknetHelpers";
 import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
@@ -394,6 +394,7 @@ export function loseMoney(money) {
         console.error("NaN passed into Player.loseMoney()");
         return;
     }
+    if(this.money.eq(Infinity) && money === Infinity) return;
     this.money = this.money.minus(money);
 }
 
@@ -1741,6 +1742,7 @@ export function applyForJob(entryPosType, sing=false) {
     }
 
     this.jobs[company.name] = pos.name;
+    this.companyName = this.location;
 
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();
@@ -1784,6 +1786,7 @@ export function getNextCompanyPosition(company, entryPosType) {
 }
 
 export function quitJob(company) {
+    this.isWorking = false;
     this.companyName = "";
     delete this.jobs[company];
 }

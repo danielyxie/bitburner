@@ -194,6 +194,23 @@ export class Action implements IAction {
         return 1;
     }
 
+    getEstSuccessChance(inst: IBladeburner): number[] {
+        function clamp(x: number): number {
+            return Math.max(0, Math.min(x, 1));
+        }
+        const est = this.getSuccessChance(inst, {est: true});
+        const real = this.getSuccessChance(inst);
+        const diff = Math.abs(real-est);
+        let low = real-diff;
+        let high = real+diff;
+        const city = inst.getCurrentCity();
+        const r = city.pop / city.popEst;
+
+        if(r < 1) low *= r;
+        else high *= r;
+        return [clamp(low), clamp(high)];
+    }
+
     /**
      * @inst - Bladeburner Object
      * @params - options:

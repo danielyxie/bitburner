@@ -74,7 +74,7 @@ export class LocationRoot extends React.Component<IProps, IState> {
         }
 
         return (
-            <div>
+            <div className="noselect">
                 <h2>{this.state.city}</h2>
                 <LocationCity city={city} enterLocation={this.enterLocation} />
             </div>
@@ -120,7 +120,7 @@ export class LocationRoot extends React.Component<IProps, IState> {
 
         p.loseMoney(cost);
         p.travel(to);
-        dialogBoxCreate(`You are now in ${to}!`);
+        dialogBoxCreate(<span className="noselect">You are now in {to}!</span>);
 
         // Dynamically update main menu
         if (p.firstTimeTraveled === false) {

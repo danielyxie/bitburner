@@ -119,7 +119,7 @@ function Industry(params={}) {
     };
 
     this.name   = params.name ? params.name : 0;
-    this.type   = params.type ? params.type : 0;
+    this.type   = params.type ? params.type : Industries.Agriculture;
 
     this.sciResearch    = new Material({name: "Scientific Research"});
     this.researched = {}; // Object of acquired Research. Keys = research name
@@ -1397,11 +1397,12 @@ Industry.prototype.createResearchBox = function() {
                 researchTree.research(allResearch[i]);
                 this.researched[allResearch[i]] = true;
 
+                const researchBox = this.createResearchBox();
                 dialogBoxCreate(`Researched ${allResearch[i]}. It may take a market cycle ` +
                                 `(~${SecsPerMarketCycle} seconds) before the effects of ` +
                                 `the Research apply.`);
 
-                return this.createResearchBox();
+                return researchBox;
             } else {
                 dialogBoxCreate(`You do not have enough Scientific Research for ${research.name}`);
             }

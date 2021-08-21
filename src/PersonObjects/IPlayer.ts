@@ -31,6 +31,7 @@ export interface IPlayer {
     corporation: any;
     currentServer: string;
     factions: string[];
+    factionInvitations: string[];
     firstProgramAvailable: boolean;
     firstTimeTraveled: boolean;
     hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
@@ -42,6 +43,7 @@ export interface IPlayer {
     homeComputer: string;
     hp: number;
     jobs: IMap<string>;
+    isWorking: boolean;
     karma: number;
     location: LocationName;
     max_hp: number;
@@ -136,6 +138,7 @@ export interface IPlayer {
     gainDexterityExp(exp: number): void;
     gainAgilityExp(exp: number): void;
     gainCharismaExp(exp: number): void;
+    gainIntelligenceExp(exp: number): void;
     gainMoney(money: number): void;
     getCurrentServer(): Server;
     getGangFaction(): Faction;
@@ -178,6 +181,7 @@ export interface IPlayer {
     startWork(companyName: string): void;
     startWorkPartTime(companyName: string): void;
     queueAugmentation(augmentation: string): void;
+    takeDamage(amt: number): boolean;
     travel(to: CityName): boolean;
     giveExploit(exploit: Exploit): void;
     queryStatFromString(str: string): number;

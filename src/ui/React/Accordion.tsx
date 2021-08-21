@@ -23,27 +23,14 @@ export class Accordion extends React.Component<IProps, IState> {
         this.handleHeaderClick = this.handleHeaderClick.bind(this);
 
         this.state = {
-            panelOpened: props.panelInitiallyOpened ? true : false,
+            panelOpened: props.panelInitiallyOpened ? props.panelInitiallyOpened : false,
         }
     }
 
-    handleHeaderClick(e: React.MouseEvent<HTMLButtonElement>): void {
-        const elem = e.currentTarget;
-        elem.classList.toggle("active");
-
-        const panel: HTMLElement = elem.nextElementSibling as HTMLElement;
-        const active = elem.classList.contains("active");
-        if (active) {
-            panel.style.display = "block";
-            this.setState({
-                panelOpened: true,
-            });
-        } else {
-            panel.style.display = "none";
-            this.setState({
-                panelOpened: false,
-            });
-        }
+    handleHeaderClick(): void {
+        this.setState({
+            panelOpened: !this.state.panelOpened,
+        });
     }
 
     render(): React.ReactNode {
@@ -51,6 +38,8 @@ export class Accordion extends React.Component<IProps, IState> {
         if (typeof this.props.headerClass === "string") {
             className = this.props.headerClass;
         }
+
+        if(this.state.panelOpened) className += " active"
 
         return (
             <>
@@ -84,8 +73,9 @@ class AccordionPanel extends React.Component<IPanelProps, any> {
             className = this.props.panelClass;
         }
 
+
         return (
-            <div className={className}>
+            <div className={className} style={{display: this.props.opened ? "block" : "none"}}>
                 {this.props.panelContent}
             </div>
         )

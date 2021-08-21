@@ -10,7 +10,7 @@ import { Engine } from "./engine";
 import { Factions, loadFactions } from "./Faction/Factions";
 import { loadFconf } from "./Fconf/Fconf";
 import { FconfSettings } from "./Fconf/FconfSettings";
-import { loadAllGangs, AllGangs } from "./Gang";
+import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
 import { AllServers, loadAllServers } from "./Server/AllServers";
@@ -83,6 +83,7 @@ BitburnerSaveObject.prototype.getSaveString = function() {
     this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.StockMarketSave            = JSON.stringify(StockMarket);
+    console.log(JSON.stringify(Settings));
     this.SettingsSave               = JSON.stringify(Settings);
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
