@@ -163,7 +163,7 @@ export function Root(props: IProps): React.ReactElement {
             const textFile = new TextFile(filename, code);
             s.textFiles.push(textFile);
         } else {
-            dialogBoxCreate("Invalid filename. Must be either a script (.script) or " +
+            dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " +
                             " or text file (.txt)")
             return;
         }
