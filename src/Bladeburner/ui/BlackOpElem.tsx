@@ -10,6 +10,7 @@ import { createPopup } from "../../ui/React/createPopup";
 import { TeamSizePopup } from "./TeamSizePopup";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { SuccessChance } from "./SuccessChance";
 
 interface IProps {
     bladeburner: IBladeburner;
@@ -26,7 +27,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
     }
 
     const isActive = props.bladeburner.action.type === ActionTypes["BlackOperation"] && props.action.name === props.bladeburner.action.name;
-    const estimatedSuccessChance = props.action.getSuccessChance(props.bladeburner, {est:true});
+    const estimatedSuccessChance = props.action.getEstSuccessChance(props.bladeburner);
     const actionTime = props.action.getActionTime(props.bladeburner);
     const hasReqdRank = props.bladeburner.rank >= props.action.reqdRank;
     const computedActionTimeCurrent = Math.min(props.bladeburner.actionTimeCurrent+props.bladeburner.actionTimeOverflow, props.bladeburner.actionTimeToComplete);
@@ -78,10 +79,10 @@ export function BlackOpElem(props: IProps): React.ReactElement {
             Required Rank: {formatNumber(props.action.reqdRank, 0)}
         </p>
         <br />
-        <p style={{display:"inline-block"}}>
-            Estimated Success Chance: {formatNumber(estimatedSuccessChance*100, 1)}% {props.action.isStealth?stealthIcon:<></>}{props.action.isKill?killIcon:<></>}
+        <pre style={{display:"inline-block"}}>
+            Estimated Success Chance: <SuccessChance chance={estimatedSuccessChance} /> {props.action.isStealth?stealthIcon:<></>}{props.action.isKill?killIcon:<></>}
             <br />
             Time Required: {convertTimeMsToTimeElapsedString(actionTime*1000)}
-        </p>
+        </pre>
     </>);
 }

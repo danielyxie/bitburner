@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.6",
+    Version:                "0.52.7",
 
     // Speed (in ms) at which the main loop is updated
     _idleSpeed: 200,
@@ -228,26 +228,37 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.6 - 2021-07-21 Logboxes and VS-code (hydroflame)
+    v0.52.7 - 2021-07-21 Fixing the previous patch tbh (hydroflame)
     -------------------------------------------
 
-    ** Text Editor **
+    ** Netscript ** 
 
-    * Ace and Codemirror have been removed in favor of monaco (web version of
-      vs-code). The options are a bit lackluster but more will be added as
-      feedback comes.
+    * API BREAKING CHANGE: getActionEstimatedSuccessChance now returns a pair of
+      value to reflect the UI changes. I'm very sorry.
 
-    ** Log boxes **
+    ** Bladeburner **
 
-    * Multiple log boxes can be opened at once. They can be moved around the
-      screen. (but the movement behavior is a bit weird.)
+    * General actions now display time required.
+    * Recruitment now displays success chance.
+    * All other success chance now display a range instead of a single value
+      The real value is guaranteed to be within that range.
 
     ** Misc. **
 
-    * Job promotion now correctly updates the UI.
-    * Milestones now call the faction CyberSec instead of CSEC
-    * Can no longer create file that break the filesystem.
-    * Remove dollar sign in blade contract UI element
+    * Fix tutorial not working after Monaco upate
+    * Fix logbox logs not taking up the whole logbox
+    * Fix script editor shortcut (ctrl+b)
+    * Fix Corporation popup appearing in the wrong order, hiding one of them
+    * Fix error when loading Corp
+    * Fix logbox dragging (smoother now)
+    * Fix logbox name collision
+    * Fix logbox allowing to open the same box multiple times
+    * Fix netscript write.
     * nerf noodle bar
 `,
+
+/*
+
+
+*/
 }

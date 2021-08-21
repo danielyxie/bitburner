@@ -3,6 +3,34 @@
 Changelog
 =========
 
+v0.52.7 - 2021-07-21 Fixing the previous patch tbh (hydroflame)
+-------------------------------------------
+
+** Netscript ** 
+
+* API BREAKING CHANGE: getActionEstimatedSuccessChance now returns a pair of
+  value to reflect the UI changes. I'm very sorry.
+
+** Bladeburner **
+
+* General actions now display time required.
+* Recruitment now displays success chance.
+* All other success chance now display a range instead of a single value
+  The real value is guaranteed to be within that range.
+
+** Misc. **
+
+* Fix tutorial not working after Monaco upate
+* Fix logbox logs not taking up the whole logbox
+* Fix script editor shortcut (ctrl+b)
+* Fix Corporation popup appearing in the wrong order, hiding one of them
+* Fix error when loading Corp
+* Fix logbox dragging (smoother now)
+* Fix logbox name collision
+* Fix logbox allowing to open the same box multiple times
+* Fix netscript write.
+* nerf noodle bar
+
 v0.52.6 - 2021-07-21 Logboxes and VS-code (hydroflame)
 -------------------------------------------
 

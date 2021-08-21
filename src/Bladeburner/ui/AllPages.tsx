@@ -44,6 +44,6 @@ export function AllPages(props: IProps): React.ReactElement {
             {page === 'BlackOps' && <BlackOpPage bladeburner={props.bladeburner} player={props.player} />}
             {page === 'Skills' && <SkillPage bladeburner={props.bladeburner} />}
         </div>
-        <span className="text">{stealthIcon}= This action requires stealth, {killIcon} = This action involves retirement</span>
+        <span className="text">{stealthIcon} = This action requires stealth, {killIcon} = This action involves retirement</span>
     </>);
 }
