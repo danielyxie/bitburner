@@ -119,7 +119,7 @@ function Industry(params={}) {
     };
 
     this.name   = params.name ? params.name : 0;
-    this.type   = params.type ? params.type : 0;
+    this.type   = params.type ? params.type : Industries.Agriculture;
 
     this.sciResearch    = new Material({name: "Scientific Research"});
     this.researched = {}; // Object of acquired Research. Keys = research name
