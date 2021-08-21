@@ -94,7 +94,8 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
 }
 
 export function logBoxCreate(script: RunningScript): void {
-    const id = script.filename+script.args.map((x: any): string => `${x}`).join('');
+    const id = script.server+"-"+script.filename+script.args.map((x: any): string => `${x}`).join('-');
+    if(document.getElementById(id) !== null) return;
     const container = createElement("div", {
         class: "log-box-container",
         id: id,

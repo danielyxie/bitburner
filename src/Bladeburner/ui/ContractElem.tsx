@@ -9,6 +9,7 @@ import { stealthIcon, killIcon } from "../data/Icons";
 import { BladeburnerConstants } from "../data/Constants";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { SuccessChance } from "./SuccessChance";
 
 interface IProps {
     bladeburner: IBladeburner;
@@ -19,7 +20,8 @@ interface IProps {
 export function ContractElem(props: IProps): React.ReactElement {
     const setRerender = useState(false)[1];
     const isActive = props.bladeburner.action.type === ActionTypes["Contract"] && props.action.name === props.bladeburner.action.name;
-    const estimatedSuccessChance = props.action.getSuccessChance(props.bladeburner, {est:true});
+    const estimatedSuccessChance = props.action.getEstSuccessChance(props.bladeburner);
+    const successChance = props.action.getSuccessChance(props.bladeburner);
     const computedActionTimeCurrent = Math.min(props.bladeburner.actionTimeCurrent+props.bladeburner.actionTimeOverflow, props.bladeburner.actionTimeToComplete);
     const maxLevel = (props.action.level >= props.action.maxLevel);
     const actionTime = props.action.getActionTime(props.bladeburner);
@@ -93,7 +95,7 @@ export function ContractElem(props: IProps): React.ReactElement {
         <pre style={{display: 'inline-block'}}>
 <span dangerouslySetInnerHTML={{__html: props.action.desc}} />
 <br /><br />
-Estimated success chance: {formatNumber(estimatedSuccessChance*100, 1)}% {props.action.isStealth?stealthIcon:<></>}{props.action.isKill?killIcon:<></>}<br />
+Estimated success chance: <SuccessChance chance={estimatedSuccessChance} /> {props.action.isStealth?stealthIcon:<></>}{props.action.isKill?killIcon:<></>}<br />
 Time Required: {convertTimeMsToTimeElapsedString(actionTime*1000)}<br />
 Contracts remaining: {Math.floor(props.action.count)}<br />
 Successes: {props.action.successes}<br />
@@ -114,26 +116,3 @@ Failures: {props.action.failures}
             onChange={onAutolevel}/>
     </>);
 }
-
-/*
-
-// Autolevel Checkbox
-el.appendChild(createElement("br"));
-var autolevelCheckboxId = "bladeburner-" + action.name + "-autolevel-checkbox";
-el.appendChild(createElement("label", {
-    for:autolevelCheckboxId, innerText:"Autolevel: ",color:"white",
-    tooltip:"Automatically increase contract level when possible",
-}));
-
-const checkboxInput = createElement("input", {
-  type:"checkbox",
-  id: autolevelCheckboxId,
-  checked: action.autoLevel,
-  changeListener: () => {
-    action.autoLevel = checkboxInput.checked;
-  },
-});
-
-el.appendChild(checkboxInput);
-
-*/

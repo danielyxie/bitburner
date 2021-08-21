@@ -67,7 +67,7 @@ export interface IBladeburner {
     getSkillNamesNetscriptFn(): string[];
     startActionNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): boolean;
     getActionTimeNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number;
-    getActionEstimatedSuccessChanceNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number;
+    getActionEstimatedSuccessChanceNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number[];
     getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
     getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number;
     getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number;

@@ -1788,18 +1788,18 @@ export class Bladeburner implements IBladeburner {
         }
     }
 
-    getActionEstimatedSuccessChanceNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number {
+    getActionEstimatedSuccessChanceNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number[] {
         const errorLogText = `Invalid action: type='${type}' name='${name}'`
         const actionId = this.getActionIdFromTypeAndName(type, name);
         if (actionId == null) {
             workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
-            return -1;
+            return [-1, -1];
         }
 
         const actionObj = this.getActionObject(actionId);
         if (actionObj == null) {
             workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
-            return -1;
+            return [-1, -1];
         }
 
         switch (actionId.type) {
@@ -1807,16 +1807,17 @@ export class Bladeburner implements IBladeburner {
             case ActionTypes["Operation"]:
             case ActionTypes["BlackOp"]:
             case ActionTypes["BlackOperation"]:
-                return actionObj.getSuccessChance(this, {est:true});
+                return actionObj.getEstSuccessChance(this);
             case ActionTypes["Training"]:
             case ActionTypes["Field Analysis"]:
             case ActionTypes["FieldAnalysis"]:
-                return 1;
+                return [1, 1];
             case ActionTypes["Recruitment"]:
-                return this.getRecruitmentSuccessChance(player);
+                const recChance = this.getRecruitmentSuccessChance(player);
+                return [recChance, recChance];
             default:
                 workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
-                return -1;
+                return [-1, -1];
         }
     }
 
