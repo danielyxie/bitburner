@@ -85,10 +85,13 @@ export function Game(props: IProps): React.ReactElement {
         })
     }
 
-    function failure(): void {
+    function failure(options?: { automated: boolean }): void {
         setStage(Stage.Countdown);
         pushResult(false);
-        if(props.Player.takeDamage(props.StartingDifficulty*3)) {
+        // Kill the player immediately if they use automation, so
+        // it's clear they're not meant to
+        const damage = options?.automated ? props.Player.hp : props.StartingDifficulty*3;
+        if(props.Player.takeDamage(damage)) {
             const menu = document.getElementById("mainmenu-container");
             if(menu === null) throw new Error("mainmenu-container not found");
             menu.style.visibility = "visible";

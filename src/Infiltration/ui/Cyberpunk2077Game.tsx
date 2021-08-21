@@ -86,7 +86,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
                     return <span key={`${x}${y}`} style={{fontSize: fontSize, color: 'blue'}}>{cell}&nbsp;</span>
                 return <span key={`${x}${y}`} style={{fontSize: fontSize}}>{cell}&nbsp;</span>
             })}</pre><br /></div>)}
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
     </Grid>)
 }

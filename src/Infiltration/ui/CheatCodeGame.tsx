@@ -47,7 +47,7 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
         <Grid item xs={12}>
             <h1 className={"noselect"}>Enter the Code!</h1>
             <p style={{fontSize: '5em'}}>{code[index]}</p>
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
     </Grid>)
 }

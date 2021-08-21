@@ -94,7 +94,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
                     return <span key={x}>[&nbsp;]&nbsp;</span>
                 }
             })}</pre><br /></div>)}
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
     </Grid>)
 }

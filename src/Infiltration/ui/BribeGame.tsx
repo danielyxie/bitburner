@@ -51,7 +51,7 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
         <GameTimer millis={timer} onExpire={props.onFailure} />
         <Grid item xs={12}>
             <h1>Say something nice about the guard.</h1>
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
         <Grid item xs={6}>
             <h2 style={{fontSize: "2em"}}>↑</h2>
