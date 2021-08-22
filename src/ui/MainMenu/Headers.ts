@@ -68,7 +68,7 @@ export function initializeMainMenuHeaders(p: IPlayer, dev = false): boolean {
             const createProgramNot: HTMLElement = safeGetElement("create-program-notification");
             const staneksGift: HTMLElement      = safeGetElement("staneks-gift-tab");
 
-            staneksGift.style.display   = p.augmentations.some(aug => aug.name === AugmentationNames.StaneksGift) ? "list-item" : "none";
+            staneksGift.style.display   = p.augmentations.some(aug => aug.name === AugmentationNames.StaneksGift1) ? "list-item" : "none";
             createProgram.style.display = p.firstProgramAvailable ? "list-item" : "none";
 
             (this as any).classList.toggle("opened");
