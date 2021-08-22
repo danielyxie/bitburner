@@ -57,6 +57,7 @@ import {
     loadAllRunningScripts,
     updateOnlineScriptTimes,
 } from "./NetscriptWorker";
+import { GetServerByHostname } from "./Server/ServerHelpers";
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
 import {
@@ -226,6 +227,8 @@ const Engine = {
     },
 
     indexedDb: undefined,
+    lastFilename: '',
+    lastFilenameServer: '',
 
     // Time variables (milliseconds unix epoch time)
     _lastUpdate: new Date().getTime(),
@@ -251,9 +254,17 @@ const Engine = {
         Engine.Display.scriptEditorContent.style.display = "block";
         routing.navigateTo(Page.ScriptEditor);
 
+        if(filename !== "") {
+            this.lastFilename = filename;
+            this.lastFilenameServer = Player.getCurrentServer().hostname;
+        } else if(this.lastFilename !== '') {
+            const scripts = GetServerByHostname(this.lastFilenameServer).scripts.filter(x => x.filename === this.lastFilename);
+            if(scripts.length === 1) {
+                filename = this.lastFilename;
+                code = scripts[0].code;
+            }
+        }
 
-        const monaco = document.getElementById('monaco-editor');
-        //https://www.npmjs.com/package/@monaco-editor/react#development-playground
         ReactDOM.render(
             <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
             Engine.Display.scriptEditorContent,
