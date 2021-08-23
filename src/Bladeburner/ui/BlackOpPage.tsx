@@ -2,6 +2,7 @@ import * as React from "react";
 import { BlackOpList } from "./BlackOpList";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { CopyableText } from "../../ui/React/CopyableText";
 
 interface IProps {
     bladeburner: IBladeburner;

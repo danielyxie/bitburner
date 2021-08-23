@@ -11,6 +11,7 @@ import { TeamSizePopup } from "./TeamSizePopup";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { SuccessChance } from "./SuccessChance";
+import { CopyableText } from "../../ui/React/CopyableText";
 
 interface IProps {
     bladeburner: IBladeburner;
@@ -51,8 +52,8 @@ export function BlackOpElem(props: IProps): React.ReactElement {
     return (<>
         <h2 style={{display: 'inline-block'}}>
             {isActive ? 
-                <>{props.action.name} (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} / {formatNumber(props.bladeburner.actionTimeToComplete, 0)})</> :
-                <>{props.action.name}</>
+                <><CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} / {formatNumber(props.bladeburner.actionTimeToComplete, 0)})</> :
+                <CopyableText value={props.action.name} />
             }
         </h2>
         {isActive ? 
