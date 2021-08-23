@@ -23,7 +23,7 @@ import { libSource } from "../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
-import { GetServerByHostname } from "../../Server/ServerHelpers";
+import { getServer } from "../../Server/ServerHelpers";
 import {
     iTutorialNextStep,
     ITutorial,
@@ -91,7 +91,7 @@ export function Root(props: IProps): React.ReactElement {
     useEffect(() => {
         if(props.filename === "") return;
         if(lastFilename === "")
-            lastServer = props.player.getCurrentServer().hostname;
+            lastServer = props.player.getCurrentServer().ip;
         lastFilename = props.filename;
         lastCode = props.code;
         lastPosition = null;
@@ -122,7 +122,7 @@ export function Root(props: IProps): React.ReactElement {
             }
 
             //Save the script
-            const server = GetServerByHostname(lastServer);
+            const server = getServer(lastServer);
             if(server === null) throw new Error('Server should not be null but it is.');
             for (let i = 0; i < server.scripts.length; i++) {
                 if (filename == server.scripts[i].filename) {
@@ -150,7 +150,7 @@ export function Root(props: IProps): React.ReactElement {
             return;
         }
 
-        const server = GetServerByHostname(lastServer);
+        const server = getServer(lastServer);
         if(server === null) throw new Error('Server should not be null but it is.');
         if (filename === ".fconf") {
             try {
