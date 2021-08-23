@@ -73,7 +73,6 @@ interface IProps {
 // These variables are used to reload a script when it's clicked on. Because we
 // won't have references to the old script.
 let lastFilename = "";
-let lastServer = "";
 let lastCode = "";
 let lastPosition: monaco.Position | null = null;
 
@@ -90,8 +89,6 @@ export function Root(props: IProps): React.ReactElement {
     // store the last known state in case we need to restart without nano.
     useEffect(() => {
         if(props.filename === "") return;
-        if(lastFilename === "")
-            lastServer = props.player.getCurrentServer().hostname;
         lastFilename = props.filename;
         lastCode = props.code;
         lastPosition = null;
@@ -122,11 +119,11 @@ export function Root(props: IProps): React.ReactElement {
             }
 
             //Save the script
-            const server = GetServerByHostname(lastServer);
+            const server = props.player.getCurrentServer();
             if(server === null) throw new Error('Server should not be null but it is.');
             for (let i = 0; i < server.scripts.length; i++) {
                 if (filename == server.scripts[i].filename) {
-                    server.scripts[i].saveScript(code, server.ip, server.scripts);
+                    server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
                     props.engine.loadTerminalContent();
                     return iTutorialNextStep();
                 }
@@ -134,7 +131,7 @@ export function Root(props: IProps): React.ReactElement {
 
             // If the current script does NOT exist, create a new one
             const script = new Script();
-            script.saveScript(code, server.ip, server.scripts);
+            script.saveScript(code, props.player.currentServer, server.scripts);
             server.scripts.push(script);
 
             return iTutorialNextStep();
@@ -150,7 +147,7 @@ export function Root(props: IProps): React.ReactElement {
             return;
         }
 
-        const server = GetServerByHostname(lastServer);
+        const server = props.player.getCurrentServer();
         if(server === null) throw new Error('Server should not be null but it is.');
         if (filename === ".fconf") {
             try {
@@ -163,7 +160,7 @@ export function Root(props: IProps): React.ReactElement {
             //If the current script already exists on the server, overwrite it
             for (let i = 0; i < server.scripts.length; i++) {
                 if (filename == server.scripts[i].filename) {
-                    server.scripts[i].saveScript(code, server.ip, server.scripts);
+                    server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
                     props.engine.loadTerminalContent();
                     return;
                 }
@@ -171,7 +168,7 @@ export function Root(props: IProps): React.ReactElement {
 
             //If the current script does NOT exist, create a new one
             const script = new Script();
-            script.saveScript(code, server.ip, server.scripts);
+            script.saveScript(code, props.player.currentServer, server.scripts);
             server.scripts.push(script);
         } else if (filename.endsWith(".txt")) {
             for (let i = 0; i < server.textFiles.length; ++i) {
