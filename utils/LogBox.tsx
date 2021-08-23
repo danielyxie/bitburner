@@ -48,6 +48,20 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
         removeElementById(props.id);
     }
 
+    useEffect(() => {
+        function closeHandler(event: KeyboardEvent) {
+            if(event.keyCode === 27) {
+                close();
+            }
+        }
+
+        document.addEventListener('keydown', closeHandler);
+
+        return () => {
+            document.removeEventListener('keydown', closeHandler);
+        }
+    }, []);
+
     function kill(): void {
         killWorkerScript(props.script, props.script.server, true);
         close();
