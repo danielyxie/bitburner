@@ -287,7 +287,7 @@ export function Root(props: IProps): React.ReactElement {
             loading={<p>Loading script editor!</p>}
             height="80%"
             defaultLanguage="javascript"
-            value={code}
+            defaultValue={code}
             onChange={updateCode}
             theme={options.theme}
             options={options}
