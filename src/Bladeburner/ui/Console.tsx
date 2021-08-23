@@ -26,18 +26,8 @@ export function Console(props: IProps): React.ReactElement {
 
     // TODO: Figure out how to actually make the scrolling work correctly.
     function scrollToBottom(): void {
-        function isMaxed(): boolean {
-            if(!lastRef.current) return false;
-            const oldTop = lastRef.current.scrollTop;
-            lastRef.current.scrollTop = lastRef.current.scrollHeight;
-            const maxed = oldTop === lastRef.current.scrollTop;
-            lastRef.current.scrollTop = oldTop;
-            return maxed;
-        }
-        if(lastRef.current) {
-            if(isMaxed())
-                lastRef.current.scrollTop = lastRef.current.scrollHeight;
-        }
+        if(!lastRef.current) return;
+        lastRef.current.scrollTop = lastRef.current.scrollHeight;
     }
 
     function rerender(): void {

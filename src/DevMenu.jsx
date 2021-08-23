@@ -502,7 +502,7 @@ class DevMenuComponent extends Component {
     modifyBladeburnerRank(modify) {
         return function(rank) {
             if (Player.bladeburner) {
-                Player.bladeburner.changeRank(rank*modify);
+                Player.bladeburner.changeRank(Player, rank*modify);
             }
         }
     }
@@ -514,7 +514,7 @@ class DevMenuComponent extends Component {
 
     addTonsBladeburnerRank() {
         if (Player.bladeburner) {
-            Player.bladeburner.changeRank(tonsP);
+            Player.bladeburner.changeRank(Player, tonsP);
         }
     }
 

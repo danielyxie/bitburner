@@ -227,8 +227,6 @@ const Engine = {
     },
 
     indexedDb: undefined,
-    lastFilename: '',
-    lastFilenameServer: '',
 
     // Time variables (milliseconds unix epoch time)
     _lastUpdate: new Date().getTime(),
@@ -253,17 +251,6 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.scriptEditorContent.style.display = "block";
         routing.navigateTo(Page.ScriptEditor);
-
-        if(filename !== "") {
-            this.lastFilename = filename;
-            this.lastFilenameServer = Player.getCurrentServer().hostname;
-        } else if(this.lastFilename !== '') {
-            const scripts = GetServerByHostname(this.lastFilenameServer).scripts.filter(x => x.filename === this.lastFilename);
-            if(scripts.length === 1) {
-                filename = this.lastFilename;
-                code = scripts[0].code;
-            }
-        }
 
         ReactDOM.render(
             <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
