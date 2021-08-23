@@ -82,7 +82,6 @@ BitburnerSaveObject.prototype.getSaveString = function() {
     this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.StockMarketSave            = JSON.stringify(StockMarket);
-    console.log(JSON.stringify(Settings));
     this.SettingsSave               = JSON.stringify(Settings);
     this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);

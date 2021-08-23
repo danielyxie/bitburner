@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.7",
+    Version:                "0.52.8",
 
     // Speed (in ms) at which the main loop is updated
     _idleSpeed: 200,
@@ -228,32 +228,24 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.7 - 2021-07-21 Fixing the previous patch tbh (hydroflame)
+    v0.52.8 - 2021-07-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
     -------------------------------------------
 
-    ** Netscript ** 
+    ** Script editor **
 
-    * API BREAKING CHANGE: getActionEstimatedSuccessChance now returns a pair of
-      value to reflect the UI changes. I'm very sorry.
+    * Correctly reloads old script when clicking "Script Editor"
+    * No longer jumps to the end of the text for no reason.
 
-    ** Bladeburner **
+    ** Hash upgrades ** 
 
-    * General actions now display time required.
-    * Recruitment now displays success chance.
-    * All other success chance now display a range instead of a single value
-      The real value is guaranteed to be within that range.
+    * Fixed an issue where the default option would say ecorp but was really
+      foodnstuff
 
     ** Misc. **
 
-    * Fix tutorial not working after Monaco upate
-    * Fix logbox logs not taking up the whole logbox
-    * Fix script editor shortcut (ctrl+b)
-    * Fix Corporation popup appearing in the wrong order, hiding one of them
-    * Fix error when loading Corp
-    * Fix logbox dragging (smoother now)
-    * Fix logbox name collision
-    * Fix logbox allowing to open the same box multiple times
-    * Fix netscript write.
+    * The "Delete all active script" button under the options has a clearer
+      description.
+    * Removed some debug console.log
     * nerf noodle bar
 `,
 

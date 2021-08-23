@@ -23,6 +23,7 @@ import { libSource } from "../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
+import { GetServerByHostname } from "../../Server/ServerHelpers";
 import {
     iTutorialNextStep,
     ITutorial,
@@ -69,15 +70,32 @@ interface IProps {
 // https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
 // https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
 
+// These variables are used to reload a script when it's clicked on. Because we
+// won't have references to the old script.
+let lastFilename = "";
+let lastServer = "";
+let lastCode = "";
+let lastPosition: monaco.Position | null = null;
+
 export function Root(props: IProps): React.ReactElement {
     const editorRef = useRef<IStandaloneCodeEditor | null>(null);
-    const [filename, setFilename] = useState(props.filename);
-    const [code, setCode] = useState<string>(props.code);
-    const [ram, setRAM] = useState('');
+    const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
+    const [code, setCode] = useState<string>(props.code ? props.code : lastCode);
+    const [ram, setRAM] = useState('RAM: ???');
     const [options, setOptions] = useState<Options>({
         theme: Settings.MonacoTheme,
         insertSpaces: Settings.MonacoInsertSpaces,
     });
+
+    // store the last known state in case we need to restart without nano.
+    useEffect(() => {
+        if(props.filename === "") return;
+        if(lastFilename === "")
+            lastServer = props.player.getCurrentServer().hostname;
+        lastFilename = props.filename;
+        lastCode = props.code;
+        lastPosition = null;
+    }, []);
 
     function save(): void {
         if(editorRef.current !== null) {
@@ -89,6 +107,7 @@ export function Root(props: IProps): React.ReactElement {
                 });
             }
         }
+        lastPosition = null;
 
         // TODO(hydroflame): re-enable the tutorial.
         if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
@@ -103,19 +122,20 @@ export function Root(props: IProps): React.ReactElement {
             }
 
             //Save the script
-            const s = props.player.getCurrentServer();
-            for (let i = 0; i < s.scripts.length; i++) {
-                if (filename == s.scripts[i].filename) {
-                    s.scripts[i].saveScript(code, props.player.currentServer, props.player.getCurrentServer().scripts);
+            const server = GetServerByHostname(lastServer);
+            if(server === null) throw new Error('Server should not be null but it is.');
+            for (let i = 0; i < server.scripts.length; i++) {
+                if (filename == server.scripts[i].filename) {
+                    server.scripts[i].saveScript(code, lastServer, server.scripts);
                     props.engine.loadTerminalContent();
                     return iTutorialNextStep();
                 }
             }
 
             // If the current script does NOT exist, create a new one
-            let script = new Script();
-            script.saveScript(code, props.player.currentServer, props.player.getCurrentServer().scripts);
-            s.scripts.push(script);
+            const script = new Script();
+            script.saveScript(code, lastServer, server.scripts);
+            server.scripts.push(script);
 
             return iTutorialNextStep();
         }
@@ -130,7 +150,8 @@ export function Root(props: IProps): React.ReactElement {
             return;
         }
 
-        const s = props.player.getCurrentServer();
+        const server = GetServerByHostname(lastServer);
+        if(server === null) throw new Error('Server should not be null but it is.');
         if (filename === ".fconf") {
             try {
                 parseFconfSettings(code);
@@ -140,9 +161,9 @@ export function Root(props: IProps): React.ReactElement {
             }
         } else if (isScriptFilename(filename)) {
             //If the current script already exists on the server, overwrite it
-            for (let i = 0; i < s.scripts.length; i++) {
-                if (filename == s.scripts[i].filename) {
-                    s.scripts[i].saveScript(code, props.player.currentServer, props.player.getCurrentServer().scripts);
+            for (let i = 0; i < server.scripts.length; i++) {
+                if (filename == server.scripts[i].filename) {
+                    server.scripts[i].saveScript(code, lastServer, server.scripts);
                     props.engine.loadTerminalContent();
                     return;
                 }
@@ -150,18 +171,18 @@ export function Root(props: IProps): React.ReactElement {
 
             //If the current script does NOT exist, create a new one
             const script = new Script();
-            script.saveScript(code, props.player.currentServer, props.player.getCurrentServer().scripts);
-            s.scripts.push(script);
+            script.saveScript(code, lastServer, server.scripts);
+            server.scripts.push(script);
         } else if (filename.endsWith(".txt")) {
-            for (let i = 0; i < s.textFiles.length; ++i) {
-                if (s.textFiles[i].fn === filename) {
-                    s.textFiles[i].write(code);
+            for (let i = 0; i < server.textFiles.length; ++i) {
+                if (server.textFiles[i].fn === filename) {
+                    server.textFiles[i].write(code);
                     props.engine.loadTerminalContent();
                     return;
                 }
             }
             const textFile = new TextFile(filename, code);
-            s.textFiles.push(textFile);
+            server.textFiles.push(textFile);
         } else {
             dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " +
                             " or text file (.txt)")
@@ -179,6 +200,7 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     function onFilenameChange(event: React.ChangeEvent<HTMLInputElement>): void {
+        lastFilename = filename;
         setFilename(event.target.value);
     }
 
@@ -202,6 +224,10 @@ export function Root(props: IProps): React.ReactElement {
 
     function updateCode(newCode?: string): void {
         if(newCode === undefined) return;
+        lastCode = newCode;
+        if(editorRef.current !== null) {
+            lastPosition = editorRef.current.getPosition();
+        }
         setCode(newCode);
     }
 
@@ -252,7 +278,10 @@ export function Root(props: IProps): React.ReactElement {
         editorRef.current = editor;
         if(editorRef.current === null) return;
         const position = CursorPositions.getCursor(filename);
-        editorRef.current.setPosition({lineNumber: position.row, column: position.column});
+        if(position.row !== -1) 
+            editorRef.current.setPosition({lineNumber: position.row, column: position.column});
+        else if(lastPosition !== null)
+            editorRef.current.setPosition({lineNumber: lastPosition.lineNumber, column: lastPosition.column+1});
         editorRef.current.focus();
     }
 
