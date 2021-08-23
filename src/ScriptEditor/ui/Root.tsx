@@ -23,7 +23,6 @@ import { libSource } from "../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
-import { getServer } from "../../Server/ServerHelpers";
 import {
     iTutorialNextStep,
     ITutorial,
@@ -91,7 +90,7 @@ export function Root(props: IProps): React.ReactElement {
     useEffect(() => {
         if(props.filename === "") return;
         if(lastFilename === "")
-            lastServer = props.player.getCurrentServer().ip;
+            lastServer = props.player.getCurrentServer();
         lastFilename = props.filename;
         lastCode = props.code;
         lastPosition = null;
@@ -122,11 +121,11 @@ export function Root(props: IProps): React.ReactElement {
             }
 
             //Save the script
-            const server = getServer(lastServer);
+            const server = lastServer;
             if(server === null) throw new Error('Server should not be null but it is.');
             for (let i = 0; i < server.scripts.length; i++) {
                 if (filename == server.scripts[i].filename) {
-                    server.scripts[i].saveScript(code, lastServer, server.scripts);
+                    server.scripts[i].saveScript(code, lastServer.ip, server.scripts);
                     props.engine.loadTerminalContent();
                     return iTutorialNextStep();
                 }
@@ -134,7 +133,7 @@ export function Root(props: IProps): React.ReactElement {
 
             // If the current script does NOT exist, create a new one
             const script = new Script();
-            script.saveScript(code, lastServer, server.scripts);
+            script.saveScript(code, lastServer.ip, server.scripts);
             server.scripts.push(script);
 
             return iTutorialNextStep();
@@ -150,7 +149,7 @@ export function Root(props: IProps): React.ReactElement {
             return;
         }
 
-        const server = getServer(lastServer);
+        const server = lastServer;
         if(server === null) throw new Error('Server should not be null but it is.');
         if (filename === ".fconf") {
             try {
@@ -163,7 +162,7 @@ export function Root(props: IProps): React.ReactElement {
             //If the current script already exists on the server, overwrite it
             for (let i = 0; i < server.scripts.length; i++) {
                 if (filename == server.scripts[i].filename) {
-                    server.scripts[i].saveScript(code, lastServer, server.scripts);
+                    server.scripts[i].saveScript(code, lastServer.ip, server.scripts);
                     props.engine.loadTerminalContent();
                     return;
                 }
@@ -171,7 +170,7 @@ export function Root(props: IProps): React.ReactElement {
 
             //If the current script does NOT exist, create a new one
             const script = new Script();
-            script.saveScript(code, lastServer, server.scripts);
+            script.saveScript(code, lastServer.ip, server.scripts);
             server.scripts.push(script);
         } else if (filename.endsWith(".txt")) {
             for (let i = 0; i < server.textFiles.length; ++i) {
