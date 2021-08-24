@@ -57,6 +57,7 @@ import {
     loadAllRunningScripts,
     updateOnlineScriptTimes,
 } from "./NetscriptWorker";
+import { GetServerByHostname } from "./Server/ServerHelpers";
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
 import {
@@ -253,9 +254,6 @@ const Engine = {
         Engine.Display.scriptEditorContent.style.display = "block";
         routing.navigateTo(Page.ScriptEditor);
 
-
-        const monaco = document.getElementById('monaco-editor');
-        //https://www.npmjs.com/package/@monaco-editor/react#development-playground
         ReactDOM.render(
             <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
             Engine.Display.scriptEditorContent,

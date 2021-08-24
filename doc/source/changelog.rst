@@ -3,6 +3,26 @@
 Changelog
 =========
 
+v0.52.8 - 2021-07-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
+-------------------------------------------
+
+** Script editor **
+
+* Correctly reloads old script when clicking "Script Editor"
+* No longer jumps to the end of the text for no reason.
+
+** Hash upgrades ** 
+
+* Fixed an issue where the default option would say ecorp but was really
+  foodnstuff
+
+** Misc. **
+
+* The "Delete all active script" button under the options has a clearer
+  description.
+* Removed some debug console.log
+* nerf noodle bar
+
 v0.52.7 - 2021-07-21 Fixing the previous patch tbh (hydroflame)
 -------------------------------------------
 

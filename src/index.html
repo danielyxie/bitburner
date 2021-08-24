@@ -601,10 +601,12 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                     Copy Save data to Clipboard
                 </button>
                 <button id="debug-delete-scripts-link" class="a-link-button tooltip">
-                    Delete all active scripts
+                    Force kill all active scripts
                     <span class="tooltiptextleft">
                         Forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the game. After
-                        using this, save the game and then reload the page.
+                        using this, save the game and then reload the page. This is different then normal kill in that normal kill
+                        will tell the script to shut down while force kill just removes the references to it (and it should crash on it's own).
+                        This will not remove the files on your computer. Just forcefully kill all running instance of all scripts.
                     </span>
                 </button>
                 <button id="debug-soft-reset" class="a-link-button tooltip">

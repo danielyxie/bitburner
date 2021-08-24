@@ -112,6 +112,13 @@
     background-color: #000;
 }
 
+.log-box-button:hover,
+.log-box-button:focus {
+    color: var(--my-font-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .dialog-box-content {
     z-index: 2;
     background-color: var(--my-background-color);

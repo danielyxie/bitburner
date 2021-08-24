@@ -1659,6 +1659,11 @@ button {
 #create-program-list {
   width: 70%; }
 
+/* Stormtech lab */
+#stormtech-lab-container {
+  position: fixed;
+  padding-top: 10px; }
+
 /* Factions and Faction (Single Faction page) */
 #factions-container {
   position: fixed;
@@ -1965,21 +1970,9 @@ h1 {
   font-size: 22px;
   color: var(--my-font-color); }
 
-<<<<<<< HEAD
-/* Stormtech lab */
-#stormtech-lab-container {
-  position: fixed;
-  padding-top: 10px; }
-
-/* Factions and Faction (Single Faction page) */
-#factions-container {
-  position: fixed;
-  padding-top: 10px; }
-=======
 ul {
   padding: 2px;
   list-style-type: none; }
->>>>>>> dev
 
 li {
   list-style-type: none; }
@@ -2455,6 +2448,12 @@ input[type="checkbox"] {
   margin: 6px;
   border: 1px solid #fff;
   background-color: #000; }
+
+.log-box-button:hover,
+.log-box-button:focus {
+  color: var(--my-font-color);
+  text-decoration: none;
+  cursor: pointer; }
 
 .dialog-box-content {
   z-index: 2;
@@ -5887,7 +5886,6 @@ html {
   padding: 6px;
   width: 60%; }
 
-<<<<<<< HEAD
 .staneksgift_row {
   padding: 0;
   margin: 0; }
@@ -5907,7 +5905,7 @@ html {
 
 .staneksgift_container {
   position: fixed; }
-=======
+
 /* COLORS */
 /* Attributes */
 .blinking-cursor {
@@ -5948,7 +5946,6 @@ html {
     color: transparent; }
   50% {
     color: #adff2f; } }
->>>>>>> dev
 
 
 /*# sourceMappingURL=engineStyle.css.map*/

@@ -48,6 +48,20 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
         removeElementById(props.id);
     }
 
+    useEffect(() => {
+        function closeHandler(event: KeyboardEvent) {
+            if(event.keyCode === 27) {
+                close();
+            }
+        }
+
+        document.addEventListener('keydown', closeHandler);
+
+        return () => {
+            document.removeEventListener('keydown', closeHandler);
+        }
+    }, []);
+
     function kill(): void {
         killWorkerScript(props.script, props.script.server, true);
         close();
@@ -57,7 +71,6 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
         event.preventDefault();
         let x = event.clientX;
         let y = event.clientY;
-        console.log(props.container.clientWidth);
         let left = props.container.offsetLeft+props.container.clientWidth/2;
         let top = props.container.offsetTop+props.container.clientWidth/5;
         function mouseMove(event: MouseEvent): void {

@@ -18,8 +18,8 @@ export class PositionTracker {
 		const position = this.positions.get(filename);
 		if (!position) {
 			return {
-				row: 0,
-				column: 0,
+				row: -1,
+				column: -1,
 			};
 		}
 		return position;

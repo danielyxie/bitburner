@@ -23,7 +23,7 @@ class HashUpgrade extends React.Component {
         super(props);
 
         this.state = {
-            selectedServer: "foodnstuff",
+            selectedServer: "ecorp",
         }
 
         this.changeTargetServer = this.changeTargetServer.bind(this);
