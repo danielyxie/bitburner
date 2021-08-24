@@ -544,15 +544,15 @@ export function initBitNodeMultipliers(p: IPlayer): void {
             BitNodeMultipliers.HackExpGain        = 0.1;
             BitNodeMultipliers.CrimeExpGain       = 0.1;
 
-            BitNodeMultipliers.FactionWorkRepGain    = 0.2;
+            BitNodeMultipliers.FactionWorkRepGain    = 0.4;
 
-            BitNodeMultipliers.FourSigmaMarketDataCost = 4;
-            BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
+            BitNodeMultipliers.FourSigmaMarketDataCost = 10;
+            BitNodeMultipliers.FourSigmaMarketDataApiCost = 10;
 
-            BitNodeMultipliers.CorporationValuation = 0.01;
+            BitNodeMultipliers.CorporationValuation = 0.001;
 
-            BitNodeMultipliers.BladeburnerRank      = 0.5;
-            BitNodeMultipliers.BladeburnerSkillCost = 2;
+            BitNodeMultipliers.BladeburnerRank      = 0.1;
+            BitNodeMultipliers.BladeburnerSkillCost = 5;
             BitNodeMultipliers.GangKarmaRequirement = 20;
             break;
         default:
