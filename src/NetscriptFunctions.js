@@ -3029,6 +3029,7 @@ function NetscriptFunctions(workerScript) {
                 has4SDataTixApi:                 Player.has4SDataTixApi,
                 bladeburner_max_stamina_mult:    Player.bladeburner_max_stamina_mult,
                 bladeburner_stamina_gain_mult:   Player.bladeburner_stamina_gain_mult,
+                bladeburner_analysis_mult:       Player.bladeburner_analysis_mult,
                 bladeburner_success_chance_mult: Player.bladeburner_success_chance_mult,
                 bitNodeN:                        Player.bitNodeN,
                 totalPlaytime:                   Player.totalPlaytime,
