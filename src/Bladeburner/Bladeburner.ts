@@ -606,13 +606,11 @@ export class Bladeburner implements IBladeburner {
             const flag = args[1];
             if (flag.toLowerCase() === "status") {
                 this.postToConsole("Automation: " + (this.automateEnabled ? "enabled" : "disabled"));
-                if (this.automateEnabled) {
-                    this.postToConsole("When your stamina drops to " + formatNumber(this.automateThreshLow, 0) +
-                                       ", you will automatically switch to " + this.automateActionLow.name +
-                                       ". When your stamina recovers to " +
-                                       formatNumber(this.automateThreshHigh, 0) + ", you will automatically " +
-                                       "switch to " + this.automateActionHigh.name + ".");
-                }
+                this.postToConsole("When your stamina drops to " + formatNumber(this.automateThreshLow, 0) +
+                                   ", you will automatically switch to " + this.automateActionLow.name +
+                                   ". When your stamina recovers to " +
+                                   formatNumber(this.automateThreshHigh, 0) + ", you will automatically " +
+                                   "switch to " + this.automateActionHigh.name + ".");
 
             } else if (flag.toLowerCase().includes("en")) {
                 if (!(this.automateActionLow instanceof ActionIdentifier) ||
