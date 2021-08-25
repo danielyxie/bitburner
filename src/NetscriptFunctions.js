@@ -4065,7 +4065,7 @@ function NetscriptFunctions(workerScript) {
                         return true; // Already member
                     } else if (Player.strength >= 100 && Player.defense >= 100 &&
                                Player.dexterity >= 100 && Player.agility >= 100) {
-                        Player.bladeburner = new Bladeburner();
+                        Player.bladeburner = new Bladeburner(Player);
                         workerScript.log("joinBladeburnerDivision", "You have been accepted into the Bladeburner division");
 
                         const worldHeader = document.getElementById("world-menu-header");
