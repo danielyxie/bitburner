@@ -1126,6 +1126,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                 }
             }
 
+
             var maxSell = 0.5
                         * Math.pow(product.rat, 0.65)
                         * marketFactor

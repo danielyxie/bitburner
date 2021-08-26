@@ -187,6 +187,11 @@ export class Product {
         this.calculateRating(industry);
         const advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
         this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
+        
+        // I actually don't understand well enough to know if this is right.
+        // I'm adding this to prevent a crash.
+        if(this.mku === 0) this.mku = 1;
+
         this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
         this.cmp = getRandomInt(0, 70);
 
