@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StdButton } from "../../ui/React/StdButton";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
-import IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
+type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 import { createPopup } from "../../ui/React/createPopup";
 import { OptionsPopup } from "./OptionsPopup";
 import { Options } from "./Options";
@@ -56,7 +56,7 @@ interface IProps {
     code: string;
     player: IPlayer;
     engine: IEngine;
-};
+}
 
 
 /*
@@ -217,7 +217,7 @@ export function Root(props: IProps): React.ReactElement {
                 setOptions(options);
                 Settings.MonacoTheme = options.theme;
                 Settings.MonacoInsertSpaces = options.insertSpaces;
-            }
+            },
         });
     }
 
@@ -297,7 +297,7 @@ export function Root(props: IProps): React.ReactElement {
                     });
                 }
                 return { suggestions: suggestions };
-            }
+            },
         });
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
         monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, 'netscript.d.ts');
