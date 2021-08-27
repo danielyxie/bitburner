@@ -19,6 +19,7 @@ This includes information such as function signatures, what they do, and their r
     sleep() <basicfunctions/sleep>
     print() <basicfunctions/print>
     tprint() <basicfunctions/tprint>
+    tprintf() <basicfunctions/tprint>
     clearLog() <basicfunctions/clearLog>
     disableLog() <basicfunctions/disableLog>
     enableLog() <basicfunctions/enableLog>

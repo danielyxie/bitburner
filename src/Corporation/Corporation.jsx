@@ -1112,8 +1112,13 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             } else if (product.marketTa1) {
                 sCost = product.pCost + markupLimit;
             } else if (isString(product.sCost)) {
+                if(product.mku === 0) {
+                    console.error(`mku is zero, reverting to 1 to avoid Infinity`);
+                    product.mku = 1;
+                }
                 sCost = product.sCost.replace(/MP/g, product.pCost + product.rat / product.mku);
                 sCost = eval(sCost);
+
             } else {
                 sCost = product.sCost;
             }

@@ -936,6 +936,9 @@ function NetscriptFunctions(workerScript) {
             }
             post(`${workerScript.scriptRef.filename}: ${argsToString(arguments)}`);
         },
+        tprintf: function(format, ...args) {
+            post(vsprintf(format, args));
+        },
         clearLog: function() {
             workerScript.scriptRef.clearLog();
         },
