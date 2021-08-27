@@ -958,7 +958,6 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
                 const mgmtProd  = office.employeeProd[EmployeePositions.Management];
                 const opProd    = office.employeeProd[EmployeePositions.Operations];
                 const total = engrProd + mgmtProd + opProd;
-
                 if (total <= 0) { break; }
 
                 // Management is a multiplier for the production from Engineers
@@ -1125,7 +1124,6 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                     markup = markupLimit / (sCost - product.pCost);
                 }
             }
-
 
             var maxSell = 0.5
                         * Math.pow(product.rat, 0.65)
@@ -1441,11 +1439,11 @@ Industry.prototype.createResearchBox = function() {
 }
 
 Industry.prototype.toJSON = function() {
-	return Generic_toJSON("Industry", this);
+    return Generic_toJSON("Industry", this);
 }
 
 Industry.fromJSON = function(value) {
-	return Generic_fromJSON(Industry, value.data);
+    return Generic_fromJSON(Industry, value.data);
 }
 
 Reviver.constructors.Industry = Industry;
@@ -1602,11 +1600,11 @@ Employee.prototype.createUI = function(panel, corporation, industry) {
 }
 
 Employee.prototype.toJSON = function() {
-	return Generic_toJSON("Employee", this);
+    return Generic_toJSON("Employee", this);
 }
 
 Employee.fromJSON = function(value) {
-	return Generic_fromJSON(Employee, value.data);
+    return Generic_fromJSON(Employee, value.data);
 }
 
 Reviver.constructors.Employee = Employee;
@@ -1901,11 +1899,11 @@ OfficeSpace.prototype.unassignEmployeeFromJob = function(job) {
 }
 
 OfficeSpace.prototype.toJSON = function() {
-	return Generic_toJSON("OfficeSpace", this);
+    return Generic_toJSON("OfficeSpace", this);
 }
 
 OfficeSpace.fromJSON = function(value) {
-	return Generic_fromJSON(OfficeSpace, value.data);
+    return Generic_fromJSON(OfficeSpace, value.data);
 }
 
 Reviver.constructors.OfficeSpace = OfficeSpace;
@@ -1941,6 +1939,12 @@ function Corporation(params={}) {
     this.upgradeMultipliers = Array(numUpgrades).fill(1);
 
     this.state = new CorporationState();
+}
+
+Corporation.prototype.addFunds = function(amt) {
+    if(!isFinite(amt))
+        console.error('Trying to add invalid amount of funds. Report to a developper.');
+    this.funds = this.funds.plus(amt);
 }
 
 Corporation.prototype.getState = function() {
@@ -1982,7 +1986,7 @@ Corporation.prototype.process = function() {
             });
             var profit = this.revenue.minus(this.expenses);
             const cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
-            if (isNaN(this.funds)) {
+            if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
                 dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
                                 "This is a bug. Please report to game developer.<br><br>" +
                                 "(Your funds have been set to $150b for the inconvenience)");
@@ -2001,10 +2005,10 @@ Corporation.prototype.process = function() {
                     const profit = this.numShares * dividendsPerShare * (1 - (this.dividendTaxPercentage / 100));
                     Player.gainMoney(profit);
                     Player.recordMoneySource(profit, "corporation");
-                    this.funds = this.funds.plus(retainedEarnings);
+                    this.addFunds(retainedEarnings);
                 }
             } else {
-                this.funds = this.funds.plus(cycleProfit);
+                this.addFunds(cycleProfit);
             }
 
             this.updateSharePrice();
@@ -2071,7 +2075,7 @@ Corporation.prototype.getInvestment = function() {
     noBtn.innerHML = "Reject";
     yesBtn.addEventListener("click", () => {
         ++this.fundingRound;
-        this.funds = this.funds.plus(funding);
+        this.addFunds(funding);
         this.numShares -= investShares;
         this.rerender();
         return yesNoBoxClose();
@@ -2125,7 +2129,7 @@ Corporation.prototype.goPublic = function() {
             this.sharePrice = initialSharePrice;
             this.issuedShares = numShares;
             this.numShares -= numShares;
-            this.funds = this.funds.plus(numShares * initialSharePrice);
+            this.addFunds(numShares * initialSharePrice);
             this.rerender();
             removeElementById(goPublicPopupId);
             dialogBoxCreate(`You took your ${this.name} public and earned ` +
@@ -2378,11 +2382,11 @@ Corporation.prototype.clearUI = function() {
 }
 
 Corporation.prototype.toJSON = function() {
-	return Generic_toJSON("Corporation", this);
+    return Generic_toJSON("Corporation", this);
 }
 
 Corporation.fromJSON = function(value) {
-	return Generic_fromJSON(Corporation, value.data);
+    return Generic_fromJSON(Corporation, value.data);
 }
 
 Reviver.constructors.Corporation = Corporation;
