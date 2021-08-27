@@ -46,7 +46,7 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
         <GameTimer millis={timer} onExpire={props.onFailure} />
         <Grid item xs={12}>
             <h1 className={"noselect"}>Type it backward</h1>
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
         <Grid item xs={6}>
             <p style={{transform: 'scaleX(-1)'}}>{answer}</p>

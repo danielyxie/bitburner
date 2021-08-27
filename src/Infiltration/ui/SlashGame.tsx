@@ -54,7 +54,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
         <Grid item xs={12}>
             <h1 className={"noselect"}>Slash when his guard is down!</h1>
             <p style={{fontSize: '5em'}}>{guarding ? "!Guarding!" : "!ATTACKING!"}</p>
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
     </Grid>)
 }

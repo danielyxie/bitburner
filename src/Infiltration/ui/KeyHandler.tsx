@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 interface IProps {
     onKeyDown: (event: React.KeyboardEvent<HTMLElement>) => void;
+    onFailure: (options?: { automated: boolean }) => void;
 }
 
 export function KeyHandler(props: IProps): React.ReactElement {
@@ -9,7 +10,12 @@ export function KeyHandler(props: IProps): React.ReactElement {
     useEffect(() => elem.focus());
 
     function onKeyDown(event: React.KeyboardEvent<HTMLElement>): void {
-        if(!event.isTrusted) return;
+        console.log("isTrusted?", event.isTrusted)
+        if(!event.isTrusted) {
+            console.log("untrusted event!")
+            props.onFailure({ automated: true });
+            return;
+        }
         props.onKeyDown(event);
     }
 

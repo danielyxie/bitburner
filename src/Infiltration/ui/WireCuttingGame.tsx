@@ -111,7 +111,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
                 })}
                 </pre>
             </div>)}
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
     </Grid>)
 }

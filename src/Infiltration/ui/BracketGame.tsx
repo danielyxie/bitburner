@@ -78,7 +78,7 @@ export function BracketGame(props: IMinigameProps): React.ReactElement {
         <Grid item xs={12}>
             <h1 className={"noselect"}>Close the brackets</h1>
             <p style={{fontSize: '5em'}}>{`${left}${right}`}<BlinkingCursor /></p>
-            <KeyHandler onKeyDown={press} />
+            <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
         </Grid>
     </Grid>)
 }
