@@ -3,6 +3,37 @@
 Changelog
 =========
 
+v0.52.9 - 2021-07-27 Less lag! (hydroflame & community)
+-------------------------------------------
+
+** Active Scripts page **
+
+* Now less laggy, has pagination.
+
+** File diagnostic ** 
+
+* Added a popup found under options that shows the files you own and how
+  large they are. This help find bugs and leftover massive logs files.
+
+** Corporation **
+
+* Added safeguard against a very specific bug that causes NaN money. I'm
+  still not sure what the root cause is but it should prevent corp from
+  breaking.
+
+** Netscript ** 
+
+* tprintf is a new function that doesn't print the filename.
+
+** Misc. **
+
+* Infiltration kills you if you try to automate it. (@threehams)
+* Fix beautify button not working
+* Added bladeburner_analysis_mult to getPlayer() (@brubsby)
+* Fixed joining bladeburner via netscript functions. (@omuretsu)
+* All bladeburner actions are click-to-copy
+* nerf noodle bar
+
 v0.52.8 - 2021-07-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
 -------------------------------------------
 

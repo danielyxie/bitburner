@@ -6,6 +6,7 @@ import * as React from "react";
 
 import { WorkerScriptAccordion } from "./WorkerScriptAccordion";
 import { Accordion } from "../React/Accordion";
+import { ServerAccordionContent } from "./ServerAccordionContent";
 
 import { BaseServer } from "../../Server/BaseServer";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -42,7 +43,7 @@ export function ServerAccordion(props: IProps): React.ReactElement {
                 <pre>{headerTxt}</pre>
             }
             panelContent={
-                <ul>{scripts}</ul>
+                <ServerAccordionContent workerScripts={props.workerScripts} />
             }
         />
     )

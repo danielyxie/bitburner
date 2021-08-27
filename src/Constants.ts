@@ -6,7 +6,7 @@
 import { IMap } from "./types";
 
 export const CONSTANTS: IMap<any> = {
-    Version:                "0.52.8",
+    Version:                "0.52.9",
 
     // Speed (in ms) at which the main loop is updated
     _idleSpeed: 200,
@@ -228,24 +228,35 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.8 - 2021-07-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
+    v0.52.9 - 2021-07-27 Less lag! (hydroflame & community)
     -------------------------------------------
 
-    ** Script editor **
+    ** Active Scripts page **
 
-    * Correctly reloads old script when clicking "Script Editor"
-    * No longer jumps to the end of the text for no reason.
+    * Now less laggy, has pagination.
 
-    ** Hash upgrades ** 
+    ** File diagnostic ** 
 
-    * Fixed an issue where the default option would say ecorp but was really
-      foodnstuff
+    * Added a popup found under options that shows the files you own and how
+      large they are. This help find bugs and leftover massive logs files.
+
+    ** Corporation **
+
+    * Added safeguard against a very specific bug that causes NaN money. I'm
+      still not sure what the root cause is but it should prevent corp from
+      breaking.
+
+    ** Netscript ** 
+
+    * tprintf is a new function that doesn't print the filename.
 
     ** Misc. **
 
-    * The "Delete all active script" button under the options has a clearer
-      description.
-    * Removed some debug console.log
+    * Infiltration kills you if you try to automate it. (@threehams)
+    * Fix beautify button not working
+    * Added bladeburner_analysis_mult to getPlayer() (@brusby)
+    * Fixed joining bladeburner via netscript functions. (@omuretsu)
+    * All bladeburner actions are click-to-copy
     * nerf noodle bar
 `,
 

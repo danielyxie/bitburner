@@ -73,9 +73,11 @@ class AccordionPanel extends React.Component<IPanelProps, any> {
             className = this.props.panelClass;
         }
 
+        if(!this.props.opened) return (<></>);
+
 
         return (
-            <div className={className} style={{display: this.props.opened ? "block" : "none"}}>
+            <div className={className} style={{display: "block"}}>
                 {this.props.panelContent}
             </div>
         )
