@@ -1947,8 +1947,10 @@ function Corporation(params={}) {
 }
 
 Corporation.prototype.addFunds = function(amt) {
-    if(!isFinite(amt))
+    if(!isFinite(amt)) {
         console.error('Trying to add invalid amount of funds. Report to a developper.');
+        return;
+    }
     this.funds = this.funds.plus(amt);
 }
 
