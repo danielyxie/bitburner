@@ -1845,8 +1845,11 @@ export class Bladeburner implements IBladeburner {
                     return 1;
                 }
             case ActionTypes["Training"]:
+            case ActionTypes["Recruitment"]:
             case ActionTypes["Field Analysis"]:
             case ActionTypes["FieldAnalysis"]:
+            case ActionTypes["Diplomacy"]:
+            case ActionTypes["Hyperbolic Regeneration Chamber"]:
                 return Infinity;
             default:
                 workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
