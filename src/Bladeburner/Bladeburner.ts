@@ -1809,6 +1809,8 @@ export class Bladeburner implements IBladeburner {
             case ActionTypes["Training"]:
             case ActionTypes["Field Analysis"]:
             case ActionTypes["FieldAnalysis"]:
+            case ActionTypes["Diplomacy"]:
+            case ActionTypes["Hyperbolic Regeneration Chamber"]:
                 return [1, 1];
             case ActionTypes["Recruitment"]:
                 const recChance = this.getRecruitmentSuccessChance(player);
