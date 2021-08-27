@@ -1,7 +1,7 @@
-getTrainingMul() Netscript Function
+getTrainingMult() Netscript Function
 ===================================
 
-.. js:function:: getTrainingMul()
+.. js:function:: getTrainingMult()
 
     :RAM cost: 0 GB
     :returns: The multiplier to training that hash upgrades provide to the player.
