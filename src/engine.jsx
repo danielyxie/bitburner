@@ -1571,4 +1571,4 @@ window.onload = function() {
     }
 };
 
-export {Engine, indexedDb};
+export {Engine};

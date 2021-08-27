@@ -1,8 +1,5 @@
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../src/Script/RamCalculations"
-import { expect } from "chai";
-
-console.log("Beginning Netscript Static RAM Calculation/Generation Tests");
 
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 const HacknetNamespaceCost = RamCostConstants.ScriptHacknetNodesRamCost;
@@ -10,7 +7,8 @@ const HacknetNamespaceCost = RamCostConstants.ScriptHacknetNodesRamCost;
 describe("Netscript Static RAM Calculation/Generation Tests", function() {
     // Tests numeric equality, allowing for floating point imprecision
     function testEquality(val, expected) {
-        expect(val).to.be.within(expected - 100 * Number.EPSILON, expected + 100 * Number.EPSILON);
+        expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
+        expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
     }
 
     /**
@@ -24,7 +22,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
     async function expectNonZeroRamCost(fnDesc) {
         if (!Array.isArray(fnDesc)) { expect.fail("Non-array passed to expectNonZeroRamCost()"); }
         const expected = getRamCost(...fnDesc);
-        expect(expected).to.be.above(0);
+        expect(expected).toBeGreaterThan(0);
 
         const code = fnDesc.join(".") + "(); ";
 
@@ -33,7 +31,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
 
         const multipleCallsCode = code.repeat(3);
         const multipleCallsCalculated = await calculateRamUsage(multipleCallsCode, []);
-        expect(multipleCallsCalculated).to.equal(calculated);
+        expect(multipleCallsCalculated).toEqual(calculated);
     }
 
     /**
@@ -47,7 +45,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
     async function expectZeroRamCost(fnDesc) {
         if (!Array.isArray(fnDesc)) { expect.fail("Non-array passed to expectZeroRamCost()"); }
         const expected = getRamCost(...fnDesc);
-        expect(expected).to.equal(0);
+        expect(expected).toEqual(0);
 
         const code = fnDesc.join(".") + "(); ";
 
@@ -55,10 +53,10 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         testEquality(calculated, ScriptBaseCost);
 
         const multipleCallsCalculated = await calculateRamUsage(code, []);
-        expect(multipleCallsCalculated).to.equal(ScriptBaseCost);
+        expect(multipleCallsCalculated).toEqual(ScriptBaseCost);
     }
 
-    describe("Basic Functions", async function() {
+    describe("Basic Functions", function() {
         it("hack()", async function() {
             const f = ["hack"];
             await expectNonZeroRamCost(f);
@@ -460,14 +458,14 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Advanced Functions", async function() {
+    describe("Advanced Functions", function() {
         it("getBitNodeMultipliers()", async function() {
             const f = ["getBitNodeMultipliers"];
             await expectNonZeroRamCost(f);
         });
     });
 
-    describe("Hacknet Node API", async function() {
+    describe("Hacknet Node API", function() {
         // The Hacknet Node API RAM cost is a bit different because
         // it's just a one-time cost to access the 'hacknet' namespace.
         // Otherwise, all functions cost 0 RAM
@@ -490,7 +488,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         ]
         it("should have zero RAM cost for all functions", function() {
             for (const fn of apiFunctions) {
-                expect(getRamCost("hacknet", fn)).to.equal(0);
+                expect(getRamCost("hacknet", fn)).toEqual(0);
             }
         });
 
@@ -505,7 +503,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("TIX API", async function() {
+    describe("TIX API", function() {
         it("getStockSymbols()", async function() {
             const f = ["getStockSymbols"];
             await expectNonZeroRamCost(f);
@@ -602,7 +600,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Singularity Functions", async function() {
+    describe("Singularity Functions", function() {
         it("universityCourse()", async function() {
             const f = ["universityCourse"];
             await expectNonZeroRamCost(f);
@@ -769,7 +767,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Bladeburner API", async function() {
+    describe("Bladeburner API", function() {
         it("getContractNames()", async function() {
             const f = ["bladeburner", "getContractNames"];
             await expectNonZeroRamCost(f);
@@ -941,7 +939,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Gang API", async function() {
+    describe("Gang API", function() {
         it("getMemberNames()", async function() {
             const f = ["gang", "getMemberNames"];
             await expectNonZeroRamCost(f);
@@ -1023,7 +1021,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Coding Contract API", async function() {
+    describe("Coding Contract API", function() {
         it("attempt()", async function() {
             const f = ["codingcontract", "attempt"];
             await expectNonZeroRamCost(f);
@@ -1050,7 +1048,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Sleeve API", async function() {
+    describe("Sleeve API", function() {
         it("getNumSleeves()", async function() {
             const f = ["sleeve", "getNumSleeves"];
             await expectNonZeroRamCost(f);

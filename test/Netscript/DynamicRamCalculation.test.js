@@ -5,12 +5,6 @@ import { RunningScript } from "../../src/Script/RunningScript";
 import { Script } from "../../src/Script/Script";
 import { SourceFileFlags } from "../../src/SourceFile/SourceFileFlags";
 
-import { expect } from "chai";
-
-console.log("Beginning Netscript Dynamic RAM Calculation/Generation Tests");
-
-console.log("Beginning Netscript Static RAM Calculation/Generation Tests");
-
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 
 describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
@@ -27,12 +21,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
 
     // Tests numeric equality, allowing for floating point imprecision
     function testEquality(val, expected) {
-        expect(val).to.be.within(expected - 100 * Number.EPSILON, expected + 100 * Number.EPSILON);
+        expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
+        expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
     }
 
     // Runs a Netscript function and properly catches it if it returns promise
     function runPotentiallyAsyncFunction(fn) {
-        let res = fn();
+        const res = fn();
         if (res instanceof Promise) {
             res.catch(() => undefined);
         }
@@ -47,9 +42,9 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
      *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
      */
     async function testNonzeroDynamicRamCost(fnDesc) {
-        if (!Array.isArray(fnDesc)) { expect.fail("Non-array passed to testNonzeroDynamicRamCost()"); }
+        if (!Array.isArray(fnDesc)) { throw new Error("Non-array passed to testNonzeroDynamicRamCost()"); }
         const expected = getRamCost(...fnDesc);
-        expect(expected).to.be.above(0);
+        expect(expected).toBeGreaterThan(0);
 
         const code = `${fnDesc.join(".")}();`
 
@@ -72,7 +67,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         let curr = scope[fnDesc[0]];
         for (let i = 1; i < fnDesc.length; ++i) {
             if (curr == null) {
-                expect.fail(`Invalid function specified: [${fnDesc}]`);
+                throw new Error(`Invalid function specified: [${fnDesc}]`);
             }
 
             if (typeof curr === "function") {
@@ -92,13 +87,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
                 runPotentiallyAsyncFunction(curr);
             } catch(e) {}
         } else {
-            expect.fail(`Invalid function specified: [${fndesc}]`);
+            throw new Error(`Invalid function specified: [${fnDesc}]`);
         }
 
         const fnName = fnDesc[fnDesc.length - 1];
         testEquality(workerScript.dynamicRamUsage - ScriptBaseCost, expected);
         testEquality(workerScript.dynamicRamUsage, runningScript.ramUsage);
-        expect(workerScript.dynamicLoadedFns).to.have.property(fnName);
+        expect(workerScript.dynamicLoadedFns).toHaveProperty(fnName);
     }
 
     /**
@@ -110,9 +105,9 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
      *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
      */
     async function testZeroDynamicRamCost(fnDesc) {
-        if (!Array.isArray(fnDesc)) { expect.fail("Non-array passed to testZeroDynamicRamCost()"); }
+        if (!Array.isArray(fnDesc)) { throw new Error("Non-array passed to testZeroDynamicRamCost()"); }
         const expected = getRamCost(...fnDesc);
-        expect(expected).to.equal(0);
+        expect(expected).toEqual(0);
 
         const code = `${fnDesc.join(".")}();`
 
@@ -135,7 +130,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         let curr = scope[fnDesc[0]];
         for (let i = 1; i < fnDesc.length; ++i) {
             if (curr == null) {
-                expect.fail(`Invalid function specified: [${fnDesc}]`);
+                throw new Error(`Invalid function specified: [${fnDesc}]`);
             }
 
             if (typeof curr === "function") {
@@ -155,20 +150,20 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
                 runPotentiallyAsyncFunction(curr);
             } catch(e) {}
         } else {
-            expect.fail(`Invalid function specified: [${fndesc}]`);
+            throw new Error(`Invalid function specified: [${fndesc}]`);
         }
 
         testEquality(workerScript.dynamicRamUsage, ScriptBaseCost);
         testEquality(workerScript.dynamicRamUsage, runningScript.ramUsage);
     }
 
-    before(function() {
+    beforeEach(function() {
         for (let i = 0; i < SourceFileFlags.length; ++i) {
             SourceFileFlags[i] = 3;
         }
     });
 
-    describe("Basic Functions", async function() {
+    describe("Basic Functions", function() {
         it("hack()", async function() {
             const f = ["hack"];
             await testNonzeroDynamicRamCost(f);
@@ -570,14 +565,14 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Advanced Functions", async function() {
+    describe("Advanced Functions", function() {
         it("getBitNodeMultipliers()", async function() {
             const f = ["getBitNodeMultipliers"];
             await testNonzeroDynamicRamCost(f);
         });
     });
 
-    describe("TIX API", async function() {
+    describe("TIX API", function() {
         it("getStockSymbols()", async function() {
             const f = ["getStockSymbols"];
             await testNonzeroDynamicRamCost(f);
@@ -664,7 +659,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Singularity Functions", async function() {
+    describe("Singularity Functions", function() {
         it("universityCourse()", async function() {
             const f = ["universityCourse"];
             await testNonzeroDynamicRamCost(f);
@@ -831,7 +826,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Bladeburner API", async function() {
+    describe("Bladeburner API", function() {
         it("getContractNames()", async function() {
             const f = ["bladeburner", "getContractNames"];
             await testNonzeroDynamicRamCost(f);
@@ -1003,7 +998,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Gang API", async function() {
+    describe("Gang API", function() {
         it("getMemberNames()", async function() {
             const f = ["gang", "getMemberNames"];
             await testNonzeroDynamicRamCost(f);
@@ -1085,7 +1080,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Coding Contract API", async function() {
+    describe("Coding Contract API", function() {
         it("attempt()", async function() {
             const f = ["codingcontract", "attempt"];
             await testNonzeroDynamicRamCost(f);
@@ -1112,7 +1107,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function() {
         });
     });
 
-    describe("Sleeve API", async function() {
+    describe("Sleeve API", function() {
         it("getNumSleeves()", async function() {
             const f = ["sleeve", "getNumSleeves"];
             await testNonzeroDynamicRamCost(f);
