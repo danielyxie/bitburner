@@ -3,19 +3,7 @@
 // divisions, see an overview of your corporation, or create a new industry
 import React from "react";
 import { BaseReactComponent } from "./BaseReactComponent";
-
-function HeaderTab(props) {
-    let className = "cmpy-mgmt-header-tab";
-    if (props.current) {
-        className += " current";
-    }
-
-    return (
-        <button className={className} onClick={props.onClick}>
-            {props.text}
-        </button>
-    )
-}
+import { HeaderTab } from "./HeaderTab";
 
 export class HeaderTabs extends BaseReactComponent {
     renderTab(props) {
