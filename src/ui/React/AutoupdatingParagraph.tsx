@@ -31,7 +31,7 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
 
     componentDidMount(): void {
         const time = this.props.intervalTime ? this.props.intervalTime : 1000;
-        this.interval = setInterval(() => this.tick(), time);
+        this.interval = window.setInterval(() => this.tick(), time);
     }
 
     componentWillUnmount(): void {

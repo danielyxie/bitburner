@@ -147,7 +147,7 @@ export class Roulette extends Game<IProps, IState> {
 
 
     componentDidMount(): void {
-        this.interval = setInterval(this.step, 50);
+        this.interval = window.setInterval(this.step, 50);
     }
 
     step(): void {

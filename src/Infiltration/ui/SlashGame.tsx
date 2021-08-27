@@ -39,9 +39,9 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
 
     useEffect(() => {
         let id2 = -1;
-        const id = setTimeout(() => {
+        const id = window.setTimeout(() => {
             setGuarding(false);
-            id2 = setTimeout(()=>setGuarding(true), difficulty.window)
+            id2 = window.setTimeout(()=>setGuarding(true), difficulty.window)
         }, Math.random()*3250+1500);
         return () => {
             clearInterval(id);
