@@ -102,6 +102,9 @@ import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
 import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
 
+import { FileDiagnosticPopup } from "./Diagnostic/FileDiagnosticPopup";
+import { createPopup } from "./ui/React/createPopup";
+
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
@@ -1521,6 +1524,12 @@ const Engine = {
             dialogBoxCreate("Soft Reset!");
             prestigeAugmentation();
             gameOptionsBoxClose();
+            return false;
+        });
+
+        // DEBUG File diagnostic
+        document.getElementById("debug-files").addEventListener("click", function() {
+            createPopup("debug-files-diagnostic-popup", FileDiagnosticPopup, {});
             return false;
         });
     },
