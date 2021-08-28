@@ -12,7 +12,6 @@ interface IProps {
 }
 
 export function HeaderTabs(props: IProps): React.ReactElement {
-    console.log(props);
     function overviewOnClick() {
         props.routing.routeToOverviewPage();
         props.corp.rerender();
