@@ -3,7 +3,7 @@
 Changelog
 =========
 
-v0.52.9 - 2021-07-27 Less lag! (hydroflame & community)
+v0.52.9 - 2021-08-27 Less lag! (hydroflame & community)
 -------------------------------------------
 
 ** Active Scripts page **
@@ -34,7 +34,7 @@ v0.52.9 - 2021-07-27 Less lag! (hydroflame & community)
 * All bladeburner actions are click-to-copy
 * nerf noodle bar
 
-v0.52.8 - 2021-07-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
+v0.52.8 - 2021-08-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
 -------------------------------------------
 
 ** Script editor **
@@ -54,7 +54,7 @@ v0.52.8 - 2021-07-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
 * Removed some debug console.log
 * nerf noodle bar
 
-v0.52.7 - 2021-07-21 Fixing the previous patch tbh (hydroflame)
+v0.52.7 - 2021-08-21 Fixing the previous patch tbh (hydroflame)
 -------------------------------------------
 
 ** Netscript ** 
@@ -82,7 +82,7 @@ v0.52.7 - 2021-07-21 Fixing the previous patch tbh (hydroflame)
 * Fix netscript write.
 * nerf noodle bar
 
-v0.52.6 - 2021-07-21 Logboxes and VS-code (hydroflame)
+v0.52.6 - 2021-08-21 Logboxes and VS-code (hydroflame)
 -------------------------------------------
 
 ** Text Editor **
@@ -104,7 +104,7 @@ v0.52.6 - 2021-07-21 Logboxes and VS-code (hydroflame)
 * Remove dollar sign in blade contract UI element
 * nerf noodle bar
 
-v0.52.5 - 2021-07-19 CPU cores are useful!? (hydroflame)
+v0.52.5 - 2021-08-19 CPU cores are useful!? (hydroflame)
 -------------------------------------------
 
 ** Terminal ** 
@@ -130,7 +130,7 @@ v0.52.5 - 2021-07-19 CPU cores are useful!? (hydroflame)
 * Fix weird scrolling in the new Bladeburner React console.
 * nerf noodle bar
 
-v0.52.4 - 2021-07-19 Bladeburner in React (hydroflame)
+v0.52.4 - 2021-08-19 Bladeburner in React (hydroflame)
 -------------------------------------------
 
 ** Bladeburner **
@@ -152,7 +152,7 @@ v0.52.4 - 2021-07-19 Bladeburner in React (hydroflame)
 * Linting (no one cares except the dev)
 * nerf noodle bar
 
-v0.52.3 - 2021-07-15 Gangs were OP (hydroflame)
+v0.52.3 - 2021-08-15 Gangs were OP (hydroflame)
 -------------------------------------------
 
 ** Gang **
@@ -175,7 +175,7 @@ v0.52.3 - 2021-07-15 Gangs were OP (hydroflame)
 * Factions list screen converted to React.
 * nerf noodle bar
 
-v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
+v0.52.2 - 2021-08-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
 -------------------------------------------
 
 ** Source-Files **
@@ -193,7 +193,7 @@ v0.52.2 - 2021-07-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
 
 * nerf noodle bar
 
-v0.52.1 - 2021-07-10 bugfixing (hydroflame & community)
+v0.52.1 - 2021-08-10 bugfixing (hydroflame & community)
 -------------------------------------------
 
 **Misc.**
