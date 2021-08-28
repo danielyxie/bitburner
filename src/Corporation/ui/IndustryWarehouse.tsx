@@ -7,9 +7,11 @@ import { OfficeSpace }                  from "../OfficeSpace";
 import { Material }                     from "../Material";
 import { Product }                      from "../Product";
 import { Warehouse }                    from "../Warehouse";
+import { DiscontinueProductPopup }      from "./DiscontinueProductPopup";
 
 import { numeralWrapper }               from "../../ui/numeralFormat";
 import { dialogBoxCreate }              from "../../../utils/DialogBox";
+import { createPopup }                  from "../../ui/React/createPopup";
 
 import { isString }                     from "../../../utils/helpers/isString";
 
@@ -71,8 +73,15 @@ function ProductComponent(props: IProductProps) {
     }
     const limitProductionButtonOnClick = eventHandler.createLimitProductProdutionPopup.bind(eventHandler, product, city);
 
-    // Discontinue Button
-    const discontinueButtonOnClick = eventHandler.createDiscontinueProductPopup.bind(eventHandler, product, division);
+    function openDiscontinueProductPopup() {
+        const popupId = "cmpy-mgmt-discontinue-product-popup";
+        createPopup(popupId, DiscontinueProductPopup, {
+            product: product,
+            industry: division,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
     // Market TA button
     const marketTaButtonOnClick = eventHandler.createProductMarketTaPopup.bind(eventHandler, product, division);
@@ -93,7 +102,7 @@ function ProductComponent(props: IProductProps) {
                         <button className={"std-button"} onClick={limitProductionButtonOnClick}>
                             {limitProductionButtonText}
                         </button>
-                        <button className={"std-button"} onClick={discontinueButtonOnClick}>
+                        <button className={"std-button"} onClick={openDiscontinueProductPopup}>
                             Discontinue
                         </button>
                         {
@@ -173,7 +182,7 @@ function ProductComponent(props: IProductProps) {
                 <button className={"std-button"} onClick={limitProductionButtonOnClick}>
                     {limitProductionButtonText}
                 </button>
-                <button className={"std-button"} onClick={discontinueButtonOnClick}>
+                <button className={"std-button"} onClick={openDiscontinueProductPopup}>
                     Discontinue
                 </button>
                 {

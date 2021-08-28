@@ -56,29 +56,6 @@ export class CorporationEventHandler {
         this.routing = routing;
     }
 
-    // Create a popup that lets the player discontinue a product
-    createDiscontinueProductPopup(product, industry) {
-        const popupId = "cmpy-mgmt-discontinue-product-popup";
-        const txt = createElement("p", {
-            innerText:"Are you sure you want to do this? Discontinuing a product " +
-                      "removes it completely and permanently. You will no longer " +
-                      "produce this product and all of its existing stock will be " +
-                      "removed and left unsold",
-        });
-        const confirmBtn = createElement("button", {
-            class:"popup-box-button",innerText:"Discontinue",
-            clickListener: () => {
-                industry.discontinueProduct(product);
-                removeElementById(popupId);
-                this.rerender();
-                return false;
-            },
-        });
-        const cancelBtn = createPopupCloseButton(popupId, { innerText: "Cancel" });
-
-        createPopup(popupId, [txt, cancelBtn, confirmBtn]);
-    }
-
     // Create a popup that lets the player manage exports
     createExportMaterialPopup(mat) {
         const corp = this.corp;
