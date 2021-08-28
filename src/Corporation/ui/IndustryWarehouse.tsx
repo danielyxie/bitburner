@@ -9,6 +9,7 @@ import { Product }                      from "../Product";
 import { Warehouse }                    from "../Warehouse";
 
 import { numeralWrapper }               from "../../ui/numeralFormat";
+import { dialogBoxCreate }              from "../../../utils/DialogBox";
 
 import { isString }                     from "../../../utils/helpers/isString";
 
@@ -527,12 +528,27 @@ export function IndustryWarehouse(props: IProps) {
     }
     const warehouse = division.warehouses[props.currentCity];
 
+    function purchaseWarehouse(division: any, city: string) {
+        if (props.corp.funds.lt(CorporationConstants.WarehouseInitialCost)) {
+            dialogBoxCreate("You do not have enough funds to do this!");
+        } else {
+            division.warehouses[city] = new Warehouse({
+                corp: props.corp,
+                industry: division,
+                loc: city,
+                size: CorporationConstants.WarehouseInitialSize,
+            });
+            props.corp.funds = props.corp.funds.minus(CorporationConstants.WarehouseInitialCost);
+            props.corp.rerender();
+        }
+    }
+
     if (warehouse instanceof Warehouse) {
         return renderWarehouseUI();
     } else {
         return (
             <div className={"cmpy-mgmt-warehouse-panel"}>
-                <button className={"std-button"} onClick={() => props.eventHandler.purchaseWarehouse(division, props.currentCity)}>
+                <button className={"std-button"} onClick={() => purchaseWarehouse(division, props.currentCity)}>
                     Purchase Warehouse ({numeralWrapper.formatMoney(CorporationConstants.WarehouseInitialCost)})
                 </button>
             </div>

@@ -9,6 +9,9 @@ import { EmployeePositions }        from "../EmployeePositions";
 import { numeralWrapper }           from "../../ui/numeralFormat";
 
 import { getSelectText }            from "../../../utils/uiHelpers/getSelectData";
+import { createPopup }              from "../../ui/React/createPopup";
+import { UpgradeOfficeSizePopup }   from "./UpgradeOfficeSizePopup";
+import { ThrowPartyPopup }          from "./ThrowPartyPopup";
 
 interface IProps {
     routing: any;
@@ -565,17 +568,29 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     } else {
         autohireEmployeeButtonClass += " std-button";
     }
-    const autohireEmployeeButtonOnClick = () => {
-        if (office.atCapacity()) { return; }
+    function autohireEmployeeButtonOnClick(): void {
+        if (office.atCapacity()) return;
         office.hireRandomEmployee();
         props.corp.rerender();
     }
 
-    // Upgrade Office Size Button
-    const upgradeOfficeSizeOnClick = props.eventHandler.createUpgradeOfficeSizePopup.bind(props.eventHandler, office);
+    function openUpgradeOfficeSizePopup(): void {
+        const popupId = "cmpy-mgmt-upgrade-office-size-popup";
+        createPopup(popupId, UpgradeOfficeSizePopup, {
+            office: office,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
-    // Throw Office Party
-    const throwOfficePartyOnClick = props.eventHandler.createThrowOfficePartyPopup.bind(props.eventHandler, office);
+    function openThrowPartyPopup(): void {
+        const popupId = "cmpy-mgmt-throw-office-party-popup";
+        createPopup(popupId, ThrowPartyPopup, {
+            office: office,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
     return (
         <div className={"cmpy-mgmt-employee-panel"}>
@@ -598,7 +613,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
                 </span>
             </button>
             <br />
-            <button className={"std-button tooltip"} onClick={upgradeOfficeSizeOnClick} style={buttonStyle}>
+            <button className={"std-button tooltip"} onClick={openUpgradeOfficeSizePopup} style={buttonStyle}>
                 Upgrade size
                 <span className={"tooltiptext"}>
                     Upgrade the office's size so that it can hold more employees!
@@ -606,7 +621,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             </button>
             {
                 !division.hasResearch("AutoPartyManager") &&
-                <button className={"std-button tooltip"} onClick={throwOfficePartyOnClick} style={buttonStyle}>
+                <button className={"std-button tooltip"} onClick={openThrowPartyPopup} style={buttonStyle}>
                     Throw Party
                     <span className={"tooltiptext"}>
                         "Throw an office party to increase your employee's morale and happiness"
