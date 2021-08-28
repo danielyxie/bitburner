@@ -1,12 +1,9 @@
 // React Component for displaying an Industry's warehouse information
 // (right-side panel in the Industry UI)
 import React from "react";
-import { BaseReactComponent }           from "./BaseReactComponent";
 
-import { OfficeSpace,
-         WarehouseInitialCost,
-         WarehouseUpgradeBaseCost,
-         ProductProductionCostRatio }   from "../Corporation";
+import { CorporationConstants }         from "../data/Constants";
+import { OfficeSpace }                  from "../OfficeSpace";
 import { Material }                     from "../Material";
 import { Product }                      from "../Product";
 import { Warehouse }                    from "../Warehouse";
@@ -15,8 +12,16 @@ import { numeralWrapper }               from "../../ui/numeralFormat";
 
 import { isString }                     from "../../../utils/helpers/isString";
 
+interface IProductProps {
+    corp: any;
+    division: any;
+    city: string;
+    product: any;
+    eventHandler: any;
+}
+
 // Creates the UI for a single Product type
-function ProductComponent(props) {
+function ProductComponent(props: IProductProps) {
     const corp = props.corp;
     const division = props.division;
     const city = props.city;
@@ -146,7 +151,7 @@ function ProductComponent(props) {
                 </span>
             </p><br />
             <p className={"tooltip"}>
-                Est. Production Cost:  {numeralWrapper.formatMoney(product.pCost / ProductProductionCostRatio)}
+                Est. Production Cost:  {numeralWrapper.formatMoney(product.pCost / CorporationConstants.ProductProductionCostRatio)}
                 <span className={"tooltiptext"}>
                 An estimate of the material cost it takes to create this Product.
                 </span>
@@ -181,8 +186,17 @@ function ProductComponent(props) {
     )
 }
 
+interface IMaterialProps {
+    corp: any;
+    division: any;
+    warehouse: any;
+    city: string;
+    mat: any;
+    eventHandler: any;
+}
+
 // Creates the UI for a single Material type
-function MaterialComponent(props) {
+function MaterialComponent(props: any) {
     const corp = props.corp;
     const division = props.division;
     const warehouse = props.warehouse;
@@ -230,7 +244,7 @@ function MaterialComponent(props) {
             sellButtonText += " @ " + numeralWrapper.formatMoney(mat.bCost + markupLimit);
         } else if (mat.sCost) {
             if (isString(mat.sCost)) {
-                var sCost = mat.sCost.replace(/MP/g, mat.bCost);
+                const sCost = mat.sCost.replace(/MP/g, mat.bCost);
                 sellButtonText += " @ " + numeralWrapper.formatMoney(eval(sCost));
             } else {
                 sellButtonText += " @ " + numeralWrapper.formatMoney(mat.sCost);
@@ -320,10 +334,17 @@ function MaterialComponent(props) {
     )
 }
 
-export class IndustryWarehouse extends BaseReactComponent {
+interface IProps {
+    corp: any;
+    routing: any;
+    currentCity: string;
+    eventHandler: any;
+}
+
+export function IndustryWarehouse(props: IProps) {
     // Returns a boolean indicating whether the given material is relevant for the
     // current industry.
-    isRelevantMaterial(matName, division) {
+    function isRelevantMaterial(matName: string, division: any): boolean {
         // Materials that affect Production multiplier
         const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate"];
 
@@ -334,10 +355,10 @@ export class IndustryWarehouse extends BaseReactComponent {
         return false;
     }
 
-    renderWarehouseUI() {
-        const corp = this.corp();
-        const division = this.routing().currentDivision; // Validated in render()
-        const warehouse = division.warehouses[this.props.currentCity]; // Validated in render()
+    function renderWarehouseUI() {
+        const corp = props.corp;
+        const division = props.routing.currentDivision; // Validated in render()
+        const warehouse = division.warehouses[props.currentCity]; // Validated in render()
 
         // General Storage information at the top
         const sizeUsageStyle = {
@@ -346,7 +367,7 @@ export class IndustryWarehouse extends BaseReactComponent {
         }
 
         // Upgrade Warehouse size button
-        const sizeUpgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+        const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
         const canAffordUpgrade = (corp.funds.gt(sizeUpgradeCost));
         const upgradeWarehouseClass = canAffordUpgrade ? "std-button" : "a-link-button-inactive";
         const upgradeWarehouseOnClick = () => {
@@ -416,7 +437,7 @@ export class IndustryWarehouse extends BaseReactComponent {
 
         // Smart Supply Checkbox
         const smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
-        const smartSupplyOnChange = (e) => {
+        const smartSupplyOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             warehouse.smartSupplyEnabled = e.target.checked;
             corp.rerender();
         }
@@ -426,12 +447,12 @@ export class IndustryWarehouse extends BaseReactComponent {
         for (const matName in warehouse.materials) {
             if (warehouse.materials[matName] instanceof Material) {
                 // Only create UI for materials that are relevant for the industry
-                if (this.isRelevantMaterial(matName, division)) {
+                if (isRelevantMaterial(matName, division)) {
                     mats.push(<MaterialComponent
-                                city={this.props.currentCity}
+                                city={props.currentCity}
                                 corp={corp}
                                 division={division}
-                                eventHandler={this.eventHandler()}
+                                eventHandler={props.eventHandler}
                                 key={matName}
                                 mat={warehouse.materials[matName]}
                                 warehouse={warehouse} />);
@@ -445,13 +466,13 @@ export class IndustryWarehouse extends BaseReactComponent {
             for (const productName in division.products) {
                 if (division.products[productName] instanceof Product) {
                     products.push(<ProductComponent
-                                    city={this.props.currentCity}
+                                    city={props.currentCity}
                                     corp={corp}
                                     division={division}
-                                    eventHandler={this.eventHandler()}
+                                    eventHandler={props.eventHandler}
                                     key={productName}
                                     product={division.products[productName]}
-                                    warehouse={warehouse} />);
+                                    />);
                 }
             }
         }
@@ -500,25 +521,21 @@ export class IndustryWarehouse extends BaseReactComponent {
         )
     }
 
-    render() {
-        const division = this.routing().currentDivision;
-        if (division == null) {
-            throw new Error(`Routing does not hold reference to the current Industry`);
-        }
-        const warehouse = division.warehouses[this.props.currentCity];
+    const division = props.routing.currentDivision;
+    if (division == null) {
+        throw new Error(`Routing does not hold reference to the current Industry`);
+    }
+    const warehouse = division.warehouses[props.currentCity];
 
-        const newWarehouseOnClick = this.eventHandler().purchaseWarehouse.bind(this.eventHandler(), division, this.props.currentCity);
-
-        if (warehouse instanceof Warehouse) {
-            return this.renderWarehouseUI();
-        } else {
-            return (
-                <div className={"cmpy-mgmt-warehouse-panel"}>
-                    <button className={"std-button"} onClick={newWarehouseOnClick}>
-                        Purchase Warehouse ({numeralWrapper.formatMoney(WarehouseInitialCost)})
-                    </button>
-                </div>
-            )
-        }
+    if (warehouse instanceof Warehouse) {
+        return renderWarehouseUI();
+    } else {
+        return (
+            <div className={"cmpy-mgmt-warehouse-panel"}>
+                <button className={"std-button"} onClick={() => props.eventHandler.purchaseWarehouse(division, props.currentCity)}>
+                    Purchase Warehouse ({numeralWrapper.formatMoney(CorporationConstants.WarehouseInitialCost)})
+                </button>
+            </div>
+        )
     }
 }

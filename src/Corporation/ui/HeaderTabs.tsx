@@ -26,8 +26,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
                 text={props.corp.name}
             />
             {
-                props.corp.divisions.map((division: IDivision) => 
-                    <HeaderTab
+                props.corp.divisions.map((division: IDivision) => <HeaderTab
                         current={props.routing.isOn(division.name)}
                         key={division.name}
                         onClick={() => {

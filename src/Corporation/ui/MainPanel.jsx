@@ -8,7 +8,7 @@ import { CityTabs } from "./CityTabs";
 import { Industry } from "./Industry";
 import { Overview } from "./Overview";
 
-import { OfficeSpace } from "../Corporation";
+import { OfficeSpace } from "../OfficeSpace";
 
 import { CityName } from "../../Locations/data/CityNames";
 
@@ -80,6 +80,7 @@ export class MainPanel extends BaseReactComponent {
         const cityTabs = (
             <CityTabs
                 {...this.props}
+                corp={this.props.corp}
                 city={this.state.city}
                 onClicks={onClicks}
                 cityStateSetter={this.changeCityState.bind(this)}

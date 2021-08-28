@@ -2,7 +2,6 @@
 import { CorporationRouting } from "./Routing";
 import { Corporation,
          Industry,
-         OfficeSpace,
          Warehouse,
          DividendMaxPercentage,
          IssueNewSharesCooldown,
@@ -12,6 +11,7 @@ import { Corporation,
          WarehouseInitialCost,
          WarehouseInitialSize,
          BribeToRepRatio } from "../Corporation";
+import { OfficeSpace } from "../OfficeSpace";
 
 import { Industries,
          IndustryStartingCosts,

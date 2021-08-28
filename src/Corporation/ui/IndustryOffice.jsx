@@ -3,7 +3,7 @@
 import React from "react";
 import { BaseReactComponent }       from "./BaseReactComponent";
 
-import { OfficeSpace }              from "../Corporation";
+import { OfficeSpace }              from "../OfficeSpace";
 import { EmployeePositions }        from "../EmployeePositions";
 
 import { numeralWrapper }           from "../../ui/numeralFormat";

@@ -25,7 +25,12 @@ export class Industry extends BaseReactComponent {
             </div>
 
             <div className={"cmpy-mgmt-industry-right-panel"}>
-                <IndustryWarehouse {...this.props} />
+                <IndustryWarehouse
+                    corp={this.props.corp}
+                    routing={this.props.routing}
+                    currentCity={this.props.currentCity}
+                    eventHandler={this.props.eventHandler}
+                />
             </div>
             </div>
         )
