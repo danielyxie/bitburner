@@ -20,7 +20,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
 
     const text = `${data[4]} - ${numeralWrapper.formatMoney(cost)}`
     const tooltip = data[5];
-    function onClick() {
+    function onClick(): void {
         const corp = props.corp;
         if (corp.funds.lt(cost)) {
             dialogBoxCreate("Insufficient funds");

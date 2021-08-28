@@ -34,7 +34,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     const [numUnassigned, setNumUnassigned] = useState(0);
     const [numTraining, setNumTraining] = useState(0);
 
-    function resetEmployeeCount() {
+    function resetEmployeeCount(): void {
         setNumEmployees(0);
         setNumOperations(0);
         setNumEngineers(0);
@@ -45,7 +45,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         setNumTraining(0);
     }
 
-    function updateEmployeeCount() {
+    function updateEmployeeCount(): void {
         const division = props.routing.currentDivision;
         if (division == null) {
             throw new Error(`Routing does not hold reference to the current Industry`);
@@ -116,7 +116,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     updateEmployeeCount();
 
     // Renders the "Employee Management" section of the Office UI
-    function renderEmployeeManagement() {
+    function renderEmployeeManagement(): React.ReactElement {
         updateEmployeeCount();
 
         if (employeeManualAssignMode) {
@@ -126,12 +126,12 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         }
     }
 
-    function renderAutomaticEmployeeManagement() {
+    function renderAutomaticEmployeeManagement(): React.ReactElement {
         const division = props.routing.currentDivision; // Validated in constructor
         const office = division.offices[props.currentCity]; // Validated in constructor
         const vechain = (props.corp.unlockUpgrades[4] === 1); // Has Vechain upgrade
 
-        const switchModeOnClick = () => {
+        function switchModeOnClick(): void {
             setEmployeeManualAssignMode(true);
             props.corp.rerender();
         }
@@ -154,7 +154,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         }
 
         // Helper functions for (re-)assigning employees to different positions
-        function assignEmployee(to: string) {
+        function assignEmployee(to: string): void {
             if (numUnassigned <= 0) {
                 console.warn("Cannot assign employee. No unassigned employees available");
                 return;
@@ -193,8 +193,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             props.corp.rerender();
         }
 
-        function unassignEmployee(from: string) {
-            function logWarning(pos: string) {
+        function unassignEmployee(from: string): void {
+            function logWarning(pos: string): void {
                 console.warn(`Cannot unassign from ${pos} because there is nobody assigned to that position`);
             }
 
@@ -244,61 +244,61 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         }
         const assignButtonClass = numUnassigned > 0 ? "std-button" : "a-link-button-inactive";
 
-        const operationAssignButtonOnClick = () => {
+        function operationAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Operations);
             props.corp.rerender();
         }
-        const operationUnassignButtonOnClick = () => {
+        function operationUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Operations);
             props.corp.rerender();
         }
         const operationUnassignButtonClass = numOperations > 0 ? "std-button" : "a-link-button-inactive";
 
-        const engineerAssignButtonOnClick = () => {
+        function engineerAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Engineer);
             props.corp.rerender();
         }
-        const engineerUnassignButtonOnClick = () => {
+        function engineerUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Engineer);
             props.corp.rerender();
         }
         const engineerUnassignButtonClass = numEngineers > 0 ? "std-button" : "a-link-button-inactive";
 
-        const businessAssignButtonOnClick = () => {
+        function businessAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Business);
             props.corp.rerender();
         }
-        const businessUnassignButtonOnClick = () => {
+        function businessUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Business);
             props.corp.rerender();
         }
         const businessUnassignButtonClass = numBusiness > 0 ? "std-button" : "a-link-button-inactive";
 
-        const managementAssignButtonOnClick = () => {
+        function managementAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Management);
             props.corp.rerender();
         }
-        const managementUnassignButtonOnClick = () => {
+        function managementUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Management);
             props.corp.rerender();
         }
         const managementUnassignButtonClass = numManagement > 0 ? "std-button" : "a-link-button-inactive";
 
-        const rndAssignButtonOnClick = () => {
+        function rndAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.RandD);
             props.corp.rerender();
         }
-        const rndUnassignButtonOnClick = () => {
+        function rndUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.RandD);
             props.corp.rerender();
         }
         const rndUnassignButtonClass = numResearch > 0 ? "std-button" : "a-link-button-inactive";
 
-        const trainingAssignButtonOnClick = () => {
+        function trainingAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Training);
             props.corp.rerender();
         }
-        const trainingUnassignButtonOnClick = () => {
+        function trainingUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Training);
             props.corp.rerender();
         }
@@ -427,12 +427,12 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         )
     }
 
-    function renderManualEmployeeManagement() {
+    function renderManualEmployeeManagement(): React.ReactElement {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated in constructor
         const office = division.offices[props.currentCity]; // Validated in constructor
 
-        const switchModeOnClick = () => {
+        function switchModeOnClick(): void {
             setEmployeeManualAssignMode(false);
             props.corp.rerender();
         }
@@ -449,7 +449,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             employees.push(<option key={office.employees[i].name}>{office.employees[i].name}</option>)
         }
 
-        const employeeSelectorOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        function employeeSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
             const name = getSelectText(e.target);
             for (let i = 0; i < office.employees.length; ++i) {
                 if (name === office.employees[i].name) {
@@ -473,7 +473,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             }
         }
 
-        function employeePositionSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        function employeePositionSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
             if(employee === null) return;
             const pos = getSelectText(e.target);
             employee.pos = pos;
@@ -557,7 +557,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         }
     }
 
-    const hireEmployeeButtonOnClick = () => {
+    function hireEmployeeButtonOnClick(): void {
         office.findEmployees({ corporation: corp, industry: division });
     }
 

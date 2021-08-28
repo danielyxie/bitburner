@@ -32,7 +32,7 @@ export function MainPanel(props: IProps): React.ReactElement {
         }
     }
 
-    function renderOverviewPage() {
+    function renderOverviewPage(): React.ReactElement {
         return (
             <div id="cmpy-mgmt-panel">
                 <Overview {...props} />
@@ -40,7 +40,7 @@ export function MainPanel(props: IProps): React.ReactElement {
         )
     }
 
-    function renderDivisionPage() {
+    function renderDivisionPage(): React.ReactElement {
         // Note: Division is the same thing as Industry...I wasn't consistent with naming
         const division = props.routing.currentDivision;
         if (division == null) {

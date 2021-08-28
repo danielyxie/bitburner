@@ -17,7 +17,7 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
         setCost(parseFloat(event.target.value));
     }
 
-    function throwParty() {
+    function throwParty(): void {
         if (cost === null || isNaN(cost) || cost < 0) {
             dialogBoxCreate("Invalid value entered");
         } else {
@@ -37,14 +37,14 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
         }
     }
 
-    function EffectText(props: {cost: number | null, office: IOfficeSpace}): React.ReactElement {
+    function EffectText(props: {cost: number | null; office: IOfficeSpace}): React.ReactElement {
         let cost = props.cost;
         if(cost !== null && (isNaN(cost) || cost < 0)) return <p>Invalid value entered!</p>
         if(cost === null) cost = 0;
         return <p>Throwing this party will cost a total of {numeralWrapper.formatMoney(cost * props.office.employees.length)}</p>
     }
 
-    function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
         if (event.keyCode === 13) throwParty();
     }
 

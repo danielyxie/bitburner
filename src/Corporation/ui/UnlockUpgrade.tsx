@@ -13,7 +13,7 @@ export function UnlockUpgrade(props: IProps): React.ReactElement {
     const data = props.upgradeData;
     const text = `${data[2]} - ${numeralWrapper.formatMoney(data[1])}`;
     const tooltip = data[3];
-    function onClick() {
+    function onClick(): void {
         const corp = props.corp;
         if (corp.funds.lt(data[1])) {
             dialogBoxCreate("Insufficient funds");

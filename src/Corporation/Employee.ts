@@ -56,7 +56,7 @@ export class Employee {
     }
 
     //Returns the amount the employee needs to be paid
-    process(marketCycles = 1, office: any) {
+    process(marketCycles = 1, office: any): number {
         const gain = 0.003 * marketCycles,
             det = gain * Math.random();
         this.exp += gain;
@@ -127,7 +127,7 @@ export class Employee {
     }
 
     //Process benefits from having an office party thrown
-    throwParty(money: number) {
+    throwParty(money: number): number {
         const mult = 1 + (money / 10e6);
         this.mor *= mult;
         this.mor = Math.min(100, this.mor);
@@ -137,7 +137,7 @@ export class Employee {
     }
 
     //'panel' is the DOM element on which to create the UI
-    createUI(panel: any, corporation: any, industry: any) {
+    createUI(panel: any, corporation: any, industry: any): void {
         const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
             effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
             effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),

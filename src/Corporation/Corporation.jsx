@@ -12,7 +12,6 @@ import { MaterialSizes }                                from "./MaterialSizes";
 import { Product }                                      from "./Product";
 import { ResearchMap }                                  from "./ResearchMap";
 import { Warehouse }                                    from "./Warehouse";
-import { Employee }                                     from "./Employee";
 import { OfficeSpace }                                  from "./OfficeSpace";
 
 import { BitNodeMultipliers }                           from "../BitNode/BitNodeMultipliers";
@@ -34,21 +33,16 @@ import { appendLineBreaks }                             from "../../utils/uiHelp
 import { createElement }                                from "../../utils/uiHelpers/createElement";
 import { createPopup }                                  from "../../utils/uiHelpers/createPopup";
 import { createPopupCloseButton }                       from "../../utils/uiHelpers/createPopupCloseButton";
-import { formatNumber, generateRandomString }           from "../../utils/StringHelperFunctions";
+import { formatNumber }                                 from "../../utils/StringHelperFunctions";
 import { getRandomInt }                                 from "../../utils/helpers/getRandomInt";
 import { isString }                                     from "../../utils/helpers/isString";
 import { KEY }                                          from "../../utils/helpers/keyCodes";
 import { removeElement }                                from "../../utils/uiHelpers/removeElement";
 import { removeElementById }                            from "../../utils/uiHelpers/removeElementById";
 import { yesNoBoxCreate,
-         yesNoTxtInpBoxCreate,
          yesNoBoxGetYesButton,
          yesNoBoxGetNoButton,
-         yesNoTxtInpBoxGetYesButton,
-         yesNoTxtInpBoxGetNoButton,
-         yesNoTxtInpBoxGetInput,
-         yesNoBoxClose,
-         yesNoTxtInpBoxClose }                          from "../../utils/YesNoBox";
+         yesNoBoxClose }                                from "../../utils/YesNoBox";
 
 // UI Related Imports
 import React                                            from "react";
@@ -1454,13 +1448,6 @@ Industry.fromJSON = function(value) {
 }
 
 Reviver.constructors.Industry = Industry;
-
-var OfficeSpaceTiers = {
-    Basic: "Basic",
-    Enhanced: "Enhanced",
-    Luxurious: "Luxurious",
-    Extravagant: "Extravagant",
-}
 
 function Corporation(params={}) {
     this.name = params.name ? params.name : "The Corporation";

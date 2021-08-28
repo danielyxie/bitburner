@@ -24,7 +24,7 @@ interface IProductProps {
 }
 
 // Creates the UI for a single Product type
-function ProductComponent(props: IProductProps) {
+function ProductComponent(props: IProductProps): React.ReactElement {
     const corp = props.corp;
     const division = props.division;
     const city = props.city;
@@ -73,7 +73,7 @@ function ProductComponent(props: IProductProps) {
     }
     const limitProductionButtonOnClick = eventHandler.createLimitProductProdutionPopup.bind(eventHandler, product, city);
 
-    function openDiscontinueProductPopup() {
+    function openDiscontinueProductPopup(): void {
         const popupId = "cmpy-mgmt-discontinue-product-popup";
         createPopup(popupId, DiscontinueProductPopup, {
             product: product,
@@ -206,7 +206,7 @@ interface IMaterialProps {
 }
 
 // Creates the UI for a single Material type
-function MaterialComponent(props: IMaterialProps) {
+function MaterialComponent(props: IMaterialProps): React.ReactElement {
     const corp = props.corp;
     const division = props.division;
     const warehouse = props.warehouse;
@@ -351,7 +351,7 @@ interface IProps {
     eventHandler: any;
 }
 
-export function IndustryWarehouse(props: IProps) {
+export function IndustryWarehouse(props: IProps): React.ReactElement {
     // Returns a boolean indicating whether the given material is relevant for the
     // current industry.
     function isRelevantMaterial(matName: string, division: any): boolean {
@@ -365,7 +365,7 @@ export function IndustryWarehouse(props: IProps) {
         return false;
     }
 
-    function renderWarehouseUI() {
+    function renderWarehouseUI(): React.ReactElement {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated in render()
         const warehouse = division.warehouses[props.currentCity]; // Validated in render()
@@ -380,12 +380,11 @@ export function IndustryWarehouse(props: IProps) {
         const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
         const canAffordUpgrade = (corp.funds.gt(sizeUpgradeCost));
         const upgradeWarehouseClass = canAffordUpgrade ? "std-button" : "a-link-button-inactive";
-        const upgradeWarehouseOnClick = () => {
+        function upgradeWarehouseOnClick(): void {
             ++warehouse.level;
             warehouse.updateSize(corp, division);
             corp.funds = corp.funds.minus(sizeUpgradeCost);
             corp.rerender();
-            return;
         }
 
         // Industry material Requirements
@@ -447,7 +446,7 @@ export function IndustryWarehouse(props: IProps) {
 
         // Smart Supply Checkbox
         const smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
-        const smartSupplyOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        function smartSupplyOnChange(e: React.ChangeEvent<HTMLInputElement>): void {
             warehouse.smartSupplyEnabled = e.target.checked;
             corp.rerender();
         }
@@ -537,7 +536,7 @@ export function IndustryWarehouse(props: IProps) {
     }
     const warehouse = division.warehouses[props.currentCity];
 
-    function purchaseWarehouse(division: any, city: string) {
+    function purchaseWarehouse(division: any, city: string): void {
         if (props.corp.funds.lt(CorporationConstants.WarehouseInitialCost)) {
             dialogBoxCreate("You do not have enough funds to do this!");
         } else {

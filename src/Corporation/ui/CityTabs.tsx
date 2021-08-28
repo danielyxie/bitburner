@@ -18,7 +18,7 @@ interface IProps {
 export function CityTabs(props: IProps): React.ReactElement {
     const division = props.routing.currentDivision;
 
-    function openExpandNewCityModal() {
+    function openExpandNewCityModal(): void {
         const popupId = "cmpy-mgmt-expand-city-popup";
         createPopup(popupId, ExpandNewCityPopup, {
             popupId: popupId,

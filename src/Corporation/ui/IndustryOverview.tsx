@@ -17,7 +17,7 @@ interface IProps {
 }
 
 export function IndustryOverview(props: IProps): React.ReactElement {
-    function renderMakeProductButton() {
+    function renderMakeProductButton(): React.ReactElement {
         const division = props.routing.currentDivision; // Validated inside render()
 
         let createProductButtonText = "";
@@ -59,7 +59,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             default:
                 createProductButtonText = "Create Product";
                 createProductPopupText = "Create a new product!";
-                return "";
+                return (<></>);
         }
         createProductPopupText += "<br><br>To begin developing a product, " +
             "first choose the city in which it will be designed. The stats of your employees " +
@@ -90,7 +90,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         )
     }
 
-    function renderText() {
+    function renderText(): React.ReactElement {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated inside render()
 
@@ -113,11 +113,11 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         const expenses = `Expenses: ${numeralWrapper.formatMoney(division.lastCycleExpenses.toNumber())} /s`;
         const profitStr = `Profit: ${numeralWrapper.formatMoney(profit)} / s`;
 
-        const productionMultHelpTipOnClick = () => {
+        function productionMultHelpTipOnClick(): void {
             // Wrapper for createProgressBarText()
             // Converts the industry's "effectiveness factors"
             // into a graphic (string) depicting how high that effectiveness is
-            function convertEffectFacToGraphic(fac: number) {
+            function convertEffectFacToGraphic(fac: number): string {
                 return createProgressBarText({
                     progress: fac,
                     totalTicks: 20,
@@ -191,7 +191,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         )
     }
 
-    function renderUpgrades() {
+    function renderUpgrades(): React.ReactElement[] {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated inside render()
         const office = division.offices[props.currentCity];
@@ -219,7 +219,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
                     break;
             }
 
-            const onClick = () => {
+            function onClick(): void {
                 if (corp.funds.lt(cost)) {
                     dialogBoxCreate("Insufficient funds");
                 } else {
@@ -243,7 +243,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         return upgrades;
     }
 
-    function renderUpgrade(props: any) {
+    function renderUpgrade(props: any): React.ReactElement {
         return (
             <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.text}>
                 {props.text}

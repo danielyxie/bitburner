@@ -3,12 +3,11 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 
 interface IProps {
-    player: IPlayer,
-    popupId: string,
-    corp: any,
+    player: IPlayer;
+    popupId: string;
+    corp: any;
 }
 
 // Create a popup that lets the player buyback shares
@@ -24,7 +23,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
     const currentStockPrice = props.corp.sharePrice;
     const buybackPrice = currentStockPrice * 1.1;
 
-    function buy() {
+    function buy(): void {
         if(shares === null) return;
         const tempStockPrice = props.corp.sharePrice;
         const buybackPrice = tempStockPrice * 1.1;
@@ -66,7 +65,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
         }
     }
 
-    function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
         if (event.keyCode === 13) buy();
     }
 

@@ -4,13 +4,7 @@ import { Corporation,
          Industry,
          Warehouse,
          DividendMaxPercentage,
-         IssueNewSharesCooldown,
-         OfficeInitialCost,
-         OfficeInitialSize,
-         SellSharesCooldown,
-         WarehouseInitialCost,
-         WarehouseInitialSize,
-         BribeToRepRatio } from "../Corporation";
+         IssueNewSharesCooldown } from "../Corporation";
 import { OfficeSpace } from "../OfficeSpace";
 
 import { Industries,
@@ -22,9 +16,6 @@ import { MaterialSizes } from "../MaterialSizes";
 
 import { Product } from "../Product";
 
-import { Player } from "../../Player";
-
-import { Factions } from "../../Faction/Factions";
 import { Cities } from "../../Locations/Cities";
 
 import { numeralWrapper } from "../../ui/numeralFormat";

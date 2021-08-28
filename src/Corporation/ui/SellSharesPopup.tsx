@@ -4,7 +4,6 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { removePopup } from "../../ui/React/createPopup";
 import { CorporationConstants } from "../data/Constants";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 
 interface IProps {
     corp: any;
@@ -22,7 +21,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
         else setShares(Math.round(parseFloat(event.target.value)));
     }
 
-    function ProfitIndicator(props: {shares: number | null, corp: any}): React.ReactElement {
+    function ProfitIndicator(props: {shares: number | null; corp: any}): React.ReactElement {
         if(props.shares === null) return (<></>);
         if (isNaN(props.shares) || props.shares <= 0) {
             return (<>ERROR: Invalid value entered for number of shares to sell</>);
@@ -35,7 +34,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
         }
     }
 
-    function sell() {
+    function sell(): void {
         if(shares === null) return;
         if (isNaN(shares) || shares <= 0) {
             dialogBoxCreate("ERROR: Invalid value for number of shares");
@@ -50,7 +49,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
             props.corp.numShares -= shares;
             if (isNaN(props.corp.issuedShares)) {
                 console.error(`Corporation issuedShares is NaN: ${props.corp.issuedShares}`);
-                var res = parseInt(props.corp.issuedShares);
+                const res = parseInt(props.corp.issuedShares);
                 if (isNaN(res)) {
                     props.corp.issuedShares = 0;
                 } else {
@@ -74,7 +73,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
     }
 
 
-    function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
         if (event.keyCode === 13) sell();
     }
 

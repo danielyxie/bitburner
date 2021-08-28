@@ -24,7 +24,7 @@ interface IProps {
 
 export function Overview(props: IProps): React.ReactElement {
     // Generic Function for Creating a button
-    function createButton(props: any) {
+    function createButton(props: any): React.ReactElement {
         let className = props.class ? props.class : "std-button";
         const displayStyle = props.display ? props.display : "block";
         const hasTooltip = (props.tooltip != null);
@@ -46,7 +46,7 @@ export function Overview(props: IProps): React.ReactElement {
     }
 
     // Returns a string with general information about Corporation
-    function getOverviewText() {
+    function getOverviewText(): string {
         // Formatted text for profit
         const profit = props.corp.revenue.minus(props.corp.expenses).toNumber(),
             profitStr = profit >= 0 ? numeralWrapper.formatMoney(profit) : "-" + numeralWrapper.format(-1 * profit, "$0.000a");
@@ -110,7 +110,7 @@ export function Overview(props: IProps): React.ReactElement {
 
     // Render the buttons that lie below the overview text.
     // These are mainly for things such as managing finances/stock
-    function renderButtons() {
+    function renderButtons(): React.ReactElement {
         // Create a "Getting Started Guide" button that lets player view the
         // handbook and adds it to the players home computer
         const getStarterGuideOnClick = props.corp.getStarterGuide.bind(props.corp);
@@ -124,7 +124,7 @@ export function Overview(props: IProps): React.ReactElement {
                      "provides some tips/pointers for helping you get started with managing it.",
         });
 
-        function openBribeFactionPopup() {
+        function openBribeFactionPopup(): void {
             const popupId = "corp-bribe-popup";
             createPopup(popupId, BribeFactionPopup, {
                 player: props.player,
@@ -162,7 +162,7 @@ export function Overview(props: IProps): React.ReactElement {
 
 
     // Render the buttons for when your Corporation is still private
-    function renderPrivateButtons(generalBtns: any) {
+    function renderPrivateButtons(generalBtns: any): React.ReactElement {
         const fundingAvailable = (props.corp.fundingRound < 4);
         const findInvestorsClassName = fundingAvailable ? "std-button" : "a-link-button-inactive";
         const findInvestorsTooltip = fundingAvailable ? "Search for private investors who will give you startup funding in exchangefor equity (stock shares) in your company" : null;
@@ -202,7 +202,7 @@ export function Overview(props: IProps): React.ReactElement {
     }
 
     // Render the buttons for when your Corporation has gone public
-    function renderPublicButtons(generalBtns: any) {
+    function renderPublicButtons(generalBtns: any): React.ReactElement {
         const corp = props.corp;
 
         const sellSharesOnCd = (corp.shareSaleCooldown > 0);
@@ -228,7 +228,7 @@ export function Overview(props: IProps): React.ReactElement {
             tooltip: sellSharesTooltip,
         });
 
-        function openBuybackSharesPopup() {
+        function openBuybackSharesPopup(): void {
             const popupId = "corp-buyback-shares-popup";
             createPopup(popupId, BuybackSharesPopup, {
                 player: props.player,
@@ -281,9 +281,9 @@ export function Overview(props: IProps): React.ReactElement {
     }
 
     // Render the UI for Corporation upgrades
-    function renderUpgrades() {
+    function renderUpgrades(): React.ReactElement {
         // Don't show upgrades
-        if (props.corp.divisions.length <= 0) { return; }
+        if (props.corp.divisions.length <= 0) { return (<></>); }
 
         // Create an array of all Unlocks
         const unlockUpgrades: React.ReactElement[] = [];

@@ -25,6 +25,10 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
         setStock(parseFloat(event.target.value));
     }
 
+    function changeFaction(event: React.ChangeEvent<HTMLSelectElement>): void {
+        setSelectedFaction(event.target.value);
+    }
+
     function repGain(money: number, stock: number): number {
         return (money + (stock * props.corp.sharePrice)) / CorporationConstants.BribeToRepRatio;
     }
@@ -45,7 +49,7 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
         }
     }
 
-    function bribe(money: number, stock: number) {
+    function bribe(money: number, stock: number): void {
         const fac = Factions[selectedFaction];
         if (fac == null) {
             dialogBoxCreate("ERROR: You must select a faction to bribe");
@@ -66,7 +70,7 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
 
     return (<>
         <p>You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation.</p>
-        <select className="dropdown" style={{margin: "3px"}} defaultValue={selectedFaction}>
+        <select className="dropdown" style={{margin: "3px"}} defaultValue={selectedFaction} onChange={changeFaction}>
             {
                 props.player.factions.map((name: string) => {
                     const info = Factions[name].getInfo();

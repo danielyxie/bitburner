@@ -24,12 +24,12 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
     const upgradeCost15 = CorporationConstants.OfficeInitialCost * mult;
 
     //Calculate max upgrade size and cost
-    let maxMult = (props.corp.funds.dividedBy(CorporationConstants.OfficeInitialCost)).toNumber();
+    const maxMult = (props.corp.funds.dividedBy(CorporationConstants.OfficeInitialCost)).toNumber();
     let maxNum = 1;
     mult = Math.pow(costMultiplier, initialPriceMult);
     while(maxNum < 50) { //Hard cap of 50x (extra 150 employees)
         if (mult >= maxMult) break;
-        let multIncrease = Math.pow(costMultiplier, initialPriceMult + maxNum);
+        const multIncrease = Math.pow(costMultiplier, initialPriceMult + maxNum);
         if (mult + multIncrease > maxMult) {
             break;
         } else {

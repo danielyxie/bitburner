@@ -3,14 +3,10 @@ import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { formatNumber, generateRandomString } from "../../utils/StringHelperFunctions";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
-import { yesNoBoxCreate,
-         yesNoTxtInpBoxCreate,
-         yesNoBoxGetYesButton,
-         yesNoBoxGetNoButton,
+import { yesNoTxtInpBoxCreate,
          yesNoTxtInpBoxGetYesButton,
          yesNoTxtInpBoxGetNoButton,
          yesNoTxtInpBoxGetInput,
-         yesNoBoxClose,
          yesNoTxtInpBoxClose } from "../../utils/YesNoBox";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { createPopup } from "../../utils/uiHelpers/createPopup";
@@ -126,7 +122,7 @@ export class OfficeSpace {
         return salaryPaid;
     }
 
-    calculateEmployeeProductivity(parentRefs: any) {
+    calculateEmployeeProductivity(parentRefs: any): void {
         const company = parentRefs.corporation, industry = parentRefs.industry;
 
         //Reset
@@ -145,7 +141,7 @@ export class OfficeSpace {
     }
 
     //Takes care of UI as well
-    findEmployees(parentRefs: any) {
+    findEmployees(parentRefs: any): void {
         if (this.atCapacity()) { return; }
         if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
@@ -191,7 +187,7 @@ export class OfficeSpace {
             innerHTML: "Select one of the following candidates for hire:",
         });
 
-        const createEmpDiv = function(employee: any, office: any) {
+        function createEmpDiv(employee: any, office: any): HTMLElement {
             const div = createElement("div", {
                 class:"cmpy-mgmt-find-employee-option",
                 innerHTML:  "Intelligence: " + formatNumber(employee.int, 1) + "<br>" +
@@ -207,7 +203,7 @@ export class OfficeSpace {
                 },
             });
             return div;
-        };
+        }
 
         const cancelBtn = createElement("a", {
             class:"a-link-button",
@@ -228,7 +224,7 @@ export class OfficeSpace {
         createPopup("cmpy-mgmt-hire-employee-popup", elems);
     }
 
-    hireEmployee(employee: Employee, parentRefs: any) {
+    hireEmployee(employee: Employee, parentRefs: any): void {
         const company = parentRefs.corporation;
         const yesBtn = yesNoTxtInpBoxGetYesButton(),
             noBtn = yesNoTxtInpBoxGetNoButton();
