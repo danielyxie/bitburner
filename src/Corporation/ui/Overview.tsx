@@ -4,6 +4,7 @@ import { LevelableUpgrade }             from "./LevelableUpgrade";
 import { UnlockUpgrade }                from "./UnlockUpgrade";
 import { BribeFactionPopup }            from "./BribeFactionPopup";
 import { SellSharesPopup }              from "./SellSharesPopup";
+import { BuybackSharesPopup }           from "./BuybackSharesPopup";
 
 import { CorporationConstants }         from "../data/Constants";
 import { CorporationUnlockUpgrades }    from "../data/CorporationUnlockUpgrades";
@@ -227,10 +228,19 @@ export function Overview(props: IProps): React.ReactElement {
             tooltip: sellSharesTooltip,
         });
 
+        function openBuybackSharesPopup() {
+            const popupId = "corp-buyback-shares-popup";
+            createPopup(popupId, BuybackSharesPopup, {
+                player: props.player,
+                popupId: popupId,
+                corp: props.corp,
+            });
+        }
+
         const buybackSharesBtn = createButton({
             class: "std-button",
             display: "inline-block",
-            onClick: props.eventHandler.createBuybackSharesPopup,
+            onClick: openBuybackSharesPopup,
             text: "Buyback shares",
             tooltip: "Buy back shares you that previously issued or sold at market price.",
         });
