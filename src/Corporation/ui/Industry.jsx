@@ -20,7 +20,12 @@ export class Industry extends BaseReactComponent {
         return (
             <div>
             <div className={"cmpy-mgmt-industry-left-panel"}>
-                <IndustryOverview {...this.props} />
+                <IndustryOverview
+                    routing={this.props.routing}
+                    eventHandler={this.props.eventHandler}
+                    corp={this.props.corp}
+                    currentCity={this.props.currentCity}
+                />
                 <IndustryOffice {...this.props} />
             </div>
 
