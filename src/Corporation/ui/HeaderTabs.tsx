@@ -38,7 +38,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
             }
             <HeaderTab
                 current={false}
-                onClick={props.eventHandler.createNewIndustryPopup}
+                onClick={() => props.eventHandler.createNewIndustryPopup()}
                 text={"Expand into new Industry"}
             />
         </div>

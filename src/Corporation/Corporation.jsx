@@ -1924,6 +1924,7 @@ Corporation.prototype.rerender = function() {
                         corp={this}
                         routing={corpRouting}
                         eventHandler={eventHandler}
+                        player={Player}
                     />, companyManagementDiv);
 }
 

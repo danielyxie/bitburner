@@ -10,11 +10,13 @@ import { Overview } from "./Overview";
 import { OfficeSpace } from "../OfficeSpace";
 
 import { CityName } from "../../Locations/data/CityNames";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     corp: any;
     eventHandler: any;
     routing: any;
+    player: IPlayer;
 }
 
 export function MainPanel(props: IProps): React.ReactElement {

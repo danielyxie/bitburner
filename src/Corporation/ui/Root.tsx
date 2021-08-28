@@ -3,18 +3,20 @@ import React from "react";
 
 import { HeaderTabs } from "./HeaderTabs";
 import { MainPanel } from "./MainPanel";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     corp: any;
     eventHandler: any;
     routing: any;
+    player: IPlayer;
 }
 
 export function CorporationRoot(props: IProps): React.ReactElement {
     return (
         <div>
             <HeaderTabs corp={props.corp} eventHandler={props.eventHandler} routing={props.routing} />
-            <MainPanel corp={props.corp} eventHandler={props.eventHandler} routing={props.routing} />
+            <MainPanel corp={props.corp} eventHandler={props.eventHandler} routing={props.routing} player={props.player} />
         </div>
     )
 }

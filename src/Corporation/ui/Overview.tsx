@@ -2,6 +2,7 @@
 import React from "react";
 import { LevelableUpgrade }             from "./LevelableUpgrade";
 import { UnlockUpgrade }                from "./UnlockUpgrade";
+import { BribeFactionPopup }            from "./BribeFactionPopup";
 
 import { CorporationConstants }         from "../data/Constants";
 import { CorporationUnlockUpgrades }    from "../data/CorporationUnlockUpgrades";
@@ -10,10 +11,13 @@ import { CorporationUpgrades }          from "../data/CorporationUpgrades";
 import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { createPopup } from "../../ui/React/createPopup";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     corp: any;
     eventHandler: any;
+    player: IPlayer;
 }
 
 export function Overview(props: IProps): React.ReactElement {
@@ -118,14 +122,23 @@ export function Overview(props: IProps): React.ReactElement {
                      "provides some tips/pointers for helping you get started with managing it.",
         });
 
+        function openBribeFactionPopup() {
+            const popupId = "corp-bribe-popup";
+            createPopup(popupId, BribeFactionPopup, {
+                player: props.player,
+                popupId: popupId,
+                corp: props.corp,
+            });
+        }
+
         // Create a "Bribe Factions" button if your Corporation is powerful enough.
         // This occurs regardless of whether you're public or private
-        const canBribe = (props.corp.determineValuation() >= CorporationConstants.BribeThreshold);
+        const canBribe = (props.corp.determineValuation() >= CorporationConstants.BribeThreshold) || true;
         const bribeFactionsClass = (canBribe ? "a-link-button" : "a-link-button-inactive");
         const bribeFactionsBtn = createButton({
             class: bribeFactionsClass,
             display: "inline-block",
-            onClick: props.eventHandler.createBribeFactionsPopup,
+            onClick: openBribeFactionPopup,
             text: "Bribe Factions",
             tooltip: (canBribe
                         ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"
