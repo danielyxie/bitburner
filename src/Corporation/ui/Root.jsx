@@ -9,7 +9,7 @@ export class CorporationRoot extends BaseReactComponent {
     render() {
         return (
             <div>
-                <HeaderTabs {...this.props} />
+                <HeaderTabs corp={this.props.corp} eventHandler={this.props.eventHandler} routing={this.props.routing} />
                 <MainPanel {...this.props} />
             </div>
         )

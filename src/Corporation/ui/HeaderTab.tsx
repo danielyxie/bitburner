@@ -6,7 +6,7 @@ interface IProps {
     onClick: () => void;
 }
 
-export function HeaderTab(props: IProps) {
+export function HeaderTab(props: IProps): React.ReactElement {
     let className = "cmpy-mgmt-header-tab";
     if (props.current) {
         className += " current";
