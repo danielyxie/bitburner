@@ -1,7 +1,6 @@
 // React Component for displaying an Industry's overview information
 // (top-left panel in the Industry UI)
 import React from "react";
-import { BaseReactComponent }       from "./BaseReactComponent";
 
 import { OfficeSpace }              from "../OfficeSpace";
 import { Industries }               from "../IndustryData";
@@ -10,11 +9,19 @@ import { numeralWrapper }           from "../../ui/numeralFormat";
 import { dialogBoxCreate }          from "../../../utils/DialogBox";
 import { createProgressBarText }    from "../../../utils/helpers/createProgressBarText";
 
-export class IndustryOverview extends BaseReactComponent {
-    renderMakeProductButton() {
-        const division = this.routing().currentDivision; // Validated inside render()
+interface IProps {
+    routing: any;
+    eventHandler: any;
+    corp: any;
+    currentCity: string;
+}
 
-        var createProductButtonText, createProductPopupText;
+export function IndustryOverview(props: IProps): React.ReactElement {
+    function renderMakeProductButton() {
+        const division = props.routing.currentDivision; // Validated inside render()
+
+        let createProductButtonText = "";
+        let createProductPopupText = "";
         switch(division.type) {
             case Industries.Food:
                 createProductButtonText = "Build Restaurant";
@@ -65,14 +72,13 @@ export class IndustryOverview extends BaseReactComponent {
         const hasMaxProducts = division.hasMaximumNumberProducts();
 
         const className = hasMaxProducts ? "a-link-button-inactive tooltip" : "std-button";
-        const onClick = this.eventHandler().createMakeProductPopup.bind(this.eventHandler(), createProductPopupText, division);
         const buttonStyle = {
             margin: "6px",
             display: "inline-block",
         }
 
         return (
-            <button className={className} onClick={onClick} style={buttonStyle}>
+            <button className={className} onClick={() => props.eventHandler.createMakeProductPopup(createProductPopupText, division)} style={buttonStyle}>
                 {createProductButtonText}
                 {
                     hasMaxProducts &&
@@ -84,9 +90,9 @@ export class IndustryOverview extends BaseReactComponent {
         )
     }
 
-    renderText() {
-        const corp = this.corp();
-        const division = this.routing().currentDivision; // Validated inside render()
+    function renderText() {
+        const corp = props.corp;
+        const division = props.routing.currentDivision; // Validated inside render()
 
         const vechain = (corp.unlockUpgrades[4] === 1);
         const profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber();
@@ -111,7 +117,7 @@ export class IndustryOverview extends BaseReactComponent {
             // Wrapper for createProgressBarText()
             // Converts the industry's "effectiveness factors"
             // into a graphic (string) depicting how high that effectiveness is
-            function convertEffectFacToGraphic(fac) {
+            function convertEffectFacToGraphic(fac: number) {
                 return createProgressBarText({
                     progress: fac,
                     totalTicks: 20,
@@ -185,12 +191,12 @@ export class IndustryOverview extends BaseReactComponent {
         )
     }
 
-    renderUpgrades() {
-        const corp = this.corp();
-        const division = this.routing().currentDivision; // Validated inside render()
-        const office = division.offices[this.props.currentCity];
+    function renderUpgrades() {
+        const corp = props.corp;
+        const division = props.routing.currentDivision; // Validated inside render()
+        const office = division.offices[props.currentCity];
         if (!(office instanceof OfficeSpace)) {
-            throw new Error(`Current City (${this.props.currentCity}) for UI does not have an OfficeSpace object`);
+            throw new Error(`Current City (${props.currentCity}) for UI does not have an OfficeSpace object`);
         }
 
         const upgrades = [];
@@ -227,7 +233,7 @@ export class IndustryOverview extends BaseReactComponent {
                 }
             }
 
-            upgrades.push(this.renderUpgrade({
+            upgrades.push(renderUpgrade({
                 onClick: onClick,
                 text: `${upgrade[4]} - ${numeralWrapper.formatMoney(cost)}`,
                 tooltip: upgrade[5],
@@ -237,7 +243,7 @@ export class IndustryOverview extends BaseReactComponent {
         return upgrades;
     }
 
-    renderUpgrade(props) {
+    function renderUpgrade(props: any) {
         return (
             <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.text}>
                 {props.text}
@@ -249,27 +255,25 @@ export class IndustryOverview extends BaseReactComponent {
         )
     }
 
-    render() {
-        const division = this.routing().currentDivision;
-        if (division == null) {
-            throw new Error(`Routing does not hold reference to the current Industry`);
-        }
-
-        const makeProductButton = this.renderMakeProductButton();
-
-        return (
-            <div className={"cmpy-mgmt-industry-overview-panel"}>
-                {this.renderText()}
-                <br />
-
-                <u className={"industry-purchases-and-upgrades-header"}>Purchases & Upgrades</u><br />
-                {this.renderUpgrades()} <br />
-
-                {
-                    division.makesProducts &&
-                    makeProductButton
-                }
-            </div>
-        )
+    const division = props.routing.currentDivision;
+    if (division == null) {
+        throw new Error(`Routing does not hold reference to the current Industry`);
     }
+
+    const makeProductButton = renderMakeProductButton();
+
+    return (
+        <div className={"cmpy-mgmt-industry-overview-panel"}>
+            {renderText()}
+            <br />
+
+            <u className={"industry-purchases-and-upgrades-header"}>Purchases & Upgrades</u><br />
+            {renderUpgrades()} <br />
+
+            {
+                division.makesProducts &&
+                makeProductButton
+            }
+        </div>
+    )
 }

@@ -196,7 +196,7 @@ interface IMaterialProps {
 }
 
 // Creates the UI for a single Material type
-function MaterialComponent(props: any) {
+function MaterialComponent(props: IMaterialProps) {
     const corp = props.corp;
     const division = props.division;
     const warehouse = props.warehouse;
