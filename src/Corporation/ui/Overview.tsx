@@ -3,6 +3,7 @@ import React from "react";
 import { LevelableUpgrade }             from "./LevelableUpgrade";
 import { UnlockUpgrade }                from "./UnlockUpgrade";
 import { BribeFactionPopup }            from "./BribeFactionPopup";
+import { SellSharesPopup }              from "./SellSharesPopup";
 
 import { CorporationConstants }         from "../data/Constants";
 import { CorporationUnlockUpgrades }    from "../data/CorporationUnlockUpgrades";
@@ -215,7 +216,12 @@ export function Overview(props: IProps): React.ReactElement {
             display: "inline-block",
             onClick: function(event: MouseEvent) {
                 if(!event.isTrusted) return;
-                props.eventHandler.createSellSharesPopup(event);
+                const popupId = "cmpy-mgmt-sell-shares-popup";
+                createPopup(popupId, SellSharesPopup, {
+                    corp: props.corp,
+                    player: props.player,
+                    popupId: popupId,
+                });
             },
             text: "Sell Shares",
             tooltip: sellSharesTooltip,
