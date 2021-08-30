@@ -14,7 +14,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     corp: any;
-    eventHandler: any;
     routing: any;
     player: IPlayer;
 }

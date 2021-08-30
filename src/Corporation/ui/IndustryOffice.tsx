@@ -15,7 +15,6 @@ import { ThrowPartyPopup }          from "./ThrowPartyPopup";
 
 interface IProps {
     routing: any;
-    eventHandler: any;
     corp: any;
     currentCity: string;
 }

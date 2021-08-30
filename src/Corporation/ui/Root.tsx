@@ -7,7 +7,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     corp: any;
-    eventHandler: any;
     routing: any;
     player: IPlayer;
 }
@@ -15,8 +14,8 @@ interface IProps {
 export function CorporationRoot(props: IProps): React.ReactElement {
     return (
         <div>
-            <HeaderTabs corp={props.corp} eventHandler={props.eventHandler} routing={props.routing} />
-            <MainPanel corp={props.corp} eventHandler={props.eventHandler} routing={props.routing} player={props.player} />
+            <HeaderTabs corp={props.corp} routing={props.routing} />
+            <MainPanel corp={props.corp} routing={props.routing} player={props.player} />
         </div>
     )
 }

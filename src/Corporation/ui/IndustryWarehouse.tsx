@@ -11,6 +11,10 @@ import { DiscontinueProductPopup }      from "./DiscontinueProductPopup";
 import { ExportPopup }                  from "./ExportPopup";
 import { LimitProductProductionPopup }  from "./LimitProductProductionPopup";
 import { MaterialMarketTaPopup }        from "./MaterialMarketTaPopup";
+import { SellMaterialPopup }            from "./SellMaterialPopup";
+import { SellProductPopup }             from "./SellProductPopup";
+import { PurchaseMaterialPopup }        from "./PurchaseMaterialPopup";
+import { ProductMarketTaPopup }         from "./ProductMarketTaPopup";
 
 import { numeralWrapper }               from "../../ui/numeralFormat";
 import { dialogBoxCreate }              from "../../../utils/DialogBox";
@@ -23,7 +27,6 @@ interface IProductProps {
     division: any;
     city: string;
     product: any;
-    eventHandler: any;
 }
 
 // Creates the UI for a single Product type
@@ -32,7 +35,6 @@ function ProductComponent(props: IProductProps): React.ReactElement {
     const division = props.division;
     const city = props.city;
     const product = props.product;
-    const eventHandler = props.eventHandler;
 
     // Numeraljs formatters
     const nf = "0.000";
@@ -67,7 +69,15 @@ function ProductComponent(props: IProductProps): React.ReactElement {
             sellButtonText += (" @ " + numeralWrapper.format(product.sCost, "$0.000a"));
         }
     }
-    const sellButtonOnClick = eventHandler.createSellProductPopup.bind(eventHandler, product, city);
+
+    function openSellProductPopup(): void {
+        const popupId = "cmpy-mgmt-limit-product-production-popup";
+        createPopup(popupId, SellProductPopup, {
+            product: product,
+            city: city,
+            popupId: popupId,
+        });
+    }
 
     // Limit Production button
     let limitProductionButtonText = "Limit Production";
@@ -94,8 +104,14 @@ function ProductComponent(props: IProductProps): React.ReactElement {
         });
     }
 
-    // Market TA button
-    const marketTaButtonOnClick = eventHandler.createProductMarketTaPopup.bind(eventHandler, product, division);
+    function openProductMarketTaPopup(): void {
+        const popupId = "cmpy-mgmt-marketta-popup";
+        createPopup(popupId, ProductMarketTaPopup, {
+            product: product,
+            industry: division,
+            popupId: popupId,
+        });
+    }
 
     // Unfinished Product
     if (!product.fin) {
@@ -107,7 +123,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                     <br />
 
                     <div>
-                        <button className={"std-button"} onClick={sellButtonOnClick}>
+                        <button className={"std-button"} onClick={openSellProductPopup}>
                             {sellButtonText}
                         </button><br />
                         <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
@@ -118,7 +134,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                         </button>
                         {
                             division.hasResearch("Market-TA.I") &&
-                            <button className={"std-button"} onClick={marketTaButtonOnClick}>
+                            <button className={"std-button"} onClick={openProductMarketTaPopup}>
                                 Market-TA
                             </button>
                         }
@@ -187,7 +203,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
             </p>
 
             <div>
-                <button className={"std-button"} onClick={sellButtonOnClick}>
+                <button className={"std-button"} onClick={openSellProductPopup}>
                     {sellButtonText}
                 </button><br />
                 <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
@@ -198,7 +214,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                 </button>
                 {
                     division.hasResearch("Market-TA.I") &&
-                    <button className={"std-button"} onClick={marketTaButtonOnClick}>
+                    <button className={"std-button"} onClick={openProductMarketTaPopup}>
                         Market-TA
                     </button>
                 }
@@ -213,7 +229,6 @@ interface IMaterialProps {
     warehouse: any;
     city: string;
     mat: any;
-    eventHandler: any;
 }
 
 // Creates the UI for a single Material type
@@ -223,7 +238,6 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     const warehouse = props.warehouse;
     const city = props.city;
     const mat = props.mat;
-    const eventHandler = props.eventHandler;
     const markupLimit = mat.getMarkupLimit();
     const office = division.offices[city];
     if (!(office instanceof OfficeSpace)) {
@@ -245,7 +259,17 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     // Purchase material button
     const purchaseButtonText = `Buy (${numeralWrapper.format(mat.buy, nfB)})`;
     const purchaseButtonClass = tutorial ? "std-button flashing-button tooltip" : "std-button";
-    const purchaseButtonOnClick = eventHandler.createPurchaseMaterialPopup.bind(eventHandler, mat, division, warehouse);
+
+    function openPurchaseMaterialPopup() {
+        const popupId = "cmpy-mgmt-material-purchase-popup";
+        createPopup(popupId, PurchaseMaterialPopup, {
+            mat: mat,
+            industry: division,
+            warehouse: warehouse,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
     function openExportPopup() {
         const popupId = "cmpy-mgmt-export-popup";
@@ -280,7 +304,15 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     } else {
         sellButtonText = "Sell (0.000/0.000)";
     }
-    const sellButtonOnClick = eventHandler.createSellMaterialPopup.bind(eventHandler, mat);
+
+    function openSellMaterialPopup(): void {
+        const popupId = "cmpy-mgmt-material-sell-popup";
+        createPopup(popupId, SellMaterialPopup, {
+            mat: mat,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
     function openMaterialMarketTaPopup(): void {
         const popupId = "cmpy-mgmt-export-popup";
@@ -334,7 +366,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
             </div>
 
             <div style={{display: "inline-block"}}>
-                <button className={purchaseButtonClass} onClick={purchaseButtonOnClick}>
+                <button className={purchaseButtonClass} onClick={openPurchaseMaterialPopup}>
                     {purchaseButtonText}
                     {
                         tutorial &&
@@ -352,7 +384,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
                 }
                 <br />
 
-                <button className={"std-button"} onClick={sellButtonOnClick}>
+                <button className={"std-button"} onClick={openSellMaterialPopup}>
                     {sellButtonText}
                 </button>
 
@@ -372,7 +404,6 @@ interface IProps {
     corp: any;
     routing: any;
     currentCity: string;
-    eventHandler: any;
 }
 
 export function IndustryWarehouse(props: IProps): React.ReactElement {
@@ -485,7 +516,6 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
                                 city={props.currentCity}
                                 corp={corp}
                                 division={division}
-                                eventHandler={props.eventHandler}
                                 key={matName}
                                 mat={warehouse.materials[matName]}
                                 warehouse={warehouse} />);
@@ -502,7 +532,6 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
                                     city={props.currentCity}
                                     corp={corp}
                                     division={division}
-                                    eventHandler={props.eventHandler}
                                     key={productName}
                                     product={division.products[productName]}
                                     />);

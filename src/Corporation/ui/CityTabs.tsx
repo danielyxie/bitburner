@@ -7,7 +7,6 @@ import { createPopup } from "../../ui/React/createPopup";
 import { IDivision } from "../IDivision";
 
 interface IProps {
-    eventHandler: any;
     routing: any;
     onClicks: {[key: string]: () => void};
     city: string; // currentCity

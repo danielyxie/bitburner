@@ -20,7 +20,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     corp: any;
-    eventHandler: any;
     player: IPlayer;
 }
 

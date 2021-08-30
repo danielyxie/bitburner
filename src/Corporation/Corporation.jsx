@@ -47,7 +47,6 @@ import { yesNoBoxCreate,
 // UI Related Imports
 import React                                            from "react";
 import ReactDOM                                         from "react-dom";
-import { CorporationEventHandler }                      from "./ui/CorporationUIEventHandler";
 import { CorporationRoot }                              from "./ui/Root";
 import { CorporationRouting }                           from "./ui/Routing";
 
@@ -1884,7 +1883,6 @@ Corporation.prototype.getStarterGuide = function() {
 }
 
 let corpRouting;
-let eventHandler;
 let companyManagementDiv;
 Corporation.prototype.createUI = function() {
     companyManagementDiv = createElement("div", {
@@ -1895,13 +1893,12 @@ Corporation.prototype.createUI = function() {
     document.getElementById("entire-game-container").appendChild(companyManagementDiv);
 
     corpRouting = new CorporationRouting(this);
-    eventHandler = new CorporationEventHandler(this, corpRouting);
 
     this.rerender();
 }
 
 Corporation.prototype.rerender = function() {
-    if (companyManagementDiv == null || corpRouting == null || eventHandler == null) {
+    if (companyManagementDiv == null || corpRouting == null) {
         console.warn(`Corporation.rerender() called when companyManagementDiv, corpRouting, or eventHandler is null`);
         return;
     }
@@ -1910,7 +1907,6 @@ Corporation.prototype.rerender = function() {
     ReactDOM.render(<CorporationRoot
                         corp={this}
                         routing={corpRouting}
-                        eventHandler={eventHandler}
                         player={Player}
                     />, companyManagementDiv);
 }

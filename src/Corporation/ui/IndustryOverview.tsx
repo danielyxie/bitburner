@@ -13,7 +13,6 @@ import { createPopup }              from "../../ui/React/createPopup";
 
 interface IProps {
     routing: any;
-    eventHandler: any;
     corp: any;
     currentCity: string;
 }

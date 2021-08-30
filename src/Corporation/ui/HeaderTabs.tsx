@@ -9,7 +9,6 @@ import { createPopup } from "../../ui/React/createPopup";
 
 interface IProps {
     corp: any;
-    eventHandler: any;
     routing: any;
 }
 

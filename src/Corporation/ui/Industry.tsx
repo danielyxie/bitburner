@@ -8,7 +8,6 @@ import { IndustryWarehouse } from "./IndustryWarehouse";
 
 interface IProps {
     routing: any;
-    eventHandler: any;
     corp: any;
     currentCity: string;
 }
@@ -19,12 +18,10 @@ export function Industry(props: IProps): React.ReactElement {
             <div className={"cmpy-mgmt-industry-left-panel"}>
                 <IndustryOverview
                     routing={props.routing}
-                    eventHandler={props.eventHandler}
                     corp={props.corp}
                     currentCity={props.currentCity} />
                 <IndustryOffice 
                     routing={props.routing}
-                    eventHandler={props.eventHandler}
                     corp={props.corp}
                     currentCity={props.currentCity} />
             </div>
@@ -32,8 +29,7 @@ export function Industry(props: IProps): React.ReactElement {
                 <IndustryWarehouse
                     corp={props.corp}
                     routing={props.routing}
-                    currentCity={props.currentCity}
-                    eventHandler={props.eventHandler} />
+                    currentCity={props.currentCity} />
             </div>
         </div>
     )
