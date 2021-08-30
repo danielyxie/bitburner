@@ -8,6 +8,9 @@ import { Material }                     from "../Material";
 import { Product }                      from "../Product";
 import { Warehouse }                    from "../Warehouse";
 import { DiscontinueProductPopup }      from "./DiscontinueProductPopup";
+import { ExportPopup }                  from "./ExportPopup";
+import { LimitProductProductionPopup }  from "./LimitProductProductionPopup";
+import { MaterialMarketTaPopup }        from "./MaterialMarketTaPopup";
 
 import { numeralWrapper }               from "../../ui/numeralFormat";
 import { dialogBoxCreate }              from "../../../utils/DialogBox";
@@ -71,7 +74,15 @@ function ProductComponent(props: IProductProps): React.ReactElement {
     if (product.prdman[city][0]) {
         limitProductionButtonText += " (" + numeralWrapper.format(product.prdman[city][1], nf) + ")";
     }
-    const limitProductionButtonOnClick = eventHandler.createLimitProductProdutionPopup.bind(eventHandler, product, city);
+
+    function openLimitProductProdutionPopup(): void {
+        const popupId = "cmpy-mgmt-limit-product-production-popup";
+        createPopup(popupId, LimitProductProductionPopup, {
+            product: product,
+            city: city,
+            popupId: popupId,
+        });
+    }
 
     function openDiscontinueProductPopup(): void {
         const popupId = "cmpy-mgmt-discontinue-product-popup";
@@ -83,8 +94,15 @@ function ProductComponent(props: IProductProps): React.ReactElement {
         });
     }
 
-    // Market TA button
-    const marketTaButtonOnClick = eventHandler.createProductMarketTaPopup.bind(eventHandler, product, division);
+    function openMaterialMarketTaPopup(): void {
+        const popupId = "cmpy-mgmt-export-popup";
+        createPopup(popupId, MaterialMarketTaPopup, {
+            mat: product,
+            industry: division,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
     // Unfinished Product
     if (!product.fin) {
@@ -99,7 +117,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                         <button className={"std-button"} onClick={sellButtonOnClick}>
                             {sellButtonText}
                         </button><br />
-                        <button className={"std-button"} onClick={limitProductionButtonOnClick}>
+                        <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
                             {limitProductionButtonText}
                         </button>
                         <button className={"std-button"} onClick={openDiscontinueProductPopup}>
@@ -107,7 +125,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                         </button>
                         {
                             division.hasResearch("Market-TA.I") &&
-                            <button className={"std-button"} onClick={marketTaButtonOnClick}>
+                            <button className={"std-button"} onClick={openMaterialMarketTaPopup}>
                                 Market-TA
                             </button>
                         }
@@ -179,7 +197,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                 <button className={"std-button"} onClick={sellButtonOnClick}>
                     {sellButtonText}
                 </button><br />
-                <button className={"std-button"} onClick={limitProductionButtonOnClick}>
+                <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
                     {limitProductionButtonText}
                 </button>
                 <button className={"std-button"} onClick={openDiscontinueProductPopup}>
@@ -187,7 +205,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                 </button>
                 {
                     division.hasResearch("Market-TA.I") &&
-                    <button className={"std-button"} onClick={marketTaButtonOnClick}>
+                    <button className={"std-button"} onClick={openMaterialMarketTaPopup}>
                         Market-TA
                     </button>
                 }
@@ -236,8 +254,14 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     const purchaseButtonClass = tutorial ? "std-button flashing-button tooltip" : "std-button";
     const purchaseButtonOnClick = eventHandler.createPurchaseMaterialPopup.bind(eventHandler, mat, division, warehouse);
 
-    // Export material button
-    const exportButtonOnClick = eventHandler.createExportMaterialPopup.bind(eventHandler, mat);
+    function openExportPopup() {
+        const popupId = "cmpy-mgmt-export-popup";
+        createPopup(popupId, ExportPopup, {
+            mat: mat,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
     // Sell material button
     let sellButtonText;
@@ -265,8 +289,15 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     }
     const sellButtonOnClick = eventHandler.createSellMaterialPopup.bind(eventHandler, mat);
 
-    // Market TA button
-    const marketTaButtonOnClick = eventHandler.createMaterialMarketTaPopup.bind(eventHandler, mat, division);
+    function openMaterialMarketTaPopup(): void {
+        const popupId = "cmpy-mgmt-export-popup";
+        createPopup(popupId, MaterialMarketTaPopup, {
+            mat: mat,
+            industry: division,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
 
     return (
         <div className={"cmpy-mgmt-warehouse-material-div"}>
@@ -322,7 +353,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
 
                 {
                     corp.unlockUpgrades[0] === 1 &&
-                    <button className={"std-button"} onClick={exportButtonOnClick}>
+                    <button className={"std-button"} onClick={openExportPopup}>
                         Export
                     </button>
                 }
@@ -334,7 +365,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
 
                 {
                     division.hasResearch("Market-TA.I") &&
-                    <button className={"std-button"} onClick={marketTaButtonOnClick}>
+                    <button className={"std-button"} onClick={openMaterialMarketTaPopup}>
                         Market-TA
                     </button>
                 }

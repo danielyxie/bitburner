@@ -5,6 +5,8 @@ import { UnlockUpgrade }                from "./UnlockUpgrade";
 import { BribeFactionPopup }            from "./BribeFactionPopup";
 import { SellSharesPopup }              from "./SellSharesPopup";
 import { BuybackSharesPopup }           from "./BuybackSharesPopup";
+import { IssueDividendsPopup }          from "./IssueDividendsPopup";
+import { IssueNewSharesPopup }          from "./IssueNewSharesPopup";
 
 import { CorporationConstants }         from "../data/Constants";
 import { CorporationUnlockUpgrades }    from "../data/CorporationUnlockUpgrades";
@@ -245,6 +247,14 @@ export function Overview(props: IProps): React.ReactElement {
             tooltip: "Buy back shares you that previously issued or sold at market price.",
         });
 
+        function openIssueNewSharesPopup(): void {
+            const popupId = "cmpy-mgmt-issue-new-shares-popup";
+            createPopup(popupId, IssueNewSharesPopup, {
+                popupId: popupId,
+                corp: props.corp,
+            });
+        }
+
         const issueNewSharesOnCd = (corp.issueNewSharesCooldown > 0);
         const issueNewSharesClass = issueNewSharesOnCd ? "a-link-button-inactive" : "std-button";
         const issueNewSharesTooltip = issueNewSharesOnCd
@@ -253,15 +263,23 @@ export function Overview(props: IProps): React.ReactElement {
         const issueNewSharesBtn = createButton({
             class: issueNewSharesClass,
             display: "inline-block",
-            onClick: props.eventHandler.createIssueNewSharesPopup,
+            onClick: openIssueNewSharesPopup,
             text: "Issue New Shares",
             tooltip: issueNewSharesTooltip,
         });
 
+        function openIssueDividendsPopup(): void {
+            const popupId = "cmpy-mgmt-issue-dividends-popup";
+            createPopup(popupId, IssueDividendsPopup, {
+                popupId: popupId,
+                corp: props.corp,
+            });
+        }
+
         const issueDividendsBtn = createButton({
             class: "std-button",
             display: "inline-block",
-            onClick: props.eventHandler.createIssueDividendsPopup,
+            onClick: openIssueDividendsPopup,
             text: "Issue Dividends",
             tooltip: "Manage the dividends that are paid out to shareholders (including yourself)",
         });

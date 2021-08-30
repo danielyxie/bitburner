@@ -8,6 +8,8 @@ import { IndustryUpgrades }         from "../IndustryUpgrades";
 import { numeralWrapper }           from "../../ui/numeralFormat";
 import { dialogBoxCreate }          from "../../../utils/DialogBox";
 import { createProgressBarText }    from "../../../utils/helpers/createProgressBarText";
+import { MakeProductPopup }         from "./MakeProductPopup";
+import { createPopup }              from "../../ui/React/createPopup";
 
 interface IProps {
     routing: any;
@@ -77,8 +79,18 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             display: "inline-block",
         }
 
+        function openMakeProductPopup() {
+            const popupId = "cmpy-mgmt-create-product-popup";
+            createPopup(popupId, MakeProductPopup, {
+                popupText: createProductPopupText,
+                division: division,
+                corp: props.corp,
+                popupId: popupId,
+            });
+        }
+
         return (
-            <button className={className} onClick={() => props.eventHandler.createMakeProductPopup(createProductPopupText, division)} style={buttonStyle}>
+            <button className={className} onClick={openMakeProductPopup} style={buttonStyle}>
                 {createProductButtonText}
                 {
                     hasMaxProducts &&

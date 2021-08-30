@@ -4,6 +4,8 @@
 import React from "react";
 import { HeaderTab } from "./HeaderTab";
 import { IDivision } from "../IDivision";
+import { NewIndustryPopup } from "./NewIndustryPopup";
+import { createPopup } from "../../ui/React/createPopup";
 
 interface IProps {
     corp: any;
@@ -15,6 +17,15 @@ export function HeaderTabs(props: IProps): React.ReactElement {
     function overviewOnClick(): void {
         props.routing.routeToOverviewPage();
         props.corp.rerender();
+    }
+
+    function openNewIndustryPopup(): void {
+        const popupId = "cmpy-mgmt-expand-industry-popup";
+        createPopup(popupId, NewIndustryPopup, {
+            corp: props.corp,
+            routing: props.routing,
+            popupId: popupId,
+        });
     }
 
     return (
@@ -38,7 +49,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
             }
             <HeaderTab
                 current={false}
-                onClick={() => props.eventHandler.createNewIndustryPopup()}
+                onClick={openNewIndustryPopup}
                 text={"Expand into new Industry"}
             />
         </div>

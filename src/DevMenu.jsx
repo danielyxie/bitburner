@@ -591,6 +591,13 @@ class DevMenuComponent extends Component {
         });
     }
 
+    addCorporationResearch() {
+        if(!Player.corporation) return;
+        Player.corporation.divisions.forEach(div => {
+            div.sciResearch.qty += 1e10;
+        });
+    }
+
     specificContract() {
         generateContract({
             problemType: this.state.codingcontract,
@@ -1179,6 +1186,11 @@ class DevMenuComponent extends Component {
                     <tr>
                         <td>
                             <button className="std-button" onClick={this.finishCorporationProducts}>Finish products</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button className="std-button" onClick={this.addCorporationResearch}>Tons of research</button>
                         </td>
                     </tr>
                 </tbody>
