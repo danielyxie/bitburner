@@ -94,15 +94,8 @@ function ProductComponent(props: IProductProps): React.ReactElement {
         });
     }
 
-    function openMaterialMarketTaPopup(): void {
-        const popupId = "cmpy-mgmt-export-popup";
-        createPopup(popupId, MaterialMarketTaPopup, {
-            mat: product,
-            industry: division,
-            corp: props.corp,
-            popupId: popupId,
-        });
-    }
+    // Market TA button
+    const marketTaButtonOnClick = eventHandler.createProductMarketTaPopup.bind(eventHandler, product, division);
 
     // Unfinished Product
     if (!product.fin) {
@@ -125,7 +118,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                         </button>
                         {
                             division.hasResearch("Market-TA.I") &&
-                            <button className={"std-button"} onClick={openMaterialMarketTaPopup}>
+                            <button className={"std-button"} onClick={marketTaButtonOnClick}>
                                 Market-TA
                             </button>
                         }
@@ -205,7 +198,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
                 </button>
                 {
                     division.hasResearch("Market-TA.I") &&
-                    <button className={"std-button"} onClick={openMaterialMarketTaPopup}>
+                    <button className={"std-button"} onClick={marketTaButtonOnClick}>
                         Market-TA
                     </button>
                 }
