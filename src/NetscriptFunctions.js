@@ -940,11 +940,18 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.clearLog();
         },
         disableLog: function(fn) {
-            if (possibleLogs[fn]===undefined) {
+            if (fn = "ALL") {
+                for (fn in possibleLogs) {
+                    workerScript.disableLogs[fn] = true;
+
+                }
+                workerScript.log("disableLog", `Disabled logging for all functions`);
+            } else if (possibleLogs[fn] === undefined) {
                 throw makeRuntimeErrorMsg("disableLog", `Invalid argument: ${fn}.`);
+            } else {
+                workerScript.disableLogs[fn] = true;
+                workerScript.log("disableLog", `Disabled logging for ${fn}`);
             }
-            workerScript.disableLogs[fn] = true;
-            workerScript.log("disableLog", `Disabled logging for ${fn}`);
         },
         enableLog: function(fn) {
             if (possibleLogs[fn]===undefined) {
@@ -4541,7 +4548,7 @@ function NetscriptFunctions(workerScript) {
         return functionNames;
     }
 
-    const possibleLogs = Object.fromEntries(["ALL", ...getFunctionNames(functions)].map(a => [a, true]))
+    const possibleLogs = Object.fromEntries([...getFunctionNames(functions)].map(a => [a, true]))
 
     return functions;
 } // End NetscriptFunction()
