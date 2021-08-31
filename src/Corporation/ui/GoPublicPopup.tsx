@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { ICorporation } from "../ICorporation";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
-    corp: any;
+    corp: ICorporation;
     popupId: string;
+    player: IPlayer;
 }
 
 // Create a popup that lets the player manage exports
@@ -29,7 +32,7 @@ export function GoPublicPopup(props: IProps): React.ReactElement {
         props.corp.issuedShares = numShares;
         props.corp.numShares -= numShares;
         props.corp.addFunds(numShares * initialSharePrice);
-        props.corp.rerender();
+        props.corp.rerender(props.player);
         dialogBoxCreate(`You took your ${props.corp.name} public and earned ` +
                         `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`);
         removePopup(props.popupId);

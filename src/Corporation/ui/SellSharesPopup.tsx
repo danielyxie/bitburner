@@ -4,9 +4,10 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { removePopup } from "../../ui/React/createPopup";
 import { CorporationConstants } from "../data/Constants";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
-    corp: any;
+    corp: ICorporation;
     player: IPlayer;
     popupId: string;
 }
@@ -49,7 +50,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
             props.corp.numShares -= shares;
             if (isNaN(props.corp.issuedShares)) {
                 console.error(`Corporation issuedShares is NaN: ${props.corp.issuedShares}`);
-                const res = parseInt(props.corp.issuedShares);
+                const res = props.corp.issuedShares;
                 if (isNaN(res)) {
                     props.corp.issuedShares = 0;
                 } else {
@@ -68,7 +69,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
                             `The corporation's stock price fell to ${numeralWrapper.formatMoney(props.corp.sharePrice)} ` +
                             `as a result of dilution.`);
 
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
     }
 

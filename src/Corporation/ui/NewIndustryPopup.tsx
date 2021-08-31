@@ -6,9 +6,10 @@ import {
     IndustryStartingCosts,
     IndustryDescriptions } from "../IndustryData";
 import { Industry } from "../Industry";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
-    corp: any;
+    corp: ICorporation;
     popupId: string;
     routing: any;
 }

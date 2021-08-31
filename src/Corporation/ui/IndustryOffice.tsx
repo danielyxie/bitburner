@@ -12,11 +12,14 @@ import { getSelectText }            from "../../../utils/uiHelpers/getSelectData
 import { createPopup }              from "../../ui/React/createPopup";
 import { UpgradeOfficeSizePopup }   from "./UpgradeOfficeSizePopup";
 import { ThrowPartyPopup }          from "./ThrowPartyPopup";
+import { ICorporation }             from "../ICorporation";
+import { IPlayer }                  from "../../PersonObjects/IPlayer";
 
 interface IProps {
     routing: any;
-    corp: any;
+    corp: ICorporation;
     currentCity: string;
+    player: IPlayer;
 }
 
 export function IndustryOffice(props: IProps): React.ReactElement {
@@ -132,7 +135,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
         function switchModeOnClick(): void {
             setEmployeeManualAssignMode(true);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
 
         // Calculate average morale, happiness, and energy. Also salary
@@ -189,7 +192,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
             office.assignEmployeeToJob(to);
             office.calculateEmployeeProductivity({ corporation: props.corp, industry:division });
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
 
         function unassignEmployee(from: string): void {
@@ -233,7 +236,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
             office.unassignEmployeeFromJob(from);
             office.calculateEmployeeProductivity({ corporation: props.corp, industry:division });
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
 
         const positionHeaderStyle = {
@@ -245,61 +248,61 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
         function operationAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Operations);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         function operationUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Operations);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         const operationUnassignButtonClass = numOperations > 0 ? "std-button" : "a-link-button-inactive";
 
         function engineerAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Engineer);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         function engineerUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Engineer);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         const engineerUnassignButtonClass = numEngineers > 0 ? "std-button" : "a-link-button-inactive";
 
         function businessAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Business);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         function businessUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Business);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         const businessUnassignButtonClass = numBusiness > 0 ? "std-button" : "a-link-button-inactive";
 
         function managementAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Management);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         function managementUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Management);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         const managementUnassignButtonClass = numManagement > 0 ? "std-button" : "a-link-button-inactive";
 
         function rndAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.RandD);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         function rndUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.RandD);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         const rndUnassignButtonClass = numResearch > 0 ? "std-button" : "a-link-button-inactive";
 
         function trainingAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Training);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         function trainingUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Training);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         const trainingUnassignButtonClass = numTraining > 0 ? "std-button" : "a-link-button-inactive";
 
@@ -433,7 +436,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
         function switchModeOnClick(): void {
             setEmployeeManualAssignMode(false);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
 
         const employeeInfoDivStyle = {
@@ -457,7 +460,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
                 }
             }
 
-            corp.rerender();
+            corp.rerender(props.player);
         }
 
         // Employee Positions Selector
@@ -477,7 +480,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             const pos = getSelectText(e.target);
             employee.pos = pos;
             resetEmployeeCount();
-            corp.rerender();
+            corp.rerender(props.player);
         }
 
         // Numeraljs formatter
@@ -570,7 +573,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     function autohireEmployeeButtonOnClick(): void {
         if (office.atCapacity()) return;
         office.hireRandomEmployee();
-        props.corp.rerender();
+        props.corp.rerender(props.player);
     }
 
     function openUpgradeOfficeSizePopup(): void {
@@ -579,6 +582,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             office: office,
             corp: props.corp,
             popupId: popupId,
+            player: props.player,
         });
     }
 

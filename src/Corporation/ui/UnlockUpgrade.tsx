@@ -4,10 +4,13 @@ import React from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { CorporationUnlockUpgrade } from "../data/CorporationUnlockUpgrades";
+import { ICorporation } from "../ICorporation";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     upgradeData: CorporationUnlockUpgrade;
-    corp: any;
+    corp: ICorporation;
+    player: IPlayer;
 }
 
 export function UnlockUpgrade(props: IProps): React.ReactElement {
@@ -20,7 +23,7 @@ export function UnlockUpgrade(props: IProps): React.ReactElement {
             dialogBoxCreate("Insufficient funds");
         } else {
             corp.unlock(data);
-            corp.rerender();
+            corp.rerender(props.player);
         }
     }
 

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { CorporationConstants } from "../data/Constants";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
     popupId: string;
-    corp: any;
+    corp: ICorporation;
 }
 
 // Create a popup that lets the player issue & manage dividends

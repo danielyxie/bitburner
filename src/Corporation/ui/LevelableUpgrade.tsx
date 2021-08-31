@@ -3,11 +3,15 @@ import React from "react";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { ICorporation } from "../ICorporation";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { CorporationUpgrade } from "../data/CorporationUpgrades";
 
 interface IProps {
-    upgradeData: number[];
+    upgradeData: CorporationUpgrade;
     upgradeLevel: number;
-    corp: any;
+    corp: ICorporation;
+    player: IPlayer;
 }
 
 export function LevelableUpgrade(props: IProps): React.ReactElement {
@@ -26,7 +30,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
             dialogBoxCreate("Insufficient funds");
         } else {
             corp.upgrade(data);
-            corp.rerender();
+            corp.rerender(props.player);
         }
     }
 

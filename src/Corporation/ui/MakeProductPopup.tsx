@@ -3,11 +3,12 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { Industries } from "../IndustryData";
 import { Product } from "../Product";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
     popupText: string;
     division: any;
-    corp: any;
+    corp: ICorporation;
     popupId: string;
 }
 

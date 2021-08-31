@@ -3,11 +3,12 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
     player: IPlayer;
     popupId: string;
-    corp: any;
+    corp: ICorporation;
 }
 
 // Create a popup that lets the player buyback shares
@@ -39,7 +40,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
             if (isNaN(props.corp.issuedShares)) {
                 console.warn("Corporation issuedShares is NaN: " + props.corp.issuedShares);
                 console.warn("Converting to number now");
-                const res = parseInt(props.corp.issuedShares);
+                const res = props.corp.issuedShares;
                 if (isNaN(res)) {
                     props.corp.issuedShares = 0;
                 } else {
@@ -49,7 +50,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
             props.corp.issuedShares -= shares;
             props.player.loseMoney(shares * buybackPrice);
             removePopup(props.popupId);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
     }
 

@@ -174,6 +174,7 @@ export function Overview(props: IProps): React.ReactElement {
         function openFindInvestorsPopup(): void {
             const popupId = "cmpy-mgmt-find-investors-popup";
             createPopup(popupId, FindInvestorsPopup, {
+                player: props.player,
                 popupId: popupId,
                 corp: props.corp,
             });
@@ -182,6 +183,7 @@ export function Overview(props: IProps): React.ReactElement {
         function openGoPublicPopup(): void {
             const popupId = "cmpy-mgmt-go-public-popup";
             createPopup(popupId, GoPublicPopup, {
+                player: props.player,
                 popupId: popupId,
                 corp: props.corp,
             });
@@ -323,6 +325,7 @@ export function Overview(props: IProps): React.ReactElement {
         Object.values(CorporationUnlockUpgrades).forEach((unlockData) => {
             if (props.corp.unlockUpgrades[unlockData[0]] === 0) {
                 unlockUpgrades.push(<UnlockUpgrade
+                    player={props.player}
                     corp={props.corp}
                     upgradeData={unlockData}
                     key={unlockData[0]}
@@ -351,6 +354,7 @@ export function Overview(props: IProps): React.ReactElement {
                 <h1 className={"cmpy-mgmt-upgrade-header"}> Upgrades </h1>
                 {
                     levelableUpgradeProps.map((data: any) => <LevelableUpgrade
+                            player={props.player}
                             corp={props.corp}
                             upgradeData={data.upgradeData}
                             upgradeLevel={data.upgradeLevel}

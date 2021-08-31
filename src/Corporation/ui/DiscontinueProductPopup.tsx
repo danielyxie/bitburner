@@ -1,11 +1,14 @@
 import React from 'react';
 import { removePopup } from "../../ui/React/createPopup";
+import { ICorporation } from "../ICorporation";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     product: any;
     industry: any;
-    corp: any;
+    corp: ICorporation;
     popupId: string;
+    player: IPlayer;
 }
 
 // Create a popup that lets the player discontinue a product
@@ -13,7 +16,7 @@ export function DiscontinueProductPopup(props: IProps): React.ReactElement {
     function discontinue(): void {
         props.industry.discontinueProduct(props.product);
         removePopup(props.popupId);
-        props.corp.rerender();
+        props.corp.rerender(props.player);
     }
 
     return (<>

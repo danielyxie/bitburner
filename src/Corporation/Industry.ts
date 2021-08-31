@@ -19,6 +19,7 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { isString } from "../../utils/helpers/isString";
 import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
+import { ICorporation } from "./ICorporation";
 import {
     IndustryUpgrade,
     IndustryUpgrades } from "./IndustryUpgrades";
@@ -401,7 +402,7 @@ export class Industry {
         }
     }
 
-    process(marketCycles=1, state: string, company: any): void {
+    process(marketCycles=1, state: string, corporation: ICorporation): void {
         this.state = state;
 
         //At the start of a cycle, store and reset revenue/expenses
@@ -426,7 +427,7 @@ export class Industry {
             let employeeSalary = 0;
             for (const officeLoc in this.offices) {
                 if (this.offices[officeLoc] instanceof OfficeSpace) {
-                    employeeSalary += this.offices[officeLoc].process(marketCycles, {industry:this, corporation:company});
+                    employeeSalary += this.offices[officeLoc].process(marketCycles, {industry:this, corporation:corporation});
                 }
             }
             this.thisCycleExpenses = this.thisCycleExpenses.plus(employeeSalary);
@@ -440,7 +441,7 @@ export class Industry {
             this.popularity = Math.max(0, this.popularity);
 
             // Process Dreamsense gains
-            const popularityGain = company.getDreamSenseGain(), awarenessGain = popularityGain * 4;
+            const popularityGain = corporation.getDreamSenseGain(), awarenessGain = popularityGain * 4;
             if (popularityGain > 0) {
                 this.popularity += (popularityGain * marketCycles);
                 this.awareness += (awarenessGain * marketCycles);
@@ -450,14 +451,14 @@ export class Industry {
         }
 
         // Process production, purchase, and import/export of materials
-        let res = this.processMaterials(marketCycles, company);
+        let res = this.processMaterials(marketCycles, corporation);
         if (Array.isArray(res)) {
             this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
             this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
         }
 
         // Process creation, production & sale of products
-        res = this.processProducts(marketCycles, company);
+        res = this.processProducts(marketCycles, corporation);
         if (Array.isArray(res)) {
             this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
             this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
@@ -518,7 +519,7 @@ export class Industry {
     }
 
     //Process production, purchase, and import/export of materials
-    processMaterials(marketCycles=1, company: any): [number, number] {
+    processMaterials(marketCycles=1, corporation: ICorporation): [number, number] {
         let revenue = 0, expenses = 0;
         this.calculateProductionFactors();
 
@@ -588,7 +589,7 @@ export class Industry {
                     //on the office's productivity
                     const maxProd = this.getOfficeProductivity(office)
                                 * this.prodMult                     // Multiplier from materials
-                                * company.getProductionMultiplier()
+                                * corporation.getProductionMultiplier()
                                 * this.getProductionMultiplier();   // Multiplier from Research
                     let prod;
 
@@ -700,7 +701,7 @@ export class Industry {
                             const sqrtDenominator = ((mat.qlt + .001)
                                                       * marketFactor
                                                       * businessFactor
-                                                      * company.getSalesMultiplier()
+                                                      * corporation.getSalesMultiplier()
                                                       * advertisingFactor
                                                       * this.getSalesMultiplier());
                             const denominator = Math.sqrt(sqrtNumerator / sqrtDenominator);
@@ -750,7 +751,7 @@ export class Industry {
                                     * marketFactor
                                     * markup
                                     * businessFactor
-                                    * company.getSalesMultiplier()
+                                    * corporation.getSalesMultiplier()
                                     * advertisingFactor
                                     * this.getSalesMultiplier();
                         let sellAmt;
@@ -822,9 +823,9 @@ export class Industry {
                                 if (amt === 0) {
                                     break; //None left
                                 }
-                                for (let foo = 0; foo < company.divisions.length; ++foo) {
-                                    if (company.divisions[foo].name === exp.ind) {
-                                        const expIndustry = company.divisions[foo];
+                                for (let foo = 0; foo < corporation.divisions.length; ++foo) {
+                                    if (corporation.divisions[foo].name === exp.ind) {
+                                        const expIndustry = corporation.divisions[foo];
                                         const expWarehouse = expIndustry.warehouses[exp.city];
                                         if (!(expWarehouse instanceof Warehouse)) {
                                             console.error(`Invalid export! ${expIndustry.name} ${exp.city}`);
@@ -872,7 +873,7 @@ export class Industry {
             if (office instanceof OfficeSpace) {
                 this.sciResearch.qty += (.004
                                          * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
-                                         * company.getScientificResearchMultiplier()
+                                         * corporation.getScientificResearchMultiplier()
                                          * this.getScientificResearchMultiplier());
             }
         }
@@ -880,7 +881,7 @@ export class Industry {
     }
 
     //Process production & sale of this industry's FINISHED products (including all of their stats)
-    processProducts(marketCycles=1, corporation: any): [number, number] {
+    processProducts(marketCycles=1, corporation: ICorporation): [number, number] {
         let revenue = 0;
         const expenses = 0;
 
@@ -926,7 +927,7 @@ export class Industry {
     }
 
     //Processes FINISHED products
-    processProduct(marketCycles=1, product: Product, corporation: any): number {
+    processProduct(marketCycles=1, product: Product, corporation: ICorporation): number {
         let totalProfit = 0;
         for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
             const city = CorporationConstants.Cities[i], office = this.offices[city], warehouse = this.warehouses[city];

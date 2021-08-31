@@ -3,10 +3,11 @@ import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { IOfficeSpace } from "../IOfficeSpace";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
     office: IOfficeSpace;
-    corp: any;
+    corp: ICorporation;
     popupId: string;
 }
 

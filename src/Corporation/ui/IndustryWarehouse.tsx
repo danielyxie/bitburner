@@ -21,12 +21,15 @@ import { dialogBoxCreate }              from "../../../utils/DialogBox";
 import { createPopup }                  from "../../ui/React/createPopup";
 
 import { isString }                     from "../../../utils/helpers/isString";
+import { ICorporation } from "../ICorporation";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProductProps {
-    corp: any;
+    corp: ICorporation;
     division: any;
     city: string;
     product: any;
+    player: IPlayer;
 }
 
 // Creates the UI for a single Product type
@@ -101,6 +104,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
             industry: division,
             corp: props.corp,
             popupId: popupId,
+            player: props.player,
         });
     }
 
@@ -404,6 +408,7 @@ interface IProps {
     corp: any;
     routing: any;
     currentCity: string;
+    player: IPlayer;
 }
 
 export function IndustryWarehouse(props: IProps): React.ReactElement {
@@ -439,7 +444,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
             ++warehouse.level;
             warehouse.updateSize(corp, division);
             corp.funds = corp.funds.minus(sizeUpgradeCost);
-            corp.rerender();
+            corp.rerender(props.player);
         }
 
         // Industry material Requirements
@@ -503,7 +508,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         const smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
         function smartSupplyOnChange(e: React.ChangeEvent<HTMLInputElement>): void {
             warehouse.smartSupplyEnabled = e.target.checked;
-            corp.rerender();
+            corp.rerender(props.player);
         }
 
         // Create React components for materials
@@ -529,6 +534,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
             for (const productName in division.products) {
                 if (division.products[productName] instanceof Product) {
                     products.push(<ProductComponent
+                                    player={props.player}
                                     city={props.currentCity}
                                     corp={corp}
                                     division={division}
@@ -600,7 +606,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
                 size: CorporationConstants.WarehouseInitialSize,
             });
             props.corp.funds = props.corp.funds.minus(CorporationConstants.WarehouseInitialCost);
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
     }
 

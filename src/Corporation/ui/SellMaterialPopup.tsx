@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
+import { ICorporation } from "../ICorporation";
 
 function initialPrice(mat: any): string {
     let val = mat.sCost ? mat.sCost : '';
@@ -14,7 +15,7 @@ function initialPrice(mat: any): string {
 
 interface IProps {
     mat: any;
-    corp: any;
+    corp: ICorporation;
     popupId: string;
 }
 

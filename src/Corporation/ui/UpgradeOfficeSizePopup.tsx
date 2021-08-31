@@ -4,11 +4,14 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { CorporationConstants } from "../data/Constants";
 import { IOfficeSpace } from "../IOfficeSpace";
+import { ICorporation } from "../ICorporation";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
     office: IOfficeSpace;
-    corp: any;
+    corp: ICorporation;
     popupId: string;
+    player: IPlayer;
 }
 
 export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
@@ -46,7 +49,7 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
             props.office.size += size;
             props.corp.funds = props.corp.funds.minus(cost);
             dialogBoxCreate("Office space increased! It can now hold " + props.office.size + " employees");
-            props.corp.rerender();
+            props.corp.rerender(props.player);
         }
         removePopup(props.popupId);
     }

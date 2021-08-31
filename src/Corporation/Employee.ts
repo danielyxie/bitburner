@@ -3,6 +3,7 @@ import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { EmployeePositions } from "./EmployeePositions";
+import { ICorporation } from "./ICorporation";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 
@@ -86,7 +87,7 @@ export class Employee {
         return salary;
     }
 
-    calculateProductivity(corporation: any, industry: any): number {
+    calculateProductivity(corporation: ICorporation, industry: any): number {
         const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
             effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
             effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
@@ -137,7 +138,7 @@ export class Employee {
     }
 
     //'panel' is the DOM element on which to create the UI
-    createUI(panel: any, corporation: any, industry: any): void {
+    createUI(panel: any, corporation: ICorporation, industry: any): void {
         const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
             effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
             effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),

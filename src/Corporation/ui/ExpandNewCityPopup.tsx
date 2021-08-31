@@ -5,10 +5,11 @@ import { CorporationConstants } from "../data/Constants";
 import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { OfficeSpace } from "../OfficeSpace";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
     popupId: string;
-    corp: any;
+    corp: ICorporation;
     division: IDivision;
     cityStateSetter: (city: string) => void;
 }

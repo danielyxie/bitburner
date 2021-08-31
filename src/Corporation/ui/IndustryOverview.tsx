@@ -11,11 +11,14 @@ import { createProgressBarText }    from "../../../utils/helpers/createProgressB
 import { MakeProductPopup }         from "./MakeProductPopup";
 import { ResearchPopup }            from "./ResearchPopup";
 import { createPopup }              from "../../ui/React/createPopup";
+import { ICorporation }             from "../ICorporation";
+import { IPlayer }                  from "../../PersonObjects/IPlayer";
 
 interface IProps {
     routing: any;
-    corp: any;
+    corp: ICorporation;
     currentCity: string;
+    player: IPlayer;
 }
 
 export function IndustryOverview(props: IProps): React.ReactElement {
@@ -249,7 +252,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
                         office: office,
                     });
                     // corp.displayDivisionContent(division, city);
-                    corp.rerender();
+                    corp.rerender(props.player);
                 }
             }
 

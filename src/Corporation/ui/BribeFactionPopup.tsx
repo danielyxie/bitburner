@@ -5,10 +5,11 @@ import { CorporationConstants } from "../data/Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
     popupId: string;
-    corp: any;
+    corp: ICorporation;
     player: IPlayer;
 }
 
@@ -39,7 +40,7 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
             return "ERROR: Invalid value(s) entered";
         } else if (props.corp.funds.lt(money)) {
             return "ERROR: You do not have this much money to bribe with";
-        } else if (props.corp.stock > props.corp.numShares) {
+        } else if (stock > props.corp.numShares) {
             return "ERROR: You do not have this many shares to bribe with";
         } else {
             return "You will gain " + numeralWrapper.formatReputation(repGain(money, stock)) +

@@ -2,10 +2,13 @@ import React from 'react';
 import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CorporationConstants } from "../data/Constants";
+import { ICorporation } from "../ICorporation";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
-    corp: any;
+    corp: ICorporation;
     popupId: string;
+    player: IPlayer;
 }
 
 // Create a popup that lets the player manage exports
@@ -40,7 +43,7 @@ export function FindInvestorsPopup(props: IProps): React.ReactElement {
         props.corp.fundingRound++;
         props.corp.addFunds(funding);
         props.corp.numShares -= investShares;
-        props.corp.rerender();
+        props.corp.rerender(props.player);
         removePopup(props.popupId);
     }
     return (<>

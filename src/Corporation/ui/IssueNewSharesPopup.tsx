@@ -4,9 +4,10 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { getRandomInt } from "../../../utils/helpers/getRandomInt";
 import { CorporationConstants } from "../data/Constants";
+import { ICorporation } from "../ICorporation";
 
 interface IEffectTextProps {
-    corp: any;
+    corp: ICorporation;
     shares: number | null;
 }
 
