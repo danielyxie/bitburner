@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import { Warehouse } from "../Warehouse";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
-import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { clearSelector } from "../../../utils/uiHelpers/clearSelector";
-import { getSelectText,
-         getSelectValue } from "../../../utils/uiHelpers/getSelectData";
-
 
 interface IProps {
     product: any;
@@ -25,7 +18,7 @@ export function LimitProductProductionPopup(props: IProps): React.ReactElement {
             removePopup(props.popupId);
             return;
         }
-        var qty = limit;
+        const qty = limit;
         if (isNaN(qty)) {
             dialogBoxCreate("Invalid value entered");
             return;

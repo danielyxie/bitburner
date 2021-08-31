@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { Warehouse } from "../Warehouse";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
-import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { clearSelector } from "../../../utils/uiHelpers/clearSelector";
-import { getSelectText,
-         getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import {
     Industries,
     IndustryStartingCosts,
@@ -22,9 +16,7 @@ interface IProps {
 // This is created when the player clicks the "Expand into new Industry" header tab
 export function NewIndustryPopup(props: IProps): React.ReactElement {
     const allIndustries = Object.keys(Industries).sort();
-    const possibleIndustries = allIndustries.filter((industryType: string) =>
-        props.corp.divisions.find((division: any) =>
-            division.type === industryType) === undefined).sort();
+    const possibleIndustries = allIndustries.filter((industryType: string) => props.corp.divisions.find((division: any) => division.type === industryType) === undefined).sort();
     const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : '');
     const [name, setName] = useState('');
 
@@ -74,8 +66,7 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
         <p>Create a new division to expand into a new industry:</p>
         <select className="dropdown" defaultValue={industry} onChange={onIndustryChange}>
             {
-                possibleIndustries.map((industry: string) => 
-                    <option key={industry} value={industry}>{industry}</option>)
+                possibleIndustries.map((industry: string) => <option key={industry} value={industry}>{industry}</option>)
             }
         </select>
         <p>{IndustryDescriptions[industry]}</p>

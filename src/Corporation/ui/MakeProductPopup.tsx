@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { Warehouse } from "../Warehouse";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
-import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { clearSelector } from "../../../utils/uiHelpers/clearSelector";
-import { getSelectText,
-         getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import { Industries } from "../IndustryData";
 import { Product } from "../Product";
 
@@ -29,9 +23,9 @@ function productPlaceholder(tpe: string): string {
 }
 
 // Create a popup that lets the player create a product for their current industry
-export function MakeProductPopup(props: IProps) {
-    const allCities = Object.keys(props.division.offices).
-        filter((cityName: string) => props.division.offices[cityName] !== 0);
+export function MakeProductPopup(props: IProps): React.ReactElement {
+    const allCities = Object.keys(props.division.offices)
+        .filter((cityName: string) => props.division.offices[cityName] !== 0);
     const [city, setCity] = useState(allCities.length > 0 ? allCities[0] : '');
     const [name, setName] = useState('');
     const [design, setDesign] = useState<number | null>(null);
@@ -94,8 +88,7 @@ export function MakeProductPopup(props: IProps) {
         <p dangerouslySetInnerHTML={{__html: props.popupText}} />
         <select className="dropdown" style={{margin: "5px"}} onChange={onCityChange} defaultValue={city}>
             {
-                allCities.map((cityName: string) => 
-                    <option key={cityName} value={cityName}>{cityName}</option>)
+                allCities.map((cityName: string) => <option key={cityName} value={cityName}>{cityName}</option>)
             }
         </select>
         <input onChange={onProductNameChange} className="text-input" style={{margin:"5px"}} placeholder={productPlaceholder(props.division.type)} />

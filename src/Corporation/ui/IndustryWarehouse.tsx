@@ -260,7 +260,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     const purchaseButtonText = `Buy (${numeralWrapper.format(mat.buy, nfB)})`;
     const purchaseButtonClass = tutorial ? "std-button flashing-button tooltip" : "std-button";
 
-    function openPurchaseMaterialPopup() {
+    function openPurchaseMaterialPopup(): void {
         const popupId = "cmpy-mgmt-material-purchase-popup";
         createPopup(popupId, PurchaseMaterialPopup, {
             mat: mat,
@@ -271,7 +271,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
         });
     }
 
-    function openExportPopup() {
+    function openExportPopup(): void {
         const popupId = "cmpy-mgmt-export-popup";
         createPopup(popupId, ExportPopup, {
             mat: mat,

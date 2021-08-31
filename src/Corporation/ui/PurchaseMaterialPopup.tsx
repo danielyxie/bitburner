@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { Warehouse } from "../Warehouse";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
-import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { clearSelector } from "../../../utils/uiHelpers/clearSelector";
-import { getSelectText,
-         getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import { MaterialSizes } from "../MaterialSizes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -85,7 +79,7 @@ function BulkPurchase(props: IProps): React.ReactElement {
             (all at once).
         </p>
         <BulkPurchaseText warehouse={props.warehouse} mat={props.mat} amount={buyAmt} />
-        <input onChange={onChange} type="number" placeholder="Bulk Purchase amount" style={{margin: "5px"}} />
+        <input onChange={onChange} type="number" placeholder="Bulk Purchase amount" style={{margin: "5px"}} onKeyDown={onKeyDown} />
         <button className="std-button">Confirm Bulk Purchase</button>
     </>);
 }

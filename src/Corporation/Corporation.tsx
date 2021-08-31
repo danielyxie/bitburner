@@ -1,47 +1,26 @@
-import { AllCorporationStates,
-         CorporationState }                             from "./CorporationState";
+import { CorporationState }                             from "./CorporationState";
 import {
     CorporationUnlockUpgrade,
     CorporationUnlockUpgrades }                         from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade, CorporationUpgrades }      from "./data/CorporationUpgrades";
-import { EmployeePositions }                            from "./EmployeePositions";
-import { Industries,
-         IndustryStartingCosts,
-         IndustryResearchTrees }                        from "./IndustryData";
-import { IndustryUpgrades }                             from "./IndustryUpgrades";
-import { Material }                                     from "./Material";
-import { MaterialSizes }                                from "./MaterialSizes";
-import { Product }                                      from "./Product";
-import { ResearchMap }                                  from "./ResearchMap";
 import { Warehouse }                                    from "./Warehouse";
-import { OfficeSpace }                                  from "./OfficeSpace";
 import { CorporationConstants }                         from "./data/Constants";
 import { Industry }                                     from "./Industry";
 
 import { BitNodeMultipliers }                           from "../BitNode/BitNodeMultipliers";
 import { showLiterature }                               from "../Literature/LiteratureHelpers";
 import { LiteratureNames }                              from "../Literature/data/LiteratureNames";
-import { CityName }                                     from "../Locations/data/CityNames";
 import { IPlayer }                                      from "../PersonObjects/IPlayer";
 
-import { numeralWrapper }                               from "../ui/numeralFormat";
 import { Page, routing }                                from "../ui/navigationTracking";
 
-import { calculateEffectWithFactors }                   from "../utils/calculateEffectWithFactors";
 
 import { dialogBoxCreate }                              from "../../utils/DialogBox";
 import { Reviver,
          Generic_toJSON,
          Generic_fromJSON }                             from "../../utils/JSONReviver";
-import { appendLineBreaks }                             from "../../utils/uiHelpers/appendLineBreaks";
 import { createElement }                                from "../../utils/uiHelpers/createElement";
-import { createPopup }                                  from "../../utils/uiHelpers/createPopup";
-import { createPopupCloseButton }                       from "../../utils/uiHelpers/createPopupCloseButton";
-import { formatNumber }                                 from "../../utils/StringHelperFunctions";
-import { getRandomInt }                                 from "../../utils/helpers/getRandomInt";
 import { isString }                                     from "../../utils/helpers/isString";
-import { KEY }                                          from "../../utils/helpers/keyCodes";
-import { removeElement }                                from "../../utils/uiHelpers/removeElement";
 import { removeElementById }                            from "../../utils/uiHelpers/removeElementById";
 
 // UI Related Imports
@@ -51,16 +30,6 @@ import { CorporationRoot }                              from "./ui/Root";
 import { CorporationRouting }                           from "./ui/Routing";
 
 import Decimal                                          from "decimal.js";
-
-/* Constants */
-export const INITIALSHARES                  = 1e9; //Total number of shares you have at your company
-export const SHARESPERPRICEUPDATE           = 1e6; //When selling large number of shares, price is dynamically updated for every batch of this amount
-
-export const CyclesPerMarketCycle           = 50;
-export const CyclesPerIndustryStateCycle    = CyclesPerMarketCycle / AllCorporationStates.length;
-export const SecsPerMarketCycle             = CyclesPerMarketCycle / 5;
-
-export const DividendMaxPercentage          = 50;
 
 interface IParams {
     name?: string;
@@ -107,7 +76,7 @@ export class Corporation {
         this.upgradeMultipliers = Array(numUpgrades).fill(1);
     }
 
-    addFunds(amt: number) {
+    addFunds(amt: number): void {
         if(!isFinite(amt)) {
             console.error('Trying to add invalid amount of funds. Report to a developper.');
             return;
@@ -123,11 +92,11 @@ export class Corporation {
         this.storedCycles += numCycles;
     }
 
-    process(player: IPlayer) {
-        if (this.storedCycles >= CyclesPerIndustryStateCycle) {
+    process(player: IPlayer): void {
+        if (this.storedCycles >= CorporationConstants.CyclesPerIndustryStateCycle) {
             const state = this.getState();
             const marketCycles = 1;
-            const gameCycles = (marketCycles * CyclesPerIndustryStateCycle);
+            const gameCycles = (marketCycles * CorporationConstants.CyclesPerIndustryStateCycle);
             this.storedCycles -= gameCycles;
 
             this.divisions.forEach((ind) => {
@@ -152,8 +121,8 @@ export class Corporation {
                     this.revenue = this.revenue.plus(ind.lastCycleRevenue);
                     this.expenses = this.expenses.plus(ind.lastCycleExpenses);
                 });
-                var profit = this.revenue.minus(this.expenses);
-                const cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
+                const profit = this.revenue.minus(this.expenses);
+                const cycleProfit = profit.times(marketCycles * CorporationConstants.SecsPerMarketCycle);
                 if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
                     dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
                                     "This is a bug. Please report to game developer.<br><br>" +
@@ -164,7 +133,7 @@ export class Corporation {
                 // Process dividends
                 if (this.dividendPercentage > 0 && cycleProfit > 0) {
                     // Validate input again, just to be safe
-                    if (isNaN(this.dividendPercentage) || this.dividendPercentage < 0 || this.dividendPercentage > DividendMaxPercentage) {
+                    if (isNaN(this.dividendPercentage) || this.dividendPercentage < 0 || this.dividendPercentage > CorporationConstants.DividendMaxPercentage) {
                         console.error(`Invalid Corporation dividend percentage: ${this.dividendPercentage}`);
                     } else {
                         const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
@@ -188,8 +157,8 @@ export class Corporation {
         }
     }
 
-    determineValuation() {
-        var val, profit = (this.revenue.minus(this.expenses)).toNumber();
+    determineValuation(): number {
+        let val, profit = (this.revenue.minus(this.expenses)).toNumber();
         if (this.public) {
             // Account for dividends
             if (this.dividendPercentage > 0) {
@@ -212,13 +181,13 @@ export class Corporation {
         return val * BitNodeMultipliers.CorporationValuation;
     }
 
-    getTargetSharePrice() {
+    getTargetSharePrice(): number {
         // Note: totalShares - numShares is not the same as issuedShares because
         // issuedShares does not account for private investors
         return this.determineValuation() / (2 * (this.totalShares - this.numShares) + 1);
     }
 
-    updateSharePrice() {
+    updateSharePrice(): void {
         const targetPrice = this.getTargetSharePrice();
         if (this.sharePrice <= targetPrice) {
             this.sharePrice *= (1 + (Math.random() * 0.01));
@@ -228,7 +197,7 @@ export class Corporation {
         if (this.sharePrice <= 0.01) {this.sharePrice = 0.01;}
     }
 
-    immediatelyUpdateSharePrice() {
+    immediatelyUpdateSharePrice(): void {
         this.sharePrice = this.getTargetSharePrice();
     }
 
@@ -242,7 +211,7 @@ export class Corporation {
         let sharesSold = 0;
         let profit = 0;
 
-        const maxIterations = Math.ceil(numShares / SHARESPERPRICEUPDATE);
+        const maxIterations = Math.ceil(numShares / CorporationConstants.SHARESPERPRICEUPDATE);
         if (isNaN(maxIterations) || maxIterations > 10e6) {
             console.error(`Something went wrong or unexpected when calculating share sale. Maxiterations calculated to be ${maxIterations}`);
             return [0, 0, 0];
@@ -255,7 +224,7 @@ export class Corporation {
                 break;
             } else {
                 profit += (sharePrice * sharesUntilUpdate);
-                sharesUntilUpdate = SHARESPERPRICEUPDATE;
+                sharesUntilUpdate = CorporationConstants.SHARESPERPRICEUPDATE;
                 sharesTracker -= sharesUntilUpdate;
                 sharesSold += sharesUntilUpdate;
 
@@ -267,7 +236,7 @@ export class Corporation {
         return [profit, sharePrice, sharesUntilUpdate];
     }
 
-    convertCooldownToString(cd: number) {
+    convertCooldownToString(cd: number): string {
         // The cooldown value is based on game cycles. Convert to a simple string
         const seconds = cd / 5;
 
@@ -306,11 +275,11 @@ export class Corporation {
 
     //Levelable upgrades
     upgrade(upgrade: CorporationUpgrade): void {
-        var upgN = upgrade[0], basePrice = upgrade[1], priceMult = upgrade[2],
+        const upgN = upgrade[0], basePrice = upgrade[1], priceMult = upgrade[2],
             upgradeAmt = upgrade[3]; //Amount by which the upgrade multiplier gets increased (additive)
         while (this.upgrades.length <= upgN) {this.upgrades.push(0);}
         while (this.upgradeMultipliers.length <= upgN) {this.upgradeMultipliers.push(1);}
-        var totalCost = basePrice * Math.pow(priceMult, this.upgrades[upgN]);
+        const totalCost = basePrice * Math.pow(priceMult, this.upgrades[upgN]);
         if (this.funds.lt(totalCost)) {
             dialogBoxCreate("You don't have enough funds to purchase this!");
             return;
@@ -323,9 +292,9 @@ export class Corporation {
 
         //If storage size is being updated, update values in Warehouse objects
         if (upgN === 1) {
-            for (var i = 0; i < this.divisions.length; ++i) {
-                var industry = this.divisions[i];
-                for (var city in industry.warehouses) {
+            for (let i = 0; i < this.divisions.length; ++i) {
+                const industry = this.divisions[i];
+                for (const city in industry.warehouses) {
                     if (industry.warehouses.hasOwnProperty(city) && industry.warehouses[city] instanceof Warehouse) {
                         industry.warehouses[city].updateSize(this, industry);
                     }
@@ -334,64 +303,64 @@ export class Corporation {
         }
     }
 
-    getProductionMultiplier() {
-        var mult = this.upgradeMultipliers[0];
+    getProductionMultiplier(): number {
+        const mult = this.upgradeMultipliers[0];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getStorageMultiplier() {
-        var mult = this.upgradeMultipliers[1];
+    getStorageMultiplier(): number {
+        const mult = this.upgradeMultipliers[1];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getDreamSenseGain() {
-        var gain = this.upgradeMultipliers[2] - 1;
+    getDreamSenseGain(): number {
+        const gain = this.upgradeMultipliers[2] - 1;
         return gain <= 0 ? 0 : gain;
     }
 
-    getAdvertisingMultiplier() {
-        var mult = this.upgradeMultipliers[3];
+    getAdvertisingMultiplier(): number {
+        const mult = this.upgradeMultipliers[3];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getEmployeeCreMultiplier() {
-        var mult = this.upgradeMultipliers[4];
+    getEmployeeCreMultiplier(): number {
+        const mult = this.upgradeMultipliers[4];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getEmployeeChaMultiplier() {
-        var mult = this.upgradeMultipliers[5];
+    getEmployeeChaMultiplier(): number {
+        const mult = this.upgradeMultipliers[5];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getEmployeeIntMultiplier() {
-        var mult = this.upgradeMultipliers[6];
+    getEmployeeIntMultiplier(): number {
+        const mult = this.upgradeMultipliers[6];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getEmployeeEffMultiplier() {
-        var mult = this.upgradeMultipliers[7];
+    getEmployeeEffMultiplier(): number {
+        const mult = this.upgradeMultipliers[7];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getSalesMultiplier() {
-        var mult = this.upgradeMultipliers[8];
+    getSalesMultiplier(): number {
+        const mult = this.upgradeMultipliers[8];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
-    getScientificResearchMultiplier() {
-        var mult = this.upgradeMultipliers[9];
+    getScientificResearchMultiplier(): number {
+        const mult = this.upgradeMultipliers[9];
         if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
     }
 
     // Adds the Corporation Handbook (Starter Guide) to the player's home computer.
     // This is a lit file that gives introductory info to the player
     // This occurs when the player clicks the "Getting Started Guide" button on the overview panel
-    getStarterGuide(player: IPlayer) {
+    getStarterGuide(player: IPlayer): void {
         // Check if player already has Corporation Handbook
-        let homeComp = player.getHomeComputer(),
-            hasHandbook = false,
-            handbookFn = LiteratureNames.CorporationManagementHandbook;
+        const homeComp = player.getHomeComputer();
+        let hasHandbook = false;
+        const handbookFn = LiteratureNames.CorporationManagementHandbook;
         for (let i = 0; i < homeComp.messages.length; ++i) {
             if (isString(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
                 hasHandbook = true;
@@ -401,10 +370,10 @@ export class Corporation {
 
         if (!hasHandbook) { homeComp.messages.push(handbookFn); }
         showLiterature(handbookFn);
-        return false;
+        return;
     }
 
-    createUI(player: IPlayer) {
+    createUI(player: IPlayer): void {
         companyManagementDiv = createElement("div", {
             id:"cmpy-mgmt-container",
             position:"fixed",
@@ -419,7 +388,7 @@ export class Corporation {
         this.rerender(player);
     }
 
-    rerender(player: IPlayer) {
+    rerender(player: IPlayer): void {
         if (companyManagementDiv == null || corpRouting == null) {
             console.warn(`Corporation.rerender() called when companyManagementDiv, corpRouting, or eventHandler is null`);
             return;
@@ -433,7 +402,7 @@ export class Corporation {
                         />, companyManagementDiv);
     }
 
-    clearUI() {
+    clearUI(): void {
         if (companyManagementDiv instanceof HTMLElement) {
             ReactDOM.unmountComponentAtNode(companyManagementDiv);
             removeElementById(companyManagementDiv.id);

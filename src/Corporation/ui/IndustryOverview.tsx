@@ -79,7 +79,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             display: "inline-block",
         }
 
-        function openMakeProductPopup() {
+        function openMakeProductPopup(): void {
             const popupId = "cmpy-mgmt-create-product-popup";
             createPopup(popupId, MakeProductPopup, {
                 popupText: createProductPopupText,

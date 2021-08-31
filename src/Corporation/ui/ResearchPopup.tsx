@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Warehouse } from "../Warehouse";
+import React, { useEffect } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
-import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { clearSelector } from "../../../utils/uiHelpers/clearSelector";
-import { getSelectText,
-         getSelectValue } from "../../../utils/uiHelpers/getSelectData";
-import { MaterialSizes } from "../MaterialSizes";
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { IndustryResearchTrees } from "../IndustryData";
 import { CorporationConstants } from "../data/Constants";
 import { ResearchMap } from "../ResearchMap";
-import { ResearchTree } from "../ResearchTree";
 import { Treant } from 'treant-js';
 
 interface IProps {

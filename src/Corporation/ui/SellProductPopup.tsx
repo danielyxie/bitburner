@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { Warehouse } from "../Warehouse";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
-import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { clearSelector } from "../../../utils/uiHelpers/clearSelector";
-import { getSelectText,
-         getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import { Cities } from "../../Locations/Cities";
 
 function initialPrice(product: any): string {
@@ -40,9 +34,9 @@ export function SellProductPopup(props: IProps): React.ReactElement {
         if (px.includes("MP")) {
             //Dynamically evaluated quantity. First test to make sure its valid
             //Sanitize input, then replace dynamic variables with arbitrary numbers
-            var price = px.replace(/\s+/g, '');
+            let price = px.replace(/\s+/g, '');
             price = price.replace(/[^-()\d/*+.MP]/g, '');
-            var temp = price.replace(/MP/g, '1');
+            let temp = price.replace(/MP/g, '1');
             try {
                 temp = eval(temp);
             } catch(e) {
@@ -55,7 +49,7 @@ export function SellProductPopup(props: IProps): React.ReactElement {
             }
             props.product.sCost = price; //Use sanitized price
         } else {
-            var cost = parseFloat(px);
+            const cost = parseFloat(px);
             if (isNaN(cost)) {
                 dialogBoxCreate("Invalid value for sell price field");
                 return;
@@ -69,9 +63,9 @@ export function SellProductPopup(props: IProps): React.ReactElement {
         // Parse quantity
         if (iQty.includes("MAX") || iQty.includes("PROD")) {
             //Dynamically evaluated quantity. First test to make sure its valid
-            var qty = iQty.replace(/\s+/g, '');
+            let qty = iQty.replace(/\s+/g, '');
             qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, '');
-            var temp = qty.replace(/MAX/g, '1');
+            let temp = qty.replace(/MAX/g, '1');
             temp = temp.replace(/PROD/g, '1');
             try {
                 temp = eval(temp);

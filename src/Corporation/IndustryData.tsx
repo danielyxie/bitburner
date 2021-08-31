@@ -2,8 +2,6 @@ import React from 'react';
 import { ResearchTree } from "./ResearchTree";
 import { getBaseResearchTreeCopy,
          getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
-
-import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
 interface IIndustryMap<T> {

@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { Warehouse } from "../Warehouse";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
-import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { clearSelector } from "../../../utils/uiHelpers/clearSelector";
-import { getSelectText,
-         getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 
 interface IProps {
     mat: any;
@@ -90,8 +84,7 @@ amount to 'MAX' to export all of the materials in this warehouse.
         </p>
         <select className="dropdown" onChange={onIndustryChange} defaultValue={industry}>
             {
-                props.corp.divisions.map((division: any) =>
-                    <option key={division.name} value={division.name}>{division.name}</option>)
+                props.corp.divisions.map((division: any) => <option key={division.name} value={division.name}>{division.name}</option>)
             }
         </select>
         <select className="dropdown" onChange={onCityChange} defaultValue={city}>
@@ -109,8 +102,7 @@ Below is a list of all current exports of this material from this warehouse.
 Clicking on one of the exports below will REMOVE that export.
         </p>
         {
-            props.mat.exp.map((exp: any, index: number) => 
-                <div key={index} className="cmpy-mgmt-existing-export" onClick={() => removeExport(exp)}>
+            props.mat.exp.map((exp: any, index: number) => <div key={index} className="cmpy-mgmt-existing-export" onClick={() => removeExport(exp)}>
                     Industry: {exp.ind}<br />
                     City: {exp.city}<br />
                     Amount/s: {exp.amt}
