@@ -6,16 +6,20 @@ import { HeaderTab } from "./HeaderTab";
 import { IDivision } from "../IDivision";
 import { NewIndustryPopup } from "./NewIndustryPopup";
 import { createPopup } from "../../ui/React/createPopup";
+import { ICorporation } from "../ICorporation";
+import { CorporationRouting } from "./Routing";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
-    corp: any;
-    routing: any;
+    corp: ICorporation;
+    routing: CorporationRouting;
+    player: IPlayer;
 }
 
 export function HeaderTabs(props: IProps): React.ReactElement {
     function overviewOnClick(): void {
         props.routing.routeToOverviewPage();
-        props.corp.rerender();
+        props.corp.rerender(props.player);
     }
 
     function openNewIndustryPopup(): void {
@@ -41,7 +45,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
                         key={division.name}
                         onClick={() => {
                             props.routing.routeTo(division.name);
-                            props.corp.rerender();
+                            props.corp.rerender(props.player);
                         }}
                         text={division.name}
                     />)

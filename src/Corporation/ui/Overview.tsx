@@ -19,9 +19,10 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { createPopup } from "../../ui/React/createPopup";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { ICorporation } from "../ICorporation";
 
 interface IProps {
-    corp: any;
+    corp: ICorporation;
     player: IPlayer;
 }
 

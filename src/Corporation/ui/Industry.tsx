@@ -5,10 +5,12 @@ import React from "react";
 import { IndustryOffice } from "./IndustryOffice";
 import { IndustryOverview } from "./IndustryOverview";
 import { IndustryWarehouse } from "./IndustryWarehouse";
+import { ICorporation } from "../ICorporation";
+import { CorporationRouting } from "./Routing";
 
 interface IProps {
-    routing: any;
-    corp: any;
+    routing: CorporationRouting;
+    corp: ICorporation;
     currentCity: string;
 }
 

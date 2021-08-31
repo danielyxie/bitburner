@@ -5,13 +5,15 @@ import { CityTab } from "./CityTab";
 import { ExpandNewCityPopup } from "./ExpandNewCityPopup";
 import { createPopup } from "../../ui/React/createPopup";
 import { IDivision } from "../IDivision";
+import { ICorporation } from "../ICorporation";
+import { CorporationRouting } from "./Routing";
 
 interface IProps {
-    routing: any;
+    routing: CorporationRouting;
     onClicks: {[key: string]: () => void};
     city: string; // currentCity
     cityStateSetter: (city: string) => void;
-    corp: any;
+    corp: ICorporation;
 }
 
 export function CityTabs(props: IProps): React.ReactElement {

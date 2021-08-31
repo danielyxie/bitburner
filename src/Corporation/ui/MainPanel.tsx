@@ -11,10 +11,12 @@ import { OfficeSpace } from "../OfficeSpace";
 
 import { CityName } from "../../Locations/data/CityNames";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { ICorporation } from "../ICorporation";
+import { CorporationRouting } from "./Routing";
 
 interface IProps {
-    corp: any;
-    routing: any;
+    corp: ICorporation;
+    routing: CorporationRouting;
     player: IPlayer;
 }
 
@@ -52,7 +54,7 @@ export function MainPanel(props: IProps): React.ReactElement {
             if (division.offices[cityName] instanceof OfficeSpace) {
                 onClicks[cityName] = () => {
                     setCity(cityName);
-                    props.corp.rerender();
+                    props.corp.rerender(props.player);
                 }
             }
         }
