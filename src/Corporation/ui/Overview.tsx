@@ -7,6 +7,8 @@ import { SellSharesPopup }              from "./SellSharesPopup";
 import { BuybackSharesPopup }           from "./BuybackSharesPopup";
 import { IssueDividendsPopup }          from "./IssueDividendsPopup";
 import { IssueNewSharesPopup }          from "./IssueNewSharesPopup";
+import { FindInvestorsPopup }           from "./FindInvestorsPopup";
+import { GoPublicPopup }                from "./GoPublicPopup";
 
 import { CorporationConstants }         from "../data/Constants";
 import { CorporationUnlockUpgrades }    from "../data/CorporationUnlockUpgrades";
@@ -168,12 +170,25 @@ export function Overview(props: IProps): React.ReactElement {
         const findInvestorsClassName = fundingAvailable ? "std-button" : "a-link-button-inactive";
         const findInvestorsTooltip = fundingAvailable ? "Search for private investors who will give you startup funding in exchangefor equity (stock shares) in your company" : null;
 
-        const findInvestorsOnClick = props.corp.getInvestment.bind(props.corp);
-        const goPublicOnClick = props.corp.goPublic.bind(props.corp);
+        function openFindInvestorsPopup(): void {
+            const popupId = "cmpy-mgmt-find-investors-popup";
+            createPopup(popupId, FindInvestorsPopup, {
+                popupId: popupId,
+                corp: props.corp,
+            });
+        }
+
+        function openGoPublicPopup(): void {
+            const popupId = "cmpy-mgmt-go-public-popup";
+            createPopup(popupId, GoPublicPopup, {
+                popupId: popupId,
+                corp: props.corp,
+            });
+        }
 
         const findInvestorsBtn = createButton({
             class: findInvestorsClassName,
-            onClick: findInvestorsOnClick,
+            onClick: openFindInvestorsPopup,
             style: "inline-block",
             text: "Find Investors",
             tooltip: findInvestorsTooltip,
@@ -181,7 +196,7 @@ export function Overview(props: IProps): React.ReactElement {
         });
         const goPublicBtn = createButton({
             class: "std-button",
-            onClick: goPublicOnClick,
+            onClick: openGoPublicPopup,
             style: "inline-block",
             display: "inline-block",
             text: "Go Public",

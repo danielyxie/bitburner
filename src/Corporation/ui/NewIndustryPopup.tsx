@@ -11,7 +11,7 @@ import {
     Industries,
     IndustryStartingCosts,
     IndustryDescriptions } from "../IndustryData";
-import { Industry } from "../Corporation";
+import { Industry } from "../Industry";
 
 interface IProps {
     corp: any;

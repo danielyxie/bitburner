@@ -3,9 +3,10 @@ import React from "react";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { CorporationUnlockUpgrade } from "../data/CorporationUnlockUpgrades";
 
 interface IProps {
-    upgradeData: number[];
+    upgradeData: CorporationUnlockUpgrade;
     corp: any;
 }
 

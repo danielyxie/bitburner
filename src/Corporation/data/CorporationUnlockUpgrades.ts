@@ -1,10 +1,12 @@
 import { IMap } from "../../types";
 
+export type CorporationUnlockUpgrade = [number, number, string, string];
+
 // Corporation Unlock Upgrades
 // Upgrades for entire corporation, unlocks features, either you have it or you dont
 // The data structure is an array with the following format:
 //  [index in Corporation feature upgrades array, price, name, description]
-export const CorporationUnlockUpgrades: IMap<any[]> = {
+export const CorporationUnlockUpgrades: IMap<CorporationUnlockUpgrade> = {
     //Lets you export goods
     "0":  [0, 20e9, "Export",
                     "Develop infrastructure to export your materials to your other facilities. " +

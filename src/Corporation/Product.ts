@@ -60,7 +60,7 @@ export class Product {
     pCost = 0;
 
     // Sell cost
-    sCost = 0;
+    sCost: string | number = 0;
 
     // Variables for handling the creation process of this Product
     fin = false;       // Whether this Product has finished being created

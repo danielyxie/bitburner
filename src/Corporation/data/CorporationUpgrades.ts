@@ -1,10 +1,12 @@
 import { IMap } from "../../types";
 
+export type CorporationUpgrade = [number, number, number, number, string, string];
+
 // Corporation Upgrades
 // Upgrades for entire corporation, levelable upgrades
 // The data structure is an array with the following format
 //  [index in Corporation upgrades array, base price, price mult, benefit mult (additive), name, desc]
-export const CorporationUpgrades: IMap<any[]> = {
+export const CorporationUpgrades: IMap<CorporationUpgrade> = {
     //Smart factories, increases production
     "0":    [0, 2e9, 1.06, 0.03,
             "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
