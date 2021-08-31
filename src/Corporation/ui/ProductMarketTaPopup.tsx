@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { IIndustry } from "../IIndustry";
+import { Product } from "../Product";
 
 interface IProps {
-    product: any;
-    industry: any;
+    product: Product;
+    industry: IIndustry;
     popupId: string;
 }
 
@@ -16,7 +18,7 @@ function MarketTA2(props: IProps): React.ReactElement {
     }
 
     function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        setValue(event.target.value);
+        setValue(parseFloat(event.target.value));
     }
 
 
@@ -25,7 +27,7 @@ function MarketTA2(props: IProps): React.ReactElement {
         rerender();
     }
 
-    const sCost = parseFloat(value);
+    const sCost = value;
     let markup = 1;
     if (sCost > props.product.pCost) {
         if ((sCost - props.product.pCost) > markupLimit) {

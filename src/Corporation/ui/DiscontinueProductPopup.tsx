@@ -1,11 +1,13 @@
 import React from 'react';
 import { removePopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
+import { Product } from "../Product";
+import { IIndustry } from "../IIndustry";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
-    product: any;
-    industry: any;
+    product: Product;
+    industry: IIndustry;
     corp: ICorporation;
     popupId: string;
     player: IPlayer;

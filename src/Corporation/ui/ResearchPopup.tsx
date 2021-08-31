@@ -6,9 +6,10 @@ import { IndustryResearchTrees } from "../IndustryData";
 import { CorporationConstants } from "../data/Constants";
 import { ResearchMap } from "../ResearchMap";
 import { Treant } from 'treant-js';
+import { IIndustry } from "../IIndustry";
 
 interface IProps {
-    industry: any;
+    industry: IIndustry;
     popupId: string;
 }
 

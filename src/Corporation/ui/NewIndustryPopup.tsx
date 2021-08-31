@@ -7,17 +7,19 @@ import {
     IndustryDescriptions } from "../IndustryData";
 import { Industry } from "../Industry";
 import { ICorporation } from "../ICorporation";
+import { IIndustry } from "../IIndustry";
+import { CorporationRouting } from "./Routing";
 
 interface IProps {
     corp: ICorporation;
     popupId: string;
-    routing: any;
+    routing: CorporationRouting;
 }
 // Create a popup that lets the player create a new industry.
 // This is created when the player clicks the "Expand into new Industry" header tab
 export function NewIndustryPopup(props: IProps): React.ReactElement {
     const allIndustries = Object.keys(Industries).sort();
-    const possibleIndustries = allIndustries.filter((industryType: string) => props.corp.divisions.find((division: any) => division.type === industryType) === undefined).sort();
+    const possibleIndustries = allIndustries.filter((industryType: string) => props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined).sort();
     const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : '');
     const [name, setName] = useState('');
 

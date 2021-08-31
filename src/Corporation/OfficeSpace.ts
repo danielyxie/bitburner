@@ -14,6 +14,9 @@ import { removeElementById } from "../../utils/uiHelpers/removeElementById";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Employee } from "./Employee";
+import { IIndustry } from "./IIndustry";
+import { ICorporation } from './ICorporation';
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 interface IParams {
     loc?: string;
@@ -58,7 +61,7 @@ export class OfficeSpace {
         return (this.employees.length) >= this.size;
     }
 
-    process(marketCycles = 1, parentRefs: any): number {
+    process(marketCycles = 1, parentRefs: {industry: IIndustry; corporation: ICorporation}): number {
         const industry = parentRefs.industry;
 
         // HRBuddy AutoRecruitment and training
@@ -85,9 +88,9 @@ export class OfficeSpace {
 
         // Calculate changes in Morale/Happiness/Energy for Employees
         let perfMult=1; //Multiplier for employee morale/happiness/energy based on company performance
-        if (industry.funds < 0 && industry.lastCycleRevenue < 0) {
+        if (parentRefs.corporation.funds < 0 && industry.lastCycleRevenue < 0) {
             perfMult = Math.pow(0.99, marketCycles);
-        } else if (industry.funds > 0 && industry.lastCycleRevenue > 0) {
+        } else if (parentRefs.corporation.funds > 0 && industry.lastCycleRevenue > 0) {
             perfMult = Math.pow(1.01, marketCycles);
         }
 
@@ -122,7 +125,7 @@ export class OfficeSpace {
         return salaryPaid;
     }
 
-    calculateEmployeeProductivity(parentRefs: any): void {
+    calculateEmployeeProductivity(parentRefs: {corporation: ICorporation; industry: IIndustry}): void {
         const company = parentRefs.corporation, industry = parentRefs.industry;
 
         //Reset
@@ -141,7 +144,7 @@ export class OfficeSpace {
     }
 
     //Takes care of UI as well
-    findEmployees(parentRefs: any): void {
+    findEmployees(player: IPlayer, parentRefs: {corporation: ICorporation}): void {
         if (this.atCapacity()) { return; }
         if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
@@ -197,7 +200,7 @@ export class OfficeSpace {
                             "Efficiency: " + formatNumber(employee.eff, 1) + "<br>" +
                             "Salary: " + numeralWrapper.format(employee.sal, '$0.000a') + " \ s<br>",
                 clickListener: () => {
-                    office.hireEmployee(employee, parentRefs);
+                    office.hireEmployee(player, employee, parentRefs);
                     removeElementById("cmpy-mgmt-hire-employee-popup");
                     return false;
                 },
@@ -224,8 +227,8 @@ export class OfficeSpace {
         createPopup("cmpy-mgmt-hire-employee-popup", elems);
     }
 
-    hireEmployee(employee: Employee, parentRefs: any): void {
-        const company = parentRefs.corporation;
+    hireEmployee(player: IPlayer, employee: Employee, parentRefs: {corporation: ICorporation}): void {
+        const corporation = parentRefs.corporation;
         const yesBtn = yesNoTxtInpBoxGetYesButton(),
             noBtn = yesNoTxtInpBoxGetNoButton();
         yesBtn.innerHTML = "Hire";
@@ -240,7 +243,7 @@ export class OfficeSpace {
             }
             employee.name = name;
             this.employees.push(employee);
-            company.rerender();
+            corporation.rerender(player);
             return yesNoTxtInpBoxClose();
         });
         noBtn.addEventListener("click", () => {
@@ -285,7 +288,7 @@ export class OfficeSpace {
     }
 
     //Finds the first unassigned employee and assigns its to the specified job
-    assignEmployeeToJob(job: any): boolean {
+    assignEmployeeToJob(job: string): boolean {
         for (let i = 0; i < this.employees.length; ++i) {
             if (this.employees[i].pos === EmployeePositions.Unassigned) {
                 this.employees[i].pos = job;
@@ -296,7 +299,7 @@ export class OfficeSpace {
     }
 
     //Finds the first employee with the given job and unassigns it
-    unassignEmployeeFromJob(job: any): boolean {
+    unassignEmployeeFromJob(job: string): boolean {
         for (let i = 0; i < this.employees.length; ++i) {
             if (this.employees[i].pos === job) {
                 this.employees[i].pos = EmployeePositions.Unassigned;

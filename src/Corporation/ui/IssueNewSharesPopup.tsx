@@ -40,7 +40,7 @@ function EffectText(props: IEffectTextProps): React.ReactElement {
 }
 
 interface IProps {
-    corp: any;
+    corp: ICorporation;
     popupId: string;
 }
 

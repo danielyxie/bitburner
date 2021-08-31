@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
+import { Material } from "../Material";
 
-function initialPrice(mat: any): string {
-    let val = mat.sCost ? mat.sCost : '';
+function initialPrice(mat: Material): string {
+    let val = mat.sCost ? mat.sCost+'' : '';
     if (mat.marketTa2) {
         val += " (Market-TA.II)";
     } else if (mat.marketTa1) {
@@ -14,7 +15,7 @@ function initialPrice(mat: any): string {
 }
 
 interface IProps {
-    mat: any;
+    mat: Material;
     corp: ICorporation;
     popupId: string;
 }
@@ -31,7 +32,7 @@ export function SellMaterialPopup(props: IProps): React.ReactElement {
         if(qty === '') qty = '0';
         let cost = p.replace(/\s+/g, '');
         cost = cost.replace(/[^-()\d/*+.MP]/g, ''); //Sanitize cost
-        let temp = cost.replace(/MP/g, props.mat.bCost);
+        let temp = cost.replace(/MP/g, props.mat.bCost+'');
         try {
             temp = eval(temp);
         } catch(e) {

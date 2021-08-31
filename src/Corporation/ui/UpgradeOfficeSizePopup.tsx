@@ -57,7 +57,7 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
     interface IUpgradeButton {
         cost: number;
         size: number;
-        corp: any;
+        corp: ICorporation;
     }
 
     function UpgradeSizeButton(props: IUpgradeButton): React.ReactElement {

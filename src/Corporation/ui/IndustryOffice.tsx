@@ -14,9 +14,10 @@ import { UpgradeOfficeSizePopup }   from "./UpgradeOfficeSizePopup";
 import { ThrowPartyPopup }          from "./ThrowPartyPopup";
 import { ICorporation }             from "../ICorporation";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
+import { CorporationRouting }       from "./Routing";
 
 interface IProps {
-    routing: any;
+    routing: CorporationRouting;
     corp: ICorporation;
     currentCity: string;
     player: IPlayer;
@@ -130,6 +131,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
     function renderAutomaticEmployeeManagement(): React.ReactElement {
         const division = props.routing.currentDivision; // Validated in constructor
+        if(division === null) return(<></>);
         const office = division.offices[props.currentCity]; // Validated in constructor
         const vechain = (props.corp.unlockUpgrades[4] === 1); // Has Vechain upgrade
 
@@ -432,6 +434,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     function renderManualEmployeeManagement(): React.ReactElement {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated in constructor
+        if(division === null) return (<></>);
         const office = division.offices[props.currentCity]; // Validated in constructor
 
         function switchModeOnClick(): void {
@@ -542,6 +545,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
     const corp = props.corp;
     const division = props.routing.currentDivision; // Validated in constructor
+    if(division === null) return (<></>);
     const office = division.offices[props.currentCity]; // Validated in constructor
 
     const buttonStyle = {
@@ -560,7 +564,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     }
 
     function hireEmployeeButtonOnClick(): void {
-        office.findEmployees({ corporation: corp, industry: division });
+        office.findEmployees(props.player, { corporation: corp, industry: division });
     }
 
     // Autohire employee button

@@ -13,9 +13,10 @@ import { ResearchPopup }            from "./ResearchPopup";
 import { createPopup }              from "../../ui/React/createPopup";
 import { ICorporation }             from "../ICorporation";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
+import { CorporationRouting }       from "./Routing";
 
 interface IProps {
-    routing: any;
+    routing: CorporationRouting;
     corp: ICorporation;
     currentCity: string;
     player: IPlayer;
@@ -24,7 +25,7 @@ interface IProps {
 export function IndustryOverview(props: IProps): React.ReactElement {
     function renderMakeProductButton(): React.ReactElement {
         const division = props.routing.currentDivision; // Validated inside render()
-
+        if(division === null) return (<></>);
         let createProductButtonText = "";
         let createProductPopupText = "";
         switch(division.type) {
@@ -83,6 +84,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         }
 
         function openMakeProductPopup(): void {
+            if(division === null) return;
             const popupId = "cmpy-mgmt-create-product-popup";
             createPopup(popupId, MakeProductPopup, {
                 popupText: createProductPopupText,
@@ -108,7 +110,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
     function renderText(): React.ReactElement {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated inside render()
-
+        if(division === null) return (<></>);
         const vechain = (corp.unlockUpgrades[4] === 1);
         const profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber();
 
@@ -129,6 +131,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         const profitStr = `Profit: ${numeralWrapper.formatMoney(profit)} / s`;
 
         function productionMultHelpTipOnClick(): void {
+            if(division === null) return;
             // Wrapper for createProgressBarText()
             // Converts the industry's "effectiveness factors"
             // into a graphic (string) depicting how high that effectiveness is
@@ -158,6 +161,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         }
 
         function openResearchPopup(): void {
+            if(division === null) return;
             const popupId = "corporation-research-popup-box";
             createPopup(popupId, ResearchPopup, {
                 industry: division,
@@ -217,6 +221,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
     function renderUpgrades(): React.ReactElement[] {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated inside render()
+        if(division === null) return ([<></>]);
         const office = division.offices[props.currentCity];
         if (!(office instanceof OfficeSpace)) {
             throw new Error(`Current City (${props.currentCity}) for UI does not have an OfficeSpace object`);
@@ -243,6 +248,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             }
 
             function onClick(): void {
+                if(division === null) return;
                 if (corp.funds.lt(cost)) {
                     dialogBoxCreate("Insufficient funds");
                 } else {
@@ -266,7 +272,13 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         return upgrades;
     }
 
-    function renderUpgrade(props: any): React.ReactElement {
+    interface IRenderUpgradeProps {
+        onClick: () => void;
+        text: string;
+        tooltip: string;
+    }
+
+    function renderUpgrade(props: IRenderUpgradeProps): React.ReactElement {
         return (
             <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.text}>
                 {props.text}

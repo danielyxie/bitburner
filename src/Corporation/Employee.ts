@@ -6,6 +6,8 @@ import { EmployeePositions } from "./EmployeePositions";
 import { ICorporation } from "./ICorporation";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { formatNumber } from "../../utils/StringHelperFunctions";
+import { OfficeSpace } from "./OfficeSpace";
+import { IIndustry } from "./IIndustry";
 
 interface IParams {
     name?: string;
@@ -57,7 +59,7 @@ export class Employee {
     }
 
     //Returns the amount the employee needs to be paid
-    process(marketCycles = 1, office: any): number {
+    process(marketCycles = 1, office: OfficeSpace): number {
         const gain = 0.003 * marketCycles,
             det = gain * Math.random();
         this.exp += gain;
@@ -87,7 +89,7 @@ export class Employee {
         return salary;
     }
 
-    calculateProductivity(corporation: ICorporation, industry: any): number {
+    calculateProductivity(corporation: ICorporation, industry: IIndustry): number {
         const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
             effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
             effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
@@ -138,7 +140,7 @@ export class Employee {
     }
 
     //'panel' is the DOM element on which to create the UI
-    createUI(panel: any, corporation: ICorporation, industry: any): void {
+    createUI(panel: HTMLElement, corporation: ICorporation, industry: IIndustry): void {
         const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
             effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
             effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),

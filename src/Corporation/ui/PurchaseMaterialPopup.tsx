@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { MaterialSizes } from "../MaterialSizes";
+import { Warehouse } from "../Warehouse";
+import { Material } from "../Material";
+import { IIndustry } from "../IIndustry";
+import { ICorporation } from "../ICorporation";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 interface IBulkPurchaseTextProps {
-    warehouse: any;
-    mat: any;
+    warehouse: Warehouse;
+    mat: Material;
     amount: string;
 }
 
@@ -28,10 +32,10 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
 }
 
 interface IProps {
-    mat: any;
-    industry: any;
-    warehouse: any;
-    corp: any;
+    mat: Material;
+    industry: IIndustry;
+    warehouse: Warehouse;
+    corp: ICorporation;
     popupId: string;
 }
 
@@ -89,10 +93,11 @@ export function PurchaseMaterialPopup(props: IProps): React.ReactElement {
     const [buyAmt, setBuyAmt] = useState(props.mat.buy ? props.mat.buy : null);
     
     function purchaseMaterial(): void {
-        if (isNaN(parseFloat(buyAmt))) {
+        if(buyAmt === null) return;
+        if (isNaN(buyAmt)) {
             dialogBoxCreate("Invalid amount");
         } else {
-            props.mat.buy = parseFloat(buyAmt);
+            props.mat.buy = buyAmt;
             if (isNaN(props.mat.buy)) props.mat.buy = 0;
             removePopup(props.popupId);
         }
@@ -108,7 +113,7 @@ export function PurchaseMaterialPopup(props: IProps): React.ReactElement {
     }
 
     function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        setBuyAmt(event.target.value);
+        setBuyAmt(parseFloat(event.target.value));
     }
 
     return (<>

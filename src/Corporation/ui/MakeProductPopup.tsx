@@ -4,10 +4,11 @@ import { removePopup } from "../../ui/React/createPopup";
 import { Industries } from "../IndustryData";
 import { Product } from "../Product";
 import { ICorporation } from "../ICorporation";
+import { IIndustry } from "../IIndustry";
 
 interface IProps {
     popupText: string;
-    division: any;
+    division: IIndustry;
     corp: ICorporation;
     popupId: string;
 }

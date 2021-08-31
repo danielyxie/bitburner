@@ -22,7 +22,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
         else setShares(Math.round(parseFloat(event.target.value)));
     }
 
-    function ProfitIndicator(props: {shares: number | null; corp: any}): React.ReactElement {
+    function ProfitIndicator(props: {shares: number | null; corp: ICorporation}): React.ReactElement {
         if(props.shares === null) return (<></>);
         if (isNaN(props.shares) || props.shares <= 0) {
             return (<>ERROR: Invalid value entered for number of shares to sell</>);

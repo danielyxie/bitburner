@@ -1,6 +1,7 @@
 import { Generic_fromJSON,
          Generic_toJSON,
          Reviver }                  from "../../utils/JSONReviver";
+import { Export } from "./Export";
 
 interface IConstructorParams {
     name?: string;
@@ -43,7 +44,7 @@ export class Material {
     imp = 0;
 
     // Exports of this material to another warehouse/industry
-    exp: any[] = [];
+    exp: Export[] = [];
 
     // Total amount of this material exported in the last cycle
     totalExp = 0;
@@ -52,7 +53,7 @@ export class Material {
     bCost = 0;
 
     // Cost / sec to sell this material
-    sCost = 0;
+    sCost: string | number = 0;
 
     // Flags to keep track of whether production and/or sale of this material is limited
     // [Whether production/sale is limited, limit amount]

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { IIndustry } from "../IIndustry";
+import { ICorporation } from "../ICorporation";
+import { Material } from "../Material";
 
 interface IMarketTA2Props {
-    industry: any;
-    mat: any;
+    industry: IIndustry;
+    mat: Material;
 }
 
 function MarketTA2(props: IMarketTA2Props): React.ReactElement {
@@ -70,9 +73,9 @@ function MarketTA2(props: IMarketTA2Props): React.ReactElement {
 }
 
 interface IProps {
-    mat: any;
-    industry: any;
-    corp: any;
+    mat: Material;
+    industry: IIndustry;
+    corp: ICorporation;
     popupId: string;
 }
 

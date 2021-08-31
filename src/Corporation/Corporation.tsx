@@ -14,7 +14,6 @@ import { IPlayer }                                      from "../PersonObjects/I
 
 import { Page, routing }                                from "../ui/navigationTracking";
 
-
 import { dialogBoxCreate }                              from "../../utils/DialogBox";
 import { Reviver,
          Generic_toJSON,

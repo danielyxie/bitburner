@@ -1,32 +1,8 @@
 import { IMap } from "../../types";
+import { ICorporation } from "../ICorporation";
+import { IIndustry } from "../IIndustry";
 
 export const overviewPage = "Overview";
-
-// Interfaces for whatever's required to sanitize routing with Corporation Data
-interface IOfficeSpace {
-    loc: string;
-    cost: number;
-    size: number;
-    comf: number;
-    beau: number;
-    tier: any;
-    minEne: number;
-    maxEne: number;
-    minHap: number;
-    maxHap: number;
-    maxMor: number;
-    employees: any;
-    employeeProd: any;
-}
-
-interface IDivision {
-    name: string;
-    offices: IMap<IOfficeSpace>;
-}
-
-interface ICorporation {
-    divisions: IDivision[];
-}
 
 /**
  * Keeps track of what content is currently being displayed for the Corporation UI
@@ -39,7 +15,7 @@ export class CorporationRouting {
 
     // Stores a reference to the Division instance that the routing is currently on
     // This will be null if routing is on the overview page
-    currentDivision: IDivision | null = null;
+    currentDivision: IIndustry | null = null;
 
     constructor(corp: ICorporation) {
         this.corp = corp;

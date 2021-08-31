@@ -12,7 +12,9 @@ import { GoPublicPopup }                from "./GoPublicPopup";
 
 import { CorporationConstants }         from "../data/Constants";
 import { CorporationUnlockUpgrades }    from "../data/CorporationUnlockUpgrades";
-import { CorporationUpgrades }          from "../data/CorporationUpgrades";
+import {
+    CorporationUpgrade,
+    CorporationUpgrades }               from "../data/CorporationUpgrades";
 
 import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -26,9 +28,21 @@ interface IProps {
     player: IPlayer;
 }
 
+interface GeneralBtns {
+    bribeFactions: React.ReactElement;
+    getStarterGuide: React.ReactElement;
+}
+
 export function Overview(props: IProps): React.ReactElement {
     // Generic Function for Creating a button
-    function createButton(props: any): React.ReactElement {
+    interface ICreateButtonProps {
+        text: string
+        class?: string;
+        display?: string;
+        tooltip?: string;
+        onClick?: (event: React.MouseEvent) => void;
+    }
+    function createButton(props: ICreateButtonProps): React.ReactElement {
         let className = props.class ? props.class : "std-button";
         const displayStyle = props.display ? props.display : "block";
         const hasTooltip = (props.tooltip != null);
@@ -117,11 +131,10 @@ export function Overview(props: IProps): React.ReactElement {
     function renderButtons(): React.ReactElement {
         // Create a "Getting Started Guide" button that lets player view the
         // handbook and adds it to the players home computer
-        const getStarterGuideOnClick = props.corp.getStarterGuide.bind(props.corp);
         const getStarterGuideBtn = createButton({
             class: "a-link-button",
             display: "inline-block",
-            onClick: getStarterGuideOnClick,
+            onClick: () => props.corp.getStarterGuide(props.player),
             text: "Getting Started Guide",
             tooltip: "Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' " +
                      "This is a .lit file that guides you through the beginning of setting up a Corporation and " +
@@ -166,10 +179,10 @@ export function Overview(props: IProps): React.ReactElement {
 
 
     // Render the buttons for when your Corporation is still private
-    function renderPrivateButtons(generalBtns: any): React.ReactElement {
+    function renderPrivateButtons(generalBtns: GeneralBtns): React.ReactElement {
         const fundingAvailable = (props.corp.fundingRound < 4);
         const findInvestorsClassName = fundingAvailable ? "std-button" : "a-link-button-inactive";
-        const findInvestorsTooltip = fundingAvailable ? "Search for private investors who will give you startup funding in exchangefor equity (stock shares) in your company" : null;
+        const findInvestorsTooltip = fundingAvailable ? "Search for private investors who will give you startup funding in exchangefor equity (stock shares) in your company" : undefined;
 
         function openFindInvestorsPopup(): void {
             const popupId = "cmpy-mgmt-find-investors-popup";
@@ -192,7 +205,6 @@ export function Overview(props: IProps): React.ReactElement {
         const findInvestorsBtn = createButton({
             class: findInvestorsClassName,
             onClick: openFindInvestorsPopup,
-            style: "inline-block",
             text: "Find Investors",
             tooltip: findInvestorsTooltip,
             display: "inline-block",
@@ -200,7 +212,6 @@ export function Overview(props: IProps): React.ReactElement {
         const goPublicBtn = createButton({
             class: "std-button",
             onClick: openGoPublicPopup,
-            style: "inline-block",
             display: "inline-block",
             text: "Go Public",
             tooltip: "Become a publicly traded and owned entity. Going public " +
@@ -221,7 +232,7 @@ export function Overview(props: IProps): React.ReactElement {
     }
 
     // Render the buttons for when your Corporation has gone public
-    function renderPublicButtons(generalBtns: any): React.ReactElement {
+    function renderPublicButtons(generalBtns: GeneralBtns): React.ReactElement {
         const corp = props.corp;
 
         const sellSharesOnCd = (corp.shareSaleCooldown > 0);
@@ -234,7 +245,7 @@ export function Overview(props: IProps): React.ReactElement {
         const sellSharesBtn = createButton({
             class: sellSharesClass,
             display: "inline-block",
-            onClick: function(event: MouseEvent) {
+            onClick: function(event: React.MouseEvent) {
                 if(!event.isTrusted) return;
                 const popupId = "cmpy-mgmt-sell-shares-popup";
                 createPopup(popupId, SellSharesPopup, {
@@ -333,8 +344,13 @@ export function Overview(props: IProps): React.ReactElement {
             }
         });
 
+        interface UpgradeData {
+            upgradeData: CorporationUpgrade;
+            upgradeLevel: number;
+        }
+
         // Create an array of properties of all unlocks
-        const levelableUpgradeProps = [];
+        const levelableUpgradeProps: UpgradeData[] = [];
         for (let i = 0; i < props.corp.upgrades.length; ++i) {
             const upgradeData = CorporationUpgrades[i];
             const level  = props.corp.upgrades[i];
@@ -353,7 +369,7 @@ export function Overview(props: IProps): React.ReactElement {
 
                 <h1 className={"cmpy-mgmt-upgrade-header"}> Upgrades </h1>
                 {
-                    levelableUpgradeProps.map((data: any) => <LevelableUpgrade
+                    levelableUpgradeProps.map((data: UpgradeData) => <LevelableUpgrade
                             player={props.player}
                             corp={props.corp}
                             upgradeData={data.upgradeData}

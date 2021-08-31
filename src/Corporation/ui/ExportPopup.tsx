@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
+import { Material } from "../Material";
+import { Export } from "../Export";
+import { IIndustry } from "../IIndustry";
 
 interface IProps {
-    mat: any;
+    mat: Material;
     corp: ICorporation;
     popupId: string;
 }
@@ -64,7 +67,7 @@ export function ExportPopup(props: IProps): React.ReactElement {
         removePopup(props.popupId);
     }
 
-    function removeExport(exp: any): void {
+    function removeExport(exp: Export): void {
         for (let i = 0; i < props.mat.exp.length; ++i) {
             if(props.mat.exp[i].ind !== exp.ind ||
                 props.mat.exp[i].city !== exp.city ||
@@ -75,7 +78,7 @@ export function ExportPopup(props: IProps): React.ReactElement {
         rerender();
     }
 
-    const currentDivision = props.corp.divisions.find((division: any) => division.name === industry);
+    const currentDivision = props.corp.divisions.find((division: IIndustry) => division.name === industry);
 
     return (<>
         <p>
@@ -85,12 +88,12 @@ amount to 'MAX' to export all of the materials in this warehouse.
         </p>
         <select className="dropdown" onChange={onIndustryChange} defaultValue={industry}>
             {
-                props.corp.divisions.map((division: any) => <option key={division.name} value={division.name}>{division.name}</option>)
+                props.corp.divisions.map((division: IIndustry) => <option key={division.name} value={division.name}>{division.name}</option>)
             }
         </select>
         <select className="dropdown" onChange={onCityChange} defaultValue={city}>
             {
-                currentDivision && Object.keys(currentDivision.warehouses).map((cityName: any) => {
+                currentDivision && Object.keys(currentDivision.warehouses).map((cityName: string) => {
                     if(currentDivision.warehouses[cityName] === 0) return;
                     return (<option key={cityName} value={cityName}>{cityName}</option>);
                 })
@@ -103,7 +106,7 @@ Below is a list of all current exports of this material from this warehouse.
 Clicking on one of the exports below will REMOVE that export.
         </p>
         {
-            props.mat.exp.map((exp: any, index: number) => <div key={index} className="cmpy-mgmt-existing-export" onClick={() => removeExport(exp)}>
+            props.mat.exp.map((exp: Export, index: number) => <div key={index} className="cmpy-mgmt-existing-export" onClick={() => removeExport(exp)}>
                     Industry: {exp.ind}<br />
                     City: {exp.city}<br />
                     Amount/s: {exp.amt}

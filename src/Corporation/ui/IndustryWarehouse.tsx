@@ -21,14 +21,16 @@ import { dialogBoxCreate }              from "../../../utils/DialogBox";
 import { createPopup }                  from "../../ui/React/createPopup";
 
 import { isString }                     from "../../../utils/helpers/isString";
-import { ICorporation } from "../ICorporation";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { ICorporation }                 from "../ICorporation";
+import { IIndustry }                    from "../IIndustry";
+import { CorporationRouting }           from "./Routing";
+import { IPlayer }                      from "../../PersonObjects/IPlayer";
 
 interface IProductProps {
     corp: ICorporation;
-    division: any;
+    division: IIndustry;
     city: string;
-    product: any;
+    product: Product;
     player: IPlayer;
 }
 
@@ -69,7 +71,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
         if (isString(product.sCost)) {
             sellButtonText += (" @ " + product.sCost);
         } else {
-            sellButtonText += (" @ " + numeralWrapper.format(product.sCost, "$0.000a"));
+            sellButtonText += (" @ " + numeralWrapper.formatMoney(product.sCost as number));
         }
     }
 
@@ -228,11 +230,11 @@ function ProductComponent(props: IProductProps): React.ReactElement {
 }
 
 interface IMaterialProps {
-    corp: any;
-    division: any;
-    warehouse: any;
+    corp: ICorporation;
+    division: IIndustry;
+    warehouse: Warehouse;
     city: string;
-    mat: any;
+    mat: Material;
 }
 
 // Creates the UI for a single Material type
@@ -299,10 +301,10 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
             sellButtonText += " @ " + numeralWrapper.formatMoney(mat.bCost + markupLimit);
         } else if (mat.sCost) {
             if (isString(mat.sCost)) {
-                const sCost = mat.sCost.replace(/MP/g, mat.bCost);
+                const sCost = (mat.sCost as string).replace(/MP/g, mat.bCost+'');
                 sellButtonText += " @ " + numeralWrapper.formatMoney(eval(sCost));
             } else {
-                sellButtonText += " @ " + numeralWrapper.formatMoney(mat.sCost);
+                sellButtonText += " @ " + numeralWrapper.formatMoney(mat.sCost as number);
             }
         }
     } else {
@@ -405,8 +407,8 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
 }
 
 interface IProps {
-    corp: any;
-    routing: any;
+    corp: ICorporation;
+    routing: CorporationRouting;
     currentCity: string;
     player: IPlayer;
 }
@@ -414,7 +416,7 @@ interface IProps {
 export function IndustryWarehouse(props: IProps): React.ReactElement {
     // Returns a boolean indicating whether the given material is relevant for the
     // current industry.
-    function isRelevantMaterial(matName: string, division: any): boolean {
+    function isRelevantMaterial(matName: string, division: IIndustry): boolean {
         // Materials that affect Production multiplier
         const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate"];
 
@@ -428,6 +430,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
     function renderWarehouseUI(): React.ReactElement {
         const corp = props.corp;
         const division = props.routing.currentDivision; // Validated in render()
+        if(division === null) return (<></>);
         const warehouse = division.warehouses[props.currentCity]; // Validated in render()
 
         // General Storage information at the top
@@ -595,7 +598,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
     }
     const warehouse = division.warehouses[props.currentCity];
 
-    function purchaseWarehouse(division: any, city: string): void {
+    function purchaseWarehouse(division: IIndustry, city: string): void {
         if (props.corp.funds.lt(CorporationConstants.WarehouseInitialCost)) {
             dialogBoxCreate("You do not have enough funds to do this!");
         } else {

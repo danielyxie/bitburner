@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { Cities } from "../../Locations/Cities";
+import { Product } from "../Product";
 
-function initialPrice(product: any): string {
-    let val = product.sCost ? product.sCost : '';
+function initialPrice(product: Product): string {
+    let val = product.sCost ? product.sCost+'' : '';
     if (product.marketTa2) {
         val += " (Market-TA.II)";
     } else if (product.marketTa1) {
@@ -14,7 +15,7 @@ function initialPrice(product: any): string {
 }
 
 interface IProps {
-    product: any;
+    product: Product;
     city: string;
     popupId: string;
 }

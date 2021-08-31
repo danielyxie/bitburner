@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
+import { Product } from "../Product";
 
 interface IProps {
-    product: any;
-    city: any;
+    product: Product;
+    city: string;
     popupId: string;
 }
 
