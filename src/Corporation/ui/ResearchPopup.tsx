@@ -22,7 +22,6 @@ interface IProps {
 
 // Create the Research Tree UI for this Industry
 export function ResearchPopup(props: IProps): React.ReactElement {
-
     useEffect(() => {
         const researchTree = IndustryResearchTrees[props.industry.type];
         if(researchTree === undefined) return;
@@ -42,9 +41,6 @@ export function ResearchPopup(props: IProps): React.ReactElement {
             },
         }
 
-        // Construct the tree with Treant
-        // This is required for side effect.
-        // eslint-disable-next-line no-new
         Treant(markup);
 
         // Add Event Listeners for all Nodes
@@ -74,10 +70,10 @@ export function ResearchPopup(props: IProps): React.ReactElement {
                     researchTree.research(allResearch[i]);
                     props.industry.researched[allResearch[i]] = true;
 
-                    const researchBox = props.industry.createResearchBox();
                     dialogBoxCreate(`Researched ${allResearch[i]}. It may take a market cycle ` +
                                     `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
                                     `the Research apply.`);
+                    removePopup(props.popupId);
                 } else {
                     dialogBoxCreate(`You do not have enough Scientific Research for ${research.name}`);
                 }
@@ -105,6 +101,8 @@ export function ResearchPopup(props: IProps): React.ReactElement {
         }
     });
 
-    return <div id={props.popupId}></div>
+    return <div id={props.popupId}>
+        <div id={props.popupId+'outer-box'}></div>
+    </div>
 
 }
