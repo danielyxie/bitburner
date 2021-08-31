@@ -943,7 +943,6 @@ function NetscriptFunctions(workerScript) {
             if (fn = "ALL") {
                 for (fn in possibleLogs) {
                     workerScript.disableLogs[fn] = true;
-
                 }
                 workerScript.log("disableLog", `Disabled logging for all functions`);
             } else if (possibleLogs[fn] === undefined) {
