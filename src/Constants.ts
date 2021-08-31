@@ -228,7 +228,7 @@ export const CONSTANTS: IMap<any> = {
     TotalNumBitNodes: 24,
 
     LatestUpdate: `
-    v0.52.9 - 2021-07-27 Less lag! (hydroflame & community)
+    v0.52.9 - 2021-08-27 Less lag! (hydroflame & community)
     -------------------------------------------
 
     ** Active Scripts page **
