@@ -1,22 +1,11 @@
 import { EmployeePositions } from "./EmployeePositions";
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import { formatNumber, generateRandomString } from "../../utils/StringHelperFunctions";
+import { generateRandomString } from "../../utils/StringHelperFunctions";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
-import { yesNoTxtInpBoxCreate,
-         yesNoTxtInpBoxGetYesButton,
-         yesNoTxtInpBoxGetNoButton,
-         yesNoTxtInpBoxGetInput,
-         yesNoTxtInpBoxClose } from "../../utils/YesNoBox";
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { createPopup } from "../../utils/uiHelpers/createPopup";
-import { removeElementById } from "../../utils/uiHelpers/removeElementById";
-import { createElement } from "../../utils/uiHelpers/createElement";
-import { numeralWrapper } from "../ui/numeralFormat";
 import { Employee } from "./Employee";
 import { IIndustry } from "./IIndustry";
 import { ICorporation } from './ICorporation';
-import { IPlayer } from "../PersonObjects/IPlayer";
 
 interface IParams {
     loc?: string;
@@ -137,114 +126,6 @@ export class OfficeSpace {
             total += prod;
         }
         this.employeeProd.total = total;
-    }
-
-    //Takes care of UI as well
-    findEmployees(player: IPlayer, corporation: ICorporation): void {
-        if (this.atCapacity()) { return; }
-        if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
-
-        //Generate three random employees (meh, decent, amazing)
-        const mult1 = getRandomInt(25, 50)/100,
-            mult2 = getRandomInt(51, 75)/100,
-            mult3 = getRandomInt(76, 100)/100;
-        const int = getRandomInt(50, 100),
-            cha = getRandomInt(50, 100),
-            exp = getRandomInt(50, 100),
-            cre = getRandomInt(50, 100),
-            eff = getRandomInt(50, 100),
-            sal = CorporationConstants.EmployeeSalaryMultiplier * (int + cha + exp + cre + eff);
-
-        const emp1 = new Employee({
-            intelligence: int * mult1,
-            charisma: cha * mult1,
-            experience: exp * mult1,
-            creativity: cre * mult1,
-            efficiency: eff * mult1,
-            salary: sal * mult1,
-        });
-
-        const emp2 = new Employee({
-            intelligence: int * mult2,
-            charisma: cha * mult2,
-            experience: exp * mult2,
-            creativity: cre * mult2,
-            efficiency: eff * mult2,
-            salary: sal * mult2,
-        });
-
-        const emp3 = new Employee({
-            intelligence: int * mult3,
-            charisma: cha * mult3,
-            experience: exp * mult3,
-            creativity: cre * mult3,
-            efficiency: eff * mult3,
-            salary: sal * mult3,
-        });
-
-        const text = createElement("h1", {
-            innerHTML: "Select one of the following candidates for hire:",
-        });
-
-        function createEmpDiv(employee: Employee, office: OfficeSpace): HTMLElement {
-            const div = createElement("div", {
-                class:"cmpy-mgmt-find-employee-option",
-                innerHTML:  "Intelligence: " + formatNumber(employee.int, 1) + "<br>" +
-                            "Charisma: " + formatNumber(employee.cha, 1) + "<br>" +
-                            "Experience: " + formatNumber(employee.exp, 1) + "<br>" +
-                            "Creativity: " + formatNumber(employee.cre, 1) + "<br>" +
-                            "Efficiency: " + formatNumber(employee.eff, 1) + "<br>" +
-                            "Salary: " + numeralWrapper.format(employee.sal, '$0.000a') + " \ s<br>",
-                clickListener: () => {
-                    office.hireEmployee(player, employee, corporation);
-                    removeElementById("cmpy-mgmt-hire-employee-popup");
-                    return false;
-                },
-            });
-            return div;
-        }
-
-        const cancelBtn = createElement("a", {
-            class:"a-link-button",
-            innerText:"Cancel",
-            float:"right",
-            clickListener:() => {
-                removeElementById("cmpy-mgmt-hire-employee-popup");
-                return false;
-            },
-        });
-
-        const elems = [text,
-                     createEmpDiv(emp1, this),
-                     createEmpDiv(emp2, this),
-                     createEmpDiv(emp3, this),
-                     cancelBtn];
-
-        createPopup("cmpy-mgmt-hire-employee-popup", elems);
-    }
-
-    hireEmployee(player: IPlayer, employee: Employee, corporation: ICorporation): void {
-        const yesBtn = yesNoTxtInpBoxGetYesButton(),
-            noBtn = yesNoTxtInpBoxGetNoButton();
-        yesBtn.innerHTML = "Hire";
-        noBtn.innerHTML = "Cancel";
-        yesBtn.addEventListener("click", () => {
-            const name = yesNoTxtInpBoxGetInput();
-            for (let i = 0; i < this.employees.length; ++i) {
-                if (this.employees[i].name === name) {
-                    dialogBoxCreate("You already have an employee with this nickname! Please give every employee a unique nickname.");
-                    return false;
-                }
-            }
-            employee.name = name;
-            this.employees.push(employee);
-            corporation.rerender(player);
-            return yesNoTxtInpBoxClose();
-        });
-        noBtn.addEventListener("click", () => {
-            return yesNoTxtInpBoxClose();
-        });
-        yesNoTxtInpBoxCreate("Give your employee a nickname!");
     }
 
     hireRandomEmployee(): Employee | undefined {

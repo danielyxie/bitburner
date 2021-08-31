@@ -11,6 +11,7 @@ import { numeralWrapper }           from "../../ui/numeralFormat";
 import { getSelectText }            from "../../../utils/uiHelpers/getSelectData";
 import { createPopup }              from "../../ui/React/createPopup";
 import { UpgradeOfficeSizePopup }   from "./UpgradeOfficeSizePopup";
+import { HireEmployeePopup }        from "./HireEmployeePopup";
 import { ThrowPartyPopup }          from "./ThrowPartyPopup";
 import { ICorporation }             from "../ICorporation";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
@@ -550,7 +551,6 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         )
     }
 
-    const corp = props.corp;
     const division = props.routing.currentDivision; // Validated in constructor
     if(division === null) return (<></>);
     const office = division.offices[props.currentCity]; // Validated in constructor
@@ -570,9 +570,15 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         }
     }
 
-    function hireEmployeeButtonOnClick(): void {
+    function openHireEmployeePopup(): void {
         if(office === 0) return;
-        office.findEmployees(props.player, corp);
+        const popupId = "cmpy-mgmt-hire-employee-popup";
+        createPopup(popupId, HireEmployeePopup, {
+            office: office,
+            corp: props.corp,
+            popupId: popupId,
+            player: props.player,
+        });
     }
 
     // Autohire employee button
@@ -614,7 +620,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         <div className={"cmpy-mgmt-employee-panel"}>
             <h1 style={{ margin: "4px 0px 5px 0px" }}>Office Space</h1>
             <p>Size: {office.employees.length} / {office.size} employees</p>
-            <button className={hireEmployeeButtonClass} onClick={hireEmployeeButtonOnClick} style={buttonStyle}>
+            <button className={hireEmployeeButtonClass} onClick={openHireEmployeePopup} style={buttonStyle}>
                 Hire Employee
                 {
                     office.employees.length === 0 &&
