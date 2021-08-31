@@ -9,6 +9,7 @@ import { numeralWrapper }           from "../../ui/numeralFormat";
 import { dialogBoxCreate }          from "../../../utils/DialogBox";
 import { createProgressBarText }    from "../../../utils/helpers/createProgressBarText";
 import { MakeProductPopup }         from "./MakeProductPopup";
+import { ResearchPopup }            from "./ResearchPopup";
 import { createPopup }              from "../../ui/React/createPopup";
 
 interface IProps {
@@ -153,6 +154,14 @@ export function IndustryOverview(props: IProps): React.ReactElement {
                             `Real Estate: ${convertEffectFacToGraphic(division.reFac)}`);
         }
 
+        function openResearchPopup(): void {
+            const popupId = "corporation-research-popup-box";
+            createPopup(popupId, ResearchPopup, {
+                industry: division,
+                popupId: popupId,
+            });
+        }
+
         return (
             <div>
                 {genInfo}
@@ -195,7 +204,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
                         products that you produce.
                     </span>
                 </p>
-                <button className={"help-tip"} onClick={division.createResearchBox.bind(division)}>
+                <button className={"help-tip"} onClick={openResearchPopup}>
                     Research
                 </button>
             </div>
