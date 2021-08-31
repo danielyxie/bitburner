@@ -1,4 +1,3 @@
-import { IMap } from "../../types";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
 

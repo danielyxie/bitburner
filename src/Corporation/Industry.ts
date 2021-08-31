@@ -20,6 +20,7 @@ import { isString } from "../../utils/helpers/isString";
 import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
+import { IIndustry } from "./IIndustry";
 import {
     IndustryUpgrade,
     IndustryUpgrades } from "./IndustryUpgrades";
@@ -27,21 +28,21 @@ import { formatNumber } from "../../utils/StringHelperFunctions";
 
 interface IParams {
     name?: string;
-    corp?: any;
+    corp?: ICorporation;
     type?: string;
 }
 
-export class Industry {
+export class Industry implements IIndustry {
     name = "";
     type = Industries.Agriculture;
     sciResearch = new Material({name: "Scientific Research"});
-    researched: any = {};
-    reqMats: any = {};
+    researched: {[key: string]: boolean | undefined} = {};
+    reqMats: {[key: string]: number | undefined} = {};
 
     //An array of the name of materials being produced
     prodMats: string[] = [];
 
-    products: any = {};
+    products: {[key: string]: Product | undefined} = {};
     makesProducts = false;
 
     awareness = 0;
@@ -69,16 +70,16 @@ export class Industry {
     thisCycleExpenses: any;
 
     //Upgrades
-    upgrades: number[] = [];
+    upgrades: number[] = Array(Object.keys(IndustryUpgrades).length).fill(0);
 
     state = "START";
     newInd = true;
 
     //Maps locations to warehouses. 0 if no warehouse at that location
-    warehouses: any;
+    warehouses: {[key: string]: Warehouse | 0};
 
     //Maps locations to offices. 0 if no office at that location
-    offices: any = {
+    offices: {[key: string]: OfficeSpace | 0} = {
         [CityName.Aevum]: 0,
         [CityName.Chongqing]: 0,
         [CityName.Sector12]: new OfficeSpace({
@@ -100,11 +101,7 @@ export class Industry {
         this.thisCycleRevenue   = new Decimal(0);
         this.thisCycleExpenses  = new Decimal(0);
 
-        //Upgrades
-        const numUpgrades = Object.keys(IndustryUpgrades).length;
-        this.upgrades = Array(numUpgrades).fill(0);
-
-        this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
+        this.warehouses = {
             [CityName.Aevum]: 0,
             [CityName.Chongqing]: 0,
             [CityName.Sector12]: new Warehouse({
@@ -394,6 +391,7 @@ export class Industry {
         for (const prodName in this.products) {
             if (this.products.hasOwnProperty(prodName)) {
                 const prod = this.products[prodName];
+                if(prod === undefined) continue;
                 warehouse.sizeUsed += (prod.data[warehouse.loc][0] * prod.siz);
                 if (prod.data[warehouse.loc][0] > 0) {
                     warehouse.breakdown += (prodName + ": " + formatNumber(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
@@ -426,8 +424,10 @@ export class Industry {
             // Process offices (and the employees in them)
             let employeeSalary = 0;
             for (const officeLoc in this.offices) {
-                if (this.offices[officeLoc] instanceof OfficeSpace) {
-                    employeeSalary += this.offices[officeLoc].process(marketCycles, {industry:this, corporation:corporation});
+                const office = this.offices[officeLoc];
+                if(office === 0) continue;
+                if (office instanceof OfficeSpace) {
+                    employeeSalary += office.process(marketCycles, corporation, this);
                 }
             }
             this.thisCycleExpenses = this.thisCycleExpenses.plus(employeeSalary);
@@ -476,6 +476,7 @@ export class Industry {
             //for every material this industry requires or produces
             if (this.warehouses[CorporationConstants.Cities[i]] instanceof Warehouse) {
                 const wh = this.warehouses[CorporationConstants.Cities[i]];
+                if(wh === 0) continue;
                 for (const name in reqMats) {
                     if (reqMats.hasOwnProperty(name)) {
                         wh.materials[name].processMarket();
@@ -502,6 +503,7 @@ export class Industry {
         for (const name in this.products) {
             if (this.products.hasOwnProperty(name)) {
                 const product = this.products[name];
+                if(product === undefined) continue;
                 let change = getRandomInt(0, 3) * 0.0004;
                 if (change === 0) continue;
 
@@ -531,6 +533,7 @@ export class Industry {
                     continue;
                 }
                 const warehouse = this.warehouses[city];
+                if(warehouse === 0) continue;
                 for (const matName in warehouse.materials) {
                     if (warehouse.materials.hasOwnProperty(matName)) {
                         const mat = warehouse.materials[matName];
@@ -541,10 +544,13 @@ export class Industry {
         }
 
         for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
-            const city = CorporationConstants.Cities[i], office = this.offices[city];
+            const city = CorporationConstants.Cities[i];
+            const office = this.offices[city];
+            if(office === 0) continue;
 
             if (this.warehouses[city] instanceof Warehouse) {
                 const warehouse = this.warehouses[city];
+                if(warehouse === 0) continue;
 
                 switch(this.state) {
 
@@ -557,7 +563,10 @@ export class Industry {
                         let buyAmt, maxAmt;
                         if (warehouse.smartSupplyEnabled && Object.keys(ind.reqMats).includes(matName)) {
                             //Smart supply tracker is stored as per second rate
-                            mat.buy = ind.reqMats[matName] * warehouse.smartSupplyStore;
+                            const reqMat = ind.reqMats[matName];
+                            if(reqMat === undefined)
+                                throw new Error(`reqMat "${matName}" is undefined`);
+                            mat.buy = reqMat * warehouse.smartSupplyStore;
                             buyAmt = mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles;
                         } else {
                             buyAmt = (mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles);
@@ -608,6 +617,7 @@ export class Industry {
                     }
                     for (const reqMatName in this.reqMats) {
                         const normQty = this.reqMats[reqMatName];
+                        if(normQty === undefined) continue;
                         totalMatSize -= (MaterialSizes[reqMatName] * normQty);
                     }
                     // If not enough space in warehouse, limit the amount of produced materials
@@ -625,7 +635,9 @@ export class Industry {
                     let producableFrac = 1;
                     for (const reqMatName in this.reqMats) {
                         if (this.reqMats.hasOwnProperty(reqMatName)) {
-                            const req = this.reqMats[reqMatName] * prod;
+                            const reqMat = this.reqMats[reqMatName];
+                            if(reqMat === undefined) continue;
+                            const req = reqMat * prod;
                             if (warehouse.materials[reqMatName].qty < req) {
                                 producableFrac = Math.min(producableFrac, warehouse.materials[reqMatName].qty / req);
                             }
@@ -636,7 +648,9 @@ export class Industry {
                     // Make our materials if they are producable
                     if (producableFrac > 0 && prod > 0) {
                         for (const reqMatName in this.reqMats) {
-                            const reqMatQtyNeeded = (this.reqMats[reqMatName] * prod * producableFrac);
+                            const reqMat = this.reqMats[reqMatName];
+                            if(reqMat === undefined) continue;
+                            const reqMatQtyNeeded = (reqMat * prod * producableFrac);
                             warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
                             warehouse.materials[reqMatName].prd = 0;
                             warehouse.materials[reqMatName].prd -= reqMatQtyNeeded / (CorporationConstants.SecsPerMarketCycle * marketCycles);
@@ -725,7 +739,7 @@ export class Industry {
                         } else if (mat.marketTa1) {
                             sCost = mat.bCost + markupLimit;
                         } else if (isString(mat.sCost)) {
-                            sCost = mat.sCost.replace(/MP/g, mat.bCost);
+                            sCost = (mat.sCost as string).replace(/MP/g, mat.bCost+'');
                             sCost = eval(sCost);
                         } else {
                             sCost = mat.sCost;
@@ -757,8 +771,8 @@ export class Industry {
                         let sellAmt;
                         if (isString(mat.sllman[1])) {
                             //Dynamically evaluated
-                            let tmp = mat.sllman[1].replace(/MAX/g, maxSell);
-                            tmp = tmp.replace(/PROD/g, mat.prd);
+                            let tmp = (mat.sllman[1] as string).replace(/MAX/g, maxSell+'');
+                            tmp = tmp.replace(/PROD/g, mat.prd+'');
                             try {
                                 sellAmt = eval(tmp);
                             } catch(e) {
@@ -773,7 +787,7 @@ export class Industry {
                             sellAmt = maxSell;
                         } else {
                             //Player's input value is just a number
-                            sellAmt = Math.min(maxSell, mat.sllman[1]);
+                            sellAmt = Math.min(maxSell, mat.sllman[1] as number);
                         }
 
                         sellAmt = (sellAmt * CorporationConstants.SecsPerMarketCycle * marketCycles);
@@ -801,9 +815,10 @@ export class Industry {
                             mat.totalExp = 0; //Reset export
                             for (let expI = 0; expI < mat.exp.length; ++expI) {
                                 const exp = mat.exp[expI];
-                                let amt = exp.amt.replace(/MAX/g, mat.qty / (CorporationConstants.SecsPerMarketCycle * marketCycles));
+                                const amtStr = exp.amt.replace(/MAX/g, (mat.qty / (CorporationConstants.SecsPerMarketCycle * marketCycles))+'');
+                                let amt = 0;
                                 try {
-                                    amt = eval(amt);
+                                    amt = eval(amtStr);
                                 } catch(e) {
                                     dialogBoxCreate("Calculating export for " + mat.name + " in " +
                                                     this.name +  "'s " + city + " division failed with " +
@@ -889,9 +904,11 @@ export class Industry {
         if (this.state === "PRODUCTION") {
             for (const prodName in this.products) {
                 const prod = this.products[prodName];
+                if(prod === undefined) continue;
                 if (!prod.fin) {
                     const city = prod.createCity;
                     const office = this.offices[city];
+                    if(office === 0) continue;
 
                     // Designing/Creating a Product is based mostly off Engineers
                     const engrProd  = office.employeeProd[EmployeePositions.Engineer];
@@ -930,7 +947,10 @@ export class Industry {
     processProduct(marketCycles=1, product: Product, corporation: ICorporation): number {
         let totalProfit = 0;
         for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
-            const city = CorporationConstants.Cities[i], office = this.offices[city], warehouse = this.warehouses[city];
+            const city = CorporationConstants.Cities[i];
+            const office = this.offices[city];
+            if(office === 0) continue;
+            const warehouse = this.warehouses[city];
             if (warehouse instanceof Warehouse) {
                 switch(this.state) {
 
@@ -1135,7 +1155,7 @@ export class Industry {
         }
     }
 
-    upgrade(upgrade: IndustryUpgrade, refs: {corporation: any; office: OfficeSpace}): void {
+    upgrade(upgrade: IndustryUpgrade, refs: {corporation: ICorporation; office: OfficeSpace}): void {
         const corporation = refs.corporation;
         const office = refs.office;
         const upgN = upgrade[0];

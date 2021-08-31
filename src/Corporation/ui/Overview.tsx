@@ -36,7 +36,7 @@ interface GeneralBtns {
 export function Overview(props: IProps): React.ReactElement {
     // Generic Function for Creating a button
     interface ICreateButtonProps {
-        text: string
+        text: string;
         class?: string;
         display?: string;
         tooltip?: string;

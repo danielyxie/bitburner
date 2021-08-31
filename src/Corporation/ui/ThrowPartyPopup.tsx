@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { IOfficeSpace } from "../IOfficeSpace";
+import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";
 
 interface IProps {
-    office: IOfficeSpace;
+    office: OfficeSpace;
     corp: ICorporation;
     popupId: string;
 }
@@ -38,7 +38,7 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
         }
     }
 
-    function EffectText(props: {cost: number | null; office: IOfficeSpace}): React.ReactElement {
+    function EffectText(props: {cost: number | null; office: OfficeSpace}): React.ReactElement {
         let cost = props.cost;
         if(cost !== null && (isNaN(cost) || cost < 0)) return <p>Invalid value entered!</p>
         if(cost === null) cost = 0;

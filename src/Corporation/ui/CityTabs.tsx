@@ -4,7 +4,6 @@ import React from "react";
 import { CityTab } from "./CityTab";
 import { ExpandNewCityPopup } from "./ExpandNewCityPopup";
 import { createPopup } from "../../ui/React/createPopup";
-import { IDivision } from "../IDivision";
 import { ICorporation } from "../ICorporation";
 import { CorporationRouting } from "./Routing";
 
@@ -20,11 +19,12 @@ export function CityTabs(props: IProps): React.ReactElement {
     const division = props.routing.currentDivision;
 
     function openExpandNewCityModal(): void {
+        if(division === null) return;
         const popupId = "cmpy-mgmt-expand-city-popup";
         createPopup(popupId, ExpandNewCityPopup, {
             popupId: popupId,
             corp: props.corp,
-            division: division as IDivision,
+            division: division,
             cityStateSetter: props.cityStateSetter,
         });
     }

@@ -61,9 +61,7 @@ export class OfficeSpace {
         return (this.employees.length) >= this.size;
     }
 
-    process(marketCycles = 1, parentRefs: {industry: IIndustry; corporation: ICorporation}): number {
-        const industry = parentRefs.industry;
-
+    process(marketCycles = 1, corporation: ICorporation, industry: IIndustry): number {
         // HRBuddy AutoRecruitment and training
         if (industry.hasResearch("HRBuddy-Recruitment") && !this.atCapacity()) {
             const emp = this.hireRandomEmployee();
@@ -88,9 +86,9 @@ export class OfficeSpace {
 
         // Calculate changes in Morale/Happiness/Energy for Employees
         let perfMult=1; //Multiplier for employee morale/happiness/energy based on company performance
-        if (parentRefs.corporation.funds < 0 && industry.lastCycleRevenue < 0) {
+        if (corporation.funds < 0 && industry.lastCycleRevenue < 0) {
             perfMult = Math.pow(0.99, marketCycles);
-        } else if (parentRefs.corporation.funds > 0 && industry.lastCycleRevenue > 0) {
+        } else if (corporation.funds > 0 && industry.lastCycleRevenue > 0) {
             perfMult = Math.pow(1.01, marketCycles);
         }
 
@@ -121,13 +119,11 @@ export class OfficeSpace {
             salaryPaid += salary;
         }
 
-        this.calculateEmployeeProductivity(parentRefs);
+        this.calculateEmployeeProductivity(corporation, industry);
         return salaryPaid;
     }
 
-    calculateEmployeeProductivity(parentRefs: {corporation: ICorporation; industry: IIndustry}): void {
-        const company = parentRefs.corporation, industry = parentRefs.industry;
-
+    calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
         //Reset
         for (const name in this.employeeProd) {
             this.employeeProd[name] = 0;
@@ -136,7 +132,7 @@ export class OfficeSpace {
         let total = 0;
         for (let i = 0; i < this.employees.length; ++i) {
             const employee = this.employees[i];
-            const prod = employee.calculateProductivity(company, industry);
+            const prod = employee.calculateProductivity(corporation, industry);
             this.employeeProd[employee.pos] += prod;
             total += prod;
         }
@@ -144,7 +140,7 @@ export class OfficeSpace {
     }
 
     //Takes care of UI as well
-    findEmployees(player: IPlayer, parentRefs: {corporation: ICorporation}): void {
+    findEmployees(player: IPlayer, corporation: ICorporation): void {
         if (this.atCapacity()) { return; }
         if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
@@ -200,7 +196,7 @@ export class OfficeSpace {
                             "Efficiency: " + formatNumber(employee.eff, 1) + "<br>" +
                             "Salary: " + numeralWrapper.format(employee.sal, '$0.000a') + " \ s<br>",
                 clickListener: () => {
-                    office.hireEmployee(player, employee, parentRefs);
+                    office.hireEmployee(player, employee, corporation);
                     removeElementById("cmpy-mgmt-hire-employee-popup");
                     return false;
                 },
@@ -227,8 +223,7 @@ export class OfficeSpace {
         createPopup("cmpy-mgmt-hire-employee-popup", elems);
     }
 
-    hireEmployee(player: IPlayer, employee: Employee, parentRefs: {corporation: ICorporation}): void {
-        const corporation = parentRefs.corporation;
+    hireEmployee(player: IPlayer, employee: Employee, corporation: ICorporation): void {
         const yesBtn = yesNoTxtInpBoxGetYesButton(),
             noBtn = yesNoTxtInpBoxGetNoButton();
         yesBtn.innerHTML = "Hire";

@@ -57,8 +57,8 @@ export class Material {
 
     // Flags to keep track of whether production and/or sale of this material is limited
     // [Whether production/sale is limited, limit amount]
-    prdman: any[] = [false, 0]; // Production
-    sllman: any[] = [false, 0]; // Sale
+    prdman: [boolean, number] = [false, 0]; // Production
+    sllman: [boolean, string | number] = [false, 0]; // Sale
 
     // Flags that signal whether automatic sale pricing through Market TA is enabled
     marketTa1 = false;

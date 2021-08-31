@@ -3,12 +3,12 @@ import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { CorporationConstants } from "../data/Constants";
-import { IOfficeSpace } from "../IOfficeSpace";
+import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
-    office: IOfficeSpace;
+    office: OfficeSpace;
     corp: ICorporation;
     popupId: string;
     player: IPlayer;

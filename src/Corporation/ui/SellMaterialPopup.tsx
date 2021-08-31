@@ -22,7 +22,7 @@ interface IProps {
 
 // Create a popup that let the player manage sales of a material
 export function SellMaterialPopup(props: IProps): React.ReactElement {
-    const [amt, setAmt] = useState<string>(props.mat.sllman[1] ? props.mat.sllman[1] : '');
+    const [amt, setAmt] = useState<string>(props.mat.sllman[1] ? props.mat.sllman[1]+'' : '');
     const [price, setPrice] = useState<string>(initialPrice(props.mat));
 
     function sellMaterial(): void {

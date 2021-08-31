@@ -9,12 +9,12 @@ export interface IIndustry {
     name: string;
     type: string;
     sciResearch: Material;
-    researched: any;
-    reqMats: any;
+    researched: {[key: string]: boolean | undefined};
+    reqMats: {[key: string]: number | undefined};
 
     prodMats: string[];
 
-    products: any;
+    products: {[key: string]: Product | undefined};
     makesProducts: boolean;
 
     awareness: number;
@@ -40,9 +40,8 @@ export interface IIndustry {
 
     state: string;
     newInd: boolean;
-    warehouses: any;
-    offices: any;
-
+    warehouses: {[key: string]: Warehouse | 0};
+    offices: {[key: string]: OfficeSpace | 0};
 
     init(): void;
     getProductDescriptionText(): string;
@@ -57,7 +56,7 @@ export interface IIndustry {
     processProducts(marketCycles: number, corporation: ICorporation): [number, number];
     processProduct(marketCycles: number, product: Product, corporation: ICorporation): number;
     discontinueProduct(product: Product): void;
-    upgrade(upgrade: IndustryUpgrade, refs: {corporation: any; office: OfficeSpace}): void;
+    upgrade(upgrade: IndustryUpgrade, refs: {corporation: ICorporation; office: OfficeSpace}): void;
     getOfficeProductivity(office: OfficeSpace, params?: any): number;
     getBusinessFactor(office: OfficeSpace): number;
     getAdvertisingFactors(): [number, number, number, number];

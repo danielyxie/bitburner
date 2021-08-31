@@ -133,6 +133,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         const division = props.routing.currentDivision; // Validated in constructor
         if(division === null) return(<></>);
         const office = division.offices[props.currentCity]; // Validated in constructor
+        if(office === 0) return (<></>);
         const vechain = (props.corp.unlockUpgrades[4] === 1); // Has Vechain upgrade
 
         function switchModeOnClick(): void {
@@ -159,6 +160,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
         // Helper functions for (re-)assigning employees to different positions
         function assignEmployee(to: string): void {
+            if(office === 0) return;
+            if(division === null) return;
             if (numUnassigned <= 0) {
                 console.warn("Cannot assign employee. No unassigned employees available");
                 return;
@@ -193,11 +196,13 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             setNumUnassigned(n => n-1);
 
             office.assignEmployeeToJob(to);
-            office.calculateEmployeeProductivity({ corporation: props.corp, industry:division });
+            office.calculateEmployeeProductivity(props.corp, division);
             props.corp.rerender(props.player);
         }
 
         function unassignEmployee(from: string): void {
+            if(office === 0) return;
+            if(division === null) return;
             function logWarning(pos: string): void {
                 console.warn(`Cannot unassign from ${pos} because there is nobody assigned to that position`);
             }
@@ -237,7 +242,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             setNumUnassigned(n => n+1);
 
             office.unassignEmployeeFromJob(from);
-            office.calculateEmployeeProductivity({ corporation: props.corp, industry:division });
+            office.calculateEmployeeProductivity(props.corp, division);
             props.corp.rerender(props.player);
         }
 
@@ -436,6 +441,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         const division = props.routing.currentDivision; // Validated in constructor
         if(division === null) return (<></>);
         const office = division.offices[props.currentCity]; // Validated in constructor
+        if(office === 0) return (<></>);
 
         function switchModeOnClick(): void {
             setEmployeeManualAssignMode(false);
@@ -455,6 +461,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         }
 
         function employeeSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
+            if(office === 0) return;
             const name = getSelectText(e.target);
             for (let i = 0; i < office.employees.length; ++i) {
                 if (name === office.employees[i].name) {
@@ -547,7 +554,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     const division = props.routing.currentDivision; // Validated in constructor
     if(division === null) return (<></>);
     const office = division.offices[props.currentCity]; // Validated in constructor
-
+    if(office === 0) return (<></>);
     const buttonStyle = {
         fontSize: "13px",
     }
@@ -564,7 +571,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     }
 
     function hireEmployeeButtonOnClick(): void {
-        office.findEmployees(props.player, { corporation: corp, industry: division });
+        if(office === 0) return;
+        office.findEmployees(props.player, corp);
     }
 
     // Autohire employee button
@@ -575,12 +583,14 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         autohireEmployeeButtonClass += " std-button";
     }
     function autohireEmployeeButtonOnClick(): void {
+        if(office === 0) return;
         if (office.atCapacity()) return;
         office.hireRandomEmployee();
         props.corp.rerender(props.player);
     }
 
     function openUpgradeOfficeSizePopup(): void {
+        if(office === 0) return;
         const popupId = "cmpy-mgmt-upgrade-office-size-popup";
         createPopup(popupId, UpgradeOfficeSizePopup, {
             office: office,
@@ -591,6 +601,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     }
 
     function openThrowPartyPopup(): void {
+        if(office === 0) return;
         const popupId = "cmpy-mgmt-throw-office-party-popup";
         createPopup(popupId, ThrowPartyPopup, {
             office: office,

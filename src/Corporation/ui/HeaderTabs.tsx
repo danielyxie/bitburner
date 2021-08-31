@@ -3,7 +3,7 @@
 // divisions, see an overview of your corporation, or create a new industry
 import React from "react";
 import { HeaderTab } from "./HeaderTab";
-import { IDivision } from "../IDivision";
+import { IIndustry } from "../IIndustry";
 import { NewIndustryPopup } from "./NewIndustryPopup";
 import { createPopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
@@ -40,7 +40,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
                 text={props.corp.name}
             />
             {
-                props.corp.divisions.map((division: IDivision) => <HeaderTab
+                props.corp.divisions.map((division: IIndustry) => <HeaderTab
                         current={props.routing.isOn(division.name)}
                         key={division.name}
                         onClick={() => {

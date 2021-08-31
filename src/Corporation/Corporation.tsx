@@ -294,8 +294,10 @@ export class Corporation {
             for (let i = 0; i < this.divisions.length; ++i) {
                 const industry = this.divisions[i];
                 for (const city in industry.warehouses) {
-                    if (industry.warehouses.hasOwnProperty(city) && industry.warehouses[city] instanceof Warehouse) {
-                        industry.warehouses[city].updateSize(this, industry);
+                    const warehouse = industry.warehouses[city]
+                    if(warehouse === 0) continue
+                    if (industry.warehouses.hasOwnProperty(city) && warehouse instanceof Warehouse) {
+                        warehouse.updateSize(this, industry);
                     }
                 }
             }

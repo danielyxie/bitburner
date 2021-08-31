@@ -248,6 +248,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             }
 
             function onClick(): void {
+                if(office === 0) return;
                 if(division === null) return;
                 if (corp.funds.lt(cost)) {
                     dialogBoxCreate("Insufficient funds");

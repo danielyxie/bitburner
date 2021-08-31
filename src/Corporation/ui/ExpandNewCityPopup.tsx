@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { IDivision } from "../IDivision";
+import { IIndustry } from "../IIndustry";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CorporationConstants } from "../data/Constants";
 import { removePopup } from "../../ui/React/createPopup";
@@ -10,7 +10,7 @@ import { ICorporation } from "../ICorporation";
 interface IProps {
     popupId: string;
     corp: ICorporation;
-    division: IDivision;
+    division: IIndustry;
     cityStateSetter: (city: string) => void;
 }
 

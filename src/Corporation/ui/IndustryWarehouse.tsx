@@ -292,7 +292,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
         if (isString(mat.sllman[1])) {
             sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nfB)}/${mat.sllman[1]})`
         } else {
-            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nfB)}/${numeralWrapper.format(mat.sllman[1], nfB)})`;
+            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nfB)}/${numeralWrapper.format(mat.sllman[1] as number, nfB)})`;
         }
 
         if (mat.marketTa2) {
@@ -432,6 +432,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         const division = props.routing.currentDivision; // Validated in render()
         if(division === null) return (<></>);
         const warehouse = division.warehouses[props.currentCity]; // Validated in render()
+        if(warehouse === 0) return (<></>);
 
         // General Storage information at the top
         const sizeUsageStyle = {
@@ -444,6 +445,8 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         const canAffordUpgrade = (corp.funds.gt(sizeUpgradeCost));
         const upgradeWarehouseClass = canAffordUpgrade ? "std-button" : "a-link-button-inactive";
         function upgradeWarehouseOnClick(): void {
+            if(division === null) return;
+            if(warehouse === 0) return;
             ++warehouse.level;
             warehouse.updateSize(corp, division);
             corp.funds = corp.funds.minus(sizeUpgradeCost);
@@ -510,6 +513,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         // Smart Supply Checkbox
         const smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
         function smartSupplyOnChange(e: React.ChangeEvent<HTMLInputElement>): void {
+            if(warehouse === 0) return;
             warehouse.smartSupplyEnabled = e.target.checked;
             corp.rerender(props.player);
         }
@@ -535,14 +539,15 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         const products = [];
         if (division.makesProducts && Object.keys(division.products).length > 0) {
             for (const productName in division.products) {
-                if (division.products[productName] instanceof Product) {
+                const product = division.products[productName];
+                if (product instanceof Product) {
                     products.push(<ProductComponent
                                     player={props.player}
                                     city={props.currentCity}
                                     corp={corp}
                                     division={division}
                                     key={productName}
-                                    product={division.products[productName]}
+                                    product={product}
                                     />);
                 }
             }
