@@ -38,7 +38,7 @@ export class OfficeSpace {
     minHap = 0;
     maxHap = 100;
     maxMor = 100;
-    employees: any[] = [];
+    employees: Employee[] = [];
     employeeProd: {[key: string]: number} = {
         [EmployeePositions.Operations]:   0,
         [EmployeePositions.Engineer]:     0,
@@ -186,7 +186,7 @@ export class OfficeSpace {
             innerHTML: "Select one of the following candidates for hire:",
         });
 
-        function createEmpDiv(employee: any, office: any): HTMLElement {
+        function createEmpDiv(employee: Employee, office: OfficeSpace): HTMLElement {
             const div = createElement("div", {
                 class:"cmpy-mgmt-find-employee-option",
                 innerHTML:  "Intelligence: " + formatNumber(employee.int, 1) + "<br>" +

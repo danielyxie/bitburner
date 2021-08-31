@@ -34,8 +34,8 @@ interface IParams {
     name?: string;
 }
 
-let corpRouting: any;
-let companyManagementDiv: any;
+let corpRouting: CorporationRouting;
+let companyManagementDiv: HTMLDivElement | null = null;
 
 export class Corporation {
     name = "The Corporation";
@@ -379,7 +379,7 @@ export class Corporation {
             id:"cmpy-mgmt-container",
             position:"fixed",
             class:"generic-menupage-container",
-        });
+        }) as HTMLDivElement;
         const game = document.getElementById("entire-game-container");
         if(game)
             game.appendChild(companyManagementDiv);

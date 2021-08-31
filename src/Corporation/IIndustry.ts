@@ -57,7 +57,7 @@ export interface IIndustry {
     processProduct(marketCycles: number, product: Product, corporation: ICorporation): number;
     discontinueProduct(product: Product): void;
     upgrade(upgrade: IndustryUpgrade, refs: {corporation: ICorporation; office: OfficeSpace}): void;
-    getOfficeProductivity(office: OfficeSpace, params?: any): number;
+    getOfficeProductivity(office: OfficeSpace, params?: {forProduct?: boolean}): number;
     getBusinessFactor(office: OfficeSpace): number;
     getAdvertisingFactors(): [number, number, number, number];
     getMarketFactor(mat: {dmd: number; cmp: number}): number;

@@ -27,9 +27,9 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
                 dialogBoxCreate("You don't have enough company funds to throw a party!");
             } else {
                 props.corp.funds = props.corp.funds.minus(totalCost);
-                let mult;
-                for (let fooit = 0; fooit < props.office.employees.length; ++fooit) {
-                    mult = props.office.employees[fooit].throwParty(cost);
+                let mult = 0;
+                for (let i = 0; i < props.office.employees.length; ++i) {
+                    mult = props.office.employees[i].throwParty(cost);
                 }
                 dialogBoxCreate("You threw a party for the office! The morale and happiness " +
                                 "of each employee increased by " + numeralWrapper.formatPercentage((mult-1)));

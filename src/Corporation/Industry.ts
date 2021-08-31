@@ -1185,7 +1185,7 @@ export class Industry implements IIndustry {
     }
 
     // Returns how much of a material can be produced based of office productivity (employee stats)
-    getOfficeProductivity(office: OfficeSpace, params: any = {}): number {
+    getOfficeProductivity(office: OfficeSpace, params: {forProduct?: boolean} = {}): number {
         const opProd    = office.employeeProd[EmployeePositions.Operations];
         const engrProd  = office.employeeProd[EmployeePositions.Engineer];
         const mgmtProd  = office.employeeProd[EmployeePositions.Management]
