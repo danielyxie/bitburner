@@ -11,6 +11,7 @@ import { AutoupdatingParagraph } from "../../ui/React/AutoupdatingParagraph";
 import { ParagraphWithTooltip } from "../../ui/React/ParagraphWithTooltip";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
+import { MathComponent } from 'mathjax-react'
 
 type IProps = {
     faction: Faction;
@@ -48,10 +49,14 @@ export class Info extends React.Component<IProps, any> {
     }
 
     render(): React.ReactNode {
-        const favorTooltip = "Faction favor increases the rate at which you earn reputation for " +
-                             "this faction by 1% per favor. Faction favor is gained whenever you " +
-                             "reset after installing an Augmentation. The amount of " +
-                             "favor you gain depends on how much reputation you have with the faction"
+        const favorTooltip = <>
+                                Faction favor increases the rate at which you earn reputation for
+                                this faction by 1% per favor. Faction favor is gained whenever you
+                                reset after installing an Augmentation. The amount of
+                                favor you gain depends on how much reputation you have with the faction
+                                <MathComponent tex={String.raw`r = \text{total faction reputation}`} />
+                                <MathComponent tex={String.raw`\text{favor} = \frac{-\ln(\frac{25500}{r + 25000})}{\ln(\frac{51}{50})}`} />
+                            </>;
 
         const infoText: IInnerHTMLMarkup = {
             __html: this.props.factionInfo.infoText,
