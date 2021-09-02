@@ -101,7 +101,7 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
             </div>
         </div>
         <div className="log-box-log-container">
-            <p>{props.script.logs.map((line: string, i: number): JSX.Element => <span key={i}>{line}<br /></span>)}</p>
+            <p>{props.script.logs.map((line: string, i: number): JSX.Element => <span key={i} style={{whiteSpace: "pre-line"}}>{line}<br /></span>)}</p>
         </div>
     </>);
 }
