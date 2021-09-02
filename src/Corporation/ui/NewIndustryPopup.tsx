@@ -28,7 +28,7 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
         try {
             NewIndustry(props.corp, industry, name);
         } catch(err) {
-            dialogBoxCreate(err);
+            dialogBoxCreate(err+'');
             return;
         }
 

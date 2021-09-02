@@ -25,7 +25,10 @@ import {
     NewCity,
     UnlockUpgrade,
     LevelUpgrade,
-    IssueDividends } from "./Corporation/Actions";
+    IssueDividends,
+    SellMaterial,
+    SellProduct,
+    SetSmartSupply } from "./Corporation/Actions";
 import { CorporationUnlockUpgrades } from "./Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "./Corporation/data/CorporationUpgrades";
 import {
@@ -561,6 +564,39 @@ function NetscriptFunctions(workerScript) {
         }
 
         return Augmentations[name];
+    }
+
+    function getDivision(divisionName) {
+        const division = Player.corporation.divisions.find(div => div.name === divisionName);
+        if(division === undefined)
+            throw new Error(`No division named '${divisionName}'`);
+        return division;
+    }
+
+    function getWarehouse(divisionName, cityName) {
+        const division = getDivision(divisionName);
+        if(!(cityName in division.warehouses)) 
+            throw new Error(`Invalid city name '${cityName}'`);
+        const warehouse = division.warehouses[cityName];
+        if(warehouse === 0)
+            throw new Error(`${division.name} has not expanded to '${cityName}'`);
+        return warehouse;
+    }
+
+    function getMaterial(divisionName, cityName, materialName) {
+        const warehouse = getWarehouse(divisionName, cityName);
+        const material = warehouse.materials[materialName];
+        if(material === undefined)
+            throw new Error(`Invalid material name: '${materialName}'`);
+        return material;
+    }
+
+    function getProduct(divisionName, productName) {
+        const division = getDivision(divisionName);
+        const product = division.products[productName];
+        if(product === undefined)
+            throw new Error(`Invalid product name: '${productName}'`);
+        return product;
     }
 
     const runAfterReset = function(cbScript=null) {
@@ -4110,8 +4146,7 @@ function NetscriptFunctions(workerScript) {
                 NewIndustry(Player.corporation, industryName, divisionName);
             },
             expandCity: function(divisionName, cityName) {
-                const division = Player.corporation.divisions.find(div => div.name === divisionName);
-                if(division === undefined) throw new Error("No division named '${divisionName}'");
+                const division = getDivision(divisionName);
                 NewCity(Player.corporation, division, cityName);
             },
             unlockUpgrade: function(upgradeName) {
@@ -4128,6 +4163,18 @@ function NetscriptFunctions(workerScript) {
             },
             issueDividends: function(percent) {
                 IssueDividends(Player.corporation, percent);
+            },
+            sellMaterial: function(divisionName, cityName, materialName, amt, price) {
+                const material = getMaterial(divisionName, cityName, materialName);
+                SellMaterial(material, amt, price);
+            },
+            sellProduct: function(divisionName, cityName, productName, amt, price, all) {
+                const product = getProduct(divisionName, productName);
+                SellProduct(product, cityName, amt, price, all);
+            },
+            setSmartSupply: function(divisionName, cityName, enabled) {
+                const warehouse = getWarehouse(divisionName, cityName);
+                SetSmartSupply(warehouse, enabled);
             },
         }, // End Corporation API
 

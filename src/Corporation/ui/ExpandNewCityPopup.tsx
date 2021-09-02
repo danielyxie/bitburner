@@ -23,7 +23,7 @@ export function ExpandNewCityPopup(props: IProps): React.ReactElement {
         try {
             NewCity(props.corp, props.division, dropdown.current.value);
         } catch(err) {
-            dialogBoxCreate(err);
+            dialogBoxCreate(err+'');
             return;
         }
 

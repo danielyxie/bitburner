@@ -25,6 +25,8 @@ import { ICorporation }                 from "../ICorporation";
 import { IIndustry }                    from "../IIndustry";
 import { CorporationRouting }           from "./Routing";
 import { IPlayer }                      from "../../PersonObjects/IPlayer";
+import { SetSmartSupply }               from "../Actions";
+
 
 interface IProductProps {
     corp: ICorporation;
@@ -514,7 +516,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         const smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
         function smartSupplyOnChange(e: React.ChangeEvent<HTMLInputElement>): void {
             if(warehouse === 0) return;
-            warehouse.smartSupplyEnabled = e.target.checked;
+            SetSmartSupply(warehouse, e.target.checked);
             corp.rerender(props.player);
         }
 

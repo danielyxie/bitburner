@@ -20,7 +20,7 @@ export function IssueDividendsPopup(props: IProps): React.ReactElement {
         try {
             IssueDividends(props.corp, percent/100);
         } catch(err) {
-            dialogBoxCreate(err);
+            dialogBoxCreate(err+'');
         }
 
         removePopup(props.popupId);

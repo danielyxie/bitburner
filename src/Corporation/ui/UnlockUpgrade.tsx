@@ -23,7 +23,7 @@ export function UnlockUpgrade(props: IProps): React.ReactElement {
         try {
             UU(props.corp, props.upgradeData);
         } catch(err) {
-            dialogBoxCreate(err);
+            dialogBoxCreate(err+'');
         }
         props.corp.rerender(props.player);
     }

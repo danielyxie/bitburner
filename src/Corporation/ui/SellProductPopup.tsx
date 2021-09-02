@@ -3,6 +3,7 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { Cities } from "../../Locations/Cities";
 import { Product } from "../Product";
+import { SellProduct } from "../Actions";
 
 function initialPrice(product: Product): string {
     let val = product.sCost ? product.sCost+'' : '';
@@ -31,93 +32,10 @@ export function SellProductPopup(props: IProps): React.ReactElement {
     }
 
     function sellProduct(): void {
-        //Parse price
-        if (px.includes("MP")) {
-            //Dynamically evaluated quantity. First test to make sure its valid
-            //Sanitize input, then replace dynamic variables with arbitrary numbers
-            let price = px.replace(/\s+/g, '');
-            price = price.replace(/[^-()\d/*+.MP]/g, '');
-            let temp = price.replace(/MP/g, '1');
-            try {
-                temp = eval(temp);
-            } catch(e) {
-                dialogBoxCreate("Invalid value or expression for sell quantity field: " + e);
-                return;
-            }
-            if (temp == null || isNaN(parseFloat(temp))) {
-                dialogBoxCreate("Invalid value or expression for sell quantity field.");
-                return;
-            }
-            props.product.sCost = price; //Use sanitized price
-        } else {
-            const cost = parseFloat(px);
-            if (isNaN(cost)) {
-                dialogBoxCreate("Invalid value for sell price field");
-                return;
-            }
-            props.product.sCost = cost;
-        }
-
-        // Array of all cities. Used later
-        const cities = Object.keys(Cities);
-
-        // Parse quantity
-        if (iQty.includes("MAX") || iQty.includes("PROD")) {
-            //Dynamically evaluated quantity. First test to make sure its valid
-            let qty = iQty.replace(/\s+/g, '');
-            qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, '');
-            let temp = qty.replace(/MAX/g, '1');
-            temp = temp.replace(/PROD/g, '1');
-            try {
-                temp = eval(temp);
-            } catch(e) {
-                dialogBoxCreate("Invalid value or expression for sell price field: " + e);
-                return;
-            }
-
-            if (temp == null || isNaN(parseFloat(temp))) {
-                dialogBoxCreate("Invalid value or expression for sell price field");
-                return;
-            }
-            if (checked) {
-                for (let i = 0; i < cities.length; ++i) {
-                    const tempCity = cities[i];
-                    props.product.sllman[tempCity][0] = true;
-                    props.product.sllman[tempCity][1] = qty; //Use sanitized input
-                }
-            } else {
-                props.product.sllman[props.city][0] = true;
-                props.product.sllman[props.city][1] = qty; //Use sanitized input
-            }
-        } else if (isNaN(parseFloat(iQty))) {
-            dialogBoxCreate("Invalid value for sell quantity field! Must be numeric");
-            return;
-        } else {
-            let qty = parseFloat(iQty);
-            if (isNaN(qty)) {qty = 0;}
-            if (qty === 0) {
-                if (checked) {
-                    for (let i = 0; i < cities.length; ++i) {
-                        const tempCity = cities[i];
-                        props.product.sllman[tempCity][0] = false;
-                        props.product.sllman[tempCity][1] = '';
-                    }
-                } else {
-                    props.product.sllman[props.city][0] = false;
-                    props.product.sllman[props.city][1] = '';
-                }
-            } else {
-                if (checked) {
-                    for (let i = 0; i < cities.length; ++i) {
-                        const tempCity = cities[i];
-                        props.product.sllman[tempCity][0] = true;
-                        props.product.sllman[tempCity][1] = qty;
-                    }
-                } else {
-                    props.product.sllman[props.city][0] = true;
-                    props.product.sllman[props.city][1] = qty;
-                }
-            }
+        try {
+            SellProduct(props.product, props.city, iQty, px, checked);
+        } catch(err) {
+            dialogBoxCreate(err+'');
         }
 
         removePopup(props.popupId);

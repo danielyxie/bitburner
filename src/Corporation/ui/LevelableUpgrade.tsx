@@ -29,7 +29,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
         try {
             LevelUpgrade(props.corp, props.upgrade);
         } catch(err) {
-            dialogBoxCreate(err);
+            dialogBoxCreate(err+'');
         }
         props.corp.rerender(props.player);
     }

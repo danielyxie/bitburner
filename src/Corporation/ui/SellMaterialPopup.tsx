@@ -3,6 +3,7 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
 import { Material } from "../Material";
+import { SellMaterial } from "../Actions";
 
 function initialPrice(mat: Material): string {
     let val = mat.sCost ? mat.sCost+'' : '';
@@ -26,64 +27,10 @@ export function SellMaterialPopup(props: IProps): React.ReactElement {
     const [price, setPrice] = useState<string>(initialPrice(props.mat));
 
     function sellMaterial(): void {
-        let p = price;
-        let qty = amt;
-        if(p === '') p = '0';
-        if(qty === '') qty = '0';
-        let cost = p.replace(/\s+/g, '');
-        cost = cost.replace(/[^-()\d/*+.MP]/g, ''); //Sanitize cost
-        let temp = cost.replace(/MP/g, props.mat.bCost+'');
         try {
-            temp = eval(temp);
-        } catch(e) {
-            dialogBoxCreate("Invalid value or expression for sell price field: " + e);
-            return;
-        }
-
-        if (temp == null || isNaN(parseFloat(temp))) {
-            dialogBoxCreate("Invalid value or expression for sell price field");
-            return;
-        }
-
-        if (cost.includes("MP")) {
-            props.mat.sCost = cost; //Dynamically evaluated
-        } else {
-            props.mat.sCost = temp;
-        }
-
-        //Parse quantity
-        if (qty.includes("MAX") || qty.includes("PROD")) {
-            let q = qty.replace(/\s+/g, '');
-            q = q.replace(/[^-()\d/*+.MAXPROD]/g, '');
-            let tempQty = q.replace(/MAX/g, '1');
-            tempQty = tempQty.replace(/PROD/g, '1');
-            try {
-                tempQty = eval(tempQty);
-            } catch(e) {
-                dialogBoxCreate("Invalid value or expression for sell price field: " + e);
-                return;
-            }
-
-            if (tempQty == null || isNaN(parseFloat(tempQty))) {
-                dialogBoxCreate("Invalid value or expression for sell price field");
-                return;
-            }
-
-            props.mat.sllman[0] = true;
-            props.mat.sllman[1] = q; //Use sanitized input
-        } else if (isNaN(parseFloat(qty))) {
-            dialogBoxCreate("Invalid value for sell quantity field! Must be numeric or 'MAX'");
-            return;
-        } else {
-            let q = parseFloat(qty);
-            if (isNaN(q)) {q = 0;}
-            if (q === 0) {
-                props.mat.sllman[0] = false;
-                props.mat.sllman[1] = 0;
-            } else {
-                props.mat.sllman[0] = true;
-                props.mat.sllman[1] = q;
-            }
+            SellMaterial(props.mat, amt, price);
+        } catch(err) {
+            dialogBoxCreate(err+'');
         }
 
         removePopup(props.popupId);
