@@ -6,18 +6,18 @@ import * as React       from "react";
 export interface IParagraphWithTooltipProps {
     style?: any;
     content: JSX.Element;
-    tooltip: string;
+    tooltip: string | React.ReactElement | JSX.Element;
 }
 
 export class ParagraphWithTooltip extends React.Component<IParagraphWithTooltipProps, any> {
     render(): React.ReactNode {
         return (
-            <p className={"tooltip"} style={this.props.style}>
-                {this.props.content}
+            <div className={"tooltip"} style={this.props.style}>
+                <p>{this.props.content}</p>
                 <span className={"tooltiptext"}>
                     {this.props.tooltip}
                 </span>
-            </p>
+            </div>
         )
     }
 }

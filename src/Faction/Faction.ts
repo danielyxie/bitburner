@@ -1,6 +1,7 @@
 import { CONSTANTS } from "../Constants";
 import { FactionInfo,
          FactionInfos } from "./FactionInfo";
+import { favorToRep, repToFavor } from "./formulas/favor";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class Faction {
@@ -76,19 +77,11 @@ export class Faction {
     getFavorGain(): number[] {
         if (this.favor == null) { this.favor = 0; }
         if (this.rolloverRep == null) { this.rolloverRep = 0; }
-        let favorGain = 0, rep = this.playerReputation + this.rolloverRep;
-        let reqdRep = CONSTANTS.FactionReputationToFavorBase *
-                      Math.pow(CONSTANTS.FactionReputationToFavorMult, this.favor);
-        while(rep > 0) {
-            if (rep >= reqdRep) {
-                ++favorGain;
-                rep -= reqdRep;
-            } else {
-                break;
-            }
-            reqdRep *= CONSTANTS.FactionReputationToFavorMult;
-        }
-        return [favorGain, rep];
+        const storedRep = favorToRep(this.favor-1);
+        const totalRep = storedRep+this.rolloverRep+this.playerReputation;
+        const newFavor = Math.floor(repToFavor(totalRep));
+        const newRep = favorToRep(newFavor);
+        return [newFavor-this.favor+1, totalRep-newRep];
     }
 
     /**
