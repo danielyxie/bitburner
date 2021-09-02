@@ -6,6 +6,7 @@ import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";
+import { NewCity } from "../Actions";
 
 interface IProps {
     popupId: string;
@@ -19,19 +20,16 @@ export function ExpandNewCityPopup(props: IProps): React.ReactElement {
 
     function expand(): void {
         if(dropdown.current === null) return;
-        const city = dropdown.current.value;
-        if (props.corp.funds.lt(CorporationConstants.OfficeInitialCost)) {
-            dialogBoxCreate("You don't have enough company funds to open a new office!");
-        } else {
-            props.corp.funds = props.corp.funds.minus(CorporationConstants.OfficeInitialCost);
-            dialogBoxCreate(`Opened a new office in ${city}!`);
-            props.division.offices[city] = new OfficeSpace({
-                loc: city,
-                size: CorporationConstants.OfficeInitialSize,
-            });
+        try {
+            NewCity(props.corp, props.division, dropdown.current.value);
+        } catch(err) {
+            dialogBoxCreate(err);
+            return;
         }
 
-        props.cityStateSetter(city);
+        dialogBoxCreate(`Opened a new office in ${dropdown.current.value}!`);
+
+        props.cityStateSetter(dropdown.current.value);
         removePopup(props.popupId);
     }
     return (<>

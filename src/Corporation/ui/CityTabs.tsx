@@ -31,7 +31,8 @@ export function CityTabs(props: IProps): React.ReactElement {
 
     return <>
         {
-            Object.keys(props.onClicks).map((cityName: string) => <CityTab current={props.city === cityName} key={cityName} name={cityName} onClick={props.onClicks[cityName]} />,
+            Object.keys(props.onClicks).map((cityName: string) =>
+                <CityTab current={props.city === cityName} key={cityName} name={cityName} onClick={props.onClicks[cityName]} />,
             )
         }
         <CityTab

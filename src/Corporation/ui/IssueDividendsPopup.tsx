@@ -3,6 +3,7 @@ import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { CorporationConstants } from "../data/Constants";
 import { ICorporation } from "../ICorporation";
+import { IssueDividends } from "../Actions";
 
 interface IProps {
     popupId: string;
@@ -16,12 +17,11 @@ export function IssueDividendsPopup(props: IProps): React.ReactElement {
 
     function issueDividends(): void {
         if(percent === null) return;
-        if (isNaN(percent) || percent < 0 || percent > CorporationConstants.DividendMaxPercentage) {
-            dialogBoxCreate(`Invalid value. Must be an integer between 0 and ${CorporationConstants.DividendMaxPercentage}`);
-            return;
+        try {
+            IssueDividends(props.corp, percent/100);
+        } catch(err) {
+            dialogBoxCreate(err);
         }
-
-        props.corp.dividendPercentage = percent;
 
         removePopup(props.popupId);
     }
@@ -37,7 +37,7 @@ export function IssueDividendsPopup(props: IProps): React.ReactElement {
 
     return (<>
         <p>
-"Dividends are a distribution of a portion of the corporation's
+Dividends are a distribution of a portion of the corporation's
 profits to the shareholders. This includes yourself, as well.<br /><br />
 In order to issue dividends, simply allocate some percentage
 of your corporation's profits to dividends. This percentage must be an

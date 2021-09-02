@@ -21,6 +21,14 @@ import { CompanyPositions } from "./Company/CompanyPositions";
 import { CONSTANTS } from "./Constants";
 import { DarkWebItems } from "./DarkWeb/DarkWebItems";
 import {
+    NewIndustry,
+    NewCity,
+    UnlockUpgrade,
+    LevelUpgrade,
+    IssueDividends } from "./Corporation/Actions";
+import { CorporationUnlockUpgrades } from "./Corporation/data/CorporationUnlockUpgrades";
+import { CorporationUpgrades } from "./Corporation/data/CorporationUpgrades";
+import {
     calculateHackingChance,
     calculateHackingExpGain,
     calculatePercentMoneyHacked,
@@ -4096,6 +4104,32 @@ function NetscriptFunctions(workerScript) {
                 return Math.round(Player.bladeburner.storedCycles / 5);
             },
         }, // End Bladeburner
+
+        corporation: {
+            expandIndustry: function(industryName, divisionName) {
+                NewIndustry(Player.corporation, industryName, divisionName);
+            },
+            expandCity: function(divisionName, cityName) {
+                const division = Player.corporation.divisions.find(div => div.name === divisionName);
+                if(division === undefined) throw new Error("No division named '${divisionName}'");
+                NewCity(Player.corporation, division, cityName);
+            },
+            unlockUpgrade: function(upgradeName) {
+                const upgrade = Object.values(CorporationUnlockUpgrades).
+                    find(upgrade => upgrade[2] === upgradeName);
+                if(upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'")
+                UnlockUpgrade(Player.corporation, upgrade);
+            },
+            levelUpgrade: function(upgradeName) {
+                const upgrade = Object.values(CorporationUpgrades).
+                    find(upgrade => upgrade[4] === upgradeName);
+                if(upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'")
+                LevelUpgrade(Player.corporation, upgrade);
+            },
+            issueDividends: function(percent) {
+                IssueDividends(Player.corporation, percent);
+            },
+        }, // End Corporation API
 
         // Coding Contract API
         codingcontract: {

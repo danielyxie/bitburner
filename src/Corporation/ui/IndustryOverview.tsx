@@ -11,6 +11,7 @@ import { createProgressBarText }    from "../../../utils/helpers/createProgressB
 import { MakeProductPopup }         from "./MakeProductPopup";
 import { ResearchPopup }            from "./ResearchPopup";
 import { createPopup }              from "../../ui/React/createPopup";
+import { Money }                    from "../../ui/React/Money";
 import { ICorporation }             from "../ICorporation";
 import { IPlayer }                  from "../../PersonObjects/IPlayer";
 import { CorporationRouting }       from "./Routing";
@@ -114,10 +115,6 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         const vechain = (corp.unlockUpgrades[4] === 1);
         const profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber();
 
-        const genInfo = `Industry: ${division.type} (Corp Funds: ${numeralWrapper.formatMoney(corp.funds.toNumber())})`;
-        const awareness = `Awareness: ${numeralWrapper.format(division.awareness, "0.000")}`;
-        const popularity = `Popularity: ${numeralWrapper.format(division.popularity, "0.000")}`;
-
         let advertisingInfo = false;
         const advertisingFactors = division.getAdvertisingFactors();
         const awarenessFac = advertisingFactors[1];
@@ -125,10 +122,6 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         const ratioFac = advertisingFactors[3];
         const totalAdvertisingFac = advertisingFactors[0];
         if (vechain) { advertisingInfo = true; }
-
-        const revenue = `Revenue: ${numeralWrapper.formatMoney(division.lastCycleRevenue.toNumber())} / s`;
-        const expenses = `Expenses: ${numeralWrapper.formatMoney(division.lastCycleExpenses.toNumber())} /s`;
-        const profitStr = `Profit: ${numeralWrapper.formatMoney(profit)} / s`;
 
         function productionMultHelpTipOnClick(): void {
             if(division === null) return;
@@ -171,10 +164,10 @@ export function IndustryOverview(props: IProps): React.ReactElement {
 
         return (
             <div>
-                {genInfo}
+                Industry: {division.type} (Corp Funds: {Money(corp.funds.toNumber())})
                 <br /> <br />
-                {awareness} <br />
-                {popularity} <br />
+                Awareness: {numeralWrapper.format(division.awareness, "0.000")} <br />
+                Popularity: {numeralWrapper.format(division.popularity, "0.000")} <br />
                 {
                     (advertisingInfo !== false) &&
                     <p className={"tooltip"}>Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}
@@ -191,9 +184,9 @@ export function IndustryOverview(props: IProps): React.ReactElement {
                 }
                 {advertisingInfo}
                 <br /><br />
-                {revenue} <br />
-                {expenses} <br />
-                {profitStr}
+                Revenue: {Money(division.lastCycleRevenue.toNumber())} / s <br />
+                Expenses: {Money(division.lastCycleExpenses.toNumber())} /s <br />
+                Profit: {Money(profit)} / s
                 <br /> <br />
                 <p className={"tooltip"}>
                     Production Multiplier: {numeralWrapper.format(division.prodMult, "0.00")}
@@ -264,8 +257,9 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             }
 
             upgrades.push(renderUpgrade({
+                key: index,
                 onClick: onClick,
-                text: `${upgrade[4]} - ${numeralWrapper.formatMoney(cost)}`,
+                text: <>{upgrade[4]} - {Money(cost)}</>,
                 tooltip: upgrade[5],
             }));
         }
@@ -274,14 +268,15 @@ export function IndustryOverview(props: IProps): React.ReactElement {
     }
 
     interface IRenderUpgradeProps {
+        key: string;
         onClick: () => void;
-        text: string;
+        text: JSX.Element;
         tooltip: string;
     }
 
     function renderUpgrade(props: IRenderUpgradeProps): React.ReactElement {
         return (
-            <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.text}>
+            <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.key}>
                 {props.text}
                 {
                     props.tooltip != null &&

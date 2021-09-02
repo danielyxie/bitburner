@@ -6,6 +6,8 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { CorporationUnlockUpgrade } from "../data/CorporationUnlockUpgrades";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { UnlockUpgrade as UU } from "../Actions";
+import { Money } from "../../ui/React/Money";
 
 interface IProps {
     upgradeData: CorporationUnlockUpgrade;
@@ -15,16 +17,15 @@ interface IProps {
 
 export function UnlockUpgrade(props: IProps): React.ReactElement {
     const data = props.upgradeData;
-    const text = `${data[2]} - ${numeralWrapper.formatMoney(data[1])}`;
+    const text = <>{data[2]} - {Money(data[1])}</>;
     const tooltip = data[3];
     function onClick(): void {
-        const corp = props.corp;
-        if (corp.funds.lt(data[1])) {
-            dialogBoxCreate("Insufficient funds");
-        } else {
-            corp.unlock(data);
-            corp.rerender(props.player);
+        try {
+            UU(props.corp, props.upgradeData);
+        } catch(err) {
+            dialogBoxCreate(err);
         }
+        props.corp.rerender(props.player);
     }
 
     return (

@@ -132,7 +132,7 @@ export class Corporation {
                 // Process dividends
                 if (this.dividendPercentage > 0 && cycleProfit > 0) {
                     // Validate input again, just to be safe
-                    if (isNaN(this.dividendPercentage) || this.dividendPercentage < 0 || this.dividendPercentage > CorporationConstants.DividendMaxPercentage) {
+                    if (isNaN(this.dividendPercentage) || this.dividendPercentage < 0 || this.dividendPercentage > CorporationConstants.DividendMaxPercentage*100) {
                         console.error(`Invalid Corporation dividend percentage: ${this.dividendPercentage}`);
                     } else {
                         const totalDividends = (this.dividendPercentage / 100) * cycleProfit;

@@ -9,6 +9,7 @@ import { Industry } from "../Industry";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
 import { CorporationRouting } from "./Routing";
+import { NewIndustry } from "../Actions";
 
 interface IProps {
     corp: ICorporation;
@@ -24,33 +25,17 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
     const [name, setName] = useState('');
 
     function newIndustry(): void {
-        const ind = industry;
-        const newDivisionName = name;
-
-        for (let i = 0; i < props.corp.divisions.length; ++i) {
-            if (props.corp.divisions[i].name === newDivisionName) {
-                dialogBoxCreate("This name is already in use!");
-                return;
-            }
+        try {
+            NewIndustry(props.corp, industry, name);
+        } catch(err) {
+            dialogBoxCreate(err);
+            return;
         }
-        if (props.corp.funds.lt(IndustryStartingCosts[ind])) {
-            dialogBoxCreate("Not enough money to create a new division in this industry");
-        } else if (newDivisionName === "") {
-            dialogBoxCreate("New division must have a name!");
-        } else {
-            props.corp.funds = props.corp.funds.minus(IndustryStartingCosts[ind]);
-            const newInd = new Industry({
-                corp: props.corp,
-                name: newDivisionName,
-                type: ind,
-            });
-            props.corp.divisions.push(newInd);
 
-            // Set routing to the new division so that the UI automatically switches to it
-            props.routing.routeTo(newDivisionName);
+        // Set routing to the new division so that the UI automatically switches to it
+        props.routing.routeTo(name);
 
-            removePopup(props.popupId);
-        }
+        removePopup(props.popupId);
     }
 
     function onNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
