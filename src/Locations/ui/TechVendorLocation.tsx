@@ -78,6 +78,9 @@ export class TechVendorLocation extends React.Component<IProps, any> {
         return (
             <div>
                 {purchaseServerButtons}
+                <br />
+                <p><i>"You can order bigger servers via scripts. We don't take custom order in person."</i></p>
+                <br />
                 {
                     this.state.torPurchased ? (
                         <StdButtonPurchased
