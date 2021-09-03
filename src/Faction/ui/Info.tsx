@@ -41,7 +41,11 @@ export class Info extends React.Component<IProps, any> {
 
     getFavorGainContent(): JSX.Element {
         const favorGain = this.props.faction.getFavorGain()[0];
-        return <>You will earn {Favor(favorGain)} faction favor upon resetting after installing an Augmentation</>
+        return (<>
+            You will earn {Favor(favorGain)} faction favor upon resetting after installing an Augmentation
+            <MathComponent tex={String.raw`r = \text{total faction reputation}`} />
+            <MathComponent tex={String.raw`favor=\left\lfloor\log_{1.02}\left(\frac{r+25000}{25500}\right)\right\rfloor`} />
+        </>);
     }
 
     getReputationContent(): JSX.Element {
@@ -54,9 +58,10 @@ export class Info extends React.Component<IProps, any> {
                                 this faction by 1% per favor. Faction favor is gained whenever you
                                 reset after installing an Augmentation. The amount of
                                 favor you gain depends on how much reputation you have with the faction
-                                <MathComponent tex={String.raw`r = \text{total faction reputation}`} />
-                                <MathComponent tex={String.raw`\text{favor} = \frac{-\ln(\frac{25500}{r + 25000})}{\ln(\frac{51}{50})}`} />
+                                <MathComponent tex={String.raw`r = reputation`} />
+                                <MathComponent tex={String.raw`\Delta r = \Delta r \times \frac{100+favor}{100}`} />
                             </>;
+
 
         const infoText: IInnerHTMLMarkup = {
             __html: this.props.factionInfo.infoText,
