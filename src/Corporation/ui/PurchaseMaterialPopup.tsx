@@ -7,6 +7,7 @@ import { Material } from "../Material";
 import { IIndustry } from "../IIndustry";
 import { ICorporation } from "../ICorporation";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { BuyMaterial } from "../Actions";
 
 interface IBulkPurchaseTextProps {
     warehouse: Warehouse;
@@ -94,13 +95,13 @@ export function PurchaseMaterialPopup(props: IProps): React.ReactElement {
     
     function purchaseMaterial(): void {
         if(buyAmt === null) return;
-        if (isNaN(buyAmt)) {
-            dialogBoxCreate("Invalid amount");
-        } else {
-            props.mat.buy = buyAmt;
-            if (isNaN(props.mat.buy)) props.mat.buy = 0;
-            removePopup(props.popupId);
+        try {
+            BuyMaterial(props.mat, buyAmt)
+        } catch(err) {
+            dialogBoxCreate(err+'');
         }
+
+        removePopup(props.popupId);
     }
 
     function clearPurchase(): void {

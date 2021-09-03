@@ -28,7 +28,8 @@ import {
     IssueDividends,
     SellMaterial,
     SellProduct,
-    SetSmartSupply } from "./Corporation/Actions";
+    SetSmartSupply,
+    BuyMaterial } from "./Corporation/Actions";
 import { CorporationUnlockUpgrades } from "./Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "./Corporation/data/CorporationUpgrades";
 import {
@@ -4175,6 +4176,9 @@ function NetscriptFunctions(workerScript) {
             setSmartSupply: function(divisionName, cityName, enabled) {
                 const warehouse = getWarehouse(divisionName, cityName);
                 SetSmartSupply(warehouse, enabled);
+            },
+            BuyMaterial: function(divisionName, cityName, materialName, amt) {
+
             },
         }, // End Corporation API
 

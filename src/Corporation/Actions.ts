@@ -219,3 +219,10 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
 export function SetSmartSupply(warehouse: Warehouse, smartSupply: boolean): void {
     warehouse.smartSupplyEnabled = smartSupply;
 }
+
+export function BuyMaterial(material: Material, amt: number): void {
+    if (isNaN(amt)) {
+        throw new Error(`Invalid amount '${amt}' to buy material '${material.name}'`);
+    }
+    material.buy = amt;
+}
