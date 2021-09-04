@@ -3,6 +3,4 @@ doc/build/
 dist/
 tests/*.bundle.*
 src/ThirdParty/*
-src/ScriptEditor/CodeMirrorNetscriptMode.js
-src/ScriptEditor/CodeMirrorNetscriptLint.js
 src/JSInterpreter.js

@@ -114,7 +114,7 @@ export function Overview(props: IProps): React.ReactElement {
         </>);
     }
 
-    function Mult(props: {name: string, mult: number}): React.ReactElement {
+    function Mult(props: {name: string; mult: number}): React.ReactElement {
         if(props.mult <= 1) return (<></>);
         return (<p>{props.name}{numeralWrapper.format(props.mult, "0.000")}<br /></p>);
     }
@@ -287,8 +287,7 @@ export function Overview(props: IProps): React.ReactElement {
                 {
                     Object.values(CorporationUnlockUpgrades)
                         .filter((upgrade: CorporationUnlockUpgrade) => props.corp.unlockUpgrades[upgrade[0]] === 0)
-                        .map((upgrade: CorporationUnlockUpgrade) => 
-                            <UnlockUpgrade
+                        .map((upgrade: CorporationUnlockUpgrade) => <UnlockUpgrade
                                 player={props.player}
                                 corp={props.corp}
                                 upgradeData={upgrade}

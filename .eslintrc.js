@@ -69,28 +69,8 @@ module.exports = {
         "class-methods-use-this": [
             "off",
         ],
-        "comma-dangle": [
-            "error", {
-                "arrays": "always-multiline",
-                "objects": "always-multiline",
-                "imports": "always-multiline",
-                "exports": "always-multiline",
-                "functions": "always-multiline",
-            },
-        ],
-        "comma-spacing": [
-            "off",
-        ],
-        "comma-style": [
-            "error",
-            "last",
-        ],
         "complexity": [
             "off",
-        ],
-        "computed-property-spacing": [
-            "off",
-            "never",
         ],
         "consistent-return": [
             "off",
@@ -106,10 +86,6 @@ module.exports = {
         ],
         "default-case": [
             "off",
-        ],
-        "dot-location": [
-            "error",
-            "property",
         ],
         "dot-notation": [
             "off",
@@ -138,10 +114,6 @@ module.exports = {
         ],
         "function-paren-newline": [
             "off",
-        ],
-        "generator-star-spacing": [
-            "error",
-            "before",
         ],
         "getter-return": [
             "error",
@@ -180,9 +152,6 @@ module.exports = {
         "init-declarations": [
             "off",
         ],
-        "jsx-quotes": [
-	    "error",
-    	],
         "key-spacing": [
             "off",
         ],
