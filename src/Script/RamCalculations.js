@@ -216,7 +216,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
  * that need to be parsed (i.e. are 'import'ed scripts).
  */
 function parseOnlyCalculateDeps(code, currentModule) {
-    const ast = parse(code, {sourceType:"module", ecmaVersion: 9});
+    const ast = parse(code, {sourceType:"module", ecmaVersion: 'latest' });
 
     // Everything from the global scope goes in ".". Everything else goes in ".function", where only
     // the outermost layer of functions counts.
