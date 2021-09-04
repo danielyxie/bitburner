@@ -154,7 +154,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
             <LastEmployer />
             <LastJob />
             <Employers />
-            <span>Money: {Money(p.money.toNumber())}</span>
+            <span>Money: <Money money={p.money.toNumber()} /></span>
             <button className="popup-box-button" style={{display: 'inline-block', float: 'none'}} onClick={openMoneyModal}>Money Statistics & Breakdown</button><br /><br />
             <b>Stats</b>
             <table>

@@ -600,7 +600,7 @@ export function work(numCycles) {
         You are currently working as a {position} at {this.companyName} (Current Company Reputation: {Reputation(companyRep)})<br /><br />
         You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
         You have earned: <br /><br />
-        {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+        <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
         {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this company <br /><br />
         {numeralWrapper.formatExp(this.workHackExpGained)} ({`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}) hacking exp <br /><br />
         {numeralWrapper.formatExp(this.workStrExpGained)} ({`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}) strength exp <br />
@@ -626,7 +626,7 @@ export function finishWork(cancelled, sing=false) {
 
     let content = <>
         You earned a total of: <br />
-        {Money(this.workMoneyGained)}<br />
+        <Money money={this.workMoneyGained} /><br />
         {Reputation(this.workRepGained)} reputation for the company <br />
         {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
         {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -728,7 +728,7 @@ export function workPartTime(numCycles) {
         You are currently working as a {position} at {this.companyName} (Current Company Reputation: {Reputation(companyRep)})<br /><br />
         You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
         You have earned: <br /><br />
-        {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+        <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
         {Reputation(this.workRepGained)} ({Reputation(`${numeralWrapper.formatExp(this.workRepGainRate * CYCLES_PER_SEC)} / sec`)}) reputation for this company <br /><br />
         {numeralWrapper.formatExp(this.workHackExpGained)} ({`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}) hacking exp <br /><br />
         {numeralWrapper.formatExp(this.workStrExpGained)} ({`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}) strength exp <br />
@@ -749,7 +749,7 @@ export function finishWorkPartTime(sing=false) {
     const content = <>
         You worked for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br /> 
         You earned a total of: <br />
-        {Money(this.workMoneyGained)}<br />
+        <Money money={this.workMoneyGained} /><br />
         {Reputation(this.workRepGained)} reputation for the company <br />
         {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
         {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -913,7 +913,7 @@ export function workForFaction(numCycles) {
                     (Current Faction Reputation: {Reputation(faction.playerReputation)}). <br />
                     You have been doing this for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
                     You have earned: <br /><br />
-                    {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+                    <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
                     {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this faction <br /><br />
                     {numeralWrapper.formatExp(this.workHackExpGained)} ({numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br /><br />
                     {numeralWrapper.formatExp(this.workStrExpGained)} ({numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
@@ -936,7 +936,7 @@ export function finishFactionWork(cancelled, sing=false) {
         dialogBoxCreate(<>
             You worked for your faction {faction.name} for a total of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br /><br />
             You earned a total of: <br />
-            {Money(this.workMoneyGained)}<br />
+            <Money money={this.workMoneyGained} /><br />
             {Reputation(this.workRepGained)} reputation for the faction <br />
             {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
             {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -1316,7 +1316,7 @@ export function takeClass(numCycles) {
     ReactDOM.render(<>
         You have been {className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
         This has cost you: <br />
-        {Money(-this.workMoneyGained)} ({MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br /><br />
+        <Money money={-this.workMoneyGained} /> ({MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br /><br />
         You have gained: <br />
         {numeralWrapper.formatExp(this.workHackExpGained)} ({numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
         {numeralWrapper.formatExp(this.workStrExpGained)} ({numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
@@ -1341,7 +1341,7 @@ export function finishClass(sing=false) {
     if (!sing) {
         dialogBoxCreate(<>
             After {this.className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}, <br />
-            you spent a total of {Money(this.workMoneyGained * -1)}. <br /><br />
+            you spent a total of <Money money={-this.workMoneyGained} />. <br /><br />
             You earned a total of: <br />
             {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
             {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -1475,7 +1475,7 @@ export function finishCrime(cancelled) {
                 dialogBoxCreate(<>
                     Crime successful!<br /><br />
                     You gained:<br />
-                    {Money(this.workMoneyGained)}<br />
+                    <Money money={this.workMoneyGained} /><br />
                     {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
                     {numeralWrapper.formatExp(this.workStrExpGained)} strength experience<br />
                     {numeralWrapper.formatExp(this.workDefExpGained)} defense experience<br />
@@ -1596,7 +1596,7 @@ export function hospitalize() {
         dialogBoxCreate(<>
             You were in critical condition! You were taken to the hospital where 
             luckily they were able to save your life. You were charged&nbsp;
-            {Money(cost)}
+            <Money money={cost} />
         </>);
     }
 

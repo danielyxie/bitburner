@@ -555,7 +555,7 @@ let Terminal = {
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
 
-                postElement(<>Hack successful! Gained {Money(moneyGained)} and {numeralWrapper.formatExp(expGainedOnSuccess)} hacking exp</>);
+                postElement(<>Hack successful! Gained <Money money={moneyGained} /> and {numeralWrapper.formatExp(expGainedOnSuccess)} hacking exp</>);
             } else { // Failure
                 // Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
@@ -600,7 +600,7 @@ let Terminal = {
             post("Chance to hack: " + (!isHacknet ? numeralWrapper.formatPercentage(hackingChance) : "N/A"));
             const hackingTime = calculateHackingTime(currServ, Player)*1000;
             post("Time to hack: " + (!isHacknet ? convertTimeMsToTimeElapsedString(hackingTime, true) : "N/A"));
-            postElement(<>Total money available on server: {!isHacknet ? Money(currServ.moneyAvailable) : "N/A"}</>);
+            postElement(<>Total money available on server: {!isHacknet ? <Money money={currServ.moneyAvailable} /> : "N/A"}</>);
             const numPort = currServ.numOpenPortsRequired;
             post("Required number of open ports for NUKE: " + (!isHacknet ? numPort : "N/A"));
             post("SSH port: "+ (currServ.sshPortOpen ? "Open" : "Closed"))
@@ -2242,7 +2242,7 @@ let Terminal = {
                 Player.hacking_skill >= 2500;
             if(!fulfilled) {
                 post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
-                postElement(<>Money: {Money(Player.money.toNumber())} / {Money(1e11)}</>);
+                postElement(<>Money: <Money money={Player.money.toNumber()} /> / <Money money={1e11} /></>);
                 post(`Hacking skill: ${Player.hacking_skill} / 2500`);
                 return;
             }

@@ -23,10 +23,10 @@ export function PurchaseButton(props) {
             text = <>Hacknet Server limit reached</>;
             style = {color: "red"};
         } else {
-            text = <>Purchase Hacknet Server - {Money(cost)}</>;
+            text = <>Purchase Hacknet Server - <Money money={cost} player={Player} /></>;
         }
     } else {
-        text = <>Purchase Hacknet Node  - {Money(cost)}</>;
+        text = <>Purchase Hacknet Node  - <Money money={cost} player={Player} /></>;
     }
 
     return (

@@ -124,7 +124,7 @@ export function purchaseAugmentationBoxCreate(aug, fac) {
         <h2>{aug.name}</h2><br />
 {content}<br /><br />
 <br />Would you like to purchase the {aug.name} Augmentation for&nbsp;
-{Money(aug.baseCost * factionInfo.augmentationPriceMult)}?
+<Money money={aug.baseCost * factionInfo.augmentationPriceMult} />?
     </>);
 }
 
