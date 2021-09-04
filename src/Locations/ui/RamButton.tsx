@@ -12,6 +12,7 @@ import { purchaseRamForHomeComputer }   from "../../Server/ServerPurchases";
 import { StdButtonPurchased }           from "../../ui/React/StdButtonPurchased";
 import { StdButton }                    from "../../ui/React/StdButton";
 import { Money }                        from "../../ui/React/Money";
+import { MathComponent }                from 'mathjax-react';
 
 type IProps = {
     p: IPlayer;
@@ -45,5 +46,6 @@ export function RamButton(props: IProps): React.ReactElement {
         onClick={buy}
         style={btnStyle}
         text={<>Upgrade 'home' RAM ({homeComputer.maxRam}GB -&gt; {homeComputer.maxRam*2}GB) - <Money money={cost} player={props.p} /></>}
+        tooltip={<MathComponent tex={String.raw`\large{3.2 \times 10^3 \times 1.58^{log_2{(ram)}}}`} />}
     />);
 }
