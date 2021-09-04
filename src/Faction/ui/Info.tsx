@@ -11,7 +11,7 @@ import { AutoupdatingParagraph } from "../../ui/React/AutoupdatingParagraph";
 import { ParagraphWithTooltip } from "../../ui/React/ParagraphWithTooltip";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
-import { MathComponent } from 'mathjax-react'
+import { MathComponent } from 'mathjax-react';
 
 type IProps = {
     faction: Faction;
