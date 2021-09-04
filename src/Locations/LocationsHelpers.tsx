@@ -249,45 +249,6 @@ cost {Money(cost)}</>);
 }
 
 /**
- * Create a popup that lets the player upgrade the RAM on his/her home computer
- * @param {IPlayer} p - Player object
- */
-export function createUpgradeHomeRamPopup(p: IPlayer): void {
-    const cost: number = p.getUpgradeHomeRamCost();
-    const ram: number = p.getHomeComputer().maxRam;
-
-    const yesBtn = yesNoBoxGetYesButton();
-    const noBtn = yesNoBoxGetNoButton();
-    if (yesBtn == null || noBtn == null) { return; }
-
-    const homeComputer = p.getHomeComputer();
-    if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
-        dialogBoxCreate(<>
-            You have the maximum amount of RAM on your home computer.
-        </>);
-        return;
-    }
-
-    yesBtn.innerText = "Purchase";
-    yesBtn.addEventListener("click", ()=>{
-        purchaseRamForHomeComputer(cost, p);
-        yesNoBoxClose();
-    });
-
-    noBtn.innerText = "Cancel";
-    noBtn.addEventListener("click", ()=>{
-        yesNoBoxClose();
-    });
-
-    yesNoBoxCreate(<>
-        Would you like to purchase additional RAM for your home computer? <br /><br />
-        This will upgrade your RAM from {numeralWrapper.formatRAM(ram)} to {numeralWrapper.formatRAM(ram*2)}. <br /><br />
-        This will cost {Money(cost)}
-    </>);
-}
-
-
-/**
  * Attempt to purchase a TOR router
  * @param {IPlayer} p - Player object
  */

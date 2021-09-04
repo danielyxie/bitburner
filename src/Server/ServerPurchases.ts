@@ -96,7 +96,8 @@ export function purchaseServer(ram: number, p: IPlayer): void {
 }
 
 // Manually upgrade RAM on home computer (NOT through Netscript)
-export function purchaseRamForHomeComputer(cost: number, p: IPlayer): void {
+export function purchaseRamForHomeComputer(p: IPlayer): void {
+    const cost = p.getUpgradeHomeRamCost();
     if (!p.canAfford(cost)) {
         dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
         return;
@@ -111,6 +112,4 @@ export function purchaseRamForHomeComputer(cost: number, p: IPlayer): void {
 
     homeComputer.maxRam *= 2;
     p.loseMoney(cost);
-
-    dialogBoxCreate("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
 }

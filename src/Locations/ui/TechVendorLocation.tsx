@@ -8,8 +8,10 @@ import * as React from "react";
 import { Location }                     from "../Location";
 import { createPurchaseServerPopup,
          createUpgradeHomeCoresPopup,
-         createUpgradeHomeRamPopup,
          purchaseTorRouter }            from "../LocationsHelpers";
+import { RamButton }                    from "./RamButton";
+import { TorButton }                    from "./TorButton";
+import { CoresButton }                  from "./CoresButton";
 
 import { CONSTANTS }                    from "../../Constants";
 import { IPlayer }                      from "../../PersonObjects/IPlayer";
@@ -24,89 +26,29 @@ type IProps = {
     p: IPlayer;
 }
 
-export class TechVendorLocation extends React.Component<IProps, any> {
-    /**
-     * Stores button styling that sets them all to block display
-     */
-    btnStyle: any;
+export function TechVendorLocation(props: IProps): React.ReactElement {
+    const btnStyle = { display: "block" };
 
-    constructor(props: IProps) {
-        super(props);
-
-        this.btnStyle = { display: "block" };
-
-        this.state = {
-            torPurchased: props.p.hasTorRouter(),
-        }
-
-        this.createUpgradeHomeCoresPopup = this.createUpgradeHomeCoresPopup.bind(this);
-        this.createUpgradeHomeRamPopup = this.createUpgradeHomeRamPopup.bind(this);
-        this.purchaseTorRouter = this.purchaseTorRouter.bind(this);
-    }
-
-    createUpgradeHomeCoresPopup(): void {
-        createUpgradeHomeCoresPopup(this.props.p);
-    }
-
-    createUpgradeHomeRamPopup(): void {
-        createUpgradeHomeRamPopup(this.props.p);
-    }
-
-    purchaseTorRouter(): void {
-        purchaseTorRouter(this.props.p);
-        this.setState({
-            torPurchased: this.props.p.hasTorRouter(),
-        });
-    }
-
-    render(): React.ReactNode {
-        const loc: Location = this.props.loc;
-
-        const purchaseServerButtons: React.ReactNode[] = [];
-        for (let i = loc.techVendorMinRam; i <= loc.techVendorMaxRam; i *= 2) {
-            const cost = getPurchaseServerCost(i);
-            purchaseServerButtons.push(
-                <StdButton
-                    key={i}
-                    onClick={() => createPurchaseServerPopup(i, this.props.p)}
-                    style={this.btnStyle}
-                    text={<>Purchase {i}GB Server - {Money(cost)}</>}
-                />,
-            )
-        }
-
-        return (
-            <div>
-                {purchaseServerButtons}
-                <br />
-                <p><i>"You can order bigger servers via scripts. We don't take custom order in person."</i></p>
-                <br />
-                {
-                    this.state.torPurchased ? (
-                        <StdButtonPurchased
-                        style={this.btnStyle}
-                            text={"TOR Router - Purchased"}
-                        />
-                    ) : (
-                        <StdButton
-                            onClick={this.purchaseTorRouter}
-                            style={this.btnStyle}
-                            text={<>Purchase TOR Router - {Money(CONSTANTS.TorRouterCost)}</>}
-                        />
-                    )
-
-                }
-                <StdButton
-                    onClick={this.createUpgradeHomeRamPopup}
-                    style={this.btnStyle}
-                    text={`Purchase additional RAM for Home computer`}
-                />
-                <StdButton
-                    onClick={this.createUpgradeHomeCoresPopup}
-                    style={this.btnStyle}
-                    text={`Purchase additional Core for Home computer`}
-                />
-            </div>
+    const purchaseServerButtons: React.ReactNode[] = [];
+    for (let i = props.loc.techVendorMinRam; i <= props.loc.techVendorMaxRam; i *= 2) {
+        const cost = getPurchaseServerCost(i);
+        purchaseServerButtons.push(
+            <StdButton
+                key={i}
+                onClick={() => createPurchaseServerPopup(i, props.p)}
+                style={btnStyle}
+                text={<>Purchase {i}GB Server - {Money(cost)}</>}
+            />,
         )
     }
+
+    return (<div>
+        {purchaseServerButtons}
+        <br />
+        <p className="noselect"><i>"You can order bigger servers via scripts. We don't take custom order in person."</i></p>
+        <br />
+        <TorButton p={props.p} />
+        <RamButton p={props.p} />
+        <CoresButton p={props.p} />
+    </div>);
 }
