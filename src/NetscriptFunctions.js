@@ -243,15 +243,27 @@ function NetscriptFunctions(workerScript) {
     if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
       throw makeRuntimeRejectMsg(
         workerScript,
-        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " +
-          fnName +
-          ". This is probably because you somehow circumvented the static RAM " +
-          "calculation.<br><br>Please don't do that :(<br><br>" +
-          "Dynamic RAM Usage: " +
-          numeralWrapper.formatRAM(workerScript.dynamicRamUsage) +
-          "<br>" +
-          "Static RAM Usage: " +
-          numeralWrapper.formatRAM(workerScript.ramUsage),
+        `Dynamic RAM usage calculated to be greater than initial RAM usage on fn: ${fnName}.
+        This is probably because you somehow circumvented the static RAM calculation.
+
+        Dynamic RAM Usage: ${numeralWrapper.formatRAM(
+          workerScript.dynamicRamUsage,
+        )}
+        Static RAM Usage: ${numeralWrapper.formatRAM(workerScript.ramUsage)}
+
+        One of these could be the reason:
+        * Using eval() to get a reference to a ns function
+        &nbsp;&nbsp;const scan = eval('ns.scan');
+
+        * Using map access to do the same
+        &nbsp;&nbsp;const scan = ns['scan'];
+
+        * Saving script in the improper order.
+        &nbsp;&nbsp;Increase the cost of an imported script, save it, then run the
+        &nbsp;&nbsp;parent. To fix this just re-open & save every script in order
+        &nbsp;&nbsp;from most imported to least imported (parent script).
+
+        Sorry :(`,
       );
     }
   };
