@@ -1,120 +1,145 @@
 // React Component for displaying an Industry's OfficeSpace information
 // (bottom-left panel in the Industry UI)
-import React from "react";
-import { BaseReactComponent }       from "./BaseReactComponent";
+import React, { useState } from "react";
 
-import { OfficeSpace }              from "../Corporation";
+import { OfficeSpace }              from "../OfficeSpace";
+import { Employee }                 from "../Employee";
 import { EmployeePositions }        from "../EmployeePositions";
 
 import { numeralWrapper }           from "../../ui/numeralFormat";
 
 import { getSelectText }            from "../../../utils/uiHelpers/getSelectData";
+import { createPopup }              from "../../ui/React/createPopup";
+import { UpgradeOfficeSizePopup }   from "./UpgradeOfficeSizePopup";
+import { HireEmployeePopup }        from "./HireEmployeePopup";
+import { ThrowPartyPopup }          from "./ThrowPartyPopup";
+import { ICorporation }             from "../ICorporation";
+import { IPlayer }                  from "../../PersonObjects/IPlayer";
+import { CorporationRouting }       from "./Routing";
 
-export class IndustryOffice extends BaseReactComponent {
-    constructor(props) {
-        super(props);
+interface IProps {
+    routing: CorporationRouting;
+    corp: ICorporation;
+    currentCity: string;
+    player: IPlayer;
+}
 
-        this.state = {
-            city: "",
-            division: "",
-            employeeManualAssignMode: false,
-            employee: null, // Reference to employee being referenced if in Manual Mode
-            numEmployees: 0,
-            numOperations: 0,
-            numEngineers: 0,
-            numBusiness: 0,
-            numManagement: 0,
-            numResearch: 0,
-            numUnassigned: 0,
-            numTraining: 0,
-        }
+export function IndustryOffice(props: IProps): React.ReactElement {
+    const [employeeManualAssignMode, setEmployeeManualAssignMode] = useState(false);
+    const [city, setCity] = useState("");
+    const [divisionName, setDivisionName] = useState("");
+    const [employee, setEmployee] = useState<Employee | null>(null);
+    const [numEmployees, setNumEmployees] = useState(0);
+    const [numOperations, setNumOperations] = useState(0);
+    const [numEngineers, setNumEngineers] = useState(0);
+    const [numBusiness, setNumBusiness] = useState(0);
+    const [numManagement, setNumManagement] = useState(0);
+    const [numResearch, setNumResearch] = useState(0);
+    const [numUnassigned, setNumUnassigned] = useState(0);
+    const [numTraining, setNumTraining] = useState(0);
 
-        this.updateEmployeeCount(); // This function validates division and office refs
+    function resetEmployeeCount(): void {
+        setNumEmployees(0);
+        setNumOperations(0);
+        setNumEngineers(0);
+        setNumBusiness(0);
+        setNumManagement(0);
+        setNumResearch(0);
+        setNumUnassigned(0);
+        setNumTraining(0);
     }
 
-    resetEmployeeCount() {
-        this.state.numEmployees = 0;
-        this.state.numOperations = 0;
-        this.state.numEngineers = 0;
-        this.state.numBusiness = 0;
-        this.state.numManagement = 0;
-        this.state.numResearch = 0;
-        this.state.numUnassigned = 0;
-        this.state.numTraining = 0;
-    }
-
-    updateEmployeeCount() {
-        const division = this.routing().currentDivision;
+    function updateEmployeeCount(): void {
+        const division = props.routing.currentDivision;
         if (division == null) {
             throw new Error(`Routing does not hold reference to the current Industry`);
         }
-        const office = division.offices[this.props.currentCity];
+        const office = division.offices[props.currentCity];
         if (!(office instanceof OfficeSpace)) {
-            throw new Error(`Current City (${this.props.currentCity}) for UI does not have an OfficeSpace object`);
+            throw new Error(`Current City (${props.currentCity}) for UI does not have an OfficeSpace object`);
         }
 
         // If we're in a new city, we have to reset the state
-        if (division.name !== this.state.division || this.props.currentCity !== this.state.city) {
-            this.resetEmployeeCount();
-            this.state.division = division.name;
-            this.state.city = this.props.currentCity;
+        if (division.name !== divisionName || props.currentCity !== city) {
+            resetEmployeeCount();
+            setDivisionName(division.name);
+            setCity(props.currentCity);
         }
 
-        // Calculate how many NEW emplyoees we need to account for
+        // Calculate how many NEW employees we need to account for
         const currentNumEmployees = office.employees.length;
 
+        let newOperations = numOperations;
+        let newEngineers = numEngineers;
+        let newBusiness = numBusiness;
+        let newManagement = numManagement;
+        let newResearch = numResearch;
+        let newUnassigned = numUnassigned;
+        let newTraining = numTraining;
+
         // Record the number of employees in each position, for NEW employees only
-        for (let i = this.state.numEmployees; i < office.employees.length; ++i) {
+        for (let i = numEmployees; i < office.employees.length; ++i) {
             switch (office.employees[i].pos) {
                 case EmployeePositions.Operations:
-                    ++this.state.numOperations;
+                    newOperations++;
                     break;
                 case EmployeePositions.Engineer:
-                    ++this.state.numEngineers;
+                    newEngineers++;
                     break;
                 case EmployeePositions.Business:
-                    ++this.state.numBusiness;
+                    newBusiness++;
                     break;
                 case EmployeePositions.Management:
-                    ++this.state.numManagement;
+                    newManagement++;
                     break;
                 case EmployeePositions.RandD:
-                    ++this.state.numResearch;
+                    newResearch++;
                     break;
                 case EmployeePositions.Unassigned:
-                    ++this.state.numUnassigned;
+                    newUnassigned++;
                     break;
                 case EmployeePositions.Training:
-                    ++this.state.numTraining;
+                    newTraining++;
                     break;
                 default:
                     console.error("Unrecognized employee position: " + office.employees[i].pos);
                     break;
             }
         }
+        if(newOperations !== numOperations) setNumOperations(newOperations);
+        if(newEngineers !== numEngineers) setNumEngineers(newEngineers);
+        if(newBusiness !== numBusiness) setNumBusiness(newBusiness);
+        if(newManagement !== numManagement) setNumManagement(newManagement);
+        if(newResearch !== numResearch) setNumResearch(newResearch);
+        if(newUnassigned !== numUnassigned) setNumUnassigned(newUnassigned);
+        if(newTraining !== numTraining) setNumTraining(newTraining);
 
-        this.state.numEmployees = currentNumEmployees;
+        if(currentNumEmployees !== numEmployees) setNumEmployees(currentNumEmployees);
     }
 
-    // Renders the "Employee Management" section of the Office UI
-    renderEmployeeManagement() {
-        this.updateEmployeeCount();
+    updateEmployeeCount();
 
-        if (this.state.employeeManualAssignMode) {
-            return this.renderManualEmployeeManagement();
+    // Renders the "Employee Management" section of the Office UI
+    function renderEmployeeManagement(): React.ReactElement {
+        updateEmployeeCount();
+
+        if (employeeManualAssignMode) {
+            return renderManualEmployeeManagement();
         } else {
-            return this.renderAutomaticEmployeeManagement();
+            return renderAutomaticEmployeeManagement();
         }
     }
 
-    renderAutomaticEmployeeManagement() {
-        const division = this.routing().currentDivision; // Validated in constructor
-        const office = division.offices[this.props.currentCity]; // Validated in constructor
-        const vechain = (this.corp().unlockUpgrades[4] === 1); // Has Vechain upgrade
+    function renderAutomaticEmployeeManagement(): React.ReactElement {
+        const division = props.routing.currentDivision; // Validated in constructor
+        if(division === null) return(<></>);
+        const office = division.offices[props.currentCity]; // Validated in constructor
+        if(office === 0) return (<></>);
+        const vechain = (props.corp.unlockUpgrades[4] === 1); // Has Vechain upgrade
 
-        const switchModeOnClick = () => {
-            this.state.employeeManualAssignMode = true;
-            this.corp().rerender();
+        function switchModeOnClick(): void {
+            setEmployeeManualAssignMode(true);
+            props.corp.rerender(props.player);
         }
 
         // Calculate average morale, happiness, and energy. Also salary
@@ -135,87 +160,91 @@ export class IndustryOffice extends BaseReactComponent {
         }
 
         // Helper functions for (re-)assigning employees to different positions
-        const assignEmployee = (to) => {
-            if (this.state.numUnassigned <= 0) {
+        function assignEmployee(to: string): void {
+            if(office === 0) return;
+            if(division === null) return;
+            if (numUnassigned <= 0) {
                 console.warn("Cannot assign employee. No unassigned employees available");
                 return;
             }
 
             switch (to) {
                 case EmployeePositions.Operations:
-                    ++this.state.numOperations;
+                    setNumOperations(n => n+1);
                     break;
                 case EmployeePositions.Engineer:
-                    ++this.state.numEngineers;
+                    setNumEngineers(n => n+1);
                     break;
                 case EmployeePositions.Business:
-                    ++this.state.numBusiness;
+                    setNumBusiness(n => n+1);
                     break;
                 case EmployeePositions.Management:
-                    ++this.state.numManagement;
+                    setNumManagement(n => n+1);
                     break;
                 case EmployeePositions.RandD:
-                    ++this.state.numResearch;
+                    setNumResearch(n => n+1);
                     break;
                 case EmployeePositions.Unassigned:
-                    ++this.state.numUnassigned;
+                    setNumUnassigned(n => n+1);
                     break;
                 case EmployeePositions.Training:
-                    ++this.state.numTraining;
+                    setNumTraining(n => n+1);
                     break;
                 default:
                     console.error("Unrecognized employee position: " + to);
                     break;
             }
-            --this.state.numUnassigned;
+            setNumUnassigned(n => n-1);
 
             office.assignEmployeeToJob(to);
-            office.calculateEmployeeProductivity({ corporation: this.corp(), industry:division });
-            this.corp().rerender();
+            office.calculateEmployeeProductivity(props.corp, division);
+            props.corp.rerender(props.player);
         }
 
-        const unassignEmployee = (from) => {
-            function logWarning(pos) {
+        function unassignEmployee(from: string): void {
+            if(office === 0) return;
+            if(division === null) return;
+            function logWarning(pos: string): void {
                 console.warn(`Cannot unassign from ${pos} because there is nobody assigned to that position`);
             }
 
             switch (from) {
                 case EmployeePositions.Operations:
-                    if (this.state.numOperations <= 0) { return logWarning(EmployeePositions.Operations); }
-                    --this.state.numOperations;
+                    if (numOperations <= 0) { return logWarning(EmployeePositions.Operations); }
+                    setNumOperations(n => n-1);
                     break;
                 case EmployeePositions.Engineer:
-                    if (this.state.numEngineers <= 0) { return logWarning(EmployeePositions.Operations); }
-                    --this.state.numEngineers;
+                    if (numEngineers <= 0) { return logWarning(EmployeePositions.Operations); }
+                    setNumEngineers(n => n-1);
                     break;
                 case EmployeePositions.Business:
-                    if (this.state.numBusiness <= 0) { return logWarning(EmployeePositions.Operations); }
-                    --this.state.numBusiness;
+                    if (numBusiness <= 0) { return logWarning(EmployeePositions.Operations); }
+                    setNumBusiness(n => n-1);
                     break;
                 case EmployeePositions.Management:
-                    if (this.state.numManagement <= 0) { return logWarning(EmployeePositions.Operations); }
-                    --this.state.numManagement;
+                    if (numManagement <= 0) { return logWarning(EmployeePositions.Operations); }
+                    setNumManagement(n => n-1);
                     break;
                 case EmployeePositions.RandD:
-                    if (this.state.numResearch <= 0) { return logWarning(EmployeePositions.Operations); }
-                    --this.state.numResearch;
+                    if (numResearch <= 0) { return logWarning(EmployeePositions.Operations); }
+                    setNumResearch(n => n-1);
                     break;
                 case EmployeePositions.Unassigned:
                     console.warn(`Tried to unassign from the Unassigned position`);
                     break;
                 case EmployeePositions.Training:
-                    if (this.state.numTraining <= 0) { return logWarning(EmployeePositions.Operations); }
-                    --this.state.numTraining;
+                    if (numTraining <= 0) { return logWarning(EmployeePositions.Operations); }
+                    setNumTraining(n => n-1);
                     break;
                 default:
                     console.error("Unrecognized employee position: " + from);
                     break;
             }
-            ++this.state.numUnassigned;
+            setNumUnassigned(n => n+1);
 
             office.unassignEmployeeFromJob(from);
-            office.calculateEmployeeProductivity({ corporation: this.corp(), industry:division });
-            this.corp().rerender();
+            office.calculateEmployeeProductivity(props.corp, division);
+            props.corp.rerender(props.player);
         }
 
         const positionHeaderStyle = {
@@ -223,67 +252,67 @@ export class IndustryOffice extends BaseReactComponent {
             margin: "5px 0px 5px 0px",
             width: "50%",
         }
-        const assignButtonClass = this.state.numUnassigned > 0 ? "std-button" : "a-link-button-inactive";
+        const assignButtonClass = numUnassigned > 0 ? "std-button" : "a-link-button-inactive";
 
-        const operationAssignButtonOnClick = () => {
+        function operationAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Operations);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const operationUnassignButtonOnClick = () => {
+        function operationUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Operations);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const operationUnassignButtonClass = this.state.numOperations > 0 ? "std-button" : "a-link-button-inactive";
+        const operationUnassignButtonClass = numOperations > 0 ? "std-button" : "a-link-button-inactive";
 
-        const engineerAssignButtonOnClick = () => {
+        function engineerAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Engineer);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const engineerUnassignButtonOnClick = () => {
+        function engineerUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Engineer);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const engineerUnassignButtonClass = this.state.numEngineers > 0 ? "std-button" : "a-link-button-inactive";
+        const engineerUnassignButtonClass = numEngineers > 0 ? "std-button" : "a-link-button-inactive";
 
-        const businessAssignButtonOnClick = () => {
+        function businessAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Business);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const businessUnassignButtonOnClick = () => {
+        function businessUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Business);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const businessUnassignButtonClass = this.state.numBusiness > 0 ? "std-button" : "a-link-button-inactive";
+        const businessUnassignButtonClass = numBusiness > 0 ? "std-button" : "a-link-button-inactive";
 
-        const managementAssignButtonOnClick = () => {
+        function managementAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Management);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const managementUnassignButtonOnClick = () => {
+        function managementUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Management);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const managementUnassignButtonClass = this.state.numManagement > 0 ? "std-button" : "a-link-button-inactive";
+        const managementUnassignButtonClass = numManagement > 0 ? "std-button" : "a-link-button-inactive";
 
-        const rndAssignButtonOnClick = () => {
+        function rndAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.RandD);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const rndUnassignButtonOnClick = () => {
+        function rndUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.RandD);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const rndUnassignButtonClass = this.state.numResearch > 0 ? "std-button" : "a-link-button-inactive";
+        const rndUnassignButtonClass = numResearch > 0 ? "std-button" : "a-link-button-inactive";
 
-        const trainingAssignButtonOnClick = () => {
+        function trainingAssignButtonOnClick(): void {
             assignEmployee(EmployeePositions.Training);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const trainingUnassignButtonOnClick = () => {
+        function trainingUnassignButtonOnClick(): void {
             unassignEmployee(EmployeePositions.Training);
-            this.corp().rerender();
+            props.corp.rerender(props.player);
         }
-        const trainingUnassignButtonClass = this.state.numTraining > 0 ? "std-button" : "a-link-button-inactive";
+        const trainingUnassignButtonClass = numTraining > 0 ? "std-button" : "a-link-button-inactive";
 
         return (
             <div>
@@ -295,7 +324,7 @@ export class IndustryOffice extends BaseReactComponent {
                     </span>
                 </button>
 
-                <p><strong>Unassigned Employees: {this.state.numUnassigned}</strong></p>
+                <p><strong>Unassigned Employees: {numUnassigned}</strong></p>
                 <br />
 
                 <p>Avg Employee Morale: {numeralWrapper.format(avgMorale, "0.000")}</p>
@@ -344,7 +373,7 @@ export class IndustryOffice extends BaseReactComponent {
                 }
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Operations} ({this.state.numOperations})
+                    {EmployeePositions.Operations} ({numOperations})
                     <span className={"tooltiptext"}>
                         Manages supply chain operations. Improves the amount of Materials and Products you produce.
                     </span>
@@ -354,7 +383,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Engineer} ({this.state.numEngineers})
+                    {EmployeePositions.Engineer} ({numEngineers})
                     <span className={"tooltiptext"}>
                         Develops and maintains products and production systems. Increases the quality of
                         everything you produce. Also increases the amount you produce (not as much
@@ -366,7 +395,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Business} ({this.state.numBusiness})
+                    {EmployeePositions.Business} ({numBusiness})
                     <span className={"tooltiptext"}>
                         Handles sales and finances. Improves the amount of Materials and Products you can sell.
                     </span>
@@ -376,7 +405,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Management} ({this.state.numManagement})
+                    {EmployeePositions.Management} ({numManagement})
                     <span className={"tooltiptext"}>
                         Leads and oversees employees and office operations. Improves the effectiveness of
                         Engineer and Operations employees
@@ -387,7 +416,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.RandD} ({this.state.numResearch})
+                    {EmployeePositions.RandD} ({numResearch})
                     <span className={"tooltiptext"}>
                         Research new innovative ways to improve the company. Generates Scientific Research
                     </span>
@@ -397,7 +426,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Training} ({this.state.numTraining})
+                    {EmployeePositions.Training} ({numTraining})
                     <span className={"tooltiptext"}>
                         Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations.
                     </span>
@@ -408,14 +437,16 @@ export class IndustryOffice extends BaseReactComponent {
         )
     }
 
-    renderManualEmployeeManagement() {
-        const corp = this.corp();
-        const division = this.routing().currentDivision; // Validated in constructor
-        const office = division.offices[this.props.currentCity]; // Validated in constructor
+    function renderManualEmployeeManagement(): React.ReactElement {
+        const corp = props.corp;
+        const division = props.routing.currentDivision; // Validated in constructor
+        if(division === null) return (<></>);
+        const office = division.offices[props.currentCity]; // Validated in constructor
+        if(office === 0) return (<></>);
 
-        const switchModeOnClick = () => {
-            this.state.employeeManualAssignMode = false;
-            this.corp().rerender();
+        function switchModeOnClick(): void {
+            setEmployeeManualAssignMode(false);
+            props.corp.rerender(props.player);
         }
 
         const employeeInfoDivStyle = {
@@ -430,21 +461,22 @@ export class IndustryOffice extends BaseReactComponent {
             employees.push(<option key={office.employees[i].name}>{office.employees[i].name}</option>)
         }
 
-        const employeeSelectorOnChange = (e) => {
+        function employeeSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
+            if(office === 0) return;
             const name = getSelectText(e.target);
             for (let i = 0; i < office.employees.length; ++i) {
                 if (name === office.employees[i].name) {
-                    this.state.employee = office.employees[i];
+                    setEmployee(office.employees[i]);
                     break;
                 }
             }
 
-            corp.rerender();
+            corp.rerender(props.player);
         }
 
         // Employee Positions Selector
-        const emp = this.state.employee;
-        let employeePositionSelectorInitialValue = null;
+        const emp = employee;
+        let employeePositionSelectorInitialValue = "";
         const employeePositions = [];
         const positionNames = Object.values(EmployeePositions);
         for (let i = 0; i < positionNames.length; ++i) {
@@ -454,11 +486,12 @@ export class IndustryOffice extends BaseReactComponent {
             }
         }
 
-        const employeePositionSelectorOnChange = (e) => {
+        function employeePositionSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
+            if(employee === null) return;
             const pos = getSelectText(e.target);
-            this.state.employee.pos = pos;
-            this.resetEmployeeCount();
-            corp.rerender();
+            employee.pos = pos;
+            resetEmployeeCount();
+            corp.rerender(props.player);
         }
 
         // Numeraljs formatter
@@ -486,29 +519,29 @@ export class IndustryOffice extends BaseReactComponent {
                         {employees}
                     </select>
                     {
-                        this.state.employee != null &&
+                        employee != null &&
                         <p>
-                            Morale: {numeralWrapper.format(this.state.employee.mor, nf)}
+                            Morale: {numeralWrapper.format(employee.mor, nf)}
                             <br />
-                            Happiness: {numeralWrapper.format(this.state.employee.hap, nf)}
+                            Happiness: {numeralWrapper.format(employee.hap, nf)}
                             <br />
-                            Energy: {numeralWrapper.format(this.state.employee.ene, nf)}
+                            Energy: {numeralWrapper.format(employee.ene, nf)}
                             <br />
                             Intelligence: {numeralWrapper.format(effInt, nf)}
                             <br />
                             Charisma: {numeralWrapper.format(effCha, nf)}
                             <br />
-                            Experience: {numeralWrapper.format(this.state.employee.exp, nf)}
+                            Experience: {numeralWrapper.format(employee.exp, nf)}
                             <br />
                             Creativity: {numeralWrapper.format(effCre, nf)}
                             <br />
                             Efficiency: {numeralWrapper.format(effEff, nf)}
                             <br />
-                            Salary: {numeralWrapper.formatMoney(this.state.employee.sal)}
+                            Salary: {numeralWrapper.formatMoney(employee.sal)}
                         </p>
                     }
                     {
-                        this.state.employee != null &&
+                        employee != null &&
                         <select onChange={employeePositionSelectorOnChange} value={employeePositionSelectorInitialValue}>
                             {employeePositions}
                         </select>
@@ -518,89 +551,110 @@ export class IndustryOffice extends BaseReactComponent {
         )
     }
 
-    render() {
-        const corp = this.corp();
-        const division = this.routing().currentDivision; // Validated in constructor
-        const office = division.offices[this.props.currentCity]; // Validated in constructor
-
-        const buttonStyle = {
-            fontSize: "13px",
-        }
-
-        // Hire Employee button
-        let hireEmployeeButtonClass = "tooltip";
-        if (office.atCapacity()) {
-            hireEmployeeButtonClass += " a-link-button-inactive";
-        } else {
-            hireEmployeeButtonClass += " std-button";
-            if (office.employees.length === 0) {
-                hireEmployeeButtonClass += " flashing-button";
-            }
-        }
-
-        const hireEmployeeButtonOnClick = () => {
-            office.findEmployees({ corporation: corp, industry: division });
-        }
-
-        // Autohire employee button
-        let autohireEmployeeButtonClass = "tooltip";
-        if (office.atCapacity()) {
-            autohireEmployeeButtonClass += " a-link-button-inactive";
-        } else {
-            autohireEmployeeButtonClass += " std-button";
-        }
-        const autohireEmployeeButtonOnClick = () => {
-            if (office.atCapacity()) { return; }
-            office.hireRandomEmployee();
-            this.corp().rerender();
-        }
-
-        // Upgrade Office Size Button
-        const upgradeOfficeSizeOnClick = this.eventHandler().createUpgradeOfficeSizePopup.bind(this.eventHandler(), office);
-
-        // Throw Office Party
-        const throwOfficePartyOnClick = this.eventHandler().createThrowOfficePartyPopup.bind(this.eventHandler(), office);
-
-        return (
-            <div className={"cmpy-mgmt-employee-panel"}>
-                <h1 style={{ margin: "4px 0px 5px 0px" }}>Office Space</h1>
-                <p>Size: {office.employees.length} / {office.size} employees</p>
-                <button className={hireEmployeeButtonClass} onClick={hireEmployeeButtonOnClick} style={buttonStyle}>
-                    Hire Employee
-                    {
-                        office.employees.length === 0 &&
-                        <span className={"tooltiptext"}>
-                            You'll need to hire some employees to get your operations started!
-                            It's recommended to have at least one employee in every position
-                        </span>
-                    }
-                </button>
-                <button className={autohireEmployeeButtonClass} onClick={autohireEmployeeButtonOnClick} style={buttonStyle}>
-                    Autohire Employee
-                    <span className={"tooltiptext"}>
-                        Automatically hires an employee and gives him/her a random name
-                    </span>
-                </button>
-                <br />
-                <button className={"std-button tooltip"} onClick={upgradeOfficeSizeOnClick} style={buttonStyle}>
-                    Upgrade size
-                    <span className={"tooltiptext"}>
-                        Upgrade the office's size so that it can hold more employees!
-                    </span>
-                </button>
-                {
-                    !division.hasResearch("AutoPartyManager") &&
-                    <button className={"std-button tooltip"} onClick={throwOfficePartyOnClick} style={buttonStyle}>
-                        Throw Party
-                        <span className={"tooltiptext"}>
-                            "Throw an office party to increase your employee's morale and happiness"
-                        </span>
-                    </button>
-                }
-                <br />
-
-                {this.renderEmployeeManagement()}
-            </div>
-        )
+    const division = props.routing.currentDivision; // Validated in constructor
+    if(division === null) return (<></>);
+    const office = division.offices[props.currentCity]; // Validated in constructor
+    if(office === 0) return (<></>);
+    const buttonStyle = {
+        fontSize: "13px",
     }
+
+    // Hire Employee button
+    let hireEmployeeButtonClass = "tooltip";
+    if (office.atCapacity()) {
+        hireEmployeeButtonClass += " a-link-button-inactive";
+    } else {
+        hireEmployeeButtonClass += " std-button";
+        if (office.employees.length === 0) {
+            hireEmployeeButtonClass += " flashing-button";
+        }
+    }
+
+    function openHireEmployeePopup(): void {
+        if(office === 0) return;
+        const popupId = "cmpy-mgmt-hire-employee-popup";
+        createPopup(popupId, HireEmployeePopup, {
+            office: office,
+            corp: props.corp,
+            popupId: popupId,
+            player: props.player,
+        });
+    }
+
+    // Autohire employee button
+    let autohireEmployeeButtonClass = "tooltip";
+    if (office.atCapacity()) {
+        autohireEmployeeButtonClass += " a-link-button-inactive";
+    } else {
+        autohireEmployeeButtonClass += " std-button";
+    }
+    function autohireEmployeeButtonOnClick(): void {
+        if(office === 0) return;
+        if (office.atCapacity()) return;
+        office.hireRandomEmployee();
+        props.corp.rerender(props.player);
+    }
+
+    function openUpgradeOfficeSizePopup(): void {
+        if(office === 0) return;
+        const popupId = "cmpy-mgmt-upgrade-office-size-popup";
+        createPopup(popupId, UpgradeOfficeSizePopup, {
+            office: office,
+            corp: props.corp,
+            popupId: popupId,
+            player: props.player,
+        });
+    }
+
+    function openThrowPartyPopup(): void {
+        if(office === 0) return;
+        const popupId = "cmpy-mgmt-throw-office-party-popup";
+        createPopup(popupId, ThrowPartyPopup, {
+            office: office,
+            corp: props.corp,
+            popupId: popupId,
+        });
+    }
+
+    return (
+        <div className={"cmpy-mgmt-employee-panel"}>
+            <h1 style={{ margin: "4px 0px 5px 0px" }}>Office Space</h1>
+            <p>Size: {office.employees.length} / {office.size} employees</p>
+            <button className={hireEmployeeButtonClass} onClick={openHireEmployeePopup} style={buttonStyle}>
+                Hire Employee
+                {
+                    office.employees.length === 0 &&
+                    <span className={"tooltiptext"}>
+                        You'll need to hire some employees to get your operations started!
+                        It's recommended to have at least one employee in every position
+                    </span>
+                }
+            </button>
+            <button className={autohireEmployeeButtonClass} onClick={autohireEmployeeButtonOnClick} style={buttonStyle}>
+                Autohire Employee
+                <span className={"tooltiptext"}>
+                    Automatically hires an employee and gives him/her a random name
+                </span>
+            </button>
+            <br />
+            <button className={"std-button tooltip"} onClick={openUpgradeOfficeSizePopup} style={buttonStyle}>
+                Upgrade size
+                <span className={"tooltiptext"}>
+                    Upgrade the office's size so that it can hold more employees!
+                </span>
+            </button>
+            {
+                !division.hasResearch("AutoPartyManager") &&
+                <button className={"std-button tooltip"} onClick={openThrowPartyPopup} style={buttonStyle}>
+                    Throw Party
+                    <span className={"tooltiptext"}>
+                        "Throw an office party to increase your employee's morale and happiness"
+                    </span>
+                </button>
+            }
+            <br />
+
+            {renderEmployeeManagement()}
+        </div>
+    )
 }

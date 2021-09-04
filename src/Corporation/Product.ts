@@ -1,5 +1,6 @@
 import { EmployeePositions }        from "./EmployeePositions";
 import { MaterialSizes }            from "./MaterialSizes";
+import { IIndustry }                from "./IIndustry";
 import { ProductRatingWeights,
          IProductRatingWeight }     from "./ProductRatingWeights";
 
@@ -30,17 +31,6 @@ interface IConstructorParams {
     req?: IMap<number>;
 }
 
-// Interface for an Industry object - Used for type checking method arguments
-interface IIndustry {
-    awareness: number;
-    popularity: number;
-    reqMats: IMap<number>;
-    sciFac: number;
-    sciResearch: any;
-    type: string;
-}
-
-
 export class Product {
 
     // Product name
@@ -60,7 +50,7 @@ export class Product {
     pCost = 0;
 
     // Sell cost
-    sCost = 0;
+    sCost: string | number = 0;
 
     // Variables for handling the creation process of this Product
     fin = false;       // Whether this Product has finished being created
@@ -137,7 +127,7 @@ export class Product {
     }
 
     // @param industry - Industry object. Reference to industry that makes this Product
-    finishProduct(employeeProd: IMap<number>, industry: IIndustry): void {
+    finishProduct(employeeProd: {[key: string]: number}, industry: IIndustry): void {
         this.fin = true;
 
         //Calculate properties
@@ -199,7 +189,9 @@ export class Product {
         //For now, just set it to be the same as the requirements to make materials
         for (const matName in industry.reqMats) {
             if (industry.reqMats.hasOwnProperty(matName)) {
-                this.reqMats[matName] = industry.reqMats[matName];
+                const reqMat = industry.reqMats[matName];
+                if(reqMat === undefined) continue;
+                this.reqMats[matName] = reqMat;
             }
         }
 
@@ -207,18 +199,10 @@ export class Product {
         //For now, just set it to be the same size as the requirements to make materials
         this.siz = 0;
         for (const matName in industry.reqMats) {
-            this.siz += MaterialSizes[matName] * industry.reqMats[matName];
+            const reqMat = industry.reqMats[matName];
+            if(reqMat === undefined) continue;
+            this.siz += MaterialSizes[matName] * reqMat;
         }
-
-        //Delete unneeded variables
-        // @ts-ignore
-        delete this.prog;
-        // @ts-ignore
-        delete this.createCity;
-        // @ts-ignore
-        delete this.designCost;
-        // @ts-ignore
-        delete this.advCost;
     }
 
 

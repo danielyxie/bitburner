@@ -584,6 +584,20 @@ class DevMenuComponent extends Component {
         }
     }
 
+    finishCorporationProducts() {
+        if(!Player.corporation) return;
+        Player.corporation.divisions.forEach(div => {
+            Object.keys(div.products).forEach(prod => div.products[prod].prog = 99.9)
+        });
+    }
+
+    addCorporationResearch() {
+        if(!Player.corporation) return;
+        Player.corporation.divisions.forEach(div => {
+            div.sciResearch.qty += 1e10;
+        });
+    }
+
     specificContract() {
         generateContract({
             problemType: this.state.codingcontract,
@@ -1167,6 +1181,16 @@ class DevMenuComponent extends Component {
                               subtract={this.modifyCorporationCycles(-1)}
                               reset={this.resetCorporationCycles}
                             />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button className="std-button" onClick={this.finishCorporationProducts}>Finish products</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button className="std-button" onClick={this.addCorporationResearch}>Tons of research</button>
                         </td>
                     </tr>
                 </tbody>

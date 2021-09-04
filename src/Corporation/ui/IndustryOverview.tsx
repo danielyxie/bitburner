@@ -1,20 +1,34 @@
 // React Component for displaying an Industry's overview information
 // (top-left panel in the Industry UI)
 import React from "react";
-import { BaseReactComponent }       from "./BaseReactComponent";
 
-import { OfficeSpace }              from "../Corporation";
+import { OfficeSpace }              from "../OfficeSpace";
 import { Industries }               from "../IndustryData";
 import { IndustryUpgrades }         from "../IndustryUpgrades";
 import { numeralWrapper }           from "../../ui/numeralFormat";
 import { dialogBoxCreate }          from "../../../utils/DialogBox";
 import { createProgressBarText }    from "../../../utils/helpers/createProgressBarText";
+import { MakeProductPopup }         from "./MakeProductPopup";
+import { ResearchPopup }            from "./ResearchPopup";
+import { createPopup }              from "../../ui/React/createPopup";
+import { Money }                    from "../../ui/React/Money";
+import { ICorporation }             from "../ICorporation";
+import { IPlayer }                  from "../../PersonObjects/IPlayer";
+import { CorporationRouting }       from "./Routing";
 
-export class IndustryOverview extends BaseReactComponent {
-    renderMakeProductButton() {
-        const division = this.routing().currentDivision; // Validated inside render()
+interface IProps {
+    routing: CorporationRouting;
+    corp: ICorporation;
+    currentCity: string;
+    player: IPlayer;
+}
 
-        var createProductButtonText, createProductPopupText;
+export function IndustryOverview(props: IProps): React.ReactElement {
+    function renderMakeProductButton(): React.ReactElement {
+        const division = props.routing.currentDivision; // Validated inside render()
+        if(division === null) return (<></>);
+        let createProductButtonText = "";
+        let createProductPopupText = "";
         switch(division.type) {
             case Industries.Food:
                 createProductButtonText = "Build Restaurant";
@@ -52,7 +66,7 @@ export class IndustryOverview extends BaseReactComponent {
             default:
                 createProductButtonText = "Create Product";
                 createProductPopupText = "Create a new product!";
-                return "";
+                return (<></>);
         }
         createProductPopupText += "<br><br>To begin developing a product, " +
             "first choose the city in which it will be designed. The stats of your employees " +
@@ -65,14 +79,24 @@ export class IndustryOverview extends BaseReactComponent {
         const hasMaxProducts = division.hasMaximumNumberProducts();
 
         const className = hasMaxProducts ? "a-link-button-inactive tooltip" : "std-button";
-        const onClick = this.eventHandler().createMakeProductPopup.bind(this.eventHandler(), createProductPopupText, division);
         const buttonStyle = {
             margin: "6px",
             display: "inline-block",
         }
 
+        function openMakeProductPopup(): void {
+            if(division === null) return;
+            const popupId = "cmpy-mgmt-create-product-popup";
+            createPopup(popupId, MakeProductPopup, {
+                popupText: createProductPopupText,
+                division: division,
+                corp: props.corp,
+                popupId: popupId,
+            });
+        }
+
         return (
-            <button className={className} onClick={onClick} style={buttonStyle}>
+            <button className={className} onClick={openMakeProductPopup} style={buttonStyle}>
                 {createProductButtonText}
                 {
                     hasMaxProducts &&
@@ -84,16 +108,12 @@ export class IndustryOverview extends BaseReactComponent {
         )
     }
 
-    renderText() {
-        const corp = this.corp();
-        const division = this.routing().currentDivision; // Validated inside render()
-
+    function renderText(): React.ReactElement {
+        const corp = props.corp;
+        const division = props.routing.currentDivision; // Validated inside render()
+        if(division === null) return (<></>);
         const vechain = (corp.unlockUpgrades[4] === 1);
         const profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber();
-
-        const genInfo = `Industry: ${division.type} (Corp Funds: ${numeralWrapper.formatMoney(corp.funds.toNumber())})`;
-        const awareness = `Awareness: ${numeralWrapper.format(division.awareness, "0.000")}`;
-        const popularity = `Popularity: ${numeralWrapper.format(division.popularity, "0.000")}`;
 
         let advertisingInfo = false;
         const advertisingFactors = division.getAdvertisingFactors();
@@ -103,15 +123,12 @@ export class IndustryOverview extends BaseReactComponent {
         const totalAdvertisingFac = advertisingFactors[0];
         if (vechain) { advertisingInfo = true; }
 
-        const revenue = `Revenue: ${numeralWrapper.formatMoney(division.lastCycleRevenue.toNumber())} / s`;
-        const expenses = `Expenses: ${numeralWrapper.formatMoney(division.lastCycleExpenses.toNumber())} /s`;
-        const profitStr = `Profit: ${numeralWrapper.formatMoney(profit)} / s`;
-
-        const productionMultHelpTipOnClick = () => {
+        function productionMultHelpTipOnClick(): void {
+            if(division === null) return;
             // Wrapper for createProgressBarText()
             // Converts the industry's "effectiveness factors"
             // into a graphic (string) depicting how high that effectiveness is
-            function convertEffectFacToGraphic(fac) {
+            function convertEffectFacToGraphic(fac: number): string {
                 return createProgressBarText({
                     progress: fac,
                     totalTicks: 20,
@@ -136,12 +153,21 @@ export class IndustryOverview extends BaseReactComponent {
                             `Real Estate: ${convertEffectFacToGraphic(division.reFac)}`);
         }
 
+        function openResearchPopup(): void {
+            if(division === null) return;
+            const popupId = "corporation-research-popup-box";
+            createPopup(popupId, ResearchPopup, {
+                industry: division,
+                popupId: popupId,
+            });
+        }
+
         return (
             <div>
-                {genInfo}
+                Industry: {division.type} (Corp Funds: <Money money={corp.funds.toNumber()} />)
                 <br /> <br />
-                {awareness} <br />
-                {popularity} <br />
+                Awareness: {numeralWrapper.format(division.awareness, "0.000")} <br />
+                Popularity: {numeralWrapper.format(division.popularity, "0.000")} <br />
                 {
                     (advertisingInfo !== false) &&
                     <p className={"tooltip"}>Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}
@@ -158,9 +184,9 @@ export class IndustryOverview extends BaseReactComponent {
                 }
                 {advertisingInfo}
                 <br /><br />
-                {revenue} <br />
-                {expenses} <br />
-                {profitStr}
+                Revenue: <Money money={division.lastCycleRevenue.toNumber()} /> / s <br />
+                Expenses: <Money money={division.lastCycleExpenses.toNumber()} /> /s <br />
+                Profit: <Money money={profit} /> / s
                 <br /> <br />
                 <p className={"tooltip"}>
                     Production Multiplier: {numeralWrapper.format(division.prodMult, "0.00")}
@@ -178,19 +204,20 @@ export class IndustryOverview extends BaseReactComponent {
                         products that you produce.
                     </span>
                 </p>
-                <button className={"help-tip"} onClick={division.createResearchBox.bind(division)}>
+                <button className={"help-tip"} onClick={openResearchPopup}>
                     Research
                 </button>
             </div>
         )
     }
 
-    renderUpgrades() {
-        const corp = this.corp();
-        const division = this.routing().currentDivision; // Validated inside render()
-        const office = division.offices[this.props.currentCity];
+    function renderUpgrades(): React.ReactElement[] {
+        const corp = props.corp;
+        const division = props.routing.currentDivision; // Validated inside render()
+        if(division === null) return ([<></>]);
+        const office = division.offices[props.currentCity];
         if (!(office instanceof OfficeSpace)) {
-            throw new Error(`Current City (${this.props.currentCity}) for UI does not have an OfficeSpace object`);
+            throw new Error(`Current City (${props.currentCity}) for UI does not have an OfficeSpace object`);
         }
 
         const upgrades = [];
@@ -213,7 +240,9 @@ export class IndustryOverview extends BaseReactComponent {
                     break;
             }
 
-            const onClick = () => {
+            function onClick(): void {
+                if(office === 0) return;
+                if(division === null) return;
                 if (corp.funds.lt(cost)) {
                     dialogBoxCreate("Insufficient funds");
                 } else {
@@ -223,13 +252,14 @@ export class IndustryOverview extends BaseReactComponent {
                         office: office,
                     });
                     // corp.displayDivisionContent(division, city);
-                    corp.rerender();
+                    corp.rerender(props.player);
                 }
             }
 
-            upgrades.push(this.renderUpgrade({
+            upgrades.push(renderUpgrade({
+                key: index,
                 onClick: onClick,
-                text: `${upgrade[4]} - ${numeralWrapper.formatMoney(cost)}`,
+                text: <>{upgrade[4]} - <Money money={cost} /></>,
                 tooltip: upgrade[5],
             }));
         }
@@ -237,9 +267,16 @@ export class IndustryOverview extends BaseReactComponent {
         return upgrades;
     }
 
-    renderUpgrade(props) {
+    interface IRenderUpgradeProps {
+        key: string;
+        onClick: () => void;
+        text: JSX.Element;
+        tooltip: string;
+    }
+
+    function renderUpgrade(props: IRenderUpgradeProps): React.ReactElement {
         return (
-            <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.text}>
+            <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.key}>
                 {props.text}
                 {
                     props.tooltip != null &&
@@ -249,27 +286,25 @@ export class IndustryOverview extends BaseReactComponent {
         )
     }
 
-    render() {
-        const division = this.routing().currentDivision;
-        if (division == null) {
-            throw new Error(`Routing does not hold reference to the current Industry`);
-        }
-
-        const makeProductButton = this.renderMakeProductButton();
-
-        return (
-            <div className={"cmpy-mgmt-industry-overview-panel"}>
-                {this.renderText()}
-                <br />
-
-                <u className={"industry-purchases-and-upgrades-header"}>Purchases & Upgrades</u><br />
-                {this.renderUpgrades()} <br />
-
-                {
-                    division.makesProducts &&
-                    makeProductButton
-                }
-            </div>
-        )
+    const division = props.routing.currentDivision;
+    if (division == null) {
+        throw new Error(`Routing does not hold reference to the current Industry`);
     }
+
+    const makeProductButton = renderMakeProductButton();
+
+    return (
+        <div className={"cmpy-mgmt-industry-overview-panel"}>
+            {renderText()}
+            <br />
+
+            <u className={"industry-purchases-and-upgrades-header"}>Purchases & Upgrades</u><br />
+            {renderUpgrades()} <br />
+
+            {
+                division.makesProducts &&
+                makeProductButton
+            }
+        </div>
+    )
 }

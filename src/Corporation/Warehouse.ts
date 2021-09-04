@@ -1,4 +1,6 @@
 import { Material }                 from "./Material";
+import { ICorporation }             from "./ICorporation";
+import { IIndustry }                from "./IIndustry";
 import { MaterialSizes }            from "./MaterialSizes";
 import { IMap }                     from "../types";
 import { numeralWrapper }           from "../ui/numeralFormat";
@@ -7,13 +9,9 @@ import { Generic_fromJSON,
          Reviver }                  from "../../utils/JSONReviver";
 import { exceptionAlert }           from "../../utils/helpers/exceptionAlert";
 
-interface IParent {
-    getStorageMultiplier(): number;
-}
-
 interface IConstructorParams {
-    corp?: IParent;
-    industry?: IParent;
+    corp?: ICorporation;
+    industry?: IIndustry;
     loc?: string;
     size?: number;
 }
@@ -92,7 +90,7 @@ export class Warehouse {
         }
     }
 
-    updateSize(corporation: IParent, industry: IParent): void {
+    updateSize(corporation: ICorporation, industry: IIndustry): void {
         try {
             this.size = (this.level * 100)
                       * corporation.getStorageMultiplier()

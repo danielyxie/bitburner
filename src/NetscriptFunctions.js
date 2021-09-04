@@ -21,6 +21,18 @@ import { CompanyPositions } from "./Company/CompanyPositions";
 import { CONSTANTS } from "./Constants";
 import { DarkWebItems } from "./DarkWeb/DarkWebItems";
 import {
+    NewIndustry,
+    NewCity,
+    UnlockUpgrade,
+    LevelUpgrade,
+    IssueDividends,
+    SellMaterial,
+    SellProduct,
+    SetSmartSupply,
+    BuyMaterial } from "./Corporation/Actions";
+import { CorporationUnlockUpgrades } from "./Corporation/data/CorporationUnlockUpgrades";
+import { CorporationUpgrades } from "./Corporation/data/CorporationUpgrades";
+import {
     calculateHackingChance,
     calculateHackingExpGain,
     calculatePercentMoneyHacked,
@@ -553,6 +565,39 @@ function NetscriptFunctions(workerScript) {
         }
 
         return Augmentations[name];
+    }
+
+    function getDivision(divisionName) {
+        const division = Player.corporation.divisions.find(div => div.name === divisionName);
+        if(division === undefined)
+            throw new Error(`No division named '${divisionName}'`);
+        return division;
+    }
+
+    function getWarehouse(divisionName, cityName) {
+        const division = getDivision(divisionName);
+        if(!(cityName in division.warehouses)) 
+            throw new Error(`Invalid city name '${cityName}'`);
+        const warehouse = division.warehouses[cityName];
+        if(warehouse === 0)
+            throw new Error(`${division.name} has not expanded to '${cityName}'`);
+        return warehouse;
+    }
+
+    function getMaterial(divisionName, cityName, materialName) {
+        const warehouse = getWarehouse(divisionName, cityName);
+        const material = warehouse.materials[materialName];
+        if(material === undefined)
+            throw new Error(`Invalid material name: '${materialName}'`);
+        return material;
+    }
+
+    function getProduct(divisionName, productName) {
+        const division = getDivision(divisionName);
+        const product = division.products[productName];
+        if(product === undefined)
+            throw new Error(`Invalid product name: '${productName}'`);
+        return product;
     }
 
     const runAfterReset = function(cbScript=null) {
@@ -4096,6 +4141,46 @@ function NetscriptFunctions(workerScript) {
                 return Math.round(Player.bladeburner.storedCycles / 5);
             },
         }, // End Bladeburner
+
+        // corporation: {
+        //     expandIndustry: function(industryName, divisionName) {
+        //         NewIndustry(Player.corporation, industryName, divisionName);
+        //     },
+        //     expandCity: function(divisionName, cityName) {
+        //         const division = getDivision(divisionName);
+        //         NewCity(Player.corporation, division, cityName);
+        //     },
+        //     unlockUpgrade: function(upgradeName) {
+        //         const upgrade = Object.values(CorporationUnlockUpgrades).
+        //             find(upgrade => upgrade[2] === upgradeName);
+        //         if(upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'")
+        //         UnlockUpgrade(Player.corporation, upgrade);
+        //     },
+        //     levelUpgrade: function(upgradeName) {
+        //         const upgrade = Object.values(CorporationUpgrades).
+        //             find(upgrade => upgrade[4] === upgradeName);
+        //         if(upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'")
+        //         LevelUpgrade(Player.corporation, upgrade);
+        //     },
+        //     issueDividends: function(percent) {
+        //         IssueDividends(Player.corporation, percent);
+        //     },
+        //     sellMaterial: function(divisionName, cityName, materialName, amt, price) {
+        //         const material = getMaterial(divisionName, cityName, materialName);
+        //         SellMaterial(material, amt, price);
+        //     },
+        //     sellProduct: function(divisionName, cityName, productName, amt, price, all) {
+        //         const product = getProduct(divisionName, productName);
+        //         SellProduct(product, cityName, amt, price, all);
+        //     },
+        //     setSmartSupply: function(divisionName, cityName, enabled) {
+        //         const warehouse = getWarehouse(divisionName, cityName);
+        //         SetSmartSupply(warehouse, enabled);
+        //     },
+        //     BuyMaterial: function(divisionName, cityName, materialName, amt) {
+
+        //     },
+        // }, // End Corporation API
 
         // Coding Contract API
         codingcontract: {

@@ -45,6 +45,7 @@
     "react-modal": "^3.12.1",
     "sprintf-js": "^1.1.1",
     "tapable": "^1.0.0",
+    "treant-js": "^1.0.1",
     "uuid": "^3.2.1",
     "w3c-blob": "0.0.1"
   },

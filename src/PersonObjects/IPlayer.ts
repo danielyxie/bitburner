@@ -19,7 +19,8 @@ import { LocationName }                 from "../Locations/data/LocationNames";
 import { Server }                       from "../Server/Server";
 import { IPlayerOwnedSourceFile }       from "../SourceFile/PlayerOwnedSourceFile";
 import { MoneySourceTracker }           from "../utils/MoneySourceTracker";
-import { Exploit }                        from "../Exploits/Exploit";
+import { Exploit }                      from "../Exploits/Exploit";
+import { ICorporation }                 from "../Corporation/ICorporation";
 
 export interface IPlayer {
     // Class members
@@ -28,7 +29,7 @@ export interface IPlayer {
     bitNodeN: number;
     city: CityName;
     companyName: string;
-    corporation: any;
+    corporation: ICorporation;
     currentServer: string;
     factions: string[];
     factionInvitations: string[];

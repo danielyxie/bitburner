@@ -454,7 +454,7 @@ const Engine = {
         if (Player.corporation instanceof Corporation) {
             Engine.hideAllContent();
             routing.navigateTo(Page.Corporation);
-            Player.corporation.createUI();
+            Player.corporation.createUI(Player);
         }
     },
 
@@ -537,7 +537,7 @@ const Engine = {
         }
 
         if (Player.corporation instanceof Corporation) {
-            Player.corporation.clearUI();
+            Player.corporation.clearUI(Player);
         }
 
         clearResleevesPage();
@@ -856,7 +856,7 @@ const Engine = {
 
         if (Engine.Counters.mechanicProcess <= 0) {
             if (Player.corporation instanceof Corporation) {
-                Player.corporation.process();
+                Player.corporation.process(Player);
             }
             if (Player.bladeburner instanceof Bladeburner) {
                 try {
