@@ -943,7 +943,7 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.clearLog();
         },
         disableLog: function(fn) {
-            if (fn = "ALL") {
+            if (fn === "ALL") {
                 for (fn in possibleLogs) {
                     workerScript.disableLogs[fn] = true;
                 }
