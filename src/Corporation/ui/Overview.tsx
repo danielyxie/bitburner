@@ -105,12 +105,12 @@ export function Overview(props: IProps): React.ReactElement {
         const dividendsPerShare = totalDividends / props.corp.totalShares;
         const playerEarnings = props.corp.numShares * dividendsPerShare;
         return (<>
-            Retained Profits (after dividends): {Money(retainedEarnings)} / s<br /><br />
+            Retained Profits (after dividends): <Money money={retainedEarnings} /> / s<br /><br />
             Dividend Percentage: {numeralWrapper.format(props.corp.dividendPercentage / 100, "0%")}<br />
-            Dividends per share: {Money(dividendsPerShare)} / s<br />
-            Your earnings as a shareholder (Pre-Tax): {Money(playerEarnings)} / s<br />
+            Dividends per share: <Money money={dividendsPerShare} /> / s<br />
+            Your earnings as a shareholder (Pre-Tax): <Money money={playerEarnings} /> / s<br />
             Dividend Tax Rate: {props.corp.dividendTaxPercentage}%<br />
-            Your earnings as a shareholder (Post-Tax): {Money(playerEarnings * (1 - (props.corp.dividendTaxPercentage / 100)))} / s<br /><br />
+            Your earnings as a shareholder (Post-Tax): <Money money={playerEarnings * (1 - (props.corp.dividendTaxPercentage / 100))} /> / s<br /><br />
         </>);
     }
 
@@ -316,14 +316,14 @@ export function Overview(props: IProps): React.ReactElement {
     return (
         <div>
             <p>
-                Total Funds: {Money(props.corp.funds.toNumber())}<br />
-                Total Revenue: {Money(props.corp.revenue.toNumber())} / s<br />
-                Total Expenses: {Money(props.corp.expenses.toNumber())} / s<br />
-                Total Profits: {Money(profit)} / s<br />
+                Total Funds: <Money money={props.corp.funds.toNumber()} /><br />
+                Total Revenue: <Money money={props.corp.revenue.toNumber()} /> / s<br />
+                Total Expenses: <Money money={props.corp.expenses.toNumber()} /> / s<br />
+                Total Profits: <Money money={profit} /> / s<br />
                 <DividendsStats />
                 Publicly Traded: {(props.corp.public ? "Yes" : "No")}<br />
                 Owned Stock Shares: {numeralWrapper.format(props.corp.numShares, '0.000a')}<br />
-                Stock Price: {(props.corp.public ? Money(props.corp.sharePrice) : "N/A")}<br />
+                Stock Price: {(props.corp.public ? <Money money={props.corp.sharePrice} /> : "N/A")}<br />
             </p>
             <p className='tooltip'>
                 Total Stock Shares: {numeralWrapper.format(props.corp.totalShares, "0.000a")}

@@ -61,46 +61,46 @@ export const IndustryStartingCosts: IIndustryMap<number> = {
 // Map of description for each industry
 export const IndustryDescriptions: IIndustryMap<JSX.Element> = {
     Energy: (<>Engage in the production and distribution of energy.<br /><br />
-            Starting cost: {Money(IndustryStartingCosts.Energy)}<br />
+            Starting cost: <Money money={IndustryStartingCosts.Energy} /><br />
             Recommended starting Industry: NO</>),
     Utilities: (<>Distribute water and provide wastewater services.<br /><br />
-               Starting cost: {Money(IndustryStartingCosts.Utilities)}<br />
+               Starting cost: <Money money={IndustryStartingCosts.Utilities} /><br />
                Recommended starting Industry: NO</>),
     Agriculture: (<>Cultivate crops and breed livestock to produce food.<br /><br />
-                 Starting cost: {Money(IndustryStartingCosts.Agriculture)}<br />
+                 Starting cost: <Money money={IndustryStartingCosts.Agriculture} /><br />
                  Recommended starting Industry: YES</>),
     Fishing: (<>Produce food through the breeding and processing of fish and fish products.<br /><br />
-             Starting cost: {Money(IndustryStartingCosts.Fishing)}<br />
+             Starting cost: <Money money={IndustryStartingCosts.Fishing} /><br />
              Recommended starting Industry: NO</>),
     Mining: (<>Extract and process metals from the earth.<br /><br />
-            Starting cost: {Money(IndustryStartingCosts.Mining)}<br />
+            Starting cost: <Money money={IndustryStartingCosts.Mining} /><br />
             Recommended starting Industry: NO</>),
     Food: (<>Create your own restaurants all around the world.<br /><br />
-          Starting cost: {Money(IndustryStartingCosts.Food)}<br />
+          Starting cost: <Money money={IndustryStartingCosts.Food} /><br />
           Recommended starting Industry: YES</>),
     Tobacco: (<>Create and distribute tobacco and tobacco-related products.<br /><br />
-             Starting cost: {Money(IndustryStartingCosts.Tobacco)}<br />
+             Starting cost: <Money money={IndustryStartingCosts.Tobacco} /><br />
              Recommended starting Industry: YES</>),
     Chemical: (<>Produce industrial chemicals.<br /><br />
-              Starting cost: {Money(IndustryStartingCosts.Chemical)}<br />
+              Starting cost: <Money money={IndustryStartingCosts.Chemical} /><br />
               Recommended starting Industry: NO</>),
     Pharmaceutical: (<>Discover, develop, and create new pharmaceutical drugs.<br /><br />
-                    Starting cost: {Money(IndustryStartingCosts.Pharmaceutical)}<br />
+                    Starting cost: <Money money={IndustryStartingCosts.Pharmaceutical} /><br />
                     Recommended starting Industry: NO</>),
     Computer: (<>Develop and manufacture new computer hardware and networking infrastructures.<br /><br />
-              Starting cost: {Money(IndustryStartingCosts.Computer)}<br />
+              Starting cost: <Money money={IndustryStartingCosts.Computer} /><br />
               Recommended starting Industry: NO</>),
     Robotics: (<>Develop and create robots.<br /><br />
-              Starting cost: {Money(IndustryStartingCosts.Robotics)}<br />
+              Starting cost: <Money money={IndustryStartingCosts.Robotics} /><br />
               Recommended starting Industry: NO</>),
     Software: (<>Develop computer software and create AI Cores.<br /><br />
-              Starting cost: {Money(IndustryStartingCosts.Software)}<br />
+              Starting cost: <Money money={IndustryStartingCosts.Software} /><br />
               Recommended starting Industry: YES</>),
     Healthcare: (<>Create and manage hospitals.<br /><br />
-                Starting cost: {Money(IndustryStartingCosts.Healthcare)}<br />
+                Starting cost: <Money money={IndustryStartingCosts.Healthcare} /><br />
                 Recommended starting Industry: NO</>),
     RealEstate: (<>Develop and manage real estate properties.<br /><br />
-                Starting cost: {Money(IndustryStartingCosts.RealEstate)}<br />
+                Starting cost: <Money money={IndustryStartingCosts.RealEstate} /><br />
                 Recommended starting Industry: NO</>),
 }
 

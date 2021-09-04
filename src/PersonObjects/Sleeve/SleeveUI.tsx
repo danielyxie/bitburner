@@ -1,6 +1,7 @@
 /**
  * Module for handling the Sleeve UI
  */
+import React from 'react';
 import { createSleevePurchaseAugsPopup } from "./SleeveAugmentationsUI";
 import { Sleeve } from "./Sleeve";
 import { SleeveTaskType } from "./SleeveTaskTypesEnum";
@@ -202,6 +203,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         currentEarningsInfo:    null,
         totalEarningsButton:    null,
     }
+    if(playerRef === null) return elems;
 
     if (!routing.isOn(Page.Sleeves)) { return elems; }
 
@@ -223,13 +225,14 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         class: "std-button",
         innerText: "Travel",
         clickListener: () => {
+            if(playerRef === null) return;
             const popupId = "sleeve-travel-popup";
             const popupArguments: HTMLElement[] = [];
             popupArguments.push(createPopupCloseButton(popupId, { class: "std-button" }));
             popupArguments.push(createElement("p", {
                 innerHTML: "Have this sleeve travel to a different city. This affects " +
                            "the gyms and universities at which this sleeve can study. " +
-                           `Traveling to a different city costs ${renderToStaticMarkup(Money(CONSTANTS.TravelCost))}. ` +
+                           `Traveling to a different city costs ${renderToStaticMarkup(<Money money={CONSTANTS.TravelCost} player={playerRef} />)}. ` +
                            "It will also CANCEL the sleeve's current task (setting it to idle)",
             }));
             for (const cityName in Cities) {
@@ -346,7 +349,7 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems): void {
 
     if (sleeve.currentTask === SleeveTaskType.Crime) {
         const data = [
-            [`Money`, Money(parseFloat(sleeve.currentTaskLocation)), `(on success)`],
+            [`Money`, <Money money={parseFloat(sleeve.currentTaskLocation)} />, `(on success)`],
             [`Hacking Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.hack), `(2x on success)`],
             [`Strength Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.str), `(2x on success)`],
             [`Defense Exp`, numeralWrapper.formatExp(sleeve.gainRatesForTask.def), `(2x on success)`],

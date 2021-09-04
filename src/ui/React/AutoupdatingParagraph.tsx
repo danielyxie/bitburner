@@ -58,13 +58,13 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
 
     render(): React.ReactNode {
         return (
-            <p className="tooltip" style={this.props.style}>
-                {this.props.getContent()}
+            <div className="tooltip" style={this.props.style}>
+                <p>{this.props.getContent()}</p>
                 {
                     this.hasTooltip() &&
                     <span className={"tooltiptext"}>{this.tooltip()}</span>
                 }
-            </p>
+            </div>
         )
     }
 }

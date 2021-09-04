@@ -47,7 +47,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
             <div className="noselect">
                 <p>
                     From here, you can travel to any other city! A ticket
-                    costs {Money(CONSTANTS.TravelCost)}.
+                    costs <Money money={CONSTANTS.TravelCost} player={this.props.p} />.
                 </p>
 <pre>               ,_   .  ._. _.  .</pre>
 <pre>           , _-\','|~\~      ~/      ;-'_   _-'     ,;_;_,    ~~-</pre>
@@ -98,7 +98,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
             <div>
                 <p>
                     From here, you can travel to any other city! A ticket
-                    costs {Money(CONSTANTS.TravelCost)}.
+                    costs <Money money={CONSTANTS.TravelCost} />.
                 </p>
                 {travelBtns}
             </div>

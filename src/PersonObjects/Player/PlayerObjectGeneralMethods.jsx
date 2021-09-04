@@ -125,6 +125,12 @@ export function prestigeAugmentation() {
 
     this.resleeves = [];
 
+    let numSleeves = Math.min(3, SourceFileFlags[10] + (this.bitNodeN === 10 ? 1 : 0)) + this.sleevesFromCovenant;
+    if(this.sleeves.length > numSleeves) this.sleeves.length = numSleeves;
+    for(let i = this.sleeves.length; i < numSleeves; i++) {
+        this.sleeves.push(new Sleeve(this));
+    }
+
     for (let i = 0; i < this.sleeves.length; ++i) {
         if (this.sleeves[i] instanceof Sleeve) {
             if (this.sleeves[i].shock >= 100) {
@@ -178,55 +184,16 @@ export function prestigeAugmentation() {
 }
 
 export function prestigeSourceFile() {
-    var homeComp = this.getHomeComputer();
-    this.currentServer = homeComp.ip;
-    this.homeComputer = homeComp.ip;
-
-    this.numPeopleKilled = 0;
-    this.karma = 0;
-
-    //Reset stats
-    this.hacking_skill = 1;
-
-    this.strength = 1;
-    this.defense = 1;
-    this.dexterity = 1;
-    this.agility = 1;
-
-    this.charisma = 1;
-
-    this.hacking_exp = 0;
-    this.strength_exp = 0;
-    this.defense_exp = 0;
-    this.dexterity_exp = 0;
-    this.agility_exp = 0;
-    this.charisma_exp = 0;
-
-    this.money = new Decimal(1000);
-
-    this.city = CityName.Sector12;
-    this.location = "";
-
-    this.companyName = "";
-    this.jobs = {};
-
-    this.purchasedServers = [];
-
-    this.factions = [];
-    this.factionInvitations = [];
-
-    this.queuedAugmentations = [];
-    this.augmentations = [];
-
-    this.resleeves = [];
-
+    this.prestigeAugmentation();
     // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
-    this.sleeves.length = SourceFileFlags[10] + this.sleevesFromCovenant;
     for (let i = 0; i < this.sleeves.length; ++i) {
-        if (this.sleeves[i] instanceof Sleeve) {
-            this.sleeves[i].prestige(this);
-        } else {
-            this.sleeves[i] = new Sleeve(this);
+        this.sleeves[i] = new Sleeve(this);
+    }
+
+    if(this.bitNodeN === 10) {
+        for (let i = 0; i < this.sleeves.length; i++) {
+            this.sleeves[i].shock = Math.max(25, this.sleeves[i].shock);
+            this.sleeves[i].sync = Math.max(25, this.sleeves[i].sync);
         }
     }
 
@@ -235,37 +202,7 @@ export function prestigeSourceFile() {
         characterMenuHeader.click(); characterMenuHeader.click();
     }
 
-    this.isWorking = false;
-    this.currentWorkFactionName = "";
-    this.currentWorkFactionDescription = "";
-    this.createProgramName = "";
-    this.className = "";
-    this.crimeType = "";
-
-    this.workHackExpGainRate = 0;
-    this.workStrExpGainRate = 0;
-    this.workDefExpGainRate = 0;
-    this.workDexExpGainRate = 0;
-    this.workAgiExpGainRate = 0;
-    this.workChaExpGainRate = 0;
-    this.workRepGainRate = 0;
-    this.workMoneyGainRate = 0;
-
-    this.workHackExpGained = 0;
-    this.workStrExpGained = 0;
-    this.workDefExpGained = 0;
-    this.workDexExpGained = 0;
-    this.workAgiExpGained = 0;
-    this.workChaExpGained = 0;
-    this.workRepGained = 0;
-    this.workMoneyGained = 0;
-
     this.timeWorked = 0;
-
-    this.lastUpdate = new Date().getTime();
-
-    this.hacknetNodes.length = 0;
-    this.hashManager.prestige();
 
     // Gang
     this.gang = null;
@@ -280,15 +217,10 @@ export function prestigeSourceFile() {
     // BitNode 3: Corporatocracy
     this.corporation = 0;
 
-    // Statistics trackers
-    this.playtimeSinceLastAug = 0;
-    this.playtimeSinceLastBitnode = 0;
-    this.scriptProdSinceLastAug = 0;
-    this.moneySourceA.reset();
     this.moneySourceB.reset();
+    this.playtimeSinceLastBitnode = 0;
+    this.augmentations = [];
 
-    this.updateSkillLevels();
-    this.hp = this.max_hp;
 }
 
 export function receiveInvite(factionName) {
@@ -668,7 +600,7 @@ export function work(numCycles) {
         You are currently working as a {position} at {this.companyName} (Current Company Reputation: {Reputation(companyRep)})<br /><br />
         You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
         You have earned: <br /><br />
-        {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+        <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
         {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this company <br /><br />
         {numeralWrapper.formatExp(this.workHackExpGained)} ({`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}) hacking exp <br /><br />
         {numeralWrapper.formatExp(this.workStrExpGained)} ({`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}) strength exp <br />
@@ -694,7 +626,7 @@ export function finishWork(cancelled, sing=false) {
 
     let content = <>
         You earned a total of: <br />
-        {Money(this.workMoneyGained)}<br />
+        <Money money={this.workMoneyGained} /><br />
         {Reputation(this.workRepGained)} reputation for the company <br />
         {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
         {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -796,7 +728,7 @@ export function workPartTime(numCycles) {
         You are currently working as a {position} at {this.companyName} (Current Company Reputation: {Reputation(companyRep)})<br /><br />
         You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
         You have earned: <br /><br />
-        {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+        <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
         {Reputation(this.workRepGained)} ({Reputation(`${numeralWrapper.formatExp(this.workRepGainRate * CYCLES_PER_SEC)} / sec`)}) reputation for this company <br /><br />
         {numeralWrapper.formatExp(this.workHackExpGained)} ({`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}) hacking exp <br /><br />
         {numeralWrapper.formatExp(this.workStrExpGained)} ({`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}) strength exp <br />
@@ -817,7 +749,7 @@ export function finishWorkPartTime(sing=false) {
     const content = <>
         You worked for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br /> 
         You earned a total of: <br />
-        {Money(this.workMoneyGained)}<br />
+        <Money money={this.workMoneyGained} /><br />
         {Reputation(this.workRepGained)} reputation for the company <br />
         {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
         {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -981,7 +913,7 @@ export function workForFaction(numCycles) {
                     (Current Faction Reputation: {Reputation(faction.playerReputation)}). <br />
                     You have been doing this for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
                     You have earned: <br /><br />
-                    {Money(this.workMoneyGained)} ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
+                    <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br /><br />
                     {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this faction <br /><br />
                     {numeralWrapper.formatExp(this.workHackExpGained)} ({numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br /><br />
                     {numeralWrapper.formatExp(this.workStrExpGained)} ({numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
@@ -1004,7 +936,7 @@ export function finishFactionWork(cancelled, sing=false) {
         dialogBoxCreate(<>
             You worked for your faction {faction.name} for a total of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br /><br />
             You earned a total of: <br />
-            {Money(this.workMoneyGained)}<br />
+            <Money money={this.workMoneyGained} /><br />
             {Reputation(this.workRepGained)} reputation for the faction <br />
             {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
             {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -1384,7 +1316,7 @@ export function takeClass(numCycles) {
     ReactDOM.render(<>
         You have been {className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}<br /><br />
         This has cost you: <br />
-        {Money(-this.workMoneyGained)} ({MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br /><br />
+        <Money money={-this.workMoneyGained} /> ({MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br /><br />
         You have gained: <br />
         {numeralWrapper.formatExp(this.workHackExpGained)} ({numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
         {numeralWrapper.formatExp(this.workStrExpGained)} ({numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
@@ -1409,7 +1341,7 @@ export function finishClass(sing=false) {
     if (!sing) {
         dialogBoxCreate(<>
             After {this.className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}, <br />
-            you spent a total of {Money(this.workMoneyGained * -1)}. <br /><br />
+            you spent a total of <Money money={-this.workMoneyGained} />. <br /><br />
             You earned a total of: <br />
             {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
             {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
@@ -1543,7 +1475,7 @@ export function finishCrime(cancelled) {
                 dialogBoxCreate(<>
                     Crime successful!<br /><br />
                     You gained:<br />
-                    {Money(this.workMoneyGained)}<br />
+                    <Money money={this.workMoneyGained} /><br />
                     {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
                     {numeralWrapper.formatExp(this.workStrExpGained)} strength experience<br />
                     {numeralWrapper.formatExp(this.workDefExpGained)} defense experience<br />
@@ -1664,7 +1596,7 @@ export function hospitalize() {
         dialogBoxCreate(<>
             You were in critical condition! You were taken to the hospital where 
             luckily they were able to save your life. You were charged&nbsp;
-            {Money(cost)}
+            <Money money={cost} />
         </>);
     }
 

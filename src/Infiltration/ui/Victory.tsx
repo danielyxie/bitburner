@@ -67,7 +67,7 @@ export function Victory(props: IProps): React.ReactElement {
                 <StdButton onClick={trade} text={<>{"Trade for "}{Reputation(repGain)}{" reputation"}</>} />
             </Grid>
             <Grid item xs={3}>
-                <StdButton onClick={sell} text={<>{"Sell for "}{Money(moneyGain)}</>} />
+                <StdButton onClick={sell} text={<>{"Sell for "}<Money money={moneyGain} /></>} />
             </Grid>
             <Grid item xs={3}>
                 <StdButton onClick={quitInfiltration} text={"Quit"} />

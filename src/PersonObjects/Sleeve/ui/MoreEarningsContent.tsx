@@ -7,7 +7,7 @@ import { StatsTable } from "../../../ui/React/StatsTable";
 export function MoreEarningsContent(sleeve: Sleeve): React.ReactElement {
     return (<>
         {StatsTable([
-            ['Money ', Money(sleeve.earningsForTask.money)],
+            ['Money ', <Money money={sleeve.earningsForTask.money} />],
             ['Hacking Exp ', numeralWrapper.formatExp(sleeve.earningsForTask.hack)],
             ['Strength Exp ', numeralWrapper.formatExp(sleeve.earningsForTask.str)],
             ['Defense Exp ', numeralWrapper.formatExp(sleeve.earningsForTask.def)],
@@ -17,7 +17,7 @@ export function MoreEarningsContent(sleeve: Sleeve): React.ReactElement {
         ], 'Earnings for Current Task:')}
         <br />
         {StatsTable([
-            ['Money: ', Money(sleeve.earningsForPlayer.money)],
+            ['Money: ', <Money money={sleeve.earningsForPlayer.money} />],
             ['Hacking Exp: ', numeralWrapper.formatExp(sleeve.earningsForPlayer.hack)],
             ['Strength Exp: ', numeralWrapper.formatExp(sleeve.earningsForPlayer.str)],
             ['Defense Exp: ', numeralWrapper.formatExp(sleeve.earningsForPlayer.def)],
@@ -27,7 +27,7 @@ export function MoreEarningsContent(sleeve: Sleeve): React.ReactElement {
         ], 'Total Earnings for Host Consciousness:')}
         <br />
         {StatsTable([
-            ['Money: ', Money(sleeve.earningsForSleeves.money)],
+            ['Money: ', <Money money={sleeve.earningsForSleeves.money} />],
             ['Hacking Exp: ', numeralWrapper.formatExp(sleeve.earningsForSleeves.hack)],
             ['Strength Exp: ', numeralWrapper.formatExp(sleeve.earningsForSleeves.str)],
             ['Defense Exp: ', numeralWrapper.formatExp(sleeve.earningsForSleeves.def)],

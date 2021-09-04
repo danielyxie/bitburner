@@ -125,7 +125,6 @@ export class Gang {
         this.respectGainRate = respectGains;
         this.wantedGainRate = wantedLevelGains;
         this.moneyGainRate = moneyGains;
-
         const gain = respectGains * numCycles;
         this.respect += gain;
         // Faction reputation gains is respect gain divided by some constant
@@ -135,6 +134,7 @@ export class Gang {
             throw new Error('Could not find the faction associated with this gang.');
         }
         const favorMult = 1 + (fac.favor / 100);
+
         fac.playerReputation += ((player.faction_rep_mult * gain * favorMult) / GangConstants.GangRespectToReputationRatio);
 
         // Keep track of respect gained per member

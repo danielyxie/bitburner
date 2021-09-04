@@ -79,7 +79,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
         } else if (this.state.amt > maxMemory) {
             purchaseBtnContent = <>Memory cannot exceed 100?</>;
         } else {
-            purchaseBtnContent = <>Purchase {this.state.amt} memory - {Money(cost)}?</>;
+            purchaseBtnContent = <>Purchase {this.state.amt} memory - <Money money={cost} player={this.props.p} />?</>;
         }
 
         return (

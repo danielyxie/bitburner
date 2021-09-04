@@ -641,7 +641,7 @@ class DevMenuComponent extends Component {
         this.processStocks((stock) => {
             stocks.push(<tr key={stock.symbol}>
                 <td>{stock.symbol}</td>
-                <td style={{'textAlign':'right'}}>{Money(stock.cap)}</td>
+                <td style={{'textAlign':'right'}}><Money money={stock.cap} /></td>
             </tr>);
         });
         dialogBoxCreate(<table><tbody><tr><th>Stock</th><th>Price cap</th></tr>
@@ -741,11 +741,11 @@ class DevMenuComponent extends Component {
         <h2>Generic</h2>
     </div>
     <div className="row">
-            <button className="std-button" onClick={this.addMoney(1e6)}>Add $1m</button>
-            <button className="std-button" onClick={this.addMoney(1e9)}>Add $1b</button>
-            <button className="std-button" onClick={this.addMoney(1e12)}>Add $1t</button>
-            <button className="std-button" onClick={this.addMoney(1e15)}>Add $1000t</button>
-            <button className="std-button" onClick={this.addMoney(Infinity)}>Add $Infinity</button>
+            <button className="std-button" onClick={this.addMoney(1e6)}>Add <Money money={1e6} /></button>
+            <button className="std-button" onClick={this.addMoney(1e9)}>Add <Money money={1e9} /></button>
+            <button className="std-button" onClick={this.addMoney(1e12)}>Add <Money money={1e12} /></button>
+            <button className="std-button" onClick={this.addMoney(1e15)}>Add <Money money={1000e12} /></button>
+            <button className="std-button" onClick={this.addMoney(Infinity)}>Add <Money money={Infinity} /></button>
             <button className="std-button" onClick={this.upgradeRam}>Upgrade Home Computer's RAM</button>
     </div>
     <div className="row">

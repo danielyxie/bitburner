@@ -44,7 +44,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, Player.hacknet_node_level_cost_mult);
-            upgradeLevelContent = <>Upgrade x{multiplier} - {Money(upgradeLevelCost)}</>;
+            upgradeLevelContent = <>Upgrade x{multiplier} - <Money money={upgradeLevelCost} player={Player} /></>;
             if (Player.money.lt(upgradeLevelCost)) {
                 upgradeLevelClass = "std-button-disabled";
             } else {
@@ -76,7 +76,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, Player.hacknet_node_ram_cost_mult);
-            upgradeRamContent = <>Upgrade x{multiplier} - {Money(upgradeRamCost)}</>;
+            upgradeRamContent = <>Upgrade x{multiplier} - <Money money={upgradeRamCost} player={Player} /></>;
             if (Player.money.lt(upgradeRamCost)) {
                 upgradeRamClass = "std-button-disabled";
             } else {
@@ -108,7 +108,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, Player.hacknet_node_core_cost_mult);
-            upgradeCoresContent = <>Upgrade x{multiplier} - {Money(upgradeCoreCost)}</>;
+            upgradeCoresContent = <>Upgrade x{multiplier} - <Money money={upgradeCoreCost} player={Player} /></>;
             if (Player.money.lt(upgradeCoreCost)) {
                 upgradeCoresClass = "std-button-disabled";
             } else {
@@ -140,7 +140,7 @@ export class HacknetServer extends React.Component {
             }
 
             const upgradeCacheCost = node.calculateCacheUpgradeCost(multiplier);
-            upgradeCacheContent = <>Upgrade x{multiplier} - {Money(upgradeCacheCost)}</>;
+            upgradeCacheContent = <>Upgrade x{multiplier} - <Money money={upgradeCacheCost} player={Player} /></>;
             if (Player.money.lt(upgradeCacheCost)) {
                 upgradeCacheClass = "std-button-disabled";
             } else {

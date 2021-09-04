@@ -11,7 +11,7 @@ import { AutoupdatingParagraph } from "../../ui/React/AutoupdatingParagraph";
 import { ParagraphWithTooltip } from "../../ui/React/ParagraphWithTooltip";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
-import { MathComponent } from 'mathjax-react'
+import { MathComponent } from 'mathjax-react';
 
 type IProps = {
     faction: Faction;
@@ -41,7 +41,11 @@ export class Info extends React.Component<IProps, any> {
 
     getFavorGainContent(): JSX.Element {
         const favorGain = this.props.faction.getFavorGain()[0];
-        return <>You will earn {Favor(favorGain)} faction favor upon resetting after installing an Augmentation</>
+        return (<>
+            You will have {Favor(this.props.faction.favor+favorGain)} faction favor after installing an Augmentation.
+            <MathComponent tex={String.raw`\large{r = \text{total faction reputation}}`} />
+            <MathComponent tex={String.raw`\large{favor=\left\lfloor\log_{1.02}\left(\frac{r+25000}{25500}\right)\right\rfloor}`} />
+        </>);
     }
 
     getReputationContent(): JSX.Element {
@@ -52,11 +56,13 @@ export class Info extends React.Component<IProps, any> {
         const favorTooltip = <>
                                 Faction favor increases the rate at which you earn reputation for
                                 this faction by 1% per favor. Faction favor is gained whenever you
-                                reset after installing an Augmentation. The amount of
-                                favor you gain depends on how much reputation you have with the faction
-                                <MathComponent tex={String.raw`r = \text{total faction reputation}`} />
-                                <MathComponent tex={String.raw`\text{favor} = \frac{-\ln(\frac{25500}{r + 25000})}{\ln(\frac{51}{50})}`} />
+                                install an Augmentation. The amount of
+                                favor you gain depends on the total amount of reputation you earned with this faction.
+                                Across all resets.
+                                <MathComponent tex={String.raw`\large{r = reputation}`} />
+                                <MathComponent tex={String.raw`\large{\Delta r = \Delta r \times \frac{100+favor}{100}}`} />
                             </>;
+
 
         const infoText: IInnerHTMLMarkup = {
             __html: this.props.factionInfo.infoText,

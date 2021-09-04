@@ -170,7 +170,7 @@ export class SlotMachine extends Game<IProps, IState> {
         }
 
         this.setState({
-            status: <>{gains>0?"gained":"lost"} {Money(Math.abs(gains))}</>,
+            status: <>{gains>0?"gained":"lost"} <Money money={Math.abs(gains)} /></>,
             canPlay: true,
         })
         if(this.reachedLimit(this.props.p)) return;

@@ -1059,7 +1059,7 @@ const Engine = {
             var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
             const hacknetProdInfo = hasHacknetServers() ?
                                     <>{Hashes(offlineProductionFromHacknetNodes)} hashes</>:
-                                    Money(offlineProductionFromHacknetNodes);
+                                    <Money money={offlineProductionFromHacknetNodes} />;
 
             // Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
@@ -1113,7 +1113,7 @@ const Engine = {
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
             dialogBoxCreate(<>
                 Offline for {timeOfflineString}. While you were offline, your scripts
-                generated {Money(offlineHackingIncome)}, your Hacknet Nodes
+                generated <Money money={offlineHackingIncome} />, your Hacknet Nodes
                 generated {hacknetProdInfo} and you
                 gained {Reputation(offlineReputation)} divided amongst your factions.
             </>);

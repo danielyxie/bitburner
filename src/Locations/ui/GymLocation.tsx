@@ -77,22 +77,22 @@ export class GymLocation extends React.Component<IProps, any> {
                 <StdButton
                     onClick={this.trainStrength}
                     style={this.btnStyle}
-                    text={<>Train Strength ({Money(cost)} / sec)</>}
+                    text={<>Train Strength (<Money money={cost} player={this.props.p} /> / sec)</>}
                 />
                 <StdButton
                     onClick={this.trainDefense}
                     style={this.btnStyle}
-                    text={<>Train Defense ({Money(cost)} / sec)</>}
+                    text={<>Train Defense (<Money money={cost} player={this.props.p} /> / sec)</>}
                 />
                 <StdButton
                     onClick={this.trainDexterity}
                     style={this.btnStyle}
-                    text={<>Train Dexterity ({Money(cost)} / sec)</>}
+                    text={<>Train Dexterity (<Money money={cost} player={this.props.p} /> / sec)</>}
                 />
                 <StdButton
                     onClick={this.trainAgility}
                     style={this.btnStyle}
-                    text={<>Train Agility ({Money(cost)} / sec)</>}
+                    text={<>Train Agility (<Money money={cost} player={this.props.p} /> / sec)</>}
                 />
             </div>
         )

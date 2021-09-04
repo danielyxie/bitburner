@@ -51,7 +51,7 @@ export function executeDarkwebTerminalCommand(commandArray: string[]): void {
 function listAllDarkwebItems(): void {
     for(const key in DarkWebItems) {
         const item = DarkWebItems[key];
-        postElement(<>{item.program} - {Money(item.price)} - {item.description}</>);
+        postElement(<>{item.program} - <Money money={item.price} player={Player} /> - {item.description}</>);
     }
 }
 

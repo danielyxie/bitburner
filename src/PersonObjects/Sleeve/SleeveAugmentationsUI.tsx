@@ -2,6 +2,7 @@
  * Module for handling the UI for purchasing Sleeve Augmentations
  * This UI is a popup, not a full page
  */
+import React from 'react';
 import { Sleeve } from "./Sleeve";
 import { findSleevePurchasableAugs } from "./SleeveHelpers";
 
@@ -102,7 +103,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer): void 
             innerHTML:
             [
                 `<h2>${aug.name}</h2><br>`,
-                `Cost: ${renderToStaticMarkup(Money(aug.startingCost))}<br><br>`,
+                `Cost: ${renderToStaticMarkup(<Money money={aug.startingCost} player={p} />)}<br><br>`,
                 `${info}`,
             ].join(" "),
             padding: "2px",

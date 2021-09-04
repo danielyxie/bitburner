@@ -60,7 +60,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
         if (workerScript) {
             workerScript.log("buyStock", `You do not have enough money to purchase this position. You need ${numeralWrapper.formatMoney(totalPrice)}.`);
         } else if (opts.suppressDialog !== true) {
-            dialogBoxCreate(<>You do not have enough money to purchase this. You need {Money(totalPrice)}</>);
+            dialogBoxCreate(<>You do not have enough money to purchase this. You need <Money money={totalPrice} /></>);
         }
 
         return false;
@@ -92,7 +92,7 @@ export function buyStock(stock: Stock, shares: number, workerScript: WorkerScrip
                     `Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} in commission fees.`
         workerScript.log("buyStock", resultTxt)
     } else if (opts.suppressDialog !== true) {
-        dialogBoxCreate(<>Bought {numeralWrapper.formatShares(shares)} shares of {stock.symbol} for {Money(totalPrice)}. Paid {Money(CONSTANTS.StockMarketCommission)} in commission fees.</>);
+        dialogBoxCreate(<>Bought {numeralWrapper.formatShares(shares)} shares of {stock.symbol} for <Money money={totalPrice} />. Paid <Money money={CONSTANTS.StockMarketCommission} /> in commission fees.</>);
     }
 
     return true;
@@ -150,7 +150,7 @@ export function sellStock(stock: Stock, shares: number, workerScript: WorkerScri
                       `After commissions, you gained a total of ${numeralWrapper.formatMoney(gains)}.`;
         workerScript.log("sellStock", resultTxt)
     } else if (opts.suppressDialog !== true)  {
-        dialogBoxCreate(<>Sold {numeralWrapper.formatShares(shares)} shares of {stock.symbol}. After commissions, you gained a total of {Money(gains)}.</>);
+        dialogBoxCreate(<>Sold {numeralWrapper.formatShares(shares)} shares of {stock.symbol}. After commissions, you gained a total of <Money money={gains} />.</>);
     }
 
     return true;
@@ -188,7 +188,7 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
                              "money to purchase this short position. You need " +
                              numeralWrapper.formatMoney(totalPrice));
         } else if (opts.suppressDialog !== true) {
-            dialogBoxCreate(<>You do not have enough money to purchase this short position. You need {Money(totalPrice)}</>);
+            dialogBoxCreate(<>You do not have enough money to purchase this short position. You need <Money money={totalPrice} /></>);
         }
 
         return false;
@@ -222,7 +222,7 @@ export function shortStock(stock: Stock, shares: number, workerScript: WorkerScr
             `in commission fees.`;
         workerScript.log("shortStock", resultTxt);
     } else if (!opts.suppressDialog) {
-        dialogBoxCreate(<>Bought a short position of {numeralWrapper.formatShares(shares)} shares of {stock.symbol} for {Money(totalPrice)}. Paid {Money(CONSTANTS.StockMarketCommission)} in commission fees.</>);
+        dialogBoxCreate(<>Bought a short position of {numeralWrapper.formatShares(shares)} shares of {stock.symbol} for <Money money={totalPrice} />. Paid <Money money={CONSTANTS.StockMarketCommission} /> in commission fees.</>);
     }
 
     return true;
@@ -287,7 +287,7 @@ export function sellShort(stock: Stock, shares: number, workerScript: WorkerScri
                       `After commissions, you gained a total of ${numeralWrapper.formatMoney(totalGain)}`;
         workerScript.log("sellShort", resultTxt);
     } else if (!opts.suppressDialog) {
-        dialogBoxCreate(<>Sold your short position of {numeralWrapper.formatShares(shares)} shares of {stock.symbol}. After commissions, you gained a total of {Money(totalGain)}</>);
+        dialogBoxCreate(<>Sold your short position of {numeralWrapper.formatShares(shares)} shares of {stock.symbol}. After commissions, you gained a total of <Money money={totalGain} /></>);
     }
 
     return true;

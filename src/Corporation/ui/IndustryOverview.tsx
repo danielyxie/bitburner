@@ -164,7 +164,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
 
         return (
             <div>
-                Industry: {division.type} (Corp Funds: {Money(corp.funds.toNumber())})
+                Industry: {division.type} (Corp Funds: <Money money={corp.funds.toNumber()} />)
                 <br /> <br />
                 Awareness: {numeralWrapper.format(division.awareness, "0.000")} <br />
                 Popularity: {numeralWrapper.format(division.popularity, "0.000")} <br />
@@ -184,9 +184,9 @@ export function IndustryOverview(props: IProps): React.ReactElement {
                 }
                 {advertisingInfo}
                 <br /><br />
-                Revenue: {Money(division.lastCycleRevenue.toNumber())} / s <br />
-                Expenses: {Money(division.lastCycleExpenses.toNumber())} /s <br />
-                Profit: {Money(profit)} / s
+                Revenue: <Money money={division.lastCycleRevenue.toNumber()} /> / s <br />
+                Expenses: <Money money={division.lastCycleExpenses.toNumber()} /> /s <br />
+                Profit: <Money money={profit} /> / s
                 <br /> <br />
                 <p className={"tooltip"}>
                     Production Multiplier: {numeralWrapper.format(division.prodMult, "0.00")}
@@ -259,7 +259,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
             upgrades.push(renderUpgrade({
                 key: index,
                 onClick: onClick,
-                text: <>{upgrade[4]} - {Money(cost)}</>,
+                text: <>{upgrade[4]} - <Money money={cost} /></>,
                 tooltip: upgrade[5],
             }));
         }

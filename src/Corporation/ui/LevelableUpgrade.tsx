@@ -23,7 +23,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
     const priceMult = data[2];
     const cost = baseCost * Math.pow(priceMult, level);
 
-    const text = <>{data[4]} - {Money(cost)}</>
+    const text = <>{data[4]} - <Money money={cost} /></>
     const tooltip = data[5];
     function onClick(): void {
         try {

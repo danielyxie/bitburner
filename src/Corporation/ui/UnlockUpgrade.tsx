@@ -17,7 +17,7 @@ interface IProps {
 
 export function UnlockUpgrade(props: IProps): React.ReactElement {
     const data = props.upgradeData;
-    const text = <>{data[2]} - {Money(data[1])}</>;
+    const text = <>{data[2]} - <Money money={data[1]} /></>;
     const tooltip = data[3];
     function onClick(): void {
         try {

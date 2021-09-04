@@ -10,14 +10,14 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
         costPerLevel: 4,
         desc: "Sell hashes for $1m",
         name: "Sell for Money",
-        effectText: (level: number): JSX.Element | null => (<>Sold for {Money(1e6*level)}</>),
+        effectText: (level: number): JSX.Element | null => (<>Sold for <Money money={1e6*level} /></>),
         value: 1e6,
     },
     {
         costPerLevel: 100,
         desc: "Sell hashes for $1b in Corporation funds",
         name: "Sell for Corporation Funds",
-        effectText: (level: number): JSX.Element | null => (<>Sold for {Money(1e9*level)} Corporation funds.</>),
+        effectText: (level: number): JSX.Element | null => (<>Sold for <Money money={1e9*level} /> Corporation funds.</>),
         value: 1e9,
     },
     {

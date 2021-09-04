@@ -51,7 +51,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
             setRerender(old => !old);
         }
         return (<a key={upg.name} className="a-link-button tooltip" style={{margin:"2px",  padding:"2px", display:"block", fontSize:"11px"}} onClick={onClick}>
-            {upg.name} - {Money(props.gang.getUpgradeCost(upg))}
+            {upg.name} - <Money money={props.gang.getUpgradeCost(upg)} player={props.player} />
             <span className={left?"tooltiptextleft":"tooltiptext"} dangerouslySetInnerHTML={{__html: upg.desc}} />
         </a>);
     }

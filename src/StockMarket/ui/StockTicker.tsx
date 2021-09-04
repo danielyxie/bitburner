@@ -115,7 +115,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         const cost = getBuyTransactionCost(stock, qty, this.state.position);
         if (cost == null) { return null; }
 
-        return <>Purchasing {numeralWrapper.formatShares(qty)} shares ({this.state.position === PositionTypes.Long ? "Long" : "Short"}) will cost {Money(cost)}.</>;
+        return <>Purchasing {numeralWrapper.formatShares(qty)} shares ({this.state.position === PositionTypes.Long ? "Long" : "Short"}) will cost <Money money={cost} />.</>;
     }
 
     getQuantity(): number {
@@ -140,7 +140,7 @@ export class StockTicker extends React.Component<IProps, IState> {
         const cost = getSellTransactionGain(stock, qty, this.state.position);
         if (cost == null) { return null; }
 
-        return <>Selling {numeralWrapper.formatShares(qty)} shares ({this.state.position === PositionTypes.Long ? "Long" : "Short"}) will result in a gain of {Money(cost)}.</>;
+        return <>Selling {numeralWrapper.formatShares(qty)} shares ({this.state.position === PositionTypes.Long ? "Long" : "Short"}) will result in a gain of <Money money={cost} />.</>;
     }
 
     handleBuyButtonClick(): void {

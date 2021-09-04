@@ -150,7 +150,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
         for (let i = 0; i < stockOrders.length; ++i) {
             if (order == stockOrders[i]) {
                 stockOrders.splice(i, 1);
-                dialogBoxCreate(<>{order.type} for {stock.symbol} @ {Money(order.price)} ({pos}) was filled ({numeralWrapper.formatShares(Math.round(order.shares))} shares)</>);
+                dialogBoxCreate(<>{order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}) was filled ({numeralWrapper.formatShares(Math.round(order.shares))} shares)</>);
                 refs.rerenderFn();
                 return;
             }
@@ -160,7 +160,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
         console.error(order);
     } else {
         if (isBuy) {
-            dialogBoxCreate(<>Failed to execute {order.type} for {stock.symbol} @ {Money(order.price)} ({pos}). This is most likely because you do not have enough money or the order would exceed the stock's maximum number of shares</>);
+            dialogBoxCreate(<>Failed to execute {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}). This is most likely because you do not have enough money or the order would exceed the stock's maximum number of shares</>);
         }
     }
 }

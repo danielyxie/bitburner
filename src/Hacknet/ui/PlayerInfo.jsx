@@ -26,7 +26,7 @@ export function PlayerInfo(props) {
     return (
         <p id={"hacknet-nodes-money"}>
             <span>Money: </span>
-            {Money(Player.money.toNumber())}<br />
+            <Money money={Player.money.toNumber()} /><br />
 
             {
                 hasServers && <><span>Hashes: {Hashes(Player.hashManager.hashes)} / {Hashes(Player.hashManager.capacity)}</span><br /></>
