@@ -99,8 +99,6 @@ module.exports = {
 //            "skew",
 //            "var"
 //        ],
-        "function-whitespace-after": "always",
-        "indentation": 4,
         "keyframe-declaration-no-important": true,
         "length-zero-no-unit": true,
         "max-empty-lines": 1,
@@ -277,6 +275,7 @@ module.exports = {
             "active",
             "after",
             "before",
+            "checked",
             "disabled",
             "focus",
             "hover",
@@ -284,6 +283,7 @@ module.exports = {
             "not",
             "last-child",
             "root",
+            "target",
             "visited",
         ],
         //"selector-pseudo-element-blacklist": [],
@@ -301,7 +301,6 @@ module.exports = {
 //                "font-family"
 //            ]
 //        ],
-        "string-no-newline": true,
 //        "string-quotes": "double",
         "time-min-milliseconds": 50,
         "unit-blacklist": [],
@@ -318,10 +317,6 @@ module.exports = {
             "%",
         ],
 //        "value-keyword-case": "lower",
-        "value-list-comma-newline-after": "always-multi-line",
-        "value-list-comma-newline-before": "never-multi-line",
-        "value-list-comma-space-after": "always-single-line",
-        "value-list-comma-space-before": "never",
         "value-list-max-empty-lines": 0,
         "value-no-vendor-prefix": true,
     },

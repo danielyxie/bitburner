@@ -72,7 +72,6 @@
     border: 5px solid var(--my-highlight-color);
 }
 
-
 .log-box-container {
     display: flex;
     flex-flow: column;
@@ -157,7 +156,7 @@
 }
 
 .dialog-box-close-button:hover,
-.dialog-box-close-button:focus,{
+.dialog-box-close-button:focus {
     color: #fff;
     text-decoration: none;
     cursor: pointer;
