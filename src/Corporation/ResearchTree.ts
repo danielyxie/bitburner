@@ -241,7 +241,7 @@ export class ResearchTree {
         continue;
       }
 
-      const mult: any = (<any>research)[propName];
+      const mult: any = (research as any)[propName];
       if (mult == null) {
         console.warn(
           `Invalid propName specified in ResearchTree.getMultiplierHelper: ${propName}`,

@@ -564,8 +564,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
   },
   {
     desc: (data: any[]): string => {
-      const k: number = <number>data[0];
-      const prices: number[] = <number[]>data[1];
+      const k: number = data[0];
+      const prices: number[] = data[1];
       return [
         "You are given the following array with two elements:\n\n",
         `[${k}, [${prices}]]\n\n`,
@@ -595,8 +595,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     name: "Algorithmic Stock Trader IV",
     numTries: 10,
     solver: (data: any[], ans: string): boolean => {
-      const k: number = <number>data[0];
-      const prices: number[] = <number[]>data[1];
+      const k: number = data[0];
+      const prices: number[] = data[1];
 
       const len = prices.length;
       if (len < 2) {

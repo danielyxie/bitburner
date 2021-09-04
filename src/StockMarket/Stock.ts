@@ -37,10 +37,10 @@ function toNumber(n: number | IMinMaxRange): number {
   let value: number;
   switch (typeof n) {
     case "number": {
-      return <number>n;
+      return n;
     }
     case "object": {
-      const range = <IMinMaxRange>n;
+      const range = n as IMinMaxRange;
       value = getRandomInt(range.min, range.max);
       break;
     }

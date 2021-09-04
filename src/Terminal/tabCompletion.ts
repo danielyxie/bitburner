@@ -49,7 +49,7 @@ export function tabCompletion(
     );
     return;
   }
-  const textBox = <HTMLInputElement>textBoxElem;
+  const textBox = textBoxElem as HTMLInputElement;
 
   const oldValue = textBox.value;
   const semiColonIndex = oldValue.lastIndexOf(";");

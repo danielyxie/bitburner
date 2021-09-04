@@ -113,12 +113,12 @@ export abstract class Person {
    */
   applyAugmentation(aug: Augmentation): void {
     for (const mult in aug.mults) {
-      if ((<any>this)[mult] == null) {
+      if ((this as any)[mult] == null) {
         console.warn(
           `Augmentation has unrecognized multiplier property: ${mult}`,
         );
       } else {
-        (<any>this)[mult] *= aug.mults[mult];
+        (this as any)[mult] *= aug.mults[mult];
       }
     }
   }
