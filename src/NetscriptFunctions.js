@@ -3041,6 +3041,7 @@ function NetscriptFunctions(workerScript) {
                 charisma_exp_mult:               Player.charisma_exp_mult,
                 company_rep_mult:                Player.company_rep_mult,
                 faction_rep_mult:                Player.faction_rep_mult,
+                numPeopleKilled:                 Player.numPeopleKilled,
                 money:                           Player.money.toNumber(),
                 city:                            Player.city,
                 location:                        Player.location,

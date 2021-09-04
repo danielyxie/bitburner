@@ -47,6 +47,7 @@ export interface IPlayer {
     init: () => void;
     isWorking: boolean;
     karma: number;
+    numPeopleKilled: number;
     location: LocationName;
     max_hp: number;
     money: any;
