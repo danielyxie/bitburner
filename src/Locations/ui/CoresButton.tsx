@@ -59,6 +59,6 @@ export function CoresButton(props: IProps): React.ReactElement {
         disabled={!props.p.canAfford(cost)}
         onClick={buy}
         style={btnStyle}
-        text={<>Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores+1}) - {Money(cost)}</>}
+        text={<>Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores+1}) - <Money money={cost} player={props.p} /></>}
     />);
 }

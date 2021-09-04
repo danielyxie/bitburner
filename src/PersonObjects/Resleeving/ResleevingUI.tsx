@@ -254,6 +254,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
         costText: null,
         buyButton: null,
     };
+    if(playerRef === null) return elems;
 
     if (!routing.isOn(Page.Resleeves)) { return elems; }
 
@@ -334,7 +335,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     const cost: number = resleeve.getCost();
     elems.costPanel = createElement("div", { class: "resleeve-panel", width: "20%" });
     elems.costText = createElement("p", {
-        innerHTML: `It costs ${renderToStaticMarkup(Money(cost))} ` +
+        innerHTML: `It costs ${renderToStaticMarkup(<Money money={cost} player={playerRef} />)} ` +
                    `to purchase this Sleeve.`,
     });
     elems.buyButton = createElement("button", {
@@ -343,7 +344,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
         clickListener: () => {
             if(playerRef == null) throw new Error("playerRef is null in buyButton.click()");
             if (purchaseResleeve(resleeve, playerRef)) {
-                dialogBoxCreate((<>You re-sleeved for {Money(cost)}!</>), false);
+                dialogBoxCreate((<>You re-sleeved for <Money money={cost} />!</>), false);
             } else {
                 dialogBoxCreate(`You cannot afford to re-sleeve into this body`, false);
             }

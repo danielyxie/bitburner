@@ -79,7 +79,7 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
     });
 
     yesNoBoxCreate(<span>Would you like to travel to {destination}? The trip will
-        cost {Money(cost)}.</span>);
+        cost <Money money={cost} />.</span>);
 }
 
 /**
@@ -107,7 +107,7 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
         yesNoTxtInpBoxClose();
     });
 
-    yesNoTxtInpBoxCreate(<>Would you like to purchase a new server with {numeralWrapper.formatRAM(ram)} of RAM for {Money(cost)}?
+    yesNoTxtInpBoxCreate(<>Would you like to purchase a new server with {numeralWrapper.formatRAM(ram)} of RAM for <Money money={cost} player={p} />?
         <br /><br />Please enter the server hostname below:<br />
     </>);
 }
@@ -245,7 +245,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer): void {
     yesNoBoxCreate(<>Would you like to purchase an additional CPU Core for your home computer? Each CPU Core 
 lets you start with an additional Core Node in Hacking Missions.<br /><br />
 Purchasing an additional core (for a total of {p.getHomeComputer().cpuCores + 1}) will 
-cost {Money(cost)}</>);
+cost <Money money={cost} player={p} /></>);
 }
 
 /**

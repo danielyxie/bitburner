@@ -97,7 +97,7 @@ export function Stats(props: IProps): React.ReactElement {
         <p>Team Size: {formatNumber(props.bladeburner.teamSize, 0)}</p>
         <p>Team Members Lost: {formatNumber(props.bladeburner.teamLost, 0)}</p><br />
         <p>Num Times Hospitalized: {props.bladeburner.numHosp}</p>
-        <p>Money Lost From Hospitalizations: {Money(props.bladeburner.moneyLost)}</p><br />
+        <p>Money Lost From Hospitalizations: <Money money={props.bladeburner.moneyLost} /></p><br />
         <p>Current City: {props.bladeburner.city}</p>
         <p className="tooltip" style={{display: 'inline-block'}}>
             Est. Synthoid Population: {numeralWrapper.formatPopulation(props.bladeburner.getCurrentCity().popEst)}

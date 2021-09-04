@@ -314,7 +314,7 @@ export class Blackjack extends Game<Props, State> {
                         label={
                             <>
                                 {"Wager (Max: "}
-                                {Money(MAX_BET)}
+                                <Money money={MAX_BET} />
                                 {")"}
                             </>
                         }
@@ -333,7 +333,7 @@ export class Blackjack extends Game<Props, State> {
 
                     <p>
                         {"Total earnings this session: "}
-                        {Money(gains)}
+                        <Money money={gains} />
                     </p>
                 </div>
                 
@@ -404,13 +404,13 @@ export class Blackjack extends Game<Props, State> {
                         {this.isPlayerWinResult(result) && (
                             <>
                                 {" You gained "}
-                                {Money(this.state.bet)}
+                                <Money money={this.state.bet} />
                             </>
                         )}
                         {result === Result.DealerWon && (
                             <>
                                 {" You lost "}
-                                {Money(this.state.bet)}
+                                <Money money={this.state.bet} />
                             </>
                         )}
                     </p>

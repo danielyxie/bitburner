@@ -103,31 +103,31 @@ export class UniversityLocation extends React.Component<IProps, any> {
                 <StdButton
                     onClick={this.dataStructures}
                     style={this.btnStyle}
-                    text={<>Take Data Structures course ({Money(dataStructuresCost)} / sec)</>}
+                    text={<>Take Data Structures course (<Money money={dataStructuresCost} player={this.props.p} /> / sec)</>}
                     tooltip={earnHackingExpTooltip}
                 />
                 <StdButton
                     onClick={this.networks}
                     style={this.btnStyle}
-                    text={<>Take Networks course ({Money(networksCost)} / sec)</>}
+                    text={<>Take Networks course (<Money money={networksCost} player={this.props.p} /> / sec)</>}
                     tooltip={earnHackingExpTooltip}
                 />
                 <StdButton
                     onClick={this.algorithms}
                     style={this.btnStyle}
-                    text={<>Take Algorithms course ({Money(algorithmsCost)} / sec)</>}
+                    text={<>Take Algorithms course (<Money money={algorithmsCost} player={this.props.p} /> / sec)</>}
                     tooltip={earnHackingExpTooltip}
                 />
                 <StdButton
                     onClick={this.management}
                     style={this.btnStyle}
-                    text={<>Take Management course ({Money(managementCost)} / sec)</>}
+                    text={<>Take Management course (<Money money={managementCost} player={this.props.p} /> / sec)</>}
                     tooltip={earnCharismaExpTooltip}
                 />
                 <StdButton
                     onClick={this.leadership}
                     style={this.btnStyle}
-                    text={<>Take Leadership course ({Money(leadershipCost)} / sec)</>}
+                    text={<>Take Leadership course (<Money money={leadershipCost} player={this.props.p} /> / sec)</>}
                     tooltip={earnCharismaExpTooltip}
                 />
             </div>

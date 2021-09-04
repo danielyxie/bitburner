@@ -43,10 +43,10 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
                     Shares: {numeralWrapper.formatShares(stock.playerShares)}
                 </p><br />
                 <p>
-                    Average Price: {Money(stock.playerAvgPx)} (Total Cost: {Money(totalCost)})
+                    Average Price: <Money money={stock.playerAvgPx} /> (Total Cost: <Money money={totalCost} />
                 </p><br />
                 <p>
-                    Profit: {Money(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
+                    Profit: <Money money={gains} /> ({numeralWrapper.formatPercentage(percentageGains)})
                 </p><br />
             </div>
         )
@@ -75,10 +75,10 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
                         Shares: {numeralWrapper.formatShares(stock.playerShortShares)}
                     </p><br />
                     <p>
-                        Average Price: {Money(stock.playerAvgShortPx)} (Total Cost: {Money(totalCost)})
+                        Average Price: <Money money={stock.playerAvgShortPx} /> (Total Cost: <Money money={totalCost} />)
                     </p><br />
                     <p>
-                        Profit: {Money(gains)} ({numeralWrapper.formatPercentage(percentageGains)})
+                        Profit: <Money money={gains} /> ({numeralWrapper.formatPercentage(percentageGains)})
                     </p><br />
                 </div>
             )
@@ -96,13 +96,13 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
                     Max Shares: {numeralWrapper.formatShares(stock.maxShares)}
                 </p>
                 <p className={"tooltip"} >
-                    Ask Price: {Money(stock.getAskPrice())}
+                    Ask Price: <Money money={stock.getAskPrice()} />
                     <span className={"tooltiptext"}>
                         See Investopedia for details on what this is
                     </span>
                 </p><br />
                 <p className={"tooltip"} >
-                    Bid Price: {Money(stock.getBidPrice())}
+                    Bid Price: <Money money={stock.getBidPrice()} />
                     <span className={"tooltiptext"}>
                         See Investopedia for details on what this is
                     </span>

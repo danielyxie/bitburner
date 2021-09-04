@@ -60,7 +60,7 @@ export function DonateOption(props: IProps): React.ReactElement {
         const repGain = repFromDonation(amt, props.p);
         props.faction.playerReputation += repGain;
         dialogBoxCreate(<>
-            You just donated {Money(amt)} to {fac.name} to gain {Reputation(repGain)} reputation.
+            You just donated <Money money={amt} /> to {fac.name} to gain {Reputation(repGain)} reputation.
         </>);
         props.rerender();
     }

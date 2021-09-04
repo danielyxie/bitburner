@@ -75,7 +75,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
         <PopupCloseButton popup={PopupId} text={"Close"} />
         <p>
             Would you like to purchase an additional Duplicate Sleeve from The Covenant
-            for {Money(purchaseCost())}?
+            for <Money money={purchaseCost()} player={props.p} />?
         </p>
         <br />
         <p>

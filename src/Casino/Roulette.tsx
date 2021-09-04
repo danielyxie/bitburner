@@ -202,10 +202,10 @@ export class Roulette extends Game<IProps, IState> {
             }
             if(playerWin) {
                 gain = this.state.investment*this.state.strategy.payout;
-                status = <>won {Money(gain)}</>;
+                status = <>won <Money money={gain} /></>;
             } else {
                 gain = -this.state.investment;
-                status = <>lost {Money(-gain)}</>;
+                status = <>lost <Money money={-gain} /></>;
             }
             this.win(this.props.p, gain);
             this.setState({

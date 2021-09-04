@@ -345,6 +345,10 @@ a:visited {
     color: $light-yellow;
 }
 
+.unbuyable {
+    color: #66CFBC;
+}
+
 .failure {
     color: $alert-red;
     text-shadow: 0 0 0 $alert-red;

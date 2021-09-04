@@ -47,21 +47,21 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     }
 
     function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
-        const parts: any[][] = [[`Total:`, Money(src.total)]];
-        if (src.bladeburner)     { parts.push([`Bladeburner:`, Money(src.bladeburner)]) }
-        if (src.codingcontract)  { parts.push([`Coding Contracts:`, Money(src.codingcontract)]) }
-        if (src.work)            { parts.push([`Company Work:`, Money(src.work)]) }
-        if (src.class)           { parts.push([`Class:`, Money(src.class)]) }
-        if (src.corporation)     { parts.push([`Corporation:`, Money(src.corporation)]) }
-        if (src.crime)           { parts.push([`Crimes:`, Money(src.crime)]) }
-        if (src.gang)            { parts.push([`Gang:`, Money(src.gang)]) }
-        if (src.hacking)         { parts.push([`Hacking:`, Money(src.hacking)]) }
-        if (src.hacknetnode)     { parts.push([`Hacknet Nodes:`, Money(src.hacknetnode)]) }
-        if (src.hospitalization) { parts.push([`Hospitalization:`, Money(src.hospitalization)]) }
-        if (src.infiltration)    { parts.push([`Infiltration:`, Money(src.infiltration)]) }
-        if (src.stock)           { parts.push([`Stock Market:`, Money(src.stock)]) }
-        if (src.casino)          { parts.push([`Casino:`, Money(src.casino)]) }
-        if (src.sleeves)         { parts.push([`Sleeves:`, Money(src.sleeves)]) }
+        const parts: any[][] = [[`Total:`, <Money money={src.total} />]];
+        if (src.bladeburner)     { parts.push([`Bladeburner:`, <Money money={src.bladeburner} />]) }
+        if (src.codingcontract)  { parts.push([`Coding Contracts:`, <Money money={src.codingcontract} />]) }
+        if (src.work)            { parts.push([`Company Work:`, <Money money={src.work} />]) }
+        if (src.class)           { parts.push([`Class:`, <Money money={src.class} />]) }
+        if (src.corporation)     { parts.push([`Corporation:`, <Money money={src.corporation} />]) }
+        if (src.crime)           { parts.push([`Crimes:`, <Money money={src.crime} />]) }
+        if (src.gang)            { parts.push([`Gang:`, <Money money={src.gang} />]) }
+        if (src.hacking)         { parts.push([`Hacking:`, <Money money={src.hacking} />]) }
+        if (src.hacknetnode)     { parts.push([`Hacknet Nodes:`, <Money money={src.hacknetnode} />]) }
+        if (src.hospitalization) { parts.push([`Hospitalization:`, <Money money={src.hospitalization} />]) }
+        if (src.infiltration)    { parts.push([`Infiltration:`, <Money money={src.infiltration} />]) }
+        if (src.stock)           { parts.push([`Stock Market:`, <Money money={src.stock} />]) }
+        if (src.casino)          { parts.push([`Casino:`, <Money money={src.casino} />]) }
+        if (src.sleeves)         { parts.push([`Sleeves:`, <Money money={src.sleeves} />]) }
 
         return StatsTable(parts);
     }

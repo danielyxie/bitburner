@@ -53,13 +53,13 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
                 <pre>Args: {arrayToString(props.workerScript.args)}</pre>
                 <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
                 <pre>Offline Time: {convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</pre>
-                <pre>Total online production: {Money(scriptRef.onlineMoneyMade)}</pre>
+                <pre>Total online production: <Money money={scriptRef.onlineMoneyMade} /></pre>
                 <pre>{(Array(26).join(" ") + numeralWrapper.formatExp(scriptRef.onlineExpGained) + " hacking exp")}</pre>
-                <pre>Online production rate: {Money(onlineMps)} / second</pre>
+                <pre>Online production rate: <Money money={onlineMps} /> / second</pre>
                 <pre>{(Array(25).join(" ") + numeralWrapper.formatExp(onlineEps) + " hacking exp / second")}</pre>
-                <pre>Total offline production: {Money(scriptRef.offlineMoneyMade)}</pre>
+                <pre>Total offline production: <Money money={scriptRef.offlineMoneyMade} /></pre>
                 <pre>{(Array(27).join(" ") + numeralWrapper.formatExp(scriptRef.offlineExpGained) + " hacking exp")}</pre>
-                <pre>Offline production rate: {Money(offlineMps)} / second</pre>
+                <pre>Offline production rate: <Money money={offlineMps} /> / second</pre>
                 <pre>{(Array(26).join(" ") + numeralWrapper.formatExp(offlineEps) +  " hacking exp / second")}</pre>
 
                 <AccordionButton

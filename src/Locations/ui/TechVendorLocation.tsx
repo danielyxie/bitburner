@@ -37,7 +37,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
                 key={i}
                 onClick={() => createPurchaseServerPopup(i, props.p)}
                 style={btnStyle}
-                text={<>Purchase {i}GB Server - {Money(cost)}</>}
+                text={<>Purchase {i}GB Server - <Money money={cost} player={props.p} /></>}
             />,
         )
     }

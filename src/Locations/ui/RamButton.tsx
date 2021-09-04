@@ -44,6 +44,6 @@ export function RamButton(props: IProps): React.ReactElement {
         disabled={!props.p.canAfford(cost)}
         onClick={buy}
         style={btnStyle}
-        text={<>Upgrade 'home' RAM ({homeComputer.maxRam}GB -&gt; {homeComputer.maxRam*2}GB) - {Money(cost)}</>}
+        text={<>Upgrade 'home' RAM ({homeComputer.maxRam}GB -&gt; {homeComputer.maxRam*2}GB) - <Money money={cost} player={props.p} /></>}
     />);
 }

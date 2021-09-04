@@ -60,7 +60,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
             currHp: this.props.p.hp,
         });
 
-        dialogBoxCreate(<>You were healed to full health! The hospital billed you for {Money(cost)}</>);
+        dialogBoxCreate(<>You were healed to full health! The hospital billed you for <Money money={cost} /></>);
     }
 
     render(): React.ReactNode {
@@ -70,7 +70,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
             <AutoupdatingStdButton
                 onClick={this.getHealed}
                 style={this.btnStyle}
-                text={<>Get treatment for wounds - {Money(cost)}</>}
+                text={<>Get treatment for wounds - <Money money={cost} player={this.props.p} /></>}
             />
         )
     }

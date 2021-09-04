@@ -29,7 +29,7 @@ export class StockTickerOrder extends React.Component<IProps, any> {
         const order = this.props.order;
 
         const posTxt = order.pos === PositionTypes.Long ? "Long Position" : "Short Position";
-        const txt = <>{order.type} - {posTxt} - {numeralWrapper.formatShares(order.shares)} @ {Money(order.price)}</>
+        const txt = <>{order.type} - {posTxt} - {numeralWrapper.formatShares(order.shares)} @ <Money money={order.price} /></>
 
         return (
             <li>

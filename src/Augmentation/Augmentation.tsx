@@ -167,7 +167,7 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
         desc = <>{desc}<br />+{f(mults.bladeburner_success_chance_mult-1)} Bladeburner Contracts and Operations success chance</>
 
     if(startingMoney)
-        desc = <>{desc}<br />Start with {Money(startingMoney)} after installing Augmentations.</>
+        desc = <>{desc}<br />Start with <Money money={startingMoney} /> after installing Augmentations.</>
 
     if(programs)
         desc = <>{desc}<br />Start with {programs.join(' and ')} after installing Augmentations.</>
