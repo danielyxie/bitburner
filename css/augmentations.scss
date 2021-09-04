@@ -6,25 +6,25 @@
 @import "theme";
 
 #augmentations-container {
-    position: fixed;
-    padding-top: 10px;
+  position: fixed;
+  padding-top: 10px;
 }
 
 #augmentations-content {
-    > p {
-        font-size: $defaultFontSize * 0.875;
-        width: 70%;
-    }
+  > p {
+    font-size: $defaultFontSize * 0.875;
+    width: 70%;
+  }
 }
 
 .augmentations-list {
-    button,
-    div {
-        color: var(--my-font-color);
-        text-decoration: none;
-    }
+  button,
+  div {
+    color: var(--my-font-color);
+    text-decoration: none;
+  }
 
-    button {
-        padding: 4px;
-    }
+  button {
+    padding: 4px;
+  }
 }

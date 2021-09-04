@@ -7,22 +7,24 @@ import { getElementById } from "./getElementById";
  * @param el The element or ID of an element to remove all children from.
  */
 export function removeChildrenFromElement(el: string | null | Element): void {
-    if (el === null) {
-        return;
+  if (el === null) {
+    return;
+  }
+
+  try {
+    const elem: HTMLElement | Element = isString(el)
+      ? getElementById(el as string)
+      : (el as Element);
+
+    if (elem instanceof Element) {
+      while (elem.firstChild !== null) {
+        elem.removeChild(elem.firstChild);
+      }
     }
+  } catch (e) {
+    // tslint:disable-next-line:no-console
+    console.debug(e);
 
-    try {
-        const elem: HTMLElement | Element = (isString(el) ? getElementById(el as string) : el as Element);
-
-        if (elem instanceof Element) {
-            while (elem.firstChild !== null) {
-                elem.removeChild(elem.firstChild);
-            }
-        }
-    } catch (e) {
-        // tslint:disable-next-line:no-console
-        console.debug(e);
-
-        return;
-    }
+    return;
+  }
 }

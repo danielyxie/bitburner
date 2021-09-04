@@ -10,21 +10,21 @@ let x: number | undefined;
  * @param text The status text to display
  */
 export function createStatusText(text: string): void {
-    if (x !== undefined) {
-        clearTimeout(x);
-        // Likely not needed due to clearTimeout, but just in case...
-        x = undefined;
-    }
+  if (x !== undefined) {
+    clearTimeout(x);
+    // Likely not needed due to clearTimeout, but just in case...
+    x = undefined;
+  }
 
-    const statusElement: HTMLElement = getElementById("status-text");
-    statusElement.style.display = "block";
-    statusElement.classList.add("status-text");
-    statusElement.innerText = text;
-    const handler: Action = () => {
-        statusElement.innerText = "";
-        statusElement.style.display = "none";
-        statusElement.classList.remove("status-text");
-    };
+  const statusElement: HTMLElement = getElementById("status-text");
+  statusElement.style.display = "block";
+  statusElement.classList.add("status-text");
+  statusElement.innerText = text;
+  const handler: Action = () => {
+    statusElement.innerText = "";
+    statusElement.style.display = "none";
+    statusElement.classList.remove("status-text");
+  };
 
-    x = setTimeoutRef(handler, threeSeconds);
+  x = setTimeoutRef(handler, threeSeconds);
 }

@@ -155,4 +155,4 @@ export const libSource = `interface NS {
     exploit(): void;
     bypass(doc: any): void;
     flags(data: any): any;
-}`
+}`;

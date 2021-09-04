@@ -4,25 +4,25 @@
 @import "theme";
 
 .resleeve-container {
-    border: 1px solid white;
-    margin: 4px;
-    width: 75%;
+  border: 1px solid white;
+  margin: 4px;
+  width: 75%;
 
-    p {
-        font-size: $defaultFontSize * 0.8125;
-    }
+  p {
+    font-size: $defaultFontSize * 0.8125;
+  }
 }
 
 .resleeve-panel {
-    display: inline-block;
-    margin: 0;
-    padding: 2px;
+  display: inline-block;
+  margin: 0;
+  padding: 2px;
 }
 
 .resleeve-aug-selector {
-    font-size: $defaultFontSize * 0.8125;
+  font-size: $defaultFontSize * 0.8125;
 
-    option {
-        font-size: $defaultFontSize * 0.8125;
-    }
+  option {
+    font-size: $defaultFontSize * 0.8125;
+  }
 }

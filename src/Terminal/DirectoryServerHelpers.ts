@@ -8,9 +8,9 @@
  * ./DirectoryHelpers.ts
  */
 import {
-    isValidDirectoryPath,
-    isInRootDirectory,
-    getFirstParentDirectory,
+  isValidDirectoryPath,
+  isInRootDirectory,
+  getFirstParentDirectory,
 } from "./DirectoryHelpers";
 import { BaseServer } from "../Server/BaseServer";
 
@@ -19,35 +19,39 @@ import { BaseServer } from "../Server/BaseServer";
  * subdirectories of that directory. This is only for FIRST-LEVEl/immediate subdirectories
  */
 export function getSubdirectories(serv: BaseServer, dir: string): string[] {
-    const res: string[] = [];
+  const res: string[] = [];
 
-    if (!isValidDirectoryPath(dir)) { return res; }
-
-    let t_dir = dir;
-    if (!t_dir.endsWith("/")) { t_dir += "/"; }
-
-    function processFile(fn: string): void {
-        if (t_dir === "/" && isInRootDirectory(fn)) {
-            const subdir = getFirstParentDirectory(fn);
-            if (subdir !== "/" && !res.includes(subdir)) {
-                res.push(subdir);
-            }
-        } else if (fn.startsWith(t_dir)) {
-            const remaining = fn.slice(t_dir.length);
-            const subdir = getFirstParentDirectory(remaining);
-            if (subdir !== "/" && !res.includes(subdir)) {
-                res.push(subdir);
-            }
-        }
-    }
-
-    for (const script of serv.scripts) {
-        processFile(script.filename);
-    }
-
-    for (const txt of serv.textFiles) {
-        processFile(txt.fn);
-    }
-
+  if (!isValidDirectoryPath(dir)) {
     return res;
+  }
+
+  let t_dir = dir;
+  if (!t_dir.endsWith("/")) {
+    t_dir += "/";
+  }
+
+  function processFile(fn: string): void {
+    if (t_dir === "/" && isInRootDirectory(fn)) {
+      const subdir = getFirstParentDirectory(fn);
+      if (subdir !== "/" && !res.includes(subdir)) {
+        res.push(subdir);
+      }
+    } else if (fn.startsWith(t_dir)) {
+      const remaining = fn.slice(t_dir.length);
+      const subdir = getFirstParentDirectory(remaining);
+      if (subdir !== "/" && !res.includes(subdir)) {
+        res.push(subdir);
+      }
+    }
+  }
+
+  for (const script of serv.scripts) {
+    processFile(script.filename);
+  }
+
+  for (const txt of serv.textFiles) {
+    processFile(txt.fn);
+  }
+
+  return res;
 }

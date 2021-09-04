@@ -4,5 +4,5 @@
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function isString(value: any): boolean {
-    return (typeof value === "string" || value instanceof String);
+  return typeof value === "string" || value instanceof String;
 }

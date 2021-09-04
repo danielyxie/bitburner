@@ -3,5 +3,5 @@
  * must be a "number" type and cannot be NaN
  */
 export function isValidNumber(n: number): boolean {
-    return (typeof n === "number") && !isNaN(n);
+  return typeof n === "number" && !isNaN(n);
 }

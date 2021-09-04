@@ -14,26 +14,33 @@ import { HashRate } from "../../ui/React/HashRate";
 import { Hashes } from "../../ui/React/Hashes";
 
 export function PlayerInfo(props) {
-    const hasServers = hasHacknetServers();
+  const hasServers = hasHacknetServers();
 
-    let prod;
-    if (hasServers) {
-        prod = HashRate(props.totalProduction);
-    } else {
-        prod = MoneyRate(props.totalProduction);
-    }
+  let prod;
+  if (hasServers) {
+    prod = HashRate(props.totalProduction);
+  } else {
+    prod = MoneyRate(props.totalProduction);
+  }
 
-    return (
-        <p id={"hacknet-nodes-money"}>
-            <span>Money: </span>
-            <Money money={Player.money.toNumber()} /><br />
+  return (
+    <p id={"hacknet-nodes-money"}>
+      <span>Money: </span>
+      <Money money={Player.money.toNumber()} />
+      <br />
 
-            {
-                hasServers && <><span>Hashes: {Hashes(Player.hashManager.hashes)} / {Hashes(Player.hashManager.capacity)}</span><br /></>
-            }
+      {hasServers && (
+        <>
+          <span>
+            Hashes: {Hashes(Player.hashManager.hashes)} /{" "}
+            {Hashes(Player.hashManager.capacity)}
+          </span>
+          <br />
+        </>
+      )}
 
-            <span>Total Hacknet {hasServers ? 'Server' : 'Node'} Production: </span>
-            {prod}
-        </p>
-    )
+      <span>Total Hacknet {hasServers ? "Server" : "Node"} Production: </span>
+      {prod}
+    </p>
+  );
 }

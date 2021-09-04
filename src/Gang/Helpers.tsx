@@ -8,25 +8,28 @@ import { Page, routing } from ".././ui/navigationTracking";
 
 let gangContainer: HTMLElement;
 
-(function() {
-    function set(): void {
-        const c = document.getElementById("gang-container");
-        if(c === null) throw new Error("Could not find element 'gang-container'");
-        gangContainer = c;
-        document.removeEventListener("DOMContentLoaded", set);
-    }
+(function () {
+  function set(): void {
+    const c = document.getElementById("gang-container");
+    if (c === null) throw new Error("Could not find element 'gang-container'");
+    gangContainer = c;
+    document.removeEventListener("DOMContentLoaded", set);
+  }
 
-    document.addEventListener("DOMContentLoaded", set);
+  document.addEventListener("DOMContentLoaded", set);
 })();
 
+export function displayGangContent(
+  engine: IEngine,
+  gang: Gang,
+  player: IPlayer,
+): void {
+  if (!routing.isOn(Page.Gang)) {
+    return;
+  }
 
-export function displayGangContent(engine: IEngine, gang: Gang, player: IPlayer): void {
-    if (!routing.isOn(Page.Gang)) {
-        return;
-    }
-
-    ReactDOM.render(<Root
-        engine={engine}
-        gang={gang}
-        player={player} />, gangContainer);
+  ReactDOM.render(
+    <Root engine={engine} gang={gang} player={player} />,
+    gangContainer,
+  );
 }

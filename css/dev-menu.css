@@ -1,32 +1,32 @@
 .add-exp-button {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .remove-exp-button {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .exp-input {
-    margin: 5px 0 5px 0;
+  margin: 5px 0 5px 0;
 
-    padding: 2px 5px;
+  padding: 2px 5px;
 }
 
 .text-center {
-    margin: auto;
-    text-align: center;
-    vertical-align: middle;
+  margin: auto;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .touch-right {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .touch-left {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .touch-sides {
-    margin-left: 0;
-    margin-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }

@@ -10,14 +10,14 @@
  * @param percentage The percentage (in a range of 0-100) to offset
  */
 export function addOffset(midpoint: number, percentage: number): number {
-    const maxPercent = 100;
-    if (percentage < 0 || percentage > maxPercent) {
-        return midpoint;
-    }
+  const maxPercent = 100;
+  if (percentage < 0 || percentage > maxPercent) {
+    return midpoint;
+  }
 
-    const offset: number = midpoint * (percentage / maxPercent);
+  const offset: number = midpoint * (percentage / maxPercent);
 
-    // Double the range to account for both sides of the midpoint.
-    // tslint:disable-next-line:no-magic-numbers
-    return midpoint + ((Math.random() * (offset * 2)) - offset);
+  // Double the range to account for both sides of the midpoint.
+  // tslint:disable-next-line:no-magic-numbers
+  return midpoint + (Math.random() * (offset * 2) - offset);
 }

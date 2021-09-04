@@ -1,61 +1,61 @@
 @mixin animation($property) {
-    -webkit-animation: $property;
-    -moz-animation: $property;
-    -ms-animation: $property;
-    -o-animation: $property;
-    animation: $property;
+  -webkit-animation: $property;
+  -moz-animation: $property;
+  -ms-animation: $property;
+  -o-animation: $property;
+  animation: $property;
 }
 
 @mixin borderRadius($property) {
-    -webkit-border-radius: $property;
-    -moz-border-radius: $property;
-    border-radius: $property;
+  -webkit-border-radius: $property;
+  -moz-border-radius: $property;
+  border-radius: $property;
 }
 
 @mixin boxShadow($value) {
-    -webkit-box-shadow: $value;
-    -moz-box-shadow: $value;
-    box-shadow: $value;
+  -webkit-box-shadow: $value;
+  -moz-box-shadow: $value;
+  box-shadow: $value;
 }
 
 @mixin keyframes($animationName) {
-    @-webkit-keyframes #{$animationName} {
-        $browser: '-webkit-' !global;
-        @content;
-    }
+  @-webkit-keyframes #{$animationName} {
+    $browser: "-webkit-" !global;
+    @content;
+  }
 
-    @-moz-keyframes #{$animationName} {
-        $browser: '-moz-' !global;
-        @content;
-    }
+  @-moz-keyframes #{$animationName} {
+    $browser: "-moz-" !global;
+    @content;
+  }
 
-    @-ms-keyframes #{$animationName} {
-        $browser: '-ms-' !global;
-        @content;
-    }
+  @-ms-keyframes #{$animationName} {
+    $browser: "-ms-" !global;
+    @content;
+  }
 
-    @-o-keyframes #{$animationName} {
-        $browser: '-o-' !global;
-        @content;
-    }
+  @-o-keyframes #{$animationName} {
+    $browser: "-o-" !global;
+    @content;
+  }
 
-    @keyframes #{$animationName} {
-        $browser: '' !global;
-        @content;
-    }
+  @keyframes #{$animationName} {
+    $browser: "" !global;
+    @content;
+  }
 }
 
 @mixin transform($property) {
-    -webkit-transform: $property;
-    -moz-transform: $property;
-    -ms-transform: $property;
-    -o-transform: $property;
-    transform: $property;
+  -webkit-transform: $property;
+  -moz-transform: $property;
+  -ms-transform: $property;
+  -o-transform: $property;
+  transform: $property;
 }
 
 @mixin userSelect($value) {
-    -webkit-user-select: $value;
-    -moz-user-select: $value;
-    -ms-user-select: $value;
-    user-select: $value;
+  -webkit-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
 }

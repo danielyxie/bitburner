@@ -5,71 +5,71 @@
 import { IMap } from "../types";
 
 export class Environment {
-    /**
-     * Parent environment. Used to implement "scope"
-     */
-    parent: Environment | null = null;
+  /**
+   * Parent environment. Used to implement "scope"
+   */
+  parent: Environment | null = null;
 
-    /**
-     * Whether or not the script that uses this Environment should stop running
-     */
-    stopFlag = false;
+  /**
+   * Whether or not the script that uses this Environment should stop running
+   */
+  stopFlag = false;
 
-    /**
-     * Environment variables (currently only Netscript functions)
-     */
-    vars: IMap<any> = {};
+  /**
+   * Environment variables (currently only Netscript functions)
+   */
+  vars: IMap<any> = {};
 
-    constructor(parent: Environment | null) {
-        if (parent instanceof Environment) {
-            this.vars = Object.assign({}, parent.vars);
-        }
-
-        this.parent = parent;
+  constructor(parent: Environment | null) {
+    if (parent instanceof Environment) {
+      this.vars = Object.assign({}, parent.vars);
     }
 
-    /**
-     * Finds the scope where the variable with the given name is defined
-     */
-    lookup(name: string): Environment | null {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        let scope: Environment | null = this;
-        while (scope) {
-            if (Object.prototype.hasOwnProperty.call(scope.vars, name)) {
-                return scope;
-            }
-            scope = scope.parent;
-        }
+    this.parent = parent;
+  }
 
-        return null;
+  /**
+   * Finds the scope where the variable with the given name is defined
+   */
+  lookup(name: string): Environment | null {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let scope: Environment | null = this;
+    while (scope) {
+      if (Object.prototype.hasOwnProperty.call(scope.vars, name)) {
+        return scope;
+      }
+      scope = scope.parent;
     }
 
-	//Get the current value of a variable
-    get(name: string): any {
-        if (name in this.vars) {
-            return this.vars[name];
-        }
+    return null;
+  }
 
-        throw new Error(`Undefined variable ${name}`);
+  //Get the current value of a variable
+  get(name: string): any {
+    if (name in this.vars) {
+      return this.vars[name];
     }
 
-	//Sets the value of a variable in any scope
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    set(name: string, value: any): any {
-        const scope = this.lookup(name);
+    throw new Error(`Undefined variable ${name}`);
+  }
 
-        //If scope has a value, then this variable is already set in a higher scope, so
-        //set is there. Otherwise, create a new variable in the local scope
-        if (scope !== null) {
-            return scope.vars[name] = value;
-        } else {
-            return this.vars[name] = value;
-        }
-    }
+  //Sets the value of a variable in any scope
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  set(name: string, value: any): any {
+    const scope = this.lookup(name);
 
-	//Creates (or overwrites) a variable in the current scope
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    def(name: string, value: any): any {
-        return this.vars[name] = value;
+    //If scope has a value, then this variable is already set in a higher scope, so
+    //set is there. Otherwise, create a new variable in the local scope
+    if (scope !== null) {
+      return (scope.vars[name] = value);
+    } else {
+      return (this.vars[name] = value);
     }
+  }
+
+  //Creates (or overwrites) a variable in the current scope
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  def(name: string, value: any): any {
+    return (this.vars[name] = value);
+  }
 }

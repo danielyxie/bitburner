@@ -1,4 +1,4 @@
 export enum PositionTypes {
-    Long = "L",
-    Short = "S"
+  Long = "L",
+  Short = "S",
 }

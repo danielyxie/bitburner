@@ -11,25 +11,23 @@ import { Accordion } from "./Accordion";
 import { SourceFile } from "../../SourceFile/SourceFile";
 
 type IProps = {
-    level: number;
-    sf: SourceFile;
-}
+  level: number;
+  sf: SourceFile;
+};
 
 export function SourceFileAccordion(props: IProps): React.ReactElement {
-    const maxLevel = props.sf.n === 12 ? "∞" : "3";
+  const maxLevel = props.sf.n === 12 ? "∞" : "3";
 
-    return (
-        <Accordion
-            headerContent={
-                <>
-                    {props.sf.name}
-                    <br />
-                    {`Level ${props.level} / ${maxLevel}`}
-                </>
-            }
-            panelContent={
-                <p dangerouslySetInnerHTML={{__html: props.sf.info}}></p>
-            }
-        />
-    )
+  return (
+    <Accordion
+      headerContent={
+        <>
+          {props.sf.name}
+          <br />
+          {`Level ${props.level} / ${maxLevel}`}
+        </>
+      }
+      panelContent={<p dangerouslySetInnerHTML={{ __html: props.sf.info }}></p>}
+    />
+  );
 }

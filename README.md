@@ -1,9 +1,11 @@
 # Bitburner
+
 Bitburner is a programming-based [incremental game](https://en.wikipedia.org/wiki/Incremental_game)
 that revolves around hacking and cyberpunk themes.
 The game can be played at https://danielyxie.github.io/bitburner.
 
 # Documentation
+
 The game's official documentation can be found on [Read The
 Docs](http://bitburner.readthedocs.io/). Please note that this is still a
 work-in-progress.
@@ -16,6 +18,7 @@ For further guidance, please refer to the "As A Documentor" section of
 [CONTRIBUTING](CONTRIBUTING.md).
 
 # Contribution
+
 There are many ways to contribute to the game. It can be as simple as fixing
 a typo, correcting a bug, or improving the UI. For guidance on doing so,
 please refer to the [CONTRIBUTING](CONTRIBUTING.md) document.

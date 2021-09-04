@@ -5,151 +5,151 @@
     terminal which has its own page) */
 
 .generic-menupage-container {
-    height: 100%;
-    padding-left: 10px;
-    margin-left: 10%;
-    width: 99%;
-    overflow-y: scroll;
+  height: 100%;
+  padding-left: 10px;
+  margin-left: 10%;
+  width: 99%;
+  overflow-y: scroll;
 }
 
 /* Character Info */
 #character-container {
-    padding-top: 10px;
-    position: fixed;
+  padding-top: 10px;
+  position: fixed;
 }
 
 /* World */
 #world-container {
-    position: fixed;
-    padding-top: 10px;
+  position: fixed;
+  padding-top: 10px;
 }
 
 #world-city-name,
 #world-city-desc {
-    padding: 4px;
-    margin: 4px;
+  padding: 4px;
+  margin: 4px;
 }
 
 /* Create program */
 #create-program-container {
-    position: fixed;
-    padding-top: 10px;
+  position: fixed;
+  padding-top: 10px;
 }
 
 #create-program-page-text,
 #create-program-list {
-    width: 70%;
+  width: 70%;
 }
 
 /* Factions and Faction (Single Faction page) */
 #factions-container {
-    position: fixed;
-    padding-top: 10px;
+  position: fixed;
+  padding-top: 10px;
 }
 
 #faction-container {
-    position: fixed;
-    padding-top: 10px;
+  position: fixed;
+  padding-top: 10px;
 }
 
 .faction-work-div {
-    width: 70%;
-    height: 100%;
+  width: 70%;
+  height: 100%;
 }
 
 .faction-work-div-wrapper {
-    overflow: hidden;
-    border: 2px solid #333;
-    padding: 6px;
-    margin: 6px;
-    width: 70%;
+  overflow: hidden;
+  border: 2px solid #333;
+  padding: 6px;
+  margin: 6px;
+  width: 70%;
 }
 
 #faction-container p,
 #faction-container pre {
-    padding: 4px 6px;
-    margin: 4px 6px;
+  padding: 4px 6px;
+  margin: 4px 6px;
 }
 
 #faction-container pre {
-    width: 70%;
-    white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  width: 70%;
+  white-space: pre-wrap; /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 /* World */
 #world-container li {
-    margin: 0 0 15px 0;
-    list-style-type: none;
+  margin: 0 0 15px 0;
+  list-style-type: none;
 }
 
 /* Tutorial */
 #tutorial-container {
-    position: fixed;
-    padding-top: 10px;
+  position: fixed;
+  padding-top: 10px;
 }
 
 #tutorial-text {
-    width: 70%;
-    margin: 10px;
+  width: 70%;
+  margin: 10px;
 }
 
 #tutorial-container a {
-    width: 50%;
+  width: 50%;
 }
 
 /* Dev menu */
 #dev-menu-container {
-    position: fixed;
-    padding-top: 10px;
+  position: fixed;
+  padding-top: 10px;
 }
 
 #dev-menu-text {
-    width: 70%;
-    margin: 10px;
+  width: 70%;
+  margin: 10px;
 }
 
 #dev-menu-container a {
-    width: 50%;
+  width: 50%;
 }
 
 /* Location */
 #location-container {
-    position: fixed;
-    padding: 6px;
-    overflow-x: hidden;
+  position: fixed;
+  padding: 6px;
+  overflow-x: hidden;
 }
 
 #location-container a {
-    display: inline-block;
-    width: 30%;
+  display: inline-block;
+  width: 30%;
 }
 
 #location-slums-description {
-    width: 70%;
-    margin: 10px;
+  width: 70%;
+  margin: 10px;
 }
 
 #location-return-to-world-button {
-    margin: 10px;
-    padding: 6px;
+  margin: 10px;
+  padding: 6px;
 }
 
 #location-container > * {
-    margin: 10px 5px 10px 5px;
+  margin: 10px 5px 10px 5px;
 }
 
 #location-job-reputation,
 #location-company-favor {
-    display: inline;
+  display: inline;
 }
 
 /* Infiltration */
 #infiltration-container {
-    position: fixed;
-    margin: 5px;
-    width: 70%;
+  position: fixed;
+  margin: 5px;
+  width: 70%;
 }

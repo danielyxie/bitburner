@@ -8,16 +8,24 @@ import { ICorporation } from "../ICorporation";
 import { CorporationRouting } from "./Routing";
 
 interface IProps {
-    corp: ICorporation;
-    routing: CorporationRouting;
-    player: IPlayer;
+  corp: ICorporation;
+  routing: CorporationRouting;
+  player: IPlayer;
 }
 
 export function CorporationRoot(props: IProps): React.ReactElement {
-    return (
-        <div>
-            <HeaderTabs corp={props.corp} routing={props.routing} player={props.player} />
-            <MainPanel corp={props.corp} routing={props.routing} player={props.player} />
-        </div>
-    )
+  return (
+    <div>
+      <HeaderTabs
+        corp={props.corp}
+        routing={props.routing}
+        player={props.player}
+      />
+      <MainPanel
+        corp={props.corp}
+        routing={props.routing}
+        player={props.player}
+      />
+    </div>
+  );
 }

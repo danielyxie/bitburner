@@ -12,30 +12,31 @@ import { SourceFiles } from "../../SourceFile/SourceFiles";
 import { SourceFileAccordion } from "../../ui/React/SourceFileAccordion";
 
 export function OwnedSourceFiles(): React.ReactElement {
-    const sourceSfs = Player.sourceFiles.slice();
+  const sourceSfs = Player.sourceFiles.slice();
 
-    if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
-        sourceSfs.sort((sf1, sf2) => {
-            return sf1.n - sf2.n;
-        });
+  if (
+    Settings.OwnedAugmentationsOrder ===
+    OwnedAugmentationsOrderSetting.Alphabetically
+  ) {
+    sourceSfs.sort((sf1, sf2) => {
+      return sf1.n - sf2.n;
+    });
+  }
+
+  const sfs = sourceSfs.map((e) => {
+    const srcFileKey = "SourceFile" + e.n;
+    const sfObj = SourceFiles[srcFileKey];
+    if (sfObj == null) {
+      console.error(`Invalid source file number: ${e.n}`);
+      return null;
     }
 
-    const sfs = sourceSfs.map((e) => {
-        const srcFileKey = "SourceFile" + e.n;
-        const sfObj = SourceFiles[srcFileKey];
-        if (sfObj == null) {
-            console.error(`Invalid source file number: ${e.n}`);
-            return null;
-        }
-
-        return (
-            <li key={e.n}>
-                <SourceFileAccordion level={e.lvl} sf={sfObj} />
-            </li>
-        )
-    });
-
     return (
-        <>{sfs}</>
+      <li key={e.n}>
+        <SourceFileAccordion level={e.lvl} sf={sfObj} />
+      </li>
     );
+  });
+
+  return <>{sfs}</>;
 }

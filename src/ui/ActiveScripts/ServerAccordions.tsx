@@ -13,97 +13,96 @@ import { BaseServer } from "../../Server/BaseServer";
 
 // Map of server hostname -> all workerscripts on that server for all active scripts
 interface IServerData {
-    server: BaseServer;
-    workerScripts: WorkerScript[];
+  server: BaseServer;
+  workerScripts: WorkerScript[];
 }
 
 interface IServerToScriptsMap {
-    [key: string]: IServerData;
+  [key: string]: IServerData;
 }
 
 type IProps = {
-    workerScripts: Map<number, WorkerScript>;
+  workerScripts: Map<number, WorkerScript>;
 };
 
 type IState = {
-    rerenderFlag: boolean;
-}
-
+  rerenderFlag: boolean;
+};
 
 const subscriberId = "ActiveScriptsUI";
 
 export class ServerAccordions extends React.Component<IProps, IState> {
-    serverToScriptMap: IServerToScriptsMap = {};
+  serverToScriptMap: IServerToScriptsMap = {};
 
-    constructor(props: IProps) {
-        super(props);
+  constructor(props: IProps) {
+    super(props);
 
-        this.state = {
-            rerenderFlag: false,
-        }
+    this.state = {
+      rerenderFlag: false,
+    };
 
-        this.updateServerToScriptsMap();
+    this.updateServerToScriptsMap();
 
-        this.rerender = this.rerender.bind(this);
+    this.rerender = this.rerender.bind(this);
+  }
+
+  componentDidMount(): void {
+    WorkerScriptStartStopEventEmitter.addSubscriber({
+      cb: this.rerender,
+      id: subscriberId,
+    });
+  }
+
+  componentWillUnmount(): void {
+    WorkerScriptStartStopEventEmitter.removeSubscriber(subscriberId);
+  }
+
+  updateServerToScriptsMap(): void {
+    const map: IServerToScriptsMap = {};
+
+    for (const ws of this.props.workerScripts.values()) {
+      const server = getServer(ws.serverIp);
+      if (server == null) {
+        console.warn(`WorkerScript has invalid IP address: ${ws.serverIp}`);
+        continue;
+      }
+
+      if (map[server.hostname] == null) {
+        map[server.hostname] = {
+          server: server,
+          workerScripts: [],
+        };
+      }
+
+      map[server.hostname].workerScripts.push(ws);
     }
 
-    componentDidMount(): void {
-        WorkerScriptStartStopEventEmitter.addSubscriber({
-            cb: this.rerender,
-            id: subscriberId,
-        })
-    }
+    this.serverToScriptMap = map;
+  }
 
-    componentWillUnmount(): void {
-        WorkerScriptStartStopEventEmitter.removeSubscriber(subscriberId);
-    }
+  rerender(): void {
+    this.updateServerToScriptsMap();
+    this.setState((prevState) => {
+      return { rerenderFlag: !prevState.rerenderFlag };
+    });
+  }
 
-    updateServerToScriptsMap(): void {
-        const map: IServerToScriptsMap = {};
+  render(): React.ReactNode {
+    const elems = Object.keys(this.serverToScriptMap).map((serverName) => {
+      const data = this.serverToScriptMap[serverName];
+      return (
+        <ServerAccordion
+          key={serverName}
+          server={data.server}
+          workerScripts={data.workerScripts}
+        />
+      );
+    });
 
-        for (const ws of this.props.workerScripts.values()) {
-            const server = getServer(ws.serverIp);
-            if (server == null) {
-                console.warn(`WorkerScript has invalid IP address: ${ws.serverIp}`);
-                continue;
-            }
-
-            if (map[server.hostname] == null) {
-                map[server.hostname] = {
-                    server: server,
-                    workerScripts: [],
-                };
-            }
-
-            map[server.hostname].workerScripts.push(ws);
-        }
-
-        this.serverToScriptMap = map;
-    }
-
-    rerender(): void {
-        this.updateServerToScriptsMap();
-        this.setState((prevState) => {
-            return { rerenderFlag: !prevState.rerenderFlag }
-        });
-    }
-
-    render(): React.ReactNode {
-        const elems = Object.keys(this.serverToScriptMap).map((serverName) => {
-            const data = this.serverToScriptMap[serverName];
-            return (
-                <ServerAccordion
-                    key={serverName}
-                    server={data.server}
-                    workerScripts={data.workerScripts}
-                />
-            )
-        });
-
-        return (
-            <ul className="active-scripts-list" id="active-scripts-list">
-                {elems}
-            </ul>
-        )
-    }
+    return (
+      <ul className="active-scripts-list" id="active-scripts-list">
+        {elems}
+      </ul>
+    );
+  }
 }

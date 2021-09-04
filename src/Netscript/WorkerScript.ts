@@ -16,193 +16,206 @@ import { BaseServer } from "../Server/BaseServer";
 import { IMap } from "../types";
 
 export class WorkerScript {
-    /**
-     * Script's arguments
-     */
-    args: any[];
+  /**
+   * Script's arguments
+   */
+  args: any[];
 
-    /**
-     * Copy of the script's code
-     */
-    code = "";
+  /**
+   * Copy of the script's code
+   */
+  code = "";
 
-    /**
-     * Holds the timeoutID (numeric value) for whenever this script is blocked by a
-     * timed Netscript function. i.e. Holds the return value of setTimeout()
-     */
-    delay: number | null = null;
+  /**
+   * Holds the timeoutID (numeric value) for whenever this script is blocked by a
+   * timed Netscript function. i.e. Holds the return value of setTimeout()
+   */
+  delay: number | null = null;
 
-    /**
-     * Holds the Promise resolve() function for when the script is "blocked" by an async op
-     */
-    delayResolve?: () => void;
+  /**
+   * Holds the Promise resolve() function for when the script is "blocked" by an async op
+   */
+  delayResolve?: () => void;
 
-    /**
-     * Stores names of all functions that have logging disabled
-     */
-    disableLogs: IMap<string> = {};
+  /**
+   * Stores names of all functions that have logging disabled
+   */
+  disableLogs: IMap<string> = {};
 
-    /**
-     * Used for dynamic RAM calculation. Stores names of all functions that have
-     * already been checked by this script.
-     * TODO: Could probably just combine this with loadedFns?
-     */
-    dynamicLoadedFns: IMap<string> = {};
+  /**
+   * Used for dynamic RAM calculation. Stores names of all functions that have
+   * already been checked by this script.
+   * TODO: Could probably just combine this with loadedFns?
+   */
+  dynamicLoadedFns: IMap<string> = {};
 
-    /**
-     * Tracks dynamic RAM usage
-     */
-    dynamicRamUsage: number = RamCostConstants.ScriptBaseRamCost;
+  /**
+   * Tracks dynamic RAM usage
+   */
+  dynamicRamUsage: number = RamCostConstants.ScriptBaseRamCost;
 
-    /**
-     * Netscript Environment for this script
-     */
-    env: Environment;
+  /**
+   * Netscript Environment for this script
+   */
+  env: Environment;
 
-    /**
-     * Status message in case of script error. Currently unused I think
-     */
-    errorMessage = "";
+  /**
+   * Status message in case of script error. Currently unused I think
+   */
+  errorMessage = "";
 
-    /**
-     * Used for static RAM calculation. Stores names of all functions that have
-     * already been checked by this script
-     */
-    loadedFns: IMap<string> = {};
+  /**
+   * Used for static RAM calculation. Stores names of all functions that have
+   * already been checked by this script
+   */
+  loadedFns: IMap<string> = {};
 
-    /**
-     * Filename of script
-     */
-	name: string;
+  /**
+   * Filename of script
+   */
+  name: string;
 
-    /**
-     * Script's output/return value. Currently not used or implemented
-     */
-    output = "";
+  /**
+   * Script's output/return value. Currently not used or implemented
+   */
+  output = "";
 
-    /**
-     * Process ID. Must be an integer. Used for efficient script
-     * killing and removal.
-     */
-    pid: number;
+  /**
+   * Process ID. Must be an integer. Used for efficient script
+   * killing and removal.
+   */
+  pid: number;
 
-    /**
-     * Script's Static RAM usage. Equivalent to underlying script's RAM usage
-     */
-    ramUsage = 0;
+  /**
+   * Script's Static RAM usage. Equivalent to underlying script's RAM usage
+   */
+  ramUsage = 0;
 
-    /**
-     * Whether or not this workerScript is currently running
-     */
-    running = false;
+  /**
+   * Whether or not this workerScript is currently running
+   */
+  running = false;
 
-    /**
-     * Reference to underlying RunningScript object
-     */
-    scriptRef: RunningScript;
+  /**
+   * Reference to underlying RunningScript object
+   */
+  scriptRef: RunningScript;
 
-    /**
-     * IP Address on which this script is running
-     */
-    serverIp: string;
+  /**
+   * IP Address on which this script is running
+   */
+  serverIp: string;
 
-    constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
-        this.name 			= runningScriptObj.filename;
-    	this.serverIp 		= runningScriptObj.server;
+  constructor(
+    runningScriptObj: RunningScript,
+    pid: number,
+    nsFuncsGenerator?: (ws: WorkerScript) => any,
+  ) {
+    this.name = runningScriptObj.filename;
+    this.serverIp = runningScriptObj.server;
 
-        const sanitizedPid = Math.round(pid);
-        if (typeof sanitizedPid !== "number" || isNaN(sanitizedPid)) {
-            throw new Error(`Invalid PID when constructing WorkerScript: ${pid}`);
-        }
-        this.pid = sanitizedPid;
-        runningScriptObj.pid = sanitizedPid;
+    const sanitizedPid = Math.round(pid);
+    if (typeof sanitizedPid !== "number" || isNaN(sanitizedPid)) {
+      throw new Error(`Invalid PID when constructing WorkerScript: ${pid}`);
+    }
+    this.pid = sanitizedPid;
+    runningScriptObj.pid = sanitizedPid;
 
-        // Get the underlying script's code
-        const server = AllServers[this.serverIp];
-        if (server == null) {
-            throw new Error(`WorkerScript constructed with invalid server ip: ${this.serverIp}`);
-        }
-        let found = false;
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === this.name) {
-                found = true;
-                this.code = server.scripts[i].code;
-            }
-        }
-        if (!found) {
-            throw new Error(`WorkerScript constructed with invalid script filename: ${this.name}`);
-        }
-
-    	this.env 			= new Environment(null);
-        if (typeof nsFuncsGenerator === "function") {
-            this.env.vars       = nsFuncsGenerator(this);
-        }
-        this.env.set("args", runningScriptObj.args.slice());
-
-    	this.scriptRef		= runningScriptObj;
-        this.args           = runningScriptObj.args.slice();
+    // Get the underlying script's code
+    const server = AllServers[this.serverIp];
+    if (server == null) {
+      throw new Error(
+        `WorkerScript constructed with invalid server ip: ${this.serverIp}`,
+      );
+    }
+    let found = false;
+    for (let i = 0; i < server.scripts.length; ++i) {
+      if (server.scripts[i].filename === this.name) {
+        found = true;
+        this.code = server.scripts[i].code;
+      }
+    }
+    if (!found) {
+      throw new Error(
+        `WorkerScript constructed with invalid script filename: ${this.name}`,
+      );
     }
 
-    /**
-     * Returns the Server on which this script is running
-     */
-    getServer(): BaseServer {
-        const server = AllServers[this.serverIp];
-        if(server == null) throw new Error(`Script ${this.name} pid ${this.pid} is running on non-existent server?`);
-    	return server;
+    this.env = new Environment(null);
+    if (typeof nsFuncsGenerator === "function") {
+      this.env.vars = nsFuncsGenerator(this);
+    }
+    this.env.set("args", runningScriptObj.args.slice());
+
+    this.scriptRef = runningScriptObj;
+    this.args = runningScriptObj.args.slice();
+  }
+
+  /**
+   * Returns the Server on which this script is running
+   */
+  getServer(): BaseServer {
+    const server = AllServers[this.serverIp];
+    if (server == null)
+      throw new Error(
+        `Script ${this.name} pid ${this.pid} is running on non-existent server?`,
+      );
+    return server;
+  }
+
+  /**
+   * Returns the Script object for the underlying script.
+   * Returns null if it cannot be found (which would be a bug)
+   */
+  getScript(): Script | null {
+    const server = this.getServer();
+    for (let i = 0; i < server.scripts.length; ++i) {
+      if (server.scripts[i].filename === this.name) {
+        return server.scripts[i];
+      }
     }
 
-    /**
-     * Returns the Script object for the underlying script.
-     * Returns null if it cannot be found (which would be a bug)
-     */
-    getScript(): Script | null {
-        const server = this.getServer();
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === this.name) {
-                return server.scripts[i];
-            }
-        }
+    console.error(
+      "Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong",
+    );
+    return null;
+  }
 
-        console.error("Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong");
-        return null;
+  /**
+   * Returns the script with the specified filename on the specified server,
+   * or null if it cannot be found
+   */
+  getScriptOnServer(fn: string, server: BaseServer): Script | null {
+    if (server == null) {
+      server = this.getServer();
     }
 
-    /**
-     * Returns the script with the specified filename on the specified server,
-     * or null if it cannot be found
-     */
-    getScriptOnServer(fn: string, server: BaseServer): Script | null {
-        if (server == null) {
-            server = this.getServer();
-        }
-
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename === fn) {
-                return server.scripts[i];
-            }
-        }
-
-        return null;
+    for (let i = 0; i < server.scripts.length; ++i) {
+      if (server.scripts[i].filename === fn) {
+        return server.scripts[i];
+      }
     }
 
-    shouldLog(fn: string): boolean {
-        return (this.disableLogs[fn] == null);
-    }
+    return null;
+  }
 
-    log(func: string, txt: string): void {
-        if(this.shouldLog(func)) {
-            if(func && txt){
-                this.scriptRef.log(`${func}: ${txt}`);
-            } else if(func) {
-                this.scriptRef.log(func);
-            } else {
-                this.scriptRef.log(txt);
-            }
-        }
-    }
+  shouldLog(fn: string): boolean {
+    return this.disableLogs[fn] == null;
+  }
 
-    print(txt: string): void {
+  log(func: string, txt: string): void {
+    if (this.shouldLog(func)) {
+      if (func && txt) {
+        this.scriptRef.log(`${func}: ${txt}`);
+      } else if (func) {
+        this.scriptRef.log(func);
+      } else {
         this.scriptRef.log(txt);
+      }
     }
+  }
+
+  print(txt: string): void {
+    this.scriptRef.log(txt);
+  }
 }

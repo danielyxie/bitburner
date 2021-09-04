@@ -1,13 +1,13 @@
 export class PlayerOwnedAugmentation {
-    level = 1;
-    name = "";
+  level = 1;
+  name = "";
 
-    constructor(name = "") {
-        this.name = name;
-    }
+  constructor(name = "") {
+    this.name = name;
+  }
 }
 
 export interface IPlayerOwnedAugmentation {
-    level: number;
-    name: string;
+  level: number;
+  name: string;
 }

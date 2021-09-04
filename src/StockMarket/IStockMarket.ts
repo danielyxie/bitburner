@@ -2,10 +2,10 @@ import { IOrderBook } from "./IOrderBook";
 import { Stock } from "./Stock";
 
 export type IStockMarket = {
-    [key: string]: Stock;
+  [key: string]: Stock;
 } & {
-    lastUpdate: number;
-    Orders: IOrderBook;
-    storedCycles: number;
-    ticksUntilCycle: number;
+  lastUpdate: number;
+  Orders: IOrderBook;
+  storedCycles: number;
+  ticksUntilCycle: number;
 };

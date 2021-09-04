@@ -5,73 +5,89 @@
  */
 import * as React from "react";
 
-import { IPlayer }                  from "../../PersonObjects/IPlayer";
-import { getHospitalizationCost }   from "../../Hospital/Hospital";
+import { IPlayer } from "../../PersonObjects/IPlayer";
+import { getHospitalizationCost } from "../../Hospital/Hospital";
 
-import { AutoupdatingStdButton }    from "../../ui/React/AutoupdatingStdButton";
-import { Money }                    from "../../ui/React/Money";
+import { AutoupdatingStdButton } from "../../ui/React/AutoupdatingStdButton";
+import { Money } from "../../ui/React/Money";
 
-import { dialogBoxCreate }          from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../../utils/DialogBox";
 
 type IProps = {
-    p: IPlayer;
-}
+  p: IPlayer;
+};
 
 type IState = {
-    currHp: number;
-}
+  currHp: number;
+};
 
 export class HospitalLocation extends React.Component<IProps, IState> {
-    /**
-     * Stores button styling that sets them all to block display
-     */
-    btnStyle: any;
+  /**
+   * Stores button styling that sets them all to block display
+   */
+  btnStyle: any;
 
-    constructor(props: IProps) {
-        super(props);
+  constructor(props: IProps) {
+    super(props);
 
-        this.btnStyle = { display: "block" };
+    this.btnStyle = { display: "block" };
 
-        this.getCost = this.getCost.bind(this);
-        this.getHealed = this.getHealed.bind(this);
+    this.getCost = this.getCost.bind(this);
+    this.getHealed = this.getHealed.bind(this);
 
-        this.state = {
-            currHp: this.props.p.hp,
+    this.state = {
+      currHp: this.props.p.hp,
+    };
+  }
+
+  getCost(): number {
+    return getHospitalizationCost(this.props.p);
+  }
+
+  getHealed(e: React.MouseEvent<HTMLElement>): void {
+    if (!e.isTrusted) {
+      return;
+    }
+
+    if (this.props.p.hp < 0) {
+      this.props.p.hp = 0;
+    }
+    if (this.props.p.hp >= this.props.p.max_hp) {
+      return;
+    }
+
+    const cost = this.getCost();
+    this.props.p.loseMoney(cost);
+    this.props.p.hp = this.props.p.max_hp;
+    this.props.p.recordMoneySource(-1 * cost, "hospitalization");
+
+    // This just forces a re-render to update the cost
+    this.setState({
+      currHp: this.props.p.hp,
+    });
+
+    dialogBoxCreate(
+      <>
+        You were healed to full health! The hospital billed you for{" "}
+        <Money money={cost} />
+      </>,
+    );
+  }
+
+  render(): React.ReactNode {
+    const cost = this.getCost();
+
+    return (
+      <AutoupdatingStdButton
+        onClick={this.getHealed}
+        style={this.btnStyle}
+        text={
+          <>
+            Get treatment for wounds -{" "}
+            <Money money={cost} player={this.props.p} />
+          </>
         }
-    }
-
-    getCost(): number {
-        return getHospitalizationCost(this.props.p);
-    }
-
-    getHealed(e: React.MouseEvent<HTMLElement>): void {
-        if (!e.isTrusted) { return; }
-
-        if (this.props.p.hp < 0) { this.props.p.hp = 0; }
-        if (this.props.p.hp >= this.props.p.max_hp) { return; }
-
-        const cost = this.getCost();
-        this.props.p.loseMoney(cost);
-        this.props.p.hp = this.props.p.max_hp;
-        this.props.p.recordMoneySource(-1 * cost, 'hospitalization');
-
-        // This just forces a re-render to update the cost
-        this.setState({
-            currHp: this.props.p.hp,
-        });
-
-        dialogBoxCreate(<>You were healed to full health! The hospital billed you for <Money money={cost} /></>);
-    }
-
-    render(): React.ReactNode {
-        const cost = this.getCost();
-
-        return (
-            <AutoupdatingStdButton
-                onClick={this.getHealed}
-                style={this.btnStyle}
-                text={<>Get treatment for wounds - <Money money={cost} player={this.props.p} /></>}
-            />
-        )
-    }
+      />
+    );
+  }
 }

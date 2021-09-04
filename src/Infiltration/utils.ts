@@ -1,23 +1,23 @@
-import React from 'react';
+import React from "react";
 
 export function random(min: number, max: number): number {
-	return Math.random()*(max-min)+min;
+  return Math.random() * (max - min) + min;
 }
 
 export function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
-    switch(event.keyCode) {
+  switch (event.keyCode) {
     case 38:
     case 87:
-        return "↑";
+      return "↑";
     case 65:
     case 37:
-        return "←";
+      return "←";
     case 40:
     case 83:
-        return "↓";
+      return "↓";
     case 39:
     case 68:
-        return "→";
-    }
-    return '';
+      return "→";
+  }
+  return "";
 }

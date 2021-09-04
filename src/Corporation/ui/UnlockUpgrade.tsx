@@ -10,28 +10,36 @@ import { UnlockUpgrade as UU } from "../Actions";
 import { Money } from "../../ui/React/Money";
 
 interface IProps {
-    upgradeData: CorporationUnlockUpgrade;
-    corp: ICorporation;
-    player: IPlayer;
+  upgradeData: CorporationUnlockUpgrade;
+  corp: ICorporation;
+  player: IPlayer;
 }
 
 export function UnlockUpgrade(props: IProps): React.ReactElement {
-    const data = props.upgradeData;
-    const text = <>{data[2]} - <Money money={data[1]} /></>;
-    const tooltip = data[3];
-    function onClick(): void {
-        try {
-            UU(props.corp, props.upgradeData);
-        } catch(err) {
-            dialogBoxCreate(err+'');
-        }
-        props.corp.rerender(props.player);
+  const data = props.upgradeData;
+  const text = (
+    <>
+      {data[2]} - <Money money={data[1]} />
+    </>
+  );
+  const tooltip = data[3];
+  function onClick(): void {
+    try {
+      UU(props.corp, props.upgradeData);
+    } catch (err) {
+      dialogBoxCreate(err + "");
     }
+    props.corp.rerender(props.player);
+  }
 
-    return (
-        <div className={"cmpy-mgmt-upgrade-div tooltip"} style={{"width" : "45%"}} onClick={onClick}>
-            {text}
-            <span className={"tooltiptext"}>{tooltip}</span>
-        </div>
-    )
+  return (
+    <div
+      className={"cmpy-mgmt-upgrade-div tooltip"}
+      style={{ width: "45%" }}
+      onClick={onClick}
+    >
+      {text}
+      <span className={"tooltiptext"}>{tooltip}</span>
+    </div>
+  );
 }

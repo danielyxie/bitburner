@@ -4,26 +4,26 @@
 @import "theme";
 
 .sleeve-container {
-    border: 1px solid white;
-    margin: 4px;
-    width: 75%;
+  border: 1px solid white;
+  margin: 4px;
+  width: 75%;
 
-    p {
-        font-size: $defaultFontSize * 0.875;
-    }
+  p {
+    font-size: $defaultFontSize * 0.875;
+  }
 }
 
 .sleeves-page-info {
-    display: "block";
-    width: 75%;
+  display: "block";
+  width: 75%;
 }
 
 .sleeve-panel {
-    display: inline-block;
-    margin: 0;
-    padding: 2px;
+  display: inline-block;
+  margin: 0;
+  padding: 2px;
 
-    select {
-        display: block;
-    }
+  select {
+    display: block;
+  }
 }

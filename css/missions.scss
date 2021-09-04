@@ -5,115 +5,115 @@
 
 /* Hacking missions */
 #mission-container {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .hack-mission-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 2.5%;
-    height: 90%;
-    position: absolute;
-    width: 100%;
-    overflow-y: auto;
-    padding-right: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 2.5%;
+  height: 90%;
+  position: absolute;
+  width: 100%;
+  overflow-y: auto;
+  padding-right: 10px;
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .hack-mission-node {
-    z-index: 5;
-    background-color: #808080;
-    align-self: center;
-    justify-self: center;
-    display: inline-block;
+  z-index: 5;
+  background-color: #808080;
+  align-self: center;
+  justify-self: center;
+  display: inline-block;
 
-    p {
-        @include userSelect(none);
+  p {
+    @include userSelect(none);
 
-        margin-top: 8px;
-        color: #fff;
-        font-size: $defaultFontSize * 0.75;
-        text-align: center;
-    }
+    margin-top: 8px;
+    color: #fff;
+    font-size: $defaultFontSize * 0.75;
+    text-align: center;
+  }
 }
 
 .hack-mission-player-node {
-    color: #fff;
-    background-color: #00f;
+  color: #fff;
+  background-color: #00f;
 }
 
 .hack-mission-player-node-active {
-    border: 2px solid #fff;
-    background-color: #66f;
+  border: 2px solid #fff;
+  background-color: #66f;
 }
 
 .hack-mission-enemy-node {
-    color: #fff;
-    background-color: #f00;
+  color: #fff;
+  background-color: #f00;
 }
 
 .hack-mission-cpu-node {
-    @include borderRadius(50%);
-    width: 100%;
-    height: 100%;
+  @include borderRadius(50%);
+  width: 100%;
+  height: 100%;
 }
 
 .hack-mission-firewall-node {
-    width: 90%;
-    height: 100%;
+  width: 90%;
+  height: 100%;
 }
 
 .hack-mission-database-node {
-    @include transform(skew(20deg));
+  @include transform(skew(20deg));
 
-    width: 100%;
-    height: 90%;
+  width: 100%;
+  height: 90%;
 
-    p {
-        @include transform(skew(-20deg));
-        @include userSelect(none);
+  p {
+    @include transform(skew(-20deg));
+    @include userSelect(none);
 
-        color: #fff;
-        font-size: $defaultFontSize * 0.75;
-        margin-top: 8px;
-        text-align: center;
-    }
+    color: #fff;
+    font-size: $defaultFontSize * 0.75;
+    margin-top: 8px;
+    text-align: center;
+  }
 }
 
 .hack-mission-transfer-node {
-    @include transform(skew(-20deg));
+  @include transform(skew(-20deg));
 
-    width: 100%;
-    height: 90%;
+  width: 100%;
+  height: 90%;
 
-    p {
-        @include transform(skew(20deg));
-        @include userSelect(none);
+  p {
+    @include transform(skew(20deg));
+    @include userSelect(none);
 
-        color: #fff;
-        font-size: $defaultFontSize * 0.75;
-        margin-top: 8px;
-        text-align: center;
-    }
+    color: #fff;
+    font-size: $defaultFontSize * 0.75;
+    margin-top: 8px;
+    text-align: center;
+  }
 }
 
 .hack-mission-spam-node,
 .hack-mission-shield-node {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 /* Non-map related DOM elements */
 
 /* Element at the top of the Hacking Mission page (intro page, start button, guide buttons, etc.) */
 .hack-mission-header-element {
-    margin: 6px;
+  margin: 6px;
 }
 
 .hack-mission-action-buttons-container {
-    border: 2px solid #fff;
+  border: 2px solid #fff;
 }

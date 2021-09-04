@@ -3,9 +3,8 @@ import { ScriptUrl } from "./Script/ScriptUrl";
 
 // Makes a blob that contains the code of a given script.
 export function makeScriptBlob(code) {
-    return new Blob([code], {type: "text/javascript"});
+  return new Blob([code], { type: "text/javascript" });
 }
-
 
 // Begin executing a user JS script, and return a promise that resolves
 // or rejects when the script finishes.
@@ -16,40 +15,45 @@ export function makeScriptBlob(code) {
 // When the promise returned by this resolves, we'll have finished
 // running the main function of the script.
 export async function executeJSScript(scripts = [], workerScript) {
-    let loadedModule;
-    let urls = null;
-    let script = workerScript.getScript();
-    if (shouldCompile(script, scripts)) {
-        // The URL at the top is the one we want to import. It will
-        // recursively import all the other modules in the urlStack.
-        //
-        // Webpack likes to turn the import into a require, which sort of
-        // but not really behaves like import. Particularly, it cannot
-        // load fully dynamic content. So we hide the import from webpack
-        // by placing it inside an eval call.
-        script.markUpdated();
-        urls = _getScriptUrls(script, scripts, []);
-        script.url = urls[urls.length - 1].url;
-        script.module = new Promise(resolve => resolve(eval('import(urls[urls.length - 1].url)')));
-        script.dependencies = urls;
-    }
-    loadedModule = await script.module;
+  let loadedModule;
+  let urls = null;
+  let script = workerScript.getScript();
+  if (shouldCompile(script, scripts)) {
+    // The URL at the top is the one we want to import. It will
+    // recursively import all the other modules in the urlStack.
+    //
+    // Webpack likes to turn the import into a require, which sort of
+    // but not really behaves like import. Particularly, it cannot
+    // load fully dynamic content. So we hide the import from webpack
+    // by placing it inside an eval call.
+    script.markUpdated();
+    urls = _getScriptUrls(script, scripts, []);
+    script.url = urls[urls.length - 1].url;
+    script.module = new Promise((resolve) =>
+      resolve(eval("import(urls[urls.length - 1].url)")),
+    );
+    script.dependencies = urls;
+  }
+  loadedModule = await script.module;
 
-    let ns      = workerScript.env.vars;
+  let ns = workerScript.env.vars;
 
-    try {
-        // TODO: putting await in a non-async function yields unhelpful
-        // "SyntaxError: unexpected reserved word" with no line number information.
-        if (!loadedModule.main) {
-            throw makeRuntimeRejectMsg(workerScript, `${script.filename} cannot be run because it does not have a main function.`);
-        }
-        return loadedModule.main(ns);
-    } finally {
-        // Revoke the generated URLs
-        if (urls != null) {
-            for (const b in urls) URL.revokeObjectURL(b.url);
-        }
+  try {
+    // TODO: putting await in a non-async function yields unhelpful
+    // "SyntaxError: unexpected reserved word" with no line number information.
+    if (!loadedModule.main) {
+      throw makeRuntimeRejectMsg(
+        workerScript,
+        `${script.filename} cannot be run because it does not have a main function.`,
+      );
     }
+    return loadedModule.main(ns);
+  } finally {
+    // Revoke the generated URLs
+    if (urls != null) {
+      for (const b in urls) URL.revokeObjectURL(b.url);
+    }
+  }
 }
 
 /** Returns whether we should compile the script parameter.
@@ -58,17 +62,18 @@ export async function executeJSScript(scripts = [], workerScript) {
  * @param {Script[]} scripts
  */
 function shouldCompile(script, scripts) {
-    if (script.module === "") return true;
-    return script.dependencies.some(dep => {
-        const depScript = scripts.find(s => s.filename == dep.filename);
+  if (script.module === "") return true;
+  return script.dependencies.some((dep) => {
+    const depScript = scripts.find((s) => s.filename == dep.filename);
 
-        // If the script is not present on the server, we should recompile, if only to get any necessary
-        // compilation errors.
-        if (!depScript) return true;
+    // If the script is not present on the server, we should recompile, if only to get any necessary
+    // compilation errors.
+    if (!depScript) return true;
 
-        const depIsMoreRecent = depScript.moduleSequenceNumber > script.moduleSequenceNumber;
-        return depIsMoreRecent;
-    });
+    const depIsMoreRecent =
+      depScript.moduleSequenceNumber > script.moduleSequenceNumber;
+    return depIsMoreRecent;
+  });
 }
 
 // Gets a stack of blob urls, the top/right-most element being
@@ -92,51 +97,57 @@ function shouldCompile(script, scripts) {
  */
 // BUG: apparently seen is never consulted. Oops.
 export function _getScriptUrls(script, scripts, seen) {
-    // Inspired by: https://stackoverflow.com/a/43834063/91401
-    /** @type {ScriptUrl[]} */
-    const urlStack = [];
-    seen.push(script);
-    try {
-        // Replace every import statement with an import to a blob url containing
-        // the corresponding script. E.g.
-        //
-        // import {foo} from "bar.js";
-        //
-        // becomes
-        //
-        // import {foo} from "blob://<uuid>"
-        //
-        // Where the blob URL contains the script content.
-        let transformedCode = script.code.replace(/((?:from|import)\s+(?:'|"))(?:\.\/)?([^'"]+)('|")/g,
-            (unmodified, prefix, filename, suffix) => {
-                const isAllowedImport = scripts.some(s => s.filename == filename);
-                if (!isAllowedImport) return unmodified;
+  // Inspired by: https://stackoverflow.com/a/43834063/91401
+  /** @type {ScriptUrl[]} */
+  const urlStack = [];
+  seen.push(script);
+  try {
+    // Replace every import statement with an import to a blob url containing
+    // the corresponding script. E.g.
+    //
+    // import {foo} from "bar.js";
+    //
+    // becomes
+    //
+    // import {foo} from "blob://<uuid>"
+    //
+    // Where the blob URL contains the script content.
+    let transformedCode = script.code.replace(
+      /((?:from|import)\s+(?:'|"))(?:\.\/)?([^'"]+)('|")/g,
+      (unmodified, prefix, filename, suffix) => {
+        const isAllowedImport = scripts.some((s) => s.filename == filename);
+        if (!isAllowedImport) return unmodified;
 
-                // Find the corresponding script.
-                const [importedScript] = scripts.filter(s => s.filename == filename);
+        // Find the corresponding script.
+        const [importedScript] = scripts.filter((s) => s.filename == filename);
 
-                // Try to get a URL for the requested script and its dependencies.
-                const urls = _getScriptUrls(importedScript, scripts, seen);
+        // Try to get a URL for the requested script and its dependencies.
+        const urls = _getScriptUrls(importedScript, scripts, seen);
 
-                // The top url in the stack is the replacement import file for this script.
-                urlStack.push(...urls);
-                return [prefix, urls[urls.length - 1].url, suffix].join('');
-            },
-        );
+        // The top url in the stack is the replacement import file for this script.
+        urlStack.push(...urls);
+        return [prefix, urls[urls.length - 1].url, suffix].join("");
+      },
+    );
 
-        // We automatically define a print function() in the NetscriptJS module so that
-        // accidental calls to window.print() do not bring up the "print screen" dialog
-        transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}`
+    // We automatically define a print function() in the NetscriptJS module so that
+    // accidental calls to window.print() do not bring up the "print screen" dialog
+    transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}`;
 
-        // If we successfully transformed the code, create a blob url for it and
-        // push that URL onto the top of the stack.
-        urlStack.push(new ScriptUrl(script.filename, URL.createObjectURL(makeScriptBlob(transformedCode))));
-        return urlStack;
-    } catch (err) {
-        // If there is an error, we need to clean up the URLs.
-        for (const url in urlStack) URL.revokeObjectURL(url);
-        throw err;
-    } finally {
-        seen.pop();
-    }
+    // If we successfully transformed the code, create a blob url for it and
+    // push that URL onto the top of the stack.
+    urlStack.push(
+      new ScriptUrl(
+        script.filename,
+        URL.createObjectURL(makeScriptBlob(transformedCode)),
+      ),
+    );
+    return urlStack;
+  } catch (err) {
+    // If there is an error, we need to clean up the URLs.
+    for (const url in urlStack) URL.revokeObjectURL(url);
+    throw err;
+  } finally {
+    seen.pop();
+  }
 }

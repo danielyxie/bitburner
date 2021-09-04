@@ -21,18 +21,25 @@ export const forecastForecastChangeFromCompanyWork = 0.001;
  * @param {Server} server - Server being hack()ed
  * @param {number} moneyHacked - Amount of money stolen from the server
  */
-export function influenceStockThroughServerHack(server: Server, moneyHacked: number): void {
-    const orgName = server.organizationName;
-    let stock: Stock | null = null;
-    if (typeof orgName === "string" && orgName !== "") {
-        stock = StockMarket[orgName];
-    }
-    if (!(stock instanceof Stock)) { return; }
+export function influenceStockThroughServerHack(
+  server: Server,
+  moneyHacked: number,
+): void {
+  const orgName = server.organizationName;
+  let stock: Stock | null = null;
+  if (typeof orgName === "string" && orgName !== "") {
+    stock = StockMarket[orgName];
+  }
+  if (!(stock instanceof Stock)) {
+    return;
+  }
 
-    const percTotalMoneyHacked = moneyHacked / server.moneyMax;
-    if (Math.random() < percTotalMoneyHacked) {
-        stock.changeForecastForecast(stock.otlkMagForecast - forecastForecastChangeFromHack);
-    }
+  const percTotalMoneyHacked = moneyHacked / server.moneyMax;
+  if (Math.random() < percTotalMoneyHacked) {
+    stock.changeForecastForecast(
+      stock.otlkMagForecast - forecastForecastChangeFromHack,
+    );
+  }
 }
 
 /**
@@ -42,18 +49,25 @@ export function influenceStockThroughServerHack(server: Server, moneyHacked: num
  * @param {Server} server - Server being grow()n
  * @param {number} moneyHacked - Amount of money added to the server
  */
-export function influenceStockThroughServerGrow(server: Server, moneyGrown: number): void {
-    const orgName = server.organizationName;
-    let stock: Stock | null = null;
-    if (typeof orgName === "string" && orgName !== "") {
-        stock = StockMarket[orgName];
-    }
-    if (!(stock instanceof Stock)) { return; }
+export function influenceStockThroughServerGrow(
+  server: Server,
+  moneyGrown: number,
+): void {
+  const orgName = server.organizationName;
+  let stock: Stock | null = null;
+  if (typeof orgName === "string" && orgName !== "") {
+    stock = StockMarket[orgName];
+  }
+  if (!(stock instanceof Stock)) {
+    return;
+  }
 
-    const percTotalMoneyGrown = moneyGrown / server.moneyMax;
-    if (Math.random() < percTotalMoneyGrown) {
-        stock.changeForecastForecast(stock.otlkMagForecast + forecastForecastChangeFromHack);
-    }
+  const percTotalMoneyGrown = moneyGrown / server.moneyMax;
+  if (Math.random() < percTotalMoneyGrown) {
+    stock.changeForecastForecast(
+      stock.otlkMagForecast + forecastForecastChangeFromHack,
+    );
+  }
 }
 
 /**
@@ -63,16 +77,22 @@ export function influenceStockThroughServerGrow(server: Server, moneyGrown: numb
  * @param {number} performanceMult - Effectiveness of player's work. Affects influence
  * @param {number} cyclesOfWork - # game cycles of work being processed
  */
-export function influenceStockThroughCompanyWork(company: Company, performanceMult: number, cyclesOfWork: number): void {
-    const compName = company.name;
-    let stock: Stock | null = null;
-    if (typeof compName === "string" && compName !== "") {
-        stock = StockMarket[compName];
-    }
-    if (!(stock instanceof Stock)) { return; }
+export function influenceStockThroughCompanyWork(
+  company: Company,
+  performanceMult: number,
+  cyclesOfWork: number,
+): void {
+  const compName = company.name;
+  let stock: Stock | null = null;
+  if (typeof compName === "string" && compName !== "") {
+    stock = StockMarket[compName];
+  }
+  if (!(stock instanceof Stock)) {
+    return;
+  }
 
-    if (Math.random() < 0.002 * cyclesOfWork) {
-        const change = forecastForecastChangeFromCompanyWork * performanceMult;
-        stock.changeForecastForecast(stock.otlkMagForecast + change);
-    }
+  if (Math.random() < 0.002 * cyclesOfWork) {
+    const change = forecastForecastChangeFromCompanyWork * performanceMult;
+    stock.changeForecastForecast(stock.otlkMagForecast + change);
+  }
 }

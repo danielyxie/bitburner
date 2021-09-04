@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
 interface IProps {
-    current: boolean;
-    text: string;
-    onClick: () => void;
+  current: boolean;
+  text: string;
+  onClick: () => void;
 }
 
 export function HeaderTab(props: IProps): React.ReactElement {
-    let className = "cmpy-mgmt-header-tab";
-    if (props.current) {
-        className += " current";
-    }
+  let className = "cmpy-mgmt-header-tab";
+  if (props.current) {
+    className += " current";
+  }
 
-    return (
-        <button className={className} onClick={props.onClick}>
-            {props.text}
-        </button>
-    )
+  return (
+    <button className={className} onClick={props.onClick}>
+      {props.text}
+    </button>
+  );
 }

@@ -12,31 +12,45 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 type IProps = {
-    aug: Augmentation;
-    level?: number | string | null;
-}
+  aug: Augmentation;
+  level?: number | string | null;
+};
 
 export function AugmentationAccordion(props: IProps): React.ReactElement {
-    let displayName = props.aug.name;
-    if (props.level != null) {
-        if (props.aug.name === AugmentationNames.NeuroFluxGovernor) {
-            displayName += (` - Level ${props.level}`)
-        }
+  let displayName = props.aug.name;
+  if (props.level != null) {
+    if (props.aug.name === AugmentationNames.NeuroFluxGovernor) {
+      displayName += ` - Level ${props.level}`;
     }
+  }
 
-    if(typeof props.aug.info === 'string') {
-        return (
-            <Accordion
-                headerContent={<>{displayName}</>}
-                panelContent={<p><span dangerouslySetInnerHTML={{__html: props.aug.info}} /><br /><br />{props.aug.stats}</p>}
-            />
-        )
-    }
-
+  if (typeof props.aug.info === "string") {
     return (
-        <Accordion
-            headerContent={<>{displayName}</>}
-            panelContent={<p>{props.aug.info}<br /><br />{props.aug.stats}</p>}
-        />
-    )
+      <Accordion
+        headerContent={<>{displayName}</>}
+        panelContent={
+          <p>
+            <span dangerouslySetInnerHTML={{ __html: props.aug.info }} />
+            <br />
+            <br />
+            {props.aug.stats}
+          </p>
+        }
+      />
+    );
+  }
+
+  return (
+    <Accordion
+      headerContent={<>{displayName}</>}
+      panelContent={
+        <p>
+          {props.aug.info}
+          <br />
+          <br />
+          {props.aug.stats}
+        </p>
+      }
+    />
+  );
 }

@@ -11,28 +11,28 @@ import { WorkerScript } from "../../Netscript/WorkerScript";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 type IProps = {
-    p: IPlayer;
-    workerScripts: Map<number, WorkerScript>;
-}
+  p: IPlayer;
+  workerScripts: Map<number, WorkerScript>;
+};
 
 export class ActiveScriptsRoot extends React.Component<IProps> {
-    constructor(props: IProps) {
-        super(props);
-    }
+  constructor(props: IProps) {
+    super(props);
+  }
 
-    render(): React.ReactNode {
-        return (
-            <>
-                <p>
-                    This page displays a list of all of your scripts that are currently
-                    running across every machine. It also provides information about each
-                    script's production. The scripts are categorized by the hostname of
-                    the servers on which they are running.
-                </p>
+  render(): React.ReactNode {
+    return (
+      <>
+        <p>
+          This page displays a list of all of your scripts that are currently
+          running across every machine. It also provides information about each
+          script's production. The scripts are categorized by the hostname of
+          the servers on which they are running.
+        </p>
 
-                <ScriptProduction {...this.props} />
-                <ServerAccordions {...this.props} />
-            </>
-        )
-    }
+        <ScriptProduction {...this.props} />
+        <ServerAccordions {...this.props} />
+      </>
+    );
+  }
 }

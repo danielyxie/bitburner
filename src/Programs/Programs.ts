@@ -1,9 +1,9 @@
-import { Program }                  from "./Program";
-import { programsMetadata }         from "./data/ProgramsMetadata";
-import { IMap }                     from "../types";
+import { Program } from "./Program";
+import { programsMetadata } from "./data/ProgramsMetadata";
+import { IMap } from "../types";
 
 export const Programs: IMap<Program> = {};
 
 for (const params of programsMetadata) {
-    Programs[params.key] = new Program(params.name, params.create);
+  Programs[params.key] = new Program(params.name, params.create);
 }

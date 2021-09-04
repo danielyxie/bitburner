@@ -10,65 +10,65 @@ import { LiteratureNames } from "../../Literature/data/LiteratureNames";
  * These values will be adjusted based on Bitnode multipliers when the Server objects are built out.
  */
 interface IServerMetadata {
-    /**
-     * When populated, the base security level of the server.
-     */
-    hackDifficulty?: number | IMinMaxRange;
+  /**
+   * When populated, the base security level of the server.
+   */
+  hackDifficulty?: number | IMinMaxRange;
 
-    /**
-     * The DNS name of the server.
-     */
-    hostname: string;
+  /**
+   * The DNS name of the server.
+   */
+  hostname: string;
 
-    /**
-     * When populated, the files will be added to the server when created.
-     */
-    literature?: string[];
+  /**
+   * When populated, the files will be added to the server when created.
+   */
+  literature?: string[];
 
-    /**
-     * When populated, the exponent of 2^x amount of RAM the server has.
-     * This should be in the range of 1-20, to match the Player's max RAM.
-     */
-    maxRamExponent?: number | IMinMaxRange;
+  /**
+   * When populated, the exponent of 2^x amount of RAM the server has.
+   * This should be in the range of 1-20, to match the Player's max RAM.
+   */
+  maxRamExponent?: number | IMinMaxRange;
 
-    /**
-     * How much money the server starts out with.
-     */
-    moneyAvailable: number | IMinMaxRange;
+  /**
+   * How much money the server starts out with.
+   */
+  moneyAvailable: number | IMinMaxRange;
 
-    /**
-     * The number of network layers away from the `home` server.
-     * This value is between 1 and 15.
-     * If this is not populated, @specialName should be.
-     */
-    networkLayer?: number | IMinMaxRange;
+  /**
+   * The number of network layers away from the `home` server.
+   * This value is between 1 and 15.
+   * If this is not populated, @specialName should be.
+   */
+  networkLayer?: number | IMinMaxRange;
 
-    /**
-     * The number of ports that must be opened before the player can execute NUKE.
-     */
-    numOpenPortsRequired: number;
+  /**
+   * The number of ports that must be opened before the player can execute NUKE.
+   */
+  numOpenPortsRequired: number;
 
-    /**
-     * The organization that the server belongs to.
-     */
-    organizationName: string;
+  /**
+   * The organization that the server belongs to.
+   */
+  organizationName: string;
 
-    /**
-     * The minimum hacking level before the player can run NUKE.
-     */
-    requiredHackingSkill: number | IMinMaxRange;
+  /**
+   * The minimum hacking level before the player can run NUKE.
+   */
+  requiredHackingSkill: number | IMinMaxRange;
 
-    /**
-     * The growth factor for the server.
-     */
-    serverGrowth?: number | IMinMaxRange;
+  /**
+   * The growth factor for the server.
+   */
+  serverGrowth?: number | IMinMaxRange;
 
-    /**
-     * A "unique" server that has special implications when the player manually hacks it.
-     */
-    specialName?: string;
+  /**
+   * A "unique" server that has special implications when the player manually hacks it.
+   */
+  specialName?: string;
 
-    [key: string]: any;
+  [key: string]: any;
 }
 
 /**
@@ -140,8 +140,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "blade",
     literature: [LiteratureNames.BeyondMan],
     maxRamExponent: {
-        max: 9,
-        min: 5,
+      max: 9,
+      min: 5,
     },
     moneyAvailable: {
       max: 40e9,
@@ -183,14 +183,11 @@ export const serverMetadata: IServerMetadata[] = [
   },
   {
     hackDifficulty: {
-        max: 65,
-        min: 45,
+      max: 65,
+      min: 45,
     },
     hostname: "clarkinc",
-    literature: [
-        LiteratureNames.BeyondMan,
-        LiteratureNames.CostOfImmortality,
-    ],
+    literature: [LiteratureNames.BeyondMan, LiteratureNames.CostOfImmortality],
     moneyAvailable: {
       max: 25e9,
       min: 15e9,
@@ -203,8 +200,8 @@ export const serverMetadata: IServerMetadata[] = [
       min: 950,
     },
     serverGrowth: {
-        max: 75,
-        min: 45,
+      max: 75,
+      min: 45,
     },
     specialName: LocationName.AevumClarkeIncorporated,
   },
@@ -219,8 +216,8 @@ export const serverMetadata: IServerMetadata[] = [
       LiteratureNames.HistoryOfSynthoids,
     ],
     maxRamExponent: {
-        max: 9,
-        min: 7,
+      max: 9,
+      min: 7,
     },
     moneyAvailable: {
       max: 22e9,
@@ -293,8 +290,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "fulcrumtech",
     literature: [LiteratureNames.SimulatedReality],
     maxRamExponent: {
-        max: 11,
-        min: 7,
+      max: 11,
+      min: 7,
     },
     moneyAvailable: {
       max: 1800e6,
@@ -403,8 +400,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "helios",
     literature: [LiteratureNames.BeyondMan],
     maxRamExponent: {
-        max: 8,
-        min: 5,
+      max: 8,
+      min: 5,
     },
     moneyAvailable: {
       max: 750e6,
@@ -431,8 +428,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "vitalife",
     literature: [LiteratureNames.AGreenTomorrow],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 800e6,
@@ -481,8 +478,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "univ-energy",
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 1200e6,
@@ -509,8 +506,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "titan-labs",
     literature: [LiteratureNames.CodedIntelligence],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 900000000,
@@ -536,8 +533,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "microdyne",
     literature: [LiteratureNames.SyntheticMuscles],
     maxRamExponent: {
-        max: 6,
-        min: 4,
+      max: 6,
+      min: 4,
     },
     moneyAvailable: {
       max: 700000000,
@@ -636,8 +633,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "omnia",
     literature: [LiteratureNames.HistoryOfSynthoids],
     maxRamExponent: {
-        max: 6,
-        min: 4,
+      max: 6,
+      min: 4,
     },
     moneyAvailable: {
       max: 1000000000,
@@ -708,12 +705,12 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "solaris",
     literature: [
-        LiteratureNames.AGreenTomorrow,
-        LiteratureNames.TheFailedFrontier,
+      LiteratureNames.AGreenTomorrow,
+      LiteratureNames.TheFailedFrontier,
     ],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 900000000,
@@ -763,8 +760,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "global-pharm",
     literature: [LiteratureNames.AGreenTomorrow],
     maxRamExponent: {
-        max: 6,
-        min: 3,
+      max: 6,
+      min: 3,
     },
     moneyAvailable: {
       max: 1750000000,
@@ -835,8 +832,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "unitalife",
     maxRamExponent: {
-        max: 6,
-        min: 4,
+      max: 6,
+      min: 4,
     },
     moneyAvailable: {
       max: 1100000000,
@@ -861,8 +858,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "lexo-corp",
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 800000000,
@@ -888,8 +885,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "rho-construction",
     maxRamExponent: {
-        max: 6,
-        min: 4,
+      max: 6,
+      min: 4,
     },
     moneyAvailable: {
       max: 700000000,
@@ -916,8 +913,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "alpha-ent",
     literature: [LiteratureNames.Sector12Crime],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 750000000,
@@ -943,8 +940,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "aevum-police",
     maxRamExponent: {
-        max: 6,
-        min: 4,
+      max: 6,
+      min: 4,
     },
     moneyAvailable: {
       max: 400000000,
@@ -975,8 +972,8 @@ export const serverMetadata: IServerMetadata[] = [
       LiteratureNames.TensionsInTechRace,
     ],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 250000000,
@@ -1002,8 +999,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "zb-institute",
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 1100000000,
@@ -1034,8 +1031,8 @@ export const serverMetadata: IServerMetadata[] = [
       LiteratureNames.SyntheticMuscles,
     ],
     maxRamExponent: {
-        max: 6,
-        min: 4,
+      max: 6,
+      min: 4,
     },
     moneyAvailable: {
       max: 350000000,
@@ -1085,8 +1082,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "catalyst",
     literature: [LiteratureNames.TensionsInTechRace],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: {
       max: 550000000,
@@ -1111,8 +1108,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "the-hub",
     maxRamExponent: {
-        max: 6,
-        min: 3,
+      max: 6,
+      min: 3,
     },
     moneyAvailable: {
       max: 200000000,
@@ -1162,8 +1159,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "netlink",
     literature: [LiteratureNames.SimulatedReality],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: 275000000,
     networkLayer: 4,
@@ -1408,8 +1405,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "millenium-fitness",
     maxRamExponent: {
-        max: 8,
-        min: 4,
+      max: 8,
+      min: 4,
     },
     moneyAvailable: 250000000,
     networkLayer: 6,
@@ -1432,8 +1429,8 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "powerhouse-fitness",
     maxRamExponent: {
-        max: 6,
-        min: 4,
+      max: 6,
+      min: 4,
     },
     moneyAvailable: 900000000,
     networkLayer: 14,
@@ -1472,13 +1469,10 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 0,
     hostname: "run4theh111z",
-    literature: [
-        LiteratureNames.SimulatedReality,
-        LiteratureNames.TheNewGod,
-    ],
+    literature: [LiteratureNames.SimulatedReality, LiteratureNames.TheNewGod],
     maxRamExponent: {
-        max: 9,
-        min: 5,
+      max: 9,
+      min: 5,
     },
     moneyAvailable: 0,
     networkLayer: 11,
@@ -1496,8 +1490,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "I.I.I.I",
     literature: [LiteratureNames.DemocracyIsDead],
     maxRamExponent: {
-        max: 8,
-        min: 4,
+      max: 8,
+      min: 4,
     },
     moneyAvailable: 0,
     networkLayer: 5,
@@ -1515,8 +1509,8 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "avmnite-02h",
     literature: [LiteratureNames.DemocracyIsDead],
     maxRamExponent: {
-        max: 7,
-        min: 4,
+      max: 7,
+      min: 4,
     },
     moneyAvailable: 0,
     networkLayer: 4,

@@ -1,5 +1,4 @@
-
 export interface Options {
-    theme: string;
-    insertSpaces: boolean;
+  theme: string;
+  insertSpaces: boolean;
 }

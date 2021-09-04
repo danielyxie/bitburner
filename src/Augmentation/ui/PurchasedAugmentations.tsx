@@ -11,32 +11,33 @@ import { Player } from "../../Player";
 import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
 
 export function PurchasedAugmentations(): React.ReactElement {
-    const augs: React.ReactElement[] = [];
-    // Only render the last NeuroFlux (there are no findLastIndex btw)
-    let nfgIndex = -1;
-    for(let i = Player.queuedAugmentations.length-1; i >= 0; i--) {
-        if(Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-            nfgIndex = i;
-            break;
-        }
+  const augs: React.ReactElement[] = [];
+  // Only render the last NeuroFlux (there are no findLastIndex btw)
+  let nfgIndex = -1;
+  for (let i = Player.queuedAugmentations.length - 1; i >= 0; i--) {
+    if (
+      Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor
+    ) {
+      nfgIndex = i;
+      break;
     }
-    for (let i = 0; i < Player.queuedAugmentations.length; i++) {
-        const ownedAug = Player.queuedAugmentations[i];
-        if(ownedAug.name === AugmentationNames.NeuroFluxGovernor && i !== nfgIndex) continue;
-        const aug = Augmentations[ownedAug.name];
-        let level = null;
-        if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
-            level = ownedAug.level;
-        }
-
-        augs.push(
-            <li key={`${ownedAug.name}${ownedAug.level}`}>
-                <AugmentationAccordion aug={aug} level={level} />
-            </li>,
-        )
+  }
+  for (let i = 0; i < Player.queuedAugmentations.length; i++) {
+    const ownedAug = Player.queuedAugmentations[i];
+    if (ownedAug.name === AugmentationNames.NeuroFluxGovernor && i !== nfgIndex)
+      continue;
+    const aug = Augmentations[ownedAug.name];
+    let level = null;
+    if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
+      level = ownedAug.level;
     }
 
-    return (
-        <ul className="augmentations-list">{augs}</ul>
-    )
+    augs.push(
+      <li key={`${ownedAug.name}${ownedAug.level}`}>
+        <AugmentationAccordion aug={aug} level={level} />
+      </li>,
+    );
+  }
+
+  return <ul className="augmentations-list">{augs}</ul>;
 }

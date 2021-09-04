@@ -1,1 +1,1 @@
-Implementation of Faction-related mechanics 
+Implementation of Faction-related mechanics

@@ -12,154 +12,154 @@
 #cmpy-mgmt-container a,
 #cmpy-mgmt-container div,
 #cmpy-mgmt-container br {
-    font-size: $defaultFontSize * 0.8125;
+  font-size: $defaultFontSize * 0.8125;
 }
 
 /* Header tabs */
 .cmpy-mgmt-header-tab {
-    display: inline-block;
-    color: #fff;
-    background-color: #555;
-    border: 1px solid #fff;
-    padding: 4px;
+  display: inline-block;
+  color: #fff;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 4px;
 }
 
 .cmpy-mgmt-header-tab:hover {
-    background-color: #666;
+  background-color: #666;
 }
 
 .cmpy-mgmt-header-tab.current {
-    background-color: #777;
+  background-color: #777;
 }
 
 /* Switch between Cities */
 .cmpy-mgmt-city-tab {
-    display: inline-block;
-    color: #fff;
-    background-color: #555;
-    border: 1px solid #fff;
-    padding: 4px;
+  display: inline-block;
+  color: #fff;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 4px;
 }
 
 .cmpy-mgmt-city-tab:hover {
-    background-color: #666;
+  background-color: #666;
 }
 
 .cmpy-mgmt-city-tab.current {
-    background-color: #777;
+  background-color: #777;
 }
 
 /* Panels */
 #cmpy-mgmt-panel {
-    height: 90%;
+  height: 90%;
 }
 
 .cmpy-mgmt-industry-left-panel,
 .cmpy-mgmt-industry-right-panel {
-    display: inline-block;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-    overflow: visible;
-    top: 10px;
-    width: 45%;
+  display: inline-block;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+  overflow: visible;
+  top: 10px;
+  width: 45%;
 }
 
 .cmpy-mgmt-industry-overview-panel {
-    border: 1px solid #fff;
-    color: var(--my-font-color);
-    display: inline-block;
-    padding: 3px;
-    width: 100%;
+  border: 1px solid #fff;
+  color: var(--my-font-color);
+  display: inline-block;
+  padding: 3px;
+  width: 100%;
 }
 
 .cmpy-mgmt-employee-panel {
-    border: 1px solid #fff;
-    display: block;
-    padding: 3px;
-    width: 100%;
+  border: 1px solid #fff;
+  display: block;
+  padding: 3px;
+  width: 100%;
 }
 
 .cmpy-mgmt-warehouse-panel {
-    border: 1px solid #fff;
-    display: inline-block;
-    padding: 3px;
-    width: 100%;
+  border: 1px solid #fff;
+  display: inline-block;
+  padding: 3px;
+  width: 100%;
 }
 
 /* Hiring new employees */
 .cmpy-mgmt-find-employee-option {
-    border: 1px solid #fff;
-    margin: 6px;
+  border: 1px solid #fff;
+  margin: 6px;
 }
 
 .cmpy-mgmt-find-employee-option:hover {
-    background-color: #3d4044;
+  background-color: #3d4044;
 }
 
 /* Warehouse */
 .cmpy-mgmt-warehouse-material-div {
-    padding: 2px;
-    border: 1px solid #fff;
+  padding: 2px;
+  border: 1px solid #fff;
 }
 
 .cmpy-mgmt-warehouse-product-div {
-    padding: 2px;
-    border: 1px solid #fff;
+  padding: 2px;
+  border: 1px solid #fff;
 }
 
 /* Exporting materials/products */
 .cmpy-mgmt-existing-export {
-    border: 1px solid #fff;
-    border-radius: 25px;
-    margin: 4px;
-    padding: 4px;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  margin: 4px;
+  padding: 4px;
 }
 
 .cmpy-mgmt-existing-export:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 /* Corporation Upgrades */
 .cmpy-mgmt-upgrade-container {
-    border: 1px solid #fff;
-    width: 60%;
-    margin: 4px;
+  border: 1px solid #fff;
+  width: 60%;
+  margin: 4px;
 }
 
 .cmpy-mgmt-upgrade-header {
-    margin: 6px;
-    padding: 6px;
+  margin: 6px;
+  padding: 6px;
 }
 
 .cmpy-mgmt-upgrade-div {
-    display: inline-block;
-    border: 1px solid #fff;
-    margin: 2px;
-    padding: 6px;
-    border-radius: 25px;
-    font-size: $defaultFontSize * 0.75;
-    color: var(--my-font-color);
+  display: inline-block;
+  border: 1px solid #fff;
+  margin: 2px;
+  padding: 6px;
+  border-radius: 25px;
+  font-size: $defaultFontSize * 0.75;
+  color: var(--my-font-color);
 }
 
 .cmpy-mgmt-upgrade-div:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 /* Industry Upgrades */
 .industry-purchases-and-upgrades-header {
-    font-size: 14px;
-    margin: 2px;
-    padding: 2px;
+  font-size: 14px;
+  margin: 2px;
+  padding: 2px;
 }
 
 /* Advertising */
 .cmpy-mgmt-advertising-info {
-    font-size: $defaultFontSize * 0.75;
+  font-size: $defaultFontSize * 0.75;
 }
 
 /* Research */
 #corporation-research-popup-box-content {
-    overflow-x: auto !important;
-    overflow-y: auto !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
 }

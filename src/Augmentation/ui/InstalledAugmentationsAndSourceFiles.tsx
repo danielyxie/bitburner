@@ -16,96 +16,105 @@ import { Settings } from "../../Settings/Settings";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 
 type IProps = {
-    // nothing special.
-}
+  // nothing special.
+};
 
 type IState = {
-    rerenderFlag: boolean;
-}
+  rerenderFlag: boolean;
+};
 
-export class InstalledAugmentationsAndSourceFiles extends React.Component<IProps, IState> {
-    listRef: React.RefObject<HTMLUListElement>;
+export class InstalledAugmentationsAndSourceFiles extends React.Component<
+  IProps,
+  IState
+> {
+  listRef: React.RefObject<HTMLUListElement>;
 
-    constructor(props: IProps) {
-        super(props);
+  constructor(props: IProps) {
+    super(props);
 
-        this.state = {
-            rerenderFlag: false,
-        }
+    this.state = {
+      rerenderFlag: false,
+    };
 
-        this.collapseAllHeaders = this.collapseAllHeaders.bind(this);
-        this.expandAllHeaders = this.expandAllHeaders.bind(this);
-        this.sortByAcquirementTime = this.sortByAcquirementTime.bind(this);
-        this.sortInOrder = this.sortInOrder.bind(this);
+    this.collapseAllHeaders = this.collapseAllHeaders.bind(this);
+    this.expandAllHeaders = this.expandAllHeaders.bind(this);
+    this.sortByAcquirementTime = this.sortByAcquirementTime.bind(this);
+    this.sortInOrder = this.sortInOrder.bind(this);
 
-        this.listRef = React.createRef();
+    this.listRef = React.createRef();
+  }
+
+  collapseAllHeaders(): void {
+    const ul = this.listRef.current;
+    if (ul == null) {
+      return;
     }
+    const tickers = ul.getElementsByClassName("accordion-header");
+    for (let i = 0; i < tickers.length; ++i) {
+      const ticker = tickers[i];
+      if (!(ticker instanceof HTMLButtonElement)) {
+        continue;
+      }
 
-    collapseAllHeaders(): void {
-        const ul = this.listRef.current;
-        if (ul == null) { return; }
-        const tickers = ul.getElementsByClassName("accordion-header");
-        for (let i = 0; i < tickers.length; ++i) {
-            const ticker = tickers[i];
-            if (!(ticker instanceof HTMLButtonElement)) {
-                continue;
-            }
-
-            if (ticker.classList.contains("active")) {
-                ticker.click();
-            }
-        }
+      if (ticker.classList.contains("active")) {
+        ticker.click();
+      }
     }
+  }
 
-    expandAllHeaders(): void {
-        const ul = this.listRef.current;
-        if (ul == null) { return; }
-        const tickers = ul.getElementsByClassName("accordion-header");
-        for (let i = 0; i < tickers.length; ++i) {
-            const ticker = tickers[i];
-            if (!(ticker instanceof HTMLButtonElement)) {
-                continue;
-            }
-
-            if (!ticker.classList.contains("active")) {
-                ticker.click();
-            }
-        }
+  expandAllHeaders(): void {
+    const ul = this.listRef.current;
+    if (ul == null) {
+      return;
     }
+    const tickers = ul.getElementsByClassName("accordion-header");
+    for (let i = 0; i < tickers.length; ++i) {
+      const ticker = tickers[i];
+      if (!(ticker instanceof HTMLButtonElement)) {
+        continue;
+      }
 
-    rerender(): void {
-        this.setState((prevState) => {
-            return {
-                rerenderFlag: !prevState.rerenderFlag,
-            }
-        });
+      if (!ticker.classList.contains("active")) {
+        ticker.click();
+      }
     }
+  }
 
-    sortByAcquirementTime(): void {
-        Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.AcquirementTime;
-        this.rerender();
-    }
+  rerender(): void {
+    this.setState((prevState) => {
+      return {
+        rerenderFlag: !prevState.rerenderFlag,
+      };
+    });
+  }
 
-    sortInOrder(): void {
-        Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.Alphabetically
-        this.rerender();
-    }
+  sortByAcquirementTime(): void {
+    Settings.OwnedAugmentationsOrder =
+      OwnedAugmentationsOrderSetting.AcquirementTime;
+    this.rerender();
+  }
 
-    render(): React.ReactNode {
-        return (
-            <>
-            <ListConfiguration
-                collapseAllButtonsFn={this.collapseAllHeaders}
-                expandAllButtonsFn={this.expandAllHeaders}
-                sortByAcquirementTimeFn={this.sortByAcquirementTime}
-                sortInOrderFn={this.sortInOrder}
-            />
-            <ul className="augmentations-list" ref={this.listRef}>
-                <SourceFileMinus1 />
-                <OwnedSourceFiles />
-                <InstalledAugmentations />
-            </ul>
-            </>
-        )
-    }
+  sortInOrder(): void {
+    Settings.OwnedAugmentationsOrder =
+      OwnedAugmentationsOrderSetting.Alphabetically;
+    this.rerender();
+  }
+
+  render(): React.ReactNode {
+    return (
+      <>
+        <ListConfiguration
+          collapseAllButtonsFn={this.collapseAllHeaders}
+          expandAllButtonsFn={this.expandAllHeaders}
+          sortByAcquirementTimeFn={this.sortByAcquirementTime}
+          sortInOrderFn={this.sortInOrder}
+        />
+        <ul className="augmentations-list" ref={this.listRef}>
+          <SourceFileMinus1 />
+          <OwnedSourceFiles />
+          <InstalledAugmentations />
+        </ul>
+      </>
+    );
+  }
 }

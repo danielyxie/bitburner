@@ -1,6 +1,6 @@
 export enum FactionWorkType {
-    Field,
-    Hacking,
-    None,
-    Security,
+  Field,
+  Hacking,
+  None,
+  Security,
 }

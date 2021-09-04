@@ -3,7 +3,7 @@
  * @param decimal A decimal value to trim to two places.
  */
 export function roundToTwo(decimal: number): number {
-    const leftShift: number = Math.round(parseFloat(`${decimal}e+2`));
+  const leftShift: number = Math.round(parseFloat(`${decimal}e+2`));
 
-    return +(`${leftShift}e-2`);
+  return +`${leftShift}e-2`;
 }

@@ -41,8 +41,8 @@ export interface ISelfLoading {
  * and an optional message
  */
 export interface IReturnStatus {
-    res: boolean;
-    msg?: string;
+  res: boolean;
+  msg?: string;
 }
 
 /**
@@ -51,18 +51,18 @@ export interface IReturnStatus {
  * It is up to the implementor to ensure max > min.
  */
 export interface IMinMaxRange {
-    /**
-     * Value by which the bounds are to be divided for the final range
-     */
-    divisor?: number;
-    
-    /**
-     * The maximum bound of the range.
-     */
-    max: number;
+  /**
+   * Value by which the bounds are to be divided for the final range
+   */
+  divisor?: number;
 
-    /**
-     * The minimum bound of the range.
-     */
-    min: number;
+  /**
+   * The maximum bound of the range.
+   */
+  max: number;
+
+  /**
+   * The minimum bound of the range.
+   */
+  min: number;
 }

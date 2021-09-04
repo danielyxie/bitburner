@@ -3,49 +3,49 @@
 
 /* Both Work in progress and BitNode stuff */
 .generic-fullscreen-container {
-    color: var(--my-font-color);
-    width: 99%;
-    height: 100%;
-    overflow-y: hidden;
+  color: var(--my-font-color);
+  width: 99%;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 .generic-fullscreen-container-scroll {
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    padding-right: 20px;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding-right: 20px;
 }
 
 #work-in-progress-container {
-    position: fixed;
+  position: fixed;
 }
 
 #work-in-progress-text {
-    color: var(--my-font-color);
-    width: 70%;
-    margin: 10px;
+  color: var(--my-font-color);
+  width: 70%;
+  margin: 10px;
 }
 
 .work-button {
-    @include borderRadius(12px);
-    @include boxShadow(1px 1px 3px #000);
+  @include borderRadius(12px);
+  @include boxShadow(1px 1px 3px #000);
 
-    color: #aaa;
-    float: left;
-    font-size: $defaultFontSize * 1.25;
-    font-weight: bold;
-    margin: 10px;
-    padding: 5px;
-    border: 3px solid #fff;
+  color: #aaa;
+  float: left;
+  font-size: $defaultFontSize * 1.25;
+  font-weight: bold;
+  margin: 10px;
+  padding: 5px;
+  border: 3px solid #fff;
 }
 
 .work-button:hover,
 .work-button:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 #cinematic-text-container {
-    position: fixed;
+  position: fixed;
 }

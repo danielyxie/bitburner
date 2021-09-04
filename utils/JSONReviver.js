@@ -6,31 +6,33 @@
 // constructor that has a `fromJSON` property on it, it hands
 // off to that `fromJSON` fuunction, passing in the value.
 function Reviver(key, value) {
-	var ctor;
-    if (value == null) {
-        console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
-        return 0;
+  var ctor;
+  if (value == null) {
+    console.log(
+      "Reviver WRONGLY called with key: " + key + ", and value: " + value,
+    );
+    return 0;
+  }
+
+  if (
+    typeof value === "object" &&
+    typeof value.ctor === "string" &&
+    typeof value.data !== "undefined"
+  ) {
+    // Compatibility for version v0.43.1
+    // TODO Remove this eventually
+    if (value.ctor === "AllServersMap") {
+      console.log("Converting AllServersMap for v0.43.1");
+      return value.data;
     }
 
-	if (typeof value === "object" &&
-		typeof value.ctor === "string" &&
-		typeof value.data !== "undefined") {
-			// Compatibility for version v0.43.1
-			// TODO Remove this eventually
-			if (value.ctor === "AllServersMap") {
-				console.log('Converting AllServersMap for v0.43.1');
-				return value.data;
-			}
+    ctor = Reviver.constructors[value.ctor] || window[value.ctor];
 
-			ctor = Reviver.constructors[value.ctor] || window[value.ctor];
-
-			if (typeof ctor === "function" &&
-				typeof ctor.fromJSON === "function") {
-
-					return ctor.fromJSON(value);
-			}
-	}
-	return value;
+    if (typeof ctor === "function" && typeof ctor.fromJSON === "function") {
+      return ctor.fromJSON(value);
+    }
+  }
+  return value;
 }
 Reviver.constructors = {}; // A list of constructors the smart reviver should know about
 
@@ -57,7 +59,7 @@ function Generic_toJSON(ctorName, obj, keys) {
     key = keys[index];
     data[key] = obj[key];
   }
-  return {ctor: ctorName, data: data};
+  return { ctor: ctorName, data: data };
 }
 
 // A generic "fromJSON" function for use with Reviver: Just calls the
@@ -77,4 +79,4 @@ function Generic_fromJSON(ctor, data) {
   return obj;
 }
 
-export {Reviver, Generic_toJSON, Generic_fromJSON};
+export { Reviver, Generic_toJSON, Generic_fromJSON };

@@ -11,80 +11,80 @@
 
 /* Remove default <button> styling */
 button {
-    border: none;
-    background-color: transparent;
+  border: none;
+  background-color: transparent;
 }
 
 .a-link-button,
 .std-button {
-    @extend .noselect;
-    text-decoration: none;
-    background-color: #555;
-    color: #fff;
-    padding: 3px 5px;
-    margin: 5px;
-    border: 1px solid #333;
+  @extend .noselect;
+  text-decoration: none;
+  background-color: #555;
+  color: #fff;
+  padding: 3px 5px;
+  margin: 5px;
+  border: 1px solid #333;
 
-    &:hover {
-        background-color: #666;
-    }
+  &:hover {
+    background-color: #666;
+  }
 
-    &:active {
-        @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
-    }
+  &:active {
+    @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
+  }
 }
 
 .a-link-button-inactive,
 .std-button-disabled,
 .std-button:disabled {
-    text-decoration: none;
-    background-color: #333;
-    color: #fff;
-    padding: 3px 5px;
-    margin: 5px;
-    border: 1px solid #333;
-    cursor: default;
+  text-decoration: none;
+  background-color: #333;
+  color: #fff;
+  padding: 3px 5px;
+  margin: 5px;
+  border: 1px solid #333;
+  cursor: default;
 
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
 
-    &:hover {
-        .tooltiptext,
-        .tooltiptexthigh,
-        .tooltiptextleft {
-            visibility: visible;
-        }
+  &:hover {
+    .tooltiptext,
+    .tooltiptexthigh,
+    .tooltiptextleft {
+      visibility: visible;
     }
+  }
 
-    &:active {
-        pointer-events: none;
-    }
+  &:active {
+    pointer-events: none;
+  }
 }
 
 .a-link-button-bought,
 .std-button-bought {
-    @extend .noselect;
-    text-decoration: none;
-    background-color: #0a0;
-    color: #fff;
-    padding: 3px 5px;
-    margin: 5px;
-    border: 1px solid #0a0;
-    cursor: default;
+  @extend .noselect;
+  text-decoration: none;
+  background-color: #0a0;
+  color: #fff;
+  padding: 3px 5px;
+  margin: 5px;
+  border: 1px solid #0a0;
+  cursor: default;
 
-    &:hover {
-        .tooltiptext,
-        .tooltiptexthigh,
-        .tooltiptextleft {
-            visibility: visible;
-        }
+  &:hover {
+    .tooltiptext,
+    .tooltiptexthigh,
+    .tooltiptextleft {
+      visibility: visible;
     }
+  }
 
-    &:active {
-        pointer-events: none;
-    }
+  &:active {
+    pointer-events: none;
+  }
 }
 
 /**
@@ -92,21 +92,21 @@ button {
  * It has a black background so it does not clash with the default accordion coloring
  */
 .accordion-button {
-    @include borderRadius(12px);
-    @include boxShadow(1px 1px 3px #000);
+  @include borderRadius(12px);
+  @include boxShadow(1px 1px 3px #000);
 
-    color: #aaa;
-    font-size: $defaultFontSize;
-    font-weight: bold;
-    margin: 4px;
-    padding: 4px;
-    background-color: #000;
+  color: #aaa;
+  font-size: $defaultFontSize;
+  font-weight: bold;
+  margin: 4px;
+  padding: 4px;
+  background-color: #000;
 
-    &:hover,
-    &:active {
-        color: #fff;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    /* TODO focus selector? */
+  &:hover,
+  &:active {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  /* TODO focus selector? */
 }

@@ -3,11 +3,17 @@
 import { CompanyPosition } from "./CompanyPosition";
 import { CompanyPositions } from "./CompanyPositions";
 
-export function getNextCompanyPositionHelper(currPos: CompanyPosition | null): CompanyPosition | null {
-    if (currPos == null) { return null; }
+export function getNextCompanyPositionHelper(
+  currPos: CompanyPosition | null,
+): CompanyPosition | null {
+  if (currPos == null) {
+    return null;
+  }
 
-    const nextPosName: string | null = currPos.nextPosition;
-    if (nextPosName == null) { return null; }
+  const nextPosName: string | null = currPos.nextPosition;
+  if (nextPosName == null) {
+    return null;
+  }
 
-    return CompanyPositions[nextPosName];
+  return CompanyPositions[nextPosName];
 }

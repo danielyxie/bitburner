@@ -21,10 +21,11 @@ body {
   background-color: #eeeeec;
 }
 
-
 /* Page layout */
 
-div.header, div.content, div.footer {
+div.header,
+div.content,
+div.footer {
   width: 70em;
   margin-left: auto;
   margin-right: auto;
@@ -35,13 +36,13 @@ div.header-wrapper {
   border-bottom: 3px solid #2e3436;
 }
 
-
 /* Default body styles */
 a {
   color: #ce5c00;
 }
 
-div.bodywrapper a, div.footer a {
+div.bodywrapper a,
+div.footer a {
   text-decoration: underline;
 }
 
@@ -58,22 +59,25 @@ div.bodywrapper a, div.footer a {
 }
 
 .line-block {
-    display: block;
-    margin-top: 1em;
-    margin-bottom: 1em;
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .line-block .line-block {
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 1.5em;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 1.5em;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: "Georgia", "Times New Roman", serif;
   font-weight: normal;
   color: #3465a4;
-  margin-bottom: .8em;
+  margin-bottom: 0.8em;
 }
 
 h1 {
@@ -81,14 +85,14 @@ h1 {
 }
 
 h2 {
-  padding-bottom: .5em;
+  padding-bottom: 0.5em;
   border-bottom: 1px solid #3465a4;
 }
 
 a.headerlink {
   visibility: hidden;
   color: #dddddd;
-  padding-left: .3em;
+  padding-left: 0.3em;
 }
 
 h1:hover > a.headerlink,
@@ -120,7 +124,8 @@ p.admonition-title {
   font-weight: bold;
 }
 
-dt:target, .highlighted {
+dt:target,
+.highlighted {
   background-color: #fbe54e;
 }
 
@@ -135,8 +140,8 @@ div.header .headertitle {
   font-family: "Georgia", "Times New Roman", serif;
   font-weight: normal;
   font-size: 180%;
-  letter-spacing: .08em;
-  margin-bottom: .8em;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.8em;
 }
 
 div.header .headertitle a {
@@ -149,18 +154,17 @@ div.header div.rel {
 
 div.header div.rel a {
   color: #fcaf3e;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 p.logo {
-    float: right;
+  float: right;
 }
 
 img.logo {
-    border: 0;
+  border: 0;
 }
-
 
 /* Content */
 div.content-wrapper {
@@ -190,7 +194,7 @@ div.document ul {
 
 div.document dd {
   margin-left: 1.2em;
-  margin-top: .4em;
+  margin-top: 0.4em;
   margin-bottom: 1em;
 }
 
@@ -206,13 +210,13 @@ div.document div.highlight {
   background-color: #eeeeec;
   border-top: 2px solid #dddddd;
   border-bottom: 2px solid #dddddd;
-  margin-top: .8em;
-  margin-bottom: .8em;
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
 }
 
 div.document div.literal-block-wrapper {
-  margin-top: .8em;
-  margin-bottom: .8em;
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
 }
 
 div.document div.literal-block-wrapper div.highlight {
@@ -220,19 +224,19 @@ div.document div.literal-block-wrapper div.highlight {
 }
 
 div.document div.code-block-caption span.caption-number {
-    padding: 0.1em 0.3em;
-    font-style: italic;
+  padding: 0.1em 0.3em;
+  font-style: italic;
 }
 
 div.document div.code-block-caption span.caption-text {
 }
 
 div.document h2 {
-  margin-top: .7em;
+  margin-top: 0.7em;
 }
 
 div.document p {
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
 div.document li.toctree-l1 {
@@ -244,7 +248,7 @@ div.document .descname {
 }
 
 div.document .sig-paren {
-    font-size: larger;
+  font-size: larger;
 }
 
 div.document .docutils.literal {
@@ -265,16 +269,15 @@ div.document ol {
   margin: 1.5em;
 }
 
-
 /* Sidebar */
 
 div.sidebar {
   width: 20em;
-  position:fixed;
+  position: fixed;
   right: 10%;
-  height:75%;
-  font-size: .9em;
-  overflow-y:auto;
+  height: 75%;
+  font-size: 0.9em;
+  overflow-y: auto;
 }
 /*
 div.sidebar {
@@ -284,11 +287,13 @@ div.sidebar {
 }
 */
 
-div.sidebar a, div.header a {
+div.sidebar a,
+div.header a {
   text-decoration: none;
 }
 
-div.sidebar a:hover, div.header a:hover {
+div.sidebar a:hover,
+div.header a:hover {
   text-decoration: underline;
 }
 
@@ -296,7 +301,7 @@ div.sidebar h3 {
   color: #2e3436;
   text-transform: uppercase;
   font-size: 130%;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 }
 
 div.sidebar ul {
@@ -308,7 +313,7 @@ div.sidebar li.toctree-l1 a {
   padding: 1px;
   border: 1px solid #dddddd;
   background-color: #eeeeec;
-  margin-bottom: .4em;
+  margin-bottom: 0.4em;
   padding-left: 3px;
   color: #2e3436;
 }
@@ -347,7 +352,6 @@ div.sidebar input[type="submit"] {
   width: 30px;
 }
 
-
 /* Footer */
 
 div.footer-wrapper {
@@ -358,7 +362,8 @@ div.footer-wrapper {
   min-height: 80px;
 }
 
-div.footer, div.footer a {
+div.footer,
+div.footer a {
   color: #888a85;
 }
 
@@ -370,48 +375,53 @@ div.footer .left {
   text-transform: uppercase;
 }
 
-
 /* Styles copied from basic theme */
 
-img.align-left, .figure.align-left, object.align-left {
-    clear: left;
-    float: left;
-    margin-right: 1em;
+img.align-left,
+.figure.align-left,
+object.align-left {
+  clear: left;
+  float: left;
+  margin-right: 1em;
 }
 
-img.align-right, .figure.align-right, object.align-right {
-    clear: right;
-    float: right;
-    margin-left: 1em;
+img.align-right,
+.figure.align-right,
+object.align-right {
+  clear: right;
+  float: right;
+  margin-left: 1em;
 }
 
-img.align-center, .figure.align-center, object.align-center {
+img.align-center,
+.figure.align-center,
+object.align-center {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
 .align-left {
-    text-align: left;
+  text-align: left;
 }
 
 .align-center {
-    text-align: center;
+  text-align: center;
 }
 
 .align-right {
-    text-align: right;
+  text-align: right;
 }
 
 table caption span.caption-number {
-    font-style: italic;
+  font-style: italic;
 }
 
 table caption span.caption-text {
 }
 
 div.figure p.caption span.caption-number {
-    font-style: italic;
+  font-style: italic;
 }
 
 div.figure p.caption span.caption-text {
@@ -420,122 +430,122 @@ div.figure p.caption span.caption-text {
 /* -- search page ----------------------------------------------------------- */
 
 ul.search {
-    margin: 10px 0 0 20px;
-    padding: 0;
+  margin: 10px 0 0 20px;
+  padding: 0;
 }
 
 ul.search li {
-    padding: 5px 0 5px 20px;
-    background-image: url(file.png);
-    background-repeat: no-repeat;
-    background-position: 0 7px;
+  padding: 5px 0 5px 20px;
+  background-image: url(file.png);
+  background-repeat: no-repeat;
+  background-position: 0 7px;
 }
 
 ul.search li a {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 ul.search li div.context {
-    color: #888;
-    margin: 2px 0 0 30px;
-    text-align: left;
+  color: #888;
+  margin: 2px 0 0 30px;
+  text-align: left;
 }
 
 ul.keywordmatches li.goodmatch a {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* -- index page ------------------------------------------------------------ */
 
 table.contentstable {
-    width: 90%;
+  width: 90%;
 }
 
 table.contentstable p.biglink {
-    line-height: 150%;
+  line-height: 150%;
 }
 
 a.biglink {
-    font-size: 1.3em;
+  font-size: 1.3em;
 }
 
 span.linkdescr {
-    font-style: italic;
-    padding-top: 5px;
-    font-size: 90%;
+  font-style: italic;
+  padding-top: 5px;
+  font-size: 90%;
 }
 
 /* -- general index --------------------------------------------------------- */
 
 table.indextable td {
-    text-align: left;
-    vertical-align: top;
+  text-align: left;
+  vertical-align: top;
 }
 
 table.indextable ul {
-    margin-top: 0;
-    margin-bottom: 0;
-    list-style-type: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
 }
 
 table.indextable > tbody > tr > td > ul {
-    padding-left: 0em;
+  padding-left: 0em;
 }
 
 table.indextable tr.pcap {
-    height: 10px;
+  height: 10px;
 }
 
 table.indextable tr.cap {
-    margin-top: 10px;
-    background-color: #f2f2f2;
+  margin-top: 10px;
+  background-color: #f2f2f2;
 }
 
 img.toggler {
-    margin-right: 3px;
-    margin-top: 3px;
-    cursor: pointer;
+  margin-right: 3px;
+  margin-top: 3px;
+  cursor: pointer;
 }
 
 /* -- domain module index --------------------------------------------------- */
 
 table.modindextable td {
-    padding: 2px;
-    border-collapse: collapse;
+  padding: 2px;
+  border-collapse: collapse;
 }
 
 /* -- viewcode extension ---------------------------------------------------- */
 
 .viewcode-link {
-    float: right;
+  float: right;
 }
 
 .viewcode-back {
-    float: right;
-    font-family: "Verdana", Arial, sans-serif;
+  float: right;
+  font-family: "Verdana", Arial, sans-serif;
 }
 
 div.viewcode-block:target {
-    margin: -1px -3px;
-    padding: 0 3px;
-    background-color: #f4debf;
-    border-top: 1px solid #ac9;
-    border-bottom: 1px solid #ac9;
+  margin: -1px -3px;
+  padding: 0 3px;
+  background-color: #f4debf;
+  border-top: 1px solid #ac9;
+  border-bottom: 1px solid #ac9;
 }
 
 div.code-block-caption {
-    background-color: #ddd;
-    color: #333;
-    padding: 2px 5px;
-    font-size: small;
+  background-color: #ddd;
+  color: #333;
+  padding: 2px 5px;
+  font-size: small;
 }
 
 /* -- math display ---------------------------------------------------------- */
 
 div.body div.math p {
-    text-align: center;
+  text-align: center;
 }
 
 span.eqno {
-    float: right;
+  float: right;
 }

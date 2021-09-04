@@ -11,48 +11,60 @@ import { GangMember } from "../GangMember";
 import { RecruitButton } from "./RecruitButton";
 
 interface IProps {
-    gang: Gang;
-    player: IPlayer;
+  gang: Gang;
+  player: IPlayer;
 }
 
 export function GangMemberList(props: IProps): React.ReactElement {
-    const [filter, setFilter] = useState("");
-    const setRerender = useState(false)[1];
+  const [filter, setFilter] = useState("");
+  const setRerender = useState(false)[1];
 
-    function openUpgradePopup(): void {
-        const popupId = `gang-upgrade-popup`;
-        createPopup(popupId, GangMemberUpgradePopup, {
-            gang: props.gang,
-            player: props.player,
-            popupId: popupId,
-        });
-    }
+  function openUpgradePopup(): void {
+    const popupId = `gang-upgrade-popup`;
+    createPopup(popupId, GangMemberUpgradePopup, {
+      gang: props.gang,
+      player: props.player,
+      popupId: popupId,
+    });
+  }
 
-    function onFilterChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        setFilter(event.target.value);
-    }
+  function onFilterChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setFilter(event.target.value);
+  }
 
-    const members = props.gang.members.filter((member: GangMember) => member.name.indexOf(filter) > -1 || member.task.indexOf(filter) > -1);
+  const members = props.gang.members.filter(
+    (member: GangMember) =>
+      member.name.indexOf(filter) > -1 || member.task.indexOf(filter) > -1,
+  );
 
-    return (<>
-        <RecruitButton
-            onRecruit={() => setRerender(old => !old)}
-            gang={props.gang} />
-        <br />
-        <input
-            className="text-input noselect"
-            placeholder="Filter gang member"
-            style={{margin: "5px", padding: "5px"}}
-            value={filter}
-            onChange={onFilterChange} />
-        <a
-            className="a-link-button"
-            style={{display: 'inline-block'}}
-            onClick={openUpgradePopup}>Manage Equipment</a>
-        <ul>
-            {members.map((member: GangMember) => <li key={member.name}>
-                <GangMemberAccordion gang={props.gang} member={member} />
-            </li>)}
-        </ul>
-    </>);
+  return (
+    <>
+      <RecruitButton
+        onRecruit={() => setRerender((old) => !old)}
+        gang={props.gang}
+      />
+      <br />
+      <input
+        className="text-input noselect"
+        placeholder="Filter gang member"
+        style={{ margin: "5px", padding: "5px" }}
+        value={filter}
+        onChange={onFilterChange}
+      />
+      <a
+        className="a-link-button"
+        style={{ display: "inline-block" }}
+        onClick={openUpgradePopup}
+      >
+        Manage Equipment
+      </a>
+      <ul>
+        {members.map((member: GangMember) => (
+          <li key={member.name}>
+            <GangMemberAccordion gang={props.gang} member={member} />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }

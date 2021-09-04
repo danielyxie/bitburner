@@ -6,65 +6,64 @@
 import * as React from "react";
 
 interface IProps {
-    intervalTime?: number;
-    style?: any;
-    getContent: () => JSX.Element;
-    getTooltip?: () => JSX.Element;
+  intervalTime?: number;
+  style?: any;
+  getContent: () => JSX.Element;
+  getTooltip?: () => JSX.Element;
 }
 
 interface IState {
-    i: number;
+  i: number;
 }
 
 export class AutoupdatingParagraph extends React.Component<IProps, IState> {
-    /**
-     *  Timer ID for auto-updating implementation (returned value from setInterval())
-     */
-    interval = 0;
+  /**
+   *  Timer ID for auto-updating implementation (returned value from setInterval())
+   */
+  interval = 0;
 
-    constructor(props: IProps) {
-        super(props);
-        this.state = {
-            i: 0,
-        }
-    }
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      i: 0,
+    };
+  }
 
-    componentDidMount(): void {
-        const time = this.props.intervalTime ? this.props.intervalTime : 1000;
-        this.interval = window.setInterval(() => this.tick(), time);
-    }
+  componentDidMount(): void {
+    const time = this.props.intervalTime ? this.props.intervalTime : 1000;
+    this.interval = window.setInterval(() => this.tick(), time);
+  }
 
-    componentWillUnmount(): void {
-        clearInterval(this.interval);
-    }
+  componentWillUnmount(): void {
+    clearInterval(this.interval);
+  }
 
-    tick(): void {
-        this.setState(prevState => ({
-            i: prevState.i + 1,
-        }));
-    }
+  tick(): void {
+    this.setState((prevState) => ({
+      i: prevState.i + 1,
+    }));
+  }
 
-    hasTooltip(): boolean {
-        if (this.props.getTooltip != null) {
-            return !!this.props.getTooltip()
-        }
-        return true;
+  hasTooltip(): boolean {
+    if (this.props.getTooltip != null) {
+      return !!this.props.getTooltip();
     }
+    return true;
+  }
 
-    tooltip(): JSX.Element {
-        if(!this.props.getTooltip) return <></>;
-        return this.props.getTooltip();
-    }
+  tooltip(): JSX.Element {
+    if (!this.props.getTooltip) return <></>;
+    return this.props.getTooltip();
+  }
 
-    render(): React.ReactNode {
-        return (
-            <div className="tooltip" style={this.props.style}>
-                <p>{this.props.getContent()}</p>
-                {
-                    this.hasTooltip() &&
-                    <span className={"tooltiptext"}>{this.tooltip()}</span>
-                }
-            </div>
-        )
-    }
+  render(): React.ReactNode {
+    return (
+      <div className="tooltip" style={this.props.style}>
+        <p>{this.props.getContent()}</p>
+        {this.hasTooltip() && (
+          <span className={"tooltiptext"}>{this.tooltip()}</span>
+        )}
+      </div>
+    );
+  }
 }

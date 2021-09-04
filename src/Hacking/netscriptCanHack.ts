@@ -6,48 +6,50 @@
  */
 import { IReturnStatus } from "../types";
 
-import { IPlayer }          from "../PersonObjects/IPlayer";
-import { Server }           from "../Server/Server";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { Server } from "../Server/Server";
 
 function baseCheck(server: Server, fnName: string): IReturnStatus {
-    const hostname = server.hostname;
+  const hostname = server.hostname;
 
-    if (!("requiredHackingSkill" in server)) {
-        return {
-            res: false,
-            msg: `Cannot ${fnName} ${hostname} server because it is a Hacknet Node`,
-        }
-    }
+  if (!("requiredHackingSkill" in server)) {
+    return {
+      res: false,
+      msg: `Cannot ${fnName} ${hostname} server because it is a Hacknet Node`,
+    };
+  }
 
-    if (server.hasAdminRights === false) {
-        return {
-            res: false,
-            msg: `Cannot ${fnName} ${hostname} server because you do not have root access`,
-        }
-    }
+  if (server.hasAdminRights === false) {
+    return {
+      res: false,
+      msg: `Cannot ${fnName} ${hostname} server because you do not have root access`,
+    };
+  }
 
-    return { res: true }
+  return { res: true };
 }
 
 export function netscriptCanHack(server: Server, p: IPlayer): IReturnStatus {
-    const initialCheck = baseCheck(server, "hack");
-    if (!initialCheck.res) { return initialCheck; }
+  const initialCheck = baseCheck(server, "hack");
+  if (!initialCheck.res) {
+    return initialCheck;
+  }
 
-    const s = server;
-    if (s.requiredHackingSkill > p.hacking_skill) {
-        return {
-            res: false,
-            msg: `Cannot hack ${server.hostname} server because your hacking skill is not high enough`,
-        }
-    }
+  const s = server;
+  if (s.requiredHackingSkill > p.hacking_skill) {
+    return {
+      res: false,
+      msg: `Cannot hack ${server.hostname} server because your hacking skill is not high enough`,
+    };
+  }
 
-    return { res: true }
+  return { res: true };
 }
 
 export function netscriptCanGrow(server: Server): IReturnStatus {
-    return baseCheck(server, "grow");
+  return baseCheck(server, "grow");
 }
 
 export function netscriptCanWeaken(server: Server): IReturnStatus {
-    return baseCheck(server, "weaken");
+  return baseCheck(server, "weaken");
 }

@@ -3,24 +3,26 @@
  * @param elem The element to remove.
  */
 export function removeElement(elem: Element | null): void {
-    if (elem === null) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was null.");
+  if (elem === null) {
+    // tslint:disable-next-line:no-console
+    console.debug("The element passed into 'removeElement' was null.");
 
-        return;
-    }
-    if (!(elem instanceof Element)) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was not an instance of an Element.");
+    return;
+  }
+  if (!(elem instanceof Element)) {
+    // tslint:disable-next-line:no-console
+    console.debug(
+      "The element passed into 'removeElement' was not an instance of an Element.",
+    );
 
-        return;
-    }
+    return;
+  }
 
-    while (elem.firstChild !== null) {
-        elem.removeChild(elem.firstChild);
-    }
+  while (elem.firstChild !== null) {
+    elem.removeChild(elem.firstChild);
+  }
 
-    if (elem.parentNode !== null) {
-        elem.parentNode.removeChild(elem);
-    }
+  if (elem.parentNode !== null) {
+    elem.parentNode.removeChild(elem);
+  }
 }

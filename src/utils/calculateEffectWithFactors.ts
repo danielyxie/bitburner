@@ -16,30 +16,38 @@
  * can be called with the stat and the exponential/linear factors. The other is a
  * class where the exponential and linear factors are defined upon construction.
  */
-export function calculateEffectWithFactors(n: number, expFac: number, linearFac: number): number {
-    if (expFac <= 0 || expFac >= 1) {
-        console.warn(`Exponential factor is ${expFac}. This is not an intended value for it`);
-    }
-    if (linearFac < 1) {
-        console.warn(`Linear factor is ${linearFac}. This is not an intended value for it`);
-    }
+export function calculateEffectWithFactors(
+  n: number,
+  expFac: number,
+  linearFac: number,
+): number {
+  if (expFac <= 0 || expFac >= 1) {
+    console.warn(
+      `Exponential factor is ${expFac}. This is not an intended value for it`,
+    );
+  }
+  if (linearFac < 1) {
+    console.warn(
+      `Linear factor is ${linearFac}. This is not an intended value for it`,
+    );
+  }
 
-    return (Math.pow(n, expFac)) + (n / linearFac);
+  return Math.pow(n, expFac) + n / linearFac;
 }
 
 export class EffectWithFactors {
-    // Exponential factor
-    private expFac: number;
+  // Exponential factor
+  private expFac: number;
 
-    // Linear Factor
-    private linearFac: number;
+  // Linear Factor
+  private linearFac: number;
 
-    constructor(expFac: number, linearFac: number) {
-        this.expFac = expFac;
-        this.linearFac = linearFac;
-    }
+  constructor(expFac: number, linearFac: number) {
+    this.expFac = expFac;
+    this.linearFac = linearFac;
+  }
 
-    calculate(n: number): number {
-        return calculateEffectWithFactors(n, this.expFac, this.linearFac);
-    }
+  calculate(n: number): number {
+    return calculateEffectWithFactors(n, this.expFac, this.linearFac);
+  }
 }
