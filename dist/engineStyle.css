@@ -342,6 +342,9 @@ a:visited {
 .light-yellow {
   color: #faffdf; }
 
+.unbuyable {
+  color: #66CFBC; }
+
 .failure {
   color: #ff2929;
   text-shadow: 0 0 0 #ff2929; }
@@ -868,6 +871,9 @@ a:visited {
 
 .light-yellow {
   color: #faffdf; }
+
+.unbuyable {
+  color: #66CFBC; }
 
 .failure {
   color: #ff2929;
@@ -2270,6 +2276,9 @@ a:visited {
 
 .light-yellow {
   color: #faffdf; }
+
+.unbuyable {
+  color: #66CFBC; }
 
 .failure {
   color: #ff2929;

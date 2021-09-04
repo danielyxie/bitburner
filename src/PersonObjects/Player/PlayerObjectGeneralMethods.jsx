@@ -125,6 +125,12 @@ export function prestigeAugmentation() {
 
     this.resleeves = [];
 
+    let numSleeves = Math.min(3, SourceFileFlags[10] + (this.bitNodeN === 10 ? 1 : 0)) + this.sleevesFromCovenant;
+    if(this.sleeves.length > numSleeves) this.sleeves.length = numSleeves;
+    for(let i = this.sleeves.length; i < numSleeves; i++) {
+        this.sleeves.push(new Sleeve(this));
+    }
+
     for (let i = 0; i < this.sleeves.length; ++i) {
         if (this.sleeves[i] instanceof Sleeve) {
             if (this.sleeves[i].shock >= 100) {
@@ -178,55 +184,16 @@ export function prestigeAugmentation() {
 }
 
 export function prestigeSourceFile() {
-    var homeComp = this.getHomeComputer();
-    this.currentServer = homeComp.ip;
-    this.homeComputer = homeComp.ip;
-
-    this.numPeopleKilled = 0;
-    this.karma = 0;
-
-    //Reset stats
-    this.hacking_skill = 1;
-
-    this.strength = 1;
-    this.defense = 1;
-    this.dexterity = 1;
-    this.agility = 1;
-
-    this.charisma = 1;
-
-    this.hacking_exp = 0;
-    this.strength_exp = 0;
-    this.defense_exp = 0;
-    this.dexterity_exp = 0;
-    this.agility_exp = 0;
-    this.charisma_exp = 0;
-
-    this.money = new Decimal(1000);
-
-    this.city = CityName.Sector12;
-    this.location = "";
-
-    this.companyName = "";
-    this.jobs = {};
-
-    this.purchasedServers = [];
-
-    this.factions = [];
-    this.factionInvitations = [];
-
-    this.queuedAugmentations = [];
-    this.augmentations = [];
-
-    this.resleeves = [];
-
+    this.prestigeAugmentation();
     // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
-    this.sleeves.length = SourceFileFlags[10] + this.sleevesFromCovenant;
     for (let i = 0; i < this.sleeves.length; ++i) {
-        if (this.sleeves[i] instanceof Sleeve) {
-            this.sleeves[i].prestige(this);
-        } else {
-            this.sleeves[i] = new Sleeve(this);
+        this.sleeves[i] = new Sleeve(this);
+    }
+
+    if(this.bitNodeN === 10) {
+        for (let i = 0; i < this.sleeves.length; i++) {
+            this.sleeves[i].shock = Math.max(25, this.sleeves[i].shock);
+            this.sleeves[i].sync = Math.max(25, this.sleeves[i].sync);
         }
     }
 
@@ -235,37 +202,7 @@ export function prestigeSourceFile() {
         characterMenuHeader.click(); characterMenuHeader.click();
     }
 
-    this.isWorking = false;
-    this.currentWorkFactionName = "";
-    this.currentWorkFactionDescription = "";
-    this.createProgramName = "";
-    this.className = "";
-    this.crimeType = "";
-
-    this.workHackExpGainRate = 0;
-    this.workStrExpGainRate = 0;
-    this.workDefExpGainRate = 0;
-    this.workDexExpGainRate = 0;
-    this.workAgiExpGainRate = 0;
-    this.workChaExpGainRate = 0;
-    this.workRepGainRate = 0;
-    this.workMoneyGainRate = 0;
-
-    this.workHackExpGained = 0;
-    this.workStrExpGained = 0;
-    this.workDefExpGained = 0;
-    this.workDexExpGained = 0;
-    this.workAgiExpGained = 0;
-    this.workChaExpGained = 0;
-    this.workRepGained = 0;
-    this.workMoneyGained = 0;
-
     this.timeWorked = 0;
-
-    this.lastUpdate = new Date().getTime();
-
-    this.hacknetNodes.length = 0;
-    this.hashManager.prestige();
 
     // Gang
     this.gang = null;
@@ -280,15 +217,10 @@ export function prestigeSourceFile() {
     // BitNode 3: Corporatocracy
     this.corporation = 0;
 
-    // Statistics trackers
-    this.playtimeSinceLastAug = 0;
-    this.playtimeSinceLastBitnode = 0;
-    this.scriptProdSinceLastAug = 0;
-    this.moneySourceA.reset();
     this.moneySourceB.reset();
+    this.playtimeSinceLastBitnode = 0;
+    this.augmentations = [];
 
-    this.updateSkillLevels();
-    this.hp = this.max_hp;
 }
 
 export function receiveInvite(factionName) {
