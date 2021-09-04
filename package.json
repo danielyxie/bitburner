@@ -126,7 +126,7 @@
     "build:dev": "webpack --mode development",
     "build:test": "webpack --config webpack.config-test.js",
     "lint": "npm run lint:jsts & npm run lint:style",
-    "lint:jsts": "eslint --fix . --ext ts,tsx",
+    "lint:jsts": "eslint --fix . --ext js,jsx,ts,tsx",
     "lint:style": "stylelint --fix ./css/*",
     "preinstall": "node ./scripts/engines-check.js",
     "test": "jest",

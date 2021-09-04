@@ -483,7 +483,7 @@ class SemVer {
         // Numberify any prerelease numeric ids
         if (matches[4]) {
             this.prerelease = matches[4].split(".").map((id) => {
-                if (/^[0-9]+$/.test(id)) {
+                if ((/^[0-9]+$/).test(id)) {
                     const num = Number(id);
                     if (num >= 0 && num < MAX_SAFE_INTEGER) {
                         return num;
