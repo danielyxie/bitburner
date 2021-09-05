@@ -7,6 +7,7 @@ Netburner.txt
 /test/*.map
 /test/*.bundle.*
 /test/*.css
+.cypress
 
 # editor files
 .vscode
