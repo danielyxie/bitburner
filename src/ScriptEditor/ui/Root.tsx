@@ -49,6 +49,9 @@ let symbols: string[] = [];
     return symbols;
   }
   symbols = populate(ns);
+
+  const exclude = ["heart", "break", "exploit", "bypass"];
+  symbols = symbols.filter((symbol: string) => !exclude.includes(symbol));
 })();
 
 interface IProps {
