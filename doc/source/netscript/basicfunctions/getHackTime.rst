@@ -5,8 +5,6 @@ getHackTime() Netscript Function
 
     :RAM cost: 0.05 GB
     :param string hostname: Hostname of target server.
-    :param number hackLvl: Optional hacking level for the calculation. Defaults
-        to player's current hacking level.
     :returns: seconds it takes to execute :doc:`hack<hack>` on that server.
 
     The function takes in an optional ``hackLvl`` parameter that can be

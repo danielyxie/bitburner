@@ -5,8 +5,6 @@ getWeakenTime() Netscript Function
 
     :RAM cost: 0.05 GB
     :param string hostname: Hostname of target server.
-    :param number hackLvl: Optional hacking level for the calculation. Defaults
-        to player's current hacking level.
     :returns: seconds it takes to execute the :doc:`weaken<weaken>` Netscript
         function on the target server.
 
