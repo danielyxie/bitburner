@@ -19,7 +19,7 @@ export function ResearchPopup(props: IProps): React.ReactElement {
     {
       const boxContent = document.getElementById(`${props.popupId}-content`);
       if (boxContent != null) {
-        boxContent.style["min-height"] = "80vh";
+        boxContent.style.minHeight = "80vh";
       }
     }
     const researchTree = IndustryResearchTrees[props.industry.type];
@@ -87,7 +87,6 @@ export function ResearchPopup(props: IProps): React.ReactElement {
 
     const boxContent = document.getElementById(`${props.popupId}-content`);
     if (boxContent != null) {
-      boxContent.style["min-height"] = "80vh";
       // Add information about multipliers from research at the bottom of the popup
       //appendLineBreaks(boxContent, 2);
       boxContent.appendChild(
