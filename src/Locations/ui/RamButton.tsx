@@ -55,7 +55,7 @@ export function RamButton(props: IProps): React.ReactElement {
       }
       tooltip={
         <MathComponent
-          tex={String.raw`\large{3.2 \times 10^3 \times 1.58^{log_2{(ram)}}}`}
+          tex={String.raw`\large{cost = 3.2 \times 10^3 \times 1.58^{log_2{(ram)}}}`}
         />
       }
     />

@@ -16,6 +16,12 @@ interface IProps {
 // Create the Research Tree UI for this Industry
 export function ResearchPopup(props: IProps): React.ReactElement {
   useEffect(() => {
+    {
+      const boxContent = document.getElementById(`${props.popupId}-content`);
+      if (boxContent != null) {
+        boxContent.style["min-height"] = "80vh";
+      }
+    }
     const researchTree = IndustryResearchTrees[props.industry.type];
     if (researchTree === undefined) return;
 
@@ -81,6 +87,7 @@ export function ResearchPopup(props: IProps): React.ReactElement {
 
     const boxContent = document.getElementById(`${props.popupId}-content`);
     if (boxContent != null) {
+      boxContent.style["min-height"] = "80vh";
       // Add information about multipliers from research at the bottom of the popup
       //appendLineBreaks(boxContent, 2);
       boxContent.appendChild(
