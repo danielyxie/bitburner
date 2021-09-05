@@ -224,7 +224,8 @@ function generateStatsDescription(
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_speed_mult - 1)} faster hacking
+        <br />+{f(mults.hacking_speed_mult - 1)} faster hack(), grow(), and
+        weaken()
       </>
     );
   if (mults.hacking_chance_mult)
