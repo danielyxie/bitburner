@@ -58,52 +58,36 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
       return <span>{props.city[0]}</span>;
     };
 
+    // map needs all this whitespace!
+    // prettier-ignore
     return (
       <div className="noselect">
         <p>
           From here, you can travel to any other city! A ticket costs{" "}
           <Money money={CONSTANTS.TravelCost} player={this.props.p} />.
         </p>
-        <pre> ,_ . ._. _. .</pre>
-        <pre> , _-\','|~\~ ~/ ;-'_ _-' ,;_;_, ~~-</pre>
-        <pre> /~~-\_/-'~'--' \~~| ', ,' / / ~|-_\_/~/~ ~~--~~~~'--_</pre>
-        <pre>
-          {" "}
-          / ,/'-/~ '\ ,' _ , '<LocationLetter city="Volhaven" />
-          ,'|~ ._/-, /~
-        </pre>
-        <pre> ~/-'~\_, '-,| '|. ' ~ ,\ /'~ / /_ /~</pre>
-        <pre>
-          .-~ '| '',\~|\ _\~ ,_ , <LocationLetter city="Chongqing" /> /,
-        </pre>
-        <pre>
-          {" "}
-          '\ <LocationLetter city="Sector-12" /> /'~ |_/~\\,-,~ \ " ,_,/ |
-        </pre>
-        <pre>
-          {" "}
-          | / ._-~'\_ _~| \ ) <LocationLetter city="New Tokyo" />
-        </pre>
-        <pre> \ __-\ '/ ~ |\ \_ / ~</pre>
-        <pre> ., '\ |, ~-_ - | \\_' ~| /\ \~ ,</pre>
-        <pre> ~-_' _; '\ '-, \,' /\/ |</pre>
-        <pre> '\_,~'\_ \_ _, /' ' |, /|'</pre>
-        <pre> / \_ ~ | / \ ~'; -,_.</pre>
-        <pre> | ~\ | | , '-_, ,; ~ ~\</pre>
-        <pre>
-          {" "}
-          \, <LocationLetter city="Aevum" /> / \ / /| ,-, , -,
-        </pre>
-        <pre> | ,/ | |' |/ ,- ~ \ '.</pre>
-        <pre>
-          {" "}
-          ,| ,/ \ ,/ \ <LocationLetter city="Ishima" /> |
-        </pre>
-        <pre> / | ~ -~~-, / _</pre>
-        <pre> | ,-' ~ /</pre>
-        <pre> / ,' ~</pre>
-        <pre> ',| ~</pre>
-        <pre> ~'</pre>
+        <pre>               ,_   .  ._. _.  .</pre>
+        <pre>           , _-\','|~\~      ~/      ;-'_   _-'     ,;_;_,    ~~-</pre>
+        <pre>  /~~-\_/-'~'--' \~~| ',    ,'      /  / ~|-_\_/~/~      ~~--~~~~'--_</pre>
+        <pre>  /              ,/'-/~ '\ ,' _  , '<LocationLetter city="Volhaven" />,'|~                   ._/-, /~</pre>
+        <pre>  ~/-'~\_,       '-,| '|. '   ~  ,\ /'~                /    /_  /~</pre>
+        <pre>.-~      '|        '',\~|\       _\~     ,_  ,     <LocationLetter city="Chongqing" />         /,</pre>
+        <pre>          '\     <LocationLetter city="Sector-12" />  /'~          |_/~\\,-,~  \ "         ,_,/ |</pre>
+        <pre>           |       /            ._-~'\_ _~|              \ ) <LocationLetter city="New Tokyo" /></pre>
+        <pre>            \   __-\           '/      ~ |\  \_          /  ~</pre>
+        <pre>  .,         '\ |,  ~-_      - |          \\_' ~|  /\  \~ ,</pre>
+        <pre>               ~-_'  _;       '\           '-,   \,' /\/  |</pre>
+        <pre>                 '\_,~'\_       \_ _,       /'    '  |, /|'</pre>
+        <pre>                   /     \_       ~ |      /         \  ~'; -,_.</pre>
+        <pre>                   |       ~\        |    |  ,        '-_, ,; ~ ~\</pre>
+        <pre>                    \,   <LocationLetter city="Aevum" />  /        \    / /|            ,-, ,   -,</pre>
+        <pre>                     |    ,/          |  |' |/          ,-   ~ \   '.</pre>
+        <pre>                    ,|   ,/           \ ,/              \   <LocationLetter city="Ishima" />   |</pre>
+        <pre>                    /    |             ~                 -~~-, /   _</pre>
+        <pre>                    | ,-'                                    ~    /</pre>
+        <pre>                    / ,'                                      ~</pre>
+        <pre>                    ',|  ~</pre>
+        <pre>                      ~'</pre>
       </div>
     );
   }

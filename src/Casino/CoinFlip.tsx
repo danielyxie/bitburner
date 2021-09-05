@@ -81,14 +81,15 @@ export class CoinFlip extends Game<IProps, IState> {
   render(): React.ReactNode {
     return (
       <>
+        <pre>{`+———————+`}</pre>
+        <pre>{`| |   | |`}</pre>
         <pre>
-          +———————+
-          <br />
-          | | | |<br />| | {this.state.result} | |<br />
-          | | | |<br />
-          +———————+
-          <br />
+          {`| | `}
+          {this.state.result}
+          {` | |`}
         </pre>
+        <pre>{`| |   | |`}</pre>
+        <pre>{`+———————+`}</pre>
         <span className="text">Play for: </span>
         <input
           type="number"

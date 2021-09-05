@@ -10,7 +10,6 @@ export function KeyHandler(props: IProps): React.ReactElement {
   useEffect(() => elem.focus());
 
   function onKeyDown(event: React.KeyboardEvent<HTMLElement>): void {
-    console.log("isTrusted?", event.isTrusted);
     if (!event.isTrusted) {
       console.log("untrusted event!");
       props.onFailure({ automated: true });

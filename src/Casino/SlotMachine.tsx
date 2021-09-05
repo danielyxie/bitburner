@@ -307,25 +307,16 @@ export class SlotMachine extends Game<IProps, IState> {
 
   render(): React.ReactNode {
     const t = this.getTable();
+    // prettier-ignore
     return (
       <>
-        <pre>
-          +———————————————————————+
-          <br />| | {t[0][0]} | {t[0][1]} | {t[0][2]} | {t[0][3]} | {t[0][4]} |
-          |<br />
-          | | | | | | | |<br />| | {symbols[this.state.index[0]]} |{" "}
-          {symbols[this.state.index[1]]} | {symbols[this.state.index[2]]} |{" "}
-          {symbols[this.state.index[3]]} | {symbols[this.state.index[4]]} | |
-          <br />
-          | | | | | | | |<br />| |{" "}
-          {symbols[(this.state.index[0] + 1) % symbols.length]} |{" "}
-          {symbols[(this.state.index[1] + 1) % symbols.length]} |{" "}
-          {symbols[(this.state.index[2] + 1) % symbols.length]} |{" "}
-          {symbols[(this.state.index[3] + 1) % symbols.length]} |{" "}
-          {symbols[(this.state.index[4] + 1) % symbols.length]} | |<br />
-          +———————————————————————+
-          <br />
-        </pre>
+<pre>+———————————————————————+</pre>
+<pre>| | {t[0][0]} | {t[0][1]} | {t[0][2]} | {t[0][3]} | {t[0][4]} | |</pre>
+<pre>| |   |   |   |   |   | |</pre>
+<pre>| | {symbols[this.state.index[0]]} | {symbols[this.state.index[1]]} | {symbols[this.state.index[2]]} | {symbols[this.state.index[3]]} | {symbols[this.state.index[4]]} | |</pre>
+<pre>| |   |   |   |   |   | |</pre>
+<pre>| | {symbols[(this.state.index[0]+1)%symbols.length]} | {symbols[(this.state.index[1]+1)%symbols.length]} | {symbols[(this.state.index[2]+1)%symbols.length]} | {symbols[(this.state.index[3]+1)%symbols.length]} | {symbols[(this.state.index[4]+1)%symbols.length]} | |</pre>
+<pre>+———————————————————————+</pre>
         <input
           type="number"
           className="text-input"
@@ -341,32 +332,21 @@ export class SlotMachine extends Game<IProps, IState> {
         />
         <h1>{this.state.status}</h1>
         <h2>Pay lines</h2>
-        <pre>
-          ----- ····· ····· <br />
-          ····· ----- ····· <br />
-          ····· ····· ----- <br />
-        </pre>
-        <br />
 
-        <pre>
-          ··^·· \···/ \···/
-          <br />
-          ·/·\· ·\·/· ·---·
-          <br />
-          /···\ ··v·· ·····
-          <br />
-        </pre>
-        <br />
+<pre>-----   ·····   ·····</pre>
+<pre>·····   -----   ·····</pre>
+<pre>·····   ·····   -----</pre>
+<br />
 
-        <pre>
-          ····· ·---· ·····
-          <br />
-          ·---· /···\ \···/
-          <br />
-          /···\ ····· ·---·
-          <br />
-        </pre>
-      </>
+<pre>··^··   \···/   \···/</pre>
+<pre>·/·\·   ·\·/·   ·---·</pre>
+<pre>/···\   ··v··   ·····</pre>
+<br />
+
+<pre>·····   ·---·   ·····</pre>
+<pre>·---·   /···\   \···/</pre>
+<pre>/···\   ·····   ·---·</pre>
+        </>
     );
   }
 }

@@ -108,34 +108,12 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
           use: {
-            loader: "swc-loader",
+            loader: "babel-loader",
             options: {
-              jsc: {
-                parser: {
-                  syntax: "typescript",
-                  tsx: true,
-                },
-                target: "es2016",
-              },
-            },
-          },
-        },
-        {
-          test: /\.(jsx)$/,
-          exclude: /node_modules/,
-          use: {
-            loader: "swc-loader",
-            options: {
-              jsc: {
-                parser: {
-                  syntax: "ecmascript",
-                  jsx: true,
-                },
-                target: "es2017",
-              },
+              cacheDirectory: true,
             },
           },
         },
