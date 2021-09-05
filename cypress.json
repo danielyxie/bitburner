@@ -1,0 +1,7 @@
+{
+  "baseUrl": "http://localhost:8000",
+  "trashAssetsBeforeRuns": true,
+  "screenshotsFolder": ".cypress/screenshots",
+  "videosFolder": ".cypress/videos",
+  "videoUploadOnPasses": false
+}

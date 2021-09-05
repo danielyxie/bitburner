@@ -56,6 +56,7 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.15.0",
+    "@testing-library/cypress": "^8.0.1",
     "@types/jest": "^27.0.1",
     "@types/lodash": "^4.14.168",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
@@ -66,6 +67,7 @@
     "benchmark": "^2.1.1",
     "bundle-loader": "~0.5.0",
     "css-loader": "^0.28.11",
+    "cypress": "^8.3.1",
     "es6-promise-polyfill": "^1.1.1",
     "eslint": "^7.24.0",
     "eslint-plugin-node": "^11.1.0",
@@ -94,6 +96,7 @@
     "simple-git": "^1.96.0",
     "sinon": "^2.3.2",
     "source-map": "^0.7.3",
+    "start-server-and-test": "^1.14.0",
     "style-loader": "^0.21.0",
     "stylelint": "^9.2.1",
     "stylelint-declaration-use-variable": "^1.6.1",
@@ -120,6 +123,8 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
+    "cy:dev": "start-server-and-test start:dev http://localhost:8000 cy:open",
+    "cy:open": "cypress open",
     "format": "prettier --write .",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
     "start:container": "webpack-dev-server --progress --env.devServer --mode development --env.runInContainer",
