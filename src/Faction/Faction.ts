@@ -93,7 +93,6 @@ export class Faction {
     const totalRep = storedRep + this.rolloverRep + this.playerReputation;
     const newFavor = Math.floor(repToFavor(totalRep));
     const newRep = favorToRep(newFavor);
-    console.log(`${storedRep} ${this.rolloverRep} ${this.playerReputation}`);
     return [newFavor - this.favor + 1, totalRep - newRep];
   }
 
