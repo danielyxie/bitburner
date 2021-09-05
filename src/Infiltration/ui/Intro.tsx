@@ -62,8 +62,8 @@ export function Intro(props: IProps): React.ReactElement {
         </Grid>
         <Grid item xs={10}>
           <pre>[{coloredArrow(props.Difficulty)}]</pre>
-          <pre> ^ ^ ^ ^</pre>
-          <pre> Trivial Normal Hard Impossible</pre>
+          <pre>{` ^            ^            ^           ^`}</pre>
+          <pre>{` Trivial    Normal        Hard    Impossible`}</pre>
         </Grid>
         <Grid item xs={10}>
           <p>
