@@ -214,9 +214,9 @@ export class Sleeve extends Person {
           // Success
           const successGainRates: ITaskTracker = createTaskTracker();
 
-          const keysForIteration: (keyof ITaskTracker)[] = <
-            (keyof ITaskTracker)[]
-          >Object.keys(successGainRates);
+          const keysForIteration: (keyof ITaskTracker)[] = Object.keys(
+            successGainRates,
+          ) as (keyof ITaskTracker)[];
           for (let i = 0; i < keysForIteration.length; ++i) {
             const key = keysForIteration[i];
             successGainRates[key] = this.gainRatesForTask[key] * 2;

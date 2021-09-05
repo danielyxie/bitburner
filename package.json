@@ -44,6 +44,8 @@
     "react-dom": "^16.8.3",
     "react-modal": "^3.12.1",
     "sprintf-js": "^1.1.1",
+    "swc": "^1.0.11",
+    "swc-loader": "^0.1.14",
     "tapable": "^1.0.0",
     "treant-js": "^1.0.1",
     "uuid": "^3.2.1",

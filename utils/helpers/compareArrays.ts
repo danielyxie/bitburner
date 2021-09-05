@@ -15,8 +15,8 @@ export function compareArrays<T>(a1: T[], a2: T[]): boolean {
         return false;
       }
 
-      const elem1 = <any[]>(<any>a1[i]);
-      const elem2 = <any[]>(<any>a2[i]);
+      const elem1 = a1[i] as any;
+      const elem2 = a2[i] as any;
       if (!compareArrays(elem1, elem2)) {
         return false;
       }
