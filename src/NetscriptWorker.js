@@ -31,7 +31,7 @@ import { generate } from "escodegen";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
-import { isString } from "../utils/StringHelperFunctions";
+import { isString } from "../utils/helpers/isString";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
