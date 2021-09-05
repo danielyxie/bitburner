@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
     chunkModules: false,
     chunkOrigins: false,
     colors: true,
-    entrypoints: true,
+    entrypoints: false,
   };
 
   const devServerSettings = {
@@ -106,10 +106,25 @@ module.exports = (env, argv) => {
           },
         },
       }),
-    ],
+      // In dev mode, use a faster method of create sourcemaps
+      // while keeping lines/columns accurate
+      isDevServer &&
+        new webpack.EvalSourceMapDevToolPlugin({
+          // Exclude vendor files from sourcemaps
+          // This is a huge speed improvement for not much loss
+          exclude: ["vendor"],
+          columns: true,
+          module: true,
+        }),
+      !isDevServer &&
+        new webpack.SourceMapDevToolPlugin({
+          filename: "[file].map",
+          columns: true,
+          module: true,
+        }),
+    ].filter(Boolean),
     target: "web",
     entry: entries,
-    devtool: "source-map",
     output: {
       path: path.resolve(__dirname, "./"),
       filename: "[name].bundle.js",
