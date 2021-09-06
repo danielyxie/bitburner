@@ -16,7 +16,7 @@ interface IExpandButtonProps {
   setCity: (name: string) => void;
 }
 
-function ExpandButton(props: IExpandButtonProps) {
+function ExpandButton(props: IExpandButtonProps): React.ReactElement {
   function openExpandNewCityModal(): void {
     const popupId = "cmpy-mgmt-expand-city-popup";
     createPopup(popupId, ExpandNewCityPopup, {
@@ -61,8 +61,7 @@ export function CityTabs(props: IProps): React.ReactElement {
   return (
     <>
       {Object.values(props.division.offices).map(
-        (office: OfficeSpace | 0) =>
-          office !== 0 && (
+        (office: OfficeSpace | 0) => office !== 0 && (
             <CityTab
               current={city === office.loc}
               key={office.loc}

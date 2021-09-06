@@ -16,6 +16,7 @@ import { HireEmployeePopup } from "./HireEmployeePopup";
 import { ThrowPartyPopup } from "./ThrowPartyPopup";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Money } from "../../ui/React/Money";
 
 interface IProps {
   corp: ICorporation;
@@ -24,324 +25,279 @@ interface IProps {
   player: IPlayer;
 }
 
-export function IndustryOffice(props: IProps): React.ReactElement {
-  const [employeeManualAssignMode, setEmployeeManualAssignMode] =
-    useState(false);
-  const [employee, setEmployee] = useState<Employee | null>(null);
-  const [numEmployees, setNumEmployees] = useState(0);
-  const [numOperations, setNumOperations] = useState(0);
-  const [numEngineers, setNumEngineers] = useState(0);
-  const [numBusiness, setNumBusiness] = useState(0);
-  const [numManagement, setNumManagement] = useState(0);
-  const [numResearch, setNumResearch] = useState(0);
-  const [numUnassigned, setNumUnassigned] = useState(0);
-  const [numTraining, setNumTraining] = useState(0);
-
-  function resetEmployeeCount(): void {
-    setNumEmployees(0);
-    setNumOperations(0);
-    setNumEngineers(0);
-    setNumBusiness(0);
-    setNumManagement(0);
-    setNumResearch(0);
-    setNumUnassigned(0);
-    setNumTraining(0);
+function countEmployee(employees: Employee[], job: string): number {
+  let n = 0;
+  for (let i = 0; i < employees.length; ++i) {
+    if (employees[i].pos === job) n++;
   }
+  return n;
+}
 
-  function updateEmployeeCount(): void {
-    // Calculate how many NEW employees we need to account for
-    const currentNumEmployees = props.office.employees.length;
+interface ISwitchProps {
+  manualMode: boolean;
+  switchMode: (f: (b: boolean) => boolean) => void;
+}
 
-    let newOperations = numOperations;
-    let newEngineers = numEngineers;
-    let newBusiness = numBusiness;
-    let newManagement = numManagement;
-    let newResearch = numResearch;
-    let newUnassigned = numUnassigned;
-    let newTraining = numTraining;
-
-    // Record the number of employees in each position, for NEW employees only
-    for (let i = numEmployees; i < props.office.employees.length; ++i) {
-      switch (props.office.employees[i].pos) {
-        case EmployeePositions.Operations:
-          newOperations++;
-          break;
-        case EmployeePositions.Engineer:
-          newEngineers++;
-          break;
-        case EmployeePositions.Business:
-          newBusiness++;
-          break;
-        case EmployeePositions.Management:
-          newManagement++;
-          break;
-        case EmployeePositions.RandD:
-          newResearch++;
-          break;
-        case EmployeePositions.Unassigned:
-          newUnassigned++;
-          break;
-        case EmployeePositions.Training:
-          newTraining++;
-          break;
-        default:
-          console.error(
-            "Unrecognized employee position: " + props.office.employees[i].pos,
-          );
-          break;
-      }
-    }
-    if (newOperations !== numOperations) setNumOperations(newOperations);
-    if (newEngineers !== numEngineers) setNumEngineers(newEngineers);
-    if (newBusiness !== numBusiness) setNumBusiness(newBusiness);
-    if (newManagement !== numManagement) setNumManagement(newManagement);
-    if (newResearch !== numResearch) setNumResearch(newResearch);
-    if (newUnassigned !== numUnassigned) setNumUnassigned(newUnassigned);
-    if (newTraining !== numTraining) setNumTraining(newTraining);
-
-    if (currentNumEmployees !== numEmployees)
-      setNumEmployees(currentNumEmployees);
-  }
-
-  updateEmployeeCount();
-
-  // Renders the "Employee Management" section of the Office UI
-  function renderEmployeeManagement(): React.ReactElement {
-    updateEmployeeCount();
-
-    if (employeeManualAssignMode) {
-      return renderManualEmployeeManagement();
-    } else {
-      return renderAutomaticEmployeeManagement();
-    }
-  }
-
-  function renderAutomaticEmployeeManagement(): React.ReactElement {
-    const vechain = props.corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
-
-    function switchModeOnClick(): void {
-      setEmployeeManualAssignMode(true);
-      props.corp.rerender(props.player);
-    }
-
-    // Calculate average morale, happiness, and energy. Also salary
-    // TODO is this efficient?
-    let totalMorale = 0,
-      totalHappiness = 0,
-      totalEnergy = 0,
-      totalSalary = 0;
-    for (let i = 0; i < props.office.employees.length; ++i) {
-      totalMorale += props.office.employees[i].mor;
-      totalHappiness += props.office.employees[i].hap;
-      totalEnergy += props.office.employees[i].ene;
-      totalSalary += props.office.employees[i].sal;
-    }
-
-    let avgMorale = 0,
-      avgHappiness = 0,
-      avgEnergy = 0;
-    if (props.office.employees.length > 0) {
-      avgMorale = totalMorale / props.office.employees.length;
-      avgHappiness = totalHappiness / props.office.employees.length;
-      avgEnergy = totalEnergy / props.office.employees.length;
-    }
-
-    // Helper functions for (re-)assigning employees to different positions
-    function assignEmployee(to: string): void {
-      if (numUnassigned <= 0) {
-        console.warn(
-          "Cannot assign employee. No unassigned employees available",
-        );
-        return;
-      }
-
-      switch (to) {
-        case EmployeePositions.Operations:
-          setNumOperations((n) => n + 1);
-          break;
-        case EmployeePositions.Engineer:
-          setNumEngineers((n) => n + 1);
-          break;
-        case EmployeePositions.Business:
-          setNumBusiness((n) => n + 1);
-          break;
-        case EmployeePositions.Management:
-          setNumManagement((n) => n + 1);
-          break;
-        case EmployeePositions.RandD:
-          setNumResearch((n) => n + 1);
-          break;
-        case EmployeePositions.Unassigned:
-          setNumUnassigned((n) => n + 1);
-          break;
-        case EmployeePositions.Training:
-          setNumTraining((n) => n + 1);
-          break;
-        default:
-          console.error("Unrecognized employee position: " + to);
-          break;
-      }
-      setNumUnassigned((n) => n - 1);
-
-      props.office.assignEmployeeToJob(to);
-      props.office.calculateEmployeeProductivity(props.corp, props.division);
-      props.corp.rerender(props.player);
-    }
-
-    function unassignEmployee(from: string): void {
-      function logWarning(pos: string): void {
-        console.warn(
-          `Cannot unassign from ${pos} because there is nobody assigned to that position`,
-        );
-      }
-
-      switch (from) {
-        case EmployeePositions.Operations:
-          if (numOperations <= 0) {
-            return logWarning(EmployeePositions.Operations);
-          }
-          setNumOperations((n) => n - 1);
-          break;
-        case EmployeePositions.Engineer:
-          if (numEngineers <= 0) {
-            return logWarning(EmployeePositions.Operations);
-          }
-          setNumEngineers((n) => n - 1);
-          break;
-        case EmployeePositions.Business:
-          if (numBusiness <= 0) {
-            return logWarning(EmployeePositions.Operations);
-          }
-          setNumBusiness((n) => n - 1);
-          break;
-        case EmployeePositions.Management:
-          if (numManagement <= 0) {
-            return logWarning(EmployeePositions.Operations);
-          }
-          setNumManagement((n) => n - 1);
-          break;
-        case EmployeePositions.RandD:
-          if (numResearch <= 0) {
-            return logWarning(EmployeePositions.Operations);
-          }
-          setNumResearch((n) => n - 1);
-          break;
-        case EmployeePositions.Unassigned:
-          console.warn(`Tried to unassign from the Unassigned position`);
-          break;
-        case EmployeePositions.Training:
-          if (numTraining <= 0) {
-            return logWarning(EmployeePositions.Operations);
-          }
-          setNumTraining((n) => n - 1);
-          break;
-        default:
-          console.error("Unrecognized employee position: " + from);
-          break;
-      }
-      setNumUnassigned((n) => n + 1);
-
-      props.office.unassignEmployeeFromJob(from);
-      props.office.calculateEmployeeProductivity(props.corp, props.division);
-      props.corp.rerender(props.player);
-    }
-
-    const positionHeaderStyle = {
-      fontSize: "15px",
-      margin: "5px 0px 5px 0px",
-      width: "50%",
-    };
-    const assignButtonClass =
-      numUnassigned > 0 ? "std-button" : "a-link-button-inactive";
-
-    function operationAssignButtonOnClick(): void {
-      assignEmployee(EmployeePositions.Operations);
-      props.corp.rerender(props.player);
-    }
-    function operationUnassignButtonOnClick(): void {
-      unassignEmployee(EmployeePositions.Operations);
-      props.corp.rerender(props.player);
-    }
-    const operationUnassignButtonClass =
-      numOperations > 0 ? "std-button" : "a-link-button-inactive";
-
-    function engineerAssignButtonOnClick(): void {
-      assignEmployee(EmployeePositions.Engineer);
-      props.corp.rerender(props.player);
-    }
-    function engineerUnassignButtonOnClick(): void {
-      unassignEmployee(EmployeePositions.Engineer);
-      props.corp.rerender(props.player);
-    }
-    const engineerUnassignButtonClass =
-      numEngineers > 0 ? "std-button" : "a-link-button-inactive";
-
-    function businessAssignButtonOnClick(): void {
-      assignEmployee(EmployeePositions.Business);
-      props.corp.rerender(props.player);
-    }
-    function businessUnassignButtonOnClick(): void {
-      unassignEmployee(EmployeePositions.Business);
-      props.corp.rerender(props.player);
-    }
-    const businessUnassignButtonClass =
-      numBusiness > 0 ? "std-button" : "a-link-button-inactive";
-
-    function managementAssignButtonOnClick(): void {
-      assignEmployee(EmployeePositions.Management);
-      props.corp.rerender(props.player);
-    }
-    function managementUnassignButtonOnClick(): void {
-      unassignEmployee(EmployeePositions.Management);
-      props.corp.rerender(props.player);
-    }
-    const managementUnassignButtonClass =
-      numManagement > 0 ? "std-button" : "a-link-button-inactive";
-
-    function rndAssignButtonOnClick(): void {
-      assignEmployee(EmployeePositions.RandD);
-      props.corp.rerender(props.player);
-    }
-    function rndUnassignButtonOnClick(): void {
-      unassignEmployee(EmployeePositions.RandD);
-      props.corp.rerender(props.player);
-    }
-    const rndUnassignButtonClass =
-      numResearch > 0 ? "std-button" : "a-link-button-inactive";
-
-    function trainingAssignButtonOnClick(): void {
-      assignEmployee(EmployeePositions.Training);
-      props.corp.rerender(props.player);
-    }
-    function trainingUnassignButtonOnClick(): void {
-      unassignEmployee(EmployeePositions.Training);
-      props.corp.rerender(props.player);
-    }
-    const trainingUnassignButtonClass =
-      numTraining > 0 ? "std-button" : "a-link-button-inactive";
-
+function SwitchButton(props: ISwitchProps): React.ReactElement {
+  if (props.manualMode) {
     return (
-      <div>
-        <button className={"std-button tooltip"} onClick={switchModeOnClick}>
-          Switch to Manual Mode
-          <span className={"tooltiptext"}>
-            Switch to Manual Assignment Mode, which allows you to specify which
-            employees should get which jobs
-          </span>
-        </button>
+      <button
+        className={"std-button tooltip"}
+        onClick={() => props.switchMode((old) => !old)}
+      >
+        Switch to Auto Mode
+        <span className={"tooltiptext"}>
+          Switch to Automatic Assignment Mode, which will automatically assign
+          employees to your selected jobs. You simply have to select the number
+          of assignments for each job
+        </span>
+      </button>
+    );
+  } else {
+    return (
+      <button
+        className={"std-button tooltip"}
+        onClick={() => props.switchMode((old) => !old)}
+      >
+        Switch to Manual Mode
+        <span className={"tooltiptext"}>
+          Switch to Manual Assignment Mode, which allows you to specify which
+          employees should get which jobs
+        </span>
+      </button>
+    );
+  }
+}
 
-        <p>
-          <strong>Unassigned Employees: {numUnassigned}</strong>
-        </p>
-        <br />
+function ManualManagement(props: IProps): React.ReactElement {
+  const [employee, setEmployee] = useState<Employee | null>(
+    props.office.employees.length > 0 ? props.office.employees[0] : null,
+  );
 
-        <p>Avg Employee Morale: {numeralWrapper.format(avgMorale, "0.000")}</p>
+  const employeeInfoDivStyle = {
+    color: "white",
+    margin: "4px",
+    padding: "4px",
+  };
+
+  // Employee Selector
+  const employees = [];
+  for (let i = 0; i < props.office.employees.length; ++i) {
+    employees.push(
+      <option key={props.office.employees[i].name}>
+        {props.office.employees[i].name}
+      </option>,
+    );
+  }
+
+  function employeeSelectorOnChange(
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void {
+    const name = getSelectText(e.target);
+    for (let i = 0; i < props.office.employees.length; ++i) {
+      if (name === props.office.employees[i].name) {
+        setEmployee(props.office.employees[i]);
+        break;
+      }
+    }
+
+    props.corp.rerender(props.player);
+  }
+
+  // Employee Positions Selector
+  const emp = employee;
+  let employeePositionSelectorInitialValue = "";
+  const employeePositions = [];
+  const positionNames = Object.values(EmployeePositions);
+  for (let i = 0; i < positionNames.length; ++i) {
+    employeePositions.push(
+      <option key={positionNames[i]} value={positionNames[i]}>
+        {positionNames[i]}
+      </option>,
+    );
+    if (emp != null && emp.pos === positionNames[i]) {
+      employeePositionSelectorInitialValue = positionNames[i];
+    }
+  }
+
+  function employeePositionSelectorOnChange(
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void {
+    if (employee === null) return;
+    const pos = getSelectText(e.target);
+    employee.pos = pos;
+    props.corp.rerender(props.player);
+  }
+
+  // Numeraljs formatter
+  const nf = "0.000";
+
+  // Employee stats (after applying multipliers)
+  const effCre = emp
+    ? emp.cre *
+      props.corp.getEmployeeCreMultiplier() *
+      props.division.getEmployeeCreMultiplier()
+    : 0;
+  const effCha = emp
+    ? emp.cha *
+      props.corp.getEmployeeChaMultiplier() *
+      props.division.getEmployeeChaMultiplier()
+    : 0;
+  const effInt = emp
+    ? emp.int *
+      props.corp.getEmployeeIntMultiplier() *
+      props.division.getEmployeeIntMultiplier()
+    : 0;
+  const effEff = emp
+    ? emp.eff *
+      props.corp.getEmployeeEffMultiplier() *
+      props.division.getEmployeeEffMultiplier()
+    : 0;
+
+  return (
+    <div style={employeeInfoDivStyle}>
+      <select className="dropdown" onChange={employeeSelectorOnChange}>
+        {employees}
+      </select>
+      {employee != null && (
         <p>
-          Avg Employee Happiness: {numeralWrapper.format(avgHappiness, "0.000")}
+          Morale: {numeralWrapper.format(employee.mor, nf)}
+          <br />
+          Happiness: {numeralWrapper.format(employee.hap, nf)}
+          <br />
+          Energy: {numeralWrapper.format(employee.ene, nf)}
+          <br />
+          Intelligence: {numeralWrapper.format(effInt, nf)}
+          <br />
+          Charisma: {numeralWrapper.format(effCha, nf)}
+          <br />
+          Experience: {numeralWrapper.format(employee.exp, nf)}
+          <br />
+          Creativity: {numeralWrapper.format(effCre, nf)}
+          <br />
+          Efficiency: {numeralWrapper.format(effEff, nf)}
+          <br />
+          Salary: <Money money={employee.sal} />
         </p>
-        <p>Avg Employee Energy: {numeralWrapper.format(avgEnergy, "0.000")}</p>
-        <p>Total Employee Salary: {numeralWrapper.formatMoney(totalSalary)}</p>
-        {vechain && (
+      )}
+      {employee != null && (
+        <select
+          className="dropdown"
+          onChange={employeePositionSelectorOnChange}
+          value={employeePositionSelectorInitialValue}
+        >
+          {employeePositions}
+        </select>
+      )}
+    </div>
+  );
+}
+
+interface IAutoAssignProps {
+  office: OfficeSpace;
+  corp: ICorporation;
+  division: IIndustry;
+  player: IPlayer;
+  job: string;
+  desc: string;
+}
+
+function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
+  const numJob = countEmployee(props.office.employees, props.job);
+  const numUnassigned = countEmployee(
+    props.office.employees,
+    EmployeePositions.Unassigned,
+  );
+  function assignEmployee(): void {
+    if (numUnassigned <= 0) {
+      console.warn("Cannot assign employee. No unassigned employees available");
+      return;
+    }
+
+    props.office.assignEmployeeToJob(props.job);
+    props.office.calculateEmployeeProductivity(props.corp, props.division);
+    props.corp.rerender(props.player);
+  }
+
+  function unassignEmployee(): void {
+    props.office.unassignEmployeeFromJob(props.job);
+    props.office.calculateEmployeeProductivity(props.corp, props.division);
+    props.corp.rerender(props.player);
+  }
+  const positionHeaderStyle = {
+    fontSize: "15px",
+    margin: "5px 0px 5px 0px",
+    width: "50%",
+  };
+  return (
+    <>
+      <h2 className={"tooltip"} style={positionHeaderStyle}>
+        {props.job} ({numJob})
+        <span className={"tooltiptext"}>{props.desc}</span>
+      </h2>
+      <button
+        className={numUnassigned > 0 ? "std-button" : "a-link-button-inactive"}
+        onClick={assignEmployee}
+      >
+        +
+      </button>
+      <button
+        className={numJob > 0 ? "std-button" : "a-link-button-inactive"}
+        onClick={unassignEmployee}
+      >
+        -
+      </button>
+      <br />
+    </>
+  );
+}
+
+function AutoManagement(props: IProps): React.ReactElement {
+  const numUnassigned = countEmployee(
+    props.office.employees,
+    EmployeePositions.Unassigned,
+  );
+  const vechain = props.corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
+
+  // Calculate average morale, happiness, and energy. Also salary
+  // TODO is this efficient?
+  let totalMorale = 0,
+    totalHappiness = 0,
+    totalEnergy = 0,
+    totalSalary = 0;
+  for (let i = 0; i < props.office.employees.length; ++i) {
+    totalMorale += props.office.employees[i].mor;
+    totalHappiness += props.office.employees[i].hap;
+    totalEnergy += props.office.employees[i].ene;
+    totalSalary += props.office.employees[i].sal;
+  }
+
+  let avgMorale = 0,
+    avgHappiness = 0,
+    avgEnergy = 0;
+  if (props.office.employees.length > 0) {
+    avgMorale = totalMorale / props.office.employees.length;
+    avgHappiness = totalHappiness / props.office.employees.length;
+    avgEnergy = totalEnergy / props.office.employees.length;
+  }
+
+  return (
+    <>
+      <p>
+        <strong>Unassigned Employees: {numUnassigned}</strong>
+      </p>
+      <br />
+
+      <p>Avg Employee Morale: {numeralWrapper.format(avgMorale, "0.000")}</p>
+      <p>
+        Avg Employee Happiness: {numeralWrapper.format(avgHappiness, "0.000")}
+      </p>
+      <p>Avg Employee Energy: {numeralWrapper.format(avgEnergy, "0.000")}</p>
+      <p>
+        Total Employee Salary: <Money money={totalSalary} />
+      </p>
+      {vechain && (
+        <>
           <p className={"tooltip"} style={{ display: "inline-block" }}>
             Material Production:{" "}
             {numeralWrapper.format(
@@ -355,9 +311,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
               Engineering, and Management employees
             </span>
           </p>
-        )}
-        {vechain && <br />}
-        {vechain && (
+          <br />
           <p className={"tooltip"} style={{ display: "inline-block" }}>
             Product Production:{" "}
             {numeralWrapper.format(
@@ -373,9 +327,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
               Engineering, and Management employees
             </span>
           </p>
-        )}
-        {vechain && <br />}
-        {vechain && (
+          <br />
           <p className={"tooltip"} style={{ display: "inline-block" }}>
             Business Multiplier: x
             {numeralWrapper.format(
@@ -387,268 +339,81 @@ export function IndustryOffice(props: IProps): React.ReactElement {
               sales
             </span>
           </p>
-        )}
-        {vechain && <br />}
-
-        <h2 className={"tooltip"} style={positionHeaderStyle}>
-          {EmployeePositions.Operations} ({numOperations})
-          <span className={"tooltiptext"}>
-            Manages supply chain operations. Improves the amount of Materials
-            and Products you produce.
-          </span>
-        </h2>
-        <button
-          className={assignButtonClass}
-          onClick={operationAssignButtonOnClick}
-        >
-          +
-        </button>
-        <button
-          className={operationUnassignButtonClass}
-          onClick={operationUnassignButtonOnClick}
-        >
-          -
-        </button>
-        <br />
-
-        <h2 className={"tooltip"} style={positionHeaderStyle}>
-          {EmployeePositions.Engineer} ({numEngineers})
-          <span className={"tooltiptext"}>
-            Develops and maintains products and production systems. Increases
-            the quality of everything you produce. Also increases the amount you
-            produce (not as much as Operations, however)
-          </span>
-        </h2>
-        <button
-          className={assignButtonClass}
-          onClick={engineerAssignButtonOnClick}
-        >
-          +
-        </button>
-        <button
-          className={engineerUnassignButtonClass}
-          onClick={engineerUnassignButtonOnClick}
-        >
-          -
-        </button>
-        <br />
-
-        <h2 className={"tooltip"} style={positionHeaderStyle}>
-          {EmployeePositions.Business} ({numBusiness})
-          <span className={"tooltiptext"}>
-            Handles sales and finances. Improves the amount of Materials and
-            Products you can sell.
-          </span>
-        </h2>
-        <button
-          className={assignButtonClass}
-          onClick={businessAssignButtonOnClick}
-        >
-          +
-        </button>
-        <button
-          className={businessUnassignButtonClass}
-          onClick={businessUnassignButtonOnClick}
-        >
-          -
-        </button>
-        <br />
-
-        <h2 className={"tooltip"} style={positionHeaderStyle}>
-          {EmployeePositions.Management} ({numManagement})
-          <span className={"tooltiptext"}>
-            Leads and oversees employees and office operations. Improves the
-            effectiveness of Engineer and Operations employees
-          </span>
-        </h2>
-        <button
-          className={assignButtonClass}
-          onClick={managementAssignButtonOnClick}
-        >
-          +
-        </button>
-        <button
-          className={managementUnassignButtonClass}
-          onClick={managementUnassignButtonOnClick}
-        >
-          -
-        </button>
-        <br />
-
-        <h2 className={"tooltip"} style={positionHeaderStyle}>
-          {EmployeePositions.RandD} ({numResearch})
-          <span className={"tooltiptext"}>
-            Research new innovative ways to improve the company. Generates
-            Scientific Research
-          </span>
-        </h2>
-        <button className={assignButtonClass} onClick={rndAssignButtonOnClick}>
-          +
-        </button>
-        <button
-          className={rndUnassignButtonClass}
-          onClick={rndUnassignButtonOnClick}
-        >
-          -
-        </button>
-        <br />
-
-        <h2 className={"tooltip"} style={positionHeaderStyle}>
-          {EmployeePositions.Training} ({numTraining})
-          <span className={"tooltiptext"}>
-            Set employee to training, which will increase some of their stats.
-            Employees in training do not affect any company operations.
-          </span>
-        </h2>
-        <button
-          className={assignButtonClass}
-          onClick={trainingAssignButtonOnClick}
-        >
-          +
-        </button>
-        <button
-          className={trainingUnassignButtonClass}
-          onClick={trainingUnassignButtonOnClick}
-        >
-          -
-        </button>
-      </div>
-    );
-  }
-
-  function renderManualEmployeeManagement(): React.ReactElement {
-    function switchModeOnClick(): void {
-      setEmployeeManualAssignMode(false);
-      props.corp.rerender(props.player);
-    }
-
-    const employeeInfoDivStyle = {
-      color: "white",
-      margin: "4px",
-      padding: "4px",
-    };
-
-    // Employee Selector
-    const employees = [];
-    for (let i = 0; i < props.office.employees.length; ++i) {
-      employees.push(
-        <option key={props.office.employees[i].name}>
-          {props.office.employees[i].name}
-        </option>,
-      );
-    }
-
-    function employeeSelectorOnChange(
-      e: React.ChangeEvent<HTMLSelectElement>,
-    ): void {
-      const name = getSelectText(e.target);
-      for (let i = 0; i < props.office.employees.length; ++i) {
-        if (name === props.office.employees[i].name) {
-          setEmployee(props.office.employees[i]);
-          break;
+          <br />
+        </>
+      )}
+      <AutoAssignJob
+        office={props.office}
+        corp={props.corp}
+        division={props.division}
+        player={props.player}
+        job={EmployeePositions.Operations}
+        desc={
+          "Manages supply chain operations. Improves the amount of Materials and Products you produce."
         }
-      }
+      />
 
-      props.corp.rerender(props.player);
-    }
+      <AutoAssignJob
+        office={props.office}
+        corp={props.corp}
+        division={props.division}
+        player={props.player}
+        job={EmployeePositions.Engineer}
+        desc={
+          "Develops and maintains products and production systems. Increases the quality of everything you produce. Also increases the amount you produce (not as much as Operations, however)"
+        }
+      />
 
-    // Employee Positions Selector
-    const emp = employee;
-    let employeePositionSelectorInitialValue = "";
-    const employeePositions = [];
-    const positionNames = Object.values(EmployeePositions);
-    for (let i = 0; i < positionNames.length; ++i) {
-      employeePositions.push(
-        <option key={positionNames[i]} value={positionNames[i]}>
-          {positionNames[i]}
-        </option>,
-      );
-      if (emp != null && emp.pos === positionNames[i]) {
-        employeePositionSelectorInitialValue = positionNames[i];
-      }
-    }
+      <AutoAssignJob
+        office={props.office}
+        corp={props.corp}
+        division={props.division}
+        player={props.player}
+        job={EmployeePositions.Business}
+        desc={
+          "Handles sales and finances. Improves the amount of Materials and Products you can sell."
+        }
+      />
 
-    function employeePositionSelectorOnChange(
-      e: React.ChangeEvent<HTMLSelectElement>,
-    ): void {
-      if (employee === null) return;
-      const pos = getSelectText(e.target);
-      employee.pos = pos;
-      resetEmployeeCount();
-      props.corp.rerender(props.player);
-    }
+      <AutoAssignJob
+        office={props.office}
+        corp={props.corp}
+        division={props.division}
+        player={props.player}
+        job={EmployeePositions.Management}
+        desc={
+          "Leads and oversees employees and office operations. Improves the effectiveness of Engineer and Operations employees."
+        }
+      />
 
-    // Numeraljs formatter
-    const nf = "0.000";
+      <AutoAssignJob
+        office={props.office}
+        corp={props.corp}
+        division={props.division}
+        player={props.player}
+        job={EmployeePositions.RandD}
+        desc={
+          "Research new innovative ways to improve the company. Generates Scientific Research."
+        }
+      />
 
-    // Employee stats (after applying multipliers)
-    const effCre = emp
-      ? emp.cre *
-        props.corp.getEmployeeCreMultiplier() *
-        props.division.getEmployeeCreMultiplier()
-      : 0;
-    const effCha = emp
-      ? emp.cha *
-        props.corp.getEmployeeChaMultiplier() *
-        props.division.getEmployeeChaMultiplier()
-      : 0;
-    const effInt = emp
-      ? emp.int *
-        props.corp.getEmployeeIntMultiplier() *
-        props.division.getEmployeeIntMultiplier()
-      : 0;
-    const effEff = emp
-      ? emp.eff *
-        props.corp.getEmployeeEffMultiplier() *
-        props.division.getEmployeeEffMultiplier()
-      : 0;
+      <AutoAssignJob
+        office={props.office}
+        corp={props.corp}
+        division={props.division}
+        player={props.player}
+        job={EmployeePositions.Training}
+        desc={
+          "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."
+        }
+      />
+    </>
+  );
+}
 
-    return (
-      <div>
-        <button className={"std-button tooltip"} onClick={switchModeOnClick}>
-          Switch to Auto Mode
-          <span className={"tooltiptext"}>
-            Switch to Automatic Assignment Mode, which will automatically assign
-            employees to your selected jobs. You simply have to select the
-            number of assignments for each job
-          </span>
-        </button>
-
-        <div style={employeeInfoDivStyle}>
-          <select onChange={employeeSelectorOnChange}>{employees}</select>
-          {employee != null && (
-            <p>
-              Morale: {numeralWrapper.format(employee.mor, nf)}
-              <br />
-              Happiness: {numeralWrapper.format(employee.hap, nf)}
-              <br />
-              Energy: {numeralWrapper.format(employee.ene, nf)}
-              <br />
-              Intelligence: {numeralWrapper.format(effInt, nf)}
-              <br />
-              Charisma: {numeralWrapper.format(effCha, nf)}
-              <br />
-              Experience: {numeralWrapper.format(employee.exp, nf)}
-              <br />
-              Creativity: {numeralWrapper.format(effCre, nf)}
-              <br />
-              Efficiency: {numeralWrapper.format(effEff, nf)}
-              <br />
-              Salary: {numeralWrapper.formatMoney(employee.sal)}
-            </p>
-          )}
-          {employee != null && (
-            <select
-              onChange={employeePositionSelectorOnChange}
-              value={employeePositionSelectorInitialValue}
-            >
-              {employeePositions}
-            </select>
-          )}
-        </div>
-      </div>
-    );
-  }
+export function IndustryOffice(props: IProps): React.ReactElement {
+  const [employeeManualAssignMode, setEmployeeManualAssignMode] =
+    useState(false);
 
   const buttonStyle = {
     fontSize: "13px",
@@ -762,7 +527,27 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       )}
       <br />
 
-      {renderEmployeeManagement()}
+      <div>
+        <SwitchButton
+          manualMode={employeeManualAssignMode}
+          switchMode={setEmployeeManualAssignMode}
+        />
+      </div>
+      {employeeManualAssignMode ? (
+        <ManualManagement
+          corp={props.corp}
+          division={props.division}
+          office={props.office}
+          player={props.player}
+        />
+      ) : (
+        <AutoManagement
+          corp={props.corp}
+          division={props.division}
+          office={props.office}
+          player={props.player}
+        />
+      )}
     </div>
   );
 }
