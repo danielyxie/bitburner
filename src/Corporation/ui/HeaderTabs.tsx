@@ -9,6 +9,42 @@ import { createPopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { MainPanel } from "./MainPanel";
+import { Industries } from "../IndustryData";
+
+interface IExpandButtonProps {
+  corp: ICorporation;
+  setDivisionName: (name: string) => void;
+}
+
+function ExpandButton(props: IExpandButtonProps): React.ReactElement {
+  const allIndustries = Object.keys(Industries).sort();
+  const possibleIndustries = allIndustries
+    .filter(
+      (industryType: string) =>
+        props.corp.divisions.find(
+          (division: IIndustry) => division.type === industryType,
+        ) === undefined,
+    )
+    .sort();
+  if (possibleIndustries.length === 0) return <></>;
+
+  function openNewIndustryPopup(): void {
+    const popupId = "cmpy-mgmt-expand-industry-popup";
+    createPopup(popupId, NewIndustryPopup, {
+      corp: props.corp,
+      setDivisionName: props.setDivisionName,
+      popupId: popupId,
+    });
+  }
+
+  return (
+    <HeaderTab
+      current={false}
+      onClick={openNewIndustryPopup}
+      text={"Expand into new Industry"}
+    />
+  );
+}
 
 interface IProps {
   corp: ICorporation;
@@ -17,15 +53,6 @@ interface IProps {
 
 export function HeaderTabs(props: IProps): React.ReactElement {
   const [divisionName, setDivisionName] = useState("Overview");
-
-  function openNewIndustryPopup(): void {
-    const popupId = "cmpy-mgmt-expand-industry-popup";
-    createPopup(popupId, NewIndustryPopup, {
-      corp: props.corp,
-      setDivisionName: setDivisionName,
-      popupId: popupId,
-    });
-  }
 
   return (
     <>
@@ -44,11 +71,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
             text={division.name}
           />
         ))}
-        <HeaderTab
-          current={false}
-          onClick={openNewIndustryPopup}
-          text={"Expand into new Industry"}
-        />
+        <ExpandButton corp={props.corp} setDivisionName={setDivisionName} />
       </div>
       <MainPanel
         corp={props.corp}
