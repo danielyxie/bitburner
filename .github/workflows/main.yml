@@ -25,7 +25,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install Dependencies
+      # - name: Cache NPM dependencies
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.OS }}-npm-cache-
+
+      - name: Install NPM dependencies
         run: npm ci
 
       - name: Build

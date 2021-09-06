@@ -34,6 +34,7 @@
     "jszip": "^3.7.0",
     "loader-runner": "^2.3.0",
     "loader-utils": "^1.1.0",
+    "mathjax-full": "^3.2.0",
     "mathjax-react": "^1.0.6",
     "memory-fs": "~0.4.1",
     "monaco-editor": "^0.27.0",
