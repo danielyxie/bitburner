@@ -24,20 +24,16 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      - name: Cache NPM dependencies
-        uses: actions/cache@v1
+      - uses: actions/setup-node@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache-
+          node-version: "14"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Test
         run: npm run test
-
-      - name: Install NPM dependencies
-        run: npm ci
 
       - name: Build
         run: npm run build
