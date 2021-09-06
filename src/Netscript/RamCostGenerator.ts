@@ -149,8 +149,7 @@ export const RamCosts: IMap<any> = {
   purchase4SMarketData: () => RamCostConstants.ScriptBuySellStockRamCost,
   purchase4SMarketDataTixApi: () => RamCostConstants.ScriptBuySellStockRamCost,
   getPurchasedServerLimit: () => RamCostConstants.ScriptGetPurchasedServerLimit,
-  getPurchasedServerMaxRam: () =>
-    RamCostConstants.ScriptGetPurchasedServerMaxRam,
+  getPurchasedServerMaxRam: () => RamCostConstants.ScriptGetPurchasedServerMaxRam,
   getPurchasedServerCost: () => RamCostConstants.ScriptGetPurchaseServerRamCost,
   purchaseServer: () => RamCostConstants.ScriptPurchaseServerRamCost,
   deleteServer: () => RamCostConstants.ScriptPurchaseServerRamCost,
@@ -189,8 +188,7 @@ export const RamCosts: IMap<any> = {
   manualHack: () => RamCostConstants.ScriptSingularityFn1RamCost,
   installBackdoor: () => RamCostConstants.ScriptSingularityFn1RamCost,
   getStats: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
-  getCharacterInformation: () =>
-    RamCostConstants.ScriptSingularityFn1RamCost / 4,
+  getCharacterInformation: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
   getPlayer: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
   hospitalize: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
   isBusy: () => RamCostConstants.ScriptSingularityFn1RamCost / 4,
@@ -215,8 +213,7 @@ export const RamCosts: IMap<any> = {
   getCrimeStats: () => RamCostConstants.ScriptSingularityFn3RamCost,
   getOwnedAugmentations: () => RamCostConstants.ScriptSingularityFn3RamCost,
   getOwnedSourceFiles: () => RamCostConstants.ScriptSingularityFn3RamCost,
-  getAugmentationsFromFaction: () =>
-    RamCostConstants.ScriptSingularityFn3RamCost,
+  getAugmentationsFromFaction: () => RamCostConstants.ScriptSingularityFn3RamCost,
   getAugmentationPrereq: () => RamCostConstants.ScriptSingularityFn3RamCost,
   getAugmentationCost: () => RamCostConstants.ScriptSingularityFn3RamCost,
   getAugmentationStats: () => RamCostConstants.ScriptSingularityFn3RamCost,
@@ -230,8 +227,7 @@ export const RamCosts: IMap<any> = {
     inGang: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
     getMemberNames: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
     getGangInformation: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
-    getOtherGangInformation: () =>
-      RamCostConstants.ScriptGangApiBaseRamCost / 2,
+    getOtherGangInformation: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
     getMemberInformation: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
     canRecruitMember: () => RamCostConstants.ScriptGangApiBaseRamCost / 4,
     recruitMember: () => RamCostConstants.ScriptGangApiBaseRamCost / 2,
@@ -251,30 +247,21 @@ export const RamCosts: IMap<any> = {
 
   // Bladeburner API
   bladeburner: {
-    getContractNames: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
-    getOperationNames: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
-    getBlackOpNames: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
+    getContractNames: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
+    getOperationNames: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
+    getBlackOpNames: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
     getBlackOpRank: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 2,
-    getGeneralActionNames: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
+    getGeneralActionNames: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
     getSkillNames: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 10,
     startAction: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    stopBladeburnerAction: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost / 2,
-    getCurrentAction: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost / 4,
+    stopBladeburnerAction: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 2,
+    getCurrentAction: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost / 4,
     getActionTime: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    getActionEstimatedSuccessChance: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    getActionEstimatedSuccessChance: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getActionRepGain: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    getActionCountRemaining: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    getActionCountRemaining: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getActionMaxLevel: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    getActionCurrentLevel: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    getActionCurrentLevel: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getActionAutolevel: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     setActionAutolevel: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     setActionLevel: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
@@ -285,18 +272,14 @@ export const RamCosts: IMap<any> = {
     upgradeSkill: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getTeamSize: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     setTeamSize: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    getCityEstimatedPopulation: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    getCityEstimatedCommunities: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    getCityEstimatedPopulation: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    getCityEstimatedCommunities: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getCityChaos: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getCity: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     switchCity: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getStamina: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    joinBladeburnerFaction: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    joinBladeburnerDivision: () =>
-      RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    joinBladeburnerFaction: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    joinBladeburnerDivision: () => RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getBonusTime: () => 0,
   },
 
@@ -306,8 +289,7 @@ export const RamCosts: IMap<any> = {
     getContractType: () => RamCostConstants.ScriptCodingContractBaseRamCost / 2,
     getData: () => RamCostConstants.ScriptCodingContractBaseRamCost / 2,
     getDescription: () => RamCostConstants.ScriptCodingContractBaseRamCost / 2,
-    getNumTriesRemaining: () =>
-      RamCostConstants.ScriptCodingContractBaseRamCost / 5,
+    getNumTriesRemaining: () => RamCostConstants.ScriptCodingContractBaseRamCost / 5,
   },
 
   // Duplicate Sleeve API

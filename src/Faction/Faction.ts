@@ -1,4 +1,3 @@
-import { CONSTANTS } from "../Constants";
 import { FactionInfo, FactionInfos } from "./FactionInfo";
 import { favorToRep, repToFavor } from "./formulas/favor";
 import {

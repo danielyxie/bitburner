@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 
 import { OfficeSpace } from "../OfficeSpace";
+import { IIndustry } from "../IIndustry";
 import { Employee } from "../Employee";
 import { EmployeePositions } from "../EmployeePositions";
 
@@ -15,20 +16,17 @@ import { HireEmployeePopup } from "./HireEmployeePopup";
 import { ThrowPartyPopup } from "./ThrowPartyPopup";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { CorporationRouting } from "./Routing";
 
 interface IProps {
-  routing: CorporationRouting;
   corp: ICorporation;
-  currentCity: string;
+  division: IIndustry;
+  office: OfficeSpace;
   player: IPlayer;
 }
 
 export function IndustryOffice(props: IProps): React.ReactElement {
   const [employeeManualAssignMode, setEmployeeManualAssignMode] =
     useState(false);
-  const [city, setCity] = useState("");
-  const [divisionName, setDivisionName] = useState("");
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [numEmployees, setNumEmployees] = useState(0);
   const [numOperations, setNumOperations] = useState(0);
@@ -51,28 +49,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
   }
 
   function updateEmployeeCount(): void {
-    const division = props.routing.currentDivision;
-    if (division == null) {
-      throw new Error(
-        `Routing does not hold reference to the current Industry`,
-      );
-    }
-    const office = division.offices[props.currentCity];
-    if (!(office instanceof OfficeSpace)) {
-      throw new Error(
-        `Current City (${props.currentCity}) for UI does not have an OfficeSpace object`,
-      );
-    }
-
-    // If we're in a new city, we have to reset the state
-    if (division.name !== divisionName || props.currentCity !== city) {
-      resetEmployeeCount();
-      setDivisionName(division.name);
-      setCity(props.currentCity);
-    }
-
     // Calculate how many NEW employees we need to account for
-    const currentNumEmployees = office.employees.length;
+    const currentNumEmployees = props.office.employees.length;
 
     let newOperations = numOperations;
     let newEngineers = numEngineers;
@@ -83,8 +61,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     let newTraining = numTraining;
 
     // Record the number of employees in each position, for NEW employees only
-    for (let i = numEmployees; i < office.employees.length; ++i) {
-      switch (office.employees[i].pos) {
+    for (let i = numEmployees; i < props.office.employees.length; ++i) {
+      switch (props.office.employees[i].pos) {
         case EmployeePositions.Operations:
           newOperations++;
           break;
@@ -108,7 +86,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
           break;
         default:
           console.error(
-            "Unrecognized employee position: " + office.employees[i].pos,
+            "Unrecognized employee position: " + props.office.employees[i].pos,
           );
           break;
       }
@@ -139,10 +117,6 @@ export function IndustryOffice(props: IProps): React.ReactElement {
   }
 
   function renderAutomaticEmployeeManagement(): React.ReactElement {
-    const division = props.routing.currentDivision; // Validated in constructor
-    if (division === null) return <></>;
-    const office = division.offices[props.currentCity]; // Validated in constructor
-    if (office === 0) return <></>;
     const vechain = props.corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
 
     function switchModeOnClick(): void {
@@ -156,26 +130,24 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       totalHappiness = 0,
       totalEnergy = 0,
       totalSalary = 0;
-    for (let i = 0; i < office.employees.length; ++i) {
-      totalMorale += office.employees[i].mor;
-      totalHappiness += office.employees[i].hap;
-      totalEnergy += office.employees[i].ene;
-      totalSalary += office.employees[i].sal;
+    for (let i = 0; i < props.office.employees.length; ++i) {
+      totalMorale += props.office.employees[i].mor;
+      totalHappiness += props.office.employees[i].hap;
+      totalEnergy += props.office.employees[i].ene;
+      totalSalary += props.office.employees[i].sal;
     }
 
     let avgMorale = 0,
       avgHappiness = 0,
       avgEnergy = 0;
-    if (office.employees.length > 0) {
-      avgMorale = totalMorale / office.employees.length;
-      avgHappiness = totalHappiness / office.employees.length;
-      avgEnergy = totalEnergy / office.employees.length;
+    if (props.office.employees.length > 0) {
+      avgMorale = totalMorale / props.office.employees.length;
+      avgHappiness = totalHappiness / props.office.employees.length;
+      avgEnergy = totalEnergy / props.office.employees.length;
     }
 
     // Helper functions for (re-)assigning employees to different positions
     function assignEmployee(to: string): void {
-      if (office === 0) return;
-      if (division === null) return;
       if (numUnassigned <= 0) {
         console.warn(
           "Cannot assign employee. No unassigned employees available",
@@ -211,14 +183,12 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       }
       setNumUnassigned((n) => n - 1);
 
-      office.assignEmployeeToJob(to);
-      office.calculateEmployeeProductivity(props.corp, division);
+      props.office.assignEmployeeToJob(to);
+      props.office.calculateEmployeeProductivity(props.corp, props.division);
       props.corp.rerender(props.player);
     }
 
     function unassignEmployee(from: string): void {
-      if (office === 0) return;
-      if (division === null) return;
       function logWarning(pos: string): void {
         console.warn(
           `Cannot unassign from ${pos} because there is nobody assigned to that position`,
@@ -271,8 +241,8 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       }
       setNumUnassigned((n) => n + 1);
 
-      office.unassignEmployeeFromJob(from);
-      office.calculateEmployeeProductivity(props.corp, division);
+      props.office.unassignEmployeeFromJob(from);
+      props.office.calculateEmployeeProductivity(props.corp, props.division);
       props.corp.rerender(props.player);
     }
 
@@ -375,7 +345,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
           <p className={"tooltip"} style={{ display: "inline-block" }}>
             Material Production:{" "}
             {numeralWrapper.format(
-              division.getOfficeProductivity(office),
+              props.division.getOfficeProductivity(props.office),
               "0.000",
             )}
             <span className={"tooltiptext"}>
@@ -391,7 +361,9 @@ export function IndustryOffice(props: IProps): React.ReactElement {
           <p className={"tooltip"} style={{ display: "inline-block" }}>
             Product Production:{" "}
             {numeralWrapper.format(
-              division.getOfficeProductivity(office, { forProduct: true }),
+              props.division.getOfficeProductivity(props.office, {
+                forProduct: true,
+              }),
               "0.000",
             )}
             <span className={"tooltiptext"}>
@@ -406,7 +378,10 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         {vechain && (
           <p className={"tooltip"} style={{ display: "inline-block" }}>
             Business Multiplier: x
-            {numeralWrapper.format(division.getBusinessFactor(office), "0.000")}
+            {numeralWrapper.format(
+              props.division.getBusinessFactor(props.office),
+              "0.000",
+            )}
             <span className={"tooltiptext"}>
               The effect this office's 'Business' employees has on boosting
               sales
@@ -542,12 +517,6 @@ export function IndustryOffice(props: IProps): React.ReactElement {
   }
 
   function renderManualEmployeeManagement(): React.ReactElement {
-    const corp = props.corp;
-    const division = props.routing.currentDivision; // Validated in constructor
-    if (division === null) return <></>;
-    const office = division.offices[props.currentCity]; // Validated in constructor
-    if (office === 0) return <></>;
-
     function switchModeOnClick(): void {
       setEmployeeManualAssignMode(false);
       props.corp.rerender(props.player);
@@ -561,10 +530,10 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
     // Employee Selector
     const employees = [];
-    for (let i = 0; i < office.employees.length; ++i) {
+    for (let i = 0; i < props.office.employees.length; ++i) {
       employees.push(
-        <option key={office.employees[i].name}>
-          {office.employees[i].name}
+        <option key={props.office.employees[i].name}>
+          {props.office.employees[i].name}
         </option>,
       );
     }
@@ -572,16 +541,15 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     function employeeSelectorOnChange(
       e: React.ChangeEvent<HTMLSelectElement>,
     ): void {
-      if (office === 0) return;
       const name = getSelectText(e.target);
-      for (let i = 0; i < office.employees.length; ++i) {
-        if (name === office.employees[i].name) {
-          setEmployee(office.employees[i]);
+      for (let i = 0; i < props.office.employees.length; ++i) {
+        if (name === props.office.employees[i].name) {
+          setEmployee(props.office.employees[i]);
           break;
         }
       }
 
-      corp.rerender(props.player);
+      props.corp.rerender(props.player);
     }
 
     // Employee Positions Selector
@@ -607,7 +575,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       const pos = getSelectText(e.target);
       employee.pos = pos;
       resetEmployeeCount();
-      corp.rerender(props.player);
+      props.corp.rerender(props.player);
     }
 
     // Numeraljs formatter
@@ -616,23 +584,23 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     // Employee stats (after applying multipliers)
     const effCre = emp
       ? emp.cre *
-        corp.getEmployeeCreMultiplier() *
-        division.getEmployeeCreMultiplier()
+        props.corp.getEmployeeCreMultiplier() *
+        props.division.getEmployeeCreMultiplier()
       : 0;
     const effCha = emp
       ? emp.cha *
-        corp.getEmployeeChaMultiplier() *
-        division.getEmployeeChaMultiplier()
+        props.corp.getEmployeeChaMultiplier() *
+        props.division.getEmployeeChaMultiplier()
       : 0;
     const effInt = emp
       ? emp.int *
-        corp.getEmployeeIntMultiplier() *
-        division.getEmployeeIntMultiplier()
+        props.corp.getEmployeeIntMultiplier() *
+        props.division.getEmployeeIntMultiplier()
       : 0;
     const effEff = emp
       ? emp.eff *
-        corp.getEmployeeEffMultiplier() *
-        division.getEmployeeEffMultiplier()
+        props.corp.getEmployeeEffMultiplier() *
+        props.division.getEmployeeEffMultiplier()
       : 0;
 
     return (
@@ -682,30 +650,25 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     );
   }
 
-  const division = props.routing.currentDivision; // Validated in constructor
-  if (division === null) return <></>;
-  const office = division.offices[props.currentCity]; // Validated in constructor
-  if (office === 0) return <></>;
   const buttonStyle = {
     fontSize: "13px",
   };
 
   // Hire Employee button
   let hireEmployeeButtonClass = "tooltip";
-  if (office.atCapacity()) {
+  if (props.office.atCapacity()) {
     hireEmployeeButtonClass += " a-link-button-inactive";
   } else {
     hireEmployeeButtonClass += " std-button";
-    if (office.employees.length === 0) {
+    if (props.office.employees.length === 0) {
       hireEmployeeButtonClass += " flashing-button";
     }
   }
 
   function openHireEmployeePopup(): void {
-    if (office === 0) return;
     const popupId = "cmpy-mgmt-hire-employee-popup";
     createPopup(popupId, HireEmployeePopup, {
-      office: office,
+      office: props.office,
       corp: props.corp,
       popupId: popupId,
       player: props.player,
@@ -714,23 +677,21 @@ export function IndustryOffice(props: IProps): React.ReactElement {
 
   // Autohire employee button
   let autohireEmployeeButtonClass = "tooltip";
-  if (office.atCapacity()) {
+  if (props.office.atCapacity()) {
     autohireEmployeeButtonClass += " a-link-button-inactive";
   } else {
     autohireEmployeeButtonClass += " std-button";
   }
   function autohireEmployeeButtonOnClick(): void {
-    if (office === 0) return;
-    if (office.atCapacity()) return;
-    office.hireRandomEmployee();
+    if (props.office.atCapacity()) return;
+    props.office.hireRandomEmployee();
     props.corp.rerender(props.player);
   }
 
   function openUpgradeOfficeSizePopup(): void {
-    if (office === 0) return;
     const popupId = "cmpy-mgmt-upgrade-office-size-popup";
     createPopup(popupId, UpgradeOfficeSizePopup, {
-      office: office,
+      office: props.office,
       corp: props.corp,
       popupId: popupId,
       player: props.player,
@@ -738,10 +699,9 @@ export function IndustryOffice(props: IProps): React.ReactElement {
   }
 
   function openThrowPartyPopup(): void {
-    if (office === 0) return;
     const popupId = "cmpy-mgmt-throw-office-party-popup";
     createPopup(popupId, ThrowPartyPopup, {
-      office: office,
+      office: props.office,
       corp: props.corp,
       popupId: popupId,
     });
@@ -751,7 +711,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     <div className={"cmpy-mgmt-employee-panel"}>
       <h1 style={{ margin: "4px 0px 5px 0px" }}>Office Space</h1>
       <p>
-        Size: {office.employees.length} / {office.size} employees
+        Size: {props.office.employees.length} / {props.office.size} employees
       </p>
       <button
         className={hireEmployeeButtonClass}
@@ -759,7 +719,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         style={buttonStyle}
       >
         Hire Employee
-        {office.employees.length === 0 && (
+        {props.office.employees.length === 0 && (
           <span className={"tooltiptext"}>
             You'll need to hire some employees to get your operations started!
             It's recommended to have at least one employee in every position
@@ -787,7 +747,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
           Upgrade the office's size so that it can hold more employees!
         </span>
       </button>
-      {!division.hasResearch("AutoPartyManager") && (
+      {!props.division.hasResearch("AutoPartyManager") && (
         <button
           className={"std-button tooltip"}
           onClick={openThrowPartyPopup}

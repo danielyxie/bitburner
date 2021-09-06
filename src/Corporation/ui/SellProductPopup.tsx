@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
-import { Cities } from "../../Locations/Cities";
 import { Product } from "../Product";
 import { SellProduct } from "../Actions";
 

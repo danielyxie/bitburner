@@ -1,32 +1,11 @@
-import { Script } from "./Script";
-
-import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
-import { calculateRamUsage } from "./RamCalculations";
-import { isScriptFilename } from "./ScriptHelpersTS";
-
 import { CONSTANTS } from "../Constants";
-import { Engine } from "../engine";
-import { parseFconfSettings } from "../Fconf/Fconf";
-import {
-  iTutorialSteps,
-  iTutorialNextStep,
-  ITutorial,
-} from "../InteractiveTutorial";
 import { Player } from "../Player";
-import { CursorPositions } from "../ScriptEditor/CursorPositions";
 import { AllServers } from "../Server/AllServers";
 import { processSingleServerGrowth } from "../Server/ServerHelpers";
-import { Settings } from "../Settings/Settings";
-import { EditorSetting } from "../Settings/SettingEnums";
-import { isValidFilePath } from "../Terminal/DirectoryHelpers";
-import { TextFile } from "../TextFile";
 
-import { Page, routing } from "../ui/navigationTracking";
 import { numeralWrapper } from "../ui/numeralFormat";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
 import { compareArrays } from "../../utils/helpers/compareArrays";
-import { createElement } from "../../utils/uiHelpers/createElement";
 
 export function scriptCalculateOfflineProduction(runningScriptObj) {
   //The Player object stores the last update time from when we were online

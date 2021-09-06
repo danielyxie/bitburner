@@ -29,8 +29,7 @@ export async function executeJSScript(scripts = [], workerScript) {
     script.markUpdated();
     urls = _getScriptUrls(script, scripts, []);
     script.url = urls[urls.length - 1].url;
-    script.module = new Promise((resolve) =>
-      resolve(eval("import(urls[urls.length - 1].url)")),
+    script.module = new Promise((resolve) => resolve(eval("import(urls[urls.length - 1].url)")),
     );
     script.dependencies = urls;
   }

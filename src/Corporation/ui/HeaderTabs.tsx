@@ -1,60 +1,60 @@
 // React Components for the Corporation UI's navigation tabs
 // These are the tabs at the top of the UI that let you switch to different
 // divisions, see an overview of your corporation, or create a new industry
-import React from "react";
+import React, { useState } from "react";
 import { HeaderTab } from "./HeaderTab";
 import { IIndustry } from "../IIndustry";
 import { NewIndustryPopup } from "./NewIndustryPopup";
 import { createPopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
-import { CorporationRouting } from "./Routing";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { MainPanel } from "./MainPanel";
 
 interface IProps {
   corp: ICorporation;
-  routing: CorporationRouting;
   player: IPlayer;
 }
 
 export function HeaderTabs(props: IProps): React.ReactElement {
-  function overviewOnClick(): void {
-    props.routing.routeToOverviewPage();
-    props.corp.rerender(props.player);
-  }
+  const [divisionName, setDivisionName] = useState("Overview");
 
   function openNewIndustryPopup(): void {
     const popupId = "cmpy-mgmt-expand-industry-popup";
     createPopup(popupId, NewIndustryPopup, {
       corp: props.corp,
-      routing: props.routing,
+      setDivisionName: setDivisionName,
       popupId: popupId,
     });
   }
 
   return (
-    <div>
-      <HeaderTab
-        current={props.routing.isOnOverviewPage()}
-        key={"overview"}
-        onClick={overviewOnClick}
-        text={props.corp.name}
-      />
-      {props.corp.divisions.map((division: IIndustry) => (
+    <>
+      <div>
         <HeaderTab
-          current={props.routing.isOn(division.name)}
-          key={division.name}
-          onClick={() => {
-            props.routing.routeTo(division.name);
-            props.corp.rerender(props.player);
-          }}
-          text={division.name}
+          current={divisionName === "Overview"}
+          key={"overview"}
+          onClick={() => setDivisionName("Overview")}
+          text={props.corp.name}
         />
-      ))}
-      <HeaderTab
-        current={false}
-        onClick={openNewIndustryPopup}
-        text={"Expand into new Industry"}
+        {props.corp.divisions.map((division: IIndustry) => (
+          <HeaderTab
+            current={division.name === divisionName}
+            key={division.name}
+            onClick={() => setDivisionName(division.name)}
+            text={division.name}
+          />
+        ))}
+        <HeaderTab
+          current={false}
+          onClick={openNewIndustryPopup}
+          text={"Expand into new Industry"}
+        />
+      </div>
+      <MainPanel
+        corp={props.corp}
+        divisionName={divisionName}
+        player={props.player}
       />
-    </div>
+    </>
   );
 }

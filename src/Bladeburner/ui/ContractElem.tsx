@@ -26,7 +26,6 @@ export function ContractElem(props: IProps): React.ReactElement {
   const estimatedSuccessChance = props.action.getEstSuccessChance(
     props.bladeburner,
   );
-  const successChance = props.action.getSuccessChance(props.bladeburner);
   const computedActionTimeCurrent = Math.min(
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
     props.bladeburner.actionTimeToComplete,

@@ -53,7 +53,6 @@ import {
   loadAllRunningScripts,
   updateOnlineScriptTimes,
 } from "./NetscriptWorker";
-import { GetServerByHostname } from "./Server/ServerHelpers";
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
 import {

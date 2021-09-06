@@ -48,7 +48,7 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
   }
 
   useEffect(() => {
-    function closeHandler(event: KeyboardEvent) {
+    function closeHandler(event: KeyboardEvent): void {
       if (event.keyCode === 27) {
         close();
       }

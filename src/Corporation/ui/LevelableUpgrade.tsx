@@ -1,7 +1,6 @@
 // React components for the levelable upgrade buttons on the overview panel
 import React from "react";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";

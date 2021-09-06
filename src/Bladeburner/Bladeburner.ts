@@ -2472,9 +2472,10 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
         return [1, 1];
-      case ActionTypes["Recruitment"]:
+      case ActionTypes["Recruitment"]: {
         const recChance = this.getRecruitmentSuccessChance(player);
         return [recChance, recChance];
+      }
       default:
         workerScript.log(
           "bladeburner.getActionEstimatedSuccessChance",

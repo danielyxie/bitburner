@@ -1,9 +1,5 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import {
-  AceKeybindingSetting,
-  CodeMirrorKeybindingSetting,
-  CodeMirrorThemeSetting,
-  EditorSetting,
   OwnedAugmentationsOrderSetting,
   PurchaseAugmentationsOrderSetting,
 } from "./SettingEnums";

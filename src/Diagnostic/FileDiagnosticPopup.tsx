@@ -1,7 +1,5 @@
 import React from "react";
 import { AllServers } from "../Server/AllServers";
-import { Script } from "../Script/Script";
-import { TextFile } from "../TextFile";
 import { Accordion } from "../ui/React/Accordion";
 import { numeralWrapper } from "../ui/numeralFormat";
 
@@ -61,9 +59,7 @@ export function ServerAccordion(props: IServerProps): React.ReactElement {
   );
 }
 
-interface IProps {}
-
-export function FileDiagnosticPopup(props: IProps): React.ReactElement {
+export function FileDiagnosticPopup(): React.ReactElement {
   const ips: string[] = [];
   for (const ip of Object.keys(AllServers)) {
     ips.push(ip);

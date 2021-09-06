@@ -4,7 +4,6 @@
  */
 import * as React from "react";
 
-import { WorkerScriptAccordion } from "./WorkerScriptAccordion";
 import { Accordion } from "../React/Accordion";
 import { ServerAccordionContent } from "./ServerAccordionContent";
 
@@ -32,12 +31,6 @@ export function ServerAccordion(props: IProps): React.ReactElement {
     totalTicks: 30,
   };
   const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`;
-
-  const scripts = props.workerScripts.map((ws) => {
-    return (
-      <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />
-    );
-  });
 
   return (
     <Accordion

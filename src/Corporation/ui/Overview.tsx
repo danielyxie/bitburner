@@ -33,10 +33,6 @@ interface IProps {
   player: IPlayer;
 }
 
-interface GeneralBtns {
-  bribeFactions: React.ReactElement;
-}
-
 export function Overview(props: IProps): React.ReactElement {
   // Generic Function for Creating a button
   interface ICreateButtonProps {
@@ -64,26 +60,6 @@ export function Overview(props: IProps): React.ReactElement {
     );
   }
 
-  function createButton(props: ICreateButtonProps): React.ReactElement {
-    let className = props.class ? props.class : "std-button";
-    const displayStyle = props.display ? props.display : "block";
-    const hasTooltip = props.tooltip != null;
-    if (hasTooltip) {
-      className += " tooltip";
-    }
-
-    return (
-      <a
-        className={className}
-        onClick={props.onClick}
-        style={{ display: displayStyle }}
-      >
-        {props.text}
-        {hasTooltip && <span className={"tooltiptext"}>{props.tooltip}</span>}
-      </a>
-    );
-  }
-
   function openBribeFactionPopup(): void {
     const popupId = "corp-bribe-popup";
     createPopup(popupId, BribeFactionPopup, {
@@ -97,7 +73,7 @@ export function Overview(props: IProps): React.ReactElement {
     .minus(props.corp.expenses)
     .toNumber();
 
-  function DividendsStats() {
+  function DividendsStats(): React.ReactElement {
     if (props.corp.dividendPercentage <= 0 || profit <= 0) return <></>;
     const totalDividends = (props.corp.dividendPercentage / 100) * profit;
     const retainedEarnings = profit - totalDividends;
@@ -330,8 +306,7 @@ export function Overview(props: IProps): React.ReactElement {
         <h1 className={"cmpy-mgmt-upgrade-header"}> Unlocks </h1>
         {Object.values(CorporationUnlockUpgrades)
           .filter(
-            (upgrade: CorporationUnlockUpgrade) =>
-              props.corp.unlockUpgrades[upgrade[0]] === 0,
+            (upgrade: CorporationUnlockUpgrade) => props.corp.unlockUpgrades[upgrade[0]] === 0,
           )
           .map((upgrade: CorporationUnlockUpgrade) => (
             <UnlockUpgrade

@@ -23,7 +23,6 @@ import { libSource } from "../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
-import { GetServerByHostname } from "../../Server/ServerHelpers";
 import {
   iTutorialNextStep,
   ITutorial,
@@ -287,7 +286,7 @@ export function Root(props: IProps): React.ReactElement {
   }, [code]);
 
   useEffect(() => {
-    function maybeSave(event: KeyboardEvent) {
+    function maybeSave(event: KeyboardEvent): void {
       if (Settings.DisableHotkeys) return;
       //Ctrl + b
       if (event.keyCode == 66 && (event.ctrlKey || event.metaKey)) {

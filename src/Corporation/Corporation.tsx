@@ -32,7 +32,6 @@ import { removeElementById } from "../../utils/uiHelpers/removeElementById";
 import React from "react";
 import ReactDOM from "react-dom";
 import { CorporationRoot } from "./ui/Root";
-import { CorporationRouting } from "./ui/Routing";
 
 import Decimal from "decimal.js";
 
@@ -40,7 +39,6 @@ interface IParams {
   name?: string;
 }
 
-let corpRouting: CorporationRouting;
 let companyManagementDiv: HTMLDivElement | null = null;
 
 export class Corporation {
@@ -483,22 +481,20 @@ export class Corporation {
     const game = document.getElementById("entire-game-container");
     if (game) game.appendChild(companyManagementDiv);
 
-    corpRouting = new CorporationRouting(this);
-
     this.rerender(player);
   }
 
   rerender(player: IPlayer): void {
-    if (companyManagementDiv == null || corpRouting == null) {
+    if (companyManagementDiv == null) {
       console.warn(
-        `Corporation.rerender() called when companyManagementDiv, corpRouting, or eventHandler is null`,
+        `Corporation.rerender() called when companyManagementDiv is null`,
       );
       return;
     }
     if (!routing.isOn(Page.Corporation)) return;
 
     ReactDOM.render(
-      <CorporationRoot corp={this} routing={corpRouting} player={player} />,
+      <CorporationRoot corp={this} player={player} />,
       companyManagementDiv,
     );
   }

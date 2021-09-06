@@ -9,8 +9,7 @@ interface IProps {
 }
 
 function randomize(char: string): string {
-  const randFrom = (str: string): string =>
-    str[Math.floor(Math.random() * str.length)];
+  const randFrom = (str: string): string => str[Math.floor(Math.random() * str.length)];
   const classes = [
     "abcdefghijklmnopqrstuvwxyz",
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",

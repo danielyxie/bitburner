@@ -25,7 +25,7 @@ export function NewIndustry(
 
   const cost = IndustryStartingCosts[industry];
   if (cost === undefined) {
-    throw new Error("Invalid industry: ${industry}");
+    throw new Error(`Invalid industry: '${industry}'`);
   }
   if (corporation.funds.lt(cost)) {
     throw new Error(

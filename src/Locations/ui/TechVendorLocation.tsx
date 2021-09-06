@@ -6,20 +6,14 @@
 import * as React from "react";
 
 import { Location } from "../Location";
-import {
-  createPurchaseServerPopup,
-  createUpgradeHomeCoresPopup,
-  purchaseTorRouter,
-} from "../LocationsHelpers";
+import { createPurchaseServerPopup } from "../LocationsHelpers";
 import { RamButton } from "./RamButton";
 import { TorButton } from "./TorButton";
 import { CoresButton } from "./CoresButton";
 
-import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getPurchaseServerCost } from "../../Server/ServerPurchases";
 
-import { StdButtonPurchased } from "../../ui/React/StdButtonPurchased";
 import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
 

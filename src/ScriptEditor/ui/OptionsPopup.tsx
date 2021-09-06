@@ -13,7 +13,7 @@ export function OptionsPopup(props: IProps): React.ReactElement {
   const [theme, setTheme] = useState(props.options.theme);
   const [insertSpaces, setInsertSpaces] = useState(props.options.insertSpaces);
 
-  function save() {
+  function save(): void {
     props.save({
       theme: theme,
       insertSpaces: insertSpaces,

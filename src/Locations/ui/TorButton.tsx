@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 
-import { Location } from "../Location";
-import {
-  createPurchaseServerPopup,
-  createUpgradeHomeCoresPopup,
-  purchaseTorRouter,
-} from "../LocationsHelpers";
+import { purchaseTorRouter } from "../LocationsHelpers";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { purchaseRamForHomeComputer } from "../../Server/ServerPurchases";
 
 import { StdButtonPurchased } from "../../ui/React/StdButtonPurchased";
 import { StdButton } from "../../ui/React/StdButton";

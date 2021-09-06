@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
-import {
-  Industries,
-  IndustryStartingCosts,
-  IndustryDescriptions,
-} from "../IndustryData";
-import { Industry } from "../Industry";
+import { Industries, IndustryDescriptions } from "../IndustryData";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
-import { CorporationRouting } from "./Routing";
 import { NewIndustry } from "../Actions";
 
 interface IProps {
   corp: ICorporation;
   popupId: string;
-  routing: CorporationRouting;
+  setDivisionName: (name: string) => void;
 }
 // Create a popup that lets the player create a new industry.
 // This is created when the player clicks the "Expand into new Industry" header tab
@@ -23,8 +17,7 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
   const allIndustries = Object.keys(Industries).sort();
   const possibleIndustries = allIndustries
     .filter(
-      (industryType: string) =>
-        props.corp.divisions.find(
+      (industryType: string) => props.corp.divisions.find(
           (division: IIndustry) => division.type === industryType,
         ) === undefined,
     )
@@ -43,7 +36,7 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
     }
 
     // Set routing to the new division so that the UI automatically switches to it
-    props.routing.routeTo(name);
+    props.setDivisionName(name);
 
     removePopup(props.popupId);
   }

@@ -97,7 +97,6 @@ import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import * as libarg from "arg";
 import React from "react";
-import ReactDOM from "react-dom";
 
 function postNetburnerText() {
   post("Bitburner v" + CONSTANTS.Version);
@@ -1166,8 +1165,7 @@ let Terminal = {
 
             const server = Player.getCurrentServer();
             if (
-              !server.scripts.some((script) =>
-                script.filename.startsWith(evaledDir),
+              !server.scripts.some((script) => script.filename.startsWith(evaledDir),
               ) &&
               !server.textFiles.some((file) => file.fn.startsWith(evaledDir))
             ) {

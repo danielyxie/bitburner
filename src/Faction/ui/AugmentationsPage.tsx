@@ -124,8 +124,7 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
   render(): React.ReactNode {
     const augs = this.getAugsSorted();
     const purchasable = augs.filter(
-      (aug: string) =>
-        aug === AugmentationNames.NeuroFluxGovernor ||
+      (aug: string) => aug === AugmentationNames.NeuroFluxGovernor ||
         (!this.props.p.augmentations.some((a) => a.name === aug) &&
           !this.props.p.queuedAugmentations.some((a) => a.name === aug)),
     );
@@ -142,8 +141,7 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
       );
     };
 
-    const augListElems = purchasable.map((aug) =>
-      purchaseableAugmentation(aug),
+    const augListElems = purchasable.map((aug) => purchaseableAugmentation(aug),
     );
 
     let ownedElem = <></>;
@@ -172,20 +170,17 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
           will enhance your abilities.
         </p>
         <StdButton
-          onClick={() =>
-            this.switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)
+          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)
           }
           text={"Sort by Cost"}
         />
         <StdButton
-          onClick={() =>
-            this.switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)
+          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)
           }
           text={"Sort by Reputation"}
         />
         <StdButton
-          onClick={() =>
-            this.switchSortOrder(PurchaseAugmentationsOrderSetting.Default)
+          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Default)
           }
           text={"Sort by Default Order"}
         />

@@ -3,8 +3,6 @@
  *
  * Constants for specific mechanics or features will NOT be here.
  */
-import { IMap } from "./types";
-
 export const CONSTANTS: {
   Version: string;
   _idleSpeed: number;

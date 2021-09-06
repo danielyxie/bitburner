@@ -130,8 +130,7 @@ export function initForeignServers(homeComputer: Server): void {
     server2.serversOnNetwork.push(server1.ip);
   };
 
-  const getRandomArrayItem = (arr: any[]): any =>
-    arr[Math.floor(Math.random() * arr.length)];
+  const getRandomArrayItem = (arr: any[]): any => arr[Math.floor(Math.random() * arr.length)];
 
   const linkNetworkLayers = (
     network1: Server[],
@@ -145,8 +144,7 @@ export function initForeignServers(homeComputer: Server): void {
   // Connect the first tier of servers to the player's home computer
   linkNetworkLayers(networkLayers[0], () => homeComputer);
   for (let i = 1; i < networkLayers.length; i++) {
-    linkNetworkLayers(networkLayers[i], () =>
-      getRandomArrayItem(networkLayers[i - 1]),
+    linkNetworkLayers(networkLayers[i], () => getRandomArrayItem(networkLayers[i - 1]),
     );
   }
 }

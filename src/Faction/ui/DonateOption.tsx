@@ -31,8 +31,6 @@ const inputStyleMarkup = {
   height: "26px",
 };
 
-const blockStyle = { display: "block" };
-
 export function DonateOption(props: IProps): React.ReactElement {
   const [donateAmt, setDonateAmt] = useState<number | null>(null);
   const digits = (CONSTANTS.DonateMoneyToRepDivisor + "").length - 1;

@@ -1,5 +1,6 @@
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { dialogBoxCreate } from "../utils/DialogBox";
+import { BaseServer } from "./Server/BaseServer";
 import {
   Generic_fromJSON,
   Generic_toJSON,
@@ -103,7 +104,7 @@ Reviver.constructors.TextFile = TextFile;
  * @returns The file object, or null if it couldn't find it.
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getTextFile(fn: string, server: any): TextFile | null {
+export function getTextFile(fn: string, server: BaseServer): TextFile | null {
   const filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
 
   for (const file of server.textFiles as TextFile[]) {
@@ -126,7 +127,7 @@ export function getTextFile(fn: string, server: any): TextFile | null {
 export function createTextFile(
   fn: string,
   txt: string,
-  server: any,
+  server: BaseServer,
 ): TextFile | undefined {
   if (getTextFile(fn, server) !== null) {
     // This should probably be a `throw`...

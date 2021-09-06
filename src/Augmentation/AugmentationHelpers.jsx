@@ -139,8 +139,7 @@ function initAugmentations() {
       "unpredictable results based on your circadian rhythm.",
   };
   Object.keys(randomBonuses.bonuses).forEach(
-    (key) =>
-      (UnstableCircadianModulatorParams[key] = randomBonuses.bonuses[key]),
+    (key) => (UnstableCircadianModulatorParams[key] = randomBonuses.bonuses[key]),
   );
   const UnstableCircadianModulator = new Augmentation(
     UnstableCircadianModulatorParams,

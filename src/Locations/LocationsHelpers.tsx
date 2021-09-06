@@ -11,7 +11,6 @@ import { AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
 import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
 import {
   getPurchaseServerCost,
-  purchaseRamForHomeComputer,
   purchaseServer,
 } from "../Server/ServerPurchases";
 import { SpecialServerIps } from "../Server/SpecialServerIps";

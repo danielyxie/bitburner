@@ -33,8 +33,7 @@ export function GangMemberList(props: IProps): React.ReactElement {
   }
 
   const members = props.gang.members.filter(
-    (member: GangMember) =>
-      member.name.indexOf(filter) > -1 || member.task.indexOf(filter) > -1,
+    (member: GangMember) => member.name.indexOf(filter) > -1 || member.task.indexOf(filter) > -1,
   );
 
   return (

@@ -4,7 +4,6 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { CorporationConstants } from "../data/Constants";
 import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";
 import { NewCity } from "../Actions";
 

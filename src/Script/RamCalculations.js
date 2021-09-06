@@ -125,8 +125,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
     // are those that start with __SPECIAL_INITIAL_MODULE__.
     let ram = RamCostConstants.ScriptBaseRamCost;
-    const unresolvedRefs = Object.keys(dependencyMap).filter((s) =>
-      s.startsWith(initialModule),
+    const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule),
     );
     const resolvedRefs = new Set();
     while (unresolvedRefs.length > 0) {
@@ -148,8 +147,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
       if (ref.endsWith(".*")) {
         // A prefix reference. We need to find all matching identifiers.
         const prefix = ref.slice(0, ref.length - 2);
-        for (let ident of Object.keys(dependencyMap).filter((k) =>
-          k.startsWith(prefix),
+        for (let ident of Object.keys(dependencyMap).filter((k) => k.startsWith(prefix),
         )) {
           for (let dep of dependencyMap[ident] || []) {
             if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
