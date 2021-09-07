@@ -137,6 +137,7 @@
     "lint": "npm run lint:jsts & npm run lint:style",
     "lint:jsts": "eslint --fix . --ext js,jsx,ts,tsx",
     "lint:style": "stylelint --fix ./css/*",
+    "typescript": "tsc --build",
     "preinstall": "node ./scripts/engines-check.js",
     "test": "jest",
     "test:watch": "jest --watch",
