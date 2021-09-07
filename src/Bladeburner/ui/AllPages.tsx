@@ -28,8 +28,8 @@ export function AllPages(props: IProps): React.ReactElement {
         onClick={() => setPage(props.name)}
         className={
           page !== props.name
-            ? "bladeburner-nav-button"
-            : "bladeburner-nav-button-inactive"
+            ? "bladeburner-nav-button noselect"
+            : "bladeburner-nav-button-inactive noselect"
         }
       >
         {props.name}
