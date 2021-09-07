@@ -41,6 +41,9 @@ export class Warehouse {
   // Whether Smart Supply is enabled for this Industry (the Industry that this Warehouse is for)
   smartSupplyEnabled = false;
 
+  // Decide if smart supply should use the materials already in the warehouse when deciding on the amount to buy.
+  smartSupplyUseLeftovers: { [key: string]: boolean | undefined } = {};
+
   // Stores the amount of product to be produced. Used for Smart Supply unlock.
   // The production tracked by smart supply is always based on the previous cycle,
   // so it will always trail the "true" production by 1 cycle
@@ -62,6 +65,20 @@ export class Warehouse {
       Robots: new Material({ name: "Robots" }),
       AICores: new Material({ name: "AI Cores" }),
       RealEstate: new Material({ name: "Real Estate" }),
+    };
+
+    this.smartSupplyUseLeftovers = {
+      Water: true,
+      Energy: true,
+      Food: true,
+      Plants: true,
+      Metal: true,
+      Hardware: true,
+      Chemicals: true,
+      Drugs: true,
+      Robots: true,
+      AICores: true,
+      RealEstate: true,
     };
 
     if (params.corp && params.industry) {

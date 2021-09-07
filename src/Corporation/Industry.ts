@@ -685,8 +685,9 @@ export class Industry implements IIndustry {
               }
             }
 
-            // Use the materials already in the warehouse.
+            // Use the materials already in the warehouse if the option is on.
             for (const matName in smartBuy) {
+              if (!warehouse.smartSupplyUseLeftovers[matName]) continue;
               const mat = warehouse.materials[matName];
               const buyAmt = smartBuy[matName];
               if (buyAmt === undefined)

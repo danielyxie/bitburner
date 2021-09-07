@@ -46,7 +46,6 @@ export function ExportPopup(props: IProps): React.ReactElement {
   function exportMaterial(): void {
     const industryName = industry;
     const cityName = city;
-    console.log(`${industryName}, ${cityName}, ${amt}`);
 
     // Sanitize amt
     let sanitizedAmt = amt.replace(/\s+/g, "");
@@ -66,7 +65,6 @@ export function ExportPopup(props: IProps): React.ReactElement {
       return;
     }
     const exportObj = { ind: industryName, city: cityName, amt: sanitizedAmt };
-    console.log(exportObj);
     props.mat.exp.push(exportObj);
     removePopup(props.popupId);
   }

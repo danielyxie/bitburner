@@ -15,6 +15,7 @@ import { SellMaterialPopup } from "./SellMaterialPopup";
 import { SellProductPopup } from "./SellProductPopup";
 import { PurchaseMaterialPopup } from "./PurchaseMaterialPopup";
 import { ProductMarketTaPopup } from "./ProductMarketTaPopup";
+import { SmartSupplyPopup } from "./SmartSupplyPopup";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
@@ -24,9 +25,9 @@ import { isString } from "../../../utils/helpers/isString";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { SetSmartSupply } from "../Actions";
 import { Money } from "../../ui/React/Money";
 import { MoneyCost } from "./MoneyCost";
+import { isRelevantMaterial } from "./Helpers";
 
 interface IProductProps {
   corp: ICorporation;
@@ -88,11 +89,23 @@ function ProductComponent(props: IProductProps): React.ReactElement {
       </>
     );
   } else if (product.sCost) {
-    sellButtonText = (
-      <>
-        {sellButtonText} @ <Money money={product.sCost} />
-      </>
-    );
+    if (isString(product.sCost)) {
+      const sCost = (product.sCost as string).replace(
+        /MP/g,
+        product.pCost + "",
+      );
+      sellButtonText = (
+        <>
+          {sellButtonText} @ <Money money={eval(sCost)} />
+        </>
+      );
+    } else {
+      sellButtonText = (
+        <>
+          {sellButtonText} @ <Money money={product.sCost} />
+        </>
+      );
+    }
   }
 
   function openSellProductPopup(): void {
@@ -473,25 +486,6 @@ interface IProps {
 }
 
 export function IndustryWarehouse(props: IProps): React.ReactElement {
-  // Returns a boolean indicating whether the given material is relevant for the
-  // current industry.
-  function isRelevantMaterial(matName: string, division: IIndustry): boolean {
-    // Materials that affect Production multiplier
-    const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate"];
-
-    if (Object.keys(division.reqMats).includes(matName)) {
-      return true;
-    }
-    if (division.prodMats.includes(matName)) {
-      return true;
-    }
-    if (prodMultiplierMats.includes(matName)) {
-      return true;
-    }
-
-    return false;
-  }
-
   function renderWarehouseUI(): React.ReactElement {
     if (props.warehouse === 0) return <></>;
     // General Storage information at the top
@@ -515,6 +509,18 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
       props.warehouse.updateSize(props.corp, props.division);
       props.corp.funds = props.corp.funds.minus(sizeUpgradeCost);
       props.corp.rerender(props.player);
+    }
+
+    function openSmartSupplyPopup(): void {
+      if (props.warehouse === 0) return;
+      const popupId = "cmpy-mgmt-smart-supply-popup";
+      createPopup(popupId, SmartSupplyPopup, {
+        division: props.division,
+        warehouse: props.warehouse,
+        corp: props.corp,
+        player: props.player,
+        popupId: popupId,
+      });
     }
 
     // Industry material Requirements
@@ -578,14 +584,6 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
       default:
         console.error(`Invalid state: ${props.division.state}`);
         break;
-    }
-
-    // Smart Supply Checkbox
-    const smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
-    function smartSupplyOnChange(e: React.ChangeEvent<HTMLInputElement>): void {
-      if (props.warehouse === 0) return;
-      SetSmartSupply(props.warehouse, e.target.checked);
-      props.corp.rerender(props.player);
     }
 
     // Create React components for materials
@@ -664,18 +662,11 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         <p>{stateText}</p>
 
         {props.corp.unlockUpgrades[1] && (
-          <div>
-            <label style={{ color: "white" }} htmlFor={smartSupplyCheckboxId}>
-              Enable Smart Supply
-            </label>
-            <input
-              type={"checkbox"}
-              id={smartSupplyCheckboxId}
-              onChange={smartSupplyOnChange}
-              style={{ margin: "3px" }}
-              checked={props.warehouse.smartSupplyEnabled}
-            />
-          </div>
+          <>
+            <button className="std-button" onClick={openSmartSupplyPopup}>
+              Configure Smart Supply
+            </button>
+          </>
         )}
 
         {mats}

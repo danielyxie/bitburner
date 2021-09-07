@@ -30,6 +30,7 @@ export const CorporationConstants: {
   EmployeeRaiseAmount: number;
   BaseMaxProducts: number;
   AllCorporationStates: string[];
+  AllMaterials: string[];
 } = {
   INITIALSHARES: 1e9, //Total number of shares you have at your company
   SHARESPERPRICEUPDATE: 1e6, //When selling large number of shares, price is dynamically updated for every batch of this amount
@@ -71,4 +72,17 @@ export const CorporationConstants: {
 
   BaseMaxProducts: 3, // Initial value for maximum number of products allowed
   AllCorporationStates: AllCorporationStates,
+  AllMaterials: [
+    "Water",
+    "Energy",
+    "Food",
+    "Plants",
+    "Metal",
+    "Hardware",
+    "Chemicals",
+    "Drugs",
+    "Robots",
+    "AI Cores",
+    "Real Estate",
+  ],
 };
