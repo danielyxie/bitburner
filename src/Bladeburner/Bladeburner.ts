@@ -7,6 +7,7 @@ import { IBladeburner } from "./IBladeburner";
 import { IActionIdentifier } from "./IActionIdentifier";
 import { ActionIdentifier } from "./ActionIdentifier";
 import { ActionTypes } from "./data/ActionTypes";
+import { Growths } from "./data/Growths";
 import { BlackOperations } from "./BlackOperations";
 import { BlackOperation } from "./BlackOperation";
 import { Operation } from "./Operation";
@@ -1857,7 +1858,6 @@ export class Bladeburner implements IBladeburner {
       rankGain: 0.3,
       hpLoss: 0.5,
       count: getRandomInt(25, 150),
-      countGrowth: getRandomInt(5, 75) / 10,
       weights: {
         hack: 0,
         str: 0.05,
@@ -1890,7 +1890,6 @@ export class Bladeburner implements IBladeburner {
       rankGain: 0.9,
       hpLoss: 1,
       count: getRandomInt(5, 150),
-      countGrowth: getRandomInt(5, 75) / 10,
       weights: {
         hack: 0,
         str: 0.15,
@@ -1923,7 +1922,6 @@ export class Bladeburner implements IBladeburner {
       rankGain: 0.6,
       hpLoss: 1,
       count: getRandomInt(5, 150),
-      countGrowth: getRandomInt(5, 75) / 10,
       weights: {
         hack: 0,
         str: 0.2,
@@ -1960,7 +1958,6 @@ export class Bladeburner implements IBladeburner {
       rankGain: 2.2,
       rankLoss: 0.2,
       count: getRandomInt(1, 100),
-      countGrowth: getRandomInt(10, 40) / 10,
       weights: {
         hack: 0.25,
         str: 0.05,
@@ -1996,7 +1993,6 @@ export class Bladeburner implements IBladeburner {
       rankLoss: 0.4,
       hpLoss: 2,
       count: getRandomInt(1, 100),
-      countGrowth: getRandomInt(10, 40) / 10,
       weights: {
         hack: 0.2,
         str: 0.05,
@@ -2030,7 +2026,6 @@ export class Bladeburner implements IBladeburner {
       rankLoss: 0.5,
       hpLoss: 2.5,
       count: getRandomInt(1, 150),
-      countGrowth: getRandomInt(3, 40) / 10,
       weights: {
         hack: 0.25,
         str: 0.05,
@@ -2065,7 +2060,6 @@ export class Bladeburner implements IBladeburner {
       rankLoss: 2.5,
       hpLoss: 50,
       count: getRandomInt(1, 150),
-      countGrowth: getRandomInt(2, 40) / 10,
       weights: {
         hack: 0.1,
         str: 0.2,
@@ -2100,7 +2094,6 @@ export class Bladeburner implements IBladeburner {
       rankLoss: 2,
       hpLoss: 10,
       count: getRandomInt(1, 150),
-      countGrowth: getRandomInt(1, 20) / 10,
       weights: {
         hack: 0.1,
         str: 0.1,
@@ -2136,7 +2129,6 @@ export class Bladeburner implements IBladeburner {
       rankLoss: 4,
       hpLoss: 5,
       count: getRandomInt(1, 150),
-      countGrowth: getRandomInt(1, 20) / 10,
       weights: {
         hack: 0.1,
         str: 0.1,
@@ -2211,14 +2203,28 @@ export class Bladeburner implements IBladeburner {
 
       // Count increase for contracts/operations
       for (const contract of Object.values(this.contracts) as Contract[]) {
+        let growthF = Growths[contract.name];
+        if (growthF === undefined)
+          throw new Error(
+            `growth formula for action '${contract.name}' is undefined`,
+          );
         contract.count +=
-          (seconds * contract.countGrowth) /
-          BladeburnerConstants.ActionCountGrowthPeriod;
+          (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
+        console.log(
+          (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod,
+        );
       }
       for (const op of Object.values(this.operations) as Operation[]) {
-        op.count +=
-          (seconds * op.countGrowth) /
-          BladeburnerConstants.ActionCountGrowthPeriod;
+        const growthF = Growths[op.name];
+        if (growthF === undefined)
+          throw new Error(
+            `growth formula for action '${op.name}' is undefined`,
+          );
+        if (growthF !== undefined) {
+          op.count +=
+            (seconds * growthF()) /
+            BladeburnerConstants.ActionCountGrowthPeriod;
+        }
       }
 
       // Chaos goes down very slowly

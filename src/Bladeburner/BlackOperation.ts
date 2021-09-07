@@ -9,7 +9,6 @@ export class BlackOperation extends Operation {
   constructor(params: IOperationParams | null = null) {
     super(params);
     this.count = 1;
-    this.countGrowth = 0;
   }
 
   // To be implemented by subtypes

@@ -40,7 +40,6 @@ export interface IActionParams {
   isStealth?: boolean;
   isKill?: boolean;
   count?: number;
-  countGrowth?: number;
   weights?: StatsMultiplier;
   decays?: StatsMultiplier;
   teamCount?: number;
@@ -78,7 +77,6 @@ export class Action implements IAction {
    * Growth rate is an integer and the count will increase by that integer every "cycle"
    */
   count: number = getRandomInt(1e3, 25e3);
-  countGrowth: number = getRandomInt(1, 5);
 
   // Weighting of each stat in determining action success rate
   weights: StatsMultiplier = {
@@ -122,7 +120,6 @@ export class Action implements IAction {
     if (params && params.isKill) this.isKill = params.isKill;
 
     if (params && params.count) this.count = params.count;
-    if (params && params.countGrowth) this.countGrowth = params.countGrowth;
 
     if (params && params.weights) this.weights = params.weights;
     if (params && params.decays) this.decays = params.decays;

@@ -48,7 +48,6 @@ export interface IAction {
    * Growth rate is an integer and the count will increase by that integer every "cycle"
    */
   count: number;
-  countGrowth: number;
 
   // Weighting of each stat in determining action success rate
   weights: IStatsMultiplier;

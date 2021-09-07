@@ -54,7 +54,10 @@ export function findCrime(roughName: string): Crime | null {
     return Crimes.GrandTheftAuto;
   } else if (roughName.includes("kidnap")) {
     return Crimes.Kidnap;
-  } else if (roughName.includes("assassinate")) {
+  } else if (
+    roughName.includes("assassinate") ||
+    roughName.includes("assassination")
+  ) {
     return Crimes.Assassination;
   } else if (roughName.includes("heist")) {
     return Crimes.Heist;
