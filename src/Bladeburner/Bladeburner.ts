@@ -2210,9 +2210,6 @@ export class Bladeburner implements IBladeburner {
           );
         contract.count +=
           (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
-        console.log(
-          (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod,
-        );
       }
       for (const op of Object.values(this.operations) as Operation[]) {
         const growthF = Growths[op.name];
