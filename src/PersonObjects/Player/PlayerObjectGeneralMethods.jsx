@@ -2886,8 +2886,7 @@ export function checkForFactionInvitations() {
     !bitrunnersFac.isBanned &&
     !bitrunnersFac.isMember &&
     bitrunnersServer.backdoorInstalled &&
-    !bitrunnersFac.alreadyInvited &&
-    homeComp.maxRam >= 128
+    !bitrunnersFac.alreadyInvited
   ) {
     invitedFactions.push(bitrunnersFac);
   }
@@ -2902,8 +2901,7 @@ export function checkForFactionInvitations() {
     !theblackhandFac.isBanned &&
     !theblackhandFac.isMember &&
     blackhandServer.backdoorInstalled &&
-    !theblackhandFac.alreadyInvited &&
-    homeComp.maxRam >= 64
+    !theblackhandFac.alreadyInvited
   ) {
     invitedFactions.push(theblackhandFac);
   }
@@ -2918,8 +2916,7 @@ export function checkForFactionInvitations() {
     !nitesecFac.isBanned &&
     !nitesecFac.isMember &&
     nitesecServer.backdoorInstalled &&
-    !nitesecFac.alreadyInvited &&
-    homeComp.maxRam >= 32
+    !nitesecFac.alreadyInvited
   ) {
     invitedFactions.push(nitesecFac);
   }
