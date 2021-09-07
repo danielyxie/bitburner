@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist-tsc/",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["es2016", "dom", "es2017.object", "es2019"],
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "strict": true
+  }
+}
