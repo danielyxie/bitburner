@@ -287,61 +287,113 @@ function AutoManagement(props: IProps): React.ReactElement {
         <strong>Unassigned Employees: {numUnassigned}</strong>
       </p>
       <br />
-
-      <p>Avg Employee Morale: {numeralWrapper.format(avgMorale, "0.000")}</p>
-      <p>
-        Avg Employee Happiness: {numeralWrapper.format(avgHappiness, "0.000")}
-      </p>
-      <p>Avg Employee Energy: {numeralWrapper.format(avgEnergy, "0.000")}</p>
-      <p>
-        Total Employee Salary: <Money money={totalSalary} />
-      </p>
-      {vechain && (
-        <>
-          <p className={"tooltip"} style={{ display: "inline-block" }}>
-            Material Production:{" "}
-            {numeralWrapper.format(
-              props.division.getOfficeProductivity(props.office),
-              "0.000",
-            )}
-            <span className={"tooltiptext"}>
-              The base amount of material this office can produce. Does not
-              include production multipliers from upgrades and materials. This
-              value is based off the productivity of your Operations,
-              Engineering, and Management employees
-            </span>
-          </p>
-          <br />
-          <p className={"tooltip"} style={{ display: "inline-block" }}>
-            Product Production:{" "}
-            {numeralWrapper.format(
-              props.division.getOfficeProductivity(props.office, {
-                forProduct: true,
-              }),
-              "0.000",
-            )}
-            <span className={"tooltiptext"}>
-              The base amount of any given Product this office can produce. Does
-              not include production multipliers from upgrades and materials.
-              This value is based off the productivity of your Operations,
-              Engineering, and Management employees
-            </span>
-          </p>
-          <br />
-          <p className={"tooltip"} style={{ display: "inline-block" }}>
-            Business Multiplier: x
-            {numeralWrapper.format(
-              props.division.getBusinessFactor(props.office),
-              "0.000",
-            )}
-            <span className={"tooltiptext"}>
-              The effect this office's 'Business' employees has on boosting
-              sales
-            </span>
-          </p>
-          <br />
-        </>
-      )}
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <p>Avg Employee Morale:</p>
+            </td>
+            <td>
+              <p>{numeralWrapper.format(avgMorale, "0.000")}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Avg Employee Happiness:</p>
+            </td>
+            <td>
+              <p>{numeralWrapper.format(avgHappiness, "0.000")}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Avg Employee Energy:</p>
+            </td>
+            <td>
+              <p>{numeralWrapper.format(avgEnergy, "0.000")}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Total Employee Salary:</p>
+            </td>
+            <td>
+              <p>
+                <Money money={totalSalary} />
+              </p>
+            </td>
+          </tr>
+          {vechain && (
+            <>
+              <tr>
+                <td>
+                  <p className={"tooltip"} style={{ display: "inline-block" }}>
+                    Material Production:
+                    <span className={"tooltiptext"}>
+                      The base amount of material this office can produce. Does
+                      not include production multipliers from upgrades and
+                      materials. This value is based off the productivity of
+                      your Operations, Engineering, and Management employees
+                    </span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    {numeralWrapper.format(
+                      props.division.getOfficeProductivity(props.office),
+                      "0.000",
+                    )}
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p className={"tooltip"} style={{ display: "inline-block" }}>
+                    Product Production:
+                    <span className={"tooltiptext"}>
+                      The base amount of any given Product this office can
+                      produce. Does not include production multipliers from
+                      upgrades and materials. This value is based off the
+                      productivity of your Operations, Engineering, and
+                      Management employees
+                    </span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    {numeralWrapper.format(
+                      props.division.getOfficeProductivity(props.office, {
+                        forProduct: true,
+                      }),
+                      "0.000",
+                    )}
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p className={"tooltip"} style={{ display: "inline-block" }}>
+                    Business Multiplier:
+                    <span className={"tooltiptext"}>
+                      The effect this office's 'Business' employees has on
+                      boosting sales
+                    </span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    x
+                    {numeralWrapper.format(
+                      props.division.getBusinessFactor(props.office),
+                      "0.000",
+                    )}
+                  </p>
+                </td>
+              </tr>
+            </>
+          )}
+        </tbody>
+      </table>
       <AutoAssignJob
         office={props.office}
         corp={props.corp}
@@ -506,6 +558,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         className={"std-button tooltip"}
         onClick={openUpgradeOfficeSizePopup}
         style={buttonStyle}
+        disabled={props.corp.funds.lt(0)}
       >
         Upgrade size
         <span className={"tooltiptext"}>
@@ -517,6 +570,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
           className={"std-button tooltip"}
           onClick={openThrowPartyPopup}
           style={buttonStyle}
+          disabled={props.corp.funds.lt(0)}
         >
           Throw Party
           <span className={"tooltiptext"}>

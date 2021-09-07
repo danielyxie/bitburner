@@ -1,10 +1,11 @@
 import React from "react";
 import { ResearchTree } from "./ResearchTree";
+import { ICorporation } from "./ICorporation";
 import {
   getBaseResearchTreeCopy,
   getProductIndustryResearchTreeCopy,
 } from "./data/BaseResearchTree";
-import { Money } from "../ui/React/Money";
+import { MoneyCost } from "./ui/MoneyCost";
 
 interface IIndustryMap<T> {
   [key: string]: T | undefined;
@@ -61,145 +62,161 @@ export const IndustryStartingCosts: IIndustryMap<number> = {
 };
 
 // Map of description for each industry
-export const IndustryDescriptions: IIndustryMap<JSX.Element> = {
-  Energy: (
+export const IndustryDescriptions: IIndustryMap<
+  (corp: ICorporation) => React.ReactElement
+> = {
+  Energy: (corp: ICorporation) => (
     <>
       Engage in the production and distribution of energy.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Energy} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Energy} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Utilities: (
+  Utilities: (corp: ICorporation) => (
     <>
       Distribute water and provide wastewater services.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Utilities} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Utilities} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Agriculture: (
+  Agriculture: (corp: ICorporation) => (
     <>
       Cultivate crops and breed livestock to produce food.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Agriculture} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Agriculture} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
   ),
-  Fishing: (
+  Fishing: (corp: ICorporation) => (
     <>
       Produce food through the breeding and processing of fish and fish
       products.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Fishing} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Fishing} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Mining: (
+  Mining: (corp: ICorporation) => (
     <>
       Extract and process metals from the earth.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Mining} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Mining} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Food: (
+  Food: (corp: ICorporation) => (
     <>
       Create your own restaurants all around the world.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Food} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Food} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
   ),
-  Tobacco: (
+  Tobacco: (corp: ICorporation) => (
     <>
       Create and distribute tobacco and tobacco-related products.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Tobacco} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Tobacco} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
   ),
-  Chemical: (
+  Chemical: (corp: ICorporation) => (
     <>
       Produce industrial chemicals.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Chemical} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Chemical} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Pharmaceutical: (
+  Pharmaceutical: (corp: ICorporation) => (
     <>
       Discover, develop, and create new pharmaceutical drugs.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Pharmaceutical} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Pharmaceutical} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Computer: (
+  Computer: (corp: ICorporation) => (
     <>
       Develop and manufacture new computer hardware and networking
       infrastructures.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Computer} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Computer} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Robotics: (
+  Robotics: (corp: ICorporation) => (
     <>
       Develop and create robots.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Robotics} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Robotics} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  Software: (
+  Software: (corp: ICorporation) => (
     <>
       Develop computer software and create AI Cores.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Software} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Software} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
   ),
-  Healthcare: (
+  Healthcare: (corp: ICorporation) => (
     <>
       Create and manage hospitals.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.Healthcare} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.Healthcare} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
-  RealEstate: (
+  RealEstate: (corp: ICorporation) => (
     <>
       Develop and manage real estate properties.
       <br />
       <br />
-      Starting cost: <Money money={IndustryStartingCosts.RealEstate} />
+      Starting cost:{" "}
+      <MoneyCost money={IndustryStartingCosts.RealEstate} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>

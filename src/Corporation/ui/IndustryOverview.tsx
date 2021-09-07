@@ -15,6 +15,7 @@ import { createPopup } from "../../ui/React/createPopup";
 import { Money } from "../../ui/React/Money";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { MoneyCost } from "./MoneyCost";
 
 interface IProps {
   corp: ICorporation;
@@ -104,6 +105,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         className={className}
         onClick={openMakeProductPopup}
         style={buttonStyle}
+        disabled={props.corp.funds.lt(0)}
       >
         {createProductButtonText}
         {hasMaxProducts && (
@@ -214,14 +216,43 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         {advertisingInfo}
         <br />
         <br />
-        Revenue: <Money money={props.division.lastCycleRevenue.toNumber()} /> /
-        s <br />
-        Expenses: <Money
-          money={props.division.lastCycleExpenses.toNumber()}
-        />{" "}
-        /s <br />
-        Profit: <Money money={profit} /> / s
-        <br /> <br />
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <p>Revenue: </p>
+              </td>
+              <td>
+                <p>
+                  <Money money={props.division.lastCycleRevenue.toNumber()} /> /
+                  s
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Expenses: </p>
+              </td>
+              <td>
+                <p>
+                  <Money money={props.division.lastCycleExpenses.toNumber()} />{" "}
+                  / s
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Profit: </p>
+              </td>
+              <td>
+                <p>
+                  <Money money={profit} /> / s
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br />
         <p className={"tooltip"}>
           Production Multiplier:{" "}
           {numeralWrapper.format(props.division.prodMult, "0.00")}
@@ -273,17 +304,14 @@ export function IndustryOverview(props: IProps): React.ReactElement {
       }
 
       function onClick(): void {
-        if (props.corp.funds.lt(cost)) {
-          dialogBoxCreate("Insufficient funds");
-        } else {
-          props.corp.funds = props.corp.funds.minus(cost);
-          props.division.upgrade(upgrade, {
-            corporation: props.corp,
-            office: props.office,
-          });
-          // corp.displayDivisionContent(division, city);
-          props.corp.rerender(props.player);
-        }
+        if (props.corp.funds.lt(cost)) return;
+        props.corp.funds = props.corp.funds.minus(cost);
+        props.division.upgrade(upgrade, {
+          corporation: props.corp,
+          office: props.office,
+        });
+        // corp.displayDivisionContent(division, city);
+        props.corp.rerender(props.player);
       }
 
       upgrades.push(
@@ -292,7 +320,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
           onClick: onClick,
           text: (
             <>
-              {upgrade[4]} - <Money money={cost} />
+              {upgrade[4]} - <MoneyCost money={cost} corp={props.corp} />
             </>
           ),
           tooltip: upgrade[5],

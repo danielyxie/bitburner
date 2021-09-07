@@ -6,6 +6,7 @@ import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { ICorporation } from "../ICorporation";
 import { NewCity } from "../Actions";
+import { MoneyCost } from "./MoneyCost";
 
 interface IProps {
   popupId: string;
@@ -36,10 +37,10 @@ export function ExpandNewCityPopup(props: IProps): React.ReactElement {
       <p>
         Would you like to expand into a new city by opening an office? This
         would cost{" "}
-        {numeralWrapper.format(
-          CorporationConstants.OfficeInitialCost,
-          "$0.000a",
-        )}
+        <MoneyCost
+          money={CorporationConstants.OfficeInitialCost}
+          corp={props.corp}
+        />
       </p>
       <select ref={dropdown} className="dropdown" style={{ margin: "5px" }}>
         {Object.keys(props.division.offices)
@@ -54,6 +55,7 @@ export function ExpandNewCityPopup(props: IProps): React.ReactElement {
         className="std-button"
         style={{ display: "inline-block" }}
         onClick={expand}
+        disabled={props.corp.funds.lt(0)}
       >
         Confirm
       </button>

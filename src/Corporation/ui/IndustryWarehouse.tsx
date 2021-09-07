@@ -25,6 +25,8 @@ import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { SetSmartSupply } from "../Actions";
+import { Money } from "../../ui/React/Money";
+import { MoneyCost } from "./MoneyCost";
 
 interface IProductProps {
   corp: ICorporation;
@@ -51,37 +53,46 @@ function ProductComponent(props: IProductProps): React.ReactElement {
   const totalGain = product.data[city][1] - product.data[city][2];
 
   // Sell button
-  let sellButtonText;
+  let sellButtonText: JSX.Element;
   if (product.sllman[city][0]) {
     if (isString(product.sllman[city][1])) {
-      sellButtonText = `Sell (${numeralWrapper.format(
-        product.data[city][2],
-        nfB,
-      )}/${product.sllman[city][1]})`;
+      sellButtonText = (
+        <>
+          Sell ({numeralWrapper.format(product.data[city][2], nfB)}/
+          {product.sllman[city][1]})
+        </>
+      );
     } else {
-      sellButtonText = `Sell (${numeralWrapper.format(
-        product.data[city][2],
-        nfB,
-      )}/${numeralWrapper.format(product.sllman[city][1], nfB)})`;
+      sellButtonText = (
+        <>
+          Sell ({numeralWrapper.format(product.data[city][2], nfB)}/
+          {numeralWrapper.format(product.sllman[city][1], nfB)})
+        </>
+      );
     }
   } else {
-    sellButtonText = "Sell (0.000/0.000)";
+    sellButtonText = <>Sell (0.000/0.000)</>;
   }
 
   if (product.marketTa2) {
-    sellButtonText +=
-      " @ " + numeralWrapper.formatMoney(product.marketTa2Price[city]);
+    sellButtonText = (
+      <>
+        {sellButtonText} @ <Money money={product.marketTa2Price[city]} />
+      </>
+    );
   } else if (product.marketTa1) {
     const markupLimit = product.rat / product.mku;
-    sellButtonText +=
-      " @ " + numeralWrapper.formatMoney(product.pCost + markupLimit);
+    sellButtonText = (
+      <>
+        {sellButtonText} @ <Money money={product.pCost + markupLimit} />
+      </>
+    );
   } else if (product.sCost) {
-    if (isString(product.sCost)) {
-      sellButtonText += " @ " + product.sCost;
-    } else {
-      sellButtonText +=
-        " @ " + numeralWrapper.formatMoney(product.sCost as number);
-    }
+    sellButtonText = (
+      <>
+        {sellButtonText} @ <Money money={product.sCost} />
+      </>
+    );
   }
 
   function openSellProductPopup(): void {
@@ -314,35 +325,53 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
   }
 
   // Sell material button
-  let sellButtonText;
+  let sellButtonText: JSX.Element;
   if (mat.sllman[0]) {
     if (isString(mat.sllman[1])) {
-      sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nfB)}/${
-        mat.sllman[1]
-      })`;
+      sellButtonText = (
+        <>
+          Sell ({numeralWrapper.format(mat.sll, nfB)}/{mat.sllman[1]})
+        </>
+      );
     } else {
-      sellButtonText = `Sell (${numeralWrapper.format(
-        mat.sll,
-        nfB,
-      )}/${numeralWrapper.format(mat.sllman[1] as number, nfB)})`;
+      sellButtonText = (
+        <>
+          Sell ({numeralWrapper.format(mat.sll, nfB)}/
+          {numeralWrapper.format(mat.sllman[1] as number, nfB)})
+        </>
+      );
     }
 
     if (mat.marketTa2) {
-      sellButtonText += " @ " + numeralWrapper.formatMoney(mat.marketTa2Price);
+      sellButtonText = (
+        <>
+          {sellButtonText} @ <Money money={mat.marketTa2Price} />
+        </>
+      );
     } else if (mat.marketTa1) {
-      sellButtonText +=
-        " @ " + numeralWrapper.formatMoney(mat.bCost + markupLimit);
+      sellButtonText = (
+        <>
+          {sellButtonText} @ <Money money={mat.bCost + markupLimit} />
+        </>
+      );
     } else if (mat.sCost) {
       if (isString(mat.sCost)) {
         const sCost = (mat.sCost as string).replace(/MP/g, mat.bCost + "");
-        sellButtonText += " @ " + numeralWrapper.formatMoney(eval(sCost));
+        sellButtonText = (
+          <>
+            {sellButtonText} @ <Money money={eval(sCost)} />
+          </>
+        );
       } else {
-        sellButtonText +=
-          " @ " + numeralWrapper.formatMoney(mat.sCost as number);
+        sellButtonText = (
+          <>
+            {sellButtonText} @ <Money money={mat.sCost} />
+          </>
+        );
       }
     }
   } else {
-    sellButtonText = "Sell (0.000/0.000)";
+    sellButtonText = <>Sell (0.000/0.000)</>;
   }
 
   function openSellMaterialPopup(): void {
@@ -617,7 +646,8 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
           className={upgradeWarehouseClass}
           onClick={upgradeWarehouseOnClick}
         >
-          Upgrade Warehouse Size - {numeralWrapper.formatMoney(sizeUpgradeCost)}
+          Upgrade Warehouse Size -{" "}
+          <MoneyCost money={sizeUpgradeCost} corp={props.corp} />
         </button>
 
         <p>{generalReqsText}. The exact requirements for production are:</p>
@@ -682,9 +712,10 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
           onClick={() => purchaseWarehouse(props.division, props.currentCity)}
         >
           Purchase Warehouse (
-          {numeralWrapper.formatMoney(
-            CorporationConstants.WarehouseInitialCost,
-          )}
+          <MoneyCost
+            money={CorporationConstants.WarehouseInitialCost}
+            corp={props.corp}
+          />
           )
         </button>
       </div>

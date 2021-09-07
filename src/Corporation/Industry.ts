@@ -582,11 +582,6 @@ export class Industry implements IIndustry {
 
         switch (this.state) {
           case "PURCHASE": {
-            let totalProdRatio = 0;
-            for (const reqMat of Object.values(this.reqMats)) {
-              if (reqMat === undefined) continue;
-              totalProdRatio += reqMat;
-            }
             /* Process purchase of materials */
             for (const matName in warehouse.materials) {
               if (!warehouse.materials.hasOwnProperty(matName)) continue;

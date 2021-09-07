@@ -580,6 +580,14 @@ class DevMenuComponent extends Component {
     }
   }
 
+  resetCorporationFunds() {
+    if (Player.corporation) {
+      Player.corporation.funds = Player.corporation.funds.minus(
+        Player.corporation.funds,
+      );
+    }
+  }
+
   addTonsCorporationCycles() {
     if (Player.corporation) {
       Player.corporation.storedCycles = tonsP;
@@ -1526,6 +1534,12 @@ class DevMenuComponent extends Component {
                         onClick={this.addTonsCorporationFunds}
                       >
                         Tons of funds
+                      </button>
+                      <button
+                        className="std-button"
+                        onClick={this.resetCorporationFunds}
+                      >
+                        Reset funds
                       </button>
                     </td>
                   </tr>

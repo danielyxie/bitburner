@@ -6,7 +6,7 @@ import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CorporationUpgrade } from "../data/CorporationUpgrades";
 import { LevelUpgrade } from "../Actions";
-import { Money } from "../../ui/React/Money";
+import { MoneyCost } from "./MoneyCost";
 
 interface IProps {
   upgrade: CorporationUpgrade;
@@ -24,11 +24,12 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
 
   const text = (
     <>
-      {data[4]} - <Money money={cost} />
+      {data[4]} - <MoneyCost money={cost} corp={props.corp} />
     </>
   );
   const tooltip = data[5];
   function onClick(): void {
+    if (props.corp.funds.lt(cost)) return;
     try {
       LevelUpgrade(props.corp, props.upgrade);
     } catch (err) {
