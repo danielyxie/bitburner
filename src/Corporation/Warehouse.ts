@@ -41,10 +41,6 @@ export class Warehouse {
   // Whether Smart Supply is enabled for this Industry (the Industry that this Warehouse is for)
   smartSupplyEnabled = false;
 
-  // Flag that indicates whether Smart Supply accounts for imports when calculating
-  // the amount fo purchase
-  smartSupplyConsiderExports = false;
-
   // Stores the amount of product to be produced. Used for Smart Supply unlock.
   // The production tracked by smart supply is always based on the previous cycle,
   // so it will always trail the "true" production by 1 cycle

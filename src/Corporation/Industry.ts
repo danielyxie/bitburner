@@ -581,52 +581,135 @@ export class Industry implements IIndustry {
         if (warehouse === 0) continue;
 
         switch (this.state) {
-          case "PURCHASE":
+          case "PURCHASE": {
+            let totalProdRatio = 0;
+            for (const reqMat of Object.values(this.reqMats)) {
+              if (reqMat === undefined) continue;
+              totalProdRatio += reqMat;
+            }
             /* Process purchase of materials */
             for (const matName in warehouse.materials) {
-              if (warehouse.materials.hasOwnProperty(matName)) {
-                (function (matName, ind) {
-                  const mat = warehouse.materials[matName];
-                  let buyAmt, maxAmt;
-                  if (
-                    warehouse.smartSupplyEnabled &&
-                    Object.keys(ind.reqMats).includes(matName)
-                  ) {
-                    //Smart supply tracker is stored as per second rate
-                    const reqMat = ind.reqMats[matName];
-                    if (reqMat === undefined)
-                      throw new Error(`reqMat "${matName}" is undefined`);
-                    mat.buy = reqMat * warehouse.smartSupplyStore;
-                    buyAmt =
-                      mat.buy *
-                      CorporationConstants.SecsPerMarketCycle *
-                      marketCycles;
-                  } else {
-                    buyAmt =
-                      mat.buy *
-                      CorporationConstants.SecsPerMarketCycle *
-                      marketCycles;
-                  }
-
-                  if (matName == "RealEstate") {
-                    maxAmt = buyAmt;
-                  } else {
-                    maxAmt = Math.floor(
-                      (warehouse.size - warehouse.sizeUsed) /
-                        MaterialSizes[matName],
-                    );
-                  }
-                  buyAmt = Math.min(buyAmt, maxAmt);
-                  if (buyAmt > 0) {
-                    mat.qty += buyAmt;
-                    expenses += buyAmt * mat.bCost;
-                  }
-                })(matName, this);
-                this.updateWarehouseSizeUsed(warehouse);
+              if (!warehouse.materials.hasOwnProperty(matName)) continue;
+              const mat = warehouse.materials[matName];
+              let buyAmt = 0;
+              let maxAmt = 0;
+              if (
+                warehouse.smartSupplyEnabled &&
+                Object.keys(this.reqMats).includes(matName)
+              ) {
+                continue;
               }
-            } //End process purchase of materials
-            break;
+              buyAmt =
+                mat.buy *
+                CorporationConstants.SecsPerMarketCycle *
+                marketCycles;
 
+              if (matName == "RealEstate") {
+                maxAmt = buyAmt;
+              } else {
+                maxAmt = Math.floor(
+                  (warehouse.size - warehouse.sizeUsed) /
+                    MaterialSizes[matName],
+                );
+              }
+              buyAmt = Math.min(buyAmt, maxAmt);
+              if (buyAmt > 0) {
+                mat.qty += buyAmt;
+                expenses += buyAmt * mat.bCost;
+              }
+              this.updateWarehouseSizeUsed(warehouse);
+            } //End process purchase of materials
+
+            // smart supply
+            const smartBuy: { [key: string]: number | undefined } = {};
+            for (const matName in warehouse.materials) {
+              if (!warehouse.materials.hasOwnProperty(matName)) continue;
+              if (
+                !warehouse.smartSupplyEnabled ||
+                !Object.keys(this.reqMats).includes(matName)
+              )
+                continue;
+              const mat = warehouse.materials[matName];
+
+              //Smart supply tracker is stored as per second rate
+              const reqMat = this.reqMats[matName];
+              if (reqMat === undefined)
+                throw new Error(`reqMat "${matName}" is undefined`);
+              mat.buy = reqMat * warehouse.smartSupplyStore;
+              let buyAmt =
+                mat.buy *
+                CorporationConstants.SecsPerMarketCycle *
+                marketCycles;
+              const maxAmt = Math.floor(
+                (warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName],
+              );
+              buyAmt = Math.min(buyAmt, maxAmt);
+              if (buyAmt > 0) smartBuy[matName] = buyAmt;
+            }
+
+            // Find which material were trying to create the least amount of product with.
+            let worseAmt = 1e99;
+            for (const matName in smartBuy) {
+              const buyAmt = smartBuy[matName];
+              if (buyAmt === undefined)
+                throw new Error(`Somehow smartbuy matname is undefined`);
+              const reqMat = this.reqMats[matName];
+              if (reqMat === undefined)
+                throw new Error(`reqMat "${matName}" is undefined`);
+              const amt = buyAmt / reqMat;
+              if (amt < worseAmt) worseAmt = amt;
+            }
+
+            // Align all the materials to the smallest amount.
+            for (const matName in smartBuy) {
+              const reqMat = this.reqMats[matName];
+              if (reqMat === undefined)
+                throw new Error(`reqMat "${matName}" is undefined`);
+              smartBuy[matName] = worseAmt * reqMat;
+            }
+
+            // Calculate the total size of all things were trying to buy
+            let totalSize = 0;
+            for (const matName in smartBuy) {
+              const buyAmt = smartBuy[matName];
+              if (buyAmt === undefined)
+                throw new Error(`Somehow smartbuy matname is undefined`);
+              totalSize += buyAmt * MaterialSizes[matName];
+            }
+
+            // Shrink to the size of available space.
+            const freeSpace = warehouse.size - warehouse.sizeUsed;
+            if (totalSize > freeSpace) {
+              for (const matName in smartBuy) {
+                const buyAmt = smartBuy[matName];
+                if (buyAmt === undefined)
+                  throw new Error(`Somehow smartbuy matname is undefined`);
+                smartBuy[matName] = Math.floor(
+                  (buyAmt * freeSpace) / totalSize,
+                );
+              }
+            }
+
+            // Use the materials already in the warehouse.
+            for (const matName in smartBuy) {
+              const mat = warehouse.materials[matName];
+              const buyAmt = smartBuy[matName];
+              if (buyAmt === undefined)
+                throw new Error(`Somehow smartbuy matname is undefined`);
+              smartBuy[matName] = Math.max(0, buyAmt - mat.qty);
+            }
+
+            // buy them
+            for (const matName in smartBuy) {
+              const mat = warehouse.materials[matName];
+              const buyAmt = smartBuy[matName];
+              if (buyAmt === undefined)
+                throw new Error(`Somehow smartbuy matname is undefined`);
+              mat.qty += buyAmt;
+              expenses += buyAmt * mat.bCost;
+            }
+            break;
+          }
           case "PRODUCTION":
             warehouse.smartSupplyStore = 0; //Reset smart supply amount
 
