@@ -11,14 +11,10 @@ import { MathComponent } from "mathjax-react";
 
 type IProps = {
   p: IPlayer;
+  rerender: () => void;
 };
 
 export function RamButton(props: IProps): React.ReactElement {
-  const setRerender = useState(false)[1];
-  function rerender(): void {
-    setRerender((old) => !old);
-  }
-
   const btnStyle = { display: "block" };
 
   const homeComputer = props.p.getHomeComputer();
@@ -32,7 +28,7 @@ export function RamButton(props: IProps): React.ReactElement {
 
   function buy(): void {
     purchaseRamForHomeComputer(props.p);
-    rerender();
+    props.rerender();
   }
 
   return (

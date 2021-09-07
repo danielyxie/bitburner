@@ -11,19 +11,15 @@ import { Money } from "../../ui/React/Money";
 
 type IProps = {
   p: IPlayer;
+  rerender: () => void;
 };
 
 export function TorButton(props: IProps): React.ReactElement {
-  const setRerender = useState(false)[1];
-  function rerender(): void {
-    setRerender((old) => !old);
-  }
-
   const btnStyle = { display: "block" };
 
   function buy(): void {
     purchaseTorRouter(props.p);
-    rerender();
+    props.rerender();
   }
 
   if (props.p.hasTorRouter()) {

@@ -3,7 +3,7 @@
  *
  * This subcomponent renders all of the buttons for purchasing things from tech vendors
  */
-import * as React from "react";
+import React, { useState } from "react";
 
 import { Location } from "../Location";
 import { createPurchaseServerPopup } from "../LocationsHelpers";
@@ -23,6 +23,10 @@ type IProps = {
 };
 
 export function TechVendorLocation(props: IProps): React.ReactElement {
+  const setRerender = useState(false)[1];
+  function rerender() {
+    setRerender((old) => !old);
+  }
   const btnStyle = { display: "block" };
 
   const purchaseServerButtons: React.ReactNode[] = [];
@@ -58,9 +62,9 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
         </i>
       </p>
       <br />
-      <TorButton p={props.p} />
-      <RamButton p={props.p} />
-      <CoresButton p={props.p} />
+      <TorButton p={props.p} rerender={rerender} />
+      <RamButton p={props.p} rerender={rerender} />
+      <CoresButton p={props.p} rerender={rerender} />
     </div>
   );
 }

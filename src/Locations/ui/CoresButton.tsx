@@ -9,14 +9,10 @@ import { MathComponent } from "mathjax-react";
 
 type IProps = {
   p: IPlayer;
+  rerender: () => void;
 };
 
 export function CoresButton(props: IProps): React.ReactElement {
-  const setRerender = useState(false)[1];
-  function rerender(): void {
-    setRerender((old) => !old);
-  }
-
   const btnStyle = { display: "block" };
 
   const homeComputer = props.p.getHomeComputer();
@@ -37,7 +33,7 @@ export function CoresButton(props: IProps): React.ReactElement {
     if (!props.p.canAfford(cost)) return;
     props.p.loseMoney(cost);
     homeComputer.cpuCores++;
-    rerender();
+    props.rerender();
   }
 
   return (
