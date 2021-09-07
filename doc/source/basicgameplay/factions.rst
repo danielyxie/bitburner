@@ -76,15 +76,15 @@ List of Factions and their Requirements
 +---------------------+----------------+-----------------------------------------+-------------------------------+
 | Hacking             | NiteSec        | * Install a backdoor on the avmnite-02h |                               |
 | Groups              |                |   server                                |                               |
-|                     |                | * Home Computer RAM of at least 32GB    |                               |
+|                     |                |                                         |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | The Black Hand | * Install a backdoor on the I.I.I.I     |                               |
 |                     |                |   server                                |                               |
-|                     |                | * Home Computer RAM of at least 64GB    |                               |
+|                     |                |                                         |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | Bitrunners     | * Install a backdoor on the run4theh111z|                               |
 |                     |                |   server                                |                               |
-|                     |                | * Home Computer RAM of at least 128GB   |                               |
+|                     |                |                                         |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
 | Megacorporations    | ECorp          | * Have 200k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |

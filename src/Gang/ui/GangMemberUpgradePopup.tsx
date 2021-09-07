@@ -13,6 +13,32 @@ import { GangMember } from "../GangMember";
 import { Gang } from "../Gang";
 import { UpgradeType } from "../data/upgrades";
 
+interface INextRevealProps {
+  gang: Gang;
+  upgrades: string[];
+  type: UpgradeType;
+  player: IPlayer;
+}
+
+function NextReveal(props: INextRevealProps): React.ReactElement {
+  const upgrades = Object.keys(GangMemberUpgrades)
+    .filter((upgName: string) => {
+      const upg = GangMemberUpgrades[upgName];
+      if (props.player.money.gt(props.gang.getUpgradeCost(upg))) return false;
+      if (upg.type !== props.type) return false;
+      if (props.upgrades.includes(upgName)) return false;
+      return true;
+    })
+    .map((upgName: string) => GangMemberUpgrades[upgName]);
+
+  if (upgrades.length === 0) return <></>;
+  return (
+    <p>
+      Next at <Money money={upgrades[0].cost} />
+    </p>
+  );
+}
+
 interface IPanelProps {
   member: GangMember;
   gang: Gang;
@@ -137,6 +163,12 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
       >
         <h2>Weapons</h2>
         {weaponUpgrades.map((upg) => upgradeButton(upg))}
+        <NextReveal
+          gang={props.gang}
+          type={UpgradeType.Weapon}
+          player={props.player}
+          upgrades={props.member.upgrades}
+        />
       </div>
       <div
         className="noselect"
@@ -144,6 +176,12 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
       >
         <h2>Armor</h2>
         {armorUpgrades.map((upg) => upgradeButton(upg))}
+        <NextReveal
+          gang={props.gang}
+          type={UpgradeType.Armor}
+          player={props.player}
+          upgrades={props.member.upgrades}
+        />
       </div>
       <div
         className="noselect"
@@ -151,6 +189,12 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
       >
         <h2>Vehicles</h2>
         {vehicleUpgrades.map((upg) => upgradeButton(upg))}
+        <NextReveal
+          gang={props.gang}
+          type={UpgradeType.Vehicle}
+          player={props.player}
+          upgrades={props.member.upgrades}
+        />
       </div>
       <div
         className="noselect"
@@ -158,6 +202,12 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
       >
         <h2>Rootkits</h2>
         {rootkitUpgrades.map((upg) => upgradeButton(upg, true))}
+        <NextReveal
+          gang={props.gang}
+          type={UpgradeType.Rootkit}
+          player={props.player}
+          upgrades={props.member.upgrades}
+        />
       </div>
       <div
         className="noselect"
@@ -165,6 +215,12 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
       >
         <h2>Augmentations</h2>
         {augUpgrades.map((upg) => upgradeButton(upg, true))}
+        <NextReveal
+          gang={props.gang}
+          type={UpgradeType.Augmentation}
+          player={props.player}
+          upgrades={props.member.upgrades}
+        />
       </div>
     </div>
   );

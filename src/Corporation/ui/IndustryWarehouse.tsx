@@ -155,14 +155,17 @@ function ProductComponent(props: IProductProps): React.ReactElement {
 
   // Unfinished Product
   if (!product.fin) {
-    if (hasUpgradeDashboard) {
-      return (
-        <div className={"cmpy-mgmt-warehouse-product-div"}>
-          <p>Designing {product.name}...</p>
-          <br />
-          <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
-          <br />
+    return (
+      <div className={"cmpy-mgmt-warehouse-product-div"}>
+        <p>
+          Designing {product.name} (req. Operations/Engineers in{" "}
+          {product.createCity})...
+        </p>
+        <br />
+        <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
+        <br />
 
+        {hasUpgradeDashboard && (
           <div>
             <button className={"std-button"} onClick={openSellProductPopup}>
               {sellButtonText}
@@ -189,17 +192,9 @@ function ProductComponent(props: IProductProps): React.ReactElement {
               </button>
             )}
           </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className={"cmpy-mgmt-warehouse-product-div"}>
-          <p>Designing {product.name}...</p>
-          <br />
-          <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
-        </div>
-      );
-    }
+        )}
+      </div>
+    );
   }
 
   return (
