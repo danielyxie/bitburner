@@ -39,7 +39,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
           <span
             className="tooltip"
             style={{
-              color: "blue",
+              color: "white",
               whiteSpace: "nowrap",
               margin: "0px",
               padding: "0px",
@@ -51,7 +51,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
             )}
           >
             <span className="tooltiptext">{props.city}</span>
-            {props.city[0]}
+            <b>{props.city[0]}</b>
           </span>
         );
       }

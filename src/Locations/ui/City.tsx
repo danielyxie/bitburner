@@ -25,7 +25,7 @@ export class LocationCity extends React.Component<IProps, any> {
             key={location}
             className="tooltip"
             style={{
-              color: "blue",
+              color: "white",
               whiteSpace: "nowrap",
               margin: "0px",
               padding: "0px",
@@ -33,7 +33,7 @@ export class LocationCity extends React.Component<IProps, any> {
             }}
             onClick={this.props.enterLocation.bind(this, location)}
           >
-            X
+            <b>X</b>
           </span>
         );
       return <span>*</span>;
