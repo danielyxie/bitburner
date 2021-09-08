@@ -4598,6 +4598,15 @@ function NetscriptFunctions(workerScript) {
 
       return faction.augmentations.slice();
     },
+    getAugmentationCost: function (name) {
+      updateDynamicRam(
+        "getAugmentationCost",
+        getRamCost("getAugmentationCost"),
+      );
+      checkSingularityAccess("getAugmentationCost", 3);
+      const aug = getAugmentation("getAugmentationCost", name);
+      return [aug.baseRepRequirement, aug.baseCost];
+    },
     getAugmentationPrereq: function (name) {
       updateDynamicRam(
         "getAugmentationPrereq",
@@ -4607,14 +4616,23 @@ function NetscriptFunctions(workerScript) {
       const aug = getAugmentation("getAugmentationPrereq", name);
       return aug.prereqs.slice();
     },
-    getAugmentationCost: function (name) {
+    getAugmentationPrice: function (name) {
       updateDynamicRam(
-        "getAugmentationCost",
-        getRamCost("getAugmentationCost"),
+        "getAugmentationPrice",
+        getRamCost("getAugmentationPrice"),
       );
-      checkSingularityAccess("getAugmentationCost", 3);
-      const aug = getAugmentation("getAugmentationCost", name);
-      return [aug.baseRepRequirement, aug.baseCost];
+      checkSingularityAccess("getAugmentationPrice", 3);
+      const aug = getAugmentation("getAugmentationPrice", name);
+      return aug.baseCost;
+    },
+    getAugmentationRepReq: function (name) {
+      updateDynamicRam(
+        "getAugmentationRepReq",
+        getRamCost("getAugmentationRepReq"),
+      );
+      checkSingularityAccess("getAugmentationRepReq", 3);
+      const aug = getAugmentation("getAugmentationRepReq", name);
+      return aug.baseRepRequirement;
     },
     getAugmentationStats: function (name) {
       updateDynamicRam(
