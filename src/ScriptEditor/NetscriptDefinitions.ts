@@ -146,8 +146,10 @@ export const libSource = `interface NS {
     getOwnedAugmentations(purchased: boolean): string[];
     getOwnedSourceFiles(): any; // complex type
     getAugmentationsFromFaction(facname: string): string[];
-    getAugmentationPrereq(name: string): string[];
     getAugmentationCost(name: string): number;
+    getAugmentationPrereq(name: string): string[];
+    getAugmentationPrice(name: string): number;
+    getAugmentationRepReq(name: string): number;
     getAugmentationStats(name: string): any; // complex type
     purchaseAugmentation(faction: string, name: string): boolean;
     softReset(cbScript: string): void;

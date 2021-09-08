@@ -55,8 +55,10 @@ The player has access to all of these functions while in BitNode-4. Completing B
     getOwnedAugmentations() <singularityfunctions/getOwnedAugmentations>
     getOwnedSourceFiles() <singularityfunctions/getOwnedSourceFiles>
     getAugmentationsFromFaction() <singularityfunctions/getAugmentationsFromFaction>
-    getAugmentationPrereq() <singularityfunctions/getAugmentationPrereq>
     getAugmentationCost() <singularityfunctions/getAugmentationCost>
+    getAugmentationPrereq() <singularityfunctions/getAugmentationPrereq>
+    getAugmentationPrice() <singularityfunctions/getAugmentationPrice>
+    getAugmentationRepReq() <singularityfunctions/getAugmentationRepReq>
     getAugmentationStats() <singularityfunctions/getAugmentationStats>
     purchaseAugmentation() <singularityfunctions/purchaseAugmentation>
     installAugmentations() <singularityfunctions/installAugmentations>
