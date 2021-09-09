@@ -15,6 +15,7 @@ interface IProps {
   corp: ICorporation;
   player: IPlayer;
   divisionName: string;
+  rerender: () => void;
 }
 
 export function MainPanel(props: IProps): React.ReactElement {
@@ -32,7 +33,13 @@ export function MainPanel(props: IProps): React.ReactElement {
   } else {
     return (
       <div id="cmpy-mgmt-panel">
-        <CityTabs division={division} corp={props.corp} city={CityName.Sector12} player={props.player} />
+        <CityTabs
+          rerender={props.rerender}
+          division={division}
+          corp={props.corp}
+          city={CityName.Sector12}
+          player={props.player}
+        />
       </div>
     );
   }

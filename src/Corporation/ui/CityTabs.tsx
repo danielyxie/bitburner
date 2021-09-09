@@ -47,6 +47,7 @@ interface IProps {
   division: IIndustry;
   corp: ICorporation;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function CityTabs(props: IProps): React.ReactElement {
@@ -72,6 +73,7 @@ export function CityTabs(props: IProps): React.ReactElement {
       )}
       <ExpandButton corp={props.corp} division={props.division} setCity={setCity} />
       <Industry
+        rerender={props.rerender}
         corp={props.corp}
         division={props.division}
         city={city}

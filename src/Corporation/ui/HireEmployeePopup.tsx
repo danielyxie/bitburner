@@ -16,6 +16,7 @@ interface INameEmployeeProps {
   popupId: string;
   employee: Employee;
   player: IPlayer;
+  rerender: () => void;
 }
 
 function NameEmployeePopup(props: INameEmployeeProps): React.ReactElement {
@@ -29,7 +30,7 @@ function NameEmployeePopup(props: INameEmployeeProps): React.ReactElement {
     }
     props.employee.name = name;
     props.office.employees.push(props.employee);
-    props.corp.rerender(props.player);
+    props.rerender();
     removePopup(props.popupId);
   }
 
@@ -65,12 +66,14 @@ interface IHireEmployeeProps {
   popupId: string;
   player: IPlayer;
   corp: ICorporation;
+  rerender: () => void;
 }
 
 function HireEmployeeButton(props: IHireEmployeeProps): React.ReactElement {
   function hire(): void {
     const popupId = "cmpy-mgmt-name-employee-popup";
     createPopup(popupId, NameEmployeePopup, {
+      rerender: props.rerender,
       office: props.office,
       corp: props.corp,
       popupId: popupId,
@@ -102,6 +105,7 @@ interface IProps {
   corp: ICorporation;
   popupId: string;
   player: IPlayer;
+  rerender: () => void;
 }
 
 // Create a popup that lets the player manage exports
@@ -150,6 +154,7 @@ export function HireEmployeePopup(props: IProps): React.ReactElement {
     <>
       <h1>Select one of the following candidates for hire:</h1>
       <HireEmployeeButton
+        rerender={props.rerender}
         employee={emp1}
         office={props.office}
         corp={props.corp}
@@ -157,6 +162,7 @@ export function HireEmployeePopup(props: IProps): React.ReactElement {
         player={props.player}
       />
       <HireEmployeeButton
+        rerender={props.rerender}
         employee={emp2}
         office={props.office}
         corp={props.corp}
@@ -164,6 +170,7 @@ export function HireEmployeePopup(props: IProps): React.ReactElement {
         player={props.player}
       />
       <HireEmployeeButton
+        rerender={props.rerender}
         employee={emp3}
         office={props.office}
         corp={props.corp}

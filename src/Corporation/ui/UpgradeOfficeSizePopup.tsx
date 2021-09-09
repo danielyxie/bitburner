@@ -12,6 +12,7 @@ interface IProps {
   corp: ICorporation;
   popupId: string;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
@@ -50,7 +51,7 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
       props.office.size += size;
       props.corp.funds = props.corp.funds.minus(cost);
       dialogBoxCreate("Office space increased! It can now hold " + props.office.size + " employees");
-      props.corp.rerender(props.player);
+      props.rerender();
     }
     removePopup(props.popupId);
   }

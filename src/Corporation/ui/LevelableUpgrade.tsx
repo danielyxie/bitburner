@@ -12,6 +12,7 @@ interface IProps {
   upgrade: CorporationUpgrade;
   corp: ICorporation;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function LevelableUpgrade(props: IProps): React.ReactElement {
@@ -35,7 +36,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
     } catch (err) {
       dialogBoxCreate(err + "");
     }
-    props.corp.rerender(props.player);
+    props.rerender();
   }
 
   return (

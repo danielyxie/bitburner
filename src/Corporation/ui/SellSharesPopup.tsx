@@ -10,6 +10,7 @@ interface IProps {
   corp: ICorporation;
   player: IPlayer;
   popupId: string;
+  rerender: () => void;
 }
 
 // Create a popup that lets the player sell Corporation shares
@@ -75,7 +76,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
           `as a result of dilution.`,
       );
 
-      props.corp.rerender(props.player);
+      props.rerender();
     }
   }
 

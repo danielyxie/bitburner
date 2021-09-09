@@ -18,6 +18,7 @@ interface IProps {
   warehouse: Warehouse | 0;
   office: OfficeSpace;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function Industry(props: IProps): React.ReactElement {
@@ -25,16 +26,24 @@ export function Industry(props: IProps): React.ReactElement {
     <div>
       <div className={"cmpy-mgmt-industry-left-panel"}>
         <IndustryOverview
+          rerender={props.rerender}
           player={props.player}
           corp={props.corp}
           division={props.division}
           currentCity={props.city}
           office={props.office}
         />
-        <IndustryOffice player={props.player} corp={props.corp} division={props.division} office={props.office} />
+        <IndustryOffice
+          rerender={props.rerender}
+          player={props.player}
+          corp={props.corp}
+          division={props.division}
+          office={props.office}
+        />
       </div>
       <div className={"cmpy-mgmt-industry-right-panel"}>
         <IndustryWarehouse
+          rerender={props.rerender}
           player={props.player}
           corp={props.corp}
           currentCity={props.city}

@@ -21,6 +21,7 @@ import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/Faction
 import { FactionList } from "./Faction/ui/FactionList";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
+import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
   getHackingWorkRepGain,
@@ -188,6 +189,7 @@ const Engine = {
     stockMarketContent: null,
     gangContent: null,
     bladeburnerContent: null,
+    corporationContent: null,
     locationContent: null,
     workInProgressContent: null,
     redPillContent: null,
@@ -409,7 +411,8 @@ const Engine = {
     if (!(Player.corporation instanceof Corporation)) return;
     Engine.hideAllContent();
     routing.navigateTo(Page.Corporation);
-    Player.corporation.createUI(Player);
+    Engine.Display.corporationContent.style.display = "block";
+    ReactDOM.render(<CorporationRoot corp={Player.corporation} player={Player} />, Engine.Display.corporationContent);
   },
 
   loadBladeburnerContent: function () {
@@ -483,15 +486,14 @@ const Engine = {
     Engine.Display.bladeburnerContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.bladeburnerContent);
 
+    Engine.Display.corporationContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.corporationContent);
+
     Engine.Display.workInProgressContent.style.display = "none";
     Engine.Display.redPillContent.style.display = "none";
     Engine.Display.cinematicTextContent.style.display = "none";
     Engine.Display.stockMarketContent.style.display = "none";
     Engine.Display.missionContent.style.display = "none";
-
-    if (Player.corporation instanceof Corporation) {
-      Player.corporation.clearUI(Player);
-    }
 
     clearResleevesPage();
     clearSleevesPage();
@@ -1249,6 +1251,9 @@ const Engine = {
 
     Engine.Display.bladeburnerContent = document.getElementById("bladeburner-container");
     Engine.Display.bladeburnerContent.style.display = "none";
+
+    Engine.Display.corporationContent = document.getElementById("corporation-container");
+    Engine.Display.corporationContent.style.display = "none";
 
     Engine.Display.missionContent = document.getElementById("mission-container");
     Engine.Display.missionContent.style.display = "none";

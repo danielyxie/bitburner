@@ -12,6 +12,7 @@ interface IProps {
   upgradeData: CorporationUnlockUpgrade;
   corp: ICorporation;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function UnlockUpgrade(props: IProps): React.ReactElement {
@@ -29,7 +30,7 @@ export function UnlockUpgrade(props: IProps): React.ReactElement {
     } catch (err) {
       dialogBoxCreate(err + "");
     }
-    props.corp.rerender(props.player);
+    props.rerender();
   }
 
   return (

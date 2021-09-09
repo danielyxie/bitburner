@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { createElement } from "../../../utils/uiHelpers/createElement";
 import { removePopup } from "../../ui/React/createPopup";
 import { IndustryResearchTrees } from "../IndustryData";
 import { CorporationConstants } from "../data/Constants";

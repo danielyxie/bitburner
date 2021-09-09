@@ -36,6 +36,7 @@ interface IProductProps {
   city: string;
   product: Product;
   player: IPlayer;
+  rerender: () => void;
 }
 
 // Creates the UI for a single Product type
@@ -132,6 +133,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
   function openDiscontinueProductPopup(): void {
     const popupId = "cmpy-mgmt-discontinue-product-popup";
     createPopup(popupId, DiscontinueProductPopup, {
+      rerender: props.rerender,
       product: product,
       industry: division,
       corp: props.corp,
@@ -251,6 +253,7 @@ interface IMaterialProps {
   warehouse: Warehouse;
   city: string;
   mat: Material;
+  rerender: () => void;
 }
 
 // Creates the UI for a single Material type
@@ -444,6 +447,7 @@ interface IProps {
   warehouse: Warehouse | 0;
   currentCity: string;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function IndustryWarehouse(props: IProps): React.ReactElement {
@@ -465,7 +469,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
       ++props.warehouse.level;
       props.warehouse.updateSize(props.corp, props.division);
       props.corp.funds = props.corp.funds.minus(sizeUpgradeCost);
-      props.corp.rerender(props.player);
+      props.rerender();
     }
 
     function openSmartSupplyPopup(): void {
@@ -523,6 +527,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         if (isRelevantMaterial(matName, props.division)) {
           mats.push(
             <MaterialComponent
+              rerender={props.rerender}
               city={props.currentCity}
               corp={props.corp}
               division={props.division}
@@ -543,6 +548,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         if (product instanceof Product) {
           products.push(
             <ProductComponent
+              rerender={props.rerender}
               player={props.player}
               city={props.currentCity}
               corp={props.corp}
@@ -607,7 +613,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         size: CorporationConstants.WarehouseInitialSize,
       });
       props.corp.funds = props.corp.funds.minus(CorporationConstants.WarehouseInitialCost);
-      props.corp.rerender(props.player);
+      props.rerender();
     }
   }
 

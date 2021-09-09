@@ -23,6 +23,7 @@ interface IProps {
   division: IIndustry;
   office: OfficeSpace;
   player: IPlayer;
+  rerender: () => void;
 }
 
 function countEmployee(employees: Employee[], job: string): number {
@@ -87,7 +88,7 @@ function ManualManagement(props: IProps): React.ReactElement {
       }
     }
 
-    props.corp.rerender(props.player);
+    props.rerender();
   }
 
   // Employee Positions Selector
@@ -110,7 +111,7 @@ function ManualManagement(props: IProps): React.ReactElement {
     if (employee === null) return;
     const pos = getSelectText(e.target);
     employee.pos = pos;
-    props.corp.rerender(props.player);
+    props.rerender();
   }
 
   // Numeraljs formatter
@@ -168,6 +169,7 @@ interface IAutoAssignProps {
   player: IPlayer;
   job: string;
   desc: string;
+  rerender: () => void;
 }
 
 function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
@@ -181,13 +183,13 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
 
     props.office.assignEmployeeToJob(props.job);
     props.office.calculateEmployeeProductivity(props.corp, props.division);
-    props.corp.rerender(props.player);
+    props.rerender();
   }
 
   function unassignEmployee(): void {
     props.office.unassignEmployeeFromJob(props.job);
     props.office.calculateEmployeeProductivity(props.corp, props.division);
-    props.corp.rerender(props.player);
+    props.rerender();
   }
   const positionHeaderStyle = {
     fontSize: "15px",
@@ -335,6 +337,7 @@ function AutoManagement(props: IProps): React.ReactElement {
         </tbody>
       </table>
       <AutoAssignJob
+        rerender={props.rerender}
         office={props.office}
         corp={props.corp}
         division={props.division}
@@ -344,6 +347,7 @@ function AutoManagement(props: IProps): React.ReactElement {
       />
 
       <AutoAssignJob
+        rerender={props.rerender}
         office={props.office}
         corp={props.corp}
         division={props.division}
@@ -355,6 +359,7 @@ function AutoManagement(props: IProps): React.ReactElement {
       />
 
       <AutoAssignJob
+        rerender={props.rerender}
         office={props.office}
         corp={props.corp}
         division={props.division}
@@ -364,6 +369,7 @@ function AutoManagement(props: IProps): React.ReactElement {
       />
 
       <AutoAssignJob
+        rerender={props.rerender}
         office={props.office}
         corp={props.corp}
         division={props.division}
@@ -375,6 +381,7 @@ function AutoManagement(props: IProps): React.ReactElement {
       />
 
       <AutoAssignJob
+        rerender={props.rerender}
         office={props.office}
         corp={props.corp}
         division={props.division}
@@ -384,6 +391,7 @@ function AutoManagement(props: IProps): React.ReactElement {
       />
 
       <AutoAssignJob
+        rerender={props.rerender}
         office={props.office}
         corp={props.corp}
         division={props.division}
@@ -418,6 +426,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
   function openHireEmployeePopup(): void {
     const popupId = "cmpy-mgmt-hire-employee-popup";
     createPopup(popupId, HireEmployeePopup, {
+      rerender: props.rerender,
       office: props.office,
       corp: props.corp,
       popupId: popupId,
@@ -435,12 +444,13 @@ export function IndustryOffice(props: IProps): React.ReactElement {
   function autohireEmployeeButtonOnClick(): void {
     if (props.office.atCapacity()) return;
     props.office.hireRandomEmployee();
-    props.corp.rerender(props.player);
+    props.rerender();
   }
 
   function openUpgradeOfficeSizePopup(): void {
     const popupId = "cmpy-mgmt-upgrade-office-size-popup";
     createPopup(popupId, UpgradeOfficeSizePopup, {
+      rerender: props.rerender,
       office: props.office,
       corp: props.corp,
       popupId: popupId,
@@ -505,9 +515,21 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         <SwitchButton manualMode={employeeManualAssignMode} switchMode={setEmployeeManualAssignMode} />
       </div>
       {employeeManualAssignMode ? (
-        <ManualManagement corp={props.corp} division={props.division} office={props.office} player={props.player} />
+        <ManualManagement
+          rerender={props.rerender}
+          corp={props.corp}
+          division={props.division}
+          office={props.office}
+          player={props.player}
+        />
       ) : (
-        <AutoManagement corp={props.corp} division={props.division} office={props.office} player={props.player} />
+        <AutoManagement
+          rerender={props.rerender}
+          corp={props.corp}
+          division={props.division}
+          office={props.office}
+          player={props.player}
+        />
       )}
     </div>
   );

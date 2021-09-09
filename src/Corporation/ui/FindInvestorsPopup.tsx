@@ -9,6 +9,7 @@ interface IProps {
   corp: ICorporation;
   popupId: string;
   player: IPlayer;
+  rerender: () => void;
 }
 
 // Create a popup that lets the player manage exports
@@ -43,7 +44,7 @@ export function FindInvestorsPopup(props: IProps): React.ReactElement {
     props.corp.fundingRound++;
     props.corp.addFunds(funding);
     props.corp.numShares -= investShares;
-    props.corp.rerender(props.player);
+    props.rerender();
     removePopup(props.popupId);
   }
   return (

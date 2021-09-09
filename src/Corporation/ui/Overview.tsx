@@ -25,6 +25,7 @@ import { ICorporation } from "../ICorporation";
 interface IProps {
   corp: ICorporation;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function Overview(props: IProps): React.ReactElement {
@@ -128,6 +129,7 @@ export function Overview(props: IProps): React.ReactElement {
   function openFindInvestorsPopup(): void {
     const popupId = "cmpy-mgmt-find-investors-popup";
     createPopup(popupId, FindInvestorsPopup, {
+      rerender: props.rerender,
       player: props.player,
       popupId: popupId,
       corp: props.corp,
@@ -137,6 +139,7 @@ export function Overview(props: IProps): React.ReactElement {
   function openGoPublicPopup(): void {
     const popupId = "cmpy-mgmt-go-public-popup";
     createPopup(popupId, GoPublicPopup, {
+      rerender: props.rerender,
       player: props.player,
       popupId: popupId,
       corp: props.corp,
@@ -182,12 +185,14 @@ export function Overview(props: IProps): React.ReactElement {
       corp: props.corp,
       player: props.player,
       popupId: popupId,
+      rerender: props.rerender,
     });
   }
 
   function openBuybackSharesPopup(): void {
     const popupId = "corp-buyback-shares-popup";
     createPopup(popupId, BuybackSharesPopup, {
+      rerender: props.rerender,
       player: props.player,
       popupId: popupId,
       corp: props.corp,
@@ -277,14 +282,26 @@ export function Overview(props: IProps): React.ReactElement {
         {Object.values(CorporationUnlockUpgrades)
           .filter((upgrade: CorporationUnlockUpgrade) => props.corp.unlockUpgrades[upgrade[0]] === 0)
           .map((upgrade: CorporationUnlockUpgrade) => (
-            <UnlockUpgrade player={props.player} corp={props.corp} upgradeData={upgrade} key={upgrade[0]} />
+            <UnlockUpgrade
+              rerender={props.rerender}
+              player={props.player}
+              corp={props.corp}
+              upgradeData={upgrade}
+              key={upgrade[0]}
+            />
           ))}
 
         <h1 className={"cmpy-mgmt-upgrade-header"}> Upgrades </h1>
         {props.corp.upgrades
           .map((level: number, i: number) => CorporationUpgrades[i])
           .map((upgrade: CorporationUpgrade) => (
-            <LevelableUpgrade player={props.player} corp={props.corp} upgrade={upgrade} key={upgrade[0]} />
+            <LevelableUpgrade
+              rerender={props.rerender}
+              player={props.player}
+              corp={props.corp}
+              upgrade={upgrade}
+              key={upgrade[0]}
+            />
           ))}
       </div>
     );

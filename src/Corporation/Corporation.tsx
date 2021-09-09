@@ -10,26 +10,17 @@ import { showLiterature } from "../Literature/LiteratureHelpers";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
-import { Page, routing } from "../ui/navigationTracking";
-
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
-import { createElement } from "../../utils/uiHelpers/createElement";
 import { isString } from "../../utils/helpers/isString";
-import { removeElementById } from "../../utils/uiHelpers/removeElementById";
 
 // UI Related Imports
-import React from "react";
-import ReactDOM from "react-dom";
-import { CorporationRoot } from "./ui/Root";
 
 import Decimal from "decimal.js";
 
 interface IParams {
   name?: string;
 }
-
-let companyManagementDiv: HTMLDivElement | null = null;
 
 export class Corporation {
   name = "The Corporation";
@@ -155,8 +146,6 @@ export class Corporation {
       }
 
       this.state.nextState();
-
-      if (routing.isOn(Page.Corporation)) this.rerender(player);
     }
   }
 
@@ -426,39 +415,6 @@ export class Corporation {
     }
     showLiterature(handbookFn);
     return;
-  }
-
-  createUI(player: IPlayer): void {
-    companyManagementDiv = createElement("div", {
-      id: "cmpy-mgmt-container",
-      position: "fixed",
-      class: "generic-menupage-container",
-    }) as HTMLDivElement;
-    const game = document.getElementById("entire-game-container");
-    if (game) game.appendChild(companyManagementDiv);
-
-    this.rerender(player);
-  }
-
-  rerender(player: IPlayer): void {
-    if (companyManagementDiv == null) {
-      console.warn(`Corporation.rerender() called when companyManagementDiv is null`);
-      return;
-    }
-    if (!routing.isOn(Page.Corporation)) return;
-
-    ReactDOM.render(<CorporationRoot corp={this} player={player} />, companyManagementDiv);
-  }
-
-  clearUI(): void {
-    if (companyManagementDiv instanceof HTMLElement) {
-      ReactDOM.unmountComponentAtNode(companyManagementDiv);
-      removeElementById(companyManagementDiv.id);
-    }
-
-    companyManagementDiv = null;
-    const character = document.getElementById("character-overview-wrapper");
-    if (character) character.style.visibility = "visible";
   }
 
   /**

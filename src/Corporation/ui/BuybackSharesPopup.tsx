@@ -9,6 +9,7 @@ interface IProps {
   player: IPlayer;
   popupId: string;
   corp: ICorporation;
+  rerender: () => void;
 }
 
 // Create a popup that lets the player buyback shares
@@ -53,7 +54,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
       props.corp.issuedShares -= shares;
       props.player.loseMoney(shares * buybackPrice);
       removePopup(props.popupId);
-      props.corp.rerender(props.player);
+      props.rerender();
     }
   }
 

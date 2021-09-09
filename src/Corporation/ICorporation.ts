@@ -54,8 +54,5 @@ export interface ICorporation {
   getSalesMultiplier(): number;
   getScientificResearchMultiplier(): number;
   getStarterGuide(player: IPlayer): void;
-  createUI(player: IPlayer): void;
-  rerender(player: IPlayer): void;
-  clearUI(): void;
   toJSON(): any;
 }

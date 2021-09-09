@@ -23,6 +23,7 @@ interface IProps {
   division: IIndustry;
   office: OfficeSpace;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function IndustryOverview(props: IProps): React.ReactElement {
@@ -281,8 +282,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
           corporation: props.corp,
           office: props.office,
         });
-        // corp.displayDivisionContent(division, city);
-        props.corp.rerender(props.player);
+        props.rerender();
       }
 
       upgrades.push(

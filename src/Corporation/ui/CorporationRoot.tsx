@@ -1,7 +1,7 @@
 // React Components for the Corporation UI's navigation tabs
 // These are the tabs at the top of the UI that let you switch to different
 // divisions, see an overview of your corporation, or create a new industry
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HeaderTab } from "./HeaderTab";
 import { IIndustry } from "../IIndustry";
 import { NewIndustryPopup } from "./NewIndustryPopup";
@@ -42,8 +42,17 @@ interface IProps {
   player: IPlayer;
 }
 
-export function HeaderTabs(props: IProps): React.ReactElement {
+export function CorporationRoot(props: IProps): React.ReactElement {
+  const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
   const [divisionName, setDivisionName] = useState("Overview");
+
+  useEffect(() => {
+    const id = setInterval(rerender, 150);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <>
@@ -64,7 +73,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
         ))}
         <ExpandButton corp={props.corp} setDivisionName={setDivisionName} />
       </div>
-      <MainPanel corp={props.corp} divisionName={divisionName} player={props.player} />
+      <MainPanel rerender={rerender} corp={props.corp} divisionName={divisionName} player={props.player} />
     </>
   );
 }

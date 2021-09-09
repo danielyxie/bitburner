@@ -11,6 +11,7 @@ interface IProps {
   corp: ICorporation;
   popupId: string;
   player: IPlayer;
+  rerender: () => void;
 }
 
 // Create a popup that lets the player discontinue a product
@@ -18,7 +19,7 @@ export function DiscontinueProductPopup(props: IProps): React.ReactElement {
   function discontinue(): void {
     props.industry.discontinueProduct(props.product);
     removePopup(props.popupId);
-    props.corp.rerender(props.player);
+    props.rerender();
   }
 
   return (

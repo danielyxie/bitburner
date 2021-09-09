@@ -9,6 +9,7 @@ interface IProps {
   corp: ICorporation;
   popupId: string;
   player: IPlayer;
+  rerender: () => void;
 }
 
 // Create a popup that lets the player manage exports
@@ -32,7 +33,7 @@ export function GoPublicPopup(props: IProps): React.ReactElement {
     props.corp.issuedShares = numShares;
     props.corp.numShares -= numShares;
     props.corp.addFunds(numShares * initialSharePrice);
-    props.corp.rerender(props.player);
+    props.rerender();
     dialogBoxCreate(
       `You took your ${props.corp.name} public and earned ` +
         `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`,
