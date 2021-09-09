@@ -3,7 +3,12 @@
  */
 @import "theme";
 
-.resleeve-container {
+#resleeve-container {
+  position: fixed;
+  padding: 6px;
+}
+
+.resleeve-elem {
   border: 1px solid white;
   margin: 4px;
   width: 75%;

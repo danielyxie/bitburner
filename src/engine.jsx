@@ -22,6 +22,7 @@ import { FactionList } from "./Faction/ui/FactionList";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
+import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
   getHackingWorkRepGain,
@@ -189,6 +190,7 @@ const Engine = {
     stockMarketContent: null,
     gangContent: null,
     bladeburnerContent: null,
+    resleeveContent: null,
     corporationContent: null,
     locationContent: null,
     workInProgressContent: null,
@@ -439,13 +441,10 @@ const Engine = {
   },
 
   loadResleevingContent: function () {
-    try {
-      Engine.hideAllContent();
-      routing.navigateTo(Page.Resleeves);
-      createResleevesPage(Player);
-    } catch (e) {
-      exceptionAlert(e);
-    }
+    Engine.hideAllContent();
+    routing.navigateTo(Page.Resleeves);
+    Engine.Display.resleeveContent.style.display = "block";
+    ReactDOM.render(<ResleeveRoot player={Player} />, Engine.Display.resleeveContent);
   },
 
   // Helper function that hides all content
@@ -486,8 +485,14 @@ const Engine = {
     Engine.Display.bladeburnerContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.bladeburnerContent);
 
+    Engine.Display.resleeveContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.resleeveContent);
+
     Engine.Display.corporationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.corporationContent);
+
+    Engine.Display.resleeveContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.resleeveContent);
 
     Engine.Display.workInProgressContent.style.display = "none";
     Engine.Display.redPillContent.style.display = "none";
@@ -495,7 +500,6 @@ const Engine = {
     Engine.Display.stockMarketContent.style.display = "none";
     Engine.Display.missionContent.style.display = "none";
 
-    clearResleevesPage();
     clearSleevesPage();
 
     // Make nav menu tabs inactive
@@ -1251,6 +1255,9 @@ const Engine = {
 
     Engine.Display.bladeburnerContent = document.getElementById("bladeburner-container");
     Engine.Display.bladeburnerContent.style.display = "none";
+
+    Engine.Display.resleeveContent = document.getElementById("resleeve-container");
+    Engine.Display.resleeveContent.style.display = "none";
 
     Engine.Display.corporationContent = document.getElementById("corporation-container");
     Engine.Display.corporationContent.style.display = "none";
