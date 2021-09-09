@@ -3,9 +3,7 @@
 import { CompanyPosition } from "./CompanyPosition";
 import { CompanyPositions } from "./CompanyPositions";
 
-export function getNextCompanyPositionHelper(
-  currPos: CompanyPosition | null,
-): CompanyPosition | null {
+export function getNextCompanyPositionHelper(currPos: CompanyPosition | null): CompanyPosition | null {
   if (currPos == null) {
     return null;
   }

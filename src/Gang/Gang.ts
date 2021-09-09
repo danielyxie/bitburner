@@ -8,11 +8,7 @@ import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import {
-  Reviver,
-  Generic_toJSON,
-  Generic_fromJSON,
-} from "../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 
 import { exceptionAlert } from "../../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
@@ -134,9 +130,7 @@ export class Gang {
     }
     const favorMult = 1 + fac.favor / 100;
 
-    fac.playerReputation +=
-      (player.faction_rep_mult * gain * favorMult) /
-      GangConstants.GangRespectToReputationRatio;
+    fac.playerReputation += (player.faction_rep_mult * gain * favorMult) / GangConstants.GangRespectToReputationRatio;
 
     // Keep track of respect gained per member
     for (let i = 0; i < this.members.length; ++i) {
@@ -158,13 +152,8 @@ export class Gang {
 
   processTerritoryAndPowerGains(numCycles = 1): void {
     this.storedTerritoryAndPowerCycles += numCycles;
-    if (
-      this.storedTerritoryAndPowerCycles <
-      GangConstants.CyclesPerTerritoryAndPowerUpdate
-    )
-      return;
-    this.storedTerritoryAndPowerCycles -=
-      GangConstants.CyclesPerTerritoryAndPowerUpdate;
+    if (this.storedTerritoryAndPowerCycles < GangConstants.CyclesPerTerritoryAndPowerUpdate) return;
+    this.storedTerritoryAndPowerCycles -= GangConstants.CyclesPerTerritoryAndPowerUpdate;
 
     // Process power first
     const gangName = this.facName;
@@ -218,20 +207,9 @@ export class Gang {
       const otherPwr = AllGangs[otherGang].power;
       const thisChance = thisPwr / (thisPwr + otherPwr);
 
-      function calculateTerritoryGain(
-        winGang: string,
-        loseGang: string,
-      ): number {
-        const powerBonus = Math.max(
-          1,
-          1 +
-            Math.log(AllGangs[winGang].power / AllGangs[loseGang].power) /
-              Math.log(50),
-        );
-        const gains = Math.min(
-          AllGangs[loseGang].territory,
-          powerBonus * 0.0001 * (Math.random() + 0.5),
-        );
+      function calculateTerritoryGain(winGang: string, loseGang: string): number {
+        const powerBonus = Math.max(1, 1 + Math.log(AllGangs[winGang].power / AllGangs[loseGang].power) / Math.log(50));
+        const gains = Math.min(AllGangs[loseGang].territory, powerBonus * 0.0001 * (Math.random() + 0.5));
         return gains;
       }
 
@@ -332,10 +310,7 @@ export class Gang {
   calculatePower(): number {
     let memberTotal = 0;
     for (let i = 0; i < this.members.length; ++i) {
-      if (
-        !GangMemberTasks.hasOwnProperty(this.members[i].task) ||
-        this.members[i].task !== "Territory Warfare"
-      )
+      if (!GangMemberTasks.hasOwnProperty(this.members[i].task) || this.members[i].task !== "Territory Warfare")
         continue;
       memberTotal += this.members[i].calculatePower();
     }
@@ -357,16 +332,11 @@ export class Gang {
 
     // Notify of death
     if (this.notifyMemberDeath) {
-      dialogBoxCreate(
-        `${member.name} was killed in a gang clash! You lost ${lostRespect} respect`,
-      );
+      dialogBoxCreate(`${member.name} was killed in a gang clash! You lost ${lostRespect} respect`);
     }
   }
 
-  ascendMember(
-    member: GangMember,
-    workerScript?: WorkerScript,
-  ): IAscensionResult {
+  ascendMember(member: GangMember, workerScript?: WorkerScript): IAscensionResult {
     try {
       const res = member.ascend();
       this.respect = Math.max(1, this.respect - res.respect);
@@ -390,11 +360,7 @@ export class Gang {
     const respectLinearFac = 5e6;
     const powerLinearFac = 1e6;
     const discount =
-      Math.pow(respect, 0.01) +
-      respect / respectLinearFac +
-      Math.pow(power, 0.01) +
-      power / powerLinearFac -
-      1;
+      Math.pow(respect, 0.01) + respect / respectLinearFac + Math.pow(power, 0.01) + power / powerLinearFac - 1;
     return Math.max(1, discount);
   }
 
@@ -405,10 +371,7 @@ export class Gang {
       if (task == null) return false;
       if (task.name === "Unassigned") return false;
       // yes you need both checks
-      return (
-        this.isHackingGang === task.isHacking ||
-        !this.isHackingGang === task.isCombat
-      );
+      return this.isHackingGang === task.isHacking || !this.isHackingGang === task.isCombat;
     });
   }
 

@@ -99,10 +99,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
               {line.map((cell, x) => {
                 if (x == pos[0] && y == pos[1])
                   return (
-                    <span
-                      key={`${x}${y}`}
-                      style={{ fontSize: fontSize, color: "blue" }}
-                    >
+                    <span key={`${x}${y}`} style={{ fontSize: fontSize, color: "blue" }}>
                       {cell}&nbsp;
                     </span>
                   );
@@ -125,11 +122,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
 function generateAnswer(grid: string[][], difficulty: Difficulty): string[] {
   const answer = [];
   for (let i = 0; i < Math.round(difficulty.symbols); i++) {
-    answer.push(
-      grid[Math.floor(Math.random() * grid.length)][
-        Math.floor(Math.random() * grid[0].length)
-      ],
-    );
+    answer.push(grid[Math.floor(Math.random() * grid.length)][Math.floor(Math.random() * grid[0].length)]);
   }
   return answer;
 }

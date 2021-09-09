@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  formatNumber,
-  convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
+import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
 import { stealthIcon, killIcon } from "../data/Icons";
@@ -23,17 +20,13 @@ export function BlackOpElem(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   const isCompleted = props.bladeburner.blackops[props.action.name] != null;
   if (isCompleted) {
-    return (
-      <h2 style={{ display: "block" }}>{props.action.name} (COMPLETED)</h2>
-    );
+    return <h2 style={{ display: "block" }}>{props.action.name} (COMPLETED)</h2>;
   }
 
   const isActive =
     props.bladeburner.action.type === ActionTypes["BlackOperation"] &&
     props.action.name === props.bladeburner.action.name;
-  const estimatedSuccessChance = props.action.getEstSuccessChance(
-    props.bladeburner,
-  );
+  const estimatedSuccessChance = props.action.getEstSuccessChance(props.bladeburner);
   const actionTime = props.action.getActionTime(props.bladeburner);
   const hasReqdRank = props.bladeburner.rank >= props.action.reqdRank;
   const computedActionTimeCurrent = Math.min(
@@ -62,8 +55,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
       <h2 style={{ display: "inline-block" }}>
         {isActive ? (
           <>
-            <CopyableText value={props.action.name} /> (IN PROGRESS -{" "}
-            {formatNumber(computedActionTimeCurrent, 0)} /{" "}
+            <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
             {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
           </>
         ) : (
@@ -73,9 +65,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
       {isActive ? (
         <p style={{ display: "block" }}>
           {createProgressBarText({
-            progress:
-              computedActionTimeCurrent /
-              props.bladeburner.actionTimeToComplete,
+            progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
           })}
         </p>
       ) : (
@@ -87,21 +77,14 @@ export function BlackOpElem(props: IProps): React.ReactElement {
           >
             Start
           </a>
-          <a
-            onClick={onTeam}
-            style={{ margin: "3px", padding: "3px" }}
-            className="a-link-button"
-          >
+          <a onClick={onTeam} style={{ margin: "3px", padding: "3px" }} className="a-link-button">
             Set Team Size (Curr Size: {formatNumber(props.action.teamCount, 0)})
           </a>
         </>
       )}
       <br />
       <br />
-      <p
-        style={{ display: "inline-block" }}
-        dangerouslySetInnerHTML={{ __html: props.action.desc }}
-      />
+      <p style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: props.action.desc }} />
       <br />
       <br />
       <p style={{ display: "block", color: hasReqdRank ? "white" : "red" }}>
@@ -109,8 +92,7 @@ export function BlackOpElem(props: IProps): React.ReactElement {
       </p>
       <br />
       <pre style={{ display: "inline-block" }}>
-        Estimated Success Chance:{" "}
-        <SuccessChance chance={estimatedSuccessChance} />{" "}
+        Estimated Success Chance: <SuccessChance chance={estimatedSuccessChance} />{" "}
         {props.action.isStealth ? stealthIcon : <></>}
         {props.action.isKill ? killIcon : <></>}
         <br />

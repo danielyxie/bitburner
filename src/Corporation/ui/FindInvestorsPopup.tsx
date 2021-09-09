@@ -37,9 +37,7 @@ export function FindInvestorsPopup(props: IProps): React.ReactElement {
       return <></>;
   }
   const funding = val * percShares * roundMultiplier;
-  const investShares = Math.floor(
-    CorporationConstants.INITIALSHARES * percShares,
-  );
+  const investShares = Math.floor(CorporationConstants.INITIALSHARES * percShares);
 
   function findInvestors(): void {
     props.corp.fundingRound++;
@@ -51,17 +49,15 @@ export function FindInvestorsPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        An investment firm has offered you {numeralWrapper.formatMoney(funding)}{" "}
-        in funding in exchange for a{" "}
-        {numeralWrapper.format(percShares * 100, "0.000a")}% stake in the
-        company ({numeralWrapper.format(investShares, "0.000a")} shares).
+        An investment firm has offered you {numeralWrapper.formatMoney(funding)} in funding in exchange for a{" "}
+        {numeralWrapper.format(percShares * 100, "0.000a")}% stake in the company (
+        {numeralWrapper.format(investShares, "0.000a")} shares).
         <br />
         <br />
         Do you accept or reject this offer?
         <br />
         <br />
-        Hint: Investment firms will offer more money if your corporation is
-        turning a profit
+        Hint: Investment firms will offer more money if your corporation is turning a profit
       </p>
       <button onClick={findInvestors} className="std-button">
         Accept

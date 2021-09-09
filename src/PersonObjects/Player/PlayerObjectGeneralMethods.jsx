@@ -32,17 +32,10 @@ import {
   getFactionSecurityWorkRepGain,
   getFactionFieldWorkRepGain,
 } from "../formulas/reputation";
-import {
-  AllServers,
-  AddToAllServers,
-  createUniqueRandomIp,
-} from "../../Server/AllServers";
+import { AllServers, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
 import { Settings } from "../../Settings/Settings";
-import {
-  SpecialServerIps,
-  SpecialServerNames,
-} from "../../Server/SpecialServerIps";
+import { SpecialServerIps, SpecialServerNames } from "../../Server/SpecialServerIps";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
 import { applyExploit } from "../../Exploits/applyExploits";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
@@ -128,9 +121,7 @@ export function prestigeAugmentation() {
 
   this.resleeves = [];
 
-  let numSleeves =
-    Math.min(3, SourceFileFlags[10] + (this.bitNodeN === 10 ? 1 : 0)) +
-    this.sleevesFromCovenant;
+  let numSleeves = Math.min(3, SourceFileFlags[10] + (this.bitNodeN === 10 ? 1 : 0)) + this.sleevesFromCovenant;
   if (this.sleeves.length > numSleeves) this.sleeves.length = numSleeves;
   for (let i = this.sleeves.length; i < numSleeves; i++) {
     this.sleeves.push(new Sleeve(this));
@@ -192,7 +183,11 @@ export function prestigeSourceFile() {
   this.prestigeAugmentation();
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
   for (let i = 0; i < this.sleeves.length; ++i) {
-    this.sleeves[i] = new Sleeve(this);
+    if (this.sleeves[i] instanceof Sleeve) {
+      this.sleeves[i].prestige(this);
+    } else {
+      this.sleeves[i] = new Sleeve(this);
+    }
   }
 
   if (this.bitNodeN === 10) {
@@ -229,10 +224,7 @@ export function prestigeSourceFile() {
 }
 
 export function receiveInvite(factionName) {
-  if (
-    this.factionInvitations.includes(factionName) ||
-    this.factions.includes(factionName)
-  ) {
+  if (this.factionInvitations.includes(factionName) || this.factions.includes(factionName)) {
     return;
   }
   this.firstFacInvRecvd = true;
@@ -247,57 +239,29 @@ export function calculateSkill(exp, mult = 1) {
 export function updateSkillLevels() {
   this.hacking_skill = Math.max(
     1,
-    Math.floor(
-      this.calculateSkill(
-        this.hacking_exp,
-        this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
-      ),
-    ),
+    Math.floor(this.calculateSkill(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)),
   );
   this.strength = Math.max(
     1,
-    Math.floor(
-      this.calculateSkill(
-        this.strength_exp,
-        this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
-      ),
-    ),
+    Math.floor(this.calculateSkill(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier)),
   );
   this.defense = Math.max(
     1,
-    Math.floor(
-      this.calculateSkill(
-        this.defense_exp,
-        this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
-      ),
-    ),
+    Math.floor(this.calculateSkill(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)),
   );
   this.dexterity = Math.max(
     1,
     Math.floor(
-      this.calculateSkill(
-        this.dexterity_exp,
-        this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
-      ),
+      this.calculateSkill(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier),
     ),
   );
   this.agility = Math.max(
     1,
-    Math.floor(
-      this.calculateSkill(
-        this.agility_exp,
-        this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
-      ),
-    ),
+    Math.floor(this.calculateSkill(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier)),
   );
   this.charisma = Math.max(
     1,
-    Math.floor(
-      this.calculateSkill(
-        this.charisma_exp,
-        this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
-      ),
-    ),
+    Math.floor(this.calculateSkill(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier)),
   );
 
   if (this.intelligence > 0) {
@@ -421,10 +385,7 @@ export function gainHackingExp(exp) {
     this.hacking_exp = 0;
   }
 
-  this.hacking_skill = calculateSkillF(
-    this.hacking_exp,
-    this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
-  );
+  this.hacking_skill = calculateSkillF(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
 }
 
 export function gainStrengthExp(exp) {
@@ -437,10 +398,7 @@ export function gainStrengthExp(exp) {
     this.strength_exp = 0;
   }
 
-  this.strength = calculateSkillF(
-    this.strength_exp,
-    this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
-  );
+  this.strength = calculateSkillF(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
 }
 
 export function gainDefenseExp(exp) {
@@ -453,10 +411,7 @@ export function gainDefenseExp(exp) {
     this.defense_exp = 0;
   }
 
-  this.defense = calculateSkillF(
-    this.defense_exp,
-    this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
-  );
+  this.defense = calculateSkillF(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
 }
 
 export function gainDexterityExp(exp) {
@@ -485,10 +440,7 @@ export function gainAgilityExp(exp) {
     this.agility_exp = 0;
   }
 
-  this.agility = calculateSkillF(
-    this.agility_exp,
-    this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
-  );
+  this.agility = calculateSkillF(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier);
 }
 
 export function gainCharismaExp(exp) {
@@ -501,10 +453,7 @@ export function gainCharismaExp(exp) {
     this.charisma_exp = 0;
   }
 
-  this.charisma = calculateSkillF(
-    this.charisma_exp,
-    this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
-  );
+  this.charisma = calculateSkillF(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier);
 }
 
 export function gainIntelligenceExp(exp) {
@@ -546,11 +495,7 @@ export function queryStatFromString(str) {
 /******* Working functions *******/
 export function resetWorkStatus(generalType, group, workType) {
   if (generalType === this.workType && group === this.companyName) return;
-  if (
-    generalType === this.workType &&
-    group === this.currentWorkFactionName &&
-    workType === this.factionWorkType
-  )
+  if (generalType === this.workType && group === this.currentWorkFactionName && workType === this.factionWorkType)
     return;
   if (this.isWorking) this.singularityStopWork();
   this.workHackExpGainRate = 0;
@@ -580,9 +525,7 @@ export function resetWorkStatus(generalType, group, workType) {
   this.createProgramName = "";
   this.className = "";
 
-  ReactDOM.unmountComponentAtNode(
-    document.getElementById("work-in-progress-text"),
-  );
+  ReactDOM.unmountComponentAtNode(document.getElementById("work-in-progress-text"));
 }
 
 export function processWorkEarnings(numCycles = 1) {
@@ -593,8 +536,7 @@ export function processWorkEarnings(numCycles = 1) {
   const dexExpGain = focusBonus * this.workDexExpGainRate * numCycles;
   const agiExpGain = focusBonus * this.workAgiExpGainRate * numCycles;
   const chaExpGain = focusBonus * this.workChaExpGainRate * numCycles;
-  const moneyGain =
-    (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
+  const moneyGain = (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
 
   this.gainHackingExp(hackExpGain);
   this.gainStrengthExp(strExpGain);
@@ -646,9 +588,7 @@ export function startWork(companyName) {
     return false;
   });
 
-  const focusButton = clearEventListeners(
-    "work-in-progress-something-else-button",
-  );
+  const focusButton = clearEventListeners("work-in-progress-something-else-button");
   focusButton.style.visibility = "visible";
   focusButton.innerHTML = "Do something else simultaneously";
   focusButton.addEventListener("click", () => {
@@ -673,14 +613,9 @@ export function work(numCycles) {
   // Cap the number of cycles being processed to whatever would put you at
   // the work time limit (8 hours)
   var overMax = false;
-  if (
-    this.timeWorked + Engine._idleSpeed * numCycles >=
-    CONSTANTS.MillisecondsPer8Hours
-  ) {
+  if (this.timeWorked + Engine._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
     overMax = true;
-    numCycles = Math.round(
-      (CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / Engine._idleSpeed,
-    );
+    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / Engine._idleSpeed);
   }
   this.timeWorked += Engine._idleSpeed * numCycles;
 
@@ -711,58 +646,42 @@ export function work(numCycles) {
   var elem = document.getElementById("work-in-progress-text");
   ReactDOM.render(
     <>
-      You are currently working as a {position} at {this.companyName} (Current
-      Company Reputation: {Reputation(companyRep)})<br />
+      You are currently working as a {position} at {this.companyName} (Current Company Reputation:{" "}
+      {Reputation(companyRep)})<br />
       <br />
-      You have been working for{" "}
-      {convertTimeMsToTimeElapsedString(this.timeWorked)}
+      You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}
       <br />
       <br />
       You have earned: <br />
       <br />
-      <Money money={this.workMoneyGained} /> (
-      {MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
+      <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
       <br />
-      {Reputation(this.workRepGained)} (
-      {ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for
-      this company <br />
+      {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this
+      company <br />
       <br />
       {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workHackExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) hacking exp <br />
       <br />
       {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workStrExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) strength exp <br />
       {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workDefExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) defense exp <br />
       {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workDexExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) dexterity exp <br />
       {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workAgiExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) agility exp <br />
       <br />
       {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workChaExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) charisma exp <br />
       <br />
-      You will automatically finish after working for 8 hours. You can cancel
-      earlier if you wish, but you will only gain {penaltyString} of the
-      reputation you've earned so far.
+      You will automatically finish after working for 8 hours. You can cancel earlier if you wish, but you will only
+      gain {penaltyString} of the reputation you've earned so far.
     </>,
     elem,
   );
@@ -798,11 +717,9 @@ export function finishWork(cancelled, sing = false) {
   if (cancelled) {
     content = (
       <>
-        You worked a short shift of{" "}
-        {convertTimeMsToTimeElapsedString(this.timeWorked)} <br />
+        You worked a short shift of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br />
         <br />
-        Since you cancelled your work early, you only gained half of the
-        reputation you earned. <br />
+        Since you cancelled your work early, you only gained half of the reputation you earned. <br />
         <br />
         {content}
       </>
@@ -886,14 +803,9 @@ export function workPartTime(numCycles) {
   //Cap the number of cycles being processed to whatever would put you at the
   //work time limit (8 hours)
   var overMax = false;
-  if (
-    this.timeWorked + Engine._idleSpeed * numCycles >=
-    CONSTANTS.MillisecondsPer8Hours
-  ) {
+  if (this.timeWorked + Engine._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
     overMax = true;
-    numCycles = Math.round(
-      (CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / Engine._idleSpeed,
-    );
+    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / Engine._idleSpeed);
   }
   this.timeWorked += Engine._idleSpeed * numCycles;
 
@@ -918,62 +830,43 @@ export function workPartTime(numCycles) {
   const elem = document.getElementById("work-in-progress-text");
   ReactDOM.render(
     <>
-      You are currently working as a {position} at {this.companyName} (Current
-      Company Reputation: {Reputation(companyRep)})<br />
+      You are currently working as a {position} at {this.companyName} (Current Company Reputation:{" "}
+      {Reputation(companyRep)})<br />
       <br />
-      You have been working for{" "}
-      {convertTimeMsToTimeElapsedString(this.timeWorked)}
+      You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}
       <br />
       <br />
       You have earned: <br />
       <br />
-      <Money money={this.workMoneyGained} /> (
-      {MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
+      <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
       <br />
       {Reputation(this.workRepGained)} (
-      {Reputation(
-        `${numeralWrapper.formatExp(
-          this.workRepGainRate * CYCLES_PER_SEC,
-        )} / sec`,
-      )}
+      {Reputation(`${numeralWrapper.formatExp(this.workRepGainRate * CYCLES_PER_SEC)} / sec`)}
       ) reputation for this company <br />
       <br />
       {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workHackExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) hacking exp <br />
       <br />
       {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workStrExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) strength exp <br />
       {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workDefExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) defense exp <br />
       {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workDexExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) dexterity exp <br />
       {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workAgiExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) agility exp <br />
       <br />
       {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {`${numeralWrapper.formatExp(
-        this.workChaExpGainRate * CYCLES_PER_SEC,
-      )} / sec`}
+      {`${numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
       ) charisma exp <br />
       <br />
-      You will automatically finish after working for 8 hours. You can cancel
-      earlier if you wish, and there will be no penalty because this is a
-      part-time job.
+      You will automatically finish after working for 8 hours. You can cancel earlier if you wish, and there will be no
+      penalty because this is a part-time job.
     </>,
     elem,
   );
@@ -1078,9 +971,7 @@ export function startFactionWork(faction) {
     return false;
   });
 
-  const focusButton = clearEventListeners(
-    "work-in-progress-something-else-button",
-  );
+  const focusButton = clearEventListeners("work-in-progress-something-else-button");
   focusButton.style.visibility = "visible";
   focusButton.innerHTML = "Do something else simultaneously";
   focusButton.addEventListener("click", () => {
@@ -1093,14 +984,9 @@ export function startFactionWork(faction) {
 }
 
 export function startFactionHackWork(faction) {
-  this.resetWorkStatus(
-    CONSTANTS.WorkTypeFaction,
-    faction.name,
-    CONSTANTS.FactionWorkHacking,
-  );
+  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
-  this.workHackExpGainRate =
-    0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate =
     ((this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel) *
     this.faction_rep_mult *
@@ -1113,24 +999,14 @@ export function startFactionHackWork(faction) {
 }
 
 export function startFactionFieldWork(faction) {
-  this.resetWorkStatus(
-    CONSTANTS.WorkTypeFaction,
-    faction.name,
-    CONSTANTS.FactionWorkField,
-  );
+  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
 
-  this.workHackExpGainRate =
-    0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workStrExpGainRate =
-    0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDefExpGainRate =
-    0.1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDexExpGainRate =
-    0.1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workAgiExpGainRate =
-    0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workChaExpGainRate =
-    0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workStrExpGainRate = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workDefExpGainRate = 0.1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workDexExpGainRate = 0.1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workAgiExpGainRate = 0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
 
   this.factionWorkType = CONSTANTS.FactionWorkField;
@@ -1140,24 +1016,14 @@ export function startFactionFieldWork(faction) {
 }
 
 export function startFactionSecurityWork(faction) {
-  this.resetWorkStatus(
-    CONSTANTS.WorkTypeFaction,
-    faction.name,
-    CONSTANTS.FactionWorkSecurity,
-  );
+  this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
-  this.workHackExpGainRate =
-    0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workStrExpGainRate =
-    0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDefExpGainRate =
-    0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workDexExpGainRate =
-    0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workAgiExpGainRate =
-    0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workChaExpGainRate =
-    0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workStrExpGainRate = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workDefExpGainRate = 0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workDexExpGainRate = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workAgiExpGainRate = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workChaExpGainRate = 0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
 
   this.factionWorkType = CONSTANTS.FactionWorkSecurity;
@@ -1186,14 +1052,9 @@ export function workForFaction(numCycles) {
 
   //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
   var overMax = false;
-  if (
-    this.timeWorked + Engine._idleSpeed * numCycles >=
-    CONSTANTS.MillisecondsPer20Hours
-  ) {
+  if (this.timeWorked + Engine._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer20Hours) {
     overMax = true;
-    numCycles = Math.round(
-      (CONSTANTS.MillisecondsPer20Hours - this.timeWorked) / Engine._idleSpeed,
-    );
+    numCycles = Math.round((CONSTANTS.MillisecondsPer20Hours - this.timeWorked) / Engine._idleSpeed);
   }
   this.timeWorked += Engine._idleSpeed * numCycles;
 
@@ -1207,47 +1068,35 @@ export function workForFaction(numCycles) {
   const elem = document.getElementById("work-in-progress-text");
   ReactDOM.render(
     <>
-      You are currently {this.currentWorkFactionDescription} for your faction{" "}
-      {faction.name}
+      You are currently {this.currentWorkFactionDescription} for your faction {faction.name}
       <br />
-      (Current Faction Reputation: {Reputation(faction.playerReputation)}).{" "}
-      <br />
-      You have been doing this for{" "}
-      {convertTimeMsToTimeElapsedString(this.timeWorked)}
+      (Current Faction Reputation: {Reputation(faction.playerReputation)}). <br />
+      You have been doing this for {convertTimeMsToTimeElapsedString(this.timeWorked)}
       <br />
       <br />
       You have earned: <br />
       <br />
-      <Money money={this.workMoneyGained} /> (
-      {MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
+      <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
       <br />
-      {Reputation(this.workRepGained)} (
-      {ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for
-      this faction <br />
+      {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this
+      faction <br />
       <br />
       {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} /
-      sec) hacking exp <br />
+      {numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
       <br />
       {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} /
-      sec) strength exp <br />
+      {numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
       {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} /
-      sec) defense exp <br />
+      {numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
       {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} /
-      sec) dexterity exp <br />
+      {numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
       {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} /
-      sec) agility exp <br />
+      {numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br />
       <br />
       {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} /
-      sec) charisma exp <br />
+      {numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br />
       <br />
-      You will automatically finish after working for 20 hours. You can cancel
-      earlier if you wish.
+      You will automatically finish after working for 20 hours. You can cancel earlier if you wish.
       <br />
       There is no penalty for cancelling earlier.
     </>,
@@ -1264,8 +1113,8 @@ export function finishFactionWork(cancelled, sing = false) {
   if (!sing) {
     dialogBoxCreate(
       <>
-        You worked for your faction {faction.name} for a total of{" "}
-        {convertTimeMsToTimeElapsedString(this.timeWorked)} <br />
+        You worked for your faction {faction.name} for a total of {convertTimeMsToTimeElapsedString(this.timeWorked)}{" "}
+        <br />
         <br />
         You earned a total of: <br />
         <Money money={this.workMoneyGained} />
@@ -1330,9 +1179,7 @@ export function getWorkMoneyGain() {
   const companyPositionName = this.jobs[this.companyName];
   const companyPosition = CompanyPositions[companyPositionName];
   if (companyPosition == null) {
-    console.error(
-      `Could not find CompanyPosition object for ${companyPositionName}. Work salary will be 0`,
-    );
+    console.error(`Could not find CompanyPosition object for ${companyPositionName}. Work salary will be 0`);
     return 0;
   }
 
@@ -1572,8 +1419,7 @@ export function startCreateProgramWork(programName, time, reqLevel) {
       if (isNaN(percComplete) || percComplete < 0 || percComplete >= 100) {
         break;
       }
-      this.timeWorkedCreateProgram =
-        (percComplete / 100) * this.timeNeededToCompleteWork;
+      this.timeWorkedCreateProgram = (percComplete / 100) * this.timeNeededToCompleteWork;
       this.getHomeComputer().programs.splice(i, 1);
     }
   }
@@ -1587,9 +1433,7 @@ export function startCreateProgramWork(programName, time, reqLevel) {
     return false;
   });
 
-  const focusButton = clearEventListeners(
-    "work-in-progress-something-else-button",
-  );
+  const focusButton = clearEventListeners("work-in-progress-something-else-button");
   focusButton.style.visibility = "hidden";
 
   //Display Work In Progress Screen
@@ -1616,18 +1460,12 @@ export function createProgramWork(numCycles) {
     <>
       You are currently working on coding {programName}.<br />
       <br />
-      You have been working for{" "}
-      {convertTimeMsToTimeElapsedString(this.timeWorked)}
+      You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}
       <br />
       <br />
-      The program is{" "}
-      {(
-        (this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) *
-        100
-      ).toFixed(2)}
+      The program is {((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 100).toFixed(2)}
       % complete. <br />
-      If you cancel, your work will be saved and you can come back to complete
-      the program later.
+      If you cancel, your work will be saved and you can come back to complete the program later.
     </>,
     elem,
   );
@@ -1637,27 +1475,18 @@ export function finishCreateProgramWork(cancelled) {
   var programName = this.createProgramName;
   if (cancelled === false) {
     dialogBoxCreate(
-      "You've finished creating " +
-        programName +
-        "!<br>" +
-        "The new program can be found on your home computer.",
+      "You've finished creating " + programName + "!<br>" + "The new program can be found on your home computer.",
     );
 
     this.getHomeComputer().programs.push(programName);
   } else {
-    var perc = (
-      Math.floor(
-        (this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000,
-      ) / 100
-    ).toString();
+    var perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
     var incompleteName = programName + "-" + perc + "%-INC";
     this.getHomeComputer().programs.push(incompleteName);
   }
 
   if (!cancelled) {
-    this.gainIntelligenceExp(
-      this.createProgramReqLvl / CONSTANTS.IntelligenceProgramBaseExpGain,
-    );
+    this.gainIntelligenceExp(this.createProgramReqLvl / CONSTANTS.IntelligenceProgramBaseExpGain);
   }
 
   var mainMenu = document.getElementById("mainmenu-container");
@@ -1691,39 +1520,27 @@ export function startClass(costMult, expMult, className) {
   const hashManager = this.hashManager;
   switch (className) {
     case CONSTANTS.ClassStudyComputerScience:
-      hackExp =
-        ((CONSTANTS.ClassStudyComputerScienceBaseExp * expMult) / gameCPS) *
-        hashManager.getStudyMult();
+      hackExp = ((CONSTANTS.ClassStudyComputerScienceBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case CONSTANTS.ClassDataStructures:
       cost = (CONSTANTS.ClassDataStructuresBaseCost * costMult) / gameCPS;
-      hackExp =
-        ((CONSTANTS.ClassDataStructuresBaseExp * expMult) / gameCPS) *
-        hashManager.getStudyMult();
+      hackExp = ((CONSTANTS.ClassDataStructuresBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case CONSTANTS.ClassNetworks:
       cost = (CONSTANTS.ClassNetworksBaseCost * costMult) / gameCPS;
-      hackExp =
-        ((CONSTANTS.ClassNetworksBaseExp * expMult) / gameCPS) *
-        hashManager.getStudyMult();
+      hackExp = ((CONSTANTS.ClassNetworksBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case CONSTANTS.ClassAlgorithms:
       cost = (CONSTANTS.ClassAlgorithmsBaseCost * costMult) / gameCPS;
-      hackExp =
-        ((CONSTANTS.ClassAlgorithmsBaseExp * expMult) / gameCPS) *
-        hashManager.getStudyMult();
+      hackExp = ((CONSTANTS.ClassAlgorithmsBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case CONSTANTS.ClassManagement:
       cost = (CONSTANTS.ClassManagementBaseCost * costMult) / gameCPS;
-      chaExp =
-        ((CONSTANTS.ClassManagementBaseExp * expMult) / gameCPS) *
-        hashManager.getStudyMult();
+      chaExp = ((CONSTANTS.ClassManagementBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case CONSTANTS.ClassLeadership:
       cost = (CONSTANTS.ClassLeadershipBaseCost * costMult) / gameCPS;
-      chaExp =
-        ((CONSTANTS.ClassLeadershipBaseExp * expMult) / gameCPS) *
-        hashManager.getStudyMult();
+      chaExp = ((CONSTANTS.ClassLeadershipBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
       break;
     case CONSTANTS.ClassGymStrength:
       cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
@@ -1747,18 +1564,12 @@ export function startClass(costMult, expMult, className) {
   }
 
   this.workMoneyLossRate = cost;
-  this.workHackExpGainRate =
-    hackExp * this.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workStrExpGainRate =
-    strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workDefExpGainRate =
-    defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workDexExpGainRate =
-    dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workAgiExpGainRate =
-    agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workChaExpGainRate =
-    chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workHackExpGainRate = hackExp * this.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workStrExpGainRate = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workDefExpGainRate = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workDexExpGainRate = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workAgiExpGainRate = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workChaExpGainRate = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
 
   var cancelButton = clearEventListeners("work-in-progress-cancel-button");
   if (
@@ -1776,9 +1587,7 @@ export function startClass(costMult, expMult, className) {
     return false;
   });
 
-  const focusButton = clearEventListeners(
-    "work-in-progress-something-else-button",
-  );
+  const focusButton = clearEventListeners("work-in-progress-something-else-button");
   focusButton.style.visibility = "hidden";
 
   //Display Work In Progress Screen
@@ -1794,33 +1603,25 @@ export function takeClass(numCycles) {
   const elem = document.getElementById("work-in-progress-text");
   ReactDOM.render(
     <>
-      You have been {className} for{" "}
-      {convertTimeMsToTimeElapsedString(this.timeWorked)}
+      You have been {className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}
       <br />
       <br />
       This has cost you: <br />
-      <Money money={-this.workMoneyGained} /> (
-      {MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br />
+      <Money money={-this.workMoneyGained} /> ({MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br />
       <br />
       You have gained: <br />
       {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} /
-      sec) hacking exp <br />
+      {numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
       {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} /
-      sec) strength exp <br />
+      {numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
       {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} /
-      sec) defense exp <br />
+      {numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
       {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} /
-      sec) dexterity exp <br />
+      {numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
       {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} /
-      sec) agility exp <br />
+      {numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br />
       {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} /
-      sec) charisma exp <br />
+      {numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br />
       You may cancel at any time
     </>,
     elem,
@@ -1830,9 +1631,7 @@ export function takeClass(numCycles) {
 //The 'sing' argument defines whether or not this function was called
 //through a Singularity Netscript function
 export function finishClass(sing = false) {
-  this.gainIntelligenceExp(
-    CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000),
-  );
+  this.gainIntelligenceExp(CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
 
   if (this.workMoneyGained > 0) {
     throw new Error("ERR: Somehow gained money while taking class");
@@ -1842,8 +1641,7 @@ export function finishClass(sing = false) {
   if (!sing) {
     dialogBoxCreate(
       <>
-        After {this.className} for{" "}
-        {convertTimeMsToTimeElapsedString(this.timeWorked)}, <br />
+        After {this.className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}, <br />
         you spent a total of <Money money={-this.workMoneyGained} />. <br />
         <br />
         You earned a total of: <br />
@@ -1894,18 +1692,7 @@ export function finishClass(sing = false) {
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
-export function startCrime(
-  crimeType,
-  hackExp,
-  strExp,
-  defExp,
-  dexExp,
-  agiExp,
-  chaExp,
-  money,
-  time,
-  singParams = null,
-) {
+export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, chaExp, money, time, singParams = null) {
   this.crimeType = crimeType;
 
   this.resetWorkStatus();
@@ -1918,20 +1705,13 @@ export function startCrime(
     this.singFnCrimeWorkerScript = singParams.workerscript;
   }
 
-  this.workHackExpGained =
-    hackExp * this.hacking_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workStrExpGained =
-    strExp * this.strength_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workDefExpGained =
-    defExp * this.defense_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workDexExpGained =
-    dexExp * this.dexterity_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workAgiExpGained =
-    agiExp * this.agility_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workChaExpGained =
-    chaExp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
-  this.workMoneyGained =
-    money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
+  this.workHackExpGained = hackExp * this.hacking_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workStrExpGained = strExp * this.strength_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workDefExpGained = defExp * this.defense_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workDexExpGained = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workAgiExpGained = agiExp * this.agility_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workChaExpGained = chaExp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
   this.timeNeededToCompleteWork = time;
 
@@ -1943,9 +1723,7 @@ export function startCrime(
     return false;
   });
 
-  const focusButton = clearEventListeners(
-    "work-in-progress-something-else-button",
-  );
+  const focusButton = clearEventListeners("work-in-progress-something-else-button");
   focusButton.style.visibility = "hidden";
 
   //Display Work In Progress Screen
@@ -1960,9 +1738,7 @@ export function commitCrime(numCycles) {
     return;
   }
 
-  var percent = Math.round(
-    (this.timeWorked / this.timeNeededToCompleteWork) * 100,
-  );
+  var percent = Math.round((this.timeWorked / this.timeNeededToCompleteWork) * 100);
   var numBars = Math.round(percent / 5);
   if (numBars < 0) {
     numBars = 0;
@@ -1970,11 +1746,7 @@ export function commitCrime(numCycles) {
   if (numBars > 20) {
     numBars = 20;
   }
-  var progressBar =
-    "[" +
-    Array(numBars + 1).join("|") +
-    Array(20 - numBars + 1).join(" ") +
-    "]";
+  var progressBar = "[" + Array(numBars + 1).join("|") + Array(20 - numBars + 1).join(" ") + "]";
 
   var txt = document.getElementById("work-in-progress-text");
   txt.innerHTML =
@@ -1982,9 +1754,7 @@ export function commitCrime(numCycles) {
     this.crimeType +
     ".<br>" +
     "Time remaining: " +
-    convertTimeMsToTimeElapsedString(
-      this.timeNeededToCompleteWork - this.timeWorked,
-    ) +
+    convertTimeMsToTimeElapsedString(this.timeNeededToCompleteWork - this.timeWorked) +
     "<br>" +
     progressBar.replace(/ /g, "&nbsp;");
 }
@@ -2054,20 +1824,16 @@ export function finishCrime(cancelled) {
             <br />
             <Money money={this.workMoneyGained} />
             <br />
-            {numeralWrapper.formatExp(this.workHackExpGained)} hacking
-            experience <br />
-            {numeralWrapper.formatExp(this.workStrExpGained)} strength
-            experience
+            {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
+            {numeralWrapper.formatExp(this.workStrExpGained)} strength experience
             <br />
             {numeralWrapper.formatExp(this.workDefExpGained)} defense experience
             <br />
-            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity
-            experience
+            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity experience
             <br />
             {numeralWrapper.formatExp(this.workAgiExpGained)} agility experience
             <br />
-            {numeralWrapper.formatExp(this.workChaExpGained)} charisma
-            experience
+            {numeralWrapper.formatExp(this.workChaExpGained)} charisma experience
           </>,
         );
       }
@@ -2108,20 +1874,16 @@ export function finishCrime(cancelled) {
             <br />
             You gained:
             <br />
-            {numeralWrapper.formatExp(this.workHackExpGained)} hacking
-            experience <br />
-            {numeralWrapper.formatExp(this.workStrExpGained)} strength
-            experience
+            {numeralWrapper.formatExp(this.workHackExpGained)} hacking experience <br />
+            {numeralWrapper.formatExp(this.workStrExpGained)} strength experience
             <br />
             {numeralWrapper.formatExp(this.workDefExpGained)} defense experience
             <br />
-            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity
-            experience
+            {numeralWrapper.formatExp(this.workDexExpGained)} dexterity experience
             <br />
             {numeralWrapper.formatExp(this.workAgiExpGained)} agility experience
             <br />
-            {numeralWrapper.formatExp(this.workChaExpGained)} charisma
-            experience
+            {numeralWrapper.formatExp(this.workChaExpGained)} charisma experience
           </>,
         );
       }
@@ -2179,9 +1941,7 @@ export function singularityStopWork() {
 // Returns true if hospitalized, false otherwise
 export function takeDamage(amt) {
   if (typeof amt !== "number") {
-    console.warn(
-      `Player.takeDamage() called without a numeric argument: ${amt}`,
-    );
+    console.warn(`Player.takeDamage() called without a numeric argument: ${amt}`);
     return;
   }
 
@@ -2196,9 +1956,7 @@ export function takeDamage(amt) {
 
 export function regenerateHp(amt) {
   if (typeof amt !== "number") {
-    console.warn(
-      `Player.regenerateHp() called without a numeric argument: ${amt}`,
-    );
+    console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
     return;
   }
   this.hp += amt;
@@ -2212,8 +1970,8 @@ export function hospitalize() {
   if (Settings.SuppressHospitalizationPopup === false) {
     dialogBoxCreate(
       <>
-        You were in critical condition! You were taken to the hospital where
-        luckily they were able to save your life. You were charged&nbsp;
+        You were in critical condition! You were taken to the hospital where luckily they were able to save your life.
+        You were charged&nbsp;
         <Money money={cost} />
       </>,
     );
@@ -2241,11 +1999,7 @@ export function applyForJob(entryPosType, sing = false) {
   const company = Companies[this.location]; //Company being applied to
   if (!(company instanceof Company)) {
     if (sing) {
-      return (
-        "ERROR: Invalid company name: " +
-        this.location +
-        ". applyToCompany() failed"
-      );
+      return "ERROR: Invalid company name: " + this.location + ". applyToCompany() failed";
     } else {
       console.error(
         `Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`,
@@ -2261,9 +2015,7 @@ export function applyForJob(entryPosType, sing = false) {
     if (sing) {
       return false;
     }
-    dialogBoxCreate(
-      "Unforunately, you do not qualify for this position<br>" + reqText,
-    );
+    dialogBoxCreate("Unforunately, you do not qualify for this position<br>" + reqText);
     return;
   }
 
@@ -2293,24 +2045,18 @@ export function applyForJob(entryPosType, sing = false) {
         if (sing) {
           return false;
         }
-        dialogBoxCreate(
-          "You are already at the highest position for your field! No promotion available",
-        );
+        dialogBoxCreate("You are already at the highest position for your field! No promotion available");
       } else if (company.hasPosition(nextPos)) {
         if (sing) {
           return false;
         }
         var reqText = getJobRequirementText(company, nextPos);
-        dialogBoxCreate(
-          "Unfortunately, you do not qualify for a promotion<br>" + reqText,
-        );
+        dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
       } else {
         if (sing) {
           return false;
         }
-        dialogBoxCreate(
-          "You are already at the highest position for your field! No promotion available",
-        );
+        dialogBoxCreate("You are already at the highest position for your field! No promotion available");
       }
       return; //Same job, do nothing
     }
@@ -2326,13 +2072,7 @@ export function applyForJob(entryPosType, sing = false) {
     return true;
   }
 
-  dialogBoxCreate(
-    "Congratulations! You were offered a new job at " +
-      this.companyName +
-      " as a " +
-      pos.name +
-      "!",
-  );
+  dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
 }
 
 //Returns your next position at a company given the field (software, business, etc.)
@@ -2356,16 +2096,12 @@ export function getNextCompanyPosition(company, entryPosType) {
     (currentPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
     (currentPosition.isITJob() && entryPosType.isITJob()) ||
     (currentPosition.isBusinessJob() && entryPosType.isBusinessJob()) ||
-    (currentPosition.isSecurityEngineerJob() &&
-      entryPosType.isSecurityEngineerJob()) ||
-    (currentPosition.isNetworkEngineerJob() &&
-      entryPosType.isNetworkEngineerJob()) ||
+    (currentPosition.isSecurityEngineerJob() && entryPosType.isSecurityEngineerJob()) ||
+    (currentPosition.isNetworkEngineerJob() && entryPosType.isNetworkEngineerJob()) ||
     (currentPosition.isSecurityJob() && entryPosType.isSecurityJob()) ||
     (currentPosition.isAgentJob() && entryPosType.isAgentJob()) ||
-    (currentPosition.isSoftwareConsultantJob() &&
-      entryPosType.isSoftwareConsultantJob()) ||
-    (currentPosition.isBusinessConsultantJob() &&
-      entryPosType.isBusinessConsultantJob()) ||
+    (currentPosition.isSoftwareConsultantJob() && entryPosType.isSoftwareConsultantJob()) ||
+    (currentPosition.isBusinessConsultantJob() && entryPosType.isBusinessConsultantJob()) ||
     (currentPosition.isPartTimeJob() && entryPosType.isPartTimeJob())
   ) {
     return getNextCompanyPositionHelper(currentPosition);
@@ -2381,38 +2117,21 @@ export function quitJob(company) {
 }
 
 export function applyForSoftwareJob(sing = false) {
-  return this.applyForJob(
-    CompanyPositions[posNames.SoftwareCompanyPositions[0]],
-    sing,
-  );
+  return this.applyForJob(CompanyPositions[posNames.SoftwareCompanyPositions[0]], sing);
 }
 
 export function applyForSoftwareConsultantJob(sing = false) {
-  return this.applyForJob(
-    CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]],
-    sing,
-  );
+  return this.applyForJob(CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]], sing);
 }
 
 export function applyForItJob(sing = false) {
-  return this.applyForJob(
-    CompanyPositions[posNames.ITCompanyPositions[0]],
-    sing,
-  );
+  return this.applyForJob(CompanyPositions[posNames.ITCompanyPositions[0]], sing);
 }
 
 export function applyForSecurityEngineerJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
-  if (
-    this.isQualified(
-      company,
-      CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]],
-    )
-  ) {
-    return this.applyForJob(
-      CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]],
-      sing,
-    );
+  if (this.isQualified(company, CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]])) {
+    return this.applyForJob(CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], sing);
   } else {
     if (sing) {
       return false;
@@ -2423,16 +2142,8 @@ export function applyForSecurityEngineerJob(sing = false) {
 
 export function applyForNetworkEngineerJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
-  if (
-    this.isQualified(
-      company,
-      CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]],
-    )
-  ) {
-    return this.applyForJob(
-      CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]],
-      sing,
-    );
+  if (this.isQualified(company, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]])) {
+    return this.applyForJob(CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]], sing);
   } else {
     if (sing) {
       return false;
@@ -2442,40 +2153,23 @@ export function applyForNetworkEngineerJob(sing = false) {
 }
 
 export function applyForBusinessJob(sing = false) {
-  return this.applyForJob(
-    CompanyPositions[posNames.BusinessCompanyPositions[0]],
-    sing,
-  );
+  return this.applyForJob(CompanyPositions[posNames.BusinessCompanyPositions[0]], sing);
 }
 
 export function applyForBusinessConsultantJob(sing = false) {
-  return this.applyForJob(
-    CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]],
-    sing,
-  );
+  return this.applyForJob(CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], sing);
 }
 
 export function applyForSecurityJob(sing = false) {
   // TODO Police Jobs
   // Indexing starts at 2 because 0 is for police officer
-  return this.applyForJob(
-    CompanyPositions[posNames.SecurityCompanyPositions[2]],
-    sing,
-  );
+  return this.applyForJob(CompanyPositions[posNames.SecurityCompanyPositions[2]], sing);
 }
 
 export function applyForAgentJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
-  if (
-    this.isQualified(
-      company,
-      CompanyPositions[posNames.AgentCompanyPositions[0]],
-    )
-  ) {
-    return this.applyForJob(
-      CompanyPositions[posNames.AgentCompanyPositions[0]],
-      sing,
-    );
+  if (this.isQualified(company, CompanyPositions[posNames.AgentCompanyPositions[0]])) {
+    return this.applyForJob(CompanyPositions[posNames.AgentCompanyPositions[0]], sing);
   } else {
     if (sing) {
       return false;
@@ -2486,12 +2180,7 @@ export function applyForAgentJob(sing = false) {
 
 export function applyForEmployeeJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
-  if (
-    this.isQualified(
-      company,
-      CompanyPositions[posNames.MiscCompanyPositions[1]],
-    )
-  ) {
+  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[1];
     document.getElementById("world-menu-header").click();
@@ -2499,9 +2188,7 @@ export function applyForEmployeeJob(sing = false) {
     if (sing) {
       return true;
     }
-    dialogBoxCreate(
-      "Congratulations, you are now employed at " + this.companyName,
-    );
+    dialogBoxCreate("Congratulations, you are now employed at " + this.companyName);
   } else {
     if (sing) {
       return false;
@@ -2512,21 +2199,14 @@ export function applyForEmployeeJob(sing = false) {
 
 export function applyForPartTimeEmployeeJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
-  if (
-    this.isQualified(
-      company,
-      CompanyPositions[posNames.PartTimeCompanyPositions[1]],
-    )
-  ) {
+  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
-    dialogBoxCreate(
-      "Congratulations, you are now employed part-time at " + this.companyName,
-    );
+    dialogBoxCreate("Congratulations, you are now employed part-time at " + this.companyName);
   } else {
     if (sing) {
       return false;
@@ -2537,12 +2217,7 @@ export function applyForPartTimeEmployeeJob(sing = false) {
 
 export function applyForWaiterJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
-  if (
-    this.isQualified(
-      company,
-      CompanyPositions[posNames.MiscCompanyPositions[0]],
-    )
-  ) {
+  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[0];
     document.getElementById("world-menu-header").click();
@@ -2550,10 +2225,7 @@ export function applyForWaiterJob(sing = false) {
     if (sing) {
       return true;
     }
-    dialogBoxCreate(
-      "Congratulations, you are now employed as a waiter at " +
-        this.companyName,
-    );
+    dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.companyName);
   } else {
     if (sing) {
       return false;
@@ -2564,12 +2236,7 @@ export function applyForWaiterJob(sing = false) {
 
 export function applyForPartTimeWaiterJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
-  if (
-    this.isQualified(
-      company,
-      CompanyPositions[posNames.PartTimeCompanyPositions[0]],
-    )
-  ) {
+  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
     document.getElementById("world-menu-header").click();
@@ -2577,10 +2244,7 @@ export function applyForPartTimeWaiterJob(sing = false) {
     if (sing) {
       return true;
     }
-    dialogBoxCreate(
-      "Congratulations, you are now employed as a part-time waiter at " +
-        this.companyName,
-    );
+    dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
   } else {
     if (sing) {
       return false;
@@ -2592,18 +2256,12 @@ export function applyForPartTimeWaiterJob(sing = false) {
 //Checks if the Player is qualified for a certain position
 export function isQualified(company, position) {
   var offset = company.jobStatReqOffset;
-  var reqHacking =
-    position.requiredHacking > 0 ? position.requiredHacking + offset : 0;
-  var reqStrength =
-    position.requiredStrength > 0 ? position.requiredStrength + offset : 0;
-  var reqDefense =
-    position.requiredDefense > 0 ? position.requiredDefense + offset : 0;
-  var reqDexterity =
-    position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
-  var reqAgility =
-    position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
-  var reqCharisma =
-    position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
+  var reqHacking = position.requiredHacking > 0 ? position.requiredHacking + offset : 0;
+  var reqStrength = position.requiredStrength > 0 ? position.requiredStrength + offset : 0;
+  var reqDefense = position.requiredDefense > 0 ? position.requiredDefense + offset : 0;
+  var reqDexterity = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
+  var reqAgility = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
+  var reqCharisma = position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
 
   if (
     this.hacking_skill >= reqHacking &&
@@ -2627,20 +2285,14 @@ export function reapplyAllAugmentations(resetMultipliers = true) {
 
   for (let i = 0; i < this.augmentations.length; ++i) {
     //Compatibility with new version
-    if (
-      this.augmentations[i].name ===
-      "HacknetNode NIC Architecture Neural-Upload"
-    ) {
-      this.augmentations[i].name =
-        "Hacknet Node NIC Architecture Neural-Upload";
+    if (this.augmentations[i].name === "HacknetNode NIC Architecture Neural-Upload") {
+      this.augmentations[i].name = "Hacknet Node NIC Architecture Neural-Upload";
     }
 
     const augName = this.augmentations[i].name;
     var aug = Augmentations[augName];
     if (aug == null) {
-      console.warn(
-        `Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`,
-      );
+      console.warn(`Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
       continue;
     }
     aug.owned = true;
@@ -2696,14 +2348,8 @@ export function checkForFactionInvitations() {
   // the requirements for the specified company. There are two requirements:
   //      1. High enough reputation
   //      2. Player is employed at the company
-  function checkMegacorpRequirements(
-    companyName,
-    repNeeded = CONSTANTS.CorpFactionRepRequirement,
-  ) {
-    return (
-      allCompanies.includes(companyName) &&
-      getCompanyRep(companyName) > repNeeded
-    );
+  function checkMegacorpRequirements(companyName, repNeeded = CONSTANTS.CorpFactionRepRequirement) {
+    return allCompanies.includes(companyName) && getCompanyRep(companyName) > repNeeded;
   }
 
   //Illuminati
@@ -2729,14 +2375,10 @@ export function checkForFactionInvitations() {
     !daedalusFac.isBanned &&
     !daedalusFac.isMember &&
     !daedalusFac.alreadyInvited &&
-    numAugmentations >=
-      Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
+    numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
     this.money.gte(100000000000) &&
     (this.hacking_skill >= 2500 ||
-      (this.strength >= 1500 &&
-        this.defense >= 1500 &&
-        this.dexterity >= 1500 &&
-        this.agility >= 1500))
+      (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))
   ) {
     invitedFactions.push(daedalusFac);
   }
@@ -2859,8 +2501,7 @@ export function checkForFactionInvitations() {
 
   //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
   var fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
-  var fulcrumSecretServer =
-    AllServers[SpecialServerIps[SpecialServerNames.FulcrumSecretTechnologies]];
+  var fulcrumSecretServer = AllServers[SpecialServerIps[SpecialServerNames.FulcrumSecretTechnologies]];
   if (fulcrumSecretServer == null) {
     console.error("Could not find Fulcrum Secret Technologies Server");
   } else {
@@ -2878,8 +2519,7 @@ export function checkForFactionInvitations() {
   //BitRunners
   var bitrunnersFac = Factions["BitRunners"];
   var homeComp = this.getHomeComputer();
-  var bitrunnersServer =
-    AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
+  var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
   if (bitrunnersServer == null) {
     console.error("Could not find BitRunners Server");
   } else if (
@@ -2893,8 +2533,7 @@ export function checkForFactionInvitations() {
 
   //The Black Hand
   var theblackhandFac = Factions["The Black Hand"];
-  var blackhandServer =
-    AllServers[SpecialServerIps[SpecialServerNames.TheBlackHandServer]];
+  var blackhandServer = AllServers[SpecialServerIps[SpecialServerNames.TheBlackHandServer]];
   if (blackhandServer == null) {
     console.error("Could not find The Black Hand Server");
   } else if (
@@ -2908,8 +2547,7 @@ export function checkForFactionInvitations() {
 
   //NiteSec
   var nitesecFac = Factions["NiteSec"];
-  var nitesecServer =
-    AllServers[SpecialServerIps[SpecialServerNames.NiteSecServer]];
+  var nitesecServer = AllServers[SpecialServerIps[SpecialServerNames.NiteSecServer]];
   if (nitesecServer == null) {
     console.error("Could not find NiteSec Server");
   } else if (
@@ -3073,9 +2711,7 @@ export function checkForFactionInvitations() {
     !tetradsFac.isBanned &&
     !tetradsFac.isMember &&
     !tetradsFac.alreadyInvited &&
-    (this.city == CityName.Chongqing ||
-      this.city == CityName.NewTokyo ||
-      this.city == CityName.Ishima) &&
+    (this.city == CityName.Chongqing || this.city == CityName.NewTokyo || this.city == CityName.Ishima) &&
     this.strength >= 75 &&
     this.defense >= 75 &&
     this.dexterity >= 75 &&
@@ -3140,17 +2776,14 @@ export function checkForFactionInvitations() {
     !tiandihuiFac.alreadyInvited &&
     this.money.gte(1000000) &&
     this.hacking_skill >= 50 &&
-    (this.city == CityName.Chongqing ||
-      this.city == CityName.NewTokyo ||
-      this.city == CityName.Ishima)
+    (this.city == CityName.Chongqing || this.city == CityName.NewTokyo || this.city == CityName.Ishima)
   ) {
     invitedFactions.push(tiandihuiFac);
   }
 
   //CyberSec
   var cybersecFac = Factions["CyberSec"];
-  var cybersecServer =
-    AllServers[SpecialServerIps[SpecialServerNames.CyberSecServer]];
+  var cybersecServer = AllServers[SpecialServerIps[SpecialServerNames.CyberSecServer]];
   if (cybersecServer == null) {
     console.error("Could not find CyberSec Server");
   } else if (
@@ -3243,10 +2876,7 @@ export function gainCodingContractReward(reward, difficulty = 1) {
       break;
     case CodingContractRewardType.Money:
     default:
-      var moneyGain =
-        CONSTANTS.CodingContractBaseMoneyGain *
-        difficulty *
-        BitNodeMultipliers.CodingContractMoney;
+      var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
       this.gainMoney(moneyGain);
       this.recordMoneySource(moneyGain, "codingcontract");
       return `Gained ${numeralWrapper.formatMoney(moneyGain)}`;

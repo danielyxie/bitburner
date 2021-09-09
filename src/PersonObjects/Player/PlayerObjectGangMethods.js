@@ -14,9 +14,7 @@ export function canAccessGang() {
     return false;
   }
 
-  return (
-    this.karma <= BitNodeMultipliers.GangKarmaRequirement * GangKarmaRequirement
-  );
+  return this.karma <= BitNodeMultipliers.GangKarmaRequirement * GangKarmaRequirement;
 }
 
 export function getGangFaction() {

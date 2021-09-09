@@ -46,9 +46,8 @@ export class GeneralInfo extends React.Component {
     return (
       <div>
         <p className={"hacknet-general-info"}>
-          The Hacknet is a global, decentralized network of machines. It is used
-          by hackers all around the world to anonymously share computing power
-          and perform distributed cyberattacks without the fear of being traced.
+          The Hacknet is a global, decentralized network of machines. It is used by hackers all around the world to
+          anonymously share computing power and perform distributed cyberattacks without the fear of being traced.
         </p>
         <p className={"hacknet-general-info"}>{this.getSecondParagraph()}</p>
         <p className={"hacknet-general-info"}>{this.getThirdParagraph()}</p>

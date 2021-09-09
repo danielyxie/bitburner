@@ -11,19 +11,11 @@ export const SoftwareCompanyPositions: string[] = [
   "Chief Technology Officer",
 ];
 
-export const ITCompanyPositions: string[] = [
-  "IT Intern",
-  "IT Analyst",
-  "IT Manager",
-  "Systems Administrator",
-];
+export const ITCompanyPositions: string[] = ["IT Intern", "IT Analyst", "IT Manager", "Systems Administrator"];
 
 export const SecurityEngineerCompanyPositions: string[] = ["Security Engineer"];
 
-export const NetworkEngineerCompanyPositions: string[] = [
-  "Network Engineer",
-  "Network Administrator",
-];
+export const NetworkEngineerCompanyPositions: string[] = ["Network Engineer", "Network Administrator"];
 
 export const BusinessCompanyPositions: string[] = [
   "Business Intern",
@@ -43,25 +35,12 @@ export const SecurityCompanyPositions: string[] = [
   "Head of Security",
 ];
 
-export const AgentCompanyPositions: string[] = [
-  "Field Agent",
-  "Secret Agent",
-  "Special Operative",
-];
+export const AgentCompanyPositions: string[] = ["Field Agent", "Secret Agent", "Special Operative"];
 
 export const MiscCompanyPositions: string[] = ["Waiter", "Employee"];
 
-export const SoftwareConsultantCompanyPositions: string[] = [
-  "Software Consultant",
-  "Senior Software Consultant",
-];
+export const SoftwareConsultantCompanyPositions: string[] = ["Software Consultant", "Senior Software Consultant"];
 
-export const BusinessConsultantCompanyPositions: string[] = [
-  "Business Consultant",
-  "Senior Business Consultant",
-];
+export const BusinessConsultantCompanyPositions: string[] = ["Business Consultant", "Senior Business Consultant"];
 
-export const PartTimeCompanyPositions: string[] = [
-  "Part-time Waiter",
-  "Part-time Employee",
-];
+export const PartTimeCompanyPositions: string[] = ["Part-time Waiter", "Part-time Employee"];

@@ -17,10 +17,7 @@ export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
   }
 
   if (!found) {
-    dialogBoxCreate(
-      `ERR: Unrecognized crime type: ${type} This is probably a bug please contact the developer`,
-      false,
-    );
+    dialogBoxCreate(`ERR: Unrecognized crime type: ${type} This is probably a bug please contact the developer`, false);
     return false;
   }
 
@@ -54,10 +51,7 @@ export function findCrime(roughName: string): Crime | null {
     return Crimes.GrandTheftAuto;
   } else if (roughName.includes("kidnap")) {
     return Crimes.Kidnap;
-  } else if (
-    roughName.includes("assassinate") ||
-    roughName.includes("assassination")
-  ) {
+  } else if (roughName.includes("assassinate") || roughName.includes("assassination")) {
     return Crimes.Assassination;
   } else if (roughName.includes("heist")) {
     return Crimes.Heist;

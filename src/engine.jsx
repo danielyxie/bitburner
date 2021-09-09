@@ -3,15 +3,9 @@
  *
  * TODO: Separate UI functionality into its own component
  */
-import {
-  convertTimeMsToTimeElapsedString,
-  replaceAt,
-} from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString, replaceAt } from "../utils/StringHelperFunctions";
 import { Augmentations } from "./Augmentation/Augmentations";
-import {
-  initAugmentations,
-  displayAugmentationsContent,
-} from "./Augmentation/AugmentationHelpers";
+import { initAugmentations, displayAugmentationsContent } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
@@ -23,10 +17,7 @@ import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
 import { createDevMenu, closeDevMenu } from "./DevMenu";
 import { Factions, initFactions } from "./Faction/Factions";
-import {
-  processPassiveFactionRepGain,
-  inviteToFaction,
-} from "./Faction/FactionHelpers";
+import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { FactionList } from "./Faction/ui/FactionList";
 import { displayGangContent } from "./Gang/Helpers";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
@@ -49,10 +40,7 @@ import { LocationRoot } from "./Locations/ui/Root";
 import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
 import { inMission, currMission } from "./Missions";
 import { workerScripts } from "./Netscript/WorkerScripts";
-import {
-  loadAllRunningScripts,
-  updateOnlineScriptTimes,
-} from "./NetscriptWorker";
+import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
 import {
@@ -67,23 +55,12 @@ import { initForeignServers, AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
-import {
-  initSymbolToStockMap,
-  processStockPrices,
-  displayStockMarketContent,
-} from "./StockMarket/StockMarket";
+import { initSymbolToStockMap, processStockPrices, displayStockMarketContent } from "./StockMarket/StockMarket";
 import { displayMilestonesContent } from "./Milestones/MilestoneHelpers";
 import { Terminal, postNetburnerText } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
-import {
-  clearSleevesPage,
-  createSleevesPage,
-  updateSleevesPage,
-} from "./PersonObjects/Sleeve/SleeveUI";
-import {
-  clearResleevesPage,
-  createResleevesPage,
-} from "./PersonObjects/Resleeving/ResleevingUI";
+import { clearSleevesPage, createSleevesPage, updateSleevesPage } from "./PersonObjects/Sleeve/SleeveUI";
+import { clearResleevesPage, createResleevesPage } from "./PersonObjects/Resleeving/ResleevingUI";
 
 import { createStatusText } from "./ui/createStatusText";
 import { CharacterInfo } from "./ui/CharacterInfo";
@@ -252,12 +229,7 @@ const Engine = {
     routing.navigateTo(Page.ScriptEditor);
 
     ReactDOM.render(
-      <ScriptEditorRoot
-        filename={filename}
-        code={code}
-        player={Player}
-        engine={this}
-      />,
+      <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
       Engine.Display.scriptEditorContent,
     );
 
@@ -295,10 +267,7 @@ const Engine = {
     Engine.hideAllContent();
     Engine.Display.factionsContent.style.display = "block";
     routing.navigateTo(Page.Factions);
-    ReactDOM.render(
-      <FactionList player={Player} engine={this} />,
-      Engine.Display.factionsContent,
-    );
+    ReactDOM.render(<FactionList player={Player} engine={this} />, Engine.Display.factionsContent);
     MainMenuLinks.Factions.classList.add("active");
   },
 
@@ -344,13 +313,7 @@ const Engine = {
     MainMenuLinks.City.classList.add("active");
 
     routing.navigateTo(Page.Location);
-    const rootComponent = (
-      <LocationRoot
-        initiallyInCity={initiallyInCity}
-        engine={Engine}
-        p={Player}
-      />
-    );
+    const rootComponent = <LocationRoot initiallyInCity={initiallyInCity} engine={Engine} p={Player} />;
     ReactDOM.render(rootComponent, Engine.Display.locationContent);
   },
 
@@ -363,9 +326,7 @@ const Engine = {
     MainMenuLinks.Travel.classList.add("active");
 
     routing.navigateTo(Page.Location);
-    const rootComponent = (
-      <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />
-    );
+    const rootComponent = <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />;
     ReactDOM.render(rootComponent, Engine.Display.locationContent);
   },
 
@@ -374,8 +335,7 @@ const Engine = {
     // Make sure that the 'City' main menu link doesnt become 'active'
     if (Player.companyName == "") {
       dialogBoxCreate(
-        "You do not currently have a job! You can visit various companies " +
-          "in the city and try to find a job.",
+        "You do not currently have a job! You can visit various companies " + "in the city and try to find a job.",
       );
       return;
     }
@@ -385,9 +345,7 @@ const Engine = {
     MainMenuLinks.Job.classList.add("active");
 
     routing.navigateTo(Page.Location);
-    const rootComponent = (
-      <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />
-    );
+    const rootComponent = <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />;
     ReactDOM.render(rootComponent, Engine.Display.locationContent);
   },
 
@@ -446,8 +404,7 @@ const Engine = {
   loadMissionContent: function () {
     Engine.hideAllContent();
     document.getElementById("mainmenu-container").style.visibility = "hidden";
-    document.getElementById("character-overview-wrapper").style.visibility =
-      "hidden";
+    document.getElementById("character-overview-wrapper").style.visibility = "hidden";
     Engine.Display.missionContent.style.display = "block";
     routing.navigateTo(Page.Mission);
   },
@@ -466,11 +423,7 @@ const Engine = {
     routing.navigateTo(Page.Bladeburner);
     Engine.Display.bladeburnerContent.style.display = "block";
     ReactDOM.render(
-      <BladeburnerRoot
-        bladeburner={Player.bladeburner}
-        player={Player}
-        engine={this}
-      />,
+      <BladeburnerRoot bladeburner={Player.bladeburner} player={Player} engine={this} />,
       Engine.Display.bladeburnerContent,
     );
     MainMenuLinks.Bladeburner.classList.add("active");
@@ -582,10 +535,7 @@ const Engine = {
   },
 
   displayCharacterOverviewInfo: function () {
-    ReactDOM.render(
-      <CharacterOverviewComponent />,
-      document.getElementById("character-overview-text"),
-    );
+    ReactDOM.render(<CharacterOverviewComponent />, document.getElementById("character-overview-text"));
 
     const save = document.getElementById("character-overview-save-button");
     const flashClass = "flashing-button";
@@ -642,8 +592,7 @@ const Engine = {
       Engine._actionTimeLeft = Terminal.actionTime;
       Engine._actionInProgress = true;
       Engine._actionProgressBarCount = 1;
-      Engine._actionProgressStr =
-        "[                                                  ]";
+      Engine._actionProgressStr = "[                                                  ]";
       Engine._actionTimeStr = "Time left: ";
       Terminal.actionStarted = false;
     }
@@ -703,12 +652,7 @@ const Engine = {
           if (j === i) {
             continue;
           }
-          Player.sleeves[j].gainExperience(
-            Player,
-            expForOtherSleeves,
-            numCycles,
-            true,
-          );
+          Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCycles, true);
         }
       }
     }
@@ -847,8 +791,7 @@ const Engine = {
           document.getElementById("character-menu-header").click();
         }
 
-        var randFaction =
-          invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
+        var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
         inviteToFaction(randFaction);
       }
 
@@ -917,30 +860,20 @@ const Engine = {
     Engine._actionTimeLeft = Math.max(Engine._actionTimeLeft, 0);
 
     // Calculate percent filled
-    var percent = Math.round(
-      (1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100,
-    );
+    var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);
 
     // Update progress bar
     while (Engine._actionProgressBarCount * 2 <= percent) {
-      Engine._actionProgressStr = replaceAt(
-        Engine._actionProgressStr,
-        Engine._actionProgressBarCount,
-        "|",
-      );
+      Engine._actionProgressStr = replaceAt(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
       Engine._actionProgressBarCount += 1;
     }
 
     // Update hack time remaining
-    Engine._actionTimeStr =
-      "Time left: " +
-      Math.max(0, Math.round(Engine._actionTimeLeft)).toString() +
-      "s";
+    Engine._actionTimeStr = "Time left: " + Math.max(0, Math.round(Engine._actionTimeLeft)).toString() + "s";
     document.getElementById("hack-progress").innerHTML = Engine._actionTimeStr;
 
     // Dynamically update progress bar
-    document.getElementById("hack-progress-bar").innerHTML =
-      Engine._actionProgressStr.replace(/ /g, "&nbsp;");
+    document.getElementById("hack-progress-bar").innerHTML = Engine._actionProgressStr.replace(/ /g, "&nbsp;");
 
     // Once percent is 100, the hack is completed
     if (percent >= 100) {
@@ -1043,10 +976,7 @@ const Engine = {
       const numCyclesOffline = Math.floor(timeOffline / Engine._idleSpeed);
 
       let offlineReputation = 0;
-      const offlineHackingIncome =
-        (Player.moneySourceA.hacking / Player.playtimeSinceLastAug) *
-        timeOffline *
-        0.75;
+      const offlineHackingIncome = (Player.moneySourceA.hacking / Player.playtimeSinceLastAug) * timeOffline * 0.75;
       Player.gainMoney(offlineHackingIncome);
       // Process offline progress
       loadAllRunningScripts(); // This also takes care of offline production for those scripts
@@ -1081,8 +1011,7 @@ const Engine = {
           const sRep = getFactionSecurityWorkRepGain(Player, faction);
           const fRep = getFactionFieldWorkRepGain(Player, faction);
           // can be infinite, doesn't matter.
-          const reputationRate =
-            Math.max(hRep, sRep, fRep) / Player.factions.length;
+          const reputationRate = Math.max(hRep, sRep, fRep) / Player.factions.length;
 
           const rep = reputationRate * numCyclesOffline;
           faction.playerReputation += rep;
@@ -1091,8 +1020,7 @@ const Engine = {
       }
 
       // Hacknet Nodes offline progress
-      var offlineProductionFromHacknetNodes =
-        processHacknetEarnings(numCyclesOffline);
+      var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
       const hacknetProdInfo = hasHacknetServers() ? (
         <>{Hashes(offlineProductionFromHacknetNodes)} hashes</>
       ) : (
@@ -1125,10 +1053,7 @@ const Engine = {
       // Sleeves offline progress
       for (let i = 0; i < Player.sleeves.length; ++i) {
         if (Player.sleeves[i] instanceof Sleeve) {
-          const expForOtherSleeves = Player.sleeves[i].process(
-            Player,
-            numCyclesOffline,
-          );
+          const expForOtherSleeves = Player.sleeves[i].process(Player, numCyclesOffline);
 
           // This sleeve earns experience for other sleeves
           if (expForOtherSleeves == null) {
@@ -1138,12 +1063,7 @@ const Engine = {
             if (j === i) {
               continue;
             }
-            Player.sleeves[j].gainExperience(
-              Player,
-              expForOtherSleeves,
-              numCyclesOffline,
-              true,
-            );
+            Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCyclesOffline, true);
           }
         }
       }
@@ -1169,9 +1089,8 @@ const Engine = {
       const timeOfflineString = convertTimeMsToTimeElapsedString(time);
       dialogBoxCreate(
         <>
-          Offline for {timeOfflineString}. While you were offline, your scripts
-          generated <Money money={offlineHackingIncome} />, your Hacknet Nodes
-          generated {hacknetProdInfo} and you gained{" "}
+          Offline for {timeOfflineString}. While you were offline, your scripts generated{" "}
+          <Money money={offlineHackingIncome} />, your Hacknet Nodes generated {hacknetProdInfo} and you gained{" "}
           {Reputation(offlineReputation)} divided amongst your factions.
         </>,
       );
@@ -1294,101 +1213,71 @@ const Engine = {
 
   setDisplayElements: function () {
     // Content elements
-    Engine.Display.terminalContent =
-      document.getElementById("terminal-container");
+    Engine.Display.terminalContent = document.getElementById("terminal-container");
     routing.navigateTo(Page.Terminal);
 
-    Engine.Display.characterContent = document.getElementById(
-      "character-container",
-    );
+    Engine.Display.characterContent = document.getElementById("character-container");
     Engine.Display.characterContent.style.display = "none";
 
-    Engine.Display.scriptEditorContent = document.getElementById(
-      "script-editor-container",
-    );
+    Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
     Engine.Display.scriptEditorContent.style.display = "none";
 
-    Engine.Display.activeScriptsContent = document.getElementById(
-      "active-scripts-container",
-    );
+    Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
     Engine.Display.activeScriptsContent.style.display = "none";
 
-    Engine.Display.hacknetNodesContent = document.getElementById(
-      "hacknet-nodes-container",
-    );
+    Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
     Engine.Display.hacknetNodesContent.style.display = "none";
 
-    Engine.Display.createProgramContent = document.getElementById(
-      "create-program-container",
-    );
+    Engine.Display.createProgramContent = document.getElementById("create-program-container");
     Engine.Display.createProgramContent.style.display = "none";
 
-    Engine.Display.factionsContent =
-      document.getElementById("factions-container");
+    Engine.Display.factionsContent = document.getElementById("factions-container");
     Engine.Display.factionsContent.style.display = "none";
 
-    Engine.Display.factionContent =
-      document.getElementById("faction-container");
+    Engine.Display.factionContent = document.getElementById("faction-container");
     Engine.Display.factionContent.style.display = "none";
 
-    Engine.Display.augmentationsContent = document.getElementById(
-      "augmentations-container",
-    );
+    Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
     Engine.Display.augmentationsContent.style.display = "none";
 
-    Engine.Display.milestonesContent = document.getElementById(
-      "milestones-container",
-    );
+    Engine.Display.milestonesContent = document.getElementById("milestones-container");
     Engine.Display.milestonesContent.style.display = "none";
 
-    Engine.Display.tutorialContent =
-      document.getElementById("tutorial-container");
+    Engine.Display.tutorialContent = document.getElementById("tutorial-container");
     Engine.Display.tutorialContent.style.display = "none";
 
-    Engine.Display.infiltrationContent = document.getElementById(
-      "infiltration-container",
-    );
+    Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
     Engine.Display.infiltrationContent.style.display = "none";
 
-    Engine.Display.stockMarketContent = document.getElementById(
-      "stock-market-container",
-    );
+    Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
     Engine.Display.stockMarketContent.style.display = "none";
 
     Engine.Display.gangContent = document.getElementById("gang-container");
     Engine.Display.gangContent.style.display = "none";
 
-    Engine.Display.bladeburnerContent =
-      document.getElementById("gang-container");
+    Engine.Display.bladeburnerContent = document.getElementById("gang-container");
     Engine.Display.bladeburnerContent.style.display = "none";
 
-    Engine.Display.missionContent =
-      document.getElementById("mission-container");
+    Engine.Display.missionContent = document.getElementById("mission-container");
     Engine.Display.missionContent.style.display = "none";
 
     // Character info
     Engine.Display.characterInfo = document.getElementById("character-content");
 
     // Location page (page that shows up when you visit a specific location in World)
-    Engine.Display.locationContent =
-      document.getElementById("location-container");
+    Engine.Display.locationContent = document.getElementById("location-container");
     Engine.Display.locationContent.style.display = "none";
 
     // Work In Progress
-    Engine.Display.workInProgressContent = document.getElementById(
-      "work-in-progress-container",
-    );
+    Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
     Engine.Display.workInProgressContent.style.display = "none";
 
     // Red Pill / Hack World Daemon
-    Engine.Display.redPillContent =
-      document.getElementById("red-pill-container");
+    Engine.Display.redPillContent = document.getElementById("red-pill-container");
     Engine.Display.redPillContent.style.display = "none";
 
     // Cinematic Text
-    Engine.Display.cinematicTextContent = document.getElementById(
-      "cinematic-text-container",
-    );
+    Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
     Engine.Display.cinematicTextContent.style.display = "none";
 
     // Initialize references to main menu links
@@ -1410,9 +1299,7 @@ const Engine = {
     };
 
     // Initialize Main Menu Headers (this must be done after initializing the links)
-    if (
-      !initializeMainMenuHeaders(Player, process.env.NODE_ENV === "development")
-    ) {
+    if (!initializeMainMenuHeaders(Player, process.env.NODE_ENV === "development")) {
       const errorMsg =
         "Failed to initialize Main Menu Headers. Please try refreshing the page. " +
         "If that doesn't work, report the issue to the developer";
@@ -1526,44 +1413,33 @@ const Engine = {
     Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
 
     // Save, Delete, Import/Export buttons
-    Engine.Clickables.saveMainMenuButton =
-      document.getElementById("save-game-link");
+    Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
     Engine.Clickables.saveMainMenuButton.addEventListener("click", function () {
       saveObject.saveGame(Engine.indexedDb);
       return false;
     });
 
-    Engine.Clickables.deleteMainMenuButton =
-      document.getElementById("delete-game-link");
-    Engine.Clickables.deleteMainMenuButton.addEventListener(
-      "click",
-      function () {
-        saveObject.deleteGame(Engine.indexedDb);
-        return false;
-      },
-    );
+    Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
+    Engine.Clickables.deleteMainMenuButton.addEventListener("click", function () {
+      saveObject.deleteGame(Engine.indexedDb);
+      return false;
+    });
 
-    document
-      .getElementById("export-game-link")
-      .addEventListener("click", function () {
-        saveObject.exportGame();
-        return false;
-      });
+    document.getElementById("export-game-link").addEventListener("click", function () {
+      saveObject.exportGame();
+      return false;
+    });
 
     // Character Overview buttons
-    document
-      .getElementById("character-overview-save-button")
-      .addEventListener("click", function () {
-        saveObject.saveGame(Engine.indexedDb);
-        return false;
-      });
+    document.getElementById("character-overview-save-button").addEventListener("click", function () {
+      saveObject.saveGame(Engine.indexedDb);
+      return false;
+    });
 
-    document
-      .getElementById("character-overview-options-button")
-      .addEventListener("click", function () {
-        gameOptionsBoxOpen();
-        return false;
-      });
+    document.getElementById("character-overview-options-button").addEventListener("click", function () {
+      gameOptionsBoxOpen();
+      return false;
+    });
 
     // Create Program buttons
     initCreateProgramButtons();
@@ -1573,9 +1449,7 @@ const Engine = {
 
     // Player was working cancel button
     if (Player.isWorking) {
-      var cancelButton = document.getElementById(
-        "work-in-progress-cancel-button",
-      );
+      var cancelButton = document.getElementById("work-in-progress-cancel-button");
       cancelButton.addEventListener("click", function () {
         if (Player.workType == CONSTANTS.WorkTypeFaction) {
           Player.finishFactionWork(true);
@@ -1592,15 +1466,9 @@ const Engine = {
         }
       });
 
-      const focusButton = document.getElementById(
-        "work-in-progress-something-else-button",
-      );
+      const focusButton = document.getElementById("work-in-progress-something-else-button");
       focusButton.style.visibility = "hidden";
-      const focusable = [
-        CONSTANTS.WorkTypeFaction,
-        CONSTANTS.WorkTypeCompanyPartTime,
-        CONSTANTS.WorkTypeCompany,
-      ];
+      const focusable = [CONSTANTS.WorkTypeFaction, CONSTANTS.WorkTypeCompanyPartTime, CONSTANTS.WorkTypeCompany];
       if (focusable.includes(Player.workType)) {
         focusButton.style.visibility = "visible";
         focusButton.addEventListener("click", function () {
@@ -1612,99 +1480,82 @@ const Engine = {
     }
 
     // Character overview screen
-    document.getElementById("character-overview-container").style.display =
-      "block";
+    document.getElementById("character-overview-container").style.display = "block";
 
     // Remove classes from links (they might be set from tutorial)
     document.getElementById("terminal-menu-link").removeAttribute("class");
     document.getElementById("stats-menu-link").removeAttribute("class");
     document.getElementById("create-script-menu-link").removeAttribute("class");
-    document
-      .getElementById("active-scripts-menu-link")
-      .removeAttribute("class");
+    document.getElementById("active-scripts-menu-link").removeAttribute("class");
     document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
     document.getElementById("city-menu-link").removeAttribute("class");
     document.getElementById("milestones-menu-link").removeAttribute("class");
     document.getElementById("tutorial-menu-link").removeAttribute("class");
 
     // Copy Save Data to Clipboard
-    document
-      .getElementById("copy-save-to-clipboard-link")
-      .addEventListener("click", function () {
-        const saveString = saveObject.getSaveString();
-        if (!navigator.clipboard) {
-          // Async Clipboard API not supported, so we'll use this using the
-          // textarea and document.execCommand('copy') trick
-          const textArea = document.createElement("textarea");
-          textArea.value = saveString;
-          textArea.setAttribute("readonly", "");
-          textArea.style.position = "absolute";
-          textArea.left = "-9999px";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          try {
-            const successful = document.execCommand("copy");
-            if (successful) {
-              createStatusText("Copied save to clipboard");
-            } else {
-              createStatusText("Failed to copy save");
-            }
-          } catch (e) {
-            console.error(
-              "Unable to copy save data to clipboard using document.execCommand('copy')",
-            );
+    document.getElementById("copy-save-to-clipboard-link").addEventListener("click", function () {
+      const saveString = saveObject.getSaveString();
+      if (!navigator.clipboard) {
+        // Async Clipboard API not supported, so we'll use this using the
+        // textarea and document.execCommand('copy') trick
+        const textArea = document.createElement("textarea");
+        textArea.value = saveString;
+        textArea.setAttribute("readonly", "");
+        textArea.style.position = "absolute";
+        textArea.left = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          const successful = document.execCommand("copy");
+          if (successful) {
+            createStatusText("Copied save to clipboard");
+          } else {
             createStatusText("Failed to copy save");
           }
-          document.body.removeChild(textArea);
-        } else {
-          // Use the Async Clipboard API
-          navigator.clipboard.writeText(saveString).then(
-            function () {
-              createStatusText("Copied save to clipboard");
-            },
-            function (err) {
-              console.error(err);
-              console.error(
-                "Unable to copy save data to clipboard using Async API",
-              );
-              createStatusText("Failed to copy save");
-            },
-          );
+        } catch (e) {
+          console.error("Unable to copy save data to clipboard using document.execCommand('copy')");
+          createStatusText("Failed to copy save");
         }
-      });
+        document.body.removeChild(textArea);
+      } else {
+        // Use the Async Clipboard API
+        navigator.clipboard.writeText(saveString).then(
+          function () {
+            createStatusText("Copied save to clipboard");
+          },
+          function (err) {
+            console.error(err);
+            console.error("Unable to copy save data to clipboard using Async API");
+            createStatusText("Failed to copy save");
+          },
+        );
+      }
+    });
 
     // DEBUG Delete active Scripts on home
-    document
-      .getElementById("debug-delete-scripts-link")
-      .addEventListener("click", function () {
-        for (const hostname of Object.keys(AllServers)) {
-          AllServers[hostname].runningScripts = [];
-        }
-        dialogBoxCreate(
-          "Forcefully deleted all running scripts. Please save and refresh page.",
-        );
-        gameOptionsBoxClose();
-        return false;
-      });
+    document.getElementById("debug-delete-scripts-link").addEventListener("click", function () {
+      for (const hostname of Object.keys(AllServers)) {
+        AllServers[hostname].runningScripts = [];
+      }
+      dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
+      gameOptionsBoxClose();
+      return false;
+    });
 
     // DEBUG Soft Reset
-    document
-      .getElementById("debug-soft-reset")
-      .addEventListener("click", function () {
-        dialogBoxCreate("Soft Reset!");
-        prestigeAugmentation();
-        gameOptionsBoxClose();
-        return false;
-      });
+    document.getElementById("debug-soft-reset").addEventListener("click", function () {
+      dialogBoxCreate("Soft Reset!");
+      prestigeAugmentation();
+      gameOptionsBoxClose();
+      return false;
+    });
 
     // DEBUG File diagnostic
-    document
-      .getElementById("debug-files")
-      .addEventListener("click", function () {
-        createPopup("debug-files-diagnostic-popup", FileDiagnosticPopup, {});
-        return false;
-      });
+    document.getElementById("debug-files").addEventListener("click", function () {
+      createPopup("debug-files-diagnostic-popup", FileDiagnosticPopup, {});
+      return false;
+    });
   },
 
   start: function () {

@@ -187,10 +187,7 @@ export function isInRootDirectory(path: string): boolean {
  * Evaluates a directory path, including the processing of linux dots.
  * Returns the full, proper path, or null if an invalid path is passed in
  */
-export function evaluateDirectoryPath(
-  path: string,
-  currPath?: string,
-): string | null {
+export function evaluateDirectoryPath(path: string, currPath?: string): string | null {
   let t_path = path;
 
   // If the path begins with a slash, then its an absolute path. Otherwise its relative
@@ -232,10 +229,7 @@ export function evaluateDirectoryPath(
  * Evaluates a file path, including the processing of linux dots.
  * Returns the full, proper path, or null if an invalid path is passed in
  */
-export function evaluateFilePath(
-  path: string,
-  currPath?: string,
-): string | null {
+export function evaluateFilePath(path: string, currPath?: string): string | null {
   let t_path = path;
 
   // If the path begins with a slash, then its an absolute path. Otherwise its relative

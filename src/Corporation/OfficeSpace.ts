@@ -2,11 +2,7 @@ import { EmployeePositions } from "./EmployeePositions";
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { generateRandomString } from "../../utils/StringHelperFunctions";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { Employee } from "./Employee";
 import { IIndustry } from "./IIndustry";
 import { ICorporation } from "./ICorporation";
@@ -53,11 +49,7 @@ export class OfficeSpace {
     return this.employees.length >= this.size;
   }
 
-  process(
-    marketCycles = 1,
-    corporation: ICorporation,
-    industry: IIndustry,
-  ): number {
+  process(marketCycles = 1, corporation: ICorporation, industry: IIndustry): number {
     // HRBuddy AutoRecruitment and training
     if (industry.hasResearch("HRBuddy-Recruitment") && !this.atCapacity()) {
       const emp = this.hireRandomEmployee();
@@ -119,10 +111,7 @@ export class OfficeSpace {
     return salaryPaid;
   }
 
-  calculateEmployeeProductivity(
-    corporation: ICorporation,
-    industry: IIndustry,
-  ): void {
+  calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
     //Reset
     for (const name in this.employeeProd) {
       this.employeeProd[name] = 0;
@@ -140,8 +129,7 @@ export class OfficeSpace {
 
   hireRandomEmployee(): Employee | undefined {
     if (this.atCapacity()) return;
-    if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null)
-      return;
+    if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) return;
 
     //Generate three random employees (meh, decent, amazing)
     const mult = getRandomInt(76, 100) / 100;
@@ -150,9 +138,7 @@ export class OfficeSpace {
       exp = getRandomInt(50, 100),
       cre = getRandomInt(50, 100),
       eff = getRandomInt(50, 100),
-      sal =
-        CorporationConstants.EmployeeSalaryMultiplier *
-        (int + cha + exp + cre + eff);
+      sal = CorporationConstants.EmployeeSalaryMultiplier * (int + cha + exp + cre + eff);
 
     const emp = new Employee({
       intelligence: int * mult,

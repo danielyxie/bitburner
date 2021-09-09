@@ -407,8 +407,7 @@ export const Literatures: IMap<Literature> = {};
     "We live in an era vastly different from that of 15 or even 20 years ago. We have gone " +
     "beyond the limits of humanity. We have stripped ourselves of the tyranny of flesh.<br><br>" +
     "The Singularity is here. The merging of man and machine. This is where humanity evolves into ";
-  "something greater. This is our future.<br><br>" +
-    "Embrace it, and you will obey a new god. The God in the Machine.";
+  "something greater. This is our future.<br><br>" + "Embrace it, and you will obey a new god. The God in the Machine.";
   Literatures[fn] = new Literature(title, fn, txt);
 
   title = "The New Triads";

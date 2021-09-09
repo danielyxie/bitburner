@@ -23,9 +23,7 @@ export class Accordion extends React.Component<IProps, IState> {
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
 
     this.state = {
-      panelOpened: props.panelInitiallyOpened
-        ? props.panelInitiallyOpened
-        : false,
+      panelOpened: props.panelInitiallyOpened ? props.panelInitiallyOpened : false,
     };
   }
 

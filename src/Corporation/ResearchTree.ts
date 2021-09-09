@@ -40,9 +40,7 @@ export class Node {
 
   constructor(p: IConstructorParams = { cost: 0, text: "" }) {
     if (ResearchMap[p.text] == null) {
-      throw new Error(
-        `Invalid Research name used when constructing ResearchTree Node: ${p.text}`,
-      );
+      throw new Error(`Invalid Research name used when constructing ResearchTree Node: ${p.text}`);
     }
 
     this.text = p.text;
@@ -87,10 +85,7 @@ export class Node {
       HTMLclass: htmlClass,
       innerHTML:
         `<div id="${sanitizedName}-corp-research-click-listener" class="tooltip">` +
-        `${this.text}<br>${numeralWrapper.format(
-          this.cost,
-          "0,0",
-        )} Scientific Research` +
+        `${this.text}<br>${numeralWrapper.format(this.cost, "0,0")} Scientific Research` +
         `<span class="tooltiptext">` +
         `${research.desc}` +
         `</span>` +
@@ -243,9 +238,7 @@ export class ResearchTree {
 
       const mult: any = (research as any)[propName];
       if (mult == null) {
-        console.warn(
-          `Invalid propName specified in ResearchTree.getMultiplierHelper: ${propName}`,
-        );
+        console.warn(`Invalid propName specified in ResearchTree.getMultiplierHelper: ${propName}`);
         continue;
       }
 
@@ -292,9 +285,7 @@ export class ResearchTree {
       }
     }
 
-    console.warn(
-      `ResearchTree.research() did not find the specified Research node for: ${name}`,
-    );
+    console.warn(`ResearchTree.research() did not find the specified Research node for: ${name}`);
   }
 
   // Set the tree's Root Node

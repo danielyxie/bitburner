@@ -60,10 +60,9 @@ function convert2DArrayToString(arr: any[][]): string {
 export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
   {
     desc: (n: number): string => {
-      return [
-        "A prime factor is a factor that is a prime number.",
-        `What is the largest prime factor of ${n}?`,
-      ].join(" ");
+      return ["A prime factor is a factor that is a prime number.", `What is the largest prime factor of ${n}?`].join(
+        " ",
+      );
     },
     difficulty: 1,
     gen: (): number => {
@@ -158,7 +157,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       d += "&nbsp;&nbsp;&nbsp;&nbsp;[\n";
       d += n
         .map(
-          (line: number[]) => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[" +
+          (line: number[]) =>
+            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[" +
             line.map((x: number) => `${x}`.padStart(2, " ")).join(",") +
             "]",
         )
@@ -251,9 +251,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         }
       }
 
-      const sanitizedPlayerAns: string = removeBracketsFromArrayString(
-        ans,
-      ).replace(/\s/g, "");
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans).replace(/\s/g, "");
       const playerAns: any[] = sanitizedPlayerAns.split(",");
       for (let i = 0; i < playerAns.length; ++i) {
         playerAns[i] = parseInt(playerAns[i], 10);
@@ -371,10 +369,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       const sanitizedResult: string = convert2DArrayToString(result);
       const sanitizedAns: string = ans.replace(/\s/g, "");
 
-      return (
-        sanitizedResult === sanitizedAns ||
-        sanitizedResult === removeBracketsFromArrayString(sanitizedAns)
-      );
+      return sanitizedResult === sanitizedAns || sanitizedResult === removeBracketsFromArrayString(sanitizedAns);
     },
   },
   {
@@ -413,24 +408,10 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
               if (a + b + c + d === data.length) {
                 const A: number = parseInt(data.substring(0, a), 10);
                 const B: number = parseInt(data.substring(a, a + b), 10);
-                const C: number = parseInt(
-                  data.substring(a + b, a + b + c),
-                  10,
-                );
-                const D: number = parseInt(
-                  data.substring(a + b + c, a + b + c + d),
-                  10,
-                );
+                const C: number = parseInt(data.substring(a + b, a + b + c), 10);
+                const D: number = parseInt(data.substring(a + b + c, a + b + c + d), 10);
                 if (A <= 255 && B <= 255 && C <= 255 && D <= 255) {
-                  const ip: string = [
-                    A.toString(),
-                    ".",
-                    B.toString(),
-                    ".",
-                    C.toString(),
-                    ".",
-                    D.toString(),
-                  ].join("");
+                  const ip: string = [A.toString(), ".", B.toString(), ".", C.toString(), ".", D.toString()].join("");
                   if (ip.length === data.length + 3) {
                     ret.push(ip);
                   }
@@ -441,10 +422,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         }
       }
 
-      const sanitizedAns: string = removeBracketsFromArrayString(ans).replace(
-        /\s/g,
-        "",
-      );
+      const sanitizedAns: string = removeBracketsFromArrayString(ans).replace(/\s/g, "");
       const ansArr: string[] = sanitizedAns.split(",");
       if (ansArr.length !== ret.length) {
         return false;
@@ -651,12 +629,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         }
         const numSpaces = numLevels - level + 1;
 
-        let str: string = [
-          "&nbsp;".repeat(numSpaces),
-          "[",
-          data[level].toString(),
-          "]",
-        ].join("");
+        let str: string = ["&nbsp;".repeat(numSpaces), "[", data[level].toString(), "]"].join("");
         if (level < numLevels - 1) {
           str += ",";
         }
@@ -821,17 +794,12 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           } else if (i == 0 && j == 0) {
             obstacleGrid[0][0] = 1;
           } else {
-            obstacleGrid[i][j] =
-              (i > 0 ? obstacleGrid[i - 1][j] : 0) +
-              (j > 0 ? obstacleGrid[i][j - 1] : 0);
+            obstacleGrid[i][j] = (i > 0 ? obstacleGrid[i - 1][j] : 0) + (j > 0 ? obstacleGrid[i][j - 1] : 0);
           }
         }
       }
 
-      return (
-        obstacleGrid[obstacleGrid.length - 1][obstacleGrid[0].length - 1] ===
-        parseInt(ans)
-      );
+      return obstacleGrid[obstacleGrid.length - 1][obstacleGrid[0].length - 1] === parseInt(ans);
     },
   },
   {
@@ -915,10 +883,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           }
           dfs(pair + 1, index + 1, left, right, s, solution + s[index], res);
         } else if (s[index] === ")") {
-          if (right > 0)
-            dfs(pair, index + 1, left, right - 1, s, solution, res);
-          if (pair > 0)
-            dfs(pair - 1, index + 1, left, right, s, solution + s[index], res);
+          if (right > 0) dfs(pair, index + 1, left, right - 1, s, solution, res);
+          if (pair > 0) dfs(pair - 1, index + 1, left, right, s, solution + s[index], res);
         } else {
           dfs(pair, index + 1, left, right, s, solution + s[index], res);
         }
@@ -926,10 +892,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       dfs(0, 0, left, right, data, "", res);
 
-      const sanitizedPlayerAns = removeBracketsFromArrayString(ans).replace(
-        /\s/g,
-        "",
-      );
+      const sanitizedPlayerAns = removeBracketsFromArrayString(ans).replace(/\s/g, "");
 
       const playerAnsArray: string[] = sanitizedPlayerAns.split(",");
       if (playerAnsArray.length !== res.length) {
@@ -1017,33 +980,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           if (pos === 0) {
             helper(res, path + cur, num, target, i + 1, cur, cur);
           } else {
-            helper(
-              res,
-              path + "+" + cur,
-              num,
-              target,
-              i + 1,
-              evaluated + cur,
-              cur,
-            );
-            helper(
-              res,
-              path + "-" + cur,
-              num,
-              target,
-              i + 1,
-              evaluated - cur,
-              -cur,
-            );
-            helper(
-              res,
-              path + "*" + cur,
-              num,
-              target,
-              i + 1,
-              evaluated - multed + multed * cur,
-              multed * cur,
-            );
+            helper(res, path + "+" + cur, num, target, i + 1, evaluated + cur, cur);
+            helper(res, path + "-" + cur, num, target, i + 1, evaluated - cur, -cur);
+            helper(res, path + "*" + cur, num, target, i + 1, evaluated - multed + multed * cur, multed * cur);
           }
         }
       }
@@ -1051,19 +990,14 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
       const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
       for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
-        sanitizedPlayerAnsArr[i] = removeQuotesFromString(
-          sanitizedPlayerAnsArr[i],
-        ).replace(/\s/g, "");
+        sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i]).replace(/\s/g, "");
       }
 
       if (num == null || num.length === 0) {
         if (sanitizedPlayerAnsArr.length === 0) {
           return true;
         }
-        if (
-          sanitizedPlayerAnsArr.length === 1 &&
-          sanitizedPlayerAnsArr[0] === ""
-        ) {
+        if (sanitizedPlayerAnsArr.length === 1 && sanitizedPlayerAnsArr[0] === "") {
           return true;
         }
         return false;

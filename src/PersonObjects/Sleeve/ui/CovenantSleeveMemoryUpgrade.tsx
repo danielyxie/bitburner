@@ -22,10 +22,7 @@ interface IState {
   amt: number;
 }
 
-export class CovenantSleeveMemoryUpgrade extends React.Component<
-  IProps,
-  IState
-> {
+export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -88,8 +85,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<
     } else {
       purchaseBtnContent = (
         <>
-          Purchase {this.state.amt} memory -{" "}
-          <Money money={cost} player={this.props.p} />?
+          Purchase {this.state.amt} memory - <Money money={cost} player={this.props.p} />?
         </>
       );
     }
@@ -100,14 +96,11 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<
           <u>Upgrade Memory</u>
         </h2>
         <p>
-          Purchase a memory upgrade for your sleeve. Note that a sleeve's max
-          memory is 100 (current:{" "}
+          Purchase a memory upgrade for your sleeve. Note that a sleeve's max memory is 100 (current:{" "}
           {numeralWrapper.formatSleeveMemory(this.props.sleeve.memory)})
         </p>
 
-        <label htmlFor={inputId}>
-          Amount of memory to purchase (must be an integer):
-        </label>
+        <label htmlFor={inputId}>Amount of memory to purchase (must be an integer):</label>
         <input
           className="text-input"
           id={inputId}
@@ -116,11 +109,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<
           value={this.state.amt}
         />
         <br />
-        <StdButton
-          disabled={purchaseBtnDisabled}
-          onClick={this.purchaseMemory}
-          text={purchaseBtnContent}
-        />
+        <StdButton disabled={purchaseBtnDisabled} onClick={this.purchaseMemory} text={purchaseBtnContent} />
       </div>
     );
   }

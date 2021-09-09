@@ -9,10 +9,7 @@ export interface IParagraphWithTooltipProps {
   tooltip: string | React.ReactElement | JSX.Element;
 }
 
-export class ParagraphWithTooltip extends React.Component<
-  IParagraphWithTooltipProps,
-  any
-> {
+export class ParagraphWithTooltip extends React.Component<IParagraphWithTooltipProps, any> {
   render(): React.ReactNode {
     return (
       <div className={"tooltip"} style={this.props.style}>

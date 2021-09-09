@@ -23,13 +23,7 @@ export class StockTickerOrderList extends React.Component<IProps, any> {
     const orders: React.ReactElement[] = [];
     for (let i = 0; i < this.props.orders.length; ++i) {
       const o = this.props.orders[i];
-      orders.push(
-        <StockTickerOrder
-          cancelOrder={this.props.cancelOrder}
-          order={o}
-          key={i}
-        />,
-      );
+      orders.push(<StockTickerOrder cancelOrder={this.props.cancelOrder} order={o} key={i} />);
     }
 
     return <ul className={"stock-market-order-list"}>{orders}</ul>;

@@ -5,9 +5,7 @@ import { isString } from "./helpers/isString";
 
 // Replaces the character at an index with a new character
 function replaceAt(base: string, index: number, character: string): string {
-  return (
-    base.substr(0, index) + character + base.substr(index + character.length)
-  );
+  return base.substr(0, index) + character + base.substr(index + character.length);
 }
 
 /*
@@ -15,10 +13,7 @@ Converts a date representing time in milliseconds to a string with the format H 
 e.g.    10000 -> "10 seconds"
         120000 -> "2 minutes and 0 seconds"
 */
-function convertTimeMsToTimeElapsedString(
-  time: number,
-  showMilli = false,
-): string {
+function convertTimeMsToTimeElapsedString(time: number, showMilli = false): string {
   time = Math.floor(time);
   const millisecondsPerSecond = 1000;
   const secondPerMinute = 60;
@@ -45,9 +40,7 @@ function convertTimeMsToTimeElapsedString(
     return str;
   })();
 
-  const seconds: string = showMilli
-    ? `${secTruncMinutes}.${milliTruncSec}`
-    : `${secTruncMinutes}`;
+  const seconds: string = showMilli ? `${secTruncMinutes}.${milliTruncSec}` : `${secTruncMinutes}`;
 
   let res = "";
   if (days > 0) {
@@ -78,10 +71,7 @@ function longestCommonStart(strings: string[]): string {
   const a2: string = A[A.length - 1];
   const L: number = a1.length;
   let i = 0;
-  const areEqualCaseInsensitive: EqualityFunc<string> = (
-    a: string,
-    b: string,
-  ) => a.toUpperCase() === b.toUpperCase();
+  const areEqualCaseInsensitive: EqualityFunc<string> = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
   while (i < L && areEqualCaseInsensitive(a1.charAt(i), a2.charAt(i))) {
     i++;
   }
@@ -119,8 +109,7 @@ function isHTML(str: string): boolean {
 // Generates a random alphanumeric string with N characters
 function generateRandomString(n: number): string {
   let str = "";
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (let i = 0; i < n; i++) {
     str += chars.charAt(Math.floor(Math.random() * chars.length));

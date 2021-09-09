@@ -146,10 +146,7 @@ export interface IPlayer {
   getGangFaction(): Faction;
   getGangName(): string;
   getHomeComputer(): Server;
-  getNextCompanyPosition(
-    company: Company,
-    entryPosType: CompanyPosition,
-  ): CompanyPosition;
+  getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
   getUpgradeHomeRamCost(): number;
   gotoLocation(to: LocationName): boolean;
   hasCorporation(): boolean;

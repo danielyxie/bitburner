@@ -26,11 +26,7 @@ export function AllPages(props: IProps): React.ReactElement {
     return (
       <a
         onClick={() => setPage(props.name)}
-        className={
-          page !== props.name
-            ? "bladeburner-nav-button noselect"
-            : "bladeburner-nav-button-inactive noselect"
-        }
+        className={page !== props.name ? "bladeburner-nav-button noselect" : "bladeburner-nav-button-inactive noselect"}
       >
         {props.name}
       </a>
@@ -44,29 +40,14 @@ export function AllPages(props: IProps): React.ReactElement {
       <Header name={"BlackOps"} />
       <Header name={"Skills"} />
       <div style={{ display: "block", margin: "4px", padding: "4px" }}>
-        {page === "General" && (
-          <GeneralActionPage
-            bladeburner={props.bladeburner}
-            player={props.player}
-          />
-        )}
-        {page === "Contracts" && (
-          <ContractPage bladeburner={props.bladeburner} player={props.player} />
-        )}
-        {page === "Operations" && (
-          <OperationPage
-            bladeburner={props.bladeburner}
-            player={props.player}
-          />
-        )}
-        {page === "BlackOps" && (
-          <BlackOpPage bladeburner={props.bladeburner} player={props.player} />
-        )}
+        {page === "General" && <GeneralActionPage bladeburner={props.bladeburner} player={props.player} />}
+        {page === "Contracts" && <ContractPage bladeburner={props.bladeburner} player={props.player} />}
+        {page === "Operations" && <OperationPage bladeburner={props.bladeburner} player={props.player} />}
+        {page === "BlackOps" && <BlackOpPage bladeburner={props.bladeburner} player={props.player} />}
         {page === "Skills" && <SkillPage bladeburner={props.bladeburner} />}
       </div>
       <span className="text">
-        {stealthIcon} = This action requires stealth, {killIcon} = This action
-        involves retirement
+        {stealthIcon} = This action requires stealth, {killIcon} = This action involves retirement
       </span>
     </>
   );

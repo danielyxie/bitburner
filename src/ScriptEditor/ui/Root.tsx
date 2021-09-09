@@ -23,11 +23,7 @@ import { libSource } from "../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
-import {
-  iTutorialNextStep,
-  ITutorial,
-  iTutorialSteps,
-} from "../../InteractiveTutorial";
+import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
 
 let symbols: string[] = [];
 (function () {
@@ -79,9 +75,7 @@ let lastPosition: monaco.Position | null = null;
 
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
-  const [filename, setFilename] = useState(
-    props.filename ? props.filename : lastFilename,
-  );
+  const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.code ? props.code : lastCode);
   const [ram, setRAM] = useState("RAM: ???");
   const [options, setOptions] = useState<Options>({
@@ -110,33 +104,23 @@ export function Root(props: IProps): React.ReactElement {
     lastPosition = null;
 
     // TODO(hydroflame): re-enable the tutorial.
-    if (
-      ITutorial.isRunning &&
-      ITutorial.currStep === iTutorialSteps.TerminalTypeScript
-    ) {
+    if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
       //Make sure filename + code properly follow tutorial
       if (filename !== "n00dles.script") {
         dialogBoxCreate("Leave the script name as 'n00dles'!");
         return;
       }
-      if (
-        code.replace(/\s/g, "").indexOf("while(true){hack('n00dles');}") == -1
-      ) {
+      if (code.replace(/\s/g, "").indexOf("while(true){hack('n00dles');}") == -1) {
         dialogBoxCreate("Please copy and paste the code from the tutorial!");
         return;
       }
 
       //Save the script
       const server = props.player.getCurrentServer();
-      if (server === null)
-        throw new Error("Server should not be null but it is.");
+      if (server === null) throw new Error("Server should not be null but it is.");
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
-          server.scripts[i].saveScript(
-            code,
-            props.player.currentServer,
-            server.scripts,
-          );
+          server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
           props.engine.loadTerminalContent();
           return iTutorialNextStep();
         }
@@ -163,8 +147,7 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     const server = props.player.getCurrentServer();
-    if (server === null)
-      throw new Error("Server should not be null but it is.");
+    if (server === null) throw new Error("Server should not be null but it is.");
     if (filename === ".fconf") {
       try {
         parseFconfSettings(code);
@@ -176,11 +159,7 @@ export function Root(props: IProps): React.ReactElement {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
-          server.scripts[i].saveScript(
-            code,
-            props.player.currentServer,
-            server.scripts,
-          );
+          server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
           props.engine.loadTerminalContent();
           return;
         }
@@ -201,10 +180,7 @@ export function Root(props: IProps): React.ReactElement {
       const textFile = new TextFile(filename, code);
       server.textFiles.push(textFile);
     } else {
-      dialogBoxCreate(
-        "Invalid filename. Must be either a script (.script, .js, or .ns) or " +
-          " or text file (.txt)",
-      );
+      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
       return;
     }
     props.engine.loadTerminalContent();
@@ -254,10 +230,7 @@ export function Root(props: IProps): React.ReactElement {
 
   async function updateRAM(): Promise<void> {
     const codeCopy = code + "";
-    const ramUsage = await calculateRamUsage(
-      codeCopy,
-      props.player.getCurrentServer().scripts,
-    );
+    const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
     if (ramUsage > 0) {
       setRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
       return;
@@ -324,21 +297,14 @@ export function Root(props: IProps): React.ReactElement {
             label: symbol,
             kind: monaco.languages.CompletionItemKind.Function,
             insertText: symbol,
-            insertTextRules:
-              monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
           });
         }
         return { suggestions: suggestions };
       },
     });
-    monaco.languages.typescript.javascriptDefaults.addExtraLib(
-      libSource,
-      "netscript.d.ts",
-    );
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(
-      libSource,
-      "netscript.d.ts",
-    );
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
   }
 
   return (
@@ -371,17 +337,10 @@ export function Root(props: IProps): React.ReactElement {
       />
       <div id="script-editor-buttons-wrapper">
         <StdButton text={"Beautify"} onClick={beautify} />
-        <p
-          id="script-editor-status-text"
-          style={{ display: "inline-block", margin: "10px" }}
-        >
+        <p id="script-editor-status-text" style={{ display: "inline-block", margin: "10px" }}>
           {ram}
         </p>
-        <button
-          className="std-button"
-          style={{ display: "inline-block" }}
-          onClick={save}
-        >
+        <button className="std-button" style={{ display: "inline-block" }} onClick={save}>
           Save & Close (Ctrl/Cmd + b)
         </button>
         <a

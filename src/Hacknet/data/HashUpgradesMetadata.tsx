@@ -63,9 +63,7 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
       "Use hashes to improve the experience earned when training at the gym by 20%. This effect " +
       "persists until you install Augmentations",
     name: "Improve Gym Training",
-    effectText: (level: number): JSX.Element | null => (
-      <>Improves training by ${level * 20}%</>
-    ),
+    effectText: (level: number): JSX.Element | null => <>Improves training by ${level * 20}%</>,
     value: 20, // Improves training by value%
   },
   {
@@ -82,10 +80,7 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
     desc: "Exchange hashes for 100 Bladeburner Rank",
     name: "Exchange for Bladeburner Rank",
     effectText: (level: number): JSX.Element | null => (
-      <>
-        Acquired a total of {numeralWrapper.format(100 * level, "0a")}{" "}
-        Bladeburner rank
-      </>
+      <>Acquired a total of {numeralWrapper.format(100 * level, "0a")} Bladeburner rank</>
     ),
     value: 100,
   },
@@ -94,10 +89,7 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
     desc: "Exchanges hashes for 10 Bladeburner Skill Points",
     name: "Exchange for Bladeburner SP",
     effectText: (level: number): JSX.Element | null => (
-      <>
-        Acquired a total of {numeralWrapper.format(10 * level, "0a")}{" "}
-        Bladeburner Skill Points
-      </>
+      <>Acquired a total of {numeralWrapper.format(10 * level, "0a")} Bladeburner Skill Points</>
     ),
     value: 10,
   },
@@ -105,9 +97,7 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
     costPerLevel: 200,
     desc: "Generate a random Coding Contract somewhere on the network",
     name: "Generate Coding Contract",
-    effectText: (level: number): JSX.Element | null => (
-      <>Generated {level} contracts.</>
-    ),
+    effectText: (level: number): JSX.Element | null => <>Generated {level} contracts.</>,
     value: 1,
   },
 ];

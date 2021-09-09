@@ -26,10 +26,7 @@ export function MultiplierButtons(props) {
   for (let i = 0; i < mults.length; ++i) {
     const mult = mults[i];
     const btnProps = {
-      className:
-        props.purchaseMultiplier === PurchaseMultipliers[mult]
-          ? "std-button-disabled"
-          : "std-button",
+      className: props.purchaseMultiplier === PurchaseMultipliers[mult] ? "std-button-disabled" : "std-button",
       key: mult,
       onClick: onClicks[i],
       text: mult,

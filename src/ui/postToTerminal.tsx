@@ -38,16 +38,11 @@ export function postElement(element: JSX.Element): void {
   postContent(renderToStaticMarkup(element));
 }
 
-export function postContent(
-  input: string,
-  config: IPostContentConfig = {},
-): void {
+export function postContent(input: string, config: IPostContentConfig = {}): void {
   // tslint:disable-next-line:max-line-length
   const style = `color: ${
     config.color != null ? config.color : "var(--my-font-color)"
-  }; background-color:var(--my-background-color);${
-    config.id === undefined ? " white-space:pre-wrap;" : ""
-  }`;
+  }; background-color:var(--my-background-color);${config.id === undefined ? " white-space:pre-wrap;" : ""}`;
   // tslint:disable-next-line:max-line-length
   const content = `<tr class="posted"><td ${
     config.id === undefined ? `class="terminal-line"` : `id="${config.id}"`

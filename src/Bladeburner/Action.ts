@@ -1,11 +1,7 @@
 import { Player } from "../Player";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { addOffset } from "../../utils/helpers/addOffset";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { BladeburnerConstants } from "./data/Constants";
 import { IBladeburner } from "./IBladeburner";
 import { IAction, ISuccessChanceParams } from "./IAction";
@@ -106,10 +102,8 @@ export class Action implements IAction {
     if (params && params.name) this.name = params.name;
     if (params && params.desc) this.desc = params.desc;
 
-    if (params && params.baseDifficulty)
-      this.baseDifficulty = addOffset(params.baseDifficulty, 10);
-    if (params && params.difficultyFac)
-      this.difficultyFac = params.difficultyFac;
+    if (params && params.baseDifficulty) this.baseDifficulty = addOffset(params.baseDifficulty, 10);
+    if (params && params.difficultyFac) this.difficultyFac = params.difficultyFac;
 
     if (params && params.rewardFac) this.rewardFac = params.rewardFac;
     if (params && params.rankGain) this.rankGain = params.rankGain;
@@ -144,11 +138,7 @@ export class Action implements IAction {
       if (this.decays.hasOwnProperty(decay)) {
         if (this.decays[decay] > 1) {
           throw new Error(
-            "Invalid decays when constructing " +
-              "Action " +
-              this.name +
-              ". " +
-              "Decay value cannot be greater than 1",
+            "Invalid decays when constructing " + "Action " + this.name + ". " + "Decay value cannot be greater than 1",
           );
         }
       }
@@ -156,8 +146,7 @@ export class Action implements IAction {
   }
 
   getDifficulty(): number {
-    const difficulty =
-      this.baseDifficulty * Math.pow(this.difficultyFac, this.level - 1);
+    const difficulty = this.baseDifficulty * Math.pow(this.difficultyFac, this.level - 1);
     if (isNaN(difficulty)) {
       throw new Error("Calculated NaN in Action.getDifficulty()");
     }
@@ -207,27 +196,16 @@ export class Action implements IAction {
     return 1;
   }
 
-  getChaosCompetencePenalty(
-    inst: IBladeburner,
-    params: ISuccessChanceParams,
-  ): number {
+  getChaosCompetencePenalty(inst: IBladeburner, params: ISuccessChanceParams): number {
     const city = inst.getCurrentCity();
     if (params.est) {
-      return Math.pow(
-        city.popEst / BladeburnerConstants.PopulationThreshold,
-        BladeburnerConstants.PopulationExponent,
-      );
+      return Math.pow(city.popEst / BladeburnerConstants.PopulationThreshold, BladeburnerConstants.PopulationExponent);
     } else {
-      return Math.pow(
-        city.pop / BladeburnerConstants.PopulationThreshold,
-        BladeburnerConstants.PopulationExponent,
-      );
+      return Math.pow(city.pop / BladeburnerConstants.PopulationThreshold, BladeburnerConstants.PopulationExponent);
     }
   }
 
-  getChaosDifficultyBonus(
-    inst: IBladeburner /*, params: ISuccessChanceParams*/,
-  ): number {
+  getChaosDifficultyBonus(inst: IBladeburner /*, params: ISuccessChanceParams*/): number {
     const city = inst.getCurrentCity();
     if (city.chaos > BladeburnerConstants.ChaosThreshold) {
       const diff = 1 + (city.chaos - BladeburnerConstants.ChaosThreshold);
@@ -260,14 +238,9 @@ export class Action implements IAction {
    * @params - options:
    *  est (bool): Get success chance estimate instead of real success chance
    */
-  getSuccessChance(
-    inst: IBladeburner,
-    params: ISuccessChanceParams = { est: false },
-  ): number {
+  getSuccessChance(inst: IBladeburner, params: ISuccessChanceParams = { est: false }): number {
     if (inst == null) {
-      throw new Error(
-        "Invalid Bladeburner instance passed into Action.getSuccessChance",
-      );
+      throw new Error("Invalid Bladeburner instance passed into Action.getSuccessChance");
     }
     let difficulty = this.getDifficulty();
     let competence = 0;
@@ -277,14 +250,10 @@ export class Action implements IAction {
         const key = "eff" + stat.charAt(0).toUpperCase() + stat.slice(1);
         let effMultiplier = inst.skillMultipliers[key];
         if (effMultiplier == null) {
-          console.error(
-            `Failed to find Bladeburner Skill multiplier for: ${stat}`,
-          );
+          console.error(`Failed to find Bladeburner Skill multiplier for: ${stat}`);
           effMultiplier = 1;
         }
-        competence +=
-          this.weights[stat] *
-          Math.pow(effMultiplier * playerStatLvl, this.decays[stat]);
+        competence += this.weights[stat] * Math.pow(effMultiplier * playerStatLvl, this.decays[stat]);
       }
     }
     competence *= Player.getIntelligenceBonus(0.75);
@@ -313,24 +282,17 @@ export class Action implements IAction {
     competence *= Player.bladeburner_success_chance_mult;
 
     if (isNaN(competence)) {
-      throw new Error(
-        "Competence calculated as NaN in Action.getSuccessChance()",
-      );
+      throw new Error("Competence calculated as NaN in Action.getSuccessChance()");
     }
     return Math.min(1, competence / difficulty);
   }
 
   getSuccessesNeededForNextLevel(baseSuccessesPerLevel: number): number {
-    return Math.ceil(
-      0.5 * this.maxLevel * (2 * baseSuccessesPerLevel + (this.maxLevel - 1)),
-    );
+    return Math.ceil(0.5 * this.maxLevel * (2 * baseSuccessesPerLevel + (this.maxLevel - 1)));
   }
 
   setMaxLevel(baseSuccessesPerLevel: number): void {
-    if (
-      this.successes >=
-      this.getSuccessesNeededForNextLevel(baseSuccessesPerLevel)
-    ) {
+    if (this.successes >= this.getSuccessesNeededForNextLevel(baseSuccessesPerLevel)) {
       ++this.maxLevel;
     }
   }

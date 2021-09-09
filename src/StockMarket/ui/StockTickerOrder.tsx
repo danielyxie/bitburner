@@ -28,22 +28,17 @@ export class StockTickerOrder extends React.Component<IProps, any> {
   render(): React.ReactNode {
     const order = this.props.order;
 
-    const posTxt =
-      order.pos === PositionTypes.Long ? "Long Position" : "Short Position";
+    const posTxt = order.pos === PositionTypes.Long ? "Long Position" : "Short Position";
     const txt = (
       <>
-        {order.type} - {posTxt} - {numeralWrapper.formatShares(order.shares)} @{" "}
-        <Money money={order.price} />
+        {order.type} - {posTxt} - {numeralWrapper.formatShares(order.shares)} @ <Money money={order.price} />
       </>
     );
 
     return (
       <li>
         {txt}
-        <button
-          className={"std-button stock-market-order-cancel-btn"}
-          onClick={this.handleCancelOrderClick}
-        >
+        <button className={"std-button stock-market-order-cancel-btn"} onClick={this.handleCancelOrderClick}>
           Cancel Order
         </button>
       </li>

@@ -47,25 +47,13 @@ export class CasinoLocation extends React.Component<IProps, IState> {
   renderGames(): React.ReactNode {
     return (
       <>
-        <StdButton
-          onClick={() => this.updateGame(GameType.Coin)}
-          text={"Play coin flip"}
-        />
+        <StdButton onClick={() => this.updateGame(GameType.Coin)} text={"Play coin flip"} />
         <br />
-        <StdButton
-          onClick={() => this.updateGame(GameType.Slots)}
-          text={"Play slots"}
-        />
+        <StdButton onClick={() => this.updateGame(GameType.Slots)} text={"Play slots"} />
         <br />
-        <StdButton
-          onClick={() => this.updateGame(GameType.Roulette)}
-          text={"Play roulette"}
-        />
+        <StdButton onClick={() => this.updateGame(GameType.Roulette)} text={"Play roulette"} />
         <br />
-        <StdButton
-          onClick={() => this.updateGame(GameType.Blackjack)}
-          text={"Play blackjack"}
-        />
+        <StdButton onClick={() => this.updateGame(GameType.Blackjack)} text={"Play blackjack"} />
       </>
     );
   }
@@ -93,10 +81,7 @@ export class CasinoLocation extends React.Component<IProps, IState> {
 
     return (
       <>
-        <StdButton
-          onClick={() => this.updateGame(GameType.None)}
-          text={"Stop playing"}
-        />
+        <StdButton onClick={() => this.updateGame(GameType.None)} text={"Stop playing"} />
         {elem}
       </>
     );

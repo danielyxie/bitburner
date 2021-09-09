@@ -72,8 +72,7 @@ function iTutorialStart() {
   ITutorial.currStep = 0;
   ITutorial.isRunning = true;
 
-  document.getElementById("interactive-tutorial-container").style.display =
-    "block";
+  document.getElementById("interactive-tutorial-container").style.display = "block";
 
   // Exit tutorial button
   const exitButton = clearEventListeners("interactive-tutorial-exit");
@@ -415,8 +414,7 @@ function iTutorialEvaluateStep() {
     case iTutorialSteps.HacknetNodesIntroduction:
       Engine.loadHacknetNodesContent();
       iTutorialSetText(
-        "here you can purchase new Hacknet Nodes and upgrade your " +
-          "existing ones. Let's purchase a new one now.",
+        "here you can purchase new Hacknet Nodes and upgrade your " + "existing ones. Let's purchase a new one now.",
       );
       nextBtn.style.display = "none"; // Next step triggered by purchaseHacknet() (HacknetNode.js)
       break;
@@ -491,9 +489,7 @@ function iTutorialNextStep() {
     document.getElementById("terminal-menu-link").removeAttribute("class");
   }
   if (ITutorial.currStep === iTutorialSteps.TerminalGoToActiveScriptsPage) {
-    document
-      .getElementById("active-scripts-menu-link")
-      .removeAttribute("class");
+    document.getElementById("active-scripts-menu-link").removeAttribute("class");
   }
   if (ITutorial.currStep === iTutorialSteps.ActiveScriptsPage) {
     document.getElementById("terminal-menu-link").removeAttribute("class");
@@ -546,8 +542,7 @@ function iTutorialEnd() {
 
   ITutorial.currStep = iTutorialSteps.End;
   ITutorial.isRunning = false;
-  document.getElementById("interactive-tutorial-container").style.display =
-    "none";
+  document.getElementById("interactive-tutorial-container").style.display = "none";
 
   // Create a popup with final introductory stuff
   const popupId = "interactive-tutorial-ending-popup";
@@ -571,9 +566,7 @@ function iTutorialEnd() {
   });
   createPopup(popupId, [txt, gotitBtn]);
 
-  Player.getHomeComputer().messages.push(
-    LiteratureNames.HackersStartingHandbook,
-  );
+  Player.getHomeComputer().messages.push(LiteratureNames.HackersStartingHandbook);
 }
 
 let textBox = null;
@@ -590,10 +583,4 @@ function iTutorialSetText(txt) {
   textBox.parentElement.scrollTop = 0; // this resets scroll position
 }
 
-export {
-  iTutorialSteps,
-  iTutorialEnd,
-  iTutorialStart,
-  iTutorialNextStep,
-  ITutorial,
-};
+export { iTutorialSteps, iTutorialEnd, iTutorialStart, iTutorialNextStep, ITutorial };

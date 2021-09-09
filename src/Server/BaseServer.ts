@@ -95,20 +95,15 @@ export class BaseServer {
   // Text files on this server
   textFiles: TextFile[] = [];
 
-  constructor(
-    params: IConstructorParams = { hostname: "", ip: createRandomIp() },
-  ) {
+  constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     this.ip = params.ip ? params.ip : createRandomIp();
 
     this.hostname = params.hostname;
-    this.organizationName =
-      params.organizationName != null ? params.organizationName : "";
-    this.isConnectedTo =
-      params.isConnectedTo != null ? params.isConnectedTo : false;
+    this.organizationName = params.organizationName != null ? params.organizationName : "";
+    this.isConnectedTo = params.isConnectedTo != null ? params.isConnectedTo : false;
 
     //Access information
-    this.hasAdminRights =
-      params.adminRights != null ? params.adminRights : false;
+    this.hasAdminRights = params.adminRights != null ? params.adminRights : false;
   }
 
   addContract(contract: CodingContract): void {
@@ -131,10 +126,7 @@ export class BaseServer {
    * @returns RunningScript for the specified active script
    *          Returns null if no such script can be found
    */
-  getRunningScript(
-    scriptName: string,
-    scriptArgs: any[],
-  ): RunningScript | null {
+  getRunningScript(scriptName: string, scriptArgs: any[]): RunningScript | null {
     for (const rs of this.runningScripts) {
       if (rs.filename === scriptName && compareArrays(rs.args, scriptArgs)) {
         return rs;
@@ -189,10 +181,7 @@ export class BaseServer {
    * @returns {IReturnStatus} Return status object indicating whether or not file was deleted
    */
   removeFile(fn: string): IReturnStatus {
-    if (
-      fn.endsWith(".exe") ||
-      fn.match(/^.+\.exe-\d+(?:\.\d*)?%-INC$/) != null
-    ) {
+    if (fn.endsWith(".exe") || fn.match(/^.+\.exe-\d+(?:\.\d*)?%-INC$/) != null) {
       for (let i = 0; i < this.programs.length; ++i) {
         if (this.programs[i] === fn) {
           this.programs.splice(i, 1);

@@ -33,8 +33,8 @@ export function Root(props: IProps): JSX.Element {
     <>
       <h1>Milestones</h1>
       <p>
-        Milestones don't reward you for completing them. They are here to guide
-        you if you're lost. They will reset when you install Augmentations.
+        Milestones don't reward you for completing them. They are here to guide you if you're lost. They will reset when
+        you install Augmentations.
       </p>
       <br />
 

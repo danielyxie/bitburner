@@ -15,11 +15,7 @@ export const forecastChangePerPriceMovement = 0.006;
  * @param {PositionTypes} posType - Long or short position
  * @returns {number | null} Total transaction cost. Returns null for an invalid transaction
  */
-export function getBuyTransactionCost(
-  stock: Stock,
-  shares: number,
-  posType: PositionTypes,
-): number | null {
+export function getBuyTransactionCost(stock: Stock, shares: number, posType: PositionTypes): number | null {
   if (isNaN(shares) || shares <= 0 || !(stock instanceof Stock)) {
     return null;
   }
@@ -46,11 +42,7 @@ export function getBuyTransactionCost(
  * @param {PositionTypes} posType - Long or short position
  * @returns {number | null} Amount of money gained from transaction. Returns null for an invalid transaction
  */
-export function getSellTransactionGain(
-  stock: Stock,
-  shares: number,
-  posType: PositionTypes,
-): number | null {
+export function getSellTransactionGain(stock: Stock, shares: number, posType: PositionTypes): number | null {
   if (isNaN(shares) || shares <= 0 || !(stock instanceof Stock)) {
     return null;
   }
@@ -65,9 +57,7 @@ export function getSellTransactionGain(
   } else {
     // Calculating gains for a short position requires calculating the profit made
     const origCost = shares * stock.playerAvgShortPx;
-    const profit =
-      (stock.playerAvgShortPx - stock.getAskPrice()) * shares -
-      CONSTANTS.StockMarketCommission;
+    const profit = (stock.playerAvgShortPx - stock.getAskPrice()) * shares - CONSTANTS.StockMarketCommission;
 
     return origCost + profit;
   }
@@ -80,10 +70,7 @@ export function getSellTransactionGain(
  * @param {number} shares - Number of sharse being transacted
  * @param {PositionTypes} posType - Long or short position
  */
-export function processTransactionForecastMovement(
-  stock: Stock,
-  shares: number,
-): void {
+export function processTransactionForecastMovement(stock: Stock, shares: number): void {
   if (isNaN(shares) || shares <= 0 || !(stock instanceof Stock)) {
     return;
   }
@@ -99,9 +86,7 @@ export function processTransactionForecastMovement(
     if (stock.shareTxUntilMovement <= 0) {
       stock.shareTxUntilMovement = stock.shareTxForMovement;
       stock.influenceForecast(forecastChangePerPriceMovement);
-      stock.influenceForecastForecast(
-        forecastChangePerPriceMovement * (stock.mv / 100),
-      );
+      stock.influenceForecastForecast(forecastChangePerPriceMovement * (stock.mv / 100));
     }
 
     return;
@@ -113,12 +98,8 @@ export function processTransactionForecastMovement(
 
   // If on the offchance we end up perfectly at the next price movement
   stock.shareTxUntilMovement =
-    stock.shareTxForMovement -
-    ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
-  if (
-    stock.shareTxUntilMovement === stock.shareTxForMovement ||
-    stock.shareTxUntilMovement <= 0
-  ) {
+    stock.shareTxForMovement - ((shares - stock.shareTxUntilMovement) % stock.shareTxForMovement);
+  if (stock.shareTxUntilMovement === stock.shareTxForMovement || stock.shareTxUntilMovement <= 0) {
     ++numIterations;
     stock.shareTxUntilMovement = stock.shareTxForMovement;
   }
@@ -139,11 +120,7 @@ export function processTransactionForecastMovement(
  * @param {number} money - Amount of money player has
  * @returns maximum number of shares that the player can purchase
  */
-export function calculateBuyMaxAmount(
-  stock: Stock,
-  posType: PositionTypes,
-  money: number,
-): number {
+export function calculateBuyMaxAmount(stock: Stock, posType: PositionTypes, money: number): number {
   if (!(stock instanceof Stock)) {
     return 0;
   }

@@ -141,9 +141,7 @@ function initAugmentations() {
   Object.keys(randomBonuses.bonuses).forEach(
     (key) => (UnstableCircadianModulatorParams[key] = randomBonuses.bonuses[key]),
   );
-  const UnstableCircadianModulator = new Augmentation(
-    UnstableCircadianModulatorParams,
-  );
+  const UnstableCircadianModulator = new Augmentation(UnstableCircadianModulatorParams);
 
   UnstableCircadianModulator.addToFactions(["Speakers for the Dead"]);
   if (augmentationExists(AugmentationNames.UnstableCircadianModulator)) {
@@ -156,9 +154,7 @@ function initAugmentations() {
     name: AugmentationNames.HemoRecirculator,
     moneyCost: 4.5e7,
     repCost: 1e4,
-    info:
-      "A heart implant that greatly increases the body's ability to effectively use and pump " +
-      "blood.",
+    info: "A heart implant that greatly increases the body's ability to effectively use and pump " + "blood.",
     strength_mult: 1.08,
     defense_mult: 1.08,
     agility_mult: 1.08,
@@ -221,9 +217,7 @@ function initAugmentations() {
     name: AugmentationNames.Targeting3,
     moneyCost: 1.15e8,
     repCost: 2.75e4,
-    info:
-      "The latest version of the 'Augmented Targeting' implant adds the ability to " +
-      "lock-on and track threats.",
+    info: "The latest version of the 'Augmented Targeting' implant adds the ability to " + "lock-on and track threats.",
     prereqs: [AugmentationNames.Targeting2],
     dexterity_mult: 1.3,
   });
@@ -442,15 +436,11 @@ function initAugmentations() {
     repCost: 1.125e6,
     moneyCost: 4.25e9,
     info:
-      "Graphene is grafted and fused into the skeletal structure, " +
-      "enhancing bone density and tensile strength.",
+      "Graphene is grafted and fused into the skeletal structure, " + "enhancing bone density and tensile strength.",
     strength_mult: 1.7,
     defense_mult: 1.7,
   });
-  GrapheneBoneLacings.addToFactions([
-    "Fulcrum Secret Technologies",
-    "The Covenant",
-  ]);
+  GrapheneBoneLacings.addToFactions(["Fulcrum Secret Technologies", "The Covenant"]);
   if (augmentationExists(AugmentationNames.GrapheneBoneLacings)) {
     delete Augmentations[AugmentationNames.GrapheneBoneLacings];
   }
@@ -530,11 +520,7 @@ function initAugmentations() {
     prereqs: [AugmentationNames.BionicLegs],
     agility_mult: 2.5,
   });
-  GrapheneBionicLegs.addToFactions([
-    "MegaCorp",
-    "ECorp",
-    "Fulcrum Secret Technologies",
-  ]);
+  GrapheneBionicLegs.addToFactions(["MegaCorp", "ECorp", "Fulcrum Secret Technologies"]);
   if (augmentationExists(AugmentationNames.GrapheneBionicLegs)) {
     delete Augmentations[AugmentationNames.GrapheneBionicLegs];
   }
@@ -638,10 +624,7 @@ function initAugmentations() {
     hacking_money_mult: 1.15,
     hacking_mult: 1.12,
   });
-  ArtificialBioNeuralNetwork.addToFactions([
-    "BitRunners",
-    "Fulcrum Secret Technologies",
-  ]);
+  ArtificialBioNeuralNetwork.addToFactions(["BitRunners", "Fulcrum Secret Technologies"]);
   if (augmentationExists(AugmentationNames.ArtificialBioNeuralNetwork)) {
     delete Augmentations[AugmentationNames.ArtificialBioNeuralNetwork];
   }
@@ -677,11 +660,7 @@ function initAugmentations() {
     hacking_exp_mult: 1.1,
     hacking_mult: 1.08,
   });
-  EnhancedMyelinSheathing.addToFactions([
-    "Fulcrum Secret Technologies",
-    "BitRunners",
-    "The Black Hand",
-  ]);
+  EnhancedMyelinSheathing.addToFactions(["Fulcrum Secret Technologies", "BitRunners", "The Black Hand"]);
   if (augmentationExists(AugmentationNames.EnhancedMyelinSheathing)) {
     delete Augmentations[AugmentationNames.EnhancedMyelinSheathing];
   }
@@ -727,13 +706,7 @@ function initAugmentations() {
       "and delete it.",
     hacking_money_mult: 1.25,
   });
-  DataJack.addToFactions([
-    "BitRunners",
-    "The Black Hand",
-    "NiteSec",
-    "Chongqing",
-    "New Tokyo",
-  ]);
+  DataJack.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo"]);
   if (augmentationExists(AugmentationNames.DataJack)) {
     delete Augmentations[AugmentationNames.DataJack];
   }
@@ -1001,11 +974,7 @@ function initAugmentations() {
     hacking_money_mult: 1.15,
     hacking_mult: 1.09,
   });
-  CranialSignalProcessorsG3.addToFactions([
-    "NiteSec",
-    "The Black Hand",
-    "BitRunners",
-  ]);
+  CranialSignalProcessorsG3.addToFactions(["NiteSec", "The Black Hand", "BitRunners"]);
   if (augmentationExists(AugmentationNames.CranialSignalProcessorsG3)) {
     delete Augmentations[AugmentationNames.CranialSignalProcessorsG3];
   }
@@ -1122,9 +1091,7 @@ function initAugmentations() {
     name: AugmentationNames.FocusWire,
     repCost: 7.5e4,
     moneyCost: 9e8,
-    info:
-      "A cranial implant that stops procrastination by blocking specific neural pathways " +
-      "in the brain.",
+    info: "A cranial implant that stops procrastination by blocking specific neural pathways " + "in the brain.",
     hacking_exp_mult: 1.05,
     strength_exp_mult: 1.05,
     defense_exp_mult: 1.05,
@@ -1134,12 +1101,7 @@ function initAugmentations() {
     company_rep_mult: 1.1,
     work_money_mult: 1.2,
   });
-  FocusWire.addToFactions([
-    "Bachman & Associates",
-    "Clarke Incorporated",
-    "Four Sigma",
-    "KuaiGong International",
-  ]);
+  FocusWire.addToFactions(["Bachman & Associates", "Clarke Incorporated", "Four Sigma", "KuaiGong International"]);
   if (augmentationExists(AugmentationNames.FocusWire)) {
     delete Augmentations[AugmentationNames.FocusWire];
   }
@@ -1156,12 +1118,7 @@ function initAugmentations() {
     company_rep_mult: 1.3,
     hacking_mult: 1.08,
   });
-  PCDNI.addToFactions([
-    "Four Sigma",
-    "OmniTek Incorporated",
-    "ECorp",
-    "Blade Industries",
-  ]);
+  PCDNI.addToFactions(["Four Sigma", "OmniTek Incorporated", "ECorp", "Blade Industries"]);
   if (augmentationExists(AugmentationNames.PCDNI)) {
     delete Augmentations[AugmentationNames.PCDNI];
   }
@@ -1179,11 +1136,7 @@ function initAugmentations() {
     company_rep_mult: 1.75,
     hacking_mult: 1.1,
   });
-  PCDNIOptimizer.addToFactions([
-    "Fulcrum Secret Technologies",
-    "ECorp",
-    "Blade Industries",
-  ]);
+  PCDNIOptimizer.addToFactions(["Fulcrum Secret Technologies", "ECorp", "Blade Industries"]);
   if (augmentationExists(AugmentationNames.PCDNIOptimizer)) {
     delete Augmentations[AugmentationNames.PCDNIOptimizer];
   }
@@ -1220,13 +1173,7 @@ function initAugmentations() {
     company_rep_mult: 1.1,
     faction_rep_mult: 1.1,
   });
-  ADRPheromone1.addToFactions([
-    "Tian Di Hui",
-    "The Syndicate",
-    "NWO",
-    "MegaCorp",
-    "Four Sigma",
-  ]);
+  ADRPheromone1.addToFactions(["Tian Di Hui", "The Syndicate", "NWO", "MegaCorp", "Four Sigma"]);
   if (augmentationExists(AugmentationNames.ADRPheromone1)) {
     delete Augmentations[AugmentationNames.ADRPheromone1];
   }
@@ -1243,12 +1190,7 @@ function initAugmentations() {
     company_rep_mult: 1.2,
     faction_rep_mult: 1.2,
   });
-  ADRPheromone2.addToFactions([
-    "Silhouette",
-    "Four Sigma",
-    "Bachman & Associates",
-    "Clarke Incorporated",
-  ]);
+  ADRPheromone2.addToFactions(["Silhouette", "Four Sigma", "Bachman & Associates", "Clarke Incorporated"]);
   if (augmentationExists(AugmentationNames.ADRPheromone2)) {
     delete Augmentations[AugmentationNames.ADRPheromone2];
   }
@@ -1267,11 +1209,7 @@ function initAugmentations() {
     company_rep_mult: 1.15,
     faction_rep_mult: 1.15,
   });
-  ShadowsSimulacrum.addToFactions([
-    "The Syndicate",
-    "The Dark Army",
-    "Speakers for the Dead",
-  ]);
+  ShadowsSimulacrum.addToFactions(["The Syndicate", "The Dark Army", "Speakers for the Dead"]);
   if (augmentationExists(AugmentationNames.ShadowsSimulacrum)) {
     delete Augmentations[AugmentationNames.ShadowsSimulacrum];
   }
@@ -1373,9 +1311,8 @@ function initAugmentations() {
       "body's nervous system.",
     stats: (
       <>
-        This special augmentation can be leveled up infinitely. Each level of
-        this augmentation increases ALL multipliers by 1%, stacking
-        multiplicatively.
+        This special augmentation can be leveled up infinitely. Each level of this augmentation increases ALL
+        multipliers by 1%, stacking multiplicatively.
       </>
     ),
     hacking_chance_mult: 1.01,
@@ -1419,17 +1356,13 @@ function initAugmentations() {
   // levels that are purchased but not yet installed
   let nextLevel = currLevel;
   for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-    if (
-      Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor
-    ) {
+    if (Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
       ++nextLevel;
     }
   }
   let mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-  NeuroFluxGovernor.baseRepRequirement =
-    500 * mult * BitNodeMultipliers.AugmentationRepCost;
-  NeuroFluxGovernor.baseCost =
-    750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
+  NeuroFluxGovernor.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
+  NeuroFluxGovernor.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
   if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
     delete Augmentations[AugmentationNames.NeuroFluxGovernor];
   }
@@ -1559,9 +1492,7 @@ function initAugmentations() {
     name: AugmentationNames.SmartSonar,
     repCost: 2.25e4,
     moneyCost: 7.5e7,
-    info:
-      "A cochlear implant that helps the player detect and locate enemies " +
-      "using sound propagation.",
+    info: "A cochlear implant that helps the player detect and locate enemies " + "using sound propagation.",
     dexterity_mult: 1.1,
     dexterity_exp_mult: 1.15,
     crime_money_mult: 1.25,
@@ -1593,12 +1524,7 @@ function initAugmentations() {
     agility_exp_mult: 1.1,
     charisma_exp_mult: 1.1,
   });
-  PowerRecirculator.addToFactions([
-    "Tetrads",
-    "The Dark Army",
-    "The Syndicate",
-    "NWO",
-  ]);
+  PowerRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate", "NWO"]);
   if (augmentationExists(AugmentationNames.PowerRecirculator)) {
     delete Augmentations[AugmentationNames.PowerRecirculator];
   }
@@ -1941,9 +1867,8 @@ function initAugmentations() {
     moneyCost: 1.25e8,
     info: (
       <>
-        A collection of digital assets saved on a small chip. The chip is
-        implanted into your wrist. A small jack in the chip allows you to
-        connect it to a computer and upload the assets.
+        A collection of digital assets saved on a small chip. The chip is implanted into your wrist. A small jack in the
+        chip allows you to connect it to a computer and upload the assets.
       </>
     ),
     startingMoney: 1e6,
@@ -2006,8 +1931,7 @@ function initAugmentations() {
     repCost: 7.5e3,
     moneyCost: 3e7,
     info:
-      "A tiny chip that sits behind the retinae. This implant lets the" +
-      "user visually detect infrared radiation.",
+      "A tiny chip that sits behind the retinae. This implant lets the" + "user visually detect infrared radiation.",
     crime_success_mult: 1.25,
     crime_money_mult: 1.1,
     dexterity_mult: 1.1,
@@ -2098,8 +2022,7 @@ function initAugmentations() {
     repCost: 6.25e4,
     moneyCost: 2.75e8,
     info:
-      "Cybernetic arms created from plasteel and carbon fibers that completely replace " +
-      "the user's organic arms.",
+      "Cybernetic arms created from plasteel and carbon fibers that completely replace " + "the user's organic arms.",
     strength_mult: 1.3,
     dexterity_mult: 1.3,
   });
@@ -2417,8 +2340,8 @@ function initAugmentations() {
         "weaponized by Bladeburner units to be used against Synthoids.",
       stats: (
         <>
-          This augmentation allows you to perform Bladeburner actions and other
-          actions (such as working, commiting crimes, etc.) at the same time.
+          This augmentation allows you to perform Bladeburner actions and other actions (such as working, commiting
+          crimes, etc.) at the same time.
         </>
       ),
       isSpecial: true,
@@ -2429,8 +2352,7 @@ function initAugmentations() {
 
   // Update costs based on how many have been purchased
   mult = Math.pow(
-    CONSTANTS.MultipleAugMultiplier *
-      [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],
+    CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],
     Player.queuedAugmentations.length,
   );
   for (var name in Augmentations) {
@@ -2445,9 +2367,7 @@ function initAugmentations() {
 //Resets an Augmentation during (re-initizliation)
 function resetAugmentation(newAugObject) {
   if (!(newAugObject instanceof Augmentation)) {
-    throw new Error(
-      "Invalid argument 'newAugObject' passed into resetAugmentation",
-    );
+    throw new Error("Invalid argument 'newAugObject' passed into resetAugmentation");
   }
   var name = newAugObject.name;
   if (augmentationExists(name)) {
@@ -2464,9 +2384,7 @@ function applyAugmentation(aug, reapply = false) {
   // Apply multipliers
   for (const mult in augObj.mults) {
     if (Player[mult] == null) {
-      console.warn(
-        `Augmentation has unrecognized multiplier property: ${mult}`,
-      );
+      console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
     } else {
       Player[mult] *= augObj.mults[mult];
     }
@@ -2477,9 +2395,7 @@ function applyAugmentation(aug, reapply = false) {
     if (!reapply) {
       Augmentations[aug.name].level = aug.level;
       for (let i = 0; i < Player.augmentations.length; ++i) {
-        if (
-          Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor
-        ) {
+        if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
           Player.augmentations[i].level = aug.level;
           return;
           // break;
@@ -2503,9 +2419,7 @@ function installAugmentations() {
   let augmentationList = "";
   let nfgIndex = -1;
   for (let i = Player.queuedAugmentations.length - 1; i >= 0; i--) {
-    if (
-      Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor
-    ) {
+    if (Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
       nfgIndex = i;
       break;
     }
@@ -2519,8 +2433,7 @@ function installAugmentations() {
     }
 
     applyAugmentation(Player.queuedAugmentations[i]);
-    if (ownedAug.name === AugmentationNames.NeuroFluxGovernor && i !== nfgIndex)
-      continue;
+    if (ownedAug.name === AugmentationNames.NeuroFluxGovernor && i !== nfgIndex) continue;
 
     let level = "";
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
@@ -2555,13 +2468,7 @@ export function displayAugmentationsContent(contentEl) {
     onExport(Player);
   }
 
-  ReactDOM.render(
-    <AugmentationsRoot
-      exportGameFn={backup}
-      installAugmentationsFn={installAugmentations}
-    />,
-    contentEl,
-  );
+  ReactDOM.render(<AugmentationsRoot exportGameFn={backup} installAugmentationsFn={installAugmentations} />, contentEl);
 }
 
 export function isRepeatableAug(aug) {
@@ -2574,9 +2481,4 @@ export function isRepeatableAug(aug) {
   return false;
 }
 
-export {
-  installAugmentations,
-  initAugmentations,
-  applyAugmentation,
-  augmentationExists,
-};
+export { installAugmentations, initAugmentations, applyAugmentation, augmentationExists };

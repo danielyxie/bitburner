@@ -49,8 +49,7 @@ export function createPopup<T>(
       if (clickedId !== id) return;
       removePopup(id);
     }
-    const backgroundColor =
-      deepestPopupId === "" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)";
+    const backgroundColor = deepestPopupId === "" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)";
     container = createElement("div", {
       class: "popup-box-container",
       display: "flex",
@@ -63,15 +62,7 @@ export function createPopup<T>(
   }
 
   if (deepestPopupId === "") deepestPopupId = id;
-  ReactDOM.render(
-    <Popup
-      content={rootComponent}
-      id={id}
-      props={props}
-      removePopup={removePopup}
-    />,
-    container,
-  );
+  ReactDOM.render(<Popup content={rootComponent} id={id} props={props} removePopup={removePopup} />, container);
 
   return container;
 }

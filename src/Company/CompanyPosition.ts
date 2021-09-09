@@ -103,18 +103,12 @@ export class CompanyPosition {
     this.requiredCharisma = p.reqdCharisma != null ? p.reqdCharisma : 0;
     this.requiredReputation = p.reqdReputation != null ? p.reqdReputation : 0;
 
-    this.hackingEffectiveness =
-      p.hackingEffectiveness != null ? p.hackingEffectiveness : 0;
-    this.strengthEffectiveness =
-      p.strengthEffectiveness != null ? p.strengthEffectiveness : 0;
-    this.defenseEffectiveness =
-      p.defenseEffectiveness != null ? p.defenseEffectiveness : 0;
-    this.dexterityEffectiveness =
-      p.dexterityEffectiveness != null ? p.dexterityEffectiveness : 0;
-    this.agilityEffectiveness =
-      p.agilityEffectiveness != null ? p.agilityEffectiveness : 0;
-    this.charismaEffectiveness =
-      p.charismaEffectiveness != null ? p.charismaEffectiveness : 0;
+    this.hackingEffectiveness = p.hackingEffectiveness != null ? p.hackingEffectiveness : 0;
+    this.strengthEffectiveness = p.strengthEffectiveness != null ? p.strengthEffectiveness : 0;
+    this.defenseEffectiveness = p.defenseEffectiveness != null ? p.defenseEffectiveness : 0;
+    this.dexterityEffectiveness = p.dexterityEffectiveness != null ? p.dexterityEffectiveness : 0;
+    this.agilityEffectiveness = p.agilityEffectiveness != null ? p.agilityEffectiveness : 0;
+    this.charismaEffectiveness = p.charismaEffectiveness != null ? p.charismaEffectiveness : 0;
 
     if (
       Math.round(
@@ -126,9 +120,7 @@ export class CompanyPosition {
           this.charismaEffectiveness,
       ) !== 100
     ) {
-      console.error(
-        `CompanyPosition ${this.name} parameters do not sum to 100`,
-      );
+      console.error(`CompanyPosition ${this.name} parameters do not sum to 100`);
     }
 
     this.hackingExpGain = p.hackingExpGain != null ? p.hackingExpGain : 0;
@@ -139,31 +131,16 @@ export class CompanyPosition {
     this.charismaExpGain = p.charismaExpGain != null ? p.charismaExpGain : 0;
   }
 
-  calculateJobPerformance(
-    hack: number,
-    str: number,
-    def: number,
-    dex: number,
-    agi: number,
-    cha: number,
-  ): number {
-    const hackRatio: number =
-      (this.hackingEffectiveness * hack) / CONSTANTS.MaxSkillLevel;
-    const strRatio: number =
-      (this.strengthEffectiveness * str) / CONSTANTS.MaxSkillLevel;
-    const defRatio: number =
-      (this.defenseEffectiveness * def) / CONSTANTS.MaxSkillLevel;
-    const dexRatio: number =
-      (this.dexterityEffectiveness * dex) / CONSTANTS.MaxSkillLevel;
-    const agiRatio: number =
-      (this.agilityEffectiveness * agi) / CONSTANTS.MaxSkillLevel;
-    const chaRatio: number =
-      (this.charismaEffectiveness * cha) / CONSTANTS.MaxSkillLevel;
+  calculateJobPerformance(hack: number, str: number, def: number, dex: number, agi: number, cha: number): number {
+    const hackRatio: number = (this.hackingEffectiveness * hack) / CONSTANTS.MaxSkillLevel;
+    const strRatio: number = (this.strengthEffectiveness * str) / CONSTANTS.MaxSkillLevel;
+    const defRatio: number = (this.defenseEffectiveness * def) / CONSTANTS.MaxSkillLevel;
+    const dexRatio: number = (this.dexterityEffectiveness * dex) / CONSTANTS.MaxSkillLevel;
+    const agiRatio: number = (this.agilityEffectiveness * agi) / CONSTANTS.MaxSkillLevel;
+    const chaRatio: number = (this.charismaEffectiveness * cha) / CONSTANTS.MaxSkillLevel;
 
     let reputationGain: number =
-      (this.repMultiplier *
-        (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio)) /
-      100;
+      (this.repMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio)) / 100;
     if (isNaN(reputationGain)) {
       console.error("Company reputation gain calculated to be NaN");
       reputationGain = 0;

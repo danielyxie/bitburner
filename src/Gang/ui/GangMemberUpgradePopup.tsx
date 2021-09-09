@@ -47,10 +47,7 @@ interface IPanelProps {
 
 function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
   const setRerender = useState(false)[1];
-  function filterUpgrades(
-    list: string[],
-    type: UpgradeType,
-  ): GangMemberUpgrade[] {
+  function filterUpgrades(list: string[], type: UpgradeType): GangMemberUpgrade[] {
     return Object.keys(GangMemberUpgrades)
       .filter((upgName: string) => {
         const upg = GangMemberUpgrades[upgName];
@@ -61,44 +58,23 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
       })
       .map((upgName: string) => GangMemberUpgrades[upgName]);
   }
-  const weaponUpgrades = filterUpgrades(
-    props.member.upgrades,
-    UpgradeType.Weapon,
-  );
-  const armorUpgrades = filterUpgrades(
-    props.member.upgrades,
-    UpgradeType.Armor,
-  );
-  const vehicleUpgrades = filterUpgrades(
-    props.member.upgrades,
-    UpgradeType.Vehicle,
-  );
-  const rootkitUpgrades = filterUpgrades(
-    props.member.upgrades,
-    UpgradeType.Rootkit,
-  );
-  const augUpgrades = filterUpgrades(
-    props.member.augmentations,
-    UpgradeType.Augmentation,
-  );
+  const weaponUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Weapon);
+  const armorUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Armor);
+  const vehicleUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Vehicle);
+  const rootkitUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Rootkit);
+  const augUpgrades = filterUpgrades(props.member.augmentations, UpgradeType.Augmentation);
 
   function purchasedUpgrade(upgName: string): React.ReactElement {
     const upg = GangMemberUpgrades[upgName];
     return (
       <div key={upgName} className="gang-owned-upgrade tooltip">
         {upg.name}
-        <span
-          className="tooltiptext"
-          dangerouslySetInnerHTML={{ __html: upg.desc }}
-        />
+        <span className="tooltiptext" dangerouslySetInnerHTML={{ __html: upg.desc }} />
       </div>
     );
   }
 
-  function upgradeButton(
-    upg: GangMemberUpgrade,
-    left = false,
-  ): React.ReactElement {
+  function upgradeButton(upg: GangMemberUpgrade, left = false): React.ReactElement {
     function onClick(): void {
       props.member.buyUpgrade(upg, props.player, props.gang);
       setRerender((old) => !old);
@@ -115,12 +91,8 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
         }}
         onClick={onClick}
       >
-        {upg.name} -{" "}
-        <Money money={props.gang.getUpgradeCost(upg)} player={props.player} />
-        <span
-          className={left ? "tooltiptextleft" : "tooltiptext"}
-          dangerouslySetInnerHTML={{ __html: upg.desc }}
-        />
+        {upg.name} - <Money money={props.gang.getUpgradeCost(upg)} player={props.player} />
+        <span className={left ? "tooltiptextleft" : "tooltiptext"} dangerouslySetInnerHTML={{ __html: upg.desc }} />
       </a>
     );
   }
@@ -153,14 +125,10 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
         {formatNumber(props.member.cha_mult * asc.cha, 2)})
       </pre>
       <div className="gang-owned-upgrades-div noselect">
-        Purchased Upgrades:{" "}
-        {props.member.upgrades.map((upg: string) => purchasedUpgrade(upg))}
+        Purchased Upgrades: {props.member.upgrades.map((upg: string) => purchasedUpgrade(upg))}
         {props.member.augmentations.map((upg: string) => purchasedUpgrade(upg))}
       </div>
-      <div
-        className="noselect"
-        style={{ width: "20%", display: "inline-block" }}
-      >
+      <div className="noselect" style={{ width: "20%", display: "inline-block" }}>
         <h2>Weapons</h2>
         {weaponUpgrades.map((upg) => upgradeButton(upg))}
         <NextReveal
@@ -170,23 +138,12 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
           upgrades={props.member.upgrades}
         />
       </div>
-      <div
-        className="noselect"
-        style={{ width: "20%", display: "inline-block" }}
-      >
+      <div className="noselect" style={{ width: "20%", display: "inline-block" }}>
         <h2>Armor</h2>
         {armorUpgrades.map((upg) => upgradeButton(upg))}
-        <NextReveal
-          gang={props.gang}
-          type={UpgradeType.Armor}
-          player={props.player}
-          upgrades={props.member.upgrades}
-        />
+        <NextReveal gang={props.gang} type={UpgradeType.Armor} player={props.player} upgrades={props.member.upgrades} />
       </div>
-      <div
-        className="noselect"
-        style={{ width: "20%", display: "inline-block" }}
-      >
+      <div className="noselect" style={{ width: "20%", display: "inline-block" }}>
         <h2>Vehicles</h2>
         {vehicleUpgrades.map((upg) => upgradeButton(upg))}
         <NextReveal
@@ -196,10 +153,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
           upgrades={props.member.upgrades}
         />
       </div>
-      <div
-        className="noselect"
-        style={{ width: "20%", display: "inline-block" }}
-      >
+      <div className="noselect" style={{ width: "20%", display: "inline-block" }}>
         <h2>Rootkits</h2>
         {rootkitUpgrades.map((upg) => upgradeButton(upg, true))}
         <NextReveal
@@ -209,10 +163,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
           upgrades={props.member.upgrades}
         />
       </div>
-      <div
-        className="noselect"
-        style={{ width: "20%", display: "inline-block" }}
-      >
+      <div className="noselect" style={{ width: "20%", display: "inline-block" }}>
         <h2>Augmentations</h2>
         {augUpgrades.map((upg) => upgradeButton(upg, true))}
         <NextReveal
@@ -258,24 +209,15 @@ export function GangMemberUpgradePopup(props: IProps): React.ReactElement {
         placeholder="Filter gang member"
         onChange={(event) => setFilter(event.target.value)}
       />
-      <p
-        className="tooltip"
-        style={{ marginLeft: "6px", display: "inline-block" }}
-      >
-        Discount: -
-        {numeralWrapper.formatPercentage(1 - 1 / props.gang.getDiscount())}
+      <p className="tooltip" style={{ marginLeft: "6px", display: "inline-block" }}>
+        Discount: -{numeralWrapper.formatPercentage(1 - 1 / props.gang.getDiscount())}
         <span className="tooltiptext noselect">
-          You get a discount on equipment and upgrades based on your gang's
-          respect and power. More respect and power leads to more discounts.
+          You get a discount on equipment and upgrades based on your gang's respect and power. More respect and power
+          leads to more discounts.
         </span>
       </p>
       {props.gang.members.map((member: GangMember) => (
-        <GangMemberUpgradePanel
-          key={member.name}
-          player={props.player}
-          gang={props.gang}
-          member={member}
-        />
+        <GangMemberUpgradePanel key={member.name} player={props.player} gang={props.gang} member={member} />
       ))}
     </>
   );

@@ -29,17 +29,11 @@ export class ServerDropdown extends React.Component {
       case ServerType.Foreign:
         return s.hostname !== "home" && !s.purchasedByPlayer;
       case ServerType.Owned:
-        return (
-          s.purchasedByPlayer ||
-          s instanceof HacknetServer ||
-          s.hostname === "home"
-        );
+        return s.purchasedByPlayer || s instanceof HacknetServer || s.hostname === "home";
       case ServerType.Purchased:
         return s.purchasedByPlayer || s instanceof HacknetServer;
       default:
-        console.warn(
-          `Invalid ServerType specified for ServerDropdown component: ${type}`,
-        );
+        console.warn(`Invalid ServerType specified for ServerDropdown component: ${type}`);
         return false;
     }
   }
@@ -65,11 +59,7 @@ export class ServerDropdown extends React.Component {
     }
 
     return (
-      <select
-        className={"dropdown"}
-        onChange={this.props.onChange}
-        style={this.props.style}
-      >
+      <select className={"dropdown"} onChange={this.props.onChange} style={this.props.style}>
         {servers}
       </select>
     );

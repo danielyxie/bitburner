@@ -69,19 +69,11 @@ export class GenericLocation extends React.Component<IProps, any> {
     }
 
     if (this.props.loc.types.includes(LocationType.Gym)) {
-      content.push(
-        <GymLocation
-          key={"gymlocation"}
-          loc={this.props.loc}
-          p={this.props.p}
-        />,
-      );
+      content.push(<GymLocation key={"gymlocation"} loc={this.props.loc} p={this.props.p} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Hospital)) {
-      content.push(
-        <HospitalLocation key={"hospitallocation"} p={this.props.p} />,
-      );
+      content.push(<HospitalLocation key={"hospitallocation"} p={this.props.p} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Slums)) {
@@ -90,43 +82,20 @@ export class GenericLocation extends React.Component<IProps, any> {
 
     if (this.props.loc.types.includes(LocationType.Special)) {
       content.push(
-        <SpecialLocation
-          engine={this.props.engine}
-          key={"speciallocation"}
-          loc={this.props.loc}
-          p={this.props.p}
-        />,
+        <SpecialLocation engine={this.props.engine} key={"speciallocation"} loc={this.props.loc} p={this.props.p} />,
       );
     }
 
     if (this.props.loc.types.includes(LocationType.TechVendor)) {
-      content.push(
-        <TechVendorLocation
-          key={"techvendorlocation"}
-          loc={this.props.loc}
-          p={this.props.p}
-        />,
-      );
+      content.push(<TechVendorLocation key={"techvendorlocation"} loc={this.props.loc} p={this.props.p} />);
     }
 
     if (this.props.loc.types.includes(LocationType.TravelAgency)) {
-      content.push(
-        <TravelAgencyLocation
-          key={"travelagencylocation"}
-          p={this.props.p}
-          travel={this.props.travel}
-        />,
-      );
+      content.push(<TravelAgencyLocation key={"travelagencylocation"} p={this.props.p} travel={this.props.travel} />);
     }
 
     if (this.props.loc.types.includes(LocationType.University)) {
-      content.push(
-        <UniversityLocation
-          key={"universitylocation"}
-          loc={this.props.loc}
-          p={this.props.p}
-        />,
-      );
+      content.push(<UniversityLocation key={"universitylocation"} loc={this.props.loc} p={this.props.p} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Casino)) {
@@ -144,11 +113,7 @@ export class GenericLocation extends React.Component<IProps, any> {
 
     return (
       <div>
-        <StdButton
-          onClick={this.props.returnToCity}
-          style={this.btnStyle}
-          text={"Return to World"}
-        />
+        <StdButton onClick={this.props.returnToCity} style={this.btnStyle} text={"Return to World"} />
         <h1 className="noselect">
           {backdoorInstalled && !Settings.DisableTextEffects ? (
             <CorruptableText content={this.props.loc.name} />

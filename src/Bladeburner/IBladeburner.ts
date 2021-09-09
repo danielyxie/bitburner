@@ -68,57 +68,22 @@ export interface IBladeburner {
   getBlackOpNamesNetscriptFn(): string[];
   getGeneralActionNamesNetscriptFn(): string[];
   getSkillNamesNetscriptFn(): string[];
-  startActionNetscriptFn(
-    player: IPlayer,
-    type: string,
-    name: string,
-    workerScript: WorkerScript,
-  ): boolean;
-  getActionTimeNetscriptFn(
-    player: IPlayer,
-    type: string,
-    name: string,
-    workerScript: WorkerScript,
-  ): number;
+  startActionNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): boolean;
+  getActionTimeNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number;
   getActionEstimatedSuccessChanceNetscriptFn(
     player: IPlayer,
     type: string,
     name: string,
     workerScript: WorkerScript,
   ): number[];
-  getActionCountRemainingNetscriptFn(
-    type: string,
-    name: string,
-    workerScript: WorkerScript,
-  ): number;
-  getSkillLevelNetscriptFn(
-    skillName: string,
-    workerScript: WorkerScript,
-  ): number;
-  getSkillUpgradeCostNetscriptFn(
-    skillName: string,
-    workerScript: WorkerScript,
-  ): number;
-  upgradeSkillNetscriptFn(
-    skillName: string,
-    workerScript: WorkerScript,
-  ): boolean;
-  getTeamSizeNetscriptFn(
-    type: string,
-    name: string,
-    workerScript: WorkerScript,
-  ): number;
-  setTeamSizeNetscriptFn(
-    type: string,
-    name: string,
-    size: number,
-    workerScript: WorkerScript,
-  ): number;
+  getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
+  getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number;
+  getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number;
+  upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean;
+  getTeamSizeNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
+  setTeamSizeNetscriptFn(type: string, name: string, size: number, workerScript: WorkerScript): number;
   joinBladeburnerFactionNetscriptFn(workerScript: WorkerScript): boolean;
-  getActionIdFromTypeAndName(
-    type: string,
-    name: string,
-  ): IActionIdentifier | null;
+  getActionIdFromTypeAndName(type: string, name: string): IActionIdentifier | null;
   executeStartConsoleCommand(player: IPlayer, args: string[]): void;
   executeSkillConsoleCommand(args: string[]): void;
   executeLogConsoleCommand(args: string[]): void;

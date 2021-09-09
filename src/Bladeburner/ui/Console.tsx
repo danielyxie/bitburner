@@ -10,10 +10,7 @@ interface ILineProps {
 function Line(props: ILineProps): React.ReactElement {
   return (
     <tr>
-      <td
-        className="bladeburner-console-line"
-        style={{ color: "var(--my-font-color)", whiteSpace: "pre-wrap" }}
-      >
+      <td className="bladeburner-console-line" style={{ color: "var(--my-font-color)", whiteSpace: "pre-wrap" }}>
         {props.content}
       </td>
     </tr>
@@ -29,9 +26,7 @@ export function Console(props: IProps): React.ReactElement {
   const lastRef = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
 
-  const [consoleHistoryIndex, setConsoleHistoryIndex] = useState(
-    props.bladeburner.consoleHistory.length,
-  );
+  const [consoleHistoryIndex, setConsoleHistoryIndex] = useState(props.bladeburner.consoleHistory.length);
 
   // TODO: Figure out how to actually make the scrolling work correctly.
   function scrollToBottom(): void {
@@ -121,11 +116,7 @@ export function Console(props: IProps): React.ReactElement {
           {props.bladeburner.consoleLogs.map((log: any, i: number) => (
             <Line key={i} content={log} />
           ))}
-          <tr
-            key="input"
-            id="bladeburner-console-input-row"
-            className="bladeburner-console-input-row"
-          >
+          <tr key="input" id="bladeburner-console-input-row" className="bladeburner-console-input-row">
             <td className="bladeburner-console-input-cell">
               <pre>{"> "}</pre>
               <input

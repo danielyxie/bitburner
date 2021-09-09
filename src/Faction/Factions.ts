@@ -35,9 +35,7 @@ export function initFactions(): void {
 //reinserts the new Faction object
 export function resetFaction(newFactionObject: Faction): void {
   if (!(newFactionObject instanceof Faction)) {
-    throw new Error(
-      "Invalid argument 'newFactionObject' passed into resetFaction()",
-    );
+    throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
   }
   const factionName: string = newFactionObject.name;
   if (factionExists(factionName)) {

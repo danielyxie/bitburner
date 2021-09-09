@@ -8,11 +8,7 @@ import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 interface IConstructorParams {
   info: string | JSX.Element;
@@ -58,11 +54,7 @@ interface IConstructorParams {
   programs?: string[];
 }
 
-function generateStatsDescription(
-  mults: IMap<number>,
-  programs?: string[],
-  startingMoney?: number,
-): JSX.Element {
+function generateStatsDescription(mults: IMap<number>, programs?: string[], startingMoney?: number): JSX.Element {
   const f = (x: number, decimals = 0): string => {
     // look, I don't know how to make a "smart decimals"
     // todo, make it smarter
@@ -224,8 +216,7 @@ function generateStatsDescription(
     desc = (
       <>
         {desc}
-        <br />+{f(mults.hacking_speed_mult - 1)} faster hack(), grow(), and
-        weaken()
+        <br />+{f(mults.hacking_speed_mult - 1)} faster hack(), grow(), and weaken()
       </>
     );
   if (mults.hacking_chance_mult)
@@ -250,15 +241,11 @@ function generateStatsDescription(
       </>
     );
 
-  if (
-    mults.faction_rep_mult &&
-    mults.faction_rep_mult === mults.company_rep_mult
-  ) {
+  if (mults.faction_rep_mult && mults.faction_rep_mult === mults.company_rep_mult) {
     desc = (
       <>
         {desc}
-        <br />+{f(mults.faction_rep_mult - 1)} reputation from factions and
-        companies
+        <br />+{f(mults.faction_rep_mult - 1)} reputation from factions and companies
       </>
     );
   } else {
@@ -311,16 +298,14 @@ function generateStatsDescription(
     desc = (
       <>
         {desc}
-        <br />-{f(-(mults.hacknet_node_purchase_cost_mult - 1))} hacknet nodes
-        cost
+        <br />-{f(-(mults.hacknet_node_purchase_cost_mult - 1))} hacknet nodes cost
       </>
     );
   if (mults.hacknet_node_level_cost_mult)
     desc = (
       <>
         {desc}
-        <br />-{f(-(mults.hacknet_node_level_cost_mult - 1))} hacknet nodes
-        upgrade cost
+        <br />-{f(-(mults.hacknet_node_level_cost_mult - 1))} hacknet nodes upgrade cost
       </>
     );
 
@@ -328,32 +313,28 @@ function generateStatsDescription(
     desc = (
       <>
         {desc}
-        <br />+{f(mults.bladeburner_max_stamina_mult - 1)} Bladeburner Max
-        Stamina
+        <br />+{f(mults.bladeburner_max_stamina_mult - 1)} Bladeburner Max Stamina
       </>
     );
   if (mults.bladeburner_stamina_gain_mult)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.bladeburner_stamina_gain_mult - 1)} Bladeburner Stamina
-        gain
+        <br />+{f(mults.bladeburner_stamina_gain_mult - 1)} Bladeburner Stamina gain
       </>
     );
   if (mults.bladeburner_analysis_mult)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.bladeburner_analysis_mult - 1)} Bladeburner Field
-        Analysis effectiveness
+        <br />+{f(mults.bladeburner_analysis_mult - 1)} Bladeburner Field Analysis effectiveness
       </>
     );
   if (mults.bladeburner_success_chance_mult)
     desc = (
       <>
         {desc}
-        <br />+{f(mults.bladeburner_success_chance_mult - 1)} Bladeburner
-        Contracts and Operations success chance
+        <br />+{f(mults.bladeburner_success_chance_mult - 1)} Bladeburner Contracts and Operations success chance
       </>
     );
 
@@ -362,8 +343,7 @@ function generateStatsDescription(
       <>
         {desc}
         <br />
-        Start with <Money money={startingMoney} /> after installing
-        Augmentations.
+        Start with <Money money={startingMoney} /> after installing Augmentations.
       </>
     );
 
@@ -425,8 +405,7 @@ export class Augmentation {
     this.info = params.info;
     this.prereqs = params.prereqs ? params.prereqs : [];
 
-    this.baseRepRequirement =
-      params.repCost * BitNodeMultipliers.AugmentationRepCost;
+    this.baseRepRequirement = params.repCost * BitNodeMultipliers.AugmentationRepCost;
     this.baseCost = params.moneyCost * BitNodeMultipliers.AugmentationMoneyCost;
     this.startingCost = this.baseCost;
 
@@ -504,43 +483,32 @@ export class Augmentation {
       this.mults.hacknet_node_money_mult = params.hacknet_node_money_mult;
     }
     if (params.hacknet_node_purchase_cost_mult) {
-      this.mults.hacknet_node_purchase_cost_mult =
-        params.hacknet_node_purchase_cost_mult;
+      this.mults.hacknet_node_purchase_cost_mult = params.hacknet_node_purchase_cost_mult;
     }
     if (params.hacknet_node_ram_cost_mult) {
       this.mults.hacknet_node_ram_cost_mult = params.hacknet_node_ram_cost_mult;
     }
     if (params.hacknet_node_core_cost_mult) {
-      this.mults.hacknet_node_core_cost_mult =
-        params.hacknet_node_core_cost_mult;
+      this.mults.hacknet_node_core_cost_mult = params.hacknet_node_core_cost_mult;
     }
     if (params.hacknet_node_level_cost_mult) {
-      this.mults.hacknet_node_level_cost_mult =
-        params.hacknet_node_level_cost_mult;
+      this.mults.hacknet_node_level_cost_mult = params.hacknet_node_level_cost_mult;
     }
     if (params.bladeburner_max_stamina_mult) {
-      this.mults.bladeburner_max_stamina_mult =
-        params.bladeburner_max_stamina_mult;
+      this.mults.bladeburner_max_stamina_mult = params.bladeburner_max_stamina_mult;
     }
     if (params.bladeburner_stamina_gain_mult) {
-      this.mults.bladeburner_stamina_gain_mult =
-        params.bladeburner_stamina_gain_mult;
+      this.mults.bladeburner_stamina_gain_mult = params.bladeburner_stamina_gain_mult;
     }
     if (params.bladeburner_analysis_mult) {
       this.mults.bladeburner_analysis_mult = params.bladeburner_analysis_mult;
     }
     if (params.bladeburner_success_chance_mult) {
-      this.mults.bladeburner_success_chance_mult =
-        params.bladeburner_success_chance_mult;
+      this.mults.bladeburner_success_chance_mult = params.bladeburner_success_chance_mult;
     }
 
     if (params.stats) this.stats = params.stats;
-    else
-      this.stats = generateStatsDescription(
-        this.mults,
-        params.programs,
-        params.startingMoney,
-      );
+    else this.stats = generateStatsDescription(this.mults, params.programs, params.startingMoney);
   }
 
   // Adds this Augmentation to the specified Factions
@@ -548,9 +516,7 @@ export class Augmentation {
     for (let i = 0; i < factionList.length; ++i) {
       const faction: Faction | null = Factions[factionList[i]];
       if (faction == null) {
-        console.warn(
-          `In Augmentation.addToFactions(), could not find faction with this name: ${factionList[i]}`,
-        );
+        console.warn(`In Augmentation.addToFactions(), could not find faction with this name: ${factionList[i]}`);
         continue;
       }
       faction.augmentations.push(this.name);
@@ -563,9 +529,7 @@ export class Augmentation {
       if (Factions.hasOwnProperty(fac)) {
         const facObj: Faction | null = Factions[fac];
         if (facObj == null) {
-          console.warn(
-            `Invalid Faction object in addToAllFactions(). Key value: ${fac}`,
-          );
+          console.warn(`Invalid Faction object in addToAllFactions(). Key value: ${fac}`);
           continue;
         }
         facObj.augmentations.push(this.name);

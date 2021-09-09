@@ -10,13 +10,7 @@ interface IProps {
 
 function randomize(char: string): string {
   const randFrom = (str: string): string => str[Math.floor(Math.random() * str.length)];
-  const classes = [
-    "abcdefghijklmnopqrstuvwxyz",
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    "1234567890",
-    " _",
-    "()[]{}<>",
-  ];
+  const classes = ["abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "1234567890", " _", "()[]{}<>"];
   const other = `!@#$%^&*()_+|\\';"/.,?\`~`;
 
   for (const c of classes) {

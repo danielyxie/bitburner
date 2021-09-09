@@ -37,23 +37,16 @@ export class HacknetServer extends React.Component {
     } else {
       let multiplier = 0;
       if (purchaseMult === "MAX") {
-        multiplier = getMaxNumberLevelUpgrades(
-          node,
-          HacknetServerConstants.MaxLevel,
-        );
+        multiplier = getMaxNumberLevelUpgrades(node, HacknetServerConstants.MaxLevel);
       } else {
         const levelsToMax = HacknetServerConstants.MaxLevel - node.level;
         multiplier = Math.min(levelsToMax, purchaseMult);
       }
 
-      const upgradeLevelCost = node.calculateLevelUpgradeCost(
-        multiplier,
-        Player.hacknet_node_level_cost_mult,
-      );
+      const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, Player.hacknet_node_level_cost_mult);
       upgradeLevelContent = (
         <>
-          Upgrade x{multiplier} -{" "}
-          <Money money={upgradeLevelCost} player={Player} />
+          Upgrade x{multiplier} - <Money money={upgradeLevelCost} player={Player} />
         </>
       );
       if (Player.money.lt(upgradeLevelCost)) {
@@ -65,10 +58,7 @@ export class HacknetServer extends React.Component {
     const upgradeLevelOnClick = () => {
       let numUpgrades = purchaseMult;
       if (purchaseMult === "MAX") {
-        numUpgrades = getMaxNumberLevelUpgrades(
-          node,
-          HacknetServerConstants.MaxLevel,
-        );
+        numUpgrades = getMaxNumberLevelUpgrades(node, HacknetServerConstants.MaxLevel);
       }
       purchaseLevelUpgrade(node, numUpgrades);
       recalculate();
@@ -83,25 +73,16 @@ export class HacknetServer extends React.Component {
     } else {
       let multiplier = 0;
       if (purchaseMult === "MAX") {
-        multiplier = getMaxNumberRamUpgrades(
-          node,
-          HacknetServerConstants.MaxRam,
-        );
+        multiplier = getMaxNumberRamUpgrades(node, HacknetServerConstants.MaxRam);
       } else {
-        const levelsToMax = Math.round(
-          Math.log2(HacknetServerConstants.MaxRam / node.maxRam),
-        );
+        const levelsToMax = Math.round(Math.log2(HacknetServerConstants.MaxRam / node.maxRam));
         multiplier = Math.min(levelsToMax, purchaseMult);
       }
 
-      const upgradeRamCost = node.calculateRamUpgradeCost(
-        multiplier,
-        Player.hacknet_node_ram_cost_mult,
-      );
+      const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, Player.hacknet_node_ram_cost_mult);
       upgradeRamContent = (
         <>
-          Upgrade x{multiplier} -{" "}
-          <Money money={upgradeRamCost} player={Player} />
+          Upgrade x{multiplier} - <Money money={upgradeRamCost} player={Player} />
         </>
       );
       if (Player.money.lt(upgradeRamCost)) {
@@ -113,10 +94,7 @@ export class HacknetServer extends React.Component {
     const upgradeRamOnClick = () => {
       let numUpgrades = purchaseMult;
       if (purchaseMult === "MAX") {
-        numUpgrades = getMaxNumberRamUpgrades(
-          node,
-          HacknetServerConstants.MaxRam,
-        );
+        numUpgrades = getMaxNumberRamUpgrades(node, HacknetServerConstants.MaxRam);
       }
       purchaseRamUpgrade(node, numUpgrades);
       recalculate();
@@ -131,23 +109,16 @@ export class HacknetServer extends React.Component {
     } else {
       let multiplier = 0;
       if (purchaseMult === "MAX") {
-        multiplier = getMaxNumberCoreUpgrades(
-          node,
-          HacknetServerConstants.MaxCores,
-        );
+        multiplier = getMaxNumberCoreUpgrades(node, HacknetServerConstants.MaxCores);
       } else {
         const levelsToMax = HacknetServerConstants.MaxCores - node.cores;
         multiplier = Math.min(levelsToMax, purchaseMult);
       }
 
-      const upgradeCoreCost = node.calculateCoreUpgradeCost(
-        multiplier,
-        Player.hacknet_node_core_cost_mult,
-      );
+      const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, Player.hacknet_node_core_cost_mult);
       upgradeCoresContent = (
         <>
-          Upgrade x{multiplier} -{" "}
-          <Money money={upgradeCoreCost} player={Player} />
+          Upgrade x{multiplier} - <Money money={upgradeCoreCost} player={Player} />
         </>
       );
       if (Player.money.lt(upgradeCoreCost)) {
@@ -159,10 +130,7 @@ export class HacknetServer extends React.Component {
     const upgradeCoresOnClick = () => {
       let numUpgrades = purchaseMult;
       if (purchaseMult === "MAX") {
-        numUpgrades = getMaxNumberCoreUpgrades(
-          node,
-          HacknetServerConstants.MaxCores,
-        );
+        numUpgrades = getMaxNumberCoreUpgrades(node, HacknetServerConstants.MaxCores);
       }
       purchaseCoreUpgrade(node, numUpgrades);
       recalculate();
@@ -177,10 +145,7 @@ export class HacknetServer extends React.Component {
     } else {
       let multiplier = 0;
       if (purchaseMult === "MAX") {
-        multiplier = getMaxNumberCacheUpgrades(
-          node,
-          HacknetServerConstants.MaxCache,
-        );
+        multiplier = getMaxNumberCacheUpgrades(node, HacknetServerConstants.MaxCache);
       } else {
         const levelsToMax = HacknetServerConstants.MaxCache - node.cache;
         multiplier = Math.min(levelsToMax, purchaseMult);
@@ -189,8 +154,7 @@ export class HacknetServer extends React.Component {
       const upgradeCacheCost = node.calculateCacheUpgradeCost(multiplier);
       upgradeCacheContent = (
         <>
-          Upgrade x{multiplier} -{" "}
-          <Money money={upgradeCacheCost} player={Player} />
+          Upgrade x{multiplier} - <Money money={upgradeCacheCost} player={Player} />
         </>
       );
       if (Player.money.lt(upgradeCacheCost)) {
@@ -202,10 +166,7 @@ export class HacknetServer extends React.Component {
     const upgradeCacheOnClick = () => {
       let numUpgrades = purchaseMult;
       if (purchaseMult === "MAX") {
-        numUpgrades = getMaxNumberCacheUpgrades(
-          node,
-          HacknetServerConstants.MaxCache,
-        );
+        numUpgrades = getMaxNumberCacheUpgrades(node, HacknetServerConstants.MaxCache);
       }
       purchaseCacheUpgrade(node, numUpgrades);
       recalculate();

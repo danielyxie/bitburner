@@ -71,8 +71,7 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
     }
 
     const profit = newShares * newSharePrice;
-    props.corp.issueNewSharesCooldown =
-      CorporationConstants.IssueNewSharesCooldown;
+    props.corp.issueNewSharesCooldown = CorporationConstants.IssueNewSharesCooldown;
     props.corp.totalShares += newShares;
 
     // Determine how many are bought by private investors
@@ -88,14 +87,9 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
     removePopup(props.popupId);
     dialogBoxCreate(
       `Issued ${numeralWrapper.format(newShares, "0.000a")} and raised ` +
-        `${numeralWrapper.formatMoney(profit)}. ${numeralWrapper.format(
-          privateShares,
-          "0.000a",
-        )} ` +
+        `${numeralWrapper.formatMoney(profit)}. ${numeralWrapper.format(privateShares, "0.000a")} ` +
         `of these shares were bought by private investors.<br><br>` +
-        `Stock price decreased to ${numeralWrapper.formatMoney(
-          props.corp.sharePrice,
-        )}`,
+        `Stock price decreased to ${numeralWrapper.formatMoney(props.corp.sharePrice)}`,
     );
   }
 
@@ -111,29 +105,23 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        You can issue new equity shares (i.e. stocks) in order to raise capital
-        for your corporation.
+        You can issue new equity shares (i.e. stocks) in order to raise capital for your corporation.
         <br />
         <br />
-        &nbsp;* You can issue at most {numeralWrapper.formatMoney(
-          maxNewShares,
-        )}{" "}
-        new shares
+        &nbsp;* You can issue at most {numeralWrapper.formatMoney(maxNewShares)} new shares
         <br />
         &nbsp;* New shares are sold at a 10% discount
         <br />
         &nbsp;* You can only issue new shares once every 12 hours
         <br />
-        &nbsp;* Issuing new shares causes dilution, resulting in a decrease in
-        stock price and lower dividends per share
+        &nbsp;* Issuing new shares causes dilution, resulting in a decrease in stock price and lower dividends per share
         <br />
         &nbsp;* Number of new shares issued must be a multiple of 10 million
         <br />
         <br />
-        When you choose to issue new equity, private shareholders have first
-        priority for up to 50% of the new shares. If they choose to exercise
-        this option, these newly issued shares become private, restricted
-        shares, which means you cannot buy them back.
+        When you choose to issue new equity, private shareholders have first priority for up to 50% of the new shares.
+        If they choose to exercise this option, these newly issued shares become private, restricted shares, which means
+        you cannot buy them back.
       </p>
       <EffectText corp={props.corp} shares={shares} />
       <input
@@ -144,11 +132,7 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
         onChange={onChange}
         onKeyDown={onKeyDown}
       />
-      <button
-        onClick={issueNewShares}
-        className="std-button"
-        style={{ display: "inline-block" }}
-      >
+      <button onClick={issueNewShares} className="std-button" style={{ display: "inline-block" }}>
         Issue New Shares
       </button>
     </>

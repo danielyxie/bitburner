@@ -48,11 +48,7 @@ export class PopupCloseButton extends PopupButton {
     const className = this.props.class ? this.props.class : "std-button";
 
     return (
-      <button
-        className={className}
-        onClick={this.closePopup}
-        style={this.props.style}
-      >
+      <button className={className} onClick={this.closePopup} style={this.props.style}>
         {this.props.text}
       </button>
     );

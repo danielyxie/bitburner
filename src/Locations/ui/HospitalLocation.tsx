@@ -68,8 +68,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
 
     dialogBoxCreate(
       <>
-        You were healed to full health! The hospital billed you for{" "}
-        <Money money={cost} />
+        You were healed to full health! The hospital billed you for <Money money={cost} />
       </>,
     );
   }
@@ -83,8 +82,7 @@ export class HospitalLocation extends React.Component<IProps, IState> {
         style={this.btnStyle}
         text={
           <>
-            Get treatment for wounds -{" "}
-            <Money money={cost} player={this.props.p} />
+            Get treatment for wounds - <Money money={cost} player={this.props.p} />
           </>
         }
       />

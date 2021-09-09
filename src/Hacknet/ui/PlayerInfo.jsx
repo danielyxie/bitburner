@@ -32,8 +32,7 @@ export function PlayerInfo(props) {
       {hasServers && (
         <>
           <span>
-            Hashes: {Hashes(Player.hashManager.hashes)} /{" "}
-            {Hashes(Player.hashManager.capacity)}
+            Hashes: {Hashes(Player.hashManager.hashes)} / {Hashes(Player.hashManager.capacity)}
           </span>
           <br />
         </>

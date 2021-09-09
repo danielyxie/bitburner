@@ -60,9 +60,7 @@ export class AutoupdatingParagraph extends React.Component<IProps, IState> {
     return (
       <div className="tooltip" style={this.props.style}>
         <p>{this.props.getContent()}</p>
-        {this.hasTooltip() && (
-          <span className={"tooltiptext"}>{this.tooltip()}</span>
-        )}
+        {this.hasTooltip() && <span className={"tooltiptext"}>{this.tooltip()}</span>}
       </div>
     );
   }

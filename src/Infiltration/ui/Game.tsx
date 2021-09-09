@@ -89,9 +89,7 @@ export function Game(props: IProps): React.ReactElement {
     pushResult(false);
     // Kill the player immediately if they use automation, so
     // it's clear they're not meant to
-    const damage = options?.automated
-      ? props.Player.hp
-      : props.StartingDifficulty * 3;
+    const damage = options?.automated ? props.Player.hp : props.StartingDifficulty * 3;
     if (props.Player.takeDamage(damage)) {
       const menu = document.getElementById("mainmenu-container");
       if (menu === null) throw new Error("mainmenu-container not found");
@@ -108,13 +106,7 @@ export function Game(props: IProps): React.ReactElement {
       break;
     case Stage.Minigame: {
       const MiniGame = minigames[gameIds.id];
-      stageComponent = (
-        <MiniGame
-          onSuccess={success}
-          onFailure={failure}
-          difficulty={props.Difficulty + level / 50}
-        />
-      );
+      stageComponent = <MiniGame onSuccess={success} onFailure={failure} difficulty={props.Difficulty + level / 50} />;
       break;
     }
     case Stage.Sell:
@@ -133,9 +125,7 @@ export function Game(props: IProps): React.ReactElement {
   function Progress(): React.ReactElement {
     return (
       <h4>
-        <span style={{ color: "gray" }}>
-          {results.slice(0, results.length - 1)}
-        </span>
+        <span style={{ color: "gray" }}>{results.slice(0, results.length - 1)}</span>
         {results[results.length - 1]}
       </h4>
     );

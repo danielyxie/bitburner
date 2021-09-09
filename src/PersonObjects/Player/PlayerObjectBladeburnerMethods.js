@@ -6,12 +6,7 @@ export function canAccessBladeburner() {
     return false;
   }
 
-  return (
-    this.bitNodeN === 6 ||
-    this.bitNodeN === 7 ||
-    SourceFileFlags[6] > 0 ||
-    SourceFileFlags[7] > 0
-  );
+  return this.bitNodeN === 6 || this.bitNodeN === 7 || SourceFileFlags[6] > 0 || SourceFileFlags[7] > 0;
 }
 
 export function inBladeburner() {

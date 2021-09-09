@@ -59,8 +59,7 @@ function listAllDarkwebItems(): void {
     const item = DarkWebItems[key];
     postElement(
       <>
-        {item.program} - <Money money={item.price} player={Player} /> -{" "}
-        {item.description}
+        {item.program} - <Money money={item.price} player={Player} /> - {item.description}
       </>,
     );
   }
@@ -99,9 +98,5 @@ function buyDarkwebItem(itemName: string): void {
   // buy and push
   Player.loseMoney(item.price);
   Player.getHomeComputer().programs.push(item.program);
-  post(
-    "You have purchased the " +
-      item.program +
-      " program. The new program can be found on your home computer.",
-  );
+  post("You have purchased the " + item.program + " program. The new program can be found on your home computer.");
 }

@@ -60,18 +60,14 @@ class NumeralFormatter {
     if (n === Infinity) return "∞";
     for (let i = 0; i < extraFormats.length; i++) {
       if (extraFormats[i] < n && n <= extraFormats[i] * 1000) {
-        return (
-          this.format(n / extraFormats[i], "0." + "0".repeat(decimalPlaces)) +
-          extraNotations[i]
-        );
+        return this.format(n / extraFormats[i], "0." + "0".repeat(decimalPlaces)) + extraNotations[i];
       }
     }
     if (Math.abs(n) < 1000) {
       return this.format(n, "0." + "0".repeat(decimalPlaces));
     }
     const str = this.format(n, "0." + "0".repeat(decimalPlaces) + "a");
-    if (str === "NaNt")
-      return this.format(n, "0." + " ".repeat(decimalPlaces) + "e+0");
+    if (str === "NaNt") return this.format(n, "0." + " ".repeat(decimalPlaces) + "e+0");
     return str;
   }
 

@@ -144,108 +144,84 @@ export class SlumsLocation extends React.Component<IProps, any> {
           intervalTime={5e3}
           onClick={this.shoplift}
           style={this.btnStyle}
-          text={`Shoplift (${numeralWrapper.formatPercentage(
-            shopliftChance,
-          )} chance of success)`}
+          text={`Shoplift (${numeralWrapper.formatPercentage(shopliftChance)} chance of success)`}
           tooltip={"Attempt to shoplift from a low-end retailer"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.robStore}
           style={this.btnStyle}
-          text={`Rob store (${numeralWrapper.formatPercentage(
-            robStoreChance,
-          )} chance of success)`}
+          text={`Rob store (${numeralWrapper.formatPercentage(robStoreChance)} chance of success)`}
           tooltip={"Attempt to commit armed robbery on a high-end store"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.mug}
           style={this.btnStyle}
-          text={`Mug someone (${numeralWrapper.formatPercentage(
-            mugChance,
-          )} chance of success)`}
+          text={`Mug someone (${numeralWrapper.formatPercentage(mugChance)} chance of success)`}
           tooltip={"Attempt to mug a random person on the street"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.larceny}
           style={this.btnStyle}
-          text={`Larceny (${numeralWrapper.formatPercentage(
-            larcenyChance,
-          )} chance of success)`}
+          text={`Larceny (${numeralWrapper.formatPercentage(larcenyChance)} chance of success)`}
           tooltip={"Attempt to rob property from someone's house"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.dealDrugs}
           style={this.btnStyle}
-          text={`Deal Drugs (${numeralWrapper.formatPercentage(
-            drugsChance,
-          )} chance of success)`}
+          text={`Deal Drugs (${numeralWrapper.formatPercentage(drugsChance)} chance of success)`}
           tooltip={"Attempt to deal drugs"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.bondForgery}
           style={this.btnStyle}
-          text={`Bond Forgery (${numeralWrapper.formatPercentage(
-            bondChance,
-          )} chance of success)`}
+          text={`Bond Forgery (${numeralWrapper.formatPercentage(bondChance)} chance of success)`}
           tooltip={"Attempt to forge corporate bonds"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.traffickArms}
           style={this.btnStyle}
-          text={`Traffick illegal Arms (${numeralWrapper.formatPercentage(
-            armsChance,
-          )} chance of success)`}
+          text={`Traffick illegal Arms (${numeralWrapper.formatPercentage(armsChance)} chance of success)`}
           tooltip={"Attempt to smuggle illegal arms into the city"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.homicide}
           style={this.btnStyle}
-          text={`Homicide (${numeralWrapper.formatPercentage(
-            homicideChance,
-          )} chance of success)`}
+          text={`Homicide (${numeralWrapper.formatPercentage(homicideChance)} chance of success)`}
           tooltip={"Attempt to murder a random person on the street"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.grandTheftAuto}
           style={this.btnStyle}
-          text={`Grand theft Auto (${numeralWrapper.formatPercentage(
-            gtaChance,
-          )} chance of success)`}
+          text={`Grand theft Auto (${numeralWrapper.formatPercentage(gtaChance)} chance of success)`}
           tooltip={"Attempt to commit grand theft auto"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.kidnap}
           style={this.btnStyle}
-          text={`Kidnap and Ransom (${numeralWrapper.formatPercentage(
-            kidnapChance,
-          )} chance of success)`}
+          text={`Kidnap and Ransom (${numeralWrapper.formatPercentage(kidnapChance)} chance of success)`}
           tooltip={"Attempt to kidnap and ransom a high-profile-target"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.assassinate}
           style={this.btnStyle}
-          text={`Assassinate (${numeralWrapper.formatPercentage(
-            assassinateChance,
-          )} chance of success)`}
+          text={`Assassinate (${numeralWrapper.formatPercentage(assassinateChance)} chance of success)`}
           tooltip={"Attempt to assassinate a high-profile target"}
         />
         <AutoupdatingStdButton
           intervalTime={5e3}
           onClick={this.heist}
           style={this.btnStyle}
-          text={`Heist (${numeralWrapper.formatPercentage(
-            heistChance,
-          )} chance of success)`}
+          text={`Heist (${numeralWrapper.formatPercentage(heistChance)} chance of success)`}
           tooltip={"Attempt to pull off the ultimate heist"}
         />
       </div>

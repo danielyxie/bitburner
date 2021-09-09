@@ -26,11 +26,7 @@ class HashUpgrade extends React.Component {
     };
 
     this.changeTargetServer = this.changeTargetServer.bind(this);
-    this.purchase = this.purchase.bind(
-      this,
-      this.props.hashManager,
-      this.props.upg,
-    );
+    this.purchase = this.purchase.bind(this, this.props.hashManager, this.props.upg);
   }
 
   changeTargetServer(e) {
@@ -40,8 +36,7 @@ class HashUpgrade extends React.Component {
   }
 
   purchase(hashManager, upg) {
-    const canPurchase =
-      hashManager.hashes >= hashManager.getUpgradeCost(upg.name);
+    const canPurchase = hashManager.hashes >= hashManager.getUpgradeCost(upg.name);
     if (canPurchase) {
       const res = purchaseHashUpgrade(upg.name, this.state.selectedServer);
       if (res) {
@@ -124,14 +119,7 @@ export class HashUpgradePopup extends React.Component {
 
     const upgradeElems = Object.keys(HashUpgrades).map((upgName) => {
       const upg = HashUpgrades[upgName];
-      return (
-        <HashUpgrade
-          upg={upg}
-          hashManager={hashManager}
-          key={upg.name}
-          rerender={rerender}
-        />
-      );
+      return <HashUpgrade upg={upg} hashManager={hashManager} key={upg.name} rerender={rerender} />;
     });
 
     return (

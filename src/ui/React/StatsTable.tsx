@@ -22,8 +22,7 @@ export function StatsTable(rows: any[][], title?: string): React.ReactElement {
               <tr key={row[0]}>
                 {row.map((elem: any, i: number) => {
                   let style = {};
-                  if (i !== 0)
-                    style = { textAlign: "right", paddingLeft: ".25em" };
+                  if (i !== 0) style = { textAlign: "right", paddingLeft: ".25em" };
                   return (
                     <td key={i} style={style}>
                       {elem}

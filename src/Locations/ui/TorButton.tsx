@@ -23,9 +23,7 @@ export function TorButton(props: IProps): React.ReactElement {
   }
 
   if (props.p.hasTorRouter()) {
-    return (
-      <StdButtonPurchased style={btnStyle} text={"TOR Router - Purchased"} />
-    );
+    return <StdButtonPurchased style={btnStyle} text={"TOR Router - Purchased"} />;
   }
 
   return (
@@ -35,8 +33,7 @@ export function TorButton(props: IProps): React.ReactElement {
       style={btnStyle}
       text={
         <>
-          Purchase TOR router -{" "}
-          <Money money={CONSTANTS.TorRouterCost} player={props.p} />
+          Purchase TOR router - <Money money={CONSTANTS.TorRouterCost} player={props.p} />
         </>
       }
     />

@@ -1,7 +1,4 @@
-import {
-  evaluateDirectoryPath,
-  getAllParentDirectories,
-} from "./DirectoryHelpers";
+import { evaluateDirectoryPath, getAllParentDirectories } from "./DirectoryHelpers";
 import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import { Aliases, GlobalAliases } from "../Alias";
@@ -111,16 +108,10 @@ export function determineAllPossibilitiesForTabCompletion(
 
   function addAllDirectories(): void {
     // Directories are based on the currently evaluated path
-    const subdirs = getSubdirectories(
-      currServ,
-      evaledParentDirPath == null ? "/" : evaledParentDirPath,
-    );
+    const subdirs = getSubdirectories(currServ, evaledParentDirPath == null ? "/" : evaledParentDirPath);
 
     for (let i = 0; i < subdirs.length; ++i) {
-      const assembledDirPath =
-        evaledParentDirPath == null
-          ? subdirs[i]
-          : evaledParentDirPath + subdirs[i];
+      const assembledDirPath = evaledParentDirPath == null ? subdirs[i] : evaledParentDirPath + subdirs[i];
       const res = processFilepath(assembledDirPath);
       if (res != null) {
         subdirs[i] = res;
@@ -198,9 +189,7 @@ export function determineAllPossibilitiesForTabCompletion(
 
   // Autocomplete the command
   if (index === -1) {
-    return commands
-      .concat(Object.keys(Aliases))
-      .concat(Object.keys(GlobalAliases));
+    return commands.concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
   }
 
   // Since we're autocompleting an argument and not a command, the argument might
@@ -263,12 +252,7 @@ export function determineAllPossibilitiesForTabCompletion(
     return allPos;
   }
 
-  if (
-    isCommand("kill") ||
-    isCommand("tail") ||
-    isCommand("mem") ||
-    isCommand("check")
-  ) {
+  if (isCommand("kill") || isCommand("tail") || isCommand("mem") || isCommand("check")) {
     addAllScripts();
     addAllDirectories();
 

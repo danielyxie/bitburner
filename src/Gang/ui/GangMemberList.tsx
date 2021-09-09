@@ -38,10 +38,7 @@ export function GangMemberList(props: IProps): React.ReactElement {
 
   return (
     <>
-      <RecruitButton
-        onRecruit={() => setRerender((old) => !old)}
-        gang={props.gang}
-      />
+      <RecruitButton onRecruit={() => setRerender((old) => !old)} gang={props.gang} />
       <br />
       <input
         className="text-input noselect"
@@ -50,11 +47,7 @@ export function GangMemberList(props: IProps): React.ReactElement {
         value={filter}
         onChange={onFilterChange}
       />
-      <a
-        className="a-link-button"
-        style={{ display: "inline-block" }}
-        onClick={openUpgradePopup}
-      >
+      <a className="a-link-button" style={{ display: "inline-block" }} onClick={openUpgradePopup}>
         Manage Equipment
       </a>
       <ul>

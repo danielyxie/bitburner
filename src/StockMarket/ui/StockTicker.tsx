@@ -10,11 +10,7 @@ import { StockTickerTxButton } from "./StockTickerTxButton";
 
 import { Order } from "../Order";
 import { Stock } from "../Stock";
-import {
-  getBuyTransactionCost,
-  getSellTransactionGain,
-  calculateBuyMaxAmount,
-} from "../StockMarketHelpers";
+import { getBuyTransactionCost, getSellTransactionGain, calculateBuyMaxAmount } from "../StockMarketHelpers";
 import { OrderTypes } from "../data/OrderTypes";
 import { PositionTypes } from "../data/PositionTypes";
 
@@ -77,10 +73,8 @@ export class StockTicker extends React.Component<IProps, IState> {
       qty: "",
     };
 
-    this.getBuyTransactionCostContent =
-      this.getBuyTransactionCostContent.bind(this);
-    this.getSellTransactionCostContent =
-      this.getSellTransactionCostContent.bind(this);
+    this.getBuyTransactionCostContent = this.getBuyTransactionCostContent.bind(this);
+    this.getSellTransactionCostContent = this.getSellTransactionCostContent.bind(this);
     this.handleBuyButtonClick = this.handleBuyButtonClick.bind(this);
     this.handleBuyMaxButtonClick = this.handleBuyMaxButtonClick.bind(this);
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
@@ -91,11 +85,7 @@ export class StockTicker extends React.Component<IProps, IState> {
     this.handleSellAllButtonClick = this.handleSellAllButtonClick.bind(this);
   }
 
-  createPlaceOrderPopupBox(
-    yesTxt: string,
-    popupTxt: string,
-    yesBtnCb: (price: number) => void,
-  ): void {
+  createPlaceOrderPopupBox(yesTxt: string, popupTxt: string, yesBtnCb: (price: number) => void): void {
     const yesBtn = yesNoTxtInpBoxGetYesButton();
     const noBtn = yesNoTxtInpBoxGetNoButton();
 
@@ -134,8 +124,7 @@ export class StockTicker extends React.Component<IProps, IState> {
     return (
       <>
         Purchasing {numeralWrapper.formatShares(qty)} shares (
-        {this.state.position === PositionTypes.Long ? "Long" : "Short"}) will
-        cost <Money money={cost} />.
+        {this.state.position === PositionTypes.Long ? "Long" : "Short"}) will cost <Money money={cost} />.
       </>
     );
   }
@@ -169,8 +158,8 @@ export class StockTicker extends React.Component<IProps, IState> {
     return (
       <>
         Selling {numeralWrapper.formatShares(qty)} shares (
-        {this.state.position === PositionTypes.Long ? "Long" : "Short"}) will
-        result in a gain of <Money money={cost} />.
+        {this.state.position === PositionTypes.Long ? "Long" : "Short"}) will result in a gain of <Money money={cost} />
+        .
       </>
     );
   }
@@ -178,9 +167,7 @@ export class StockTicker extends React.Component<IProps, IState> {
   handleBuyButtonClick(): void {
     const shares = this.getQuantity();
     if (isNaN(shares)) {
-      dialogBoxCreate(
-        `Invalid input for quantity (number of shares): ${this.state.qty}`,
-      );
+      dialogBoxCreate(`Invalid input for quantity (number of shares): ${this.state.qty}`);
       return;
     }
 
@@ -199,13 +186,7 @@ export class StockTicker extends React.Component<IProps, IState> {
           "Place Buy Limit Order",
           "Enter the price for your Limit Order",
           (price: number) => {
-            this.props.placeOrder(
-              this.props.stock,
-              shares,
-              price,
-              OrderTypes.LimitBuy,
-              this.state.position,
-            );
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitBuy, this.state.position);
           },
         );
         break;
@@ -215,13 +196,7 @@ export class StockTicker extends React.Component<IProps, IState> {
           "Place Buy Stop Order",
           "Enter the price for your Stop Order",
           (price: number) => {
-            this.props.placeOrder(
-              this.props.stock,
-              shares,
-              price,
-              OrderTypes.StopBuy,
-              this.state.position,
-            );
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopBuy, this.state.position);
           },
         );
         break;
@@ -235,17 +210,8 @@ export class StockTicker extends React.Component<IProps, IState> {
     const playerMoney: number = this.props.p.money.toNumber();
 
     const stock = this.props.stock;
-    let maxShares = calculateBuyMaxAmount(
-      stock,
-      this.state.position,
-      playerMoney,
-    );
-    maxShares = Math.min(
-      maxShares,
-      Math.round(
-        stock.maxShares - stock.playerShares - stock.playerShortShares,
-      ),
-    );
+    let maxShares = calculateBuyMaxAmount(stock, this.state.position, playerMoney);
+    maxShares = Math.min(maxShares, Math.round(stock.maxShares - stock.playerShares - stock.playerShortShares));
 
     switch (this.state.orderType) {
       case SelectorOrderType.Market: {
@@ -323,9 +289,7 @@ export class StockTicker extends React.Component<IProps, IState> {
   handleSellButtonClick(): void {
     const shares = this.getQuantity();
     if (isNaN(shares)) {
-      dialogBoxCreate(
-        `Invalid input for quantity (number of shares): ${this.state.qty}`,
-      );
+      dialogBoxCreate(`Invalid input for quantity (number of shares): ${this.state.qty}`);
       return;
     }
 
@@ -344,13 +308,7 @@ export class StockTicker extends React.Component<IProps, IState> {
           "Place Sell Limit Order",
           "Enter the price for your Limit Order",
           (price: number) => {
-            this.props.placeOrder(
-              this.props.stock,
-              shares,
-              price,
-              OrderTypes.LimitSell,
-              this.state.position,
-            );
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitSell, this.state.position);
           },
         );
         break;
@@ -360,13 +318,7 @@ export class StockTicker extends React.Component<IProps, IState> {
           "Place Sell Stop Order",
           "Enter the price for your Stop Order",
           (price: number) => {
-            this.props.placeOrder(
-              this.props.stock,
-              shares,
-              price,
-              OrderTypes.StopSell,
-              this.state.position,
-            );
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopSell, this.state.position);
           },
         );
         break;
@@ -410,9 +362,7 @@ export class StockTicker extends React.Component<IProps, IState> {
     return (
       <li>
         <Accordion
-          headerContent={
-            <StockTickerHeaderText p={this.props.p} stock={this.props.stock} />
-          }
+          headerContent={<StockTickerHeaderText p={this.props.p} stock={this.props.stock} />}
           panelContent={
             <div>
               <input
@@ -427,28 +377,16 @@ export class StockTicker extends React.Component<IProps, IState> {
                 value={this.state.position}
               >
                 <option value={PositionTypes.Long}>Long</option>
-                {this.hasShortAccess() && (
-                  <option value={PositionTypes.Short}>Short</option>
-                )}
+                {this.hasShortAccess() && <option value={PositionTypes.Short}>Short</option>}
               </select>
               <select
                 className="stock-market-input dropdown"
                 onChange={this.handleOrderTypeChange}
                 value={this.state.orderType}
               >
-                <option value={SelectorOrderType.Market}>
-                  {SelectorOrderType.Market}
-                </option>
-                {this.hasOrderAccess() && (
-                  <option value={SelectorOrderType.Limit}>
-                    {SelectorOrderType.Limit}
-                  </option>
-                )}
-                {this.hasOrderAccess() && (
-                  <option value={SelectorOrderType.Stop}>
-                    {SelectorOrderType.Stop}
-                  </option>
-                )}
+                <option value={SelectorOrderType.Market}>{SelectorOrderType.Market}</option>
+                {this.hasOrderAccess() && <option value={SelectorOrderType.Limit}>{SelectorOrderType.Limit}</option>}
+                {this.hasOrderAccess() && <option value={SelectorOrderType.Stop}>{SelectorOrderType.Stop}</option>}
               </select>
 
               <StockTickerTxButton
@@ -461,18 +399,9 @@ export class StockTicker extends React.Component<IProps, IState> {
                 text={"Sell"}
                 tooltip={this.getSellTransactionCostContent()}
               />
-              <StockTickerTxButton
-                onClick={this.handleBuyMaxButtonClick}
-                text={"Buy MAX"}
-              />
-              <StockTickerTxButton
-                onClick={this.handleSellAllButtonClick}
-                text={"Sell ALL"}
-              />
-              <StockTickerPositionText
-                p={this.props.p}
-                stock={this.props.stock}
-              />
+              <StockTickerTxButton onClick={this.handleBuyMaxButtonClick} text={"Buy MAX"} />
+              <StockTickerTxButton onClick={this.handleSellAllButtonClick} text={"Sell ALL"} />
+              <StockTickerPositionText p={this.props.p} stock={this.props.stock} />
               <StockTickerOrderList
                 cancelOrder={this.props.cancelOrder}
                 orders={this.props.orders}

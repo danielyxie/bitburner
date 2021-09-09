@@ -23,10 +23,7 @@ type IState = {
   rerenderFlag: boolean;
 };
 
-export class InstalledAugmentationsAndSourceFiles extends React.Component<
-  IProps,
-  IState
-> {
+export class InstalledAugmentationsAndSourceFiles extends React.Component<IProps, IState> {
   listRef: React.RefObject<HTMLUListElement>;
 
   constructor(props: IProps) {
@@ -89,14 +86,12 @@ export class InstalledAugmentationsAndSourceFiles extends React.Component<
   }
 
   sortByAcquirementTime(): void {
-    Settings.OwnedAugmentationsOrder =
-      OwnedAugmentationsOrderSetting.AcquirementTime;
+    Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.AcquirementTime;
     this.rerender();
   }
 
   sortInOrder(): void {
-    Settings.OwnedAugmentationsOrder =
-      OwnedAugmentationsOrderSetting.Alphabetically;
+    Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.Alphabetically;
     this.rerender();
   }
 

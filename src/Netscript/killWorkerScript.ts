@@ -12,11 +12,7 @@ import { AllServers } from "../Server/AllServers";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
-export function killWorkerScript(
-  runningScriptObj: RunningScript,
-  serverIp: string,
-  rerenderUi: boolean,
-): boolean;
+export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string, rerenderUi: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
 export function killWorkerScript(pid: number): boolean;
 export function killWorkerScript(
@@ -41,11 +37,7 @@ export function killWorkerScript(
 
     // If for some reason that doesn't work, we'll try the old way
     for (const ws of workerScripts.values()) {
-      if (
-        ws.name == script.filename &&
-        ws.serverIp == serverIp &&
-        compareArrays(ws.args, script.args)
-      ) {
+      if (ws.name == script.filename && ws.serverIp == serverIp && compareArrays(ws.args, script.args)) {
         stopAndCleanUpWorkerScript(ws, rerenderUi);
 
         return true;
@@ -73,10 +65,7 @@ function killWorkerScriptByPid(pid: number, rerenderUi = true): boolean {
   return false;
 }
 
-function stopAndCleanUpWorkerScript(
-  workerScript: WorkerScript,
-  rerenderUi = true,
-): void {
+function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
   workerScript.env.stopFlag = true;
   killNetscriptDelay(workerScript);
   removeWorkerScript(workerScript, rerenderUi);
@@ -89,10 +78,7 @@ function stopAndCleanUpWorkerScript(
  * @param {WorkerScript | number} - Identifier for WorkerScript. Either the object itself, or
  *                                  its index in the global workerScripts array
  */
-function removeWorkerScript(
-  workerScript: WorkerScript,
-  rerenderUi = true,
-): void {
+function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
   if (workerScript instanceof WorkerScript) {
     const ip = workerScript.serverIp;
     const name = workerScript.name;
@@ -100,9 +86,7 @@ function removeWorkerScript(
     // Get the server on which the script runs
     const server = AllServers[ip];
     if (server == null) {
-      console.error(
-        `Could not find server on which this script is running: ${ip}`,
-      );
+      console.error(`Could not find server on which this script is running: ${ip}`);
       return;
     }
 
@@ -118,10 +102,7 @@ function removeWorkerScript(
     // Delete the RunningScript object from that server
     for (let i = 0; i < server.runningScripts.length; ++i) {
       const runningScript = server.runningScripts[i];
-      if (
-        runningScript.filename === name &&
-        compareArrays(runningScript.args, workerScript.args)
-      ) {
+      if (runningScript.filename === name && compareArrays(runningScript.args, workerScript.args)) {
         server.runningScripts.splice(i, 1);
         break;
       }
@@ -130,9 +111,7 @@ function removeWorkerScript(
     // Delete script from global pool (workerScripts)
     const res = workerScripts.delete(workerScript.pid);
     if (!res) {
-      console.warn(
-        `removeWorkerScript() called with WorkerScript that wasn't in the global map:`,
-      );
+      console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
       console.warn(workerScript);
     }
 

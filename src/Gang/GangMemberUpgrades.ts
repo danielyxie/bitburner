@@ -7,11 +7,6 @@ export const GangMemberUpgrades: {
 
 (function () {
   gangMemberUpgradesMetadata.forEach((e) => {
-    GangMemberUpgrades[e.name] = new GangMemberUpgrade(
-      e.name,
-      e.cost,
-      e.upgType,
-      e.mults,
-    );
+    GangMemberUpgrades[e.name] = new GangMemberUpgrade(e.name, e.cost, e.upgType, e.mults);
   });
 })();

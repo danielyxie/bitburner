@@ -1,11 +1,7 @@
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { BaseServer } from "./Server/BaseServer";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 /**
  * Represents a plain text file that is typically stored on a server.
@@ -124,17 +120,11 @@ export function getTextFile(fn: string, server: BaseServer): TextFile | null {
  * @returns The instance of the file.
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function createTextFile(
-  fn: string,
-  txt: string,
-  server: BaseServer,
-): TextFile | undefined {
+export function createTextFile(fn: string, txt: string, server: BaseServer): TextFile | undefined {
   if (getTextFile(fn, server) !== null) {
     // This should probably be a `throw`...
     /* tslint:disable-next-line:no-console */
-    console.error(
-      `A file named "${fn}" already exists on server ${server.hostname}.`,
-    );
+    console.error(`A file named "${fn}" already exists on server ${server.hostname}.`);
 
     return undefined;
   }

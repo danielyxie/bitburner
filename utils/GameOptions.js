@@ -13,12 +13,10 @@ $(document).click(function (event) {
 var gameOptionsOpened = false;
 function gameOptionsBoxInit() {
   //Menu link button
-  document
-    .getElementById("options-menu-link")
-    .addEventListener("click", function () {
-      gameOptionsBoxOpen();
-      return false;
-    });
+  document.getElementById("options-menu-link").addEventListener("click", function () {
+    gameOptionsBoxOpen();
+    return false;
+  });
 
   //Close button
   var closeButton = document.getElementById("game-options-close-button");
@@ -41,11 +39,8 @@ function gameOptionsBoxOpen() {
   box.style.display = "flex";
 
   // special exception for bladeburner popup because it's only visible later.
-  document
-    .getElementById("settingsSuppressBladeburnerPopup")
-    .closest("fieldset").style.display = Player.canAccessBladeburner()
-    ? "block"
-    : "none";
+  document.getElementById("settingsSuppressBladeburnerPopup").closest("fieldset").style.display =
+    Player.canAccessBladeburner() ? "block" : "none";
   setTimeout(function () {
     gameOptionsOpened = true;
   }, 500);

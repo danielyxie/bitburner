@@ -17,11 +17,7 @@ import {
 import { HacknetNodeConstants } from "./data/Constants";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class HacknetNode implements IHacknetNode {
   // Node's number of cores
@@ -85,20 +81,14 @@ export class HacknetNode implements IHacknetNode {
   // Upgrade this Node's number of cores, if possible
   // Returns a boolean indicating whether new cores were successfully bought
   upgradeCore(levels = 1, prodMult: number): void {
-    this.cores = Math.min(
-      HacknetNodeConstants.MaxCores,
-      Math.round(this.cores + levels),
-    );
+    this.cores = Math.min(HacknetNodeConstants.MaxCores, Math.round(this.cores + levels));
     this.updateMoneyGainRate(prodMult);
   }
 
   // Upgrade this Node's level, if possible
   // Returns a boolean indicating whether the level was successfully updated
   upgradeLevel(levels = 1, prodMult: number): void {
-    this.level = Math.min(
-      HacknetNodeConstants.MaxLevel,
-      Math.round(this.level + levels),
-    );
+    this.level = Math.min(HacknetNodeConstants.MaxLevel, Math.round(this.level + levels));
     this.updateMoneyGainRate(prodMult);
   }
 
@@ -114,18 +104,10 @@ export class HacknetNode implements IHacknetNode {
 
   // Re-calculate this Node's production and update the moneyGainRatePerSecond prop
   updateMoneyGainRate(prodMult: number): void {
-    this.moneyGainRatePerSecond = calculateMoneyGainRate(
-      this.level,
-      this.ram,
-      this.cores,
-      prodMult,
-    );
+    this.moneyGainRatePerSecond = calculateMoneyGainRate(this.level, this.ram, this.cores, prodMult);
     if (isNaN(this.moneyGainRatePerSecond)) {
       this.moneyGainRatePerSecond = 0;
-      dialogBoxCreate(
-        "Error in calculating Hacknet Node production. Please report to game developer",
-        false,
-      );
+      dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer", false);
     }
   }
 

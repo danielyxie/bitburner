@@ -76,14 +76,8 @@ export class Blackjack extends Game<Props, State> {
     // always reload without saving but w.e)
     this.props.p.loseMoney(this.state.bet);
 
-    const playerHand = new Hand([
-      this.deck.safeDrawCard(),
-      this.deck.safeDrawCard(),
-    ]);
-    const dealerHand = new Hand([
-      this.deck.safeDrawCard(),
-      this.deck.safeDrawCard(),
-    ]);
+    const playerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);
+    const dealerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);
 
     this.setState({
       playerHand,
@@ -242,9 +236,7 @@ export class Blackjack extends Game<Props, State> {
   };
 
   isPlayerWinResult = (result: Result): boolean => {
-    return (
-      result === Result.PlayerWon || result === Result.PlayerWonByBlackjack
-    );
+    return result === Result.PlayerWon || result === Result.PlayerWonByBlackjack;
   };
 
   wagerOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -304,16 +296,8 @@ export class Blackjack extends Game<Props, State> {
   };
 
   render(): React.ReactNode {
-    const {
-      betInput,
-      playerHand,
-      dealerHand,
-      gameInProgress,
-      result,
-      wagerInvalid,
-      wagerInvalidHelperText,
-      gains,
-    } = this.state;
+    const { betInput, playerHand, dealerHand, gameInProgress, result, wagerInvalid, wagerInvalidHelperText, gains } =
+      this.state;
 
     // Get the player totals to display.
     const playerHandValues = this.getHandDisplayValues(playerHand);
@@ -342,9 +326,7 @@ export class Blackjack extends Game<Props, State> {
               width: "200px",
             }}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
+              startAdornment: <InputAdornment position="start">$</InputAdornment>,
             }}
           />
 
@@ -357,11 +339,7 @@ export class Blackjack extends Game<Props, State> {
         {/* Buttons */}
         {!gameInProgress ? (
           <div>
-            <MuiButton
-              color="primary"
-              onClick={this.startOnClick}
-              disabled={wagerInvalid || !this.canStartGame()}
-            >
+            <MuiButton color="primary" onClick={this.startOnClick} disabled={wagerInvalid || !this.canStartGame()}>
               Start
             </MuiButton>
           </div>
@@ -398,11 +376,7 @@ export class Blackjack extends Game<Props, State> {
               <pre>Dealer</pre>
               {dealerHand.cards.map((card, i) => (
                 // Hide every card except the first while game is in progress
-                <ReactCard
-                  card={card}
-                  hidden={gameInProgress && i !== 0}
-                  key={i}
-                />
+                <ReactCard card={card} hidden={gameInProgress && i !== 0} key={i} />
               ))}
 
               {!gameInProgress && (

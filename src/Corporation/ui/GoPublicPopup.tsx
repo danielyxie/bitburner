@@ -14,13 +14,11 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function GoPublicPopup(props: IProps): React.ReactElement {
   const [shares, setShares] = useState("");
-  const initialSharePrice =
-    props.corp.determineValuation() / props.corp.totalShares;
+  const initialSharePrice = props.corp.determineValuation() / props.corp.totalShares;
 
   function goPublic(): void {
     const numShares = parseFloat(shares);
-    const initialSharePrice =
-      props.corp.determineValuation() / props.corp.totalShares;
+    const initialSharePrice = props.corp.determineValuation() / props.corp.totalShares;
     if (isNaN(numShares)) {
       dialogBoxCreate("Invalid value for number of issued shares");
       return;
@@ -37,9 +35,7 @@ export function GoPublicPopup(props: IProps): React.ReactElement {
     props.corp.rerender(props.player);
     dialogBoxCreate(
       `You took your ${props.corp.name} public and earned ` +
-        `${numeralWrapper.formatMoney(
-          numShares * initialSharePrice,
-        )} in your IPO`,
+        `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`,
     );
     removePopup(props.popupId);
   }
@@ -55,16 +51,12 @@ export function GoPublicPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the number of shares you would like to issue for your IPO. These
-        shares will be publicly sold and you will no longer own them. Your
-        Corporation will receive {numeralWrapper.formatMoney(initialSharePrice)}{" "}
-        per share (the IPO money will be deposited directly into your
-        Corporation's funds).
+        Enter the number of shares you would like to issue for your IPO. These shares will be publicly sold and you will
+        no longer own them. Your Corporation will receive {numeralWrapper.formatMoney(initialSharePrice)} per share (the
+        IPO money will be deposited directly into your Corporation's funds).
         <br />
         <br />
-        You have a total of{" "}
-        {numeralWrapper.format(props.corp.numShares, "0.000a")} of shares that
-        you can issue.
+        You have a total of {numeralWrapper.format(props.corp.numShares, "0.000a")} of shares that you can issue.
       </p>
       <input
         className="text-input"

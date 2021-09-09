@@ -39,11 +39,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
   }
 
   return (
-    <div
-      className={"cmpy-mgmt-upgrade-div tooltip"}
-      style={{ width: "45%" }}
-      onClick={onClick}
-    >
+    <div className={"cmpy-mgmt-upgrade-div tooltip"} style={{ width: "45%" }} onClick={onClick}>
       {text}
       <span className={"tooltiptext"}>{tooltip}</span>
     </div>

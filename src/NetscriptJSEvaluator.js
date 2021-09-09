@@ -29,8 +29,7 @@ export async function executeJSScript(scripts = [], workerScript) {
     script.markUpdated();
     urls = _getScriptUrls(script, scripts, []);
     script.url = urls[urls.length - 1].url;
-    script.module = new Promise((resolve) => resolve(eval("import(urls[urls.length - 1].url)")),
-    );
+    script.module = new Promise((resolve) => resolve(eval("import(urls[urls.length - 1].url)")));
     script.dependencies = urls;
   }
   loadedModule = await script.module;
@@ -69,8 +68,7 @@ function shouldCompile(script, scripts) {
     // compilation errors.
     if (!depScript) return true;
 
-    const depIsMoreRecent =
-      depScript.moduleSequenceNumber > script.moduleSequenceNumber;
+    const depIsMoreRecent = depScript.moduleSequenceNumber > script.moduleSequenceNumber;
     return depIsMoreRecent;
   });
 }
@@ -135,12 +133,7 @@ export function _getScriptUrls(script, scripts, seen) {
 
     // If we successfully transformed the code, create a blob url for it and
     // push that URL onto the top of the stack.
-    urlStack.push(
-      new ScriptUrl(
-        script.filename,
-        URL.createObjectURL(makeScriptBlob(transformedCode)),
-      ),
-    );
+    urlStack.push(new ScriptUrl(script.filename, URL.createObjectURL(makeScriptBlob(transformedCode))));
     return urlStack;
   } catch (err) {
     // If there is an error, we need to clean up the URLs.

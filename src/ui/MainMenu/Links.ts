@@ -59,9 +59,7 @@ export function initializeMainMenuLinks(): boolean {
     function safeGetLink(id: string): HTMLElement {
       const elem: HTMLElement | null = clearEventListeners(id);
       if (elem == null) {
-        throw new Error(
-          `clearEventListeners() failed for element with id: ${id}`,
-        );
+        throw new Error(`clearEventListeners() failed for element with id: ${id}`);
       }
 
       return elem;
@@ -86,8 +84,7 @@ export function initializeMainMenuLinks(): boolean {
     MainMenuLinks.Milestones = safeGetLink("milestones-menu-link");
     MainMenuLinks.Tutorial = safeGetLink("tutorial-menu-link");
     const op: HTMLElement | null = document.getElementById("options-menu-link");
-    if (op === null)
-      throw new Error(`Could not find element with id: "options-menu-link"`);
+    if (op === null) throw new Error(`Could not find element with id: "options-menu-link"`);
     MainMenuLinks.Options = op; // This click listener is already set, so don't clear it
     MainMenuLinks.DevMenu = safeGetLink("dev-menu-link");
 

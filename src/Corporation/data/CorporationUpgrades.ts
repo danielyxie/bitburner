@@ -1,13 +1,6 @@
 import { IMap } from "../../types";
 
-export type CorporationUpgrade = [
-  number,
-  number,
-  number,
-  number,
-  string,
-  string,
-];
+export type CorporationUpgrade = [number, number, number, number, string, string];
 
 // Corporation Upgrades
 // Upgrades for entire corporation, levelable upgrades

@@ -199,12 +199,8 @@ describe("Terminal Directory Tests", function () {
       expect(isValidFilePath("/dir/my_script.script")).toEqual(true);
       expect(isValidFilePath("/dir1/dir2/dir3/my-script.script")).toEqual(true);
       expect(isValidFilePath("/dir1/dir2/././../_foo.lit")).toEqual(true);
-      expect(isValidFilePath("/.dir1/./../.dir2/mult.periods.script")).toEqual(
-        true,
-      );
-      expect(
-        isValidFilePath("/_dir/../dir2/mult.per-iods.again.script"),
-      ).toEqual(true);
+      expect(isValidFilePath("/.dir1/./../.dir2/mult.periods.script")).toEqual(true);
+      expect(isValidFilePath("/_dir/../dir2/mult.per-iods.again.script")).toEqual(true);
     });
 
     it("should return false for strings that end with a slash", function () {
@@ -227,9 +223,7 @@ describe("Terminal Directory Tests", function () {
 
     it("should return the first parent directory in a filepath", function () {
       expect(getFirstParentDirectory("/dir1/foo.txt")).toEqual("dir1/");
-      expect(getFirstParentDirectory("/dir1/dir2/dir3/dir4/foo.txt")).toEqual(
-        "dir1/",
-      );
+      expect(getFirstParentDirectory("/dir1/dir2/dir3/dir4/foo.txt")).toEqual("dir1/");
       expect(getFirstParentDirectory("/_dir1/dir2/foo.js")).toEqual("_dir1/");
     });
 
@@ -248,13 +242,9 @@ describe("Terminal Directory Tests", function () {
 
     it("should return all parent directories in a filepath", function () {
       expect(getAllParentDirectories("/")).toEqual("/");
-      expect(getAllParentDirectories("/home/var/foo.txt")).toEqual(
-        "/home/var/",
-      );
+      expect(getAllParentDirectories("/home/var/foo.txt")).toEqual("/home/var/");
       expect(getAllParentDirectories("/home/var/")).toEqual("/home/var/");
-      expect(getAllParentDirectories("/home/var/test/")).toEqual(
-        "/home/var/test/",
-      );
+      expect(getAllParentDirectories("/home/var/test/")).toEqual("/home/var/test/");
     });
 
     it("should return an empty string if there are no parent directories", function () {

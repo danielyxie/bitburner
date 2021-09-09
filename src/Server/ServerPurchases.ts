@@ -29,23 +29,15 @@ export function getPurchaseServerCost(ram: number): number {
     return Infinity;
   }
 
-  return (
-    sanitizedRam *
-    CONSTANTS.BaseCostFor1GBOfRamServer *
-    BitNodeMultipliers.PurchasedServerCost
-  );
+  return sanitizedRam * CONSTANTS.BaseCostFor1GBOfRamServer * BitNodeMultipliers.PurchasedServerCost;
 }
 
 export function getPurchaseServerLimit(): number {
-  return Math.round(
-    CONSTANTS.PurchasedServerLimit * BitNodeMultipliers.PurchasedServerLimit,
-  );
+  return Math.round(CONSTANTS.PurchasedServerLimit * BitNodeMultipliers.PurchasedServerLimit);
 }
 
 export function getPurchaseServerMaxRam(): number {
-  const ram = Math.round(
-    CONSTANTS.PurchasedServerMaxRam * BitNodeMultipliers.PurchasedServerMaxRam,
-  );
+  const ram = Math.round(CONSTANTS.PurchasedServerMaxRam * BitNodeMultipliers.PurchasedServerMaxRam);
 
   // Round this to the nearest power of 2
   return 1 << (31 - Math.clz32(ram));
@@ -57,10 +49,7 @@ export function purchaseServer(ram: number, p: IPlayer): void {
 
   //Check if player has enough money
   if (!p.canAfford(cost)) {
-    dialogBoxCreate(
-      "You don't have enough money to purchase this server!",
-      false,
-    );
+    dialogBoxCreate("You don't have enough money to purchase this server!", false);
     return;
   }
 
@@ -111,17 +100,13 @@ export function purchaseServer(ram: number, p: IPlayer): void {
 export function purchaseRamForHomeComputer(p: IPlayer): void {
   const cost = p.getUpgradeHomeRamCost();
   if (!p.canAfford(cost)) {
-    dialogBoxCreate(
-      "You do not have enough money to purchase additional RAM for your home computer",
-    );
+    dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
     return;
   }
 
   const homeComputer = p.getHomeComputer();
   if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
-    dialogBoxCreate(
-      `You cannot upgrade your home computer RAM because it is at its maximum possible value`,
-    );
+    dialogBoxCreate(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
     return;
   }
 

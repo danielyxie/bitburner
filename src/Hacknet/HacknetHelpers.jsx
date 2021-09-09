@@ -17,11 +17,7 @@ import { HashManager } from "./HashManager";
 import { HashUpgrades } from "./HashUpgrades";
 
 import { generateRandomContract } from "../CodingContractGenerator";
-import {
-  iTutorialSteps,
-  iTutorialNextStep,
-  ITutorial,
-} from "../InteractiveTutorial";
+import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../InteractiveTutorial";
 import { Player } from "../Player";
 import { AllServers } from "../Server/AllServers";
 import { GetServerByHostname } from "../Server/ServerHelpers";
@@ -94,24 +90,15 @@ export function purchaseHacknet() {
 }
 
 export function hasMaxNumberHacknetServers() {
-  return (
-    hasHacknetServers() &&
-    Player.hacknetNodes.length >= HacknetServerConstants.MaxServers
-  );
+  return hasHacknetServers() && Player.hacknetNodes.length >= HacknetServerConstants.MaxServers;
 }
 
 export function getCostOfNextHacknetNode() {
-  return calculateNodeCost(
-    Player.hacknetNodes.length + 1,
-    Player.hacknet_node_purchase_cost_mult,
-  );
+  return calculateNodeCost(Player.hacknetNodes.length + 1, Player.hacknet_node_purchase_cost_mult);
 }
 
 export function getCostOfNextHacknetServer() {
-  return calculateServerCost(
-    Player.hacknetNodes.length + 1,
-    Player.hacknet_node_purchase_cost_mult,
-  );
+  return calculateServerCost(Player.hacknetNodes.length + 1, Player.hacknet_node_purchase_cost_mult);
 }
 
 // Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node's level
@@ -120,25 +107,14 @@ export function getMaxNumberLevelUpgrades(nodeObj, maxLevel) {
     throw new Error(`getMaxNumberLevelUpgrades() called without maxLevel arg`);
   }
 
-  if (
-    Player.money.lt(
-      nodeObj.calculateLevelUpgradeCost(1, Player.hacknet_node_level_cost_mult),
-    )
-  ) {
+  if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(1, Player.hacknet_node_level_cost_mult))) {
     return 0;
   }
 
   let min = 1;
   let max = maxLevel - 1;
   let levelsToMax = maxLevel - nodeObj.level;
-  if (
-    Player.money.gt(
-      nodeObj.calculateLevelUpgradeCost(
-        levelsToMax,
-        Player.hacknet_node_level_cost_mult,
-      ),
-    )
-  ) {
+  if (Player.money.gt(nodeObj.calculateLevelUpgradeCost(levelsToMax, Player.hacknet_node_level_cost_mult))) {
     return levelsToMax;
   }
 
@@ -146,37 +122,13 @@ export function getMaxNumberLevelUpgrades(nodeObj, maxLevel) {
     var curr = ((min + max) / 2) | 0;
     if (
       curr !== maxLevel &&
-      Player.money.gt(
-        nodeObj.calculateLevelUpgradeCost(
-          curr,
-          Player.hacknet_node_level_cost_mult,
-        ),
-      ) &&
-      Player.money.lt(
-        nodeObj.calculateLevelUpgradeCost(
-          curr + 1,
-          Player.hacknet_node_level_cost_mult,
-        ),
-      )
+      Player.money.gt(nodeObj.calculateLevelUpgradeCost(curr, Player.hacknet_node_level_cost_mult)) &&
+      Player.money.lt(nodeObj.calculateLevelUpgradeCost(curr + 1, Player.hacknet_node_level_cost_mult))
     ) {
       return Math.min(levelsToMax, curr);
-    } else if (
-      Player.money.lt(
-        nodeObj.calculateLevelUpgradeCost(
-          curr,
-          Player.hacknet_node_level_cost_mult,
-        ),
-      )
-    ) {
+    } else if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(curr, Player.hacknet_node_level_cost_mult))) {
       max = curr - 1;
-    } else if (
-      Player.money.gt(
-        nodeObj.calculateLevelUpgradeCost(
-          curr,
-          Player.hacknet_node_level_cost_mult,
-        ),
-      )
-    ) {
+    } else if (Player.money.gt(nodeObj.calculateLevelUpgradeCost(curr, Player.hacknet_node_level_cost_mult))) {
       min = curr + 1;
     } else {
       return Math.min(levelsToMax, curr);
@@ -191,11 +143,7 @@ export function getMaxNumberRamUpgrades(nodeObj, maxLevel) {
     throw new Error(`getMaxNumberRamUpgrades() called without maxLevel arg`);
   }
 
-  if (
-    Player.money.lt(
-      nodeObj.calculateRamUpgradeCost(1, Player.hacknet_node_ram_cost_mult),
-    )
-  ) {
+  if (Player.money.lt(nodeObj.calculateRamUpgradeCost(1, Player.hacknet_node_ram_cost_mult))) {
     return 0;
   }
 
@@ -205,24 +153,13 @@ export function getMaxNumberRamUpgrades(nodeObj, maxLevel) {
   } else {
     levelsToMax = Math.round(Math.log2(maxLevel / nodeObj.ram));
   }
-  if (
-    Player.money.gt(
-      nodeObj.calculateRamUpgradeCost(
-        levelsToMax,
-        Player.hacknet_node_ram_cost_mult,
-      ),
-    )
-  ) {
+  if (Player.money.gt(nodeObj.calculateRamUpgradeCost(levelsToMax, Player.hacknet_node_ram_cost_mult))) {
     return levelsToMax;
   }
 
   //We'll just loop until we find the max
   for (let i = levelsToMax - 1; i >= 0; --i) {
-    if (
-      Player.money.gt(
-        nodeObj.calculateRamUpgradeCost(i, Player.hacknet_node_ram_cost_mult),
-      )
-    ) {
+    if (Player.money.gt(nodeObj.calculateRamUpgradeCost(i, Player.hacknet_node_ram_cost_mult))) {
       return i;
     }
   }
@@ -235,25 +172,14 @@ export function getMaxNumberCoreUpgrades(nodeObj, maxLevel) {
     throw new Error(`getMaxNumberCoreUpgrades() called without maxLevel arg`);
   }
 
-  if (
-    Player.money.lt(
-      nodeObj.calculateCoreUpgradeCost(1, Player.hacknet_node_core_cost_mult),
-    )
-  ) {
+  if (Player.money.lt(nodeObj.calculateCoreUpgradeCost(1, Player.hacknet_node_core_cost_mult))) {
     return 0;
   }
 
   let min = 1;
   let max = maxLevel - 1;
   const levelsToMax = maxLevel - nodeObj.cores;
-  if (
-    Player.money.gt(
-      nodeObj.calculateCoreUpgradeCost(
-        levelsToMax,
-        Player.hacknet_node_core_cost_mult,
-      ),
-    )
-  ) {
+  if (Player.money.gt(nodeObj.calculateCoreUpgradeCost(levelsToMax, Player.hacknet_node_core_cost_mult))) {
     return levelsToMax;
   }
 
@@ -262,37 +188,13 @@ export function getMaxNumberCoreUpgrades(nodeObj, maxLevel) {
     let curr = ((min + max) / 2) | 0;
     if (
       curr != maxLevel &&
-      Player.money.gt(
-        nodeObj.calculateCoreUpgradeCost(
-          curr,
-          Player.hacknet_node_core_cost_mult,
-        ),
-      ) &&
-      Player.money.lt(
-        nodeObj.calculateCoreUpgradeCost(
-          curr + 1,
-          Player.hacknet_node_core_cost_mult,
-        ),
-      )
+      Player.money.gt(nodeObj.calculateCoreUpgradeCost(curr, Player.hacknet_node_core_cost_mult)) &&
+      Player.money.lt(nodeObj.calculateCoreUpgradeCost(curr + 1, Player.hacknet_node_core_cost_mult))
     ) {
       return Math.min(levelsToMax, curr);
-    } else if (
-      Player.money.lt(
-        nodeObj.calculateCoreUpgradeCost(
-          curr,
-          Player.hacknet_node_core_cost_mult,
-        ),
-      )
-    ) {
+    } else if (Player.money.lt(nodeObj.calculateCoreUpgradeCost(curr, Player.hacknet_node_core_cost_mult))) {
       max = curr - 1;
-    } else if (
-      Player.money.gt(
-        nodeObj.calculateCoreUpgradeCost(
-          curr,
-          Player.hacknet_node_core_cost_mult,
-        ),
-      )
-    ) {
+    } else if (Player.money.gt(nodeObj.calculateCoreUpgradeCost(curr, Player.hacknet_node_core_cost_mult))) {
       min = curr + 1;
     } else {
       return Math.min(levelsToMax, curr);
@@ -342,10 +244,7 @@ export function getMaxNumberCacheUpgrades(nodeObj, maxLevel) {
 
 export function purchaseLevelUpgrade(node, levels = 1) {
   const sanitizedLevels = Math.round(levels);
-  const cost = node.calculateLevelUpgradeCost(
-    sanitizedLevels,
-    Player.hacknet_node_level_cost_mult,
-  );
+  const cost = node.calculateLevelUpgradeCost(sanitizedLevels, Player.hacknet_node_level_cost_mult);
   if (isNaN(cost) || cost <= 0 || sanitizedLevels < 0) {
     return false;
   }
@@ -353,25 +252,14 @@ export function purchaseLevelUpgrade(node, levels = 1) {
   const isServer = node instanceof HacknetServer;
 
   // If we're at max level, return false
-  if (
-    node.level >=
-    (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel)
-  ) {
+  if (node.level >= (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel)) {
     return false;
   }
 
   // If the number of specified upgrades would exceed the max level, calculate
   // the maximum number of upgrades and use that
-  if (
-    node.level + sanitizedLevels >
-    (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel)
-  ) {
-    const diff = Math.max(
-      0,
-      (isServer
-        ? HacknetServerConstants.MaxLevel
-        : HacknetNodeConstants.MaxLevel) - node.level,
-    );
+  if (node.level + sanitizedLevels > (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel)) {
+    const diff = Math.max(0, (isServer ? HacknetServerConstants.MaxLevel : HacknetNodeConstants.MaxLevel) - node.level);
     return purchaseLevelUpgrade(node, diff);
   }
 
@@ -387,10 +275,7 @@ export function purchaseLevelUpgrade(node, levels = 1) {
 
 export function purchaseRamUpgrade(node, levels = 1) {
   const sanitizedLevels = Math.round(levels);
-  const cost = node.calculateRamUpgradeCost(
-    sanitizedLevels,
-    Player.hacknet_node_ram_cost_mult,
-  );
+  const cost = node.calculateRamUpgradeCost(sanitizedLevels, Player.hacknet_node_ram_cost_mult);
   if (isNaN(cost) || cost <= 0 || sanitizedLevels < 0) {
     return false;
   }
@@ -398,32 +283,20 @@ export function purchaseRamUpgrade(node, levels = 1) {
   const isServer = node instanceof HacknetServer;
 
   // Fail if we're already at max
-  if (
-    node.ram >=
-    (isServer ? HacknetServerConstants.MaxRam : HacknetNodeConstants.MaxRam)
-  ) {
+  if (node.ram >= (isServer ? HacknetServerConstants.MaxRam : HacknetNodeConstants.MaxRam)) {
     return false;
   }
 
   // If the number of specified upgrades would exceed the max RAM, calculate the
   // max possible number of upgrades and use that
   if (isServer) {
-    if (
-      node.maxRam * Math.pow(2, sanitizedLevels) >
-      HacknetServerConstants.MaxRam
-    ) {
-      const diff = Math.max(
-        0,
-        Math.log2(Math.round(HacknetServerConstants.MaxRam / node.maxRam)),
-      );
+    if (node.maxRam * Math.pow(2, sanitizedLevels) > HacknetServerConstants.MaxRam) {
+      const diff = Math.max(0, Math.log2(Math.round(HacknetServerConstants.MaxRam / node.maxRam)));
       return purchaseRamUpgrade(node, diff);
     }
   } else {
     if (node.ram * Math.pow(2, sanitizedLevels) > HacknetNodeConstants.MaxRam) {
-      const diff = Math.max(
-        0,
-        Math.log2(Math.round(HacknetNodeConstants.MaxRam / node.ram)),
-      );
+      const diff = Math.max(0, Math.log2(Math.round(HacknetNodeConstants.MaxRam / node.ram)));
       return purchaseRamUpgrade(node, diff);
     }
   }
@@ -440,10 +313,7 @@ export function purchaseRamUpgrade(node, levels = 1) {
 
 export function purchaseCoreUpgrade(node, levels = 1) {
   const sanitizedLevels = Math.round(levels);
-  const cost = node.calculateCoreUpgradeCost(
-    sanitizedLevels,
-    Player.hacknet_node_core_cost_mult,
-  );
+  const cost = node.calculateCoreUpgradeCost(sanitizedLevels, Player.hacknet_node_core_cost_mult);
   if (isNaN(cost) || cost <= 0 || sanitizedLevels < 0) {
     return false;
   }
@@ -451,25 +321,14 @@ export function purchaseCoreUpgrade(node, levels = 1) {
   const isServer = node instanceof HacknetServer;
 
   // Fail if we're already at max
-  if (
-    node.cores >=
-    (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores)
-  ) {
+  if (node.cores >= (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores)) {
     return false;
   }
 
   // If the specified number of upgrades would exceed the max Cores, calculate
   // the max possible number of upgrades and use that
-  if (
-    node.cores + sanitizedLevels >
-    (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores)
-  ) {
-    const diff = Math.max(
-      0,
-      (isServer
-        ? HacknetServerConstants.MaxCores
-        : HacknetNodeConstants.MaxCores) - node.cores,
-    );
+  if (node.cores + sanitizedLevels > (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores)) {
+    const diff = Math.max(0, (isServer ? HacknetServerConstants.MaxCores : HacknetNodeConstants.MaxCores) - node.cores);
     return purchaseCoreUpgrade(node, diff);
   }
 
@@ -546,10 +405,7 @@ export function processHacknetEarnings(numCycles) {
 function processAllHacknetNodeEarnings(numCycles) {
   let total = 0;
   for (let i = 0; i < Player.hacknetNodes.length; ++i) {
-    total += processSingleHacknetNodeEarnings(
-      numCycles,
-      Player.hacknetNodes[i],
-    );
+    total += processSingleHacknetNodeEarnings(numCycles, Player.hacknetNodes[i]);
   }
 
   return total;
@@ -565,9 +421,7 @@ function processSingleHacknetNodeEarnings(numCycles, nodeObj) {
 
 function processAllHacknetServerEarnings(numCycles) {
   if (!(Player.hashManager instanceof HashManager)) {
-    throw new Error(
-      `Player does not have a HashManager (should be in 'hashManager' prop)`,
-    );
+    throw new Error(`Player does not have a HashManager (should be in 'hashManager' prop)`);
   }
 
   let hashes = 0;
@@ -648,9 +502,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
         try {
           const target = GetServerByHostname(upgTarget);
           if (target == null) {
-            console.error(
-              `Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`,
-            );
+            console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
             return false;
           }
 
@@ -665,9 +517,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
         try {
           const target = GetServerByHostname(upgTarget);
           if (target == null) {
-            console.error(
-              `Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`,
-            );
+            console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
             return false;
           }
 
@@ -725,9 +575,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
         break;
       }
       default:
-        console.warn(
-          `Unrecognized upgrade name ${upgName}. Upgrade has no effect`,
-        );
+        console.warn(`Unrecognized upgrade name ${upgName}. Upgrade has no effect`);
         Player.hashManager.refundUpgrade(upgName);
         return false;
     }

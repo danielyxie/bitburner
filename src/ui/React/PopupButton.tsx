@@ -63,11 +63,7 @@ export class PopupButton extends React.Component<IPopupButtonProps, any> {
     const className = this.props.class ? this.props.class : "std-button";
 
     return (
-      <button
-        className={className}
-        onClick={this.handleClick}
-        style={this.props.style}
-      >
+      <button className={className} onClick={this.handleClick} style={this.props.style}>
         {this.props.text}
       </button>
     );

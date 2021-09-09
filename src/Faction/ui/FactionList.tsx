@@ -17,10 +17,7 @@ export function FactionList(props: IProps): React.ReactElement {
     displayFactionContent(faction);
   }
 
-  function acceptInvitation(
-    event: React.MouseEvent<HTMLElement>,
-    faction: string,
-  ): void {
+  function acceptInvitation(event: React.MouseEvent<HTMLElement>, faction: string): void {
     if (!event.isTrusted) return;
     joinFaction(Factions[faction]);
     setRerender((x) => !x);
@@ -47,15 +44,12 @@ export function FactionList(props: IProps): React.ReactElement {
       <br />
       <h1>Outstanding Faction Invitations</h1>
       <p style={{ width: "70%" }}>
-        Lists factions you have been invited to. You can accept these faction
-        invitations at any time.
+        Lists factions you have been invited to. You can accept these faction invitations at any time.
       </p>
       <ul>
         {props.player.factionInvitations.map((faction: string) => (
           <li key={faction} style={{ padding: "6px", margin: "6px" }}>
-            <p style={{ display: "inline", margin: "4px", padding: "4px" }}>
-              {faction}
-            </p>
+            <p style={{ display: "inline", margin: "4px", padding: "4px" }}>{faction}</p>
             <a
               className="a-link-button"
               onClick={(e) => acceptInvitation(e, faction)}

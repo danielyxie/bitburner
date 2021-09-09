@@ -1,11 +1,5 @@
 const CyclesPerMarketCycle = 50;
-const AllCorporationStates = [
-  "START",
-  "PURCHASE",
-  "PRODUCTION",
-  "SALE",
-  "EXPORT",
-];
+const AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
 export const CorporationConstants: {
   INITIALSHARES: number;
   SHARESPERPRICEUPDATE: number;
@@ -38,18 +32,10 @@ export const CorporationConstants: {
   SellSharesCooldown: 18e3, // 1 Hour in terms of game cycles
 
   CyclesPerMarketCycle: CyclesPerMarketCycle,
-  CyclesPerIndustryStateCycle:
-    CyclesPerMarketCycle / AllCorporationStates.length,
+  CyclesPerIndustryStateCycle: CyclesPerMarketCycle / AllCorporationStates.length,
   SecsPerMarketCycle: CyclesPerMarketCycle / 5,
 
-  Cities: [
-    "Aevum",
-    "Chongqing",
-    "Sector-12",
-    "New Tokyo",
-    "Ishima",
-    "Volhaven",
-  ],
+  Cities: ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"],
 
   WarehouseInitialCost: 5e9, //Initial purchase cost of warehouse
   WarehouseInitialSize: 100,

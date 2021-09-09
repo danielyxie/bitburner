@@ -45,8 +45,8 @@ export function LimitProductProductionPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter a limit to the amount of this product you would like to product
-        per second. Leave the box empty to set no limit.
+        Enter a limit to the amount of this product you would like to product per second. Leave the box empty to set no
+        limit.
       </p>
       <input
         autoFocus={true}

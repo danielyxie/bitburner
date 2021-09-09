@@ -52,9 +52,7 @@ const useLabelStyles = makeStyles({
   },
 });
 
-export const MuiTextField: React.FC<TextFieldProps> = (
-  props: TextFieldProps,
-) => {
+export const MuiTextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
   return (
     <TextField
       {...props}

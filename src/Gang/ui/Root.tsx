@@ -31,11 +31,7 @@ export function Root(props: IProps): React.ReactElement {
 
   return (
     <>
-      <a
-        className="a-link-button"
-        style={{ display: "inline-block" }}
-        onClick={back}
-      >
+      <a className="a-link-button" style={{ display: "inline-block" }} onClick={back}>
         Back
       </a>
       <a

@@ -12,9 +12,7 @@ export function removeChildrenFromElement(el: string | null | Element): void {
   }
 
   try {
-    const elem: HTMLElement | Element = isString(el)
-      ? getElementById(el as string)
-      : (el as Element);
+    const elem: HTMLElement | Element = isString(el) ? getElementById(el as string) : (el as Element);
 
     if (elem instanceof Element) {
       while (elem.firstChild !== null) {

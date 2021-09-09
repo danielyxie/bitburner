@@ -1,17 +1,7 @@
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 // Array of all valid states
-export const AllCorporationStates: string[] = [
-  "START",
-  "PURCHASE",
-  "PRODUCTION",
-  "SALE",
-  "EXPORT",
-];
+export const AllCorporationStates: string[] = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
 
 export class CorporationState {
   // Number representing what state the Corporation is in. The number

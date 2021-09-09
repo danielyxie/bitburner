@@ -36,12 +36,8 @@ export function AddToAllServers(server: Server | HacknetServer): void {
   const serverIp = server.ip;
   if (ipExists(serverIp)) {
     console.warn(`IP of server that's being added: ${serverIp}`);
-    console.warn(
-      `Hostname of the server thats being added: ${server.hostname}`,
-    );
-    console.warn(
-      `The server that already has this IP is: ${AllServers[serverIp].hostname}`,
-    );
+    console.warn(`Hostname of the server thats being added: ${server.hostname}`);
+    console.warn(`The server that already has this IP is: ${AllServers[serverIp].hostname}`);
     throw new Error("Error: Trying to add a server with an existing IP");
   }
 
@@ -85,9 +81,7 @@ export function initForeignServers(homeComputer: Server): void {
       case "object":
         return getRandomInt(value.min, value.max);
       default:
-        throw Error(
-          `Do not know how to convert the type '${typeof value}' to a number`,
-        );
+        throw Error(`Do not know how to convert the type '${typeof value}' to a number`);
     }
   };
 
@@ -132,10 +126,7 @@ export function initForeignServers(homeComputer: Server): void {
 
   const getRandomArrayItem = (arr: any[]): any => arr[Math.floor(Math.random() * arr.length)];
 
-  const linkNetworkLayers = (
-    network1: Server[],
-    selectServer: () => Server,
-  ): void => {
+  const linkNetworkLayers = (network1: Server[], selectServer: () => Server): void => {
     for (const server of network1) {
       linkComputers(server, selectServer());
     }
@@ -144,8 +135,7 @@ export function initForeignServers(homeComputer: Server): void {
   // Connect the first tier of servers to the player's home computer
   linkNetworkLayers(networkLayers[0], () => homeComputer);
   for (let i = 1; i < networkLayers.length; i++) {
-    linkNetworkLayers(networkLayers[i], () => getRandomArrayItem(networkLayers[i - 1]),
-    );
+    linkNetworkLayers(networkLayers[i], () => getRandomArrayItem(networkLayers[i - 1]));
   }
 }
 

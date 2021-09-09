@@ -71,8 +71,4 @@ function initCreateProgramButtons() {
   }
 }
 
-export {
-  displayCreateProgramContent,
-  getNumAvailableCreateProgram,
-  initCreateProgramButtons,
-};
+export { displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons };

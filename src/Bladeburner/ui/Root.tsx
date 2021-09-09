@@ -25,11 +25,7 @@ export function Root(props: IProps): React.ReactElement {
             border: "1px solid white",
           }}
         >
-          <Stats
-            bladeburner={props.bladeburner}
-            player={props.player}
-            engine={props.engine}
-          />
+          <Stats bladeburner={props.bladeburner} player={props.player} engine={props.engine} />
         </div>
         <Console bladeburner={props.bladeburner} player={props.player} />
       </div>

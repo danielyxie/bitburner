@@ -12,17 +12,9 @@ interface DifficultySettings {
 // I could use `any` to simply some of this but I also want to take advantage
 // of the type safety that typescript provides. I'm just not sure how in this
 // case.
-export function interpolate(
-  settings: DifficultySettings,
-  n: number,
-  out: DifficultySetting,
-): DifficultySetting {
+export function interpolate(settings: DifficultySettings, n: number, out: DifficultySetting): DifficultySetting {
   // interpolates between 2 difficulties.
-  function lerpD(
-    a: DifficultySetting,
-    b: DifficultySetting,
-    t: number,
-  ): DifficultySetting {
+  function lerpD(a: DifficultySetting, b: DifficultySetting, t: number): DifficultySetting {
     // interpolates between 2 numbers.
     function lerp(x: number, y: number, t: number): number {
       return (1 - t) * x + t * y;

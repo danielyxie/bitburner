@@ -21,10 +21,7 @@ export const forecastForecastChangeFromCompanyWork = 0.001;
  * @param {Server} server - Server being hack()ed
  * @param {number} moneyHacked - Amount of money stolen from the server
  */
-export function influenceStockThroughServerHack(
-  server: Server,
-  moneyHacked: number,
-): void {
+export function influenceStockThroughServerHack(server: Server, moneyHacked: number): void {
   const orgName = server.organizationName;
   let stock: Stock | null = null;
   if (typeof orgName === "string" && orgName !== "") {
@@ -36,9 +33,7 @@ export function influenceStockThroughServerHack(
 
   const percTotalMoneyHacked = moneyHacked / server.moneyMax;
   if (Math.random() < percTotalMoneyHacked) {
-    stock.changeForecastForecast(
-      stock.otlkMagForecast - forecastForecastChangeFromHack,
-    );
+    stock.changeForecastForecast(stock.otlkMagForecast - forecastForecastChangeFromHack);
   }
 }
 
@@ -49,10 +44,7 @@ export function influenceStockThroughServerHack(
  * @param {Server} server - Server being grow()n
  * @param {number} moneyHacked - Amount of money added to the server
  */
-export function influenceStockThroughServerGrow(
-  server: Server,
-  moneyGrown: number,
-): void {
+export function influenceStockThroughServerGrow(server: Server, moneyGrown: number): void {
   const orgName = server.organizationName;
   let stock: Stock | null = null;
   if (typeof orgName === "string" && orgName !== "") {
@@ -64,9 +56,7 @@ export function influenceStockThroughServerGrow(
 
   const percTotalMoneyGrown = moneyGrown / server.moneyMax;
   if (Math.random() < percTotalMoneyGrown) {
-    stock.changeForecastForecast(
-      stock.otlkMagForecast + forecastForecastChangeFromHack,
-    );
+    stock.changeForecastForecast(stock.otlkMagForecast + forecastForecastChangeFromHack);
   }
 }
 

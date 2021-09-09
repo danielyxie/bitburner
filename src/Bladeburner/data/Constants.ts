@@ -27,14 +27,7 @@ export const BladeburnerConstants: {
   HrcHpGain: number;
   HrcStaminaGain: number;
 } = {
-  CityNames: [
-    "Aevum",
-    "Chongqing",
-    "Sector-12",
-    "New Tokyo",
-    "Ishima",
-    "Volhaven",
-  ],
+  CityNames: ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"],
   CyclesPerSecond: 5, // Game cycle is 200 ms
 
   StaminaGainPerSecond: 0.0085,

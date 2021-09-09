@@ -1,27 +1,16 @@
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { HacknetNodeConstants } from "../data/Constants";
 
-export function calculateMoneyGainRate(
-  level: number,
-  ram: number,
-  cores: number,
-  mult: number,
-): number {
+export function calculateMoneyGainRate(level: number, ram: number, cores: number, mult: number): number {
   const gainPerLevel = HacknetNodeConstants.MoneyGainPerLevel;
 
   const levelMult = level * gainPerLevel;
   const ramMult = Math.pow(1.035, ram - 1);
   const coresMult = (cores + 5) / 6;
-  return (
-    levelMult * ramMult * coresMult * mult * BitNodeMultipliers.HacknetNodeMoney
-  );
+  return levelMult * ramMult * coresMult * mult * BitNodeMultipliers.HacknetNodeMoney;
 }
 
-export function calculateLevelUpgradeCost(
-  startingLevel: number,
-  extraLevels = 1,
-  costMult = 1,
-): number {
+export function calculateLevelUpgradeCost(startingLevel: number, extraLevels = 1, costMult = 1): number {
   const sanitizedLevels = Math.round(extraLevels);
   if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
     return 0;
@@ -35,19 +24,14 @@ export function calculateLevelUpgradeCost(
   let totalMultiplier = 0;
   let currLevel = startingLevel;
   for (let i = 0; i < sanitizedLevels; ++i) {
-    totalMultiplier +=
-      HacknetNodeConstants.LevelBaseCost * Math.pow(mult, currLevel);
+    totalMultiplier += HacknetNodeConstants.LevelBaseCost * Math.pow(mult, currLevel);
     ++currLevel;
   }
 
   return (HacknetNodeConstants.BaseCost / 2) * totalMultiplier * costMult;
 }
 
-export function calculateRamUpgradeCost(
-  startingRam: number,
-  extraLevels = 1,
-  costMult = 1,
-): number {
+export function calculateRamUpgradeCost(startingRam: number, extraLevels = 1, costMult = 1): number {
   const sanitizedLevels = Math.round(extraLevels);
   if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
     return 0;
@@ -76,11 +60,7 @@ export function calculateRamUpgradeCost(
   return totalCost;
 }
 
-export function calculateCoreUpgradeCost(
-  startingCore: number,
-  extraLevels = 1,
-  costMult = 1,
-): number {
+export function calculateCoreUpgradeCost(startingCore: number, extraLevels = 1, costMult = 1): number {
   const sanitizedCores = Math.round(extraLevels);
   if (isNaN(sanitizedCores) || sanitizedCores < 1) {
     return 0;
@@ -108,9 +88,5 @@ export function calculateNodeCost(n: number, mult = 1): number {
   if (n <= 0) {
     return 0;
   }
-  return (
-    HacknetNodeConstants.BaseCost *
-    Math.pow(HacknetNodeConstants.PurchaseNextMult, n - 1) *
-    mult
-  );
+  return HacknetNodeConstants.BaseCost * Math.pow(HacknetNodeConstants.PurchaseNextMult, n - 1) * mult;
 }

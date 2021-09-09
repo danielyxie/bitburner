@@ -19,17 +19,10 @@ let gangContainer: HTMLElement;
   document.addEventListener("DOMContentLoaded", set);
 })();
 
-export function displayGangContent(
-  engine: IEngine,
-  gang: Gang,
-  player: IPlayer,
-): void {
+export function displayGangContent(engine: IEngine, gang: Gang, player: IPlayer): void {
   if (!routing.isOn(Page.Gang)) {
     return;
   }
 
-  ReactDOM.render(
-    <Root engine={engine} gang={gang} player={player} />,
-    gangContainer,
-  );
+  ReactDOM.render(<Root engine={engine} gang={gang} player={player} />, gangContainer);
 }

@@ -44,11 +44,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
               margin: "0px",
               padding: "0px",
             }}
-            onClick={createTravelPopup.bind(
-              null,
-              props.city,
-              this.props.travel,
-            )}
+            onClick={createTravelPopup.bind(null, props.city, this.props.travel)}
           >
             <span className="tooltiptext">{props.city}</span>
             <b>{props.city[0]}</b>
@@ -115,8 +111,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
     return (
       <div>
         <p>
-          From here, you can travel to any other city! A ticket costs{" "}
-          <Money money={CONSTANTS.TravelCost} />.
+          From here, you can travel to any other city! A ticket costs <Money money={CONSTANTS.TravelCost} />.
         </p>
         {travelBtns}
       </div>

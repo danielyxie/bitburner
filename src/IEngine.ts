@@ -8,11 +8,7 @@ export interface IEngine {
   loadFactionContent: () => void;
   loadFactionsContent: () => void;
   loadGangContent: () => void;
-  loadInfiltrationContent: (
-    name: string,
-    difficulty: number,
-    maxLevel: number,
-  ) => void;
+  loadInfiltrationContent: (name: string, difficulty: number, maxLevel: number) => void;
   loadLocationContent: () => void;
   loadMissionContent: () => void;
   loadResleevingContent: () => void;

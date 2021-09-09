@@ -22,10 +22,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
     else setShares(Math.round(parseFloat(event.target.value)));
   }
 
-  function ProfitIndicator(props: {
-    shares: number | null;
-    corp: ICorporation;
-  }): React.ReactElement {
+  function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
     if (props.shares === null) return <></>;
     if (isNaN(props.shares) || props.shares <= 0) {
       return <>ERROR: Invalid value entered for number of shares to sell</>;
@@ -36,8 +33,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
       const profit = stockSaleResults[0];
       return (
         <>
-          Sell {props.shares} shares for a total of{" "}
-          {numeralWrapper.formatMoney(profit)}
+          Sell {props.shares} shares for a total of {numeralWrapper.formatMoney(profit)}
         </>
       );
     }
@@ -57,9 +53,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
 
       props.corp.numShares -= shares;
       if (isNaN(props.corp.issuedShares)) {
-        console.error(
-          `Corporation issuedShares is NaN: ${props.corp.issuedShares}`,
-        );
+        console.error(`Corporation issuedShares is NaN: ${props.corp.issuedShares}`);
         const res = props.corp.issuedShares;
         if (isNaN(res)) {
           props.corp.issuedShares = 0;
@@ -77,9 +71,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
       dialogBoxCreate(
         `Sold ${numeralWrapper.formatMoney(shares)} shares for ` +
           `${numeralWrapper.formatMoney(profit)}. ` +
-          `The corporation's stock price fell to ${numeralWrapper.formatMoney(
-            props.corp.sharePrice,
-          )} ` +
+          `The corporation's stock price fell to ${numeralWrapper.formatMoney(props.corp.sharePrice)} ` +
           `as a result of dilution.`,
       );
 
@@ -94,17 +86,15 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the number of shares you would like to sell. The money from
-        selling your shares will go directly to you (NOT your Corporation).
+        Enter the number of shares you would like to sell. The money from selling your shares will go directly to you
+        (NOT your Corporation).
         <br />
         <br />
-        Selling your shares will cause your corporation's stock price to fall
-        due to dilution. Furthermore, selling a large number of shares all at
-        once will have an immediate effect in reducing your stock price.
+        Selling your shares will cause your corporation's stock price to fall due to dilution. Furthermore, selling a
+        large number of shares all at once will have an immediate effect in reducing your stock price.
         <br />
         <br />
-        The current price of your company's stock is{" "}
-        {numeralWrapper.formatMoney(props.corp.sharePrice)}
+        The current price of your company's stock is {numeralWrapper.formatMoney(props.corp.sharePrice)}
       </p>
       <ProfitIndicator shares={shares} corp={props.corp} />
       <br />
@@ -117,11 +107,7 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
         onChange={changeShares}
         onKeyDown={onKeyDown}
       />
-      <button
-        onClick={sell}
-        className="a-link-button"
-        style={{ display: "inline-block" }}
-      >
+      <button onClick={sell} className="a-link-button" style={{ display: "inline-block" }}>
         Sell shares
       </button>
     </>

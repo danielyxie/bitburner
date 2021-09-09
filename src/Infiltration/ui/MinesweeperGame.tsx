@@ -81,9 +81,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1 className={"noselect"}>
-          {memoryPhase ? "Remember all the mines!" : "Mark all the mines!"}
-        </h1>
+        <h1 className={"noselect"}>{memoryPhase ? "Remember all the mines!" : "Mark all the mines!"}</h1>
         {minefield.map((line, y) => (
           <div key={y}>
             <pre>
@@ -92,8 +90,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
                   if (minefield[y][x]) return <span key={x}>[?]&nbsp;</span>;
                   return <span key={x}>[&nbsp;]&nbsp;</span>;
                 } else {
-                  if (x == pos[0] && y == pos[1])
-                    return <span key={x}>[X]&nbsp;</span>;
+                  if (x == pos[0] && y == pos[1]) return <span key={x}>[X]&nbsp;</span>;
                   if (answer[y][x]) return <span key={x}>[.]&nbsp;</span>;
                   return <span key={x}>[&nbsp;]&nbsp;</span>;
                 }

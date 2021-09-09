@@ -92,37 +92,24 @@ export function generateContract(params: IGenerateContractParams): void {
 }
 
 // Ensures that a contract's reward type is valid
-function sanitizeRewardType(
-  rewardType: CodingContractRewardType,
-): CodingContractRewardType {
+function sanitizeRewardType(rewardType: CodingContractRewardType): CodingContractRewardType {
   let type = rewardType; // Create copy
 
   const factionsThatAllowHacking = Player.factions.filter((fac) => {
     try {
       return Factions[fac].getInfo().offerHackingWork;
     } catch (e) {
-      console.error(
-        `Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`,
-      );
+      console.error(`Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`);
       return false;
     }
   });
-  if (
-    type === CodingContractRewardType.FactionReputation &&
-    factionsThatAllowHacking.length === 0
-  ) {
+  if (type === CodingContractRewardType.FactionReputation && factionsThatAllowHacking.length === 0) {
     type = CodingContractRewardType.CompanyReputation;
   }
-  if (
-    type === CodingContractRewardType.FactionReputationAll &&
-    factionsThatAllowHacking.length === 0
-  ) {
+  if (type === CodingContractRewardType.FactionReputationAll && factionsThatAllowHacking.length === 0) {
     type = CodingContractRewardType.CompanyReputation;
   }
-  if (
-    type === CodingContractRewardType.CompanyReputation &&
-    Object.keys(Player.jobs).length === 0
-  ) {
+  if (type === CodingContractRewardType.CompanyReputation && Object.keys(Player.jobs).length === 0) {
     type = CodingContractRewardType.Money;
   }
 
@@ -148,9 +135,7 @@ function getRandomReward(): ICodingContractReward {
     try {
       return Factions[fac].getInfo().offerHackingWork;
     } catch (e) {
-      console.error(
-        `Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`,
-      );
+      console.error(`Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`);
       return false;
     }
   });
@@ -160,8 +145,7 @@ function getRandomReward(): ICodingContractReward {
       // Get a random faction that player is a part of. That
       // faction must allow hacking contracts
       const numFactions = factionsThatAllowHacking.length;
-      const randFaction =
-        factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
+      const randFaction = factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
       reward.name = randFaction;
       break;
     }
@@ -203,10 +187,7 @@ function getRandomServer(): Server | HacknetServer {
   return randServer;
 }
 
-function getRandomFilename(
-  server: Server | HacknetServer,
-  reward: ICodingContractReward,
-): string {
+function getRandomFilename(server: Server | HacknetServer, reward: ICodingContractReward): string {
   let contractFn = `contract-${getRandomInt(0, 1e6)}`;
 
   for (let i = 0; i < 1000; ++i) {

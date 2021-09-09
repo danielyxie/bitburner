@@ -54,28 +54,16 @@ function MarketTA2(props: IMarketTA2Props): React.ReactElement {
         </u>
         <br />
         If you sell at {numeralWrapper.formatMoney(sCost)}, then you will sell{" "}
-        {numeralWrapper.format(markup, "0.00000")}x as much compared to if you
-        sold at market price.
+        {numeralWrapper.format(markup, "0.00000")}x as much compared to if you sold at market price.
       </p>
-      <input
-        className="text-input"
-        type="number"
-        style={{ marginTop: "4px" }}
-        onChange={onChange}
-        value={newCost}
-      />
+      <input className="text-input" type="number" style={{ marginTop: "4px" }} onChange={onChange} value={newCost} />
       <div style={{ display: "block" }}>
-        <label
-          className="tooltip"
-          htmlFor="cmpy-mgmt-marketa2-checkbox"
-          style={{ color: "white" }}
-        >
+        <label className="tooltip" htmlFor="cmpy-mgmt-marketa2-checkbox" style={{ color: "white" }}>
           Use Market-TA.II for Auto-Sale Price
           <span className="tooltiptext">
-            If this is enabled, then this Material will automatically be sold at
-            the optimal price such that the amount sold matches the amount
-            produced. (i.e. the highest possible price, while still ensuring
-            that all produced materials will be sold)
+            If this is enabled, then this Material will automatically be sold at the optimal price such that the amount
+            sold matches the amount produced. (i.e. the highest possible price, while still ensuring that all produced
+            materials will be sold)
           </span>
         </label>
         <input
@@ -87,8 +75,8 @@ function MarketTA2(props: IMarketTA2Props): React.ReactElement {
         />
       </div>
       <p>
-        Note that Market-TA.II overrides Market-TA.I. This means that if both
-        are enabled, then Market-TA.II will take effect, not Market-TA.I
+        Note that Market-TA.II overrides Market-TA.I. This means that if both are enabled, then Market-TA.II will take
+        effect, not Market-TA.I
       </p>
     </>
   );
@@ -121,21 +109,16 @@ export function MaterialMarketTaPopup(props: IProps): React.ReactElement {
           <strong>Market-TA.I</strong>
         </u>
         <br />
-        The maximum sale price you can mark this up to is{" "}
-        {numeralWrapper.formatMoney(props.mat.bCost + markupLimit)}. This means
-        that if you set the sale price higher than this, you will begin to
-        experience a loss in number of sales
+        The maximum sale price you can mark this up to is {numeralWrapper.formatMoney(props.mat.bCost + markupLimit)}.
+        This means that if you set the sale price higher than this, you will begin to experience a loss in number of
+        sales
       </p>
       <div style={{ display: "block" }}>
-        <label
-          className="tooltip"
-          htmlFor="cmpy-mgmt-marketa1-checkbox"
-          style={{ color: "white" }}
-        >
+        <label className="tooltip" htmlFor="cmpy-mgmt-marketa1-checkbox" style={{ color: "white" }}>
           Use Market-TA.I for Auto-Sale Price
           <span className="tooltiptext">
-            If this is enabled, then this Material will automatically be sold at
-            the price identified by Market-TA.I (i.e. the price shown above)
+            If this is enabled, then this Material will automatically be sold at the price identified by Market-TA.I
+            (i.e. the price shown above)
           </span>
         </label>
         <input

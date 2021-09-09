@@ -66,14 +66,10 @@ export class Skill {
 
   constructor(params: ISkillParams = { name: "foo", desc: "foo" }) {
     if (!params.name) {
-      throw new Error(
-        "Failed to initialize Bladeburner Skill. No name was specified in ctor",
-      );
+      throw new Error("Failed to initialize Bladeburner Skill. No name was specified in ctor");
     }
     if (!params.desc) {
-      throw new Error(
-        "Failed to initialize Bladeburner Skills. No desc was specified in ctor",
-      );
+      throw new Error("Failed to initialize Bladeburner Skills. No desc was specified in ctor");
     }
     this.name = params.name;
     this.desc = params.desc;
@@ -138,10 +134,7 @@ export class Skill {
   }
 
   calculateCost(currentLevel: number): number {
-    return Math.floor(
-      (this.baseCost + currentLevel * this.costInc) *
-        BitNodeMultipliers.BladeburnerSkillCost,
-    );
+    return Math.floor((this.baseCost + currentLevel * this.costInc) * BitNodeMultipliers.BladeburnerSkillCost);
   }
 
   getMultiplier(name: string): number {

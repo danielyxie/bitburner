@@ -6,16 +6,12 @@ import { Page, routing } from "../src/ui/navigationTracking";
 
 /* Faction Invitation Pop-up box */
 function factionInvitationBoxClose() {
-  var factionInvitationBox = document.getElementById(
-    "faction-invitation-box-container",
-  );
+  var factionInvitationBox = document.getElementById("faction-invitation-box-container");
   factionInvitationBox.style.display = "none";
 }
 
 function factionInvitationBoxOpen() {
-  var factionInvitationBox = document.getElementById(
-    "faction-invitation-box-container",
-  );
+  var factionInvitationBox = document.getElementById("faction-invitation-box-container");
   factionInvitationBox.style.display = "flex";
 }
 
@@ -26,9 +22,7 @@ function factionInvitationSetText(txt) {
 
 //ram argument is in GB
 function factionInvitationBoxCreate(faction) {
-  factionInvitationSetText(
-    "You have received a faction invitation from " + faction.name,
-  );
+  factionInvitationSetText("You have received a faction invitation from " + faction.name);
   faction.alreadyInvited = true;
   Player.factionInvitations.push(faction.name);
 

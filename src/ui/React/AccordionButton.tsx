@@ -38,19 +38,9 @@ export function AccordionButton(props: IProps): React.ReactElement {
   };
 
   return (
-    <button
-      className={className}
-      id={props.id}
-      onClick={props.onClick}
-      style={props.style}
-    >
+    <button className={className} id={props.id} onClick={props.onClick} style={props.style}>
       {props.text}
-      {hasTooltip && (
-        <span
-          className={"tooltiptext"}
-          dangerouslySetInnerHTML={tooltipMarkup}
-        ></span>
-      )}
+      {hasTooltip && <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup}></span>}
     </button>
   );
 }

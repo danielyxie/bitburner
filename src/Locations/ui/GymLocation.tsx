@@ -43,8 +43,7 @@ export class GymLocation extends React.Component<IProps, any> {
   calculateCost(): number {
     const ip = SpecialServerIps.getIp(this.props.loc.name);
     const server = getServer(ip);
-    if (server == null || !server.hasOwnProperty("backdoorInstalled"))
-      return this.props.loc.costMult;
+    if (server == null || !server.hasOwnProperty("backdoorInstalled")) return this.props.loc.costMult;
     const discount = (server as Server).backdoorInstalled ? 0.9 : 1;
     return this.props.loc.costMult * discount;
   }
@@ -80,8 +79,7 @@ export class GymLocation extends React.Component<IProps, any> {
           style={this.btnStyle}
           text={
             <>
-              Train Strength (<Money money={cost} player={this.props.p} /> /
-              sec)
+              Train Strength (<Money money={cost} player={this.props.p} /> / sec)
             </>
           }
         />
@@ -99,8 +97,7 @@ export class GymLocation extends React.Component<IProps, any> {
           style={this.btnStyle}
           text={
             <>
-              Train Dexterity (<Money money={cost} player={this.props.p} /> /
-              sec)
+              Train Dexterity (<Money money={cost} player={this.props.p} /> / sec)
             </>
           }
         />

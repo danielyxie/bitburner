@@ -24,9 +24,8 @@ export function DiscontinueProductPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Are you sure you want to do this? Discontinuing a product removes it
-        completely and permanently. You will no longer produce this product and
-        all of its existing stock will be removed and left unsold
+        Are you sure you want to do this? Discontinuing a product removes it completely and permanently. You will no
+        longer produce this product and all of its existing stock will be removed and left unsold
       </p>
       <button className="popup-box-button" onClick={discontinue}>
         Discontinue

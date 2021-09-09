@@ -1,10 +1,6 @@
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { CodingContractTypes } from "./CodingContracts";
-import {
-  generateContract,
-  generateRandomContract,
-  generateRandomContractOnHome,
-} from "./CodingContractGenerator";
+import { generateContract, generateRandomContract, generateRandomContractOnHome } from "./CodingContractGenerator";
 import { Companies } from "./Company/Companies";
 import { Programs } from "./Programs/Programs";
 import { Factions } from "./Faction/Factions";
@@ -51,10 +47,7 @@ class ValueAdjusterComponent extends Component {
     const { title, add, subtract, reset } = this.props;
     return (
       <>
-        <button
-          className="std-button add-exp-button"
-          onClick={() => add(this.state.value)}
-        >
+        <button className="std-button add-exp-button" onClick={() => add(this.state.value)}>
           +
         </button>
         <input
@@ -64,10 +57,7 @@ class ValueAdjusterComponent extends Component {
           value={this.state.value}
           onChange={this.setValue}
         ></input>
-        <button
-          className="std-button remove-exp-button"
-          onClick={() => subtract(this.state.value)}
-        >
+        <button className="std-button remove-exp-button" onClick={() => subtract(this.state.value)}>
           -
         </button>
         <button className="std-button" onClick={reset}>
@@ -582,9 +572,7 @@ class DevMenuComponent extends Component {
 
   resetCorporationFunds() {
     if (Player.corporation) {
-      Player.corporation.funds = Player.corporation.funds.minus(
-        Player.corporation.funds,
-      );
+      Player.corporation.funds = Player.corporation.funds.minus(Player.corporation.funds);
     }
   }
 
@@ -611,9 +599,7 @@ class DevMenuComponent extends Component {
   finishCorporationProducts() {
     if (!Player.corporation) return;
     Player.corporation.divisions.forEach((div) => {
-      Object.keys(div.products).forEach(
-        (prod) => (div.products[prod].prog = 99.9),
-      );
+      Object.keys(div.products).forEach((prod) => (div.products[prod].prog = 99.9));
     });
   }
 
@@ -632,10 +618,7 @@ class DevMenuComponent extends Component {
   }
 
   processStocks(sub) {
-    const inputSymbols = document
-      .getElementById("dev-stock-symbol")
-      .value.toString()
-      .replace(/\s/g, "");
+    const inputSymbols = document.getElementById("dev-stock-symbol").value.toString().replace(/\s/g, "");
 
     let match = function () {
       return true;
@@ -754,34 +737,23 @@ class DevMenuComponent extends Component {
     }
 
     let sourceFiles = [];
-    validSFN.forEach((i) => sourceFiles.push(
+    validSFN.forEach((i) =>
+      sourceFiles.push(
         <tr key={"sf-" + i}>
           <td>
             <span className="text">SF-{i}:</span>
           </td>
           <td>
-            <button
-              className="std-button touch-right"
-              onClick={this.setSF(i, 0)}
-            >
+            <button className="std-button touch-right" onClick={this.setSF(i, 0)}>
               0
             </button>
-            <button
-              className="std-button touch-sides"
-              onClick={this.setSF(i, 1)}
-            >
+            <button className="std-button touch-sides" onClick={this.setSF(i, 1)}>
               1
             </button>
-            <button
-              className="std-button touch-sides"
-              onClick={this.setSF(i, 2)}
-            >
+            <button className="std-button touch-sides" onClick={this.setSF(i, 2)}>
               2
             </button>
-            <button
-              className="std-button touch-left"
-              onClick={this.setSF(i, 3)}
-            >
+            <button className="std-button touch-left" onClick={this.setSF(i, 3)}>
               3
             </button>
           </td>
@@ -823,9 +795,7 @@ class DevMenuComponent extends Component {
     return (
       <div className="col">
         <div className="row">
-          <h1>
-            Development Menu - Only meant to be used for testing/debugging
-          </h1>
+          <h1>Development Menu - Only meant to be used for testing/debugging</h1>
         </div>
         <div className="row">
           <h2>Generic</h2>
@@ -876,24 +846,13 @@ class DevMenuComponent extends Component {
                     <span className="text text-center">All:</span>
                   </td>
                   <td>
-                    <button
-                      className="std-button tooltip"
-                      onClick={this.tonsOfExp}
-                    >
+                    <button className="std-button tooltip" onClick={this.tonsOfExp}>
                       Tons of exp
-                      <span className="tooltiptext">
-                        Sometimes you just need a ton of experience in every
-                        stat
-                      </span>
+                      <span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span>
                     </button>
-                    <button
-                      className="std-button tooltip"
-                      onClick={this.resetAllExp}
-                    >
+                    <button className="std-button tooltip" onClick={this.resetAllExp}>
                       Reset
-                      <span className="tooltiptext">
-                        Reset all experience to 0
-                      </span>
+                      <span className="tooltiptext">Reset all experience to 0</span>
                     </button>
                   </td>
                 </tr>
@@ -988,18 +947,12 @@ class DevMenuComponent extends Component {
                     />
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.enableIntelligence}
-                    >
+                    <button className="std-button" onClick={this.enableIntelligence}>
                       Enable
                     </button>
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.disableIntelligence}
-                    >
+                    <button className="std-button" onClick={this.disableIntelligence}>
                       Disable
                     </button>
                   </td>
@@ -1053,10 +1006,7 @@ class DevMenuComponent extends Component {
                     </button>
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.receiveAllInvites}
-                    >
+                    <button className="std-button" onClick={this.receiveAllInvites}>
                       Receive all Invites
                     </button>
                   </td>
@@ -1105,16 +1055,10 @@ class DevMenuComponent extends Component {
                     <span className="text">All Favor:</span>
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.tonsOfFactionFavor}
-                    >
+                    <button className="std-button" onClick={this.tonsOfFactionFavor}>
                       Tons
                     </button>
-                    <button
-                      className="std-button"
-                      onClick={this.resetAllFactionFavor}
-                    >
+                    <button className="std-button" onClick={this.resetAllFactionFavor}>
                       Reset
                     </button>
                   </td>
@@ -1174,10 +1118,7 @@ class DevMenuComponent extends Component {
                     <span className="text">Exploits:</span>
                   </td>
                   <td>
-                    <button
-                      className="std-button touch-right"
-                      onClick={this.clearExploits()}
-                    >
+                    <button className="std-button touch-right" onClick={this.clearExploits()}>
                       Clear
                     </button>
                   </td>
@@ -1187,28 +1128,16 @@ class DevMenuComponent extends Component {
                     <span className="text">All:</span>
                   </td>
                   <td>
-                    <button
-                      className="std-button touch-right"
-                      onClick={this.setAllSF(0)}
-                    >
+                    <button className="std-button touch-right" onClick={this.setAllSF(0)}>
                       0
                     </button>
-                    <button
-                      className="std-button touch-sides"
-                      onClick={this.setAllSF(1)}
-                    >
+                    <button className="std-button touch-sides" onClick={this.setAllSF(1)}>
                       1
                     </button>
-                    <button
-                      className="std-button touch-sides"
-                      onClick={this.setAllSF(2)}
-                    >
+                    <button className="std-button touch-sides" onClick={this.setAllSF(2)}>
                       2
                     </button>
-                    <button
-                      className="std-button touch-left"
-                      onClick={this.setAllSF(3)}
-                    >
+                    <button className="std-button touch-left" onClick={this.setAllSF(3)}>
                       3
                     </button>
                   </td>
@@ -1248,10 +1177,7 @@ class DevMenuComponent extends Component {
                     <button className="std-button" onClick={this.addProgram}>
                       One
                     </button>
-                    <button
-                      className="std-button"
-                      onClick={this.addAllPrograms}
-                    >
+                    <button className="std-button" onClick={this.addAllPrograms}>
                       All
                     </button>
                   </td>
@@ -1292,10 +1218,7 @@ class DevMenuComponent extends Component {
                     </button>
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.rootAllServers}
-                    >
+                    <button className="std-button" onClick={this.rootAllServers}>
                       Root all
                     </button>
                   </td>
@@ -1310,10 +1233,7 @@ class DevMenuComponent extends Component {
                     </button>
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.minAllSecurity}
-                    >
+                    <button className="std-button" onClick={this.minAllSecurity}>
                       Min all
                     </button>
                   </td>
@@ -1390,16 +1310,10 @@ class DevMenuComponent extends Component {
                     <span className="text">All Reputation:</span>
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.tonsOfRepCompanies}
-                    >
+                    <button className="std-button" onClick={this.tonsOfRepCompanies}>
                       Tons
                     </button>
-                    <button
-                      className="std-button"
-                      onClick={this.resetAllRepCompanies}
-                    >
+                    <button className="std-button" onClick={this.resetAllRepCompanies}>
                       Reset
                     </button>
                   </td>
@@ -1409,16 +1323,10 @@ class DevMenuComponent extends Component {
                     <span className="text">All Favor:</span>
                   </td>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={this.tonsOfFavorCompanies}
-                    >
+                    <button className="std-button" onClick={this.tonsOfFavorCompanies}>
                       Tons
                     </button>
-                    <button
-                      className="std-button"
-                      onClick={this.resetAllFavorCompanies}
-                    >
+                    <button className="std-button" onClick={this.resetAllFavorCompanies}>
                       Reset
                     </button>
                   </td>
@@ -1441,10 +1349,7 @@ class DevMenuComponent extends Component {
                       <span className="text">Rank:</span>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.addTonsBladeburnerRank}
-                      >
+                      <button className="std-button" onClick={this.addTonsBladeburnerRank}>
                         Tons
                       </button>
                     </td>
@@ -1462,10 +1367,7 @@ class DevMenuComponent extends Component {
                       <span className="text">Cycles:</span>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.addTonsBladeburnerCycles}
-                      >
+                      <button className="std-button" onClick={this.addTonsBladeburnerCycles}>
                         Tons
                       </button>
                     </td>
@@ -1497,10 +1399,7 @@ class DevMenuComponent extends Component {
                       <span className="text">Cycles:</span>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.addTonsGangCycles}
-                      >
+                      <button className="std-button" onClick={this.addTonsGangCycles}>
                         Tons
                       </button>
                     </td>
@@ -1529,16 +1428,10 @@ class DevMenuComponent extends Component {
                 <tbody>
                   <tr>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.addTonsCorporationFunds}
-                      >
+                      <button className="std-button" onClick={this.addTonsCorporationFunds}>
                         Tons of funds
                       </button>
-                      <button
-                        className="std-button"
-                        onClick={this.resetCorporationFunds}
-                      >
+                      <button className="std-button" onClick={this.resetCorporationFunds}>
                         Reset funds
                       </button>
                     </td>
@@ -1548,10 +1441,7 @@ class DevMenuComponent extends Component {
                       <span className="text">Cycles:</span>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.addTonsCorporationCycles}
-                      >
+                      <button className="std-button" onClick={this.addTonsCorporationCycles}>
                         Tons
                       </button>
                     </td>
@@ -1566,20 +1456,14 @@ class DevMenuComponent extends Component {
                   </tr>
                   <tr>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.finishCorporationProducts}
-                      >
+                      <button className="std-button" onClick={this.finishCorporationProducts}>
                         Finish products
                       </button>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.addCorporationResearch}
-                      >
+                      <button className="std-button" onClick={this.addCorporationResearch}>
                         Tons of research
                       </button>
                     </td>
@@ -1599,16 +1483,10 @@ class DevMenuComponent extends Component {
               <tbody>
                 <tr>
                   <td>
-                    <button
-                      className="std-button"
-                      onClick={generateRandomContract}
-                    >
+                    <button className="std-button" onClick={generateRandomContract}>
                       Generate Random Contract
                     </button>
-                    <button
-                      className="std-button"
-                      onClick={generateRandomContractOnHome}
-                    >
+                    <button className="std-button" onClick={generateRandomContractOnHome}>
                       Generate Random Contract on Home Comp
                     </button>
                   </td>
@@ -1623,10 +1501,7 @@ class DevMenuComponent extends Component {
                     >
                       {contractTypes}
                     </select>
-                    <button
-                      className="std-button"
-                      onClick={this.specificContract}
-                    >
+                    <button className="std-button" onClick={this.specificContract}>
                       Generate Specified Contract Type on Home Comp
                     </button>
                   </td>
@@ -1649,12 +1524,7 @@ class DevMenuComponent extends Component {
                       <span className="text">Symbol:</span>
                     </td>
                     <td>
-                      <input
-                        id="dev-stock-symbol"
-                        className="text-input"
-                        type="text"
-                        placeholder="symbol/'all'"
-                      />
+                      <input id="dev-stock-symbol" className="text-input" type="text" placeholder="symbol/'all'" />
                     </td>
                   </tr>
                   <tr>
@@ -1662,16 +1532,8 @@ class DevMenuComponent extends Component {
                       <span className="text">Price:</span>
                     </td>
                     <td>
-                      <input
-                        id="dev-stock-price"
-                        className="text-input"
-                        type="number"
-                        placeholder="$$$"
-                      />
-                      <button
-                        className="std-button"
-                        onClick={this.setStockPrice}
-                      >
+                      <input id="dev-stock-price" className="text-input" type="number" placeholder="$$$" />
+                      <button className="std-button" onClick={this.setStockPrice}>
                         Set
                       </button>
                     </td>
@@ -1681,10 +1543,7 @@ class DevMenuComponent extends Component {
                       <span className="text">Caps:</span>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.viewStockCaps}
-                      >
+                      <button className="std-button" onClick={this.viewStockCaps}>
                         View stock caps
                       </button>
                     </td>
@@ -1708,18 +1567,12 @@ class DevMenuComponent extends Component {
                       <span className="text">Shock:</span>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.sleeveMaxAllShock}
-                      >
+                      <button className="std-button" onClick={this.sleeveMaxAllShock}>
                         Max all
                       </button>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.sleeveClearAllShock}
-                      >
+                      <button className="std-button" onClick={this.sleeveClearAllShock}>
                         Clear all
                       </button>
                     </td>
@@ -1729,18 +1582,12 @@ class DevMenuComponent extends Component {
                       <span className="text">Sync:</span>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.sleeveSyncMaxAll}
-                      >
+                      <button className="std-button" onClick={this.sleeveSyncMaxAll}>
                         Max all
                       </button>
                     </td>
                     <td>
-                      <button
-                        className="std-button"
-                        onClick={this.sleeveSyncClearAll}
-                      >
+                      <button className="std-button" onClick={this.sleeveSyncClearAll}>
                         Clear all
                       </button>
                     </td>
@@ -1760,16 +1607,10 @@ class DevMenuComponent extends Component {
               <button className="std-button" onClick={this.timeskip(60 * 1000)}>
                 1 minute
               </button>
-              <button
-                className="std-button"
-                onClick={this.timeskip(60 * 60 * 1000)}
-              >
+              <button className="std-button" onClick={this.timeskip(60 * 60 * 1000)}>
                 1 hour
               </button>
-              <button
-                className="std-button"
-                onClick={this.timeskip(24 * 60 * 60 * 1000)}
-              >
+              <button className="std-button" onClick={this.timeskip(24 * 60 * 60 * 1000)}>
                 1 day
               </button>
             </div>
@@ -1784,9 +1625,7 @@ const devMenuContainerId = "dev-menu-container";
 
 export function createDevMenu() {
   if (process.env.NODE_ENV !== "development") {
-    throw new Error(
-      "Cannot create Dev Menu because you are not in a dev build",
-    );
+    throw new Error("Cannot create Dev Menu because you are not in a dev build");
   }
 
   // Add everything to container, then append to main menu

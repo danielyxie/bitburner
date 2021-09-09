@@ -59,15 +59,7 @@ export class Crime {
   charisma_exp = 0;
   intelligence_exp = 0;
 
-  constructor(
-    name = "",
-    type = "",
-    time = 0,
-    money = 0,
-    difficulty = 0,
-    karma = 0,
-    params: IConstructorParams = {},
-  ) {
+  constructor(name = "", type = "", time = 0, money = 0, difficulty = 0, karma = 0, params: IConstructorParams = {}) {
     this.name = name;
     this.type = type;
     this.time = time;
@@ -75,24 +67,12 @@ export class Crime {
     this.difficulty = difficulty;
     this.karma = karma;
 
-    this.hacking_success_weight = params.hacking_success_weight
-      ? params.hacking_success_weight
-      : 0;
-    this.strength_success_weight = params.strength_success_weight
-      ? params.strength_success_weight
-      : 0;
-    this.defense_success_weight = params.defense_success_weight
-      ? params.defense_success_weight
-      : 0;
-    this.dexterity_success_weight = params.dexterity_success_weight
-      ? params.dexterity_success_weight
-      : 0;
-    this.agility_success_weight = params.agility_success_weight
-      ? params.agility_success_weight
-      : 0;
-    this.charisma_success_weight = params.charisma_success_weight
-      ? params.charisma_success_weight
-      : 0;
+    this.hacking_success_weight = params.hacking_success_weight ? params.hacking_success_weight : 0;
+    this.strength_success_weight = params.strength_success_weight ? params.strength_success_weight : 0;
+    this.defense_success_weight = params.defense_success_weight ? params.defense_success_weight : 0;
+    this.dexterity_success_weight = params.dexterity_success_weight ? params.dexterity_success_weight : 0;
+    this.agility_success_weight = params.agility_success_weight ? params.agility_success_weight : 0;
+    this.charisma_success_weight = params.charisma_success_weight ? params.charisma_success_weight : 0;
 
     this.hacking_exp = params.hacking_exp ? params.hacking_exp : 0;
     this.strength_exp = params.strength_exp ? params.strength_exp : 0;
@@ -100,9 +80,7 @@ export class Crime {
     this.dexterity_exp = params.dexterity_exp ? params.dexterity_exp : 0;
     this.agility_exp = params.agility_exp ? params.agility_exp : 0;
     this.charisma_exp = params.charisma_exp ? params.charisma_exp : 0;
-    this.intelligence_exp = params.intelligence_exp
-      ? params.intelligence_exp
-      : 0;
+    this.intelligence_exp = params.intelligence_exp ? params.intelligence_exp : 0;
 
     this.kills = params.kills ? params.kills : 0;
   }

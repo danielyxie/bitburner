@@ -1,8 +1,5 @@
 import { Augmentations } from "./Augmentation/Augmentations";
-import {
-  augmentationExists,
-  initAugmentations,
-} from "./Augmentation/AugmentationHelpers";
+import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
@@ -21,27 +18,11 @@ import { Player } from "./Player";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
-import {
-  AllServers,
-  AddToAllServers,
-  initForeignServers,
-  prestigeAllServers,
-} from "./Server/AllServers";
+import { AllServers, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
-import {
-  SourceFileFlags,
-  updateSourceFileFlags,
-} from "./SourceFile/SourceFileFlags";
-import {
-  SpecialServerIps,
-  prestigeSpecialServerIps,
-  SpecialServerNames,
-} from "./Server/SpecialServerIps";
-import {
-  deleteStockMarket,
-  initStockMarket,
-  initSymbolToStockMap,
-} from "./StockMarket/StockMarket";
+import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
+import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
+import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal, postNetburnerText } from "./Terminal";
 
 import { Page, routing } from "./ui/navigationTracking";
@@ -87,24 +68,15 @@ function prestigeAugmentation() {
   AddToAllServers(homeComp);
   prestigeHomeComputer(homeComp);
 
-  if (
-    augmentationExists(AugmentationNames.Neurolink) &&
-    Augmentations[AugmentationNames.Neurolink].owned
-  ) {
+  if (augmentationExists(AugmentationNames.Neurolink) && Augmentations[AugmentationNames.Neurolink].owned) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
     homeComp.programs.push(Programs.RelaySMTPProgram.name);
   }
-  if (
-    augmentationExists(AugmentationNames.CashRoot) &&
-    Augmentations[AugmentationNames.CashRoot].owned
-  ) {
+  if (augmentationExists(AugmentationNames.CashRoot) && Augmentations[AugmentationNames.CashRoot].owned) {
     Player.setMoney(1e6);
     homeComp.programs.push(Programs.BruteSSHProgram.name);
   }
-  if (
-    augmentationExists(AugmentationNames.PCMatrix) &&
-    Augmentations[AugmentationNames.PCMatrix].owned
-  ) {
+  if (augmentationExists(AugmentationNames.PCMatrix) && Augmentations[AugmentationNames.PCMatrix].owned) {
     homeComp.programs.push(Programs.DeepscanV1.name);
     homeComp.programs.push(Programs.AutoLink.name);
   }
@@ -174,14 +146,9 @@ function prestigeAugmentation() {
   document.getElementById("world-menu-header").click();
 
   // Red Pill
-  if (
-    augmentationExists(AugmentationNames.TheRedPill) &&
-    Augmentations[AugmentationNames.TheRedPill].owned
-  ) {
-    var WorldDaemon =
-      AllServers[SpecialServerIps[SpecialServerNames.WorldDaemon]];
-    var DaedalusServer =
-      AllServers[SpecialServerIps[SpecialServerNames.DaedalusServer]];
+  if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
+    var WorldDaemon = AllServers[SpecialServerIps[SpecialServerNames.WorldDaemon]];
+    var DaedalusServer = AllServers[SpecialServerIps[SpecialServerNames.DaedalusServer]];
     if (WorldDaemon && DaedalusServer) {
       WorldDaemon.serversOnNetwork.push(DaedalusServer.ip);
       DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);
@@ -346,9 +313,7 @@ function prestigeSourceFile(flume) {
 
   // Bit Node 10: Digital Carbon
   if (Player.bitNodeN === 10) {
-    dialogBoxCreate(
-      "Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!",
-    );
+    dialogBoxCreate("Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!");
   }
 
   // Reset Stock market, gang, and corporation

@@ -21,8 +21,7 @@
   white-space: nowrap;
 
   &.hacknet-node {
-    $boxShadowArgs: inset 0 0 8px rgba(0, 0, 0, 0.1),
-      0 0 16px rgba(0, 0, 0, 0.1);
+    $boxShadowArgs: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
     @include boxShadow($boxShadowArgs);
 
     margin: 6px;

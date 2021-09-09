@@ -65,12 +65,7 @@ export class FactionInfo {
   }
 
   offersWork(): boolean {
-    return (
-      this.offerFieldWork ||
-      this.offerHackingMission ||
-      this.offerHackingWork ||
-      this.offerSecurityWork
-    );
+    return this.offerFieldWork || this.offerHackingMission || this.offerHackingWork || this.offerSecurityWork;
   }
 }
 
@@ -147,14 +142,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "Blade Industries": new FactionInfo(
-    "Augmentation is Salvation.",
-    [],
-    true,
-    true,
-    true,
-    true,
-  ),
+  "Blade Industries": new FactionInfo("Augmentation is Salvation.", [], true, true, true, true),
 
   NWO: new FactionInfo(
     "Humans don't truly desire freedom. They want to be observed, understood, and judged. They want to " +
@@ -168,14 +156,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "Clarke Incorporated": new FactionInfo(
-    "The Power of the Genome - Unlocked.",
-    [],
-    true,
-    true,
-    true,
-    true,
-  ),
+  "Clarke Incorporated": new FactionInfo("The Power of the Genome - Unlocked.", [], true, true, true, true),
 
   "OmniTek Incorporated": new FactionInfo(
     "Simply put, our mission is to design and build robots that make a difference.",
@@ -196,14 +177,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "KuaiGong International": new FactionInfo(
-    "Dream big. Work hard. Make history.",
-    [],
-    true,
-    true,
-    true,
-    true,
-  ),
+  "KuaiGong International": new FactionInfo("Dream big. Work hard. Make history.", [], true, true, true, true),
 
   // Other Corporations
   "Fulcrum Secret Technologies": new FactionInfo(
@@ -289,22 +263,8 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // City factions, essentially governments
-  Aevum: new FactionInfo(
-    "The Silicon City.",
-    ["Chongqing", "New Tokyo", "Ishima", "Volhaven"],
-    true,
-    true,
-    true,
-    true,
-  ),
-  Chongqing: new FactionInfo(
-    "Serve the People.",
-    ["Sector-12", "Aevum", "Volhaven"],
-    true,
-    true,
-    true,
-    true,
-  ),
+  Aevum: new FactionInfo("The Silicon City.", ["Chongqing", "New Tokyo", "Ishima", "Volhaven"], true, true, true, true),
+  Chongqing: new FactionInfo("Serve the People.", ["Sector-12", "Aevum", "Volhaven"], true, true, true, true),
   Ishima: new FactionInfo(
     "The East Asian Order of the Future.",
     ["Sector-12", "Aevum", "Volhaven"],
@@ -313,14 +273,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
   ),
-  "New Tokyo": new FactionInfo(
-    "Asia's World City.",
-    ["Sector-12", "Aevum", "Volhaven"],
-    true,
-    true,
-    true,
-    true,
-  ),
+  "New Tokyo": new FactionInfo("Asia's World City.", ["Sector-12", "Aevum", "Volhaven"], true, true, true, true),
   "Sector-12": new FactionInfo(
     "The City of the Future.",
     ["Chongqing", "New Tokyo", "Ishima", "Volhaven"],
@@ -357,14 +310,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  "The Syndicate": new FactionInfo(
-    "Honor holds you back.",
-    [],
-    true,
-    true,
-    true,
-    true,
-  ),
+  "The Syndicate": new FactionInfo("Honor holds you back.", [], true, true, true, true),
 
   Silhouette: new FactionInfo(
     "Corporations have filled the void of power left behind by the collapse of Western government. The issue is " +
@@ -379,42 +325,14 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  Tetrads: new FactionInfo(
-    "Following the mandate of Heaven and carrying out the way.",
-    [],
-    false,
-    false,
-    true,
-    true,
-  ),
+  Tetrads: new FactionInfo("Following the mandate of Heaven and carrying out the way.", [], false, false, true, true),
 
-  "Slum Snakes": new FactionInfo(
-    "Slum Snakes rule!",
-    [],
-    false,
-    false,
-    true,
-    true,
-  ),
+  "Slum Snakes": new FactionInfo("Slum Snakes rule!", [], false, false, true, true),
 
   // Earlygame factions - factions the player will prestige with early on that don't belong in other categories.
-  Netburners: new FactionInfo(
-    "~~//*>H4CK||3T 8URN3R5**>?>\\~~",
-    [],
-    true,
-    true,
-    false,
-    false,
-  ),
+  Netburners: new FactionInfo("~~//*>H4CK||3T 8URN3R5**>?>\\~~", [], true, true, false, false),
 
-  "Tian Di Hui": new FactionInfo(
-    "Obey Heaven and work righteously.",
-    [],
-    true,
-    true,
-    false,
-    true,
-  ),
+  "Tian Di Hui": new FactionInfo("Obey Heaven and work righteously.", [], true, true, false, true),
 
   CyberSec: new FactionInfo(
     "The Internet is the first thing that was built that we don't fully understand, the largest " +

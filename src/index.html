@@ -3,23 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="dist/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="dist/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="dist/favicon-16x16.png"
-    />
+    <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png" />
     <link rel="manifest" href="dist/site.webmanifest" />
     <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000" />
     <meta name="apple-mobile-web-app-title" content="Bitburner" />
@@ -42,21 +28,11 @@
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m);
-      })(
-        window,
-        document,
-        "script",
-        "https://www.google-analytics.com/analytics.js",
-        "ga",
-      );
+      })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
     </script>
     <% if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
     <script>
-      ga(
-        "create",
-        "<%= htmlWebpackPlugin.options.googleAnalytics.trackingId %>",
-        "auto",
-      );
+      ga("create", "<%= htmlWebpackPlugin.options.googleAnalytics.trackingId %>", "auto");
       ga("send", "pageview");
     </script>
     <% } %>
@@ -68,12 +44,7 @@
         <ul id="mainmenu" class="mainmenu noscrollbar">
           <!-- Hacking dropdown -->
           <li id="hacking-menu-header-li">
-            <button
-              id="hacking-menu-header"
-              class="mainmenu-accordion-header noselect"
-            >
-              Hacking
-            </button>
+            <button id="hacking-menu-header" class="mainmenu-accordion-header noselect">Hacking</button>
           </li>
           <li id="terminal-tab" class="mainmenu-accordion-panel noselect">
             <button id="terminal-menu-link">Terminal</button>
@@ -86,18 +57,12 @@
           </li>
           <li id="create-program-tab" class="mainmenu-accordion-panel noselect">
             <button id="create-program-menu-link">Create Program</button>
-            <span id="create-program-notification" class="notification-off">
-            </span>
+            <span id="create-program-notification" class="notification-off"> </span>
           </li>
 
           <!-- Character dropdown -->
           <li id="character-menu-header-li">
-            <button
-              id="character-menu-header"
-              class="mainmenu-accordion-header noselect"
-            >
-              Character
-            </button>
+            <button id="character-menu-header" class="mainmenu-accordion-header noselect">Character</button>
           </li>
           <li id="stats-tab" class="mainmenu-accordion-panel noselect">
             <button id="stats-menu-link">Stats</button>
@@ -107,18 +72,10 @@
             <span id="factions-notification" class="notification-off"> </span>
           </li>
           <li id="augmentations-tab" class="mainmenu-accordion-panel noselect">
-            <button
-              id="augmentations-menu-link"
-              style="
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              "
-            >
+            <button id="augmentations-menu-link" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
               Augmentations
             </button>
-            <span id="augmentations-notification" class="notification-off">
-            </span>
+            <span id="augmentations-notification" class="notification-off"> </span>
           </li>
           <li id="hacknet-nodes-tab" class="mainmenu-accordion-panel noselect">
             <button id="hacknet-nodes-menu-link">Hacknet</button>
@@ -129,12 +86,7 @@
 
           <!-- World dropdown -->
           <li id="world-menu-header-li">
-            <button
-              id="world-menu-header"
-              class="mainmenu-accordion-header noselect"
-            >
-              World
-            </button>
+            <button id="world-menu-header" class="mainmenu-accordion-header noselect">World</button>
           </li>
           <li id="city-tab" class="mainmenu-accordion-panel noselect">
             <button id="city-menu-link">City</button>
@@ -159,12 +111,7 @@
           </li>
 
           <li id="help-menu-header-li">
-            <button
-              id="help-menu-header"
-              class="mainmenu-accordion-header noselect"
-            >
-              Help
-            </button>
+            <button id="help-menu-header" class="mainmenu-accordion-header noselect">Help</button>
           </li>
           <li id="milestones-tab" class="mainmenu-accordion-panel noselect">
             <button id="milestones-menu-link">Milestones</button>
@@ -187,12 +134,7 @@
             <p id="script-editor-filename-tag">
               <strong style="background-color: #555">Script name: </strong>
             </p>
-            <input
-              id="script-editor-filename"
-              type="text"
-              maxlength="100"
-              tabindex="1"
-            />
+            <input id="script-editor-filename" type="text" maxlength="100" tabindex="1" />
           </div>
 
           <div id="monaco-editor"></div>
@@ -219,16 +161,11 @@
 
           <fieldset>
             <label for="script-editor-option-keybinding">Key Binding</label>
-            <select
-              id="script-editor-option-keybinding"
-              class="dropdown"
-            ></select>
+            <select id="script-editor-option-keybinding" class="dropdown"></select>
           </fieldset>
 
           <fieldset>
-            <label for="script-editor-option-highlightactiveline"
-              >Highlight Active Line</label
-            >
+            <label for="script-editor-option-highlightactiveline">Highlight Active Line</label>
             <input
               type="checkbox"
               class="optionCheckbox"
@@ -239,9 +176,7 @@
           </fieldset>
 
           <fieldset>
-            <label for="script-editor-option-showinvisibles"
-              >Show Invisibles</label
-            >
+            <label for="script-editor-option-showinvisibles">Show Invisibles</label>
             <input
               type="checkbox"
               class="optionCheckbox"
@@ -305,33 +240,20 @@
       <!-- Active scripts info page -->
       <div id="active-scripts-container" class="generic-menupage-container">
         <p id="active-scripts-text">
-          This page displays a list of all of your scripts that are currently
-          running across every machine. It also provides information about each
-          script's production. The scripts are categorized by the hostname of
-          the servers on which they are running.
+          This page displays a list of all of your scripts that are currently running across every machine. It also
+          provides information about each script's production. The scripts are categorized by the hostname of the
+          servers on which they are running.
         </p>
         <p id="active-scripts-total-prod">
           Total online production of Active scripts:
-          <span class="money-gold"
-            ><span id="active-scripts-total-production-active">$0.000</span> /
-            sec</span
-          ><br />
+          <span class="money-gold"><span id="active-scripts-total-production-active">$0.000</span> / sec</span><br />
           Total online production since last Aug installation:
-          <span id="active-scripts-total-prod-aug-total" class="money-gold"
-            >$0.000</span
-          >
+          <span id="active-scripts-total-prod-aug-total" class="money-gold">$0.000</span>
           (<span class="money-gold"
-            ><span id="active-scripts-total-prod-aug-avg" class="money-gold"
-              >$0.000</span
-            >
-            / sec</span
+            ><span id="active-scripts-total-prod-aug-avg" class="money-gold">$0.000</span> / sec</span
           >)
         </p>
-        <ul
-          class="active-scripts-list"
-          id="active-scripts-list"
-          style="list-style: none"
-        ></ul>
+        <ul class="active-scripts-list" id="active-scripts-list" style="list-style: none"></ul>
       </div>
 
       <!-- Hacknet Nodes -->
@@ -342,11 +264,9 @@
       <!-- Create a program(executable) -->
       <div id="create-program-container" class="generic-menupage-container">
         <p id="create-program-page-text">
-          This page displays any programs that you are able to create. Writing
-          the code for a program takes time, which can vary based on how complex
-          the program is. If you are working on creating a program you can
-          cancel at any time. Your progress will be saved and you can continue
-          later.
+          This page displays any programs that you are able to create. Writing the code for a program takes time, which
+          can vary based on how complex the program is. If you are working on creating a program you can cancel at any
+          time. Your progress will be saved and you can continue later.
         </p>
 
         <ul id="create-program-list"></ul>
@@ -359,10 +279,7 @@
       <div id="faction-container" class="generic-menupage-container"></div>
 
       <!-- Augmentations -->
-      <div
-        id="augmentations-container"
-        class="generic-menupage-container"
-      ></div>
+      <div id="augmentations-container" class="generic-menupage-container"></div>
 
       <!-- Milestones content -->
       <div id="milestones-container" class="generic-menupage-container"></div>
@@ -402,11 +319,7 @@
         >
           Scripts</a
         ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/netscript.html"
-        >
+        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/netscript.html">
           Netscript Programming Language</a
         ><br /><br />
         <a
@@ -444,11 +357,7 @@
         >
           Augmentations</a
         ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/shortcuts.html"
-        >
+        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/shortcuts.html">
           Keyboard Shortcuts</a
         >
       </div>
@@ -456,10 +365,7 @@
       <!-- Location (visiting a location in World) -->
       <div id="location-container" class="generic-menupage-container"></div>
 
-      <div
-        id="infiltration-container"
-        class="generic-fullscreen-container"
-      ></div>
+      <div id="infiltration-container" class="generic-fullscreen-container"></div>
 
       <div id="stock-market-container" class="generic-menupage-container">
         <!-- React Component -->
@@ -482,18 +388,9 @@
       <div id="yes-no-text-input-box-container" class="popup-box-container">
         <div id="yes-no-text-input-box-content" class="popup-box-content">
           <p id="yes-no-text-input-box-text"></p>
-          <input
-            type="text"
-            id="yes-no-text-input-box-input"
-            pattern="[a-zA-Z0-9-_]"
-            maxlength="30"
-          />
-          <button id="yes-no-text-input-box-yes" class="popup-box-button">
-            Yes
-          </button>
-          <button id="yes-no-text-input-box-no" class="popup-box-button">
-            No
-          </button>
+          <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30" />
+          <button id="yes-no-text-input-box-yes" class="popup-box-button">Yes</button>
+          <button id="yes-no-text-input-box-no" class="popup-box-button">No</button>
         </div>
       </div>
 
@@ -505,15 +402,10 @@
           <p id="faction-invitation-box-warning">
             Would you like to join? <br />
             <br />
-            Warning: Joining this faction may prevent you from joining other
-            factions during this run!
+            Warning: Joining this faction may prevent you from joining other factions during this run!
           </p>
-          <button id="faction-invitation-box-yes" class="popup-box-button">
-            Join!
-          </button>
-          <button id="faction-invitation-box-no" class="popup-box-button">
-            Decide later
-          </button>
+          <button id="faction-invitation-box-yes" class="popup-box-button">Join!</button>
+          <button id="faction-invitation-box-no" class="popup-box-button">Decide later</button>
         </div>
       </div>
 
@@ -522,15 +414,11 @@
         <div id="infiltration-box-content" class="popup-box-content">
           <p id="infiltration-box-text"></p>
 
-          <button id="infiltration-box-sell" class="a-link-button">
-            Sell on Black Market
-          </button>
+          <button id="infiltration-box-sell" class="a-link-button">Sell on Black Market</button>
           <br /><br />
           <select id="infiltration-faction-select" class="dropdown"></select>
           <br />
-          <button id="infiltration-box-faction" class="a-link-button">
-            Give to Faction for Reputation
-          </button>
+          <button id="infiltration-box-faction" class="a-link-button">Give to Faction for Reputation</button>
         </div>
       </div>
 
@@ -541,9 +429,7 @@
       <div id="work-in-progress-container" class="generic-fullscreen-container">
         <p id="work-in-progress-text"></p>
 
-        <button id="work-in-progress-cancel-button" class="work-button">
-          Cancel Work
-        </button>
+        <button id="work-in-progress-cancel-button" class="work-button">Cancel Work</button>
         <button id="work-in-progress-something-else-button" class="work-button">
           Do something else simultaneously
         </button>
@@ -551,17 +437,11 @@
 
       <!-- Red Pill Container -->
       <div id="red-pill-container" class="generic-fullscreen-container">
-        <div
-          id="red-pill-content"
-          class="generic-fullscreen-container-scroll"
-        ></div>
+        <div id="red-pill-content" class="generic-fullscreen-container-scroll"></div>
       </div>
 
       <!-- Cinematic Text Container -->
-      <div
-        id="cinematic-text-container"
-        class="generic-fullscreen-container"
-      ></div>
+      <div id="cinematic-text-container" class="generic-fullscreen-container"></div>
 
       <!-- Interactive Tutorial Text Screen -->
       <div id="interactive-tutorial-wrapper">
@@ -580,18 +460,8 @@
             <!-- ReactJS Component -->
           </div>
           <div class="character-quick-options noselect">
-            <button
-              id="character-overview-save-button"
-              class="character-overview-btn"
-            >
-              Save Game
-            </button>
-            <button
-              id="character-overview-options-button"
-              class="character-overview-btn"
-            >
-              Options
-            </button>
+            <button id="character-overview-save-button" class="character-overview-btn">Save Game</button>
+            <button id="character-overview-options-button" class="character-overview-btn">Options</button>
           </div>
         </div>
       </div>
@@ -604,12 +474,7 @@
       <!-- Game Options -->
       <div id="game-options-container" class="popup-box-container">
         <div id="game-options-content" class="game-options-box">
-          <button
-            id="game-options-close-button"
-            aria-label="close options dialog"
-          >
-            &times;
-          </button>
+          <button id="game-options-close-button" aria-label="close options dialog">&times;</button>
           <h1>Game Options</h1>
           <br />
           <div id="game-options-left-panel">
@@ -618,10 +483,8 @@
               <label for="settingsNSExecTimeRangeVal" class="tooltip"
                 >Netscript exec time:&nbsp;
                 <span class="tooltiptext">
-                  The minimum number of milliseconds it takes to execute an
-                  operation in Netscript. Setting this too low can result in
-                  poor performance if you have many scripts running. The default
-                  value is 25ms.
+                  The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too low
+                  can result in poor performance if you have many scripts running. The default value is 25ms.
                 </span>
               </label>
 
@@ -635,10 +498,7 @@
                 id="settingsNSExecTimeRangeVal"
                 value="25"
               />
-              <em
-                id="settingsNSExecTimeRangeValLabel"
-                style="font-style: normal"
-              ></em>
+              <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Log capacity -->
@@ -646,9 +506,8 @@
               <label for="settingsNSLogRangeVal" class="tooltip"
                 >Netscript log size:&nbsp;&nbsp;
                 <span class="tooltiptext">
-                  The maximum number of lines a script's logs can hold. Setting
-                  this too high can cause the game to use a lot of memory if you
-                  have many scripts running. The default value is 50.
+                  The maximum number of lines a script's logs can hold. Setting this too high can cause the game to use
+                  a lot of memory if you have many scripts running. The default value is 50.
                 </span>
               </label>
 
@@ -662,10 +521,7 @@
                 id="settingsNSLogRangeVal"
                 value="50"
               />
-              <em
-                id="settingsNSLogRangeValLabel"
-                style="font-style: normal"
-              ></em>
+              <em id="settingsNSLogRangeValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Port capacity -->
@@ -673,10 +529,8 @@
               <label for="settingsNSPortRangeVal" class="tooltip"
                 >Netscript port size:&nbsp;
                 <span class="tooltiptext">
-                  The maximum number of entries that can be written to a port
-                  using Netscript's write() function. Setting this too high can
-                  cause the game to use a lot of memory. The default value is
-                  50.
+                  The maximum number of entries that can be written to a port using Netscript's write() function.
+                  Setting this too high can cause the game to use a lot of memory. The default value is 50.
                 </span>
               </label>
 
@@ -690,10 +544,7 @@
                 id="settingsNSPortRangeVal"
                 value="50"
               />
-              <em
-                id="settingsNSPortRangeValLabel"
-                style="font-style: normal"
-              ></em>
+              <em id="settingsNSPortRangeValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Autosave Interval -->
@@ -701,8 +552,7 @@
               <label for="settingsAutosaveIntervalVal" class="tooltip"
                 >Autosave Interval:&nbsp;&nbsp;&nbsp;
                 <span class="tooltiptext">
-                  The time (in seconds) between each autosave. Set to 0 to
-                  disable autosave.
+                  The time (in seconds) between each autosave. Set to 0 to disable autosave.
                 </span>
               </label>
 
@@ -716,10 +566,7 @@
                 id="settingsAutosaveIntervalVal"
                 value="60"
               />
-              <em
-                id="settingsAutosaveIntervalValLabel"
-                style="font-style: normal"
-              ></em>
+              <em id="settingsAutosaveIntervalValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Suppress messages -->
@@ -727,10 +574,8 @@
               <label for="settingsSuppressMessages" class="tooltip"
                 >Suppress Messages:
                 <span class="tooltiptext">
-                  If this is set, then any messages you receive will not appear
-                  as popups on the screen. They will still get sent to your home
-                  computer as '.msg' files and can be viewed with the 'cat'
-                  Terminal command.
+                  If this is set, then any messages you receive will not appear as popups on the screen. They will still
+                  get sent to your home computer as '.msg' files and can be viewed with the 'cat' Terminal command.
                 </span>
               </label>
               <input
@@ -746,9 +591,8 @@
               <label for="settingsSuppressFactionInvites" class="tooltip"
                 >Suppress Faction Invites:
                 <span class="tooltiptexthigh">
-                  If this is set, then any faction invites you receive will not
-                  appear as popups on the screen. Your outstanding faction
-                  invites can be viewed in the 'Factions' page.
+                  If this is set, then any faction invites you receive will not appear as popups on the screen. Your
+                  outstanding faction invites can be viewed in the 'Factions' page.
                 </span>
               </label>
               <input
@@ -764,9 +608,8 @@
               <label for="settingsSuppressTravelConfirmation" class="tooltip"
                 >Suppress Travel Confirmation:
                 <span class="tooltiptexthigh">
-                  If this is set, the confirmation message before traveling will
-                  not show up. You will automatically be deducted the travel
-                  cost as soon as you click.
+                  If this is set, the confirmation message before traveling will not show up. You will automatically be
+                  deducted the travel cost as soon as you click.
                 </span>
               </label>
               <input
@@ -779,13 +622,10 @@
 
             <!-- Suppress buy aug confirmation -->
             <fieldset>
-              <label
-                for="settingsSuppressBuyAugmentationConfirmation"
-                class="tooltip"
+              <label for="settingsSuppressBuyAugmentationConfirmation" class="tooltip"
                 >Suppress buy augmentation confirmation:
                 <span class="tooltiptexthigh">
-                  If this is set, the confirmation message before buying
-                  augmentation will not show up.
+                  If this is set, the confirmation message before buying augmentation will not show up.
                 </span>
               </label>
               <input
@@ -801,8 +641,8 @@
               <label for="settingsSuppressHospitalizationPopup" class="tooltip"
                 >Suppress Hospitalization popup:
                 <span class="tooltiptexthigh">
-                  If this is set, a popup message will no longer be shown when
-                  you are hospitalized after taking too much damage.
+                  If this is set, a popup message will no longer be shown when you are hospitalized after taking too
+                  much damage.
                 </span>
               </label>
               <input
@@ -818,9 +658,8 @@
               <label for="settingsSuppressBladeburnerPopup" class="tooltip"
                 >Suppress Bladeburner Popup:
                 <span class="tooltiptext">
-                  If this is set, then having your Bladeburner actions
-                  interrupted by being busy with something else will not display
-                  a popup message.
+                  If this is set, then having your Bladeburner actions interrupted by being busy with something else
+                  will not display a popup message.
                 </span>
               </label>
               <input
@@ -836,27 +675,19 @@
               <label for="settingsDisableHotkeys" class="tooltip"
                 >Disable Hotkeys:
                 <span class="tooltiptexthigh">
-                  If this is set, then most hotkeys (keyboard shortcuts) in the
-                  game are disabled. This includes Terminal commands, hotkeys to
-                  navigate between different parts of the game, and the "Save
-                  and Close (Ctrl + b)" hotkey in the Text Editor.
+                  If this is set, then most hotkeys (keyboard shortcuts) in the game are disabled. This includes
+                  Terminal commands, hotkeys to navigate between different parts of the game, and the "Save and Close
+                  (Ctrl + b)" hotkey in the Text Editor.
                 </span>
               </label>
-              <input
-                class="optionCheckbox"
-                type="checkbox"
-                name="settingsDisableHotkeys"
-                id="settingsDisableHotkeys"
-              />
+              <input class="optionCheckbox" type="checkbox" name="settingsDisableHotkeys" id="settingsDisableHotkeys" />
             </fieldset>
 
             <!-- View city as list of buttons instead of ASCII art. -->
             <fieldset>
               <label for="settingsDisableASCIIArt" class="tooltip"
                 >Disable ASCII art:
-                <span class="tooltiptexthigh">
-                  If this is set all ASCII art will be disabled.
-                </span>
+                <span class="tooltiptexthigh"> If this is set all ASCII art will be disabled. </span>
               </label>
               <input
                 class="optionCheckbox"
@@ -871,8 +702,8 @@
               <label for="settingsDisableTextEffects" class="tooltip"
                 >Disable Text Effects:
                 <span class="tooltiptexthigh">
-                  If this is set, text effects will not be displayed. This can
-                  help if text is difficult to read in certain areas.
+                  If this is set, text effects will not be displayed. This can help if text is difficult to read in
+                  certain areas.
                 </span>
               </label>
               <input
@@ -887,15 +718,9 @@
             <fieldset>
               <label for="settingsLocale" class="tooltip"
                 >Locale:
-                <span class="tooltiptexthigh">
-                  Sets the locale for displaying numbers. Defaults to 'en'
-                </span>
+                <span class="tooltiptexthigh"> Sets the locale for displaying numbers. Defaults to 'en' </span>
               </label>
-              <select
-                name="settingsLocale"
-                id="settingsLocale"
-                class="dropdown"
-              >
+              <select name="settingsLocale" id="settingsLocale" class="dropdown">
                 <option value="en">en</option>
                 <option value="bg">bg</option>
                 <option value="cs">cs</option>
@@ -915,11 +740,7 @@
             </fieldset>
 
             <!-- Donate button -->
-            <form
-              action="https://www.paypal.com/cgi-bin/webscr"
-              method="post"
-              target="_blank"
-            >
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
               <input type="hidden" name="cmd" value="_s-xclick" />
               <input
                 type="hidden"
@@ -934,84 +755,45 @@
                 name="submit"
                 alt="PayPal - The safer, easier way to pay online!"
               />
-              <img
-                alt=""
-                border="0"
-                src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
-                width="1"
-                height="1"
-              />
+              <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
             </form>
           </div>
           <div id="game-options-right-panel">
-            <a
-              class="a-link-button"
-              href="https://bitburner.readthedocs.io/en/latest/changelog.html"
-              target="_blank"
-            >
+            <a class="a-link-button" href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank">
               Changelog
             </a>
-            <a
-              class="a-link-button"
-              href="https://bitburner.readthedocs.io/en/latest/index.html"
-              target="_blank"
+            <a class="a-link-button" href="https://bitburner.readthedocs.io/en/latest/index.html" target="_blank"
               >Documentation</a
             >
-            <a
-              class="a-link-button"
-              href="https://discord.gg/TFc3hKD"
-              target="_blank"
-              >Discord</a
-            >
-            <a
-              class="a-link-button"
-              href="https://www.reddit.com/r/bitburner"
-              target="_blank"
-              >Subreddit</a
-            >
+            <a class="a-link-button" href="https://discord.gg/TFc3hKD" target="_blank">Discord</a>
+            <a class="a-link-button" href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
             <button id="save-game-link" class="a-link-button">Save Game</button>
-            <button id="delete-game-link" class="a-link-button">
-              Delete Game
-            </button>
-            <button id="export-game-link" class="a-link-button">
-              Export Game
-            </button>
+            <button id="delete-game-link" class="a-link-button">Delete Game</button>
+            <button id="export-game-link" class="a-link-button">Export Game</button>
             <input type="file" id="import-game-file-selector" name="file" />
-            <button id="import-game-link" class="a-link-button">
-              Import Game
-            </button>
-            <button id="copy-save-to-clipboard-link" class="std-button">
-              Copy Save data to Clipboard
-            </button>
-            <button
-              id="debug-delete-scripts-link"
-              class="a-link-button tooltip"
-            >
+            <button id="import-game-link" class="a-link-button">Import Game</button>
+            <button id="copy-save-to-clipboard-link" class="std-button">Copy Save data to Clipboard</button>
+            <button id="debug-delete-scripts-link" class="a-link-button tooltip">
               Force kill all active scripts
               <span class="tooltiptextleft">
-                Forcefully kill all active running scripts, in case there is a
-                bug or some unexpected issue with the game. After using this,
-                save the game and then reload the page. This is different then
-                normal kill in that normal kill will tell the script to shut
-                down while force kill just removes the references to it (and it
-                should crash on it's own). This will not remove the files on
-                your computer. Just forcefully kill all running instance of all
-                scripts.
+                Forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the
+                game. After using this, save the game and then reload the page. This is different then normal kill in
+                that normal kill will tell the script to shut down while force kill just removes the references to it
+                (and it should crash on it's own). This will not remove the files on your computer. Just forcefully kill
+                all running instance of all scripts.
               </span>
             </button>
             <button id="debug-soft-reset" class="a-link-button tooltip">
               Soft Reset
               <span class="tooltiptextleft">
-                Perform a soft reset. Resets everything as if you had just
-                purchased an Augmentation.
+                Perform a soft reset. Resets everything as if you had just purchased an Augmentation.
               </span>
             </button>
             <button id="debug-files" class="a-link-button tooltip">
               Diagnose files
               <span class="tooltiptextleft">
-                If your save file is extremely big you can use this button to
-                view a map of all the files on every server. Be careful there
-                might be spoilers.
+                If your save file is extremely big you can use this button to view a map of all the files on every
+                server. Be careful there might be spoilers.
               </span>
             </button>
           </div>
@@ -1023,10 +805,7 @@
     <div id="loader" class="loaderoverlay">
       <div class="loaderspinner"></div>
       <div class="loaderlabel">Loading Bitburner...</div>
-      <div
-        id="killAllMessageWrapper"
-        class="killAllMessage killAllMessageWrapperHidden"
-      >
+      <div id="killAllMessageWrapper" class="killAllMessage killAllMessageWrapperHidden">
         <script>
           setTimeout(function () {
             var w = document.getElementById("killAllMessageWrapper");
@@ -1044,9 +823,7 @@
       </div>
     </div>
 
-    <div id="unclickable" style="display: none">
-      Click on this to upgrade your Source-File -1!
-    </div>
+    <div id="unclickable" style="display: none">Click on this to upgrade your Source-File -1!</div>
   </body>
 
   <!-- Misc Scripts -->

@@ -1,9 +1,6 @@
 import * as React from "react";
 
-export function EarningsTableElement(
-  title: string,
-  stats: any[][],
-): React.ReactElement {
+export function EarningsTableElement(title: string, stats: any[][]): React.ReactElement {
   return (
     <>
       <pre>{title}</pre>

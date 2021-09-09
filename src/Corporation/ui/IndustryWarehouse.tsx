@@ -59,8 +59,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
     if (isString(product.sllman[city][1])) {
       sellButtonText = (
         <>
-          Sell ({numeralWrapper.format(product.data[city][2], nfB)}/
-          {product.sllman[city][1]})
+          Sell ({numeralWrapper.format(product.data[city][2], nfB)}/{product.sllman[city][1]})
         </>
       );
     } else {
@@ -90,10 +89,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
     );
   } else if (product.sCost) {
     if (isString(product.sCost)) {
-      const sCost = (product.sCost as string).replace(
-        /MP/g,
-        product.pCost + "",
-      );
+      const sCost = (product.sCost as string).replace(/MP/g, product.pCost + "");
       sellButtonText = (
         <>
           {sellButtonText} @ <Money money={eval(sCost)} />
@@ -120,8 +116,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
   // Limit Production button
   let limitProductionButtonText = "Limit Production";
   if (product.prdman[city][0]) {
-    limitProductionButtonText +=
-      " (" + numeralWrapper.format(product.prdman[city][1], nf) + ")";
+    limitProductionButtonText += " (" + numeralWrapper.format(product.prdman[city][1], nf) + ")";
   }
 
   function openLimitProductProdutionPopup(): void {
@@ -158,8 +153,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
     return (
       <div className={"cmpy-mgmt-warehouse-product-div"}>
         <p>
-          Designing {product.name} (req. Operations/Engineers in{" "}
-          {product.createCity})...
+          Designing {product.name} (req. Operations/Engineers in {product.createCity})...
         </p>
         <br />
         <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
@@ -171,23 +165,14 @@ function ProductComponent(props: IProductProps): React.ReactElement {
               {sellButtonText}
             </button>
             <br />
-            <button
-              className={"std-button"}
-              onClick={openLimitProductProdutionPopup}
-            >
+            <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
               {limitProductionButtonText}
             </button>
-            <button
-              className={"std-button"}
-              onClick={openDiscontinueProductPopup}
-            >
+            <button className={"std-button"} onClick={openDiscontinueProductPopup}>
               Discontinue
             </button>
             {division.hasResearch("Market-TA.I") && (
-              <button
-                className={"std-button"}
-                onClick={openProductMarketTaPopup}
-              >
+              <button className={"std-button"} onClick={openProductMarketTaPopup}>
                 Market-TA
               </button>
             )}
@@ -200,8 +185,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
   return (
     <div className={"cmpy-mgmt-warehouse-product-div"}>
       <p className={"tooltip"}>
-        {product.name}: {numeralWrapper.format(product.data[city][0], nfB)} (
-        {numeralWrapper.format(totalGain, nfB)}/s)
+        {product.name}: {numeralWrapper.format(product.data[city][0], nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
         <span className={"tooltiptext"}>
           Prod: {numeralWrapper.format(product.data[city][1], nfB)}/s
           <br />
@@ -219,30 +203,23 @@ function ProductComponent(props: IProductProps): React.ReactElement {
           Aesthetics: {numeralWrapper.format(product.aes, nf)} <br />
           Features: {numeralWrapper.format(product.fea, nf)}
           {corp.unlockUpgrades[2] === 1 && <br />}
-          {corp.unlockUpgrades[2] === 1 &&
-            "Demand: " + numeralWrapper.format(product.dmd, nf)}
+          {corp.unlockUpgrades[2] === 1 && "Demand: " + numeralWrapper.format(product.dmd, nf)}
           {corp.unlockUpgrades[3] === 1 && <br />}
-          {corp.unlockUpgrades[3] === 1 &&
-            "Competition: " + numeralWrapper.format(product.cmp, nf)}
+          {corp.unlockUpgrades[3] === 1 && "Competition: " + numeralWrapper.format(product.cmp, nf)}
         </span>
       </p>
       <br />
       <p className={"tooltip"}>
         Est. Production Cost:{" "}
-        {numeralWrapper.formatMoney(
-          product.pCost / CorporationConstants.ProductProductionCostRatio,
-        )}
-        <span className={"tooltiptext"}>
-          An estimate of the material cost it takes to create this Product.
-        </span>
+        {numeralWrapper.formatMoney(product.pCost / CorporationConstants.ProductProductionCostRatio)}
+        <span className={"tooltiptext"}>An estimate of the material cost it takes to create this Product.</span>
       </p>
       <br />
       <p className={"tooltip"}>
         Est. Market Price: {numeralWrapper.formatMoney(product.pCost)}
         <span className={"tooltiptext"}>
-          An estimate of how much consumers are willing to pay for this product.
-          Setting the sale price above this may result in less sales. Setting
-          the sale price below this may result in more sales.
+          An estimate of how much consumers are willing to pay for this product. Setting the sale price above this may
+          result in less sales. Setting the sale price below this may result in more sales.
         </span>
       </p>
 
@@ -251,10 +228,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
           {sellButtonText}
         </button>
         <br />
-        <button
-          className={"std-button"}
-          onClick={openLimitProductProdutionPopup}
-        >
+        <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
           {limitProductionButtonText}
         </button>
         <button className={"std-button"} onClick={openDiscontinueProductPopup}>
@@ -301,16 +275,11 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
   // Flag that determines whether this industry is "new" and the current material should be
   // marked with flashing-red lights
   const tutorial =
-    division.newInd &&
-    Object.keys(division.reqMats).includes(mat.name) &&
-    mat.buy === 0 &&
-    mat.imp === 0;
+    division.newInd && Object.keys(division.reqMats).includes(mat.name) && mat.buy === 0 && mat.imp === 0;
 
   // Purchase material button
   const purchaseButtonText = `Buy (${numeralWrapper.format(mat.buy, nfB)})`;
-  const purchaseButtonClass = tutorial
-    ? "std-button flashing-button tooltip"
-    : "std-button";
+  const purchaseButtonClass = tutorial ? "std-button flashing-button tooltip" : "std-button";
 
   function openPurchaseMaterialPopup(): void {
     const popupId = "cmpy-mgmt-material-purchase-popup";
@@ -344,8 +313,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     } else {
       sellButtonText = (
         <>
-          Sell ({numeralWrapper.format(mat.sll, nfB)}/
-          {numeralWrapper.format(mat.sllman[1] as number, nfB)})
+          Sell ({numeralWrapper.format(mat.sll, nfB)}/{numeralWrapper.format(mat.sllman[1] as number, nfB)})
         </>
       );
     }
@@ -405,8 +373,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     <div className={"cmpy-mgmt-warehouse-material-div"}>
       <div style={{ display: "inline-block" }}>
         <p className={"tooltip"}>
-          {mat.name}: {numeralWrapper.format(mat.qty, nfB)} (
-          {numeralWrapper.format(totalGain, nfB)}/s)
+          {mat.name}: {numeralWrapper.format(mat.qty, nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
           <span className={"tooltiptext"}>
             Buy: {numeralWrapper.format(mat.buy, nfB)} <br />
             Prod: {numeralWrapper.format(mat.prd, nfB)} <br />
@@ -414,40 +381,30 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
             Export: {numeralWrapper.format(mat.totalExp, nfB)} <br />
             Import: {numeralWrapper.format(mat.imp, nfB)}
             {corp.unlockUpgrades[2] === 1 && <br />}
-            {corp.unlockUpgrades[2] === 1 &&
-              "Demand: " + numeralWrapper.format(mat.dmd, nf)}
+            {corp.unlockUpgrades[2] === 1 && "Demand: " + numeralWrapper.format(mat.dmd, nf)}
             {corp.unlockUpgrades[3] === 1 && <br />}
-            {corp.unlockUpgrades[3] === 1 &&
-              "Competition: " + numeralWrapper.format(mat.cmp, nf)}
+            {corp.unlockUpgrades[3] === 1 && "Competition: " + numeralWrapper.format(mat.cmp, nf)}
           </span>
         </p>
         <br />
         <p className={"tooltip"}>
           MP: {numeralWrapper.formatMoney(mat.bCost)}
           <span className={"tooltiptext"}>
-            Market Price: The price you would pay if you were to buy this
-            material on the market
+            Market Price: The price you would pay if you were to buy this material on the market
           </span>
         </p>{" "}
         <br />
         <p className={"tooltip"}>
           Quality: {numeralWrapper.format(mat.qlt, "0.00a")}
-          <span className={"tooltiptext"}>
-            The quality of your material. Higher quality will lead to more sales
-          </span>
+          <span className={"tooltiptext"}>The quality of your material. Higher quality will lead to more sales</span>
         </p>
       </div>
 
       <div style={{ display: "inline-block" }}>
-        <button
-          className={purchaseButtonClass}
-          onClick={openPurchaseMaterialPopup}
-        >
+        <button className={purchaseButtonClass} onClick={openPurchaseMaterialPopup}>
           {purchaseButtonText}
           {tutorial && (
-            <span className={"tooltiptext"}>
-              Purchase your required materials to get production started!
-            </span>
+            <span className={"tooltiptext"}>Purchase your required materials to get production started!</span>
           )}
         </button>
 
@@ -490,13 +447,9 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
     };
 
     // Upgrade Warehouse size button
-    const sizeUpgradeCost =
-      CorporationConstants.WarehouseUpgradeBaseCost *
-      Math.pow(1.07, props.warehouse.level + 1);
+    const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, props.warehouse.level + 1);
     const canAffordUpgrade = props.corp.funds.gt(sizeUpgradeCost);
-    const upgradeWarehouseClass = canAffordUpgrade
-      ? "std-button"
-      : "a-link-button-inactive";
+    const upgradeWarehouseClass = canAffordUpgrade ? "std-button" : "a-link-button-inactive";
     function upgradeWarehouseOnClick(): void {
       if (props.division === null) return;
       if (props.warehouse === 0) return;
@@ -519,13 +472,9 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
     }
 
     // Industry material Requirements
-    let generalReqsText =
-      "This Industry uses [" +
-      Object.keys(props.division.reqMats).join(", ") +
-      "] in order to ";
+    let generalReqsText = "This Industry uses [" + Object.keys(props.division.reqMats).join(", ") + "] in order to ";
     if (props.division.prodMats.length > 0) {
-      generalReqsText +=
-        "produce [" + props.division.prodMats.join(", ") + "] ";
+      generalReqsText += "produce [" + props.division.prodMats.join(", ") + "] ";
       if (props.division.makesProducts) {
         generalReqsText += " and " + props.division.getProductDescriptionText();
       }
@@ -547,10 +496,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
 
     let createdItemsText = "in order to create ";
     if (props.division.prodMats.length > 0) {
-      createdItemsText +=
-        "one of each produced Material (" +
-        props.division.prodMats.join(", ") +
-        ") ";
+      createdItemsText += "one of each produced Material (" + props.division.prodMats.join(", ") + ") ";
       if (props.division.makesProducts) {
         createdItemsText += "or to create one of its Products";
       }
@@ -603,10 +549,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
 
     // Create React components for products
     const products = [];
-    if (
-      props.division.makesProducts &&
-      Object.keys(props.division.products).length > 0
-    ) {
+    if (props.division.makesProducts && Object.keys(props.division.products).length > 0) {
       for (const productName in props.division.products) {
         const product = props.division.products[productName];
         if (product instanceof Product) {
@@ -629,18 +572,11 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         <p className={"tooltip"} style={sizeUsageStyle}>
           Storage: {numeralWrapper.formatBigNumber(props.warehouse.sizeUsed)} /{" "}
           {numeralWrapper.formatBigNumber(props.warehouse.size)}
-          <span
-            className={"tooltiptext"}
-            dangerouslySetInnerHTML={{ __html: props.warehouse.breakdown }}
-          ></span>
+          <span className={"tooltiptext"} dangerouslySetInnerHTML={{ __html: props.warehouse.breakdown }}></span>
         </p>
 
-        <button
-          className={upgradeWarehouseClass}
-          onClick={upgradeWarehouseOnClick}
-        >
-          Upgrade Warehouse Size -{" "}
-          <MoneyCost money={sizeUpgradeCost} corp={props.corp} />
+        <button className={upgradeWarehouseClass} onClick={upgradeWarehouseOnClick}>
+          Upgrade Warehouse Size - <MoneyCost money={sizeUpgradeCost} corp={props.corp} />
         </button>
 
         <p>{generalReqsText}. The exact requirements for production are:</p>
@@ -649,8 +585,8 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         <br />
         <p>{createdItemsText}</p>
         <p>
-          To get started with production, purchase your required materials or
-          import them from another of your company's divisions.
+          To get started with production, purchase your required materials or import them from another of your company's
+          divisions.
         </p>
         <br />
 
@@ -681,9 +617,7 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
         loc: city,
         size: CorporationConstants.WarehouseInitialSize,
       });
-      props.corp.funds = props.corp.funds.minus(
-        CorporationConstants.WarehouseInitialCost,
-      );
+      props.corp.funds = props.corp.funds.minus(CorporationConstants.WarehouseInitialCost);
       props.corp.rerender(props.player);
     }
   }
@@ -693,16 +627,9 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
   } else {
     return (
       <div className={"cmpy-mgmt-warehouse-panel"}>
-        <button
-          className={"std-button"}
-          onClick={() => purchaseWarehouse(props.division, props.currentCity)}
-        >
+        <button className={"std-button"} onClick={() => purchaseWarehouse(props.division, props.currentCity)}>
           Purchase Warehouse (
-          <MoneyCost
-            money={CorporationConstants.WarehouseInitialCost}
-            corp={props.corp}
-          />
-          )
+          <MoneyCost money={CorporationConstants.WarehouseInitialCost} corp={props.corp} />)
         </button>
       </div>
     );

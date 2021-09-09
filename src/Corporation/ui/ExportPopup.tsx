@@ -14,16 +14,11 @@ interface IProps {
 
 // Create a popup that lets the player manage exports
 export function ExportPopup(props: IProps): React.ReactElement {
-  if (props.corp.divisions.length === 0)
-    throw new Error("Export popup created with no divisions.");
+  if (props.corp.divisions.length === 0) throw new Error("Export popup created with no divisions.");
   if (Object.keys(props.corp.divisions[0].warehouses).length === 0)
     throw new Error("Export popup created in a division with no warehouses.");
-  const [industry, setIndustry] = useState<string>(
-    props.corp.divisions[0].name,
-  );
-  const [city, setCity] = useState<string>(
-    Object.keys(props.corp.divisions[0].warehouses)[0],
-  );
+  const [industry, setIndustry] = useState<string>(props.corp.divisions[0].name);
+  const [city, setCity] = useState<string>(Object.keys(props.corp.divisions[0].warehouses)[0]);
   const [amt, setAmt] = useState("");
   const setRerender = useState(false)[1];
 
@@ -71,11 +66,7 @@ export function ExportPopup(props: IProps): React.ReactElement {
 
   function removeExport(exp: Export): void {
     for (let i = 0; i < props.mat.exp.length; ++i) {
-      if (
-        props.mat.exp[i].ind !== exp.ind ||
-        props.mat.exp[i].city !== exp.city ||
-        props.mat.exp[i].amt !== exp.amt
-      )
+      if (props.mat.exp[i].ind !== exp.ind || props.mat.exp[i].city !== exp.city || props.mat.exp[i].amt !== exp.amt)
         continue;
       props.mat.exp.splice(i, 1);
       break;
@@ -83,22 +74,15 @@ export function ExportPopup(props: IProps): React.ReactElement {
     rerender();
   }
 
-  const currentDivision = props.corp.divisions.find(
-    (division: IIndustry) => division.name === industry,
-  );
+  const currentDivision = props.corp.divisions.find((division: IIndustry) => division.name === industry);
 
   return (
     <>
       <p>
-        Select the industry and city to export this material to, as well as how
-        much of this material to export per second. You can set the export
-        amount to 'MAX' to export all of the materials in this warehouse.
+        Select the industry and city to export this material to, as well as how much of this material to export per
+        second. You can set the export amount to 'MAX' to export all of the materials in this warehouse.
       </p>
-      <select
-        className="dropdown"
-        onChange={onIndustryChange}
-        defaultValue={industry}
-      >
+      <select className="dropdown" onChange={onIndustryChange} defaultValue={industry}>
         {props.corp.divisions.map((division: IIndustry) => (
           <option key={division.name} value={division.name}>
             {division.name}
@@ -116,28 +100,16 @@ export function ExportPopup(props: IProps): React.ReactElement {
             );
           })}
       </select>
-      <input
-        className="text-input"
-        placeholder="Export amount / s"
-        onChange={onAmtChange}
-      />
-      <button
-        className="std-button"
-        style={{ display: "inline-block" }}
-        onClick={exportMaterial}
-      >
+      <input className="text-input" placeholder="Export amount / s" onChange={onAmtChange} />
+      <button className="std-button" style={{ display: "inline-block" }} onClick={exportMaterial}>
         Export
       </button>
       <p>
-        Below is a list of all current exports of this material from this
-        warehouse. Clicking on one of the exports below will REMOVE that export.
+        Below is a list of all current exports of this material from this warehouse. Clicking on one of the exports
+        below will REMOVE that export.
       </p>
       {props.mat.exp.map((exp: Export, index: number) => (
-        <div
-          key={index}
-          className="cmpy-mgmt-existing-export"
-          onClick={() => removeExport(exp)}
-        >
+        <div key={index} className="cmpy-mgmt-existing-export" onClick={() => removeExport(exp)}>
           Industry: {exp.ind}
           <br />
           City: {exp.city}

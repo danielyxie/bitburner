@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { KEY } from "../../../utils/helpers/keyCodes";
 
-import {
-  CodingContract,
-  CodingContractType,
-  CodingContractTypes,
-} from "../../CodingContracts";
+import { CodingContract, CodingContractType, CodingContractTypes } from "../../CodingContracts";
 import { ClickableTag, CopyableText } from "./CopyableText";
 import { PopupCloseButton } from "./PopupCloseButton";
 
@@ -40,25 +36,16 @@ export function CodingContractPopup(props: IProps): React.ReactElement {
 
   const contractType: CodingContractType = CodingContractTypes[props.c.type];
   const description = [];
-  for (const [i, value] of contractType
-    .desc(props.c.data)
-    .split("\n")
-    .entries())
-    description.push(
-      <span
-        key={i}
-        dangerouslySetInnerHTML={{ __html: value + "<br />" }}
-      ></span>,
-    );
+  for (const [i, value] of contractType.desc(props.c.data).split("\n").entries())
+    description.push(<span key={i} dangerouslySetInnerHTML={{ __html: value + "<br />" }}></span>);
   return (
     <div>
       <CopyableText value={props.c.type} tag={ClickableTag.Tag_h1} />
       <br />
       <br />
       <p>
-        You are attempting to solve a Coding Contract. You have{" "}
-        {props.c.getMaxNumTries() - props.c.tries} tries remaining, after which
-        the contract will self-destruct.
+        You are attempting to solve a Coding Contract. You have {props.c.getMaxNumTries() - props.c.tries} tries
+        remaining, after which the contract will self-destruct.
       </p>
       <br />
       <p>{description}</p>
@@ -72,16 +59,8 @@ export function CodingContractPopup(props: IProps): React.ReactElement {
         onChange={onChange}
         onKeyDown={onKeyDown}
       />
-      <PopupCloseButton
-        popup={props.popupId}
-        onClose={() => props.onAttempt(answer)}
-        text={"Solve"}
-      />
-      <PopupCloseButton
-        popup={props.popupId}
-        onClose={props.onClose}
-        text={"Close"}
-      />
+      <PopupCloseButton popup={props.popupId} onClose={() => props.onAttempt(answer)} text={"Solve"} />
+      <PopupCloseButton popup={props.popupId} onClose={props.onClose} text={"Close"} />
     </div>
   );
 }

@@ -24,12 +24,7 @@ import { StdButton } from "../../ui/React/StdButton";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
 
-import {
-  yesNoBoxGetYesButton,
-  yesNoBoxGetNoButton,
-  yesNoBoxClose,
-  yesNoBoxCreate,
-} from "../../../utils/YesNoBox";
+import { yesNoBoxGetYesButton, yesNoBoxGetNoButton, yesNoBoxClose, yesNoBoxCreate } from "../../../utils/YesNoBox";
 
 type IProps = {
   engine: IEngine;
@@ -80,17 +75,14 @@ export class CompanyLocation extends React.Component<IProps, IState> {
 
     this.quit = this.quit.bind(this);
     this.applyForAgentJob = this.applyForAgentJob.bind(this);
-    this.applyForBusinessConsultantJob =
-      this.applyForBusinessConsultantJob.bind(this);
+    this.applyForBusinessConsultantJob = this.applyForBusinessConsultantJob.bind(this);
     this.applyForBusinessJob = this.applyForBusinessJob.bind(this);
     this.applyForEmployeeJob = this.applyForEmployeeJob.bind(this);
     this.applyForItJob = this.applyForItJob.bind(this);
-    this.applyForPartTimeEmployeeJob =
-      this.applyForPartTimeEmployeeJob.bind(this);
+    this.applyForPartTimeEmployeeJob = this.applyForPartTimeEmployeeJob.bind(this);
     this.applyForPartTimeWaiterJob = this.applyForPartTimeWaiterJob.bind(this);
     this.applyForSecurityJob = this.applyForSecurityJob.bind(this);
-    this.applyForSoftwareConsultantJob =
-      this.applyForSoftwareConsultantJob.bind(this);
+    this.applyForSoftwareConsultantJob = this.applyForSoftwareConsultantJob.bind(this);
     this.applyForSoftwareJob = this.applyForSoftwareJob.bind(this);
     this.applyForWaiterJob = this.applyForWaiterJob.bind(this);
     this.startInfiltration = this.startInfiltration.bind(this);
@@ -98,16 +90,12 @@ export class CompanyLocation extends React.Component<IProps, IState> {
 
     this.location = Locations[props.locName];
     if (this.location == null) {
-      throw new Error(
-        `CompanyLocation component constructed with invalid location: ${props.locName}`,
-      );
+      throw new Error(`CompanyLocation component constructed with invalid location: ${props.locName}`);
     }
 
     this.company = Companies[props.locName];
     if (this.company == null) {
-      throw new Error(
-        `CompanyLocation component constructed with invalid company: ${props.locName}`,
-      );
+      throw new Error(`CompanyLocation component constructed with invalid company: ${props.locName}`);
     }
 
     this.state = {
@@ -226,9 +214,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
     }
     const loc = this.location;
     if (!loc.infiltrationData) {
-      console.error(
-        `trying to start infiltration at ${this.props.locName} but the infiltrationData is null`,
-      );
+      console.error(`trying to start infiltration at ${this.props.locName} but the infiltrationData is null`);
       return;
     }
 
@@ -251,11 +237,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
 
     const pos = this.companyPosition;
     if (pos instanceof CompanyPosition) {
-      if (
-        pos.isPartTimeJob() ||
-        pos.isSoftwareConsultantJob() ||
-        pos.isBusinessConsultantJob()
-      ) {
+      if (pos.isPartTimeJob() || pos.isSoftwareConsultantJob() || pos.isBusinessConsultantJob()) {
         this.props.p.startWorkPartTime(this.props.locName);
       } else {
         this.props.p.startWork(this.props.locName);
@@ -284,9 +266,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
       yesNoBoxClose();
     });
 
-    yesNoBoxCreate(
-      <>Would you like to quit your job at {this.company.name}?</>,
-    );
+    yesNoBoxCreate(<>Would you like to quit your job at {this.company.name}?</>);
   }
 
   render(): React.ReactNode {
@@ -304,8 +284,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
             <p className={"tooltip"}>
               Company reputation: {Reputation(this.company.playerReputation)}
               <span className={"tooltiptext"}>
-                You will earn {Favor(favorGain[0])} company favor upon resetting
-                after installing Augmentations
+                You will earn {Favor(favorGain[0])} company favor upon resetting after installing Augmentations
               </span>
             </p>
             <br />
@@ -315,11 +294,9 @@ export class CompanyLocation extends React.Component<IProps, IState> {
             <p className={"tooltip"}>
               Company Favor: {Favor(this.company.favor)}
               <span className={"tooltiptext"}>
-                Company favor increases the rate at which you earn reputation
-                for this company by 1% per favor. Company favor is gained
-                whenever you reset after installing Augmentations. The amount of
-                favor you gain depends on how much reputation you have with the
-                comapny.
+                Company favor increases the rate at which you earn reputation for this company by 1% per favor. Company
+                favor is gained whenever you reset after installing Augmentations. The amount of favor you gain depends
+                on how much reputation you have with the comapny.
               </span>
             </p>
             <br />
@@ -344,9 +321,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.company.hasBusinessConsultantPositions() && (
           <ApplyToJobButton
             company={this.company}
-            entryPosType={
-              CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]]
-            }
+            entryPosType={CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]]}
             onClick={this.applyForBusinessConsultantJob}
             p={this.props.p}
             style={this.btnStyle}
@@ -356,9 +331,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.company.hasBusinessPositions() && (
           <ApplyToJobButton
             company={this.company}
-            entryPosType={
-              CompanyPositions[posNames.BusinessCompanyPositions[0]]
-            }
+            entryPosType={CompanyPositions[posNames.BusinessCompanyPositions[0]]}
             onClick={this.applyForBusinessJob}
             p={this.props.p}
             style={this.btnStyle}
@@ -378,9 +351,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.company.hasEmployeePositions() && (
           <ApplyToJobButton
             company={this.company}
-            entryPosType={
-              CompanyPositions[posNames.PartTimeCompanyPositions[1]]
-            }
+            entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[1]]}
             onClick={this.applyForPartTimeEmployeeJob}
             p={this.props.p}
             style={this.btnStyle}
@@ -400,9 +371,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.company.hasSecurityPositions() && (
           <ApplyToJobButton
             company={this.company}
-            entryPosType={
-              CompanyPositions[posNames.SecurityCompanyPositions[2]]
-            }
+            entryPosType={CompanyPositions[posNames.SecurityCompanyPositions[2]]}
             onClick={this.applyForSecurityJob}
             p={this.props.p}
             style={this.btnStyle}
@@ -412,9 +381,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.company.hasSoftwareConsultantPositions() && (
           <ApplyToJobButton
             company={this.company}
-            entryPosType={
-              CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]]
-            }
+            entryPosType={CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]]}
             onClick={this.applyForSoftwareConsultantJob}
             p={this.props.p}
             style={this.btnStyle}
@@ -424,9 +391,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.company.hasSoftwarePositions() && (
           <ApplyToJobButton
             company={this.company}
-            entryPosType={
-              CompanyPositions[posNames.SoftwareCompanyPositions[0]]
-            }
+            entryPosType={CompanyPositions[posNames.SoftwareCompanyPositions[0]]}
             onClick={this.applyForSoftwareJob}
             p={this.props.p}
             style={this.btnStyle}
@@ -446,9 +411,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.company.hasWaiterPositions() && (
           <ApplyToJobButton
             company={this.company}
-            entryPosType={
-              CompanyPositions[posNames.PartTimeCompanyPositions[0]]
-            }
+            entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[0]]}
             onClick={this.applyForPartTimeWaiterJob}
             p={this.props.p}
             style={this.btnStyle}
@@ -456,11 +419,7 @@ export class CompanyLocation extends React.Component<IProps, IState> {
           />
         )}
         {this.location.infiltrationData != null && (
-          <StdButton
-            onClick={this.startInfiltration}
-            style={this.btnStyle}
-            text={"Infiltrate Company"}
-          />
+          <StdButton onClick={this.startInfiltration} style={this.btnStyle} text={"Infiltrate Company"} />
         )}
       </div>
     );

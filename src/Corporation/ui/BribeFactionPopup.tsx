@@ -33,10 +33,7 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
   }
 
   function repGain(money: number, stock: number): number {
-    return (
-      (money + stock * props.corp.sharePrice) /
-      CorporationConstants.BribeToRepRatio
-    );
+    return (money + stock * props.corp.sharePrice) / CorporationConstants.BribeToRepRatio;
   }
 
   function getRepText(money: number, stock: number): string {
@@ -69,11 +66,7 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
     } else {
       const rep = repGain(money, stock);
       dialogBoxCreate(
-        "You gained " +
-          numeralWrapper.formatReputation(rep) +
-          " reputation with " +
-          fac.name +
-          " by bribing them.",
+        "You gained " + numeralWrapper.formatReputation(rep) + " reputation with " + fac.name + " by bribing them.",
       );
       fac.playerReputation += rep;
       props.corp.funds = props.corp.funds.minus(money);
@@ -84,16 +77,8 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
 
   return (
     <>
-      <p>
-        You can use Corporation funds or stock shares to bribe Faction Leaders
-        in exchange for faction reputation.
-      </p>
-      <select
-        className="dropdown"
-        style={{ margin: "3px" }}
-        defaultValue={selectedFaction}
-        onChange={changeFaction}
-      >
+      <p>You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation.</p>
+      <select className="dropdown" style={{ margin: "3px" }} defaultValue={selectedFaction} onChange={changeFaction}>
         {props.player.factions.map((name: string) => {
           const info = Factions[name].getInfo();
           if (!info.offersWork()) return;
@@ -111,12 +96,7 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
         placeholder="Corporation funds"
         style={{ margin: "5px" }}
       />
-      <input
-        className="text-input"
-        onChange={onStockChange}
-        placeholder="Stock Shares"
-        style={{ margin: "5px" }}
-      />
+      <input className="text-input" onChange={onStockChange} placeholder="Stock Shares" style={{ margin: "5px" }} />
       <button
         className="a-link-button"
         onClick={() => bribe(money ? money : 0, stock ? stock : 0)}

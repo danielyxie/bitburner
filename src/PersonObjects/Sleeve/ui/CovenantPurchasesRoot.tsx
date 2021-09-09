@@ -7,11 +7,7 @@ import React, { useState } from "react";
 import { CovenantSleeveUpgrades } from "./CovenantSleeveUpgrades";
 
 import { Sleeve } from "../Sleeve";
-import {
-  BaseCostPerSleeve,
-  MaxSleevesFromCovenant,
-  PopupId,
-} from "../SleeveCovenantPurchases";
+import { BaseCostPerSleeve, MaxSleevesFromCovenant, PopupId } from "../SleeveCovenantPurchases";
 import { IPlayer } from "../../IPlayer";
 
 import { PopupCloseButton } from "../../../ui/React/PopupCloseButton";
@@ -60,10 +56,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
       props.p.sleeves.push(new Sleeve(props.p));
       rerender();
     } else {
-      dialogBoxCreate(
-        `You cannot afford to purchase a Duplicate Sleeve`,
-        false,
-      );
+      dialogBoxCreate(`You cannot afford to purchase a Duplicate Sleeve`, false);
     }
   }
 
@@ -71,39 +64,27 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
   const upgradePanels = [];
   for (let i = 0; i < props.p.sleeves.length; ++i) {
     const sleeve = props.p.sleeves[i];
-    upgradePanels.push(
-      <CovenantSleeveUpgrades
-        {...props}
-        sleeve={sleeve}
-        index={i}
-        rerender={rerender}
-        key={i}
-      />,
-    );
+    upgradePanels.push(<CovenantSleeveUpgrades {...props} sleeve={sleeve} index={i} rerender={rerender} key={i} />);
   }
 
   return (
     <div>
       <PopupCloseButton popup={PopupId} text={"Close"} />
       <p>
-        Would you like to purchase an additional Duplicate Sleeve from The
-        Covenant for <Money money={purchaseCost()} player={props.p} />?
+        Would you like to purchase an additional Duplicate Sleeve from The Covenant for{" "}
+        <Money money={purchaseCost()} player={props.p} />?
       </p>
       <br />
       <p>
-        These Duplicate Sleeves are permanent (they persist through BitNodes).
-        You can purchase a total of {MaxSleevesFromCovenant} from The Covenant.
+        These Duplicate Sleeves are permanent (they persist through BitNodes). You can purchase a total of{" "}
+        {MaxSleevesFromCovenant} from The Covenant.
       </p>
-      <StdButton
-        disabled={purchaseDisabled}
-        onClick={purchaseOnClick}
-        text={"Purchase"}
-      />
+      <StdButton disabled={purchaseDisabled} onClick={purchaseOnClick} text={"Purchase"} />
       <br />
       <br />
       <p>
-        Here, you can also purchase upgrades for your Duplicate Sleeves. These
-        upgrades are also permanent, meaning they persist across BitNodes.
+        Here, you can also purchase upgrades for your Duplicate Sleeves. These upgrades are also permanent, meaning they
+        persist across BitNodes.
       </p>
       {upgradePanels}
     </div>

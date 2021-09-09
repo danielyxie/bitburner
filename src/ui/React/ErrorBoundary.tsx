@@ -59,9 +59,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
 
   componentWillUnmount(): void {
     if (this.hasEventEmitter()) {
-      (this.props.eventEmitterForReset as EventEmitter).removeSubscriber(
-        this.props.id as string,
-      );
+      (this.props.eventEmitterForReset as EventEmitter).removeSubscriber(this.props.id as string);
     }
   }
 
@@ -78,9 +76,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
     if (this.state.hasError) {
       return (
         <div style={styleMarkup}>
-          <p>
-            {`Error rendering UI. This is (probably) a bug. Please report to game developer.`}
-          </p>
+          <p>{`Error rendering UI. This is (probably) a bug. Please report to game developer.`}</p>
           <p>{`In the meantime, try refreshing the game WITHOUT saving.`}</p>
           <p>{`Error info: ${this.state.errorInfo}`}</p>
         </div>

@@ -11,10 +11,7 @@ import { generateNextPid } from "./Netscript/Pid";
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Interpreter } from "./JSInterpreter";
-import {
-  isScriptErrorMessage,
-  makeRuntimeRejectMsg,
-} from "./NetscriptEvaluator";
+import { isScriptErrorMessage, makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
 import { NetscriptPort } from "./NetscriptPort";
@@ -85,11 +82,7 @@ function startNetscript2Script(workerScript) {
         "Did you forget to await hack(), grow(), or some other " +
         "promise-returning function? (Currently running: %s tried to run: %s)";
       if (runningFn) {
-        workerScript.errorMessage = makeRuntimeRejectMsg(
-          workerScript,
-          sprintf(msg, runningFn, propName),
-          null,
-        );
+        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName), null);
         throw workerScript;
       }
       runningFn = propName;
@@ -154,9 +147,7 @@ function startNetscript1Script(workerScript) {
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
   } catch (e) {
-    dialogBoxCreate(
-      "Error processing Imports in " + workerScript.name + ":<br>" + e,
-    );
+    dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + e);
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
@@ -184,10 +175,7 @@ function startNetscript1Script(workerScript) {
             //All of the Object/array elements are in JSInterpreter format, so
             //we have to convert them back to native format to pass them to these fns
             for (let i = 0; i < arguments.length - 1; ++i) {
-              if (
-                typeof arguments[i] === "object" ||
-                arguments[i].constructor === Array
-              ) {
+              if (typeof arguments[i] === "object" || arguments[i].constructor === Array) {
                 fnArgs.push(int.pseudoToNative(arguments[i]));
               } else {
                 fnArgs.push(arguments[i]);
@@ -220,10 +208,7 @@ function startNetscript1Script(workerScript) {
             //All of the Object/array elements are in JSInterpreter format, so
             //we have to convert them back to native format to pass them to these fns
             for (let i = 0; i < arguments.length; ++i) {
-              if (
-                typeof arguments[i] === "object" ||
-                arguments[i].constructor === Array
-              ) {
+              if (typeof arguments[i] === "object" || arguments[i].constructor === Array) {
                 fnArgs.push(int.pseudoToNative(arguments[i]));
               } else {
                 fnArgs.push(arguments[i]);
@@ -260,11 +245,7 @@ function startNetscript1Script(workerScript) {
 
   var interpreter;
   try {
-    interpreter = new Interpreter(
-      codeWithImports,
-      interpreterInitialization,
-      codeLineOffset,
-    );
+    interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
   } catch (e) {
     dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + e);
     workerScript.env.stopFlag = true;
@@ -364,10 +345,7 @@ function processNetscript1Imports(code, workerScript) {
         sourceType: "module",
       });
 
-      if (
-        node.specifiers.length === 1 &&
-        node.specifiers[0].type === "ImportNamespaceSpecifier"
-      ) {
+      if (node.specifiers.length === 1 && node.specifiers[0].type === "ImportNamespaceSpecifier") {
         // import * as namespace from script
         let namespace = node.specifiers[0].local.name;
         let fnNames = []; //Names only
@@ -380,8 +358,7 @@ function processNetscript1Imports(code, workerScript) {
         });
 
         //Now we have to generate the code that would create the namespace
-        generatedCode +=
-          "var " + namespace + ";\n" + "(function (namespace) {\n";
+        generatedCode += "var " + namespace + ";\n" + "(function (namespace) {\n";
 
         //Add the function declarations
         fnDeclarations.forEach((fn) => {
@@ -396,8 +373,7 @@ function processNetscript1Imports(code, workerScript) {
         });
 
         //Finish
-        generatedCode +=
-          "})(" + namespace + " || " + "(" + namespace + " = {}));\n";
+        generatedCode += "})(" + namespace + " || " + "(" + namespace + " = {}));\n";
       } else {
         //import {...} from script
 
@@ -496,16 +472,12 @@ export function createAndAddWorkerScript(runningScriptObj, server, parent) {
   } else {
     runningScriptObj.threads = 1;
   }
-  const ramUsage = roundToTwo(
-    getRamUsageFromRunningScript(runningScriptObj) * threads,
-  );
+  const ramUsage = roundToTwo(getRamUsageFromRunningScript(runningScriptObj) * threads);
   const ramAvailable = server.maxRam - server.ramUsed;
   if (ramUsage > ramAvailable) {
     dialogBoxCreate(
       `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
-        `${arrayToString(
-          runningScriptObj.args,
-        )}. This likely occurred because you re-loaded ` +
+        `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
         `the game and the script's RAM usage increased (either because of an update to the game or ` +
         `your changes to the script.)`,
     );
@@ -562,21 +534,14 @@ export function createAndAddWorkerScript(runningScriptObj, server, parent) {
     w.log("", "Script finished running");
   }).catch(function (w) {
     if (w instanceof Error) {
-      dialogBoxCreate(
-        "Script runtime unknown error. This is a bug please contact game developer",
-      );
-      console.error(
-        "Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " +
-          w.toString(),
-      );
+      dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+      console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
       return;
     } else if (w instanceof WorkerScript) {
       if (isScriptErrorMessage(w.errorMessage)) {
         const errorTextArray = w.errorMessage.split("|");
         if (errorTextArray.length != 4) {
-          console.error(
-            "ERROR: Something wrong with Error text in evaluator...",
-          );
+          console.error("ERROR: Something wrong with Error text in evaluator...");
           console.error("Error text: " + errorText);
           return;
         }
@@ -600,18 +565,14 @@ export function createAndAddWorkerScript(runningScriptObj, server, parent) {
       w.running = false;
       w.env.stopFlag = true;
     } else if (isScriptErrorMessage(w)) {
-      dialogBoxCreate(
-        "Script runtime unknown error. This is a bug please contact game developer",
-      );
+      dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
       console.error(
         "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
           w.toString(),
       );
       return;
     } else {
-      dialogBoxCreate(
-        "An unknown script died for an unknown reason. This is a bug please contact game dev",
-      );
+      dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
       console.error(w);
     }
 
@@ -636,8 +597,7 @@ export function updateOnlineScriptTimes(numCycles = 1) {
  * into worker scripts so that they will start running
  */
 export function loadAllRunningScripts() {
-  let skipScriptLoad =
-    window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
+  let skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
     console.info("Skipping the load of any scripts during startup");
   }
@@ -671,24 +631,14 @@ export function loadAllRunningScripts() {
 /**
  * Run a script from inside another script (run(), exec(), spawn(), etc.)
  */
-export function runScriptFromScript(
-  caller,
-  server,
-  scriptname,
-  args,
-  workerScript,
-  threads = 1,
-) {
+export function runScriptFromScript(caller, server, scriptname, args, workerScript, threads = 1) {
   // Sanitize arguments
   if (!(workerScript instanceof WorkerScript)) {
     return 0;
   }
 
   if (typeof scriptname !== "string" || !Array.isArray(args)) {
-    workerScript.log(
-      caller,
-      `Invalid arguments: scriptname='${scriptname} args='${ags}'`,
-    );
+    workerScript.log(caller, `Invalid arguments: scriptname='${scriptname} args='${ags}'`);
     console.error(`runScriptFromScript() failed due to invalid arguments`);
     return 0;
   }
@@ -696,20 +646,14 @@ export function runScriptFromScript(
   // Check if the script is already running
   let runningScriptObj = server.getRunningScript(scriptname, args);
   if (runningScriptObj != null) {
-    workerScript.log(
-      caller,
-      `'${scriptname}' is already running on '${server.hostname}'`,
-    );
+    workerScript.log(caller, `'${scriptname}' is already running on '${server.hostname}'`);
     return 0;
   }
 
   // 'null/undefined' arguments are not allowed
   for (let i = 0; i < args.length; ++i) {
     if (args[i] == null) {
-      workerScript.log(
-        caller,
-        "Cannot execute a script with null/undefined as an argument",
-      );
+      workerScript.log(caller, "Cannot execute a script with null/undefined as an argument");
       return 0;
     }
   }
@@ -728,10 +672,7 @@ export function runScriptFromScript(
       const ramAvailable = server.maxRam - server.ramUsed;
 
       if (server.hasAdminRights == false) {
-        workerScript.log(
-          caller,
-          `You do not have root access on '${server.hostname}'`,
-        );
+        workerScript.log(caller, `You do not have root access on '${server.hostname}'`);
         return 0;
       } else if (ramUsage > ramAvailable) {
         workerScript.log(
@@ -743,9 +684,7 @@ export function runScriptFromScript(
         // Able to run script
         workerScript.log(
           caller,
-          `'${scriptname}' on '${
-            server.hostname
-          }' with ${threads} threads and args: ${arrayToString(args)}.`,
+          `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
         );
         let runningScriptObj = new RunningScript(script, args);
         runningScriptObj.threads = threads;
@@ -755,9 +694,6 @@ export function runScriptFromScript(
     }
   }
 
-  workerScript.log(
-    caller,
-    `Could not find script '${scriptname}' on '${server.hostname}'`,
-  );
+  workerScript.log(caller, `Could not find script '${scriptname}' on '${server.hostname}'`);
   return 0;
 }

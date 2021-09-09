@@ -12,18 +12,13 @@ interface IProps {
 export function SkillElem(props: IProps): React.ReactElement {
   const skillName = props.skill.name;
   let currentLevel = 0;
-  if (
-    props.bladeburner.skills[skillName] &&
-    !isNaN(props.bladeburner.skills[skillName])
-  ) {
+  if (props.bladeburner.skills[skillName] && !isNaN(props.bladeburner.skills[skillName])) {
     currentLevel = props.bladeburner.skills[skillName];
   }
   const pointCost = props.skill.calculateCost(currentLevel);
 
   const canLevel = props.bladeburner.skillPoints >= pointCost;
-  const maxLvl = props.skill.maxLvl
-    ? currentLevel >= props.skill.maxLvl
-    : false;
+  const maxLvl = props.skill.maxLvl ? currentLevel >= props.skill.maxLvl : false;
 
   function onClick(): void {
     if (props.bladeburner.skillPoints < pointCost) return;
@@ -40,9 +35,7 @@ export function SkillElem(props: IProps): React.ReactElement {
       <a
         onClick={onClick}
         style={{ display: "inline-block", margin: "3px", padding: "3px" }}
-        className={
-          canLevel && !maxLvl ? "a-link-button" : "a-link-button-inactive"
-        }
+        className={canLevel && !maxLvl ? "a-link-button" : "a-link-button-inactive"}
       >
         Level
       </a>
@@ -52,14 +45,9 @@ export function SkillElem(props: IProps): React.ReactElement {
       {maxLvl ? (
         <p style={{ color: "red", display: "block" }}>MAX LEVEL</p>
       ) : (
-        <p style={{ display: "block" }}>
-          Skill Points required: {formatNumber(pointCost, 0)}
-        </p>
+        <p style={{ display: "block" }}>Skill Points required: {formatNumber(pointCost, 0)}</p>
       )}
-      <p
-        style={{ display: "inline-block" }}
-        dangerouslySetInnerHTML={{ __html: props.skill.desc }}
-      />
+      <p style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: props.skill.desc }} />
     </>
   );
 }

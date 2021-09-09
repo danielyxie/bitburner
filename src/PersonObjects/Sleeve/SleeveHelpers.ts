@@ -8,10 +8,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 
-export function findSleevePurchasableAugs(
-  sleeve: Sleeve,
-  p: IPlayer,
-): Augmentation[] {
+export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
   // You can only purchase Augmentations that are actually available from
   // your factions. I.e. you must be in a faction that has the Augmentation
   // and you must also have enough rep in that faction in order to purchase it.

@@ -67,12 +67,10 @@ export function AscensionPopup(props: IProps): React.ReactElement {
         their non-Augmentation upgrades and their stats will reset back to 1.
         <br />
         <br />
-        Furthermore, your gang will lose{" "}
-        {numeralWrapper.formatRespect(props.member.earnedRespect)} respect
+        Furthermore, your gang will lose {numeralWrapper.formatRespect(props.member.earnedRespect)} respect
         <br />
         <br />
-        In return, they will gain the following permanent boost to stat
-        multipliers:
+        In return, they will gain the following permanent boost to stat multipliers:
         <br />
         Hacking: x{numeralWrapper.format(ascendBenefits.hack, "0.000")}
         <br />

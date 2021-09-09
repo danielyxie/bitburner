@@ -76,10 +76,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
       // Additional modules can either be imported from the web (in which case we use
       // a dynamic import), or from other in-game scripts
       let code;
-      if (
-        nextModule.startsWith("https://") ||
-        nextModule.startsWith("http://")
-      ) {
+      if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) {
         try {
           // eslint-disable-next-line no-await-in-loop
           const module = await eval("import(nextModule)");
@@ -90,16 +87,12 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
             }
           }
         } catch (e) {
-          console.error(
-            `Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`,
-          );
+          console.error(`Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`);
           return RamCalculationErrorCode.URLImportError;
         }
       } else {
         if (!Array.isArray(otherScripts)) {
-          console.warn(
-            `parseOnlyRamCalculate() not called with array of scripts`,
-          );
+          console.warn(`parseOnlyRamCalculate() not called with array of scripts`);
           return RamCalculationErrorCode.ImportError;
         }
 
@@ -125,8 +118,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
     // are those that start with __SPECIAL_INITIAL_MODULE__.
     let ram = RamCostConstants.ScriptBaseRamCost;
-    const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule),
-    );
+    const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
     const resolvedRefs = new Set();
     while (unresolvedRefs.length > 0) {
       const ref = unresolvedRefs.shift();
@@ -147,8 +139,7 @@ async function parseOnlyRamCalculate(otherScripts, code, workerScript) {
       if (ref.endsWith(".*")) {
         // A prefix reference. We need to find all matching identifiers.
         const prefix = ref.slice(0, ref.length - 2);
-        for (let ident of Object.keys(dependencyMap).filter((k) => k.startsWith(prefix),
-        )) {
+        for (let ident of Object.keys(dependencyMap).filter((k) => k.startsWith(prefix))) {
           for (let dep of dependencyMap[ident] || []) {
             if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
           }
@@ -252,9 +243,7 @@ function parseOnlyCalculateDeps(code, currentModule) {
   }
 
   //A list of identifiers that resolve to "native Javascript code"
-  const objectPrototypeProperties = Object.getOwnPropertyNames(
-    Object.prototype,
-  );
+  const objectPrototypeProperties = Object.getOwnPropertyNames(Object.prototype);
 
   // If we discover a dependency identifier, state.key is the dependent identifier.
   // walkDeeper is for doing recursive walks of expressions in composites that we handle.
@@ -313,8 +302,7 @@ function parseOnlyCalculateDeps(code, currentModule) {
             const spec = node.specifiers[i];
             if (spec.imported !== undefined && spec.local !== undefined) {
               // We depend on specific things.
-              internalToExternal[spec.local.name] =
-                importModuleName + "." + spec.imported.name;
+              internalToExternal[spec.local.name] = importModuleName + "." + spec.imported.name;
             } else {
               // We depend on everything.
               dependencyMap[st.key].add(importModuleName + ".*");

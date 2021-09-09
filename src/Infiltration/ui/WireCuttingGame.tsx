@@ -68,9 +68,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     setCutWires((old) => {
       const next = [...old];
       next[wireNum - 1] = true;
-      if (
-        !questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1))
-      ) {
+      if (!questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1))) {
         props.onFailure();
       }
 
@@ -95,9 +93,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1 className={"noselect"}>
-          Cut the wires with the following properties! (keyboard 1 to 9)
-        </h1>
+        <h1 className={"noselect"}>Cut the wires with the following properties! (keyboard 1 to 9)</h1>
         {questions.map((question, i) => (
           <h3 key={i}>{question.toString()}</h3>
         ))}
@@ -111,14 +107,9 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
             <pre>
               {wires.map((wire, j) => {
                 if ((i === 3 || i === 4) && cutWires[j])
-                  return (
-                    <span key={j}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  );
+                  return <span key={j}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>;
                 return (
-                  <span
-                    key={j}
-                    style={{ color: wire.colors[i % wire.colors.length] }}
-                  >
+                  <span key={j} style={{ color: wire.colors[i % wire.colors.length] }}>
                     |{wire.tpe}|&nbsp;&nbsp;&nbsp;
                   </span>
                 );

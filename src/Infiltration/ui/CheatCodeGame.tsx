@@ -59,8 +59,7 @@ function generateCode(difficulty: Difficulty): string {
   let code = "";
   for (let i = 0; i < random(difficulty.min, difficulty.max); i++) {
     let arrow = arrows[Math.floor(4 * Math.random())];
-    while (arrow === code[code.length - 1])
-      arrow = arrows[Math.floor(4 * Math.random())];
+    while (arrow === code[code.length - 1]) arrow = arrows[Math.floor(4 * Math.random())];
     code += arrow;
   }
 

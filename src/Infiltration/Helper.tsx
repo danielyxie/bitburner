@@ -19,16 +19,8 @@ let container: HTMLElement = document.createElement("div");
 })();
 
 function calcDifficulty(player: IPlayer, startingDifficulty: number): number {
-  const totalStats =
-    player.strength +
-    player.defense +
-    player.dexterity +
-    player.agility +
-    player.charisma;
-  const difficulty =
-    startingDifficulty -
-    Math.pow(totalStats, 0.9) / 250 -
-    player.intelligence / 1600;
+  const totalStats = player.strength + player.defense + player.dexterity + player.agility + player.charisma;
+  const difficulty = startingDifficulty - Math.pow(totalStats, 0.9) / 250 - player.intelligence / 1600;
   if (difficulty < 0) return 0;
   if (difficulty > 3) return 3;
   return difficulty;

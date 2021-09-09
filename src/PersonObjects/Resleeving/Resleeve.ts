@@ -7,11 +7,7 @@ import { Person } from "../Person";
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
 export class Resleeve extends Person {
   constructor() {
@@ -37,22 +33,15 @@ export class Resleeve extends Person {
     // Get total base Augmentation cost for this re-sleeve
     let totalAugmentationCost = 0;
     for (let i = 0; i < this.augmentations.length; ++i) {
-      const aug: Augmentation | null =
-        Augmentations[this.augmentations[i].name];
+      const aug: Augmentation | null = Augmentations[this.augmentations[i].name];
       if (aug == null) {
-        console.error(
-          `Could not find Augmentation ${this.augmentations[i].name}`,
-        );
+        console.error(`Could not find Augmentation ${this.augmentations[i].name}`);
         continue;
       }
       totalAugmentationCost += aug.startingCost;
     }
 
-    return (
-      totalExp * CostPerExp +
-      totalAugmentationCost *
-        Math.pow(NumAugsExponent, this.augmentations.length)
-    );
+    return totalExp * CostPerExp + totalAugmentationCost * Math.pow(NumAugsExponent, this.augmentations.length);
   }
 
   /**

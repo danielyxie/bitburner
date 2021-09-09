@@ -13,11 +13,7 @@ export function SkillList(props: IProps): React.ReactElement {
     <>
       {Object.keys(Skills).map((skill: string) => (
         <li key={skill} className="bladeburner-action">
-          <SkillElem
-            bladeburner={props.bladeburner}
-            skill={Skills[skill]}
-            onUpgrade={props.onUpgrade}
-          />
+          <SkillElem bladeburner={props.bladeburner} skill={Skills[skill]} onUpgrade={props.onUpgrade} />
         </li>
       ))}
     </>

@@ -31,9 +31,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
     if (isNaN(shares) || shares <= 0) {
       dialogBoxCreate("ERROR: Invalid value for number of shares");
     } else if (shares > props.corp.issuedShares) {
-      dialogBoxCreate(
-        "ERROR: There are not this many oustanding shares to buy back",
-      );
+      dialogBoxCreate("ERROR: There are not this many oustanding shares to buy back");
     } else if (shares * buybackPrice > props.player.money) {
       dialogBoxCreate(
         "ERROR: You do not have enough money to purchase this many shares (you need " +
@@ -43,9 +41,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
     } else {
       props.corp.numShares += shares;
       if (isNaN(props.corp.issuedShares)) {
-        console.warn(
-          "Corporation issuedShares is NaN: " + props.corp.issuedShares,
-        );
+        console.warn("Corporation issuedShares is NaN: " + props.corp.issuedShares);
         console.warn("Converting to number now");
         const res = props.corp.issuedShares;
         if (isNaN(res)) {
@@ -69,15 +65,13 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
       return (
         <>
           There are not this many shares available to buy back. There are only{" "}
-          {numeralWrapper.formatBigNumber(props.corp.issuedShares)} outstanding
-          shares.
+          {numeralWrapper.formatBigNumber(props.corp.issuedShares)} outstanding shares.
         </>
       );
     } else {
       return (
         <>
-          Purchase {shares} shares for a total of{" "}
-          {numeralWrapper.formatMoney(shares * buybackPrice)}
+          Purchase {shares} shares for a total of {numeralWrapper.formatMoney(shares * buybackPrice)}
         </>
       );
     }
@@ -90,19 +84,15 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the number of outstanding shares you would like to buy back. These
-        shares must be bought at a 10% premium. However, repurchasing shares
-        from the market tends to lead to an increase in stock price.
+        Enter the number of outstanding shares you would like to buy back. These shares must be bought at a 10% premium.
+        However, repurchasing shares from the market tends to lead to an increase in stock price.
         <br />
         <br />
-        To purchase these shares, you must use your own money (NOT your
-        Corporation's funds).
+        To purchase these shares, you must use your own money (NOT your Corporation's funds).
         <br />
         <br />
-        The current buyback price of your company's stock is{" "}
-        {numeralWrapper.formatMoney(buybackPrice)}. Your company currently has{" "}
-        {numeralWrapper.formatBigNumber(props.corp.issuedShares)} outstanding
-        stock shares.
+        The current buyback price of your company's stock is {numeralWrapper.formatMoney(buybackPrice)}. Your company
+        currently has {numeralWrapper.formatBigNumber(props.corp.issuedShares)} outstanding stock shares.
       </p>
       <CostIndicator />
       <br />
@@ -115,11 +105,7 @@ export function BuybackSharesPopup(props: IProps): React.ReactElement {
         onChange={changeShares}
         onKeyDown={onKeyDown}
       />
-      <button
-        onClick={buy}
-        className="a-link-button"
-        style={{ display: "inline-block" }}
-      >
+      <button onClick={buy} className="a-link-button" style={{ display: "inline-block" }}>
         Buy shares
       </button>
     </>

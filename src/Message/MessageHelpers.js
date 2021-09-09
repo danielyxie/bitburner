@@ -63,13 +63,7 @@ function checkForMessagesToSend() {
     redpillOwned = true;
   }
 
-  if (
-    redpill &&
-    redpillOwned &&
-    Player.sourceFiles.length === 0 &&
-    !redPillFlag &&
-    !inMission
-  ) {
+  if (redpill && redpillOwned && Player.sourceFiles.length === 0 && !redPillFlag && !inMission) {
     sendMessage(redpill, true);
   } else if (redpill && redpillOwned) {
     //If player has already destroyed a BitNode, message is not forced
@@ -85,11 +79,7 @@ function checkForMessagesToSend() {
     }
   } else if (jumper1 && !jumper1.recvd && Player.hacking_skill >= 40) {
     sendMessage(jumper1);
-  } else if (
-    cybersecTest &&
-    !cybersecTest.recvd &&
-    Player.hacking_skill >= 50
-  ) {
+  } else if (cybersecTest && !cybersecTest.recvd && Player.hacking_skill >= 50) {
     sendMessage(cybersecTest);
   } else if (jumper2 && !jumper2.recvd && Player.hacking_skill >= 175) {
     sendMessage(jumper2);
@@ -99,11 +89,7 @@ function checkForMessagesToSend() {
     sendMessage(jumper3);
   } else if (jumper4 && !jumper4.recvd && Player.hacking_skill >= 490) {
     sendMessage(jumper4);
-  } else if (
-    bitrunnersTest &&
-    !bitrunnersTest.recvd &&
-    Player.hacking_skill >= 500
-  ) {
+  } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
     sendMessage(bitrunnersTest);
   }
 }
@@ -228,12 +214,4 @@ function initMessages() {
   );
 }
 
-export {
-  Messages,
-  checkForMessagesToSend,
-  sendMessage,
-  showMessage,
-  loadMessages,
-  initMessages,
-  Message,
-};
+export { Messages, checkForMessagesToSend, sendMessage, showMessage, loadMessages, initMessages, Message };

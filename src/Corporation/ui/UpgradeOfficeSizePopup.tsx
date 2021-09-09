@@ -15,13 +15,9 @@ interface IProps {
 }
 
 export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
-  const initialPriceMult = Math.round(
-    props.office.size / CorporationConstants.OfficeInitialSize,
-  );
+  const initialPriceMult = Math.round(props.office.size / CorporationConstants.OfficeInitialSize);
   const costMultiplier = 1.09;
-  const upgradeCost =
-    CorporationConstants.OfficeInitialCost *
-    Math.pow(costMultiplier, initialPriceMult);
+  const upgradeCost = CorporationConstants.OfficeInitialCost * Math.pow(costMultiplier, initialPriceMult);
 
   // Calculate cost to upgrade size by 15 employees
   let mult = 0;
@@ -31,9 +27,7 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
   const upgradeCost15 = CorporationConstants.OfficeInitialCost * mult;
 
   //Calculate max upgrade size and cost
-  const maxMult = props.corp.funds
-    .dividedBy(CorporationConstants.OfficeInitialCost)
-    .toNumber();
+  const maxMult = props.corp.funds.dividedBy(CorporationConstants.OfficeInitialCost).toNumber();
   let maxNum = 1;
   mult = Math.pow(costMultiplier, initialPriceMult);
   while (maxNum < 50) {
@@ -51,17 +45,11 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
 
   function upgradeSize(cost: number, size: number): void {
     if (props.corp.funds.lt(cost)) {
-      dialogBoxCreate(
-        "You don't have enough company funds to purchase this upgrade!",
-      );
+      dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
     } else {
       props.office.size += size;
       props.corp.funds = props.corp.funds.minus(cost);
-      dialogBoxCreate(
-        "Office space increased! It can now hold " +
-          props.office.size +
-          " employees",
-      );
+      dialogBoxCreate("Office space increased! It can now hold " + props.office.size + " employees");
       props.corp.rerender(props.player);
     }
     removePopup(props.popupId);
@@ -76,19 +64,12 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
   function UpgradeSizeButton(props: IUpgradeButton): React.ReactElement {
     return (
       <button
-        className={
-          "tooltip " +
-          (props.corp.funds.lt(props.cost)
-            ? "a-link-button-inactive"
-            : "a-link-button")
-        }
+        className={"tooltip " + (props.corp.funds.lt(props.cost) ? "a-link-button-inactive" : "a-link-button")}
         style={{ display: "inline-block", margin: "4px" }}
         onClick={() => upgradeSize(props.cost, props.size)}
       >
         by {props.size}
-        <span className="tooltiptext">
-          {numeralWrapper.formatMoney(props.cost)}
-        </span>
+        <span className="tooltiptext">{numeralWrapper.formatMoney(props.cost)}</span>
       </button>
     );
   }
@@ -97,16 +78,8 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
     <>
       <p>Increase the size of your office space to fit additional employees!</p>
       <p>Upgrade size: </p>
-      <UpgradeSizeButton
-        corp={props.corp}
-        cost={upgradeCost}
-        size={CorporationConstants.OfficeInitialSize}
-      />
-      <UpgradeSizeButton
-        corp={props.corp}
-        cost={upgradeCost15}
-        size={CorporationConstants.OfficeInitialSize * 5}
-      />
+      <UpgradeSizeButton corp={props.corp} cost={upgradeCost} size={CorporationConstants.OfficeInitialSize} />
+      <UpgradeSizeButton corp={props.corp} cost={upgradeCost15} size={CorporationConstants.OfficeInitialSize * 5} />
       <UpgradeSizeButton
         corp={props.corp}
         cost={upgradeCostMax}

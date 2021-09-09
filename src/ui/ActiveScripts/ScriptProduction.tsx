@@ -14,13 +14,11 @@ type IProps = {
 };
 
 export function ScriptProduction(props: IProps): React.ReactElement {
-  const prodRateSinceLastAug =
-    props.p.scriptProdSinceLastAug / (props.p.playtimeSinceLastAug / 1000);
+  const prodRateSinceLastAug = props.p.scriptProdSinceLastAug / (props.p.playtimeSinceLastAug / 1000);
 
   let onlineProduction = 0;
   for (const ws of props.workerScripts.values()) {
-    onlineProduction +=
-      ws.scriptRef.onlineMoneyMade / ws.scriptRef.onlineRunningTime;
+    onlineProduction += ws.scriptRef.onlineMoneyMade / ws.scriptRef.onlineRunningTime;
   }
 
   return (

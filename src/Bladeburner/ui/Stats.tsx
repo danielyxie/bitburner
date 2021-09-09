@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  formatNumber,
-  convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
+import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { BladeburnerConstants } from "../data/Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IEngine } from "../../IEngine";
@@ -12,10 +9,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { createPopup } from "../../ui/React/createPopup";
 import { Factions } from "../../Faction/Factions";
-import {
-  joinFaction,
-  displayFactionContent,
-} from "../../Faction/FactionHelpers";
+import { joinFaction, displayFactionContent } from "../../Faction/FactionHelpers";
 import { IBladeburner } from "../IBladeburner";
 
 import { TravelPopup } from "./TravelPopup";
@@ -83,13 +77,9 @@ export function Stats(props: IProps): React.ReactElement {
     } else {
       if (props.bladeburner.rank >= BladeburnerConstants.RankNeededForFaction) {
         joinFaction(faction);
-        dialogBoxCreate(
-          "Congratulations! You were accepted into the Bladeburners faction",
-        );
+        dialogBoxCreate("Congratulations! You were accepted into the Bladeburners faction");
       } else {
-        dialogBoxCreate(
-          "You need a rank of 25 to join the Bladeburners Faction!",
-        );
+        dialogBoxCreate("You need a rank of 25 to join the Bladeburners Faction!");
       }
     }
   }
@@ -98,46 +88,31 @@ export function Stats(props: IProps): React.ReactElement {
     <>
       <p className="tooltip" style={{ display: "inline-block" }}>
         Rank: {formatNumber(props.bladeburner.rank, 2)}
-        <span className="tooltiptext">
-          Your rank within the Bladeburner division.
-        </span>
+        <span className="tooltiptext">Your rank within the Bladeburner division.</span>
       </p>
       <br />
       <p>
-        Stamina: {formatNumber(props.bladeburner.stamina, 3)} /{" "}
-        {formatNumber(props.bladeburner.maxStamina, 3)}
+        Stamina: {formatNumber(props.bladeburner.stamina, 3)} / {formatNumber(props.bladeburner.maxStamina, 3)}
       </p>
       <div className="help-tip" onClick={openStaminaHelp}>
         ?
       </div>
       <br />
-      <p>
-        Stamina Penalty:{" "}
-        {formatNumber(
-          (1 - props.bladeburner.calculateStaminaPenalty()) * 100,
-          1,
-        )}
-        %
-      </p>
+      <p>Stamina Penalty: {formatNumber((1 - props.bladeburner.calculateStaminaPenalty()) * 100, 1)}%</p>
       <br />
       <p>Team Size: {formatNumber(props.bladeburner.teamSize, 0)}</p>
       <p>Team Members Lost: {formatNumber(props.bladeburner.teamLost, 0)}</p>
       <br />
       <p>Num Times Hospitalized: {props.bladeburner.numHosp}</p>
       <p>
-        Money Lost From Hospitalizations:{" "}
-        <Money money={props.bladeburner.moneyLost} />
+        Money Lost From Hospitalizations: <Money money={props.bladeburner.moneyLost} />
       </p>
       <br />
       <p>Current City: {props.bladeburner.city}</p>
       <p className="tooltip" style={{ display: "inline-block" }}>
-        Est. Synthoid Population:{" "}
-        {numeralWrapper.formatPopulation(
-          props.bladeburner.getCurrentCity().popEst,
-        )}
+        Est. Synthoid Population: {numeralWrapper.formatPopulation(props.bladeburner.getCurrentCity().popEst)}
         <span className="tooltiptext">
-          This is your Bladeburner division's estimate of how many Synthoids
-          exist in your current city.
+          This is your Bladeburner division's estimate of how many Synthoids exist in your current city.
         </span>
       </p>
       <div className="help-tip" onClick={openPopulationHelp}>
@@ -145,20 +120,17 @@ export function Stats(props: IProps): React.ReactElement {
       </div>
       <br />
       <p className="tooltip" style={{ display: "inline-block" }}>
-        Est. Synthoid Communities:{" "}
-        {formatNumber(props.bladeburner.getCurrentCity().comms, 0)}
+        Est. Synthoid Communities: {formatNumber(props.bladeburner.getCurrentCity().comms, 0)}
         <span className="tooltiptext">
-          This is your Bladeburner divison's estimate of how many Synthoid
-          communities exist in your current city.
+          This is your Bladeburner divison's estimate of how many Synthoid communities exist in your current city.
         </span>
       </p>
       <br />
       <p className="tooltip" style={{ display: "inline-block" }}>
         City Chaos: {formatNumber(props.bladeburner.getCurrentCity().chaos)}
         <span className="tooltiptext">
-          The city's chaos level due to tensions and conflicts between humans
-          and Synthoids. Having too high of a chaos level can make contracts and
-          operations harder.
+          The city's chaos level due to tensions and conflicts between humans and Synthoids. Having too high of a chaos
+          level can make contracts and operations harder.
         </span>
       </p>
       <br />
@@ -166,56 +138,29 @@ export function Stats(props: IProps): React.ReactElement {
       <p className="tooltip" style={{ display: "inline-block" }}>
         Bonus time:{" "}
         {convertTimeMsToTimeElapsedString(
-          (props.bladeburner.storedCycles /
-            BladeburnerConstants.CyclesPerSecond) *
-            1000,
+          (props.bladeburner.storedCycles / BladeburnerConstants.CyclesPerSecond) * 1000,
         )}
         <br />
         <span className="tooltiptext">
-          You gain bonus time while offline or when the game is inactive (e.g.
-          when the tab is throttled by browser). Bonus time makes the
-          Bladeburner mechanic progress faster, up to 5x the normal speed.
+          You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser).
+          Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed.
         </span>
       </p>
       <p>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</p>
       <br />
       {StatsTable([
-        [
-          "Aug. Success Chance mult: ",
-          formatNumber(props.player.bladeburner_success_chance_mult * 100, 1) +
-            "%",
-        ],
-        [
-          "Aug. Max Stamina mult: ",
-          formatNumber(props.player.bladeburner_max_stamina_mult * 100, 1) +
-            "%",
-        ],
-        [
-          "Aug. Stamina Gain mult: ",
-          formatNumber(props.player.bladeburner_stamina_gain_mult * 100, 1) +
-            "%",
-        ],
-        [
-          "Aug. Field Analysis mult: ",
-          formatNumber(props.player.bladeburner_analysis_mult * 100, 1) + "%",
-        ],
+        ["Aug. Success Chance mult: ", formatNumber(props.player.bladeburner_success_chance_mult * 100, 1) + "%"],
+        ["Aug. Max Stamina mult: ", formatNumber(props.player.bladeburner_max_stamina_mult * 100, 1) + "%"],
+        ["Aug. Stamina Gain mult: ", formatNumber(props.player.bladeburner_stamina_gain_mult * 100, 1) + "%"],
+        ["Aug. Field Analysis mult: ", formatNumber(props.player.bladeburner_analysis_mult * 100, 1) + "%"],
       ])}
       <br />
-      <a
-        onClick={openTravel}
-        className="a-link-button"
-        style={{ display: "inline-block" }}
-      >
+      <a onClick={openTravel} className="a-link-button" style={{ display: "inline-block" }}>
         Travel
       </a>
-      <a
-        onClick={openFaction}
-        className="a-link-button tooltip"
-        style={{ display: "inline-block" }}
-      >
+      <a onClick={openFaction} className="a-link-button tooltip" style={{ display: "inline-block" }}>
         <span className="tooltiptext">
-          Apply to the Bladeburner Faction, or go to the faction page if you are
-          already a member
+          Apply to the Bladeburner Faction, or go to the faction page if you are already a member
         </span>
         Faction
       </a>

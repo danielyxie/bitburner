@@ -55,9 +55,7 @@ export function ResearchPopup(props: IProps): React.ReactElement {
 
       // Get the DOM Element to add a click listener to it
       const sanitizedName = allResearch[i].replace(/\s/g, "");
-      const div = document.getElementById(
-        sanitizedName + "-corp-research-click-listener",
-      );
+      const div = document.getElementById(sanitizedName + "-corp-research-click-listener");
       if (div == null) {
         console.warn(`Could not find Research Tree div for ${sanitizedName}`);
         continue;
@@ -78,9 +76,7 @@ export function ResearchPopup(props: IProps): React.ReactElement {
           );
           removePopup(props.popupId);
         } else {
-          dialogBoxCreate(
-            `You do not have enough Scientific Research for ${research.name}`,
-          );
+          dialogBoxCreate(`You do not have enough Scientific Research for ${research.name}`);
         }
       });
     }

@@ -13,21 +13,10 @@ export function calculateHashGainRate(
   const coreMultiplier = 1 + (cores - 1) / 5;
   const ramRatio = 1 - ramUsed / maxRam;
 
-  return (
-    baseGain *
-    ramMultiplier *
-    coreMultiplier *
-    ramRatio *
-    mult *
-    BitNodeMultipliers.HacknetNodeMoney
-  );
+  return baseGain * ramMultiplier * coreMultiplier * ramRatio * mult * BitNodeMultipliers.HacknetNodeMoney;
 }
 
-export function calculateLevelUpgradeCost(
-  startingLevel: number,
-  extraLevels = 1,
-  costMult = 1,
-): number {
+export function calculateLevelUpgradeCost(startingLevel: number, extraLevels = 1, costMult = 1): number {
   const sanitizedLevels = Math.round(extraLevels);
   if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
     return 0;
@@ -48,11 +37,7 @@ export function calculateLevelUpgradeCost(
   return 10 * HacknetServerConstants.BaseCost * totalMultiplier * costMult;
 }
 
-export function calculateRamUpgradeCost(
-  startingRam: number,
-  extraLevels = 1,
-  costMult = 1,
-): number {
+export function calculateRamUpgradeCost(startingRam: number, extraLevels = 1, costMult = 1): number {
   const sanitizedLevels = Math.round(extraLevels);
   if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
     return 0;
@@ -79,11 +64,7 @@ export function calculateRamUpgradeCost(
   return totalCost;
 }
 
-export function calculateCoreUpgradeCost(
-  startingCores: number,
-  extraLevels = 1,
-  costMult = 1,
-): number {
+export function calculateCoreUpgradeCost(startingCores: number, extraLevels = 1, costMult = 1): number {
   const sanitizedLevels = Math.round(extraLevels);
   if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
     return 0;
@@ -106,10 +87,7 @@ export function calculateCoreUpgradeCost(
   return totalCost;
 }
 
-export function calculateCacheUpgradeCost(
-  startingCache: number,
-  extraLevels = 1,
-): number {
+export function calculateCacheUpgradeCost(startingCache: number, extraLevels = 1): number {
   const sanitizedLevels = Math.round(extraLevels);
   if (isNaN(sanitizedLevels) || sanitizedLevels < 1) {
     return 0;
@@ -136,9 +114,5 @@ export function calculateServerCost(n: number, mult = 1): number {
     return Infinity;
   }
 
-  return (
-    HacknetServerConstants.BaseCost *
-    Math.pow(HacknetServerConstants.PurchaseMult, n - 1) *
-    mult
-  );
+  return HacknetServerConstants.BaseCost * Math.pow(HacknetServerConstants.PurchaseMult, n - 1) * mult;
 }

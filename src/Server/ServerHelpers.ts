@@ -44,13 +44,8 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed
  */
-export function numCycleForGrowth(
-  server: Server,
-  growth: number,
-  p: IPlayer,
-): number {
-  let ajdGrowthRate =
-    1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
+export function numCycleForGrowth(server: Server, growth: number, p: IPlayer): number {
+  let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
   if (ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
     ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
   }
@@ -59,21 +54,13 @@ export function numCycleForGrowth(
 
   const cycles =
     Math.log(growth) /
-    (Math.log(ajdGrowthRate) *
-      p.hacking_grow_mult *
-      serverGrowthPercentage *
-      BitNodeMultipliers.ServerGrowthRate);
+    (Math.log(ajdGrowthRate) * p.hacking_grow_mult * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate);
 
   return cycles;
 }
 
 //Applied server growth for a single server. Returns the percentage growth
-export function processSingleServerGrowth(
-  server: Server,
-  threads: number,
-  p: IPlayer,
-  cores = 1,
-): number {
+export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer, cores = 1): number {
   let serverGrowth = calculateServerGrowth(server, threads, p, cores);
   if (serverGrowth < 1) {
     console.warn("serverGrowth calculated to be less than 1");
@@ -89,21 +76,14 @@ export function processSingleServerGrowth(
   }
 
   // cap at max
-  if (
-    isValidNumber(server.moneyMax) &&
-    server.moneyAvailable > server.moneyMax
-  ) {
+  if (isValidNumber(server.moneyMax) && server.moneyAvailable > server.moneyMax) {
     server.moneyAvailable = server.moneyMax;
   }
 
   // if there was any growth at all, increase security
   if (oldMoneyAvailable !== server.moneyAvailable) {
     //Growing increases server security twice as much as hacking
-    let usedCycles = numCycleForGrowth(
-      server,
-      server.moneyAvailable / oldMoneyAvailable,
-      p,
-    );
+    let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p);
     usedCycles = Math.max(0, usedCycles);
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * Math.ceil(usedCycles));
   }
@@ -134,9 +114,7 @@ export function prestigeHomeComputer(homeComp: Server): void {
 
 //Returns server object with corresponding hostname
 //    Relatively slow, would rather not use this a lot
-export function GetServerByHostname(
-  hostname: string,
-): Server | HacknetServer | null {
+export function GetServerByHostname(hostname: string): Server | HacknetServer | null {
   for (const ip in AllServers) {
     if (AllServers.hasOwnProperty(ip)) {
       if (AllServers[ip].hostname == hostname) {
@@ -163,10 +141,7 @@ export function getServer(s: string): Server | HacknetServer | null {
 // Returns the i-th server on the specified server's network
 // A Server's serverOnNetwork property holds only the IPs. This function returns
 // the actual Server object
-export function getServerOnNetwork(
-  server: Server,
-  i: number,
-): Server | HacknetServer | null {
+export function getServerOnNetwork(server: Server, i: number): Server | HacknetServer | null {
   if (i > server.serversOnNetwork.length) {
     console.error("Tried to get server on network that was out of range");
     return null;

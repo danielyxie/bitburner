@@ -23,13 +23,7 @@ export class GangMemberTask {
   territory: ITerritory;
 
   // Defines tasks that Gang Members can work on
-  constructor(
-    name: string,
-    desc: string,
-    isHacking: boolean,
-    isCombat: boolean,
-    params: ITaskParams,
-  ) {
+  constructor(name: string, desc: string, isHacking: boolean, isCombat: boolean, params: ITaskParams) {
     this.name = name;
     this.desc = desc;
 
@@ -53,12 +47,7 @@ export class GangMemberTask {
 
     if (
       Math.round(
-        this.hackWeight +
-          this.strWeight +
-          this.defWeight +
-          this.dexWeight +
-          this.agiWeight +
-          this.chaWeight,
+        this.hackWeight + this.strWeight + this.defWeight + this.dexWeight + this.agiWeight + this.chaWeight,
       ) != 100
     ) {
       console.error(`GangMemberTask ${this.name} weights do not add up to 100`);
@@ -71,8 +60,6 @@ export class GangMemberTask {
     // Formula: Territory Mutiplier = (Territory * 100) ^ factor / 100
     // So factor should be > 1 if something should scale exponentially with territory
     // and should be < 1 if it should have diminshing returns
-    this.territory = params.territory
-      ? params.territory
-      : { money: 1, respect: 1, wanted: 1 };
+    this.territory = params.territory ? params.territory : { money: 1, respect: 1, wanted: 1 };
   }
 }

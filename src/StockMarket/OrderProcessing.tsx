@@ -54,9 +54,7 @@ export function processOrders(
   }
   let stockOrders = orderBook[stock.symbol];
   if (stockOrders == null || !(stockOrders.constructor === Array)) {
-    console.error(
-      `Invalid Order book for ${stock.symbol} in processOrders(): ${stockOrders}`,
-    );
+    console.error(`Invalid Order book for ${stock.symbol} in processOrders(): ${stockOrders}`);
     stockOrders = [];
     return;
   }
@@ -67,40 +65,28 @@ export function processOrders(
         case OrderTypes.LimitBuy:
           if (order.pos === PositionTypes.Long && stock.price <= order.price) {
             executeOrder(/*66*/ order, refs);
-          } else if (
-            order.pos === PositionTypes.Short &&
-            stock.price >= order.price
-          ) {
+          } else if (order.pos === PositionTypes.Short && stock.price >= order.price) {
             executeOrder(/*66*/ order, refs);
           }
           break;
         case OrderTypes.LimitSell:
           if (order.pos === PositionTypes.Long && stock.price >= order.price) {
             executeOrder(/*66*/ order, refs);
-          } else if (
-            order.pos === PositionTypes.Short &&
-            stock.price <= order.price
-          ) {
+          } else if (order.pos === PositionTypes.Short && stock.price <= order.price) {
             executeOrder(/*66*/ order, refs);
           }
           break;
         case OrderTypes.StopBuy:
           if (order.pos === PositionTypes.Long && stock.price >= order.price) {
             executeOrder(/*66*/ order, refs);
-          } else if (
-            order.pos === PositionTypes.Short &&
-            stock.price <= order.price
-          ) {
+          } else if (order.pos === PositionTypes.Short && stock.price <= order.price) {
             executeOrder(/*66*/ order, refs);
           }
           break;
         case OrderTypes.StopSell:
           if (order.pos === PositionTypes.Long && stock.price <= order.price) {
             executeOrder(/*66*/ order, refs);
-          } else if (
-            order.pos === PositionTypes.Short &&
-            stock.price >= order.price
-          ) {
+          } else if (order.pos === PositionTypes.Short && stock.price >= order.price) {
             executeOrder(/*66*/ order, refs);
           }
           break;
@@ -168,8 +154,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
         stockOrders.splice(i, 1);
         dialogBoxCreate(
           <>
-            {order.type} for {stock.symbol} @ <Money money={order.price} /> (
-            {pos}) was filled (
+            {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}) was filled (
             {numeralWrapper.formatShares(Math.round(order.shares))} shares)
           </>,
         );
@@ -184,10 +169,8 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
     if (isBuy) {
       dialogBoxCreate(
         <>
-          Failed to execute {order.type} for {stock.symbol} @{" "}
-          <Money money={order.price} /> ({pos}). This is most likely because you
-          do not have enough money or the order would exceed the stock's maximum
-          number of shares
+          Failed to execute {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}). This is most likely
+          because you do not have enough money or the order would exceed the stock's maximum number of shares
         </>,
       );
     }

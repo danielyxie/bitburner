@@ -13,9 +13,7 @@ export class Game<T, U> extends React.Component<T, U> {
   reachedLimit(p: IPlayer): boolean {
     const reached = p.getCasinoWinnings() > gainLimit;
     if (reached) {
-      dialogBoxCreate(
-        <>Alright cheater get out of here. You're not allowed here anymore.</>,
-      );
+      dialogBoxCreate(<>Alright cheater get out of here. You're not allowed here anymore.</>);
     }
     return reached;
   }

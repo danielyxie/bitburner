@@ -10,11 +10,7 @@ import { HashUpgrades } from "./HashUpgrades";
 import { HashUpgrade } from "./HashUpgrade";
 
 import { IMap } from "../types";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class HashManager {
   // Max number of hashes this can hold. Equal to the sum of capacities of
@@ -68,9 +64,7 @@ export class HashManager {
   getUpgrade(upgName: string): HashUpgrade | null {
     const upg = HashUpgrades[upgName];
     if (!upg) {
-      console.error(
-        `Invalid Upgrade Name given to HashManager.getUpgrade(): ${upgName}`,
-      );
+      console.error(`Invalid Upgrade Name given to HashManager.getUpgrade(): ${upgName}`);
       return null;
     }
     return upg;
@@ -83,9 +77,7 @@ export class HashManager {
     const upg = this.getUpgrade(upgName);
     const currLevel = this.upgrades[upgName];
     if (upg == null || currLevel == null) {
-      console.error(
-        `Invalid Upgrade Name given to HashManager.getUpgradeCost(): ${upgName}`,
-      );
+      console.error(`Invalid Upgrade Name given to HashManager.getUpgradeCost(): ${upgName}`);
       return Infinity;
     }
 
@@ -113,9 +105,7 @@ export class HashManager {
 
     const currLevel = this.upgrades[upgName];
     if (upg == null || currLevel == null || currLevel < 0) {
-      console.error(
-        `Invalid Upgrade Name given to HashManager.upgrade(): ${upgName}`,
-      );
+      console.error(`Invalid Upgrade Name given to HashManager.upgrade(): ${upgName}`);
       return;
     }
 
@@ -142,9 +132,7 @@ export class HashManager {
   upgrade(upgName: string): boolean {
     const upg = HashUpgrades[upgName];
     if (upg == null) {
-      console.error(
-        `Invalid Upgrade Name given to HashManager.upgrade(): ${upgName}`,
-      );
+      console.error(`Invalid Upgrade Name given to HashManager.upgrade(): ${upgName}`);
       return false;
     }
 

@@ -17,8 +17,7 @@ describe("netscript", () => {
     cy.findByRole("textbox").type("nano script.js{enter}");
 
     // monaco can take a bit
-    cy.findByRole("code", { timeout: 15_000 }).type("{selectall}{del}")
-      .type(`export const main = async (ns) => {{}
+    cy.findByRole("code", { timeout: 15_000 }).type("{selectall}{del}").type(`export const main = async (ns) => {{}
   while(true) {{}
   await ns.hack("n00dles");`);
 
@@ -39,8 +38,7 @@ describe("netscript", () => {
     cy.findByRole("textbox").type("nano script.js{enter}");
 
     // monaco can take a bit
-    cy.findByRole("code", { timeout: 15_000 }).type("{selectall}{del}")
-      .type(`export const main = async (ns) => {{}
+    cy.findByRole("code", { timeout: 15_000 }).type("{selectall}{del}").type(`export const main = async (ns) => {{}
 const command = "hack";
 ns[command]("n00dles");`);
 
@@ -48,8 +46,6 @@ ns[command]("n00dles");`);
     cy.findByRole("button", { name: /Save & Close/i }).click();
 
     cy.findByRole("textbox").type("run script.js{enter}");
-    cy.findByText(
-      /Dynamic RAM usage calculated to be greater than initial RAM usage on fn: hack./i,
-    );
+    cy.findByText(/Dynamic RAM usage calculated to be greater than initial RAM usage on fn: hack./i);
   });
 });

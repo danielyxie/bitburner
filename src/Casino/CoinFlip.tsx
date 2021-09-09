@@ -91,23 +91,10 @@ export class CoinFlip extends Game<IProps, IState> {
         <pre>{`| |   | |`}</pre>
         <pre>{`+———————+`}</pre>
         <span className="text">Play for: </span>
-        <input
-          type="number"
-          className="text-input"
-          onChange={this.updateInvestment}
-          value={this.state.investment}
-        />
+        <input type="number" className="text-input" onChange={this.updateInvestment} value={this.state.investment} />
         <br />
-        <StdButton
-          onClick={trusted(() => this.play("H"))}
-          text={"Head!"}
-          disabled={this.state.playLock}
-        />
-        <StdButton
-          onClick={trusted(() => this.play("T"))}
-          text={"Tail!"}
-          disabled={this.state.playLock}
-        />
+        <StdButton onClick={trusted(() => this.play("H"))} text={"Head!"} disabled={this.state.playLock} />
+        <StdButton onClick={trusted(() => this.play("T"))} text={"Tail!"} disabled={this.state.playLock} />
         <h1>{this.state.status}</h1>
       </>
     );

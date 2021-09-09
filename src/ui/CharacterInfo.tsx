@@ -73,9 +73,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     }
   }
 
-  function convertMoneySourceTrackerToString(
-    src: MoneySourceTracker,
-  ): React.ReactElement {
+  function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
     const parts: any[][] = [[`Total:`, <Money money={src.total} />]];
     if (src.bladeburner) {
       parts.push([`Bladeburner:`, <Money money={src.bladeburner} />]);
@@ -152,9 +150,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
       return (
         <tr key="5">
           <td>Intelligence:</td>
-          <td style={{ textAlign: "right" }}>
-            {numeralWrapper.formatSkill(p.intelligence)}
-          </td>
+          <td style={{ textAlign: "right" }}>{numeralWrapper.formatSkill(p.intelligence)}</td>
         </tr>
       );
     }
@@ -222,11 +218,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
           <div style={{ width: "60%", fontSize: "13px", marginLeft: "4%" }}>
             {BitNodes[index].info.split("<br>").map((t, i) => (
               <div key={i}>
-                <span
-                  style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}
-                >
-                  {t}
-                </span>
+                <span style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{t}</span>
                 <br />
               </div>
             ))}
@@ -238,22 +230,14 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     return <></>;
   }
 
-  const timeRows = [
-    [
-      "Time played since last Augmentation:",
-      convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug),
-    ],
-  ];
+  const timeRows = [["Time played since last Augmentation:", convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug)]];
   if (p.sourceFiles.length > 0) {
     timeRows.push([
       "Time played since last Bitnode destroyed:",
       convertTimeMsToTimeElapsedString(p.playtimeSinceLastBitnode),
     ]);
   }
-  timeRows.push([
-    "Total Time played:",
-    convertTimeMsToTimeElapsedString(p.totalPlaytime),
-  ]);
+  timeRows.push(["Total Time played:", convertTimeMsToTimeElapsedString(p.totalPlaytime)]);
 
   return (
     <pre>
@@ -268,11 +252,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
       <span>
         Money: <Money money={p.money.toNumber()} />
       </span>
-      <button
-        className="popup-box-button"
-        style={{ display: "inline-block", float: "none" }}
-        onClick={openMoneyModal}
-      >
+      <button className="popup-box-button" style={{ display: "inline-block", float: "none" }} onClick={openMoneyModal}>
         Money Statistics & Breakdown
       </button>
       <br />
@@ -342,42 +322,22 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
         rows={[
           ["Hacking Chance", p.hacking_chance_mult],
           ["Hacking Speed", p.hacking_speed_mult],
-          [
-            "Hacking Money",
-            p.hacking_money_mult,
-            p.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
-          ],
-          [
-            "Hacking Growth",
-            p.hacking_grow_mult,
-            p.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
-          ],
+          ["Hacking Money", p.hacking_money_mult, p.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney],
+          ["Hacking Growth", p.hacking_grow_mult, p.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate],
         ]}
       />
       <br />
       <MultiplierTable
         rows={[
-          [
-            "Hacking Level",
-            p.hacking_mult,
-            p.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
-          ],
-          [
-            "Hacking Experience",
-            p.hacking_exp_mult,
-            p.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
-          ],
+          ["Hacking Level", p.hacking_mult, p.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier],
+          ["Hacking Experience", p.hacking_exp_mult, p.hacking_exp_mult * BitNodeMultipliers.HackExpGain],
         ]}
       />
       <br />
 
       <MultiplierTable
         rows={[
-          [
-            "Strength Level",
-            p.strength_mult,
-            p.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
-          ],
+          ["Strength Level", p.strength_mult, p.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier],
           ["Strength Experience", p.strength_exp_mult],
         ]}
       />
@@ -385,11 +345,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
       <MultiplierTable
         rows={[
-          [
-            "Defense Level",
-            p.defense_mult,
-            p.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
-          ],
+          ["Defense Level", p.defense_mult, p.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier],
           ["Defense Experience", p.defense_exp_mult],
         ]}
       />
@@ -397,11 +353,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
       <MultiplierTable
         rows={[
-          [
-            "Dexterity Level",
-            p.dexterity_mult,
-            p.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
-          ],
+          ["Dexterity Level", p.dexterity_mult, p.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier],
           ["Dexterity Experience", p.dexterity_exp_mult],
         ]}
       />
@@ -409,11 +361,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
       <MultiplierTable
         rows={[
-          [
-            "Agility Level",
-            p.agility_mult,
-            p.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
-          ],
+          ["Agility Level", p.agility_mult, p.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier],
           ["Agility Experience", p.agility_exp_mult],
         ]}
       />
@@ -421,11 +369,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
       <MultiplierTable
         rows={[
-          [
-            "Charisma Level",
-            p.charisma_mult,
-            p.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
-          ],
+          ["Charisma Level", p.charisma_mult, p.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier],
           ["Charisma Experience", p.charisma_exp_mult],
         ]}
       />
@@ -449,16 +393,8 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
       <MultiplierTable
         rows={[
           ["Company reputation gain", p.company_rep_mult],
-          [
-            "Faction reputation gain",
-            p.faction_rep_mult,
-            p.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
-          ],
-          [
-            "Salary",
-            p.work_money_mult,
-            p.work_money_mult * BitNodeMultipliers.CompanyWorkMoney,
-          ],
+          ["Faction reputation gain", p.faction_rep_mult, p.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain],
+          ["Salary", p.work_money_mult, p.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
         ]}
       />
       <br />
@@ -466,11 +402,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
       <MultiplierTable
         rows={[
           ["Crime success", p.crime_success_mult],
-          [
-            "Crime money",
-            p.crime_money_mult,
-            p.crime_money_mult * BitNodeMultipliers.CrimeMoney,
-          ],
+          ["Crime money", p.crime_money_mult, p.crime_money_mult * BitNodeMultipliers.CrimeMoney],
         ]}
       />
       <br />
@@ -481,9 +413,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
       <b>Misc.</b>
       <br />
       <br />
-      <span>{`Servers owned: ${
-        p.purchasedServers.length
-      } / ${getPurchaseServerLimit()}`}</span>
+      <span>{`Servers owned: ${p.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span>
       <br />
       <Hacknet />
       <span>{`Augmentations installed: ${p.augmentations.length}`}</span>

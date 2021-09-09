@@ -1,12 +1,6 @@
 import { CorporationState } from "./CorporationState";
-import {
-  CorporationUnlockUpgrade,
-  CorporationUnlockUpgrades,
-} from "./data/CorporationUnlockUpgrades";
-import {
-  CorporationUpgrade,
-  CorporationUpgrades,
-} from "./data/CorporationUpgrades";
+import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "./data/CorporationUnlockUpgrades";
+import { CorporationUpgrade, CorporationUpgrades } from "./data/CorporationUpgrades";
 import { Warehouse } from "./Warehouse";
 import { CorporationConstants } from "./data/Constants";
 import { Industry } from "./Industry";
@@ -19,11 +13,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Page, routing } from "../ui/navigationTracking";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import {
-  Reviver,
-  Generic_toJSON,
-  Generic_fromJSON,
-} from "../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { isString } from "../../utils/helpers/isString";
 import { removeElementById } from "../../utils/uiHelpers/removeElementById";
@@ -81,9 +71,7 @@ export class Corporation {
 
   addFunds(amt: number): void {
     if (!isFinite(amt)) {
-      console.error(
-        "Trying to add invalid amount of funds. Report to a developper.",
-      );
+      console.error("Trying to add invalid amount of funds. Report to a developper.");
       return;
     }
     this.funds = this.funds.plus(amt);
@@ -101,8 +89,7 @@ export class Corporation {
     if (this.storedCycles >= CorporationConstants.CyclesPerIndustryStateCycle) {
       const state = this.getState();
       const marketCycles = 1;
-      const gameCycles =
-        marketCycles * CorporationConstants.CyclesPerIndustryStateCycle;
+      const gameCycles = marketCycles * CorporationConstants.CyclesPerIndustryStateCycle;
       this.storedCycles -= gameCycles;
 
       this.divisions.forEach((ind) => {
@@ -122,30 +109,18 @@ export class Corporation {
         this.revenue = new Decimal(0);
         this.expenses = new Decimal(0);
         this.divisions.forEach((ind) => {
-          if (
-            ind.lastCycleRevenue === -Infinity ||
-            ind.lastCycleRevenue === Infinity
-          ) {
+          if (ind.lastCycleRevenue === -Infinity || ind.lastCycleRevenue === Infinity) {
             return;
           }
-          if (
-            ind.lastCycleExpenses === -Infinity ||
-            ind.lastCycleExpenses === Infinity
-          ) {
+          if (ind.lastCycleExpenses === -Infinity || ind.lastCycleExpenses === Infinity) {
             return;
           }
           this.revenue = this.revenue.plus(ind.lastCycleRevenue);
           this.expenses = this.expenses.plus(ind.lastCycleExpenses);
         });
         const profit = this.revenue.minus(this.expenses);
-        const cycleProfit = profit.times(
-          marketCycles * CorporationConstants.SecsPerMarketCycle,
-        );
-        if (
-          isNaN(this.funds) ||
-          this.funds === Infinity ||
-          this.funds === -Infinity
-        ) {
+        const cycleProfit = profit.times(marketCycles * CorporationConstants.SecsPerMarketCycle);
+        if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
             "There was an error calculating your Corporations funds and they got reset to 0. " +
               "This is a bug. Please report to game developer.<br><br>" +
@@ -160,21 +135,14 @@ export class Corporation {
           if (
             isNaN(this.dividendPercentage) ||
             this.dividendPercentage < 0 ||
-            this.dividendPercentage >
-              CorporationConstants.DividendMaxPercentage * 100
+            this.dividendPercentage > CorporationConstants.DividendMaxPercentage * 100
           ) {
-            console.error(
-              `Invalid Corporation dividend percentage: ${this.dividendPercentage}`,
-            );
+            console.error(`Invalid Corporation dividend percentage: ${this.dividendPercentage}`);
           } else {
-            const totalDividends =
-              (this.dividendPercentage / 100) * cycleProfit;
+            const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
             const dividendsPerShare = totalDividends / this.totalShares;
-            const profit =
-              this.numShares *
-              dividendsPerShare *
-              (1 - this.dividendTaxPercentage / 100);
+            const profit = this.numShares * dividendsPerShare * (1 - this.dividendTaxPercentage / 100);
             player.gainMoney(profit);
             player.recordMoneySource(profit, "corporation");
             this.addFunds(retainedEarnings);
@@ -220,9 +188,7 @@ export class Corporation {
   getTargetSharePrice(): number {
     // Note: totalShares - numShares is not the same as issuedShares because
     // issuedShares does not account for private investors
-    return (
-      this.determineValuation() / (2 * (this.totalShares - this.numShares) + 1)
-    );
+    return this.determineValuation() / (2 * (this.totalShares - this.numShares) + 1);
   }
 
   updateSharePrice(): void {
@@ -251,9 +217,7 @@ export class Corporation {
     let sharesSold = 0;
     let profit = 0;
 
-    const maxIterations = Math.ceil(
-      numShares / CorporationConstants.SHARESPERPRICEUPDATE,
-    );
+    const maxIterations = Math.ceil(numShares / CorporationConstants.SHARESPERPRICEUPDATE);
     if (isNaN(maxIterations) || maxIterations > 10e6) {
       console.error(
         `Something went wrong or unexpected when calculating share sale. Maxiterations calculated to be ${maxIterations}`,
@@ -273,9 +237,7 @@ export class Corporation {
         sharesSold += sharesUntilUpdate;
 
         // Calculate what new share price would be
-        sharePrice =
-          this.determineValuation() /
-          (2 * (this.totalShares + sharesSold - this.numShares));
+        sharePrice = this.determineValuation() / (2 * (this.totalShares + sharesSold - this.numShares));
       }
     }
 
@@ -350,10 +312,7 @@ export class Corporation {
         for (const city in industry.warehouses) {
           const warehouse = industry.warehouses[city];
           if (warehouse === 0) continue;
-          if (
-            industry.warehouses.hasOwnProperty(city) &&
-            warehouse instanceof Warehouse
-          ) {
+          if (industry.warehouses.hasOwnProperty(city) && warehouse instanceof Warehouse) {
             warehouse.updateSize(this, industry);
           }
         }
@@ -456,10 +415,7 @@ export class Corporation {
     let hasHandbook = false;
     const handbookFn = LiteratureNames.CorporationManagementHandbook;
     for (let i = 0; i < homeComp.messages.length; ++i) {
-      if (
-        isString(homeComp.messages[i]) &&
-        homeComp.messages[i] === handbookFn
-      ) {
+      if (isString(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
         hasHandbook = true;
         break;
       }
@@ -486,17 +442,12 @@ export class Corporation {
 
   rerender(player: IPlayer): void {
     if (companyManagementDiv == null) {
-      console.warn(
-        `Corporation.rerender() called when companyManagementDiv is null`,
-      );
+      console.warn(`Corporation.rerender() called when companyManagementDiv is null`);
       return;
     }
     if (!routing.isOn(Page.Corporation)) return;
 
-    ReactDOM.render(
-      <CorporationRoot corp={this} player={player} />,
-      companyManagementDiv,
-    );
+    ReactDOM.render(<CorporationRoot corp={this} player={player} />, companyManagementDiv);
   }
 
   clearUI(): void {

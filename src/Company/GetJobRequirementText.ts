@@ -5,25 +5,15 @@ import { CompanyPosition } from "./CompanyPosition";
  * Returns a string with the given CompanyPosition's stat requirements
  */
 
-export function getJobRequirementText(
-  company: Company,
-  pos: CompanyPosition,
-  tooltiptext = false,
-): string {
+export function getJobRequirementText(company: Company, pos: CompanyPosition, tooltiptext = false): string {
   let reqText = "";
   const offset: number = company.jobStatReqOffset;
-  const reqHacking: number =
-    pos.requiredHacking > 0 ? pos.requiredHacking + offset : 0;
-  const reqStrength: number =
-    pos.requiredStrength > 0 ? pos.requiredStrength + offset : 0;
-  const reqDefense: number =
-    pos.requiredDefense > 0 ? pos.requiredDefense + offset : 0;
-  const reqDexterity: number =
-    pos.requiredDexterity > 0 ? pos.requiredDexterity + offset : 0;
-  const reqAgility: number =
-    pos.requiredDexterity > 0 ? pos.requiredDexterity + offset : 0;
-  const reqCharisma: number =
-    pos.requiredCharisma > 0 ? pos.requiredCharisma + offset : 0;
+  const reqHacking: number = pos.requiredHacking > 0 ? pos.requiredHacking + offset : 0;
+  const reqStrength: number = pos.requiredStrength > 0 ? pos.requiredStrength + offset : 0;
+  const reqDefense: number = pos.requiredDefense > 0 ? pos.requiredDefense + offset : 0;
+  const reqDexterity: number = pos.requiredDexterity > 0 ? pos.requiredDexterity + offset : 0;
+  const reqAgility: number = pos.requiredDexterity > 0 ? pos.requiredDexterity + offset : 0;
+  const reqCharisma: number = pos.requiredCharisma > 0 ? pos.requiredCharisma + offset : 0;
   const reqRep: number = pos.requiredReputation;
   if (tooltiptext) {
     reqText = "Requires:<br>";

@@ -11,14 +11,8 @@ import { FindInvestorsPopup } from "./FindInvestorsPopup";
 import { GoPublicPopup } from "./GoPublicPopup";
 
 import { CorporationConstants } from "../data/Constants";
-import {
-  CorporationUnlockUpgrade,
-  CorporationUnlockUpgrades,
-} from "../data/CorporationUnlockUpgrades";
-import {
-  CorporationUpgrade,
-  CorporationUpgrades,
-} from "../data/CorporationUpgrades";
+import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "../data/CorporationUnlockUpgrades";
+import { CorporationUpgrade, CorporationUpgrades } from "../data/CorporationUpgrades";
 
 import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -49,11 +43,7 @@ export function Overview(props: IProps): React.ReactElement {
     const hasTooltip = props.tooltip != null;
     if (hasTooltip) className += " tooltip";
     return (
-      <a
-        className={className}
-        onClick={props.onClick}
-        style={{ display: props.display ? props.display : "block" }}
-      >
+      <a className={className} onClick={props.onClick} style={{ display: props.display ? props.display : "block" }}>
         {props.text}
         {hasTooltip && <span className={"tooltiptext"}>{props.tooltip}</span>}
       </a>
@@ -69,9 +59,7 @@ export function Overview(props: IProps): React.ReactElement {
     });
   }
 
-  const profit: number = props.corp.revenue
-    .minus(props.corp.expenses)
-    .toNumber();
+  const profit: number = props.corp.revenue.minus(props.corp.expenses).toNumber();
 
   function DividendsStats(): React.ReactElement {
     if (props.corp.dividendPercentage <= 0 || profit <= 0) return <></>;
@@ -81,21 +69,15 @@ export function Overview(props: IProps): React.ReactElement {
     const playerEarnings = props.corp.numShares * dividendsPerShare;
     return (
       <>
-        Retained Profits (after dividends): <Money money={retainedEarnings} /> /
-        s<br />
+        Retained Profits (after dividends): <Money money={retainedEarnings} /> / s<br />
         <br />
-        Dividend Percentage:{" "}
-        {numeralWrapper.format(props.corp.dividendPercentage / 100, "0%")}
+        Dividend Percentage: {numeralWrapper.format(props.corp.dividendPercentage / 100, "0%")}
         <br />
         Dividends per share: <Money money={dividendsPerShare} /> / s<br />
-        Your earnings as a shareholder (Pre-Tax):{" "}
-        <Money money={playerEarnings} /> / s<br />
+        Your earnings as a shareholder (Pre-Tax): <Money money={playerEarnings} /> / s<br />
         Dividend Tax Rate: {props.corp.dividendTaxPercentage}%<br />
         Your earnings as a shareholder (Post-Tax):{" "}
-        <Money
-          money={playerEarnings * (1 - props.corp.dividendTaxPercentage / 100)}
-        />{" "}
-        / s<br />
+        <Money money={playerEarnings * (1 - props.corp.dividendTaxPercentage / 100)} /> / s<br />
         <br />
       </>
     );
@@ -126,12 +108,8 @@ export function Overview(props: IProps): React.ReactElement {
   }
 
   function BribeButton(): React.ReactElement {
-    const canBribe =
-      props.corp.determineValuation() >= CorporationConstants.BribeThreshold ||
-      true;
-    const bribeFactionsClass = canBribe
-      ? "a-link-button"
-      : "a-link-button-inactive";
+    const canBribe = props.corp.determineValuation() >= CorporationConstants.BribeThreshold || true;
+    const bribeFactionsClass = canBribe ? "a-link-button" : "a-link-button-inactive";
     return (
       <Button
         className={bribeFactionsClass}
@@ -168,9 +146,7 @@ export function Overview(props: IProps): React.ReactElement {
   // Render the buttons for when your Corporation is still private
   function PrivateButtons(): React.ReactElement {
     const fundingAvailable = props.corp.fundingRound < 4;
-    const findInvestorsClassName = fundingAvailable
-      ? "std-button"
-      : "a-link-button-inactive";
+    const findInvestorsClassName = fundingAvailable ? "std-button" : "a-link-button-inactive";
     const findInvestorsTooltip = fundingAvailable
       ? "Search for private investors who will give you startup funding in exchangefor equity (stock shares) in your company"
       : undefined;
@@ -239,23 +215,17 @@ export function Overview(props: IProps): React.ReactElement {
     const corp = props.corp;
 
     const sellSharesOnCd = corp.shareSaleCooldown > 0;
-    const sellSharesClass = sellSharesOnCd
-      ? "a-link-button-inactive"
-      : "std-button";
+    const sellSharesClass = sellSharesOnCd ? "a-link-button-inactive" : "std-button";
     const sellSharesTooltip = sellSharesOnCd
-      ? "Cannot sell shares for " +
-        corp.convertCooldownToString(corp.shareSaleCooldown)
+      ? "Cannot sell shares for " + corp.convertCooldownToString(corp.shareSaleCooldown)
       : "Sell your shares in the company. The money earned from selling your " +
         "shares goes into your personal account, not the Corporation's. " +
         "This is one of the only ways to profit from your business venture.";
 
     const issueNewSharesOnCd = corp.issueNewSharesCooldown > 0;
-    const issueNewSharesClass = issueNewSharesOnCd
-      ? "a-link-button-inactive"
-      : "std-button";
+    const issueNewSharesClass = issueNewSharesOnCd ? "a-link-button-inactive" : "std-button";
     const issueNewSharesTooltip = issueNewSharesOnCd
-      ? "Cannot issue new shares for " +
-        corp.convertCooldownToString(corp.issueNewSharesCooldown)
+      ? "Cannot issue new shares for " + corp.convertCooldownToString(corp.issueNewSharesCooldown)
       : "Issue new equity shares to raise capital.";
 
     return (
@@ -305,28 +275,16 @@ export function Overview(props: IProps): React.ReactElement {
       <div className={"cmpy-mgmt-upgrade-container"}>
         <h1 className={"cmpy-mgmt-upgrade-header"}> Unlocks </h1>
         {Object.values(CorporationUnlockUpgrades)
-          .filter(
-            (upgrade: CorporationUnlockUpgrade) => props.corp.unlockUpgrades[upgrade[0]] === 0,
-          )
+          .filter((upgrade: CorporationUnlockUpgrade) => props.corp.unlockUpgrades[upgrade[0]] === 0)
           .map((upgrade: CorporationUnlockUpgrade) => (
-            <UnlockUpgrade
-              player={props.player}
-              corp={props.corp}
-              upgradeData={upgrade}
-              key={upgrade[0]}
-            />
+            <UnlockUpgrade player={props.player} corp={props.corp} upgradeData={upgrade} key={upgrade[0]} />
           ))}
 
         <h1 className={"cmpy-mgmt-upgrade-header"}> Upgrades </h1>
         {props.corp.upgrades
           .map((level: number, i: number) => CorporationUpgrades[i])
           .map((upgrade: CorporationUpgrade) => (
-            <LevelableUpgrade
-              player={props.player}
-              corp={props.corp}
-              upgrade={upgrade}
-              key={upgrade[0]}
-            />
+            <LevelableUpgrade player={props.player} corp={props.corp} upgrade={upgrade} key={upgrade[0]} />
           ))}
       </div>
     );
@@ -344,64 +302,31 @@ export function Overview(props: IProps): React.ReactElement {
         <DividendsStats />
         Publicly Traded: {props.corp.public ? "Yes" : "No"}
         <br />
-        Owned Stock Shares:{" "}
-        {numeralWrapper.format(props.corp.numShares, "0.000a")}
+        Owned Stock Shares: {numeralWrapper.format(props.corp.numShares, "0.000a")}
         <br />
-        Stock Price:{" "}
-        {props.corp.public ? <Money money={props.corp.sharePrice} /> : "N/A"}
+        Stock Price: {props.corp.public ? <Money money={props.corp.sharePrice} /> : "N/A"}
         <br />
       </p>
       <p className="tooltip">
-        Total Stock Shares:{" "}
-        {numeralWrapper.format(props.corp.totalShares, "0.000a")}
+        Total Stock Shares: {numeralWrapper.format(props.corp.totalShares, "0.000a")}
         <span className="tooltiptext">
-          Outstanding Shares:{" "}
-          {numeralWrapper.format(props.corp.issuedShares, "0.000a")}
+          Outstanding Shares: {numeralWrapper.format(props.corp.issuedShares, "0.000a")}
           <br />
           Private Shares:{" "}
-          {numeralWrapper.format(
-            props.corp.totalShares -
-              props.corp.issuedShares -
-              props.corp.numShares,
-            "0.000a",
-          )}
+          {numeralWrapper.format(props.corp.totalShares - props.corp.issuedShares - props.corp.numShares, "0.000a")}
         </span>
       </p>
       <br />
       <br />
-      <Mult
-        name="Production Multiplier: "
-        mult={props.corp.getProductionMultiplier()}
-      />
-      <Mult
-        name="Storage Multiplier: "
-        mult={props.corp.getStorageMultiplier()}
-      />
-      <Mult
-        name="Advertising Multiplier: "
-        mult={props.corp.getAdvertisingMultiplier()}
-      />
-      <Mult
-        name="Empl. Creativity Multiplier: "
-        mult={props.corp.getEmployeeCreMultiplier()}
-      />
-      <Mult
-        name="Empl. Charisma Multiplier: "
-        mult={props.corp.getEmployeeChaMultiplier()}
-      />
-      <Mult
-        name="Empl. Intelligence Multiplier: "
-        mult={props.corp.getEmployeeIntMultiplier()}
-      />
-      <Mult
-        name="Empl. Efficiency Multiplier: "
-        mult={props.corp.getEmployeeEffMultiplier()}
-      />
+      <Mult name="Production Multiplier: " mult={props.corp.getProductionMultiplier()} />
+      <Mult name="Storage Multiplier: " mult={props.corp.getStorageMultiplier()} />
+      <Mult name="Advertising Multiplier: " mult={props.corp.getAdvertisingMultiplier()} />
+      <Mult name="Empl. Creativity Multiplier: " mult={props.corp.getEmployeeCreMultiplier()} />
+      <Mult name="Empl. Charisma Multiplier: " mult={props.corp.getEmployeeChaMultiplier()} />
+      <Mult name="Empl. Intelligence Multiplier: " mult={props.corp.getEmployeeIntMultiplier()} />
+      <Mult name="Empl. Efficiency Multiplier: " mult={props.corp.getEmployeeEffMultiplier()} />
       <Mult name="Sales Multiplier: " mult={props.corp.getSalesMultiplier()} />
-      <Mult
-        name="Scientific Research Multiplier: "
-        mult={props.corp.getScientificResearchMultiplier()}
-      />
+      <Mult name="Scientific Research Multiplier: " mult={props.corp.getScientificResearchMultiplier()} />
       <br />
       <BonusTime />
       <div>

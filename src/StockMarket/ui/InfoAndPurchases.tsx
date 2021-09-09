@@ -5,10 +5,7 @@
  */
 import * as React from "react";
 
-import {
-  getStockMarket4SDataCost,
-  getStockMarket4STixApiCost,
-} from "../StockMarketCosts";
+import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMarketCosts";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -32,13 +29,11 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
   constructor(props: IProps) {
     super(props);
 
-    this.handleClick4SMarketDataHelpTip =
-      this.handleClick4SMarketDataHelpTip.bind(this);
+    this.handleClick4SMarketDataHelpTip = this.handleClick4SMarketDataHelpTip.bind(this);
     this.purchaseWseAccount = this.purchaseWseAccount.bind(this);
     this.purchaseTixApiAccess = this.purchaseTixApiAccess.bind(this);
     this.purchase4SMarketData = this.purchase4SMarketData.bind(this);
-    this.purchase4SMarketDataTixApiAccess =
-      this.purchase4SMarketDataTixApiAccess.bind(this);
+    this.purchase4SMarketDataTixApiAccess = this.purchase4SMarketDataTixApiAccess.bind(this);
   }
 
   handleClick4SMarketDataHelpTip(): void {
@@ -141,15 +136,12 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
       const cost = CONSTANTS.TIXAPICost;
       return (
         <StdButton
-          disabled={
-            !this.props.p.canAfford(cost) || !this.props.p.hasWseAccount
-          }
+          disabled={!this.props.p.canAfford(cost) || !this.props.p.hasWseAccount}
           onClick={this.purchaseTixApiAccess}
           style={blockStyleMarkup}
           text={
             <>
-              Buy Trade Information eXchange (TIX) API Access -{" "}
-              <Money money={cost} player={this.props.p} />
+              Buy Trade Information eXchange (TIX) API Access - <Money money={cost} player={this.props.p} />
             </>
           }
         />
@@ -162,28 +154,21 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
       return (
         <StdButtonPurchased
           text={"4S Market Data - Purchased"}
-          tooltip={
-            "Lets you view additional pricing and volatility information about stocks"
-          }
+          tooltip={"Lets you view additional pricing and volatility information about stocks"}
         />
       );
     } else {
       const cost = getStockMarket4SDataCost();
       return (
         <StdButton
-          disabled={
-            !this.props.p.canAfford(cost) || !this.props.p.hasWseAccount
-          }
+          disabled={!this.props.p.canAfford(cost) || !this.props.p.hasWseAccount}
           onClick={this.purchase4SMarketData}
           text={
             <>
-              Buy 4S Market Data Access -{" "}
-              <Money money={cost} player={this.props.p} />
+              Buy 4S Market Data Access - <Money money={cost} player={this.props.p} />
             </>
           }
-          tooltip={
-            "Lets you view additional pricing and volatility information about stocks"
-          }
+          tooltip={"Lets you view additional pricing and volatility information about stocks"}
         />
       );
     }
@@ -192,11 +177,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
   renderPurchase4SMarketDataTixApiAccessButton(): React.ReactElement {
     if (!this.props.p.hasTixApiAccess) {
       return (
-        <StdButton
-          disabled={true}
-          text={`Buy 4S Market Data TIX API Access`}
-          tooltip={"Requires TIX API Access"}
-        />
+        <StdButton disabled={true} text={`Buy 4S Market Data TIX API Access`} tooltip={"Requires TIX API Access"} />
       );
     } else if (this.props.p.has4SDataTixApi) {
       return (
@@ -213,8 +194,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
           onClick={this.purchase4SMarketDataTixApiAccess}
           text={
             <>
-              Buy 4S Market Data TIX API Access -{" "}
-              <Money money={cost} player={this.props.p} />
+              Buy 4S Market Data TIX API Access - <Money money={cost} player={this.props.p} />
             </>
           }
           tooltip={"Let you access 4S Market Data through Netscript"}
@@ -224,8 +204,7 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
   }
 
   render(): React.ReactNode {
-    const documentationLink =
-      "https://bitburner.readthedocs.io/en/latest/basicgameplay/stockmarket.html";
+    const documentationLink = "https://bitburner.readthedocs.io/en/latest/basicgameplay/stockmarket.html";
     return (
       <div className={"stock-market-info-and-purchases"}>
         <p>Welcome to the World Stock Exchange (WSE)!</p>
@@ -240,40 +219,28 @@ export class InfoAndPurchases extends React.Component<IProps, any> {
 
         <h2>Trade Information eXchange (TIX) API</h2>
         <p>
-          TIX, short for Trade Information eXchange, is the communications
-          protocol used by the WSE. Purchasing access to the TIX API lets you
-          write code to create your own algorithmic/automated trading
-          strategies.
+          TIX, short for Trade Information eXchange, is the communications protocol used by the WSE. Purchasing access
+          to the TIX API lets you write code to create your own algorithmic/automated trading strategies.
         </p>
         {this.renderPurchaseTixApiAccessButton()}
         <h2>Four Sigma (4S) Market Data Feed</h2>
         <p>
-          Four Sigma's (4S) Market Data Feed provides information about stocks
-          that will help your trading strategies.
+          Four Sigma's (4S) Market Data Feed provides information about stocks that will help your trading strategies.
         </p>
         {this.renderPurchase4SMarketDataButton()}
-        <button
-          className={"help-tip-big"}
-          onClick={this.handleClick4SMarketDataHelpTip}
-        >
+        <button className={"help-tip-big"} onClick={this.handleClick4SMarketDataHelpTip}>
           ?
         </button>
         {this.renderPurchase4SMarketDataTixApiAccessButton()}
         <p>
           Commission Fees: Every transaction you make has a{" "}
-          <Money
-            money={CONSTANTS.StockMarketCommission}
-            player={this.props.p}
-          />{" "}
-          commission fee.
+          <Money money={CONSTANTS.StockMarketCommission} player={this.props.p} /> commission fee.
         </p>
         <br />
         <p>
-          WARNING: When you reset after installing Augmentations, the Stock
-          Market is reset. You will retain your WSE Account, access to the TIX
-          API, and 4S Market Data access. However, all of your stock positions
-          are lost, so make sure to sell your stocks before installing
-          Augmentations!
+          WARNING: When you reset after installing Augmentations, the Stock Market is reset. You will retain your WSE
+          Account, access to the TIX API, and 4S Market Data access. However, all of your stock positions are lost, so
+          make sure to sell your stocks before installing Augmentations!
         </p>
       </div>
     );

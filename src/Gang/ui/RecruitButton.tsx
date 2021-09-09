@@ -22,10 +22,7 @@ export function RecruitButton(props: IProps): React.ReactElement {
     const respect = props.gang.getRespectNeededToRecruitMember();
     return (
       <>
-        <a
-          className="a-link-button-inactive"
-          style={{ display: "inline-block", margin: "10px" }}
-        >
+        <a className="a-link-button-inactive" style={{ display: "inline-block", margin: "10px" }}>
           Recruit Gang Member
         </a>
         <p style={{ margin: "10px", color: "red", display: "inline-block" }}>
@@ -46,11 +43,7 @@ export function RecruitButton(props: IProps): React.ReactElement {
 
   return (
     <>
-      <a
-        className="a-link-button"
-        onClick={onClick}
-        style={{ display: "inline-block", margin: "10px" }}
-      >
+      <a className="a-link-button" onClick={onClick} style={{ display: "inline-block", margin: "10px" }}>
         Recruit Gang Member
       </a>
     </>

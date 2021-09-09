@@ -18,12 +18,7 @@ export function CoresButton(props: IProps): React.ReactElement {
   const homeComputer = props.p.getHomeComputer();
   const maxCores = homeComputer.cpuCores >= 8;
   if (maxCores) {
-    return (
-      <StdButtonPurchased
-        style={btnStyle}
-        text={"Upgrade 'home' cores - MAX"}
-      />
-    );
+    return <StdButtonPurchased style={btnStyle} text={"Upgrade 'home' cores - MAX"} />;
   }
 
   const cost = 1e9 * Math.pow(7.5, homeComputer.cpuCores);
@@ -43,15 +38,11 @@ export function CoresButton(props: IProps): React.ReactElement {
       style={btnStyle}
       text={
         <>
-          Upgrade 'home' cores ({homeComputer.cpuCores} -&gt;{" "}
-          {homeComputer.cpuCores + 1}) - <Money money={cost} player={props.p} />
+          Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores + 1}) -{" "}
+          <Money money={cost} player={props.p} />
         </>
       }
-      tooltip={
-        <MathComponent
-          tex={String.raw`\large{cost = 10^9 \times 7.5 ^{\text{cores}}}`}
-        />
-      }
+      tooltip={<MathComponent tex={String.raw`\large{cost = 10^9 \times 7.5 ^{\text{cores}}}`} />}
     />
   );
 }

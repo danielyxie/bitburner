@@ -18,15 +18,11 @@ export const Locations: IMap<Location> = {};
  */
 function constructLocation(p: IConstructorParams): Location {
   if (!p.name) {
-    throw new Error(
-      `Invalid constructor parameters for Location. No 'name' property`,
-    );
+    throw new Error(`Invalid constructor parameters for Location. No 'name' property`);
   }
 
   if (Locations[p.name] instanceof Location) {
-    console.warn(
-      `Property with name ${p.name} already exists and is being overwritten`,
-    );
+    console.warn(`Property with name ${p.name} already exists and is being overwritten`);
   }
 
   Locations[p.name] = new Location(p);

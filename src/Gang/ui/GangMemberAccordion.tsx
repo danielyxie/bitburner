@@ -17,9 +17,7 @@ export function GangMemberAccordion(props: IProps): React.ReactElement {
     <Accordion
       panelInitiallyOpened={true}
       headerContent={<>{props.member.name}</>}
-      panelContent={
-        <GangMemberAccordionContent gang={props.gang} member={props.member} />
-      }
+      panelContent={<GangMemberAccordionContent gang={props.gang} member={props.member} />}
     />
   );
 }

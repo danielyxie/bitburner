@@ -6,19 +6,13 @@ import { Server } from "./Server/Server";
 /**
  * Returns the chance the player has to successfully hack a server
  */
-export function calculateHackingChance(
-  server: Server,
-  player: IPlayer,
-): number {
+export function calculateHackingChance(server: Server, player: IPlayer): number {
   const hackFactor = 1.75;
   const difficultyMult = (100 - server.hackDifficulty) / 100;
   const skillMult = hackFactor * player.hacking_skill;
   const skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
   const chance =
-    skillChance *
-    difficultyMult *
-    player.hacking_chance_mult *
-    calculateIntelligenceBonus(player.intelligence, 1);
+    skillChance * difficultyMult * player.hacking_chance_mult * calculateIntelligenceBonus(player.intelligence, 1);
   if (chance > 1) {
     return 1;
   }
@@ -33,10 +27,7 @@ export function calculateHackingChance(
  * Returns the amount of hacking experience the player will gain upon
  * successfully hacking a server
  */
-export function calculateHackingExpGain(
-  server: Server,
-  player: IPlayer,
-): number {
+export function calculateHackingExpGain(server: Server, player: IPlayer): number {
   const baseExpGain = 3;
   const diffFactor = 0.3;
   if (server.baseDifficulty == null) {
@@ -52,19 +43,13 @@ export function calculateHackingExpGain(
  * Returns the percentage of money that will be stolen from a server if
  * it is successfully hacked (returns the decimal form, not the actual percent value)
  */
-export function calculatePercentMoneyHacked(
-  server: Server,
-  player: IPlayer,
-): number {
+export function calculatePercentMoneyHacked(server: Server, player: IPlayer): number {
   // Adjust if needed for balancing. This is the divisor for the final calculation
   const balanceFactor = 240;
 
   const difficultyMult = (100 - server.hackDifficulty) / 100;
-  const skillMult =
-    (player.hacking_skill - (server.requiredHackingSkill - 1)) /
-    player.hacking_skill;
-  const percentMoneyHacked =
-    (difficultyMult * skillMult * player.hacking_money_mult) / balanceFactor;
+  const skillMult = (player.hacking_skill - (server.requiredHackingSkill - 1)) / player.hacking_skill;
+  const percentMoneyHacked = (difficultyMult * skillMult * player.hacking_money_mult) / balanceFactor;
   if (percentMoneyHacked < 0) {
     return 0;
   }
@@ -91,8 +76,7 @@ export function calculateHackingTime(server: Server, player: IPlayer): number {
   const hackTimeMultiplier = 5;
   const hackingTime =
     (hackTimeMultiplier * skillFactor) /
-    (player.hacking_speed_mult *
-      calculateIntelligenceBonus(player.intelligence, 1));
+    (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1));
 
   return hackingTime;
 }

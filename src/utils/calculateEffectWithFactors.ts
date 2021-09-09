@@ -16,20 +16,12 @@
  * can be called with the stat and the exponential/linear factors. The other is a
  * class where the exponential and linear factors are defined upon construction.
  */
-export function calculateEffectWithFactors(
-  n: number,
-  expFac: number,
-  linearFac: number,
-): number {
+export function calculateEffectWithFactors(n: number, expFac: number, linearFac: number): number {
   if (expFac <= 0 || expFac >= 1) {
-    console.warn(
-      `Exponential factor is ${expFac}. This is not an intended value for it`,
-    );
+    console.warn(`Exponential factor is ${expFac}. This is not an intended value for it`);
   }
   if (linearFac < 1) {
-    console.warn(
-      `Linear factor is ${linearFac}. This is not an intended value for it`,
-    );
+    console.warn(`Linear factor is ${linearFac}. This is not an intended value for it`);
   }
 
   return Math.pow(n, expFac) + n / linearFac;

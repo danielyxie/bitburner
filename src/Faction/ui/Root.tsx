@@ -19,12 +19,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { createSleevePurchasesFromCovenantPopup } from "../../PersonObjects/Sleeve/SleeveCovenantPurchases";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
-import {
-  yesNoBoxClose,
-  yesNoBoxCreate,
-  yesNoBoxGetNoButton,
-  yesNoBoxGetYesButton,
-} from "../../../utils/YesNoBox";
+import { yesNoBoxClose, yesNoBoxCreate, yesNoBoxGetNoButton, yesNoBoxGetYesButton } from "../../../utils/YesNoBox";
 
 type IProps = {
   engine: IEngine;
@@ -40,9 +35,7 @@ type IState = {
 };
 
 // Info text for all options on the UI
-const gangInfo =
-  "Create and manage a gang for this Faction. Gangs will earn you money and " +
-  "faction reputation";
+const gangInfo = "Create and manage a gang for this Faction. Gangs will earn you money and " + "faction reputation";
 const hackingMissionInfo =
   "Attempt a hacking mission for your faction. " +
   "A mission is a mini game that, if won, earns you " +
@@ -66,8 +59,7 @@ const augmentationsInfo =
   "As your reputation with this faction rises, you will " +
   "unlock Augmentations, which you can purchase to enhance " +
   "your abilities.";
-const sleevePurchasesInfo =
-  "Purchase Duplicate Sleeves and upgrades. These are permanent!";
+const sleevePurchasesInfo = "Purchase Duplicate Sleeves and upgrades. These are permanent!";
 
 const GangNames = [
   "Slum Snakes",
@@ -85,9 +77,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
 
     this.state = {
       rerenderFlag: false,
-      purchasingAugs: props.initiallyOnAugmentationsPage
-        ? props.initiallyOnAugmentationsPage
-        : false,
+      purchasingAugs: props.initiallyOnAugmentationsPage ? props.initiallyOnAugmentationsPage : false,
     };
 
     this.manageGang = this.manageGang.bind(this);
@@ -204,9 +194,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
   }
 
   render(): React.ReactNode {
-    return this.state.purchasingAugs
-      ? this.renderAugmentationsPage()
-      : this.renderMainPage();
+    return this.state.purchasingAugs ? this.renderAugmentationsPage() : this.renderMainPage();
   }
 
   renderMainPage(): React.ReactNode {
@@ -220,15 +208,10 @@ export class FactionRoot extends React.Component<IProps, IState> {
 
     // Flags for whether special options (gang, sleeve purchases, donate, etc.)
     // should be shown
-    const favorToDonate = Math.floor(
-      CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction,
-    );
+    const favorToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     const canDonate = faction.favor >= favorToDonate;
 
-    const canPurchaseSleeves =
-      faction.name === "The Covenant" &&
-      p.bitNodeN >= 10 &&
-      SourceFileFlags[10];
+    const canPurchaseSleeves = faction.name === "The Covenant" && p.bitNodeN >= 10 && SourceFileFlags[10];
 
     let canAccessGang = p.canAccessGang() && GangNames.includes(faction.name);
     if (p.inGang()) {
@@ -243,19 +226,9 @@ export class FactionRoot extends React.Component<IProps, IState> {
       <div>
         <h1>{faction.name}</h1>
         <Info faction={faction} factionInfo={factionInfo} />
-        {canAccessGang && (
-          <Option
-            buttonText={"Manage Gang"}
-            infoText={gangInfo}
-            onClick={this.manageGang}
-          />
-        )}
+        {canAccessGang && <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={this.manageGang} />}
         {!isPlayersGang && factionInfo.offerHackingMission && (
-          <Option
-            buttonText={"Hacking Mission"}
-            infoText={hackingMissionInfo}
-            onClick={this.startHackingMission}
-          />
+          <Option buttonText={"Hacking Mission"} infoText={hackingMissionInfo} onClick={this.startHackingMission} />
         )}
         {!isPlayersGang && factionInfo.offerHackingWork && (
           <Option
@@ -265,18 +238,10 @@ export class FactionRoot extends React.Component<IProps, IState> {
           />
         )}
         {!isPlayersGang && factionInfo.offerFieldWork && (
-          <Option
-            buttonText={"Field Work"}
-            infoText={fieldWorkInfo}
-            onClick={this.startFieldWork}
-          />
+          <Option buttonText={"Field Work"} infoText={fieldWorkInfo} onClick={this.startFieldWork} />
         )}
         {!isPlayersGang && factionInfo.offerSecurityWork && (
-          <Option
-            buttonText={"Security Work"}
-            infoText={securityWorkInfo}
-            onClick={this.startSecurityWork}
-          />
+          <Option buttonText={"Security Work"} infoText={securityWorkInfo} onClick={this.startSecurityWork} />
         )}
         {!isPlayersGang && factionInfo.offersWork() && (
           <DonateOption
@@ -287,11 +252,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
             disabled={!canDonate}
           />
         )}
-        <Option
-          buttonText={"Purchase Augmentations"}
-          infoText={augmentationsInfo}
-          onClick={this.routeToPurchaseAugs}
-        />
+        <Option buttonText={"Purchase Augmentations"} infoText={augmentationsInfo} onClick={this.routeToPurchaseAugs} />
         {canPurchaseSleeves && (
           <Option
             buttonText={"Purchase & Upgrade Duplicate Sleeves"}
@@ -306,11 +267,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
   renderAugmentationsPage(): React.ReactNode {
     return (
       <div>
-        <AugmentationsPage
-          faction={this.props.faction}
-          p={this.props.p}
-          routeToMainPage={this.routeToMain}
-        />
+        <AugmentationsPage faction={this.props.faction} p={this.props.p} routeToMainPage={this.routeToMain} />
       </div>
     );
   }

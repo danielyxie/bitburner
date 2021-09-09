@@ -30,11 +30,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
   const btnStyle = { display: "block" };
 
   const purchaseServerButtons: React.ReactNode[] = [];
-  for (
-    let i = props.loc.techVendorMinRam;
-    i <= props.loc.techVendorMaxRam;
-    i *= 2
-  ) {
+  for (let i = props.loc.techVendorMinRam; i <= props.loc.techVendorMaxRam; i *= 2) {
     const cost = getPurchaseServerCost(i);
     purchaseServerButtons.push(
       <StdButton
@@ -56,10 +52,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
       {purchaseServerButtons}
       <br />
       <p className="noselect">
-        <i>
-          "You can order bigger servers via scripts. We don't take custom order
-          in person."
-        </i>
+        <i>"You can order bigger servers via scripts. We don't take custom order in person."</i>
       </p>
       <br />
       <TorButton p={props.p} rerender={rerender} />

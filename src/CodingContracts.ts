@@ -1,17 +1,8 @@
-import {
-  codingContractTypesMetadata,
-  DescriptionFunc,
-  GeneratorFunc,
-  SolverFunc,
-} from "./data/codingcontracttypes";
+import { codingContractTypesMetadata, DescriptionFunc, GeneratorFunc, SolverFunc } from "./data/codingcontracttypes";
 
 import { IMap } from "./types";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { createPopup, removePopup } from "./ui/React/createPopup";
 import { CodingContractPopup } from "./ui/React/CodingContractPopup";
 
@@ -131,11 +122,7 @@ export class CodingContract {
   /* String representing the contract's type. Must match type in ContractTypes */
   type: string;
 
-  constructor(
-    fn = "",
-    type = "Find Largest Prime Factor",
-    reward: ICodingContractReward | null = null,
-  ) {
+  constructor(fn = "", type = "Find Largest Prime Factor", reward: ICodingContractReward | null = null) {
     this.fn = fn;
     if (!this.fn.endsWith(".cct")) {
       this.fn += ".cct";
@@ -143,9 +130,7 @@ export class CodingContract {
 
     // tslint:disable-next-line
     if (CodingContractTypes[type] == null) {
-      throw new Error(
-        `Error: invalid contract type: ${type} please contact developer`,
-      );
+      throw new Error(`Error: invalid contract type: ${type} please contact developer`);
     }
 
     this.type = type;

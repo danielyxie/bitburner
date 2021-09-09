@@ -9,11 +9,7 @@ import { ScriptUrl } from "./ScriptUrl";
 import { Page, routing } from "../ui/navigationTracking";
 
 import { setTimeoutRef } from "../utils/SetTimeoutRef";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
 let globalModuleSequenceNumber = 0;

@@ -12,8 +12,7 @@ export function StatsElement(sleeve: Sleeve): React.ReactElement {
           <tr>
             <td className="character-hp-cell">HP: </td>
             <td className="character-hp-cell" style={style}>
-              {numeralWrapper.formatHp(sleeve.hp)} /{" "}
-              {numeralWrapper.formatHp(sleeve.max_hp)}
+              {numeralWrapper.formatHp(sleeve.hp)} / {numeralWrapper.formatHp(sleeve.max_hp)}
             </td>
           </tr>
           <tr>

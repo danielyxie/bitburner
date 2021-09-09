@@ -2,11 +2,7 @@
  * This is an object that is used to keep track of where all of the player's
  * money is coming from (or going to)
  */
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class MoneySourceTracker {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -32,9 +28,7 @@ export class MoneySourceTracker {
   record(amt: number, source: string): void {
     const sanitizedSource = source.toLowerCase();
     if (typeof this[sanitizedSource] !== "number") {
-      console.warn(
-        `MoneySourceTracker.record() called with invalid source: ${source}`,
-      );
+      console.warn(`MoneySourceTracker.record() called with invalid source: ${source}`);
       return;
     }
 

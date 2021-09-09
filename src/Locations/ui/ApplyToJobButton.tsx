@@ -27,10 +27,7 @@ export class ApplyToJobButton extends React.Component<IProps, any> {
   }
 
   getJobRequirementTooltip(): string {
-    const pos = this.props.p.getNextCompanyPosition(
-      this.props.company,
-      this.props.entryPosType,
-    );
+    const pos = this.props.p.getNextCompanyPosition(this.props.company, this.props.entryPosType);
     if (pos == null) {
       return "";
     }

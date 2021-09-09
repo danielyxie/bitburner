@@ -10,14 +10,9 @@ export function getStockMarketTixApiCost(): number {
 }
 
 export function getStockMarket4SDataCost(): number {
-  return (
-    CONSTANTS.MarketData4SCost * BitNodeMultipliers.FourSigmaMarketDataCost
-  );
+  return CONSTANTS.MarketData4SCost * BitNodeMultipliers.FourSigmaMarketDataCost;
 }
 
 export function getStockMarket4STixApiCost(): number {
-  return (
-    CONSTANTS.MarketDataTixApi4SCost *
-    BitNodeMultipliers.FourSigmaMarketDataApiCost
-  );
+  return CONSTANTS.MarketDataTixApi4SCost * BitNodeMultipliers.FourSigmaMarketDataApiCost;
 }

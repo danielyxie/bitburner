@@ -35,12 +35,8 @@ export function ExpandNewCityPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Would you like to expand into a new city by opening an office? This
-        would cost{" "}
-        <MoneyCost
-          money={CorporationConstants.OfficeInitialCost}
-          corp={props.corp}
-        />
+        Would you like to expand into a new city by opening an office? This would cost{" "}
+        <MoneyCost money={CorporationConstants.OfficeInitialCost} corp={props.corp} />
       </p>
       <select ref={dropdown} className="dropdown" style={{ margin: "5px" }}>
         {Object.keys(props.division.offices)

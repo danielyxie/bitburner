@@ -735,9 +735,7 @@ export const BlackOperations: IMap<BlackOperation> = {};
   });
   BlackOperations["Operation Daedalus"] = new BlackOperation({
     name: "Operation Daedalus",
-    desc:
-      "Yesterday we obeyed kings and bent our neck to emperors. " +
-      "Today we kneel only to truth.",
+    desc: "Yesterday we obeyed kings and bent our neck to emperors. " + "Today we kneel only to truth.",
     baseDifficulty: 80e3,
     reqdRank: 400e3,
     rankGain: 40e3,

@@ -211,10 +211,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 90,
     },
     hostname: "omnitek",
-    literature: [
-      LiteratureNames.CodedIntelligence,
-      LiteratureNames.HistoryOfSynthoids,
-    ],
+    literature: [LiteratureNames.CodedIntelligence, LiteratureNames.HistoryOfSynthoids],
     maxRamExponent: {
       max: 9,
       min: 7,
@@ -558,10 +555,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 70,
     },
     hostname: "taiyang-digital",
-    literature: [
-      LiteratureNames.AGreenTomorrow,
-      LiteratureNames.BrighterThanTheSun,
-    ],
+    literature: [LiteratureNames.AGreenTomorrow, LiteratureNames.BrighterThanTheSun],
     moneyAvailable: {
       max: 900000000,
       min: 800000000,
@@ -704,10 +698,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 70,
     },
     hostname: "solaris",
-    literature: [
-      LiteratureNames.AGreenTomorrow,
-      LiteratureNames.TheFailedFrontier,
-    ],
+    literature: [LiteratureNames.AGreenTomorrow, LiteratureNames.TheFailedFrontier],
     maxRamExponent: {
       max: 7,
       min: 4,
@@ -1025,11 +1016,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 45,
     },
     hostname: "summit-uni",
-    literature: [
-      LiteratureNames.SecretSocieties,
-      LiteratureNames.TheFailedFrontier,
-      LiteratureNames.SyntheticMuscles,
-    ],
+    literature: [LiteratureNames.SecretSocieties, LiteratureNames.TheFailedFrontier, LiteratureNames.SyntheticMuscles],
     maxRamExponent: {
       max: 6,
       min: 4,

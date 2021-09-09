@@ -1,8 +1,4 @@
-export function unknownBladeburnerActionErrorMessage(
-  functionName,
-  actionType,
-  actionName,
-) {
+export function unknownBladeburnerActionErrorMessage(functionName, actionType, actionName) {
   return (
     `ERROR: bladeburner.${functionName}() failed due to an invalid action specified. ` +
     `Type: ${actionType}, Name: ${actionName}. Note that for contracts and operations, the ` +

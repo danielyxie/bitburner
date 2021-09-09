@@ -18,9 +18,7 @@ export function writeCinematicText(lines) {
   cinematicTextFlag = true;
 
   if (lines.constructor !== Array) {
-    throw new Error(
-      "Invalid non-array argument passed into writeCinematicText()",
-    );
+    throw new Error("Invalid non-array argument passed into writeCinematicText()");
   }
 
   // Reuse the 'Red Pill' content
@@ -28,17 +26,13 @@ export function writeCinematicText(lines) {
   const container = document.getElementById("cinematic-text-container");
   container.style.width = "75%";
   if (container == null) {
-    throw new Error(
-      "Could not find cinematic-text-container for writeCinematicText()",
-    );
+    throw new Error("Could not find cinematic-text-container for writeCinematicText()");
   }
   removeChildrenFromElement(container);
 
   for (let i = 0; i < lines.length; ++i) {
     if (!isString(lines[i])) {
-      throw new Error(
-        "Invalid non-string element in 'lines' argument. writeCinematicText() failed",
-      );
+      throw new Error("Invalid non-string element in 'lines' argument. writeCinematicText() failed");
     }
   }
 
@@ -88,8 +82,7 @@ function writeCinematicTextLetter(pElem, line, i = 0) {
         return resolve(true);
       }
 
-      pElem.innerHTML =
-        textToShow + "<span class='typed-cursor'> &#9608; </span>";
+      pElem.innerHTML = textToShow + "<span class='typed-cursor'> &#9608; </span>";
       const promise = writeCinematicTextLetter(pElem, line, i + 1);
       promise.then(
         function (res) {

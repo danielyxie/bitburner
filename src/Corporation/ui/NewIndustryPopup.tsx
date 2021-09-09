@@ -18,14 +18,10 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
   const possibleIndustries = allIndustries
     .filter(
       (industryType: string) =>
-        props.corp.divisions.find(
-          (division: IIndustry) => division.type === industryType,
-        ) === undefined,
+        props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
     )
     .sort();
-  const [industry, setIndustry] = useState(
-    possibleIndustries.length > 0 ? possibleIndustries[0] : "",
-  );
+  const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : "");
   const [name, setName] = useState("");
 
   function newIndustry(): void {
@@ -55,19 +51,12 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
   }
 
   const desc = IndustryDescriptions[industry];
-  if (desc === undefined)
-    throw new Error(
-      `Trying to create an industry that doesn't exists: '${industry}'`,
-    );
+  if (desc === undefined) throw new Error(`Trying to create an industry that doesn't exists: '${industry}'`);
 
   return (
     <>
       <p>Create a new division to expand into a new industry:</p>
-      <select
-        className="dropdown"
-        defaultValue={industry}
-        onChange={onIndustryChange}
-      >
+      <select className="dropdown" defaultValue={industry} onChange={onIndustryChange}>
         {possibleIndustries.map((industry: string) => (
           <option key={industry} value={industry}>
             {industry}

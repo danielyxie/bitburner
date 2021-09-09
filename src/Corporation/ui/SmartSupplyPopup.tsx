@@ -14,13 +14,10 @@ interface ILeftoverProps {
 }
 
 function Leftover(props: ILeftoverProps): React.ReactElement {
-  const [checked, setChecked] = useState(
-    !!props.warehouse.smartSupplyUseLeftovers[props.matName],
-  );
+  const [checked, setChecked] = useState(!!props.warehouse.smartSupplyUseLeftovers[props.matName]);
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    props.warehouse.smartSupplyUseLeftovers[props.matName] =
-      event.target.checked;
+    props.warehouse.smartSupplyUseLeftovers[props.matName] = event.target.checked;
     setChecked(event.target.checked);
   }
 
@@ -30,13 +27,7 @@ function Leftover(props: ILeftoverProps): React.ReactElement {
       <label style={{ color: "white" }} htmlFor={matNameId}>
         {props.warehouse.materials[props.matName].name}
       </label>
-      <input
-        type={"checkbox"}
-        id={matNameId}
-        onChange={onChange}
-        style={{ margin: "3px" }}
-        checked={checked}
-      />
+      <input type={"checkbox"} id={matNameId} onChange={onChange} style={{ margin: "3px" }} checked={checked} />
       <br />
     </div>
   );
@@ -67,9 +58,7 @@ export function SmartSupplyPopup(props: IProps): React.ReactElement {
   for (const matName in props.warehouse.materials) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
     if (!isRelevantMaterial(matName, props.division)) continue;
-    mats.push(
-      <Leftover key={matName} warehouse={props.warehouse} matName={matName} />,
-    );
+    mats.push(<Leftover key={matName} warehouse={props.warehouse} matName={matName} />);
   }
 
   return (
@@ -85,10 +74,7 @@ export function SmartSupplyPopup(props: IProps): React.ReactElement {
         checked={props.warehouse.smartSupplyEnabled}
       />
       <br />
-      <p>
-        Use materials already in the warehouse instead of buying new ones, if
-        available:
-      </p>
+      <p>Use materials already in the warehouse instead of buying new ones, if available:</p>
       {mats}
     </>
   );

@@ -106,9 +106,7 @@ export const researchMetadata: IConstructorParams[] = [
   {
     name: "JoyWire",
     cost: 20e3,
-    desc:
-      "A brain implant which is installed in employees, increasing their " +
-      "maximum happiness by 10.",
+    desc: "A brain implant which is installed in employees, increasing their " + "maximum happiness by 10.",
   },
   {
     name: "Market-TA.I",
@@ -162,9 +160,7 @@ export const researchMetadata: IConstructorParams[] = [
   {
     name: "sudo.Assist",
     cost: 15e3,
-    desc:
-      "Develop a virtual assistant AI to handle and manage administrative " +
-      "issues for your corporation.",
+    desc: "Develop a virtual assistant AI to handle and manage administrative " + "issues for your corporation.",
   },
   {
     name: "uPgrade: Capacity.I",

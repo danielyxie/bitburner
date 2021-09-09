@@ -9,10 +9,7 @@ import { CityName } from "./data/CityNames";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
 import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
-import {
-  getPurchaseServerCost,
-  purchaseServer,
-} from "../Server/ServerPurchases";
+import { getPurchaseServerCost, purchaseServer } from "../Server/ServerPurchases";
 import { SpecialServerIps } from "../Server/SpecialServerIps";
 import { Settings } from "../Settings/Settings";
 
@@ -46,10 +43,7 @@ import * as React from "react";
  * @param {Function} travelFn - Function that changes the player's state for traveling
  */
 type TravelFunction = (to: CityName) => void;
-export function createTravelPopup(
-  destination: CityName,
-  travelFn: TravelFunction,
-): void {
+export function createTravelPopup(destination: CityName, travelFn: TravelFunction): void {
   const cost: number = CONSTANTS.TravelCost;
 
   if (Settings.SuppressTravelConfirmation) {
@@ -79,8 +73,7 @@ export function createTravelPopup(
 
   yesNoBoxCreate(
     <span>
-      Would you like to travel to {destination}? The trip will cost{" "}
-      <Money money={cost} />.
+      Would you like to travel to {destination}? The trip will cost <Money money={cost} />.
     </span>,
   );
 }
@@ -93,9 +86,7 @@ export function createTravelPopup(
 export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
   const cost = getPurchaseServerCost(ram);
   if (cost === Infinity) {
-    dialogBoxCreate(
-      "Something went wrong when trying to purchase this server. Please contact developer.",
-    );
+    dialogBoxCreate("Something went wrong when trying to purchase this server. Please contact developer.");
     return;
   }
 
@@ -116,8 +107,7 @@ export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
 
   yesNoTxtInpBoxCreate(
     <>
-      Would you like to purchase a new server with{" "}
-      {numeralWrapper.formatRAM(ram)} of RAM for{" "}
+      Would you like to purchase a new server with {numeralWrapper.formatRAM(ram)} of RAM for{" "}
       <Money money={cost} player={p} />?
       <br />
       <br />
@@ -155,9 +145,7 @@ export function createStartCorporationPopup(p: IPlayer): void {
     innerText: "Self-Fund",
     clickListener: () => {
       if (!p.canAfford(150e9)) {
-        dialogBoxCreate(
-          "You don't have enough money to create a corporation! You need $150b.",
-        );
+        dialogBoxCreate("You don't have enough money to create a corporation! You need $150b.");
         return false;
       }
 
@@ -214,13 +202,7 @@ export function createStartCorporationPopup(p: IPlayer): void {
     class: "popup-box-button",
   });
 
-  createPopup(popupId, [
-    txt,
-    nameInput,
-    cancelBtn,
-    selfFundedButton,
-    seedMoneyButton,
-  ]);
+  createPopup(popupId, [txt, nameInput, cancelBtn, selfFundedButton, seedMoneyButton]);
   nameInput.focus();
 }
 
@@ -231,9 +213,7 @@ export function createStartCorporationPopup(p: IPlayer): void {
 export function createUpgradeHomeCoresPopup(p: IPlayer): void {
   const currentCores = p.getHomeComputer().cpuCores;
   if (currentCores >= 8) {
-    dialogBoxCreate(
-      <>You have the maximum amount of CPU cores on your home computer.</>,
-    );
+    dialogBoxCreate(<>You have the maximum amount of CPU cores on your home computer.</>);
     return;
   }
 
@@ -250,9 +230,7 @@ export function createUpgradeHomeCoresPopup(p: IPlayer): void {
   yesBtn.innerHTML = "Purchase";
   yesBtn.addEventListener("click", () => {
     if (!p.canAfford(cost)) {
-      dialogBoxCreate(
-        "You do not have enough money to purchase an additional CPU Core for your home computer!",
-      );
+      dialogBoxCreate("You do not have enough money to purchase an additional CPU Core for your home computer!");
     } else {
       p.loseMoney(cost);
       p.getHomeComputer().cpuCores++;
@@ -272,13 +250,11 @@ export function createUpgradeHomeCoresPopup(p: IPlayer): void {
 
   yesNoBoxCreate(
     <>
-      Would you like to purchase an additional CPU Core for your home computer?
-      Each CPU Core lets you start with an additional Core Node in Hacking
-      Missions.
+      Would you like to purchase an additional CPU Core for your home computer? Each CPU Core lets you start with an
+      additional Core Node in Hacking Missions.
       <br />
       <br />
-      Purchasing an additional core (for a total of{" "}
-      {p.getHomeComputer().cpuCores + 1}) will cost{" "}
+      Purchasing an additional core (for a total of {p.getHomeComputer().cpuCores + 1}) will cost{" "}
       <Money money={cost} player={p} />
     </>,
   );

@@ -8,17 +8,11 @@
 function Reviver(key, value) {
   var ctor;
   if (value == null) {
-    console.log(
-      "Reviver WRONGLY called with key: " + key + ", and value: " + value,
-    );
+    console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
     return 0;
   }
 
-  if (
-    typeof value === "object" &&
-    typeof value.ctor === "string" &&
-    typeof value.data !== "undefined"
-  ) {
+  if (typeof value === "object" && typeof value.ctor === "string" && typeof value.data !== "undefined") {
     // Compatibility for version v0.43.1
     // TODO Remove this eventually
     if (value.ctor === "AllServersMap") {

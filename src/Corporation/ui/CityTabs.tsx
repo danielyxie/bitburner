@@ -61,7 +61,8 @@ export function CityTabs(props: IProps): React.ReactElement {
   return (
     <>
       {Object.values(props.division.offices).map(
-        (office: OfficeSpace | 0) => office !== 0 && (
+        (office: OfficeSpace | 0) =>
+          office !== 0 && (
             <CityTab
               current={city === office.loc}
               key={office.loc}
@@ -70,11 +71,7 @@ export function CityTabs(props: IProps): React.ReactElement {
             />
           ),
       )}
-      <ExpandButton
-        corp={props.corp}
-        division={props.division}
-        setCity={setCity}
-      />
+      <ExpandButton corp={props.corp} division={props.division} setCity={setCity} />
       <Industry
         corp={props.corp}
         division={props.division}

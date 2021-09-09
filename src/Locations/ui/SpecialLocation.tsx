@@ -72,16 +72,9 @@ export class SpecialLocation extends React.Component<IProps, IState> {
       this.props.engine.loadBladeburnerContent();
     } else {
       // Apply for Bladeburner division
-      if (
-        p.strength >= 100 &&
-        p.defense >= 100 &&
-        p.dexterity >= 100 &&
-        p.agility >= 100
-      ) {
+      if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
         p.startBladeburner({ new: true });
-        dialogBoxCreate(
-          "You have been accepted into the Bladeburner division!",
-        );
+        dialogBoxCreate("You have been accepted into the Bladeburner division!");
         this.setState({
           inBladeburner: true,
         });
@@ -92,9 +85,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
           worldHeader.click();
         }
       } else {
-        dialogBoxCreate(
-          "Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)",
-        );
+        dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
       }
     }
   }
@@ -110,16 +101,8 @@ export class SpecialLocation extends React.Component<IProps, IState> {
     if (!this.props.p.canAccessBladeburner()) {
       return null;
     }
-    const text = this.state.inBladeburner
-      ? "Enter Bladeburner Headquarters"
-      : "Apply to Bladeburner Division";
-    return (
-      <StdButton
-        onClick={this.handleBladeburner}
-        style={this.btnStyle}
-        text={text}
-      />
-    );
+    const text = this.state.inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
+    return <StdButton onClick={this.handleBladeburner} style={this.btnStyle} text={text} />;
   }
 
   renderNoodleBar(): React.ReactNode {
@@ -127,13 +110,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
       dialogBoxCreate(<>You ate some delicious noodles and feel refreshed.</>);
     }
 
-    return (
-      <StdButton
-        onClick={EatNoodles}
-        style={this.btnStyle}
-        text={"Eat noodles"}
-      />
-    );
+    return <StdButton onClick={EatNoodles} style={this.btnStyle} text={"Eat noodles"} />;
   }
 
   renderCreateCorporation(): React.ReactNode {
@@ -141,18 +118,14 @@ export class SpecialLocation extends React.Component<IProps, IState> {
       return (
         <>
           <p>
-            <i>
-              A business man is yelling at a clerk. You should come back later.
-            </i>
+            <i>A business man is yelling at a clerk. You should come back later.</i>
           </p>
         </>
       );
     }
     return (
       <AutoupdatingStdButton
-        disabled={
-          !this.props.p.canAccessCorporation() || this.props.p.hasCorporation()
-        }
+        disabled={!this.props.p.canAccessCorporation() || this.props.p.hasCorporation()}
         onClick={this.createCorporationPopup}
         style={this.btnStyle}
         text={"Create a Corporation"}
@@ -164,13 +137,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
     if (!this.props.p.canAccessResleeving()) {
       return null;
     }
-    return (
-      <StdButton
-        onClick={this.handleResleeving}
-        style={this.btnStyle}
-        text={"Re-Sleeve"}
-      />
-    );
+    return <StdButton onClick={this.handleResleeving} style={this.btnStyle} text={"Re-Sleeve"} />;
   }
 
   render(): React.ReactNode {
@@ -188,9 +155,7 @@ export class SpecialLocation extends React.Component<IProps, IState> {
         return this.renderNoodleBar();
       }
       default:
-        console.error(
-          `Location ${this.props.loc.name} doesn't have any special properties`,
-        );
+        console.error(`Location ${this.props.loc.name} doesn't have any special properties`);
         break;
     }
   }

@@ -51,9 +51,7 @@ export function MakeProductPopup(props: IProps): React.ReactElement {
     } else if (isNaN(marketingInvest)) {
       dialogBoxCreate("Invalid value for marketing investment");
     } else if (props.corp.funds.lt(designInvest + marketingInvest)) {
-      dialogBoxCreate(
-        "You don't have enough company funds to make this large of an investment",
-      );
+      dialogBoxCreate("You don't have enough company funds to make this large of an investment");
     } else {
       const product = new Product({
         name: name.replace(/[<>]/g, ""), //Sanitize for HTMl elements
@@ -75,9 +73,7 @@ export function MakeProductPopup(props: IProps): React.ReactElement {
     setCity(event.target.value);
   }
 
-  function onProductNameChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void {
+  function onProductNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setName(event.target.value);
   }
 
@@ -98,12 +94,7 @@ export function MakeProductPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p dangerouslySetInnerHTML={{ __html: props.popupText }} />
-      <select
-        className="dropdown"
-        style={{ margin: "5px" }}
-        onChange={onCityChange}
-        defaultValue={city}
-      >
+      <select className="dropdown" style={{ margin: "5px" }} onChange={onCityChange} defaultValue={city}>
         {allCities.map((cityName: string) => (
           <option key={cityName} value={cityName}>
             {cityName}

@@ -21,11 +21,7 @@ export function GeneralActionList(props: IProps): React.ReactElement {
     <>
       {actions.map((action: Action) => (
         <li key={action.name} className="bladeburner-action">
-          <GeneralActionElem
-            bladeburner={props.bladeburner}
-            action={action}
-            player={props.player}
-          />
+          <GeneralActionElem bladeburner={props.bladeburner} action={action} player={props.player} />
         </li>
       ))}
     </>

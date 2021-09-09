@@ -21,19 +21,13 @@ export function makeRuntimeRejectMsg(workerScript, msg, exp = null) {
   }
   const server = AllServers[workerScript.serverIp];
   if (server == null) {
-    throw new Error(
-      `WorkerScript constructed with invalid server ip: ${this.serverIp}`,
-    );
+    throw new Error(`WorkerScript constructed with invalid server ip: ${this.serverIp}`);
   }
 
   return "|" + server.hostname + "|" + workerScript.name + "|" + msg + lineNum;
 }
 
-export function resolveNetscriptRequestedThreads(
-  workerScript,
-  functionName,
-  requestedThreads,
-) {
+export function resolveNetscriptRequestedThreads(workerScript, functionName, requestedThreads) {
   const threads = workerScript.scriptRef.threads;
   if (!requestedThreads) {
     return isNaN(threads) || threads < 1 ? 1 : threads;

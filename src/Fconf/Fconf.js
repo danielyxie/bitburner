@@ -13,11 +13,9 @@ var FconfComments = {
     "To see a full list of the Terminal shortcuts that this enables, see:\n" +
     "http://bitburner.readthedocs.io/en/latest/shortcuts.html",
   ENABLE_TIMESTAMPS:
-    "Terminal commands and log entries will be timestamped. The timestamp\n" +
-    "will have the format: M/D h:m",
+    "Terminal commands and log entries will be timestamped. The timestamp\n" + "will have the format: M/D h:m",
   MAIN_MENU_STYLE:
-    "Customize the main navigation menu on the left-hand side. Current options:\n\n" +
-    "default, classic, compact",
+    "Customize the main navigation menu on the left-hand side. Current options:\n\n" + "default, classic, compact",
   THEME_BACKGROUND_COLOR:
     "Sets the background color for not only the Terminal, but also for\n" +
     "most of the game's UI.\n\n" +
@@ -132,9 +130,7 @@ function parseFconfSetting(setting, value) {
       if (MainMenuStyleOptions.includes(value)) {
         FconfSettings[setting] = value;
       } else {
-        dialogBoxCreate(
-          `Invalid option specified for ${setting}. Options: ${MainMenuStyleOptions.toString()}`,
-        );
+        dialogBoxCreate(`Invalid option specified for ${setting}. Options: ${MainMenuStyleOptions.toString()}`);
       }
       break;
     case "THEME_BACKGROUND_COLOR":
@@ -145,9 +141,7 @@ function parseFconfSetting(setting, value) {
       if (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(value)) {
         FconfSettings[setting] = value;
       } else {
-        dialogBoxCreate(
-          `Invalid color specified for ${setting}. Must be a hex color code preceded by a pound (#)`,
-        );
+        dialogBoxCreate(`Invalid color specified for ${setting}. Must be a hex color code preceded by a pound (#)`);
       }
       break;
     default:
@@ -208,31 +202,15 @@ function setTheme() {
     return;
   }
   if (
-    /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(
-      FconfSettings.THEME_HIGHLIGHT_COLOR,
-    ) &&
+    /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(FconfSettings.THEME_HIGHLIGHT_COLOR) &&
     /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(FconfSettings.THEME_FONT_COLOR) &&
-    /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(
-      FconfSettings.THEME_BACKGROUND_COLOR,
-    ) &&
+    /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(FconfSettings.THEME_BACKGROUND_COLOR) &&
     /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(FconfSettings.THEME_PROMPT_COLOR)
   ) {
-    document.body.style.setProperty(
-      "--my-highlight-color",
-      FconfSettings.THEME_HIGHLIGHT_COLOR,
-    );
-    document.body.style.setProperty(
-      "--my-font-color",
-      FconfSettings.THEME_FONT_COLOR,
-    );
-    document.body.style.setProperty(
-      "--my-background-color",
-      FconfSettings.THEME_BACKGROUND_COLOR,
-    );
-    document.body.style.setProperty(
-      "--my-prompt-color",
-      FconfSettings.THEME_PROMPT_COLOR,
-    );
+    document.body.style.setProperty("--my-highlight-color", FconfSettings.THEME_HIGHLIGHT_COLOR);
+    document.body.style.setProperty("--my-font-color", FconfSettings.THEME_FONT_COLOR);
+    document.body.style.setProperty("--my-background-color", FconfSettings.THEME_BACKGROUND_COLOR);
+    document.body.style.setProperty("--my-prompt-color", FconfSettings.THEME_PROMPT_COLOR);
   }
 }
 
@@ -244,22 +222,10 @@ function setMainMenuStyle() {
   const helpMenuHdr = document.getElementById("help-menu-header");
 
   function removeAllAccordionHeaderClasses() {
-    hackingMenuHdr.classList.remove(
-      "mainmenu-accordion-header",
-      "mainmenu-accordion-header-classic",
-    );
-    characterMenuHdr.classList.remove(
-      "mainmenu-accordion-header",
-      "mainmenu-accordion-header-classic",
-    );
-    worldMenuHdr.classList.remove(
-      "mainmenu-accordion-header",
-      "mainmenu-accordion-header-classic",
-    );
-    helpMenuHdr.classList.remove(
-      "mainmenu-accordion-header",
-      "mainmenu-accordion-header-classic",
-    );
+    hackingMenuHdr.classList.remove("mainmenu-accordion-header", "mainmenu-accordion-header-classic");
+    characterMenuHdr.classList.remove("mainmenu-accordion-header", "mainmenu-accordion-header-classic");
+    worldMenuHdr.classList.remove("mainmenu-accordion-header", "mainmenu-accordion-header-classic");
+    helpMenuHdr.classList.remove("mainmenu-accordion-header", "mainmenu-accordion-header-classic");
   }
 
   function addClassToAllAccordionHeaders(clsName) {

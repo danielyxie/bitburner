@@ -47,13 +47,10 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
       <div id="augmentations-content">
         <h1>Purchased Augmentations</h1>
         <p>
-          Below is a list of all Augmentations you have purchased but not yet
-          installed. Click the button below to install them.
+          Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to
+          install them.
         </p>
-        <p>
-          WARNING: Installing your Augmentations resets most of your progress,
-          including:
-        </p>
+        <p>WARNING: Installing your Augmentations resets most of your progress, including:</p>
         <br />
         <p>- Stats/Skill levels and Experience</p>
         <p>- Money</p>
@@ -64,10 +61,9 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
         <p>- Stocks</p>
         <br />
         <p>
-          Installing Augmentations lets you start over with the perks and
-          benefits granted by all of the Augmentations you have ever installed.
-          Also, you will keep any scripts and RAM/Core upgrades on your home
-          computer (but you will lose all programs besides NUKE.exe)
+          Installing Augmentations lets you start over with the perks and benefits granted by all of the Augmentations
+          you have ever installed. Also, you will keep any scripts and RAM/Core upgrades on your home computer (but you
+          will lose all programs besides NUKE.exe)
         </p>
         <StdButton
           onClick={this.props.installAugmentationsFn}
@@ -83,9 +79,7 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
         <PurchasedAugmentations />
         <h1>Installed Augmentations</h1>
         <p>
-          {`List of all Augmentations ${
-            Player.sourceFiles.length > 0 ? "and Source Files " : ""
-          } ` +
+          {`List of all Augmentations ${Player.sourceFiles.length > 0 ? "and Source Files " : ""} ` +
             `that have been installed. You have gained the effects of these.`}
         </p>
         <InstalledAugmentationsAndSourceFiles />

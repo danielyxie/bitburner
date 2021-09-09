@@ -1,8 +1,5 @@
 import { NetscriptFunctions } from "../../src/NetscriptFunctions";
-import {
-  getRamCost,
-  RamCostConstants,
-} from "../../src/Netscript/RamCostGenerator";
+import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { Environment } from "../../src/Netscript/Environment";
 import { RunningScript } from "../../src/Script/RunningScript";
 import { Script } from "../../src/Script/Script";

@@ -47,14 +47,9 @@ export function placeOrder(
   }
   if (typeof shares !== "number" || typeof price !== "number") {
     if (workerScript) {
-      workerScript.log(
-        "placeOrder",
-        `Invalid arguments: shares='${shares}' price='${price}'`,
-      );
+      workerScript.log("placeOrder", `Invalid arguments: shares='${shares}' price='${price}'`);
     } else {
-      dialogBoxCreate(
-        "ERROR: Invalid numeric value provided for either 'shares' or 'price' argument",
-      );
+      dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
     }
     return false;
   }
@@ -94,10 +89,7 @@ interface ICancelOrderParams {
   stock?: Stock;
   type?: OrderTypes;
 }
-export function cancelOrder(
-  params: ICancelOrderParams,
-  workerScript: WorkerScript | null = null,
-): boolean {
+export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScript | null = null): boolean {
   if (StockMarket["Orders"] == null) {
     return false;
   }
@@ -123,12 +115,7 @@ export function cancelOrder(
   ) {
     // Order properties are passed in. Need to look for the order
     const stockOrders = StockMarket["Orders"][params.stock.symbol];
-    const orderTxt =
-      params.stock.symbol +
-      " - " +
-      params.shares +
-      " @ " +
-      numeralWrapper.formatMoney(params.price);
+    const orderTxt = params.stock.symbol + " - " + params.shares + " @ " + numeralWrapper.formatMoney(params.price);
     for (let i = 0; i < stockOrders.length; ++i) {
       const order = stockOrders[i];
       if (
@@ -140,9 +127,7 @@ export function cancelOrder(
         stockOrders.splice(i, 1);
         displayStockMarketContent();
         if (workerScript) {
-          workerScript.scriptRef.log(
-            "Successfully cancelled order: " + orderTxt,
-          );
+          workerScript.scriptRef.log("Successfully cancelled order: " + orderTxt);
         }
         return true;
       }
@@ -249,10 +234,7 @@ export function processStockPrices(numCycles = 1): void {
   StockMarket.storedCycles -= cyclesPerStockUpdate;
 
   // Cycle
-  if (
-    StockMarket.ticksUntilCycle == null ||
-    typeof StockMarket.ticksUntilCycle !== "number"
-  ) {
+  if (StockMarket.ticksUntilCycle == null || typeof StockMarket.ticksUntilCycle !== "number") {
     StockMarket.ticksUntilCycle = TicksPerCycle;
   }
   --StockMarket.ticksUntilCycle;
@@ -293,56 +275,16 @@ export function processStockPrices(numCycles = 1): void {
     };
     if (c < chc) {
       stock.changePrice(stock.price * (1 + av));
-      processOrders(
-        stock,
-        OrderTypes.LimitBuy,
-        PositionTypes.Short,
-        processOrderRefs,
-      );
-      processOrders(
-        stock,
-        OrderTypes.LimitSell,
-        PositionTypes.Long,
-        processOrderRefs,
-      );
-      processOrders(
-        stock,
-        OrderTypes.StopBuy,
-        PositionTypes.Long,
-        processOrderRefs,
-      );
-      processOrders(
-        stock,
-        OrderTypes.StopSell,
-        PositionTypes.Short,
-        processOrderRefs,
-      );
+      processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Short, processOrderRefs);
+      processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long, processOrderRefs);
+      processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long, processOrderRefs);
+      processOrders(stock, OrderTypes.StopSell, PositionTypes.Short, processOrderRefs);
     } else {
       stock.changePrice(stock.price / (1 + av));
-      processOrders(
-        stock,
-        OrderTypes.LimitBuy,
-        PositionTypes.Long,
-        processOrderRefs,
-      );
-      processOrders(
-        stock,
-        OrderTypes.LimitSell,
-        PositionTypes.Short,
-        processOrderRefs,
-      );
-      processOrders(
-        stock,
-        OrderTypes.StopBuy,
-        PositionTypes.Short,
-        processOrderRefs,
-      );
-      processOrders(
-        stock,
-        OrderTypes.StopSell,
-        PositionTypes.Long,
-        processOrderRefs,
-      );
+      processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long, processOrderRefs);
+      processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short, processOrderRefs);
+      processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short, processOrderRefs);
+      processOrders(stock, OrderTypes.StopSell, PositionTypes.Long, processOrderRefs);
     }
 
     let otlkMagChange = stock.otlkMag * av;
@@ -357,10 +299,7 @@ export function processStockPrices(numCycles = 1): void {
     stock.cycleForecastForecast(otlkMagChange / 2);
 
     // Shares required for price movement gradually approaches max over time
-    stock.shareTxUntilMovement = Math.min(
-      stock.shareTxUntilMovement + 10,
-      stock.shareTxForMovement,
-    );
+    stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 10, stock.shareTxForMovement);
   }
 
   displayStockMarketContent();

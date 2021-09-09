@@ -25,22 +25,14 @@ export function OptionsPopup(props: IProps): React.ReactElement {
     <div className="editor-options-container noselect">
       <div className="editor-options-line">
         <p>Theme: </p>
-        <select
-          className="dropdown"
-          onChange={(event) => setTheme(event.target.value)}
-          defaultValue={theme}
-        >
+        <select className="dropdown" onChange={(event) => setTheme(event.target.value)} defaultValue={theme}>
           <option value="vs-dark">vs-dark</option>
           <option value="light">light</option>
         </select>
       </div>
       <div className="editor-options-line">
         <p>Use whitespace over tabs: </p>
-        <input
-          type="checkbox"
-          onChange={(event) => setInsertSpaces(event.target.checked)}
-          checked={insertSpaces}
-        />
+        <input type="checkbox" onChange={(event) => setInsertSpaces(event.target.checked)} checked={insertSpaces} />
       </div>
       <br />
       <StdButton style={{ width: "50px" }} text={"Save"} onClick={save} />

@@ -90,13 +90,7 @@ export class ServerAccordions extends React.Component<IProps, IState> {
   render(): React.ReactNode {
     const elems = Object.keys(this.serverToScriptMap).map((serverName) => {
       const data = this.serverToScriptMap[serverName];
-      return (
-        <ServerAccordion
-          key={serverName}
-          server={data.server}
-          workerScripts={data.workerScripts}
-        />
-      );
+      return <ServerAccordion key={serverName} server={data.server} workerScripts={data.workerScripts} />;
     });
 
     return (

@@ -149,10 +149,7 @@ export class StockTickers extends React.Component<IProps, IState> {
       const val = this.props.stockMarket[stockMarketProp];
       if (val instanceof Stock) {
         // Skip if there's a filter and the stock isnt in that filter
-        if (
-          this.state.watchlistSymbols.length > 0 &&
-          !this.state.watchlistSymbols.includes(val.symbol)
-        ) {
+        if (this.state.watchlistSymbols.length > 0 && !this.state.watchlistSymbols.includes(val.symbol)) {
           continue;
         }
 
@@ -163,11 +160,7 @@ export class StockTickers extends React.Component<IProps, IState> {
 
         // Skip if we're in portfolio mode and the player doesnt own this or have any active orders
         if (this.state.tickerDisplayMode === TickerDisplayMode.Portfolio) {
-          if (
-            val.playerShares === 0 &&
-            val.playerShortShares === 0 &&
-            orders.length === 0
-          ) {
+          if (val.playerShares === 0 && val.playerShortShares === 0 && orders.length === 0) {
             continue;
           }
         }

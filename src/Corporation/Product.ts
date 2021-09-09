@@ -1,19 +1,12 @@
 import { EmployeePositions } from "./EmployeePositions";
 import { MaterialSizes } from "./MaterialSizes";
 import { IIndustry } from "./IIndustry";
-import {
-  ProductRatingWeights,
-  IProductRatingWeight,
-} from "./ProductRatingWeights";
+import { ProductRatingWeights, IProductRatingWeight } from "./ProductRatingWeights";
 
 import { createCityMap } from "../Locations/createCityMap";
 import { IMap } from "../types";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
 interface IConstructorParams {
@@ -132,34 +125,20 @@ export class Product {
   }
 
   // @param industry - Industry object. Reference to industry that makes this Product
-  finishProduct(
-    employeeProd: { [key: string]: number },
-    industry: IIndustry,
-  ): void {
+  finishProduct(employeeProd: { [key: string]: number }, industry: IIndustry): void {
     this.fin = true;
 
     //Calculate properties
     const progrMult = this.prog / 100;
 
-    const engrRatio =
-      employeeProd[EmployeePositions.Engineer] / employeeProd["total"];
-    const mgmtRatio =
-      employeeProd[EmployeePositions.Management] / employeeProd["total"];
-    const rndRatio =
-      employeeProd[EmployeePositions.RandD] / employeeProd["total"];
-    const opsRatio =
-      employeeProd[EmployeePositions.Operations] / employeeProd["total"];
-    const busRatio =
-      employeeProd[EmployeePositions.Business] / employeeProd["total"];
+    const engrRatio = employeeProd[EmployeePositions.Engineer] / employeeProd["total"];
+    const mgmtRatio = employeeProd[EmployeePositions.Management] / employeeProd["total"];
+    const rndRatio = employeeProd[EmployeePositions.RandD] / employeeProd["total"];
+    const opsRatio = employeeProd[EmployeePositions.Operations] / employeeProd["total"];
+    const busRatio = employeeProd[EmployeePositions.Business] / employeeProd["total"];
     const designMult = 1 + Math.pow(this.designCost, 0.1) / 100;
-    const balanceMult =
-      1.2 * engrRatio +
-      0.9 * mgmtRatio +
-      1.3 * rndRatio +
-      1.5 * opsRatio +
-      busRatio;
-    const sciMult =
-      1 + Math.pow(industry.sciResearch.qty, industry.sciFac) / 800;
+    const balanceMult = 1.2 * engrRatio + 0.9 * mgmtRatio + 1.3 * rndRatio + 1.5 * opsRatio + busRatio;
+    const sciMult = 1 + Math.pow(industry.sciResearch.qty, industry.sciFac) / 800;
     const totalMult = progrMult * balanceMult * designMult * sciMult;
 
     this.qlt =
@@ -206,21 +185,14 @@ export class Product {
         0.05 * employeeProd[EmployeePositions.Business]);
     this.calculateRating(industry);
     const advMult = 1 + Math.pow(this.advCost, 0.1) / 100;
-    this.mku =
-      100 /
-      (advMult * Math.pow(this.qlt + 0.001, 0.65) * (busRatio + mgmtRatio));
+    this.mku = 100 / (advMult * Math.pow(this.qlt + 0.001, 0.65) * (busRatio + mgmtRatio));
 
     // I actually don't understand well enough to know if this is right.
     // I'm adding this to prevent a crash.
     if (this.mku === 0) this.mku = 1;
 
     this.dmd =
-      industry.awareness === 0
-        ? 20
-        : Math.min(
-            100,
-            advMult * (100 * (industry.popularity / industry.awareness)),
-          );
+      industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
     this.cmp = getRandomInt(0, 70);
 
     //Calculate the product's required materials

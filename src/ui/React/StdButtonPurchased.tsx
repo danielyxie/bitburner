@@ -14,10 +14,7 @@ type IInnerHTMLMarkup = {
   __html: string;
 };
 
-export class StdButtonPurchased extends React.Component<
-  IStdButtonPurchasedProps,
-  any
-> {
+export class StdButtonPurchased extends React.Component<IStdButtonPurchasedProps, any> {
   constructor(props: IStdButtonPurchasedProps) {
     super(props);
     this.hasTooltip = this.hasTooltip.bind(this);
@@ -50,18 +47,9 @@ export class StdButtonPurchased extends React.Component<
     }
 
     return (
-      <button
-        className={className}
-        onClick={this.props.onClick}
-        style={this.props.style}
-      >
+      <button className={className} onClick={this.props.onClick} style={this.props.style}>
         {this.props.text}
-        {this.hasTooltip() && (
-          <span
-            className={"tooltiptext"}
-            dangerouslySetInnerHTML={tooltipMarkup}
-          ></span>
-        )}
+        {this.hasTooltip() && <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup}></span>}
       </button>
     );
   }

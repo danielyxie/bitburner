@@ -22,10 +22,7 @@ import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 import { renderToStaticMarkup } from "react-dom/server";
 
-export function createSleevePurchaseAugsPopup(
-  sleeve: Sleeve,
-  p: IPlayer,
-): void {
+export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer): void {
   // Array of all owned Augmentations. Names only
   const ownedAugNames: string[] = sleeve.augmentations.map((e) => {
     return e.name;
@@ -109,18 +106,13 @@ export function createSleevePurchaseAugsPopup(
         fontSize: "12px",
         innerHTML: [
           `<h2>${aug.name}</h2><br>`,
-          `Cost: ${renderToStaticMarkup(
-            <Money money={aug.startingCost} player={p} />,
-          )}<br><br>`,
+          `Cost: ${renderToStaticMarkup(<Money money={aug.startingCost} player={p} />)}<br><br>`,
           `${info}`,
         ].join(" "),
         padding: "2px",
         clickListener: () => {
           if (sleeve.tryBuyAugmentation(p, aug)) {
-            dialogBoxCreate(
-              `Installed ${aug.name} on Duplicate Sleeve!`,
-              false,
-            );
+            dialogBoxCreate(`Installed ${aug.name} on Duplicate Sleeve!`, false);
             removeElementById(popupId);
             createSleevePurchaseAugsPopup(sleeve, p);
           } else {

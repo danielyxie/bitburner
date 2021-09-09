@@ -1,7 +1,4 @@
-import {
-  getRamCost,
-  RamCostConstants,
-} from "../../src/Netscript/RamCostGenerator";
+import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../src/Script/RamCalculations";
 
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
@@ -35,10 +32,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
     testEquality(calculated, expected + ScriptBaseCost);
 
     const multipleCallsCode = code.repeat(3);
-    const multipleCallsCalculated = await calculateRamUsage(
-      multipleCallsCode,
-      [],
-    );
+    const multipleCallsCalculated = await calculateRamUsage(multipleCallsCode, []);
     expect(multipleCallsCalculated).toEqual(calculated);
   }
 

@@ -26,8 +26,7 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
 
     // Caculate total returns
     const totalCost = stock.playerShares * stock.playerAvgPx;
-    const gains =
-      (stock.getBidPrice() - stock.playerAvgPx) * stock.playerShares;
+    const gains = (stock.getBidPrice() - stock.playerAvgPx) * stock.playerShares;
     let percentageGains = gains / totalCost;
     if (isNaN(percentageGains)) {
       percentageGains = 0;
@@ -38,21 +37,18 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
         <h3 className={"tooltip"}>
           Long Position:
           <span className={"tooltiptext"}>
-            Shares in the long position will increase in value if the price of
-            the corresponding stock increases
+            Shares in the long position will increase in value if the price of the corresponding stock increases
           </span>
         </h3>
         <br />
         <p>Shares: {numeralWrapper.formatShares(stock.playerShares)}</p>
         <br />
         <p>
-          Average Price: <Money money={stock.playerAvgPx} /> (Total Cost:{" "}
-          <Money money={totalCost} />
+          Average Price: <Money money={stock.playerAvgPx} /> (Total Cost: <Money money={totalCost} />
         </p>
         <br />
         <p>
-          Profit: <Money money={gains} /> (
-          {numeralWrapper.formatPercentage(percentageGains)})
+          Profit: <Money money={gains} /> ({numeralWrapper.formatPercentage(percentageGains)})
         </p>
         <br />
       </div>
@@ -64,8 +60,7 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
 
     // Caculate total returns
     const totalCost = stock.playerShortShares * stock.playerAvgShortPx;
-    const gains =
-      (stock.playerAvgShortPx - stock.getAskPrice()) * stock.playerShortShares;
+    const gains = (stock.playerAvgShortPx - stock.getAskPrice()) * stock.playerShortShares;
     let percentageGains = gains / totalCost;
     if (isNaN(percentageGains)) {
       percentageGains = 0;
@@ -77,21 +72,18 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
           <h3 className={"tooltip"}>
             Short Position:
             <span className={"tooltiptext"}>
-              Shares in the short position will increase in value if the price
-              of the corresponding stock decreases
+              Shares in the short position will increase in value if the price of the corresponding stock decreases
             </span>
           </h3>
           <br />
           <p>Shares: {numeralWrapper.formatShares(stock.playerShortShares)}</p>
           <br />
           <p>
-            Average Price: <Money money={stock.playerAvgShortPx} /> (Total Cost:{" "}
-            <Money money={totalCost} />)
+            Average Price: <Money money={stock.playerAvgShortPx} /> (Total Cost: <Money money={totalCost} />)
           </p>
           <br />
           <p>
-            Profit: <Money money={gains} /> (
-            {numeralWrapper.formatPercentage(percentageGains)})
+            Profit: <Money money={gains} /> ({numeralWrapper.formatPercentage(percentageGains)})
           </p>
           <br />
         </div>
@@ -106,21 +98,15 @@ export class StockTickerPositionText extends React.Component<IProps, any> {
 
     return (
       <div className={"stock-market-position-text"}>
-        <p style={blockStyleMarkup}>
-          Max Shares: {numeralWrapper.formatShares(stock.maxShares)}
-        </p>
+        <p style={blockStyleMarkup}>Max Shares: {numeralWrapper.formatShares(stock.maxShares)}</p>
         <p className={"tooltip"}>
           Ask Price: <Money money={stock.getAskPrice()} />
-          <span className={"tooltiptext"}>
-            See Investopedia for details on what this is
-          </span>
+          <span className={"tooltiptext"}>See Investopedia for details on what this is</span>
         </p>
         <br />
         <p className={"tooltip"}>
           Bid Price: <Money money={stock.getBidPrice()} />
-          <span className={"tooltiptext"}>
-            See Investopedia for details on what this is
-          </span>
+          <span className={"tooltiptext"}>See Investopedia for details on what this is</span>
         </p>
         {this.renderLongPosition()}
         {this.renderShortPosition()}

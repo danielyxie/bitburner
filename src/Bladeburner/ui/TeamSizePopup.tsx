@@ -17,9 +17,7 @@ export function TeamSizePopup(props: IProps): React.ReactElement {
     if (teamSize === undefined) return;
     const num = Math.round(teamSize);
     if (isNaN(num) || num < 0) {
-      dialogBoxCreate(
-        "Invalid value entered for number of Team Members (must be numeric, positive)",
-      );
+      dialogBoxCreate("Invalid value entered for number of Team Members (must be numeric, positive)");
     } else {
       props.action.teamCount = num;
     }
@@ -29,10 +27,8 @@ export function TeamSizePopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the amount of team members you would like to take on this Op. If
-        you do not have the specified number of team members, then as many as
-        possible will be used. Note that team members may be lost during
-        operations.
+        Enter the amount of team members you would like to take on this Op. If you do not have the specified number of
+        team members, then as many as possible will be used. Note that team members may be lost during operations.
       </p>
       <input
         autoFocus

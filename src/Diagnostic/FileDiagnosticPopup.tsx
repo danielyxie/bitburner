@@ -68,9 +68,8 @@ export function FileDiagnosticPopup(): React.ReactElement {
   return (
     <>
       <p>
-        Welcome to the file diagnostic! If your save file is really big it's
-        likely because you have too many text/scripts. This tool can help you
-        narrow down where they are.
+        Welcome to the file diagnostic! If your save file is really big it's likely because you have too many
+        text/scripts. This tool can help you narrow down where they are.
       </p>
       {ips.map((ip: string) => (
         <ServerAccordion key={ip} ip={ip} />

@@ -26,12 +26,7 @@ import { Page, routing } from "../ui/navigationTracking";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { factionInvitationBoxCreate } from "../../utils/FactionInvitationBox";
 import { Money } from "../ui/React/Money";
-import {
-  yesNoBoxCreate,
-  yesNoBoxGetYesButton,
-  yesNoBoxGetNoButton,
-  yesNoBoxClose,
-} from "../../utils/YesNoBox";
+import { yesNoBoxCreate, yesNoBoxGetYesButton, yesNoBoxGetNoButton, yesNoBoxClose } from "../../utils/YesNoBox";
 
 export function inviteToFaction(faction) {
   if (Settings.SuppressFactionInvites) {
@@ -59,10 +54,7 @@ export function joinFaction(faction) {
     }
   }
   for (var i = 0; i < Player.factionInvitations.length; ++i) {
-    if (
-      Player.factionInvitations[i] == faction.name ||
-      Factions[Player.factionInvitations[i]].isBanned
-    ) {
+    if (Player.factionInvitations[i] == faction.name || Factions[Player.factionInvitations[i]].isBanned) {
       Player.factionInvitations.splice(i, 1);
       i--;
     }
@@ -76,21 +68,14 @@ export function startHackingMission(faction) {
 }
 
 //Displays the HTML content for a specific faction
-export function displayFactionContent(
-  factionName,
-  initiallyOnAugmentationsPage = false,
-) {
+export function displayFactionContent(factionName, initiallyOnAugmentationsPage = false) {
   const faction = Factions[factionName];
   if (faction == null) {
-    throw new Error(
-      `Invalid factionName passed into displayFactionContent(): ${factionName}`,
-    );
+    throw new Error(`Invalid factionName passed into displayFactionContent(): ${factionName}`);
   }
 
   if (!faction.isMember) {
-    throw new Error(
-      `Not a member of this faction. Cannot display faction information`,
-    );
+    throw new Error(`Not a member of this faction. Cannot display faction information`);
   }
 
   ReactDOM.render(
@@ -175,36 +160,25 @@ export function purchaseAugmentation(aug, fac, sing = false) {
   const factionInfo = fac.getInfo();
   var hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
-    var txt =
-      "You must first purchase or install " +
-      aug.prereqs.join(",") +
-      " before you can " +
-      "purchase this one.";
+    var txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
     if (sing) {
       return txt;
     } else {
       dialogBoxCreate(txt);
     }
-  } else if (
-    aug.baseCost !== 0 &&
-    Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)
-  ) {
+  } else if (aug.baseCost !== 0 && Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
     let txt = "You don't have enough money to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
   } else if (fac.playerReputation < aug.baseRepRequirement) {
-    let txt =
-      "You don't have enough faction reputation to purchase " + aug.name;
+    let txt = "You don't have enough faction reputation to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
-  } else if (
-    aug.baseCost === 0 ||
-    Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)
-  ) {
+  } else if (aug.baseCost === 0 || Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
     if (Player.firstAugPurchased === false) {
       Player.firstAugPurchased = true;
       document.getElementById("augmentations-tab").style.display = "list-item";
@@ -225,22 +199,17 @@ export function purchaseAugmentation(aug, fac, sing = false) {
       var nextLevel = getNextNeurofluxLevel();
       --nextLevel;
       var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-      aug.baseRepRequirement =
-        500 * mult * BitNodeMultipliers.AugmentationRepCost;
+      aug.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
       aug.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
 
       for (var i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
-        aug.baseCost *=
-          CONSTANTS.MultipleAugMultiplier *
-          [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
+        aug.baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
       }
     }
 
     for (var name in Augmentations) {
       if (Augmentations.hasOwnProperty(name)) {
-        Augmentations[name].baseCost *=
-          CONSTANTS.MultipleAugMultiplier *
-          [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
+        Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
       }
     }
 
@@ -281,9 +250,7 @@ export function getNextNeurofluxLevel() {
 
   // Account for purchased but uninstalled Augmentations
   for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
-    if (
-      Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor
-    ) {
+    if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
       ++currLevel;
     }
   }
@@ -309,17 +276,8 @@ export function processPassiveFactionRepGain(numCycles) {
     const hRep = getHackingWorkRepGain(Player, faction);
     const sRep = getFactionSecurityWorkRepGain(Player, faction);
     const fRep = getFactionFieldWorkRepGain(Player, faction);
-    const rate = Math.max(
-      hRep * favorMult,
-      sRep * favorMult,
-      fRep * favorMult,
-      1 / 120,
-    );
+    const rate = Math.max(hRep * favorMult, sRep * favorMult, fRep * favorMult, 1 / 120);
 
-    faction.playerReputation +=
-      rate *
-      numCycles *
-      Player.faction_rep_mult *
-      BitNodeMultipliers.FactionPassiveRepGain;
+    faction.playerReputation += rate * numCycles * Player.faction_rep_mult * BitNodeMultipliers.FactionPassiveRepGain;
   }
 }

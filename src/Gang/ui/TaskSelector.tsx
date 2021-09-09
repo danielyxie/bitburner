@@ -29,31 +29,14 @@ export function TaskSelector(props: IProps): React.ReactElement {
 
   const data = [
     [`Money:`, MoneyRate(5 * props.member.calculateMoneyGain(props.gang))],
-    [
-      `Respect:`,
-      `${numeralWrapper.formatRespect(
-        5 * props.member.calculateRespectGain(props.gang),
-      )} / sec`,
-    ],
-    [
-      `Wanted Level:`,
-      `${numeralWrapper.formatWanted(
-        5 * props.member.calculateWantedLevelGain(props.gang),
-      )} / sec`,
-    ],
-    [
-      `Total Respect:`,
-      `${numeralWrapper.formatRespect(props.member.earnedRespect)}`,
-    ],
+    [`Respect:`, `${numeralWrapper.formatRespect(5 * props.member.calculateRespectGain(props.gang))} / sec`],
+    [`Wanted Level:`, `${numeralWrapper.formatWanted(5 * props.member.calculateWantedLevelGain(props.gang))} / sec`],
+    [`Total Respect:`, `${numeralWrapper.formatRespect(props.member.earnedRespect)}`],
   ];
 
   return (
     <>
-      <select
-        onChange={onChange}
-        className="dropdown noselect"
-        value={currentTask}
-      >
+      <select onChange={onChange} className="dropdown noselect" value={currentTask}>
         <option key={0} value={"---"}>
           ---
         </option>

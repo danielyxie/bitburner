@@ -1,9 +1,5 @@
 import { IMinMaxRange } from "../types";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
 export const StockForecastInfluenceLimit = 5;
@@ -45,9 +41,7 @@ function toNumber(n: number | IMinMaxRange): number {
       break;
     }
     default:
-      throw Error(
-        `Do not know how to convert the type '${typeof n}' to a number`,
-      );
+      throw Error(`Do not know how to convert the type '${typeof n}' to a number`);
   }
 
   if (typeof n === "object" && typeof n.divisor === "number") {
@@ -181,8 +175,7 @@ export class Stock {
 
     // Max Shares (Outstanding shares) is a percentage of total shares
     const outstandingSharePercentage = 0.2;
-    this.maxShares =
-      Math.round((this.totalShares * outstandingSharePercentage) / 1e5) * 1e5;
+    this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e5) * 1e5;
   }
 
   /**
@@ -295,10 +288,7 @@ export class Stock {
    */
   influenceForecast(change: number): void {
     if (this.otlkMag > StockForecastInfluenceLimit) {
-      this.otlkMag = Math.max(
-        StockForecastInfluenceLimit,
-        this.otlkMag - change,
-      );
+      this.otlkMag = Math.max(StockForecastInfluenceLimit, this.otlkMag - change);
     }
   }
 

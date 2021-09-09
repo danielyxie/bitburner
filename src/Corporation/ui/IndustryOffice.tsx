@@ -41,28 +41,20 @@ interface ISwitchProps {
 function SwitchButton(props: ISwitchProps): React.ReactElement {
   if (props.manualMode) {
     return (
-      <button
-        className={"std-button tooltip"}
-        onClick={() => props.switchMode((old) => !old)}
-      >
+      <button className={"std-button tooltip"} onClick={() => props.switchMode((old) => !old)}>
         Switch to Auto Mode
         <span className={"tooltiptext"}>
-          Switch to Automatic Assignment Mode, which will automatically assign
-          employees to your selected jobs. You simply have to select the number
-          of assignments for each job
+          Switch to Automatic Assignment Mode, which will automatically assign employees to your selected jobs. You
+          simply have to select the number of assignments for each job
         </span>
       </button>
     );
   } else {
     return (
-      <button
-        className={"std-button tooltip"}
-        onClick={() => props.switchMode((old) => !old)}
-      >
+      <button className={"std-button tooltip"} onClick={() => props.switchMode((old) => !old)}>
         Switch to Manual Mode
         <span className={"tooltiptext"}>
-          Switch to Manual Assignment Mode, which allows you to specify which
-          employees should get which jobs
+          Switch to Manual Assignment Mode, which allows you to specify which employees should get which jobs
         </span>
       </button>
     );
@@ -83,16 +75,10 @@ function ManualManagement(props: IProps): React.ReactElement {
   // Employee Selector
   const employees = [];
   for (let i = 0; i < props.office.employees.length; ++i) {
-    employees.push(
-      <option key={props.office.employees[i].name}>
-        {props.office.employees[i].name}
-      </option>,
-    );
+    employees.push(<option key={props.office.employees[i].name}>{props.office.employees[i].name}</option>);
   }
 
-  function employeeSelectorOnChange(
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ): void {
+  function employeeSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
     const name = getSelectText(e.target);
     for (let i = 0; i < props.office.employees.length; ++i) {
       if (name === props.office.employees[i].name) {
@@ -120,9 +106,7 @@ function ManualManagement(props: IProps): React.ReactElement {
     }
   }
 
-  function employeePositionSelectorOnChange(
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ): void {
+  function employeePositionSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
     if (employee === null) return;
     const pos = getSelectText(e.target);
     employee.pos = pos;
@@ -133,26 +117,10 @@ function ManualManagement(props: IProps): React.ReactElement {
   const nf = "0.000";
 
   // Employee stats (after applying multipliers)
-  const effCre = emp
-    ? emp.cre *
-      props.corp.getEmployeeCreMultiplier() *
-      props.division.getEmployeeCreMultiplier()
-    : 0;
-  const effCha = emp
-    ? emp.cha *
-      props.corp.getEmployeeChaMultiplier() *
-      props.division.getEmployeeChaMultiplier()
-    : 0;
-  const effInt = emp
-    ? emp.int *
-      props.corp.getEmployeeIntMultiplier() *
-      props.division.getEmployeeIntMultiplier()
-    : 0;
-  const effEff = emp
-    ? emp.eff *
-      props.corp.getEmployeeEffMultiplier() *
-      props.division.getEmployeeEffMultiplier()
-    : 0;
+  const effCre = emp ? emp.cre * props.corp.getEmployeeCreMultiplier() * props.division.getEmployeeCreMultiplier() : 0;
+  const effCha = emp ? emp.cha * props.corp.getEmployeeChaMultiplier() * props.division.getEmployeeChaMultiplier() : 0;
+  const effInt = emp ? emp.int * props.corp.getEmployeeIntMultiplier() * props.division.getEmployeeIntMultiplier() : 0;
+  const effEff = emp ? emp.eff * props.corp.getEmployeeEffMultiplier() * props.division.getEmployeeEffMultiplier() : 0;
 
   return (
     <div style={employeeInfoDivStyle}>
@@ -204,10 +172,7 @@ interface IAutoAssignProps {
 
 function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
   const numJob = countEmployee(props.office.employees, props.job);
-  const numUnassigned = countEmployee(
-    props.office.employees,
-    EmployeePositions.Unassigned,
-  );
+  const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
   function assignEmployee(): void {
     if (numUnassigned <= 0) {
       console.warn("Cannot assign employee. No unassigned employees available");
@@ -232,19 +197,12 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
   return (
     <>
       <h2 className={"tooltip"} style={positionHeaderStyle}>
-        {props.job} ({numJob})
-        <span className={"tooltiptext"}>{props.desc}</span>
+        {props.job} ({numJob})<span className={"tooltiptext"}>{props.desc}</span>
       </h2>
-      <button
-        className={numUnassigned > 0 ? "std-button" : "a-link-button-inactive"}
-        onClick={assignEmployee}
-      >
+      <button className={numUnassigned > 0 ? "std-button" : "a-link-button-inactive"} onClick={assignEmployee}>
         +
       </button>
-      <button
-        className={numJob > 0 ? "std-button" : "a-link-button-inactive"}
-        onClick={unassignEmployee}
-      >
+      <button className={numJob > 0 ? "std-button" : "a-link-button-inactive"} onClick={unassignEmployee}>
         -
       </button>
       <br />
@@ -253,10 +211,7 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
 }
 
 function AutoManagement(props: IProps): React.ReactElement {
-  const numUnassigned = countEmployee(
-    props.office.employees,
-    EmployeePositions.Unassigned,
-  );
+  const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
   const vechain = props.corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
 
   // Calculate average morale, happiness, and energy. Also salary
@@ -330,20 +285,14 @@ function AutoManagement(props: IProps): React.ReactElement {
                   <p className={"tooltip"} style={{ display: "inline-block" }}>
                     Material Production:
                     <span className={"tooltiptext"}>
-                      The base amount of material this office can produce. Does
-                      not include production multipliers from upgrades and
-                      materials. This value is based off the productivity of
-                      your Operations, Engineering, and Management employees
+                      The base amount of material this office can produce. Does not include production multipliers from
+                      upgrades and materials. This value is based off the productivity of your Operations, Engineering,
+                      and Management employees
                     </span>
                   </p>
                 </td>
                 <td>
-                  <p>
-                    {numeralWrapper.format(
-                      props.division.getOfficeProductivity(props.office),
-                      "0.000",
-                    )}
-                  </p>
+                  <p>{numeralWrapper.format(props.division.getOfficeProductivity(props.office), "0.000")}</p>
                 </td>
               </tr>
               <tr>
@@ -351,11 +300,9 @@ function AutoManagement(props: IProps): React.ReactElement {
                   <p className={"tooltip"} style={{ display: "inline-block" }}>
                     Product Production:
                     <span className={"tooltiptext"}>
-                      The base amount of any given Product this office can
-                      produce. Does not include production multipliers from
-                      upgrades and materials. This value is based off the
-                      productivity of your Operations, Engineering, and
-                      Management employees
+                      The base amount of any given Product this office can produce. Does not include production
+                      multipliers from upgrades and materials. This value is based off the productivity of your
+                      Operations, Engineering, and Management employees
                     </span>
                   </p>
                 </td>
@@ -375,19 +322,12 @@ function AutoManagement(props: IProps): React.ReactElement {
                   <p className={"tooltip"} style={{ display: "inline-block" }}>
                     Business Multiplier:
                     <span className={"tooltiptext"}>
-                      The effect this office's 'Business' employees has on
-                      boosting sales
+                      The effect this office's 'Business' employees has on boosting sales
                     </span>
                   </p>
                 </td>
                 <td>
-                  <p>
-                    x
-                    {numeralWrapper.format(
-                      props.division.getBusinessFactor(props.office),
-                      "0.000",
-                    )}
-                  </p>
+                  <p>x{numeralWrapper.format(props.division.getBusinessFactor(props.office), "0.000")}</p>
                 </td>
               </tr>
             </>
@@ -400,9 +340,7 @@ function AutoManagement(props: IProps): React.ReactElement {
         division={props.division}
         player={props.player}
         job={EmployeePositions.Operations}
-        desc={
-          "Manages supply chain operations. Improves the amount of Materials and Products you produce."
-        }
+        desc={"Manages supply chain operations. Improves the amount of Materials and Products you produce."}
       />
 
       <AutoAssignJob
@@ -422,9 +360,7 @@ function AutoManagement(props: IProps): React.ReactElement {
         division={props.division}
         player={props.player}
         job={EmployeePositions.Business}
-        desc={
-          "Handles sales and finances. Improves the amount of Materials and Products you can sell."
-        }
+        desc={"Handles sales and finances. Improves the amount of Materials and Products you can sell."}
       />
 
       <AutoAssignJob
@@ -444,9 +380,7 @@ function AutoManagement(props: IProps): React.ReactElement {
         division={props.division}
         player={props.player}
         job={EmployeePositions.RandD}
-        desc={
-          "Research new innovative ways to improve the company. Generates Scientific Research."
-        }
+        desc={"Research new innovative ways to improve the company. Generates Scientific Research."}
       />
 
       <AutoAssignJob
@@ -464,8 +398,7 @@ function AutoManagement(props: IProps): React.ReactElement {
 }
 
 export function IndustryOffice(props: IProps): React.ReactElement {
-  const [employeeManualAssignMode, setEmployeeManualAssignMode] =
-    useState(false);
+  const [employeeManualAssignMode, setEmployeeManualAssignMode] = useState(false);
 
   const buttonStyle = {
     fontSize: "13px",
@@ -530,28 +463,18 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       <p>
         Size: {props.office.employees.length} / {props.office.size} employees
       </p>
-      <button
-        className={hireEmployeeButtonClass}
-        onClick={openHireEmployeePopup}
-        style={buttonStyle}
-      >
+      <button className={hireEmployeeButtonClass} onClick={openHireEmployeePopup} style={buttonStyle}>
         Hire Employee
         {props.office.employees.length === 0 && (
           <span className={"tooltiptext"}>
-            You'll need to hire some employees to get your operations started!
-            It's recommended to have at least one employee in every position
+            You'll need to hire some employees to get your operations started! It's recommended to have at least one
+            employee in every position
           </span>
         )}
       </button>
-      <button
-        className={autohireEmployeeButtonClass}
-        onClick={autohireEmployeeButtonOnClick}
-        style={buttonStyle}
-      >
+      <button className={autohireEmployeeButtonClass} onClick={autohireEmployeeButtonOnClick} style={buttonStyle}>
         Autohire Employee
-        <span className={"tooltiptext"}>
-          Automatically hires an employee and gives him/her a random name
-        </span>
+        <span className={"tooltiptext"}>Automatically hires an employee and gives him/her a random name</span>
       </button>
       <br />
       <button
@@ -561,9 +484,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         disabled={props.corp.funds.lt(0)}
       >
         Upgrade size
-        <span className={"tooltiptext"}>
-          Upgrade the office's size so that it can hold more employees!
-        </span>
+        <span className={"tooltiptext"}>Upgrade the office's size so that it can hold more employees!</span>
       </button>
       {!props.division.hasResearch("AutoPartyManager") && (
         <button
@@ -574,33 +495,19 @@ export function IndustryOffice(props: IProps): React.ReactElement {
         >
           Throw Party
           <span className={"tooltiptext"}>
-            "Throw an office party to increase your employee's morale and
-            happiness"
+            "Throw an office party to increase your employee's morale and happiness"
           </span>
         </button>
       )}
       <br />
 
       <div>
-        <SwitchButton
-          manualMode={employeeManualAssignMode}
-          switchMode={setEmployeeManualAssignMode}
-        />
+        <SwitchButton manualMode={employeeManualAssignMode} switchMode={setEmployeeManualAssignMode} />
       </div>
       {employeeManualAssignMode ? (
-        <ManualManagement
-          corp={props.corp}
-          division={props.division}
-          office={props.office}
-          player={props.player}
-        />
+        <ManualManagement corp={props.corp} division={props.division} office={props.office} player={props.player} />
       ) : (
-        <AutoManagement
-          corp={props.corp}
-          division={props.division}
-          office={props.office}
-          player={props.player}
-        />
+        <AutoManagement corp={props.corp} division={props.division} office={props.office} player={props.player} />
       )}
     </div>
   );

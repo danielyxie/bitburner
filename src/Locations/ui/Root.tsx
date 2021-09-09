@@ -88,9 +88,7 @@ export class LocationRoot extends React.Component<IProps, IState> {
     const loc = Locations[this.state.location];
 
     if (loc == null) {
-      throw new Error(
-        `Invalid location when rendering UI: ${this.state.location}`,
-      );
+      throw new Error(`Invalid location when rendering UI: ${this.state.location}`);
     }
 
     if (loc.types.includes(LocationType.StockMarket)) {

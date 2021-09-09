@@ -52,28 +52,12 @@ export interface IIndustry {
   process(marketCycles: number, state: string, corporation: ICorporation): void;
   processMaterialMarket(): void;
   processProductMarket(marketCycles: number): void;
-  processMaterials(
-    marketCycles: number,
-    corporation: ICorporation,
-  ): [number, number];
-  processProducts(
-    marketCycles: number,
-    corporation: ICorporation,
-  ): [number, number];
-  processProduct(
-    marketCycles: number,
-    product: Product,
-    corporation: ICorporation,
-  ): number;
+  processMaterials(marketCycles: number, corporation: ICorporation): [number, number];
+  processProducts(marketCycles: number, corporation: ICorporation): [number, number];
+  processProduct(marketCycles: number, product: Product, corporation: ICorporation): number;
   discontinueProduct(product: Product): void;
-  upgrade(
-    upgrade: IndustryUpgrade,
-    refs: { corporation: ICorporation; office: OfficeSpace },
-  ): void;
-  getOfficeProductivity(
-    office: OfficeSpace,
-    params?: { forProduct?: boolean },
-  ): number;
+  upgrade(upgrade: IndustryUpgrade, refs: { corporation: ICorporation; office: OfficeSpace }): void;
+  getOfficeProductivity(office: OfficeSpace, params?: { forProduct?: boolean }): number;
   getBusinessFactor(office: OfficeSpace): number;
   getAdvertisingFactors(): [number, number, number, number];
   getMarketFactor(mat: { dmd: number; cmp: number }): number;

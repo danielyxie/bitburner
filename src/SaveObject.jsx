@@ -1,9 +1,4 @@
-import {
-  loadAliases,
-  loadGlobalAliases,
-  Aliases,
-  GlobalAliases,
-} from "./Alias";
+import { loadAliases, loadGlobalAliases, Aliases, GlobalAliases } from "./Alias";
 import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
@@ -15,10 +10,7 @@ import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
 import { AllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import {
-  loadSpecialServerIps,
-  SpecialServerIps,
-} from "./Server/SpecialServerIps";
+import { loadSpecialServerIps, SpecialServerIps } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
@@ -29,11 +21,7 @@ import * as ExportBonus from "./ExportBonus";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
-import {
-  Reviver,
-  Generic_toJSON,
-  Generic_fromJSON,
-} from "../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 
 import Decimal from "decimal.js";
 
@@ -100,9 +88,7 @@ BitburnerSaveObject.prototype.saveGame = function (db) {
   var saveString = this.getSaveString();
 
   // We'll save to both localstorage and indexedDb
-  var objectStore = db
-    .transaction(["savestring"], "readwrite")
-    .objectStore("savestring");
+  var objectStore = db.transaction(["savestring"], "readwrite").objectStore("savestring");
   var request = objectStore.put(saveString, "save");
 
   request.onerror = function (e) {
@@ -133,13 +119,8 @@ function evaluateVersionCompatibility(ver) {
   // This version refactored the Company/job-related code
   if (ver <= "0.41.2") {
     // Player's company position is now a string
-    if (
-      Player.companyPosition != null &&
-      typeof Player.companyPosition !== "string"
-    ) {
-      console.log(
-        "Changed Player.companyPosition value to be compatible with v0.41.2",
-      );
+    if (Player.companyPosition != null && typeof Player.companyPosition !== "string") {
+      console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
       Player.companyPosition = Player.companyPosition.data.positionName;
       if (Player.companyPosition == null) {
         Player.companyPosition = "";
@@ -149,20 +130,13 @@ function evaluateVersionCompatibility(ver) {
     // The "companyName" property of all Companies is renamed to "name"
     for (var companyName in Companies) {
       const company = Companies[companyName];
-      if (
-        (company.name == null || company.name === 0 || company.name === "") &&
-        company.companyName != null
-      ) {
-        console.log(
-          "Changed company name property to be compatible with v0.41.2",
-        );
+      if ((company.name == null || company.name === 0 || company.name === "") && company.companyName != null) {
+        console.log("Changed company name property to be compatible with v0.41.2");
         company.name = company.companyName;
       }
 
       if (company.companyPositions instanceof Array) {
-        console.log(
-          "Changed company companyPositions property to be compatible with v0.41.2",
-        );
+        console.log("Changed company companyPositions property to be compatible with v0.41.2");
         const pos = {};
 
         for (let i = 0; i < company.companyPositions.length; ++i) {
@@ -175,14 +149,8 @@ function evaluateVersionCompatibility(ver) {
 
   // This version allowed players to hold multiple jobs
   if (ver < "0.43.0") {
-    if (
-      Player.companyName !== "" &&
-      Player.companyPosition != null &&
-      Player.companyPosition !== ""
-    ) {
-      console.log(
-        "Copied player's companyName and companyPosition properties to the Player.jobs map for v0.43.0",
-      );
+    if (Player.companyName !== "" && Player.companyPosition != null && Player.companyPosition !== "") {
+      console.log("Copied player's companyName and companyPosition properties to the Player.jobs map for v0.43.0");
       Player.jobs[Player.companyName] = Player.companyPosition;
     }
 
@@ -196,9 +164,7 @@ function loadGame(saveString) {
       console.log("No save file to load");
       return false;
     }
-    saveString = decodeURIComponent(
-      escape(atob(window.localStorage.getItem("bitburnerSave"))),
-    );
+    saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
     console.log("Loading game from localStorage");
   } else {
     saveString = decodeURIComponent(escape(atob(saveString)));
@@ -259,9 +225,7 @@ function loadGame(saveString) {
     try {
       Settings.load(saveObj.SettingsSave);
     } catch (e) {
-      console.error(
-        "ERROR: Failed to parse Settings. Re-initing default values",
-      );
+      console.error("ERROR: Failed to parse Settings. Re-initing default values");
       Settings.init();
     }
   } else {
@@ -509,9 +473,7 @@ BitburnerSaveObject.prototype.importGame = function () {
     fileSelector.addEventListener("change", openImportFileHandler, false);
     $("#import-game-file-selector").click();
   } else {
-    dialogBoxCreate(
-      "ERR: Your browser does not support HTML5 File API. Cannot import.",
-    );
+    dialogBoxCreate("ERR: Your browser does not support HTML5 File API. Cannot import.");
   }
 };
 
@@ -522,10 +484,7 @@ BitburnerSaveObject.prototype.deleteGame = function (db) {
   }
 
   // Delete from indexedDB
-  var request = db
-    .transaction(["savestring"], "readwrite")
-    .objectStore("savestring")
-    .delete("save");
+  var request = db.transaction(["savestring"], "readwrite").objectStore("savestring").delete("save");
   request.onsuccess = function () {
     console.log("Successfully deleted save from indexedDb");
   };

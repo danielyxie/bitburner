@@ -36,24 +36,14 @@ export function StdButton(props: IStdButtonProps): React.ReactElement {
       const tooltipMarkup: IInnerHTMLMarkup = {
         __html: props.tooltip,
       };
-      tooltip = (
-        <span
-          className={"tooltiptext"}
-          dangerouslySetInnerHTML={tooltipMarkup}
-        ></span>
-      );
+      tooltip = <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup}></span>;
     } else {
       tooltip = <span className={"tooltiptext"}>{props.tooltip}</span>;
     }
   }
 
   return (
-    <button
-      className={className}
-      id={props.id}
-      onClick={props.onClick}
-      style={props.style}
-    >
+    <button className={className} id={props.id} onClick={props.onClick} style={props.style}>
       {props.text}
       {hasTooltip && tooltip}
     </button>

@@ -1,10 +1,7 @@
 import React from "react";
 import { ResearchTree } from "./ResearchTree";
 import { ICorporation } from "./ICorporation";
-import {
-  getBaseResearchTreeCopy,
-  getProductIndustryResearchTreeCopy,
-} from "./data/BaseResearchTree";
+import { getBaseResearchTreeCopy, getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
 import { MoneyCost } from "./ui/MoneyCost";
 
 interface IIndustryMap<T> {
@@ -62,16 +59,13 @@ export const IndustryStartingCosts: IIndustryMap<number> = {
 };
 
 // Map of description for each industry
-export const IndustryDescriptions: IIndustryMap<
-  (corp: ICorporation) => React.ReactElement
-> = {
+export const IndustryDescriptions: IIndustryMap<(corp: ICorporation) => React.ReactElement> = {
   Energy: (corp: ICorporation) => (
     <>
       Engage in the production and distribution of energy.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Energy} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Energy} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -81,8 +75,7 @@ export const IndustryDescriptions: IIndustryMap<
       Distribute water and provide wastewater services.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Utilities} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Utilities} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -92,20 +85,17 @@ export const IndustryDescriptions: IIndustryMap<
       Cultivate crops and breed livestock to produce food.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Agriculture} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Agriculture} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
   ),
   Fishing: (corp: ICorporation) => (
     <>
-      Produce food through the breeding and processing of fish and fish
-      products.
+      Produce food through the breeding and processing of fish and fish products.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Fishing} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Fishing} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -115,8 +105,7 @@ export const IndustryDescriptions: IIndustryMap<
       Extract and process metals from the earth.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Mining} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Mining} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -126,8 +115,7 @@ export const IndustryDescriptions: IIndustryMap<
       Create your own restaurants all around the world.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Food} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Food} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
@@ -137,8 +125,7 @@ export const IndustryDescriptions: IIndustryMap<
       Create and distribute tobacco and tobacco-related products.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Tobacco} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Tobacco} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
@@ -148,8 +135,7 @@ export const IndustryDescriptions: IIndustryMap<
       Produce industrial chemicals.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Chemical} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Chemical} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -159,20 +145,17 @@ export const IndustryDescriptions: IIndustryMap<
       Discover, develop, and create new pharmaceutical drugs.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Pharmaceutical} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Pharmaceutical} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
   ),
   Computer: (corp: ICorporation) => (
     <>
-      Develop and manufacture new computer hardware and networking
-      infrastructures.
+      Develop and manufacture new computer hardware and networking infrastructures.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Computer} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Computer} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -182,8 +165,7 @@ export const IndustryDescriptions: IIndustryMap<
       Develop and create robots.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Robotics} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Robotics} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -193,8 +175,7 @@ export const IndustryDescriptions: IIndustryMap<
       Develop computer software and create AI Cores.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Software} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Software} corp={corp} />
       <br />
       Recommended starting Industry: YES
     </>
@@ -204,8 +185,7 @@ export const IndustryDescriptions: IIndustryMap<
       Create and manage hospitals.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.Healthcare} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.Healthcare} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>
@@ -215,8 +195,7 @@ export const IndustryDescriptions: IIndustryMap<
       Develop and manage real estate properties.
       <br />
       <br />
-      Starting cost:{" "}
-      <MoneyCost money={IndustryStartingCosts.RealEstate} corp={corp} />
+      Starting cost: <MoneyCost money={IndustryStartingCosts.RealEstate} corp={corp} />
       <br />
       Recommended starting Industry: NO
     </>

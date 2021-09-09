@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Bitburner</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png"/>
-    <link rel="manifest" href="dist/site.webmanifest"/>
-    <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000"/>
-    <meta name="apple-mobile-web-app-title" content="Bitburner"/>
-    <meta name="application-name" content="Bitburner"/>
-    <meta name="msapplication-TileColor" content="#000000"/>
-    <meta name="msapplication-config" content="dist/browserconfig.xml"/>
-    <meta name="theme-color" content="#ffffff"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png" />
+    <link rel="manifest" href="dist/site.webmanifest" />
+    <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000" />
+    <meta name="apple-mobile-web-app-title" content="Bitburner" />
+    <meta name="application-name" content="Bitburner" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-config" content="dist/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
 
     <!-- Google Analytics -->
     <script>
@@ -28,25 +28,18 @@
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m);
-      })(
-        window,
-        document,
-        "script",
-        "https://www.google-analytics.com/analytics.js",
-        "ga",
-      );
+      })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
     </script>
-    
+
     <script>
-      ga(
-        "create",
-        "UA-100157497-1",
-        "auto",
-      );
+      ga("create", "UA-100157497-1", "auto");
       ga("send", "pageview");
     </script>
-    
-  <link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="dist/engineStyle.css" rel="stylesheet"></head>
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="dist/vendor.css" rel="stylesheet" />
+    <link href="dist/engineStyle.css" rel="stylesheet" />
+  </head>
   <body>
     <div id="entire-game-container" style="visibility: hidden">
       <div id="mainmenu-container">
@@ -54,9 +47,7 @@
         <ul id="mainmenu" class="mainmenu noscrollbar">
           <!-- Hacking dropdown -->
           <li id="hacking-menu-header-li">
-            <button id="hacking-menu-header" class="mainmenu-accordion-header noselect">
-              Hacking
-            </button>
+            <button id="hacking-menu-header" class="mainmenu-accordion-header noselect">Hacking</button>
           </li>
           <li id="terminal-tab" class="mainmenu-accordion-panel noselect">
             <button id="terminal-menu-link">Terminal</button>
@@ -69,15 +60,12 @@
           </li>
           <li id="create-program-tab" class="mainmenu-accordion-panel noselect">
             <button id="create-program-menu-link">Create Program</button>
-            <span id="create-program-notification" class="notification-off">
-            </span>
+            <span id="create-program-notification" class="notification-off"> </span>
           </li>
 
           <!-- Character dropdown -->
           <li id="character-menu-header-li">
-            <button id="character-menu-header" class="mainmenu-accordion-header noselect">
-              Character
-            </button>
+            <button id="character-menu-header" class="mainmenu-accordion-header noselect">Character</button>
           </li>
           <li id="stats-tab" class="mainmenu-accordion-panel noselect">
             <button id="stats-menu-link">Stats</button>
@@ -87,13 +75,10 @@
             <span id="factions-notification" class="notification-off"> </span>
           </li>
           <li id="augmentations-tab" class="mainmenu-accordion-panel noselect">
-            <button id="augmentations-menu-link" style="overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;">
+            <button id="augmentations-menu-link" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
               Augmentations
             </button>
-            <span id="augmentations-notification" class="notification-off">
-            </span>
+            <span id="augmentations-notification" class="notification-off"> </span>
           </li>
           <li id="hacknet-nodes-tab" class="mainmenu-accordion-panel noselect">
             <button id="hacknet-nodes-menu-link">Hacknet</button>
@@ -104,9 +89,7 @@
 
           <!-- World dropdown -->
           <li id="world-menu-header-li">
-            <button id="world-menu-header" class="mainmenu-accordion-header noselect">
-              World
-            </button>
+            <button id="world-menu-header" class="mainmenu-accordion-header noselect">World</button>
           </li>
           <li id="city-tab" class="mainmenu-accordion-panel noselect">
             <button id="city-menu-link">City</button>
@@ -131,9 +114,7 @@
           </li>
 
           <li id="help-menu-header-li">
-            <button id="help-menu-header" class="mainmenu-accordion-header noselect">
-              Help
-            </button>
+            <button id="help-menu-header" class="mainmenu-accordion-header noselect">Help</button>
           </li>
           <li id="milestones-tab" class="mainmenu-accordion-panel noselect">
             <button id="milestones-menu-link">Milestones</button>
@@ -156,7 +137,7 @@
             <p id="script-editor-filename-tag">
               <strong style="background-color: #555">Script name: </strong>
             </p>
-            <input id="script-editor-filename" type="text" maxlength="100" tabindex="1"/>
+            <input id="script-editor-filename" type="text" maxlength="100" tabindex="1" />
           </div>
 
           <div id="monaco-editor"></div>
@@ -188,17 +169,34 @@
 
           <fieldset>
             <label for="script-editor-option-highlightactiveline">Highlight Active Line</label>
-            <input type="checkbox" class="optionCheckbox" name="script-editor-option-highlightactiveline" id="script-editor-option-highlightactiveline" checked/>
+            <input
+              type="checkbox"
+              class="optionCheckbox"
+              name="script-editor-option-highlightactiveline"
+              id="script-editor-option-highlightactiveline"
+              checked
+            />
           </fieldset>
 
           <fieldset>
             <label for="script-editor-option-showinvisibles">Show Invisibles</label>
-            <input type="checkbox" class="optionCheckbox" name="script-editor-option-showinvisibles" id="script-editor-option-showinvisibles"/>
+            <input
+              type="checkbox"
+              class="optionCheckbox"
+              name="script-editor-option-showinvisibles"
+              id="script-editor-option-showinvisibles"
+            />
           </fieldset>
 
           <fieldset>
             <label for="script-editor-option-usesofttab">Use Soft Tab</label>
-            <input type="checkbox" class="optionCheckbox" name="script-editor-option-usesofttab" id="script-editor-option-usesofttab" checked/>
+            <input
+              type="checkbox"
+              class="optionCheckbox"
+              name="script-editor-option-usesofttab"
+              id="script-editor-option-usesofttab"
+              checked
+            />
           </fieldset>
 
           <fieldset id="script-editor-option-flex1-fieldset"></fieldset>
@@ -224,7 +222,14 @@
           <tr id="terminal-input">
             <td id="terminal-input-td" tabindex="2">
               $
-              <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1" onfocus="this.value = this.value;" autocomplete="off"/>
+              <input
+                type="text"
+                id="terminal-input-text-box"
+                class="terminal-input"
+                tabindex="1"
+                onfocus="this.value = this.value;"
+                autocomplete="off"
+              />
             </td>
           </tr>
         </table>
@@ -238,19 +243,18 @@
       <!-- Active scripts info page -->
       <div id="active-scripts-container" class="generic-menupage-container">
         <p id="active-scripts-text">
-          This page displays a list of all of your scripts that are currently
-          running across every machine. It also provides information about each
-          script's production. The scripts are categorized by the hostname of
-          the servers on which they are running.
+          This page displays a list of all of your scripts that are currently running across every machine. It also
+          provides information about each script's production. The scripts are categorized by the hostname of the
+          servers on which they are running.
         </p>
         <p id="active-scripts-total-prod">
           Total online production of Active scripts:
-          <span class="money-gold"><span id="active-scripts-total-production-active">$0.000</span> /
-            sec</span><br/>
+          <span class="money-gold"><span id="active-scripts-total-production-active">$0.000</span> / sec</span><br />
           Total online production since last Aug installation:
           <span id="active-scripts-total-prod-aug-total" class="money-gold">$0.000</span>
-          (<span class="money-gold"><span id="active-scripts-total-prod-aug-avg" class="money-gold">$0.000</span>
-            / sec</span>)
+          (<span class="money-gold"
+            ><span id="active-scripts-total-prod-aug-avg" class="money-gold">$0.000</span> / sec</span
+          >)
         </p>
         <ul class="active-scripts-list" id="active-scripts-list" style="list-style: none"></ul>
       </div>
@@ -263,11 +267,9 @@
       <!-- Create a program(executable) -->
       <div id="create-program-container" class="generic-menupage-container">
         <p id="create-program-page-text">
-          This page displays any programs that you are able to create. Writing
-          the code for a program takes time, which can vary based on how complex
-          the program is. If you are working on creating a program you can
-          cancel at any time. Your progress will be saved and you can continue
-          later.
+          This page displays any programs that you are able to create. Writing the code for a program takes time, which
+          can vary based on how complex the program is. If you are working on creating a program you can cancel at any
+          time. Your progress will be saved and you can continue later.
         </p>
 
         <ul id="create-program-list"></ul>
@@ -291,28 +293,76 @@
       <!-- Tutorial content -->
       <div id="tutorial-container" class="generic-menupage-container">
         <h1>Tutorial (AKA Links to Documentation)</h1>
-        <a id="tutorial-getting-started-link" class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/guidesandtips/gettingstartedguideforbeginnerprogrammers.html">
-          Getting Started</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/servers.html">
-          Servers & Networking</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/hacking.html">
-          Hacking</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/scripts.html">
-          Scripts</a><br/><br/>
+        <a
+          id="tutorial-getting-started-link"
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/guidesandtips/gettingstartedguideforbeginnerprogrammers.html"
+        >
+          Getting Started</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/servers.html"
+        >
+          Servers & Networking</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/hacking.html"
+        >
+          Hacking</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/scripts.html"
+        >
+          Scripts</a
+        ><br /><br />
         <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/netscript.html">
-          Netscript Programming Language</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/world.html">
-          Traveling</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/companies.html">
-          Companies</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/infiltration.html">
-          Infiltration</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html">
-          Factions</a><br/><br/>
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/basicgameplay/augmentations.html">
-          Augmentations</a><br/><br/>
+          Netscript Programming Language</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/world.html"
+        >
+          Traveling</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/companies.html"
+        >
+          Companies</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/infiltration.html"
+        >
+          Infiltration</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html"
+        >
+          Factions</a
+        ><br /><br />
+        <a
+          class="a-link-button"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/augmentations.html"
+        >
+          Augmentations</a
+        ><br /><br />
         <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/shortcuts.html">
-          Keyboard Shortcuts</a>
+          Keyboard Shortcuts</a
+        >
       </div>
 
       <!-- Location (visiting a location in World) -->
@@ -341,13 +391,9 @@
       <div id="yes-no-text-input-box-container" class="popup-box-container">
         <div id="yes-no-text-input-box-content" class="popup-box-content">
           <p id="yes-no-text-input-box-text"></p>
-          <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30"/>
-          <button id="yes-no-text-input-box-yes" class="popup-box-button">
-            Yes
-          </button>
-          <button id="yes-no-text-input-box-no" class="popup-box-button">
-            No
-          </button>
+          <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30" />
+          <button id="yes-no-text-input-box-yes" class="popup-box-button">Yes</button>
+          <button id="yes-no-text-input-box-no" class="popup-box-button">No</button>
         </div>
       </div>
 
@@ -357,17 +403,12 @@
           <p id="faction-invitation-box-text"></p>
           <p id="faction-invitation-box-message"></p>
           <p id="faction-invitation-box-warning">
-            Would you like to join? <br/>
-            <br/>
-            Warning: Joining this faction may prevent you from joining other
-            factions during this run!
+            Would you like to join? <br />
+            <br />
+            Warning: Joining this faction may prevent you from joining other factions during this run!
           </p>
-          <button id="faction-invitation-box-yes" class="popup-box-button">
-            Join!
-          </button>
-          <button id="faction-invitation-box-no" class="popup-box-button">
-            Decide later
-          </button>
+          <button id="faction-invitation-box-yes" class="popup-box-button">Join!</button>
+          <button id="faction-invitation-box-no" class="popup-box-button">Decide later</button>
         </div>
       </div>
 
@@ -376,15 +417,11 @@
         <div id="infiltration-box-content" class="popup-box-content">
           <p id="infiltration-box-text"></p>
 
-          <button id="infiltration-box-sell" class="a-link-button">
-            Sell on Black Market
-          </button>
-          <br/><br/>
+          <button id="infiltration-box-sell" class="a-link-button">Sell on Black Market</button>
+          <br /><br />
           <select id="infiltration-faction-select" class="dropdown"></select>
-          <br/>
-          <button id="infiltration-box-faction" class="a-link-button">
-            Give to Faction for Reputation
-          </button>
+          <br />
+          <button id="infiltration-box-faction" class="a-link-button">Give to Faction for Reputation</button>
         </div>
       </div>
 
@@ -395,9 +432,7 @@
       <div id="work-in-progress-container" class="generic-fullscreen-container">
         <p id="work-in-progress-text"></p>
 
-        <button id="work-in-progress-cancel-button" class="work-button">
-          Cancel Work
-        </button>
+        <button id="work-in-progress-cancel-button" class="work-button">Cancel Work</button>
         <button id="work-in-progress-something-else-button" class="work-button">
           Do something else simultaneously
         </button>
@@ -428,12 +463,8 @@
             <!-- ReactJS Component -->
           </div>
           <div class="character-quick-options noselect">
-            <button id="character-overview-save-button" class="character-overview-btn">
-              Save Game
-            </button>
-            <button id="character-overview-options-button" class="character-overview-btn">
-              Options
-            </button>
+            <button id="character-overview-save-button" class="character-overview-btn">Save Game</button>
+            <button id="character-overview-options-button" class="character-overview-btn">Options</button>
           </div>
         </div>
       </div>
@@ -446,180 +477,251 @@
       <!-- Game Options -->
       <div id="game-options-container" class="popup-box-container">
         <div id="game-options-content" class="game-options-box">
-          <button id="game-options-close-button" aria-label="close options dialog">
-            &times;
-          </button>
+          <button id="game-options-close-button" aria-label="close options dialog">&times;</button>
           <h1>Game Options</h1>
-          <br/>
+          <br />
           <div id="game-options-left-panel">
             <!-- Netscript execution time -->
             <fieldset>
-              <label for="settingsNSExecTimeRangeVal" class="tooltip">Netscript exec time:&nbsp;
+              <label for="settingsNSExecTimeRangeVal" class="tooltip"
+                >Netscript exec time:&nbsp;
                 <span class="tooltiptext">
-                  The minimum number of milliseconds it takes to execute an
-                  operation in Netscript. Setting this too low can result in
-                  poor performance if you have many scripts running. The default
-                  value is 25ms.
+                  The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too low
+                  can result in poor performance if you have many scripts running. The default value is 25ms.
                 </span>
               </label>
 
-              <input class="optionRange" type="range" max="100" min="10" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="25"/>
+              <input
+                class="optionRange"
+                type="range"
+                max="100"
+                min="10"
+                step="1"
+                name="settingsNSExecTimeRangeVal"
+                id="settingsNSExecTimeRangeVal"
+                value="25"
+              />
               <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Log capacity -->
             <fieldset>
-              <label for="settingsNSLogRangeVal" class="tooltip">Netscript log size:&nbsp;&nbsp;
+              <label for="settingsNSLogRangeVal" class="tooltip"
+                >Netscript log size:&nbsp;&nbsp;
                 <span class="tooltiptext">
-                  The maximum number of lines a script's logs can hold. Setting
-                  this too high can cause the game to use a lot of memory if you
-                  have many scripts running. The default value is 50.
+                  The maximum number of lines a script's logs can hold. Setting this too high can cause the game to use
+                  a lot of memory if you have many scripts running. The default value is 50.
                 </span>
               </label>
 
-              <input class="optionRange" type="range" max="100" min="20" step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50"/>
+              <input
+                class="optionRange"
+                type="range"
+                max="100"
+                min="20"
+                step="1"
+                name="settingsNSLogRangeVal"
+                id="settingsNSLogRangeVal"
+                value="50"
+              />
               <em id="settingsNSLogRangeValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Port capacity -->
             <fieldset>
-              <label for="settingsNSPortRangeVal" class="tooltip">Netscript port size:&nbsp;
+              <label for="settingsNSPortRangeVal" class="tooltip"
+                >Netscript port size:&nbsp;
                 <span class="tooltiptext">
-                  The maximum number of entries that can be written to a port
-                  using Netscript's write() function. Setting this too high can
-                  cause the game to use a lot of memory. The default value is
-                  50.
+                  The maximum number of entries that can be written to a port using Netscript's write() function.
+                  Setting this too high can cause the game to use a lot of memory. The default value is 50.
                 </span>
               </label>
 
-              <input class="optionRange" type="range" max="100" min="20" step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50"/>
+              <input
+                class="optionRange"
+                type="range"
+                max="100"
+                min="20"
+                step="1"
+                name="settingsNSPortRangeVal"
+                id="settingsNSPortRangeVal"
+                value="50"
+              />
               <em id="settingsNSPortRangeValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Autosave Interval -->
             <fieldset>
-              <label for="settingsAutosaveIntervalVal" class="tooltip">Autosave Interval:&nbsp;&nbsp;&nbsp;
+              <label for="settingsAutosaveIntervalVal" class="tooltip"
+                >Autosave Interval:&nbsp;&nbsp;&nbsp;
                 <span class="tooltiptext">
-                  The time (in seconds) between each autosave. Set to 0 to
-                  disable autosave.
+                  The time (in seconds) between each autosave. Set to 0 to disable autosave.
                 </span>
               </label>
 
-              <input class="optionRange" type="range" max="600" min="0" step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60"/>
+              <input
+                class="optionRange"
+                type="range"
+                max="600"
+                min="0"
+                step="1"
+                name="settingsAutosaveIntervalVal"
+                id="settingsAutosaveIntervalVal"
+                value="60"
+              />
               <em id="settingsAutosaveIntervalValLabel" style="font-style: normal"></em>
             </fieldset>
 
             <!-- Suppress messages -->
             <fieldset>
-              <label for="settingsSuppressMessages" class="tooltip">Suppress Messages:
+              <label for="settingsSuppressMessages" class="tooltip"
+                >Suppress Messages:
                 <span class="tooltiptext">
-                  If this is set, then any messages you receive will not appear
-                  as popups on the screen. They will still get sent to your home
-                  computer as '.msg' files and can be viewed with the 'cat'
-                  Terminal command.
+                  If this is set, then any messages you receive will not appear as popups on the screen. They will still
+                  get sent to your home computer as '.msg' files and can be viewed with the 'cat' Terminal command.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsSuppressMessages" id="settingsSuppressMessages"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsSuppressMessages"
+                id="settingsSuppressMessages"
+              />
             </fieldset>
 
             <!-- Suppress faction invites -->
             <fieldset>
-              <label for="settingsSuppressFactionInvites" class="tooltip">Suppress Faction Invites:
+              <label for="settingsSuppressFactionInvites" class="tooltip"
+                >Suppress Faction Invites:
                 <span class="tooltiptexthigh">
-                  If this is set, then any faction invites you receive will not
-                  appear as popups on the screen. Your outstanding faction
-                  invites can be viewed in the 'Factions' page.
+                  If this is set, then any faction invites you receive will not appear as popups on the screen. Your
+                  outstanding faction invites can be viewed in the 'Factions' page.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsSuppressFactionInvites" id="settingsSuppressFactionInvites"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsSuppressFactionInvites"
+                id="settingsSuppressFactionInvites"
+              />
             </fieldset>
 
             <!-- Suppress travel confirmation -->
             <fieldset>
-              <label for="settingsSuppressTravelConfirmation" class="tooltip">Suppress Travel Confirmation:
+              <label for="settingsSuppressTravelConfirmation" class="tooltip"
+                >Suppress Travel Confirmation:
                 <span class="tooltiptexthigh">
-                  If this is set, the confirmation message before traveling will
-                  not show up. You will automatically be deducted the travel
-                  cost as soon as you click.
+                  If this is set, the confirmation message before traveling will not show up. You will automatically be
+                  deducted the travel cost as soon as you click.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsSuppressTravelConfirmation" id="settingsSuppressTravelConfirmation"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsSuppressTravelConfirmation"
+                id="settingsSuppressTravelConfirmation"
+              />
             </fieldset>
 
             <!-- Suppress buy aug confirmation -->
             <fieldset>
-              <label for="settingsSuppressBuyAugmentationConfirmation" class="tooltip">Suppress buy augmentation confirmation:
+              <label for="settingsSuppressBuyAugmentationConfirmation" class="tooltip"
+                >Suppress buy augmentation confirmation:
                 <span class="tooltiptexthigh">
-                  If this is set, the confirmation message before buying
-                  augmentation will not show up.
+                  If this is set, the confirmation message before buying augmentation will not show up.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsSuppressBuyAugmentationConfirmation" id="settingsSuppressBuyAugmentationConfirmation"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsSuppressBuyAugmentationConfirmation"
+                id="settingsSuppressBuyAugmentationConfirmation"
+              />
             </fieldset>
 
             <!-- Hospitalization Popup -->
             <fieldset>
-              <label for="settingsSuppressHospitalizationPopup" class="tooltip">Suppress Hospitalization popup:
+              <label for="settingsSuppressHospitalizationPopup" class="tooltip"
+                >Suppress Hospitalization popup:
                 <span class="tooltiptexthigh">
-                  If this is set, a popup message will no longer be shown when
-                  you are hospitalized after taking too much damage.
+                  If this is set, a popup message will no longer be shown when you are hospitalized after taking too
+                  much damage.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsSuppressHospitalizationPopup" id="settingsSuppressHospitalizationPopup"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsSuppressHospitalizationPopup"
+                id="settingsSuppressHospitalizationPopup"
+              />
             </fieldset>
 
             <!-- Suppress Bladeburner popups -->
             <fieldset>
-              <label for="settingsSuppressBladeburnerPopup" class="tooltip">Suppress Bladeburner Popup:
+              <label for="settingsSuppressBladeburnerPopup" class="tooltip"
+                >Suppress Bladeburner Popup:
                 <span class="tooltiptext">
-                  If this is set, then having your Bladeburner actions
-                  interrupted by being busy with something else will not display
-                  a popup message.
+                  If this is set, then having your Bladeburner actions interrupted by being busy with something else
+                  will not display a popup message.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsSuppressBladeburnerPopup" id="settingsSuppressBladeburnerPopup"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsSuppressBladeburnerPopup"
+                id="settingsSuppressBladeburnerPopup"
+              />
             </fieldset>
 
             <!-- Disable Terminal and Navigation Shortcuts -->
             <fieldset>
-              <label for="settingsDisableHotkeys" class="tooltip">Disable Hotkeys:
+              <label for="settingsDisableHotkeys" class="tooltip"
+                >Disable Hotkeys:
                 <span class="tooltiptexthigh">
-                  If this is set, then most hotkeys (keyboard shortcuts) in the
-                  game are disabled. This includes Terminal commands, hotkeys to
-                  navigate between different parts of the game, and the "Save
-                  and Close (Ctrl + b)" hotkey in the Text Editor.
+                  If this is set, then most hotkeys (keyboard shortcuts) in the game are disabled. This includes
+                  Terminal commands, hotkeys to navigate between different parts of the game, and the "Save and Close
+                  (Ctrl + b)" hotkey in the Text Editor.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsDisableHotkeys" id="settingsDisableHotkeys"/>
+              <input class="optionCheckbox" type="checkbox" name="settingsDisableHotkeys" id="settingsDisableHotkeys" />
             </fieldset>
 
             <!-- View city as list of buttons instead of ASCII art. -->
             <fieldset>
-              <label for="settingsDisableASCIIArt" class="tooltip">Disable ASCII art:
-                <span class="tooltiptexthigh">
-                  If this is set all ASCII art will be disabled.
-                </span>
+              <label for="settingsDisableASCIIArt" class="tooltip"
+                >Disable ASCII art:
+                <span class="tooltiptexthigh"> If this is set all ASCII art will be disabled. </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsDisableASCIIArt" id="settingsDisableASCIIArt"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsDisableASCIIArt"
+                id="settingsDisableASCIIArt"
+              />
             </fieldset>
 
             <!-- Disable text effects such as corruption. -->
             <fieldset>
-              <label for="settingsDisableTextEffects" class="tooltip">Disable Text Effects:
+              <label for="settingsDisableTextEffects" class="tooltip"
+                >Disable Text Effects:
                 <span class="tooltiptexthigh">
-                  If this is set, text effects will not be displayed. This can
-                  help if text is difficult to read in certain areas.
+                  If this is set, text effects will not be displayed. This can help if text is difficult to read in
+                  certain areas.
                 </span>
               </label>
-              <input class="optionCheckbox" type="checkbox" name="settingsDisableTextEffects" id="settingsDisableTextEffects"/>
+              <input
+                class="optionCheckbox"
+                type="checkbox"
+                name="settingsDisableTextEffects"
+                id="settingsDisableTextEffects"
+              />
             </fieldset>
 
             <!-- Locale for displaying numbers -->
             <fieldset>
-              <label for="settingsLocale" class="tooltip">Locale:
-                <span class="tooltiptexthigh">
-                  Sets the locale for displaying numbers. Defaults to 'en'
-                </span>
+              <label for="settingsLocale" class="tooltip"
+                >Locale:
+                <span class="tooltiptexthigh"> Sets the locale for displaying numbers. Defaults to 'en' </span>
               </label>
               <select name="settingsLocale" id="settingsLocale" class="dropdown">
                 <option value="en">en</option>
@@ -642,60 +744,59 @@
 
             <!-- Donate button -->
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-              <input type="hidden" name="cmd" value="_s-xclick"/>
-              <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
-                "/>
-              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
-              <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
+              <input type="hidden" name="cmd" value="_s-xclick" />
+              <input
+                type="hidden"
+                name="encrypted"
+                value="-----BEGIN PKCS7-----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-----END PKCS7-----
+                "
+              />
+              <input
+                type="image"
+                src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                border="0"
+                name="submit"
+                alt="PayPal - The safer, easier way to pay online!"
+              />
+              <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
             </form>
           </div>
           <div id="game-options-right-panel">
             <a class="a-link-button" href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank">
               Changelog
             </a>
-            <a class="a-link-button" href="https://bitburner.readthedocs.io/en/latest/index.html" target="_blank">Documentation</a>
+            <a class="a-link-button" href="https://bitburner.readthedocs.io/en/latest/index.html" target="_blank"
+              >Documentation</a
+            >
             <a class="a-link-button" href="https://discord.gg/TFc3hKD" target="_blank">Discord</a>
             <a class="a-link-button" href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
             <button id="save-game-link" class="a-link-button">Save Game</button>
-            <button id="delete-game-link" class="a-link-button">
-              Delete Game
-            </button>
-            <button id="export-game-link" class="a-link-button">
-              Export Game
-            </button>
-            <input type="file" id="import-game-file-selector" name="file"/>
-            <button id="import-game-link" class="a-link-button">
-              Import Game
-            </button>
-            <button id="copy-save-to-clipboard-link" class="std-button">
-              Copy Save data to Clipboard
-            </button>
+            <button id="delete-game-link" class="a-link-button">Delete Game</button>
+            <button id="export-game-link" class="a-link-button">Export Game</button>
+            <input type="file" id="import-game-file-selector" name="file" />
+            <button id="import-game-link" class="a-link-button">Import Game</button>
+            <button id="copy-save-to-clipboard-link" class="std-button">Copy Save data to Clipboard</button>
             <button id="debug-delete-scripts-link" class="a-link-button tooltip">
               Force kill all active scripts
               <span class="tooltiptextleft">
-                Forcefully kill all active running scripts, in case there is a
-                bug or some unexpected issue with the game. After using this,
-                save the game and then reload the page. This is different then
-                normal kill in that normal kill will tell the script to shut
-                down while force kill just removes the references to it (and it
-                should crash on it's own). This will not remove the files on
-                your computer. Just forcefully kill all running instance of all
-                scripts.
+                Forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the
+                game. After using this, save the game and then reload the page. This is different then normal kill in
+                that normal kill will tell the script to shut down while force kill just removes the references to it
+                (and it should crash on it's own). This will not remove the files on your computer. Just forcefully kill
+                all running instance of all scripts.
               </span>
             </button>
             <button id="debug-soft-reset" class="a-link-button tooltip">
               Soft Reset
               <span class="tooltiptextleft">
-                Perform a soft reset. Resets everything as if you had just
-                purchased an Augmentation.
+                Perform a soft reset. Resets everything as if you had just purchased an Augmentation.
               </span>
             </button>
             <button id="debug-files" class="a-link-button tooltip">
               Diagnose files
               <span class="tooltiptextleft">
-                If your save file is extremely big you can use this button to
-                view a map of all the files on every server. Be careful there
-                might be spoilers.
+                If your save file is extremely big you can use this button to view a map of all the files on every
+                server. Be careful there might be spoilers.
               </span>
             </button>
           </div>
@@ -725,10 +826,11 @@
       </div>
     </div>
 
-    <div id="unclickable" style="display: none">
-      Click on this to upgrade your Source-File -1!
-    </div>
-  <script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="dist/engine.bundle.js"></script><script type="text/javascript" src="dist/engineStyle.bundle.js"></script></body>
+    <div id="unclickable" style="display: none">Click on this to upgrade your Source-File -1!</div>
+    <script type="text/javascript" src="dist/vendor.bundle.js"></script>
+    <script type="text/javascript" src="dist/engine.bundle.js"></script>
+    <script type="text/javascript" src="dist/engineStyle.bundle.js"></script>
+  </body>
 
   <!-- Misc Scripts -->
   <script src="src/ThirdParty/raphael.min.js"></script>

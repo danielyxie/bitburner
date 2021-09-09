@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import {
-  formatNumber,
-  convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
+import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { stealthIcon, killIcon } from "../data/Icons";
 import { BladeburnerConstants } from "../data/Constants";
 import { createPopup } from "../../ui/React/createPopup";
@@ -23,11 +20,8 @@ interface IProps {
 export function OperationElem(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   const isActive =
-    props.bladeburner.action.type === ActionTypes["Operation"] &&
-    props.action.name === props.bladeburner.action.name;
-  const estimatedSuccessChance = props.action.getEstSuccessChance(
-    props.bladeburner,
-  );
+    props.bladeburner.action.type === ActionTypes["Operation"] && props.action.name === props.bladeburner.action.name;
+  const estimatedSuccessChance = props.action.getEstSuccessChance(props.bladeburner);
   const computedActionTimeCurrent = Math.min(
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
     props.bladeburner.actionTimeToComplete,
@@ -54,15 +48,13 @@ export function OperationElem(props: IProps): React.ReactElement {
 
   function increaseLevel(): void {
     ++props.action.level;
-    if (isActive)
-      props.bladeburner.startAction(props.player, props.bladeburner.action);
+    if (isActive) props.bladeburner.startAction(props.player, props.bladeburner.action);
     setRerender((old) => !old);
   }
 
   function decreaseLevel(): void {
     --props.action.level;
-    if (isActive)
-      props.bladeburner.startAction(props.player, props.bladeburner.action);
+    if (isActive) props.bladeburner.startAction(props.player, props.bladeburner.action);
     setRerender((old) => !old);
   }
 
@@ -76,8 +68,7 @@ export function OperationElem(props: IProps): React.ReactElement {
       <h2 style={{ display: "inline-block" }}>
         {isActive ? (
           <>
-            <CopyableText value={props.action.name} /> (IN PROGRESS -{" "}
-            {formatNumber(computedActionTimeCurrent, 0)} /{" "}
+            <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
             {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
           </>
         ) : (
@@ -87,25 +78,15 @@ export function OperationElem(props: IProps): React.ReactElement {
       {isActive ? (
         <p style={{ display: "block" }}>
           {createProgressBarText({
-            progress:
-              computedActionTimeCurrent /
-              props.bladeburner.actionTimeToComplete,
+            progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
           })}
         </p>
       ) : (
         <>
-          <a
-            onClick={onStart}
-            className="a-link-button"
-            style={{ margin: "3px", padding: "3px" }}
-          >
+          <a onClick={onStart} className="a-link-button" style={{ margin: "3px", padding: "3px" }}>
             Start
           </a>
-          <a
-            onClick={onTeam}
-            style={{ margin: "3px", padding: "3px" }}
-            className="a-link-button"
-          >
+          <a onClick={onTeam} style={{ margin: "3px", padding: "3px" }} className="a-link-button">
             Set Team Size (Curr Size: {formatNumber(props.action.teamCount, 0)})
           </a>
         </>
@@ -114,40 +95,24 @@ export function OperationElem(props: IProps): React.ReactElement {
       <br />
       <pre className="tooltip" style={{ display: "inline-block" }}>
         <span className="tooltiptext">
-          {props.action.getSuccessesNeededForNextLevel(
-            BladeburnerConstants.OperationSuccessesPerLevel,
-          )}{" "}
-          successes needed for next level
+          {props.action.getSuccessesNeededForNextLevel(BladeburnerConstants.OperationSuccessesPerLevel)} successes
+          needed for next level
         </span>
         Level: {props.action.level} / {props.action.maxLevel}
       </pre>
       <a
         onClick={increaseLevel}
         style={{ padding: "2px", margin: "2px" }}
-        className={`tooltip ${
-          maxLevel ? "a-link-button-inactive" : "a-link-button"
-        }`}
+        className={`tooltip ${maxLevel ? "a-link-button-inactive" : "a-link-button"}`}
       >
-        {isActive && (
-          <span className="tooltiptext">
-            WARNING: changing the level will restart the Operation
-          </span>
-        )}
-        ↑
+        {isActive && <span className="tooltiptext">WARNING: changing the level will restart the Operation</span>}↑
       </a>
       <a
         onClick={decreaseLevel}
         style={{ padding: "2px", margin: "2px" }}
-        className={`tooltip ${
-          props.action.level <= 1 ? "a-link-button-inactive" : "a-link-button"
-        }`}
+        className={`tooltip ${props.action.level <= 1 ? "a-link-button-inactive" : "a-link-button"}`}
       >
-        {isActive && (
-          <span className="tooltiptext">
-            WARNING: changing the level will restart the Operation
-          </span>
-        )}
-        ↓
+        {isActive && <span className="tooltiptext">WARNING: changing the level will restart the Operation</span>}↓
       </a>
       <br />
       <br />
@@ -155,8 +120,7 @@ export function OperationElem(props: IProps): React.ReactElement {
         <span dangerouslySetInnerHTML={{ __html: props.action.desc }} />
         <br />
         <br />
-        Estimated success chance:{" "}
-        <SuccessChance chance={estimatedSuccessChance} />{" "}
+        Estimated success chance: <SuccessChance chance={estimatedSuccessChance} />{" "}
         {props.action.isStealth ? stealthIcon : <></>}
         {props.action.isKill ? killIcon : <></>}
         <br />
@@ -169,22 +133,11 @@ export function OperationElem(props: IProps): React.ReactElement {
         Failures: {props.action.failures}
       </pre>
       <br />
-      <label
-        className="tooltip"
-        style={{ color: "white" }}
-        htmlFor={autolevelCheckboxId}
-      >
+      <label className="tooltip" style={{ color: "white" }} htmlFor={autolevelCheckboxId}>
         Autolevel:
-        <span className="tooltiptext">
-          Automatically increase operation level when possible
-        </span>
+        <span className="tooltiptext">Automatically increase operation level when possible</span>
       </label>
-      <input
-        type="checkbox"
-        id={autolevelCheckboxId}
-        checked={props.action.autoLevel}
-        onChange={onAutolevel}
-      />
+      <input type="checkbox" id={autolevelCheckboxId} checked={props.action.autoLevel} onChange={onAutolevel} />
     </>
   );
 }

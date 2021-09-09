@@ -22,10 +22,7 @@ export interface IPerson {
   crime_success_mult: number;
 }
 
-export function calculateCrimeSuccessChance(
-  crime: ICrime,
-  person: IPerson,
-): number {
+export function calculateCrimeSuccessChance(crime: ICrime, person: IPerson): number {
   let chance: number =
     crime.hacking_success_weight * person.hacking_skill +
     crime.strength_success_weight * person.strength +

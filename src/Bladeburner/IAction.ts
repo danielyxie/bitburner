@@ -61,10 +61,7 @@ export interface IAction {
   getActionTime(inst: IBladeburner): number;
   getTeamSuccessBonus(inst: IBladeburner): number;
   getActionTypeSkillSuccessBonus(inst: IBladeburner): number;
-  getChaosCompetencePenalty(
-    inst: IBladeburner,
-    params: ISuccessChanceParams,
-  ): number;
+  getChaosCompetencePenalty(inst: IBladeburner, params: ISuccessChanceParams): number;
   getChaosDifficultyBonus(inst: IBladeburner): number;
   getEstSuccessChance(inst: IBladeburner): number[];
   getSuccessChance(inst: IBladeburner, params: ISuccessChanceParams): number;

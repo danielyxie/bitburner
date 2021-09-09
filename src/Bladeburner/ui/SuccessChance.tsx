@@ -12,8 +12,7 @@ export function SuccessChance(props: IProps): React.ReactElement {
 
   return (
     <>
-      {formatNumber(props.chance[0] * 100, 1)}% ~{" "}
-      {formatNumber(props.chance[1] * 100, 1)}%
+      {formatNumber(props.chance[0] * 100, 1)}% ~ {formatNumber(props.chance[1] * 100, 1)}%
     </>
   );
 }

@@ -5,9 +5,7 @@ import { getElementById } from "./getElementById";
  * replacing. Then returns the new cloned element.
  * @param elemId The HTML ID to retrieve the element by.
  */
-export function clearEventListeners(
-  elemId: string | HTMLElement,
-): HTMLElement | null {
+export function clearEventListeners(elemId: string | HTMLElement): HTMLElement | null {
   try {
     let elem: HTMLElement;
     if (typeof elemId === "string") {

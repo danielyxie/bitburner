@@ -1,8 +1,5 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
-import {
-  OwnedAugmentationsOrderSetting,
-  PurchaseAugmentationsOrderSetting,
-} from "./SettingEnums";
+import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 
 /**
  * Represents the default settings the player could customize.
@@ -130,8 +127,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
   PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting.Default,
-  SuppressBuyAugmentationConfirmation:
-    defaultSettings.SuppressBuyAugmentationConfirmation,
+  SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
   SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
   SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
   SuppressMessages: defaultSettings.SuppressMessages,

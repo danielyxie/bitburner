@@ -32,11 +32,7 @@ import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
 export class Sleeve extends Person {
   /**
@@ -158,32 +154,13 @@ export class Sleeve extends Person {
       this.resetTaskStatus();
     }
 
-    this.gainRatesForTask.hack =
-      crime.hacking_exp *
-      this.hacking_exp_mult *
-      BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.str =
-      crime.strength_exp *
-      this.strength_exp_mult *
-      BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.def =
-      crime.defense_exp *
-      this.defense_exp_mult *
-      BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.dex =
-      crime.dexterity_exp *
-      this.dexterity_exp_mult *
-      BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.agi =
-      crime.agility_exp *
-      this.agility_exp_mult *
-      BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.cha =
-      crime.charisma_exp *
-      this.charisma_exp_mult *
-      BitNodeMultipliers.CrimeExpGain;
-    this.gainRatesForTask.money =
-      crime.money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
+    this.gainRatesForTask.hack = crime.hacking_exp * this.hacking_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.gainRatesForTask.str = crime.strength_exp * this.strength_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.gainRatesForTask.def = crime.defense_exp * this.defense_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.gainRatesForTask.dex = crime.dexterity_exp * this.dexterity_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.gainRatesForTask.agi = crime.agility_exp * this.agility_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.gainRatesForTask.cha = crime.charisma_exp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.gainRatesForTask.money = crime.money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
     this.currentTaskLocation = String(this.gainRatesForTask.money);
 
@@ -204,9 +181,7 @@ export class Sleeve extends Person {
       if (this.currentTaskTime >= this.currentTaskMaxTime) {
         const crime: Crime | null = Crimes[this.crimeType];
         if (!(crime instanceof Crime)) {
-          console.error(
-            `Invalid data stored in sleeve.crimeType: ${this.crimeType}`,
-          );
+          console.error(`Invalid data stored in sleeve.crimeType: ${this.crimeType}`);
           this.resetTaskStatus();
           return retValue;
         }
@@ -214,9 +189,7 @@ export class Sleeve extends Person {
           // Success
           const successGainRates: ITaskTracker = createTaskTracker();
 
-          const keysForIteration: (keyof ITaskTracker)[] = Object.keys(
-            successGainRates,
-          ) as (keyof ITaskTracker)[];
+          const keysForIteration: (keyof ITaskTracker)[] = Object.keys(successGainRates) as (keyof ITaskTracker)[];
           for (let i = 0; i < keysForIteration.length; ++i) {
             const key = keysForIteration[i];
             successGainRates[key] = this.gainRatesForTask[key] * 2;
@@ -246,12 +219,7 @@ export class Sleeve extends Person {
    * Earn experience for any stats (supports multiple)
    * This function also handles experience propogating to Player and other sleeves
    */
-  gainExperience(
-    p: IPlayer,
-    exp: ITaskTracker,
-    numCycles = 1,
-    fromOtherSleeve = false,
-  ): ITaskTracker {
+  gainExperience(p: IPlayer, exp: ITaskTracker, numCycles = 1, fromOtherSleeve = false): ITaskTracker {
     // If the experience is coming from another sleeve, it is not multiplied by anything.
     // Also the player does not earn anything
     if (fromOtherSleeve) {
@@ -405,41 +373,26 @@ export class Sleeve extends Person {
 
       switch (this.factionWorkType) {
         case FactionWorkType.Hacking:
-          return (
-            this.getFactionHackingWorkRepGain() * (this.shock / 100) * favorMult
-          );
+          return this.getFactionHackingWorkRepGain() * (this.shock / 100) * favorMult;
         case FactionWorkType.Field:
-          return (
-            this.getFactionFieldWorkRepGain() * (this.shock / 100) * favorMult
-          );
+          return this.getFactionFieldWorkRepGain() * (this.shock / 100) * favorMult;
         case FactionWorkType.Security:
-          return (
-            this.getFactionSecurityWorkRepGain() *
-            (this.shock / 100) *
-            favorMult
-          );
+          return this.getFactionSecurityWorkRepGain() * (this.shock / 100) * favorMult;
         default:
-          console.warn(
-            `Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`,
-          );
+          console.warn(`Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`);
           return 0;
       }
     } else if (this.currentTask === SleeveTaskType.Company) {
       const companyName: string = this.currentTaskLocation;
       const company: Company | null = Companies[companyName];
       if (company == null) {
-        console.error(
-          `Invalid company found when trying to calculate rep gain: ${companyName}`,
-        );
+        console.error(`Invalid company found when trying to calculate rep gain: ${companyName}`);
         return 0;
       }
 
-      const companyPosition: CompanyPosition | null =
-        CompanyPositions[p.jobs[companyName]];
+      const companyPosition: CompanyPosition | null = CompanyPositions[p.jobs[companyName]];
       if (companyPosition == null) {
-        console.error(
-          `Invalid company position name found when trying to calculate rep gain: ${p.jobs[companyName]}`,
-        );
+        console.error(`Invalid company position name found when trying to calculate rep gain: ${p.jobs[companyName]}`);
         return 0;
       }
 
@@ -455,9 +408,7 @@ export class Sleeve extends Person {
 
       return jobPerformance * this.company_rep_mult * favorMult;
     } else {
-      console.warn(
-        `Sleeve.getRepGain() called for invalid task type: ${this.currentTask}`,
-      );
+      console.warn(`Sleeve.getRepGain() called for invalid task type: ${this.currentTask}`);
       return 0;
     }
   }
@@ -527,10 +478,7 @@ export class Sleeve extends Person {
 
     let time = this.storedCycles * CONSTANTS.MilliPerCycle;
     let cyclesUsed = this.storedCycles;
-    if (
-      this.currentTaskMaxTime !== 0 &&
-      this.currentTaskTime + time > this.currentTaskMaxTime
-    ) {
+    if (this.currentTaskMaxTime !== 0 && this.currentTaskTime + time > this.currentTaskMaxTime) {
       time = this.currentTaskMaxTime - this.currentTaskTime;
       cyclesUsed = Math.floor(time / CONSTANTS.MilliPerCycle);
 
@@ -562,9 +510,7 @@ export class Sleeve extends Person {
         // Gain faction reputation
         const fac: Faction = Factions[this.currentTaskLocation];
         if (!(fac instanceof Faction)) {
-          console.error(
-            `Invalid faction for Sleeve task: ${this.currentTaskLocation}`,
-          );
+          console.error(`Invalid faction for Sleeve task: ${this.currentTaskLocation}`);
           break;
         }
 
@@ -577,9 +523,7 @@ export class Sleeve extends Person {
 
         const company: Company = Companies[this.currentTaskLocation];
         if (!(company instanceof Company)) {
-          console.error(
-            `Invalid company for Sleeve task: ${this.currentTaskLocation}`,
-          );
+          console.error(`Invalid company for Sleeve task: ${this.currentTaskLocation}`);
           break;
         }
 
@@ -590,19 +534,13 @@ export class Sleeve extends Person {
         this.shock = Math.min(100, this.shock + 0.0002 * cyclesUsed);
         break;
       case SleeveTaskType.Synchro:
-        this.sync = Math.min(
-          100,
-          this.sync + p.getIntelligenceBonus(0.5) * 0.0002 * cyclesUsed,
-        );
+        this.sync = Math.min(100, this.sync + p.getIntelligenceBonus(0.5) * 0.0002 * cyclesUsed);
         break;
       default:
         break;
     }
 
-    if (
-      this.currentTaskMaxTime !== 0 &&
-      this.currentTaskTime >= this.currentTaskMaxTime
-    ) {
+    if (this.currentTaskMaxTime !== 0 && this.currentTaskTime >= this.currentTaskMaxTime) {
       if (this.currentTask === SleeveTaskType.Crime) {
         retValue = this.finishTask(p);
       } else {
@@ -658,11 +596,7 @@ export class Sleeve extends Person {
   /**
    * Take a course at a university
    */
-  takeUniversityCourse(
-    p: IPlayer,
-    universityName: string,
-    className: string,
-  ): boolean {
+  takeUniversityCourse(p: IPlayer, universityName: string, className: string): boolean {
     if (this.currentTask !== SleeveTaskType.Idle) {
       this.finishTask(p);
     } else {
@@ -703,24 +637,19 @@ export class Sleeve extends Person {
       case "study computer science":
         break;
       case "data structures":
-        this.gainRatesForTask.money =
-          -1 * (CONSTANTS.ClassDataStructuresBaseCost * costMult);
+        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassDataStructuresBaseCost * costMult);
         break;
       case "networks":
-        this.gainRatesForTask.money =
-          -1 * (CONSTANTS.ClassNetworksBaseCost * costMult);
+        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassNetworksBaseCost * costMult);
         break;
       case "algorithms":
-        this.gainRatesForTask.money =
-          -1 * (CONSTANTS.ClassAlgorithmsBaseCost * costMult);
+        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassAlgorithmsBaseCost * costMult);
         break;
       case "management":
-        this.gainRatesForTask.money =
-          -1 * (CONSTANTS.ClassManagementBaseCost * costMult);
+        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassManagementBaseCost * costMult);
         break;
       case "leadership":
-        this.gainRatesForTask.money =
-          -1 * (CONSTANTS.ClassLeadershipBaseCost * costMult);
+        this.gainRatesForTask.money = -1 * (CONSTANTS.ClassLeadershipBaseCost * costMult);
         break;
       default:
         return false;
@@ -777,39 +706,22 @@ export class Sleeve extends Person {
       switch (this.className.toLowerCase()) {
         case "study computer science":
           this.gainRatesForTask.hack =
-            CONSTANTS.ClassStudyComputerScienceBaseExp *
-            totalExpMult *
-            this.hacking_exp_mult;
+            CONSTANTS.ClassStudyComputerScienceBaseExp * totalExpMult * this.hacking_exp_mult;
           break;
         case "data structures":
-          this.gainRatesForTask.hack =
-            CONSTANTS.ClassDataStructuresBaseExp *
-            totalExpMult *
-            this.hacking_exp_mult;
+          this.gainRatesForTask.hack = CONSTANTS.ClassDataStructuresBaseExp * totalExpMult * this.hacking_exp_mult;
           break;
         case "networks":
-          this.gainRatesForTask.hack =
-            CONSTANTS.ClassNetworksBaseExp *
-            totalExpMult *
-            this.hacking_exp_mult;
+          this.gainRatesForTask.hack = CONSTANTS.ClassNetworksBaseExp * totalExpMult * this.hacking_exp_mult;
           break;
         case "algorithms":
-          this.gainRatesForTask.hack =
-            CONSTANTS.ClassAlgorithmsBaseExp *
-            totalExpMult *
-            this.hacking_exp_mult;
+          this.gainRatesForTask.hack = CONSTANTS.ClassAlgorithmsBaseExp * totalExpMult * this.hacking_exp_mult;
           break;
         case "management":
-          this.gainRatesForTask.cha =
-            CONSTANTS.ClassManagementBaseExp *
-            totalExpMult *
-            this.charisma_exp_mult;
+          this.gainRatesForTask.cha = CONSTANTS.ClassManagementBaseExp * totalExpMult * this.charisma_exp_mult;
           break;
         case "leadership":
-          this.gainRatesForTask.cha =
-            CONSTANTS.ClassLeadershipBaseExp *
-            totalExpMult *
-            this.charisma_exp_mult;
+          this.gainRatesForTask.cha = CONSTANTS.ClassLeadershipBaseExp * totalExpMult * this.charisma_exp_mult;
           break;
         default:
           break;
@@ -846,25 +758,19 @@ export class Sleeve extends Person {
       const totalExpMultiplier = p.hashManager.getTrainingMult() * expMult;
       const sanitizedStat: string = this.gymStatType.toLowerCase();
       if (sanitizedStat.includes("str")) {
-        this.gainRatesForTask.str =
-          baseGymExp * totalExpMultiplier * this.strength_exp_mult;
+        this.gainRatesForTask.str = baseGymExp * totalExpMultiplier * this.strength_exp_mult;
       } else if (sanitizedStat.includes("def")) {
-        this.gainRatesForTask.def =
-          baseGymExp * totalExpMultiplier * this.defense_exp_mult;
+        this.gainRatesForTask.def = baseGymExp * totalExpMultiplier * this.defense_exp_mult;
       } else if (sanitizedStat.includes("dex")) {
-        this.gainRatesForTask.dex =
-          baseGymExp * totalExpMultiplier * this.dexterity_exp_mult;
+        this.gainRatesForTask.dex = baseGymExp * totalExpMultiplier * this.dexterity_exp_mult;
       } else if (sanitizedStat.includes("agi")) {
-        this.gainRatesForTask.agi =
-          baseGymExp * totalExpMultiplier * this.agility_exp_mult;
+        this.gainRatesForTask.agi = baseGymExp * totalExpMultiplier * this.agility_exp_mult;
       }
 
       return;
     }
 
-    console.warn(
-      `Sleeve.updateTaskGainRates() called for unexpected task type ${this.currentTask}`,
-    );
+    console.warn(`Sleeve.updateTaskGainRates() called for unexpected task type ${this.currentTask}`);
   }
 
   upgradeMemory(n: number): void {
@@ -881,10 +787,7 @@ export class Sleeve extends Person {
    * Returns boolean indicating success
    */
   workForCompany(p: IPlayer, companyName: string): boolean {
-    if (
-      !(Companies[companyName] instanceof Company) ||
-      p.jobs[companyName] == null
-    ) {
+    if (!(Companies[companyName] instanceof Company) || p.jobs[companyName] == null) {
       return false;
     }
 
@@ -895,8 +798,7 @@ export class Sleeve extends Person {
     }
 
     const company: Company | null = Companies[companyName];
-    const companyPosition: CompanyPosition | null =
-      CompanyPositions[p.jobs[companyName]];
+    const companyPosition: CompanyPosition | null = CompanyPositions[p.jobs[companyName]];
     if (company == null) {
       return false;
     }
@@ -954,10 +856,7 @@ export class Sleeve extends Person {
     if (factionName === "") {
       return false;
     }
-    if (
-      !(Factions[factionName] instanceof Faction) ||
-      !p.factions.includes(factionName)
-    ) {
+    if (!(Factions[factionName] instanceof Faction) || !p.factions.includes(factionName)) {
       return false;
     }
 
@@ -976,40 +875,28 @@ export class Sleeve extends Person {
         return false;
       }
       this.factionWorkType = FactionWorkType.Hacking;
-      this.gainRatesForTask.hack =
-        0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.hack = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     } else if (sanitizedWorkType.includes("field")) {
       if (!factionInfo.offerFieldWork) {
         return false;
       }
       this.factionWorkType = FactionWorkType.Field;
-      this.gainRatesForTask.hack =
-        0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.str =
-        0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.def =
-        0.1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.dex =
-        0.1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.agi =
-        0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.cha =
-        0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.str = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.def = 0.1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.dex = 0.1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.agi = 0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.cha = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     } else if (sanitizedWorkType.includes("security")) {
       if (!factionInfo.offerSecurityWork) {
         return false;
       }
       this.factionWorkType = FactionWorkType.Security;
-      this.gainRatesForTask.hack =
-        0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.str =
-        0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.def =
-        0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.dex =
-        0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-      this.gainRatesForTask.agi =
-        0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.str = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.def = 0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.dex = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+      this.gainRatesForTask.agi = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     } else {
       return false;
     }

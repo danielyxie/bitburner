@@ -1,15 +1,7 @@
-import {
-  Reviver,
-  Generic_toJSON,
-  Generic_fromJSON,
-} from "../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
 import Decimal from "decimal.js";
-import {
-  Industries,
-  IndustryStartingCosts,
-  IndustryResearchTrees,
-} from "./IndustryData";
+import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
 import { Material } from "./Material";
@@ -121,8 +113,7 @@ export class Industry implements IIndustry {
   init(): void {
     //Set the unique properties of an industry (how much its affected by real estate/scientific research, etc.)
     const startingCost = IndustryStartingCosts[this.type];
-    if (startingCost === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (startingCost === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.startingCost = startingCost;
     switch (this.type) {
       case Industries.Energy:
@@ -316,9 +307,7 @@ export class Industry implements IIndustry {
         this.makesProducts = true;
         break;
       default:
-        console.error(
-          `Invalid Industry Type passed into Industry.init(): ${this.type}`,
-        );
+        console.error(`Invalid Industry Type passed into Industry.init(): ${this.type}`);
         return;
     }
   }
@@ -344,9 +333,7 @@ export class Industry implements IIndustry {
       case Industries.RealEstate:
         return "develop and manage real estate properties";
       default:
-        console.error(
-          "Invalid industry type in Industry.getProductDescriptionText",
-        );
+        console.error("Invalid industry type in Industry.getProductDescriptionText");
         return "";
     }
   }
@@ -399,11 +386,7 @@ export class Industry implements IIndustry {
         if (prod === undefined) continue;
         warehouse.sizeUsed += prod.data[warehouse.loc][0] * prod.siz;
         if (prod.data[warehouse.loc][0] > 0) {
-          warehouse.breakdown +=
-            prodName +
-            ": " +
-            formatNumber(prod.data[warehouse.loc][0] * prod.siz, 0) +
-            "<br>";
+          warehouse.breakdown += prodName + ": " + formatNumber(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>";
         }
       }
     }
@@ -423,12 +406,8 @@ export class Industry implements IIndustry {
         this.thisCycleRevenue = new Decimal(0);
         this.thisCycleExpenses = new Decimal(0);
       }
-      this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(
-        marketCycles * CorporationConstants.SecsPerMarketCycle,
-      );
-      this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(
-        marketCycles * CorporationConstants.SecsPerMarketCycle,
-      );
+      this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(marketCycles * CorporationConstants.SecsPerMarketCycle);
+      this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * CorporationConstants.SecsPerMarketCycle);
       this.thisCycleRevenue = new Decimal(0);
       this.thisCycleExpenses = new Decimal(0);
 
@@ -493,9 +472,7 @@ export class Industry implements IIndustry {
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       //If this industry has a warehouse in this city, process the market
       //for every material this industry requires or produces
-      if (
-        this.warehouses[CorporationConstants.Cities[i]] instanceof Warehouse
-      ) {
+      if (this.warehouses[CorporationConstants.Cities[i]] instanceof Warehouse) {
         const wh = this.warehouses[CorporationConstants.Cities[i]];
         if (wh === 0) continue;
         for (const name in reqMats) {
@@ -545,10 +522,7 @@ export class Industry implements IIndustry {
   }
 
   //Process production, purchase, and import/export of materials
-  processMaterials(
-    marketCycles = 1,
-    corporation: ICorporation,
-  ): [number, number] {
+  processMaterials(marketCycles = 1, corporation: ICorporation): [number, number] {
     let revenue = 0,
       expenses = 0;
     this.calculateProductionFactors();
@@ -588,24 +562,15 @@ export class Industry implements IIndustry {
               const mat = warehouse.materials[matName];
               let buyAmt = 0;
               let maxAmt = 0;
-              if (
-                warehouse.smartSupplyEnabled &&
-                Object.keys(this.reqMats).includes(matName)
-              ) {
+              if (warehouse.smartSupplyEnabled && Object.keys(this.reqMats).includes(matName)) {
                 continue;
               }
-              buyAmt =
-                mat.buy *
-                CorporationConstants.SecsPerMarketCycle *
-                marketCycles;
+              buyAmt = mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles;
 
               if (matName == "RealEstate") {
                 maxAmt = buyAmt;
               } else {
-                maxAmt = Math.floor(
-                  (warehouse.size - warehouse.sizeUsed) /
-                    MaterialSizes[matName],
-                );
+                maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
               }
               buyAmt = Math.min(buyAmt, maxAmt);
               if (buyAmt > 0) {
@@ -619,25 +584,15 @@ export class Industry implements IIndustry {
             const smartBuy: { [key: string]: number | undefined } = {};
             for (const matName in warehouse.materials) {
               if (!warehouse.materials.hasOwnProperty(matName)) continue;
-              if (
-                !warehouse.smartSupplyEnabled ||
-                !Object.keys(this.reqMats).includes(matName)
-              )
-                continue;
+              if (!warehouse.smartSupplyEnabled || !Object.keys(this.reqMats).includes(matName)) continue;
               const mat = warehouse.materials[matName];
 
               //Smart supply tracker is stored as per second rate
               const reqMat = this.reqMats[matName];
-              if (reqMat === undefined)
-                throw new Error(`reqMat "${matName}" is undefined`);
+              if (reqMat === undefined) throw new Error(`reqMat "${matName}" is undefined`);
               mat.buy = reqMat * warehouse.smartSupplyStore;
-              let buyAmt =
-                mat.buy *
-                CorporationConstants.SecsPerMarketCycle *
-                marketCycles;
-              const maxAmt = Math.floor(
-                (warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName],
-              );
+              let buyAmt = mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles;
+              const maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
               buyAmt = Math.min(buyAmt, maxAmt);
               if (buyAmt > 0) smartBuy[matName] = buyAmt;
             }
@@ -646,11 +601,9 @@ export class Industry implements IIndustry {
             let worseAmt = 1e99;
             for (const matName in smartBuy) {
               const buyAmt = smartBuy[matName];
-              if (buyAmt === undefined)
-                throw new Error(`Somehow smartbuy matname is undefined`);
+              if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
               const reqMat = this.reqMats[matName];
-              if (reqMat === undefined)
-                throw new Error(`reqMat "${matName}" is undefined`);
+              if (reqMat === undefined) throw new Error(`reqMat "${matName}" is undefined`);
               const amt = buyAmt / reqMat;
               if (amt < worseAmt) worseAmt = amt;
             }
@@ -658,8 +611,7 @@ export class Industry implements IIndustry {
             // Align all the materials to the smallest amount.
             for (const matName in smartBuy) {
               const reqMat = this.reqMats[matName];
-              if (reqMat === undefined)
-                throw new Error(`reqMat "${matName}" is undefined`);
+              if (reqMat === undefined) throw new Error(`reqMat "${matName}" is undefined`);
               smartBuy[matName] = worseAmt * reqMat;
             }
 
@@ -667,8 +619,7 @@ export class Industry implements IIndustry {
             let totalSize = 0;
             for (const matName in smartBuy) {
               const buyAmt = smartBuy[matName];
-              if (buyAmt === undefined)
-                throw new Error(`Somehow smartbuy matname is undefined`);
+              if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
               totalSize += buyAmt * MaterialSizes[matName];
             }
 
@@ -677,11 +628,8 @@ export class Industry implements IIndustry {
             if (totalSize > freeSpace) {
               for (const matName in smartBuy) {
                 const buyAmt = smartBuy[matName];
-                if (buyAmt === undefined)
-                  throw new Error(`Somehow smartbuy matname is undefined`);
-                smartBuy[matName] = Math.floor(
-                  (buyAmt * freeSpace) / totalSize,
-                );
+                if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
+                smartBuy[matName] = Math.floor((buyAmt * freeSpace) / totalSize);
               }
             }
 
@@ -690,8 +638,7 @@ export class Industry implements IIndustry {
               if (!warehouse.smartSupplyUseLeftovers[matName]) continue;
               const mat = warehouse.materials[matName];
               const buyAmt = smartBuy[matName];
-              if (buyAmt === undefined)
-                throw new Error(`Somehow smartbuy matname is undefined`);
+              if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
               smartBuy[matName] = Math.max(0, buyAmt - mat.qty);
             }
 
@@ -699,8 +646,7 @@ export class Industry implements IIndustry {
             for (const matName in smartBuy) {
               const mat = warehouse.materials[matName];
               const buyAmt = smartBuy[matName];
-              if (buyAmt === undefined)
-                throw new Error(`Somehow smartbuy matname is undefined`);
+              if (buyAmt === undefined) throw new Error(`Somehow smartbuy matname is undefined`);
               mat.qty += buyAmt;
               expenses += buyAmt * mat.bCost;
             }
@@ -741,9 +687,7 @@ export class Industry implements IIndustry {
               }
               // If not enough space in warehouse, limit the amount of produced materials
               if (totalMatSize > 0) {
-                const maxAmt = Math.floor(
-                  (warehouse.size - warehouse.sizeUsed) / totalMatSize,
-                );
+                const maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / totalMatSize);
                 prod = Math.min(maxAmt, prod);
               }
 
@@ -752,8 +696,7 @@ export class Industry implements IIndustry {
               }
 
               // Keep track of production for smart supply (/s)
-              warehouse.smartSupplyStore +=
-                prod / (CorporationConstants.SecsPerMarketCycle * marketCycles);
+              warehouse.smartSupplyStore += prod / (CorporationConstants.SecsPerMarketCycle * marketCycles);
 
               // Make sure we have enough resource to make our materials
               let producableFrac = 1;
@@ -763,10 +706,7 @@ export class Industry implements IIndustry {
                   if (reqMat === undefined) continue;
                   const req = reqMat * prod;
                   if (warehouse.materials[reqMatName].qty < req) {
-                    producableFrac = Math.min(
-                      producableFrac,
-                      warehouse.materials[reqMatName].qty / req,
-                    );
+                    producableFrac = Math.min(producableFrac, warehouse.materials[reqMatName].qty / req);
                   }
                 }
               }
@@ -784,17 +724,14 @@ export class Industry implements IIndustry {
                   warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
                   warehouse.materials[reqMatName].prd = 0;
                   warehouse.materials[reqMatName].prd -=
-                    reqMatQtyNeeded /
-                    (CorporationConstants.SecsPerMarketCycle * marketCycles);
+                    reqMatQtyNeeded / (CorporationConstants.SecsPerMarketCycle * marketCycles);
                 }
                 for (let j = 0; j < this.prodMats.length; ++j) {
-                  warehouse.materials[this.prodMats[j]].qty +=
-                    prod * producableFrac;
+                  warehouse.materials[this.prodMats[j]].qty += prod * producableFrac;
                   warehouse.materials[this.prodMats[j]].qlt =
                     office.employeeProd[EmployeePositions.Engineer] / 90 +
                     Math.pow(this.sciResearch.qty, this.sciFac) +
-                    Math.pow(warehouse.materials["AICores"].qty, this.aiFac) /
-                      10e3;
+                    Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3;
                 }
               } else {
                 for (const reqMatName in this.reqMats) {
@@ -805,9 +742,7 @@ export class Industry implements IIndustry {
               }
 
               //Per second
-              const fooProd =
-                (prod * producableFrac) /
-                (CorporationConstants.SecsPerMarketCycle * marketCycles);
+              const fooProd = (prod * producableFrac) / (CorporationConstants.SecsPerMarketCycle * marketCycles);
               for (let fooI = 0; fooI < this.prodMats.length; ++fooI) {
                 warehouse.materials[this.prodMats[fooI]].prd = fooProd;
               }
@@ -855,18 +790,14 @@ export class Industry implements IIndustry {
                     corporation.getSalesMultiplier() *
                     advertisingFactor *
                     this.getSalesMultiplier();
-                  const denominator = Math.sqrt(
-                    sqrtNumerator / sqrtDenominator,
-                  );
+                  const denominator = Math.sqrt(sqrtNumerator / sqrtDenominator);
                   let optimalPrice;
                   if (sqrtDenominator === 0 || denominator === 0) {
                     if (sqrtNumerator === 0) {
                       optimalPrice = 0; // No production
                     } else {
                       optimalPrice = mat.bCost + markupLimit;
-                      console.warn(
-                        `In Corporation, found illegal 0s when trying to calculate MarketTA2 sale cost`,
-                      );
+                      console.warn(`In Corporation, found illegal 0s when trying to calculate MarketTA2 sale cost`);
                     }
                   } else {
                     optimalPrice = numerator / denominator + mat.bCost;
@@ -913,10 +844,7 @@ export class Industry implements IIndustry {
                 let sellAmt;
                 if (isString(mat.sllman[1])) {
                   //Dynamically evaluated
-                  let tmp = (mat.sllman[1] as string).replace(
-                    /MAX/g,
-                    maxSell + "",
-                  );
+                  let tmp = (mat.sllman[1] as string).replace(/MAX/g, maxSell + "");
                   tmp = tmp.replace(/PROD/g, mat.prd + "");
                   try {
                     sellAmt = eval(tmp);
@@ -942,24 +870,17 @@ export class Industry implements IIndustry {
                   sellAmt = Math.min(maxSell, mat.sllman[1] as number);
                 }
 
-                sellAmt =
-                  sellAmt *
-                  CorporationConstants.SecsPerMarketCycle *
-                  marketCycles;
+                sellAmt = sellAmt * CorporationConstants.SecsPerMarketCycle * marketCycles;
                 sellAmt = Math.min(mat.qty, sellAmt);
                 if (sellAmt < 0) {
-                  console.warn(
-                    `sellAmt calculated to be negative for ${matName} in ${city}`,
-                  );
+                  console.warn(`sellAmt calculated to be negative for ${matName} in ${city}`);
                   mat.sll = 0;
                   continue;
                 }
                 if (sellAmt && sCost >= 0) {
                   mat.qty -= sellAmt;
                   revenue += sellAmt * sCost;
-                  mat.sll =
-                    sellAmt /
-                    (CorporationConstants.SecsPerMarketCycle * marketCycles);
+                  mat.sll = sellAmt / (CorporationConstants.SecsPerMarketCycle * marketCycles);
                 } else {
                   mat.sll = 0;
                 }
@@ -976,9 +897,7 @@ export class Industry implements IIndustry {
                   const exp = mat.exp[expI];
                   const amtStr = exp.amt.replace(
                     /MAX/g,
-                    mat.qty /
-                      (CorporationConstants.SecsPerMarketCycle * marketCycles) +
-                      "",
+                    mat.qty / (CorporationConstants.SecsPerMarketCycle * marketCycles) + "",
                   );
                   let amt = 0;
                   try {
@@ -1009,10 +928,7 @@ export class Industry implements IIndustry {
                     );
                     continue;
                   }
-                  amt =
-                    amt *
-                    CorporationConstants.SecsPerMarketCycle *
-                    marketCycles;
+                  amt = amt * CorporationConstants.SecsPerMarketCycle * marketCycles;
 
                   if (mat.qty < amt) {
                     amt = mat.qty;
@@ -1025,9 +941,7 @@ export class Industry implements IIndustry {
                       const expIndustry = corporation.divisions[foo];
                       const expWarehouse = expIndustry.warehouses[exp.city];
                       if (!(expWarehouse instanceof Warehouse)) {
-                        console.error(
-                          `Invalid export! ${expIndustry.name} ${exp.city}`,
-                        );
+                        console.error(`Invalid export! ${expIndustry.name} ${exp.city}`);
                         break;
                       }
 
@@ -1037,16 +951,11 @@ export class Industry implements IIndustry {
                         // affect revenue so just return 0's
                         return [0, 0];
                       } else {
-                        const maxAmt = Math.floor(
-                          (expWarehouse.size - expWarehouse.sizeUsed) /
-                            MaterialSizes[matName],
-                        );
+                        const maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / MaterialSizes[matName]);
                         amt = Math.min(maxAmt, amt);
                       }
                       expWarehouse.materials[matName].imp +=
-                        amt /
-                        (CorporationConstants.SecsPerMarketCycle *
-                          marketCycles);
+                        amt / (CorporationConstants.SecsPerMarketCycle * marketCycles);
                       expWarehouse.materials[matName].qty += amt;
                       expWarehouse.materials[matName].qlt = mat.qlt;
                       mat.qty -= amt;
@@ -1057,8 +966,7 @@ export class Industry implements IIndustry {
                   }
                 }
                 //totalExp should be per second
-                mat.totalExp /=
-                  CorporationConstants.SecsPerMarketCycle * marketCycles;
+                mat.totalExp /= CorporationConstants.SecsPerMarketCycle * marketCycles;
               }
             }
 
@@ -1087,10 +995,7 @@ export class Industry implements IIndustry {
   }
 
   //Process production & sale of this industry's FINISHED products (including all of their stats)
-  processProducts(
-    marketCycles = 1,
-    corporation: ICorporation,
-  ): [number, number] {
+  processProducts(marketCycles = 1, corporation: ICorporation): [number, number] {
     let revenue = 0;
     const expenses = 0;
 
@@ -1116,8 +1021,7 @@ export class Industry implements IIndustry {
           // Management is a multiplier for the production from Engineers
           const mgmtFactor = 1 + mgmtProd / (1.2 * total);
 
-          const progress =
-            (Math.pow(engrProd, 0.34) + Math.pow(opProd, 0.2)) * mgmtFactor;
+          const progress = (Math.pow(engrProd, 0.34) + Math.pow(opProd, 0.2)) * mgmtFactor;
 
           prod.createProduct(marketCycles, progress);
           if (prod.prog >= 100) {
@@ -1141,11 +1045,7 @@ export class Industry implements IIndustry {
   }
 
   //Processes FINISHED products
-  processProduct(
-    marketCycles = 1,
-    product: Product,
-    corporation: ICorporation,
-  ): number {
+  processProduct(marketCycles = 1, product: Product, corporation: ICorporation): number {
     let totalProfit = 0;
     for (let i = 0; i < CorporationConstants.Cities.length; ++i) {
       const city = CorporationConstants.Cities[i];
@@ -1184,14 +1084,11 @@ export class Industry implements IIndustry {
 
             //If there's not enough space in warehouse, limit the amount of Product
             if (netStorageSize > 0) {
-              const maxAmt = Math.floor(
-                (warehouse.size - warehouse.sizeUsed) / netStorageSize,
-              );
+              const maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / netStorageSize);
               prod = Math.min(maxAmt, prod);
             }
 
-            warehouse.smartSupplyStore +=
-              prod / (CorporationConstants.SecsPerMarketCycle * marketCycles);
+            warehouse.smartSupplyStore += prod / (CorporationConstants.SecsPerMarketCycle * marketCycles);
 
             //Make sure we have enough resources to make our Products
             let producableFrac = 1;
@@ -1199,10 +1096,7 @@ export class Industry implements IIndustry {
               if (product.reqMats.hasOwnProperty(reqMatName)) {
                 const req = product.reqMats[reqMatName] * prod;
                 if (warehouse.materials[reqMatName].qty < req) {
-                  producableFrac = Math.min(
-                    producableFrac,
-                    warehouse.materials[reqMatName].qty / req,
-                  );
+                  producableFrac = Math.min(producableFrac, warehouse.materials[reqMatName].qty / req);
                 }
               }
             }
@@ -1211,12 +1105,10 @@ export class Industry implements IIndustry {
             if (producableFrac > 0 && prod > 0) {
               for (const reqMatName in product.reqMats) {
                 if (product.reqMats.hasOwnProperty(reqMatName)) {
-                  const reqMatQtyNeeded =
-                    product.reqMats[reqMatName] * prod * producableFrac;
+                  const reqMatQtyNeeded = product.reqMats[reqMatName] * prod * producableFrac;
                   warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
                   warehouse.materials[reqMatName].prd -=
-                    reqMatQtyNeeded /
-                    (CorporationConstants.SecsPerMarketCycle * marketCycles);
+                    reqMatQtyNeeded / (CorporationConstants.SecsPerMarketCycle * marketCycles);
                 }
               }
               //Quantity
@@ -1224,9 +1116,7 @@ export class Industry implements IIndustry {
             }
 
             //Keep track of production Per second
-            product.data[city][1] =
-              (prod * producableFrac) /
-              (CorporationConstants.SecsPerMarketCycle * marketCycles);
+            product.data[city][1] = (prod * producableFrac) / (CorporationConstants.SecsPerMarketCycle * marketCycles);
             break;
           }
           case "SALE": {
@@ -1234,9 +1124,7 @@ export class Industry implements IIndustry {
             product.pCost = 0; //Estimated production cost
             for (const reqMatName in product.reqMats) {
               if (product.reqMats.hasOwnProperty(reqMatName)) {
-                product.pCost +=
-                  product.reqMats[reqMatName] *
-                  warehouse.materials[reqMatName].bCost;
+                product.pCost += product.reqMats[reqMatName] * warehouse.materials[reqMatName].bCost;
               }
             }
 
@@ -1275,9 +1163,7 @@ export class Industry implements IIndustry {
                   optimalPrice = 0; // No production
                 } else {
                   optimalPrice = product.pCost + markupLimit;
-                  console.warn(
-                    `In Corporation, found illegal 0s when trying to calculate MarketTA2 sale cost`,
-                  );
+                  console.warn(`In Corporation, found illegal 0s when trying to calculate MarketTA2 sale cost`);
                 }
               } else {
                 optimalPrice = numerator / denominator + product.pCost;
@@ -1294,10 +1180,7 @@ export class Industry implements IIndustry {
                 console.error(`mku is zero, reverting to 1 to avoid Infinity`);
                 product.mku = 1;
               }
-              sCost = sCostString.replace(
-                /MP/g,
-                product.pCost + product.rat / product.mku + "",
-              );
+              sCost = sCostString.replace(/MP/g, product.pCost + product.rat / product.mku + "");
               sCost = eval(sCost);
             } else {
               sCost = product.sCost;
@@ -1350,15 +1233,12 @@ export class Industry implements IIndustry {
             if (sellAmt < 0) {
               sellAmt = 0;
             }
-            sellAmt =
-              sellAmt * CorporationConstants.SecsPerMarketCycle * marketCycles;
+            sellAmt = sellAmt * CorporationConstants.SecsPerMarketCycle * marketCycles;
             sellAmt = Math.min(product.data[city][0], sellAmt); //data[0] is qty
             if (sellAmt && sCost) {
               product.data[city][0] -= sellAmt; //data[0] is qty
               totalProfit += sellAmt * sCost;
-              product.data[city][2] =
-                sellAmt /
-                (CorporationConstants.SecsPerMarketCycle * marketCycles); //data[2] is sell property
+              product.data[city][2] = sellAmt / (CorporationConstants.SecsPerMarketCycle * marketCycles); //data[2] is sell property
             } else {
               product.data[city][2] = 0; //data[2] is sell property
             }
@@ -1387,10 +1267,7 @@ export class Industry implements IIndustry {
     }
   }
 
-  upgrade(
-    upgrade: IndustryUpgrade,
-    refs: { corporation: ICorporation; office: OfficeSpace },
-  ): void {
+  upgrade(upgrade: IndustryUpgrade, refs: { corporation: ICorporation; office: OfficeSpace }): void {
     const corporation = refs.corporation;
     const office = refs.office;
     const upgN = upgrade[0];
@@ -1403,18 +1280,13 @@ export class Industry implements IIndustry {
       case 0: {
         //Coffee, 5% energy per employee
         for (let i = 0; i < office.employees.length; ++i) {
-          office.employees[i].ene = Math.min(
-            office.employees[i].ene * 1.05,
-            office.maxEne,
-          );
+          office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, office.maxEne);
         }
         break;
       }
       case 1: {
         //AdVert.Inc,
-        const advMult =
-          corporation.getAdvertisingMultiplier() *
-          this.getAdvertisingMultiplier();
+        const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
         this.awareness += 3 * advMult;
         this.popularity += 1 * advMult;
         this.awareness *= 1.01 * advMult;
@@ -1429,10 +1301,7 @@ export class Industry implements IIndustry {
   }
 
   // Returns how much of a material can be produced based of office productivity (employee stats)
-  getOfficeProductivity(
-    office: OfficeSpace,
-    params: { forProduct?: boolean } = {},
-  ): number {
+  getOfficeProductivity(office: OfficeSpace, params: { forProduct?: boolean } = {}): number {
     const opProd = office.employeeProd[EmployeePositions.Operations];
     const engrProd = office.employeeProd[EmployeePositions.Engineer];
     const mgmtProd = office.employeeProd[EmployeePositions.Management];
@@ -1471,10 +1340,7 @@ export class Industry implements IIndustry {
   getAdvertisingFactors(): [number, number, number, number] {
     const awarenessFac = Math.pow(this.awareness + 1, this.advFac);
     const popularityFac = Math.pow(this.popularity + 1, this.advFac);
-    const ratioFac =
-      this.awareness === 0
-        ? 0.01
-        : Math.max((this.popularity + 0.001) / this.awareness, 0.01);
+    const ratioFac = this.awareness === 0 ? 0.01 : Math.max((this.popularity + 0.001) / this.awareness, 0.01);
     const totalFac = Math.pow(awarenessFac * popularityFac * ratioFac, 0.85);
     return [totalFac, awarenessFac, popularityFac, ratioFac];
   }
@@ -1491,15 +1357,11 @@ export class Industry implements IIndustry {
 
   updateResearchTree(): void {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry "${this.type}"`);
 
     // Since ResearchTree data isnt saved, we'll update the Research Tree data
     // based on the stored 'researched' property in the Industry object
-    if (
-      Object.keys(researchTree.researched).length !==
-      Object.keys(this.researched).length
-    ) {
+    if (Object.keys(researchTree.researched).length !== Object.keys(this.researched).length) {
       for (const research in this.researched) {
         researchTree.research(research);
       }
@@ -1509,80 +1371,70 @@ export class Industry implements IIndustry {
   // Get multipliers from Research
   getAdvertisingMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getAdvertisingMultiplier();
   }
 
   getEmployeeChaMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getEmployeeChaMultiplier();
   }
 
   getEmployeeCreMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getEmployeeCreMultiplier();
   }
 
   getEmployeeEffMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getEmployeeEffMultiplier();
   }
 
   getEmployeeIntMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getEmployeeIntMultiplier();
   }
 
   getProductionMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getProductionMultiplier();
   }
 
   getProductProductionMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getProductProductionMultiplier();
   }
 
   getSalesMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getSalesMultiplier();
   }
 
   getScientificResearchMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getScientificResearchMultiplier();
   }
 
   getStorageMultiplier(): number {
     const researchTree = IndustryResearchTrees[this.type];
-    if (researchTree === undefined)
-      throw new Error(`Invalid industry: "${this.type}"`);
+    if (researchTree === undefined) throw new Error(`Invalid industry: "${this.type}"`);
     this.updateResearchTree();
     return researchTree.getStorageMultiplier();
   }

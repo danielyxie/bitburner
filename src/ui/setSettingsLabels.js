@@ -15,29 +15,15 @@ function setSettingsLabels() {
   const nsLogLimit = document.getElementById("settingsNSLogRangeValLabel");
   const nsPortLimit = document.getElementById("settingsNSPortRangeValLabel");
   const suppressMsgs = document.getElementById("settingsSuppressMessages");
-  const suppressFactionInv = document.getElementById(
-    "settingsSuppressFactionInvites",
-  );
-  const suppressTravelConfirmation = document.getElementById(
-    "settingsSuppressTravelConfirmation",
-  );
-  const suppressBuyAugmentationConfirmation = document.getElementById(
-    "settingsSuppressBuyAugmentationConfirmation",
-  );
-  const suppressHospitalizationPopup = document.getElementById(
-    "settingsSuppressHospitalizationPopup",
-  );
-  const suppressBladeburnerPopup = document.getElementById(
-    "settingsSuppressBladeburnerPopup",
-  );
-  const autosaveInterval = document.getElementById(
-    "settingsAutosaveIntervalValLabel",
-  );
+  const suppressFactionInv = document.getElementById("settingsSuppressFactionInvites");
+  const suppressTravelConfirmation = document.getElementById("settingsSuppressTravelConfirmation");
+  const suppressBuyAugmentationConfirmation = document.getElementById("settingsSuppressBuyAugmentationConfirmation");
+  const suppressHospitalizationPopup = document.getElementById("settingsSuppressHospitalizationPopup");
+  const suppressBladeburnerPopup = document.getElementById("settingsSuppressBladeburnerPopup");
+  const autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
   const disableHotkeys = document.getElementById("settingsDisableHotkeys");
   const disableASCIIArt = document.getElementById("settingsDisableASCIIArt");
-  const disableTextEffects = document.getElementById(
-    "settingsDisableTextEffects",
-  );
+  const disableTextEffects = document.getElementById("settingsDisableTextEffects");
   const locale = document.getElementById("settingsLocale");
 
   //Initialize values on labels
@@ -47,8 +33,7 @@ function setSettingsLabels() {
   suppressMsgs.checked = Settings.SuppressMessages;
   suppressFactionInv.checked = Settings.SuppressFactionInvites;
   suppressTravelConfirmation.checked = Settings.SuppressTravelConfirmation;
-  suppressBuyAugmentationConfirmation.checked =
-    Settings.SuppressBuyAugmentationConfirmation;
+  suppressBuyAugmentationConfirmation.checked = Settings.SuppressBuyAugmentationConfirmation;
   suppressHospitalizationPopup.checked = Settings.SuppressHospitalizationPopup;
   suppressBladeburnerPopup.checked = Settings.SuppressBladeburnerPopup;
   setAutosaveLabel(autosaveInterval);
@@ -62,9 +47,7 @@ function setSettingsLabels() {
   const nsExecTimeInput = document.getElementById("settingsNSExecTimeRangeVal");
   const nsLogRangeInput = document.getElementById("settingsNSLogRangeVal");
   const nsPortRangeInput = document.getElementById("settingsNSPortRangeVal");
-  const nsAutosaveIntervalInput = document.getElementById(
-    "settingsAutosaveIntervalVal",
-  );
+  const nsAutosaveIntervalInput = document.getElementById("settingsAutosaveIntervalVal");
   nsExecTimeInput.value = Settings.CodeInstructionRunTime;
   nsLogRangeInput.value = Settings.MaxLogCapacity;
   nsPortRangeInput.value = Settings.MaxPortCapacity;

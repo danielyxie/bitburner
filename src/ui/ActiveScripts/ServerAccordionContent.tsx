@@ -11,32 +11,24 @@ interface IProps {
 
 export function ServerAccordionContent(props: IProps): React.ReactElement {
   if (props.workerScripts.length > pageSize) {
-    return (
-      <ServerAccordionContentPaginated workerScripts={props.workerScripts} />
-    );
+    return <ServerAccordionContentPaginated workerScripts={props.workerScripts} />;
   }
 
   const scripts = props.workerScripts.map((ws) => {
-    return (
-      <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />
-    );
+    return <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />;
   });
 
   return <ul>{scripts}</ul>;
 }
 
-export function ServerAccordionContentPaginated(
-  props: IProps,
-): React.ReactElement {
+export function ServerAccordionContentPaginated(props: IProps): React.ReactElement {
   const [page, setPage] = useState(0);
   const scripts: React.ReactElement[] = [];
   const maxPage = Math.ceil(props.workerScripts.length / pageSize);
   const maxScript = Math.min((page + 1) * pageSize, props.workerScripts.length);
   for (let i = page * pageSize; i < maxScript; i++) {
     const ws = props.workerScripts[i];
-    scripts.push(
-      <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />,
-    );
+    scripts.push(<WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />);
   }
 
   function capPage(page: number): number {

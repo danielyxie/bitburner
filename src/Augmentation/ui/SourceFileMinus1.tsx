@@ -29,8 +29,8 @@ export function SourceFileMinus1(): React.ReactElement {
         panelContent={
           <>
             <p>
-              This Source-File can only be acquired with obscure knowledge of
-              the game, javascript, and the web ecosystem.
+              This Source-File can only be acquired with obscure knowledge of the game, javascript, and the web
+              ecosystem.
             </p>
             <p>It increases all of the player's multipliers by 0.1%</p>
             <br />

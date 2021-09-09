@@ -23,9 +23,7 @@ interface IProps {
 
 // Create a popup that let the player manage sales of a material
 export function SellMaterialPopup(props: IProps): React.ReactElement {
-  const [amt, setAmt] = useState<string>(
-    props.mat.sllman[1] ? props.mat.sllman[1] + "" : "",
-  );
+  const [amt, setAmt] = useState<string>(props.mat.sllman[1] ? props.mat.sllman[1] + "" : "");
   const [price, setPrice] = useState<string>(initialPrice(props.mat));
 
   function sellMaterial(): void {
@@ -53,28 +51,25 @@ export function SellMaterialPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the maximum amount of {props.mat.name} you would like to sell per
-        second, as well as the price at which you would like to sell at.
+        Enter the maximum amount of {props.mat.name} you would like to sell per second, as well as the price at which
+        you would like to sell at.
         <br />
         <br />
-        If the sell amount is set to 0, then the material will not be sold. If
-        the sell price if set to 0, then the material will be discarded
+        If the sell amount is set to 0, then the material will not be sold. If the sell price if set to 0, then the
+        material will be discarded
         <br />
         <br />
-        Setting the sell amount to 'MAX' will result in you always selling the
-        maximum possible amount of the material.
+        Setting the sell amount to 'MAX' will result in you always selling the maximum possible amount of the material.
         <br />
         <br />
-        When setting the sell amount, you can use the 'PROD' variable to
-        designate a dynamically changing amount that depends on your production.
-        For example, if you set the sell amount to 'PROD-5' then you will always
-        sell 5 less of the material than you produce.
+        When setting the sell amount, you can use the 'PROD' variable to designate a dynamically changing amount that
+        depends on your production. For example, if you set the sell amount to 'PROD-5' then you will always sell 5 less
+        of the material than you produce.
         <br />
         <br />
-        When setting the sell price, you can use the 'MP' variable to designate
-        a dynamically changing price that depends on the market price. For
-        example, if you set the sell price to 'MP+10' then it will always be
-        sold at $10 above the market price.
+        When setting the sell price, you can use the 'MP' variable to designate a dynamically changing price that
+        depends on the market price. For example, if you set the sell price to 'MP+10' then it will always be sold at
+        $10 above the market price.
       </p>
       <br />
       <input

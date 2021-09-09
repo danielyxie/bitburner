@@ -1,9 +1,6 @@
 import { createElement } from "./createElement";
 
-export function createOptionElement(
-  text: string,
-  value = "",
-): HTMLOptionElement {
+export function createOptionElement(text: string, value = ""): HTMLOptionElement {
   let sanitizedValue: string = value;
   if (sanitizedValue === "") {
     sanitizedValue = text;

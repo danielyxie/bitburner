@@ -11,9 +11,7 @@ export function removeElement(elem: Element | null): void {
   }
   if (!(elem instanceof Element)) {
     // tslint:disable-next-line:no-console
-    console.debug(
-      "The element passed into 'removeElement' was not an instance of an Element.",
-    );
+    console.debug("The element passed into 'removeElement' was not an instance of an Element.");
 
     return;
   }

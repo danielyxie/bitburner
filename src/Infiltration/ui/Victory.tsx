@@ -65,10 +65,7 @@ export function Victory(props: IProps): React.ReactElement {
           <h1>Infiltration successful!</h1>
         </Grid>
         <Grid item xs={10}>
-          <h2>
-            You can trade the confidential information you found for money or
-            reputation.
-          </h2>
+          <h2>You can trade the confidential information you found for money or reputation.</h2>
           <select className={"dropdown"} onChange={changeDropdown}>
             <option key={"none"} value={"none"}>
               {"none"}

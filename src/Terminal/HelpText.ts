@@ -141,8 +141,7 @@ export const HelpTexts: IMap<string> = {
     "help alias<br>" +
     "help scan-analyze",
   home:
-    "home<br>" +
-    "Connect to your home computer. This will work no matter what server you are currently connected to.",
+    "home<br>" + "Connect to your home computer. This will work no matter what server you are currently connected to.",
   hostname: "hostname<br>" + "Prints the hostname of the current server",
   ifconfig: "ipconfig<br>" + "Prints the IP address of the current server",
   kill:
@@ -239,9 +238,7 @@ export const HelpTexts: IMap<string> = {
     "This command only works for script files (.script extension), literature files (.lit extension), " +
     "and text files (.txt extension). " +
     "The second argument passed in must be the hostname or IP of the target server.",
-  sudov:
-    "sudov<br>" +
-    "Prints whether or not you have root access to the current machine",
+  sudov: "sudov<br>" + "Prints whether or not you have root access to the current machine",
   tail:
     "tail [script name] [args...]<br>" +
     "Displays dynamic logs for the script specified by the script name and arguments. Each argument must be separated " +

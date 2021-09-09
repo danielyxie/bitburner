@@ -40,19 +40,16 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         break;
       case Industries.Pharmaceutical:
         createProductButtonText = "Create Drug";
-        createProductPopupText =
-          "Design and develop a new pharmaceutical drug!";
+        createProductPopupText = "Design and develop a new pharmaceutical drug!";
         break;
       case Industries.Computer:
       case "Computer":
         createProductButtonText = "Create Product";
-        createProductPopupText =
-          "Design and manufacture a new computer hardware product!";
+        createProductPopupText = "Design and manufacture a new computer hardware product!";
         break;
       case Industries.Robotics:
         createProductButtonText = "Design Robot";
-        createProductPopupText =
-          "Design and create a new robot or robotic system!";
+        createProductPopupText = "Design and create a new robot or robotic system!";
         break;
       case Industries.Software:
         createProductButtonText = "Develop Software";
@@ -82,9 +79,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
 
     const hasMaxProducts = props.division.hasMaximumNumberProducts();
 
-    const className = hasMaxProducts
-      ? "a-link-button-inactive tooltip"
-      : "std-button";
+    const className = hasMaxProducts ? "a-link-button-inactive tooltip" : "std-button";
     const buttonStyle = {
       margin: "6px",
       display: "inline-block",
@@ -110,8 +105,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         {createProductButtonText}
         {hasMaxProducts && (
           <span className={"tooltiptext"}>
-            You have reached the maximum number of products:{" "}
-            {props.division.getMaximumNumberProducts()}
+            You have reached the maximum number of products: {props.division.getMaximumNumberProducts()}
           </span>
         )}
       </button>
@@ -120,9 +114,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
 
   function renderText(): React.ReactElement {
     const vechain = props.corp.unlockUpgrades[4] === 1;
-    const profit = props.division.lastCycleRevenue
-      .minus(props.division.lastCycleExpenses)
-      .toNumber();
+    const profit = props.division.lastCycleRevenue.minus(props.division.lastCycleExpenses).toNumber();
 
     let advertisingInfo = false;
     const advertisingFactors = props.division.getAdvertisingFactors();
@@ -158,15 +150,9 @@ export function IndustryOverview(props: IProps): React.ReactElement {
           "production multiplier of your entire Division.<br><br>" +
           "Below are approximations for how effective each material is at boosting " +
           "this industry's production multiplier (Bigger bars = more effective):<br><br>" +
-          `Hardware:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(
-            props.division.hwFac,
-          )}<br>` +
-          `Robots:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(
-            props.division.robFac,
-          )}<br>` +
-          `AI Cores:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(
-            props.division.aiFac,
-          )}<br>` +
+          `Hardware:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(props.division.hwFac)}<br>` +
+          `Robots:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(props.division.robFac)}<br>` +
+          `AI Cores:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(props.division.aiFac)}<br>` +
           `Real Estate: ${convertEffectFacToGraphic(props.division.reFac)}`,
       );
     }
@@ -181,35 +167,21 @@ export function IndustryOverview(props: IProps): React.ReactElement {
 
     return (
       <div>
-        Industry: {props.division.type} (Corp Funds:{" "}
-        <Money money={props.corp.funds.toNumber()} />)
+        Industry: {props.division.type} (Corp Funds: <Money money={props.corp.funds.toNumber()} />)
         <br /> <br />
-        Awareness: {numeralWrapper.format(
-          props.division.awareness,
-          "0.000",
-        )}{" "}
-        <br />
-        Popularity: {numeralWrapper.format(
-          props.division.popularity,
-          "0.000",
-        )}{" "}
-        <br />
+        Awareness: {numeralWrapper.format(props.division.awareness, "0.000")} <br />
+        Popularity: {numeralWrapper.format(props.division.popularity, "0.000")} <br />
         {advertisingInfo !== false && (
           <p className={"tooltip"}>
-            Advertising Multiplier: x
-            {numeralWrapper.format(totalAdvertisingFac, "0.000")}
+            Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}
             <span className={"tooltiptext cmpy-mgmt-advertising-info"}>
-              Total multiplier for this industrys sales due to its awareness and
-              popularity
+              Total multiplier for this industrys sales due to its awareness and popularity
               <br />
-              Awareness Bonus: x
-              {numeralWrapper.format(Math.pow(awarenessFac, 0.85), "0.000")}
+              Awareness Bonus: x{numeralWrapper.format(Math.pow(awarenessFac, 0.85), "0.000")}
               <br />
-              Popularity Bonus: x
-              {numeralWrapper.format(Math.pow(popularityFac, 0.85), "0.000")}
+              Popularity Bonus: x{numeralWrapper.format(Math.pow(popularityFac, 0.85), "0.000")}
               <br />
-              Ratio Multiplier: x
-              {numeralWrapper.format(Math.pow(ratioFac, 0.85), "0.000")}
+              Ratio Multiplier: x{numeralWrapper.format(Math.pow(ratioFac, 0.85), "0.000")}
             </span>
           </p>
         )}
@@ -224,8 +196,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
               </td>
               <td>
                 <p>
-                  <Money money={props.division.lastCycleRevenue.toNumber()} /> /
-                  s
+                  <Money money={props.division.lastCycleRevenue.toNumber()} /> / s
                 </p>
               </td>
             </tr>
@@ -235,8 +206,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
               </td>
               <td>
                 <p>
-                  <Money money={props.division.lastCycleExpenses.toNumber()} />{" "}
-                  / s
+                  <Money money={props.division.lastCycleExpenses.toNumber()} /> / s
                 </p>
               </td>
             </tr>
@@ -254,11 +224,10 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         </table>
         <br />
         <p className={"tooltip"}>
-          Production Multiplier:{" "}
-          {numeralWrapper.format(props.division.prodMult, "0.00")}
+          Production Multiplier: {numeralWrapper.format(props.division.prodMult, "0.00")}
           <span className={"tooltiptext"}>
-            Production gain from owning production-boosting materials such as
-            hardware, Robots, AI Cores, and Real Estate
+            Production gain from owning production-boosting materials such as hardware, Robots, AI Cores, and Real
+            Estate
           </span>
         </p>
         <div className={"help-tip"} onClick={productionMultHelpTipOnClick}>
@@ -266,11 +235,9 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         </div>
         <br /> <br />
         <p className={"tooltip"}>
-          Scientific Research:{" "}
-          {numeralWrapper.format(props.division.sciResearch.qty, "0.000a")}
+          Scientific Research: {numeralWrapper.format(props.division.sciResearch.qty, "0.000a")}
           <span className={"tooltiptext"}>
-            Scientific Research increases the quality of the materials and
-            products that you produce.
+            Scientific Research increases the quality of the materials and products that you produce.
           </span>
         </p>
         <button className={"help-tip"} onClick={openResearchPopup}>
@@ -340,15 +307,9 @@ export function IndustryOverview(props: IProps): React.ReactElement {
 
   function renderUpgrade(props: IRenderUpgradeProps): React.ReactElement {
     return (
-      <div
-        className={"cmpy-mgmt-upgrade-div tooltip"}
-        onClick={props.onClick}
-        key={props.key}
-      >
+      <div className={"cmpy-mgmt-upgrade-div tooltip"} onClick={props.onClick} key={props.key}>
         {props.text}
-        {props.tooltip != null && (
-          <span className={"tooltiptext"}>{props.tooltip}</span>
-        )}
+        {props.tooltip != null && <span className={"tooltiptext"}>{props.tooltip}</span>}
       </div>
     );
   }
@@ -359,9 +320,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
     <div className={"cmpy-mgmt-industry-overview-panel"}>
       {renderText()}
       <br />
-      <u className={"industry-purchases-and-upgrades-header"}>
-        Purchases & Upgrades
-      </u>
+      <u className={"industry-purchases-and-upgrades-header"}>Purchases & Upgrades</u>
       <br />
       {renderUpgrades()} <br />
       {props.division.makesProducts && makeProductButton}

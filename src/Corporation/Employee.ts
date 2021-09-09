@@ -1,10 +1,6 @@
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { createElement } from "../../utils/uiHelpers/createElement";
 import { EmployeePositions } from "./EmployeePositions";
 import { ICorporation } from "./ICorporation";
@@ -93,39 +89,22 @@ export class Employee {
     if (this.hap < office.minHap) {
       this.hap = office.minHap;
     }
-    const salary =
-      this.sal * marketCycles * CorporationConstants.SecsPerMarketCycle;
+    const salary = this.sal * marketCycles * CorporationConstants.SecsPerMarketCycle;
     return salary;
   }
 
-  calculateProductivity(
-    corporation: ICorporation,
-    industry: IIndustry,
-  ): number {
-    const effCre =
-        this.cre *
-        corporation.getEmployeeCreMultiplier() *
-        industry.getEmployeeCreMultiplier(),
-      effCha =
-        this.cha *
-        corporation.getEmployeeChaMultiplier() *
-        industry.getEmployeeChaMultiplier(),
-      effInt =
-        this.int *
-        corporation.getEmployeeIntMultiplier() *
-        industry.getEmployeeIntMultiplier(),
-      effEff =
-        this.eff *
-        corporation.getEmployeeEffMultiplier() *
-        industry.getEmployeeEffMultiplier();
+  calculateProductivity(corporation: ICorporation, industry: IIndustry): number {
+    const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
+      effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
+      effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
+      effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
     const prodBase = this.mor * this.hap * this.ene * 1e-6;
     let prodMult = 0;
     switch (this.pos) {
       //Calculate productivity based on position. This is multipled by prodBase
       //to get final value
       case EmployeePositions.Operations:
-        prodMult =
-          0.6 * effInt + 0.1 * effCha + this.exp + 0.5 * effCre + effEff;
+        prodMult = 0.6 * effInt + 0.1 * effCha + this.exp + 0.5 * effCre + effEff;
         break;
       case EmployeePositions.Engineer:
         prodMult = effInt + 0.1 * effCha + 1.5 * this.exp + effEff;
@@ -161,27 +140,11 @@ export class Employee {
   }
 
   //'panel' is the DOM element on which to create the UI
-  createUI(
-    panel: HTMLElement,
-    corporation: ICorporation,
-    industry: IIndustry,
-  ): void {
-    const effCre =
-        this.cre *
-        corporation.getEmployeeCreMultiplier() *
-        industry.getEmployeeCreMultiplier(),
-      effCha =
-        this.cha *
-        corporation.getEmployeeChaMultiplier() *
-        industry.getEmployeeChaMultiplier(),
-      effInt =
-        this.int *
-        corporation.getEmployeeIntMultiplier() *
-        industry.getEmployeeIntMultiplier(),
-      effEff =
-        this.eff *
-        corporation.getEmployeeEffMultiplier() *
-        industry.getEmployeeEffMultiplier();
+  createUI(panel: HTMLElement, corporation: ICorporation, industry: IIndustry): void {
+    const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
+      effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
+      effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
+      effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
     panel.style.color = "white";
     panel.appendChild(
       createElement("p", {

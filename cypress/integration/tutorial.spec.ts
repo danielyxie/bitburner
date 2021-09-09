@@ -49,14 +49,10 @@ describe("tutorial", () => {
     cy.findByRole("button", { name: "Next" }).click();
 
     cy.findByText(/hacking exp/i);
-    cy.findByRole("textbox", { timeout: 15_000 })
-      .should("not.be.disabled")
-      .type("nano n00dles.script{enter}");
+    cy.findByRole("textbox", { timeout: 15_000 }).should("not.be.disabled").type("nano n00dles.script{enter}");
 
     // monaco can take a bit
-    cy.findByRole("code", { timeout: 15_000 })
-      .type("{selectall}{del}")
-      .type("while(true) {{}{enter}hack('n00dles');");
+    cy.findByRole("code", { timeout: 15_000 }).type("{selectall}{del}").type("while(true) {{}{enter}hack('n00dles');");
 
     cy.findByRole("button", { name: /Save & Close/i }).click();
 

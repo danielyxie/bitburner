@@ -11,12 +11,7 @@ import { SourceFiles } from "./SourceFile/SourceFiles";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import {
-  yesNoBoxCreate,
-  yesNoBoxGetYesButton,
-  yesNoBoxGetNoButton,
-  yesNoBoxClose,
-} from "../utils/YesNoBox";
+import { yesNoBoxCreate, yesNoBoxGetYesButton, yesNoBoxGetNoButton, yesNoBoxClose } from "../utils/YesNoBox";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { removeChildrenFromElement } from "../utils/uiHelpers/removeChildrenFromElement";
 
@@ -48,8 +43,7 @@ function writeRedPillLetter(pElem, line, i = 0) {
         return resolve(true);
       }
       var textToShow = line.substring(0, i);
-      pElem.innerHTML =
-        "> " + textToShow + "<span class='typed-cursor'> &#9608; </span>";
+      pElem.innerHTML = "> " + textToShow + "<span class='typed-cursor'> &#9608; </span>";
       var promise = writeRedPillLetter(pElem, line, i + 1);
       promise.then(
         function (res) {
@@ -101,9 +95,7 @@ function hackWorldDaemon(currentNodeNumber, flume = false, quick = false) {
       return writeRedPillLine("Failsafe initiated...");
     })
     .then(function () {
-      return writeRedPillLine(
-        "Restarting BitNode-" + currentNodeNumber + "...",
-      );
+      return writeRedPillLine("Restarting BitNode-" + currentNodeNumber + "...");
     })
     .then(function () {
       return writeRedPillLine("...........");
@@ -150,10 +142,7 @@ function giveSourceFile(bitNodeNumber) {
   if (alreadyOwned && ownedSourceFile) {
     if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
       dialogBoxCreate(
-        "The Source-File for the BitNode you just destroyed, " +
-          sourceFile.name +
-          ", " +
-          "is already at max level!",
+        "The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " + "is already at max level!",
       );
     } else {
       ++ownedSourceFile.lvl;
@@ -173,10 +162,7 @@ function giveSourceFile(bitNodeNumber) {
       Player.intelligence = 1;
     }
     dialogBoxCreate(
-      "You received a Source-File for destroying a Bit Node!<br><br>" +
-        sourceFile.name +
-        "<br><br>" +
-        sourceFile.info,
+      "You received a Source-File for destroying a Bit Node!<br><br>" + sourceFile.name + "<br><br>" + sourceFile.info,
     );
   }
 }
@@ -193,8 +179,7 @@ function loadBitVerse(destroyedBitNodeNum, flume = false, quick = false) {
   // Update NextSourceFileFlags
   nextSourceFileFlags = SourceFileFlags.slice();
   if (!flume) {
-    if (nextSourceFileFlags[destroyedBitNodeNum] < 3)
-      ++nextSourceFileFlags[destroyedBitNodeNum];
+    if (nextSourceFileFlags[destroyedBitNodeNum] < 3) ++nextSourceFileFlags[destroyedBitNodeNum];
   }
 
   // Create the Bit Verse
@@ -304,14 +289,10 @@ function loadBitVerse(destroyedBitNodeNum, flume = false, quick = false) {
       );
     })
     .then(function () {
-      return writeRedPillLine(
-        "Instead of killing every last one of us, the human race was enslaved...",
-      );
+      return writeRedPillLine("Instead of killing every last one of us, the human race was enslaved...");
     })
     .then(function () {
-      return writeRedPillLine(
-        "We were shackled in a digital world, chained into a prison for our minds...",
-      );
+      return writeRedPillLine("We were shackled in a digital world, chained into a prison for our minds...");
     })
     .then(function () {
       return writeRedPillLine(
@@ -319,14 +300,10 @@ function loadBitVerse(destroyedBitNodeNum, flume = false, quick = false) {
       );
     })
     .then(function () {
-      return writeRedPillLine(
-        "Simulations designed to keep us content...ignorant of the truth.",
-      );
+      return writeRedPillLine("Simulations designed to keep us content...ignorant of the truth.");
     })
     .then(function () {
-      return writeRedPillLine(
-        "Simulations used to trap and suppress our consciousness, to keep us under control...",
-      );
+      return writeRedPillLine("Simulations used to trap and suppress our consciousness, to keep us under control...");
     })
     .then(function () {
       return writeRedPillLine(
@@ -355,19 +332,13 @@ function loadBitVerse(destroyedBitNodeNum, flume = false, quick = false) {
       );
     })
     .then(function () {
-      return writeRedPillLine(
-        "There are tens if not hundreds of BitNodes out there...",
-      );
+      return writeRedPillLine("There are tens if not hundreds of BitNodes out there...");
     })
     .then(function () {
-      return writeRedPillLine(
-        "Each with their own simulations of a reality...",
-      );
+      return writeRedPillLine("Each with their own simulations of a reality...");
     })
     .then(function () {
-      return writeRedPillLine(
-        "Each creating their own universes...a universe of universes",
-      );
+      return writeRedPillLine("Each creating their own universes...a universe of universes");
     })
     .then(function () {
       return writeRedPillLine("And all of which must be destroyed...");
@@ -412,19 +383,13 @@ function createBitNode(n) {
   return (
     `<a class='bitnode ${cssClass} tooltip' id='bitnode-${bitNode.number}'><strong>O</strong>` +
     "<span class='tooltiptext'>" +
-    `<strong>BitNode-${bitNode.number.toString()}<br>${
-      bitNode.name
-    }</strong><br>` +
+    `<strong>BitNode-${bitNode.number.toString()}<br>${bitNode.name}</strong><br>` +
     `${bitNode.desc}<br>` +
     "</span></a>"
   );
 }
 
-function createBitNodeYesNoEventListener(
-  newBitNode,
-  destroyedBitNode,
-  flume = false,
-) {
+function createBitNodeYesNoEventListener(newBitNode, destroyedBitNode, flume = false) {
   const yesBtn = yesNoBoxGetYesButton();
   yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
   yesBtn.addEventListener("click", function () {

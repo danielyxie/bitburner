@@ -24,10 +24,9 @@ export class ActiveScriptsRoot extends React.Component<IProps> {
     return (
       <>
         <p>
-          This page displays a list of all of your scripts that are currently
-          running across every machine. It also provides information about each
-          script's production. The scripts are categorized by the hostname of
-          the servers on which they are running.
+          This page displays a list of all of your scripts that are currently running across every machine. It also
+          provides information about each script's production. The scripts are categorized by the hostname of the
+          servers on which they are running.
         </p>
 
         <ScriptProduction {...this.props} />

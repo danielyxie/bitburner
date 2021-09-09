@@ -4,11 +4,7 @@ import { IIndustry } from "./IIndustry";
 import { MaterialSizes } from "./MaterialSizes";
 import { IMap } from "../types";
 import { numeralWrapper } from "../ui/numeralFormat";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { exceptionAlert } from "../../utils/helpers/exceptionAlert";
 
 interface IConstructorParams {
@@ -95,28 +91,18 @@ export class Warehouse {
       if (MaterialSizes.hasOwnProperty(matName)) {
         this.sizeUsed += mat.qty * MaterialSizes[matName];
         if (mat.qty > 0) {
-          this.breakdown +=
-            matName +
-            ": " +
-            numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0") +
-            "<br>";
+          this.breakdown += matName + ": " + numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0") + "<br>";
         }
       }
     }
     if (this.sizeUsed > this.size) {
-      console.warn(
-        "Warehouse size used greater than capacity, something went wrong",
-      );
+      console.warn("Warehouse size used greater than capacity, something went wrong");
     }
   }
 
   updateSize(corporation: ICorporation, industry: IIndustry): void {
     try {
-      this.size =
-        this.level *
-        100 *
-        corporation.getStorageMultiplier() *
-        industry.getStorageMultiplier();
+      this.size = this.level * 100 * corporation.getStorageMultiplier() * industry.getStorageMultiplier();
     } catch (e) {
       exceptionAlert(e);
     }

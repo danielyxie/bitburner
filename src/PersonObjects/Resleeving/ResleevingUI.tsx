@@ -119,39 +119,15 @@ export function createResleevesPage(p: IPlayer): void {
     }
 
     UIElems.sortSelector.add(createOptionElement("Cost", SortOption.Cost));
-    UIElems.sortSelector.add(
-      createOptionElement("Hacking Level", SortOption.Hacking),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement("Strength Level", SortOption.Strength),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement("Defense Level", SortOption.Defense),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement("Dexterity Level", SortOption.Dexterity),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement("Agility Level", SortOption.Agility),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement("Charisma Level", SortOption.Charisma),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement(
-        "Average Combat Stats",
-        SortOption.AverageCombatStats,
-      ),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement("Average Stats", SortOption.AverageAllStats),
-    );
-    UIElems.sortSelector.add(
-      createOptionElement(
-        "Number of Augmentations",
-        SortOption.TotalNumAugmentations,
-      ),
-    );
+    UIElems.sortSelector.add(createOptionElement("Hacking Level", SortOption.Hacking));
+    UIElems.sortSelector.add(createOptionElement("Strength Level", SortOption.Strength));
+    UIElems.sortSelector.add(createOptionElement("Defense Level", SortOption.Defense));
+    UIElems.sortSelector.add(createOptionElement("Dexterity Level", SortOption.Dexterity));
+    UIElems.sortSelector.add(createOptionElement("Agility Level", SortOption.Agility));
+    UIElems.sortSelector.add(createOptionElement("Charisma Level", SortOption.Charisma));
+    UIElems.sortSelector.add(createOptionElement("Average Combat Stats", SortOption.AverageCombatStats));
+    UIElems.sortSelector.add(createOptionElement("Average Stats", SortOption.AverageAllStats));
+    UIElems.sortSelector.add(createOptionElement("Number of Augmentations", SortOption.TotalNumAugmentations));
 
     UIElems.resleeveList = createElement("ul");
     UIElems.sortSelector.onchange = () => {
@@ -202,40 +178,16 @@ export function createResleevesPage(p: IPlayer): void {
           break;
         case SortOption.AverageCombatStats:
           p.resleeves.sort((a, b) => {
-            const aAvg = getAverage(
-              a.strength,
-              a.defense,
-              a.dexterity,
-              a.agility,
-            );
-            const bAvg = getAverage(
-              b.strength,
-              b.defense,
-              b.dexterity,
-              b.agility,
-            );
+            const aAvg = getAverage(a.strength, a.defense, a.dexterity, a.agility);
+            const bAvg = getAverage(b.strength, b.defense, b.dexterity, b.agility);
 
             return aAvg - bAvg;
           });
           break;
         case SortOption.AverageAllStats:
           p.resleeves.sort((a, b) => {
-            const aAvg = getAverage(
-              a.hacking_skill,
-              a.strength,
-              a.defense,
-              a.dexterity,
-              a.agility,
-              a.charisma,
-            );
-            const bAvg = getAverage(
-              b.hacking_skill,
-              b.strength,
-              b.defense,
-              b.dexterity,
-              b.agility,
-              b.charisma,
-            );
+            const aAvg = getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma);
+            const bAvg = getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma);
 
             return aAvg - bAvg;
           });
@@ -253,18 +205,13 @@ export function createResleevesPage(p: IPlayer): void {
           break;
       }
 
-      if (UIElems.resleeveList == null)
-        throw new Error("UIElems.resleeveList is null in sortSelector.click()");
-      if (UIElems.resleeves == null)
-        throw new Error("UIElems.resleeves is null in sortSelector.click()");
+      if (UIElems.resleeveList == null) throw new Error("UIElems.resleeveList is null in sortSelector.click()");
+      if (UIElems.resleeves == null) throw new Error("UIElems.resleeves is null in sortSelector.click()");
 
       // Create UI for all Resleeves
       for (const resleeve of p.resleeves) {
         const resleeveUi = createResleeveUi(resleeve);
-        if (resleeveUi.container == null)
-          throw new Error(
-            "resleeveUi.container is null in sortSelector.click()",
-          );
+        if (resleeveUi.container == null) throw new Error("resleeveUi.container is null in sortSelector.click()");
         UIElems.resleeveList.appendChild(resleeveUi.container);
         UIElems.resleeves.push(resleeveUi);
       }
@@ -278,10 +225,7 @@ export function createResleevesPage(p: IPlayer): void {
     UIElems.container.appendChild(UIElems.resleeveList);
 
     const container = document.getElementById("entire-game-container");
-    if (container == null)
-      throw new Error(
-        "Could not find entire-game-container in createResleevesPage()",
-      );
+    if (container == null) throw new Error("Could not find entire-game-container in createResleevesPage()");
     container.appendChild(UIElems.container);
   } catch (e) {
     exceptionAlert(e);
@@ -331,24 +275,24 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
   elems.stats = createElement("p", {
     class: "resleeve-stats-text",
     innerHTML:
-      `Hacking: ${numeralWrapper.formatSkill(
-        resleeve.hacking_skill,
-      )} (${numeralWrapper.formatExp(resleeve.hacking_exp)} exp)<br />` +
-      `Strength: ${numeralWrapper.formatSkill(
-        resleeve.strength,
-      )} (${numeralWrapper.formatExp(resleeve.strength_exp)} exp)<br />` +
-      `Defense: ${numeralWrapper.formatSkill(
-        resleeve.defense,
-      )} (${numeralWrapper.formatExp(resleeve.defense_exp)} exp)<br />` +
-      `Dexterity: ${numeralWrapper.formatSkill(
-        resleeve.dexterity,
-      )} (${numeralWrapper.formatExp(resleeve.dexterity_exp)} exp)<br />` +
-      `Agility: ${numeralWrapper.formatSkill(
-        resleeve.agility,
-      )} (${numeralWrapper.formatExp(resleeve.agility_exp)} exp)<br />` +
-      `Charisma: ${numeralWrapper.formatSkill(
-        resleeve.charisma,
-      )} (${numeralWrapper.formatExp(resleeve.charisma_exp)} exp)<br />` +
+      `Hacking: ${numeralWrapper.formatSkill(resleeve.hacking_skill)} (${numeralWrapper.formatExp(
+        resleeve.hacking_exp,
+      )} exp)<br />` +
+      `Strength: ${numeralWrapper.formatSkill(resleeve.strength)} (${numeralWrapper.formatExp(
+        resleeve.strength_exp,
+      )} exp)<br />` +
+      `Defense: ${numeralWrapper.formatSkill(resleeve.defense)} (${numeralWrapper.formatExp(
+        resleeve.defense_exp,
+      )} exp)<br />` +
+      `Dexterity: ${numeralWrapper.formatSkill(resleeve.dexterity)} (${numeralWrapper.formatExp(
+        resleeve.dexterity_exp,
+      )} exp)<br />` +
+      `Agility: ${numeralWrapper.formatSkill(resleeve.agility)} (${numeralWrapper.formatExp(
+        resleeve.agility_exp,
+      )} exp)<br />` +
+      `Charisma: ${numeralWrapper.formatSkill(resleeve.charisma)} (${numeralWrapper.formatExp(
+        resleeve.charisma_exp,
+      )} exp)<br />` +
       `# Augmentations: ${resleeve.augmentations.length}`,
   });
   elems.multipliersButton = createElement("button", {
@@ -358,72 +302,28 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
       dialogBoxCreate(
         [
           "<h2><u>Total Multipliers:</u></h2>",
-          `Hacking Level multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.hacking_mult,
-          )}`,
-          `Hacking Experience multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.hacking_exp_mult,
-          )}`,
-          `Strength Level multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.strength_mult,
-          )}`,
-          `Strength Experience multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.strength_exp_mult,
-          )}`,
-          `Defense Level multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.defense_mult,
-          )}`,
-          `Defense Experience multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.defense_exp_mult,
-          )}`,
-          `Dexterity Level multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.dexterity_mult,
-          )}`,
-          `Dexterity Experience multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.dexterity_exp_mult,
-          )}`,
-          `Agility Level multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.agility_mult,
-          )}`,
-          `Agility Experience multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.agility_exp_mult,
-          )}`,
-          `Charisma Level multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.charisma_mult,
-          )}`,
-          `Charisma Experience multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.charisma_exp_mult,
-          )}`,
-          `Hacking Chance multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.hacking_chance_mult,
-          )}`,
-          `Hacking Speed multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.hacking_speed_mult,
-          )}`,
-          `Hacking Money multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.hacking_money_mult,
-          )}`,
-          `Hacking Growth multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.hacking_grow_mult,
-          )}`,
-          `Salary multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.work_money_mult,
-          )}`,
-          `Company Reputation Gain multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.company_rep_mult,
-          )}`,
-          `Faction Reputation Gain multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.faction_rep_mult,
-          )}`,
-          `Crime Money multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.crime_money_mult,
-          )}`,
-          `Crime Success multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.crime_success_mult,
-          )}`,
-          `Hacknet Income multiplier: ${numeralWrapper.formatPercentage(
-            resleeve.hacknet_node_money_mult,
-          )}`,
+          `Hacking Level multiplier: ${numeralWrapper.formatPercentage(resleeve.hacking_mult)}`,
+          `Hacking Experience multiplier: ${numeralWrapper.formatPercentage(resleeve.hacking_exp_mult)}`,
+          `Strength Level multiplier: ${numeralWrapper.formatPercentage(resleeve.strength_mult)}`,
+          `Strength Experience multiplier: ${numeralWrapper.formatPercentage(resleeve.strength_exp_mult)}`,
+          `Defense Level multiplier: ${numeralWrapper.formatPercentage(resleeve.defense_mult)}`,
+          `Defense Experience multiplier: ${numeralWrapper.formatPercentage(resleeve.defense_exp_mult)}`,
+          `Dexterity Level multiplier: ${numeralWrapper.formatPercentage(resleeve.dexterity_mult)}`,
+          `Dexterity Experience multiplier: ${numeralWrapper.formatPercentage(resleeve.dexterity_exp_mult)}`,
+          `Agility Level multiplier: ${numeralWrapper.formatPercentage(resleeve.agility_mult)}`,
+          `Agility Experience multiplier: ${numeralWrapper.formatPercentage(resleeve.agility_exp_mult)}`,
+          `Charisma Level multiplier: ${numeralWrapper.formatPercentage(resleeve.charisma_mult)}`,
+          `Charisma Experience multiplier: ${numeralWrapper.formatPercentage(resleeve.charisma_exp_mult)}`,
+          `Hacking Chance multiplier: ${numeralWrapper.formatPercentage(resleeve.hacking_chance_mult)}`,
+          `Hacking Speed multiplier: ${numeralWrapper.formatPercentage(resleeve.hacking_speed_mult)}`,
+          `Hacking Money multiplier: ${numeralWrapper.formatPercentage(resleeve.hacking_money_mult)}`,
+          `Hacking Growth multiplier: ${numeralWrapper.formatPercentage(resleeve.hacking_grow_mult)}`,
+          `Salary multiplier: ${numeralWrapper.formatPercentage(resleeve.work_money_mult)}`,
+          `Company Reputation Gain multiplier: ${numeralWrapper.formatPercentage(resleeve.company_rep_mult)}`,
+          `Faction Reputation Gain multiplier: ${numeralWrapper.formatPercentage(resleeve.faction_rep_mult)}`,
+          `Crime Money multiplier: ${numeralWrapper.formatPercentage(resleeve.crime_money_mult)}`,
+          `Crime Success multiplier: ${numeralWrapper.formatPercentage(resleeve.crime_success_mult)}`,
+          `Hacknet Income multiplier: ${numeralWrapper.formatPercentage(resleeve.hacknet_node_money_mult)}`,
           `Hacknet Purchase Cost multiplier: ${numeralWrapper.formatPercentage(
             resleeve.hacknet_node_purchase_cost_mult,
           )}`,
@@ -481,16 +381,13 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
   });
   elems.costText = createElement("p", {
     innerHTML:
-      `It costs ${renderToStaticMarkup(
-        <Money money={cost} player={playerRef} />,
-      )} ` + `to purchase this Sleeve.`,
+      `It costs ${renderToStaticMarkup(<Money money={cost} player={playerRef} />)} ` + `to purchase this Sleeve.`,
   });
   elems.buyButton = createElement("button", {
     class: "std-button",
     innerText: "Purchase",
     clickListener: () => {
-      if (playerRef == null)
-        throw new Error("playerRef is null in buyButton.click()");
+      if (playerRef == null) throw new Error("playerRef is null in buyButton.click()");
       if (purchaseResleeve(resleeve, playerRef)) {
         dialogBoxCreate(
           <>
@@ -514,8 +411,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
 }
 
 function updateAugDescription(elems: IResleeveUIElems): void {
-  if (elems.augDescription == null)
-    throw new Error("elems.augDescription is null in updateAugDescription()");
+  if (elems.augDescription == null) throw new Error("elems.augDescription is null in updateAugDescription()");
   const augName: string = getSelectValue(elems.augSelector);
   const aug: Augmentation | null = Augmentations[augName];
   if (aug == null) {

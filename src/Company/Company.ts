@@ -4,11 +4,7 @@ import * as posNames from "./data/companypositionnames";
 import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export interface IConstructorParams {
   name: string;
@@ -98,10 +94,7 @@ export class Company {
   }
 
   hasBusinessConsultantPositions(): boolean {
-    return (
-      this.companyPositions[posNames.BusinessConsultantCompanyPositions[0]] !=
-      null
-    );
+    return this.companyPositions[posNames.BusinessConsultantCompanyPositions[0]] != null;
   }
 
   hasBusinessPositions(): boolean {
@@ -121,10 +114,7 @@ export class Company {
   }
 
   hasSoftwareConsultantPositions(): boolean {
-    return (
-      this.companyPositions[posNames.SoftwareConsultantCompanyPositions[0]] !=
-      null
-    );
+    return this.companyPositions[posNames.SoftwareConsultantCompanyPositions[0]] != null;
   }
 
   hasSoftwarePositions(): boolean {
@@ -161,9 +151,7 @@ export class Company {
     }
     let favorGain = 0,
       rep = this.playerReputation + this.rolloverRep;
-    let reqdRep =
-      CONSTANTS.CompanyReputationToFavorBase *
-      Math.pow(CONSTANTS.CompanyReputationToFavorMult, this.favor);
+    let reqdRep = CONSTANTS.CompanyReputationToFavorBase * Math.pow(CONSTANTS.CompanyReputationToFavorMult, this.favor);
     while (rep > 0) {
       if (rep >= reqdRep) {
         ++favorGain;

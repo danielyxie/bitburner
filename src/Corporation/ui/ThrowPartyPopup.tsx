@@ -24,9 +24,7 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
     } else {
       const totalCost = cost * props.office.employees.length;
       if (props.corp.funds.lt(totalCost)) {
-        dialogBoxCreate(
-          "You don't have enough company funds to throw a party!",
-        );
+        dialogBoxCreate("You don't have enough company funds to throw a party!");
       } else {
         props.corp.funds = props.corp.funds.minus(totalCost);
         let mult = 0;
@@ -43,19 +41,12 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
     }
   }
 
-  function EffectText(props: {
-    cost: number | null;
-    office: OfficeSpace;
-  }): React.ReactElement {
+  function EffectText(props: { cost: number | null; office: OfficeSpace }): React.ReactElement {
     let cost = props.cost;
-    if (cost !== null && (isNaN(cost) || cost < 0))
-      return <p>Invalid value entered!</p>;
+    if (cost !== null && (isNaN(cost) || cost < 0)) return <p>Invalid value entered!</p>;
     if (cost === null) cost = 0;
     return (
-      <p>
-        Throwing this party will cost a total of{" "}
-        {numeralWrapper.formatMoney(cost * props.office.employees.length)}
-      </p>
+      <p>Throwing this party will cost a total of {numeralWrapper.formatMoney(cost * props.office.employees.length)}</p>
     );
   }
 
@@ -65,10 +56,7 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
 
   return (
     <>
-      <p>
-        Enter the amount of money you would like to spend PER EMPLOYEE on this
-        office party
-      </p>
+      <p>Enter the amount of money you would like to spend PER EMPLOYEE on this office party</p>
       <EffectText cost={cost} office={props.office} />
       <input
         autoFocus={true}

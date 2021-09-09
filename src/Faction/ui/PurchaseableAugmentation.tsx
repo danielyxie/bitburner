@@ -47,24 +47,18 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
     super(props);
 
     const aug = Augmentations[this.props.augName];
-    if (aug == null)
-      throw new Error(`aug ${this.props.augName} does not exists`);
+    if (aug == null) throw new Error(`aug ${this.props.augName} does not exists`);
     this.aug = aug;
 
     this.handleClick = this.handleClick.bind(this);
   }
 
   getMoneyCost(): number {
-    return (
-      this.aug.baseCost * this.props.faction.getInfo().augmentationPriceMult
-    );
+    return this.aug.baseCost * this.props.faction.getInfo().augmentationPriceMult;
   }
 
   getRepCost(): number {
-    return (
-      this.aug.baseRepRequirement *
-      this.props.faction.getInfo().augmentationRepRequirementMult
-    );
+    return this.aug.baseRepRequirement * this.props.faction.getInfo().augmentationRepRequirementMult;
   }
 
   handleClick(): void {
@@ -122,31 +116,21 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
     let color = "";
     if (!this.hasPrereqs()) {
       disabled = true;
-      status = (
-        <>
-          LOCKED (Requires {this.aug.prereqs.map((aug) => AugFormat(aug))} as
-          prerequisite)
-        </>
-      );
+      status = <>LOCKED (Requires {this.aug.prereqs.map((aug) => AugFormat(aug))} as prerequisite)</>;
       color = "red";
-    } else if (
-      this.aug.name !== AugmentationNames.NeuroFluxGovernor &&
-      (this.aug.owned || this.owned())
-    ) {
+    } else if (this.aug.name !== AugmentationNames.NeuroFluxGovernor && (this.aug.owned || this.owned())) {
       disabled = true;
     } else if (this.hasReputation()) {
       status = (
         <>
-          UNLOCKED (at {Reputation(repCost)} faction reputation) -{" "}
-          <Money money={moneyCost} player={this.props.p} />
+          UNLOCKED (at {Reputation(repCost)} faction reputation) - <Money money={moneyCost} player={this.props.p} />
         </>
       );
     } else {
       disabled = true;
       status = (
         <>
-          LOCKED (Requires {Reputation(repCost)} faction reputation -{" "}
-          <Money money={moneyCost} player={this.props.p} />)
+          LOCKED (Requires {Reputation(repCost)} faction reputation - <Money money={moneyCost} player={this.props.p} />)
         </>
       );
       color = "red";

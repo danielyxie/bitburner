@@ -21,9 +21,7 @@ export function StockTickerTxButton(props: IProps): React.ReactElement {
   return (
     <button className={className} onClick={props.onClick}>
       {props.text}
-      {props.tooltip != null && (
-        <span className={"tooltiptext"}>{props.tooltip}</span>
-      )}
+      {props.tooltip != null && <span className={"tooltiptext"}>{props.tooltip}</span>}
     </button>
   );
 }

@@ -6,14 +6,7 @@ export type IndustryUpgrade = [number, number, number, number, string, string];
 // The data structure is an array with the following format:
 //  [index in array, base price, price mult, benefit mult (if applicable), name, desc]
 export const IndustryUpgrades: IMap<IndustryUpgrade> = {
-  "0": [
-    0,
-    500e3,
-    1,
-    1.05,
-    "Coffee",
-    "Provide your employees with coffee, increasing their energy by 5%.",
-  ],
+  "0": [0, 500e3, 1, 1.05, "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
   "1": [
     1,
     1e9,

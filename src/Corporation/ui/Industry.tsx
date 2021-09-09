@@ -31,12 +31,7 @@ export function Industry(props: IProps): React.ReactElement {
           currentCity={props.city}
           office={props.office}
         />
-        <IndustryOffice
-          player={props.player}
-          corp={props.corp}
-          division={props.division}
-          office={props.office}
-        />
+        <IndustryOffice player={props.player} corp={props.corp} division={props.division} office={props.office} />
       </div>
       <div className={"cmpy-mgmt-industry-right-panel"}>
         <IndustryWarehouse

@@ -14,10 +14,7 @@ import { SourceFileAccordion } from "../../ui/React/SourceFileAccordion";
 export function OwnedSourceFiles(): React.ReactElement {
   const sourceSfs = Player.sourceFiles.slice();
 
-  if (
-    Settings.OwnedAugmentationsOrder ===
-    OwnedAugmentationsOrderSetting.Alphabetically
-  ) {
+  if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
     sourceSfs.sort((sf1, sf2) => {
       return sf1.n - sf2.n;
     });

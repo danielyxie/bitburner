@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import {
-  formatNumber,
-  convertTimeMsToTimeElapsedString,
-} from "../../../utils/StringHelperFunctions";
+import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CopyableText } from "../../ui/React/CopyableText";
@@ -37,13 +34,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
   })();
   const successChance =
     props.action.name === "Recruitment"
-      ? Math.max(
-          0,
-          Math.min(
-            props.bladeburner.getRecruitmentSuccessChance(props.player),
-            1,
-          ),
-        )
+      ? Math.max(0, Math.min(props.bladeburner.getRecruitmentSuccessChance(props.player), 1))
       : -1;
 
   function onStart(): void {
@@ -58,8 +49,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
       <h2 style={{ display: "inline-block" }}>
         {isActive ? (
           <>
-            <CopyableText value={props.action.name} /> (IN PROGRESS -{" "}
-            {formatNumber(computedActionTimeCurrent, 0)} /{" "}
+            <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
             {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
           </>
         ) : (
@@ -69,28 +59,19 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
       {isActive ? (
         <p style={{ display: "block" }}>
           {createProgressBarText({
-            progress:
-              computedActionTimeCurrent /
-              props.bladeburner.actionTimeToComplete,
+            progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
           })}
         </p>
       ) : (
         <>
-          <a
-            onClick={onStart}
-            className="a-link-button"
-            style={{ margin: "3px", padding: "3px" }}
-          >
+          <a onClick={onStart} className="a-link-button" style={{ margin: "3px", padding: "3px" }}>
             Start
           </a>
         </>
       )}
       <br />
       <br />
-      <pre
-        style={{ display: "inline-block" }}
-        dangerouslySetInnerHTML={{ __html: props.action.desc }}
-      ></pre>
+      <pre style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: props.action.desc }}></pre>
       <br />
       <br />
       <pre style={{ display: "inline-block" }}>

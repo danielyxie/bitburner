@@ -20,9 +20,7 @@ interface IProps {
 export function MainPanel(props: IProps): React.ReactElement {
   const division =
     props.divisionName !== "Overview"
-      ? props.corp.divisions.find(
-          (division: IIndustry) => division.name === props.divisionName,
-        )
+      ? props.corp.divisions.find((division: IIndustry) => division.name === props.divisionName)
       : undefined; // use undefined because find returns undefined
 
   if (division === undefined) {
@@ -34,12 +32,7 @@ export function MainPanel(props: IProps): React.ReactElement {
   } else {
     return (
       <div id="cmpy-mgmt-panel">
-        <CityTabs
-          division={division}
-          corp={props.corp}
-          city={CityName.Sector12}
-          player={props.player}
-        />
+        <CityTabs division={division} corp={props.corp} city={CityName.Sector12} player={props.player} />
       </div>
     );
   }

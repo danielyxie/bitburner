@@ -18,11 +18,7 @@ import {
 
 import { createRandomIp } from "../../utils/IPAddress";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 interface IConstructorParams {
   adminRights?: boolean;
@@ -55,9 +51,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   // Total number of hashes earned by this server
   totalHashesGenerated = 0;
 
-  constructor(
-    params: IConstructorParams = { hostname: "", ip: createRandomIp() },
-  ) {
+  constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     super(params);
 
     this.maxRam = 1;
@@ -88,26 +82,17 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   }
 
   upgradeCache(levels: number): void {
-    this.cache = Math.min(
-      HacknetServerConstants.MaxCache,
-      Math.round(this.cache + levels),
-    );
+    this.cache = Math.min(HacknetServerConstants.MaxCache, Math.round(this.cache + levels));
     this.updateHashCapacity();
   }
 
   upgradeCore(levels: number, prodMult: number): void {
-    this.cores = Math.min(
-      HacknetServerConstants.MaxCores,
-      Math.round(this.cores + levels),
-    );
+    this.cores = Math.min(HacknetServerConstants.MaxCores, Math.round(this.cores + levels));
     this.updateHashRate(prodMult);
   }
 
   upgradeLevel(levels: number, prodMult: number): void {
-    this.level = Math.min(
-      HacknetServerConstants.MaxLevel,
-      Math.round(this.level + levels),
-    );
+    this.level = Math.min(HacknetServerConstants.MaxLevel, Math.round(this.level + levels));
     this.updateHashRate(prodMult);
   }
 
@@ -115,10 +100,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     for (let i = 0; i < levels; ++i) {
       this.maxRam *= 2;
     }
-    this.maxRam = Math.min(
-      HacknetServerConstants.MaxRam,
-      Math.round(this.maxRam),
-    );
+    this.maxRam = Math.min(HacknetServerConstants.MaxRam, Math.round(this.maxRam));
     this.updateHashRate(prodMult);
 
     return true;
@@ -137,13 +119,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   }
 
   updateHashRate(prodMult: number): void {
-    this.hashRate = calculateHashGainRate(
-      this.level,
-      this.ramUsed,
-      this.maxRam,
-      this.cores,
-      prodMult,
-    );
+    this.hashRate = calculateHashGainRate(this.level, this.ramUsed, this.maxRam, this.cores, prodMult);
 
     if (isNaN(this.hashRate)) {
       this.hashRate = 0;

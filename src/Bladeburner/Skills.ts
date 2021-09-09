@@ -8,8 +8,7 @@ export const Skills: IMap<Skill> = {};
   Skills[SkillNames.BladesIntuition] = new Skill({
     name: SkillNames.BladesIntuition,
     desc:
-      "Each level of this skill increases your success chance " +
-      "for all Contracts, Operations, and BlackOps by 3%",
+      "Each level of this skill increases your success chance " + "for all Contracts, Operations, and BlackOps by 3%",
     baseCost: 3,
     costInc: 2.1,
     successChanceAll: 3,
@@ -34,18 +33,14 @@ export const Skills: IMap<Skill> = {};
   });
   Skills[SkillNames.DigitalObserver] = new Skill({
     name: SkillNames.DigitalObserver,
-    desc:
-      "Each level of this skill increases your success chance in " +
-      "all Operations and BlackOps by 4%",
+    desc: "Each level of this skill increases your success chance in " + "all Operations and BlackOps by 4%",
     baseCost: 2,
     costInc: 2.1,
     successChanceOperation: 4,
   });
   Skills[SkillNames.Tracer] = new Skill({
     name: SkillNames.Tracer,
-    desc:
-      "Each level of this skill increases your success chance in " +
-      "all Contracts by 4%",
+    desc: "Each level of this skill increases your success chance in " + "all Contracts by 4%",
     baseCost: 2,
     costInc: 2.1,
     successChanceContract: 4,
@@ -72,9 +67,7 @@ export const Skills: IMap<Skill> = {};
   });
   Skills[SkillNames.EvasiveSystem] = new Skill({
     name: SkillNames.EvasiveSystem,
-    desc:
-      "Each level of this skill increases your effective " +
-      "dexterity and agility for Bladeburner actions by 4%",
+    desc: "Each level of this skill increases your effective " + "dexterity and agility for Bladeburner actions by 4%",
     baseCost: 2,
     costInc: 2.1,
     effDex: 4,

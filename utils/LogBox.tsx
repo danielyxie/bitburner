@@ -95,8 +95,7 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
     <>
       <div className="log-box-header" onMouseDown={drag}>
         <p>
-          {props.script.filename}{" "}
-          {props.script.args.map((x: any): string => `${x}`).join(" ")}
+          {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
         </p>
         <div>
           <button className="log-box-button" onClick={kill}>
@@ -124,19 +123,12 @@ function ScriptLogPopup(props: IProps): React.ReactElement {
 }
 
 export function logBoxCreate(script: RunningScript): void {
-  const id =
-    script.server +
-    "-" +
-    script.filename +
-    script.args.map((x: any): string => `${x}`).join("-");
+  const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
   if (document.getElementById(id) !== null) return;
   const container = createElement("div", {
     class: "log-box-container",
     id: id,
   });
   gameContainer.appendChild(container);
-  ReactDOM.render(
-    <ScriptLogPopup script={script} id={id} container={container} />,
-    container,
-  );
+  ReactDOM.render(<ScriptLogPopup script={script} id={id} container={container} />, container);
 }

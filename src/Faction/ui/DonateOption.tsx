@@ -58,8 +58,7 @@ export function DonateOption(props: IProps): React.ReactElement {
     props.faction.playerReputation += repGain;
     dialogBoxCreate(
       <>
-        You just donated <Money money={amt} /> to {fac.name} to gain{" "}
-        {Reputation(repGain)} reputation.
+        You just donated <Money money={amt} /> to {fac.name} to gain {Reputation(repGain)} reputation.
       </>,
     );
     props.rerender();
@@ -71,12 +70,7 @@ export function DonateOption(props: IProps): React.ReactElement {
       if (props.p.money.lt(donateAmt)) return <p>Insufficient funds</p>;
       return <p>Invalid donate amount entered!</p>;
     }
-    return (
-      <p>
-        This donation will result in{" "}
-        {Reputation(repFromDonation(donateAmt, props.p))} reputation gain
-      </p>
-    );
+    return <p>This donation will result in {Reputation(repFromDonation(donateAmt, props.p))} reputation gain</p>;
   }
 
   return (
@@ -89,11 +83,7 @@ export function DonateOption(props: IProps): React.ReactElement {
           style={inputStyleMarkup}
           disabled={props.disabled}
         />
-        <StdButton
-          onClick={donate}
-          text={"Donate Money"}
-          disabled={props.disabled || !canDonate()}
-        />
+        <StdButton onClick={donate} text={"Donate Money"} disabled={props.disabled || !canDonate()} />
         <Status />
         {props.disabled ? (
           <p>

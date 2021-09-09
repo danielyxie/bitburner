@@ -117,9 +117,7 @@ export function HireEmployeePopup(props: IProps): React.ReactElement {
   const exp = getRandomInt(50, 100);
   const cre = getRandomInt(50, 100);
   const eff = getRandomInt(50, 100);
-  const sal =
-    CorporationConstants.EmployeeSalaryMultiplier *
-    (int + cha + exp + cre + eff);
+  const sal = CorporationConstants.EmployeeSalaryMultiplier * (int + cha + exp + cre + eff);
 
   const emp1 = new Employee({
     intelligence: int * mult1,

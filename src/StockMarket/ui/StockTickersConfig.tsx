@@ -36,27 +36,15 @@ export class StockTickersConfig extends React.Component<IProps, any> {
       tooltip = "Displays only the stocks for which you have shares or orders";
     }
 
-    return (
-      <StdButton
-        onClick={this.props.changeDisplayMode}
-        text={txt}
-        tooltip={tooltip}
-      />
-    );
+    return <StdButton onClick={this.props.changeDisplayMode} text={txt} tooltip={tooltip} />;
   }
 
   render(): React.ReactNode {
     return (
       <div>
         {this.renderDisplayModeButton()}
-        <StdButton
-          onClick={this.props.expandAllTickers}
-          text="Expand Tickers"
-        />
-        <StdButton
-          onClick={this.props.collapseAllTickers}
-          text="Collapse Tickers"
-        />
+        <StdButton onClick={this.props.expandAllTickers} text="Expand Tickers" />
+        <StdButton onClick={this.props.collapseAllTickers} text="Collapse Tickers" />
 
         <input
           className="text-input"

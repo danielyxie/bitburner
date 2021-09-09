@@ -51,12 +51,9 @@ function BulkPurchase(props: IProps): React.ReactElement {
     const amount = parseFloat(buyAmt);
 
     const matSize = MaterialSizes[props.mat.name];
-    const maxAmount =
-      (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
+    const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
     if (amount * matSize > maxAmount) {
-      dialogBoxCreate(
-        `You do not have enough warehouse size to fit this purchase`,
-      );
+      dialogBoxCreate(`You do not have enough warehouse size to fit this purchase`);
       return;
     }
 
@@ -87,14 +84,10 @@ function BulkPurchase(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the amount of {props.mat.name} you would like to bulk purchase.
-        This purchases the specified amount instantly (all at once).
+        Enter the amount of {props.mat.name} you would like to bulk purchase. This purchases the specified amount
+        instantly (all at once).
       </p>
-      <BulkPurchaseText
-        warehouse={props.warehouse}
-        mat={props.mat}
-        amount={buyAmt}
-      />
+      <BulkPurchaseText warehouse={props.warehouse} mat={props.mat} amount={buyAmt} />
       <input
         onChange={onChange}
         type="number"
@@ -138,8 +131,8 @@ export function PurchaseMaterialPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the amount of {props.mat.name} you would like to purchase per
-        second. This material's cost changes constantly.
+        Enter the amount of {props.mat.name} you would like to purchase per second. This material's cost changes
+        constantly.
       </p>
       <input
         onChange={onChange}

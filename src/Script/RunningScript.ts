@@ -8,11 +8,7 @@ import { Settings } from "../Settings/Settings";
 import { IMap } from "../types";
 import { post } from "../ui/postToTerminal";
 
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { getTimestamp } from "../../utils/helpers/getTimestamp";
 
 export class RunningScript {
@@ -99,10 +95,7 @@ export class RunningScript {
 
   // Update the moneyStolen and numTimesHack maps when hacking
   recordHack(serverIp: string, moneyGained: number, n = 1): void {
-    if (
-      this.dataMap[serverIp] == null ||
-      this.dataMap[serverIp].constructor !== Array
-    ) {
+    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
       this.dataMap[serverIp] = [0, 0, 0, 0];
     }
     this.dataMap[serverIp][0] += moneyGained;
@@ -111,10 +104,7 @@ export class RunningScript {
 
   // Update the grow map when calling grow()
   recordGrow(serverIp: string, n = 1): void {
-    if (
-      this.dataMap[serverIp] == null ||
-      this.dataMap[serverIp].constructor !== Array
-    ) {
+    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
       this.dataMap[serverIp] = [0, 0, 0, 0];
     }
     this.dataMap[serverIp][2] += n;
@@ -122,10 +112,7 @@ export class RunningScript {
 
   // Update the weaken map when calling weaken() {
   recordWeaken(serverIp: string, n = 1): void {
-    if (
-      this.dataMap[serverIp] == null ||
-      this.dataMap[serverIp].constructor !== Array
-    ) {
+    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
       this.dataMap[serverIp] = [0, 0, 0, 0];
     }
     this.dataMap[serverIp][3] += n;

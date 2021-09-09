@@ -35,8 +35,7 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.isPlayersGang =
-      props.p.inGang() && props.p.getGangName() === props.faction.name;
+    this.isPlayersGang = props.p.inGang() && props.p.getGangName() === props.faction.name;
 
     this.state = {
       rerenderFlag: false,
@@ -124,7 +123,8 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
   render(): React.ReactNode {
     const augs = this.getAugsSorted();
     const purchasable = augs.filter(
-      (aug: string) => aug === AugmentationNames.NeuroFluxGovernor ||
+      (aug: string) =>
+        aug === AugmentationNames.NeuroFluxGovernor ||
         (!this.props.p.augmentations.some((a) => a.name === aug) &&
           !this.props.p.queuedAugmentations.some((a) => a.name === aug)),
     );
@@ -141,8 +141,7 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
       );
     };
 
-    const augListElems = purchasable.map((aug) => purchaseableAugmentation(aug),
-    );
+    const augListElems = purchasable.map((aug) => purchaseableAugmentation(aug));
 
     let ownedElem = <></>;
     const owned = augs.filter((aug: string) => !purchasable.includes(aug));
@@ -151,10 +150,7 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
         <>
           <br />
           <h2>Purchased Augmentations</h2>
-          <p style={infoStyleMarkup}>
-            This factions also offers these augmentations but you already own
-            them.
-          </p>
+          <p style={infoStyleMarkup}>This factions also offers these augmentations but you already own them.</p>
           {owned.map((aug) => purchaseableAugmentation(aug))}
         </>
       );
@@ -165,23 +161,16 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
         <StdButton onClick={this.props.routeToMainPage} text={"Back"} />
         <h1>Faction Augmentations</h1>
         <p style={infoStyleMarkup}>
-          These are all of the Augmentations that are available to purchase from{" "}
-          {this.props.faction.name}. Augmentations are powerful upgrades that
-          will enhance your abilities.
+          These are all of the Augmentations that are available to purchase from {this.props.faction.name}.
+          Augmentations are powerful upgrades that will enhance your abilities.
         </p>
+        <StdButton onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)} text={"Sort by Cost"} />
         <StdButton
-          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)
-          }
-          text={"Sort by Cost"}
-        />
-        <StdButton
-          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)
-          }
+          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}
           text={"Sort by Reputation"}
         />
         <StdButton
-          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Default)
-          }
+          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}
           text={"Sort by Default Order"}
         />
         <br />

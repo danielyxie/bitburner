@@ -3,10 +3,7 @@
  */
 import React from "react";
 
-import {
-  hasHacknetServers,
-  hasMaxNumberHacknetServers,
-} from "../HacknetHelpers";
+import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers";
 import { Player } from "../../Player";
 import { Money } from "../../ui/React/Money";
 

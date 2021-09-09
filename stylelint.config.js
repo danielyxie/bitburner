@@ -156,12 +156,7 @@ module.exports = {
     //            []
     //        ],
     //        "order/properties-alphabetical-order": true,
-    "property-blacklist": [
-      "grid-area",
-      "grid-template",
-      "grid-column",
-      "grid-row",
-    ],
+    "property-blacklist": ["grid-area", "grid-template", "grid-column", "grid-row"],
     "property-case": "lower",
     "property-no-unknown": true,
     //        "property-no-vendor-prefix": true,

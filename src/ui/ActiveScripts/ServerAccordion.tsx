@@ -23,9 +23,10 @@ export function ServerAccordion(props: IProps): React.ReactElement {
   // Accordion's header text
   // TODO: calculate the longest hostname length rather than hard coding it
   const longestHostnameLength = 18;
-  const paddedName = `${server.hostname}${" ".repeat(
-    longestHostnameLength,
-  )}`.slice(0, Math.max(server.hostname.length, longestHostnameLength));
+  const paddedName = `${server.hostname}${" ".repeat(longestHostnameLength)}`.slice(
+    0,
+    Math.max(server.hostname.length, longestHostnameLength),
+  );
   const barOptions = {
     progress: server.ramUsed / server.maxRam,
     totalTicks: 30,
@@ -35,9 +36,7 @@ export function ServerAccordion(props: IProps): React.ReactElement {
   return (
     <Accordion
       headerContent={<pre>{headerTxt}</pre>}
-      panelContent={
-        <ServerAccordionContent workerScripts={props.workerScripts} />
-      }
+      panelContent={<ServerAccordionContent workerScripts={props.workerScripts} />}
     />
   );
 }

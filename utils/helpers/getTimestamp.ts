@@ -8,7 +8,5 @@ export function getTimestamp(): string {
   const formattedHours: string = `0${d.getHours()}`.slice(stringWidth);
   const formattedMinutes: string = `0${d.getMinutes()}`.slice(stringWidth);
 
-  return `${
-    d.getMonth() + 1
-  }/${d.getDate()} ${formattedHours}:${formattedMinutes}`;
+  return `${d.getMonth() + 1}/${d.getDate()} ${formattedHours}:${formattedMinutes}`;
 }

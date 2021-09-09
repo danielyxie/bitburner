@@ -16,8 +16,7 @@ interface IProgressBarConfiguration {
 /**
  * Represents concrete configuration values when creating the progress bar text.
  */
-interface IProgressBarConfigurationMaterialized
-  extends IProgressBarConfiguration {
+interface IProgressBarConfigurationMaterialized extends IProgressBarConfiguration {
   progress: number;
   totalTicks: number;
 }
@@ -27,9 +26,7 @@ interface IProgressBarConfigurationMaterialized
  * e.g.:  [||||---------------]
  * @param params The configuration parameters for the progress bar
  */
-export function createProgressBarText(
-  params: IProgressBarConfiguration,
-): string {
+export function createProgressBarText(params: IProgressBarConfiguration): string {
   // Default values
   const defaultParams: IProgressBarConfigurationMaterialized = {
     progress: 0,
@@ -37,19 +34,12 @@ export function createProgressBarText(
   };
 
   // tslint:disable-next-line:prefer-object-spread
-  const derived: IProgressBarConfigurationMaterialized = Object.assign(
-    {},
-    defaultParams,
-    params,
-  );
+  const derived: IProgressBarConfigurationMaterialized = Object.assign({}, defaultParams, params);
   // Ensure it is 0..1
   derived.progress = Math.max(Math.min(derived.progress, 1), 0);
 
   // This way there is always at least one bar filled in...
-  const bars: number = Math.max(
-    Math.floor(derived.progress / (1 / derived.totalTicks)),
-    1,
-  );
+  const bars: number = Math.max(Math.floor(derived.progress / (1 / derived.totalTicks)), 1);
   const dashes: number = Math.max(derived.totalTicks - bars, 0);
 
   // String.prototype.repeat isn't completley supported, but good enough for our purposes

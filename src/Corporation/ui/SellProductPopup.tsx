@@ -24,9 +24,7 @@ interface IProps {
 export function SellProductPopup(props: IProps): React.ReactElement {
   const [checked, setChecked] = useState(true);
   const [iQty, setQty] = useState<string>(
-    props.product.sllman[props.city][1]
-      ? props.product.sllman[props.city][1]
-      : "",
+    props.product.sllman[props.city][1] ? props.product.sllman[props.city][1] : "",
   );
   const [px, setPx] = useState<string>(initialPrice(props.product));
 
@@ -59,28 +57,25 @@ export function SellProductPopup(props: IProps): React.ReactElement {
   return (
     <>
       <p>
-        Enter the maximum amount of {props.product.name} you would like to sell
-        per second, as well as the price at which you would like to sell it at.
+        Enter the maximum amount of {props.product.name} you would like to sell per second, as well as the price at
+        which you would like to sell it at.
         <br />
         <br />
-        If the sell amount is set to 0, then the product will not be sold. If
-        the sell price is set to 0, then the product will be discarded.
+        If the sell amount is set to 0, then the product will not be sold. If the sell price is set to 0, then the
+        product will be discarded.
         <br />
         <br />
-        Setting the sell amount to 'MAX' will result in you always selling the
-        maximum possible amount of the material.
+        Setting the sell amount to 'MAX' will result in you always selling the maximum possible amount of the material.
         <br />
         <br />
-        When setting the sell amount, you can use the 'PROD' variable to
-        designate a dynamically changing amount that depends on your production.
-        For example, if you set the sell amount to 'PROD-1' then you will always
-        sell 1 less of the material than you produce.
+        When setting the sell amount, you can use the 'PROD' variable to designate a dynamically changing amount that
+        depends on your production. For example, if you set the sell amount to 'PROD-1' then you will always sell 1 less
+        of the material than you produce.
         <br />
         <br />
-        When setting the sell price, you can use the 'MP' variable to set a
-        dynamically changing price that depends on the Product's estimated
-        market price. For example, if you set it to 'MP*5' then it will always
-        be sold at five times the estimated market price.
+        When setting the sell price, you can use the 'MP' variable to set a dynamically changing price that depends on
+        the Product's estimated market price. For example, if you set it to 'MP*5' then it will always be sold at five
+        times the estimated market price.
       </p>
       <br />
       <input
@@ -106,9 +101,7 @@ export function SellProductPopup(props: IProps): React.ReactElement {
         Confirm
       </button>
       <div style={{ border: "1px solid white", display: "inline-block" }}>
-        <label htmlFor={props.popupId + "-checkbox"}>
-          Use same 'Sell Amount' for all cities
-        </label>
+        <label htmlFor={props.popupId + "-checkbox"}>Use same 'Sell Amount' for all cities</label>
         <input
           checked={checked}
           onChange={onCheckedChange}

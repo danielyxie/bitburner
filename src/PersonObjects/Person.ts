@@ -114,9 +114,7 @@ export abstract class Person {
   applyAugmentation(aug: Augmentation): void {
     for (const mult in aug.mults) {
       if ((this as any)[mult] == null) {
-        console.warn(
-          `Augmentation has unrecognized multiplier property: ${mult}`,
-        );
+        console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
       } else {
         (this as any)[mult] *= aug.mults[mult];
       }
@@ -153,9 +151,7 @@ export abstract class Person {
    * when doing Hacking Work for a faction
    */
   getFactionHackingWorkRepGain(): number {
-    return (
-      (this.hacking_skill / CONSTANTS.MaxSkillLevel) * this.faction_rep_mult
-    );
+    return (this.hacking_skill / CONSTANTS.MaxSkillLevel) * this.faction_rep_mult;
   }
 
   /**
@@ -207,56 +203,32 @@ export abstract class Person {
   updateStatLevels(): void {
     this.hacking_skill = Math.max(
       1,
-      Math.floor(
-        this.calculateStat(
-          this.hacking_exp,
-          this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
-        ),
-      ),
+      Math.floor(this.calculateStat(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)),
     );
     this.strength = Math.max(
       1,
       Math.floor(
-        this.calculateStat(
-          this.strength_exp,
-          this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
-        ),
+        this.calculateStat(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier),
       ),
     );
     this.defense = Math.max(
       1,
-      Math.floor(
-        this.calculateStat(
-          this.defense_exp,
-          this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
-        ),
-      ),
+      Math.floor(this.calculateStat(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)),
     );
     this.dexterity = Math.max(
       1,
       Math.floor(
-        this.calculateStat(
-          this.dexterity_exp,
-          this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
-        ),
+        this.calculateStat(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier),
       ),
     );
     this.agility = Math.max(
       1,
-      Math.floor(
-        this.calculateStat(
-          this.agility_exp,
-          this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
-        ),
-      ),
+      Math.floor(this.calculateStat(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier)),
     );
     this.charisma = Math.max(
       1,
       Math.floor(
-        this.calculateStat(
-          this.charisma_exp,
-          this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
-        ),
+        this.calculateStat(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier),
       ),
     );
 

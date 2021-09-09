@@ -18,10 +18,7 @@ export class Option extends React.Component<IProps, any> {
     return (
       <div className={"faction-work-div"}>
         <div className={"faction-work-div-wrapper"}>
-          <StdButton
-            onClick={this.props.onClick}
-            text={this.props.buttonText}
-          />
+          <StdButton onClick={this.props.onClick} text={this.props.buttonText} />
           <p>{this.props.infoText}</p>
         </div>
       </div>

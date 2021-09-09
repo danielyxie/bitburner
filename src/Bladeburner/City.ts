@@ -1,10 +1,6 @@
 import { BladeburnerConstants } from "./data/Constants";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { addOffset } from "../../utils/helpers/addOffset";
 
 interface IChangePopulationByCountParams {
@@ -52,10 +48,7 @@ export class City {
     this.name = name;
 
     // Synthoid population and estimate
-    this.pop = getRandomInt(
-      BladeburnerConstants.PopulationThreshold,
-      1.5 * BladeburnerConstants.PopulationThreshold,
-    );
+    this.pop = getRandomInt(BladeburnerConstants.PopulationThreshold, 1.5 * BladeburnerConstants.PopulationThreshold);
     this.popEst = this.pop * (Math.random() + 0.5);
 
     // Number of Synthoid communities population and estimate
@@ -83,9 +76,7 @@ export class City {
 
   improvePopulationEstimateByCount(n: number): void {
     if (isNaN(n)) {
-      throw new Error(
-        "NaN passeed into City.improvePopulationEstimateByCount()",
-      );
+      throw new Error("NaN passeed into City.improvePopulationEstimateByCount()");
     }
     if (this.popEst < this.pop) {
       this.popEst += n;
@@ -106,9 +97,7 @@ export class City {
   improvePopulationEstimateByPercentage(p: number, skillMult = 1): void {
     p = p * skillMult;
     if (isNaN(p)) {
-      throw new Error(
-        "NaN passed into City.improvePopulationEstimateByPercentage()",
-      );
+      throw new Error("NaN passed into City.improvePopulationEstimateByPercentage()");
     }
     if (this.popEst < this.pop) {
       ++this.popEst; // In case estimate is 0
@@ -146,10 +135,7 @@ export class City {
    *  estChange(int): How much the estimate should change by
    *  estOffset(int): Add offset to estimate (offset by percentage)
    */
-  changePopulationByCount(
-    n: number,
-    params: IChangePopulationByCountParams = { estChange: 0, estOffset: 0 },
-  ): void {
+  changePopulationByCount(n: number, params: IChangePopulationByCountParams = { estChange: 0, estOffset: 0 }): void {
     if (isNaN(n)) {
       throw new Error("NaN passed into City.changePopulationByCount()");
     }

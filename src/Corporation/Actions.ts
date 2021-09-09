@@ -11,11 +11,7 @@ import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { Cities } from "../Locations/Cities";
 
-export function NewIndustry(
-  corporation: ICorporation,
-  industry: string,
-  name: string,
-): void {
+export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
   for (let i = 0; i < corporation.divisions.length; ++i) {
     if (corporation.divisions[i].name === name) {
       throw new Error("This division name is already in use!");
@@ -28,9 +24,7 @@ export function NewIndustry(
     throw new Error(`Invalid industry: '${industry}'`);
   }
   if (corporation.funds.lt(cost)) {
-    throw new Error(
-      "Not enough money to create a new division in this industry",
-    );
+    throw new Error("Not enough money to create a new division in this industry");
   } else if (name === "") {
     throw new Error("New division must have a name!");
   } else {
@@ -45,19 +39,11 @@ export function NewIndustry(
   }
 }
 
-export function NewCity(
-  corporation: ICorporation,
-  division: IIndustry,
-  city: string,
-): void {
+export function NewCity(corporation: ICorporation, division: IIndustry, city: string): void {
   if (corporation.funds.lt(CorporationConstants.OfficeInitialCost)) {
-    throw new Error(
-      "You don't have enough company funds to open a new office!",
-    );
+    throw new Error("You don't have enough company funds to open a new office!");
   } else {
-    corporation.funds = corporation.funds.minus(
-      CorporationConstants.OfficeInitialCost,
-    );
+    corporation.funds = corporation.funds.minus(CorporationConstants.OfficeInitialCost);
     division.offices[city] = new OfficeSpace({
       loc: city,
       size: CorporationConstants.OfficeInitialSize,
@@ -65,20 +51,14 @@ export function NewCity(
   }
 }
 
-export function UnlockUpgrade(
-  corporation: ICorporation,
-  upgrade: CorporationUnlockUpgrade,
-): void {
+export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
   if (corporation.funds.lt(upgrade[1])) {
     throw new Error("Insufficient funds");
   }
   corporation.unlock(upgrade);
 }
 
-export function LevelUpgrade(
-  corporation: ICorporation,
-  upgrade: CorporationUpgrade,
-): void {
+export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgrade): void {
   const baseCost = upgrade[1];
   const priceMult = upgrade[2];
   const level = corporation.upgrades[upgrade[0]];
@@ -90,18 +70,9 @@ export function LevelUpgrade(
   }
 }
 
-export function IssueDividends(
-  corporation: ICorporation,
-  percent: number,
-): void {
-  if (
-    isNaN(percent) ||
-    percent < 0 ||
-    percent > CorporationConstants.DividendMaxPercentage
-  ) {
-    throw new Error(
-      `Invalid value. Must be an integer between 0 and ${CorporationConstants.DividendMaxPercentage}`,
-    );
+export function IssueDividends(corporation: ICorporation, percent: number): void {
+  if (isNaN(percent) || percent < 0 || percent > CorporationConstants.DividendMaxPercentage) {
+    throw new Error(`Invalid value. Must be an integer between 0 and ${CorporationConstants.DividendMaxPercentage}`);
   }
 
   corporation.dividendPercentage = percent * 100;
@@ -148,9 +119,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
     mat.sllman[0] = true;
     mat.sllman[1] = q; //Use sanitized input
   } else if (isNaN(parseFloat(amt))) {
-    throw new Error(
-      "Invalid value for sell quantity field! Must be numeric or 'MAX'",
-    );
+    throw new Error("Invalid value for sell quantity field! Must be numeric or 'MAX'");
   } else {
     let q = parseFloat(amt);
     if (isNaN(q)) {
@@ -166,13 +135,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   }
 }
 
-export function SellProduct(
-  product: Product,
-  city: string,
-  amt: string,
-  price: string,
-  all: boolean,
-): void {
+export function SellProduct(product: Product, city: string, amt: string, price: string, all: boolean): void {
   //Parse price
   if (price.includes("MP")) {
     //Dynamically evaluated quantity. First test to make sure its valid
@@ -183,9 +146,7 @@ export function SellProduct(
     try {
       temp = eval(temp);
     } catch (e) {
-      throw new Error(
-        "Invalid value or expression for sell quantity field: " + e,
-      );
+      throw new Error("Invalid value or expression for sell quantity field: " + e);
     }
     if (temp == null || isNaN(parseFloat(temp))) {
       throw new Error("Invalid value or expression for sell quantity field.");
@@ -261,18 +222,13 @@ export function SellProduct(
   }
 }
 
-export function SetSmartSupply(
-  warehouse: Warehouse,
-  smartSupply: boolean,
-): void {
+export function SetSmartSupply(warehouse: Warehouse, smartSupply: boolean): void {
   warehouse.smartSupplyEnabled = smartSupply;
 }
 
 export function BuyMaterial(material: Material, amt: number): void {
   if (isNaN(amt)) {
-    throw new Error(
-      `Invalid amount '${amt}' to buy material '${material.name}'`,
-    );
+    throw new Error(`Invalid amount '${amt}' to buy material '${material.name}'`);
   }
   material.buy = amt;
 }

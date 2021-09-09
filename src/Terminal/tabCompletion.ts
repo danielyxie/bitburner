@@ -1,9 +1,6 @@
 import { post } from "../ui/postToTerminal";
 
-import {
-  containsAllStrings,
-  longestCommonStart,
-} from "../../utils/StringHelperFunctions";
+import { containsAllStrings, longestCommonStart } from "../../utils/StringHelperFunctions";
 
 /**
  * Implements tab completion for the Terminal
@@ -12,11 +9,7 @@ import {
  * @param arg {string} Last argument that is being completed
  * @param allPossibilities {string[]} All values that `arg` can complete to
  */
-export function tabCompletion(
-  command: string,
-  arg: string,
-  allPossibilities: string[],
-): void {
+export function tabCompletion(command: string, arg: string, allPossibilities: string[]): void {
   if (!(allPossibilities.constructor === Array)) {
     return;
   }
@@ -28,9 +21,7 @@ export function tabCompletion(
   // that we are attempting to autocomplete
   if (arg === "") {
     for (let i = allPossibilities.length - 1; i >= 0; --i) {
-      if (
-        !allPossibilities[i].toLowerCase().startsWith(command.toLowerCase())
-      ) {
+      if (!allPossibilities[i].toLowerCase().startsWith(command.toLowerCase())) {
         allPossibilities.splice(i, 1);
       }
     }
@@ -44,9 +35,7 @@ export function tabCompletion(
 
   const textBoxElem = document.getElementById("terminal-input-text-box");
   if (textBoxElem == null) {
-    console.warn(
-      `Couldn't find terminal input DOM element (id=terminal-input-text-box) when trying to autocomplete`,
-    );
+    console.warn(`Couldn't find terminal input DOM element (id=terminal-input-text-box) when trying to autocomplete`);
     return;
   }
   const textBox = textBoxElem as HTMLInputElement;
@@ -96,10 +85,7 @@ export function tabCompletion(
           textBox.value = longestStartSubstr;
         } else {
           // Replace only after the last semicolon
-          textBox.value = `${textBox.value.slice(
-            0,
-            semiColonIndex + 1,
-          )} ${longestStartSubstr}`;
+          textBox.value = `${textBox.value.slice(0, semiColonIndex + 1)} ${longestStartSubstr}`;
         }
 
         textBox.focus();
@@ -115,10 +101,7 @@ export function tabCompletion(
           textBox.value = `${command} ${longestStartSubstr}`;
         } else {
           // Replace only after the last semicolon
-          textBox.value = `${textBox.value.slice(
-            0,
-            semiColonIndex + 1,
-          )} ${command} ${longestStartSubstr}`;
+          textBox.value = `${textBox.value.slice(0, semiColonIndex + 1)} ${command} ${longestStartSubstr}`;
         }
 
         textBox.focus();

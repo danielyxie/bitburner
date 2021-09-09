@@ -11,10 +11,7 @@ export function MessagePopup(props: IProps): React.ReactElement {
   return <>{props.content}</>;
 }
 
-function dialogBoxCreate(
-  txt: string | JSX.Element,
-  preformatted = false,
-): void {
+function dialogBoxCreate(txt: string | JSX.Element, preformatted = false): void {
   const popupId =
     `popup-` +
     Array.from(Array(16))

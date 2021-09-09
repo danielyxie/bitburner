@@ -41,8 +41,7 @@ export class HacknetRoot extends React.Component {
 
     this.createHashUpgradesPopup = this.createHashUpgradesPopup.bind(this);
     this.handlePurchaseButtonClick = this.handlePurchaseButtonClick.bind(this);
-    this.recalculateTotalProduction =
-      this.recalculateTotalProduction.bind(this);
+    this.recalculateTotalProduction = this.recalculateTotalProduction.bind(this);
   }
 
   componentDidMount() {
@@ -71,9 +70,7 @@ export class HacknetRoot extends React.Component {
         if (hserver) {
           total += hserver.hashRate;
         } else {
-          console.warn(
-            `Could not find Hacknet Server object in AllServers map (i=${i})`,
-          );
+          console.warn(`Could not find Hacknet Server object in AllServers map (i=${i})`);
         }
       } else {
         total += Player.hacknetNodes[i].moneyGainRatePerSecond;
@@ -113,9 +110,7 @@ export class HacknetRoot extends React.Component {
       if (hasHacknetServers()) {
         const hserver = AllServers[node];
         if (hserver == null) {
-          throw new Error(
-            `Could not find Hacknet Server object in AllServers map for IP: ${node}`,
-          );
+          throw new Error(`Could not find Hacknet Server object in AllServers map for IP: ${node}`);
         }
         return (
           <HacknetServer
@@ -151,18 +146,11 @@ export class HacknetRoot extends React.Component {
         <br />
         <div id={"hacknet-nodes-money-multipliers-div"}>
           <PlayerInfo totalProduction={this.state.totalProduction} />
-          <MultiplierButtons
-            onClicks={purchaseMultiplierOnClicks}
-            purchaseMultiplier={this.state.purchaseMultiplier}
-          />
+          <MultiplierButtons onClicks={purchaseMultiplierOnClicks} purchaseMultiplier={this.state.purchaseMultiplier} />
         </div>
 
         {hasHacknetServers() && (
-          <button
-            className={"std-button"}
-            onClick={this.createHashUpgradesPopup}
-            style={{ display: "block" }}
-          >
+          <button className={"std-button"} onClick={this.createHashUpgradesPopup} style={{ display: "block" }}>
             {"Spend Hashes on Upgrades"}
           </button>
         )}

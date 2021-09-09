@@ -20,9 +20,8 @@ function ExpandButton(props: IExpandButtonProps): React.ReactElement {
   const allIndustries = Object.keys(Industries).sort();
   const possibleIndustries = allIndustries
     .filter(
-      (industryType: string) => props.corp.divisions.find(
-          (division: IIndustry) => division.type === industryType,
-        ) === undefined,
+      (industryType: string) =>
+        props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
     )
     .sort();
   if (possibleIndustries.length === 0) return <></>;
@@ -36,13 +35,7 @@ function ExpandButton(props: IExpandButtonProps): React.ReactElement {
     });
   }
 
-  return (
-    <HeaderTab
-      current={false}
-      onClick={openNewIndustryPopup}
-      text={"Expand into new Industry"}
-    />
-  );
+  return <HeaderTab current={false} onClick={openNewIndustryPopup} text={"Expand into new Industry"} />;
 }
 
 interface IProps {
@@ -72,11 +65,7 @@ export function HeaderTabs(props: IProps): React.ReactElement {
         ))}
         <ExpandButton corp={props.corp} setDivisionName={setDivisionName} />
       </div>
-      <MainPanel
-        corp={props.corp}
-        divisionName={divisionName}
-        player={props.player}
-      />
+      <MainPanel corp={props.corp} divisionName={divisionName} player={props.player} />
     </>
   );
 }

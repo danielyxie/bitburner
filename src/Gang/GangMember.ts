@@ -6,11 +6,7 @@ import { IAscensionResult } from "./IAscensionResult";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { AllGangs } from "./AllGangs";
 import { IGang } from "./IGang";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 interface IMults {
   hack: number;
@@ -71,36 +67,16 @@ export class GangMember {
   }
 
   updateSkillLevels(): void {
-    this.hack = this.calculateSkill(
-      this.hack_exp,
-      this.hack_mult * this.calculateAscensionMult(this.hack_asc_points),
-    );
-    this.str = this.calculateSkill(
-      this.str_exp,
-      this.str_mult * this.calculateAscensionMult(this.str_asc_points),
-    );
-    this.def = this.calculateSkill(
-      this.def_exp,
-      this.def_mult * this.calculateAscensionMult(this.def_asc_points),
-    );
-    this.dex = this.calculateSkill(
-      this.dex_exp,
-      this.dex_mult * this.calculateAscensionMult(this.dex_asc_points),
-    );
-    this.agi = this.calculateSkill(
-      this.agi_exp,
-      this.agi_mult * this.calculateAscensionMult(this.agi_asc_points),
-    );
-    this.cha = this.calculateSkill(
-      this.cha_exp,
-      this.cha_mult * this.calculateAscensionMult(this.cha_asc_points),
-    );
+    this.hack = this.calculateSkill(this.hack_exp, this.hack_mult * this.calculateAscensionMult(this.hack_asc_points));
+    this.str = this.calculateSkill(this.str_exp, this.str_mult * this.calculateAscensionMult(this.str_asc_points));
+    this.def = this.calculateSkill(this.def_exp, this.def_mult * this.calculateAscensionMult(this.def_asc_points));
+    this.dex = this.calculateSkill(this.dex_exp, this.dex_mult * this.calculateAscensionMult(this.dex_asc_points));
+    this.agi = this.calculateSkill(this.agi_exp, this.agi_mult * this.calculateAscensionMult(this.agi_asc_points));
+    this.cha = this.calculateSkill(this.cha_exp, this.cha_mult * this.calculateAscensionMult(this.cha_asc_points));
   }
 
   calculatePower(): number {
-    return (
-      (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95
-    );
+    return (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95;
   }
 
   assignToTask(taskName: string): boolean {
@@ -143,8 +119,7 @@ export class GangMember {
     if (statWeight <= 0) return 0;
     const territoryMult = Math.max(
       0.005,
-      Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) /
-        100,
+      Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100,
     );
     if (isNaN(territoryMult) || territoryMult <= 0) return 0;
     const respectMult = gang.getWantedPenalty();
@@ -165,15 +140,13 @@ export class GangMember {
     if (statWeight <= 0) return 0;
     const territoryMult = Math.max(
       0.005,
-      Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) /
-        100,
+      Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100,
     );
     if (isNaN(territoryMult) || territoryMult <= 0) return 0;
     if (task.baseWanted < 0) {
       return 0.4 * task.baseWanted * statWeight * territoryMult;
     }
-    const calc =
-      (7 * task.baseWanted) / Math.pow(3 * statWeight * territoryMult, 0.8);
+    const calc = (7 * task.baseWanted) / Math.pow(3 * statWeight * territoryMult, 0.8);
 
     // Put an arbitrary cap on this to prevent wanted level from rising too fast if the
     // denominator is very small. Might want to rethink formula later
@@ -193,11 +166,7 @@ export class GangMember {
 
     statWeight -= 3.2 * task.difficulty;
     if (statWeight <= 0) return 0;
-    const territoryMult = Math.max(
-      0.005,
-      Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) /
-        100,
-    );
+    const territoryMult = Math.max(0.005, Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100);
     if (isNaN(territoryMult) || territoryMult <= 0) return 0;
     const respectMult = gang.getWantedPenalty();
     return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
@@ -221,18 +190,12 @@ export class GangMember {
     const difficultyPerCycles = difficultyMult * numCycles;
     const weightDivisor = 1500;
     const expMult = this.expMult();
-    this.hack_exp +=
-      (task.hackWeight / weightDivisor) * difficultyPerCycles * expMult.hack;
-    this.str_exp +=
-      (task.strWeight / weightDivisor) * difficultyPerCycles * expMult.str;
-    this.def_exp +=
-      (task.defWeight / weightDivisor) * difficultyPerCycles * expMult.def;
-    this.dex_exp +=
-      (task.dexWeight / weightDivisor) * difficultyPerCycles * expMult.dex;
-    this.agi_exp +=
-      (task.agiWeight / weightDivisor) * difficultyPerCycles * expMult.agi;
-    this.cha_exp +=
-      (task.chaWeight / weightDivisor) * difficultyPerCycles * expMult.cha;
+    this.hack_exp += (task.hackWeight / weightDivisor) * difficultyPerCycles * expMult.hack;
+    this.str_exp += (task.strWeight / weightDivisor) * difficultyPerCycles * expMult.str;
+    this.def_exp += (task.defWeight / weightDivisor) * difficultyPerCycles * expMult.def;
+    this.dex_exp += (task.dexWeight / weightDivisor) * difficultyPerCycles * expMult.dex;
+    this.agi_exp += (task.agiWeight / weightDivisor) * difficultyPerCycles * expMult.agi;
+    this.cha_exp += (task.chaWeight / weightDivisor) * difficultyPerCycles * expMult.cha;
   }
 
   recordEarnedRespect(numCycles = 1, gang: IGang): void {
@@ -252,14 +215,7 @@ export class GangMember {
 
   canAscend(): boolean {
     const points = this.getGainedAscensionPoints();
-    return (
-      points.hack > 0 ||
-      points.str > 0 ||
-      points.def > 0 ||
-      points.dex > 0 ||
-      points.agi > 0 ||
-      points.cha > 0
-    );
+    return points.hack > 0 || points.str > 0 || points.def > 0 || points.dex > 0 || points.agi > 0 || points.cha > 0;
   }
 
   getAscensionResults(): IMults {
@@ -342,11 +298,7 @@ export class GangMember {
 
   buyUpgrade(upg: GangMemberUpgrade, player: IPlayer, gang: IGang): boolean {
     // Prevent purchasing of already-owned upgrades
-    if (
-      this.augmentations.includes(upg.name) ||
-      this.upgrades.includes(upg.name)
-    )
-      return false;
+    if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) return false;
 
     if (player.money.lt(gang.getUpgradeCost(upg))) return false;
     player.loseMoney(gang.getUpgradeCost(upg));

@@ -5,11 +5,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 import { createRandomString } from "../utils/helpers/createRandomString";
 import { createRandomIp } from "../../utils/IPAddress";
-import {
-  Generic_fromJSON,
-  Generic_toJSON,
-  Reviver,
-} from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export interface IConstructorParams {
   adminRights?: boolean;
@@ -62,9 +58,7 @@ export class Server extends BaseServer {
   // be increased using the grow() Netscript function
   serverGrowth = 1;
 
-  constructor(
-    params: IConstructorParams = { hostname: "", ip: createRandomIp() },
-  ) {
+  constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     super(params);
 
     // "hacknet-node-X" hostnames are reserved for Hacknet Servers
@@ -72,34 +66,26 @@ export class Server extends BaseServer {
       this.hostname = createRandomString(10);
     }
 
-    this.purchasedByPlayer =
-      params.purchasedByPlayer != null ? params.purchasedByPlayer : false;
+    this.purchasedByPlayer = params.purchasedByPlayer != null ? params.purchasedByPlayer : false;
 
     //RAM, CPU speed and Scripts
     this.maxRam = params.maxRam != null ? params.maxRam : 0; //GB
 
     /* Hacking information (only valid for "foreign" aka non-purchased servers) */
-    this.requiredHackingSkill =
-      params.requiredHackingSkill != null ? params.requiredHackingSkill : 1;
+    this.requiredHackingSkill = params.requiredHackingSkill != null ? params.requiredHackingSkill : 1;
     this.moneyAvailable =
-      params.moneyAvailable != null
-        ? params.moneyAvailable * BitNodeMultipliers.ServerStartingMoney
-        : 0;
-    this.moneyMax =
-      25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
+      params.moneyAvailable != null ? params.moneyAvailable * BitNodeMultipliers.ServerStartingMoney : 0;
+    this.moneyMax = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
 
     //Hack Difficulty is synonymous with server security. Base Difficulty = Starting difficulty
     this.hackDifficulty =
-      params.hackDifficulty != null
-        ? params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity
-        : 1;
+      params.hackDifficulty != null ? params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity : 1;
     this.baseDifficulty = this.hackDifficulty;
     this.minDifficulty = Math.max(1, Math.round(this.hackDifficulty / 3));
     this.serverGrowth = params.serverGrowth != null ? params.serverGrowth : 1; //Integer from 0 to 100. Affects money increase from grow()
 
     //Port information, required for porthacking servers to get admin rights
-    this.numOpenPortsRequired =
-      params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
+    this.numOpenPortsRequired = params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
   }
 
   /**

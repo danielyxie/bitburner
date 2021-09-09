@@ -19,9 +19,7 @@ export function RamButton(props: IProps): React.ReactElement {
 
   const homeComputer = props.p.getHomeComputer();
   if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
-    return (
-      <StdButtonPurchased style={btnStyle} text={"Upgrade 'home' RAM - MAX"} />
-    );
+    return <StdButtonPurchased style={btnStyle} text={"Upgrade 'home' RAM - MAX"} />;
   }
 
   const cost = props.p.getUpgradeHomeRamCost();
@@ -38,15 +36,11 @@ export function RamButton(props: IProps): React.ReactElement {
       style={btnStyle}
       text={
         <>
-          Upgrade 'home' RAM ({homeComputer.maxRam}GB -&gt;{" "}
-          {homeComputer.maxRam * 2}GB) - <Money money={cost} player={props.p} />
+          Upgrade 'home' RAM ({homeComputer.maxRam}GB -&gt; {homeComputer.maxRam * 2}GB) -{" "}
+          <Money money={cost} player={props.p} />
         </>
       }
-      tooltip={
-        <MathComponent
-          tex={String.raw`\large{cost = 3.2 \times 10^3 \times 1.58^{log_2{(ram)}}}`}
-        />
-      }
+      tooltip={<MathComponent tex={String.raw`\large{cost = 3.2 \times 10^3 \times 1.58^{log_2{(ram)}}}`} />}
     />
   );
 }

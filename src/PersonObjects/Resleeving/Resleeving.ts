@@ -15,10 +15,7 @@ import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
-import {
-  IPlayerOwnedAugmentation,
-  PlayerOwnedAugmentation,
-} from "../../Augmentation/PlayerOwnedAugmentation";
+import { IPlayerOwnedAugmentation, PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { getRandomInt } from "../../../utils/helpers/getRandomInt";
@@ -67,9 +64,7 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
 
     if (
       p.augmentations.filter((e: IPlayerOwnedAugmentation) => {
-        return (
-          e.name !== AugmentationNames.NeuroFluxGovernor && e.name === name
-        );
+        return e.name !== AugmentationNames.NeuroFluxGovernor && e.name === name;
       }).length >= 1
     ) {
       p.queuedAugmentations.splice(i, 1);
@@ -110,10 +105,7 @@ export function generateResleeves(): Resleeve[] {
       const randKey: string = augKeys[randIndex];
 
       // Forbidden augmentations
-      if (
-        randKey === AugmentationNames.TheRedPill ||
-        randKey === AugmentationNames.NeuroFluxGovernor
-      ) {
+      if (randKey === AugmentationNames.TheRedPill || randKey === AugmentationNames.NeuroFluxGovernor) {
         continue;
       }
 
