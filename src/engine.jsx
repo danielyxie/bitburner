@@ -19,8 +19,8 @@ import { createDevMenu, closeDevMenu } from "./DevMenu";
 import { Factions, initFactions } from "./Faction/Factions";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { FactionList } from "./Faction/ui/FactionList";
-import { displayGangContent } from "./Gang/Helpers";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
+import { Root as GangRoot } from "./Gang/ui/Root";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
   getHackingWorkRepGain,
@@ -390,7 +390,7 @@ const Engine = {
     if (Player.inGang()) {
       Engine.Display.gangContent.style.display = "block";
       routing.navigateTo(Page.Gang);
-      displayGangContent(this, Player.gang, Player);
+      ReactDOM.render(<GangRoot engine={this} gang={Player.gang} player={Player} />, Engine.Display.gangContent);
     } else {
       Engine.loadTerminalContent();
       routing.navigateTo(Page.Terminal);
@@ -406,11 +406,10 @@ const Engine = {
   },
 
   loadCorporationContent: function () {
-    if (Player.corporation instanceof Corporation) {
-      Engine.hideAllContent();
-      routing.navigateTo(Page.Corporation);
-      Player.corporation.createUI(Player);
-    }
+    if (!(Player.corporation instanceof Corporation)) return;
+    Engine.hideAllContent();
+    routing.navigateTo(Page.Corporation);
+    Player.corporation.createUI(Player);
   },
 
   loadBladeburnerContent: function () {
@@ -489,9 +488,6 @@ const Engine = {
     Engine.Display.cinematicTextContent.style.display = "none";
     Engine.Display.stockMarketContent.style.display = "none";
     Engine.Display.missionContent.style.display = "none";
-    if (document.getElementById("gang-container")) {
-      document.getElementById("gang-container").style.display = "none";
-    }
 
     if (Player.corporation instanceof Corporation) {
       Player.corporation.clearUI(Player);
@@ -1251,7 +1247,7 @@ const Engine = {
     Engine.Display.gangContent = document.getElementById("gang-container");
     Engine.Display.gangContent.style.display = "none";
 
-    Engine.Display.bladeburnerContent = document.getElementById("gang-container");
+    Engine.Display.bladeburnerContent = document.getElementById("bladeburner-container");
     Engine.Display.bladeburnerContent.style.display = "none";
 
     Engine.Display.missionContent = document.getElementById("mission-container");
