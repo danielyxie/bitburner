@@ -61,8 +61,7 @@ export function CityTabs(props: IProps): React.ReactElement {
   return (
     <>
       {Object.values(props.division.offices).map(
-        (office: OfficeSpace | 0) =>
-          office !== 0 && (
+        (office: OfficeSpace | 0) => office !== 0 && (
             <CityTab
               current={city === office.loc}
               key={office.loc}

@@ -1928,7 +1928,7 @@ export class Bladeburner implements IBladeburner {
 
       // Count increase for contracts/operations
       for (const contract of Object.values(this.contracts) as Contract[]) {
-        let growthF = Growths[contract.name];
+        const growthF = Growths[contract.name];
         if (growthF === undefined) throw new Error(`growth formula for action '${contract.name}' is undefined`);
         contract.count += (seconds * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
       }

@@ -737,8 +737,7 @@ class DevMenuComponent extends Component {
     }
 
     let sourceFiles = [];
-    validSFN.forEach((i) =>
-      sourceFiles.push(
+    validSFN.forEach((i) => sourceFiles.push(
         <tr key={"sf-" + i}>
           <td>
             <span className="text">SF-{i}:</span>

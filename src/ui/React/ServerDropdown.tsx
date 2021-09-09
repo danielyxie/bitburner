@@ -5,6 +5,7 @@
  */
 import React from "react";
 import { AllServers } from "../../Server/AllServers";
+import { Server } from "../../Server/Server";
 
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 
@@ -16,52 +17,50 @@ export const ServerType = {
   Purchased: 3, // Everything from Owned except home computer
 };
 
-export class ServerDropdown extends React.Component {
+interface IProps {
+  serverType: number;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  style: any;
+}
+
+export function ServerDropdown(props: IProps): React.ReactElement {
   /**
    * Checks if the server should be shown in the dropdown menu, based on the
    * 'serverType' property
    */
-  isValidServer(s) {
-    const type = this.props.serverType;
+  function isValidServer(s: Server | HacknetServer): boolean {
+    const purchased = s instanceof Server && s.purchasedByPlayer;
+    const type = props.serverType;
     switch (type) {
       case ServerType.All:
         return true;
       case ServerType.Foreign:
-        return s.hostname !== "home" && !s.purchasedByPlayer;
+        return s.hostname !== "home" && !purchased;
       case ServerType.Owned:
-        return s.purchasedByPlayer || s instanceof HacknetServer || s.hostname === "home";
+        return purchased || s instanceof HacknetServer || s.hostname === "home";
       case ServerType.Purchased:
-        return s.purchasedByPlayer || s instanceof HacknetServer;
+        return purchased || s instanceof HacknetServer;
       default:
         console.warn(`Invalid ServerType specified for ServerDropdown component: ${type}`);
         return false;
     }
   }
 
-  /**
-   * Given a Server object, creates a Option element
-   */
-  renderOption(s) {
-    return (
-      <option key={s.hostname} value={s.hostname}>
-        {s.hostname}
-      </option>
-    );
-  }
-
-  render() {
-    const servers = [];
-    for (const serverName in AllServers) {
-      const server = AllServers[serverName];
-      if (this.isValidServer(server)) {
-        servers.push(this.renderOption(server));
-      }
+  const servers = [];
+  for (const serverName in AllServers) {
+    const server = AllServers[serverName];
+    if (isValidServer(server)) {
+      servers.push(
+        <option key={server.hostname} value={server.hostname}>
+          {server.hostname}
+        </option>,
+      );
     }
-
-    return (
-      <select className={"dropdown"} onChange={this.props.onChange} style={this.props.style}>
-        {servers}
-      </select>
-    );
   }
+
+  return (
+    <select className={"dropdown"} onChange={props.onChange} style={props.style}>
+      {servers}
+    </select>
+  );
 }

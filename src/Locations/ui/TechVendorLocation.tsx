@@ -24,7 +24,7 @@ type IProps = {
 
 export function TechVendorLocation(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
-  function rerender() {
+  function rerender(): void {
     setRerender((old) => !old);
   }
   const btnStyle = { display: "block" };

@@ -424,7 +424,6 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
         )}
         <br />
 
-        {/* TODO: add flashing here */}
         <button className={`std-button${shouldFlash() ? " flashing-button" : ""}`} onClick={openSellMaterialPopup}>
           {sellButtonText}
         </button>
@@ -481,17 +480,6 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
       });
     }
 
-    // Industry material Requirements
-    let generalReqsText = "This Industry uses [" + Object.keys(props.division.reqMats).join(", ") + "] in order to ";
-    if (props.division.prodMats.length > 0) {
-      generalReqsText += "produce [" + props.division.prodMats.join(", ") + "] ";
-      if (props.division.makesProducts) {
-        generalReqsText += " and " + props.division.getProductDescriptionText();
-      }
-    } else if (props.division.makesProducts) {
-      generalReqsText += props.division.getProductDescriptionText() + ".";
-    }
-
     const ratioLines = [];
     for (const matName in props.division.reqMats) {
       if (props.division.reqMats.hasOwnProperty(matName)) {
@@ -502,16 +490,6 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
           </div>,
         );
       }
-    }
-
-    let createdItemsText = "in order to create ";
-    if (props.division.prodMats.length > 0) {
-      createdItemsText += "one of each produced Material (" + props.division.prodMats.join(", ") + ") ";
-      if (props.division.makesProducts) {
-        createdItemsText += "or to create one of its Products";
-      }
-    } else if (props.division.makesProducts) {
-      createdItemsText += "one of its Products";
     }
 
     // Current State:

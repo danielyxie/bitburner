@@ -351,7 +351,7 @@ function NetscriptFunctions(workerScript) {
       throw makeRuntimeErrorMsg(callingFn, "Index specified for Hacknet Node is out-of-bounds: " + i);
     }
 
-    if (hasHacknetServers()) {
+    if (hasHacknetServers(Player)) {
       const hserver = AllServers[Player.hacknetNodes[i]];
       if (hserver == null) {
         throw makeRuntimeErrorMsg(
@@ -719,24 +719,24 @@ function NetscriptFunctions(workerScript) {
         return Player.hacknetNodes.length;
       },
       maxNumNodes: function () {
-        if (hasHacknetServers()) {
+        if (hasHacknetServers(Player)) {
           return HacknetServerConstants.MaxServers;
         }
         return Infinity;
       },
       purchaseNode: function () {
-        return purchaseHacknet();
+        return purchaseHacknet(Player);
       },
       getPurchaseNodeCost: function () {
-        if (hasHacknetServers()) {
-          return getCostOfNextHacknetServer();
+        if (hasHacknetServers(Player)) {
+          return getCostOfNextHacknetServer(Player);
         } else {
-          return getCostOfNextHacknetNode();
+          return getCostOfNextHacknetNode(Player);
         }
       },
       getNodeStats: function (i) {
         const node = getHacknetNode(i, "getNodeStats");
-        const hasUpgraded = hasHacknetServers();
+        const hasUpgraded = hasHacknetServers(Player);
         const res = {
           name: hasUpgraded ? node.hostname : node.name,
           level: node.level,
@@ -756,24 +756,24 @@ function NetscriptFunctions(workerScript) {
       },
       upgradeLevel: function (i, n) {
         const node = getHacknetNode(i, "upgradeLevel");
-        return purchaseLevelUpgrade(node, n);
+        return purchaseLevelUpgrade(Player, node, n);
       },
       upgradeRam: function (i, n) {
         const node = getHacknetNode(i, "upgradeRam");
-        return purchaseRamUpgrade(node, n);
+        return purchaseRamUpgrade(Player, node, n);
       },
       upgradeCore: function (i, n) {
         const node = getHacknetNode(i, "upgradeCore");
-        return purchaseCoreUpgrade(node, n);
+        return purchaseCoreUpgrade(Player, node, n);
       },
       upgradeCache: function (i, n) {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return false;
         }
         const node = getHacknetNode(i, "upgradeCache");
-        const res = purchaseCacheUpgrade(node, n);
+        const res = purchaseCacheUpgrade(Player, node, n);
         if (res) {
-          updateHashManagerCapacity();
+          updateHashManagerCapacity(Player);
         }
         return res;
       },
@@ -790,36 +790,36 @@ function NetscriptFunctions(workerScript) {
         return node.calculateCoreUpgradeCost(n, Player.hacknet_node_core_cost_mult);
       },
       getCacheUpgradeCost: function (i, n) {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return Infinity;
         }
         const node = getHacknetNode(i, "upgradeCache");
         return node.calculateCacheUpgradeCost(n);
       },
       numHashes: function () {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return 0;
         }
         return Player.hashManager.hashes;
       },
       hashCapacity: function () {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return 0;
         }
         return Player.hashManager.capacity;
       },
       hashCost: function (upgName) {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return Infinity;
         }
 
         return Player.hashManager.getUpgradeCost(upgName);
       },
       spendHashes: function (upgName, upgTarget) {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return false;
         }
-        return purchaseHashUpgrade(upgName, upgTarget);
+        return purchaseHashUpgrade(Player, upgName, upgTarget);
       },
       getHashUpgradeLevel: function (upgName) {
         const level = Player.hashManager.upgrades[upgName];
@@ -829,13 +829,13 @@ function NetscriptFunctions(workerScript) {
         return level;
       },
       getStudyMult: function () {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return false;
         }
         return Player.hashManager.getStudyMult();
       },
       getTrainingMult: function () {
-        if (!hasHacknetServers()) {
+        if (!hasHacknetServers(Player)) {
           return false;
         }
         return Player.hashManager.getTrainingMult();

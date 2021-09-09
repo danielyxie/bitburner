@@ -28,12 +28,8 @@ import {
   getFactionFieldWorkRepGain,
 } from "./PersonObjects/formulas/reputation";
 import { FconfSettings } from "./Fconf/FconfSettings";
-import {
-  hasHacknetServers,
-  renderHacknetNodesUI,
-  clearHacknetNodesUI,
-  processHacknetEarnings,
-} from "./Hacknet/HacknetHelpers";
+import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelpers";
+import { HacknetRoot } from "./Hacknet/ui/HacknetRoot";
 import { iTutorialStart } from "./InteractiveTutorial";
 import { LocationName } from "./Locations/data/LocationNames";
 import { LocationRoot } from "./Locations/ui/Root";
@@ -251,7 +247,7 @@ const Engine = {
     Engine.hideAllContent();
     Engine.Display.hacknetNodesContent.style.display = "block";
     routing.navigateTo(Page.HacknetNodes);
-    renderHacknetNodesUI();
+    ReactDOM.render(<HacknetRoot player={Player} />, Engine.Display.hacknetNodesContent);
     MainMenuLinks.HacknetNodes.classList.add("active");
   },
 
@@ -462,7 +458,9 @@ const Engine = {
     Engine.Display.infiltrationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.infiltrationContent);
 
-    clearHacknetNodesUI();
+    Engine.Display.hacknetNodesContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.hacknetNodesContent);
+
     Engine.Display.createProgramContent.style.display = "none";
 
     Engine.Display.factionsContent.style.display = "none";
@@ -670,7 +668,7 @@ const Engine = {
     updateOnlineScriptTimes(numCycles);
 
     // Hacknet Nodes
-    processHacknetEarnings(numCycles);
+    processHacknetEarnings(Player, numCycles);
   },
 
   /**
@@ -737,9 +735,7 @@ const Engine = {
 
     if (Engine.Counters.updateDisplays <= 0) {
       Engine.displayCharacterOverviewInfo();
-      if (routing.isOn(Page.HacknetNodes)) {
-        renderHacknetNodesUI();
-      } else if (routing.isOn(Page.CreateProgram)) {
+      if (routing.isOn(Page.CreateProgram)) {
         displayCreateProgramContent();
       } else if (routing.isOn(Page.Sleeves)) {
         updateSleevesPage();
@@ -1020,8 +1016,8 @@ const Engine = {
       }
 
       // Hacknet Nodes offline progress
-      var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
-      const hacknetProdInfo = hasHacknetServers() ? (
+      var offlineProductionFromHacknetNodes = processHacknetEarnings(Player, numCyclesOffline);
+      const hacknetProdInfo = hasHacknetServers(Player) ? (
         <>{Hashes(offlineProductionFromHacknetNodes)} hashes</>
       ) : (
         <Money money={offlineProductionFromHacknetNodes} />

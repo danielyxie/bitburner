@@ -339,7 +339,7 @@ function prestigeSourceFile(flume) {
     hserver.cache = 5;
     hserver.updateHashRate(Player.hacknet_node_money_mult);
     hserver.updateHashCapacity();
-    updateHashManagerCapacity();
+    updateHashManagerCapacity(Player);
   }
 
   // Refresh Main Menu (the 'World' menu, specifically)

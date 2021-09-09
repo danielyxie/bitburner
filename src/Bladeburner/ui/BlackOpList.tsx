@@ -22,8 +22,7 @@ export function BlackOpList(props: IProps): React.ReactElement {
   });
 
   blackops = blackops.filter(
-    (blackop: BlackOperation, i: number) =>
-      !(
+    (blackop: BlackOperation, i: number) => !(
         props.bladeburner.blackops[blackops[i].name] == null &&
         i !== 0 &&
         props.bladeburner.blackops[blackops[i - 1].name] == null

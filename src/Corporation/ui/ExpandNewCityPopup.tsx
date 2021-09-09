@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { IIndustry } from "../IIndustry";
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { CorporationConstants } from "../data/Constants";
 import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../../utils/DialogBox";

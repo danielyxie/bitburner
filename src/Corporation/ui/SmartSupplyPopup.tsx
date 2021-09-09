@@ -5,7 +5,6 @@ import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
 import { SetSmartSupply } from "../Actions";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { isRelevantMaterial } from "./Helpers";
 import { Material } from "../Material";
 
 interface ILeftoverProps {
@@ -43,7 +42,7 @@ interface IProps {
 
 export function SmartSupplyPopup(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
-  function rerender() {
+  function rerender(): void {
     setRerender((old) => !old);
   }
   // Smart Supply Checkbox

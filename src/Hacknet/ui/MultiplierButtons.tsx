@@ -5,9 +5,16 @@
  */
 import React from "react";
 
-import { PurchaseMultipliers } from "./Root";
+import { PurchaseMultipliers } from "../data/Constants";
 
-function MultiplierButton(props) {
+interface IMultiplierProps {
+  className: string;
+  key: string;
+  onClick: () => void;
+  text: string;
+}
+
+function MultiplierButton(props: IMultiplierProps): React.ReactElement {
   return (
     <button className={props.className} onClick={props.onClick}>
       {props.text}
@@ -15,7 +22,12 @@ function MultiplierButton(props) {
   );
 }
 
-export function MultiplierButtons(props) {
+interface IProps {
+  purchaseMultiplier: number | string;
+  onClicks: (() => void)[];
+}
+
+export function MultiplierButtons(props: IProps): React.ReactElement {
   if (props.purchaseMultiplier == null) {
     throw new Error(`MultiplierButtons constructed without required props`);
   }

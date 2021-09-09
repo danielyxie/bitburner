@@ -191,4 +191,5 @@ export interface IPlayer {
   getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
   quitJob(company: string): void;
+  createHacknetServer(): void;
 }

@@ -157,8 +157,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       d += "&nbsp;&nbsp;&nbsp;&nbsp;[\n";
       d += n
         .map(
-          (line: number[]) =>
-            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[" +
+          (line: number[]) => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[" +
             line.map((x: number) => `${x}`.padStart(2, " ")).join(",") +
             "]",
         )

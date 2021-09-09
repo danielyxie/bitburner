@@ -7,14 +7,19 @@
 import React from "react";
 
 import { hasHacknetServers } from "../HacknetHelpers";
-import { Player } from "../../Player";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { HashRate } from "../../ui/React/HashRate";
 import { Hashes } from "../../ui/React/Hashes";
 
-export function PlayerInfo(props) {
-  const hasServers = hasHacknetServers();
+interface IProps {
+  totalProduction: number;
+  player: IPlayer;
+}
+
+export function PlayerInfo(props: IProps): React.ReactElement {
+  const hasServers = hasHacknetServers(props.player);
 
   let prod;
   if (hasServers) {
@@ -26,13 +31,13 @@ export function PlayerInfo(props) {
   return (
     <p id={"hacknet-nodes-money"}>
       <span>Money: </span>
-      <Money money={Player.money.toNumber()} />
+      <Money money={props.player.money.toNumber()} />
       <br />
 
       {hasServers && (
         <>
           <span>
-            Hashes: {Hashes(Player.hashManager.hashes)} / {Hashes(Player.hashManager.capacity)}
+            Hashes: {Hashes(props.player.hashManager.hashes)} / {Hashes(props.player.hashManager.capacity)}
           </span>
           <br />
         </>

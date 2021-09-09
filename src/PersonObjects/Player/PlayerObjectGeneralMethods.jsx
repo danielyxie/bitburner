@@ -2518,7 +2518,6 @@ export function checkForFactionInvitations() {
 
   //BitRunners
   var bitrunnersFac = Factions["BitRunners"];
-  var homeComp = this.getHomeComputer();
   var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
   if (bitrunnersServer == null) {
     console.error("Could not find BitRunners Server");
@@ -2743,7 +2742,7 @@ export function checkForFactionInvitations() {
   var totalHacknetCores = 0;
   var totalHacknetLevels = 0;
   for (let i = 0; i < this.hacknetNodes.length; ++i) {
-    if (hasHacknetServers()) {
+    if (hasHacknetServers(this)) {
       const hserver = AllServers[this.hacknetNodes[i]];
       if (hserver) {
         totalHacknetLevels += hserver.level;

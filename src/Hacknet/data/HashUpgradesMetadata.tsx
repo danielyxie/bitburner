@@ -54,7 +54,7 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
       "Use hashes to improve the experience earned when studying at a university by 20%. " +
       "This effect persists until you install Augmentations",
     name: "Improve Studying",
-    //effectText: (level: number) => JSX.Element | null = <>Improves studying by ${level*20}%</>,
+    effectText: (level: number): JSX.Element | null => <>Improves studying by {level * 20}%</>,
     value: 20, // Improves studying by value%
   },
   {
@@ -63,7 +63,7 @@ export const HashUpgradesMetadata: IConstructorParams[] = [
       "Use hashes to improve the experience earned when training at the gym by 20%. This effect " +
       "persists until you install Augmentations",
     name: "Improve Gym Training",
-    effectText: (level: number): JSX.Element | null => <>Improves training by ${level * 20}%</>,
+    effectText: (level: number): JSX.Element | null => <>Improves training by {level * 20}%</>,
     value: 20, // Improves training by value%
   },
   {

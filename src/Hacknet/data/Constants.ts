@@ -35,6 +35,19 @@ export const HacknetNodeConstants: {
   MaxCores: 16,
 };
 
+export const PurchaseMultipliers: {
+  [key: string]: number | string | undefined;
+  x1: number;
+  x5: number;
+  x10: number;
+  MAX: string;
+} = {
+  x1: 1,
+  x5: 5,
+  x10: 10,
+  MAX: "MAX",
+};
+
 export const HacknetServerConstants: {
   // Constants for Hacknet Server stats/production
   HashesPerLevel: number;

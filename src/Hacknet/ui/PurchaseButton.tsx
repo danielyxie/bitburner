@@ -7,17 +7,19 @@ import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers
 import { Player } from "../../Player";
 import { Money } from "../../ui/React/Money";
 
-export function PurchaseButton(props) {
-  if (props.multiplier == null || props.onClick == null) {
-    throw new Error(`PurchaseButton constructed without required props`);
-  }
+interface IProps {
+  multiplier: number | string;
+  onClick: () => void;
+  cost: number;
+}
 
+export function PurchaseButton(props: IProps): React.ReactElement {
   const cost = props.cost;
   let className = Player.canAfford(cost) ? "std-button" : "std-button-disabled";
   let text;
-  let style = null;
-  if (hasHacknetServers()) {
-    if (hasMaxNumberHacknetServers()) {
+  let style = {};
+  if (hasHacknetServers(Player)) {
+    if (hasMaxNumberHacknetServers(Player)) {
       className = "std-button-disabled";
       text = <>Hacknet Server limit reached</>;
       style = { color: "red" };

@@ -17,8 +17,7 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
   const allIndustries = Object.keys(Industries).sort();
   const possibleIndustries = allIndustries
     .filter(
-      (industryType: string) =>
-        props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
+      (industryType: string) => props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
     )
     .sort();
   const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : "");
