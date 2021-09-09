@@ -58,7 +58,6 @@ import { displayMilestonesContent } from "./Milestones/MilestoneHelpers";
 import { Terminal, postNetburnerText } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import { clearSleevesPage, createSleevesPage, updateSleevesPage } from "./PersonObjects/Sleeve/SleeveUI";
-import { clearResleevesPage, createResleevesPage } from "./PersonObjects/Resleeving/ResleevingUI";
 
 import { createStatusText } from "./ui/createStatusText";
 import { CharacterInfo } from "./ui/CharacterInfo";

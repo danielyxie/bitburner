@@ -2,14 +2,11 @@
  * Module for handling the Sleeve UI
  */
 import React from "react";
-import { createSleevePurchaseAugsPopup } from "./SleeveAugmentationsUI";
 import { Sleeve } from "./Sleeve";
 import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 import { SleeveFaq } from "./data/SleeveFaq";
 
 import { IPlayer } from "../IPlayer";
-
-import { CONSTANTS } from "../../Constants";
 
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
@@ -17,7 +14,6 @@ import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 
 import { Crime } from "../../Crime/Crime";
 import { Crimes } from "../../Crime/Crimes";
-import { Cities } from "../../Locations/Cities";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 
@@ -32,13 +28,13 @@ import { exceptionAlert } from "../../../utils/helpers/exceptionAlert";
 import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
-import { createPopup } from "../../../utils/uiHelpers/createPopup";
-import { createPopupCloseButton } from "../../../utils/uiHelpers/createPopupCloseButton";
+import { createPopup } from "../../ui/React/createPopup";
 import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
-import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
+import { SleeveAugmentationsPopup } from "./ui/SleeveAugmentationsPopup";
+import { TravelPopup } from "./ui/TravelPopup";
 import { EarningsTableElement } from "./ui/EarningsTableElement";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
@@ -47,7 +43,6 @@ import { StatsElement } from "./ui/StatsElement";
 import { MoreStatsContent } from "./ui/MoreStatsContent";
 import { MoreEarningsContent } from "./ui/MoreEarningsContent";
 import * as ReactDOM from "react-dom";
-import { renderToStaticMarkup } from "react-dom/server";
 
 // Object that keeps track of all DOM elements for the UI for a single Sleeve
 interface ISleeveUIElems {
@@ -226,59 +221,20 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     class: "std-button",
     innerText: "More Stats",
     clickListener: () => {
-      dialogBoxCreate(MoreStatsContent(sleeve));
+      dialogBoxCreate(<MoreStatsContent sleeve={sleeve} />);
     },
   });
   elems.travelButton = createElement("button", {
     class: "std-button",
     innerText: "Travel",
     clickListener: () => {
-      if (playerRef === null) return;
+      if (playerRef == null) throw new Error("playerRef is null in purchaseAugsButton.click()");
       const popupId = "sleeve-travel-popup";
-      const popupArguments: HTMLElement[] = [];
-      popupArguments.push(createPopupCloseButton(popupId, { class: "std-button" }));
-      popupArguments.push(
-        createElement("p", {
-          innerHTML:
-            "Have this sleeve travel to a different city. This affects " +
-            "the gyms and universities at which this sleeve can study. " +
-            `Traveling to a different city costs ${renderToStaticMarkup(
-              <Money money={CONSTANTS.TravelCost} player={playerRef} />,
-            )}. ` +
-            "It will also CANCEL the sleeve's current task (setting it to idle)",
-        }),
-      );
-      for (const cityName in Cities) {
-        if (sleeve.city === cityName) {
-          continue;
-        }
-        (function (sleeve, cityName) {
-          popupArguments.push(
-            createElement("div", {
-              // Reusing this css class. It adds a border and makes it so that
-              // the background color changes when you hover
-              class: "cmpy-mgmt-find-employee-option",
-              innerText: cityName,
-              clickListener: () => {
-                if (playerRef == null) throw new Error("playerRef is null in popupArguments.click()");
-                if (!playerRef.canAfford(CONSTANTS.TravelCost)) {
-                  dialogBoxCreate("You cannot afford to have this sleeve travel to another city", false);
-                  return false;
-                }
-                sleeve.city = cityName as CityName;
-                playerRef.loseMoney(CONSTANTS.TravelCost);
-                sleeve.resetTaskStatus();
-                removeElementById(popupId);
-                updateSleeveUi(sleeve, elems);
-                updateSleeveTaskSelector(sleeve, elems, allSleeves);
-                return false;
-              },
-            }),
-          );
-        })(sleeve, cityName);
-      }
-
-      createPopup(popupId, popupArguments);
+      createPopup(popupId, TravelPopup, {
+        popupId: popupId,
+        sleeve: sleeve,
+        player: playerRef,
+      });
     },
   });
   elems.purchaseAugsButton = createElement("button", {
@@ -287,7 +243,11 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     innerText: "Manage Augmentations",
     clickListener: () => {
       if (playerRef == null) throw new Error("playerRef is null in purchaseAugsButton.click()");
-      createSleevePurchaseAugsPopup(sleeve, playerRef);
+      const popupId = "sleeve-augmentation-popup";
+      createPopup(popupId, SleeveAugmentationsPopup, {
+        sleeve: sleeve,
+        player: playerRef,
+      });
     },
   });
   elems.statsPanel.appendChild(elems.stats);
@@ -350,7 +310,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     class: "std-button",
     innerText: "More Earnings Info",
     clickListener: () => {
-      dialogBoxCreate(MoreEarningsContent(sleeve));
+      dialogBoxCreate(<MoreEarningsContent sleeve={sleeve} />);
     },
   });
 

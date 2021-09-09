@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IPlayer } from "../../IPlayer";
 import { Resleeve } from "../Resleeve";
 import { Augmentations } from "../../../Augmentation/Augmentations";
-import { generateResleeves, purchaseResleeve } from "../Resleeving";
+import { purchaseResleeve } from "../Resleeving";
 import { Money } from "../../../ui/React/Money";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
