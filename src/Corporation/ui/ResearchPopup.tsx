@@ -15,6 +15,8 @@ interface IProps {
 
 // Create the Research Tree UI for this Industry
 export function ResearchPopup(props: IProps): React.ReactElement {
+  const researchTree = IndustryResearchTrees[props.industry.type];
+  if (researchTree === undefined) return <></>;
   useEffect(() => {
     {
       const boxContent = document.getElementById(`${props.popupId}-content`);
@@ -22,8 +24,6 @@ export function ResearchPopup(props: IProps): React.ReactElement {
         boxContent.style.minHeight = "80vh";
       }
     }
-    const researchTree = IndustryResearchTrees[props.industry.type];
-    if (researchTree === undefined) return;
 
     // Get the tree's markup (i.e. config) for Treant
     const markup = researchTree.createTreantMarkup();
@@ -80,33 +80,23 @@ export function ResearchPopup(props: IProps): React.ReactElement {
         }
       });
     }
-
-    const boxContent = document.getElementById(`${props.popupId}-content`);
-    if (boxContent != null) {
-      // Add information about multipliers from research at the bottom of the popup
-      //appendLineBreaks(boxContent, 2);
-      boxContent.appendChild(
-        createElement("pre", {
-          display: "block",
-          innerText:
-            `Multipliers from research:\n` +
-            ` * Advertising Multiplier: x${researchTree.getAdvertisingMultiplier()}\n` +
-            ` * Employee Charisma Multiplier: x${researchTree.getEmployeeChaMultiplier()}\n` +
-            ` * Employee Creativity Multiplier: x${researchTree.getEmployeeCreMultiplier()}\n` +
-            ` * Employee Efficiency Multiplier: x${researchTree.getEmployeeEffMultiplier()}\n` +
-            ` * Employee Intelligence Multiplier: x${researchTree.getEmployeeIntMultiplier()}\n` +
-            ` * Production Multiplier: x${researchTree.getProductionMultiplier()}\n` +
-            ` * Sales Multiplier: x${researchTree.getSalesMultiplier()}\n` +
-            ` * Scientific Research Multiplier: x${researchTree.getScientificResearchMultiplier()}\n` +
-            ` * Storage Multiplier: x${researchTree.getStorageMultiplier()}`,
-        }),
-      );
-    }
   });
 
   return (
     <div id={props.popupId}>
       <div id={props.popupId + "outer-box"}></div>
+      <div>
+        Multipliers from research:
+        <br />* Advertising Multiplier: x{researchTree.getAdvertisingMultiplier()}
+        <br />* Employee Charisma Multiplier: x{researchTree.getEmployeeChaMultiplier()}
+        <br />* Employee Creativity Multiplier: x{researchTree.getEmployeeCreMultiplier()}
+        <br />* Employee Efficiency Multiplier: x{researchTree.getEmployeeEffMultiplier()}
+        <br />* Employee Intelligence Multiplier: x{researchTree.getEmployeeIntMultiplier()}
+        <br />* Production Multiplier: x{researchTree.getProductionMultiplier()}
+        <br />* Sales Multiplier: x{researchTree.getSalesMultiplier()}
+        <br />* Scientific Research Multiplier: x{researchTree.getScientificResearchMultiplier()}
+        <br />* Storage Multiplier: x{researchTree.getStorageMultiplier()}
+      </div>
     </div>
   );
 }

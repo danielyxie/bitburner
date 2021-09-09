@@ -5,7 +5,7 @@ import { IEngine } from "../IEngine";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-let container: HTMLElement = document.createElement("div");
+let container: HTMLElement;
 
 (function () {
   function setContainer(): void {

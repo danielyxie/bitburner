@@ -137,16 +137,4 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
       </button>
     </>
   );
-
-  // let issueBtn, newSharesInput;
-  // const dynamicText = createElement("p", {
-  //     display: "block",
-  // });
-
-  // function updateDynamicText(corp) {
-
-  // }
-
-  // createPopup(popupId, [descText, dynamicText, newSharesInput, issueBtn, cancelBtn]);
-  // newSharesInput.focus();
 }
