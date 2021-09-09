@@ -3,7 +3,6 @@ import { KEY } from "../../../utils/helpers/keyCodes";
 
 import { CodingContract, CodingContractType, CodingContractTypes } from "../../CodingContracts";
 import { ClickableTag, CopyableText } from "./CopyableText";
-import { PopupCloseButton } from "./PopupCloseButton";
 
 type IProps = {
   c: CodingContract;
@@ -28,9 +27,6 @@ export function CodingContractPopup(props: IProps): React.ReactElement {
     if (event.keyCode === KEY.ENTER && value !== "") {
       event.preventDefault();
       props.onAttempt(answer);
-    } else if (event.keyCode === KEY.ESC) {
-      event.preventDefault();
-      props.onClose();
     }
   }
 
@@ -59,8 +55,9 @@ export function CodingContractPopup(props: IProps): React.ReactElement {
         onChange={onChange}
         onKeyDown={onKeyDown}
       />
-      <PopupCloseButton popup={props.popupId} onClose={() => props.onAttempt(answer)} text={"Solve"} />
-      <PopupCloseButton popup={props.popupId} onClose={props.onClose} text={"Close"} />
+      <button className={"std-button"} onClick={() => props.onAttempt(answer)}>
+        Solve
+      </button>
     </div>
   );
 }

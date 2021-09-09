@@ -9,12 +9,12 @@ interface IProps<T> {
   content: (props: T) => React.ReactElement;
   id: string;
   props: T;
-  removePopup: (id: string) => void;
+  removePopup: () => void;
 }
 
 export function Popup<T>(props: IProps<T>): React.ReactElement {
   function keyDown(event: KeyboardEvent): void {
-    if (event.key === "Escape") props.removePopup(props.id);
+    if (event.key === "Escape") props.removePopup();
   }
 
   useEffect(() => {

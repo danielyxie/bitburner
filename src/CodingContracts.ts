@@ -168,22 +168,28 @@ export class CodingContract {
   async prompt(): Promise<CodingContractResult> {
     const popupId = `coding-contract-prompt-popup-${this.fn}`;
     return new Promise<CodingContractResult>((resolve) => {
-      createPopup(popupId, CodingContractPopup, {
-        c: this,
-        popupId: popupId,
-        onClose: () => {
-          resolve(CodingContractResult.Cancelled);
-          removePopup(popupId);
+      createPopup(
+        popupId,
+        CodingContractPopup,
+        {
+          c: this,
+          popupId: popupId,
+          onClose: () => {
+            resolve(CodingContractResult.Cancelled);
+            removePopup(popupId);
+          },
+          onAttempt: (val: string) => {
+            console.error("attempting");
+            if (this.isSolution(val)) {
+              resolve(CodingContractResult.Success);
+            } else {
+              resolve(CodingContractResult.Failure);
+            }
+            removePopup(popupId);
+          },
         },
-        onAttempt: (val: string) => {
-          if (this.isSolution(val)) {
-            resolve(CodingContractResult.Success);
-          } else {
-            resolve(CodingContractResult.Failure);
-          }
-          removePopup(popupId);
-        },
-      });
+        () => resolve(CodingContractResult.Cancelled),
+      );
     });
   }
 

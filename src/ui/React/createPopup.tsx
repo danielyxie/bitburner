@@ -39,15 +39,17 @@ export function createPopup<T>(
   id: string,
   rootComponent: (props: T) => React.ReactElement,
   props: T,
+  onClose?: () => void,
 ): HTMLElement | null {
   let container = document.getElementById(id);
   if (container == null) {
-    function onClick(this: HTMLElement, event: MouseEvent): any {
+    function onClick(this: HTMLElement, event: MouseEvent): void {
       if (!event.srcElement) return;
       if (!(event.srcElement instanceof HTMLElement)) return;
       const clickedId = (event.srcElement as HTMLElement).id;
       if (clickedId !== id) return;
       removePopup(id);
+      if (onClose) onClose();
     }
     const backgroundColor = deepestPopupId === "" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)";
     container = createElement("div", {
@@ -62,7 +64,18 @@ export function createPopup<T>(
   }
 
   if (deepestPopupId === "") deepestPopupId = id;
-  ReactDOM.render(<Popup content={rootComponent} id={id} props={props} removePopup={removePopup} />, container);
+  ReactDOM.render(
+    <Popup
+      content={rootComponent}
+      id={id}
+      props={props}
+      removePopup={() => {
+        removePopup(id);
+        if (onClose) onClose();
+      }}
+    />,
+    container,
+  );
 
   return container;
 }

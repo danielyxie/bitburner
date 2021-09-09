@@ -85,7 +85,7 @@ $(document).keydown(function (event) {
   // Terminal
   if (routing.isOn(Page.Terminal)) {
     var terminalInput = document.getElementById("terminal-input-text-box");
-    if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {
+    if (terminalInput != null && !event.ctrlKey && !event.shiftKey && !Terminal.contractOpen) {
       terminalInput.focus();
     }
 
@@ -302,7 +302,7 @@ $(document).keydown(function (e) {
       terminalCtrlPressed = true;
     } else if (e.shiftKey) {
       shiftKeyPressed = true;
-    } else if (terminalCtrlPressed || shiftKeyPressed) {
+    } else if (terminalCtrlPressed || shiftKeyPressed || Terminal.contractOpen) {
       // Don't focus
     } else {
       var inputTextBox = document.getElementById("terminal-input-text-box");
@@ -337,6 +337,9 @@ let Terminal = {
 
   commandHistory: [],
   commandHistoryIndex: 0,
+
+  // True if a Coding Contract prompt is opened
+  contractOpen: false,
 
   // Full Path of current directory
   // Excludes the trailing forward slash
@@ -2571,12 +2574,18 @@ let Terminal = {
   },
 
   runContract: async function (contractName) {
+    // There's already an opened contract
+    if (Terminal.contractOpen) {
+      return post("ERROR: There's already a Coding Contract in Progress");
+    }
+
     const serv = Player.getCurrentServer();
     const contract = serv.getContract(contractName);
     if (contract == null) {
       return post("ERROR: No such contract");
     }
 
+    Terminal.contractOpen = true;
     const res = await contract.prompt();
 
     switch (res) {
@@ -2603,6 +2612,7 @@ let Terminal = {
         post("Contract cancelled");
         break;
     }
+    Terminal.contractOpen = false;
   },
 };
 
