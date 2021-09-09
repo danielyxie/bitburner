@@ -95,9 +95,13 @@ export function IndustryOverview(props: IProps): React.ReactElement {
       });
     }
 
+    function shouldFlash(): boolean {
+      return Object.keys(props.division.products).length === 0;
+    }
+
     return (
       <button
-        className={className}
+        className={className + (shouldFlash() ? " flashing-button" : "")}
         onClick={openMakeProductPopup}
         style={buttonStyle}
         disabled={props.corp.funds.lt(0)}

@@ -57,7 +57,7 @@ export function SmartSupplyPopup(props: IProps): React.ReactElement {
   const mats = [];
   for (const matName in props.warehouse.materials) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
-    if (!isRelevantMaterial(matName, props.division)) continue;
+    if (!Object.keys(props.division.reqMats).includes(matName)) continue;
     mats.push(<Leftover key={matName} warehouse={props.warehouse} matName={matName} />);
   }
 

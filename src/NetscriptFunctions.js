@@ -4479,44 +4479,44 @@ function NetscriptFunctions(workerScript) {
       },
     }, // End Bladeburner
 
-    corporation: {
-      expandIndustry: function (industryName, divisionName) {
-        NewIndustry(Player.corporation, industryName, divisionName);
-      },
-      expandCity: function (divisionName, cityName) {
-        const division = getDivision(divisionName);
-        NewCity(Player.corporation, division, cityName);
-      },
-      unlockUpgrade: function (upgradeName) {
-        const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
-        if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
-        UnlockUpgrade(Player.corporation, upgrade);
-      },
-      levelUpgrade: function (upgradeName) {
-        const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
-        if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
-        LevelUpgrade(Player.corporation, upgrade);
-      },
-      issueDividends: function (percent) {
-        IssueDividends(Player.corporation, percent);
-      },
-      sellMaterial: function (divisionName, cityName, materialName, amt, price) {
-        const material = getMaterial(divisionName, cityName, materialName);
-        SellMaterial(material, amt, price);
-      },
-      sellProduct: function (divisionName, cityName, productName, amt, price, all) {
-        const product = getProduct(divisionName, productName);
-        SellProduct(product, cityName, amt, price, all);
-      },
-      setSmartSupply: function (divisionName, cityName, enabled) {
-        const warehouse = getWarehouse(divisionName, cityName);
-        SetSmartSupply(warehouse, enabled);
-      },
-      buyMaterial: function (divisionName, cityName, materialName, amt) {
-        const material = getMaterial(divisionName, cityName, materialName);
-        BuyMaterial(material, amt);
-      },
-    }, // End Corporation API
+    // corporation: {
+    //   expandIndustry: function (industryName, divisionName) {
+    //     NewIndustry(Player.corporation, industryName, divisionName);
+    //   },
+    //   expandCity: function (divisionName, cityName) {
+    //     const division = getDivision(divisionName);
+    //     NewCity(Player.corporation, division, cityName);
+    //   },
+    //   unlockUpgrade: function (upgradeName) {
+    //     const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
+    //     if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
+    //     UnlockUpgrade(Player.corporation, upgrade);
+    //   },
+    //   levelUpgrade: function (upgradeName) {
+    //     const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
+    //     if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
+    //     LevelUpgrade(Player.corporation, upgrade);
+    //   },
+    //   issueDividends: function (percent) {
+    //     IssueDividends(Player.corporation, percent);
+    //   },
+    //   sellMaterial: function (divisionName, cityName, materialName, amt, price) {
+    //     const material = getMaterial(divisionName, cityName, materialName);
+    //     SellMaterial(material, amt, price);
+    //   },
+    //   sellProduct: function (divisionName, cityName, productName, amt, price, all) {
+    //     const product = getProduct(divisionName, productName);
+    //     SellProduct(product, cityName, amt, price, all);
+    //   },
+    //   setSmartSupply: function (divisionName, cityName, enabled) {
+    //     const warehouse = getWarehouse(divisionName, cityName);
+    //     SetSmartSupply(warehouse, enabled);
+    //   },
+    //   buyMaterial: function (divisionName, cityName, materialName, amt) {
+    //     const material = getMaterial(divisionName, cityName, materialName);
+    //     BuyMaterial(material, amt);
+    //   },
+    // }, // End Corporation API
 
     // Coding Contract API
     codingcontract: {

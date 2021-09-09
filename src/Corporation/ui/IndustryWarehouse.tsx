@@ -28,6 +28,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
 import { MoneyCost } from "./MoneyCost";
 import { isRelevantMaterial } from "./Helpers";
+import { IndustryProductEquation } from "./IndustryProductEquation";
 
 interface IProductProps {
   corp: ICorporation;
@@ -369,6 +370,10 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     });
   }
 
+  function shouldFlash(): boolean {
+    return props.division.prodMats.includes(props.mat.name) && !mat.sllman[0];
+  }
+
   return (
     <div className={"cmpy-mgmt-warehouse-material-div"}>
       <div style={{ display: "inline-block" }}>
@@ -401,7 +406,11 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
       </div>
 
       <div style={{ display: "inline-block" }}>
-        <button className={purchaseButtonClass} onClick={openPurchaseMaterialPopup}>
+        <button
+          className={purchaseButtonClass}
+          onClick={openPurchaseMaterialPopup}
+          disabled={props.warehouse.smartSupplyEnabled && Object.keys(props.division.reqMats).includes(props.mat.name)}
+        >
           {purchaseButtonText}
           {tutorial && (
             <span className={"tooltiptext"}>Purchase your required materials to get production started!</span>
@@ -415,7 +424,8 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
         )}
         <br />
 
-        <button className={"std-button"} onClick={openSellMaterialPopup}>
+        {/* TODO: add flashing here */}
+        <button className={`std-button${shouldFlash() ? " flashing-button" : ""}`} onClick={openSellMaterialPopup}>
           {sellButtonText}
         </button>
 
@@ -579,11 +589,12 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
           Upgrade Warehouse Size - <MoneyCost money={sizeUpgradeCost} corp={props.corp} />
         </button>
 
-        <p>{generalReqsText}. The exact requirements for production are:</p>
+        <p>This industry uses the following equation for it's production: </p>
         <br />
-        {ratioLines}
         <br />
-        <p>{createdItemsText}</p>
+        <IndustryProductEquation division={props.division} />
+        <br />
+        <br />
         <p>
           To get started with production, purchase your required materials or import them from another of your company's
           divisions.
