@@ -5,6 +5,7 @@ import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 import { SleeveFaq } from "../data/SleeveFaq";
 
 import { IPlayer } from "../../IPlayer";
+import { CONSTANTS } from "../../../Constants";
 
 import { Faction } from "../../../Faction/Faction";
 import { Factions } from "../../../Faction/Factions";
@@ -201,8 +202,13 @@ export function SleeveElem(props: IProps): React.ReactElement {
           <button className="std-button" onClick={openMoreStats}>
             More Stats
           </button>
-          <button className="std-button" onClick={openTravel}>
+          <button
+            className={`std-button${props.player.money.lt(CONSTANTS.TravelCost) ? " tooltip" : ""}`}
+            onClick={openTravel}
+            disabled={props.player.money.lt(CONSTANTS.TravelCost)}
+          >
             Travel
+            {props.player.money.lt(CONSTANTS.TravelCost) && <span className="tooltiptext">Not enough money</span>}
           </button>
           <button
             className={`std-button${props.sleeve.shock < 100 ? " tooltip" : ""}`}

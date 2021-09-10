@@ -5,6 +5,7 @@ import { CONSTANTS } from "../../../Constants";
 import { Cities } from "../../../Locations/Cities";
 import { removePopup } from "../../../ui/React/createPopup";
 import { Money } from "../../../ui/React/Money";
+import { WorldMap } from "../../../ui/React/WorldMap";
 import { CityName } from "../../../Locations/data/CityNames";
 import { dialogBoxCreate } from "../../../../utils/DialogBox";
 
@@ -34,13 +35,7 @@ export function TravelPopup(props: IProps): React.ReactElement {
         study. Traveling to a different city costs <Money money={CONSTANTS.TravelCost} player={props.player} />. It will
         also set your current sleeve task to idle.
       </p>
-      {Object.keys(Cities)
-        .filter((city: string) => props.sleeve.city !== city)
-        .map((city: string) => (
-          <div key={city} className="cmpy-mgmt-find-employee-option" onClick={() => travel(city)}>
-            {city}
-          </div>
-        ))}
+      <WorldMap currentCity={props.sleeve.city} onTravel={(city: CityName) => travel(city)} />
     </>
   );
 }

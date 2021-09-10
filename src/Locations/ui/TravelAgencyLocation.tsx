@@ -14,6 +14,7 @@ import { Settings } from "../../Settings/Settings";
 
 import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
+import { WorldMap } from "../../ui/React/WorldMap";
 
 type IProps = {
   p: IPlayer;
@@ -33,27 +34,6 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
   }
 
   asciiWorldMap(): React.ReactNode {
-    const LocationLetter = (props: any): JSX.Element => {
-      if (props.city !== this.props.p.city) {
-        return (
-          <span
-            className="tooltip"
-            style={{
-              color: "white",
-              whiteSpace: "nowrap",
-              margin: "0px",
-              padding: "0px",
-            }}
-            onClick={createTravelPopup.bind(null, props.city, this.props.travel)}
-          >
-            <span className="tooltiptext">{props.city}</span>
-            <b>{props.city[0]}</b>
-          </span>
-        );
-      }
-      return <span>{props.city[0]}</span>;
-    };
-
     // map needs all this whitespace!
     // prettier-ignore
     return (
@@ -62,28 +42,7 @@ export class TravelAgencyLocation extends React.Component<IProps, any> {
           From here, you can travel to any other city! A ticket costs{" "}
           <Money money={CONSTANTS.TravelCost} player={this.props.p} />.
         </p>
-        <pre>               ,_   .  ._. _.  .</pre>
-        <pre>           , _-\','|~\~      ~/      ;-'_   _-'     ,;_;_,    ~~-</pre>
-        <pre>  /~~-\_/-'~'--' \~~| ',    ,'      /  / ~|-_\_/~/~      ~~--~~~~'--_</pre>
-        <pre>  /              ,/'-/~ '\ ,' _  , '<LocationLetter city="Volhaven" />,'|~                   ._/-, /~</pre>
-        <pre>  ~/-'~\_,       '-,| '|. '   ~  ,\ /'~                /    /_  /~</pre>
-        <pre>.-~      '|        '',\~|\       _\~     ,_  ,     <LocationLetter city="Chongqing" />         /,</pre>
-        <pre>          '\     <LocationLetter city="Sector-12" />  /'~          |_/~\\,-,~  \ "         ,_,/ |</pre>
-        <pre>           |       /            ._-~'\_ _~|              \ ) <LocationLetter city="New Tokyo" /></pre>
-        <pre>            \   __-\           '/      ~ |\  \_          /  ~</pre>
-        <pre>  .,         '\ |,  ~-_      - |          \\_' ~|  /\  \~ ,</pre>
-        <pre>               ~-_'  _;       '\           '-,   \,' /\/  |</pre>
-        <pre>                 '\_,~'\_       \_ _,       /'    '  |, /|'</pre>
-        <pre>                   /     \_       ~ |      /         \  ~'; -,_.</pre>
-        <pre>                   |       ~\        |    |  ,        '-_, ,; ~ ~\</pre>
-        <pre>                    \,   <LocationLetter city="Aevum" />  /        \    / /|            ,-, ,   -,</pre>
-        <pre>                     |    ,/          |  |' |/          ,-   ~ \   '.</pre>
-        <pre>                    ,|   ,/           \ ,/              \   <LocationLetter city="Ishima" />   |</pre>
-        <pre>                    /    |             ~                 -~~-, /   _</pre>
-        <pre>                    | ,-'                                    ~    /</pre>
-        <pre>                    / ,'                                      ~</pre>
-        <pre>                    ',|  ~</pre>
-        <pre>                      ~'</pre>
+        <WorldMap currentCity={this.props.p.city} onTravel={(city: CityName) => createTravelPopup(city, this.props.travel)} />
       </div>
     );
   }
