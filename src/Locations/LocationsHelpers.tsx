@@ -9,11 +9,9 @@ import { CityName } from "./data/CityNames";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
 import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
-import { getPurchaseServerCost, purchaseServer } from "../Server/ServerPurchases";
 import { SpecialServerIps } from "../Server/SpecialServerIps";
 import { Settings } from "../Settings/Settings";
 
-import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
@@ -22,10 +20,6 @@ import {
   yesNoBoxGetNoButton,
   yesNoBoxClose,
   yesNoBoxCreate,
-  yesNoTxtInpBoxGetYesButton,
-  yesNoTxtInpBoxGetNoButton,
-  yesNoTxtInpBoxClose,
-  yesNoTxtInpBoxCreate,
 } from "../../utils/YesNoBox";
 
 import { createElement } from "../../utils/uiHelpers/createElement";
@@ -75,45 +69,6 @@ export function createTravelPopup(destination: CityName, travelFn: TravelFunctio
     <span>
       Would you like to travel to {destination}? The trip will cost <Money money={cost} />.
     </span>,
-  );
-}
-
-/**
- * Create a pop-up box that lets the player purchase a server.
- * @param {number} ram - Amount of RAM (GB) on server
- * @param {IPlayer} p - Player object
- */
-export function createPurchaseServerPopup(ram: number, p: IPlayer): void {
-  const cost = getPurchaseServerCost(ram);
-  if (cost === Infinity) {
-    dialogBoxCreate("Something went wrong when trying to purchase this server. Please contact developer.");
-    return;
-  }
-
-  const yesBtn = yesNoTxtInpBoxGetYesButton();
-  const noBtn = yesNoTxtInpBoxGetNoButton();
-  if (yesBtn == null || noBtn == null) {
-    return;
-  }
-  yesBtn.innerHTML = "Purchase Server";
-  noBtn.innerHTML = "Cancel";
-  yesBtn.addEventListener("click", function () {
-    purchaseServer(ram, p);
-    yesNoTxtInpBoxClose();
-  });
-  noBtn.addEventListener("click", function () {
-    yesNoTxtInpBoxClose();
-  });
-
-  yesNoTxtInpBoxCreate(
-    <>
-      Would you like to purchase a new server with {numeralWrapper.formatRAM(ram)} of RAM for{" "}
-      <Money money={cost} player={p} />?
-      <br />
-      <br />
-      Please enter the server hostname below:
-      <br />
-    </>,
   );
 }
 
