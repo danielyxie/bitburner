@@ -29,6 +29,7 @@ import { Money } from "../../ui/React/Money";
 import { MoneyCost } from "./MoneyCost";
 import { isRelevantMaterial } from "./Helpers";
 import { IndustryProductEquation } from "./IndustryProductEquation";
+import { PurchaseWarehouse } from "../Actions";
 
 interface IProductProps {
   corp: ICorporation;
@@ -603,18 +604,8 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
   }
 
   function purchaseWarehouse(division: IIndustry, city: string): void {
-    if (props.corp.funds.lt(CorporationConstants.WarehouseInitialCost)) {
-      dialogBoxCreate("You do not have enough funds to do this!");
-    } else {
-      division.warehouses[city] = new Warehouse({
-        corp: props.corp,
-        industry: division,
-        loc: city,
-        size: CorporationConstants.WarehouseInitialSize,
-      });
-      props.corp.funds = props.corp.funds.minus(CorporationConstants.WarehouseInitialCost);
-      props.rerender();
-    }
+    PurchaseWarehouse(props.corp, division, city);
+    props.rerender();
   }
 
   if (props.warehouse instanceof Warehouse) {
@@ -622,7 +613,11 @@ export function IndustryWarehouse(props: IProps): React.ReactElement {
   } else {
     return (
       <div className={"cmpy-mgmt-warehouse-panel"}>
-        <button className={"std-button"} onClick={() => purchaseWarehouse(props.division, props.currentCity)}>
+        <button
+          className={"std-button"}
+          onClick={() => purchaseWarehouse(props.division, props.currentCity)}
+          disabled={props.corp.funds.lt(CorporationConstants.WarehouseInitialCost)}
+        >
           Purchase Warehouse (
           <MoneyCost money={CorporationConstants.WarehouseInitialCost} corp={props.corp} />)
         </button>

@@ -6,6 +6,7 @@ import { CorporationConstants } from "../data/Constants";
 import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { UpgradeOfficeSize } from "../Actions";
 
 interface IProps {
   office: OfficeSpace;
@@ -48,8 +49,7 @@ export function UpgradeOfficeSizePopup(props: IProps): React.ReactElement {
     if (props.corp.funds.lt(cost)) {
       dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
     } else {
-      props.office.size += size;
-      props.corp.funds = props.corp.funds.minus(cost);
+      UpgradeOfficeSize(props.corp, props.office, size);
       dialogBoxCreate("Office space increased! It can now hold " + props.office.size + " employees");
       props.rerender();
     }

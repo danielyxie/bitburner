@@ -10,6 +10,7 @@ import { Warehouse } from "./Warehouse";
 import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { Cities } from "../Locations/Cities";
+import { EmployeePositions } from "./EmployeePositions";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
   for (let i = 0; i < corporation.divisions.length; ++i) {
@@ -231,4 +232,48 @@ export function BuyMaterial(material: Material, amt: number): void {
     throw new Error(`Invalid amount '${amt}' to buy material '${material.name}'`);
   }
   material.buy = amt;
+}
+
+export function AssignJob(employee: Employee, job: string): void {
+  if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+  employee.pos = job;
+}
+
+export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size: number): void {
+  const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
+  const costMultiplier = 1.09;
+  // Calculate cost to upgrade size by 15 employees
+  let mult = 0;
+  for (let i = 0; i < size / CorporationConstants.OfficeInitialSize; ++i) {
+    mult += Math.pow(costMultiplier, initialPriceMult + i);
+  }
+  const cost = CorporationConstants.OfficeInitialCost * mult;
+  console.log(cost);
+  if (corp.funds.lt(cost)) return;
+  office.size += size;
+  corp.funds = corp.funds.minus(cost);
+}
+
+export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
+  const totalCost = costPerEmployee * office.employees.length;
+  if (corp.funds.lt(totalCost)) return 0;
+  corp.funds = corp.funds.minus(totalCost);
+  let mult = 0;
+  for (let i = 0; i < office.employees.length; ++i) {
+    mult = office.employees[i].throwParty(costPerEmployee);
+  }
+
+  return mult;
+}
+
+export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city: string): void {
+  if (corp.funds.lt(CorporationConstants.WarehouseInitialCost)) return;
+  if (division.warehouses[city] instanceof Warehouse) return;
+  division.warehouses[city] = new Warehouse({
+    corp: corp,
+    industry: division,
+    loc: city,
+    size: CorporationConstants.WarehouseInitialSize,
+  });
+  corp.funds = corp.funds.minus(CorporationConstants.WarehouseInitialCost);
 }

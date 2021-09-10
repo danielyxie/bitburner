@@ -4,6 +4,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";
+import { ThrowParty } from "../Actions";
 
 interface IProps {
   office: OfficeSpace;
@@ -26,11 +27,7 @@ export function ThrowPartyPopup(props: IProps): React.ReactElement {
       if (props.corp.funds.lt(totalCost)) {
         dialogBoxCreate("You don't have enough company funds to throw a party!");
       } else {
-        props.corp.funds = props.corp.funds.minus(totalCost);
-        let mult = 0;
-        for (let i = 0; i < props.office.employees.length; ++i) {
-          mult = props.office.employees[i].throwParty(cost);
-        }
+        const mult = ThrowParty(props.corp, props.office, cost);
         dialogBoxCreate(
           "You threw a party for the office! The morale and happiness " +
             "of each employee increased by " +
