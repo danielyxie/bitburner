@@ -8,7 +8,6 @@ Netburner.txt
 /test/*.bundle.*
 /test/*.css
 .cypress
-dist-tsc
 
 # editor files
 .vscode
