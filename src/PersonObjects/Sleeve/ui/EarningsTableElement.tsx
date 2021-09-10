@@ -1,12 +1,17 @@
 import * as React from "react";
 
-export function EarningsTableElement(title: string, stats: any[][]): React.ReactElement {
+interface IProps {
+  title: string;
+  stats: any[][];
+}
+
+export function EarningsTableElement(props: IProps): React.ReactElement {
   return (
     <>
-      <pre>{title}</pre>
+      <pre>{props.title}</pre>
       <table>
         <tbody>
-          {stats.map((stat: any[], i: number) => (
+          {props.stats.map((stat: any[], i: number) => (
             <tr key={i}>
               {stat.map((s: any, i: number) => {
                 let style = {};

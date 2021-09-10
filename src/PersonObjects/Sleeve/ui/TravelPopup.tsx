@@ -12,6 +12,7 @@ interface IProps {
   popupId: string;
   sleeve: Sleeve;
   player: IPlayer;
+  rerender: () => void;
 }
 
 export function TravelPopup(props: IProps): React.ReactElement {
@@ -23,6 +24,7 @@ export function TravelPopup(props: IProps): React.ReactElement {
     props.player.loseMoney(CONSTANTS.TravelCost);
     props.sleeve.resetTaskStatus();
     removePopup(props.popupId);
+    props.rerender();
   }
 
   return (
@@ -35,7 +37,7 @@ export function TravelPopup(props: IProps): React.ReactElement {
       {Object.keys(Cities)
         .filter((city: string) => props.sleeve.city !== city)
         .map((city: string) => (
-          <div className="cmpy-mgmt-find-employee-option" onClick={() => travel(city)}>
+          <div key={city} className="cmpy-mgmt-find-employee-option" onClick={() => travel(city)}>
             {city}
           </div>
         ))}

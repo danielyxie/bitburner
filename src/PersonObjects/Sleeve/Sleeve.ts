@@ -252,6 +252,7 @@ export class Sleeve extends Person {
 
     // Experience is first multiplied by shock. Then 'synchronization'
     // is accounted for
+
     const multFac = (this.shock / 100) * (this.sync / 100) * numCycles;
     const pHackExp = exp.hack * multFac;
     const pStrExp = exp.str * multFac;
@@ -491,7 +492,7 @@ export class Sleeve extends Person {
     this.currentTaskTime += time;
 
     // Shock gradually goes towards 100
-    this.shock = Math.min(100, this.shock + 0.0001 * this.storedCycles);
+    this.shock = Math.min(100, this.shock + 0.0001 * cyclesUsed);
 
     let retValue: ITaskTracker = createTaskTracker();
     switch (this.currentTask) {

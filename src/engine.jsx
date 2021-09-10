@@ -23,6 +23,7 @@ import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
+import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
   getHackingWorkRepGain,
@@ -57,7 +58,6 @@ import { initSymbolToStockMap, processStockPrices, displayStockMarketContent } f
 import { displayMilestonesContent } from "./Milestones/MilestoneHelpers";
 import { Terminal, postNetburnerText } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
-import { clearSleevesPage, createSleevesPage, updateSleevesPage } from "./PersonObjects/Sleeve/SleeveUI";
 
 import { createStatusText } from "./ui/createStatusText";
 import { CharacterInfo } from "./ui/CharacterInfo";
@@ -190,6 +190,7 @@ const Engine = {
     gangContent: null,
     bladeburnerContent: null,
     resleeveContent: null,
+    sleeveContent: null,
     corporationContent: null,
     locationContent: null,
     workInProgressContent: null,
@@ -429,14 +430,10 @@ const Engine = {
   },
 
   loadSleevesContent: function () {
-    // This is for Duplicate Sleeves page, not Re-sleeving @ Vita Life
-    try {
-      Engine.hideAllContent();
-      routing.navigateTo(Page.Sleeves);
-      createSleevesPage(Player);
-    } catch (e) {
-      exceptionAlert(e);
-    }
+    Engine.hideAllContent();
+    routing.navigateTo(Page.Sleeves);
+    Engine.Display.sleevesContent.style.display = "block";
+    ReactDOM.render(<SleeveRoot player={Player} />, Engine.Display.sleevesContent);
   },
 
   loadResleevingContent: function () {
@@ -487,19 +484,17 @@ const Engine = {
     Engine.Display.resleeveContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.resleeveContent);
 
+    Engine.Display.sleevesContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.sleevesContent);
+
     Engine.Display.corporationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.corporationContent);
-
-    Engine.Display.resleeveContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.resleeveContent);
 
     Engine.Display.workInProgressContent.style.display = "none";
     Engine.Display.redPillContent.style.display = "none";
     Engine.Display.cinematicTextContent.style.display = "none";
     Engine.Display.stockMarketContent.style.display = "none";
     Engine.Display.missionContent.style.display = "none";
-
-    clearSleevesPage();
 
     // Make nav menu tabs inactive
     Engine.inactivateMainMenuLinks();
@@ -738,8 +733,6 @@ const Engine = {
       Engine.displayCharacterOverviewInfo();
       if (routing.isOn(Page.CreateProgram)) {
         displayCreateProgramContent();
-      } else if (routing.isOn(Page.Sleeves)) {
-        updateSleevesPage();
       }
 
       Engine.Counters.updateDisplays = 3;
@@ -1257,6 +1250,9 @@ const Engine = {
 
     Engine.Display.resleeveContent = document.getElementById("resleeve-container");
     Engine.Display.resleeveContent.style.display = "none";
+
+    Engine.Display.sleevesContent = document.getElementById("sleeves-container");
+    Engine.Display.sleevesContent.style.display = "none";
 
     Engine.Display.corporationContent = document.getElementById("corporation-container");
     Engine.Display.corporationContent.style.display = "none";

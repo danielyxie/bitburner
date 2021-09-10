@@ -3,14 +3,15 @@
  */
 @import "theme";
 
-.sleeve-container {
+#sleeves-container {
+  position: fixed;
+  padding: 6px;
+}
+
+.sleeve-elem {
   border: 1px solid white;
   margin: 4px;
-  width: 75%;
-
-  p {
-    font-size: $defaultFontSize * 0.875;
-  }
+  display: block;
 }
 
 .sleeves-page-info {
