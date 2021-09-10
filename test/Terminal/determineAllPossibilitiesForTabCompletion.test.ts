@@ -44,12 +44,12 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
 
   it("completes the connect command", () => {
     const options = determineAllPossibilitiesForTabCompletion(Player, "connect ", 0);
-    expect(options).equal(["8.8.8.8", "near"]);
+    expect(options).toEqual(["8.8.8.8", "near"]);
   });
 
   it("completes the buy command", () => {
     const options = determineAllPossibilitiesForTabCompletion(Player, "buy ", 0);
-    expect(options).equal([
+    expect(options).toEqual([
       "BruteSSH.exe",
       "FTPCrack.exe",
       "relaySMTP.exe",
@@ -67,23 +67,23 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
     Player.getHomeComputer().messages.push("af.lit");
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
     const options1 = determineAllPossibilitiesForTabCompletion(Player, "scp ", 0);
-    expect(options1).equal(["/www/script.js", "af.lit", "note.txt", "www/"]);
+    expect(options1).toEqual(["/www/script.js", "af.lit", "note.txt", "www/"]);
 
     const options2 = determineAllPossibilitiesForTabCompletion(Player, "scp note.txt ", 1);
-    expect(options2).equal([Player.getHomeComputer().ip, "home", "8.8.8.8", "near", "4.4.4.4", "far"]);
+    expect(options2).toEqual([Player.getHomeComputer().ip, "home", "8.8.8.8", "near", "4.4.4.4", "far"]);
   });
 
   it("completes the kill, tail, mem, and check commands", () => {
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
     for (const command of ["kill", "tail", "mem", "check"]) {
-      expect(determineAllPossibilitiesForTabCompletion(Player, `${command} `, 0)).equal(["/www/script.js", "www/"]);
+      expect(determineAllPossibilitiesForTabCompletion(Player, `${command} `, 0)).toEqual(["/www/script.js", "www/"]);
     }
   });
 
   it("completes the nano commands", () => {
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
     Player.getHomeComputer().writeToTextFile("note.txt", "oh hai mark");
-    expect(determineAllPossibilitiesForTabCompletion(Player, "nano ", 0)).equal([
+    expect(determineAllPossibilitiesForTabCompletion(Player, "nano ", 0)).toEqual([
       "/www/script.js",
       "note.txt",
       ".fconf",
@@ -97,7 +97,7 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
     Player.getHomeComputer().contracts.push(new CodingContract("linklist.cct"));
     Player.getHomeComputer().messages.push(new Message("asl.msg"));
     Player.getHomeComputer().messages.push("af.lit");
-    expect(determineAllPossibilitiesForTabCompletion(Player, "rm ", 0)).equal([
+    expect(determineAllPossibilitiesForTabCompletion(Player, "rm ", 0)).toEqual([
       "/www/script.js",
       "NUKE.exe",
       "af.lit",
@@ -110,7 +110,7 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
   it("completes the run command", () => {
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
     Player.getHomeComputer().contracts.push(new CodingContract("linklist.cct"));
-    expect(determineAllPossibilitiesForTabCompletion(Player, "run ", 0)).equal([
+    expect(determineAllPossibilitiesForTabCompletion(Player, "run ", 0)).toEqual([
       "/www/script.js",
       "NUKE.exe",
       "linklist.cct",
@@ -122,7 +122,7 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
     Player.getHomeComputer().writeToTextFile("/www/note.txt", "oh hai mark");
     Player.getHomeComputer().messages.push(new Message("asl.msg"));
     Player.getHomeComputer().messages.push("af.lit");
-    expect(determineAllPossibilitiesForTabCompletion(Player, "cat ", 0)).equal([
+    expect(determineAllPossibilitiesForTabCompletion(Player, "cat ", 0)).toEqual([
       "asl.msg",
       "af.lit",
       "/www/note.txt",
@@ -134,7 +134,7 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
     Player.getHomeComputer().writeToTextFile("note.txt", "oh hai mark");
     for (const command of ["download", "mv"]) {
-      expect(determineAllPossibilitiesForTabCompletion(Player, `${command} `, 0)).equal([
+      expect(determineAllPossibilitiesForTabCompletion(Player, `${command} `, 0)).toEqual([
         "/www/script.js",
         "note.txt",
         "www/",
@@ -144,19 +144,19 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
 
   it("completes the cd command", () => {
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
-    expect(determineAllPossibilitiesForTabCompletion(Player, "cd ", 0)).equal(["www/"]);
+    expect(determineAllPossibilitiesForTabCompletion(Player, "cd ", 0)).toEqual(["www/"]);
   });
 
   it("completes the ls and cd commands", () => {
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
     for (const command of ["ls", "cd"]) {
-      expect(determineAllPossibilitiesForTabCompletion(Player, `${command} `, 0)).equal(["www/"]);
+      expect(determineAllPossibilitiesForTabCompletion(Player, `${command} `, 0)).toEqual(["www/"]);
     }
   });
 
   it("completes commands starting with ./", () => {
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
-    expect(determineAllPossibilitiesForTabCompletion(Player, "run ./", 0)).equal([
+    expect(determineAllPossibilitiesForTabCompletion(Player, "run ./", 0)).toEqual([
       ".//www/script.js",
       "NUKE.exe",
       "./www/",
