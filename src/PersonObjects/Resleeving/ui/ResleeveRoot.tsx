@@ -60,9 +60,11 @@ const SortFunctions: {
   Dexterity: (a: Resleeve, b: Resleeve): number => a.dexterity - b.dexterity,
   Agility: (a: Resleeve, b: Resleeve): number => a.agility - b.agility,
   Charisma: (a: Resleeve, b: Resleeve): number => a.charisma - b.charisma,
-  AverageCombatStats: (a: Resleeve, b: Resleeve): number => getAverage(a.strength, a.defense, a.dexterity, a.agility) -
+  AverageCombatStats: (a: Resleeve, b: Resleeve): number =>
+    getAverage(a.strength, a.defense, a.dexterity, a.agility) -
     getAverage(b.strength, b.defense, b.dexterity, b.agility),
-  AverageAllStats: (a: Resleeve, b: Resleeve): number => getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma) -
+  AverageAllStats: (a: Resleeve, b: Resleeve): number =>
+    getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma) -
     getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma),
   TotalNumAugmentations: (a: Resleeve, b: Resleeve): number => a.augmentations.length - b.augmentations.length,
 };
@@ -87,7 +89,7 @@ export function ResleeveRoot(props: IProps): React.ReactElement {
   props.player.resleeves.sort(sortFunction);
 
   return (
-    <>
+    <div id="resleeve-container">
       <p style={{ display: "block", width: "75%" }}>
         Re-sleeving is the process of digitizing and transferring your consciousness into a new human body, or 'sleeve'.
         Here at VitaLife, you can purchase new specially-engineered bodies for the re-sleeve process. Many of these
@@ -114,6 +116,6 @@ export function ResleeveRoot(props: IProps): React.ReactElement {
       {props.player.resleeves.map((resleeve, i) => (
         <ResleeveElem key={i} player={props.player} resleeve={resleeve} />
       ))}
-    </>
+    </div>
   );
 }

@@ -257,228 +257,242 @@ export function CharacterInfo(props: IProps): React.ReactElement {
   timeRows.push(["Total Time played:", convertTimeMsToTimeElapsedString(props.player.totalPlaytime)]);
 
   return (
-    <pre>
-      <b>General</b>
-      <br />
-      <br />
-      <span>Current City: {props.player.city}</span>
-      <br />
-      <LastEmployer />
-      <LastJob />
-      <Employers />
-      <span>
-        Money: <Money money={props.player.money.toNumber()} />
-      </span>
-      <button className="popup-box-button" style={{ display: "inline-block", float: "none" }} onClick={openMoneyModal}>
-        Money Statistics & Breakdown
-      </button>
-      <br />
-      <br />
-      <b>Stats</b>
-      <table>
-        <tbody>
-          <tr key="0">
-            <td key="0">Hacking:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(props.player.hacking_skill)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(props.player.hacking_exp)} exp)
-            </td>
-          </tr>
-          <tr key="1">
-            <td key="0">Strength:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(props.player.strength)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(props.player.strength_exp)} exp)
-            </td>
-          </tr>
-          <tr key="2">
-            <td key="0">Defense:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(props.player.defense)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(props.player.defense_exp)} exp)
-            </td>
-          </tr>
-          <tr key="3">
-            <td key="0">Dexterity:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(props.player.dexterity)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(props.player.dexterity_exp)} exp)
-            </td>
-          </tr>
-          <tr key="4">
-            <td key="0">Agility:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(props.player.agility)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(props.player.agility_exp)} exp)
-            </td>
-          </tr>
-          <tr key="5">
-            <td key="0">Charisma:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(props.player.charisma)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(props.player.charisma_exp)} exp)
-            </td>
-          </tr>
-          <Intelligence />
-        </tbody>
-      </table>
-      <br />
-      <MultiplierTable
-        rows={[
-          ["Hacking Chance", props.player.hacking_chance_mult],
-          ["Hacking Speed", props.player.hacking_speed_mult],
-          [
-            "Hacking Money",
-            props.player.hacking_money_mult,
-            props.player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
-          ],
-          [
-            "Hacking Growth",
-            props.player.hacking_grow_mult,
-            props.player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
-          ],
-        ]}
-      />
-      <br />
-      <MultiplierTable
-        rows={[
-          [
-            "Hacking Level",
-            props.player.hacking_mult,
-            props.player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
-          ],
-          [
-            "Hacking Experience",
-            props.player.hacking_exp_mult,
-            props.player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
-          ],
-        ]}
-      />
-      <br />
+    <div id="character-container">
+      <pre>
+        <b>General</b>
+        <br />
+        <br />
+        <span>Current City: {props.player.city}</span>
+        <br />
+        <LastEmployer />
+        <LastJob />
+        <Employers />
+        <span>
+          Money: <Money money={props.player.money.toNumber()} />
+        </span>
+        <button
+          className="popup-box-button"
+          style={{ display: "inline-block", float: "none" }}
+          onClick={openMoneyModal}
+        >
+          Money Statistics & Breakdown
+        </button>
+        <br />
+        <br />
+        <b>Stats</b>
+        <table>
+          <tbody>
+            <tr key="0">
+              <td key="0">Hacking:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.hacking_skill)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.hacking_exp)} exp)
+              </td>
+            </tr>
+            <tr key="1">
+              <td key="0">Strength:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.strength)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.strength_exp)} exp)
+              </td>
+            </tr>
+            <tr key="2">
+              <td key="0">Defense:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.defense)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.defense_exp)} exp)
+              </td>
+            </tr>
+            <tr key="3">
+              <td key="0">Dexterity:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.dexterity)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.dexterity_exp)} exp)
+              </td>
+            </tr>
+            <tr key="4">
+              <td key="0">Agility:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.agility)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.agility_exp)} exp)
+              </td>
+            </tr>
+            <tr key="5">
+              <td key="0">Charisma:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.charisma)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.charisma_exp)} exp)
+              </td>
+            </tr>
+            <Intelligence />
+          </tbody>
+        </table>
+        <br />
+        <MultiplierTable
+          rows={[
+            ["Hacking Chance", props.player.hacking_chance_mult],
+            ["Hacking Speed", props.player.hacking_speed_mult],
+            [
+              "Hacking Money",
+              props.player.hacking_money_mult,
+              props.player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
+            ],
+            [
+              "Hacking Growth",
+              props.player.hacking_grow_mult,
+              props.player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
+            ],
+          ]}
+        />
+        <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Hacking Level",
+              props.player.hacking_mult,
+              props.player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+            ],
+            [
+              "Hacking Experience",
+              props.player.hacking_exp_mult,
+              props.player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
+            ],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          [
-            "Strength Level",
-            props.player.strength_mult,
-            props.player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
-          ],
-          ["Strength Experience", props.player.strength_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Strength Level",
+              props.player.strength_mult,
+              props.player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+            ],
+            ["Strength Experience", props.player.strength_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          [
-            "Defense Level",
-            props.player.defense_mult,
-            props.player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
-          ],
-          ["Defense Experience", props.player.defense_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Defense Level",
+              props.player.defense_mult,
+              props.player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+            ],
+            ["Defense Experience", props.player.defense_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          [
-            "Dexterity Level",
-            props.player.dexterity_mult,
-            props.player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
-          ],
-          ["Dexterity Experience", props.player.dexterity_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Dexterity Level",
+              props.player.dexterity_mult,
+              props.player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+            ],
+            ["Dexterity Experience", props.player.dexterity_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          [
-            "Agility Level",
-            props.player.agility_mult,
-            props.player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
-          ],
-          ["Agility Experience", props.player.agility_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Agility Level",
+              props.player.agility_mult,
+              props.player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+            ],
+            ["Agility Experience", props.player.agility_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          [
-            "Charisma Level",
-            props.player.charisma_mult,
-            props.player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
-          ],
-          ["Charisma Experience", props.player.charisma_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Charisma Level",
+              props.player.charisma_mult,
+              props.player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+            ],
+            ["Charisma Experience", props.player.charisma_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          [
-            "Hacknet Node production",
-            props.player.hacknet_node_money_mult,
-            props.player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
-          ],
-          ["Hacknet Node purchase cost", props.player.hacknet_node_purchase_cost_mult],
-          ["Hacknet Node RAM upgrade cost", props.player.hacknet_node_ram_cost_mult],
-          ["Hacknet Node Core purchase cost", props.player.hacknet_node_core_cost_mult],
-          ["Hacknet Node level upgrade cost", props.player.hacknet_node_level_cost_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Hacknet Node production",
+              props.player.hacknet_node_money_mult,
+              props.player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
+            ],
+            ["Hacknet Node purchase cost", props.player.hacknet_node_purchase_cost_mult],
+            ["Hacknet Node RAM upgrade cost", props.player.hacknet_node_ram_cost_mult],
+            ["Hacknet Node Core purchase cost", props.player.hacknet_node_core_cost_mult],
+            ["Hacknet Node level upgrade cost", props.player.hacknet_node_level_cost_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Company reputation gain", props.player.company_rep_mult],
-          [
-            "Faction reputation gain",
-            props.player.faction_rep_mult,
-            props.player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
-          ],
-          ["Salary", props.player.work_money_mult, props.player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            ["Company reputation gain", props.player.company_rep_mult],
+            [
+              "Faction reputation gain",
+              props.player.faction_rep_mult,
+              props.player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
+            ],
+            [
+              "Salary",
+              props.player.work_money_mult,
+              props.player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney,
+            ],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Crime success", props.player.crime_success_mult],
-          ["Crime money", props.player.crime_money_mult, props.player.crime_money_mult * BitNodeMultipliers.CrimeMoney],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            ["Crime success", props.player.crime_success_mult],
+            [
+              "Crime money",
+              props.player.crime_money_mult,
+              props.player.crime_money_mult * BitNodeMultipliers.CrimeMoney,
+            ],
+          ]}
+        />
+        <br />
 
-      <BladeburnerMults />
-      <br />
+        <BladeburnerMults />
+        <br />
 
-      <b>Misc.</b>
-      <br />
-      <br />
-      <span>{`Servers owned: ${props.player.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span>
-      <br />
-      <Hacknet />
-      <span>{`Augmentations installed: ${props.player.augmentations.length}`}</span>
-      <br />
-      <br />
-      {StatsTable(timeRows)}
-      <br />
-      <CurrentBitNode />
-    </pre>
+        <b>Misc.</b>
+        <br />
+        <br />
+        <span>{`Servers owned: ${props.player.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span>
+        <br />
+        <Hacknet />
+        <span>{`Augmentations installed: ${props.player.augmentations.length}`}</span>
+        <br />
+        <br />
+        {StatsTable(timeRows)}
+        <br />
+        <CurrentBitNode />
+      </pre>
+    </div>
   );
 }

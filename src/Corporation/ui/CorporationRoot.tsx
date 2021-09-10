@@ -56,7 +56,7 @@ export function CorporationRoot(props: IProps): React.ReactElement {
   }, []);
 
   return (
-    <>
+    <div id="corporation-container">
       <div>
         <HeaderTab
           current={divisionName === "Overview"}
@@ -75,6 +75,6 @@ export function CorporationRoot(props: IProps): React.ReactElement {
         <ExpandButton corp={props.corp} setDivisionName={setDivisionName} />
       </div>
       <MainPanel rerender={rerender} corp={props.corp} divisionName={divisionName} player={props.player} />
-    </>
+    </div>
   );
 }

@@ -86,7 +86,7 @@ export function displayFactionContent(factionName, initiallyOnAugmentationsPage 
       p={Player}
       startHackingMissionFn={startHackingMission}
     />,
-    Engine.Display.factionContent,
+    Engine.Display.content,
   );
 }
 

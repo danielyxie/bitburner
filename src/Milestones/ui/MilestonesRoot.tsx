@@ -30,7 +30,7 @@ export function MilestonesRoot(props: IProps): JSX.Element {
     }
   });
   return (
-    <>
+    <div id="milestones-container">
       <h1>Milestones</h1>
       <p>
         Milestones don't reward you for completing them. They are here to guide you if you're lost. They will reset when
@@ -40,6 +40,6 @@ export function MilestonesRoot(props: IProps): JSX.Element {
 
       <h2>Completing fl1ght.exe</h2>
       <li>{milestones}</li>
-    </>
+    </div>
   );
 }

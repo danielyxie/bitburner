@@ -177,27 +177,11 @@ const Engine = {
   // Display objects
   // TODO-Refactor this into its own component
   Display: {
+    // Generic page that most react loads into.
+    content: null,
     // Main menu content
     terminalContent: null,
-    characterContent: null,
-    scriptEditorContent: null,
-    activeScriptsContent: null,
-    hacknetNodesContent: null,
-    createProgramContent: null,
-    factionsContent: null,
-    factionContent: null,
-    augmentationsContent: null,
-    milestonesContent: null,
-    devMenuContent: null,
-    tutorialContent: null,
     infiltrationContent: null,
-    stockMarketContent: null,
-    gangContent: null,
-    bladeburnerContent: null,
-    resleeveContent: null,
-    sleeveContent: null,
-    corporationContent: null,
-    locationContent: null,
     workInProgressContent: null,
     redPillContent: null,
     cinematicTextContent: null,
@@ -219,68 +203,65 @@ const Engine = {
 
   loadCharacterContent: function () {
     Engine.hideAllContent();
-    Engine.Display.characterContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.CharacterInfo);
-    ReactDOM.render(<CharacterInfo player={Player} />, Engine.Display.characterContent);
+    ReactDOM.render(<CharacterInfo player={Player} />, Engine.Display.content);
     MainMenuLinks.Stats.classList.add("active");
   },
 
   loadScriptEditorContent: function (filename = "", code = "") {
     Engine.hideAllContent();
-    Engine.Display.scriptEditorContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.ScriptEditor);
     MainMenuLinks.ScriptEditor.classList.add("active");
     ReactDOM.render(
       <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
-      Engine.Display.scriptEditorContent,
+      Engine.Display.content,
     );
   },
 
   loadActiveScriptsContent: function () {
     Engine.hideAllContent();
-    Engine.Display.activeScriptsContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.ActiveScripts);
     MainMenuLinks.ActiveScripts.classList.add("active");
-    ReactDOM.render(
-      <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
-      Engine.Display.activeScriptsContent,
-    );
+    ReactDOM.render(<ActiveScriptsRoot p={Player} workerScripts={workerScripts} />, Engine.Display.content);
   },
 
   loadHacknetNodesContent: function () {
     Engine.hideAllContent();
-    Engine.Display.hacknetNodesContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.HacknetNodes);
     MainMenuLinks.HacknetNodes.classList.add("active");
-    ReactDOM.render(<HacknetRoot player={Player} />, Engine.Display.hacknetNodesContent);
+    ReactDOM.render(<HacknetRoot player={Player} />, Engine.Display.content);
   },
 
   loadCreateProgramContent: function () {
     Engine.hideAllContent();
-    Engine.Display.createProgramContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.CreateProgram);
     MainMenuLinks.CreateProgram.classList.add("active");
-    ReactDOM.render(<ProgramsRoot player={Player} />, Engine.Display.createProgramContent);
+    ReactDOM.render(<ProgramsRoot player={Player} />, Engine.Display.content);
   },
 
   loadFactionsContent: function () {
     Engine.hideAllContent();
-    Engine.Display.factionsContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Factions);
     MainMenuLinks.Factions.classList.add("active");
-    ReactDOM.render(<FactionList player={Player} engine={this} />, Engine.Display.factionsContent);
+    ReactDOM.render(<FactionList player={Player} engine={this} />, Engine.Display.content);
   },
 
   // TODO reactify
   loadFactionContent: function () {
     Engine.hideAllContent();
-    Engine.Display.factionContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Faction);
   },
 
   loadAugmentationsContent: function () {
     Engine.hideAllContent();
-    Engine.Display.augmentationsContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Augmentations);
     MainMenuLinks.Augmentations.classList.add("active");
 
@@ -291,46 +272,45 @@ const Engine = {
 
     ReactDOM.render(
       <AugmentationsRoot exportGameFn={backup} installAugmentationsFn={installAugmentations} />,
-      Engine.Display.augmentationsContent,
+      Engine.Display.content,
     );
   },
 
   loadMilestonesContent: function () {
     Engine.hideAllContent();
-    Engine.Display.milestonesContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Milestones);
     MainMenuLinks.Milestones.classList.add("active");
-    ReactDOM.render(<MilestonesRoot player={Player} />, Engine.Display.milestonesContent);
+    ReactDOM.render(<MilestonesRoot player={Player} />, Engine.Display.content);
   },
 
   loadTutorialContent: function () {
     Engine.hideAllContent();
-    Engine.Display.tutorialContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Tutorial);
     MainMenuLinks.Tutorial.classList.add("active");
-    ReactDOM.render(<TutorialRoot />, Engine.Display.tutorialContent);
+    ReactDOM.render(<TutorialRoot />, Engine.Display.content);
   },
 
-  // TODO reactify
   loadDevMenuContent: function () {
     Engine.hideAllContent();
     if (process.env.NODE_ENV !== "development") {
       throw new Error("Cannot create Dev Menu because you are not in a dev build");
     }
-    Engine.Display.devMenuContent.style.display = "block";
-    ReactDOM.render(<DevMenuRoot player={Player} engine={this} />, Engine.Display.devMenuContent);
+    Engine.Display.content.style.display = "block";
+    ReactDOM.render(<DevMenuRoot player={Player} engine={this} />, Engine.Display.content);
     routing.navigateTo(Page.DevMenu);
     MainMenuLinks.DevMenu.classList.add("active");
   },
 
   loadLocationContent: function (initiallyInCity = true) {
     Engine.hideAllContent();
-    Engine.Display.locationContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Location);
     MainMenuLinks.City.classList.add("active");
     ReactDOM.render(
       <LocationRoot initiallyInCity={initiallyInCity} engine={Engine} p={Player} />,
-      Engine.Display.locationContent,
+      Engine.Display.content,
     );
   },
 
@@ -339,13 +319,10 @@ const Engine = {
     // and make sure that the 'City' main menu link doesnt become 'active'
     Engine.hideAllContent();
     Player.gotoLocation(LocationName.TravelAgency);
-    Engine.Display.locationContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Location);
     MainMenuLinks.Travel.classList.add("active");
-    ReactDOM.render(
-      <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />,
-      Engine.Display.locationContent,
-    );
+    ReactDOM.render(<LocationRoot initiallyInCity={false} engine={Engine} p={Player} />, Engine.Display.content);
   },
 
   loadJobContent: function () {
@@ -359,13 +336,10 @@ const Engine = {
     }
     Engine.hideAllContent();
     Player.gotoLocation(Player.companyName);
-    Engine.Display.locationContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Location);
     MainMenuLinks.Job.classList.add("active");
-    ReactDOM.render(
-      <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />,
-      Engine.Display.locationContent,
-    );
+    ReactDOM.render(<LocationRoot initiallyInCity={false} engine={Engine} p={Player} />, Engine.Display.content);
   },
 
   // TODO reactify
@@ -407,7 +381,7 @@ const Engine = {
 
   loadStockMarketContent: function () {
     Engine.hideAllContent();
-    Engine.Display.stockMarketContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.StockMarket);
     MainMenuLinks.StockMarket.classList.add("active");
     displayStockMarketContent();
@@ -416,10 +390,10 @@ const Engine = {
   loadGangContent: function () {
     if (!Player.inGang()) return;
     Engine.hideAllContent();
-    Engine.Display.gangContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Gang);
     MainMenuLinks.Gang.classList.add("active");
-    ReactDOM.render(<GangRoot engine={this} gang={Player.gang} player={Player} />, Engine.Display.gangContent);
+    ReactDOM.render(<GangRoot engine={this} gang={Player.gang} player={Player} />, Engine.Display.content);
   },
 
   loadMissionContent: function () {
@@ -433,100 +407,52 @@ const Engine = {
   loadCorporationContent: function () {
     if (!(Player.corporation instanceof Corporation)) return;
     Engine.hideAllContent();
-    Engine.Display.corporationContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Corporation);
     MainMenuLinks.Corporation.classList.add("active");
-    ReactDOM.render(<CorporationRoot corp={Player.corporation} player={Player} />, Engine.Display.corporationContent);
+    ReactDOM.render(<CorporationRoot corp={Player.corporation} player={Player} />, Engine.Display.content);
   },
 
   loadBladeburnerContent: function () {
     if (!(Player.bladeburner instanceof Bladeburner)) return;
     Engine.hideAllContent();
-    Engine.Display.bladeburnerContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Bladeburner);
     MainMenuLinks.Bladeburner.classList.add("active");
     ReactDOM.render(
       <BladeburnerRoot bladeburner={Player.bladeburner} player={Player} engine={this} />,
-      Engine.Display.bladeburnerContent,
+      Engine.Display.content,
     );
   },
 
   loadSleevesContent: function () {
     Engine.hideAllContent();
-    Engine.Display.sleevesContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Sleeves);
-    ReactDOM.render(<SleeveRoot player={Player} />, Engine.Display.sleevesContent);
+    ReactDOM.render(<SleeveRoot player={Player} />, Engine.Display.content);
   },
 
   loadResleevingContent: function () {
     Engine.hideAllContent();
     routing.navigateTo(Page.Resleeves);
-    Engine.Display.resleeveContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     MainMenuLinks.City.classList.add("active");
-    ReactDOM.render(<ResleeveRoot player={Player} />, Engine.Display.resleeveContent);
+    ReactDOM.render(<ResleeveRoot player={Player} />, Engine.Display.content);
   },
 
   // Helper function that hides all content
   hideAllContent: function () {
     Engine.Display.terminalContent.style.display = "none";
-    Engine.Display.characterContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.characterContent);
 
-    Engine.Display.scriptEditorContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.scriptEditorContent);
-
-    Engine.Display.activeScriptsContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);
+    Engine.Display.content.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.content);
 
     Engine.Display.infiltrationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.infiltrationContent);
 
-    Engine.Display.hacknetNodesContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.hacknetNodesContent);
-
-    Engine.Display.createProgramContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.createProgramContent);
-
-    Engine.Display.factionsContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.factionsContent);
-
-    Engine.Display.factionContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
-
-    Engine.Display.augmentationsContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.augmentationsContent);
-
-    Engine.Display.tutorialContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.tutorialContent);
-
-    Engine.Display.milestonesContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.milestonesContent);
-
-    Engine.Display.devMenuContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.devMenuContent);
-
-    Engine.Display.locationContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
-
-    Engine.Display.gangContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.gangContent);
-
-    Engine.Display.bladeburnerContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.bladeburnerContent);
-
-    Engine.Display.resleeveContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.resleeveContent);
-
-    Engine.Display.sleevesContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.sleevesContent);
-
-    Engine.Display.corporationContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.corporationContent);
-
     Engine.Display.workInProgressContent.style.display = "none";
     Engine.Display.redPillContent.style.display = "none";
     Engine.Display.cinematicTextContent.style.display = "none";
-    Engine.Display.stockMarketContent.style.display = "none";
     Engine.Display.missionContent.style.display = "none";
 
     // Make nav menu tabs inactive
@@ -1186,70 +1112,14 @@ const Engine = {
   },
 
   setDisplayElements: function () {
+    Engine.Display.content = document.getElementById("generic-react-container");
+    Engine.Display.content.style.display = "none";
     // Content elements
     Engine.Display.terminalContent = document.getElementById("terminal-container");
     routing.navigateTo(Page.Terminal);
 
-    Engine.Display.characterContent = document.getElementById("character-container");
-    Engine.Display.characterContent.style.display = "none";
-
-    Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
-    Engine.Display.scriptEditorContent.style.display = "none";
-
-    Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
-    Engine.Display.activeScriptsContent.style.display = "none";
-
-    Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
-    Engine.Display.hacknetNodesContent.style.display = "none";
-
-    Engine.Display.createProgramContent = document.getElementById("create-program-container");
-    Engine.Display.createProgramContent.style.display = "none";
-
-    Engine.Display.factionsContent = document.getElementById("factions-container");
-    Engine.Display.factionsContent.style.display = "none";
-
-    Engine.Display.factionContent = document.getElementById("faction-container");
-    Engine.Display.factionContent.style.display = "none";
-
-    Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
-    Engine.Display.augmentationsContent.style.display = "none";
-
-    Engine.Display.milestonesContent = document.getElementById("milestones-container");
-    Engine.Display.milestonesContent.style.display = "none";
-
-    Engine.Display.devMenuContent = document.getElementById("dev-menu-container");
-    Engine.Display.devMenuContent.style.display = "none";
-
-    Engine.Display.tutorialContent = document.getElementById("tutorial-container");
-    Engine.Display.tutorialContent.style.display = "none";
-
-    Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
-    Engine.Display.infiltrationContent.style.display = "none";
-
-    Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
-    Engine.Display.stockMarketContent.style.display = "none";
-
-    Engine.Display.gangContent = document.getElementById("gang-container");
-    Engine.Display.gangContent.style.display = "none";
-
-    Engine.Display.bladeburnerContent = document.getElementById("bladeburner-container");
-    Engine.Display.bladeburnerContent.style.display = "none";
-
-    Engine.Display.resleeveContent = document.getElementById("resleeve-container");
-    Engine.Display.resleeveContent.style.display = "none";
-
-    Engine.Display.sleevesContent = document.getElementById("sleeves-container");
-    Engine.Display.sleevesContent.style.display = "none";
-
-    Engine.Display.corporationContent = document.getElementById("corporation-container");
-    Engine.Display.corporationContent.style.display = "none";
-
     Engine.Display.missionContent = document.getElementById("mission-container");
     Engine.Display.missionContent.style.display = "none";
-
-    // Location page (page that shows up when you visit a specific location in World)
-    Engine.Display.locationContent = document.getElementById("location-container");
-    Engine.Display.locationContent.style.display = "none";
 
     // Work In Progress
     Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
@@ -1258,6 +1128,9 @@ const Engine = {
     // Red Pill / Hack World Daemon
     Engine.Display.redPillContent = document.getElementById("red-pill-container");
     Engine.Display.redPillContent.style.display = "none";
+
+    Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
+    Engine.Display.infiltrationContent.style.display = "none";
 
     // Cinematic Text
     Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");

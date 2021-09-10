@@ -19,7 +19,7 @@ export function ProgramsRoot(props: IProps): React.ReactElement {
   }, []);
 
   return (
-    <>
+    <div id="create-program-container">
       <p id="create-program-page-text">
         This page displays any programs that you are able to create. Writing the code for a program takes time, which
         can vary based on how complex the program is. If you are working on creating a program you can cancel at any
@@ -44,6 +44,6 @@ export function ProgramsRoot(props: IProps): React.ReactElement {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 }

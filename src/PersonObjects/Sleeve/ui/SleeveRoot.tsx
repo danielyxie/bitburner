@@ -20,7 +20,7 @@ export function SleeveRoot(props: IProps): React.ReactElement {
   }, []);
 
   return (
-    <div style={{ width: "70%" }}>
+    <div id="sleeves-container" style={{ width: "70%" }}>
       <h1>Sleeves</h1>
       <p>
         Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your consciousness has been copied. In

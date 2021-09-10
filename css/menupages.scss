@@ -12,6 +12,11 @@
   overflow-y: scroll;
 }
 
+#generic-react-container {
+  position: fixed;
+  padding: 10px;
+}
+
 /* Character Info */
 #character-container {
   padding-top: 10px;
