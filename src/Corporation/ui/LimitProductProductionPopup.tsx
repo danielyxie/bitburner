@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { Product } from "../Product";
+import { LimitProductProduction } from "../Actions";
 
 interface IProps {
   product: Product;
@@ -14,22 +15,9 @@ export function LimitProductProductionPopup(props: IProps): React.ReactElement {
   const [limit, setLimit] = useState<number | null>(null);
 
   function limitProductProduction(): void {
-    if (limit === null) {
-      props.product.prdman[props.city][0] = false;
-      removePopup(props.popupId);
-      return;
-    }
-    const qty = limit;
-    if (isNaN(qty)) {
-      dialogBoxCreate("Invalid value entered");
-      return;
-    }
-    if (qty < 0) {
-      props.product.prdman[props.city][0] = false;
-    } else {
-      props.product.prdman[props.city][0] = true;
-      props.product.prdman[props.city][1] = qty;
-    }
+    let qty = limit;
+    if (qty === null) qty = -1;
+    LimitProductProduction(props.product, props.city, qty);
     removePopup(props.popupId);
   }
 

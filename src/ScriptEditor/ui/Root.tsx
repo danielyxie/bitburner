@@ -45,7 +45,7 @@ let symbols: string[] = [];
   }
   symbols = populate(ns);
 
-  const exclude = ["heart", "break", "exploit", "bypass"];
+  const exclude = ["heart", "break", "exploit", "bypass", "corporation"];
   symbols = symbols.filter((symbol: string) => !exclude.includes(symbol));
 })();
 

@@ -13,6 +13,8 @@ import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
 import { Employee } from "./Employee";
 import { IndustryUpgrades } from "./IndustryUpgrades";
+import { IndustryResearchTrees } from "./IndustryData";
+import { ResearchMap } from "./ResearchMap";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
   for (let i = 0; i < corporation.divisions.length; ++i) {
@@ -229,6 +231,12 @@ export function SetSmartSupply(warehouse: Warehouse, smartSupply: boolean): void
   warehouse.smartSupplyEnabled = smartSupply;
 }
 
+export function SetSmartSupplyUseLeftovers(warehouse: Warehouse, material: Material, useLeftover: boolean): void {
+  if (!Object.keys(warehouse.smartSupplyUseLeftovers).includes(material.name))
+    throw new Error(`Invalid material '${material.name}'`);
+  warehouse.smartSupplyUseLeftovers[material.name] = useLeftover;
+}
+
 export function BuyMaterial(material: Material, amt: number): void {
   if (isNaN(amt)) {
     throw new Error(`Invalid amount '${amt}' to buy material '${material.name}'`);
@@ -250,7 +258,6 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
     mult += Math.pow(costMultiplier, initialPriceMult + i);
   }
   const cost = CorporationConstants.OfficeInitialCost * mult;
-  console.log(cost);
   if (corp.funds.lt(cost)) return;
   office.size += size;
   corp.funds = corp.funds.minus(cost);
@@ -346,4 +353,74 @@ export function MakeProduct(
   }
   corp.funds = corp.funds.minus(designInvest + marketingInvest);
   division.products[product.name] = product;
+}
+
+export function Research(division: IIndustry, researchName: string): void {
+  const researchTree = IndustryResearchTrees[division.type];
+  if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
+  const allResearch = researchTree.getAllNodes();
+  if (!allResearch.includes(researchName)) throw new Error(`No research named '${researchName}'`);
+  const research = ResearchMap[researchName];
+
+  if (division.sciResearch.qty < research.cost)
+    throw new Error(`You do not have enough Scientific Research for ${research.name}`);
+  division.sciResearch.qty -= research.cost;
+
+  // Get the Node from the Research Tree and set its 'researched' property
+  researchTree.research(researchName);
+  division.researched[researchName] = true;
+}
+
+export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string): void {
+  // Sanitize amt
+  let sanitizedAmt = amt.replace(/\s+/g, "");
+  sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, "");
+  let temp = sanitizedAmt.replace(/MAX/g, "1");
+  try {
+    temp = eval(temp);
+  } catch (e) {
+    throw new Error("Invalid expression entered for export amount: " + e);
+  }
+
+  const n = parseFloat(temp);
+
+  if (n == null || isNaN(n) || n < 0) {
+    throw new Error("Invalid amount entered for export");
+  }
+  const exportObj = { ind: divisionName, city: cityName, amt: sanitizedAmt };
+  material.exp.push(exportObj);
+}
+
+export function CancelExportMaterial(divisionName: string, cityName: string, material: Material, amt: string): void {
+  for (let i = 0; i < material.exp.length; ++i) {
+    if (material.exp[i].ind !== divisionName || material.exp[i].city !== cityName || material.exp[i].amt !== amt)
+      continue;
+    material.exp.splice(i, 1);
+    break;
+  }
+}
+
+export function LimitProductProduction(product: Product, cityName: string, qty: number): void {
+  if (qty < 0 || isNaN(qty)) {
+    product.prdman[cityName][0] = false;
+  } else {
+    product.prdman[cityName][0] = true;
+    product.prdman[cityName][1] = qty;
+  }
+}
+
+export function SetMaterialMarketTA1(material: Material, on: boolean): void {
+  material.marketTa1 = on;
+}
+
+export function SetMaterialMarketTA2(material: Material, on: boolean): void {
+  material.marketTa2 = on;
+}
+
+export function SetProductMarketTA1(product: Product, on: boolean): void {
+  product.marketTa1 = on;
+}
+
+export function SetProductMarketTA2(product: Product, on: boolean): void {
+  product.marketTa2 = on;
 }

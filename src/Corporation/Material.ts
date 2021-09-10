@@ -225,6 +225,38 @@ export class Material {
     }
   }
 
+  copy(): Material {
+    const material = new Material();
+    material.name = this.name;
+    material.qty = this.qty;
+    material.qlt = this.qlt;
+    material.dmd = this.dmd;
+
+    material.cmp = this.cmp;
+
+    material.mv = this.mv;
+    material.mku = this.mku;
+    material.buy = this.buy;
+    material.sll = this.sll;
+    material.prd = this.prd;
+    material.imp = this.imp;
+    material.totalExp = this.totalExp;
+    material.bCost = this.bCost;
+    material.marketTa1 = this.marketTa1;
+    material.marketTa2 = this.marketTa2;
+    material.marketTa2Price = this.marketTa2Price;
+    material.sCost = this.sCost;
+    material.prdman = [this.prdman[0], this.prdman[1]];
+    material.sllman = [this.sllman[0], this.sllman[1]];
+
+    material.dmdR = this.dmdR.slice();
+    material.cmpR = this.cmpR.slice();
+    material.exp = this.exp.slice().map((e) => {
+      return { ind: e.ind, city: e.city, amt: e.amt };
+    });
+    return material;
+  }
+
   // Serialize the current object to a JSON save state.
   toJSON(): any {
     return Generic_toJSON("Material", this);

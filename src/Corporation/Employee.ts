@@ -207,6 +207,25 @@ export class Employee {
     panel.appendChild(selector);
   }
 
+  copy(): Employee {
+    const employee = new Employee();
+    employee.name = this.name;
+    employee.mor = this.mor;
+    employee.hap = this.hap;
+    employee.ene = this.ene;
+    employee.int = this.int;
+    employee.cha = this.cha;
+    employee.exp = this.exp;
+    employee.cre = this.cre;
+    employee.eff = this.eff;
+    employee.sal = this.sal;
+    employee.pro = this.pro;
+    employee.cyclesUntilRaise = this.cyclesUntilRaise;
+    employee.loc = this.loc;
+    employee.pos = this.pos;
+    return employee;
+  }
+
   toJSON(): any {
     return Generic_toJSON("Employee", this);
   }

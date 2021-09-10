@@ -1439,6 +1439,59 @@ export class Industry implements IIndustry {
     return researchTree.getStorageMultiplier();
   }
 
+  copy(): Industry {
+    // products: { [key: string]: Product | undefined } = {};
+
+    // //Maps locations to warehouses. 0 if no warehouse at that location
+    // warehouses: { [key: string]: Warehouse | 0 };
+
+    // //Maps locations to offices. 0 if no office at that location
+    // offices: { [key: string]: OfficeSpace | 0 } = {
+    //   [CityName.Aevum]: 0,
+    //   [CityName.Chongqing]: 0,
+    //   [CityName.Sector12]: new OfficeSpace({
+    //     loc: CityName.Sector12,
+    //     size: CorporationConstants.OfficeInitialSize,
+    //   }),
+    //   [CityName.NewTokyo]: 0,
+    //   [CityName.Ishima]: 0,
+    //   [CityName.Volhaven]: 0,
+    // };
+
+    const division = new Industry();
+    division.sciResearch = this.sciResearch.copy();
+    division.researched = {};
+    for (const x of Object.keys(this.researched)) {
+      division.researched[x] = this.researched[x];
+    }
+    division.reqMats = {};
+    for (const x of Object.keys(this.reqMats)) {
+      division.reqMats[x] = this.reqMats[x];
+    }
+    division.name = this.name;
+    division.type = this.type;
+    division.makesProducts = this.makesProducts;
+    division.awareness = this.awareness;
+    division.popularity = this.popularity;
+    division.startingCost = this.startingCost;
+    division.reFac = this.reFac;
+    division.sciFac = this.sciFac;
+    division.hwFac = this.hwFac;
+    division.robFac = this.robFac;
+    division.aiFac = this.aiFac;
+    division.advFac = this.advFac;
+    division.prodMult = this.prodMult;
+    division.state = this.state;
+    division.newInd = this.newInd;
+    division.lastCycleRevenue = this.lastCycleRevenue.plus(0);
+    division.lastCycleExpenses = this.lastCycleExpenses.plus(0);
+    division.thisCycleRevenue = this.thisCycleRevenue.plus(0);
+    division.thisCycleExpenses = this.thisCycleExpenses.plus(0);
+    division.upgrades = this.upgrades.slice();
+    division.prodMats = this.prodMats.slice();
+    return division;
+  }
+
   /**
    * Serialize the current object to a JSON save state.
    */

@@ -9,19 +9,12 @@ import { ICorporation } from "./ICorporation";
 
 interface IParams {
   loc?: string;
-  cost?: number;
   size?: number;
-  comfort?: number;
-  beauty?: number;
 }
 
 export class OfficeSpace {
   loc: string;
-  cost: number;
   size: number;
-  comf: number;
-  beau: number;
-  tier = "Basic";
   minEne = 0;
   maxEne = 100;
   minHap = 0;
@@ -39,10 +32,7 @@ export class OfficeSpace {
 
   constructor(params: IParams = {}) {
     this.loc = params.loc ? params.loc : "";
-    this.cost = params.cost ? params.cost : 1;
     this.size = params.size ? params.size : 1;
-    this.comf = params.comfort ? params.comfort : 1;
-    this.beau = params.beauty ? params.beauty : 1;
   }
 
   atCapacity(): boolean {
@@ -182,6 +172,30 @@ export class OfficeSpace {
       }
     }
     return false;
+  }
+
+  copy(): OfficeSpace {
+    const office = new OfficeSpace();
+    office.loc = this.loc;
+    office.size = this.size;
+    office.minEne = this.minEne;
+    office.maxEne = this.maxEne;
+    office.minHap = this.minHap;
+    office.maxHap = this.maxHap;
+    office.maxMor = this.maxMor;
+    office.employeeProd = {
+      [EmployeePositions.Operations]: this.employeeProd[EmployeePositions.Operations],
+      [EmployeePositions.Engineer]: this.employeeProd[EmployeePositions.Engineer],
+      [EmployeePositions.Business]: this.employeeProd[EmployeePositions.Business],
+      [EmployeePositions.Management]: this.employeeProd[EmployeePositions.Management],
+      [EmployeePositions.RandD]: this.employeeProd[EmployeePositions.RandD],
+      total: this.employeeProd["total"],
+    };
+    office.employees = [];
+    for (const employee of this.employees) {
+      office.employees.push(employee.copy());
+    }
+    return office;
   }
 
   toJSON(): any {

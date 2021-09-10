@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { Warehouse } from "../Warehouse";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
-import { SetSmartSupply } from "../Actions";
+import { SetSmartSupply, SetSmartSupplyUseLeftovers } from "../Actions";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Material } from "../Material";
+import { dialogBoxCreate } from "../../../utils/DialogBox";
 
 interface ILeftoverProps {
   matName: string;
@@ -16,7 +17,12 @@ function Leftover(props: ILeftoverProps): React.ReactElement {
   const [checked, setChecked] = useState(!!props.warehouse.smartSupplyUseLeftovers[props.matName]);
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    props.warehouse.smartSupplyUseLeftovers[props.matName] = event.target.checked;
+    try {
+      const material = props.warehouse.materials[props.matName];
+      SetSmartSupplyUseLeftovers(props.warehouse, material, event.target.checked);
+    } catch (err) {
+      dialogBoxCreate(err + "");
+    }
     setChecked(event.target.checked);
   }
 

@@ -35,7 +35,15 @@ import {
   BuyCoffee,
   HireAdVert,
   MakeProduct,
+  Research,
+  ExportMaterial,
+  CancelExportMaterial,
+  SetMaterialMarketTA1,
+  SetMaterialMarketTA2,
+  SetProductMarketTA1,
+  SetProductMarketTA2,
 } from "./Corporation/Actions";
+import { Reviver } from "../utils/JSONReviver";
 import { CorporationUnlockUpgrades } from "./Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "./Corporation/data/CorporationUpgrades";
 import {
@@ -4502,86 +4510,139 @@ function NetscriptFunctions(workerScript) {
       },
     }, // End Bladeburner
 
-    // corporation: {
-    //   expandIndustry: function (industryName, divisionName) {
-    //     NewIndustry(Player.corporation, industryName, divisionName);
-    //   },
-    //   expandCity: function (divisionName, cityName) {
-    //     const division = getDivision(divisionName);
-    //     NewCity(Player.corporation, division, cityName);
-    //   },
-    //   unlockUpgrade: function (upgradeName) {
-    //     const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
-    //     if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
-    //     UnlockUpgrade(Player.corporation, upgrade);
-    //   },
-    //   levelUpgrade: function (upgradeName) {
-    //     const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
-    //     if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
-    //     LevelUpgrade(Player.corporation, upgrade);
-    //   },
-    //   issueDividends: function (percent) {
-    //     IssueDividends(Player.corporation, percent);
-    //   },
-    //   sellMaterial: function (divisionName, cityName, materialName, amt, price) {
-    //     const material = getMaterial(divisionName, cityName, materialName);
-    //     SellMaterial(material, amt, price);
-    //   },
-    //   sellProduct: function (divisionName, cityName, productName, amt, price, all) {
-    //     const product = getProduct(divisionName, productName);
-    //     SellProduct(product, cityName, amt, price, all);
-    //   },
-    //   setSmartSupply: function (divisionName, cityName, enabled) {
-    //     const warehouse = getWarehouse(divisionName, cityName);
-    //     SetSmartSupply(warehouse, enabled);
-    //   },
-    //   buyMaterial: function (divisionName, cityName, materialName, amt) {
-    //     const material = getMaterial(divisionName, cityName, materialName);
-    //     BuyMaterial(material, amt);
-    //   },
-    //   employees: function (divisionName, cityName) {
-    //     const office = getOffice(divisionName, cityName);
-    //     return office.employees.map((e) => Object.assign({}, e));
-    //   },
-    //   assignJob: function (divisionName, cityName, employeeName, job) {
-    //     const employee = getEmployee(divisionName, cityName, employeeName);
-    //     AssignJob(employee, job);
-    //   },
-    //   hireEmployee: function (divisionName, cityName) {
-    //     const office = getOffice(divisionName, cityName);
-    //     office.hireRandomEmployee();
-    //   },
-    //   upgradeOfficeSize: function (divisionName, cityName, size) {
-    //     const office = getOffice(divisionName, cityName);
-    //     UpgradeOfficeSize(Player.corporation, office, size);
-    //   },
-    //   throwParty: function (divisionName, cityName, costPerEmployee) {
-    //     const office = getOffice(divisionName, cityName);
-    //     ThrowParty(Player.corporation, office, costPerEmployee);
-    //   },
-    //   purchaseWarehouse: function (divisionName, cityName) {
-    //     PurchaseWarehouse(Player.corporation, getDivision(divisionName), cityName);
-    //   },
-    //   upgradeWarehouse: function (divisionName, cityName) {
-    //     UpgradeWarehouse(Player.corporation, getDivision(divisionName), getWarehouse(divisionName, cityName));
-    //   },
-    //   buyCoffee: function (divisionName, cityName) {
-    //     BuyCoffee(Player.corporation, getDivision(divisionName), getOffice(divisionName, cityName));
-    //   },
-    //   hireAdVert: function (divisionName) {
-    //     HireAdVert(Player.corporation, getDivision(divisionName), getOffice(divisionName, "Sector-12"));
-    //   },
-    //   makeProduct: function (divisionName, cityName, productName, designInvest, marketingInvest) {
-    //     MakeProduct(
-    //       Player.corporation,
-    //       getDivision(divisionName),
-    //       cityName,
-    //       productName,
-    //       designInvest,
-    //       marketingInvest,
-    //     );
-    //   },
-    // }, // End Corporation API
+    // Hi, if you're reading this you're a bit nosy.
+    // There's a corporation API but it's very imbalanced right now.
+    // It's here so players can test with if they want.
+    corporation: {
+      expandIndustry: function (industryName, divisionName) {
+        NewIndustry(Player.corporation, industryName, divisionName);
+      },
+      expandCity: function (divisionName, cityName) {
+        const division = getDivision(divisionName);
+        NewCity(Player.corporation, division, cityName);
+      },
+      unlockUpgrade: function (upgradeName) {
+        const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
+        if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
+        UnlockUpgrade(Player.corporation, upgrade);
+      },
+      levelUpgrade: function (upgradeName) {
+        const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
+        if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
+        LevelUpgrade(Player.corporation, upgrade);
+      },
+      issueDividends: function (percent) {
+        IssueDividends(Player.corporation, percent);
+      },
+      sellMaterial: function (divisionName, cityName, materialName, amt, price) {
+        const material = getMaterial(divisionName, cityName, materialName);
+        SellMaterial(material, amt, price);
+      },
+      sellProduct: function (divisionName, cityName, productName, amt, price, all) {
+        const product = getProduct(divisionName, productName);
+        SellProduct(product, cityName, amt, price, all);
+      },
+      discontinueProduct: function (divisionName, productName) {
+        getDivision(divisionName).discontinueProduct(getProduct(divisionName, productName));
+      },
+      setSmartSupply: function (divisionName, cityName, enabled) {
+        const warehouse = getWarehouse(divisionName, cityName);
+        SetSmartSupply(warehouse, enabled);
+      },
+      setSmartSupplyUseLeftovers: function () {},
+      buyMaterial: function (divisionName, cityName, materialName, amt) {
+        const material = getMaterial(divisionName, cityName, materialName);
+        BuyMaterial(material, amt);
+      },
+      employees: function (divisionName, cityName) {
+        const office = getOffice(divisionName, cityName);
+        return office.employees.map((e) => Object.assign({}, e));
+      },
+      assignJob: function (divisionName, cityName, employeeName, job) {
+        const employee = getEmployee(divisionName, cityName, employeeName);
+        AssignJob(employee, job);
+      },
+      hireEmployee: function (divisionName, cityName) {
+        const office = getOffice(divisionName, cityName);
+        office.hireRandomEmployee();
+      },
+      upgradeOfficeSize: function (divisionName, cityName, size) {
+        const office = getOffice(divisionName, cityName);
+        UpgradeOfficeSize(Player.corporation, office, size);
+      },
+      throwParty: function (divisionName, cityName, costPerEmployee) {
+        const office = getOffice(divisionName, cityName);
+        ThrowParty(Player.corporation, office, costPerEmployee);
+      },
+      purchaseWarehouse: function (divisionName, cityName) {
+        PurchaseWarehouse(Player.corporation, getDivision(divisionName), cityName);
+      },
+      upgradeWarehouse: function (divisionName, cityName) {
+        UpgradeWarehouse(Player.corporation, getDivision(divisionName), getWarehouse(divisionName, cityName));
+      },
+      buyCoffee: function (divisionName, cityName) {
+        BuyCoffee(Player.corporation, getDivision(divisionName), getOffice(divisionName, cityName));
+      },
+      hireAdVert: function (divisionName) {
+        HireAdVert(Player.corporation, getDivision(divisionName), getOffice(divisionName, "Sector-12"));
+      },
+      makeProduct: function (divisionName, cityName, productName, designInvest, marketingInvest) {
+        MakeProduct(
+          Player.corporation,
+          getDivision(divisionName),
+          cityName,
+          productName,
+          designInvest,
+          marketingInvest,
+        );
+      },
+      research: function (divisionName, researchName) {
+        Research(getDivision(divisionName), researchName);
+      },
+      exportMaterial: function (sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt) {
+        ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
+      },
+      cancelExportMaterial: function (sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt) {
+        CancelExportMaterial(
+          targetDivision,
+          targetCity,
+          getMaterial(sourceDivision, sourceCity, materialName),
+          amt + "",
+        );
+      },
+      setMaterialMarketTA1: function (divisionName, cityName, materialName, on) {
+        SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
+      },
+      setMaterialMarketTA2: function (divisionName, cityName, materialName, on) {
+        SetMaterialMarketTA2(getMaterial(divisionName, cityName, materialName), on);
+      },
+      setProductMarketTA1: function (divisionName, productName, on) {
+        SetProductMarketTA1(getProduct(divisionName, productName), on);
+      },
+      setProductMarketTA2: function (divisionName, productName, on) {
+        SetProductMarketTA2(getProduct(divisionName, productName), on);
+      },
+      // If you modify these objects you will affect them for real, it's not
+      // copies.
+      getDivision: function (divisionName) {
+        return getDivision(divisionName);
+      },
+      getOffice: function (divisionName, cityName) {
+        return getOffice(divisionName, cityName);
+      },
+      getWarehouse: function (divisionName, cityName) {
+        return getWarehouse(divisionName, cityName);
+      },
+      getMaterial: function (divisionName, cityName, materialName) {
+        return getMaterial(divisionName, cityName, materialName);
+      },
+      getProduct: function (divisionName, productName) {
+        return getProduct(divisionName, productName);
+      },
+      getEmployee: function (divisionName, cityName, employeeName) {
+        return getEmployee(divisionName, cityName, employeeName);
+      },
+    }, // End Corporation API
 
     // Coding Contract API
     codingcontract: {

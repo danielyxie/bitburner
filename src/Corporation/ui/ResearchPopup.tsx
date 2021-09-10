@@ -6,6 +6,7 @@ import { CorporationConstants } from "../data/Constants";
 import { ResearchMap } from "../ResearchMap";
 import { Treant } from "treant-js";
 import { IIndustry } from "../IIndustry";
+import { Research } from "../Actions";
 
 interface IProps {
   industry: IIndustry;
@@ -61,22 +62,18 @@ export function ResearchPopup(props: IProps): React.ReactElement {
       }
 
       div.addEventListener("click", () => {
-        if (props.industry.sciResearch.qty >= research.cost) {
-          props.industry.sciResearch.qty -= research.cost;
-
-          // Get the Node from the Research Tree and set its 'researched' property
-          researchTree.research(allResearch[i]);
-          props.industry.researched[allResearch[i]] = true;
-
-          dialogBoxCreate(
-            `Researched ${allResearch[i]}. It may take a market cycle ` +
-              `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
-              `the Research apply.`,
-          );
-          removePopup(props.popupId);
-        } else {
-          dialogBoxCreate(`You do not have enough Scientific Research for ${research.name}`);
+        try {
+          Research(props.industry, allResearch[i]);
+        } catch (err) {
+          dialogBoxCreate(err + "");
         }
+
+        dialogBoxCreate(
+          `Researched ${allResearch[i]}. It may take a market cycle ` +
+            `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
+            `the Research apply.`,
+        );
+        removePopup(props.popupId);
       });
     }
   });

@@ -5,6 +5,7 @@ import { ICorporation } from "../ICorporation";
 import { Material } from "../Material";
 import { Export } from "../Export";
 import { IIndustry } from "../IIndustry";
+import { ExportMaterial } from "../Actions";
 
 interface IProps {
   mat: Material;
@@ -39,28 +40,11 @@ export function ExportPopup(props: IProps): React.ReactElement {
   }
 
   function exportMaterial(): void {
-    const industryName = industry;
-    const cityName = city;
-
-    // Sanitize amt
-    let sanitizedAmt = amt.replace(/\s+/g, "");
-    sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, "");
-    let temp = sanitizedAmt.replace(/MAX/g, "1");
     try {
-      temp = eval(temp);
-    } catch (e) {
-      dialogBoxCreate("Invalid expression entered for export amount: " + e);
-      return;
+      ExportMaterial(industry, city, props.mat, amt);
+    } catch (err) {
+      dialogBoxCreate(err + "");
     }
-
-    const n = parseFloat(temp);
-
-    if (n == null || isNaN(n) || n < 0) {
-      dialogBoxCreate("Invalid amount entered for export");
-      return;
-    }
-    const exportObj = { ind: industryName, city: cityName, amt: sanitizedAmt };
-    props.mat.exp.push(exportObj);
     removePopup(props.popupId);
   }
 
