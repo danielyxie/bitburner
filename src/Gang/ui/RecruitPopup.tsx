@@ -36,13 +36,8 @@ export function RecruitPopup(props: IRecruitPopupProps): React.ReactElement {
     removePopup(props.popupId);
   }
 
-  function cancel(): void {
-    removePopup(props.popupId);
-  }
-
   function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.keyCode === 13) recruit();
-    if (event.keyCode === 27) cancel();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -63,9 +58,6 @@ export function RecruitPopup(props: IRecruitPopupProps): React.ReactElement {
       />
       <a className="std-button" onClick={recruit}>
         Recruit Gang Member
-      </a>
-      <a className="std-button" onClick={cancel}>
-        Cancel
       </a>
     </>
   );
