@@ -1,6 +1,5 @@
 import React from "react";
 import { removePopup } from "../../ui/React/createPopup";
-import { BladeburnerConstants } from "../data/Constants";
 import { IBladeburner } from "../IBladeburner";
 import { WorldMap } from "../../ui/React/WorldMap";
 import { CityName } from "../../Locations/data/CityNames";

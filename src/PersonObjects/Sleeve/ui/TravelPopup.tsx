@@ -2,7 +2,6 @@ import React from "react";
 import { Sleeve } from "../Sleeve";
 import { IPlayer } from "../../IPlayer";
 import { CONSTANTS } from "../../../Constants";
-import { Cities } from "../../../Locations/Cities";
 import { removePopup } from "../../../ui/React/createPopup";
 import { Money } from "../../../ui/React/Money";
 import { WorldMap } from "../../../ui/React/WorldMap";

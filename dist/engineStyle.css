@@ -3130,12 +3130,15 @@ input[type="checkbox"] {
 
 /* COLORS */
 /* Attributes */
-#bladeburner-container a,
-#bladeburner-container div,
-#bladeburner-container p,
-#bladeburner-container pre,
-#bladeburner-container td {
-  font-size: 13px; }
+#bladeburner-container {
+  position: fixed;
+  padding: 6px; }
+  #bladeburner-container a,
+  #bladeburner-container div,
+  #bladeburner-container p,
+  #bladeburner-container pre,
+  #bladeburner-container td {
+    font-size: 13px; }
 
 .bladeburner-action {
   border: 1px solid #fff;
@@ -3280,12 +3283,14 @@ input[type="checkbox"] {
  */
 /* COLORS */
 /* Attributes */
-.sleeve-container {
+#sleeves-container {
+  position: fixed;
+  padding: 6px; }
+
+.sleeve-elem {
   border: 1px solid white;
   margin: 4px;
-  width: 75%; }
-  .sleeve-container p {
-    font-size: 14px; }
+  display: block; }
 
 .sleeves-page-info {
   display: "block";
@@ -3303,11 +3308,15 @@ input[type="checkbox"] {
  */
 /* COLORS */
 /* Attributes */
-.resleeve-container {
+#resleeve-container {
+  position: fixed;
+  padding: 6px; }
+
+.resleeve-elem {
   border: 1px solid white;
   margin: 4px;
   width: 75%; }
-  .resleeve-container p {
+  .resleeve-elem p {
     font-size: 13px; }
 
 .resleeve-panel {
@@ -6284,6 +6293,10 @@ html {
     color: transparent; }
   50% {
     color: #adff2f; } }
+
+#corporation-container {
+  position: fixed;
+  padding: 6px; }
 
 
 /*# sourceMappingURL=engineStyle.css.map*/

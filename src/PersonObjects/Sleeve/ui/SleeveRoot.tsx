@@ -1,45 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Sleeve } from "../Sleeve";
-import { SleeveTaskType } from "../SleeveTaskTypesEnum";
-import { SleeveFaq } from "../data/SleeveFaq";
-
 import { IPlayer } from "../../IPlayer";
 
-import { Faction } from "../../../Faction/Faction";
-import { Factions } from "../../../Faction/Factions";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
-
-import { Crime } from "../../../Crime/Crime";
-import { Crimes } from "../../../Crime/Crimes";
-import { CityName } from "../../../Locations/data/CityNames";
-import { LocationName } from "../../../Locations/data/LocationNames";
-
-import { numeralWrapper } from "../../../ui/numeralFormat";
-import { Page, routing } from "../../../ui/navigationTracking";
-
-import { dialogBoxCreate } from "../../../../utils/DialogBox";
-
-import { createProgressBarText } from "../../../../utils/helpers/createProgressBarText";
-import { exceptionAlert } from "../../../../utils/helpers/exceptionAlert";
-
-import { clearEventListeners } from "../../../../utils/uiHelpers/clearEventListeners";
-import { createElement } from "../../../../utils/uiHelpers/createElement";
-import { createOptionElement } from "../../../../utils/uiHelpers/createOptionElement";
-import { createPopup } from "../../../ui/React/createPopup";
-import { getSelectValue } from "../../../../utils/uiHelpers/getSelectData";
-import { removeChildrenFromElement } from "../../../../utils/uiHelpers/removeChildrenFromElement";
-import { removeElement } from "../../../../utils/uiHelpers/removeElement";
-
-import { SleeveAugmentationsPopup } from "../ui/SleeveAugmentationsPopup";
-import { TravelPopup } from "../ui/TravelPopup";
-import { EarningsTableElement } from "../ui/EarningsTableElement";
-import { Money } from "../../../ui/React/Money";
-import { MoneyRate } from "../../../ui/React/MoneyRate";
-import { ReputationRate } from "../../../ui/React/ReputationRate";
-import { StatsElement } from "../ui/StatsElement";
-import { MoreStatsContent } from "../ui/MoreStatsContent";
-import { MoreEarningsContent } from "../ui/MoreEarningsContent";
 import { SleeveElem } from "../ui/SleeveElem";
 
 interface IProps {

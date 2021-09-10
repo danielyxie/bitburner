@@ -121,7 +121,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.52.9",
+  Version: "0.53.0",
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -344,35 +344,83 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v0.52.9 - 2021-08-27 Less lag! (hydroflame & community)
+    v0.53.0 - 2021-09-09 Way too many things. (hydroflame & community)
     -------------------------------------------
 
-    ** Active Scripts page **
+    ** Dev? **
 
-    * Now less laggy, has pagination.
+    * The entire codebase has been run through a code prettifier, hurray for consistency. (@threehams)
+    * Lots of test. (@threehams)
+    * Massive improvements to build speed. (@threehams)
+    * Dev notes: This won't affect any players but is immensely useful for me.
 
-    ** File diagnostic ** 
+    ** Hacknet **
 
-    * Added a popup found under options that shows the files you own and how
-      large they are. This help find bugs and leftover massive logs files.
+    * Converted to ts/react
 
-    ** Corporation **
+    ** Resleeving **
 
-    * Added safeguard against a very specific bug that causes NaN money. I'm
-      still not sure what the root cause is but it should prevent corp from
-      breaking.
+    * Converted to ts/react
 
-    ** Netscript ** 
+    ** Sleeves **
 
-    * tprintf is a new function that doesn't print the filename.
+    * Converted to ts/react. The ui should also have a better feel.
+    * Fixed a bug that allowed players to recover shock much faster than intended.
+
+    ** BN10 **
+
+    * You have access to Sleeves right away
+    * In BN10 Sleeves start with 75 shock and 25 sync.
+
+    ** MathJax **
+
+    * Several tooltips have been updated to display the relevant formula in Mathjax, e.g. Favor and reputation
+
+    ** Corporation ** 
+
+    * Completely rewritten in React. Paving the way for bigger change.
+    * Smart Supply is now smarter and won't deadlock the warehouse. It is also more configurable.
+    * Several UI fixes.
+
+    ** Bladeburner ** 
+
+    * Action count is no longer decided when joining the Bladeburners. Experiences for all players should be more similar.
+
+    ** Factions ** 
+
+    * No factions have home computer ram requirement. This caused some confusion for new players.
+
+    ** Gang ** 
+
+    * Made it clear when there's a new equipment coming up.
+
+    ** Netscript **
+
+    * getActionCountRemaining now returns Infinity for bladeburner general actions. (@brubsy)
+    * getActionEstimatedSuccessChance now returns 100% for Diplomacy and Hyperbolic Regeneration Chamber. (@brubsy)
+    * disableLog('ALL') now disables all logs individually, meaning you can re-enable the ones you want after. (@Cass)
+    * getPlayer returns numPeopleKilled.
+    * Dynamic RAM calculation errors have a better error message.
+    * Hide some functions from autocomplete.
+    * Added getAugmentationPrice, getAugmentationRepReq, deprecated getAugmentationCost. (@TempFound)
+    * Fixed bug where some crime API would return "assassinate" when that's not accepted in other functions.
+
+    ** Coding Contract **
+
+    * Spiralize Matrix is easier to read.
 
     ** Misc. **
 
-    * Infiltration kills you if you try to automate it. (@threehams)
-    * Fix beautify button not working
-    * Added bladeburner_analysis_mult to getPlayer() (@brusby)
-    * Fixed joining bladeburner via netscript functions. (@omuretsu)
-    * All bladeburner actions are click-to-copy
+    * The world map is now used in sleeve travel and bladeburner travel.
+    * noselect a bunch of stuff.
+    * Ascii maps letters are more contrasting
+    * Updated documentation for infiltration.
+    * Most money costs in the game will turn grey/cyan when you don't have enough money.
+    * Donation textbox has better look & feel.
+    * Tech vendors ram & cores buttons have better look and feels.
+    * cores cost modified to be a formula instead of a semi-random array of numbers.
+    * Tech vendors now give a hint about where to get bigger servers.
+    * logboxes now displays whitespaces exactly. (@Cass)
     * nerf noodle bar
 `,
 

@@ -41,7 +41,7 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
       forbiddenCompanies.push(otherSleeve.currentTaskLocation);
     }
   }
-  let allJobs: string[] = Object.keys(player.jobs);
+  const allJobs: string[] = Object.keys(player.jobs);
   for (let i = 0; i < allJobs.length; ++i) {
     if (!forbiddenCompanies.includes(allJobs[i])) {
       allJobs[i];
@@ -84,7 +84,7 @@ const tasks: {
   ["Shock Recovery"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
   ["Synchronize"]: (player: IPlayer, sleeve: Sleeve) => ITaskDetails;
 } = {
-  "------": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+  "------": (): ITaskDetails => {
     return { first: ["------"], second: () => ["------"] };
   },
   "Work for Company": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
@@ -116,7 +116,7 @@ const tasks: {
       },
     };
   },
-  "Commit Crime": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+  "Commit Crime": (): ITaskDetails => {
     return { first: Object.keys(Crimes), second: () => ["------"] };
   },
   "Take University Course": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
@@ -157,10 +157,10 @@ const tasks: {
 
     return { first: gymSelectorOptions, second: () => gyms };
   },
-  "Shock Recovery": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+  "Shock Recovery": (): ITaskDetails => {
     return { first: ["------"], second: () => ["------"] };
   },
-  Synchronize: (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+  Synchronize: (): ITaskDetails => {
     return { first: ["------"], second: () => ["------"] };
   },
 };
@@ -176,16 +176,14 @@ const canDo: {
   ["Shock Recovery"]: (player: IPlayer, sleeve: Sleeve) => boolean;
   ["Synchronize"]: (player: IPlayer, sleeve: Sleeve) => boolean;
 } = {
-  ["------"]: () => true,
-  ["Work for Company"]: (player: IPlayer, sleeve: Sleeve) => possibleJobs(player, sleeve).length > 0,
-  ["Work for Faction"]: (player: IPlayer, sleeve: Sleeve) => possibleFactions(player, sleeve).length > 0,
-  ["Commit Crime"]: () => true,
-  ["Take University Course"]: (player: IPlayer, sleeve: Sleeve) =>
-    [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  ["Workout at Gym"]: (player: IPlayer, sleeve: Sleeve) =>
-    [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  ["Shock Recovery"]: (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
-  ["Synchronize"]: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
+  "------": () => true,
+  "Work for Company": (player: IPlayer, sleeve: Sleeve) => possibleJobs(player, sleeve).length > 0,
+  "Work for Faction": (player: IPlayer, sleeve: Sleeve) => possibleFactions(player, sleeve).length > 0,
+  "Commit Crime": () => true,
+  "Take University Course": (player: IPlayer, sleeve: Sleeve) => [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
+  "Workout at Gym": (player: IPlayer, sleeve: Sleeve) => [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
+  "Shock Recovery": (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
+  Synchronize: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
 };
 
 function getABC(sleeve: Sleeve): [string, string, string] {
@@ -194,7 +192,7 @@ function getABC(sleeve: Sleeve): [string, string, string] {
       return ["------", "------", "------"];
     case SleeveTaskType.Company:
       return ["Work for Company", sleeve.currentTaskLocation, "------"];
-    case SleeveTaskType.Faction:
+    case SleeveTaskType.Faction: {
       let workType = "";
       switch (sleeve.factionWorkType) {
         case FactionWorkType.Hacking:
@@ -208,6 +206,7 @@ function getABC(sleeve: Sleeve): [string, string, string] {
           break;
       }
       return ["Work for Faction", sleeve.currentTaskLocation, workType];
+    }
     case SleeveTaskType.Crime:
       return ["Commit Crime", sleeve.crimeType, "------"];
     case SleeveTaskType.Class:
@@ -227,8 +226,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
   const [s1, setS1] = useState(abc[1]);
   const [s2, setS2] = useState(abc[2]);
 
-  const validActions = Object.keys(canDo).filter((k) =>
-    (canDo[k] as (player: IPlayer, sleeve: Sleeve) => boolean)(props.player, props.sleeve),
+  const validActions = Object.keys(canDo).filter((k) => (canDo[k] as (player: IPlayer, sleeve: Sleeve) => boolean)(props.player, props.sleeve),
   );
 
   const detailsF = tasks[s0];

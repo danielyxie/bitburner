@@ -1,36 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
-import { SleeveFaq } from "../data/SleeveFaq";
 
 import { IPlayer } from "../../IPlayer";
 import { CONSTANTS } from "../../../Constants";
 
-import { Faction } from "../../../Faction/Faction";
-import { Factions } from "../../../Faction/Factions";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
-
-import { Crime } from "../../../Crime/Crime";
 import { Crimes } from "../../../Crime/Crimes";
-import { CityName } from "../../../Locations/data/CityNames";
-import { LocationName } from "../../../Locations/data/LocationNames";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
-import { Page, routing } from "../../../ui/navigationTracking";
 
 import { dialogBoxCreate } from "../../../../utils/DialogBox";
 
 import { createProgressBarText } from "../../../../utils/helpers/createProgressBarText";
-import { exceptionAlert } from "../../../../utils/helpers/exceptionAlert";
 
-import { clearEventListeners } from "../../../../utils/uiHelpers/clearEventListeners";
-import { createElement } from "../../../../utils/uiHelpers/createElement";
-import { createOptionElement } from "../../../../utils/uiHelpers/createOptionElement";
 import { createPopup } from "../../../ui/React/createPopup";
-import { getSelectValue } from "../../../../utils/uiHelpers/getSelectData";
-import { removeChildrenFromElement } from "../../../../utils/uiHelpers/removeChildrenFromElement";
-import { removeElement } from "../../../../utils/uiHelpers/removeElement";
 
 import { SleeveAugmentationsPopup } from "../ui/SleeveAugmentationsPopup";
 import { TravelPopup } from "../ui/TravelPopup";
@@ -80,30 +64,29 @@ export function SleeveElem(props: IProps): React.ReactElement {
 
   function setTask(): void {
     props.sleeve.resetTaskStatus(); // sets to idle
-    let res;
     switch (abc[0]) {
       case "------":
         break;
       case "Work for Company":
-        res = props.sleeve.workForCompany(props.player, abc[1]);
+        props.sleeve.workForCompany(props.player, abc[1]);
         break;
       case "Work for Faction":
-        res = props.sleeve.workForFaction(props.player, abc[1], abc[2]);
+        props.sleeve.workForFaction(props.player, abc[1], abc[2]);
         break;
       case "Commit Crime":
-        res = props.sleeve.commitCrime(props.player, abc[1]);
+        props.sleeve.commitCrime(props.player, abc[1]);
         break;
       case "Take University Course":
-        res = props.sleeve.takeUniversityCourse(props.player, abc[2], abc[1]);
+        props.sleeve.takeUniversityCourse(props.player, abc[2], abc[1]);
         break;
       case "Workout at Gym":
-        res = props.sleeve.workoutAtGym(props.player, abc[2], abc[1]);
+        props.sleeve.workoutAtGym(props.player, abc[2], abc[1]);
         break;
       case "Shock Recovery":
-        res = props.sleeve.shockRecovery(props.player);
+        props.sleeve.shockRecovery(props.player);
         break;
       case "Synchronize":
-        res = props.sleeve.synchronize(props.player);
+        props.sleeve.synchronize(props.player);
         break;
       default:
         console.error(`Invalid/Unrecognized taskValue in setSleeveTask(): ${abc[0]}`);
