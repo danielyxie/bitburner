@@ -218,7 +218,7 @@ const Engine = {
   loadCharacterContent: function () {
     Engine.hideAllContent();
     Engine.Display.characterContent.style.display = "block";
-    Engine.updateCharacterInfo();
+    ReactDOM.render(<CharacterInfo player={Player} />, Engine.Display.characterInfo);
     routing.navigateTo(Page.CharacterInfo);
     MainMenuLinks.Stats.classList.add("active");
   },
@@ -447,6 +447,8 @@ const Engine = {
   hideAllContent: function () {
     Engine.Display.terminalContent.style.display = "none";
     Engine.Display.characterContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.characterContent);
+
     Engine.Display.scriptEditorContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.scriptEditorContent);
 
@@ -538,11 +540,6 @@ const Engine = {
     } else {
       save.classList.remove(flashClass);
     }
-  },
-
-  /// Display character info
-  updateCharacterInfo: function () {
-    ReactDOM.render(CharacterInfo(Player), Engine.Display.characterInfo);
   },
 
   // Main Game Loop
@@ -676,7 +673,6 @@ const Engine = {
     autoSaveCounter: 300,
     updateSkillLevelsCounter: 10,
     updateDisplays: 3,
-    updateDisplaysMed: 9,
     updateDisplaysLong: 15,
     updateActiveScriptsDisplay: 5,
     createProgramNotifications: 10,
@@ -718,17 +714,6 @@ const Engine = {
       Engine.Counters.updateSkillLevelsCounter = 10;
     }
 
-    if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
-      if (routing.isOn(Page.ActiveScripts)) {
-        ReactDOM.render(
-          <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
-          Engine.Display.activeScriptsContent,
-        );
-      }
-
-      Engine.Counters.updateActiveScriptsDisplay = 5;
-    }
-
     if (Engine.Counters.updateDisplays <= 0) {
       Engine.displayCharacterOverviewInfo();
       if (routing.isOn(Page.CreateProgram)) {
@@ -736,13 +721,6 @@ const Engine = {
       }
 
       Engine.Counters.updateDisplays = 3;
-    }
-
-    if (Engine.Counters.updateDisplaysMed <= 0) {
-      if (routing.isOn(Page.CharacterInfo)) {
-        Engine.updateCharacterInfo();
-      }
-      Engine.Counters.updateDisplaysMed = 9;
     }
 
     if (Engine.Counters.createProgramNotifications <= 0) {
