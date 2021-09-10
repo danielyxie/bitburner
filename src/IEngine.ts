@@ -3,6 +3,8 @@
  * to TypeScript at the moment
  */
 export interface IEngine {
+  indexedDb: any;
+  _lastUpdate: number;
   hideAllContent: () => void;
   loadBladeburnerContent: () => void;
   loadFactionContent: () => void;

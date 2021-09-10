@@ -3,6 +3,7 @@
 import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 
 interface IMainMenuLinks {
+  [key: string]: HTMLElement | undefined;
   Terminal: HTMLElement;
   ScriptEditor: HTMLElement;
   ActiveScripts: HTMLElement;

@@ -21,7 +21,7 @@ import { generateRandomContract } from "./CodingContractGenerator";
 import { initCompanies } from "./Company/Companies";
 import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
-import { createDevMenu, closeDevMenu } from "./DevMenu";
+import { DevMenuRoot } from "./DevMenu";
 import { Factions, initFactions } from "./Faction/Factions";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { FactionList } from "./Faction/ui/FactionList";
@@ -188,6 +188,7 @@ const Engine = {
     factionContent: null,
     augmentationsContent: null,
     milestonesContent: null,
+    devMenuContent: null,
     tutorialContent: null,
     infiltrationContent: null,
     stockMarketContent: null,
@@ -313,7 +314,11 @@ const Engine = {
   // TODO reactify
   loadDevMenuContent: function () {
     Engine.hideAllContent();
-    createDevMenu();
+    if (process.env.NODE_ENV !== "development") {
+      throw new Error("Cannot create Dev Menu because you are not in a dev build");
+    }
+    Engine.Display.devMenuContent.style.display = "block";
+    ReactDOM.render(<DevMenuRoot player={Player} engine={this} />, Engine.Display.devMenuContent);
     routing.navigateTo(Page.DevMenu);
     MainMenuLinks.DevMenu.classList.add("active");
   },
@@ -472,6 +477,7 @@ const Engine = {
 
     Engine.Display.activeScriptsContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);
+
     Engine.Display.infiltrationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.infiltrationContent);
 
@@ -479,6 +485,7 @@ const Engine = {
     ReactDOM.unmountComponentAtNode(Engine.Display.hacknetNodesContent);
 
     Engine.Display.createProgramContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.createProgramContent);
 
     Engine.Display.factionsContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.factionsContent);
@@ -489,8 +496,14 @@ const Engine = {
     Engine.Display.augmentationsContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.augmentationsContent);
 
-    Engine.Display.milestonesContent.style.display = "none";
     Engine.Display.tutorialContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.tutorialContent);
+
+    Engine.Display.milestonesContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.milestonesContent);
+
+    Engine.Display.devMenuContent.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.devMenuContent);
 
     Engine.Display.locationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
@@ -518,34 +531,13 @@ const Engine = {
 
     // Make nav menu tabs inactive
     Engine.inactivateMainMenuLinks();
-
-    // Close dev menu
-    closeDevMenu();
   },
 
   // Remove 'active' css class from all main menu links
   inactivateMainMenuLinks: function () {
-    MainMenuLinks.Terminal.classList.remove("active");
-    MainMenuLinks.ScriptEditor.classList.remove("active");
-    MainMenuLinks.ActiveScripts.classList.remove("active");
-    MainMenuLinks.CreateProgram.classList.remove("active");
-    MainMenuLinks.Stats.classList.remove("active");
-    MainMenuLinks.Factions.classList.remove("active");
-    MainMenuLinks.Augmentations.classList.remove("active");
-    MainMenuLinks.HacknetNodes.classList.remove("active");
-    MainMenuLinks.Sleeves.classList.remove("active");
-    MainMenuLinks.City.classList.remove("active");
-    MainMenuLinks.Travel.classList.remove("active");
-    MainMenuLinks.Job.classList.remove("active");
-    MainMenuLinks.StockMarket.classList.remove("active");
-    MainMenuLinks.Gang.classList.remove("active");
-    MainMenuLinks.Bladeburner.classList.remove("active");
-    MainMenuLinks.Corporation.classList.remove("active");
-    MainMenuLinks.Gang.classList.remove("active");
-    MainMenuLinks.Milestones.classList.remove("active");
-    MainMenuLinks.Tutorial.classList.remove("active");
-    MainMenuLinks.Options.classList.remove("active");
-    MainMenuLinks.DevMenu.classList.remove("active");
+    for (const link of Object.keys(MainMenuLinks)) {
+      MainMenuLinks[link].classList.remove("active");
+    }
   },
 
   displayCharacterOverviewInfo: function () {
@@ -1224,6 +1216,9 @@ const Engine = {
 
     Engine.Display.milestonesContent = document.getElementById("milestones-container");
     Engine.Display.milestonesContent.style.display = "none";
+
+    Engine.Display.devMenuContent = document.getElementById("dev-menu-container");
+    Engine.Display.devMenuContent.style.display = "none";
 
     Engine.Display.tutorialContent = document.getElementById("tutorial-container");
     Engine.Display.tutorialContent.style.display = "none";

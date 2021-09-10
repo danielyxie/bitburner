@@ -21,15 +21,18 @@ import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { Exploit } from "../Exploits/Exploit";
 import { ICorporation } from "../Corporation/ICorporation";
+import { IGang } from "../Gang/IGang";
+import { IBladeburner } from "../Bladeburner/IBladeburner";
 
 export interface IPlayer {
   // Class members
   augmentations: IPlayerOwnedAugmentation[];
-  bladeburner: any;
   bitNodeN: number;
   city: CityName;
   companyName: string;
   corporation: ICorporation;
+  gang: IGang;
+  bladeburner: IBladeburner;
   currentServer: string;
   factions: string[];
   factionInvitations: string[];
@@ -63,6 +66,7 @@ export interface IPlayer {
   sleevesFromCovenant: number;
   sourceFiles: IPlayerOwnedSourceFile[];
   exploits: Exploit[];
+  lastUpdate: number;
   totalPlaytime: number;
 
   // Stats
@@ -81,6 +85,7 @@ export interface IPlayer {
   dexterity_exp: number;
   agility_exp: number;
   charisma_exp: number;
+  intelligence_exp: number;
 
   // Multipliers
   hacking_chance_mult: number;
@@ -193,4 +198,7 @@ export interface IPlayer {
   quitJob(company: string): void;
   createHacknetServer(): void;
   startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
+  queueAugmentation(augmentationName: string): void;
+  receiveInvite(factionName: string): void;
+  updateSkillLevels(): void;
 }
