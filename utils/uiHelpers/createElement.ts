@@ -36,6 +36,7 @@ interface ICreateElementLabelOptions {
 interface ICreateElementListenerOptions {
   changeListener?(this: HTMLElement, ev: Event): any;
   clickListener?(this: HTMLElement, ev: MouseEvent): any;
+  mouseDown?(this: HTMLElement, ev: MouseEvent): any;
   inputListener?(this: HTMLElement, ev: Event): any;
   onfocus?(this: HTMLElement, ev: FocusEvent): any;
   onkeydown?(this: HTMLElement, ev: KeyboardEvent): any;
@@ -157,6 +158,9 @@ function setElementListeners(el: HTMLElement, params: ICreateElementListenerOpti
   // tslint:disable:no-unbound-method
   if (params.clickListener !== undefined) {
     el.addEventListener("click", params.clickListener);
+  }
+  if (params.mouseDown !== undefined) {
+    el.addEventListener("mousedown", params.mouseDown);
   }
   if (params.inputListener !== undefined) {
     el.addEventListener("input", params.inputListener);

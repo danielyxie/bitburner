@@ -11,6 +11,8 @@ import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
 import { CorporationUpgrade } from "./data/CorporationUpgrades";
 import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
+import { Employee } from "./Employee";
+import { IndustryUpgrades } from "./IndustryUpgrades";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
   for (let i = 0; i < corporation.divisions.length; ++i) {
@@ -276,4 +278,72 @@ export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city:
     size: CorporationConstants.WarehouseInitialSize,
   });
   corp.funds = corp.funds.minus(CorporationConstants.WarehouseInitialCost);
+}
+
+export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse): void {
+  const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+  ++warehouse.level;
+  warehouse.updateSize(corp, division);
+  corp.funds = corp.funds.minus(sizeUpgradeCost);
+}
+
+export function BuyCoffee(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
+  const upgrade = IndustryUpgrades[0];
+  const cost = office.employees.length * upgrade[1];
+  if (corp.funds.lt(cost)) return;
+  corp.funds = corp.funds.minus(cost);
+  division.upgrade(upgrade, {
+    corporation: corp,
+    office: office,
+  });
+}
+
+export function HireAdVert(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
+  const upgrade = IndustryUpgrades[1];
+  const cost = upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
+  if (corp.funds.lt(cost)) return;
+  corp.funds = corp.funds.minus(cost);
+  division.upgrade(upgrade, {
+    corporation: corp,
+    office: office,
+  });
+}
+
+export function MakeProduct(
+  corp: ICorporation,
+  division: IIndustry,
+  city: string,
+  productName: string,
+  designInvest: number,
+  marketingInvest: number,
+): void {
+  if (designInvest < 0) {
+    designInvest = 0;
+  }
+  if (marketingInvest < 0) {
+    marketingInvest = 0;
+  }
+  if (productName == null || productName === "") {
+    throw new Error("You must specify a name for your product!");
+  }
+  if (isNaN(designInvest)) {
+    throw new Error("Invalid value for design investment");
+  }
+  if (isNaN(marketingInvest)) {
+    throw new Error("Invalid value for marketing investment");
+  }
+  if (corp.funds.lt(designInvest + marketingInvest)) {
+    throw new Error("You don't have enough company funds to make this large of an investment");
+  }
+  const product = new Product({
+    name: productName.replace(/[<>]/g, ""), //Sanitize for HTMl elements
+    createCity: city,
+    designCost: designInvest,
+    advCost: marketingInvest,
+  });
+  if (division.products[product.name] instanceof Product) {
+    throw new Error(`You already have a product with this name!`);
+  }
+  corp.funds = corp.funds.minus(designInvest + marketingInvest);
+  division.products[product.name] = product;
 }

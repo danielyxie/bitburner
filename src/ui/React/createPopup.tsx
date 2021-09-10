@@ -57,7 +57,7 @@ export function createPopup<T>(
       display: "flex",
       id: id,
       backgroundColor: backgroundColor,
-      clickListener: onClick,
+      mouseDown: onClick,
     });
 
     gameContainer.appendChild(container);

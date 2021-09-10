@@ -5,6 +5,7 @@ import { Industries } from "../IndustryData";
 import { Product } from "../Product";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
+import { MakeProduct } from "../Actions";
 
 interface IProps {
   popupText: string;
@@ -36,37 +37,13 @@ export function MakeProductPopup(props: IProps): React.ReactElement {
   if (props.division.hasMaximumNumberProducts()) return <></>;
 
   function makeProduct(): void {
-    let designInvest = design;
-    let marketingInvest = marketing;
-    if (designInvest == null || designInvest < 0) {
-      designInvest = 0;
+    if (design === null || marketing === null) return;
+    try {
+      MakeProduct(props.corp, props.division, city, name, design, marketing);
+    } catch (err) {
+      dialogBoxCreate(err + "");
     }
-    if (marketingInvest == null || marketingInvest < 0) {
-      marketingInvest = 0;
-    }
-    if (name == null || name === "") {
-      dialogBoxCreate("You must specify a name for your product!");
-    } else if (isNaN(designInvest)) {
-      dialogBoxCreate("Invalid value for design investment");
-    } else if (isNaN(marketingInvest)) {
-      dialogBoxCreate("Invalid value for marketing investment");
-    } else if (props.corp.funds.lt(designInvest + marketingInvest)) {
-      dialogBoxCreate("You don't have enough company funds to make this large of an investment");
-    } else {
-      const product = new Product({
-        name: name.replace(/[<>]/g, ""), //Sanitize for HTMl elements
-        createCity: city,
-        designCost: designInvest,
-        advCost: marketingInvest,
-      });
-      if (props.division.products[product.name] instanceof Product) {
-        dialogBoxCreate(`You already have a product with this name!`);
-        return;
-      }
-      props.corp.funds = props.corp.funds.minus(designInvest + marketingInvest);
-      props.division.products[product.name] = product;
-      removePopup(props.popupId);
-    }
+    removePopup(props.popupId);
   }
 
   function onCityChange(event: React.ChangeEvent<HTMLSelectElement>): void {
