@@ -1,14 +1,15 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.src.json"
-    },
-    {
-      "path": "./test/tsconfig.spec.json"
-    },
-    {
-      "path": "./cypress/tsconfig.json"
-    }
-  ]
+  "compilerOptions": {
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["es2016", "dom", "es2017.object", "es2019"],
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "strict": true,
+    "types": ["cypress", "@testing-library/cypress"]
+  },
+  "exclude": ["node_modules"]
 }

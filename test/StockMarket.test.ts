@@ -35,10 +35,11 @@ import {
 } from "../src/StockMarket/StockMarketHelpers";
 import { OrderTypes } from "../src/StockMarket/data/OrderTypes";
 import { PositionTypes } from "../src/StockMarket/data/PositionTypes";
+// import { jest } from "jest";
 
-jest.mock("../src/ui/React/createPopup.tsx", () => ({
-  createPopup: jest.fn(),
-}));
+// jest.mock("../src/ui/React/createPopup.tsx", () => ({
+//   createPopup: jest.fn(),
+// }));
 
 describe("Stock Market Tests", function () {
   const commission = CONSTANTS.StockMarketCommission;
@@ -62,7 +63,7 @@ describe("Stock Market Tests", function () {
       stock = new Stock(ctorParams);
     }
 
-    expect(construct).not.toThrow();
+    expect(construct).not.throw();
   });
 
   describe("Stock Class", function () {
@@ -71,26 +72,26 @@ describe("Stock Market Tests", function () {
         function construct(): void {
           new Stock(); // eslint-disable-line no-new
         }
-        expect(construct).not.toThrow();
+        expect(construct).not.throw();
 
         const defaultStock = new Stock();
-        expect(defaultStock).not.toEqual(null);
-        expect(defaultStock.name).toEqual("");
+        expect(defaultStock).not.equal(null);
+        expect(defaultStock.name).equal("");
       });
 
       it("should properly initialize props from parameters", function () {
-        expect(stock.name).toEqual(ctorParams.name);
-        expect(stock.symbol).toEqual(ctorParams.symbol);
-        expect(stock.price).toEqual(ctorParams.initPrice);
-        expect(stock.lastPrice).toEqual(ctorParams.initPrice);
-        expect(stock.b).toEqual(ctorParams.b);
-        expect(stock.mv).toEqual(ctorParams.mv);
-        expect(stock.shareTxForMovement).toEqual(ctorParams.shareTxForMovement);
-        expect(stock.shareTxUntilMovement).toEqual(ctorParams.shareTxForMovement);
-        expect(stock.maxShares).toBeLessThan(stock.totalShares);
-        expect(stock.spreadPerc).toEqual(ctorParams.spreadPerc);
-        expect(stock.otlkMag).toEqual(ctorParams.otlkMag);
-        expect(stock.otlkMagForecast).toEqual(ctorParams.b ? 50 + ctorParams.otlkMag : 50 - ctorParams.otlkMag);
+        expect(stock.name).equal(ctorParams.name);
+        expect(stock.symbol).equal(ctorParams.symbol);
+        expect(stock.price).equal(ctorParams.initPrice);
+        expect(stock.lastPrice).equal(ctorParams.initPrice);
+        expect(stock.b).equal(ctorParams.b);
+        expect(stock.mv).equal(ctorParams.mv);
+        expect(stock.shareTxForMovement).equal(ctorParams.shareTxForMovement);
+        expect(stock.shareTxUntilMovement).equal(ctorParams.shareTxForMovement);
+        expect(stock.maxShares).lessThan(stock.totalShares);
+        expect(stock.spreadPerc).equal(ctorParams.spreadPerc);
+        expect(stock.otlkMag).equal(ctorParams.otlkMag);
+        expect(stock.otlkMagForecast).equal(ctorParams.b ? 50 + ctorParams.otlkMag : 50 - ctorParams.otlkMag);
       });
 
       it("should properly initialize props from range-values", function () {
@@ -124,38 +125,38 @@ describe("Stock Market Tests", function () {
           new Stock(params); // eslint-disable-line no-new
         }
 
-        expect(construct).not.toThrow();
+        expect(construct).not.throw();
 
         const stock = new Stock(params);
-        expect(stock).not.toEqual(null);
-        expect(stock.price).toBeGreaterThanOrEqual(params.initPrice.min);
-        expect(stock.price).toBeLessThanOrEqual(params.initPrice.max);
-        expect(stock.mv).toBeGreaterThanOrEqual(params.mv.min / params.mv.divisor);
-        expect(stock.mv).toBeLessThanOrEqual(params.mv.max / params.mv.divisor);
-        expect(stock.spreadPerc).toBeGreaterThanOrEqual(params.spreadPerc.min / params.spreadPerc.divisor);
-        expect(stock.spreadPerc).toBeLessThanOrEqual(params.spreadPerc.max / params.spreadPerc.divisor);
-        expect(stock.shareTxForMovement).toBeGreaterThanOrEqual(params.shareTxForMovement.min);
-        expect(stock.shareTxForMovement).toBeLessThanOrEqual(params.shareTxForMovement.max);
+        expect(stock).not.equal(null);
+        expect(stock.price).gte(params.initPrice.min);
+        expect(stock.price).lte(params.initPrice.max);
+        expect(stock.mv).gte(params.mv.min / params.mv.divisor);
+        expect(stock.mv).lte(params.mv.max / params.mv.divisor);
+        expect(stock.spreadPerc).gte(params.spreadPerc.min / params.spreadPerc.divisor);
+        expect(stock.spreadPerc).lte(params.spreadPerc.max / params.spreadPerc.divisor);
+        expect(stock.shareTxForMovement).gte(params.shareTxForMovement.min);
+        expect(stock.shareTxForMovement).lte(params.shareTxForMovement.max);
       });
 
       it("should round the 'totalShare' prop to the nearest 100k", function () {
-        expect(stock.totalShares % 100e3).toEqual(0);
+        expect(stock.totalShares % 100e3).equal(0);
       });
     });
 
     describe("#changeForecastForecast()", function () {
       it("should get the stock's second-order forecast property", function () {
         stock.changeForecastForecast(99);
-        expect(stock.otlkMagForecast).toEqual(99);
+        expect(stock.otlkMagForecast).equal(99);
         stock.changeForecastForecast(1);
-        expect(stock.otlkMagForecast).toEqual(1);
+        expect(stock.otlkMagForecast).equal(1);
       });
 
       it("should prevent values outside of 0-100", function () {
         stock.changeForecastForecast(101);
-        expect(stock.otlkMagForecast).toEqual(100);
+        expect(stock.otlkMagForecast).equal(100);
         stock.changeForecastForecast(-1);
-        expect(stock.otlkMagForecast).toEqual(0);
+        expect(stock.otlkMagForecast).equal(0);
       });
     });
 
@@ -163,8 +164,8 @@ describe("Stock Market Tests", function () {
       it("should set both the last price and current price properties", function () {
         const newPrice = 20e3;
         stock.changePrice(newPrice);
-        expect(stock.lastPrice).toEqual(ctorParams.initPrice);
-        expect(stock.price).toEqual(newPrice);
+        expect(stock.lastPrice).equal(ctorParams.initPrice);
+        expect(stock.price).equal(newPrice);
       });
     });
 
@@ -174,13 +175,13 @@ describe("Stock Market Tests", function () {
           return 1;
         };
         stock.cycleForecast(5);
-        expect(stock.otlkMag).toEqual(ctorParams.otlkMag + 5);
+        expect(stock.otlkMag).equal(ctorParams.otlkMag + 5);
 
         stock.getForecastIncreaseChance = () => {
           return 0;
         };
         stock.cycleForecast(10);
-        expect(stock.otlkMag).toEqual(ctorParams.otlkMag - 5);
+        expect(stock.otlkMag).equal(ctorParams.otlkMag - 5);
       });
 
       it("should NOT(!) the stock's 'b' property if it causes 'otlkMag' to go below 0", function () {
@@ -188,8 +189,8 @@ describe("Stock Market Tests", function () {
           return 0;
         };
         stock.cycleForecast(25);
-        expect(stock.otlkMag).toEqual(5);
-        expect(stock.b).toEqual(false);
+        expect(stock.otlkMag).equal(5);
+        expect(stock.b).equal(false);
       });
     });
 
@@ -197,7 +198,7 @@ describe("Stock Market Tests", function () {
       it("should increase the stock's second-order forecast by a given amount", function () {
         const expected = [65, 75];
         stock.cycleForecastForecast(5);
-        expect(expected).toContain(stock.otlkMagForecast);
+        expect(expected).contain(stock.otlkMagForecast);
       });
     });
 
@@ -205,31 +206,31 @@ describe("Stock Market Tests", function () {
       it("should flip the 'otlkMagForecast' property around 50", function () {
         stock.otlkMagForecast = 50;
         stock.flipForecastForecast();
-        expect(stock.otlkMagForecast).toEqual(50);
+        expect(stock.otlkMagForecast).equal(50);
 
         stock.otlkMagForecast = 60;
         stock.flipForecastForecast();
-        expect(stock.otlkMagForecast).toEqual(40);
+        expect(stock.otlkMagForecast).equal(40);
 
         stock.otlkMagForecast = 90;
         stock.flipForecastForecast();
-        expect(stock.otlkMagForecast).toEqual(10);
+        expect(stock.otlkMagForecast).equal(10);
 
         stock.otlkMagForecast = 100;
         stock.flipForecastForecast();
-        expect(stock.otlkMagForecast).toEqual(0);
+        expect(stock.otlkMagForecast).equal(0);
 
         stock.otlkMagForecast = 40;
         stock.flipForecastForecast();
-        expect(stock.otlkMagForecast).toEqual(60);
+        expect(stock.otlkMagForecast).equal(60);
 
         stock.otlkMagForecast = 0;
         stock.flipForecastForecast();
-        expect(stock.otlkMagForecast).toEqual(100);
+        expect(stock.otlkMagForecast).equal(100);
 
         stock.otlkMagForecast = 25;
         stock.flipForecastForecast();
-        expect(stock.otlkMagForecast).toEqual(75);
+        expect(stock.otlkMagForecast).equal(75);
       });
     });
 
@@ -237,44 +238,44 @@ describe("Stock Market Tests", function () {
       it("should return the absolute forecast on a 1-100 scale", function () {
         stock.b = true;
         stock.otlkMag = 10;
-        expect(stock.getAbsoluteForecast()).toEqual(60);
+        expect(stock.getAbsoluteForecast()).equal(60);
 
         stock.b = false;
-        expect(stock.getAbsoluteForecast()).toEqual(40);
+        expect(stock.getAbsoluteForecast()).equal(40);
 
         stock.otlkMag = 30;
-        expect(stock.getAbsoluteForecast()).toEqual(20);
+        expect(stock.getAbsoluteForecast()).equal(20);
 
         stock.b = true;
-        expect(stock.getAbsoluteForecast()).toEqual(80);
+        expect(stock.getAbsoluteForecast()).equal(80);
 
         stock.otlkMag = 0;
-        expect(stock.getAbsoluteForecast()).toEqual(50);
+        expect(stock.getAbsoluteForecast()).equal(50);
 
         stock.b = false;
-        expect(stock.getAbsoluteForecast()).toEqual(50);
+        expect(stock.getAbsoluteForecast()).equal(50);
       });
     });
 
     describe("#getAskPrice()", function () {
       it("should return the price increased by spread percentage", function () {
         const perc = stock.spreadPerc / 100;
-        expect(perc).toBeLessThanOrEqual(1);
-        expect(perc).toBeGreaterThanOrEqual(0);
+        expect(perc).lte(1);
+        expect(perc).gte(0);
 
         const expected = stock.price * (1 + perc);
-        expect(stock.getAskPrice()).toEqual(expected);
+        expect(stock.getAskPrice()).equal(expected);
       });
     });
 
     describe("#getBidPrice()", function () {
       it("should return the price decreased by spread percentage", function () {
         const perc = stock.spreadPerc / 100;
-        expect(perc).toBeLessThanOrEqual(1);
-        expect(perc).toBeGreaterThanOrEqual(0);
+        expect(perc).lte(1);
+        expect(perc).gte(0);
 
         const expected = stock.price * (1 - perc);
-        expect(stock.getBidPrice()).toEqual(expected);
+        expect(stock.getBidPrice()).equal(expected);
       });
     });
 
@@ -284,50 +285,50 @@ describe("Stock Market Tests", function () {
 
         stock.otlkMagForecast = 90;
         stock.otlkMag = 20; // Absolute forecast of 70
-        expect(stock.getForecastIncreaseChance()).toEqual(0.7);
+        expect(stock.getForecastIncreaseChance()).equal(0.7);
 
         stock.otlkMag = 25; // Absolute forecast of 75
-        expect(stock.getForecastIncreaseChance()).toEqual(0.65);
+        expect(stock.getForecastIncreaseChance()).equal(0.65);
 
         stock.otlkMagForecast = 100;
         stock.otlkMag = 0; // Absolute forecast of 50
-        expect(stock.getForecastIncreaseChance()).toEqual(0.95);
+        expect(stock.getForecastIncreaseChance()).equal(0.95);
 
         stock.otlkMagForecast = 60;
         stock.otlkMag = 25; // Absolute forecast of 75
-        expect(stock.getForecastIncreaseChance()).toEqual(0.35);
+        expect(stock.getForecastIncreaseChance()).equal(0.35);
 
         stock.otlkMagForecast = 10;
-        expect(stock.getForecastIncreaseChance()).toEqual(0.05);
+        expect(stock.getForecastIncreaseChance()).equal(0.05);
 
         stock.b = false;
 
         stock.otlkMagForecast = 90;
         stock.otlkMag = 20; // Absolute forecast of 30
-        expect(stock.getForecastIncreaseChance()).toEqual(0.95);
+        expect(stock.getForecastIncreaseChance()).equal(0.95);
 
         stock.otlkMagForecast = 50;
         stock.otlkMag = 25; // Absolute forecast of 25
-        expect(stock.getForecastIncreaseChance()).toEqual(0.75);
+        expect(stock.getForecastIncreaseChance()).equal(0.75);
 
         stock.otlkMagForecast = 100;
         stock.otlkMag = 0; // Absolute forecast of 50
-        expect(stock.getForecastIncreaseChance()).toEqual(0.95);
+        expect(stock.getForecastIncreaseChance()).equal(0.95);
 
         stock.otlkMagForecast = 5;
         stock.otlkMag = 25; // Absolute forecast of 25
-        expect(stock.getForecastIncreaseChance()).toEqual(0.3);
+        expect(stock.getForecastIncreaseChance()).equal(0.3);
 
         stock.otlkMagForecast = 10;
-        expect(stock.getForecastIncreaseChance()).toEqual(0.35);
+        expect(stock.getForecastIncreaseChance()).equal(0.35);
 
         stock.otlkMagForecast = 50;
         stock.otlkMag = 0;
-        expect(stock.getForecastIncreaseChance()).toEqual(0.5);
+        expect(stock.getForecastIncreaseChance()).equal(0.5);
 
         stock.otlkMagForecast = 25;
         stock.otlkMag = 5; // Asolute forecast of 45
-        expect(stock.getForecastIncreaseChance()).toEqual(0.3);
+        expect(stock.getForecastIncreaseChance()).equal(0.3);
       });
     });
 
@@ -338,25 +339,25 @@ describe("Stock Market Tests", function () {
 
       it("should change the forecast's value towards 50", function () {
         stock.influenceForecast(2);
-        expect(stock.otlkMag).toEqual(8);
+        expect(stock.otlkMag).equal(8);
       });
 
       it("should not care about whether the stock is in bull or bear mode", function () {
         stock.b = true;
         stock.influenceForecast(1);
-        expect(stock.otlkMag).toEqual(9);
+        expect(stock.otlkMag).equal(9);
 
         stock.b = false;
         stock.influenceForecast(2);
-        expect(stock.otlkMag).toEqual(7);
+        expect(stock.otlkMag).equal(7);
       });
 
       it("should not influence the forecast beyond the limit", function () {
         stock.influenceForecast(10);
-        expect(stock.otlkMag).toEqual(StockForecastInfluenceLimit);
+        expect(stock.otlkMag).equal(StockForecastInfluenceLimit);
 
         stock.influenceForecast(10);
-        expect(stock.otlkMag).toEqual(StockForecastInfluenceLimit);
+        expect(stock.otlkMag).equal(StockForecastInfluenceLimit);
       });
     });
 
@@ -364,21 +365,21 @@ describe("Stock Market Tests", function () {
       it("should change the second-order forecast's value towards 50", function () {
         stock.otlkMagForecast = 75;
         stock.influenceForecastForecast(15);
-        expect(stock.otlkMagForecast).toEqual(60);
+        expect(stock.otlkMagForecast).equal(60);
 
         stock.otlkMagForecast = 25;
         stock.influenceForecastForecast(15);
-        expect(stock.otlkMagForecast).toEqual(40);
+        expect(stock.otlkMagForecast).equal(40);
       });
 
       it("should not change the second-order forecast past 50", function () {
         stock.otlkMagForecast = 40;
         stock.influenceForecastForecast(20);
-        expect(stock.otlkMagForecast).toEqual(50);
+        expect(stock.otlkMagForecast).equal(50);
 
         stock.otlkMagForecast = 60;
         stock.influenceForecastForecast(20);
-        expect(stock.otlkMagForecast).toEqual(50);
+        expect(stock.otlkMagForecast).equal(50);
       });
     });
   });
@@ -389,8 +390,8 @@ describe("Stock Market Tests", function () {
       const stocks: string[] = [];
 
       beforeEach(function () {
-        expect(initStockMarket).not.toThrow();
-        expect(initSymbolToStockMap).not.toThrow();
+        expect(initStockMarket).not.throw();
+        expect(initSymbolToStockMap).not.throw();
       });
 
       it("should have Stock objects", function () {
@@ -402,35 +403,35 @@ describe("Stock Market Tests", function () {
         }
 
         // We'll just check that there are some stocks
-        expect(stocks.length).toBeGreaterThanOrEqual(1);
+        expect(stocks.length).gte(1);
       });
 
       it("should have an order book in the 'Orders' property", function () {
-        expect(StockMarket).toHaveProperty("Orders");
+        expect(StockMarket).have.property("Orders");
 
         const orderbook = StockMarket["Orders"];
         for (const symbol of stocks) {
           const ordersForStock = orderbook[symbol];
-          expect(ordersForStock).toEqual([]);
-          expect(ordersForStock.length).toEqual(0);
+          expect(ordersForStock).equal([]);
+          expect(ordersForStock.length).equal(0);
         }
       });
 
       it("should have properties for managing game cycles", function () {
-        expect(StockMarket).toHaveProperty("storedCycles");
-        expect(StockMarket["storedCycles"]).toEqual(0);
-        expect(StockMarket).toHaveProperty("lastUpdate");
-        expect(StockMarket["lastUpdate"]).toEqual(0);
-        expect(StockMarket).toHaveProperty("ticksUntilCycle");
-        expect(typeof StockMarket["ticksUntilCycle"]).toBe("number");
+        expect(StockMarket).have.property("storedCycles");
+        expect(StockMarket["storedCycles"]).equal(0);
+        expect(StockMarket).have.property("lastUpdate");
+        expect(StockMarket["lastUpdate"]).equal(0);
+        expect(StockMarket).have.property("ticksUntilCycle");
+        expect(typeof StockMarket["ticksUntilCycle"]).instanceOf("number");
       });
     });
 
     describe("Deletion", function () {
       it("should set StockMarket to be an empty object", function () {
-        expect(StockMarket).not.toEqual({});
+        expect(StockMarket).not.equal({});
         deleteStockMarket();
-        expect(StockMarket).toEqual({});
+        expect(StockMarket).equal({});
       });
     });
 
@@ -442,9 +443,9 @@ describe("Stock Market Tests", function () {
       });
 
       it("should store cycles until it actually processes", function () {
-        expect(StockMarket["storedCycles"]).toEqual(0);
+        expect(StockMarket["storedCycles"]).equal(0);
         processStockPrices(10);
-        expect(StockMarket["storedCycles"]).toEqual(10);
+        expect(StockMarket["storedCycles"]).equal(10);
       });
 
       it("should trigger a price update when it has enough cycles", function () {
@@ -473,7 +474,7 @@ describe("Stock Market Tests", function () {
             continue;
           }
           const initValue = initialValues[stock.symbol];
-          expect(initValue.price).not.toEqual(stock.price);
+          expect(initValue.price).not.equal(stock.price);
           if (initValue.otlkMag === stock.otlkMag && initValue.b === stock.b) {
             throw new Error("expected either price or otlkMag to be different");
           }
@@ -496,7 +497,7 @@ describe("Stock Market Tests", function () {
           continue;
         }
 
-        expect(SymbolToStockMap[stock.symbol]).toEqual(stock);
+        expect(SymbolToStockMap[stock.symbol]).equal(stock);
       }
     });
   });
@@ -505,55 +506,55 @@ describe("Stock Market Tests", function () {
     describe("getBuyTransactionCost()", function () {
       it("should fail on invalid 'stock' argument", function () {
         const res = getBuyTransactionCost({} as Stock, 10, PositionTypes.Long);
-        expect(res).toEqual(null);
+        expect(res).equal(null);
       });
 
       it("should fail on invalid 'shares' arg", function () {
         let res = getBuyTransactionCost(stock, NaN, PositionTypes.Long);
-        expect(res).toEqual(null);
+        expect(res).equal(null);
 
         res = getBuyTransactionCost(stock, -1, PositionTypes.Long);
-        expect(res).toEqual(null);
+        expect(res).equal(null);
       });
 
       it("should properly evaluate LONG transactions", function () {
         const shares = ctorParams.shareTxForMovement / 2;
         const res = getBuyTransactionCost(stock, shares, PositionTypes.Long);
-        expect(res).toEqual(shares * stock.getAskPrice() + commission);
+        expect(res).equal(shares * stock.getAskPrice() + commission);
       });
 
       it("should properly evaluate SHORT transactions", function () {
         const shares = ctorParams.shareTxForMovement / 2;
         const res = getBuyTransactionCost(stock, shares, PositionTypes.Short);
-        expect(res).toEqual(shares * stock.getBidPrice() + commission);
+        expect(res).equal(shares * stock.getBidPrice() + commission);
       });
 
       it("should cap the 'shares' argument at the stock's maximum number of shares", function () {
         const maxRes = getBuyTransactionCost(stock, stock.maxShares, PositionTypes.Long);
         const exceedRes = getBuyTransactionCost(stock, stock.maxShares * 10, PositionTypes.Long);
-        expect(maxRes).toEqual(exceedRes);
+        expect(maxRes).equal(exceedRes);
       });
     });
 
     describe("getSellTransactionGain()", function () {
       it("should fail on invalid 'stock' argument", function () {
         const res = getSellTransactionGain({} as Stock, 10, PositionTypes.Long);
-        expect(res).toEqual(null);
+        expect(res).equal(null);
       });
 
       it("should fail on invalid 'shares' arg", function () {
         let res = getSellTransactionGain(stock, NaN, PositionTypes.Long);
-        expect(res).toEqual(null);
+        expect(res).equal(null);
 
         res = getSellTransactionGain(stock, -1, PositionTypes.Long);
-        expect(res).toEqual(null);
+        expect(res).equal(null);
       });
 
       it("should properly evaluate LONG transactionst", function () {
         const shares = ctorParams.shareTxForMovement / 2;
         const res = getSellTransactionGain(stock, shares, PositionTypes.Long);
         const expected = shares * stock.getBidPrice() - commission;
-        expect(res).toEqual(expected);
+        expect(res).equal(expected);
       });
 
       it("should properly evaluate SHORT transactions", function () {
@@ -564,13 +565,13 @@ describe("Stock Market Tests", function () {
         const res = getSellTransactionGain(stock, shares, PositionTypes.Short);
         const expected =
           shares * stock.playerAvgShortPx + shares * (stock.playerAvgShortPx - stock.getAskPrice()) - commission;
-        expect(res).toEqual(expected);
+        expect(res).equal(expected);
       });
 
       it("should cap the 'shares' argument at the stock's maximum number of shares", function () {
         const maxRes = getSellTransactionGain(stock, stock.maxShares, PositionTypes.Long);
         const exceedRes = getSellTransactionGain(stock, stock.maxShares * 10, PositionTypes.Long);
-        expect(maxRes).toEqual(exceedRes);
+        expect(maxRes).equal(exceedRes);
       });
     });
   });
@@ -601,33 +602,33 @@ describe("Stock Market Tests", function () {
         const oldTracker = stock.shareTxUntilMovement;
 
         processTransactionForecastMovement({} as Stock, mvmtShares);
-        expect(stock.shareTxUntilMovement).toEqual(oldTracker);
+        expect(stock.shareTxUntilMovement).equal(oldTracker);
       });
 
       it("should do nothing on invalid 'shares' arg", function () {
         const oldTracker = stock.shareTxUntilMovement;
 
         processTransactionForecastMovement(stock, NaN);
-        expect(stock.shareTxUntilMovement).toEqual(oldTracker);
+        expect(stock.shareTxUntilMovement).equal(oldTracker);
 
         processTransactionForecastMovement(stock, -1);
-        expect(stock.shareTxUntilMovement).toEqual(oldTracker);
+        expect(stock.shareTxUntilMovement).equal(oldTracker);
       });
 
       it("should properly evaluate a LONG transaction that doesn't trigger a forecast movement", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, noMvmtShares);
-        expect(stock.otlkMag).toEqual(oldForecast);
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(oldForecast);
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate a SHORT transaction that doesn't trigger a forecast movement", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, noMvmtShares);
-        expect(stock.otlkMag).toEqual(oldForecast);
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(oldForecast);
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate LONG transactions that triggers forecast movements", function () {
@@ -635,9 +636,9 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, mvmtShares);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate SHORT transactions that triggers forecast movements", function () {
@@ -645,9 +646,9 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, mvmtShares);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate LONG transactions of exactly 'shareTxForMovement' shares", function () {
@@ -655,9 +656,9 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate LONG transactions that total to 'shareTxForMovement' shares", function () {
@@ -665,11 +666,11 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, Math.round(stock.shareTxForMovement / 2));
-        expect(stock.shareTxUntilMovement).toBeLessThan(stock.shareTxForMovement);
+        expect(stock.shareTxUntilMovement).lessThan(stock.shareTxForMovement);
         processTransactionForecastMovement(stock, stock.shareTxUntilMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate LONG transactions that are a multiple of 'shareTxForMovement' shares", function () {
@@ -677,9 +678,9 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, 3 * stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate SHORT transactions of exactly 'shareTxForMovement' shares", function () {
@@ -687,9 +688,9 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate SHORT transactions that total to 'shareTxForMovement' shares", function () {
@@ -697,11 +698,11 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, Math.round(stock.shareTxForMovement / 2));
-        expect(stock.shareTxUntilMovement).toBeLessThan(stock.shareTxForMovement);
+        expect(stock.shareTxUntilMovement).lessThan(stock.shareTxForMovement);
         processTransactionForecastMovement(stock, stock.shareTxUntilMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate SHORT transactions that are a multiple of 'shareTxForMovement' shares", function () {
@@ -709,9 +710,9 @@ describe("Stock Market Tests", function () {
         const oldForecastForecast = stock.otlkMagForecast;
 
         processTransactionForecastMovement(stock, 3 * stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.otlkMagForecast).toEqual(getNthForecastForecast(oldForecastForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.otlkMagForecast).equal(getNthForecastForecast(oldForecastForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
     });
 
@@ -723,101 +724,101 @@ describe("Stock Market Tests", function () {
         const oldTracker = stock.shareTxUntilMovement;
 
         processTransactionForecastMovement({} as Stock, mvmtShares);
-        expect(stock.shareTxUntilMovement).toEqual(oldTracker);
+        expect(stock.shareTxUntilMovement).equal(oldTracker);
       });
 
       it("should do nothing on invalid 'shares' arg", function () {
         const oldTracker = stock.shareTxUntilMovement;
 
         processTransactionForecastMovement(stock, NaN);
-        expect(stock.shareTxUntilMovement).toEqual(oldTracker);
+        expect(stock.shareTxUntilMovement).equal(oldTracker);
 
         processTransactionForecastMovement(stock, -1);
-        expect(stock.shareTxUntilMovement).toEqual(oldTracker);
+        expect(stock.shareTxUntilMovement).equal(oldTracker);
       });
 
       it("should properly evaluate a LONG transaction that doesn't trigger a price movement", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, noMvmtShares);
-        expect(stock.otlkMag).toEqual(oldForecast);
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(oldForecast);
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate a SHORT transaction that doesn't trigger a price movement", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, noMvmtShares);
-        expect(stock.otlkMag).toEqual(oldForecast);
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(oldForecast);
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate LONG transactions that trigger price movements", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, mvmtShares);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate SHORT transactions that trigger price movements", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, mvmtShares);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement - noMvmtShares);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement - noMvmtShares);
       });
 
       it("should properly evaluate LONG transactions of exactly 'shareTxForMovement' shares", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate LONG transactions that total to 'shareTxForMovement' shares", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, Math.round(stock.shareTxForMovement / 2));
-        expect(stock.shareTxUntilMovement).toBeLessThan(stock.shareTxForMovement);
+        expect(stock.shareTxUntilMovement).lessThan(stock.shareTxForMovement);
         processTransactionForecastMovement(stock, stock.shareTxUntilMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate LONG transactions that are a multiple of 'shareTxForMovement' shares", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, 3 * stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate SHORT transactions of exactly 'shareTxForMovement' shares", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate SHORT transactions that total to 'shareTxForMovement' shares", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, Math.round(stock.shareTxForMovement / 2));
-        expect(stock.shareTxUntilMovement).toBeLessThan(stock.shareTxForMovement);
+        expect(stock.shareTxUntilMovement).lessThan(stock.shareTxForMovement);
         processTransactionForecastMovement(stock, stock.shareTxUntilMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 2));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 2));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
 
       it("should properly evaluate SHORT transactions that are a multiple of 'shareTxForMovement' shares", function () {
         const oldForecast = stock.otlkMag;
 
         processTransactionForecastMovement(stock, 3 * stock.shareTxForMovement);
-        expect(stock.otlkMag).toEqual(getNthForecast(oldForecast, 4));
-        expect(stock.shareTxUntilMovement).toEqual(stock.shareTxForMovement);
+        expect(stock.otlkMag).equal(getNthForecast(oldForecast, 4));
+        expect(stock.shareTxUntilMovement).equal(stock.shareTxForMovement);
       });
     });
   });
@@ -827,54 +828,54 @@ describe("Stock Market Tests", function () {
 
     describe("buyStock()", function () {
       it("should fail for invalid arguments", function () {
-        expect(buyStock({} as Stock, 1, null, suppressDialogOpt)).toEqual(false);
-        expect(buyStock(stock, 0, null, suppressDialogOpt)).toEqual(false);
-        expect(buyStock(stock, -1, null, suppressDialogOpt)).toEqual(false);
-        expect(buyStock(stock, NaN, null, suppressDialogOpt)).toEqual(false);
+        expect(buyStock({} as Stock, 1, null, suppressDialogOpt)).equal(false);
+        expect(buyStock(stock, 0, null, suppressDialogOpt)).equal(false);
+        expect(buyStock(stock, -1, null, suppressDialogOpt)).equal(false);
+        expect(buyStock(stock, NaN, null, suppressDialogOpt)).equal(false);
       });
 
       it("should fail if player doesn't have enough money", function () {
         Player.setMoney(0);
-        expect(buyStock(stock, 1, null, suppressDialogOpt)).toEqual(false);
+        expect(buyStock(stock, 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should not allow for transactions that exceed the maximum shares", function () {
         const maxShares = stock.maxShares;
-        expect(buyStock(stock, maxShares + 1, null, suppressDialogOpt)).toEqual(false);
+        expect(buyStock(stock, maxShares + 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should return true and properly update stock properties for successful transactions", function () {
         const shares = 1e3;
         const cost = getBuyTransactionCost(stock, shares, PositionTypes.Long);
-        expect(cost).not.toBeNull();
+        expect(cost).not.null;
 
         // Checked above
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         Player.setMoney(cost!);
 
-        expect(buyStock(stock, shares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShares).toEqual(shares);
-        expect(stock.playerAvgPx).toBeGreaterThan(0);
-        expect(Player.money.toNumber()).toEqual(0);
+        expect(buyStock(stock, shares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShares).equal(shares);
+        expect(stock.playerAvgPx).greaterThan(0);
+        expect(Player.money.toNumber()).equal(0);
       });
     });
 
     describe("sellStock()", function () {
       it("should fail for invalid arguments", function () {
-        expect(sellStock({} as Stock, 1, null, suppressDialogOpt)).toEqual(false);
-        expect(sellStock(stock, 0, null, suppressDialogOpt)).toEqual(false);
-        expect(sellStock(stock, -1, null, suppressDialogOpt)).toEqual(false);
-        expect(sellStock(stock, NaN, null, suppressDialogOpt)).toEqual(false);
+        expect(sellStock({} as Stock, 1, null, suppressDialogOpt)).equal(false);
+        expect(sellStock(stock, 0, null, suppressDialogOpt)).equal(false);
+        expect(sellStock(stock, -1, null, suppressDialogOpt)).equal(false);
+        expect(sellStock(stock, NaN, null, suppressDialogOpt)).equal(false);
       });
 
       it("should fail if player doesn't have any shares", function () {
         Player.setMoney(0);
-        expect(sellStock(stock, 1, null, suppressDialogOpt)).toEqual(false);
+        expect(sellStock(stock, 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should not allow for transactions that exceed the maximum shares", function () {
         const maxShares = stock.maxShares;
-        expect(sellStock(stock, maxShares + 1, null, suppressDialogOpt)).toEqual(false);
+        expect(sellStock(stock, maxShares + 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should return true and properly update stock properties for successful transactions", function () {
@@ -884,10 +885,10 @@ describe("Stock Market Tests", function () {
         const gain = getSellTransactionGain(stock, shares, PositionTypes.Long);
         Player.setMoney(0);
 
-        expect(sellStock(stock, shares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShares).toEqual(0);
-        expect(stock.playerAvgPx).toEqual(0);
-        expect(Player.money.toNumber()).toEqual(gain);
+        expect(sellStock(stock, shares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShares).equal(0);
+        expect(stock.playerAvgPx).equal(0);
+        expect(Player.money.toNumber()).equal(gain);
       });
 
       it("should cap the number of sharse sold to however many the player owns", function () {
@@ -898,10 +899,10 @@ describe("Stock Market Tests", function () {
         const gain = getSellTransactionGain(stock, actualShares, PositionTypes.Long);
         Player.setMoney(0);
 
-        expect(sellStock(stock, attemptedShares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShares).toEqual(0);
-        expect(stock.playerAvgPx).toEqual(0);
-        expect(Player.money.toNumber()).toEqual(gain);
+        expect(sellStock(stock, attemptedShares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShares).equal(0);
+        expect(stock.playerAvgPx).equal(0);
+        expect(Player.money.toNumber()).equal(gain);
       });
 
       it("should properly update stock properties for partial transactions", function () {
@@ -912,63 +913,63 @@ describe("Stock Market Tests", function () {
         const gain = getSellTransactionGain(stock, shares, PositionTypes.Long);
         Player.setMoney(0);
 
-        expect(sellStock(stock, shares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShares).toEqual(shares);
-        expect(stock.playerAvgPx).toEqual(origPrice);
-        expect(Player.money.toNumber()).toEqual(gain);
+        expect(sellStock(stock, shares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShares).equal(shares);
+        expect(stock.playerAvgPx).equal(origPrice);
+        expect(Player.money.toNumber()).equal(gain);
       });
     });
 
     describe("shortStock()", function () {
       it("should fail for invalid arguments", function () {
-        expect(shortStock({} as Stock, 1, null, suppressDialogOpt)).toEqual(false);
-        expect(shortStock(stock, 0, null, suppressDialogOpt)).toEqual(false);
-        expect(shortStock(stock, -1, null, suppressDialogOpt)).toEqual(false);
-        expect(shortStock(stock, NaN, null, suppressDialogOpt)).toEqual(false);
+        expect(shortStock({} as Stock, 1, null, suppressDialogOpt)).equal(false);
+        expect(shortStock(stock, 0, null, suppressDialogOpt)).equal(false);
+        expect(shortStock(stock, -1, null, suppressDialogOpt)).equal(false);
+        expect(shortStock(stock, NaN, null, suppressDialogOpt)).equal(false);
       });
 
       it("should fail if player doesn't have enough money", function () {
         Player.setMoney(0);
-        expect(shortStock(stock, 1, null, suppressDialogOpt)).toEqual(false);
+        expect(shortStock(stock, 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should not allow for transactions that exceed the maximum shares", function () {
         const maxShares = stock.maxShares;
-        expect(shortStock(stock, maxShares + 1, null, suppressDialogOpt)).toEqual(false);
+        expect(shortStock(stock, maxShares + 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should return true and properly update stock properties for successful transactions", function () {
         const shares = 1e3;
         const cost = getBuyTransactionCost(stock, shares, PositionTypes.Short);
-        expect(cost).not.toBeNull();
+        expect(cost).not.null;
 
         // Checked above
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         Player.setMoney(cost!);
 
-        expect(shortStock(stock, shares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShortShares).toEqual(shares);
-        expect(stock.playerAvgShortPx).toBeGreaterThan(0);
-        expect(Player.money.toNumber()).toEqual(0);
+        expect(shortStock(stock, shares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShortShares).equal(shares);
+        expect(stock.playerAvgShortPx).greaterThan(0);
+        expect(Player.money.toNumber()).equal(0);
       });
     });
 
     describe("sellShort()", function () {
       it("should fail for invalid arguments", function () {
-        expect(sellShort({} as Stock, 1, null, suppressDialogOpt)).toEqual(false);
-        expect(sellShort(stock, 0, null, suppressDialogOpt)).toEqual(false);
-        expect(sellShort(stock, -1, null, suppressDialogOpt)).toEqual(false);
-        expect(sellShort(stock, NaN, null, suppressDialogOpt)).toEqual(false);
+        expect(sellShort({} as Stock, 1, null, suppressDialogOpt)).equal(false);
+        expect(sellShort(stock, 0, null, suppressDialogOpt)).equal(false);
+        expect(sellShort(stock, -1, null, suppressDialogOpt)).equal(false);
+        expect(sellShort(stock, NaN, null, suppressDialogOpt)).equal(false);
       });
 
       it("should fail if player doesn't have any shares", function () {
         Player.setMoney(0);
-        expect(sellShort(stock, 1, null, suppressDialogOpt)).toEqual(false);
+        expect(sellShort(stock, 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should not allow for transactions that exceed the maximum shares", function () {
         const maxShares = stock.maxShares;
-        expect(sellShort(stock, maxShares + 1, null, suppressDialogOpt)).toEqual(false);
+        expect(sellShort(stock, maxShares + 1, null, suppressDialogOpt)).equal(false);
       });
 
       it("should return true and properly update stock properties for successful transactions", function () {
@@ -978,10 +979,10 @@ describe("Stock Market Tests", function () {
         const gain = getSellTransactionGain(stock, shares, PositionTypes.Short);
         Player.setMoney(0);
 
-        expect(sellShort(stock, shares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShortShares).toEqual(0);
-        expect(stock.playerAvgShortPx).toEqual(0);
-        expect(Player.money.toNumber()).toEqual(gain);
+        expect(sellShort(stock, shares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShortShares).equal(0);
+        expect(stock.playerAvgShortPx).equal(0);
+        expect(Player.money.toNumber()).equal(gain);
       });
 
       it("should cap the number of sharse sold to however many the player owns", function () {
@@ -992,10 +993,10 @@ describe("Stock Market Tests", function () {
         const gain = getSellTransactionGain(stock, actualShares, PositionTypes.Short);
         Player.setMoney(0);
 
-        expect(sellShort(stock, attemptedShares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShortShares).toEqual(0);
-        expect(stock.playerAvgShortPx).toEqual(0);
-        expect(Player.money.toNumber()).toEqual(gain);
+        expect(sellShort(stock, attemptedShares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShortShares).equal(0);
+        expect(stock.playerAvgShortPx).equal(0);
+        expect(Player.money.toNumber()).equal(gain);
       });
 
       it("should properly update stock properties for partial transactions", function () {
@@ -1006,10 +1007,10 @@ describe("Stock Market Tests", function () {
         const gain = getSellTransactionGain(stock, shares, PositionTypes.Short);
         Player.setMoney(0);
 
-        expect(sellShort(stock, shares, null, suppressDialogOpt)).toEqual(true);
-        expect(stock.playerShortShares).toEqual(shares);
-        expect(stock.playerAvgShortPx).toEqual(origPrice);
-        expect(Player.money.toNumber()).toEqual(gain);
+        expect(sellShort(stock, shares, null, suppressDialogOpt)).equal(true);
+        expect(stock.playerShortShares).equal(shares);
+        expect(stock.playerAvgShortPx).equal(origPrice);
+        expect(Player.money.toNumber()).equal(gain);
       });
     });
   });
@@ -1032,18 +1033,18 @@ describe("Stock Market Tests", function () {
         return new Order("FOO", NaN, 0, OrderTypes.LimitBuy, PositionTypes.Short);
       }
 
-      expect(invalid1).toThrow();
-      expect(invalid2).toThrow();
-      expect(invalid3).toThrow();
-      expect(invalid4).toThrow();
-      expect(invalid5).toThrow();
+      expect(invalid1).throw();
+      expect(invalid2).throw();
+      expect(invalid3).throw();
+      expect(invalid4).throw();
+      expect(invalid5).throw();
     });
   });
 
   describe("Order Placing & Processing", function () {
     beforeEach(function () {
-      expect(initStockMarket).not.toThrow();
-      expect(initSymbolToStockMap).not.toThrow();
+      expect(initStockMarket).not.throw();
+      expect(initSymbolToStockMap).not.throw();
 
       // Create an order book for our mock stock
       StockMarket["Orders"][stock.symbol] = [];
@@ -1055,25 +1056,25 @@ describe("Stock Market Tests", function () {
         const invalid2 = placeOrder(stock, "foo" as any as number, 2, OrderTypes.LimitBuy, PositionTypes.Long);
         const invalid3 = placeOrder(stock, 1, "foo" as any as number, OrderTypes.LimitBuy, PositionTypes.Long);
 
-        expect(invalid1).toEqual(false);
-        expect(invalid2).toEqual(false);
-        expect(invalid3).toEqual(false);
+        expect(invalid1).equal(false);
+        expect(invalid2).equal(false);
+        expect(invalid3).equal(false);
 
-        expect(StockMarket["Orders"][stock.symbol]).toEqual([]);
+        expect(StockMarket["Orders"][stock.symbol]).equal([]);
       });
 
       it("should return true and update the order book for valid arguments", function () {
         const res = placeOrder(stock, 1e3, 9e3, OrderTypes.LimitBuy, PositionTypes.Long);
-        expect(res).toEqual(true);
+        expect(res).equal(true);
 
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(1);
+        expect(StockMarket["Orders"][stock.symbol]).length(1);
         const order = StockMarket["Orders"][stock.symbol][0];
-        expect(order).toBeInstanceOf(Order);
-        expect(order.stockSymbol).toEqual(ctorParams.symbol);
-        expect(order.shares).toEqual(1e3);
-        expect(order.price).toEqual(9e3);
-        expect(order.type).toEqual(OrderTypes.LimitBuy);
-        expect(order.pos).toEqual(PositionTypes.Long);
+        expect(order).instanceOf(Order);
+        expect(order.stockSymbol).equal(ctorParams.symbol);
+        expect(order.shares).equal(1e3);
+        expect(order.price).equal(9e3);
+        expect(order.type).equal(OrderTypes.LimitBuy);
+        expect(order.pos).equal(PositionTypes.Long);
       });
     });
 
@@ -1082,15 +1083,15 @@ describe("Stock Market Tests", function () {
         StockMarket["Orders"][stock.symbol] = [];
 
         const res = placeOrder(stock, 1e3, 9e3, OrderTypes.LimitBuy, PositionTypes.Long);
-        expect(res).toEqual(true);
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(1);
+        expect(res).equal(true);
+        expect(StockMarket["Orders"][stock.symbol]).length(1);
       });
 
       it("returns true & removes an Order from the order book", function () {
         const order = StockMarket["Orders"][stock.symbol][0];
         const res = cancelOrder({ order });
-        expect(res).toEqual(true);
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(0);
+        expect(res).equal(true);
+        expect(StockMarket["Orders"][stock.symbol]).length(0);
       });
 
       it("should also work when passing in order parameters separately", function () {
@@ -1101,16 +1102,16 @@ describe("Stock Market Tests", function () {
           type: OrderTypes.LimitBuy,
           pos: PositionTypes.Long,
         });
-        expect(res).toEqual(true);
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(0);
+        expect(res).equal(true);
+        expect(StockMarket["Orders"][stock.symbol]).length(0);
       });
 
       it("should return false and do nothing when the specified order doesn't exist", function () {
         // Same parameters, but its a different object
         const order = new Order(stock.symbol, 1e3, 9e3, OrderTypes.LimitBuy, PositionTypes.Long);
         const res = cancelOrder({ order });
-        expect(res).toEqual(false);
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(1);
+        expect(res).equal(false);
+        expect(StockMarket["Orders"][stock.symbol]).length(1);
 
         const res2 = cancelOrder({
           stock,
@@ -1119,8 +1120,8 @@ describe("Stock Market Tests", function () {
           type: OrderTypes.LimitBuy,
           pos: PositionTypes.Long,
         });
-        expect(res2).toEqual(false);
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(1);
+        expect(res2).equal(false);
+        expect(StockMarket["Orders"][stock.symbol]).length(1);
       });
     });
 
@@ -1128,8 +1129,8 @@ describe("Stock Market Tests", function () {
       let processOrdersRefs: IProcessOrderRefs;
 
       beforeEach(function () {
-        expect(initStockMarket).not.toThrow();
-        expect(initSymbolToStockMap).not.toThrow();
+        expect(initStockMarket).not.throw();
+        expect(initSymbolToStockMap).not.throw();
 
         StockMarket[stock.name] = stock;
         SymbolToStockMap[stock.symbol] = stock;
@@ -1148,13 +1149,13 @@ describe("Stock Market Tests", function () {
 
       function checkThatOrderExists(placeOrderRes?: boolean): void {
         if (typeof placeOrderRes === "boolean") {
-          expect(placeOrderRes).toEqual(true);
+          expect(placeOrderRes).equal(true);
         }
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(1);
+        expect(StockMarket["Orders"][stock.symbol]).length(1);
       }
 
       function checkThatOrderExecuted(): void {
-        expect(StockMarket["Orders"][stock.symbol]).toHaveLength(0);
+        expect(StockMarket["Orders"][stock.symbol]).length(0);
       }
 
       it("should execute LONG Limit Buy orders when price <= order price", function () {
@@ -1164,7 +1165,7 @@ describe("Stock Market Tests", function () {
         stock.changePrice(9e3);
         processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShares).toEqual(2e3);
+        expect(stock.playerShares).equal(2e3);
       });
 
       it("should execute SHORT Limit Buy Orders when price >= order price", function () {
@@ -1174,7 +1175,7 @@ describe("Stock Market Tests", function () {
         stock.changePrice(11e3);
         processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Short, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShortShares).toEqual(2e3);
+        expect(stock.playerShortShares).equal(2e3);
       });
 
       it("should execute LONG Limit Sell Orders when price >= order price", function () {
@@ -1184,7 +1185,7 @@ describe("Stock Market Tests", function () {
         stock.changePrice(11e3);
         processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShares).toEqual(0);
+        expect(stock.playerShares).equal(0);
       });
 
       it("should execute SHORT Limit Sell Orders when price <= order price", function () {
@@ -1194,7 +1195,7 @@ describe("Stock Market Tests", function () {
         stock.changePrice(9e3);
         processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShortShares).toEqual(0);
+        expect(stock.playerShortShares).equal(0);
       });
 
       it("should execute LONG Stop Buy Orders when price >= order price", function () {
@@ -1204,7 +1205,7 @@ describe("Stock Market Tests", function () {
         stock.changePrice(11e3);
         processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShares).toEqual(2e3);
+        expect(stock.playerShares).equal(2e3);
       });
 
       it("should execute SHORT Stop Buy Orders when price <= order price", function () {
@@ -1214,7 +1215,7 @@ describe("Stock Market Tests", function () {
         stock.changePrice(9e3);
         processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShortShares).toEqual(2e3);
+        expect(stock.playerShortShares).equal(2e3);
       });
 
       it("should execute LONG Stop Sell Orders when price <= order price", function () {
@@ -1224,7 +1225,7 @@ describe("Stock Market Tests", function () {
         stock.changePrice(9e3);
         processOrders(stock, OrderTypes.StopSell, PositionTypes.Long, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShares).toEqual(0);
+        expect(stock.playerShares).equal(0);
       });
 
       it("should execute SHORT Stop Sell Orders when price >= order price", function () {
@@ -1234,13 +1235,13 @@ describe("Stock Market Tests", function () {
         stock.changePrice(11e3);
         processOrders(stock, OrderTypes.StopSell, PositionTypes.Short, processOrdersRefs);
         checkThatOrderExecuted();
-        expect(stock.playerShortShares).toEqual(0);
+        expect(stock.playerShortShares).equal(0);
       });
 
       it("should execute immediately if their conditions are satisfied", function () {
         placeOrder(stock, 1e3, 11e3, OrderTypes.LimitBuy, PositionTypes.Long);
         checkThatOrderExecuted();
-        expect(stock.playerShares).toEqual(2e3);
+        expect(stock.playerShares).equal(2e3);
       });
     });
   });
@@ -1263,8 +1264,8 @@ describe("Stock Market Tests", function () {
     });
 
     beforeEach(function () {
-      expect(initStockMarket).not.toThrow();
-      expect(initSymbolToStockMap).not.toThrow();
+      expect(initStockMarket).not.throw();
+      expect(initSymbolToStockMap).not.throw();
 
       StockMarket[stock.name] = stock;
     });
@@ -1273,13 +1274,13 @@ describe("Stock Market Tests", function () {
       it("should decrease a stock's second-order forecast when all of its money is hacked", function () {
         const oldSecondOrderForecast = stock.otlkMagForecast;
         influenceStockThroughServerHack(server, server.moneyMax);
-        expect(stock.otlkMagForecast).toEqual(oldSecondOrderForecast - forecastForecastChangeFromHack);
+        expect(stock.otlkMagForecast).equal(oldSecondOrderForecast - forecastForecastChangeFromHack);
       });
 
       it("should not decrease the stock's second-order forecast when no money is stolen", function () {
         const oldSecondOrderForecast = stock.otlkMagForecast;
         influenceStockThroughServerHack(server, 0);
-        expect(stock.otlkMagForecast).toEqual(oldSecondOrderForecast);
+        expect(stock.otlkMagForecast).equal(oldSecondOrderForecast);
       });
     });
 
@@ -1287,13 +1288,13 @@ describe("Stock Market Tests", function () {
       it("should increase a stock's second-order forecast when all of its money is grown", function () {
         const oldSecondOrderForecast = stock.otlkMagForecast;
         influenceStockThroughServerGrow(server, server.moneyMax);
-        expect(stock.otlkMagForecast).toEqual(oldSecondOrderForecast + forecastForecastChangeFromHack);
+        expect(stock.otlkMagForecast).equal(oldSecondOrderForecast + forecastForecastChangeFromHack);
       });
 
       it("should not increase the stock's second-order forecast when no money is grown", function () {
         const oldSecondOrderForecast = stock.otlkMagForecast;
         influenceStockThroughServerGrow(server, 0);
-        expect(stock.otlkMagForecast).toEqual(oldSecondOrderForecast);
+        expect(stock.otlkMagForecast).equal(oldSecondOrderForecast);
       });
     });
 
@@ -1304,7 +1305,7 @@ describe("Stock Market Tests", function () {
         // Use 1e3 for numCycles to force a change
         // (This may break later if numbers are rebalanced);
         influenceStockThroughCompanyWork(company, 1, 500);
-        expect(stock.otlkMagForecast).toEqual(oldSecondOrderForecast + forecastForecastChangeFromCompanyWork);
+        expect(stock.otlkMagForecast).equal(oldSecondOrderForecast + forecastForecastChangeFromCompanyWork);
       });
 
       it("should be affected by performanceMult", function () {
@@ -1313,7 +1314,7 @@ describe("Stock Market Tests", function () {
         // Use 1e3 for numCycles to force a change
         // (This may break later if numbers are rebalanced);
         influenceStockThroughCompanyWork(company, 4, 1e3);
-        expect(stock.otlkMagForecast).toEqual(oldSecondOrderForecast + 4 * forecastForecastChangeFromCompanyWork);
+        expect(stock.otlkMagForecast).equal(oldSecondOrderForecast + 4 * forecastForecastChangeFromCompanyWork);
       });
     });
   });
