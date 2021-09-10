@@ -64,7 +64,7 @@ import * as FileSaver from "file-saver";
 import * as libarg from "arg";
 import React from "react";
 
-function postNetburnerText() {
+function postVersion() {
   post("Bitburner v" + CONSTANTS.Version);
 }
 
@@ -2616,4 +2616,4 @@ let Terminal = {
   },
 };
 
-export { postNetburnerText, Terminal };
+export { postVersion, Terminal };

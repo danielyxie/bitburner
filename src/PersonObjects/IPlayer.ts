@@ -192,4 +192,5 @@ export interface IPlayer {
   getCasinoWinnings(): number;
   quitJob(company: string): void;
   createHacknetServer(): void;
+  startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
 }

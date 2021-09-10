@@ -41,176 +41,91 @@
     <div id="entire-game-container" style="visibility: hidden">
       <div id="mainmenu-container">
         <!-- Main menu -->
-        <ul id="mainmenu" class="mainmenu noscrollbar">
+        <ul id="mainmenu" class="mainmenu noscrollbar noselect">
           <!-- Hacking dropdown -->
           <li id="hacking-menu-header-li">
-            <button id="hacking-menu-header" class="mainmenu-accordion-header noselect">Hacking</button>
+            <button id="hacking-menu-header" class="mainmenu-accordion-header">Hacking</button>
           </li>
-          <li id="terminal-tab" class="mainmenu-accordion-panel noselect">
+          <li id="terminal-tab" class="mainmenu-accordion-panel">
             <button id="terminal-menu-link">Terminal</button>
           </li>
-          <li id="create-script-tab" class="mainmenu-accordion-panel noselect">
+          <li id="create-script-tab" class="mainmenu-accordion-panel">
             <button id="create-script-menu-link">Create Script</button>
           </li>
-          <li id="active-scripts-tab" class="mainmenu-accordion-panel noselect">
+          <li id="active-scripts-tab" class="mainmenu-accordion-panel">
             <button id="active-scripts-menu-link">Active Scripts</button>
           </li>
-          <li id="create-program-tab" class="mainmenu-accordion-panel noselect">
+          <li id="create-program-tab" class="mainmenu-accordion-panel">
             <button id="create-program-menu-link">Create Program</button>
             <span id="create-program-notification" class="notification-off"> </span>
           </li>
 
           <!-- Character dropdown -->
           <li id="character-menu-header-li">
-            <button id="character-menu-header" class="mainmenu-accordion-header noselect">Character</button>
+            <button id="character-menu-header" class="mainmenu-accordion-header">Character</button>
           </li>
-          <li id="stats-tab" class="mainmenu-accordion-panel noselect">
+          <li id="stats-tab" class="mainmenu-accordion-panel">
             <button id="stats-menu-link">Stats</button>
           </li>
-          <li id="factions-tab" class="mainmenu-accordion-panel noselect">
+          <li id="factions-tab" class="mainmenu-accordion-panel">
             <button id="factions-menu-link">Factions</button>
             <span id="factions-notification" class="notification-off"> </span>
           </li>
-          <li id="augmentations-tab" class="mainmenu-accordion-panel noselect">
+          <li id="augmentations-tab" class="mainmenu-accordion-panel">
             <button id="augmentations-menu-link" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
               Augmentations
             </button>
             <span id="augmentations-notification" class="notification-off"> </span>
           </li>
-          <li id="hacknet-nodes-tab" class="mainmenu-accordion-panel noselect">
+          <li id="hacknet-nodes-tab" class="mainmenu-accordion-panel">
             <button id="hacknet-nodes-menu-link">Hacknet</button>
           </li>
-          <li id="sleeves-tab" class="mainmenu-accordion-panel noselect">
+          <li id="sleeves-tab" class="mainmenu-accordion-panel">
             <button id="sleeves-menu-link">Sleeves</button>
           </li>
 
           <!-- World dropdown -->
           <li id="world-menu-header-li">
-            <button id="world-menu-header" class="mainmenu-accordion-header noselect">World</button>
+            <button id="world-menu-header" class="mainmenu-accordion-header">World</button>
           </li>
-          <li id="city-tab" class="mainmenu-accordion-panel noselect">
+          <li id="city-tab" class="mainmenu-accordion-panel">
             <button id="city-menu-link">City</button>
           </li>
-          <li id="travel-tab" class="mainmenu-accordion-panel noselect">
+          <li id="travel-tab" class="mainmenu-accordion-panel">
             <button id="travel-menu-link">Travel</button>
           </li>
-          <li id="job-tab" class="mainmenu-accordion-panel noselect">
+          <li id="job-tab" class="mainmenu-accordion-panel">
             <button id="job-menu-link">Job</button>
           </li>
-          <li id="stock-market-tab" class="mainmenu-accordion-panel noselect">
+          <li id="stock-market-tab" class="mainmenu-accordion-panel">
             <button id="stock-market-menu-link">Stock Market</button>
           </li>
-          <li id="bladeburner-tab" class="mainmenu-accordion-panel noselect">
+          <li id="bladeburner-tab" class="mainmenu-accordion-panel">
             <button id="bladeburner-menu-link">Bladeburner</button>
           </li>
-          <li id="corporation-tab" class="mainmenu-accordion-panel noselect">
+          <li id="corporation-tab" class="mainmenu-accordion-panel">
             <button id="corporation-menu-link">Corp</button>
           </li>
-          <li id="gang-tab" class="mainmenu-accordion-panel noselect">
+          <li id="gang-tab" class="mainmenu-accordion-panel">
             <button id="gang-menu-link">Gang</button>
           </li>
 
           <li id="help-menu-header-li">
-            <button id="help-menu-header" class="mainmenu-accordion-header noselect">Help</button>
+            <button id="help-menu-header" class="mainmenu-accordion-header">Help</button>
           </li>
-          <li id="milestones-tab" class="mainmenu-accordion-panel noselect">
+          <li id="milestones-tab" class="mainmenu-accordion-panel">
             <button id="milestones-menu-link">Milestones</button>
           </li>
-          <li id="tutorial-tab" class="mainmenu-accordion-panel noselect">
+          <li id="tutorial-tab" class="mainmenu-accordion-panel">
             <button id="tutorial-menu-link">Tutorial</button>
           </li>
-          <li id="options-tab" class="mainmenu-accordion-panel noselect">
+          <li id="options-tab" class="mainmenu-accordion-panel">
             <button id="options-menu-link">Options</button>
           </li>
-          <li id="dev-tab" class="mainmenu-accordion-panel noselect">
+          <li id="dev-tab" class="mainmenu-accordion-panel">
             <button id="dev-menu-link">Dev</button>
           </li>
         </ul>
-      </div>
-
-      <div id="script-editor-container" class="generic-menupage-container">
-        <div id="script-editor-wrapper">
-          <div id="script-editor-filename-wrapper">
-            <p id="script-editor-filename-tag">
-              <strong style="background-color: #555">Script name: </strong>
-            </p>
-            <input id="script-editor-filename" type="text" maxlength="100" tabindex="1" />
-          </div>
-
-          <div id="monaco-editor"></div>
-
-          <div id="script-editor-buttons-wrapper"></div>
-          <!-- Buttons below script editor -->
-        </div>
-        <!-- End wrapper -->
-
-        <div id="script-editor-options-panel">
-          <h1 style="color: white">Script Editor Options</h1>
-          <fieldset>
-            <label for="script-editor-option-editor">Editor</label>
-            <select id="script-editor-option-editor" class="dropdown">
-              <option value="Ace">Ace</option>
-              <option value="CodeMirror">CodeMirror</option>
-            </select>
-          </fieldset>
-
-          <fieldset>
-            <label for="script-editor-option-theme">Theme</label>
-            <select id="script-editor-option-theme" class="dropdown"></select>
-          </fieldset>
-
-          <fieldset>
-            <label for="script-editor-option-keybinding">Key Binding</label>
-            <select id="script-editor-option-keybinding" class="dropdown"></select>
-          </fieldset>
-
-          <fieldset>
-            <label for="script-editor-option-highlightactiveline">Highlight Active Line</label>
-            <input
-              type="checkbox"
-              class="optionCheckbox"
-              name="script-editor-option-highlightactiveline"
-              id="script-editor-option-highlightactiveline"
-              checked
-            />
-          </fieldset>
-
-          <fieldset>
-            <label for="script-editor-option-showinvisibles">Show Invisibles</label>
-            <input
-              type="checkbox"
-              class="optionCheckbox"
-              name="script-editor-option-showinvisibles"
-              id="script-editor-option-showinvisibles"
-            />
-          </fieldset>
-
-          <fieldset>
-            <label for="script-editor-option-usesofttab">Use Soft Tab</label>
-            <input
-              type="checkbox"
-              class="optionCheckbox"
-              name="script-editor-option-usesofttab"
-              id="script-editor-option-usesofttab"
-              checked
-            />
-          </fieldset>
-
-          <fieldset id="script-editor-option-flex1-fieldset"></fieldset>
-          <fieldset id="script-editor-option-flex2-fieldset"></fieldset>
-          <fieldset id="script-editor-option-flex3-fieldset"></fieldset>
-          <fieldset id="script-editor-option-flex4-fieldset"></fieldset>
-        </div>
-        <!-- End script editor options panel -->
-
-        <!-- TODO(hydroflame): remove this once Monaco is implemented -->
-        <div id="ace-editor" style="display: none"></div>
-        <form id="codemirror-form-wrapper" style="display: none">
-          <textarea id="codemirror-editor"></textarea>
-        </form>
-        <div id="codemirror-vim-command-display-wrapper" style="display: none">
-          Key Buffer: <span id="codemirror-vim-command-display"></span>
-        </div>
       </div>
 
       <!-- Terminal page -->
@@ -233,133 +148,16 @@
       </div>
 
       <!-- Character Info page -->
-      <div id="character-container" class="generic-menupage-container">
-        <div id="character-content"></div>
-      </div>
-
-      <!-- Active scripts info page -->
-      <div id="active-scripts-container" class="generic-menupage-container">
-        <p id="active-scripts-text">
-          This page displays a list of all of your scripts that are currently running across every machine. It also
-          provides information about each script's production. The scripts are categorized by the hostname of the
-          servers on which they are running.
-        </p>
-        <p id="active-scripts-total-prod">
-          Total online production of Active scripts:
-          <span class="money-gold"><span id="active-scripts-total-production-active">$0.000</span> / sec</span><br />
-          Total online production since last Aug installation:
-          <span id="active-scripts-total-prod-aug-total" class="money-gold">$0.000</span>
-          (<span class="money-gold"
-            ><span id="active-scripts-total-prod-aug-avg" class="money-gold">$0.000</span> / sec</span
-          >)
-        </p>
-        <ul class="active-scripts-list" id="active-scripts-list" style="list-style: none"></ul>
-      </div>
-
-      <!-- Hacknet Nodes -->
-      <div id="hacknet-nodes-container" class="generic-menupage-container">
-        <!-- React Component -->
-      </div>
-
-      <!-- Create a program(executable) -->
-      <div id="create-program-container" class="generic-menupage-container">
-        <p id="create-program-page-text">
-          This page displays any programs that you are able to create. Writing the code for a program takes time, which
-          can vary based on how complex the program is. If you are working on creating a program you can cancel at any
-          time. Your progress will be saved and you can continue later.
-        </p>
-
-        <ul id="create-program-list"></ul>
-      </div>
-
-      <!-- Factions -->
+      <div id="character-container" class="generic-menupage-container"></div>
+      <div id="active-scripts-container" class="generic-menupage-container"></div>
+      <div id="script-editor-container" class="generic-menupage-container"></div>
+      <div id="hacknet-nodes-container" class="generic-menupage-container"></div>
+      <div id="create-program-container" class="generic-menupage-container"></div>
       <div id="factions-container" class="generic-menupage-container"></div>
-
-      <!-- Single Faction info (when you select a faction from the Factions menu) -->
       <div id="faction-container" class="generic-menupage-container"></div>
-
-      <!-- Augmentations -->
       <div id="augmentations-container" class="generic-menupage-container"></div>
-
-      <!-- Milestones content -->
       <div id="milestones-container" class="generic-menupage-container"></div>
-
-      <!-- Tutorial content -->
-      <div id="tutorial-container" class="generic-menupage-container">
-        <h1>Tutorial (AKA Links to Documentation)</h1>
-        <a
-          id="tutorial-getting-started-link"
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/guidesandtips/gettingstartedguideforbeginnerprogrammers.html"
-        >
-          Getting Started</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/servers.html"
-        >
-          Servers & Networking</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/hacking.html"
-        >
-          Hacking</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/scripts.html"
-        >
-          Scripts</a
-        ><br /><br />
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/netscript.html">
-          Netscript Programming Language</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/world.html"
-        >
-          Traveling</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/companies.html"
-        >
-          Companies</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/infiltration.html"
-        >
-          Infiltration</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/factions.html"
-        >
-          Factions</a
-        ><br /><br />
-        <a
-          class="a-link-button"
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/basicgameplay/augmentations.html"
-        >
-          Augmentations</a
-        ><br /><br />
-        <a class="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/shortcuts.html">
-          Keyboard Shortcuts</a
-        >
-      </div>
-
-      <!-- Location (visiting a location in World) -->
+      <div id="tutorial-container" class="generic-menupage-container"></div>
       <div id="location-container" class="generic-menupage-container"></div>
       <div id="infiltration-container" class="generic-fullscreen-container"></div>
       <div id="stock-market-container" class="generic-menupage-container"></div>
@@ -400,19 +198,6 @@
           </p>
           <button id="faction-invitation-box-yes" class="popup-box-button">Join!</button>
           <button id="faction-invitation-box-no" class="popup-box-button">Decide later</button>
-        </div>
-      </div>
-
-      <!-- End of Infiltration pop up box -->
-      <div id="infiltration-box-container" class="popup-box-container">
-        <div id="infiltration-box-content" class="popup-box-content">
-          <p id="infiltration-box-text"></p>
-
-          <button id="infiltration-box-sell" class="a-link-button">Sell on Black Market</button>
-          <br /><br />
-          <select id="infiltration-faction-select" class="dropdown"></select>
-          <br />
-          <button id="infiltration-box-faction" class="a-link-button">Give to Faction for Reputation</button>
         </div>
       </div>
 

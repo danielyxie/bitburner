@@ -3,19 +3,6 @@ import { Programs } from "./Programs";
 import { Player } from "../Player";
 import { createElement } from "../../utils/uiHelpers/createElement";
 
-// this has the same key as 'Programs', not program names
-const aLinks = {};
-
-function displayCreateProgramContent() {
-  for (const key in aLinks) {
-    const p = Programs[key];
-    aLinks[key].style.display = "none";
-    if (!Player.hasProgram(p.name) && p.create.req(Player)) {
-      aLinks[key].style.display = "inline-block";
-    }
-  }
-}
-
 //Returns the number of programs that are currently available to be created
 function getNumAvailableCreateProgram() {
   var count = 0;
@@ -46,29 +33,4 @@ function getNumAvailableCreateProgram() {
   return count;
 }
 
-function initCreateProgramButtons() {
-  const createProgramList = document.getElementById("create-program-list");
-  for (const key in Programs) {
-    if (Programs[key].create === null) {
-      continue;
-    }
-    const elem = createElement("a", {
-      class: "a-link-button",
-      id: Programs[key].htmlID(),
-      innerText: Programs[key].name,
-      tooltip: Programs[key].create.tooltip,
-    });
-    aLinks[key] = elem;
-    createProgramList.appendChild(elem);
-  }
-
-  for (const key in aLinks) {
-    const p = Programs[key];
-    aLinks[key].addEventListener("click", function () {
-      Player.startCreateProgramWork(p.name, p.create.time, p.create.level);
-      return false;
-    });
-  }
-}
-
-export { displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons };
+export { getNumAvailableCreateProgram };

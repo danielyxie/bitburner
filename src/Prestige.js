@@ -23,7 +23,7 @@ import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
-import { Terminal, postNetburnerText } from "./Terminal";
+import { Terminal, postVersion } from "./Terminal";
 
 import { Page, routing } from "./ui/navigationTracking";
 

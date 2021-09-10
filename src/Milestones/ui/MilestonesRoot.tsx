@@ -16,7 +16,7 @@ function highestMilestone(p: IPlayer, milestones: Milestone[]): number {
   return n;
 }
 
-export function Root(props: IProps): JSX.Element {
+export function MilestonesRoot(props: IProps): JSX.Element {
   const n = highestMilestone(props.player, Milestones);
   const milestones = Milestones.map((milestone: Milestone, i: number) => {
     if (i <= n + 1) {
