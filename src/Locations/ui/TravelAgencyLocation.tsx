@@ -6,13 +6,14 @@
 import * as React from "react";
 
 import { CityName } from "../data/CityNames";
-import { createTravelPopup } from "../LocationsHelpers";
+import { TravelConfirmationPopup } from "./TravelConfirmationPopup";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 
 import { StdButton } from "../../ui/React/StdButton";
+import { createPopup } from "../../ui/React/createPopup";
 import { Money } from "../../ui/React/Money";
 import { WorldMap } from "../../ui/React/WorldMap";
 
@@ -21,67 +22,63 @@ type IProps = {
   travel: (to: CityName) => void;
 };
 
-export class TravelAgencyLocation extends React.Component<IProps, any> {
-  /**
-   * Stores button styling that sets them all to block display
-   */
-  btnStyle: any;
-
-  constructor(props: IProps) {
-    super(props);
-
-    this.btnStyle = { display: "block" };
+function createTravelPopup(p: IPlayer, city: string, travel: () => void): void {
+  if (Settings.SuppressTravelConfirmation) {
+    travel();
+    return;
   }
+  const popupId = `travel-confirmation`;
+  createPopup(popupId, TravelConfirmationPopup, {
+    player: p,
+    city: city,
+    travel: travel,
+    popupId: popupId,
+  });
+}
 
-  asciiWorldMap(): React.ReactNode {
-    // map needs all this whitespace!
-    // prettier-ignore
-    return (
-      <div className="noselect">
-        <p>
-          From here, you can travel to any other city! A ticket costs{" "}
-          <Money money={CONSTANTS.TravelCost} player={this.props.p} />.
-        </p>
-        <WorldMap currentCity={this.props.p.city} onTravel={(city: CityName) => createTravelPopup(city, this.props.travel)} />
-      </div>
-    );
-  }
+function ASCIIWorldMap(props: IProps): React.ReactElement {
+  return (
+    <div className="noselect">
+      <p>
+        From here, you can travel to any other city! A ticket costs{" "}
+        <Money money={CONSTANTS.TravelCost} player={props.p} />.
+      </p>
+      <WorldMap
+        currentCity={props.p.city}
+        onTravel={(city: CityName) => createTravelPopup(props.p, city, () => props.travel(city))}
+      />
+    </div>
+  );
+}
 
-  listWorldMap(): React.ReactNode {
-    const travelBtns: React.ReactNode[] = [];
-    for (const key in CityName) {
-      const city: CityName = (CityName as any)[key];
+function ListWorldMap(props: IProps): React.ReactElement {
+  return (
+    <div>
+      <p>
+        From here, you can travel to any other city! A ticket costs{" "}
+        <Money money={CONSTANTS.TravelCost} player={props.p} />.
+      </p>
+      {Object.values(CityName)
+        .filter((city: string) => city != props.p.city)
+        .map((city: string) => (
+          <StdButton
+            key={city}
+            onClick={() =>
+              createTravelPopup(props.p, city, () => props.travel(CityName[city as keyof typeof CityName]))
+            }
+            style={{ display: "block" }}
+            text={`Travel to ${city}`}
+          />
+        ))}
+    </div>
+  );
+}
 
-      // Skip current city
-      if (city === this.props.p.city) {
-        continue;
-      }
-
-      travelBtns.push(
-        <StdButton
-          key={city}
-          onClick={createTravelPopup.bind(null, city, this.props.travel)}
-          style={this.btnStyle}
-          text={`Travel to ${city}`}
-        />,
-      );
-    }
-
-    return (
-      <div>
-        <p>
-          From here, you can travel to any other city! A ticket costs <Money money={CONSTANTS.TravelCost} />.
-        </p>
-        {travelBtns}
-      </div>
-    );
-  }
-
-  render(): React.ReactNode {
-    if (Settings.DisableASCIIArt) {
-      return this.listWorldMap();
-    } else {
-      return this.asciiWorldMap();
-    }
+export function TravelAgencyLocation(props: IProps): React.ReactElement {
+  console.log(Settings.DisableASCIIArt);
+  if (Settings.DisableASCIIArt) {
+    return <ListWorldMap p={props.p} travel={props.travel} />;
+  } else {
+    return <ASCIIWorldMap p={props.p} travel={props.travel} />;
   }
 }

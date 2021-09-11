@@ -13,7 +13,8 @@
 import * as React from "react";
 
 import { Location } from "../Location";
-import { createStartCorporationPopup } from "../LocationsHelpers";
+import { CreateCorporationPopup } from "../../Corporation/ui/CreateCorporationPopup";
+import { createPopup } from "../../ui/React/createPopup";
 import { LocationName } from "../data/LocationNames";
 
 import { IEngine } from "../../IEngine";
@@ -59,7 +60,11 @@ export class SpecialLocation extends React.Component<IProps, IState> {
    * Click handler for "Create Corporation" button at Sector-12 City Hall
    */
   createCorporationPopup(): void {
-    createStartCorporationPopup(this.props.p);
+    const popupId = `create-start-corporation-popup`;
+    createPopup(popupId, CreateCorporationPopup, {
+      player: this.props.p,
+      popupId: popupId,
+    });
   }
 
   /**
