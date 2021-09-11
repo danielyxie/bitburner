@@ -20,7 +20,8 @@ function ExpandButton(props: IExpandButtonProps): React.ReactElement {
   const allIndustries = Object.keys(Industries).sort();
   const possibleIndustries = allIndustries
     .filter(
-      (industryType: string) => props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
+      (industryType: string) =>
+        props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
     )
     .sort();
   if (possibleIndustries.length === 0) return <></>;
@@ -50,12 +51,12 @@ export function CorporationRoot(props: IProps): React.ReactElement {
   const [divisionName, setDivisionName] = useState("Overview");
 
   useEffect(() => {
-    const id = setInterval(rerender, 150);
+    const id = setInterval(rerender, 1000);
     return () => clearInterval(id);
   }, []);
 
   return (
-    <>
+    <div id="corporation-container">
       <div>
         <HeaderTab
           current={divisionName === "Overview"}
@@ -74,6 +75,6 @@ export function CorporationRoot(props: IProps): React.ReactElement {
         <ExpandButton corp={props.corp} setDivisionName={setDivisionName} />
       </div>
       <MainPanel rerender={rerender} corp={props.corp} divisionName={divisionName} player={props.player} />
-    </>
+    </div>
   );
 }

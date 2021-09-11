@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 import { BitNodes } from "../BitNode/BitNode";
@@ -13,12 +13,27 @@ import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import { StatsTable } from "./React/StatsTable";
 import { Money } from "./React/Money";
 
-export function CharacterInfo(p: IPlayer): React.ReactElement {
+interface IProps {
+  player: IPlayer;
+}
+
+export function CharacterInfo(props: IProps): React.ReactElement {
+  const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
+  const [divisionName, setDivisionName] = useState("Overview");
+
+  useEffect(() => {
+    const id = setInterval(rerender, 20);
+    return () => clearInterval(id);
+  }, []);
+
   function LastEmployer(): React.ReactElement {
-    if (p.companyName) {
+    if (props.player.companyName) {
       return (
         <>
-          <span>Employer at which you last worked: {p.companyName}</span>
+          <span>Employer at which you last worked: {props.player.companyName}</span>
           <br />
         </>
       );
@@ -26,10 +41,10 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     return <></>;
   }
   function LastJob(): React.ReactElement {
-    if (p.companyName !== "") {
+    if (props.player.companyName !== "") {
       return (
         <>
-          <span>Job you last worked: {p.jobs[p.companyName]}</span>
+          <span>Job you last worked: {props.player.jobs[props.player.companyName]}</span>
           <br />
         </>
       );
@@ -37,13 +52,13 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     return <></>;
   }
   function Employers(): React.ReactElement {
-    if (p.jobs && Object.keys(p.jobs).length !== 0)
+    if (props.player.jobs && Object.keys(props.player.jobs).length !== 0)
       return (
         <>
           <span>All Employers:</span>
           <br />
           <ul>
-            {Object.keys(p.jobs).map((j) => (
+            {Object.keys(props.player.jobs).map((j) => (
               <li key={j}> * {j}</li>
             ))}
           </ul>
@@ -56,17 +71,17 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
 
   function Hacknet(): React.ReactElement {
     // Can't import HacknetHelpers for some reason.
-    if (!(p.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
+    if (!(props.player.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
       return (
         <>
-          <span>{`Hacknet Nodes owned: ${p.hacknetNodes.length}`}</span>
+          <span>{`Hacknet Nodes owned: ${props.player.hacknetNodes.length}`}</span>
           <br />
         </>
       );
     } else {
       return (
         <>
-          <span>{`Hacknet Servers owned: ${p.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}`}</span>
+          <span>{`Hacknet Servers owned: ${props.player.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}`}</span>
           <br />
         </>
       );
@@ -126,10 +141,10 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
       <>
         <u>Money earned since you last installed Augmentations:</u>
         <br />
-        {convertMoneySourceTrackerToString(p.moneySourceA)}
+        {convertMoneySourceTrackerToString(props.player.moneySourceA)}
       </>
     );
-    if (p.sourceFiles.length !== 0) {
+    if (props.player.sourceFiles.length !== 0) {
       content = (
         <>
           {content}
@@ -137,7 +152,7 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
           <br />
           <u>Money earned in this BitNode:</u>
           <br />
-          {convertMoneySourceTrackerToString(p.moneySourceB)}
+          {convertMoneySourceTrackerToString(props.player.moneySourceB)}
         </>
       );
     }
@@ -146,11 +161,11 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
   }
 
   function Intelligence(): React.ReactElement {
-    if (p.intelligence > 0 && (p.bitNodeN === 5 || SourceFileFlags[5] > 0)) {
+    if (props.player.intelligence > 0 && (props.player.bitNodeN === 5 || SourceFileFlags[5] > 0)) {
       return (
         <tr key="5">
           <td>Intelligence:</td>
-          <td style={{ textAlign: "right" }}>{numeralWrapper.formatSkill(p.intelligence)}</td>
+          <td style={{ textAlign: "right" }}>{numeralWrapper.formatSkill(props.player.intelligence)}</td>
         </tr>
       );
     }
@@ -189,15 +204,15 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
   }
 
   function BladeburnerMults(): React.ReactElement {
-    if (!p.canAccessBladeburner()) return <></>;
+    if (!props.player.canAccessBladeburner()) return <></>;
     return (
       <>
         <MultiplierTable
           rows={[
-            ["Bladeburner Success Chance", p.bladeburner_max_stamina_mult],
-            ["Bladeburner Max Stamina", p.bladeburner_stamina_gain_mult],
-            ["Bladeburner Stamina Gain", p.bladeburner_analysis_mult],
-            ["Bladeburner Field Analysis", p.bladeburner_success_chance_mult],
+            ["Bladeburner Success Chance", props.player.bladeburner_max_stamina_mult],
+            ["Bladeburner Max Stamina", props.player.bladeburner_stamina_gain_mult],
+            ["Bladeburner Stamina Gain", props.player.bladeburner_analysis_mult],
+            ["Bladeburner Field Analysis", props.player.bladeburner_success_chance_mult],
           ]}
         />
         <br />
@@ -206,12 +221,12 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
   }
 
   function CurrentBitNode(): React.ReactElement {
-    if (p.sourceFiles.length > 0) {
-      const index = "BitNode" + p.bitNodeN;
+    if (props.player.sourceFiles.length > 0) {
+      const index = "BitNode" + props.player.bitNodeN;
       return (
         <>
           <span>
-            Current BitNode: {p.bitNodeN} ({BitNodes[index].name})
+            Current BitNode: {props.player.bitNodeN} ({BitNodes[index].name})
           </span>
           <br />
           <br />
@@ -230,198 +245,254 @@ export function CharacterInfo(p: IPlayer): React.ReactElement {
     return <></>;
   }
 
-  const timeRows = [["Time played since last Augmentation:", convertTimeMsToTimeElapsedString(p.playtimeSinceLastAug)]];
-  if (p.sourceFiles.length > 0) {
+  const timeRows = [
+    ["Time played since last Augmentation:", convertTimeMsToTimeElapsedString(props.player.playtimeSinceLastAug)],
+  ];
+  if (props.player.sourceFiles.length > 0) {
     timeRows.push([
       "Time played since last Bitnode destroyed:",
-      convertTimeMsToTimeElapsedString(p.playtimeSinceLastBitnode),
+      convertTimeMsToTimeElapsedString(props.player.playtimeSinceLastBitnode),
     ]);
   }
-  timeRows.push(["Total Time played:", convertTimeMsToTimeElapsedString(p.totalPlaytime)]);
+  timeRows.push(["Total Time played:", convertTimeMsToTimeElapsedString(props.player.totalPlaytime)]);
 
   return (
-    <pre>
-      <b>General</b>
-      <br />
-      <br />
-      <span>Current City: {p.city}</span>
-      <br />
-      <LastEmployer />
-      <LastJob />
-      <Employers />
-      <span>
-        Money: <Money money={p.money.toNumber()} />
-      </span>
-      <button className="popup-box-button" style={{ display: "inline-block", float: "none" }} onClick={openMoneyModal}>
-        Money Statistics & Breakdown
-      </button>
-      <br />
-      <br />
-      <b>Stats</b>
-      <table>
-        <tbody>
-          <tr key="0">
-            <td key="0">Hacking:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(p.hacking_skill)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(p.hacking_exp)} exp)
-            </td>
-          </tr>
-          <tr key="1">
-            <td key="0">Strength:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(p.strength)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(p.strength_exp)} exp)
-            </td>
-          </tr>
-          <tr key="2">
-            <td key="0">Defense:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(p.defense)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(p.defense_exp)} exp)
-            </td>
-          </tr>
-          <tr key="3">
-            <td key="0">Dexterity:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(p.dexterity)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(p.dexterity_exp)} exp)
-            </td>
-          </tr>
-          <tr key="4">
-            <td key="0">Agility:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(p.agility)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(p.agility_exp)} exp)
-            </td>
-          </tr>
-          <tr key="5">
-            <td key="0">Charisma:</td>
-            <td key="1" style={{ textAlign: "right" }}>
-              {numeralWrapper.formatSkill(p.charisma)}
-            </td>
-            <td key="2" style={{ textAlign: "right" }}>
-              ({numeralWrapper.formatExp(p.charisma_exp)} exp)
-            </td>
-          </tr>
-          <Intelligence />
-        </tbody>
-      </table>
-      <br />
-      <MultiplierTable
-        rows={[
-          ["Hacking Chance", p.hacking_chance_mult],
-          ["Hacking Speed", p.hacking_speed_mult],
-          ["Hacking Money", p.hacking_money_mult, p.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney],
-          ["Hacking Growth", p.hacking_grow_mult, p.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate],
-        ]}
-      />
-      <br />
-      <MultiplierTable
-        rows={[
-          ["Hacking Level", p.hacking_mult, p.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier],
-          ["Hacking Experience", p.hacking_exp_mult, p.hacking_exp_mult * BitNodeMultipliers.HackExpGain],
-        ]}
-      />
-      <br />
+    <div id="character-container">
+      <pre>
+        <b>General</b>
+        <br />
+        <br />
+        <span>Current City: {props.player.city}</span>
+        <br />
+        <LastEmployer />
+        <LastJob />
+        <Employers />
+        <span>
+          Money: <Money money={props.player.money.toNumber()} />
+        </span>
+        <button
+          className="popup-box-button"
+          style={{ display: "inline-block", float: "none" }}
+          onClick={openMoneyModal}
+        >
+          Money Statistics & Breakdown
+        </button>
+        <br />
+        <br />
+        <b>Stats</b>
+        <table>
+          <tbody>
+            <tr key="0">
+              <td key="0">Hacking:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.hacking_skill)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.hacking_exp)} exp)
+              </td>
+            </tr>
+            <tr key="1">
+              <td key="0">Strength:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.strength)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.strength_exp)} exp)
+              </td>
+            </tr>
+            <tr key="2">
+              <td key="0">Defense:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.defense)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.defense_exp)} exp)
+              </td>
+            </tr>
+            <tr key="3">
+              <td key="0">Dexterity:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.dexterity)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.dexterity_exp)} exp)
+              </td>
+            </tr>
+            <tr key="4">
+              <td key="0">Agility:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.agility)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.agility_exp)} exp)
+              </td>
+            </tr>
+            <tr key="5">
+              <td key="0">Charisma:</td>
+              <td key="1" style={{ textAlign: "right" }}>
+                {numeralWrapper.formatSkill(props.player.charisma)}
+              </td>
+              <td key="2" style={{ textAlign: "right" }}>
+                ({numeralWrapper.formatExp(props.player.charisma_exp)} exp)
+              </td>
+            </tr>
+            <Intelligence />
+          </tbody>
+        </table>
+        <br />
+        <MultiplierTable
+          rows={[
+            ["Hacking Chance", props.player.hacking_chance_mult],
+            ["Hacking Speed", props.player.hacking_speed_mult],
+            [
+              "Hacking Money",
+              props.player.hacking_money_mult,
+              props.player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
+            ],
+            [
+              "Hacking Growth",
+              props.player.hacking_grow_mult,
+              props.player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
+            ],
+          ]}
+        />
+        <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Hacking Level",
+              props.player.hacking_mult,
+              props.player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+            ],
+            [
+              "Hacking Experience",
+              props.player.hacking_exp_mult,
+              props.player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
+            ],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Strength Level", p.strength_mult, p.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier],
-          ["Strength Experience", p.strength_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Strength Level",
+              props.player.strength_mult,
+              props.player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+            ],
+            ["Strength Experience", props.player.strength_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Defense Level", p.defense_mult, p.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier],
-          ["Defense Experience", p.defense_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Defense Level",
+              props.player.defense_mult,
+              props.player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+            ],
+            ["Defense Experience", props.player.defense_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Dexterity Level", p.dexterity_mult, p.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier],
-          ["Dexterity Experience", p.dexterity_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Dexterity Level",
+              props.player.dexterity_mult,
+              props.player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+            ],
+            ["Dexterity Experience", props.player.dexterity_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Agility Level", p.agility_mult, p.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier],
-          ["Agility Experience", p.agility_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Agility Level",
+              props.player.agility_mult,
+              props.player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+            ],
+            ["Agility Experience", props.player.agility_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Charisma Level", p.charisma_mult, p.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier],
-          ["Charisma Experience", p.charisma_exp_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Charisma Level",
+              props.player.charisma_mult,
+              props.player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+            ],
+            ["Charisma Experience", props.player.charisma_exp_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          [
-            "Hacknet Node production",
-            p.hacknet_node_money_mult,
-            p.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
-          ],
-          ["Hacknet Node purchase cost", p.hacknet_node_purchase_cost_mult],
-          ["Hacknet Node RAM upgrade cost", p.hacknet_node_ram_cost_mult],
-          ["Hacknet Node Core purchase cost", p.hacknet_node_core_cost_mult],
-          ["Hacknet Node level upgrade cost", p.hacknet_node_level_cost_mult],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            [
+              "Hacknet Node production",
+              props.player.hacknet_node_money_mult,
+              props.player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
+            ],
+            ["Hacknet Node purchase cost", props.player.hacknet_node_purchase_cost_mult],
+            ["Hacknet Node RAM upgrade cost", props.player.hacknet_node_ram_cost_mult],
+            ["Hacknet Node Core purchase cost", props.player.hacknet_node_core_cost_mult],
+            ["Hacknet Node level upgrade cost", props.player.hacknet_node_level_cost_mult],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Company reputation gain", p.company_rep_mult],
-          ["Faction reputation gain", p.faction_rep_mult, p.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain],
-          ["Salary", p.work_money_mult, p.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            ["Company reputation gain", props.player.company_rep_mult],
+            [
+              "Faction reputation gain",
+              props.player.faction_rep_mult,
+              props.player.faction_rep_mult * BitNodeMultipliers.FactionWorkRepGain,
+            ],
+            [
+              "Salary",
+              props.player.work_money_mult,
+              props.player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney,
+            ],
+          ]}
+        />
+        <br />
 
-      <MultiplierTable
-        rows={[
-          ["Crime success", p.crime_success_mult],
-          ["Crime money", p.crime_money_mult, p.crime_money_mult * BitNodeMultipliers.CrimeMoney],
-        ]}
-      />
-      <br />
+        <MultiplierTable
+          rows={[
+            ["Crime success", props.player.crime_success_mult],
+            [
+              "Crime money",
+              props.player.crime_money_mult,
+              props.player.crime_money_mult * BitNodeMultipliers.CrimeMoney,
+            ],
+          ]}
+        />
+        <br />
 
-      <BladeburnerMults />
-      <br />
+        <BladeburnerMults />
+        <br />
 
-      <b>Misc.</b>
-      <br />
-      <br />
-      <span>{`Servers owned: ${p.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span>
-      <br />
-      <Hacknet />
-      <span>{`Augmentations installed: ${p.augmentations.length}`}</span>
-      <br />
-      <br />
-      {StatsTable(timeRows)}
-      <br />
-      <CurrentBitNode />
-    </pre>
+        <b>Misc.</b>
+        <br />
+        <br />
+        <span>{`Servers owned: ${props.player.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span>
+        <br />
+        <Hacknet />
+        <span>{`Augmentations installed: ${props.player.augmentations.length}`}</span>
+        <br />
+        <br />
+        {StatsTable(timeRows)}
+        <br />
+        <CurrentBitNode />
+      </pre>
+    </div>
   );
 }

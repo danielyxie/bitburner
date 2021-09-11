@@ -52,6 +52,7 @@ export function Overview(props: IProps): React.ReactElement {
   }
 
   function openBribeFactionPopup(): void {
+    console.log("hello click");
     const popupId = "corp-bribe-popup";
     createPopup(popupId, BribeFactionPopup, {
       player: props.player,

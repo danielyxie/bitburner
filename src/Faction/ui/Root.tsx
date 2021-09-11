@@ -223,7 +223,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
     }
 
     return (
-      <div>
+      <div id="faction-container">
         <h1>{faction.name}</h1>
         <Info faction={faction} factionInfo={factionInfo} />
         {canAccessGang && <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={this.manageGang} />}
@@ -266,7 +266,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
 
   renderAugmentationsPage(): React.ReactNode {
     return (
-      <div>
+      <div id="faction-container">
         <AugmentationsPage faction={this.props.faction} p={this.props.p} routeToMainPage={this.routeToMain} />
       </div>
     );

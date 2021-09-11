@@ -69,13 +69,13 @@ export class Node {
     }
 
     // Determine what css class this Node should have in the diagram
-    let htmlClass = "";
+    let htmlClass = "tooltip";
     if (this.researched) {
-      htmlClass = "researched";
+      htmlClass += " researched";
     } else if (this.parent && this.parent.researched === false) {
-      htmlClass = "locked";
+      htmlClass += " locked";
     } else {
-      htmlClass = "unlocked";
+      htmlClass += " unlocked";
     }
 
     const research: Research | null = ResearchMap[this.text];
@@ -84,7 +84,7 @@ export class Node {
       children: childrenArray,
       HTMLclass: htmlClass,
       innerHTML:
-        `<div id="${sanitizedName}-corp-research-click-listener" class="tooltip">` +
+        `<div id="${sanitizedName}-corp-research-click-listener">` +
         `${this.text}<br>${numeralWrapper.format(this.cost, "0,0")} Scientific Research` +
         `<span class="tooltiptext">` +
         `${research.desc}` +

@@ -12,6 +12,7 @@ $(document).click(function (event) {
 
 var gameOptionsOpened = false;
 function gameOptionsBoxInit() {
+  return;
   //Menu link button
   document.getElementById("options-menu-link").addEventListener("click", function () {
     gameOptionsBoxOpen();

@@ -26,6 +26,7 @@ import { StatsElement } from "../ui/StatsElement";
 import { MoreStatsContent } from "../ui/MoreStatsContent";
 import { MoreEarningsContent } from "../ui/MoreEarningsContent";
 import { TaskSelector } from "../ui/TaskSelector";
+import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 
 interface IProps {
   player: IPlayer;
@@ -63,6 +64,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
   }
 
   function setTask(): void {
+    console.log(abc);
     props.sleeve.resetTaskStatus(); // sets to idle
     switch (abc[0]) {
       case "------":
@@ -100,15 +102,28 @@ export function SleeveElem(props: IProps): React.ReactElement {
       desc = <>This sleeve is currently idle</>;
       break;
     case SleeveTaskType.Company:
-      desc = <>This sleeve is currently working your job at ${props.sleeve.currentTaskLocation}.</>;
+      desc = <>This sleeve is currently working your job at {props.sleeve.currentTaskLocation}.</>;
       break;
-    case SleeveTaskType.Faction:
+    case SleeveTaskType.Faction: {
+      let doing = "nothing";
+      switch (props.sleeve.factionWorkType) {
+        case FactionWorkType.Field:
+          doing = "Field work";
+          break;
+        case FactionWorkType.Hacking:
+          doing = "Hacking contracts";
+          break;
+        case FactionWorkType.Security:
+          doing = "Security work";
+          break;
+      }
       desc = (
         <>
-          This sleeve is currently doing ${props.sleeve.factionWorkType} for ${props.sleeve.currentTaskLocation}.
+          This sleeve is currently doing {doing} for {props.sleeve.currentTaskLocation}.
         </>
       );
       break;
+    }
     case SleeveTaskType.Crime:
       desc = (
         <>

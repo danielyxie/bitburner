@@ -113,6 +113,10 @@ a:visited {
   color: #fff;
   border-radius: 2px;
   padding: 1px 3px;
+  font-size: $defaultFontSize * 0.625;
+  top: 0;
+  right: 0;
+  position: absolute;
 }
 
 .notification-off {
@@ -120,6 +124,21 @@ a:visited {
   color: #333;
   border-radius: 0;
   padding: 0;
+  display: "none";
+}
+
+.notification {
+  position: relative;
+  display: inline-block;
+}
+
+.notification .badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  background: red;
+  color: white;
 }
 
 /* help tip. Question mark that opens popup with info/details */

@@ -5,7 +5,13 @@
  */
 import { convertTimeMsToTimeElapsedString, replaceAt } from "../utils/StringHelperFunctions";
 import { Augmentations } from "./Augmentation/Augmentations";
-import { initAugmentations, displayAugmentationsContent } from "./Augmentation/AugmentationHelpers";
+import {
+  initAugmentations,
+  displayAugmentationsContent,
+  installAugmentations,
+} from "./Augmentation/AugmentationHelpers";
+import { onExport } from "./ExportBonus";
+import { AugmentationsRoot } from "./Augmentation/ui/Root";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
@@ -15,12 +21,13 @@ import { generateRandomContract } from "./CodingContractGenerator";
 import { initCompanies } from "./Company/Companies";
 import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
-import { createDevMenu, closeDevMenu } from "./DevMenu";
+import { DevMenuRoot } from "./DevMenu";
 import { Factions, initFactions } from "./Faction/Factions";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { FactionList } from "./Faction/ui/FactionList";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
+import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
@@ -42,11 +49,7 @@ import { workerScripts } from "./Netscript/WorkerScripts";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
-import {
-  displayCreateProgramContent,
-  getNumAvailableCreateProgram,
-  initCreateProgramButtons,
-} from "./Programs/ProgramHelpers";
+import { ProgramsRoot } from "./Programs/ui/ProgramsRoot";
 import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
 import { Root as ScriptEditorRoot } from "./ScriptEditor/ui/Root";
@@ -55,8 +58,9 @@ import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import { initSymbolToStockMap, processStockPrices, displayStockMarketContent } from "./StockMarket/StockMarket";
-import { displayMilestonesContent } from "./Milestones/MilestoneHelpers";
-import { Terminal, postNetburnerText } from "./Terminal";
+import { MilestonesRoot } from "./Milestones/ui/MilestonesRoot";
+import { Terminal, postVersion } from "./Terminal";
+import { TutorialRoot } from "./Tutorial/ui/TutorialRoot";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 
 import { createStatusText } from "./ui/createStatusText";
@@ -173,33 +177,15 @@ const Engine = {
   // Display objects
   // TODO-Refactor this into its own component
   Display: {
+    // Generic page that most react loads into.
+    content: null,
     // Main menu content
     terminalContent: null,
-    characterContent: null,
-    scriptEditorContent: null,
-    activeScriptsContent: null,
-    hacknetNodesContent: null,
-    createProgramContent: null,
-    factionsContent: null,
-    factionContent: null,
-    augmentationsContent: null,
-    milestonesContent: null,
-    tutorialContent: null,
     infiltrationContent: null,
-    stockMarketContent: null,
-    gangContent: null,
-    bladeburnerContent: null,
-    resleeveContent: null,
-    sleeveContent: null,
-    corporationContent: null,
-    locationContent: null,
     workInProgressContent: null,
     redPillContent: null,
     cinematicTextContent: null,
     missionContent: null,
-
-    // Character info
-    characterInfo: null,
   },
 
   indexedDb: undefined,
@@ -217,104 +203,115 @@ const Engine = {
 
   loadCharacterContent: function () {
     Engine.hideAllContent();
-    Engine.Display.characterContent.style.display = "block";
-    Engine.updateCharacterInfo();
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.CharacterInfo);
+    ReactDOM.render(<CharacterInfo player={Player} />, Engine.Display.content);
     MainMenuLinks.Stats.classList.add("active");
   },
 
   loadScriptEditorContent: function (filename = "", code = "") {
     Engine.hideAllContent();
-    Engine.Display.scriptEditorContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.ScriptEditor);
-
+    MainMenuLinks.ScriptEditor.classList.add("active");
     ReactDOM.render(
       <ScriptEditorRoot filename={filename} code={code} player={Player} engine={this} />,
-      Engine.Display.scriptEditorContent,
+      Engine.Display.content,
     );
-
-    MainMenuLinks.ScriptEditor.classList.add("active");
   },
 
   loadActiveScriptsContent: function () {
     Engine.hideAllContent();
-    Engine.Display.activeScriptsContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.ActiveScripts);
-    ReactDOM.render(
-      <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
-      Engine.Display.activeScriptsContent,
-    );
     MainMenuLinks.ActiveScripts.classList.add("active");
+    ReactDOM.render(<ActiveScriptsRoot p={Player} workerScripts={workerScripts} />, Engine.Display.content);
   },
 
   loadHacknetNodesContent: function () {
     Engine.hideAllContent();
-    Engine.Display.hacknetNodesContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.HacknetNodes);
-    ReactDOM.render(<HacknetRoot player={Player} />, Engine.Display.hacknetNodesContent);
     MainMenuLinks.HacknetNodes.classList.add("active");
+    ReactDOM.render(<HacknetRoot player={Player} />, Engine.Display.content);
   },
 
   loadCreateProgramContent: function () {
     Engine.hideAllContent();
-    Engine.Display.createProgramContent.style.display = "block";
-    displayCreateProgramContent();
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.CreateProgram);
     MainMenuLinks.CreateProgram.classList.add("active");
+    ReactDOM.render(<ProgramsRoot player={Player} />, Engine.Display.content);
   },
 
   loadFactionsContent: function () {
     Engine.hideAllContent();
-    Engine.Display.factionsContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Factions);
-    ReactDOM.render(<FactionList player={Player} engine={this} />, Engine.Display.factionsContent);
     MainMenuLinks.Factions.classList.add("active");
+    ReactDOM.render(<FactionList player={Player} engine={this} />, Engine.Display.content);
   },
 
+  // TODO reactify
   loadFactionContent: function () {
     Engine.hideAllContent();
-    Engine.Display.factionContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Faction);
   },
 
   loadAugmentationsContent: function () {
     Engine.hideAllContent();
-    Engine.Display.augmentationsContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Augmentations);
-    displayAugmentationsContent(Engine.Display.augmentationsContent);
     MainMenuLinks.Augmentations.classList.add("active");
+
+    function backup() {
+      saveObject.exportGame();
+      onExport(Player);
+    }
+
+    ReactDOM.render(
+      <AugmentationsRoot exportGameFn={backup} installAugmentationsFn={installAugmentations} />,
+      Engine.Display.content,
+    );
   },
 
   loadMilestonesContent: function () {
     Engine.hideAllContent();
-    Engine.Display.milestonesContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Milestones);
-    displayMilestonesContent();
     MainMenuLinks.Milestones.classList.add("active");
+    ReactDOM.render(<MilestonesRoot player={Player} />, Engine.Display.content);
   },
 
   loadTutorialContent: function () {
     Engine.hideAllContent();
-    Engine.Display.tutorialContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Tutorial);
     MainMenuLinks.Tutorial.classList.add("active");
+    ReactDOM.render(<TutorialRoot />, Engine.Display.content);
   },
 
   loadDevMenuContent: function () {
     Engine.hideAllContent();
-    createDevMenu();
+    if (process.env.NODE_ENV !== "development") {
+      throw new Error("Cannot create Dev Menu because you are not in a dev build");
+    }
+    Engine.Display.content.style.display = "block";
+    ReactDOM.render(<DevMenuRoot player={Player} engine={this} />, Engine.Display.content);
     routing.navigateTo(Page.DevMenu);
     MainMenuLinks.DevMenu.classList.add("active");
   },
 
   loadLocationContent: function (initiallyInCity = true) {
     Engine.hideAllContent();
-    Engine.Display.locationContent.style.display = "block";
-    MainMenuLinks.City.classList.add("active");
-
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Location);
-    const rootComponent = <LocationRoot initiallyInCity={initiallyInCity} engine={Engine} p={Player} />;
-    ReactDOM.render(rootComponent, Engine.Display.locationContent);
+    MainMenuLinks.City.classList.add("active");
+    ReactDOM.render(
+      <LocationRoot initiallyInCity={initiallyInCity} engine={Engine} p={Player} />,
+      Engine.Display.content,
+    );
   },
 
   loadTravelContent: function () {
@@ -322,12 +319,10 @@ const Engine = {
     // and make sure that the 'City' main menu link doesnt become 'active'
     Engine.hideAllContent();
     Player.gotoLocation(LocationName.TravelAgency);
-    Engine.Display.locationContent.style.display = "block";
-    MainMenuLinks.Travel.classList.add("active");
-
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Location);
-    const rootComponent = <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />;
-    ReactDOM.render(rootComponent, Engine.Display.locationContent);
+    MainMenuLinks.Travel.classList.add("active");
+    ReactDOM.render(<LocationRoot initiallyInCity={false} engine={Engine} p={Player} />, Engine.Display.content);
   },
 
   loadJobContent: function () {
@@ -341,30 +336,31 @@ const Engine = {
     }
     Engine.hideAllContent();
     Player.gotoLocation(Player.companyName);
-    Engine.Display.locationContent.style.display = "block";
-    MainMenuLinks.Job.classList.add("active");
-
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Location);
-    const rootComponent = <LocationRoot initiallyInCity={false} engine={Engine} p={Player} />;
-    ReactDOM.render(rootComponent, Engine.Display.locationContent);
+    MainMenuLinks.Job.classList.add("active");
+    ReactDOM.render(<LocationRoot initiallyInCity={false} engine={Engine} p={Player} />, Engine.Display.content);
   },
 
+  // TODO reactify
   loadWorkInProgressContent: function () {
     Engine.hideAllContent();
-    var mainMenu = document.getElementById("mainmenu-container");
+    const mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "hidden";
     Engine.Display.workInProgressContent.style.display = "block";
     routing.navigateTo(Page.WorkInProgress);
   },
 
+  // TODO reactify
   loadRedPillContent: function () {
     Engine.hideAllContent();
-    var mainMenu = document.getElementById("mainmenu-container");
+    const mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "hidden";
     Engine.Display.redPillContent.style.display = "block";
     routing.navigateTo(Page.RedPill);
   },
 
+  // TODO reactify
   loadCinematicTextContent: function () {
     Engine.hideAllContent();
     var mainMenu = document.getElementById("mainmenu-container");
@@ -373,6 +369,7 @@ const Engine = {
     routing.navigateTo(Page.CinematicText);
   },
 
+  // TODO reactify
   loadInfiltrationContent: function (name, difficulty, maxLevel) {
     Engine.hideAllContent();
     const mainMenu = document.getElementById("mainmenu-container");
@@ -384,21 +381,19 @@ const Engine = {
 
   loadStockMarketContent: function () {
     Engine.hideAllContent();
-    Engine.Display.stockMarketContent.style.display = "block";
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.StockMarket);
+    MainMenuLinks.StockMarket.classList.add("active");
     displayStockMarketContent();
   },
 
   loadGangContent: function () {
+    if (!Player.inGang()) return;
     Engine.hideAllContent();
-    if (Player.inGang()) {
-      Engine.Display.gangContent.style.display = "block";
-      routing.navigateTo(Page.Gang);
-      ReactDOM.render(<GangRoot engine={this} gang={Player.gang} player={Player} />, Engine.Display.gangContent);
-    } else {
-      Engine.loadTerminalContent();
-      routing.navigateTo(Page.Terminal);
-    }
+    Engine.Display.content.style.display = "block";
+    routing.navigateTo(Page.Gang);
+    MainMenuLinks.Gang.classList.add("active");
+    ReactDOM.render(<GangRoot engine={this} gang={Player.gang} player={Player} />, Engine.Display.content);
   },
 
   loadMissionContent: function () {
@@ -412,120 +407,53 @@ const Engine = {
   loadCorporationContent: function () {
     if (!(Player.corporation instanceof Corporation)) return;
     Engine.hideAllContent();
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Corporation);
-    Engine.Display.corporationContent.style.display = "block";
-    ReactDOM.render(<CorporationRoot corp={Player.corporation} player={Player} />, Engine.Display.corporationContent);
+    MainMenuLinks.Corporation.classList.add("active");
+    ReactDOM.render(<CorporationRoot corp={Player.corporation} player={Player} />, Engine.Display.content);
   },
 
   loadBladeburnerContent: function () {
     if (!(Player.bladeburner instanceof Bladeburner)) return;
     Engine.hideAllContent();
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Bladeburner);
-    Engine.Display.bladeburnerContent.style.display = "block";
+    MainMenuLinks.Bladeburner.classList.add("active");
     ReactDOM.render(
       <BladeburnerRoot bladeburner={Player.bladeburner} player={Player} engine={this} />,
-      Engine.Display.bladeburnerContent,
+      Engine.Display.content,
     );
-    MainMenuLinks.Bladeburner.classList.add("active");
   },
 
   loadSleevesContent: function () {
     Engine.hideAllContent();
+    Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Sleeves);
-    Engine.Display.sleevesContent.style.display = "block";
-    ReactDOM.render(<SleeveRoot player={Player} />, Engine.Display.sleevesContent);
+    ReactDOM.render(<SleeveRoot player={Player} />, Engine.Display.content);
   },
 
   loadResleevingContent: function () {
     Engine.hideAllContent();
     routing.navigateTo(Page.Resleeves);
-    Engine.Display.resleeveContent.style.display = "block";
-    ReactDOM.render(<ResleeveRoot player={Player} />, Engine.Display.resleeveContent);
+    Engine.Display.content.style.display = "block";
+    MainMenuLinks.City.classList.add("active");
+    ReactDOM.render(<ResleeveRoot player={Player} />, Engine.Display.content);
   },
 
   // Helper function that hides all content
   hideAllContent: function () {
     Engine.Display.terminalContent.style.display = "none";
-    Engine.Display.characterContent.style.display = "none";
-    Engine.Display.scriptEditorContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.scriptEditorContent);
 
-    Engine.Display.activeScriptsContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.activeScriptsContent);
+    Engine.Display.content.style.display = "none";
+    ReactDOM.unmountComponentAtNode(Engine.Display.content);
+
     Engine.Display.infiltrationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.infiltrationContent);
-
-    Engine.Display.hacknetNodesContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.hacknetNodesContent);
-
-    Engine.Display.createProgramContent.style.display = "none";
-
-    Engine.Display.factionsContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.factionsContent);
-
-    Engine.Display.factionContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.factionContent);
-
-    Engine.Display.augmentationsContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.augmentationsContent);
-
-    Engine.Display.milestonesContent.style.display = "none";
-    Engine.Display.tutorialContent.style.display = "none";
-
-    Engine.Display.locationContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.locationContent);
-
-    Engine.Display.gangContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.gangContent);
-
-    Engine.Display.bladeburnerContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.bladeburnerContent);
-
-    Engine.Display.resleeveContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.resleeveContent);
-
-    Engine.Display.sleevesContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.sleevesContent);
-
-    Engine.Display.corporationContent.style.display = "none";
-    ReactDOM.unmountComponentAtNode(Engine.Display.corporationContent);
 
     Engine.Display.workInProgressContent.style.display = "none";
     Engine.Display.redPillContent.style.display = "none";
     Engine.Display.cinematicTextContent.style.display = "none";
-    Engine.Display.stockMarketContent.style.display = "none";
     Engine.Display.missionContent.style.display = "none";
-
-    // Make nav menu tabs inactive
-    Engine.inactivateMainMenuLinks();
-
-    // Close dev menu
-    closeDevMenu();
-  },
-
-  // Remove 'active' css class from all main menu links
-  inactivateMainMenuLinks: function () {
-    MainMenuLinks.Terminal.classList.remove("active");
-    MainMenuLinks.ScriptEditor.classList.remove("active");
-    MainMenuLinks.ActiveScripts.classList.remove("active");
-    MainMenuLinks.CreateProgram.classList.remove("active");
-    MainMenuLinks.Stats.classList.remove("active");
-    MainMenuLinks.Factions.classList.remove("active");
-    MainMenuLinks.Augmentations.classList.remove("active");
-    MainMenuLinks.HacknetNodes.classList.remove("active");
-    MainMenuLinks.Sleeves.classList.remove("active");
-    MainMenuLinks.City.classList.remove("active");
-    MainMenuLinks.Travel.classList.remove("active");
-    MainMenuLinks.Job.classList.remove("active");
-    MainMenuLinks.StockMarket.classList.remove("active");
-    MainMenuLinks.Gang.classList.remove("active");
-    MainMenuLinks.Bladeburner.classList.remove("active");
-    MainMenuLinks.Corporation.classList.remove("active");
-    MainMenuLinks.Gang.classList.remove("active");
-    MainMenuLinks.Milestones.classList.remove("active");
-    MainMenuLinks.Tutorial.classList.remove("active");
-    MainMenuLinks.Options.classList.remove("active");
-    MainMenuLinks.DevMenu.classList.remove("active");
   },
 
   displayCharacterOverviewInfo: function () {
@@ -538,11 +466,6 @@ const Engine = {
     } else {
       save.classList.remove(flashClass);
     }
-  },
-
-  /// Display character info
-  updateCharacterInfo: function () {
-    ReactDOM.render(CharacterInfo(Player), Engine.Display.characterInfo);
   },
 
   // Main Game Loop
@@ -676,7 +599,6 @@ const Engine = {
     autoSaveCounter: 300,
     updateSkillLevelsCounter: 10,
     updateDisplays: 3,
-    updateDisplaysMed: 9,
     updateDisplaysLong: 15,
     updateActiveScriptsDisplay: 5,
     createProgramNotifications: 10,
@@ -718,84 +640,9 @@ const Engine = {
       Engine.Counters.updateSkillLevelsCounter = 10;
     }
 
-    if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
-      if (routing.isOn(Page.ActiveScripts)) {
-        ReactDOM.render(
-          <ActiveScriptsRoot p={Player} workerScripts={workerScripts} />,
-          Engine.Display.activeScriptsContent,
-        );
-      }
-
-      Engine.Counters.updateActiveScriptsDisplay = 5;
-    }
-
     if (Engine.Counters.updateDisplays <= 0) {
       Engine.displayCharacterOverviewInfo();
-      if (routing.isOn(Page.CreateProgram)) {
-        displayCreateProgramContent();
-      }
-
       Engine.Counters.updateDisplays = 3;
-    }
-
-    if (Engine.Counters.updateDisplaysMed <= 0) {
-      if (routing.isOn(Page.CharacterInfo)) {
-        Engine.updateCharacterInfo();
-      }
-      Engine.Counters.updateDisplaysMed = 9;
-    }
-
-    if (Engine.Counters.createProgramNotifications <= 0) {
-      var num = getNumAvailableCreateProgram();
-      var elem = document.getElementById("create-program-notification");
-      if (num > 0) {
-        elem.innerHTML = num;
-        elem.setAttribute("class", "notification-on");
-      } else {
-        elem.innerHTML = "";
-        elem.setAttribute("class", "notification-off");
-      }
-      Engine.Counters.createProgramNotifications = 10;
-    }
-
-    if (Engine.Counters.augmentationsNotifications <= 0) {
-      var num = Player.queuedAugmentations.length;
-      var elem = document.getElementById("augmentations-notification");
-      if (num > 0) {
-        elem.innerHTML = num;
-        elem.setAttribute("class", "notification-on");
-      } else {
-        elem.innerHTML = "";
-        elem.setAttribute("class", "notification-off");
-      }
-      Engine.Counters.augmentationsNotifications = 10;
-    }
-
-    if (Engine.Counters.checkFactionInvitations <= 0) {
-      var invitedFactions = Player.checkForFactionInvitations();
-      if (invitedFactions.length > 0) {
-        if (Player.firstFacInvRecvd === false) {
-          Player.firstFacInvRecvd = true;
-          document.getElementById("factions-tab").style.display = "list-item";
-          document.getElementById("character-menu-header").click();
-          document.getElementById("character-menu-header").click();
-        }
-
-        var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
-        inviteToFaction(randFaction);
-      }
-
-      const num = Player.factionInvitations.length;
-      const elem = document.getElementById("factions-notification");
-      if (num > 0) {
-        elem.innerHTML = num;
-        elem.setAttribute("class", "notification-on");
-      } else {
-        elem.innerHTML = "";
-        elem.setAttribute("class", "notification-off");
-      }
-
-      Engine.Counters.checkFactionInvitations = 100;
     }
 
     if (Engine.Counters.passiveFactionGrowth <= 0) {
@@ -873,29 +720,6 @@ const Engine = {
   },
 
   /**
-   * Collapses a main menu header. Used when initializing the game.
-   * @param elems {HTMLElement[]} Elements under header
-   */
-  closeMainMenuHeader: function (elems) {
-    for (var i = 0; i < elems.length; ++i) {
-      elems[i].style.maxHeight = null;
-      elems[i].style.opacity = 0;
-      elems[i].style.pointerEvents = "none";
-    }
-  },
-
-  /**
-   * Expands a main menu header. Used when initializing the game.
-   * @param elems {HTMLElement[]} Elements under header
-   */
-  openMainMenuHeader: function (elems) {
-    for (var i = 0; i < elems.length; ++i) {
-      elems[i].style.maxHeight = elems[i].scrollHeight + "px";
-      elems[i].style.display = "block";
-    }
-  },
-
-  /**
    * Used in game when clicking on a main menu header (NOT used for initialization)
    * @param open {boolean} Whether header is being opened or closed
    * @param elems {HTMLElement[]} li Elements under header
@@ -926,27 +750,6 @@ const Engine = {
   },
 
   load: function (saveString) {
-    // Initialize main menu accordion panels to all start as "open"
-    const terminal = document.getElementById("terminal-tab");
-    const createScript = document.getElementById("create-script-tab");
-    const activeScripts = document.getElementById("active-scripts-tab");
-    const createProgram = document.getElementById("create-program-tab");
-    const stats = document.getElementById("stats-tab");
-    const factions = document.getElementById("factions-tab");
-    const augmentations = document.getElementById("augmentations-tab");
-    const hacknetnodes = document.getElementById("hacknet-nodes-tab");
-    const city = document.getElementById("city-tab");
-    const travel = document.getElementById("travel-tab");
-    const job = document.getElementById("job-tab");
-    const stockmarket = document.getElementById("stock-market-tab");
-    const bladeburner = document.getElementById("bladeburner-tab");
-    const corp = document.getElementById("corporation-tab");
-    const gang = document.getElementById("gang-tab");
-    const milestones = document.getElementById("milestones-tab");
-    const tutorial = document.getElementById("tutorial-tab");
-    const options = document.getElementById("options-tab");
-    const dev = document.getElementById("dev-tab");
-
     // Load game from save or create new game
     if (loadGame(saveString)) {
       initBitNodeMultipliers(Player);
@@ -1084,66 +887,6 @@ const Engine = {
           {Reputation(offlineReputation)} divided amongst your factions.
         </>,
       );
-      // Close main menu accordions for loaded game
-      var visibleMenuTabs = [
-        terminal,
-        createScript,
-        activeScripts,
-        stats,
-        hacknetnodes,
-        city,
-        milestones,
-        tutorial,
-        options,
-        dev,
-      ];
-      if (Player.firstFacInvRecvd) {
-        visibleMenuTabs.push(factions);
-      } else {
-        factions.style.display = "none";
-      }
-      if (Player.firstAugPurchased) {
-        visibleMenuTabs.push(augmentations);
-      } else {
-        augmentations.style.display = "none";
-      }
-      if (Player.companyName !== "") {
-        visibleMenuTabs.push(job);
-      } else {
-        job.style.display = "none";
-      }
-      if (Player.firstTimeTraveled) {
-        visibleMenuTabs.push(travel);
-      } else {
-        travel.style.display = "none";
-      }
-      if (Player.firstProgramAvailable) {
-        visibleMenuTabs.push(createProgram);
-      } else {
-        createProgram.style.display = "none";
-      }
-      if (Player.hasWseAccount) {
-        visibleMenuTabs.push(stockmarket);
-      } else {
-        stockmarket.style.display = "none";
-      }
-      if (Player.bladeburner instanceof Bladeburner) {
-        visibleMenuTabs.push(bladeburner);
-      } else {
-        bladeburner.style.display = "none";
-      }
-      if (Player.corporation instanceof Corporation) {
-        visibleMenuTabs.push(corp);
-      } else {
-        corp.style.display = "none";
-      }
-      if (Player.inGang()) {
-        visibleMenuTabs.push(gang);
-      } else {
-        gang.style.display = "none";
-      }
-
-      Engine.closeMainMenuHeader(visibleMenuTabs);
     } else {
       // No save found, start new game
       initBitNodeMultipliers(Player);
@@ -1158,114 +901,26 @@ const Engine = {
       initMessages();
       updateSourceFileFlags(Player);
 
-      // Open main menu accordions for new game
-      const hackingHdr = document.getElementById("hacking-menu-header");
-      hackingHdr.classList.toggle("opened");
-      const characterHdr = document.getElementById("character-menu-header");
-      characterHdr.classList.toggle("opened");
-      const worldHdr = document.getElementById("world-menu-header");
-      worldHdr.classList.toggle("opened");
-      const helpHdr = document.getElementById("help-menu-header");
-      helpHdr.classList.toggle("opened");
-
-      // Hide tabs that wont be revealed until later
-      factions.style.display = "none";
-      augmentations.style.display = "none";
-      job.style.display = "none";
-      stockmarket.style.display = "none";
-      travel.style.display = "none";
-      createProgram.style.display = "none";
-      bladeburner.style.display = "none";
-      corp.style.display = "none";
-      gang.style.display = "none";
-      dev.style.display = "none";
-
-      Engine.openMainMenuHeader([
-        terminal,
-        createScript,
-        activeScripts,
-        stats,
-        hacknetnodes,
-        city,
-        milestones,
-        tutorial,
-        options,
-      ]);
-
       // Start interactive tutorial
       iTutorialStart();
       removeLoadingScreen();
     }
+
+    ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
     // Initialize labels on game settings
     setSettingsLabels();
     Terminal.resetTerminalInput();
   },
 
   setDisplayElements: function () {
+    Engine.Display.content = document.getElementById("generic-react-container");
+    Engine.Display.content.style.display = "none";
     // Content elements
     Engine.Display.terminalContent = document.getElementById("terminal-container");
     routing.navigateTo(Page.Terminal);
 
-    Engine.Display.characterContent = document.getElementById("character-container");
-    Engine.Display.characterContent.style.display = "none";
-
-    Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
-    Engine.Display.scriptEditorContent.style.display = "none";
-
-    Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
-    Engine.Display.activeScriptsContent.style.display = "none";
-
-    Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
-    Engine.Display.hacknetNodesContent.style.display = "none";
-
-    Engine.Display.createProgramContent = document.getElementById("create-program-container");
-    Engine.Display.createProgramContent.style.display = "none";
-
-    Engine.Display.factionsContent = document.getElementById("factions-container");
-    Engine.Display.factionsContent.style.display = "none";
-
-    Engine.Display.factionContent = document.getElementById("faction-container");
-    Engine.Display.factionContent.style.display = "none";
-
-    Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
-    Engine.Display.augmentationsContent.style.display = "none";
-
-    Engine.Display.milestonesContent = document.getElementById("milestones-container");
-    Engine.Display.milestonesContent.style.display = "none";
-
-    Engine.Display.tutorialContent = document.getElementById("tutorial-container");
-    Engine.Display.tutorialContent.style.display = "none";
-
-    Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
-    Engine.Display.infiltrationContent.style.display = "none";
-
-    Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
-    Engine.Display.stockMarketContent.style.display = "none";
-
-    Engine.Display.gangContent = document.getElementById("gang-container");
-    Engine.Display.gangContent.style.display = "none";
-
-    Engine.Display.bladeburnerContent = document.getElementById("bladeburner-container");
-    Engine.Display.bladeburnerContent.style.display = "none";
-
-    Engine.Display.resleeveContent = document.getElementById("resleeve-container");
-    Engine.Display.resleeveContent.style.display = "none";
-
-    Engine.Display.sleevesContent = document.getElementById("sleeves-container");
-    Engine.Display.sleevesContent.style.display = "none";
-
-    Engine.Display.corporationContent = document.getElementById("corporation-container");
-    Engine.Display.corporationContent.style.display = "none";
-
     Engine.Display.missionContent = document.getElementById("mission-container");
     Engine.Display.missionContent.style.display = "none";
-
-    // Character info
-    Engine.Display.characterInfo = document.getElementById("character-content");
-
-    // Location page (page that shows up when you visit a specific location in World)
-    Engine.Display.locationContent = document.getElementById("location-container");
-    Engine.Display.locationContent.style.display = "none";
 
     // Work In Progress
     Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
@@ -1275,19 +930,12 @@ const Engine = {
     Engine.Display.redPillContent = document.getElementById("red-pill-container");
     Engine.Display.redPillContent.style.display = "none";
 
+    Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
+    Engine.Display.infiltrationContent.style.display = "none";
+
     // Cinematic Text
     Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
     Engine.Display.cinematicTextContent.style.display = "none";
-
-    // Initialize references to main menu links
-    if (!initializeMainMenuLinks()) {
-      const errorMsg =
-        "Failed to initialize Main Menu Links. Please try refreshing the page. " +
-        "If that doesn't work, report the issue to the developer";
-      exceptionAlert(new Error(errorMsg));
-      console.error(errorMsg);
-      return;
-    }
   },
 
   // Initialization
@@ -1296,120 +944,6 @@ const Engine = {
     document.getElementById("import-game-link").onclick = function () {
       saveObject.importGame();
     };
-
-    // Initialize Main Menu Headers (this must be done after initializing the links)
-    if (!initializeMainMenuHeaders(Player, process.env.NODE_ENV === "development")) {
-      const errorMsg =
-        "Failed to initialize Main Menu Headers. Please try refreshing the page. " +
-        "If that doesn't work, report the issue to the developer";
-      exceptionAlert(new Error(errorMsg));
-      console.error(errorMsg);
-      return;
-    }
-
-    MainMenuLinks.Terminal.addEventListener("click", function () {
-      Engine.loadTerminalContent();
-      return false;
-    });
-
-    MainMenuLinks.ScriptEditor.addEventListener("click", function () {
-      Engine.loadScriptEditorContent();
-      return false;
-    });
-
-    MainMenuLinks.ActiveScripts.addEventListener("click", function () {
-      Engine.loadActiveScriptsContent();
-      return false;
-    });
-
-    MainMenuLinks.CreateProgram.addEventListener("click", function () {
-      Engine.loadCreateProgramContent();
-      return false;
-    });
-
-    MainMenuLinks.Stats.addEventListener("click", function () {
-      Engine.loadCharacterContent();
-      return false;
-    });
-
-    MainMenuLinks.Factions.addEventListener("click", function () {
-      Engine.loadFactionsContent();
-      return false;
-    });
-
-    MainMenuLinks.Augmentations.addEventListener("click", function () {
-      Engine.loadAugmentationsContent();
-      return false;
-    });
-
-    MainMenuLinks.HacknetNodes.addEventListener("click", function () {
-      Engine.loadHacknetNodesContent();
-      return false;
-    });
-
-    MainMenuLinks.Sleeves.addEventListener("click", function () {
-      Engine.loadSleevesContent();
-      MainMenuLinks.Sleeves.classList.add("active");
-      return false;
-    });
-
-    MainMenuLinks.City.addEventListener("click", function () {
-      Engine.loadLocationContent();
-      return false;
-    });
-
-    MainMenuLinks.Travel.addEventListener("click", function () {
-      Engine.loadTravelContent();
-      return false;
-    });
-
-    MainMenuLinks.Job.addEventListener("click", function () {
-      Engine.loadJobContent();
-      return false;
-    });
-
-    MainMenuLinks.StockMarket.addEventListener("click", function () {
-      Engine.loadStockMarketContent();
-      MainMenuLinks.StockMarket.classList.add("active");
-      return false;
-    });
-
-    MainMenuLinks.Bladeburner.addEventListener("click", function () {
-      Engine.loadBladeburnerContent();
-      return false;
-    });
-
-    MainMenuLinks.Corporation.addEventListener("click", function () {
-      Engine.loadCorporationContent();
-      MainMenuLinks.Corporation.classList.add("active");
-      return false;
-    });
-
-    MainMenuLinks.Gang.addEventListener("click", function () {
-      Engine.loadGangContent();
-      MainMenuLinks.Gang.classList.add("active");
-      return false;
-    });
-
-    MainMenuLinks.Milestones.addEventListener("click", function () {
-      Engine.loadMilestonesContent();
-      return false;
-    });
-
-    MainMenuLinks.Tutorial.addEventListener("click", function () {
-      Engine.loadTutorialContent();
-      return false;
-    });
-
-    MainMenuLinks.DevMenu.addEventListener("click", function () {
-      if (process.env.NODE_ENV === "development") {
-        Engine.loadDevMenuContent();
-      }
-      return false;
-    });
-
-    // Active scripts list
-    Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
 
     // Save, Delete, Import/Export buttons
     Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
@@ -1440,11 +974,8 @@ const Engine = {
       return false;
     });
 
-    // Create Program buttons
-    initCreateProgramButtons();
-
     // Message at the top of terminal
-    postNetburnerText();
+    postVersion();
 
     // Player was working cancel button
     if (Player.isWorking) {
@@ -1480,16 +1011,6 @@ const Engine = {
 
     // Character overview screen
     document.getElementById("character-overview-container").style.display = "block";
-
-    // Remove classes from links (they might be set from tutorial)
-    document.getElementById("terminal-menu-link").removeAttribute("class");
-    document.getElementById("stats-menu-link").removeAttribute("class");
-    document.getElementById("create-script-menu-link").removeAttribute("class");
-    document.getElementById("active-scripts-menu-link").removeAttribute("class");
-    document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
-    document.getElementById("city-menu-link").removeAttribute("class");
-    document.getElementById("milestones-menu-link").removeAttribute("class");
-    document.getElementById("tutorial-menu-link").removeAttribute("class");
 
     // Copy Save Data to Clipboard
     document.getElementById("copy-save-to-clipboard-link").addEventListener("click", function () {
@@ -1539,7 +1060,6 @@ const Engine = {
       }
       dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
       gameOptionsBoxClose();
-      return false;
     });
 
     // DEBUG Soft Reset
@@ -1547,13 +1067,11 @@ const Engine = {
       dialogBoxCreate("Soft Reset!");
       prestigeAugmentation();
       gameOptionsBoxClose();
-      return false;
     });
 
     // DEBUG File diagnostic
     document.getElementById("debug-files").addEventListener("click", function () {
       createPopup("debug-files-diagnostic-popup", FileDiagnosticPopup, {});
-      return false;
     });
   },
 

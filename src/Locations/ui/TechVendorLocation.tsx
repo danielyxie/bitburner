@@ -3,7 +3,7 @@
  *
  * This subcomponent renders all of the buttons for purchasing things from tech vendors
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Location } from "../Location";
 import { RamButton } from "./RamButton";
@@ -44,6 +44,10 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
     });
   }
 
+  useEffect(() => {
+    const id = setInterval(rerender, 1000);
+    return () => clearInterval(id);
+  }, []);
   const btnStyle = { display: "block" };
 
   const purchaseServerButtons: React.ReactNode[] = [];
