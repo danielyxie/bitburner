@@ -257,7 +257,7 @@ export function CharacterInfo(props: IProps): React.ReactElement {
   timeRows.push(["Total Time played:", convertTimeMsToTimeElapsedString(props.player.totalPlaytime)]);
 
   return (
-    <div id="character-container">
+    <>
       <pre>
         <b>General</b>
         <br />
@@ -493,6 +493,6 @@ export function CharacterInfo(props: IProps): React.ReactElement {
         <br />
         <CurrentBitNode />
       </pre>
-    </div>
+    </>
   );
 }

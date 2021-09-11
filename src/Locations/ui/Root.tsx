@@ -144,7 +144,7 @@ export class LocationRoot extends React.Component<IProps, IState> {
 
   render(): React.ReactNode {
     if (this.state.inCity) {
-      return <div id="location-container">{this.renderCity()}</div>;
+      return this.renderCity();
     } else {
       return this.renderLocation();
     }

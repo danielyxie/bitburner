@@ -24,7 +24,7 @@ export function FactionList(props: IProps): React.ReactElement {
   }
 
   return (
-    <div id="factions-container">
+    <>
       <h1>Factions</h1>
       <p>Lists all factions you have joined</p>
       <br />
@@ -60,6 +60,6 @@ export function FactionList(props: IProps): React.ReactElement {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }

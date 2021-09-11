@@ -266,9 +266,9 @@ export class FactionRoot extends React.Component<IProps, IState> {
 
   renderAugmentationsPage(): React.ReactNode {
     return (
-      <div id="faction-container">
+      <>
         <AugmentationsPage faction={this.props.faction} p={this.props.p} routeToMainPage={this.routeToMain} />
-      </div>
+      </>
     );
   }
 }

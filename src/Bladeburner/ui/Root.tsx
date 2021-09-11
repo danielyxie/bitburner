@@ -15,7 +15,7 @@ interface IProps {
 
 export function Root(props: IProps): React.ReactElement {
   return (
-    <div id="bladeburner-container">
+    <>
       <div style={{ height: "60%", display: "block", position: "relative" }}>
         <div
           style={{
@@ -41,6 +41,6 @@ export function Root(props: IProps): React.ReactElement {
       >
         <AllPages bladeburner={props.bladeburner} player={props.player} />
       </div>
-    </div>
+    </>
   );
 }

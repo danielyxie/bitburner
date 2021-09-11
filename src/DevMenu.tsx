@@ -757,7 +757,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
   }
 
   return (
-    <div id="dev-menu-container" className="col">
+    <div className="col">
       <div className="row">
         <h1>Development Menu - Only meant to be used for testing/debugging</h1>
       </div>

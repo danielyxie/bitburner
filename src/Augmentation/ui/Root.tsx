@@ -44,7 +44,7 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
     }
 
     return (
-      <div id="augmentations-container">
+      <>
         <div id="augmentations-content">
           <h1>Purchased Augmentations</h1>
           <p>
@@ -87,7 +87,7 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
           <br /> <br />
           <PlayerMultipliers />
         </div>
-      </div>
+      </>
     );
   }
 }

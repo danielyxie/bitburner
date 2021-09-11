@@ -89,7 +89,7 @@ export function ResleeveRoot(props: IProps): React.ReactElement {
   props.player.resleeves.sort(sortFunction);
 
   return (
-    <div id="resleeve-container">
+    <>
       <p style={{ display: "block", width: "75%" }}>
         Re-sleeving is the process of digitizing and transferring your consciousness into a new human body, or 'sleeve'.
         Here at VitaLife, you can purchase new specially-engineered bodies for the re-sleeve process. Many of these
@@ -116,6 +116,6 @@ export function ResleeveRoot(props: IProps): React.ReactElement {
       {props.player.resleeves.map((resleeve, i) => (
         <ResleeveElem key={i} player={props.player} resleeve={resleeve} />
       ))}
-    </div>
+    </>
   );
 }

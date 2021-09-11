@@ -2,7 +2,7 @@ import React from "react";
 
 export function TutorialRoot(): React.ReactElement {
   return (
-    <div id="tutorial-container">
+    <>
       <h1>Tutorial (AKA Links to Documentation)</h1>
       <a
         id="tutorial-getting-started-link"
@@ -94,6 +94,6 @@ export function TutorialRoot(): React.ReactElement {
       <a className="a-link-button" target="_blank" href="https://bitburner.readthedocs.io/en/latest/shortcuts.html">
         Keyboard Shortcuts
       </a>
-    </div>
+    </>
   );
 }
