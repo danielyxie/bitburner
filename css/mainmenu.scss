@@ -78,6 +78,10 @@
   background-color: #aaa;
 }
 
+.menu-header {
+  position: relative;
+}
+
 #hacking-menu-header-li,
 #character-menu-header-li,
 #world-menu-header-li,
@@ -129,7 +133,5 @@
 
 /* Slide down transition */
 .mainmenu-accordion-panel {
-  max-height: 0;
-  opacity: 1;
   transition: max-height 0.2s ease-out;
 }

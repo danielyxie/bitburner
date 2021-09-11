@@ -52,7 +52,7 @@ function prestigeAugmentation() {
   Terminal.resetTerminalInput();
   Engine.loadTerminalContent();
   $("#terminal tr:not(:last)").remove();
-  postNetburnerText();
+  postVersion();
 
   // Delete all Worker Scripts objects
   prestigeWorkerScripts();
@@ -233,7 +233,7 @@ function prestigeSourceFile(flume) {
 
   // Clear terminal
   $("#terminal tr:not(:last)").remove();
-  postNetburnerText();
+  postVersion();
 
   // Messages
   initMessages();

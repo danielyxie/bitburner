@@ -64,6 +64,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
   }
 
   function setTask(): void {
+    console.log(abc);
     props.sleeve.resetTaskStatus(); // sets to idle
     switch (abc[0]) {
       case "------":
@@ -108,10 +109,13 @@ export function SleeveElem(props: IProps): React.ReactElement {
       switch (props.sleeve.factionWorkType) {
         case FactionWorkType.Field:
           doing = "Field work";
+          break;
         case FactionWorkType.Hacking:
           doing = "Hacking contracts";
+          break;
         case FactionWorkType.Security:
           doing = "Security work";
+          break;
       }
       desc = (
         <>

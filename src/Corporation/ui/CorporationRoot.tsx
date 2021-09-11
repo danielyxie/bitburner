@@ -51,7 +51,7 @@ export function CorporationRoot(props: IProps): React.ReactElement {
   const [divisionName, setDivisionName] = useState("Overview");
 
   useEffect(() => {
-    const id = setInterval(rerender, 20);
+    const id = setInterval(rerender, 1000);
     return () => clearInterval(id);
   }, []);
 

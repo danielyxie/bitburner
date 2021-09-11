@@ -59,6 +59,14 @@ export function ExportPopup(props: IProps): React.ReactElement {
   }
 
   const currentDivision = props.corp.divisions.find((division: IIndustry) => division.name === industry);
+  if (currentDivision === undefined)
+    throw new Error(`Export popup somehow ended up with undefined division '${currentDivision}'`);
+  const possibleCities = Object.keys(currentDivision.warehouses).filter(
+    (city) => currentDivision.warehouses[city] !== 0,
+  );
+  if (possibleCities.length > 0 && !possibleCities.includes(city)) {
+    setCity(possibleCities[0]);
+  }
 
   return (
     <>
@@ -74,15 +82,14 @@ export function ExportPopup(props: IProps): React.ReactElement {
         ))}
       </select>
       <select className="dropdown" onChange={onCityChange} defaultValue={city}>
-        {currentDivision &&
-          Object.keys(currentDivision.warehouses).map((cityName: string) => {
-            if (currentDivision.warehouses[cityName] === 0) return;
-            return (
-              <option key={cityName} value={cityName}>
-                {cityName}
-              </option>
-            );
-          })}
+        {possibleCities.map((cityName: string) => {
+          if (currentDivision.warehouses[cityName] === 0) return;
+          return (
+            <option key={cityName} value={cityName}>
+              {cityName}
+            </option>
+          );
+        })}
       </select>
       <input className="text-input" placeholder="Export amount / s" onChange={onAmtChange} />
       <button className="std-button" style={{ display: "inline-block" }} onClick={exportMaterial}>

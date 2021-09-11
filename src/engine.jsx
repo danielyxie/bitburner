@@ -27,6 +27,7 @@ import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/Faction
 import { FactionList } from "./Faction/ui/FactionList";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
+import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
@@ -48,7 +49,6 @@ import { workerScripts } from "./Netscript/WorkerScripts";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
-import { getNumAvailableCreateProgram } from "./Programs/ProgramHelpers";
 import { ProgramsRoot } from "./Programs/ui/ProgramsRoot";
 import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
@@ -454,16 +454,6 @@ const Engine = {
     Engine.Display.redPillContent.style.display = "none";
     Engine.Display.cinematicTextContent.style.display = "none";
     Engine.Display.missionContent.style.display = "none";
-
-    // Make nav menu tabs inactive
-    Engine.inactivateMainMenuLinks();
-  },
-
-  // Remove 'active' css class from all main menu links
-  inactivateMainMenuLinks: function () {
-    for (const link of Object.keys(MainMenuLinks)) {
-      MainMenuLinks[link].classList.remove("active");
-    }
   },
 
   displayCharacterOverviewInfo: function () {
@@ -655,59 +645,6 @@ const Engine = {
       Engine.Counters.updateDisplays = 3;
     }
 
-    if (Engine.Counters.createProgramNotifications <= 0) {
-      var num = getNumAvailableCreateProgram();
-      var elem = document.getElementById("create-program-notification");
-      if (num > 0) {
-        elem.innerHTML = num;
-        elem.setAttribute("class", "notification-on");
-      } else {
-        elem.innerHTML = "";
-        elem.setAttribute("class", "notification-off");
-      }
-      Engine.Counters.createProgramNotifications = 10;
-    }
-
-    if (Engine.Counters.augmentationsNotifications <= 0) {
-      var num = Player.queuedAugmentations.length;
-      var elem = document.getElementById("augmentations-notification");
-      if (num > 0) {
-        elem.innerHTML = num;
-        elem.setAttribute("class", "notification-on");
-      } else {
-        elem.innerHTML = "";
-        elem.setAttribute("class", "notification-off");
-      }
-      Engine.Counters.augmentationsNotifications = 10;
-    }
-
-    if (Engine.Counters.checkFactionInvitations <= 0) {
-      var invitedFactions = Player.checkForFactionInvitations();
-      if (invitedFactions.length > 0) {
-        if (Player.firstFacInvRecvd === false) {
-          Player.firstFacInvRecvd = true;
-          document.getElementById("factions-tab").style.display = "list-item";
-          document.getElementById("character-menu-header").click();
-          document.getElementById("character-menu-header").click();
-        }
-
-        var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
-        inviteToFaction(randFaction);
-      }
-
-      const num = Player.factionInvitations.length;
-      const elem = document.getElementById("factions-notification");
-      if (num > 0) {
-        elem.innerHTML = num;
-        elem.setAttribute("class", "notification-on");
-      } else {
-        elem.innerHTML = "";
-        elem.setAttribute("class", "notification-off");
-      }
-
-      Engine.Counters.checkFactionInvitations = 100;
-    }
-
     if (Engine.Counters.passiveFactionGrowth <= 0) {
       var adjustedCycles = Math.floor(5 - Engine.Counters.passiveFactionGrowth);
       processPassiveFactionRepGain(adjustedCycles);
@@ -783,29 +720,6 @@ const Engine = {
   },
 
   /**
-   * Collapses a main menu header. Used when initializing the game.
-   * @param elems {HTMLElement[]} Elements under header
-   */
-  closeMainMenuHeader: function (elems) {
-    for (var i = 0; i < elems.length; ++i) {
-      elems[i].style.maxHeight = null;
-      elems[i].style.opacity = 0;
-      elems[i].style.pointerEvents = "none";
-    }
-  },
-
-  /**
-   * Expands a main menu header. Used when initializing the game.
-   * @param elems {HTMLElement[]} Elements under header
-   */
-  openMainMenuHeader: function (elems) {
-    for (var i = 0; i < elems.length; ++i) {
-      elems[i].style.maxHeight = elems[i].scrollHeight + "px";
-      elems[i].style.display = "block";
-    }
-  },
-
-  /**
    * Used in game when clicking on a main menu header (NOT used for initialization)
    * @param open {boolean} Whether header is being opened or closed
    * @param elems {HTMLElement[]} li Elements under header
@@ -836,27 +750,6 @@ const Engine = {
   },
 
   load: function (saveString) {
-    // Initialize main menu accordion panels to all start as "open"
-    const terminal = document.getElementById("terminal-tab");
-    const createScript = document.getElementById("create-script-tab");
-    const activeScripts = document.getElementById("active-scripts-tab");
-    const createProgram = document.getElementById("create-program-tab");
-    const stats = document.getElementById("stats-tab");
-    const factions = document.getElementById("factions-tab");
-    const augmentations = document.getElementById("augmentations-tab");
-    const hacknetnodes = document.getElementById("hacknet-nodes-tab");
-    const city = document.getElementById("city-tab");
-    const travel = document.getElementById("travel-tab");
-    const job = document.getElementById("job-tab");
-    const stockmarket = document.getElementById("stock-market-tab");
-    const bladeburner = document.getElementById("bladeburner-tab");
-    const corp = document.getElementById("corporation-tab");
-    const gang = document.getElementById("gang-tab");
-    const milestones = document.getElementById("milestones-tab");
-    const tutorial = document.getElementById("tutorial-tab");
-    const options = document.getElementById("options-tab");
-    const dev = document.getElementById("dev-tab");
-
     // Load game from save or create new game
     if (loadGame(saveString)) {
       initBitNodeMultipliers(Player);
@@ -994,66 +887,6 @@ const Engine = {
           {Reputation(offlineReputation)} divided amongst your factions.
         </>,
       );
-      // Close main menu accordions for loaded game
-      var visibleMenuTabs = [
-        terminal,
-        createScript,
-        activeScripts,
-        stats,
-        hacknetnodes,
-        city,
-        milestones,
-        tutorial,
-        options,
-        dev,
-      ];
-      if (Player.firstFacInvRecvd) {
-        visibleMenuTabs.push(factions);
-      } else {
-        factions.style.display = "none";
-      }
-      if (Player.firstAugPurchased) {
-        visibleMenuTabs.push(augmentations);
-      } else {
-        augmentations.style.display = "none";
-      }
-      if (Player.companyName !== "") {
-        visibleMenuTabs.push(job);
-      } else {
-        job.style.display = "none";
-      }
-      if (Player.firstTimeTraveled) {
-        visibleMenuTabs.push(travel);
-      } else {
-        travel.style.display = "none";
-      }
-      if (Player.firstProgramAvailable) {
-        visibleMenuTabs.push(createProgram);
-      } else {
-        createProgram.style.display = "none";
-      }
-      if (Player.hasWseAccount) {
-        visibleMenuTabs.push(stockmarket);
-      } else {
-        stockmarket.style.display = "none";
-      }
-      if (Player.bladeburner instanceof Bladeburner) {
-        visibleMenuTabs.push(bladeburner);
-      } else {
-        bladeburner.style.display = "none";
-      }
-      if (Player.corporation instanceof Corporation) {
-        visibleMenuTabs.push(corp);
-      } else {
-        corp.style.display = "none";
-      }
-      if (Player.inGang()) {
-        visibleMenuTabs.push(gang);
-      } else {
-        gang.style.display = "none";
-      }
-
-      Engine.closeMainMenuHeader(visibleMenuTabs);
     } else {
       // No save found, start new game
       initBitNodeMultipliers(Player);
@@ -1068,44 +901,12 @@ const Engine = {
       initMessages();
       updateSourceFileFlags(Player);
 
-      // Open main menu accordions for new game
-      const hackingHdr = document.getElementById("hacking-menu-header");
-      hackingHdr.classList.toggle("opened");
-      const characterHdr = document.getElementById("character-menu-header");
-      characterHdr.classList.toggle("opened");
-      const worldHdr = document.getElementById("world-menu-header");
-      worldHdr.classList.toggle("opened");
-      const helpHdr = document.getElementById("help-menu-header");
-      helpHdr.classList.toggle("opened");
-
-      // Hide tabs that wont be revealed until later
-      factions.style.display = "none";
-      augmentations.style.display = "none";
-      job.style.display = "none";
-      stockmarket.style.display = "none";
-      travel.style.display = "none";
-      createProgram.style.display = "none";
-      bladeburner.style.display = "none";
-      corp.style.display = "none";
-      gang.style.display = "none";
-      dev.style.display = "none";
-
-      Engine.openMainMenuHeader([
-        terminal,
-        createScript,
-        activeScripts,
-        stats,
-        hacknetnodes,
-        city,
-        milestones,
-        tutorial,
-        options,
-      ]);
-
       // Start interactive tutorial
       iTutorialStart();
       removeLoadingScreen();
     }
+
+    ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
     // Initialize labels on game settings
     setSettingsLabels();
     Terminal.resetTerminalInput();
@@ -1135,16 +936,6 @@ const Engine = {
     // Cinematic Text
     Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
     Engine.Display.cinematicTextContent.style.display = "none";
-
-    // Initialize references to main menu links
-    if (!initializeMainMenuLinks()) {
-      const errorMsg =
-        "Failed to initialize Main Menu Links. Please try refreshing the page. " +
-        "If that doesn't work, report the issue to the developer";
-      exceptionAlert(new Error(errorMsg));
-      console.error(errorMsg);
-      return;
-    }
   },
 
   // Initialization
@@ -1153,40 +944,6 @@ const Engine = {
     document.getElementById("import-game-link").onclick = function () {
       saveObject.importGame();
     };
-
-    // Initialize Main Menu Headers (this must be done after initializing the links)
-    if (!initializeMainMenuHeaders(Player, process.env.NODE_ENV === "development")) {
-      const errorMsg =
-        "Failed to initialize Main Menu Headers. Please try refreshing the page. " +
-        "If that doesn't work, report the issue to the developer";
-      exceptionAlert(new Error(errorMsg));
-      console.error(errorMsg);
-      return;
-    }
-
-    MainMenuLinks.Terminal.addEventListener("click", () => Engine.loadTerminalContent());
-    MainMenuLinks.ScriptEditor.addEventListener("click", () => Engine.loadScriptEditorContent());
-    MainMenuLinks.ActiveScripts.addEventListener("click", () => Engine.loadActiveScriptsContent());
-    MainMenuLinks.CreateProgram.addEventListener("click", () => Engine.loadCreateProgramContent());
-    MainMenuLinks.Stats.addEventListener("click", () => Engine.loadCharacterContent());
-    MainMenuLinks.Factions.addEventListener("click", () => Engine.loadFactionsContent());
-    MainMenuLinks.Augmentations.addEventListener("click", () => Engine.loadAugmentationsContent());
-    MainMenuLinks.HacknetNodes.addEventListener("click", () => Engine.loadHacknetNodesContent());
-    MainMenuLinks.Sleeves.addEventListener("click", () => Engine.loadSleevesContent());
-    MainMenuLinks.City.addEventListener("click", () => Engine.loadLocationContent());
-    MainMenuLinks.Travel.addEventListener("click", () => Engine.loadTravelContent());
-    MainMenuLinks.Job.addEventListener("click", () => Engine.loadJobContent());
-    MainMenuLinks.StockMarket.addEventListener("click", () => Engine.loadStockMarketContent());
-    MainMenuLinks.Bladeburner.addEventListener("click", () => Engine.loadBladeburnerContent());
-    MainMenuLinks.Corporation.addEventListener("click", () => Engine.loadCorporationContent());
-    MainMenuLinks.Gang.addEventListener("click", () => Engine.loadGangContent());
-    MainMenuLinks.Milestones.addEventListener("click", () => Engine.loadMilestonesContent());
-    MainMenuLinks.Tutorial.addEventListener("click", () => Engine.loadTutorialContent());
-    MainMenuLinks.DevMenu.addEventListener("click", function () {
-      if (process.env.NODE_ENV === "development") {
-        Engine.loadDevMenuContent();
-      }
-    });
 
     // Save, Delete, Import/Export buttons
     Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
@@ -1254,16 +1011,6 @@ const Engine = {
 
     // Character overview screen
     document.getElementById("character-overview-container").style.display = "block";
-
-    // Remove classes from links (they might be set from tutorial)
-    document.getElementById("terminal-menu-link").removeAttribute("class");
-    document.getElementById("stats-menu-link").removeAttribute("class");
-    document.getElementById("create-script-menu-link").removeAttribute("class");
-    document.getElementById("active-scripts-menu-link").removeAttribute("class");
-    document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
-    document.getElementById("city-menu-link").removeAttribute("class");
-    document.getElementById("milestones-menu-link").removeAttribute("class");
-    document.getElementById("tutorial-menu-link").removeAttribute("class");
 
     // Copy Save Data to Clipboard
     document.getElementById("copy-save-to-clipboard-link").addEventListener("click", function () {

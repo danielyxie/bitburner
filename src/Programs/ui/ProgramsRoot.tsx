@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Programs } from "../Programs";
+import { getAvailableCreatePrograms } from "../ProgramHelpers";
 
 interface IProps {
   player: IPlayer;
@@ -11,10 +12,9 @@ export function ProgramsRoot(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
-  const [divisionName, setDivisionName] = useState("Overview");
 
   useEffect(() => {
-    const id = setInterval(rerender, 20);
+    const id = setInterval(rerender, 1000);
     return () => clearInterval(id);
   }, []);
 
@@ -27,14 +27,13 @@ export function ProgramsRoot(props: IProps): React.ReactElement {
       </p>
 
       <ul id="create-program-list">
-        {Object.keys(Programs).map((programName) => {
-          const program = Programs[programName];
-          if (program == null) return <></>;
+        {getAvailableCreatePrograms(props.player).map((program) => {
           const create = program.create;
           if (create === null) return <></>;
+
           return (
             <a
-              key={programName}
+              key={program.name}
               className="a-link-button tooltip"
               onClick={() => props.player.startCreateProgramWork(program.name, create.time, create.level)}
             >

@@ -105,13 +105,18 @@ a:visited {
   background-color: #fa3e3e;
   color: #fff;
   border-radius: 2px;
-  padding: 1px 3px; }
+  padding: 1px 3px;
+  display: "list-item";
+  font-size: 10px;
+  top: 0;
+  right: 0; }
 
 .notification-off {
   background-color: #333;
   color: #333;
   border-radius: 0;
-  padding: 0; }
+  padding: 0;
+  display: "none"; }
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
@@ -638,13 +643,18 @@ a:visited {
   background-color: #fa3e3e;
   color: #fff;
   border-radius: 2px;
-  padding: 1px 3px; }
+  padding: 1px 3px;
+  display: "list-item";
+  font-size: 10px;
+  top: 0;
+  right: 0; }
 
 .notification-off {
   background-color: #333;
   color: #333;
   border-radius: 0;
-  padding: 0; }
+  padding: 0;
+  display: "none"; }
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
@@ -1121,6 +1131,9 @@ button {
 .mainmenu > li button.active:hover {
   background-color: #aaa; }
 
+.menu-header {
+  position: relative; }
+
 #hacking-menu-header-li,
 #character-menu-header-li,
 #world-menu-header-li,
@@ -1166,8 +1179,6 @@ button {
 
 /* Slide down transition */
 .mainmenu-accordion-panel {
-  max-height: 0;
-  opacity: 1;
   transition: max-height 0.2s ease-out; }
 
 /* COLORS */
@@ -1652,6 +1663,10 @@ button {
   width: 99%;
   overflow-y: scroll; }
 
+#generic-react-container {
+  position: fixed;
+  padding: 10px; }
+
 /* Character Info */
 #character-container {
   padding-top: 10px;
@@ -2052,13 +2067,18 @@ a:visited {
   background-color: #fa3e3e;
   color: #fff;
   border-radius: 2px;
-  padding: 1px 3px; }
+  padding: 1px 3px;
+  display: "list-item";
+  font-size: 10px;
+  top: 0;
+  right: 0; }
 
 .notification-off {
   background-color: #333;
   color: #333;
   border-radius: 0;
-  padding: 0; }
+  padding: 0;
+  display: "none"; }
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {

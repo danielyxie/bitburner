@@ -113,6 +113,10 @@ a:visited {
   color: #fff;
   border-radius: 2px;
   padding: 1px 3px;
+  display: "list-item";
+  font-size: $defaultFontSize * 0.625;
+  top: 0;
+  right: 0;
 }
 
 .notification-off {
@@ -120,6 +124,7 @@ a:visited {
   color: #333;
   border-radius: 0;
   padding: 0;
+  display: "none";
 }
 
 /* help tip. Question mark that opens popup with info/details */
