@@ -19,7 +19,8 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { createSleevePurchasesFromCovenantPopup } from "../../PersonObjects/Sleeve/SleeveCovenantPurchases";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
-import { yesNoBoxClose, yesNoBoxCreate, yesNoBoxGetNoButton, yesNoBoxGetYesButton } from "../../../utils/YesNoBox";
+import { createPopup } from "../../ui/React/createPopup";
+import { CreateGangPopup } from "./CreateGangPopup";
 
 type IProps = {
   engine: IEngine;
@@ -97,59 +98,13 @@ export class FactionRoot extends React.Component<IProps, IState> {
       return this.props.engine.loadGangContent();
     }
 
-    // Otherwise, we have to create the gang
-    const facName = this.props.faction.name;
-    let isHacking = false;
-    if (facName === "NiteSec" || facName === "The Black Hand") {
-      isHacking = true;
-    }
-
-    // A Yes/No popup box will allow the player to confirm gang creation
-    const yesBtn = yesNoBoxGetYesButton();
-    const noBtn = yesNoBoxGetNoButton();
-    if (yesBtn == null || noBtn == null) {
-      return;
-    }
-
-    yesBtn.innerHTML = "Create Gang";
-    yesBtn.addEventListener("click", () => {
-      this.props.p.startGang(facName, isHacking);
-      const worldMenuHeader = document.getElementById("world-menu-header");
-      if (worldMenuHeader instanceof HTMLElement) {
-        worldMenuHeader.click();
-        worldMenuHeader.click();
-      }
-
-      this.props.engine.loadGangContent();
-      yesNoBoxClose();
+    const popupId = "create-gang-popup";
+    createPopup(popupId, CreateGangPopup, {
+      popupId: popupId,
+      facName: this.props.faction.name,
+      p: this.props.p,
+      engine: this.props.engine
     });
-
-    noBtn.innerHTML = "Cancel";
-    noBtn.addEventListener("click", () => {
-      yesNoBoxClose();
-    });
-
-    // Pop-up text
-    let gangTypeText = "";
-    if (isHacking) {
-      gangTypeText =
-        "This is a HACKING gang. Members in this gang will have different tasks than COMBAT gangs. " +
-        "Compared to combat gangs, progression with hacking gangs is more straightforward as territory warfare " +
-        "is not as important.<br><br>";
-    } else {
-      gangTypeText =
-        "This is a COMBAT gang. Members in this gang will have different tasks than HACKING gangs. " +
-        "Compared to hacking gangs, progression with combat gangs can be more difficult as territory management " +
-        "is more important. However, well-managed combat gangs can progress faster than hacking ones.<br><br>";
-    }
-    yesNoBoxCreate(
-      `Would you like to create a new Gang with ${facName}?<br><br>` +
-        "Note that this will prevent you from creating a Gang with any other Faction until " +
-        "this BitNode is destroyed. It also resets your reputation with this faction.<br><br>" +
-        gangTypeText +
-        "Other than hacking vs combat, there are NO differences between the Factions you can " +
-        "create a Gang with, and each of these Factions have all Augmentations available.",
-    );
   }
 
   rerender(): void {
