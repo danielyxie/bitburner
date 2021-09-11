@@ -645,6 +645,15 @@ const Engine = {
       Engine.Counters.updateDisplays = 3;
     }
 
+    if (Engine.Counters.checkFactionInvitations <= 0) {
+      const invitedFactions = Player.checkForFactionInvitations();
+      if (invitedFactions.length > 0) {
+        const randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
+        inviteToFaction(randFaction);
+      }
+      Engine.Counters.checkFactionInvitations = 100;
+    }
+
     if (Engine.Counters.passiveFactionGrowth <= 0) {
       var adjustedCycles = Math.floor(5 - Engine.Counters.passiveFactionGrowth);
       processPassiveFactionRepGain(adjustedCycles);
