@@ -5,21 +5,6 @@
  * Styling for Script Editor (both Ace and CodeMirror)
  */
 
-#script-editor-container {
-  background-color: transparent;
-}
-
-/* This temp element is used for auto adjusting filename field */
-.tmp-element {
-  visibility: hidden;
-  white-space: pre;
-}
-
-#script-editor-container {
-  position: fixed;
-  padding-top: 10px;
-}
-
 #script-editor-buttons-wrapper {
   width: 100%;
   padding-right: 0;
@@ -27,7 +12,7 @@
 }
 
 .script-editor-wrapper {
-  height: 100%;
+  height: 100vh;
   width: 70%;
   background: transparent;
 }
