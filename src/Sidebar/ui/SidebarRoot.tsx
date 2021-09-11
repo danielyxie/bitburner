@@ -258,7 +258,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           {/*<li className="mainmenu-accordion-panel">
             <button>Options</button>
           </li>*/}
-          {process.env.NODE_ENV && (
+          {process.env.NODE_ENV === "development" && (
             <li className="mainmenu-accordion-panel">
               <button onClick={() => props.engine.loadDevMenuContent()}>Dev</button>
             </li>
