@@ -129,8 +129,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           </li>
           {canCreateProgram && (
             <li className="mainmenu-accordion-panel">
-              <button onClick={() => props.engine.loadCreateProgramContent()}>
-                Create Program{programCount > 0 ? ` (${programCount})` : ""}
+              <button className="notification" onClick={() => props.engine.loadCreateProgramContent()}>
+                Create Program
+                {programCount > 0 && <span className="badge">{programCount}</span>}
               </button>
             </li>
           )}
@@ -156,24 +157,22 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           </li>
           {canOpenFactions && (
             <li className="mainmenu-accordion-panel">
-              <button onClick={() => props.engine.loadFactionsContent()}>
+              <button className="notification" onClick={() => props.engine.loadFactionsContent()}>
                 Factions
-                {props.player.factionInvitations.length > 0 ? ` (${props.player.factionInvitations.length})` : ""}
+                {props.player.factionInvitations.length > 0 && (
+                  <span className="badge">{props.player.factionInvitations.length}</span>
+                )}
               </button>
-              <span id="factions-notification" className="notification-off">
-                {" "}
-              </span>
             </li>
           )}
           {canOpenAugmentations && (
             <li className="mainmenu-accordion-panel">
-              <button onClick={() => props.engine.loadAugmentationsContent()}>
+              <button className="notification" onClick={() => props.engine.loadAugmentationsContent()}>
                 Augmentations
-                {props.player.queuedAugmentations.length > 0 ? ` (${props.player.queuedAugmentations.length})` : ""}
+                {props.player.queuedAugmentations.length > 0 && (
+                  <span className="badge">{props.player.queuedAugmentations.length}</span>
+                )}
               </button>
-              <span id="augmentations-notification" className="notification-off">
-                {" "}
-              </span>
             </li>
           )}
           <li className="mainmenu-accordion-panel">

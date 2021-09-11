@@ -106,10 +106,10 @@ a:visited {
   color: #fff;
   border-radius: 2px;
   padding: 1px 3px;
-  display: "list-item";
   font-size: 10px;
   top: 0;
-  right: 0; }
+  right: 0;
+  position: absolute; }
 
 .notification-off {
   background-color: #333;
@@ -117,6 +117,18 @@ a:visited {
   border-radius: 0;
   padding: 0;
   display: "none"; }
+
+.notification {
+  position: relative;
+  display: inline-block; }
+
+.notification .badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  background: red;
+  color: white; }
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
@@ -644,10 +656,10 @@ a:visited {
   color: #fff;
   border-radius: 2px;
   padding: 1px 3px;
-  display: "list-item";
   font-size: 10px;
   top: 0;
-  right: 0; }
+  right: 0;
+  position: absolute; }
 
 .notification-off {
   background-color: #333;
@@ -655,6 +667,18 @@ a:visited {
   border-radius: 0;
   padding: 0;
   display: "none"; }
+
+.notification {
+  position: relative;
+  display: inline-block; }
+
+.notification .badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  background: red;
+  color: white; }
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
@@ -2068,10 +2092,10 @@ a:visited {
   color: #fff;
   border-radius: 2px;
   padding: 1px 3px;
-  display: "list-item";
   font-size: 10px;
   top: 0;
-  right: 0; }
+  right: 0;
+  position: absolute; }
 
 .notification-off {
   background-color: #333;
@@ -2079,6 +2103,18 @@ a:visited {
   border-radius: 0;
   padding: 0;
   display: "none"; }
+
+.notification {
+  position: relative;
+  display: inline-block; }
+
+.notification .badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  background: red;
+  color: white; }
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
