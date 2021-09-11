@@ -6,7 +6,9 @@
  */
 
 #character-overview-wrapper {
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
 #character-overview-container {
