@@ -45,7 +45,7 @@ export class AugmentationsRoot extends React.Component<IProps, IState> {
 
     return (
       <>
-        <div id="augmentations-content">
+        <div className="augmentations-content">
           <h1>Purchased Augmentations</h1>
           <p>
             Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to

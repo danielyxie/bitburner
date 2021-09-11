@@ -1,9 +1,6 @@
 @import "theme";
 
-#stock-market-container {
-  position: fixed;
-  padding: 6px;
-
+.stock-market-container {
   p {
     font-size: $defaultFontSize * 0.8125;
   }
