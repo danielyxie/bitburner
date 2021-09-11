@@ -10,7 +10,6 @@ import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import { yesNoTxtInpBoxGetInput } from "../../utils/YesNoBox";
 import { isPowerOfTwo } from "../../utils/helpers/isPowerOfTwo";
 
 // Returns the cost of purchasing a server with the given RAM
@@ -44,9 +43,7 @@ export function getPurchaseServerMaxRam(): number {
 }
 
 // Manually purchase a server (NOT through Netscript)
-export function purchaseServer(ram: number, p: IPlayer): void {
-  const cost = getPurchaseServerCost(ram);
-
+export function purchaseServer(hostname: string, ram: number, cost: number, p: IPlayer): void {
   //Check if player has enough money
   if (!p.canAfford(cost)) {
     dialogBoxCreate("You don't have enough money to purchase this server!", false);
@@ -65,7 +62,6 @@ export function purchaseServer(ram: number, p: IPlayer): void {
     return;
   }
 
-  const hostname = yesNoTxtInpBoxGetInput();
   if (hostname == "") {
     dialogBoxCreate("You must enter a hostname for your new server!");
     return;

@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from "react";
 
 import { Location } from "../Location";
-import { createPurchaseServerPopup } from "../LocationsHelpers";
 import { RamButton } from "./RamButton";
 import { TorButton } from "./TorButton";
 import { CoresButton } from "./CoresButton";
@@ -14,8 +13,12 @@ import { CoresButton } from "./CoresButton";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getPurchaseServerCost } from "../../Server/ServerPurchases";
 
+
 import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
+import { createPopup } from "../../ui/React/createPopup";
+import { PurchaseServerPopup } from "./PurchaseServerPopup";
+
 
 type IProps = {
   loc: Location;
@@ -23,10 +26,24 @@ type IProps = {
 };
 
 export function TechVendorLocation(props: IProps): React.ReactElement {
+  
+
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  function openPurchaseServer(ram: number, cost: number, p: IPlayer): void {
+    const popupId = "purchase-server-popup";
+    createPopup(popupId, PurchaseServerPopup, {
+      ram: ram,
+      cost: cost,
+      p: p,
+      popupId: popupId,
+      rerender: rerender
+    });
+  }
+
   useEffect(() => {
     const id = setInterval(rerender, 1000);
     return () => clearInterval(id);
@@ -39,7 +56,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
     purchaseServerButtons.push(
       <StdButton
         key={i}
-        onClick={() => createPurchaseServerPopup(i, props.p)}
+        onClick={() => openPurchaseServer(i, cost, props.p)}
         style={btnStyle}
         text={
           <>
