@@ -48,7 +48,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   }
 
   function clickStats() {
-    props.engine.loadTerminalContent();
+    props.engine.loadCharacterContent();
     if (flashStats) iTutorialNextStep();
   }
 
@@ -93,8 +93,13 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const canOpenSleeves = props.player.sleeves.length > 0;
 
-  const canCorporation = props.player.corporation != null;
-  const canGang = props.player.gang != null;
+  // TODO(hydroflame): these should not as any but right now the def is that it
+  // can only be defined;
+  const canCorporation = !!(props.player.corporation as any);
+  const canGang = !!(props.player.gang as any);
+  const canJob = props.player.companyName !== "";
+  const canStockMarket = props.player.hasWseAccount;
+  const canBladeburner = !!(props.player.bladeburner as any);
 
   return (
     <ul id="mainmenu" className="mainmenu noscrollbar noselect">
@@ -208,17 +213,17 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <li className="mainmenu-accordion-panel">
             <button onClick={() => props.engine.loadTravelContent()}>Travel</button>
           </li>
-          {props.player.companyName !== "" && (
+          {canJob && (
             <li className="mainmenu-accordion-panel">
               <button onClick={() => props.engine.loadJobContent()}>Job</button>
             </li>
           )}
-          {props.player.hasWseAccount && (
+          {canStockMarket && (
             <li className="mainmenu-accordion-panel">
               <button onClick={() => props.engine.loadStockMarketContent()}>Stock Market</button>
             </li>
           )}
-          {props.player.bladeburner && (
+          {canBladeburner && (
             <li className="mainmenu-accordion-panel">
               <button onClick={() => props.engine.loadBladeburnerContent()}>Bladeburner</button>
             </li>

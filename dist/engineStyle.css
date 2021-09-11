@@ -12,7 +12,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  vertical-align: top; }
+  vertical-align: middle; }
 
 :root {
   --my-font-color: #6f3;
@@ -562,7 +562,7 @@ input[type="checkbox"] {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  vertical-align: top; }
+  vertical-align: middle; }
 
 :root {
   --my-font-color: #6f3;
@@ -1998,7 +1998,7 @@ button {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  vertical-align: top; }
+  vertical-align: middle; }
 
 :root {
   --my-font-color: #6f3;
@@ -2449,6 +2449,9 @@ input[type="checkbox"] {
   /* Sit on top of the container */
   color: var(--my-font-color); }
 
+.popup-box-input-div {
+  margin: 2px; }
+
 .popup-box-button,
 .popup-box-button-inactive {
   color: #aaa;
@@ -2590,10 +2593,6 @@ input[type="checkbox"] {
 
 #infiltration-faction-select {
   background-color: #000; }
-
-/* Generic Yes No Box */
-#yes-no-text-input-box-input {
-  color: #fff; }
 
 /* Game Options */
 #game-options-container {
@@ -2751,7 +2750,7 @@ input[type="checkbox"] {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  vertical-align: top; }
+  vertical-align: middle; }
 
 /* COLORS */
 /* Attributes */
