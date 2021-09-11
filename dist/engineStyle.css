@@ -21,7 +21,15 @@
   --my-prompt-color: #f92672; }
 
 body {
-  background-color: var(--my-background-color); }
+  background-color: var(--my-background-color);
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */ }
+
+body::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */ }
 
 p,
 pre,
@@ -571,7 +579,15 @@ input[type="checkbox"] {
   --my-prompt-color: #f92672; }
 
 body {
-  background-color: var(--my-background-color); }
+  background-color: var(--my-background-color);
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */ }
+
+body::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */ }
 
 p,
 pre,
@@ -1211,7 +1227,9 @@ button {
  * Styling for the Character Overview Panel (top-right panel)
  */
 #character-overview-wrapper {
-  position: relative; }
+  position: fixed;
+  top: 0;
+  right: 0; }
 
 #character-overview-container {
   display: none;
@@ -1386,25 +1404,13 @@ button {
 /**
  * Styling for Script Editor (both Ace and CodeMirror)
  */
-#script-editor-container {
-  background-color: transparent; }
-
-/* This temp element is used for auto adjusting filename field */
-.tmp-element {
-  visibility: hidden;
-  white-space: pre; }
-
-#script-editor-container {
-  position: fixed;
-  padding-top: 10px; }
-
 #script-editor-buttons-wrapper {
   width: 100%;
   padding-right: 0;
   margin-right: 0; }
 
-#script-editor-wrapper {
-  height: 100%;
+.script-editor-wrapper {
+  height: 110vh;
   width: 70%;
   background: transparent; }
 
@@ -1474,61 +1480,16 @@ button {
 
 /* COLORS */
 /* Attributes */
-/**
- * Customized styling for the Code Mirror editor
- */
-#codemirror-form-wrapper {
-  height: 80%;
-  margin: 10px 0 0 6px; }
-
-.CodeMirror {
-  height: 100%;
-  width: 100%;
-  border: 2px solid var(--my-highlight-color);
-  z-index: 1;
-  font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman";
-  font-size: 16px; }
-
-/**
- * Highlight matches
- */
-.cm-matchhighlight {
-  background-color: #8f908a; }
-
-.CodeMirror-selection-highlight-scrollbar {
-  background-color: #8f908a; }
-
-/**
- * Show Invisibles
- */
-.cm-whitespace::before {
-  position: absolute;
-  pointer-events: none;
-  color: #404f7d; }
-
-/**
- * Vim command display
- */
-#codemirror-vim-command-display-wrapper {
-  background-color: white;
-  font-size: 13px;
-  height: 30px;
-  margin-left: 6px; }
-
-/* COLORS */
-/* Attributes */
 .active-scripts-list {
   list-style-type: none; }
 
-#active-scripts-container {
-  position: fixed;
-  padding-top: 10px; }
-  #active-scripts-container > p {
-    width: 70%;
-    margin: 6px;
-    padding: 4px; }
-  #active-scripts-container .accordion-header > pre {
-    color: white; }
+.active-scripts-container > p {
+  width: 70%;
+  margin: 6px;
+  padding: 4px; }
+
+.active-scripts-container .accordion-header > pre {
+  color: white; }
 
 .active-scripts-server-header {
   background-color: #444;
@@ -1623,10 +1584,6 @@ button {
 /**
  * Styling for the Hacknet Nodes UI Page
  */
-#hacknet-nodes-container {
-  position: fixed;
-  padding: 10px; }
-
 .hacknet-general-info {
   margin: 10px;
   width: 70vw; }
@@ -1681,25 +1638,20 @@ button {
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
     terminal which has its own page) */
 .generic-menupage-container {
-  height: 100%;
-  padding-left: 10px;
+  padding-left: 2px;
   margin-left: 10%;
-  width: 99%;
-  overflow-y: scroll; }
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */ }
 
 #generic-react-container {
-  position: fixed;
-  padding: 10px; }
+  padding: 10px;
+  overflow-y: scroll; }
 
-/* Character Info */
-#character-container {
-  padding-top: 10px;
-  position: fixed; }
-
-/* World */
-#world-container {
-  position: fixed;
-  padding-top: 10px; }
+#generic-react-container::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */ }
 
 #world-city-name,
 #world-city-desc {
@@ -1820,11 +1772,7 @@ button {
  */
 /* COLORS */
 /* Attributes */
-#augmentations-container {
-  position: fixed;
-  padding-top: 10px; }
-
-#augmentations-content > p {
+.augmentations-content > p {
   font-size: 14px;
   width: 70%; }
 
@@ -1864,13 +1812,11 @@ button {
 
 /* COLORS */
 /* Attributes */
-#stock-market-container {
-  position: fixed;
-  padding: 6px; }
-  #stock-market-container p {
-    font-size: 13px; }
-  #stock-market-container a {
-    font-size: 14px; }
+.stock-market-container p {
+  font-size: 13px; }
+
+.stock-market-container a {
+  font-size: 14px; }
 
 .stock-market-info-and-purchases > h2 {
   display: block;
@@ -2007,7 +1953,15 @@ button {
   --my-prompt-color: #f92672; }
 
 body {
-  background-color: var(--my-background-color); }
+  background-color: var(--my-background-color);
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */ }
+
+body::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */ }
 
 p,
 pre,
@@ -3052,10 +3006,10 @@ input[type="checkbox"] {
  * for the mechanic before it got changed to avoid confusion with normal
  * companies
  */
-#cmpy-mgmt-container p,
-#cmpy-mgmt-container a,
-#cmpy-mgmt-container div,
-#cmpy-mgmt-container br {
+.cmpy-mgmt-container p,
+.cmpy-mgmt-container a,
+.cmpy-mgmt-container div,
+.cmpy-mgmt-container br {
   font-size: 13px; }
 
 /* Header tabs */
@@ -3185,15 +3139,12 @@ input[type="checkbox"] {
 
 /* COLORS */
 /* Attributes */
-#bladeburner-container {
-  position: fixed;
-  padding: 6px; }
-  #bladeburner-container a,
-  #bladeburner-container div,
-  #bladeburner-container p,
-  #bladeburner-container pre,
-  #bladeburner-container td {
-    font-size: 13px; }
+.bladeburner-container a,
+.bladeburner-container div,
+.bladeburner-container p,
+.bladeburner-container pre,
+.bladeburner-container td {
+  font-size: 13px; }
 
 .bladeburner-action {
   border: 1px solid #fff;
@@ -3300,15 +3251,13 @@ input[type="checkbox"] {
 /**
  * Styling for the Gang mechanic UI (BitNode-2)
  */
-#gang-container {
-  position: fixed;
-  padding: 6px; }
-  #gang-container p,
-  #gang-container pre {
-    font-size: 15px; }
-  #gang-container select {
-    background-color: black;
-    color: white; }
+.gang-container p,
+.gang-container pre {
+  font-size: 15px; }
+
+.gang-container select {
+  background-color: black;
+  color: white; }
 
 #gang-management-subpage > p {
   padding: 4px; }
@@ -3338,10 +3287,6 @@ input[type="checkbox"] {
  */
 /* COLORS */
 /* Attributes */
-#sleeves-container {
-  position: fixed;
-  padding: 6px; }
-
 .sleeve-elem {
   border: 1px solid white;
   margin: 4px;
@@ -3363,10 +3308,6 @@ input[type="checkbox"] {
  */
 /* COLORS */
 /* Attributes */
-#resleeve-container {
-  position: fixed;
-  padding: 6px; }
-
 .resleeve-elem {
   border: 1px solid white;
   margin: 4px;
@@ -6298,9 +6239,7 @@ html {
 .casino-card.black {
   color: black; }
 
-#milestones-container {
-  position: fixed;
-  padding: 6px;
+.milestones-container {
   width: 60%; }
 
 /* COLORS */
@@ -6348,10 +6287,6 @@ html {
     color: transparent; }
   50% {
     color: #adff2f; } }
-
-#corporation-container {
-  position: fixed;
-  padding: 6px; }
 
 
 /*# sourceMappingURL=engineStyle.css.map*/
