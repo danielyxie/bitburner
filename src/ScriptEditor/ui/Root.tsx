@@ -308,7 +308,7 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   return (
-    <div id="script-editor-wrapper">
+    <div className="script-editor-wrapper">
       <div id="script-editor-filename-wrapper">
         <p id="script-editor-filename-tag" className="noselect">
           {" "}

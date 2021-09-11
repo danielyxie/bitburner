@@ -6,9 +6,11 @@ import * as React from "react";
 
 interface IStdButtonProps {
   addClasses?: string;
+  autoFocus?: boolean;
   disabled?: boolean;
   id?: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => any;
+  onKeyUp?: (e: React.KeyboardEvent<HTMLElement>) => any;
   style?: any;
   text: string | JSX.Element;
   tooltip?: string | JSX.Element;
@@ -43,7 +45,7 @@ export function StdButton(props: IStdButtonProps): React.ReactElement {
   }
 
   return (
-    <button className={className} id={props.id} onClick={props.onClick} style={props.style}>
+    <button className={className} id={props.id} onClick={props.onClick} onKeyUp={props.onKeyUp} style={props.style} autoFocus={props.autoFocus}>
       {props.text}
       {hasTooltip && tooltip}
     </button>

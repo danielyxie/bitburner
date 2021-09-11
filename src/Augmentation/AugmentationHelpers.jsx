@@ -2455,22 +2455,6 @@ function augmentationExists(name) {
   return Augmentations.hasOwnProperty(name);
 }
 
-export function displayAugmentationsContent(contentEl) {
-  if (!routing.isOn(Page.Augmentations)) {
-    return;
-  }
-  if (!(contentEl instanceof HTMLElement)) {
-    return;
-  }
-
-  function backup() {
-    saveObject.exportGame();
-    onExport(Player);
-  }
-
-  ReactDOM.render(<AugmentationsRoot exportGameFn={backup} installAugmentationsFn={installAugmentations} />, contentEl);
-}
-
 export function isRepeatableAug(aug) {
   const augName = aug instanceof Augmentation ? aug.name : aug;
 

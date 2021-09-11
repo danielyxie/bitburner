@@ -61,7 +61,7 @@ export class StockMarketRoot extends React.Component<IProps, IState> {
 
   render(): React.ReactNode {
     return (
-      <div>
+      <div className="stock-market-container">
         <InfoAndPurchases initStockMarket={this.props.initStockMarket} p={this.props.p} rerender={this.rerender} />
         {this.props.p.hasWseAccount && (
           <StockTickers

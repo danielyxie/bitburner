@@ -30,7 +30,7 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
+    <div className="gang-container">
       <a className="a-link-button" style={{ display: "inline-block" }} onClick={back}>
         Back
       </a>
@@ -53,6 +53,6 @@ export function Root(props: IProps): React.ReactElement {
       ) : (
         <TerritorySubpage gang={props.gang} />
       )}
-    </>
+    </div>
   );
 }

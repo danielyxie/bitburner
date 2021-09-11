@@ -60,9 +60,11 @@ const SortFunctions: {
   Dexterity: (a: Resleeve, b: Resleeve): number => a.dexterity - b.dexterity,
   Agility: (a: Resleeve, b: Resleeve): number => a.agility - b.agility,
   Charisma: (a: Resleeve, b: Resleeve): number => a.charisma - b.charisma,
-  AverageCombatStats: (a: Resleeve, b: Resleeve): number => getAverage(a.strength, a.defense, a.dexterity, a.agility) -
+  AverageCombatStats: (a: Resleeve, b: Resleeve): number =>
+    getAverage(a.strength, a.defense, a.dexterity, a.agility) -
     getAverage(b.strength, b.defense, b.dexterity, b.agility),
-  AverageAllStats: (a: Resleeve, b: Resleeve): number => getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma) -
+  AverageAllStats: (a: Resleeve, b: Resleeve): number =>
+    getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma) -
     getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma),
   TotalNumAugmentations: (a: Resleeve, b: Resleeve): number => a.augmentations.length - b.augmentations.length,
 };

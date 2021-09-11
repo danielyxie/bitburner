@@ -16,7 +16,7 @@ function highestMilestone(p: IPlayer, milestones: Milestone[]): number {
   return n;
 }
 
-export function Root(props: IProps): JSX.Element {
+export function MilestonesRoot(props: IProps): JSX.Element {
   const n = highestMilestone(props.player, Milestones);
   const milestones = Milestones.map((milestone: Milestone, i: number) => {
     if (i <= n + 1) {
@@ -30,7 +30,7 @@ export function Root(props: IProps): JSX.Element {
     }
   });
   return (
-    <>
+    <div className="milestones-container">
       <h1>Milestones</h1>
       <p>
         Milestones don't reward you for completing them. They are here to guide you if you're lost. They will reset when
@@ -40,6 +40,6 @@ export function Root(props: IProps): JSX.Element {
 
       <h2>Completing fl1ght.exe</h2>
       <li>{milestones}</li>
-    </>
+    </div>
   );
 }

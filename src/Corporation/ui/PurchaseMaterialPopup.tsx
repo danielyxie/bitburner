@@ -29,8 +29,8 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
   } else {
     return (
       <>
-        Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of
-        {props.mat.name} will cost {numeralWrapper.formatMoney(cost)}
+        Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of {props.mat.name} will cost{" "}
+        {numeralWrapper.formatMoney(cost)}
       </>
     );
   }

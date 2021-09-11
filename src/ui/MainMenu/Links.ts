@@ -3,6 +3,7 @@
 import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 
 interface IMainMenuLinks {
+  [key: string]: HTMLElement | undefined;
   Terminal: HTMLElement;
   ScriptEditor: HTMLElement;
   ActiveScripts: HTMLElement;
@@ -55,6 +56,7 @@ export const MainMenuLinks: IMainMenuLinks = {
 };
 
 export function initializeMainMenuLinks(): boolean {
+  return true;
   try {
     function safeGetLink(id: string): HTMLElement {
       const elem: HTMLElement | null = clearEventListeners(id);
@@ -83,9 +85,9 @@ export function initializeMainMenuLinks(): boolean {
     MainMenuLinks.Gang = safeGetLink("gang-menu-link");
     MainMenuLinks.Milestones = safeGetLink("milestones-menu-link");
     MainMenuLinks.Tutorial = safeGetLink("tutorial-menu-link");
-    const op: HTMLElement | null = document.getElementById("options-menu-link");
-    if (op === null) throw new Error(`Could not find element with id: "options-menu-link"`);
-    MainMenuLinks.Options = op; // This click listener is already set, so don't clear it
+    // const op: HTMLElement | null = document.getElementById("options-menu-link");
+    // if (op === null) throw new Error(`Could not find element with id: "options-menu-link"`);
+    // MainMenuLinks.Options = op; // This click listener is already set, so don't clear it
     MainMenuLinks.DevMenu = safeGetLink("dev-menu-link");
 
     return true;

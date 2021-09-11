@@ -104,18 +104,18 @@ function iTutorialEvaluateStep() {
   }
 
   // Disable and clear main menu
-  const terminalMainMenu = clearEventListeners("terminal-menu-link");
-  const statsMainMenu = clearEventListeners("stats-menu-link");
-  const activeScriptsMainMenu = clearEventListeners("active-scripts-menu-link");
-  const hacknetMainMenu = clearEventListeners("hacknet-nodes-menu-link");
-  const cityMainMenu = clearEventListeners("city-menu-link");
-  const tutorialMainMenu = clearEventListeners("tutorial-menu-link");
-  terminalMainMenu.removeAttribute("class");
-  statsMainMenu.removeAttribute("class");
-  activeScriptsMainMenu.removeAttribute("class");
-  hacknetMainMenu.removeAttribute("class");
-  cityMainMenu.removeAttribute("class");
-  tutorialMainMenu.removeAttribute("class");
+  // const terminalMainMenu = clearEventListeners("terminal-menu-link");
+  // const statsMainMenu = clearEventListeners("stats-menu-link");
+  // const activeScriptsMainMenu = clearEventListeners("active-scripts-menu-link");
+  // const hacknetMainMenu = clearEventListeners("hacknet-nodes-menu-link");
+  // const cityMainMenu = clearEventListeners("city-menu-link");
+  // const tutorialMainMenu = clearEventListeners("tutorial-menu-link");
+  // terminalMainMenu.removeAttribute("class");
+  // statsMainMenu.removeAttribute("class");
+  // activeScriptsMainMenu.removeAttribute("class");
+  // hacknetMainMenu.removeAttribute("class");
+  // cityMainMenu.removeAttribute("class");
+  // tutorialMainMenu.removeAttribute("class");
 
   // Interactive Tutorial Next button
   const nextBtn = document.getElementById("interactive-tutorial-next");
@@ -138,14 +138,6 @@ function iTutorialEvaluateStep() {
           "the main navigation menu (left-hand side of the screen)",
       );
       nextBtn.style.display = "none";
-
-      // Flash 'Stats' menu and set its tutorial click handler
-      statsMainMenu.setAttribute("class", "flashing-button");
-      statsMainMenu.addEventListener("click", function () {
-        Engine.loadCharacterContent();
-        iTutorialNextStep(); //Opening the character page will go to the next step
-        return false;
-      });
       break;
     case iTutorialSteps.CharacterPage:
       Engine.loadCharacterContent();
@@ -162,14 +154,6 @@ function iTutorialEvaluateStep() {
           "main navigation menu.",
       );
       nextBtn.style.display = "none";
-
-      // Flash 'Terminal' menu and set its tutorial click handler
-      terminalMainMenu.setAttribute("class", "flashing-button");
-      terminalMainMenu.addEventListener("click", function () {
-        Engine.loadTerminalContent();
-        iTutorialNextStep();
-        return false;
-      });
       break;
     case iTutorialSteps.TerminalIntro:
       Engine.loadTerminalContent();
@@ -345,14 +329,6 @@ function iTutorialEvaluateStep() {
           "<code class='interactive-tutorial-tab flashing-button'>Active Scripts</code> link in the main navigation menu.",
       );
       nextBtn.style.display = "none";
-
-      // Flash 'Active Scripts' menu and set its tutorial click handler
-      activeScriptsMainMenu.setAttribute("class", "flashing-button");
-      activeScriptsMainMenu.addEventListener("click", function () {
-        Engine.loadActiveScriptsContent();
-        iTutorialNextStep();
-        return false;
-      });
       break;
     case iTutorialSteps.ActiveScriptsPage:
       Engine.loadActiveScriptsContent();
@@ -362,14 +338,6 @@ function iTutorialEvaluateStep() {
           "your scripts are doing. Let's go back to the <code class='interactive-tutorial-tab flashing-button'>Terminal</code>",
       );
       nextBtn.style.display = "none";
-
-      // Flash 'Terminal' button and set its tutorial click handler
-      terminalMainMenu.setAttribute("class", "flashing-button");
-      terminalMainMenu.addEventListener("click", function () {
-        Engine.loadTerminalContent();
-        iTutorialNextStep();
-        return false;
-      });
       break;
     case iTutorialSteps.ActiveScriptsToTerminal:
       Engine.loadTerminalContent();
@@ -402,14 +370,6 @@ function iTutorialEvaluateStep() {
           "the <code class='interactive-tutorial-tab flashing-button'>Hacknet</code> page through the main navigation menu now.",
       );
       nextBtn.style.display = "none";
-
-      // Flash 'Hacknet' menu and set its tutorial click handler
-      hacknetMainMenu.setAttribute("class", "flashing-button");
-      hacknetMainMenu.addEventListener("click", function () {
-        Engine.loadHacknetNodesContent();
-        iTutorialNextStep();
-        return false;
-      });
       break;
     case iTutorialSteps.HacknetNodesIntroduction:
       Engine.loadHacknetNodesContent();
@@ -428,14 +388,6 @@ function iTutorialEvaluateStep() {
           "Let's go to the <code class='interactive-tutorial-tab flashing-button'>City</code> page through the main navigation menu.",
       );
       nextBtn.style.display = "none";
-
-      // Flash 'City' menu and set its tutorial click handler
-      cityMainMenu.setAttribute("class", "flashing-button");
-      cityMainMenu.addEventListener("click", function () {
-        Engine.loadLocationContent();
-        iTutorialNextStep();
-        return false;
-      });
       break;
     case iTutorialSteps.WorldDescription:
       Engine.loadLocationContent();
@@ -447,14 +399,6 @@ function iTutorialEvaluateStep() {
           "Lastly, click on the <code class='interactive-tutorial-tab flashing-button'>Tutorial</code> link in the main navigation menu.",
       );
       nextBtn.style.display = "none";
-
-      // Flash 'Tutorial' menu and set its tutorial click handler
-      tutorialMainMenu.setAttribute("class", "flashing-button");
-      tutorialMainMenu.addEventListener("click", function () {
-        Engine.loadTutorialContent();
-        iTutorialNextStep();
-        return false;
-      });
       break;
     case iTutorialSteps.TutorialPageInfo:
       Engine.loadTutorialContent();
@@ -481,29 +425,6 @@ function iTutorialEvaluateStep() {
 
 // Go to the next step and evaluate it
 function iTutorialNextStep() {
-  // Special behavior for certain steps
-  if (ITutorial.currStep === iTutorialSteps.GoToCharacterPage) {
-    document.getElementById("stats-menu-link").removeAttribute("class");
-  }
-  if (ITutorial.currStep === iTutorialSteps.CharacterGoToTerminalPage) {
-    document.getElementById("terminal-menu-link").removeAttribute("class");
-  }
-  if (ITutorial.currStep === iTutorialSteps.TerminalGoToActiveScriptsPage) {
-    document.getElementById("active-scripts-menu-link").removeAttribute("class");
-  }
-  if (ITutorial.currStep === iTutorialSteps.ActiveScriptsPage) {
-    document.getElementById("terminal-menu-link").removeAttribute("class");
-  }
-  if (ITutorial.currStep === iTutorialSteps.GoToHacknetNodesPage) {
-    document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
-  }
-  if (ITutorial.currStep === iTutorialSteps.HacknetNodesGoToWorldPage) {
-    document.getElementById("city-menu-link").removeAttribute("class");
-  }
-  if (ITutorial.currStep === iTutorialSteps.WorldDescription) {
-    document.getElementById("tutorial-menu-link").removeAttribute("class");
-  }
-
   ITutorial.stepIsDone[ITutorial.currStep] = true;
   if (ITutorial.currStep < iTutorialSteps.End) {
     ITutorial.currStep += 1;
@@ -527,17 +448,6 @@ function iTutorialEnd() {
     Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
   }
 
-  // Initialize references to main menu links
-  // We have to call initializeMainMenuLinks() again because the Interactive Tutorial
-  // re-creates Main menu links with clearEventListeners()
-  if (!initializeMainMenuLinks()) {
-    const errorMsg =
-      "Failed to initialize Main Menu Links. Please try refreshing the page. " +
-      "If that doesn't work, report the issue to the developer";
-    exceptionAlert(new Error(errorMsg));
-    console.error(errorMsg);
-    return;
-  }
   Engine.init();
 
   ITutorial.currStep = iTutorialSteps.End;

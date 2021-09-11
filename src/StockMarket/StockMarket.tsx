@@ -307,7 +307,7 @@ export function processStockPrices(numCycles = 1): void {
 
 let stockMarketContainer: HTMLElement | null = null;
 function setStockMarketContainer(): void {
-  stockMarketContainer = document.getElementById("stock-market-container");
+  stockMarketContainer = document.getElementById("generic-react-container");
   document.removeEventListener("DOMContentLoaded", setStockMarketContainer);
 }
 

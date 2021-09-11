@@ -121,7 +121,7 @@ export function HacknetRoot(props: IProps): React.ReactElement {
   });
 
   return (
-    <div>
+    <>
       <h1>Hacknet {hasHacknetServers(props.player) ? "Servers" : "Nodes"}</h1>
       <GeneralInfo hasHacknetServers={hasHacknetServers(props.player)} />
 
@@ -140,6 +140,6 @@ export function HacknetRoot(props: IProps): React.ReactElement {
       )}
 
       <ul id={"hacknet-nodes-list"}>{nodes}</ul>
-    </div>
+    </>
   );
 }

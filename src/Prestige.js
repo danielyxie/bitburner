@@ -23,7 +23,7 @@ import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
-import { Terminal, postNetburnerText } from "./Terminal";
+import { Terminal, postVersion } from "./Terminal";
 
 import { Page, routing } from "./ui/navigationTracking";
 
@@ -52,7 +52,7 @@ function prestigeAugmentation() {
   Terminal.resetTerminalInput();
   Engine.loadTerminalContent();
   $("#terminal tr:not(:last)").remove();
-  postNetburnerText();
+  postVersion();
 
   // Delete all Worker Scripts objects
   prestigeWorkerScripts();
@@ -233,7 +233,7 @@ function prestigeSourceFile(flume) {
 
   // Clear terminal
   $("#terminal tr:not(:last)").remove();
-  postNetburnerText();
+  postVersion();
 
   // Messages
   initMessages();

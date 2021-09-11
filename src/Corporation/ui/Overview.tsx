@@ -273,7 +273,7 @@ export function Overview(props: IProps): React.ReactElement {
   function Upgrades(): React.ReactElement {
     // Don't show upgrades
     if (props.corp.divisions.length <= 0) {
-      return <></>;
+      return <h1>Unlock upgrades after creating your first division</h1>;
     }
 
     return (

@@ -5,23 +5,19 @@
     terminal which has its own page) */
 
 .generic-menupage-container {
-  height: 100%;
-  padding-left: 10px;
+  padding-left: 2px;
   margin-left: 10%;
-  width: 99%;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+}
+
+#generic-react-container {
+  padding: 10px;
   overflow-y: scroll;
 }
 
-/* Character Info */
-#character-container {
-  padding-top: 10px;
-  position: fixed;
-}
-
-/* World */
-#world-container {
-  position: fixed;
-  padding-top: 10px;
+#generic-react-container::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }
 
 #world-city-name,

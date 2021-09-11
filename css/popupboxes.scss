@@ -27,6 +27,10 @@
   color: var(--my-font-color);
 }
 
+.popup-box-input-div {
+  margin: 2px;
+}
+
 .popup-box-button,
 .popup-box-button-inactive {
   color: #aaa;
@@ -187,11 +191,6 @@
 
 #infiltration-faction-select {
   background-color: #000;
-}
-
-/* Generic Yes No Box */
-#yes-no-text-input-box-input {
-  color: #fff;
 }
 
 /* Game Options */

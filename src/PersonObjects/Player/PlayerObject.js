@@ -160,13 +160,13 @@ export function PlayerObject() {
   this.has4SDataTixApi = false;
 
   //Gang
-  this.gang = 0;
+  this.gang = null;
 
   //Corporation
-  this.corporation = 0;
+  this.corporation = null;
 
   //Bladeburner
-  this.bladeburner = 0;
+  this.bladeburner = null;
   this.bladeburner_max_stamina_mult = 1;
   this.bladeburner_stamina_gain_mult = 1;
   this.bladeburner_analysis_mult = 1; //Field Analysis Only

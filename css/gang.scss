@@ -5,10 +5,7 @@
  * Styling for the Gang mechanic UI (BitNode-2)
  */
 
-#gang-container {
-  position: fixed;
-  padding: 6px;
-
+.gang-container {
   p,
   pre {
     font-size: $defaultFontSize * 0.9375;
