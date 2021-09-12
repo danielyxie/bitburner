@@ -63,8 +63,7 @@ function ListWorldMap(props: IProps): React.ReactElement {
         .map((city: string) => (
           <StdButton
             key={city}
-            onClick={() =>
-              createTravelPopup(props.p, city, () => props.travel(CityName[city as keyof typeof CityName]))
+            onClick={() => createTravelPopup(props.p, city, () => props.travel(CityName[city as keyof typeof CityName]))
             }
             style={{ display: "block" }}
             text={`Travel to ${city}`}

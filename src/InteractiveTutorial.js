@@ -2,10 +2,8 @@ import { Engine } from "./engine";
 import { Player } from "./Player";
 import { Settings } from "./Settings/Settings";
 
-import { initializeMainMenuLinks } from "./ui/MainMenu/Links";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
-import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";

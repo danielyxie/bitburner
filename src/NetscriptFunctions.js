@@ -43,7 +43,6 @@ import {
   SetProductMarketTA1,
   SetProductMarketTA2,
 } from "./Corporation/Actions";
-import { Reviver } from "../utils/JSONReviver";
 import { CorporationUnlockUpgrades } from "./Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "./Corporation/data/CorporationUpgrades";
 import {
@@ -4523,12 +4522,12 @@ function NetscriptFunctions(workerScript) {
       },
       unlockUpgrade: function (upgradeName) {
         const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
-        if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
+        if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
         UnlockUpgrade(Player.corporation, upgrade);
       },
       levelUpgrade: function (upgradeName) {
         const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
-        if (upgrade === undefined) throw new Error("No upgrade named '${upgradeName}'");
+        if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
         LevelUpgrade(Player.corporation, upgrade);
       },
       issueDividends: function (percent) {

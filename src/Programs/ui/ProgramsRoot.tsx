@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { Programs } from "../Programs";
 import { getAvailableCreatePrograms } from "../ProgramHelpers";
 
 interface IProps {

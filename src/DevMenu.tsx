@@ -4,7 +4,6 @@ import { generateContract, generateRandomContract, generateRandomContractOnHome 
 import { Companies } from "./Company/Companies";
 import { Programs } from "./Programs/Programs";
 import { Factions } from "./Faction/Factions";
-import { Player } from "./Player";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { AllServers } from "./Server/AllServers";
@@ -18,14 +17,9 @@ import { IEngine } from "./IEngine";
 import { saveObject } from "./SaveObject";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { createElement } from "../utils/uiHelpers/createElement";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
 import { Money } from "./ui/React/Money";
 
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-
-const Component = React.Component;
 
 // Update as additional BitNodes get implemented
 const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -41,7 +35,7 @@ interface IValueAdjusterProps {
   reset: () => void;
 }
 
-function ValueAdjusterComponent(props: IValueAdjusterProps) {
+function ValueAdjusterComponent(props: IValueAdjusterProps): React.ReactElement {
   const [value, setValue] = useState(0);
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -120,28 +114,28 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
 
   function addMoney(n: number) {
     return function () {
-      Player.gainMoney(n);
+      props.player.gainMoney(n);
     };
   }
 
-  function upgradeRam() {
-    Player.getHomeComputer().maxRam *= 2;
+  function upgradeRam(): void {
+    props.player.getHomeComputer().maxRam *= 2;
   }
 
-  function quickB1tFlum3() {
-    hackWorldDaemon(Player.bitNodeN, true, true);
+  function quickB1tFlum3(): void {
+    hackWorldDaemon(props.player.bitNodeN, true, true);
   }
 
-  function b1tflum3() {
-    hackWorldDaemon(Player.bitNodeN, true);
+  function b1tflum3(): void {
+    hackWorldDaemon(props.player.bitNodeN, true);
   }
 
-  function quickHackW0r1dD43m0n() {
-    hackWorldDaemon(Player.bitNodeN, false, true);
+  function quickHackW0r1dD43m0n(): void {
+    hackWorldDaemon(props.player.bitNodeN, false, true);
   }
 
-  function hackW0r1dD43m0n() {
-    hackWorldDaemon(Player.bitNodeN);
+  function hackW0r1dD43m0n(): void {
+    hackWorldDaemon(props.player.bitNodeN);
   }
 
   function modifyExp(stat: string, modifier: number) {
@@ -149,127 +143,127 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
       switch (stat) {
         case "hacking":
           if (exp) {
-            Player.gainHackingExp(exp * modifier);
+            props.player.gainHackingExp(exp * modifier);
           }
           break;
         case "strength":
           if (exp) {
-            Player.gainStrengthExp(exp * modifier);
+            props.player.gainStrengthExp(exp * modifier);
           }
           break;
         case "defense":
           if (exp) {
-            Player.gainDefenseExp(exp * modifier);
+            props.player.gainDefenseExp(exp * modifier);
           }
           break;
         case "dexterity":
           if (exp) {
-            Player.gainDexterityExp(exp * modifier);
+            props.player.gainDexterityExp(exp * modifier);
           }
           break;
         case "agility":
           if (exp) {
-            Player.gainAgilityExp(exp * modifier);
+            props.player.gainAgilityExp(exp * modifier);
           }
           break;
         case "charisma":
           if (exp) {
-            Player.gainCharismaExp(exp * modifier);
+            props.player.gainCharismaExp(exp * modifier);
           }
           break;
         case "intelligence":
           if (exp) {
-            Player.gainIntelligenceExp(exp * modifier);
+            props.player.gainIntelligenceExp(exp * modifier);
           }
           break;
       }
-      Player.updateSkillLevels();
+      props.player.updateSkillLevels();
     };
   }
 
   function modifyKarma(modifier: number) {
     return function (amt: number) {
-      Player.karma += amt * modifier;
+      props.player.karma += amt * modifier;
     };
   }
 
-  function tonsOfExp() {
-    Player.gainHackingExp(tonsPP);
-    Player.gainStrengthExp(tonsPP);
-    Player.gainDefenseExp(tonsPP);
-    Player.gainDexterityExp(tonsPP);
-    Player.gainAgilityExp(tonsPP);
-    Player.gainCharismaExp(tonsPP);
-    Player.gainIntelligenceExp(tonsPP);
-    Player.updateSkillLevels();
+  function tonsOfExp(): void {
+    props.player.gainHackingExp(tonsPP);
+    props.player.gainStrengthExp(tonsPP);
+    props.player.gainDefenseExp(tonsPP);
+    props.player.gainDexterityExp(tonsPP);
+    props.player.gainAgilityExp(tonsPP);
+    props.player.gainCharismaExp(tonsPP);
+    props.player.gainIntelligenceExp(tonsPP);
+    props.player.updateSkillLevels();
   }
 
-  function resetAllExp() {
-    Player.hacking_exp = 0;
-    Player.strength_exp = 0;
-    Player.defense_exp = 0;
-    Player.dexterity_exp = 0;
-    Player.agility_exp = 0;
-    Player.charisma_exp = 0;
-    Player.intelligence_exp = 0;
-    Player.updateSkillLevels();
+  function resetAllExp(): void {
+    props.player.hacking_exp = 0;
+    props.player.strength_exp = 0;
+    props.player.defense_exp = 0;
+    props.player.dexterity_exp = 0;
+    props.player.agility_exp = 0;
+    props.player.charisma_exp = 0;
+    props.player.intelligence_exp = 0;
+    props.player.updateSkillLevels();
   }
 
   function resetExperience(stat: string): () => void {
     return function () {
       switch (stat) {
         case "hacking":
-          Player.hacking_exp = 0;
+          props.player.hacking_exp = 0;
           break;
         case "strength":
-          Player.strength_exp = 0;
+          props.player.strength_exp = 0;
           break;
         case "defense":
-          Player.defense_exp = 0;
+          props.player.defense_exp = 0;
           break;
         case "dexterity":
-          Player.dexterity_exp = 0;
+          props.player.dexterity_exp = 0;
           break;
         case "agility":
-          Player.agility_exp = 0;
+          props.player.agility_exp = 0;
           break;
         case "charisma":
-          Player.charisma_exp = 0;
+          props.player.charisma_exp = 0;
           break;
         case "intelligence":
-          Player.intelligence_exp = 0;
+          props.player.intelligence_exp = 0;
           break;
       }
-      Player.updateSkillLevels();
+      props.player.updateSkillLevels();
     };
   }
 
-  function resetKarma() {
+  function resetKarma(): () => void {
     return function () {
-      Player.karma = 0;
+      props.player.karma = 0;
     };
   }
 
-  function enableIntelligence() {
-    if (Player.intelligence === 0) {
-      Player.intelligence = 1;
-      Player.updateSkillLevels();
+  function enableIntelligence(): void {
+    if (props.player.intelligence === 0) {
+      props.player.intelligence = 1;
+      props.player.updateSkillLevels();
     }
   }
 
-  function disableIntelligence() {
-    Player.intelligence_exp = 0;
-    Player.intelligence = 0;
-    Player.updateSkillLevels();
+  function disableIntelligence(): void {
+    props.player.intelligence_exp = 0;
+    props.player.intelligence = 0;
+    props.player.updateSkillLevels();
   }
 
-  function receiveInvite() {
-    Player.receiveInvite(faction);
+  function receiveInvite(): void {
+    props.player.receiveInvite(faction);
   }
 
-  function receiveAllInvites() {
+  function receiveAllInvites(): void {
     for (const i in Factions) {
-      Player.receiveInvite(Factions[i].name);
+      props.player.receiveInvite(Factions[i].name);
     }
   }
 
@@ -282,7 +276,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     };
   }
 
-  function resetFactionRep() {
+  function resetFactionRep(): void {
     const fac = Factions[faction];
     if (fac != null) {
       fac.playerReputation = 0;
@@ -298,63 +292,63 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     };
   }
 
-  function resetFactionFavor() {
+  function resetFactionFavor(): void {
     const fac = Factions[faction];
     if (fac != null) {
       fac.favor = 0;
     }
   }
 
-  function tonsOfRep() {
+  function tonsOfRep(): void {
     for (const i in Factions) {
       Factions[i].playerReputation = tonsPP;
     }
   }
 
-  function resetAllRep() {
+  function resetAllRep(): void {
     for (const i in Factions) {
       Factions[i].playerReputation = 0;
     }
   }
 
-  function tonsOfFactionFavor() {
+  function tonsOfFactionFavor(): void {
     for (const i in Factions) {
       Factions[i].favor = tonsPP;
     }
   }
 
-  function resetAllFactionFavor() {
+  function resetAllFactionFavor(): void {
     for (const i in Factions) {
       Factions[i].favor = 0;
     }
   }
 
-  function queueAug() {
-    Player.queueAugmentation(augmentation);
+  function queueAug(): void {
+    props.player.queueAugmentation(augmentation);
   }
 
-  function queueAllAugs() {
+  function queueAllAugs(): void {
     for (const i in AugmentationNames) {
       const augName = AugmentationNames[i];
-      Player.queueAugmentation(augName);
+      props.player.queueAugmentation(augName);
     }
   }
 
   function setSF(sfN: number, sfLvl: number) {
     return function () {
       if (sfLvl === 0) {
-        Player.sourceFiles = Player.sourceFiles.filter((sf) => sf.n !== sfN);
+        props.player.sourceFiles = props.player.sourceFiles.filter((sf) => sf.n !== sfN);
         return;
       }
 
-      if (!Player.sourceFiles.some((sf) => sf.n === sfN)) {
-        Player.sourceFiles.push(new PlayerOwnedSourceFile(sfN, sfLvl));
+      if (!props.player.sourceFiles.some((sf) => sf.n === sfN)) {
+        props.player.sourceFiles.push(new PlayerOwnedSourceFile(sfN, sfLvl));
         return;
       }
 
-      for (let i = 0; i < Player.sourceFiles.length; i++) {
-        if (Player.sourceFiles[i].n === sfN) {
-          Player.sourceFiles[i].lvl = sfLvl;
+      for (let i = 0; i < props.player.sourceFiles.length; i++) {
+        if (props.player.sourceFiles[i].n === sfN) {
+          props.player.sourceFiles[i].lvl = sfLvl;
         }
       }
     };
@@ -368,25 +362,25 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     };
   }
 
-  function clearExploits() {
-    Player.exploits = [];
+  function clearExploits(): void {
+    props.player.exploits = [];
   }
 
-  function addProgram() {
-    if (!Player.hasProgram(program)) {
-      Player.getHomeComputer().programs.push(program);
+  function addProgram(): void {
+    if (!props.player.hasProgram(program)) {
+      props.player.getHomeComputer().programs.push(program);
     }
   }
 
-  function addAllPrograms() {
+  function addAllPrograms(): void {
     for (const i in Programs) {
-      if (!Player.hasProgram(Programs[i].name)) {
-        Player.getHomeComputer().programs.push(Programs[i].name);
+      if (!props.player.hasProgram(Programs[i].name)) {
+        props.player.getHomeComputer().programs.push(Programs[i].name);
       }
     }
   }
 
-  function rootServer() {
+  function rootServer(): void {
     const s = GetServerByHostname(server);
     if (s === null) return;
     if (s instanceof HacknetServer) return;
@@ -399,7 +393,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     s.openPortCount = 5;
   }
 
-  function rootAllServers() {
+  function rootAllServers(): void {
     for (const i in AllServers) {
       const s = AllServers[i];
       if (s instanceof HacknetServer) return;
@@ -413,14 +407,14 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     }
   }
 
-  function minSecurity() {
+  function minSecurity(): void {
     const s = GetServerByHostname(server);
     if (s === null) return;
     if (s instanceof HacknetServer) return;
     s.hackDifficulty = s.minDifficulty;
   }
 
-  function minAllSecurity() {
+  function minAllSecurity(): void {
     for (const i in AllServers) {
       const server = AllServers[i];
       if (server instanceof HacknetServer) continue;
@@ -428,14 +422,14 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     }
   }
 
-  function maxMoney() {
+  function maxMoney(): void {
     const s = GetServerByHostname(server);
     if (s === null) return;
     if (s instanceof HacknetServer) return;
     s.moneyAvailable = s.moneyMax;
   }
 
-  function maxAllMoney() {
+  function maxAllMoney(): void {
     for (const i in AllServers) {
       const server = AllServers[i];
       if (server instanceof HacknetServer) continue;
@@ -495,98 +489,98 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
 
   function modifyBladeburnerRank(modify: number): (x: number) => void {
     return function (rank: number): void {
-      if (Player.bladeburner) {
-        Player.bladeburner.changeRank(Player, rank * modify);
+      if (props.player.bladeburner) {
+        props.player.bladeburner.changeRank(props.player, rank * modify);
       }
     };
   }
 
   function resetBladeburnerRank(): void {
-    Player.bladeburner.rank = 0;
-    Player.bladeburner.maxRank = 0;
+    props.player.bladeburner.rank = 0;
+    props.player.bladeburner.maxRank = 0;
   }
 
   function addTonsBladeburnerRank(): void {
-    if (Player.bladeburner) {
-      Player.bladeburner.changeRank(Player, tonsP);
+    if (props.player.bladeburner) {
+      props.player.bladeburner.changeRank(props.player, tonsP);
     }
   }
 
   function modifyBladeburnerCycles(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      if (Player.bladeburner) {
-        Player.bladeburner.storedCycles += cycles * modify;
+      if (props.player.bladeburner) {
+        props.player.bladeburner.storedCycles += cycles * modify;
       }
     };
   }
 
   function resetBladeburnerCycles(): void {
-    if (Player.bladeburner) {
-      Player.bladeburner.storedCycles = 0;
+    if (props.player.bladeburner) {
+      props.player.bladeburner.storedCycles = 0;
     }
   }
 
   function addTonsBladeburnerCycles(): void {
-    if (Player.bladeburner) {
-      Player.bladeburner.storedCycles += tonsP;
+    if (props.player.bladeburner) {
+      props.player.bladeburner.storedCycles += tonsP;
     }
   }
 
   function addTonsGangCycles(): void {
-    if (Player.gang) {
-      Player.gang.storedCycles = tonsP;
+    if (props.player.gang) {
+      props.player.gang.storedCycles = tonsP;
     }
   }
 
   function modifyGangCycles(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      if (Player.gang) {
-        Player.gang.storedCycles += cycles * modify;
+      if (props.player.gang) {
+        props.player.gang.storedCycles += cycles * modify;
       }
     };
   }
 
   function resetGangCycles(): void {
-    if (Player.gang) {
-      Player.gang.storedCycles = 0;
+    if (props.player.gang) {
+      props.player.gang.storedCycles = 0;
     }
   }
 
   function addTonsCorporationFunds(): void {
-    if (Player.corporation) {
-      Player.corporation.funds = Player.corporation.funds.plus(1e99);
+    if (props.player.corporation) {
+      props.player.corporation.funds = props.player.corporation.funds.plus(1e99);
     }
   }
 
   function resetCorporationFunds(): void {
-    if (Player.corporation) {
-      Player.corporation.funds = Player.corporation.funds.minus(Player.corporation.funds);
+    if (props.player.corporation) {
+      props.player.corporation.funds = props.player.corporation.funds.minus(props.player.corporation.funds);
     }
   }
 
-  function addTonsCorporationCycles() {
-    if (Player.corporation) {
-      Player.corporation.storedCycles = tonsP;
+  function addTonsCorporationCycles(): void {
+    if (props.player.corporation) {
+      props.player.corporation.storedCycles = tonsP;
     }
   }
 
   function modifyCorporationCycles(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      if (Player.corporation) {
-        Player.corporation.storedCycles += cycles * modify;
+      if (props.player.corporation) {
+        props.player.corporation.storedCycles += cycles * modify;
       }
     };
   }
 
-  function resetCorporationCycles() {
-    if (Player.corporation) {
-      Player.corporation.storedCycles = 0;
+  function resetCorporationCycles(): void {
+    if (props.player.corporation) {
+      props.player.corporation.storedCycles = 0;
     }
   }
 
-  function finishCorporationProducts() {
-    if (!Player.corporation) return;
-    Player.corporation.divisions.forEach((div) => {
+  function finishCorporationProducts(): void {
+    if (!props.player.corporation) return;
+    props.player.corporation.divisions.forEach((div) => {
       Object.keys(div.products).forEach((prod) => {
         const product = div.products[prod];
         if (product === undefined) throw new Error("Impossible product undefined");
@@ -595,29 +589,29 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     });
   }
 
-  function addCorporationResearch() {
-    if (!Player.corporation) return;
-    Player.corporation.divisions.forEach((div) => {
+  function addCorporationResearch(): void {
+    if (!props.player.corporation) return;
+    props.player.corporation.divisions.forEach((div) => {
       div.sciResearch.qty += 1e10;
     });
   }
 
-  function specificContract() {
+  function specificContract(): void {
     generateContract({
       problemType: codingcontract,
       server: "home",
     });
   }
 
-  function processStocks(sub: (arg0: Stock) => void) {
+  function processStocks(sub: (arg0: Stock) => void): void {
     const inputSymbols = stockSymbol.replace(/\s/g, "");
 
-    let match = function (symbol: string) {
+    let match: (symbol: string) => boolean = (): boolean => {
       return true;
     };
 
     if (inputSymbols !== "" && inputSymbols !== "all") {
-      match = function (symbol: string) {
+      match = function (symbol: string): boolean {
         return inputSymbols.split(",").includes(symbol);
       };
     }
@@ -632,7 +626,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     }
   }
 
-  function doSetStockPrice() {
+  function doSetStockPrice(): void {
     if (!isNaN(stockPrice)) {
       processStocks((stock: Stock) => {
         stock.price = stockPrice;
@@ -640,8 +634,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     }
   }
 
-  function viewStockCaps() {
-    let stocks: JSX.Element[] = [];
+  function viewStockCaps(): void {
+    const stocks: JSX.Element[] = [];
     processStocks((stock: Stock) => {
       stocks.push(
         <tr key={stock.symbol}>
@@ -665,40 +659,40 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     );
   }
 
-  function sleeveMaxAllShock() {
-    for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].shock = 0;
+  function sleeveMaxAllShock(): void {
+    for (let i = 0; i < props.player.sleeves.length; ++i) {
+      props.player.sleeves[i].shock = 0;
     }
   }
 
-  function sleeveClearAllShock() {
-    for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].shock = 100;
+  function sleeveClearAllShock(): void {
+    for (let i = 0; i < props.player.sleeves.length; ++i) {
+      props.player.sleeves[i].shock = 100;
     }
   }
 
-  function sleeveSyncMaxAll() {
-    for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].sync = 100;
+  function sleeveSyncMaxAll(): void {
+    for (let i = 0; i < props.player.sleeves.length; ++i) {
+      props.player.sleeves[i].sync = 100;
     }
   }
 
-  function sleeveSyncClearAll() {
-    for (let i = 0; i < Player.sleeves.length; ++i) {
-      Player.sleeves[i].sync = 0;
+  function sleeveSyncClearAll(): void {
+    for (let i = 0; i < props.player.sleeves.length; ++i) {
+      props.player.sleeves[i].sync = 0;
     }
   }
 
   function timeskip(time: number) {
     return () => {
-      Player.lastUpdate -= time;
+      props.player.lastUpdate -= time;
       props.engine._lastUpdate -= time;
       saveObject.saveGame(props.engine.indexedDb);
       setTimeout(() => location.reload(), 1000);
     };
   }
 
-  let factions = [];
+  const factions = [];
   for (const i in Factions) {
     factions.push(
       <option key={Factions[i].name} value={Factions[i].name}>
@@ -707,7 +701,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     );
   }
 
-  let augs = [];
+  const augs = [];
   for (const i in AugmentationNames) {
     augs.push(
       <option key={AugmentationNames[i]} value={AugmentationNames[i]}>
@@ -716,7 +710,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     );
   }
 
-  let programs = [];
+  const programs = [];
   for (const i in Programs) {
     programs.push(
       <option key={Programs[i].name} value={Programs[i].name}>
@@ -725,7 +719,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     );
   }
 
-  let servers = [];
+  const servers = [];
   for (const i in AllServers) {
     const hn = AllServers[i].hostname;
     servers.push(
@@ -735,7 +729,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     );
   }
 
-  let companies = [];
+  const companies = [];
   for (const c in Companies) {
     const name = Companies[c].name;
     companies.push(
@@ -1310,7 +1304,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
         </div>
       </div>
 
-      {Player.bladeburner instanceof Bladeburner && (
+      {props.player.bladeburner instanceof Bladeburner && (
         <div className="row">
           <div className="col">
             <div className="row">
@@ -1360,7 +1354,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
         </div>
       )}
 
-      {Player.inGang() && (
+      {props.player.inGang() && (
         <div className="row">
           <div className="col">
             <div className="row">
@@ -1392,7 +1386,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
         </div>
       )}
 
-      {Player.hasCorporation() && (
+      {props.player.hasCorporation() && (
         <div className="row">
           <div className="col">
             <div className="row">
@@ -1485,7 +1479,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
         </div>
       </div>
 
-      {Player.hasWseAccount && (
+      {props.player.hasWseAccount && (
         <div className="row">
           <div className="col">
             <div className="row">
@@ -1540,7 +1534,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
         </div>
       )}
 
-      {Player.sleeves.length > 0 && (
+      {props.player.sleeves.length > 0 && (
         <div className="row">
           <div className="col">
             <div className="row">

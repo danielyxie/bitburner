@@ -7,6 +7,7 @@ import { StockTickerHeaderText } from "./StockTickerHeaderText";
 import { StockTickerOrderList } from "./StockTickerOrderList";
 import { StockTickerPositionText } from "./StockTickerPositionText";
 import { StockTickerTxButton } from "./StockTickerTxButton";
+import { PlaceOrderPopup } from "./PlaceOrderPopup";
 
 import { Order } from "../Order";
 import { Stock } from "../Stock";
@@ -19,15 +20,9 @@ import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Accordion } from "../../ui/React/Accordion";
 import { Money } from "../../ui/React/Money";
+import { createPopup } from "../../ui/React/createPopup";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import {
-  yesNoTxtInpBoxClose,
-  yesNoTxtInpBoxCreate,
-  yesNoTxtInpBoxGetInput,
-  yesNoTxtInpBoxGetNoButton,
-  yesNoTxtInpBoxGetYesButton,
-} from "../../../utils/YesNoBox";
 
 enum SelectorOrderType {
   Market = "Market Order",
@@ -83,30 +78,6 @@ export class StockTicker extends React.Component<IProps, IState> {
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
     this.handleSellButtonClick = this.handleSellButtonClick.bind(this);
     this.handleSellAllButtonClick = this.handleSellAllButtonClick.bind(this);
-  }
-
-  createPlaceOrderPopupBox(yesTxt: string, popupTxt: string, yesBtnCb: (price: number) => void): void {
-    const yesBtn = yesNoTxtInpBoxGetYesButton();
-    const noBtn = yesNoTxtInpBoxGetNoButton();
-
-    yesBtn.innerText = yesTxt;
-    yesBtn.addEventListener("click", () => {
-      const price = parseFloat(yesNoTxtInpBoxGetInput());
-      if (isNaN(price)) {
-        dialogBoxCreate(`Invalid input for price: ${yesNoTxtInpBoxGetInput()}`);
-        return false;
-      }
-
-      yesBtnCb(price);
-      yesNoTxtInpBoxClose();
-    });
-
-    noBtn.innerText = "Cancel Order";
-    noBtn.addEventListener("click", () => {
-      yesNoTxtInpBoxClose();
-    });
-
-    yesNoTxtInpBoxCreate(popupTxt);
   }
 
   getBuyTransactionCostContent(): JSX.Element | null {
@@ -182,23 +153,23 @@ export class StockTicker extends React.Component<IProps, IState> {
         break;
       }
       case SelectorOrderType.Limit: {
-        this.createPlaceOrderPopupBox(
-          "Place Buy Limit Order",
-          "Enter the price for your Limit Order",
-          (price: number) => {
-            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitBuy, this.state.position);
-          },
-        );
+        const popupId = `place-order-popup`;
+        createPopup(popupId, PlaceOrderPopup, {
+          text: "Enter the price for your Limit Order",
+          placeText: "Place Buy Limit Order",
+          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitBuy, this.state.position),
+          popupId: popupId,
+        });
         break;
       }
       case SelectorOrderType.Stop: {
-        this.createPlaceOrderPopupBox(
-          "Place Buy Stop Order",
-          "Enter the price for your Stop Order",
-          (price: number) => {
-            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopBuy, this.state.position);
-          },
-        );
+        const popupId = `place-order-popup`;
+        createPopup(popupId, PlaceOrderPopup, {
+          text: "Enter the price for your Stop Order",
+          placeText: "Place Buy Stop Order",
+          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopBuy, this.state.position),
+          popupId: popupId,
+        });
         break;
       }
       default:
@@ -304,23 +275,23 @@ export class StockTicker extends React.Component<IProps, IState> {
         break;
       }
       case SelectorOrderType.Limit: {
-        this.createPlaceOrderPopupBox(
-          "Place Sell Limit Order",
-          "Enter the price for your Limit Order",
-          (price: number) => {
-            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitSell, this.state.position);
-          },
-        );
+        const popupId = `place-order-popup`;
+        createPopup(popupId, PlaceOrderPopup, {
+          text: "Enter the price for your Limit Order",
+          placeText: "Place Sell Limit Order",
+          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitSell, this.state.position),
+          popupId: popupId,
+        });
         break;
       }
       case SelectorOrderType.Stop: {
-        this.createPlaceOrderPopupBox(
-          "Place Sell Stop Order",
-          "Enter the price for your Stop Order",
-          (price: number) => {
-            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopSell, this.state.position);
-          },
-        );
+        const popupId = `place-order-popup`;
+        createPopup(popupId, PlaceOrderPopup, {
+          text: "Enter the price for your Stop Order",
+          placeText: "Place Sell Stop Order",
+          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopSell, this.state.position),
+          popupId: popupId,
+        });
         break;
       }
       default:

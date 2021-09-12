@@ -20,7 +20,6 @@ export function ActiveScriptsRoot(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
-  const [divisionName, setDivisionName] = useState("Overview");
 
   useEffect(() => {
     const id = setInterval(rerender, 20);

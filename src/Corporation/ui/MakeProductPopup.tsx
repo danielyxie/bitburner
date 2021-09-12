@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { Industries } from "../IndustryData";
-import { Product } from "../Product";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
 import { MakeProduct } from "../Actions";

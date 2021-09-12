@@ -9,6 +9,7 @@ import { Sleeve } from "./Sleeve/Sleeve";
 import { IMap } from "../types";
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { Augmentation } from "../Augmentation/Augmentation";
 import { Company } from "../Company/Company";
 import { CompanyPosition } from "../Company/CompanyPosition";
 import { CityName } from "../Locations/data/CityNames";
@@ -119,6 +120,9 @@ export interface IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  workRepGained: number;
+  focus: boolean;
+
   // Methods
   applyForAgentJob(sing?: boolean): boolean | void;
   applyForBusinessConsultantJob(sing?: boolean): boolean | void;
@@ -154,6 +158,7 @@ export interface IPlayer {
   getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
   getUpgradeHomeRamCost(): number;
   gotoLocation(to: LocationName): boolean;
+  hasAugmentation(aug: Augmentation): boolean;
   hasCorporation(): boolean;
   hasGangWith(facName: string): boolean;
   hasTorRouter(): boolean;
@@ -186,6 +191,7 @@ export interface IPlayer {
   startFactionFieldWork(faction: Faction): void;
   startFactionHackWork(faction: Faction): void;
   startFactionSecurityWork(faction: Faction): void;
+  startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
   startWork(companyName: string): void;
   startWorkPartTime(companyName: string): void;

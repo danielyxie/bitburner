@@ -7,11 +7,11 @@ interface IProps {
   content: JSX.Element;
 }
 
-export function MessagePopup(props: IProps): React.ReactElement {
+function MessagePopup(props: IProps): React.ReactElement {
   return <>{props.content}</>;
 }
 
-function dialogBoxCreate(txt: string | JSX.Element, preformatted = false): void {
+export function dialogBoxCreate(txt: string | JSX.Element, preformatted = false): void {
   const popupId =
     `popup-` +
     Array.from(Array(16))
@@ -41,5 +41,3 @@ function dialogBoxCreate(txt: string | JSX.Element, preformatted = false): void 
     });
   }
 }
-
-export { dialogBoxCreate };

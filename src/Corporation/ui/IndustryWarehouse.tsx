@@ -18,7 +18,6 @@ import { ProductMarketTaPopup } from "./ProductMarketTaPopup";
 import { SmartSupplyPopup } from "./SmartSupplyPopup";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { createPopup } from "../../ui/React/createPopup";
 
 import { isString } from "../../../utils/helpers/isString";

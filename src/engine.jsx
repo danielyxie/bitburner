@@ -5,18 +5,13 @@
  */
 import { convertTimeMsToTimeElapsedString, replaceAt } from "../utils/StringHelperFunctions";
 import { Augmentations } from "./Augmentation/Augmentations";
-import {
-  initAugmentations,
-  displayAugmentationsContent,
-  installAugmentations,
-} from "./Augmentation/AugmentationHelpers";
+import { initAugmentations, installAugmentations } from "./Augmentation/AugmentationHelpers";
 import { onExport } from "./ExportBonus";
 import { AugmentationsRoot } from "./Augmentation/ui/Root";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
-import { CharacterOverviewComponent } from "./ui/React/CharacterOverview";
-import { cinematicTextFlag } from "./CinematicText";
+import { CharacterOverview } from "./ui/React/CharacterOverview";
 import { generateRandomContract } from "./CodingContractGenerator";
 import { initCompanies } from "./Company/Companies";
 import { Corporation } from "./Corporation/Corporation";
@@ -37,7 +32,6 @@ import {
   getFactionSecurityWorkRepGain,
   getFactionFieldWorkRepGain,
 } from "./PersonObjects/formulas/reputation";
-import { FconfSettings } from "./Fconf/FconfSettings";
 import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelpers";
 import { HacknetRoot } from "./Hacknet/ui/HacknetRoot";
 import { iTutorialStart } from "./InteractiveTutorial";
@@ -50,7 +44,6 @@ import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorke
 import { Player } from "./Player";
 import { prestigeAugmentation } from "./Prestige";
 import { ProgramsRoot } from "./Programs/ui/ProgramsRoot";
-import { redPillFlag } from "./RedPill";
 import { saveObject, loadGame } from "./SaveObject";
 import { Root as ScriptEditorRoot } from "./ScriptEditor/ui/Root";
 import { initForeignServers, AllServers } from "./Server/AllServers";
@@ -72,8 +65,7 @@ import { Hashes } from "./ui/React/Hashes";
 import { Reputation } from "./ui/React/Reputation";
 
 import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
-import { initializeMainMenuHeaders } from "./ui/MainMenu/Headers";
-import { initializeMainMenuLinks, MainMenuLinks } from "./ui/MainMenu/Links";
+import { MainMenuLinks } from "./ui/MainMenu/Links";
 
 import { FileDiagnosticPopup } from "./Diagnostic/FileDiagnosticPopup";
 import { createPopup } from "./ui/React/createPopup";
@@ -82,89 +74,11 @@ import { dialogBoxCreate } from "../utils/DialogBox";
 import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
-import { KEY } from "../utils/helpers/keyCodes";
 import "./Exploits/tampering";
 import "./Exploits/unclickable";
 
 import React from "react";
 import ReactDOM from "react-dom";
-
-/**
- * Shortcuts to navigate through the game
- *  Alt-t - Terminal
- *  Alt-c - Character
- *  Alt-e - Script editor
- *  Alt-s - Active scripts
- *  Alt-h - Hacknet Nodes
- *  Alt-w - City
- *  Alt-j - Job
- *  Alt-r - Travel Agency of current city
- *  Alt-p - Create program
- *  Alt-f - Factions
- *  Alt-a - Augmentations
- *  Alt-u - Tutorial
- *  Alt-o - Options
- */
-$(document).keydown(function (e) {
-  if (Settings.DisableHotkeys === true) {
-    return;
-  }
-
-  if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
-    if (e.keyCode == KEY.T && e.altKey) {
-      e.preventDefault();
-      Engine.loadTerminalContent();
-    } else if (e.keyCode === KEY.C && e.altKey) {
-      e.preventDefault();
-      Engine.loadCharacterContent();
-    } else if (e.keyCode === KEY.E && e.altKey) {
-      e.preventDefault();
-      Engine.loadScriptEditorContent();
-    } else if (e.keyCode === KEY.S && e.altKey) {
-      e.preventDefault();
-      Engine.loadActiveScriptsContent();
-    } else if (e.keyCode === KEY.H && e.altKey) {
-      e.preventDefault();
-      Engine.loadHacknetNodesContent();
-    } else if (e.keyCode === KEY.W && e.altKey) {
-      e.preventDefault();
-      Engine.loadLocationContent();
-    } else if (e.keyCode === KEY.J && e.altKey) {
-      e.preventDefault();
-      Engine.loadJobContent();
-    } else if (e.keyCode === KEY.R && e.altKey) {
-      e.preventDefault();
-      Engine.loadTravelContent();
-    } else if (e.keyCode === KEY.P && e.altKey) {
-      e.preventDefault();
-      Engine.loadCreateProgramContent();
-    } else if (e.keyCode === KEY.F && e.altKey) {
-      // Overriden by Fconf
-      if (routing.isOn(Page.Terminal) && FconfSettings.ENABLE_BASH_HOTKEYS) {
-        return;
-      }
-      e.preventDefault();
-      Engine.loadFactionsContent();
-    } else if (e.keyCode === KEY.A && e.altKey) {
-      e.preventDefault();
-      Engine.loadAugmentationsContent();
-    } else if (e.keyCode === KEY.U && e.altKey) {
-      e.preventDefault();
-      Engine.loadTutorialContent();
-    } else if (e.keyCode === KEY.B && e.altKey) {
-      e.preventDefault();
-      Engine.loadBladeburnerContent();
-    } else if (e.keyCode === KEY.G && e.altKey) {
-      e.preventDefault();
-      Engine.loadGangContent();
-    }
-  }
-
-  if (e.keyCode === KEY.O && e.altKey) {
-    e.preventDefault();
-    gameOptionsBoxOpen();
-  }
-});
 
 const Engine = {
   // Clickable objects
@@ -457,7 +371,7 @@ const Engine = {
   },
 
   displayCharacterOverviewInfo: function () {
-    ReactDOM.render(<CharacterOverviewComponent />, document.getElementById("character-overview-text"));
+    ReactDOM.render(<CharacterOverview player={Player} />, document.getElementById("character-overview-text"));
 
     const save = document.getElementById("character-overview-save-button");
     const flashClass = "flashing-button";
@@ -633,11 +547,6 @@ const Engine = {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
         saveObject.saveGame(Engine.indexedDb);
       }
-    }
-
-    if (Engine.Counters.updateSkillLevelsCounter <= 0) {
-      Player.updateSkillLevels();
-      Engine.Counters.updateSkillLevelsCounter = 10;
     }
 
     if (Engine.Counters.updateDisplays <= 0) {
