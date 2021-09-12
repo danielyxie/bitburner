@@ -123,7 +123,8 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
   render(): React.ReactNode {
     const augs = this.getAugsSorted();
     const purchasable = augs.filter(
-      (aug: string) => aug === AugmentationNames.NeuroFluxGovernor ||
+      (aug: string) =>
+        aug === AugmentationNames.NeuroFluxGovernor ||
         (!this.props.p.augmentations.some((a) => a.name === aug) &&
           !this.props.p.queuedAugmentations.some((a) => a.name === aug)),
     );
@@ -175,6 +176,15 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
         <br />
         {augListElems}
         {ownedElem}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     );
   }
