@@ -43,11 +43,6 @@
   padding-top: 10px;
 }
 
-#faction-container {
-  position: fixed;
-  padding-top: 10px;
-}
-
 .faction-work-div {
   width: 70%;
   height: 100%;
@@ -61,13 +56,13 @@
   width: 70%;
 }
 
-#faction-container p,
-#faction-container pre {
+.faction-container p,
+.faction-container pre {
   padding: 4px 6px;
   margin: 4px 6px;
 }
 
-#faction-container pre {
+.faction-container pre {
   width: 70%;
   white-space: pre-wrap; /* Since CSS 2.1 */
   white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
