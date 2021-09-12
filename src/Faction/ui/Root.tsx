@@ -103,7 +103,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
       popupId: popupId,
       facName: this.props.faction.name,
       p: this.props.p,
-      engine: this.props.engine
+      engine: this.props.engine,
     });
   }
 
@@ -178,7 +178,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
     }
 
     return (
-      <div id="faction-container">
+      <div className="faction-container">
         <h1>{faction.name}</h1>
         <Info faction={faction} factionInfo={factionInfo} />
         {canAccessGang && <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={this.manageGang} />}
