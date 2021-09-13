@@ -4,9 +4,10 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core/styles";
 
 export const colors = {
-  primary: "#0f0",
+  primarylight: "#0f0",
+  primary: "#0c0",
   primarydark: "#090",
-  primarydarker: "#030",
+  well: "#222",
 };
 
 export const theme = createMuiTheme({
@@ -19,6 +20,13 @@ export const theme = createMuiTheme({
   typography: {
     button: {
       textTransform: "none",
+    },
+  },
+  overrides: {
+    MuiInputBase: {
+      root: {
+        backgroundColor: colors.well,
+      },
     },
   },
 });
