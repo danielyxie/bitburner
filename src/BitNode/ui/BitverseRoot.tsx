@@ -117,7 +117,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
       <pre>  | |   |_/       | |    \|    /  |       \_|   | |  </pre>
       <pre>   \|   /          \|     |   /  /          \   |/   </pre>
       <pre>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  |    </pre>
-      <pre>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} /> |  |            |     |     |            |  | <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  </pre>
+      <pre>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} /> |  |            |     |     |            |  | <BitNodePortal n={12} level={nextSourceFileFlags[12]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  </pre>
       <pre>  | |  |            /    / \    \            |  | |  </pre>
       <pre>   \|  |           /  <BitNodePortal n={7} level={nextSourceFileFlags[7]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} /> /   \ <BitNodePortal n={8} level={nextSourceFileFlags[8]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  \           |  |/   </pre>
       <pre>    \  |          /  / |     | \  \          |  /    </pre>
