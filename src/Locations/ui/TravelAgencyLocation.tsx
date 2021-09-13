@@ -63,7 +63,8 @@ function ListWorldMap(props: IProps): React.ReactElement {
         .map((city: string) => (
           <StdButton
             key={city}
-            onClick={() => createTravelPopup(props.p, city, () => props.travel(CityName[city as keyof typeof CityName]))
+            onClick={() =>
+              createTravelPopup(props.p, city, () => props.travel(CityName[city as keyof typeof CityName]))
             }
             style={{ display: "block" }}
             text={`Travel to ${city}`}
@@ -74,7 +75,6 @@ function ListWorldMap(props: IProps): React.ReactElement {
 }
 
 export function TravelAgencyLocation(props: IProps): React.ReactElement {
-  console.log(Settings.DisableASCIIArt);
   if (Settings.DisableASCIIArt) {
     return <ListWorldMap p={props.p} travel={props.travel} />;
   } else {

@@ -11,7 +11,6 @@ export function KeyHandler(props: IProps): React.ReactElement {
 
   function onKeyDown(event: React.KeyboardEvent<HTMLElement>): void {
     if (!event.isTrusted) {
-      console.log("untrusted event!");
       props.onFailure({ automated: true });
       return;
     }
