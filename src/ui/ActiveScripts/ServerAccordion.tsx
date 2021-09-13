@@ -4,7 +4,7 @@
  */
 import * as React from "react";
 
-import { Accordion } from "../React/Accordion";
+import { BBAccordion } from "../React/Accordion";
 import { ServerAccordionContent } from "./ServerAccordionContent";
 
 import { BaseServer } from "../../Server/BaseServer";
@@ -34,7 +34,7 @@ export function ServerAccordion(props: IProps): React.ReactElement {
   const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`;
 
   return (
-    <Accordion
+    <BBAccordion
       headerContent={<pre>{headerTxt}</pre>}
       panelContent={<ServerAccordionContent workerScripts={props.workerScripts} />}
     />

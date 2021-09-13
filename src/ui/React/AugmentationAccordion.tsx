@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Accordion } from "./Accordion";
+import { BBAccordion } from "./Accordion";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -26,7 +26,7 @@ export function AugmentationAccordion(props: IProps): React.ReactElement {
 
   if (typeof props.aug.info === "string") {
     return (
-      <Accordion
+      <BBAccordion
         headerContent={<>{displayName}</>}
         panelContent={
           <p>
@@ -41,7 +41,7 @@ export function AugmentationAccordion(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion
+    <BBAccordion
       headerContent={<>{displayName}</>}
       panelContent={
         <p>

@@ -1,122 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png" />
-    <link rel="manifest" href="dist/site.webmanifest" />
-    <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000" />
-    <meta name="apple-mobile-web-app-title" content="Bitburner" />
-    <meta name="application-name" content="Bitburner" />
-    <meta name="msapplication-TileColor" content="#000000" />
-    <meta name="msapplication-config" content="dist/browserconfig.xml" />
-    <meta name="theme-color" content="#ffffff" />
+import React from "react";
 
-    <!-- Google Analytics -->
-    <script>
-      (function (i, s, o, g, r, a, m) {
-        i["GoogleAnalyticsObject"] = r;
-        (i[r] =
-          i[r] ||
-          function () {
-            (i[r].q = i[r].q || []).push(arguments);
-          }),
-          (i[r].l = 1 * new Date());
-        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m);
-      })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
-    </script>
-    <% if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
-    <script>
-      ga("create", "<%= htmlWebpackPlugin.options.googleAnalytics.trackingId %>", "auto");
-      ga("send", "pageview");
-    </script>
-    <% } %>
-  </head>
-  <body>
-    <div id="entire-game-container" style="visibility: hidden">
-      <div id="mainmenu-container">
-        <!-- Main menu -->
-        <div id="sidebar"></div>
-      </div>
+interface IProps {}
 
-      <!-- Terminal page -->
-      <div id="terminal-container">
-        <table id="terminal">
-          <tr id="terminal-input">
-            <td id="terminal-input-td" tabindex="2">
-              $
-              <input
-                type="text"
-                id="terminal-input-text-box"
-                class="terminal-input"
-                tabindex="1"
-                onfocus="this.value = this.value;"
-                autocomplete="off"
-              />
-            </td>
-          </tr>
-        </table>
-      </div>
+export function Options(props: IProps): React.ReactElement {
+  return (
+    <>
+      <h1>Game Options</h1>
+    </>
+  );
+  /*
 
-      <div class="generic-menupage-container">
-        <div id="generic-react-container"></div>
-      </div>
-      <div id="infiltration-container" class="generic-fullscreen-container"></div>
-      <div id="mission-container" class="generic-fullscreen-container"></div>
-
-      <!-- Work in progress screen -->
-      <div id="work-in-progress-container" class="generic-fullscreen-container">
-        <p id="work-in-progress-text"></p>
-
-        <button id="work-in-progress-cancel-button" class="work-button">Cancel Work</button>
-        <button id="work-in-progress-something-else-button" class="work-button">
-          Do something else simultaneously
-        </button>
-      </div>
-
-      <!-- Red Pill Container -->
-      <div id="red-pill-container" class="generic-fullscreen-container"></div>
-
-      <!-- Cinematic Text Container -->
-      <div id="cinematic-text-container" class="generic-fullscreen-container"></div>
-
-      <!-- Interactive Tutorial Text Screen -->
-      <div id="interactive-tutorial-wrapper">
-        <div id="interactive-tutorial-container">
-          <p id="interactive-tutorial-text"></p>
-          <button id="interactive-tutorial-exit">Exit Tutorial</button>
-          <button id="interactive-tutorial-next">Next</button>
-          <button id="interactive-tutorial-back">Back</button>
-        </div>
-      </div>
-
-      <!-- Character Overview Screen -->
-      <div id="character-overview-wrapper">
-        <div id="character-overview-container">
-          <div id="character-overview-text">
-            <!-- ReactJS Component -->
-          </div>
-          <div class="character-quick-options noselect">
-            <button id="character-overview-save-button" class="character-overview-btn">Save Game</button>
-            <button id="character-overview-options-button" class="character-overview-btn">Options</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Status text -->
-      <div id="status-text-container">
-        <p id="status-text"></p>
-      </div>
-
-      <!-- Game Options -->
-      <div id="game-options-container" class="popup-box-container">
-        <div id="game-options-content" class="game-options-box">
-          <button id="game-options-close-button" aria-label="close options dialog">&times;</button>
           <h1>Game Options</h1>
           <br />
           <div id="game-options-left-panel">
@@ -439,35 +332,6 @@
               </span>
             </button>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Loader (Loading screen) -->
-    <div id="loader" class="loaderoverlay">
-      <div class="loaderspinner"></div>
-      <div class="loaderlabel">Loading Bitburner...</div>
-      <div id="killAllMessageWrapper" class="killAllMessage killAllMessageWrapperHidden">
-        <script>
-          setTimeout(function () {
-            var w = document.getElementById("killAllMessageWrapper");
-            if (w == null) {
-              return;
-            }
-            w.classList.remove("killAllMessageWrapperHidden");
-            w.classList.add("killAllMessageWrapperShow");
-          }, 2000);
-        </script>
-        <p>
-          If the game fails to load, consider
-          <a href="?noScripts">killing all scripts</a>
-        </p>
-      </div>
-    </div>
-
-    <div id="unclickable" style="display: none">Click on this to upgrade your Source-File -1!</div>
-  </body>
-
-  <!-- Misc Scripts -->
-  <script src="src/ThirdParty/raphael.min.js"></script>
-</html>
+    */
+}

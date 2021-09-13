@@ -4,7 +4,7 @@
 import React from "react";
 import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";
-import { Accordion } from "../../ui/React/Accordion";
+import { BBAccordion } from "../../ui/React/Accordion";
 import { GangMemberAccordionContent } from "./GangMemberAccordionContent";
 
 interface IProps {
@@ -14,7 +14,7 @@ interface IProps {
 
 export function GangMemberAccordion(props: IProps): React.ReactElement {
   return (
-    <Accordion
+    <BBAccordion
       panelInitiallyOpened={true}
       headerContent={<>{props.member.name}</>}
       panelContent={<GangMemberAccordionContent gang={props.gang} member={props.member} />}

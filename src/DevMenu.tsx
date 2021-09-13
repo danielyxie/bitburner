@@ -18,8 +18,15 @@ import { saveObject } from "./SaveObject";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { Money } from "./ui/React/Money";
+import { TextField } from "./ui/React/TextField";
+import { Button } from "./ui/React/Button";
+import { Select } from "./ui/React/Select";
 
 import React, { useState } from "react";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import IconButton from "@material-ui/core/IconButton";
+import { Theme } from "./ui/React/Theme";
 
 // Update as additional BitNodes get implemented
 const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -36,31 +43,35 @@ interface IValueAdjusterProps {
 }
 
 function ValueAdjusterComponent(props: IValueAdjusterProps): React.ReactElement {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number | string>("");
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setValue(parseFloat(event.target.value));
+    if (event.target.value === "") setValue("");
+    else setValue(parseFloat(event.target.value));
   }
 
   const { title, add, subtract, reset } = props;
   return (
     <>
-      <button className="std-button add-exp-button" onClick={() => add(value)}>
-        +
-      </button>
-      <input
-        className="text-input exp-input"
-        type="number"
-        placeholder={`+/- ${title}`}
+      <TextField
         value={value}
         onChange={onChange}
-      ></input>
-      <button className="std-button remove-exp-button" onClick={() => subtract(value)}>
-        -
-      </button>
-      <button className="std-button" onClick={reset}>
-        Reset
-      </button>
+        placeholder={title}
+        type="number"
+        InputProps={{
+          startAdornment: (
+            <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)}>
+              <AddIcon />
+            </IconButton>
+          ),
+          endAdornment: (
+            <IconButton color="primary" onClick={() => subtract(typeof value !== "string" ? value : 0)}>
+              <RemoveIcon />
+            </IconButton>
+          ),
+        }}
+      />
+      <Button onClick={reset}>Reset</Button>
     </>
   );
 }
@@ -80,7 +91,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
   const [stockPrice, setStockPrice] = useState(0);
   const [stockSymbol, setStockSymbol] = useState("");
 
-  function setFactionDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function setFactionDropdown(event: React.ChangeEvent<HTMLButtonElement>): void {
     setFaction(event.target.value);
   }
 
@@ -96,7 +107,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     setServer(event.target.value);
   }
 
-  function setAugmentationDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function setAugmentationDropdown(event: React.FormEventHandler<HTMLSelectElement>): void {
     setAugmentation(event.target.value);
   }
 
@@ -751,824 +762,519 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
   }
 
   return (
-    <div className="col">
-      <div className="row">
-        <h1>Development Menu - Only meant to be used for testing/debugging</h1>
-      </div>
-      <div className="row">
-        <h2>Generic</h2>
-      </div>
-      <div className="row">
-        <button className="std-button" onClick={addMoney(1e6)}>
-          Add <Money money={1e6} />
-        </button>
-        <button className="std-button" onClick={addMoney(1e9)}>
-          Add <Money money={1e9} />
-        </button>
-        <button className="std-button" onClick={addMoney(1e12)}>
-          Add <Money money={1e12} />
-        </button>
-        <button className="std-button" onClick={addMoney(1e15)}>
-          Add <Money money={1000e12} />
-        </button>
-        <button className="std-button" onClick={addMoney(Infinity)}>
-          Add <Money money={Infinity} />
-        </button>
-        <button className="std-button" onClick={upgradeRam}>
-          Upgrade Home Computer's RAM
-        </button>
-      </div>
-      <div className="row">
-        <button className="std-button" onClick={quickB1tFlum3}>
-          Quick b1t_flum3.exe
-        </button>
-        <button className="std-button" onClick={b1tflum3}>
-          Run b1t_flum3.exe
-        </button>
-        <button className="std-button" onClick={quickHackW0r1dD43m0n}>
-          Quick w0rld_d34m0n
-        </button>
-        <button className="std-button" onClick={hackW0r1dD43m0n}>
-          Hack w0rld_d34m0n
-        </button>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Experience / Stats</h2>
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="text text-center">All:</span>
-                </td>
-                <td>
-                  <button className="std-button tooltip" onClick={tonsOfExp}>
-                    Tons of exp
-                    <span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span>
-                  </button>
-                  <button className="std-button tooltip" onClick={resetAllExp}>
-                    Reset
-                    <span className="tooltiptext">Reset all experience to 0</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Hacking:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="hacking exp"
-                    add={modifyExp("hacking", 1)}
-                    subtract={modifyExp("hacking", -1)}
-                    reset={resetExperience("hacking")}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Strength:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="strength exp"
-                    add={modifyExp("strength", 1)}
-                    subtract={modifyExp("strength", -1)}
-                    reset={resetExperience("strength")}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Defense:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="defense exp"
-                    add={modifyExp("defense", 1)}
-                    subtract={modifyExp("defense", -1)}
-                    reset={resetExperience("defense")}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Dexterity:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="dexterity exp"
-                    add={modifyExp("dexterity", 1)}
-                    subtract={modifyExp("dexterity", -1)}
-                    reset={resetExperience("dexterity")}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Agility:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="agility exp"
-                    add={modifyExp("agility", 1)}
-                    subtract={modifyExp("agility", -1)}
-                    reset={resetExperience("agility")}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Charisma:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="charisma exp"
-                    add={modifyExp("charisma", 1)}
-                    subtract={modifyExp("charisma", -1)}
-                    reset={resetExperience("charisma")}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Intelligence:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="intelligence exp"
-                    add={modifyExp("intelligence", 1)}
-                    subtract={modifyExp("intelligence", -1)}
-                    reset={resetExperience("intelligence")}
-                  />
-                </td>
-                <td>
-                  <button className="std-button" onClick={enableIntelligence}>
-                    Enable
-                  </button>
-                </td>
-                <td>
-                  <button className="std-button" onClick={disableIntelligence}>
-                    Disable
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text text-center">Karma:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="karma"
-                    add={modifyKarma(1)}
-                    subtract={modifyKarma(-1)}
-                    reset={resetKarma()}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <Theme>
+      <div className="col" style={{ backgroundColor: "#222" }}>
+        <div className="row">
+          <h1>Development Menu - Only meant to be used for testing/debugging</h1>
         </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Factions</h2>
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="text">Faction:</span>
-                </td>
-                <td>
-                  <select
-                    id="factions-dropdown"
-                    className="dropdown exp-input"
-                    onChange={setFactionDropdown}
-                    value={faction}
-                  >
-                    {factions}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Invites:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={receiveInvite}>
-                    Receive invite from faction
-                  </button>
-                </td>
-                <td>
-                  <button className="std-button" onClick={receiveAllInvites}>
-                    Receive all Invites
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Reputation:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="reputation"
-                    add={modifyFactionRep(1)}
-                    subtract={modifyFactionRep(-1)}
-                    reset={resetFactionRep}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Favor:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="favor"
-                    add={modifyFactionFavor(1)}
-                    subtract={modifyFactionFavor(-1)}
-                    reset={resetFactionFavor}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">All Reputation:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={tonsOfRep}>
-                    Tons
-                  </button>
-                  <button className="std-button" onClick={resetAllRep}>
-                    Reset
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">All Favor:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={tonsOfFactionFavor}>
-                    Tons
-                  </button>
-                  <button className="std-button" onClick={resetAllFactionFavor}>
-                    Reset
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="row">
+          <h2>Generic</h2>
         </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Augmentations</h2>
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="text">Aug:</span>
-                </td>
-                <td>
-                  <select
-                    id="dev-augs-dropdown"
-                    className="dropdown"
-                    onChange={setAugmentationDropdown}
-                    value={augmentation}
-                  >
-                    {augs}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Queue:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={queueAug}>
-                    One
-                  </button>
-                  <button className="std-button" onClick={queueAllAugs}>
-                    All
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="row">
+          <Button onClick={addMoney(1e6)}>
+            <pre>
+              + <Money money={1e6} />
+            </pre>
+          </Button>
+          <Button onClick={addMoney(1e9)}>
+            <pre>
+              + <Money money={1e9} />
+            </pre>
+          </Button>
+          <Button onClick={addMoney(1e12)}>
+            <pre>
+              + <Money money={1e12} />
+            </pre>
+          </Button>
+          <Button onClick={addMoney(1e15)}>
+            <pre>
+              + <Money money={1000e12} />
+            </pre>
+          </Button>
+          <Button onClick={addMoney(Infinity)}>
+            <pre>
+              + <Money money={Infinity} />
+            </pre>
+          </Button>
+          <Button onClick={upgradeRam}>+ RAM</Button>
         </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Source-Files</h2>
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="text">Exploits:</span>
-                </td>
-                <td>
-                  <button className="std-button touch-right" onClick={clearExploits}>
-                    Clear
-                  </button>
-                </td>
-              </tr>
-              <tr key={"sf-all"}>
-                <td>
-                  <span className="text">All:</span>
-                </td>
-                <td>
-                  <button className="std-button touch-right" onClick={setAllSF(0)}>
-                    0
-                  </button>
-                  <button className="std-button touch-sides" onClick={setAllSF(1)}>
-                    1
-                  </button>
-                  <button className="std-button touch-sides" onClick={setAllSF(2)}>
-                    2
-                  </button>
-                  <button className="std-button touch-left" onClick={setAllSF(3)}>
-                    3
-                  </button>
-                </td>
-              </tr>
-              {validSFN.map((i) => (
-                <tr key={"sf-" + i}>
+        <div className="row">
+          <Button onClick={quickB1tFlum3}>Quick b1t_flum3.exe</Button>
+          <Button onClick={b1tflum3}>Run b1t_flum3.exe</Button>
+          <Button onClick={quickHackW0r1dD43m0n}>Quick w0rld_d34m0n</Button>
+          <Button onClick={hackW0r1dD43m0n}>Hack w0rld_d34m0n</Button>
+        </div>
+        <div className="row">
+          <div className="col">
+            <div className="row">
+              <h2>Experience / Stats</h2>
+            </div>
+            <table>
+              <tbody>
+                <tr>
                   <td>
-                    <span className="text">SF-{i}:</span>
+                    <span className="text text-center">All:</span>
                   </td>
                   <td>
-                    <button className="std-button touch-right" onClick={setSF(i, 0)}>
+                    <Button onClick={tonsOfExp}>Tons of exp</Button>
+                    <Button onClick={resetAllExp}>Reset</Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Hacking:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="hacking exp"
+                      add={modifyExp("hacking", 1)}
+                      subtract={modifyExp("hacking", -1)}
+                      reset={resetExperience("hacking")}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Strength:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="strength exp"
+                      add={modifyExp("strength", 1)}
+                      subtract={modifyExp("strength", -1)}
+                      reset={resetExperience("strength")}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Defense:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="defense exp"
+                      add={modifyExp("defense", 1)}
+                      subtract={modifyExp("defense", -1)}
+                      reset={resetExperience("defense")}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Dexterity:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="dexterity exp"
+                      add={modifyExp("dexterity", 1)}
+                      subtract={modifyExp("dexterity", -1)}
+                      reset={resetExperience("dexterity")}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Agility:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="agility exp"
+                      add={modifyExp("agility", 1)}
+                      subtract={modifyExp("agility", -1)}
+                      reset={resetExperience("agility")}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Charisma:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="charisma exp"
+                      add={modifyExp("charisma", 1)}
+                      subtract={modifyExp("charisma", -1)}
+                      reset={resetExperience("charisma")}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Intelligence:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="intelligence exp"
+                      add={modifyExp("intelligence", 1)}
+                      subtract={modifyExp("intelligence", -1)}
+                      reset={resetExperience("intelligence")}
+                    />
+                  </td>
+                  <td>
+                    <Button onClick={enableIntelligence}>Enable</Button>
+                  </td>
+                  <td>
+                    <Button onClick={disableIntelligence}>Disable</Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text text-center">Karma:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="karma"
+                      add={modifyKarma(1)}
+                      subtract={modifyKarma(-1)}
+                      reset={resetKarma()}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <div className="row">
+              <h2>Factions</h2>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <span className="text">Faction:</span>
+                  </td>
+                  <td>
+                    <Select
+                      id="factions-dropdown"
+                      className="dropdown exp-input"
+                      onChange={setFactionDropdown}
+                      value={faction}
+                    >
+                      {factions}
+                    </Select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Invites:</span>
+                  </td>
+                  <td>
+                    <Button onClick={receiveInvite}>Receive invite from faction</Button>
+                  </td>
+                  <td>
+                    <Button onClick={receiveAllInvites}>Receive all Invites</Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Reputation:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="reputation"
+                      add={modifyFactionRep(1)}
+                      subtract={modifyFactionRep(-1)}
+                      reset={resetFactionRep}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Favor:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="favor"
+                      add={modifyFactionFavor(1)}
+                      subtract={modifyFactionFavor(-1)}
+                      reset={resetFactionFavor}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">All Reputation:</span>
+                  </td>
+                  <td>
+                    <Button onClick={tonsOfRep}>Tons</Button>
+                    <Button onClick={resetAllRep}>Reset</Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">All Favor:</span>
+                  </td>
+                  <td>
+                    <Button onClick={tonsOfFactionFavor}>Tons</Button>
+                    <Button onClick={resetAllFactionFavor}>Reset</Button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <div className="row">
+              <h2>Augmentations</h2>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <span className="text">Aug:</span>
+                  </td>
+                  <td>
+                    <Select
+                      id="dev-augs-dropdown"
+                      className="dropdown"
+                      onChange={setAugmentationDropdown}
+                      value={augmentation}
+                    >
+                      {augs}
+                    </Select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Queue:</span>
+                  </td>
+                  <td>
+                    <Button onClick={queueAug}>One</Button>
+                    <Button onClick={queueAllAugs}>All</Button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <div className="row">
+              <h2>Source-Files</h2>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <span className="text">Exploits:</span>
+                  </td>
+                  <td>
+                    <button className="std-button touch-right" onClick={clearExploits}>
+                      Clear
+                    </button>
+                  </td>
+                </tr>
+                <tr key={"sf-all"}>
+                  <td>
+                    <span className="text">All:</span>
+                  </td>
+                  <td>
+                    <button className="std-button touch-right" onClick={setAllSF(0)}>
                       0
                     </button>
-                    <button className="std-button touch-sides" onClick={setSF(i, 1)}>
+                    <button className="std-button touch-sides" onClick={setAllSF(1)}>
                       1
                     </button>
-                    <button className="std-button touch-sides" onClick={setSF(i, 2)}>
+                    <button className="std-button touch-sides" onClick={setAllSF(2)}>
                       2
                     </button>
-                    <button className="std-button touch-left" onClick={setSF(i, 3)}>
+                    <button className="std-button touch-left" onClick={setAllSF(3)}>
                       3
                     </button>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Programs</h2>
+                {validSFN.map((i) => (
+                  <tr key={"sf-" + i}>
+                    <td>
+                      <span className="text">SF-{i}:</span>
+                    </td>
+                    <td>
+                      <button className="std-button touch-right" onClick={setSF(i, 0)}>
+                        0
+                      </button>
+                      <button className="std-button touch-sides" onClick={setSF(i, 1)}>
+                        1
+                      </button>
+                      <button className="std-button touch-sides" onClick={setSF(i, 2)}>
+                        2
+                      </button>
+                      <button className="std-button touch-left" onClick={setSF(i, 3)}>
+                        3
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="text">Program:</span>
-                </td>
-                <td>
-                  <select id="dev-programs-dropdown" className="dropdown" onChange={setProgramDropdown} value={program}>
-                    {programs}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Add:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={addProgram}>
-                    One
-                  </button>
-                  <button className="std-button" onClick={addAllPrograms}>
-                    All
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Servers</h2>
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="text">Server:</span>
-                </td>
-                <td colSpan={2}>
-                  <select id="dev-servers-dropdown" className="dropdown" onChange={setServerDropdown} value={server}>
-                    {servers}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Root:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={rootServer}>
-                    Root one
-                  </button>
-                </td>
-                <td>
-                  <button className="std-button" onClick={rootAllServers}>
-                    Root all
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Security:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={minSecurity}>
-                    Min one
-                  </button>
-                </td>
-                <td>
-                  <button className="std-button" onClick={minAllSecurity}>
-                    Min all
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Money:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={maxMoney}>
-                    Max one
-                  </button>
-                </td>
-                <td>
-                  <button className="std-button" onClick={maxAllMoney}>
-                    Max all
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Companies</h2>
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="text">Company:</span>
-                </td>
-                <td colSpan={3}>
-                  <select
-                    id="dev-companies-dropdown"
-                    className="dropdown"
-                    onChange={setCompanyDropdown}
-                    value={company}
-                  >
-                    {companies}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Reputation:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="reputation"
-                    add={modifyCompanyRep(1)}
-                    subtract={modifyCompanyRep(-1)}
-                    reset={resetCompanyRep}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">Favor:</span>
-                </td>
-                <td>
-                  <ValueAdjusterComponent
-                    title="favor"
-                    add={modifyCompanyFavor(1)}
-                    subtract={modifyCompanyFavor(-1)}
-                    reset={resetCompanyFavor}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">All Reputation:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={tonsOfRepCompanies}>
-                    Tons
-                  </button>
-                  <button className="std-button" onClick={resetAllRepCompanies}>
-                    Reset
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text">All Favor:</span>
-                </td>
-                <td>
-                  <button className="std-button" onClick={tonsOfFavorCompanies}>
-                    Tons
-                  </button>
-                  <button className="std-button" onClick={resetAllFavorCompanies}>
-                    Reset
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {props.player.bladeburner instanceof Bladeburner && (
         <div className="row">
           <div className="col">
             <div className="row">
-              <h2>Bladeburner</h2>
+              <h2>Programs</h2>
             </div>
             <table>
               <tbody>
                 <tr>
                   <td>
-                    <span className="text">Rank:</span>
+                    <span className="text">Program:</span>
                   </td>
                   <td>
-                    <button className="std-button" onClick={addTonsBladeburnerRank}>
-                      Tons
-                    </button>
-                  </td>
-                  <td>
-                    <ValueAdjusterComponent
-                      title="rank"
-                      add={modifyBladeburnerRank(1)}
-                      subtract={modifyBladeburnerRank(-1)}
-                      reset={resetBladeburnerRank}
-                    />
+                    <select
+                      id="dev-programs-dropdown"
+                      className="dropdown"
+                      onChange={setProgramDropdown}
+                      value={program}
+                    >
+                      {programs}
+                    </select>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <span className="text">Cycles:</span>
+                    <span className="text">Add:</span>
                   </td>
                   <td>
-                    <button className="std-button" onClick={addTonsBladeburnerCycles}>
-                      Tons
-                    </button>
-                  </td>
-                  <td>
-                    <ValueAdjusterComponent
-                      title="cycles"
-                      add={modifyBladeburnerCycles(1)}
-                      subtract={modifyBladeburnerCycles(-1)}
-                      reset={resetBladeburnerCycles}
-                    />
+                    <Button onClick={addProgram}>One</Button>
+                    <Button onClick={addAllPrograms}>All</Button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      )}
-
-      {props.player.inGang() && (
         <div className="row">
           <div className="col">
             <div className="row">
-              <h2>Gang</h2>
+              <h2>Servers</h2>
             </div>
             <table>
               <tbody>
                 <tr>
                   <td>
-                    <span className="text">Cycles:</span>
+                    <span className="text">Server:</span>
                   </td>
-                  <td>
-                    <button className="std-button" onClick={addTonsGangCycles}>
-                      Tons
-                    </button>
-                  </td>
-                  <td>
-                    <ValueAdjusterComponent
-                      title="cycles"
-                      add={modifyGangCycles(1)}
-                      subtract={modifyGangCycles(-1)}
-                      reset={resetGangCycles}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {props.player.hasCorporation() && (
-        <div className="row">
-          <div className="col">
-            <div className="row">
-              <h2>Corporation</h2>
-            </div>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <button className="std-button" onClick={addTonsCorporationFunds}>
-                      Tons of funds
-                    </button>
-                    <button className="std-button" onClick={resetCorporationFunds}>
-                      Reset funds
-                    </button>
+                  <td colSpan={2}>
+                    <select id="dev-servers-dropdown" className="dropdown" onChange={setServerDropdown} value={server}>
+                      {servers}
+                    </select>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <span className="text">Cycles:</span>
+                    <span className="text">Root:</span>
                   </td>
                   <td>
-                    <button className="std-button" onClick={addTonsCorporationCycles}>
-                      Tons
+                    <Button onClick={rootServer}>Root one</Button>
+                  </td>
+                  <td>
+                    <Button onClick={rootAllServers}>Root all</Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Security:</span>
+                  </td>
+                  <td>
+                    <Button onClick={minSecurity}>Min one</Button>
+                  </td>
+                  <td>
+                    <Button onClick={minAllSecurity}>Min all</Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Money:</span>
+                  </td>
+                  <td>
+                    <button className="std-button" onClick={maxMoney}>
+                      Max one
                     </button>
                   </td>
                   <td>
-                    <ValueAdjusterComponent
-                      title="cycles"
-                      add={modifyCorporationCycles(1)}
-                      subtract={modifyCorporationCycles(-1)}
-                      reset={resetCorporationCycles}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button className="std-button" onClick={finishCorporationProducts}>
-                      Finish products
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button className="std-button" onClick={addCorporationResearch}>
-                      Tons of research
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      <div className="row">
-        <div className="col">
-          <div className="row">
-            <h2>Coding Contracts</h2>
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <button className="std-button" onClick={generateRandomContract}>
-                    Generate Random Contract
-                  </button>
-                  <button className="std-button" onClick={generateRandomContractOnHome}>
-                    Generate Random Contract on Home Comp
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <select
-                    id="contract-types-dropdown"
-                    className="dropdown"
-                    onChange={setCodingcontractDropdown}
-                    value={codingcontract}
-                  >
-                    {contractTypes}
-                  </select>
-                  <button className="std-button" onClick={specificContract}>
-                    Generate Specified Contract Type on Home Comp
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {props.player.hasWseAccount && (
-        <div className="row">
-          <div className="col">
-            <div className="row">
-              <h2>Stock Market</h2>
-            </div>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <span className="text">Symbol:</span>
-                  </td>
-                  <td>
-                    <input
-                      id="dev-stock-symbol"
-                      className="text-input"
-                      type="text"
-                      placeholder="symbol/'all'"
-                      onChange={setStockSymbolField}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span className="text">Price:</span>
-                  </td>
-                  <td>
-                    <input
-                      id="dev-stock-price"
-                      className="text-input"
-                      type="number"
-                      placeholder="$$$"
-                      onChange={setStockPriceField}
-                    />
-                    <button className="std-button" onClick={doSetStockPrice}>
-                      Set
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span className="text">Caps:</span>
-                  </td>
-                  <td>
-                    <button className="std-button" onClick={viewStockCaps}>
-                      View stock caps
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {props.player.sleeves.length > 0 && (
-        <div className="row">
-          <div className="col">
-            <div className="row">
-              <h2>Sleeves</h2>
-            </div>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <span className="text">Shock:</span>
-                  </td>
-                  <td>
-                    <button className="std-button" onClick={sleeveMaxAllShock}>
+                    <button className="std-button" onClick={maxAllMoney}>
                       Max all
                     </button>
                   </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <div className="row">
+              <h2>Companies</h2>
+            </div>
+            <table>
+              <tbody>
+                <tr>
                   <td>
-                    <button className="std-button" onClick={sleeveClearAllShock}>
-                      Clear all
+                    <span className="text">Company:</span>
+                  </td>
+                  <td colSpan={3}>
+                    <select
+                      id="dev-companies-dropdown"
+                      className="dropdown"
+                      onChange={setCompanyDropdown}
+                      value={company}
+                    >
+                      {companies}
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Reputation:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="reputation"
+                      add={modifyCompanyRep(1)}
+                      subtract={modifyCompanyRep(-1)}
+                      reset={resetCompanyRep}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">Favor:</span>
+                  </td>
+                  <td>
+                    <ValueAdjusterComponent
+                      title="favor"
+                      add={modifyCompanyFavor(1)}
+                      subtract={modifyCompanyFavor(-1)}
+                      reset={resetCompanyFavor}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="text">All Reputation:</span>
+                  </td>
+                  <td>
+                    <button className="std-button" onClick={tonsOfRepCompanies}>
+                      Tons
+                    </button>
+                    <button className="std-button" onClick={resetAllRepCompanies}>
+                      Reset
                     </button>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <span className="text">Sync:</span>
+                    <span className="text">All Favor:</span>
                   </td>
                   <td>
-                    <button className="std-button" onClick={sleeveSyncMaxAll}>
-                      Max all
+                    <button className="std-button" onClick={tonsOfFavorCompanies}>
+                      Tons
                     </button>
-                  </td>
-                  <td>
-                    <button className="std-button" onClick={sleeveSyncClearAll}>
-                      Clear all
+                    <button className="std-button" onClick={resetAllFavorCompanies}>
+                      Reset
                     </button>
                   </td>
                 </tr>
@@ -1576,26 +1282,300 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
             </table>
           </div>
         </div>
-      )}
 
-      <div className="row">
-        <div className="col">
+        {props.player.bladeburner instanceof Bladeburner && (
           <div className="row">
-            <h2>Offline time skip:</h2>
+            <div className="col">
+              <div className="row">
+                <h2>Bladeburner</h2>
+              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span className="text">Rank:</span>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={addTonsBladeburnerRank}>
+                        Tons
+                      </button>
+                    </td>
+                    <td>
+                      <ValueAdjusterComponent
+                        title="rank"
+                        add={modifyBladeburnerRank(1)}
+                        subtract={modifyBladeburnerRank(-1)}
+                        reset={resetBladeburnerRank}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text">Cycles:</span>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={addTonsBladeburnerCycles}>
+                        Tons
+                      </button>
+                    </td>
+                    <td>
+                      <ValueAdjusterComponent
+                        title="cycles"
+                        add={modifyBladeburnerCycles(1)}
+                        subtract={modifyBladeburnerCycles(-1)}
+                        reset={resetBladeburnerCycles}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+        )}
+
+        {props.player.inGang() && (
           <div className="row">
-            <button className="std-button" onClick={timeskip(60 * 1000)}>
-              1 minute
-            </button>
-            <button className="std-button" onClick={timeskip(60 * 60 * 1000)}>
-              1 hour
-            </button>
-            <button className="std-button" onClick={timeskip(24 * 60 * 60 * 1000)}>
-              1 day
-            </button>
+            <div className="col">
+              <div className="row">
+                <h2>Gang</h2>
+              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span className="text">Cycles:</span>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={addTonsGangCycles}>
+                        Tons
+                      </button>
+                    </td>
+                    <td>
+                      <ValueAdjusterComponent
+                        title="cycles"
+                        add={modifyGangCycles(1)}
+                        subtract={modifyGangCycles(-1)}
+                        reset={resetGangCycles}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {props.player.hasCorporation() && (
+          <div className="row">
+            <div className="col">
+              <div className="row">
+                <h2>Corporation</h2>
+              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <button className="std-button" onClick={addTonsCorporationFunds}>
+                        Tons of funds
+                      </button>
+                      <button className="std-button" onClick={resetCorporationFunds}>
+                        Reset funds
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text">Cycles:</span>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={addTonsCorporationCycles}>
+                        Tons
+                      </button>
+                    </td>
+                    <td>
+                      <ValueAdjusterComponent
+                        title="cycles"
+                        add={modifyCorporationCycles(1)}
+                        subtract={modifyCorporationCycles(-1)}
+                        reset={resetCorporationCycles}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="std-button" onClick={finishCorporationProducts}>
+                        Finish products
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="std-button" onClick={addCorporationResearch}>
+                        Tons of research
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        <div className="row">
+          <div className="col">
+            <div className="row">
+              <h2>Coding Contracts</h2>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <button className="std-button" onClick={generateRandomContract}>
+                      Generate Random Contract
+                    </button>
+                    <button className="std-button" onClick={generateRandomContractOnHome}>
+                      Generate Random Contract on Home Comp
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <select
+                      id="contract-types-dropdown"
+                      className="dropdown"
+                      onChange={setCodingcontractDropdown}
+                      value={codingcontract}
+                    >
+                      {contractTypes}
+                    </select>
+                    <button className="std-button" onClick={specificContract}>
+                      Generate Specified Contract Type on Home Comp
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {props.player.hasWseAccount && (
+          <div className="row">
+            <div className="col">
+              <div className="row">
+                <h2>Stock Market</h2>
+              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span className="text">Symbol:</span>
+                    </td>
+                    <td>
+                      <input
+                        id="dev-stock-symbol"
+                        className="text-input"
+                        type="text"
+                        placeholder="symbol/'all'"
+                        onChange={setStockSymbolField}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text">Price:</span>
+                    </td>
+                    <td>
+                      <input
+                        id="dev-stock-price"
+                        className="text-input"
+                        type="number"
+                        placeholder="$$$"
+                        onChange={setStockPriceField}
+                      />
+                      <button className="std-button" onClick={doSetStockPrice}>
+                        Set
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text">Caps:</span>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={viewStockCaps}>
+                        View stock caps
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {props.player.sleeves.length > 0 && (
+          <div className="row">
+            <div className="col">
+              <div className="row">
+                <h2>Sleeves</h2>
+              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span className="text">Shock:</span>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={sleeveMaxAllShock}>
+                        Max all
+                      </button>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={sleeveClearAllShock}>
+                        Clear all
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text">Sync:</span>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={sleeveSyncMaxAll}>
+                        Max all
+                      </button>
+                    </td>
+                    <td>
+                      <button className="std-button" onClick={sleeveSyncClearAll}>
+                        Clear all
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        <div className="row">
+          <div className="col">
+            <div className="row">
+              <h2>Offline time skip:</h2>
+            </div>
+            <div className="row">
+              <button className="std-button" onClick={timeskip(60 * 1000)}>
+                1 minute
+              </button>
+              <button className="std-button" onClick={timeskip(60 * 60 * 1000)}>
+                1 hour
+              </button>
+              <button className="std-button" onClick={timeskip(24 * 60 * 60 * 1000)}>
+                1 day
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Theme>
   );
 }

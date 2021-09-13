@@ -265,7 +265,6 @@ const Engine = {
     routing.navigateTo(Page.WorkInProgress);
   },
 
-  // TODO reactify
   loadRedPillContent: function () {
     Engine.hideAllContent();
     const mainMenu = document.getElementById("mainmenu-container");

@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { Accordion } from "./Accordion";
+import { BBAccordion } from "./Accordion";
 
 import { SourceFile } from "../../SourceFile/SourceFile";
 
@@ -19,7 +19,7 @@ export function SourceFileAccordion(props: IProps): React.ReactElement {
   const maxLevel = props.sf.n === 12 ? "∞" : "3";
 
   return (
-    <Accordion
+    <BBAccordion
       headerContent={
         <>
           {props.sf.name}

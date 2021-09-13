@@ -4,17 +4,19 @@
  */
 
 import React from "react";
-import { Button, ButtonProps, makeStyles } from "@material-ui/core";
+import { Button as MuiButton, ButtonProps, makeStyles } from "@material-ui/core";
+import { colors } from "./Theme";
+
 const useStyles = makeStyles({
   // Tries to emulate StdButton in buttons.scss
   root: {
-    backgroundColor: "#555",
-    border: "1px solid #333",
-    color: "white",
+    backgroundColor: "#333",
+    border: "1px solid #000",
+    color: colors.primary,
     margin: "5px",
     padding: "3px 5px",
     "&:hover": {
-      backgroundColor: "#666",
+      backgroundColor: "#000",
     },
 
     borderRadius: 0,
@@ -32,9 +34,9 @@ const useStyles = makeStyles({
   },
 });
 
-export const MuiButton: React.FC<ButtonProps> = (props: ButtonProps) => {
+export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   return (
-    <Button
+    <MuiButton
       {...props}
       classes={{
         ...useStyles(),
