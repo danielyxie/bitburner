@@ -10,12 +10,12 @@ import { colors } from "./Theme";
 const useStyles = makeStyles({
   // Tries to emulate StdButton in buttons.scss
   root: {
-    backgroundColor: "#222",
+    backgroundColor: colors.well,
     color: colors.primarydark,
     margin: "5px",
     padding: "3px 5px",
-    "&:hover": {
-      backgroundColor: "#222",
+    "&:after": {
+      backgroundColor: colors.well,
     },
 
     borderRadius: 0,
@@ -25,7 +25,6 @@ const useStyles = makeStyles({
 export const Select: React.FC<SelectProps> = (props: SelectProps) => {
   return (
     <MuiSelect
-      native
       {...props}
       classes={{
         ...useStyles(),

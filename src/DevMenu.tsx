@@ -28,6 +28,9 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import IconButton from "@material-ui/core/IconButton";
 import ExposureZeroIcon from "@material-ui/icons/ExposureZero";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
+import ReplyAllIcon from "@material-ui/icons/ReplyAll";
+import ReplyIcon from "@material-ui/icons/Reply";
 import { Theme } from "./ui/React/Theme";
 
 // Update as additional BitNodes get implemented
@@ -64,9 +67,14 @@ function ValueAdjusterComponent(props: IValueAdjusterProps): React.ReactElement 
         type="number"
         InputProps={{
           startAdornment: (
-            <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)}>
-              <AddIcon />
-            </IconButton>
+            <>
+              <IconButton color="primary">
+                <DoubleArrowIcon style={{ transform: "rotate(-90deg)" }} />
+              </IconButton>
+              <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)}>
+                <AddIcon />
+              </IconButton>
+            </>
           ),
           endAdornment: (
             <>
@@ -963,29 +971,24 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <Select
+                      label="Factions"
                       id="factions-dropdown"
                       className="dropdown exp-input"
                       onChange={setFactionDropdown}
                       value={faction}
                       startAdornment={
-                        <IconButton color="primary">
-                          <AddIcon />
-                        </IconButton>
+                        <>
+                          <IconButton color="primary" onClick={receiveAllInvites}>
+                            <ReplyAllIcon />
+                          </IconButton>
+                          <IconButton color="primary" onClick={receiveInvite}>
+                            <ReplyIcon />
+                          </IconButton>
+                        </>
                       }
                     >
                       {factions}
                     </Select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span className="text">Invites:</span>
-                  </td>
-                  <td>
-                    <Button onClick={receiveInvite}>Receive invite from faction</Button>
-                  </td>
-                  <td>
-                    <Button onClick={receiveAllInvites}>Receive all Invites</Button>
                   </td>
                 </tr>
                 <tr>

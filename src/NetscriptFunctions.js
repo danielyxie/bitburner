@@ -3291,6 +3291,7 @@ function NetscriptFunctions(workerScript) {
         money: Player.money.toNumber(),
         city: Player.city,
         location: Player.location,
+        companyName: Player.companyName,
         crime_money_mult: Player.crime_money_mult,
         crime_success_mult: Player.crime_success_mult,
         isWorking: Player.isWorking,

@@ -10,34 +10,34 @@ import { colors } from "./Theme";
 const useStyles = makeStyles({
   // Tries to emulate StdButton in buttons.scss
   root: {
-    backgroundColor: "#222",
+    backgroundColor: colors.well,
     color: "white",
     borderRadius: 0,
     "& .MuiInputBase-input": {
-      color: colors.primary, // Text color
+      color: colors.primarylight, // Text color
     },
     "& .MuiInputBase-input::placeholder::before": {
-      color: colors.primarydarker,
+      color: colors.primarydark,
       userSelect: "none",
     },
     "& .MuiInput-underline:before": {
-      borderBottomColor: colors.primarydarker,
-    },
-    "& .MuiInput-underline:hover:before": {
       borderBottomColor: colors.primarydark,
     },
-    "& .MuiInput-underline:after": {
+    "& .MuiInput-underline:hover:before": {
       borderBottomColor: colors.primary,
     },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: colors.primarylight,
+    },
     "& .MuiInputLabel-root::before": {
-      color: colors.primarydark,
+      color: colors.primary,
     },
     "& .MuiInputLabel-root": {
       // The little label on the top-right
-      color: colors.primarydark, // unfocused
+      color: colors.primary, // unfocused
       userSelect: "none",
       "&.Mui-focused": {
-        color: colors.primary, // focused
+        color: colors.primarylight, // focused
       },
     },
   },
