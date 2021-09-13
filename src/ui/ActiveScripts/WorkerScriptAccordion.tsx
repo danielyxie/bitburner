@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { numeralWrapper } from "../numeralFormat";
 
-import { Accordion } from "../React/Accordion";
+import { BBAccordion } from "../React/Accordion";
 import { AccordionButton } from "../React/AccordionButton";
 
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
@@ -41,7 +41,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   const offlineEps = scriptRef.offlineExpGained / scriptRef.offlineRunningTime;
 
   return (
-    <Accordion
+    <BBAccordion
       headerClass="active-scripts-script-header"
       headerContent={<>{props.workerScript.name}</>}
       panelClass="active-scripts-script-panel"

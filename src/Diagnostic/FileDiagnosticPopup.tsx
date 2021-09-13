@@ -1,6 +1,6 @@
 import React from "react";
 import { AllServers } from "../Server/AllServers";
-import { Accordion } from "../ui/React/Accordion";
+import { BBAccordion } from "../ui/React/Accordion";
 import { numeralWrapper } from "../ui/numeralFormat";
 
 interface IServerProps {
@@ -40,7 +40,7 @@ export function ServerAccordion(props: IServerProps): React.ReactElement {
   files.sort((a: File, b: File): number => b.size - a.size);
 
   return (
-    <Accordion
+    <BBAccordion
       headerContent={
         <>
           {server.hostname} ({numeralWrapper.formatBigNumber(totalSize)}b)

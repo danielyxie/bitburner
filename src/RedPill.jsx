@@ -16,7 +16,7 @@ import ReactDOM from "react-dom";
 let redPillFlag = false;
 function hackWorldDaemon(currentNodeNumber, flume = false, quick = false) {
   // Clear the screen
-  const container = document.getElementById("red-pill-content");
+  const container = document.getElementById("red-pill-container");
   ReactDOM.unmountComponentAtNode(container);
   Engine.loadRedPillContent();
   ReactDOM.render(
@@ -85,7 +85,7 @@ function enterBitNode(flume, destroyedBitNode, newBitNode) {
     Player.intelligence = 1;
   }
   redPillFlag = false;
-  const container = document.getElementById("red-pill-content");
+  const container = document.getElementById("red-pill-container");
   ReactDOM.unmountComponentAtNode(container);
 
   // Set new Bit Node

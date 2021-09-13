@@ -18,7 +18,7 @@ import { PositionTypes } from "../data/PositionTypes";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { Accordion } from "../../ui/React/Accordion";
+import { BBAccordion } from "../../ui/React/Accordion";
 import { Money } from "../../ui/React/Money";
 import { createPopup } from "../../ui/React/createPopup";
 
@@ -157,7 +157,8 @@ export class StockTicker extends React.Component<IProps, IState> {
         createPopup(popupId, PlaceOrderPopup, {
           text: "Enter the price for your Limit Order",
           placeText: "Place Buy Limit Order",
-          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitBuy, this.state.position),
+          place: (price: number) =>
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitBuy, this.state.position),
           popupId: popupId,
         });
         break;
@@ -167,7 +168,8 @@ export class StockTicker extends React.Component<IProps, IState> {
         createPopup(popupId, PlaceOrderPopup, {
           text: "Enter the price for your Stop Order",
           placeText: "Place Buy Stop Order",
-          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopBuy, this.state.position),
+          place: (price: number) =>
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopBuy, this.state.position),
           popupId: popupId,
         });
         break;
@@ -279,7 +281,8 @@ export class StockTicker extends React.Component<IProps, IState> {
         createPopup(popupId, PlaceOrderPopup, {
           text: "Enter the price for your Limit Order",
           placeText: "Place Sell Limit Order",
-          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitSell, this.state.position),
+          place: (price: number) =>
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.LimitSell, this.state.position),
           popupId: popupId,
         });
         break;
@@ -289,7 +292,8 @@ export class StockTicker extends React.Component<IProps, IState> {
         createPopup(popupId, PlaceOrderPopup, {
           text: "Enter the price for your Stop Order",
           placeText: "Place Sell Stop Order",
-          place: (price: number) => this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopSell, this.state.position),
+          place: (price: number) =>
+            this.props.placeOrder(this.props.stock, shares, price, OrderTypes.StopSell, this.state.position),
           popupId: popupId,
         });
         break;
@@ -332,7 +336,7 @@ export class StockTicker extends React.Component<IProps, IState> {
   render(): React.ReactNode {
     return (
       <li>
-        <Accordion
+        <BBAccordion
           headerContent={<StockTickerHeaderText p={this.props.p} stock={this.props.stock} />}
           panelContent={
             <div>

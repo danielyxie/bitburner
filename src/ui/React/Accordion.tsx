@@ -16,7 +16,7 @@ type IState = {
   panelOpened: boolean;
 };
 
-export class Accordion extends React.Component<IProps, IState> {
+export class BBAccordion extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 

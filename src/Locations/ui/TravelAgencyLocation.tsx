@@ -60,16 +60,18 @@ function ListWorldMap(props: IProps): React.ReactElement {
       </p>
       {Object.values(CityName)
         .filter((city: string) => city != props.p.city)
-        .map((city: string) => (
-          <StdButton
-            key={city}
-            onClick={() =>
-              createTravelPopup(props.p, city, () => props.travel(CityName[city as keyof typeof CityName]))
-            }
-            style={{ display: "block" }}
-            text={`Travel to ${city}`}
-          />
-        ))}
+        .map((city: string) => {
+          const match = Object.entries(CityName).find(([key, value]) => value === city);
+          if (match === undefined) throw new Error(`could not find key for city '${city}'`);
+          return (
+            <StdButton
+              key={city}
+              onClick={() => createTravelPopup(props.p, city, () => props.travel(match[1]))}
+              style={{ display: "block" }}
+              text={`Travel to ${city}`}
+            />
+          );
+        })}
     </div>
   );
 }
