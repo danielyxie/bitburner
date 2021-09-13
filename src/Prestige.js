@@ -44,7 +44,25 @@ function prestigeAugmentation() {
 
   initBitNodeMultipliers(Player);
 
+  const megaCorpFactions = [
+    "ECorp",
+    "MegaCorp",
+    "Bachman & Associates",
+    "Blade Industries",
+    "NWO",
+    "Clarke Incorporated",
+    "Omnitek Incorporated",
+    "Four Sigma",
+    "KuaiGong International",
+    "Fulcrum Secret Technologies"];
+
+  let maintainMembership = Player.factions.filter(function (faction) {
+    return megaCorpFactions.includes(faction);
+  });
+
   Player.prestigeAugmentation();
+
+  Player.factions = Player.factions.concat(maintainMembership);
 
   // Now actually go to the Terminal Screen (and reset it)
   var mainMenu = document.getElementById("mainmenu-container");
