@@ -22,7 +22,6 @@ export function CharacterInfo(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
-  const [divisionName, setDivisionName] = useState("Overview");
 
   useEffect(() => {
     const id = setInterval(rerender, 20);
@@ -230,13 +229,8 @@ export function CharacterInfo(props: IProps): React.ReactElement {
           </span>
           <br />
           <br />
-          <div style={{ width: "60%", fontSize: "13px", marginLeft: "4%" }}>
-            {BitNodes[index].info.split("<br>").map((t, i) => (
-              <div key={i}>
-                <span style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{t}</span>
-                <br />
-              </div>
-            ))}
+          <div style={{ width: "60%", fontSize: "13px", marginLeft: "2%" }}>
+            <span style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</span>
           </div>
         </>
       );

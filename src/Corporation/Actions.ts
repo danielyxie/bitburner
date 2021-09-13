@@ -1,6 +1,6 @@
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
-import { IndustryStartingCosts } from "./IndustryData";
+import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { Industry } from "./Industry";
 import { CorporationConstants } from "./data/Constants";
 import { OfficeSpace } from "./OfficeSpace";
@@ -13,7 +13,6 @@ import { Cities } from "../Locations/Cities";
 import { EmployeePositions } from "./EmployeePositions";
 import { Employee } from "./Employee";
 import { IndustryUpgrades } from "./IndustryUpgrades";
-import { IndustryResearchTrees } from "./IndustryData";
 import { ResearchMap } from "./ResearchMap";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {

@@ -64,7 +64,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
   }
 
   function setTask(): void {
-    console.log(abc);
     props.sleeve.resetTaskStatus(); // sets to idle
     switch (abc[0]) {
       case "------":

@@ -75,7 +75,6 @@ function ListWorldMap(props: IProps): React.ReactElement {
 }
 
 export function TravelAgencyLocation(props: IProps): React.ReactElement {
-  console.log(Settings.DisableASCIIArt);
   if (Settings.DisableASCIIArt) {
     return <ListWorldMap p={props.p} travel={props.travel} />;
   } else {

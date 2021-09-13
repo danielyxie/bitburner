@@ -183,10 +183,8 @@ const canDo: {
   "Work for Company": (player: IPlayer, sleeve: Sleeve) => possibleJobs(player, sleeve).length > 0,
   "Work for Faction": (player: IPlayer, sleeve: Sleeve) => possibleFactions(player, sleeve).length > 0,
   "Commit Crime": () => true,
-  "Take University Course": (player: IPlayer, sleeve: Sleeve) =>
-    [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  "Workout at Gym": (player: IPlayer, sleeve: Sleeve) =>
-    [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
+  "Take University Course": (player: IPlayer, sleeve: Sleeve) => [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
+  "Workout at Gym": (player: IPlayer, sleeve: Sleeve) => [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
   "Shock Recovery": (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
   Synchronize: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
 };
@@ -231,8 +229,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
   const [s1, setS1] = useState(abc[1]);
   const [s2, setS2] = useState(abc[2]);
 
-  const validActions = Object.keys(canDo).filter((k) =>
-    (canDo[k] as (player: IPlayer, sleeve: Sleeve) => boolean)(props.player, props.sleeve),
+  const validActions = Object.keys(canDo).filter((k) => (canDo[k] as (player: IPlayer, sleeve: Sleeve) => boolean)(props.player, props.sleeve),
   );
 
   const detailsF = tasks[s0];

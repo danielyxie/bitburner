@@ -4,12 +4,8 @@
  */
 import * as React from "react";
 
-import {
-  getNextNeurofluxLevel,
-  hasAugmentationPrereqs,
-  purchaseAugmentation,
-  purchaseAugmentationBoxCreate,
-} from "../FactionHelpers";
+import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
+import { PurchaseAugmentationPopup } from "./PurchaseAugmentationPopup";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
@@ -19,6 +15,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
+import { createPopup } from "../../ui/React/createPopup";
 import { IMap } from "../../types";
 
 import { StdButton } from "../../ui/React/StdButton";
@@ -29,15 +26,6 @@ type IProps = {
   faction: Faction;
   p: IPlayer;
   rerender: () => void;
-};
-
-const spanStyleMarkup = {
-  margin: "4px",
-  padding: "4px",
-};
-
-const inlineStyleMarkup = {
-  display: "inline-block",
 };
 
 export class PurchaseableAugmentation extends React.Component<IProps, any> {
@@ -63,7 +51,13 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
 
   handleClick(): void {
     if (!Settings.SuppressBuyAugmentationConfirmation) {
-      purchaseAugmentationBoxCreate(this.aug, this.props.faction);
+      const popupId = "purchase-augmentation-popup";
+      createPopup(popupId, PurchaseAugmentationPopup, {
+        aug: this.aug,
+        faction: this.props.faction,
+        player: this.props.p,
+        popupId: popupId,
+      });
     } else {
       purchaseAugmentation(this.aug, this.props.faction);
     }
@@ -170,12 +164,19 @@ export class PurchaseableAugmentation extends React.Component<IProps, any> {
       );
 
     return (
-      <li>
-        <span style={spanStyleMarkup}>
+      <li key={this.aug.name}>
+        <span
+          style={{
+            margin: "4px",
+            padding: "4px",
+          }}
+        >
           <StdButton
             disabled={disabled}
             onClick={this.handleClick}
-            style={inlineStyleMarkup}
+            style={{
+              display: "inline-block",
+            }}
             text={btnTxt}
             tooltip={tooltip}
           />

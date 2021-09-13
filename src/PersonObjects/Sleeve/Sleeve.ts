@@ -875,14 +875,12 @@ export class Sleeve extends Person {
       if (!factionInfo.offerHackingWork) {
         return false;
       }
-      console.log("Hacking");
       this.factionWorkType = FactionWorkType.Hacking;
       this.gainRatesForTask.hack = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     } else if (sanitizedWorkType.includes("field")) {
       if (!factionInfo.offerFieldWork) {
         return false;
       }
-      console.log("Field");
       this.factionWorkType = FactionWorkType.Field;
       this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
       this.gainRatesForTask.str = 0.1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -894,7 +892,6 @@ export class Sleeve extends Person {
       if (!factionInfo.offerSecurityWork) {
         return false;
       }
-      console.log("Security");
       this.factionWorkType = FactionWorkType.Security;
       this.gainRatesForTask.hack = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
       this.gainRatesForTask.str = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -908,7 +905,6 @@ export class Sleeve extends Person {
     this.currentTaskLocation = factionName;
     this.currentTask = SleeveTaskType.Faction;
     this.currentTaskMaxTime = CONSTANTS.MillisecondsPer20Hours;
-    console.log(this.currentTaskLocation);
 
     return true;
   }

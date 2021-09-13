@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import { FactionRoot } from "./ui/Root";
 
 import { Augmentations } from "../Augmentation/Augmentations";
-import { isRepeatableAug } from "../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -22,21 +21,20 @@ import {
 } from "../PersonObjects/formulas/reputation";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
-import { Page, routing } from "../ui/navigationTracking";
 import { dialogBoxCreate } from "../../utils/DialogBox";
-import { factionInvitationBoxCreate } from "../../utils/FactionInvitationBox";
-import { Money } from "../ui/React/Money";
-import { yesNoBoxCreate, yesNoBoxGetYesButton, yesNoBoxGetNoButton, yesNoBoxClose } from "../../utils/YesNoBox";
+import { createPopup } from "../ui/React/createPopup";
+import { InvitationPopup } from "./ui/InvitationPopup";
 
 export function inviteToFaction(faction) {
-  if (Settings.SuppressFactionInvites) {
-    faction.alreadyInvited = true;
-    Player.factionInvitations.push(faction.name);
-    if (routing.isOn(Page.Factions)) {
-      Engine.loadFactionsContent();
-    }
-  } else {
-    factionInvitationBoxCreate(faction);
+  Player.factionInvitations.push(faction.name);
+  faction.alreadyInvited = true;
+  if (!Settings.SuppressFactionInvites) {
+    const popupId = "faction-invitation";
+    createPopup(popupId, InvitationPopup, {
+      player: Player,
+      faction: faction,
+      popupId: popupId,
+    });
   }
 }
 
@@ -87,44 +85,6 @@ export function displayFactionContent(factionName, initiallyOnAugmentationsPage 
       startHackingMissionFn={startHackingMission}
     />,
     Engine.Display.content,
-  );
-}
-
-export function purchaseAugmentationBoxCreate(aug, fac) {
-  const factionInfo = fac.getInfo();
-
-  const yesBtn = yesNoBoxGetYesButton();
-  yesBtn.innerHTML = "Purchase";
-  yesBtn.addEventListener("click", function () {
-    if (!isRepeatableAug(aug) && Player.hasAugmentation(aug)) {
-      return;
-    }
-
-    purchaseAugmentation(aug, fac);
-    yesNoBoxClose();
-  });
-
-  const noBtn = yesNoBoxGetNoButton();
-  noBtn.innerHTML = "Cancel";
-  noBtn.addEventListener("click", function () {
-    yesNoBoxClose();
-  });
-
-  let content = <div dangerouslySetInnerHTML={{ __html: aug.info }}></div>;
-  if (typeof aug.info !== "string") {
-    content = <div>{aug.info}</div>;
-  }
-  yesNoBoxCreate(
-    <>
-      <h2>{aug.name}</h2>
-      <br />
-      {content}
-      <br />
-      <br />
-      <br />
-      Would you like to purchase the {aug.name} Augmentation for&nbsp;
-      <Money money={aug.baseCost * factionInfo.augmentationPriceMult} />?
-    </>,
   );
 }
 

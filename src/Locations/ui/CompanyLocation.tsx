@@ -23,8 +23,8 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { StdButton } from "../../ui/React/StdButton";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
-
-import { yesNoBoxGetYesButton, yesNoBoxGetNoButton, yesNoBoxClose, yesNoBoxCreate } from "../../../utils/YesNoBox";
+import { createPopup } from "../../ui/React/createPopup";
+import { QuitJobPopup } from "../../Company/ui/QuitJobPopup";
 
 type IProps = {
   engine: IEngine;
@@ -246,27 +246,15 @@ export class CompanyLocation extends React.Component<IProps, IState> {
   }
 
   quit(e: React.MouseEvent<HTMLElement>): void {
-    if (!e.isTrusted) {
-      return;
-    }
-
-    const yesBtn = yesNoBoxGetYesButton();
-    const noBtn = yesNoBoxGetNoButton();
-    if (yesBtn == null || noBtn == null) {
-      return;
-    }
-    yesBtn.innerHTML = "Quit job";
-    noBtn.innerHTML = "Cancel";
-    yesBtn.addEventListener("click", () => {
-      this.props.p.quitJob(this.props.locName);
-      this.checkIfEmployedHere(true);
-      yesNoBoxClose();
+    if (!e.isTrusted) return;
+    const popupId = `quit-job-popup`;
+    createPopup(popupId, QuitJobPopup, {
+      locName: this.props.locName,
+      company: this.company,
+      player: this.props.p,
+      onQuit: () => this.checkIfEmployedHere(true),
+      popupId: popupId,
     });
-    noBtn.addEventListener("click", () => {
-      yesNoBoxClose();
-    });
-
-    yesNoBoxCreate(<>Would you like to quit your job at {this.company.name}?</>);
   }
 
   render(): React.ReactNode {
@@ -421,6 +409,11 @@ export class CompanyLocation extends React.Component<IProps, IState> {
         {this.location.infiltrationData != null && (
           <StdButton onClick={this.startInfiltration} style={this.btnStyle} text={"Infiltrate Company"} />
         )}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     );
   }

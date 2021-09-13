@@ -3,16 +3,11 @@ import { Augmentations } from "./Augmentations";
 import { PlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 import { AugmentationNames } from "./data/AugmentationNames";
 
-import { AugmentationsRoot } from "./ui/Root";
-
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
 import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
-import { saveObject } from "../SaveObject";
-import { Page, routing } from "../ui/navigationTracking";
-import { onExport } from "../ExportBonus";
 import { Programs } from "../Programs/Programs";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
@@ -22,7 +17,6 @@ import { clearObject } from "../../utils/helpers/clearObject";
 import { WHRNG } from "../Casino/RNG";
 
 import React from "react";
-import ReactDOM from "react-dom";
 
 function AddToAugmentations(aug) {
   var name = aug.name;

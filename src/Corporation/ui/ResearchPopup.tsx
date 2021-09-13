@@ -3,7 +3,6 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { IndustryResearchTrees } from "../IndustryData";
 import { CorporationConstants } from "../data/Constants";
-import { ResearchMap } from "../ResearchMap";
 import { Treant } from "treant-js";
 import { IIndustry } from "../IIndustry";
 import { Research } from "../Actions";
@@ -49,9 +48,6 @@ export function ResearchPopup(props: IProps): React.ReactElement {
       if (props.industry.researched[allResearch[i]] === true) {
         continue;
       }
-
-      // Get the Research object
-      const research = ResearchMap[allResearch[i]];
 
       // Get the DOM Element to add a click listener to it
       const sanitizedName = allResearch[i].replace(/\s/g, "");

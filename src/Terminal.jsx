@@ -53,10 +53,11 @@ import { KEY } from "../utils/helpers/keyCodes";
 import { arrayToString } from "../utils/helpers/arrayToString";
 import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { logBoxCreate } from "../utils/LogBox";
-import { yesNoBoxCreate, yesNoBoxGetYesButton, yesNoBoxGetNoButton, yesNoBoxClose } from "../utils/YesNoBox";
 import { post, postElement, postContent, postError, hackProgressBarPost, hackProgressPost } from "./ui/postToTerminal";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Money } from "./ui/React/Money";
+import { createPopup } from "./ui/React/createPopup";
+import { BitFlumePopup } from "./BitNode/ui/BitFlumePopup";
 
 import autosize from "autosize";
 import * as JSZip from "jszip";
@@ -2374,22 +2375,11 @@ let Terminal = {
       post("-- Daedalus --");
     };
     programHandlers[Programs.BitFlume.name] = () => {
-      const yesBtn = yesNoBoxGetYesButton();
-      const noBtn = yesNoBoxGetNoButton();
-      yesBtn.innerHTML = "Travel to BitNode Nexus";
-      noBtn.innerHTML = "Cancel";
-      yesBtn.addEventListener("click", function () {
-        hackWorldDaemon(Player.bitNodeN, true);
-        return yesNoBoxClose();
+      const popupId = "bitflume-popup";
+      createPopup(popupId, BitFlumePopup, {
+        player: Player,
+        popupId: popupId,
       });
-      noBtn.addEventListener("click", function () {
-        return yesNoBoxClose();
-      });
-      yesNoBoxCreate(
-        "WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
-          "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
-          "and select a new one.",
-      );
     };
 
     if (!programHandlers.hasOwnProperty(programName)) {

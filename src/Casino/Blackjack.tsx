@@ -223,6 +223,7 @@ export class Blackjack extends Game<Props, State> {
       this.win(this.props.p, 2 * gains);
     } else if (result === Result.DealerWon) {
       gains = -1 * this.state.bet;
+      this.win(this.props.p, -this.state.bet); // Get the original bet back
       // Dont need to take money here since we already did it at the start
     } else if (result === Result.Tie) {
       this.win(this.props.p, this.state.bet); // Get the original bet back

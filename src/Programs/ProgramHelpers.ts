@@ -2,7 +2,6 @@ import { Programs } from "./Programs";
 import { Program } from "./Program";
 
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { createElement } from "../../utils/uiHelpers/createElement";
 
 //Returns the programs this player can create.
 export function getAvailableCreatePrograms(player: IPlayer): Program[] {
