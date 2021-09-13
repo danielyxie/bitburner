@@ -174,6 +174,9 @@ export function prestigeAugmentation() {
   this.hacknetNodes.length = 0;
   this.hashManager.prestige();
 
+  // Reset player multipliers
+  this.resetMultipliers();
+
   // Re-calculate skills and reset HP
   this.updateSkillLevels();
   this.hp = this.max_hp;
