@@ -26,6 +26,8 @@ import React, { useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import IconButton from "@material-ui/core/IconButton";
+import ExposureZeroIcon from "@material-ui/icons/ExposureZero";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { Theme } from "./ui/React/Theme";
 
 // Update as additional BitNodes get implemented
@@ -36,7 +38,8 @@ const tonsPP = 1e27;
 const tonsP = 1e12;
 
 interface IValueAdjusterProps {
-  title: string;
+  label: string;
+  placeholder: string;
   add: (x: number) => void;
   subtract: (x: number) => void;
   reset: () => void;
@@ -50,13 +53,14 @@ function ValueAdjusterComponent(props: IValueAdjusterProps): React.ReactElement 
     else setValue(parseFloat(event.target.value));
   }
 
-  const { title, add, subtract, reset } = props;
+  const { label, placeholder, add, subtract, reset } = props;
   return (
     <>
       <TextField
+        label={label}
         value={value}
         onChange={onChange}
-        placeholder={title}
+        placeholder={placeholder}
         type="number"
         InputProps={{
           startAdornment: (
@@ -65,13 +69,17 @@ function ValueAdjusterComponent(props: IValueAdjusterProps): React.ReactElement 
             </IconButton>
           ),
           endAdornment: (
-            <IconButton color="primary" onClick={() => subtract(typeof value !== "string" ? value : 0)}>
-              <RemoveIcon />
-            </IconButton>
+            <>
+              <IconButton color="primary" onClick={() => subtract(typeof value !== "string" ? value : 0)}>
+                <RemoveIcon />
+              </IconButton>
+              <IconButton color="primary" onClick={reset}>
+                <ExposureZeroIcon />
+              </IconButton>
+            </>
           ),
         }}
       />
-      <Button onClick={reset}>Reset</Button>
     </>
   );
 }
@@ -91,28 +99,28 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
   const [stockPrice, setStockPrice] = useState(0);
   const [stockSymbol, setStockSymbol] = useState("");
 
-  function setFactionDropdown(event: React.ChangeEvent<HTMLButtonElement>): void {
-    setFaction(event.target.value);
+  function setFactionDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+    setFaction(event.target.value as string);
   }
 
-  function setCompanyDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
-    setCompany(event.target.value);
+  function setCompanyDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+    setCompany(event.target.value as string);
   }
 
-  function setProgramDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
-    setProgram(event.target.value);
+  function setProgramDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+    setProgram(event.target.value as string);
   }
 
-  function setServerDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
-    setServer(event.target.value);
+  function setServerDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+    setServer(event.target.value as string);
   }
 
-  function setAugmentationDropdown(event: React.FormEventHandler<HTMLSelectElement>): void {
-    setAugmentation(event.target.value);
+  function setAugmentationDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+    setAugmentation(event.target.value as string);
   }
 
-  function setCodingcontractDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
-    setCodingcontract(event.target.value);
+  function setCodingcontractDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+    setCodingcontract(event.target.value as string);
   }
 
   function setStockPriceField(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -763,7 +771,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
 
   return (
     <Theme>
-      <div className="col" style={{ backgroundColor: "#222" }}>
+      <div className="col" style={{ backgroundColor: "#111" }}>
         <div className="row">
           <h1>Development Menu - Only meant to be used for testing/debugging</h1>
         </div>
@@ -826,7 +834,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="hacking exp"
+                      label="hacking"
+                      placeholder="exp"
                       add={modifyExp("hacking", 1)}
                       subtract={modifyExp("hacking", -1)}
                       reset={resetExperience("hacking")}
@@ -839,7 +848,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="strength exp"
+                      label="strength"
+                      placeholder="exp"
                       add={modifyExp("strength", 1)}
                       subtract={modifyExp("strength", -1)}
                       reset={resetExperience("strength")}
@@ -852,7 +862,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="defense exp"
+                      label="defense"
+                      placeholder="exp"
                       add={modifyExp("defense", 1)}
                       subtract={modifyExp("defense", -1)}
                       reset={resetExperience("defense")}
@@ -865,7 +876,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="dexterity exp"
+                      label="dexterity"
+                      placeholder="exp"
                       add={modifyExp("dexterity", 1)}
                       subtract={modifyExp("dexterity", -1)}
                       reset={resetExperience("dexterity")}
@@ -878,7 +890,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="agility exp"
+                      label="agility"
+                      placeholder="exp"
                       add={modifyExp("agility", 1)}
                       subtract={modifyExp("agility", -1)}
                       reset={resetExperience("agility")}
@@ -891,7 +904,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="charisma exp"
+                      label="charisma"
+                      placeholder="exp"
                       add={modifyExp("charisma", 1)}
                       subtract={modifyExp("charisma", -1)}
                       reset={resetExperience("charisma")}
@@ -904,7 +918,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="intelligence exp"
+                      label="intelligence"
+                      placeholder="exp"
                       add={modifyExp("intelligence", 1)}
                       subtract={modifyExp("intelligence", -1)}
                       reset={resetExperience("intelligence")}
@@ -923,7 +938,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="karma"
+                      label="karma"
+                      placeholder="amt"
                       add={modifyKarma(1)}
                       subtract={modifyKarma(-1)}
                       reset={resetKarma()}
@@ -951,6 +967,11 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                       className="dropdown exp-input"
                       onChange={setFactionDropdown}
                       value={faction}
+                      startAdornment={
+                        <IconButton color="primary">
+                          <AddIcon />
+                        </IconButton>
+                      }
                     >
                       {factions}
                     </Select>
@@ -973,7 +994,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="reputation"
+                      label="reputation"
+                      placeholder="amt"
                       add={modifyFactionRep(1)}
                       subtract={modifyFactionRep(-1)}
                       reset={resetFactionRep}
@@ -986,7 +1008,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="favor"
+                      label="favor"
+                      placeholder="amt"
                       add={modifyFactionFavor(1)}
                       subtract={modifyFactionFavor(-1)}
                       reset={resetFactionFavor}
@@ -1072,18 +1095,12 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     <span className="text">All:</span>
                   </td>
                   <td>
-                    <button className="std-button touch-right" onClick={setAllSF(0)}>
-                      0
-                    </button>
-                    <button className="std-button touch-sides" onClick={setAllSF(1)}>
-                      1
-                    </button>
-                    <button className="std-button touch-sides" onClick={setAllSF(2)}>
-                      2
-                    </button>
-                    <button className="std-button touch-left" onClick={setAllSF(3)}>
-                      3
-                    </button>
+                    <ButtonGroup>
+                      <Button onClick={setAllSF(0)}>0</Button>
+                      <Button onClick={setAllSF(1)}>1</Button>
+                      <Button onClick={setAllSF(2)}>2</Button>
+                      <Button onClick={setAllSF(3)}>3</Button>
+                    </ButtonGroup>
                   </td>
                 </tr>
                 {validSFN.map((i) => (
@@ -1092,18 +1109,12 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                       <span className="text">SF-{i}:</span>
                     </td>
                     <td>
-                      <button className="std-button touch-right" onClick={setSF(i, 0)}>
-                        0
-                      </button>
-                      <button className="std-button touch-sides" onClick={setSF(i, 1)}>
-                        1
-                      </button>
-                      <button className="std-button touch-sides" onClick={setSF(i, 2)}>
-                        2
-                      </button>
-                      <button className="std-button touch-left" onClick={setSF(i, 3)}>
-                        3
-                      </button>
+                      <ButtonGroup>
+                        <Button onClick={setSF(i, 0)}>0</Button>
+                        <Button onClick={setSF(i, 1)}>1</Button>
+                        <Button onClick={setSF(i, 2)}>2</Button>
+                        <Button onClick={setSF(i, 3)}>3</Button>
+                      </ButtonGroup>
                     </td>
                   </tr>
                 ))}
@@ -1123,14 +1134,14 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     <span className="text">Program:</span>
                   </td>
                   <td>
-                    <select
+                    <Select
                       id="dev-programs-dropdown"
                       className="dropdown"
                       onChange={setProgramDropdown}
                       value={program}
                     >
                       {programs}
-                    </select>
+                    </Select>
                   </td>
                 </tr>
                 <tr>
@@ -1158,9 +1169,9 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     <span className="text">Server:</span>
                   </td>
                   <td colSpan={2}>
-                    <select id="dev-servers-dropdown" className="dropdown" onChange={setServerDropdown} value={server}>
+                    <Select id="dev-servers-dropdown" className="dropdown" onChange={setServerDropdown} value={server}>
                       {servers}
-                    </select>
+                    </Select>
                   </td>
                 </tr>
                 <tr>
@@ -1216,14 +1227,14 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     <span className="text">Company:</span>
                   </td>
                   <td colSpan={3}>
-                    <select
+                    <Select
                       id="dev-companies-dropdown"
                       className="dropdown"
                       onChange={setCompanyDropdown}
                       value={company}
                     >
                       {companies}
-                    </select>
+                    </Select>
                   </td>
                 </tr>
                 <tr>
@@ -1232,7 +1243,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="reputation"
+                      label="reputation"
+                      placeholder="amt"
                       add={modifyCompanyRep(1)}
                       subtract={modifyCompanyRep(-1)}
                       reset={resetCompanyRep}
@@ -1245,7 +1257,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                   </td>
                   <td>
                     <ValueAdjusterComponent
-                      title="favor"
+                      label="favor"
+                      placeholder="amt"
                       add={modifyCompanyFavor(1)}
                       subtract={modifyCompanyFavor(-1)}
                       reset={resetCompanyFavor}
@@ -1302,7 +1315,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     </td>
                     <td>
                       <ValueAdjusterComponent
-                        title="rank"
+                        label="rank"
+                        placeholder="amt"
                         add={modifyBladeburnerRank(1)}
                         subtract={modifyBladeburnerRank(-1)}
                         reset={resetBladeburnerRank}
@@ -1320,7 +1334,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     </td>
                     <td>
                       <ValueAdjusterComponent
-                        title="cycles"
+                        label="cycles"
+                        placeholder="amt"
                         add={modifyBladeburnerCycles(1)}
                         subtract={modifyBladeburnerCycles(-1)}
                         reset={resetBladeburnerCycles}
@@ -1352,7 +1367,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     </td>
                     <td>
                       <ValueAdjusterComponent
-                        title="cycles"
+                        label="cycles"
+                        placeholder="amt"
                         add={modifyGangCycles(1)}
                         subtract={modifyGangCycles(-1)}
                         reset={resetGangCycles}
@@ -1394,7 +1410,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                     </td>
                     <td>
                       <ValueAdjusterComponent
-                        title="cycles"
+                        label="cycles"
+                        placeholder="amt"
                         add={modifyCorporationCycles(1)}
                         subtract={modifyCorporationCycles(-1)}
                         reset={resetCorporationCycles}
@@ -1440,14 +1457,14 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
                 </tr>
                 <tr>
                   <td>
-                    <select
+                    <Select
                       id="contract-types-dropdown"
                       className="dropdown"
                       onChange={setCodingcontractDropdown}
                       value={codingcontract}
                     >
                       {contractTypes}
-                    </select>
+                    </Select>
                     <button className="std-button" onClick={specificContract}>
                       Generate Specified Contract Type on Home Comp
                     </button>

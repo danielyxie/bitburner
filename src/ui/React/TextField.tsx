@@ -10,7 +10,7 @@ import { colors } from "./Theme";
 const useStyles = makeStyles({
   // Tries to emulate StdButton in buttons.scss
   root: {
-    backgroundColor: "#000",
+    backgroundColor: "#222",
     color: "white",
     borderRadius: 0,
     "& .MuiInputBase-input": {
