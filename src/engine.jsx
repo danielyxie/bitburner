@@ -22,9 +22,10 @@ import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/Faction
 import { FactionList } from "./Faction/ui/FactionList";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
-import { SidebarRoot } from "./Sidebar/ui/Sidebar2Root";
+import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
+import { GameOptionsRoot } from "./ui/React/GameOptionsRoot";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
@@ -352,6 +353,14 @@ const Engine = {
     Engine.Display.content.style.display = "block";
     MainMenuLinks.City.classList.add("active");
     ReactDOM.render(<ResleeveRoot player={Player} />, Engine.Display.content);
+  },
+
+  loadGameOptionsContent: function () {
+    Engine.hideAllContent();
+    routing.navigateTo(Page.GameOptions);
+    Engine.Display.content.style.display = "block";
+    MainMenuLinks.City.classList.add("active");
+    ReactDOM.render(<GameOptionsRoot />, Engine.Display.content);
   },
 
   // Helper function that hides all content
