@@ -1,7 +1,5 @@
 import React from "react";
-import { createMuiTheme } from "@material-ui/core/styles";
-
-import { ThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 export const colors = {
   primarylight: "#0f0",
@@ -41,7 +39,7 @@ export const theme = createMuiTheme({
         borderBottomColor: "#fff",
       },
       underline: {
-        "&:hover:before": {
+        "&:hover": {
           borderBottomColor: colors.primarydark,
         },
         "&:before": {
@@ -59,6 +57,20 @@ export const theme = createMuiTheme({
         "&:before": {
           color: colors.primarylight,
         },
+      },
+    },
+    MuiButton: {
+      root: {
+        backgroundColor: "#333",
+        border: "1px solid " + colors.well,
+        color: colors.primary,
+        margin: "5px",
+        padding: "3px 5px",
+        "&:hover": {
+          backgroundColor: "#000",
+        },
+
+        borderRadius: 0,
       },
     },
     MuiSelect: {
@@ -84,6 +96,20 @@ export const theme = createMuiTheme({
     MuiAccordionDetails: {
       root: {
         backgroundColor: "#000",
+      },
+    },
+    MuiIconButton: {
+      root: {
+        color: colors.primary,
+      },
+    },
+    MuiTooltip: {
+      tooltip: {
+        fontSize: "1em",
+        color: colors.primary,
+        backgroundColor: colors.well,
+        borderRadius: 0,
+        border: "2px solid white",
       },
     },
   },

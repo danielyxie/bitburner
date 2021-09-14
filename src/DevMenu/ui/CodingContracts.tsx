@@ -5,24 +5,13 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
-import { Select } from "../../ui/React/Select";
-import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { generateContract, generateRandomContract, generateRandomContractOnHome } from "../../CodingContractGenerator";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import { generateContract, generateRandomContract, generateRandomContractOnHome } from "../../CodingContractGenerator";
 import { CodingContractTypes } from "../../CodingContracts";
 
-// Update as additional BitNodes get implemented
-const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const bigNumber = 1e27;
-
-interface IProps {
-  player: IPlayer;
-}
-
-export function CodingContracts(props: IProps): React.ReactElement {
+export function CodingContracts(): React.ReactElement {
   const [codingcontract, setCodingcontract] = useState("Find Largest Prime Factor");
   function setCodingcontractDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
     setCodingcontract(event.target.value as string);

@@ -5,18 +5,11 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
-import { Select } from "../../ui/React/Select";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Programs as AllPrograms } from "../../Programs/Programs";
-import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
-import ReplyAllIcon from "@material-ui/icons/ReplyAll";
-import ReplyIcon from "@material-ui/icons/Reply";
-import InputLabel from "@material-ui/core/InputLabel";
-
-const bigNumber = 1e12;
 
 interface IProps {
   player: IPlayer;

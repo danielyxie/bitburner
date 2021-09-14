@@ -61,7 +61,7 @@ function ListWorldMap(props: IProps): React.ReactElement {
       {Object.values(CityName)
         .filter((city: string) => city != props.p.city)
         .map((city: string) => {
-          const match = Object.entries(CityName).find(([key, value]) => value === city);
+          const match = Object.entries(CityName).find((entry) => entry[1] === city);
           if (match === undefined) throw new Error(`could not find key for city '${city}'`);
           return (
             <StdButton

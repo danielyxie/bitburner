@@ -5,22 +5,14 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
-import { TextField } from "../../ui/React/TextField";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import { Money } from "../../ui/React/Money";
-import { Adjuster } from "./Adjuster";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { StockMarket as SM } from "../../StockMarket/StockMarket";
 import { Stock } from "../../StockMarket/Stock";
 
-const bigNumber = 1e27;
-
-interface IProps {
-  player: IPlayer;
-}
-
-export function StockMarket(props: IProps): React.ReactElement {
+export function StockMarket(): React.ReactElement {
   const [stockPrice, setStockPrice] = useState(0);
   const [stockSymbol, setStockSymbol] = useState("");
 

@@ -1,30 +1,8 @@
-import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-import { CodingContractTypes } from "./CodingContracts";
-import { generateContract, generateRandomContract, generateRandomContractOnHome } from "./CodingContractGenerator";
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { IEngine } from "./IEngine";
-import { saveObject } from "./SaveObject";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { Money } from "./ui/React/Money";
-import { TextField } from "./ui/React/TextField";
-import { Button } from "./ui/React/Button";
-import { Select } from "./ui/React/Select";
-
-import React, { useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import IconButton from "@material-ui/core/IconButton";
-import ExposureZeroIcon from "@material-ui/icons/ExposureZero";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
-import ReplyAllIcon from "@material-ui/icons/ReplyAll";
-import ReplyIcon from "@material-ui/icons/Reply";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
+import React from "react";
 import { Theme } from "./ui/React/Theme";
 
 import { General } from "./DevMenu/ui/General";
@@ -59,8 +37,8 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
         <Augmentations player={props.player} />
         <SourceFiles player={props.player} />
         <Programs player={props.player} />
-        <Servers player={props.player} />
-        <Companies player={props.player} />
+        <Servers />
+        <Companies />
 
         {props.player.bladeburner instanceof Bladeburner && <BladeburnerElem player={props.player} />}
 
@@ -68,9 +46,9 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
 
         {props.player.hasCorporation() && <Corporation player={props.player} />}
 
-        <CodingContracts player={props.player} />
+        <CodingContracts />
 
-        {props.player.hasWseAccount && <StockMarket player={props.player} />}
+        {props.player.hasWseAccount && <StockMarket />}
 
         {props.player.sleeves.length > 0 && <Sleeves player={props.player} />}
 

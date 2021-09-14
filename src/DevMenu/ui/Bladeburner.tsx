@@ -5,7 +5,6 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
 import { Adjuster } from "./Adjuster";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 

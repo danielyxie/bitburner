@@ -5,25 +5,15 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
-import { Select } from "../../ui/React/Select";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
 import { Companies as AllCompanies } from "../../Company/Companies";
-import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
-import ReplyAllIcon from "@material-ui/icons/ReplyAll";
-import ReplyIcon from "@material-ui/icons/Reply";
-import InputLabel from "@material-ui/core/InputLabel";
 import { Adjuster } from "./Adjuster";
 
 const bigNumber = 1e12;
 
-interface IProps {
-  player: IPlayer;
-}
-
-export function Companies(props: IProps): React.ReactElement {
+export function Companies(): React.ReactElement {
   const [company, setCompany] = useState("ECorp");
   function setCompanyDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
     setCompany(event.target.value as string);

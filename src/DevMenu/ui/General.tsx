@@ -5,7 +5,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
+import Button from "@material-ui/core/Button";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { hackWorldDaemon } from "../../RedPill";

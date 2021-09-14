@@ -5,26 +5,14 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
-import { Select } from "../../ui/React/Select";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
 import { AllServers } from "../../Server/AllServers";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServerByHostname } from "../../Server/ServerHelpers";
-import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
-import ReplyAllIcon from "@material-ui/icons/ReplyAll";
-import ReplyIcon from "@material-ui/icons/Reply";
-import InputLabel from "@material-ui/core/InputLabel";
 
-const bigNumber = 1e12;
-
-interface IProps {
-  player: IPlayer;
-}
-
-export function Servers(props: IProps): React.ReactElement {
+export function Servers(): React.ReactElement {
   const [server, setServer] = useState("home");
   function setServerDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
     setServer(event.target.value as string);

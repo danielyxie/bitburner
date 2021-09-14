@@ -4,7 +4,8 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import IconButton from "@material-ui/core/IconButton";
 import ExposureZeroIcon from "@material-ui/icons/ExposureZero";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
-import { TextField } from "../../ui/React/TextField";
+import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
 
 interface IProps {
   label: string;
@@ -35,22 +36,30 @@ export function Adjuster(props: IProps): React.ReactElement {
         InputProps={{
           startAdornment: (
             <>
-              <IconButton color="primary" onClick={tons}>
-                <DoubleArrowIcon style={{ transform: "rotate(-90deg)" }} />
-              </IconButton>
-              <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)}>
-                <AddIcon />
-              </IconButton>
+              <Tooltip title="Add a lot">
+                <IconButton color="primary" onClick={tons}>
+                  <DoubleArrowIcon style={{ transform: "rotate(-90deg)" }} />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Add">
+                <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)}>
+                  <AddIcon />
+                </IconButton>
+              </Tooltip>
             </>
           ),
           endAdornment: (
             <>
-              <IconButton color="primary" onClick={() => subtract(typeof value !== "string" ? value : 0)}>
-                <RemoveIcon />
-              </IconButton>
-              <IconButton color="primary" onClick={reset}>
-                <ExposureZeroIcon />
-              </IconButton>
+              <Tooltip title="Remove">
+                <IconButton color="primary" onClick={() => subtract(typeof value !== "string" ? value : 0)}>
+                  <RemoveIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Reset">
+                <IconButton color="primary" onClick={reset}>
+                  <ExposureZeroIcon />
+                </IconButton>
+              </Tooltip>
             </>
           ),
         }}

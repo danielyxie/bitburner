@@ -5,16 +5,13 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
-import { Select } from "../../ui/React/Select";
+import Select from "@material-ui/core/Select";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import ReplyAllIcon from "@material-ui/icons/ReplyAll";
 import ReplyIcon from "@material-ui/icons/Reply";
-
-const bigNumber = 1e27;
 
 interface IProps {
   player: IPlayer;

@@ -5,8 +5,8 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
-import { Select } from "../../ui/React/Select";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
 import { Adjuster } from "./Adjuster";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Factions as AllFaction } from "../../Faction/Factions";

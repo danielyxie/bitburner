@@ -5,14 +5,13 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { Button } from "../../ui/React/Button";
+import Button from "@material-ui/core/Button";
 import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 // Update as additional BitNodes get implemented
 const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const bigNumber = 1e27;
 
 interface IProps {
   player: IPlayer;
