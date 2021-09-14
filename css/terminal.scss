@@ -5,6 +5,12 @@
   width: 99%;
   overflow: auto;
   overflow-y: scroll;
+
+  scrollbar-width: "none"; // firefox
+}
+
+#terminal-container::-webkit-scrollbar {
+  display: none;
 }
 
 #terminal {
