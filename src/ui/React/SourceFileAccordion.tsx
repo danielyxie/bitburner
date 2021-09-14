@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-import { BBAccordion } from "./Accordion";
+import { BBAccordion } from "./BBAccordion";
 
 import { SourceFile } from "../../SourceFile/SourceFile";
 

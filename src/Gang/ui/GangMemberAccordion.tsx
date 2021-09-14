@@ -4,7 +4,7 @@
 import React from "react";
 import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";
-import { BBAccordion } from "../../ui/React/Accordion";
+import { BBAccordion } from "../../ui/React/BBAccordion";
 import { GangMemberAccordionContent } from "./GangMemberAccordionContent";
 
 interface IProps {

@@ -39,33 +39,31 @@
   </head>
   <body>
     <div id="entire-game-container" style="visibility: hidden">
-      <div id="mainmenu-container">
+      <div id="mainmenu-container" style="display: flex; flex-direction: row">
         <!-- Main menu -->
-        <div id="sidebar"></div>
+        <div id="sidebar" style=""></div>
+        <!-- Terminal page -->
+        <div id="terminal-container" style="flex-grow: 1">
+          <table id="terminal">
+            <tr id="terminal-input">
+              <td id="terminal-input-td" tabindex="2">
+                $
+                <input
+                  type="text"
+                  id="terminal-input-text-box"
+                  class="terminal-input"
+                  tabindex="1"
+                  onfocus="this.value = this.value;"
+                  autocomplete="off"
+                />
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="generic-react-container" style="flex-grow: 1"></div>
       </div>
 
-      <!-- Terminal page -->
-      <div id="terminal-container">
-        <table id="terminal">
-          <tr id="terminal-input">
-            <td id="terminal-input-td" tabindex="2">
-              $
-              <input
-                type="text"
-                id="terminal-input-text-box"
-                class="terminal-input"
-                tabindex="1"
-                onfocus="this.value = this.value;"
-                autocomplete="off"
-              />
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="generic-menupage-container">
-        <div id="generic-react-container"></div>
-      </div>
       <div id="infiltration-container" class="generic-fullscreen-container"></div>
       <div id="mission-container" class="generic-fullscreen-container"></div>
 

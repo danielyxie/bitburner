@@ -22,7 +22,7 @@ import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/Faction
 import { FactionList } from "./Faction/ui/FactionList";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
-import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
+import { SidebarRoot } from "./Sidebar/ui/Sidebar2Root";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";

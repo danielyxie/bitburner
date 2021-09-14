@@ -23,6 +23,7 @@ function hackWorldDaemon(currentNodeNumber, flume = false, quick = false) {
     <BitverseRoot destroyedBitNodeNum={currentNodeNumber} flume={flume} enter={enterBitNode} quick={quick} />,
     container,
   );
+  redPillFlag = true;
 }
 
 function giveSourceFile(bitNodeNumber) {

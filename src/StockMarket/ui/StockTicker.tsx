@@ -18,7 +18,7 @@ import { PositionTypes } from "../data/PositionTypes";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { BBAccordion } from "../../ui/React/Accordion";
+import { BBAccordion } from "../../ui/React/BBAccordion";
 import { Money } from "../../ui/React/Money";
 import { createPopup } from "../../ui/React/createPopup";
 

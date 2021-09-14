@@ -1340,8 +1340,6 @@ button {
 /* COLORS */
 /* Attributes */
 #terminal-container {
-  position: fixed;
-  margin-left: 10%;
   height: 100%;
   width: 99%;
   overflow: auto;
@@ -2368,7 +2366,7 @@ input[type="checkbox"] {
   /* Initially hidden */
   position: fixed;
   /* Stay in place */
-  z-index: 10;
+  z-index: 1300;
   /* Sit on top */
   left: 0;
   top: 0;

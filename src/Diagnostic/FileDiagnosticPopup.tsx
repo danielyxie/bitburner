@@ -1,6 +1,6 @@
 import React from "react";
 import { AllServers } from "../Server/AllServers";
-import { BBAccordion } from "../ui/React/Accordion";
+import { BBAccordion } from "../ui/React/BBAccordion";
 import { numeralWrapper } from "../ui/numeralFormat";
 
 interface IServerProps {
