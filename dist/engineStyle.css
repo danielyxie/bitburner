@@ -1340,8 +1340,6 @@ button {
 /* COLORS */
 /* Attributes */
 #terminal-container {
-  position: fixed;
-  margin-left: 10%;
   height: 100%;
   width: 99%;
   overflow: auto;

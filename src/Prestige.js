@@ -54,7 +54,8 @@ function prestigeAugmentation() {
     "Omnitek Incorporated",
     "Four Sigma",
     "KuaiGong International",
-    "Fulcrum Secret Technologies"];
+    "Fulcrum Secret Technologies",
+  ];
 
   let maintainMembership = Player.factions.filter(function (faction) {
     return megaCorpFactions.includes(faction);
@@ -158,10 +159,6 @@ function prestigeAugmentation() {
     initStockMarket();
     initSymbolToStockMap();
   }
-
-  // Refresh Main Menu (the 'World' menu, specifically)
-  document.getElementById("world-menu-header").click();
-  document.getElementById("world-menu-header").click();
 
   // Red Pill
   if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {

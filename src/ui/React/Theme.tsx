@@ -5,17 +5,40 @@ export const colors = {
   primarylight: "#0f0",
   primary: "#0c0",
   primarydark: "#090",
+
+  errorlight: "#f00",
+  error: "#c00",
+  errordark: "#900",
+
+  secondarylight: "#AAA",
+  secondary: "#888",
+  secondarydark: "#666",
+
   well: "#222",
+  white: "#fff",
+  black: "#000",
 };
 
 export const theme = createMuiTheme({
   palette: {
     primary: {
+      light: colors.primarylight,
       main: colors.primary,
       dark: colors.primarydark,
     },
+    secondary: {
+      light: colors.secondarylight,
+      main: colors.secondary,
+      dark: colors.secondarydark,
+    },
+    error: {
+      light: colors.errorlight,
+      main: colors.error,
+      dark: colors.errordark,
+    },
   },
   typography: {
+    fontFamily: "monospace",
     button: {
       textTransform: "none",
     },
@@ -67,7 +90,7 @@ export const theme = createMuiTheme({
         margin: "5px",
         padding: "3px 5px",
         "&:hover": {
-          backgroundColor: "#000",
+          backgroundColor: colors.black,
         },
 
         borderRadius: 0,
@@ -95,7 +118,7 @@ export const theme = createMuiTheme({
     },
     MuiAccordionDetails: {
       root: {
-        backgroundColor: "#000",
+        backgroundColor: colors.black,
       },
     },
     MuiIconButton: {
@@ -110,6 +133,29 @@ export const theme = createMuiTheme({
         backgroundColor: colors.well,
         borderRadius: 0,
         border: "2px solid white",
+      },
+    },
+    MuiSvgIcon: {
+      root: {
+        color: colors.primary,
+      },
+    },
+    MuiDrawer: {
+      paper: {
+        "&::-webkit-scrollbar": {
+          // webkit
+          display: "none",
+        },
+        scrollbarWidth: "none", // firefox
+        backgroundColor: colors.black,
+      },
+      paperAnchorDockedLeft: {
+        borderRight: "1px solid #444",
+      },
+    },
+    MuiDivider: {
+      root: {
+        backgroundColor: "#444",
       },
     },
   },
