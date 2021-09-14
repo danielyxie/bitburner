@@ -160,7 +160,7 @@ interface IUpgradeProps {
 function Upgrades({ corp, player, rerender }: IUpgradeProps): React.ReactElement {
   // Don't show upgrades
   if (corp.divisions.length <= 0) {
-    return <h1>Unlock upgrades after creating your first division</h1>;
+    return <h1>Upgrades are unlocked once you create an industry.</h1>;
   }
 
   return (
