@@ -111,6 +111,7 @@ const Engine = {
   loadTerminalContent: function () {
     Engine.hideAllContent();
     Engine.Display.terminalContent.style.display = "block";
+    document.getElementById("terminal-input-td").scrollIntoView(false);
     routing.navigateTo(Page.Terminal);
     MainMenuLinks.Terminal.classList.add("active");
   },
@@ -358,6 +359,7 @@ const Engine = {
     Engine.Display.terminalContent.style.display = "none";
 
     Engine.Display.content.style.display = "none";
+    Engine.Display.content.scrollTop = 0;
     ReactDOM.unmountComponentAtNode(Engine.Display.content);
 
     Engine.Display.infiltrationContent.style.display = "none";
