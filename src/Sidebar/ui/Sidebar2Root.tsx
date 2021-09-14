@@ -454,10 +454,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickStats}
             >
               <ListItemIcon>
-                <EqualizerIcon color={activeTab !== "Stats" ? "secondary" : "primary"} />
+                <EqualizerIcon color={flashStats ? "error" : activeTab !== "Stats" ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "Stats" ? "secondary" : "primary"}>Stats</Typography>
+                <Typography color={flashStats ? "error" : activeTab !== "Stats" ? "secondary" : "primary"}>
+                  Stats
+                </Typography>
               </ListItemText>
             </ListItem>
             <ListItem
@@ -680,7 +682,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 <Typography color={activeTab !== "Tutorial" ? "secondary" : "primary"}>Tutorial</Typography>
               </ListItemText>
             </ListItem>
-            <ListItem
+            {/*<ListItem
               button
               key={"Options"}
               className={clsx(classes.nested, {
@@ -693,22 +695,24 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <ListItemText>
                 <Typography color={activeTab !== "Options" ? "secondary" : "primary"}>options</Typography>
               </ListItemText>
-            </ListItem>
-            <ListItem
-              button
-              key={"Dev"}
-              className={clsx(classes.nested, {
-                [classes.active]: activeTab === "Dev",
-              })}
-              onClick={clickDev}
-            >
-              <ListItemIcon>
-                <DeveloperBoardIcon color={activeTab !== "Dev" ? "secondary" : "primary"} />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography color={activeTab !== "Dev" ? "secondary" : "primary"}>Dev</Typography>
-              </ListItemText>
-            </ListItem>
+            </ListItem>*/}
+            {process.env.NODE_ENV === "development" && (
+              <ListItem
+                button
+                key={"Dev"}
+                className={clsx(classes.nested, {
+                  [classes.active]: activeTab === "Dev",
+                })}
+                onClick={clickDev}
+              >
+                <ListItemIcon>
+                  <DeveloperBoardIcon color={activeTab !== "Dev" ? "secondary" : "primary"} />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography color={activeTab !== "Dev" ? "secondary" : "primary"}>Dev</Typography>
+                </ListItemText>
+              </ListItem>
+            )}
           </Collapse>
         </List>
       </Drawer>
