@@ -2,7 +2,7 @@ import React from "react";
 
 interface IProps {}
 
-export function Options(props: IProps): React.ReactElement {
+export function GameOptionsRoot(props: IProps): React.ReactElement {
   return (
     <>
       <h1>Game Options</h1>
