@@ -378,10 +378,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 onClick={clickTerminal}
               >
                 <ListItemIcon>
-                  <LastPageIcon color={activeTab !== "Terminal" ? "secondary" : "primary"} />
+                  <LastPageIcon color={flashTerminal ? "error" : activeTab !== "Terminal" ? "secondary" : "primary"} />
                 </ListItemIcon>
                 <ListItemText>
-                  <Typography color={activeTab !== "Terminal" ? "secondary" : "primary"}>Terminal</Typography>
+                  <Typography color={flashTerminal ? "error" : activeTab !== "Terminal" ? "secondary" : "primary"}>
+                    Terminal
+                  </Typography>
                 </ListItemText>
               </ListItem>
               <ListItem
@@ -408,10 +410,14 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 onClick={clickActiveScripts}
               >
                 <ListItemIcon>
-                  <StorageIcon color={activeTab !== "ActiveScripts" ? "secondary" : "primary"} />
+                  <StorageIcon
+                    color={flashActiveScripts ? "error" : activeTab !== "ActiveScripts" ? "secondary" : "primary"}
+                  />
                 </ListItemIcon>
                 <ListItemText>
-                  <Typography color={activeTab !== "ActiveScripts" ? "secondary" : "primary"}>
+                  <Typography
+                    color={flashActiveScripts ? "error" : activeTab !== "ActiveScripts" ? "secondary" : "primary"}
+                  >
                     Active Scripts
                   </Typography>
                 </ListItemText>
@@ -504,10 +510,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickHacknet}
             >
               <ListItemIcon>
-                <AccountTreeIcon color={activeTab !== "Hacknet" ? "secondary" : "primary"} />
+                <AccountTreeIcon color={flashHacknet ? "error" : activeTab !== "Hacknet" ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "Hacknet" ? "secondary" : "primary"}>Hacknet</Typography>
+                <Typography color={flashHacknet ? "error" : activeTab !== "Hacknet" ? "secondary" : "primary"}>
+                  Hacknet
+                </Typography>
               </ListItemText>
             </ListItem>
             <ListItem
@@ -545,10 +553,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickCity}
             >
               <ListItemIcon>
-                <LocationCityIcon color={activeTab !== "City" ? "secondary" : "primary"} />
+                <LocationCityIcon color={flashCity ? "error" : activeTab !== "City" ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "City" ? "secondary" : "primary"}>City</Typography>
+                <Typography color={flashCity ? "error" : activeTab !== "City" ? "secondary" : "primary"}>
+                  City
+                </Typography>
               </ListItemText>
             </ListItem>
             <ListItem
@@ -658,7 +668,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx(classes.nested, {
                 [classes.active]: activeTab === "Milestones",
               })}
-              onClick={clickTutorial}
+              onClick={clickMilestones}
             >
               <ListItemIcon>
                 <CheckIcon color={activeTab !== "Milestones" ? "secondary" : "primary"} />
@@ -673,13 +683,15 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               className={clsx(classes.nested, {
                 [classes.active]: activeTab === "Tutorial",
               })}
-              onClick={clickMilestones}
+              onClick={clickTutorial}
             >
               <ListItemIcon>
-                <HelpIcon color={activeTab !== "Tutorial" ? "secondary" : "primary"} />
+                <HelpIcon color={flashTutorial ? "error" : activeTab !== "Tutorial" ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "Tutorial" ? "secondary" : "primary"}>Tutorial</Typography>
+                <Typography color={flashTutorial ? "error" : activeTab !== "Tutorial" ? "secondary" : "primary"}>
+                  Tutorial
+                </Typography>
               </ListItemText>
             </ListItem>
             {/*<ListItem

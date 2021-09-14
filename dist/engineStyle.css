@@ -1343,7 +1343,11 @@ button {
   height: 100%;
   width: 99%;
   overflow: auto;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+  scrollbar-width: "none"; }
+
+#terminal-container::-webkit-scrollbar {
+  display: none; }
 
 #terminal {
   padding-top: 10px;
@@ -1637,11 +1641,11 @@ button {
     terminal which has its own page) */
 .generic-menupage-container {
   padding-left: 2px;
-  margin-left: 10%;
   -ms-overflow-style: none;
   /* for Internet Explorer, Edge */
   scrollbar-width: none;
-  /* for Firefox */ }
+  /* for Firefox */
+  flex-grow: 1; }
 
 #generic-react-container {
   padding: 10px;
@@ -2446,6 +2450,7 @@ input[type="checkbox"] {
   border: 2px solid var(--my-highlight-color); }
 
 .log-box-header {
+  z-index: 1300;
   background-color: #333;
   border: 1px solid var(--my-highlight-color);
   display: flex;
@@ -2600,7 +2605,7 @@ input[type="checkbox"] {
 
 #interactive-tutorial-container {
   display: none;
-  position: absolute;
+  position: fixed;
   /* Stay in place */
   right: 0;
   top: 0;
