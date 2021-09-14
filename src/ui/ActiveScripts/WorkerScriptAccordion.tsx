@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { numeralWrapper } from "../numeralFormat";
 
-import { BBAccordion } from "../React/Accordion";
+import { BBAccordion } from "../React/BBAccordion";
 import { AccordionButton } from "../React/AccordionButton";
 
 import { killWorkerScript } from "../../Netscript/killWorkerScript";

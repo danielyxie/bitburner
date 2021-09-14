@@ -4,7 +4,7 @@
  */
 import * as React from "react";
 
-import { BBAccordion } from "../React/Accordion";
+import { BBAccordion } from "../React/BBAccordion";
 import { ServerAccordionContent } from "./ServerAccordionContent";
 
 import { BaseServer } from "../../Server/BaseServer";

@@ -27,6 +27,64 @@ export const theme = createMuiTheme({
       root: {
         backgroundColor: colors.well,
       },
+      input: {
+        color: colors.primary,
+        "&::placeholder": {
+          userSelect: "none",
+          color: colors.primarydark,
+        },
+      },
+    },
+    MuiInput: {
+      root: {
+        backgroundColor: colors.well,
+        borderBottomColor: "#fff",
+      },
+      underline: {
+        "&:hover:before": {
+          borderBottomColor: colors.primarydark,
+        },
+        "&:before": {
+          borderBottomColor: colors.primary,
+        },
+        "&:after": {
+          borderBottomColor: colors.primarylight,
+        },
+      },
+    },
+    MuiInputLabel: {
+      root: {
+        color: colors.primarydark, // why is this switched?
+        userSelect: "none",
+        "&:before": {
+          color: colors.primarylight,
+        },
+      },
+    },
+    MuiSelect: {
+      icon: {
+        color: colors.primary,
+      },
+    },
+    MuiMenu: {
+      list: {
+        backgroundColor: colors.well,
+      },
+    },
+    MuiMenuItem: {
+      root: {
+        color: colors.primary,
+      },
+    },
+    MuiAccordionSummary: {
+      root: {
+        backgroundColor: "#111",
+      },
+    },
+    MuiAccordionDetails: {
+      root: {
+        backgroundColor: "#000",
+      },
     },
   },
 });

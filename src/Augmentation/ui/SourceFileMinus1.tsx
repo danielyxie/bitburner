@@ -7,7 +7,7 @@ import * as React from "react";
 import { Player } from "../../Player";
 import { Exploit, ExploitName } from "../../Exploits/Exploit";
 
-import { BBAccordion } from "../../ui/React/Accordion";
+import { BBAccordion } from "../../ui/React/BBAccordion";
 
 export function SourceFileMinus1(): React.ReactElement {
   const exploits = Player.exploits;
