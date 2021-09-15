@@ -2439,7 +2439,7 @@ input[type="checkbox"] {
   flex-flow: column;
   background-color: gray;
   width: 50%;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 40%;
   margin: -10% 0 0 -25%;
