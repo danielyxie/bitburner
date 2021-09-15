@@ -55,4 +55,7 @@ export function postContent(input: string, config: IPostContentConfig = {}): voi
 function scrollTerminalToBottom(): void {
   const container: HTMLElement = getElementById("terminal-container");
   container.scrollTop = container.scrollHeight;
+  const td = document.getElementById("terminal-input-td");
+  if (td === null) throw new Error("terminal-input-td should not be null");
+  td.scrollIntoView(false);
 }
