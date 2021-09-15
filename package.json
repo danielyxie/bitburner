@@ -1,4 +1,9 @@
 {
+
+  "name": "bitburner",
+  "license": "SEE LICENSE IN license.txt",
+  "version": "0.53.0",
+  "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie"
   },
@@ -114,14 +119,14 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^3.7.3",
     "webpack-dev-server": "^3.11.2",
-    "worker-loader": "^2.0.0"
+    "worker-loader": "^2.0.0",
+    "electron": "^14.0.1",
+    "electron-packager": "^15.4.0"
   },
   "engines": {
     "node": ">=8 || <=9"
   },
   "homepage": "https://github.com/danielyxie/bitburner",
-  "license": "SEE LICENSE IN license.txt",
-  "name": "bitburner",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danielyxie/bitburner.git"
@@ -135,7 +140,6 @@
     "start": "http-server -p 8000",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
     "start:container": "webpack-dev-server --progress --env.devServer --mode development --env.runInContainer",
-    "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "lint": "npm run lint:jsts & npm run lint:style",
     "lint:jsts": "eslint --fix . --ext js,jsx,ts,tsx",
@@ -144,7 +148,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
-    "watch:dev": "webpack --watch --mode development"
-  },
-  "version": "0.53.0"
+    "watch:dev": "webpack --watch --mode development",
+    "package-electron": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
+  }
 }
