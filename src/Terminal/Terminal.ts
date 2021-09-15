@@ -1,0 +1,692 @@
+import { postContent, hackProgressBarPost, hackProgressPost } from "../ui/postToTerminal";
+import { ITerminal } from "./ITerminal";
+import { IEngine } from "../IEngine";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { HacknetServer } from "../Hacknet/HacknetServer";
+import { BaseServer } from "../Server/BaseServer";
+import { hackWorldDaemon } from "../RedPill";
+import { Programs } from "../Programs/Programs";
+import { CodingContractResult } from "../CodingContracts";
+
+import { Terminal as OldTerminal } from "../Terminal";
+import { TextFile } from "../TextFile";
+import { Script } from "../Script/Script";
+import { isScriptFilename } from "../Script/ScriptHelpersTS";
+import { CONSTANTS } from "../Constants";
+import { AllServers } from "../Server/AllServers";
+
+import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
+import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
+import { logBoxCreate } from "../../utils/LogBox";
+import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
+import { findRunningScript } from "../Script/ScriptHelpers";
+import { TerminalHelpText } from "./HelpText";
+import { GetServerByHostname, getServer, getServerOnNetwork } from "../Server/ServerHelpers";
+import { ParseCommand, ParseCommands } from "./Parser";
+import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
+import {
+  calculateHackingChance,
+  calculateHackingExpGain,
+  calculatePercentMoneyHacked,
+  calculateHackingTime,
+} from "../Hacking";
+import { numeralWrapper } from "../ui/numeralFormat";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+
+import { alias } from "./commands/alias";
+import { analyze } from "./commands/analyze";
+import { backdoor } from "./commands/backdoor";
+import { buy } from "./commands/buy";
+import { cat } from "./commands/cat";
+import { cd } from "./commands/cd";
+import { check } from "./commands/check";
+import { connect } from "./commands/connect";
+import { download } from "./commands/download";
+import { expr } from "./commands/expr";
+import { free } from "./commands/free";
+import { hack } from "./commands/hack";
+import { help } from "./commands/help";
+import { home } from "./commands/home";
+import { hostname } from "./commands/hostname";
+import { ifconfig } from "./commands/ifconfig";
+import { kill } from "./commands/kill";
+import { killall } from "./commands/killall";
+import { ls } from "./commands/ls";
+import { lscpu } from "./commands/lscpu";
+import { mem } from "./commands/mem";
+import { mv } from "./commands/mv";
+import { nano } from "./commands/nano";
+import { ps } from "./commands/ps";
+import { rm } from "./commands/rm";
+import { run } from "./commands/run";
+import { scan } from "./commands/scan";
+import { scananalyze } from "./commands/scananalyze";
+import { scp } from "./commands/scp";
+import { sudov } from "./commands/sudov";
+import { tail } from "./commands/tail";
+import { theme } from "./commands/theme";
+import { top } from "./commands/top";
+import { unalias } from "./commands/unalias";
+import { wget } from "./commands/wget";
+import { clear } from "./commands/clear";
+
+export class Terminal implements ITerminal {
+  print(s: string, config?: any): void {
+    postContent(s, config);
+  }
+
+  error(s: string): void {
+    postContent(`ERROR: ${s}`, { color: "#ff2929" });
+  }
+
+  startHack(player: IPlayer): void {
+    OldTerminal.hackFlag = true;
+
+    // Hacking through Terminal should be faster than hacking through a script
+    OldTerminal.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
+    this.startAction();
+  }
+
+  startBackdoor(player: IPlayer): void {
+    OldTerminal.backdoorFlag = true;
+
+    // Backdoor should take the same amount of time as hack
+    OldTerminal.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
+    this.startAction();
+  }
+
+  startAnalyze(): void {
+    OldTerminal.analyzeFlag = true;
+    OldTerminal.actionTime = 1;
+    this.print("Analyzing system...");
+    this.startAction();
+  }
+
+  startAction(): void {
+    OldTerminal.actionStarted = true;
+
+    hackProgressPost("Time left:");
+    hackProgressBarPost("[");
+
+    // Disable terminal
+    const elem = document.getElementById("terminal-input-td");
+    if (!elem) throw new Error("terminal-input-td should not be null");
+    elem.innerHTML = '<input type="text" class="terminal-input"/>';
+    $("input[class=terminal-input]").prop("disabled", true);
+  }
+
+  // Complete the hack/analyze command
+  finishHack(player: IPlayer, cancelled = false): void {
+    if (!cancelled) {
+      const server = player.getCurrentServer();
+
+      // Calculate whether hack was successful
+      const hackChance = calculateHackingChance(server, player);
+      const rand = Math.random();
+      const expGainedOnSuccess = calculateHackingExpGain(server, player);
+      const expGainedOnFailure = expGainedOnSuccess / 4;
+      if (rand < hackChance) {
+        // Success!
+        if (
+          SpecialServerIps[SpecialServerNames.WorldDaemon] &&
+          SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
+        ) {
+          if (player.bitNodeN == null) {
+            player.bitNodeN = 1;
+          }
+          hackWorldDaemon(player.bitNodeN);
+          OldTerminal.hackFlag = false;
+          return;
+        }
+        server.backdoorInstalled = true;
+        let moneyGained = calculatePercentMoneyHacked(server, player);
+        moneyGained = Math.floor(server.moneyAvailable * moneyGained);
+
+        if (moneyGained <= 0) {
+          moneyGained = 0;
+        } // Safety check
+
+        server.moneyAvailable -= moneyGained;
+        player.gainMoney(moneyGained);
+        player.recordMoneySource(moneyGained, "hacking");
+        player.gainHackingExp(expGainedOnSuccess);
+        player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
+
+        server.fortify(CONSTANTS.ServerFortifyAmount);
+
+        this.print(
+          `Hack successful! Gained ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(
+            expGainedOnSuccess,
+          )} hacking exp`,
+        );
+      } else {
+        // Failure
+        // player only gains 25% exp for failure? TODO Can change this later to balance
+        player.gainHackingExp(expGainedOnFailure);
+        this.print(
+          `Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`,
+        );
+      }
+    }
+    OldTerminal.hackFlag = false;
+  }
+
+  finishBackdoor(player: IPlayer, cancelled = false): void {
+    if (!cancelled) {
+      const server = player.getCurrentServer();
+      if (
+        SpecialServerIps[SpecialServerNames.WorldDaemon] &&
+        SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
+      ) {
+        if (player.bitNodeN == null) {
+          player.bitNodeN = 1;
+        }
+        hackWorldDaemon(player.bitNodeN);
+        OldTerminal.backdoorFlag = false;
+        return;
+      }
+      server.backdoorInstalled = true;
+      this.print("Backdoor successful!");
+    }
+    OldTerminal.backdoorFlag = false;
+  }
+
+  finishAnalyze(player: IPlayer, cancelled = false): void {
+    if (!cancelled) {
+      const currServ = player.getCurrentServer();
+      const isHacknet = currServ instanceof HacknetServer;
+      this.print(currServ.hostname + ": ");
+      const org = currServ.organizationName;
+      this.print("Organization name: " + (!isHacknet ? org : "player"));
+      const hasAdminRights = (!isHacknet && currServ.hasAdminRights) || isHacknet;
+      this.print("Root Access: " + (hasAdminRights ? "YES" : "NO"));
+      const hackingSkill = currServ.requiredHackingSkill;
+      this.print("Required hacking skill: " + (!isHacknet ? hackingSkill : "N/A"));
+      const security = currServ.hackDifficulty;
+      this.print("Server security level: " + (!isHacknet ? numeralWrapper.formatServerSecurity(security) : "N/A"));
+      const hackingChance = calculateHackingChance(currServ, player);
+      this.print("Chance to hack: " + (!isHacknet ? numeralWrapper.formatPercentage(hackingChance) : "N/A"));
+      const hackingTime = calculateHackingTime(currServ, player) * 1000;
+      this.print("Time to hack: " + (!isHacknet ? convertTimeMsToTimeElapsedString(hackingTime, true) : "N/A"));
+      this.print(
+        `Total money available on server: ${!isHacknet ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"}`,
+      );
+      const numPort = currServ.numOpenPortsRequired;
+      this.print("Required number of open ports for NUKE: " + (!isHacknet ? numPort : "N/A"));
+      this.print("SSH port: " + (currServ.sshPortOpen ? "Open" : "Closed"));
+      this.print("FTP port: " + (currServ.ftpPortOpen ? "Open" : "Closed"));
+      this.print("SMTP port: " + (currServ.smtpPortOpen ? "Open" : "Closed"));
+      this.print("HTTP port: " + (currServ.httpPortOpen ? "Open" : "Closed"));
+      this.print("SQL port: " + (currServ.sqlPortOpen ? "Open" : "Closed"));
+    }
+    OldTerminal.analyzeFlag = false;
+  }
+
+  finishAction(player: IPlayer, cancelled = false): void {
+    if (OldTerminal.hackFlag) {
+      this.finishHack(player, cancelled);
+    } else if (OldTerminal.backdoorFlag) {
+      this.finishBackdoor(player, cancelled);
+    } else if (OldTerminal.analyzeFlag) {
+      this.finishAnalyze(player, cancelled);
+    }
+
+    // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
+    $("#hack-progress-bar").attr("id", "old-hack-progress-bar");
+    $("#hack-progress").attr("id", "old-hack-progress");
+    OldTerminal.resetTerminalInput();
+    $("input[class=terminal-input]").prop("disabled", false);
+  }
+
+  getFile(player: IPlayer, filename: string): Script | TextFile | string | null {
+    if (isScriptFilename(filename)) {
+      return this.getScript(player, filename);
+    }
+
+    if (filename.endsWith(".lit")) {
+      return this.getLitFile(player, filename);
+    }
+
+    if (filename.endsWith(".txt")) {
+      return this.getTextFile(player, filename);
+    }
+
+    return null;
+  }
+
+  getFilepath(filename: string): string {
+    const path = evaluateFilePath(filename, this.cwd());
+    if (path == null) {
+      throw new Error(`Invalid file path specified: ${filename}`);
+    }
+
+    if (isInRootDirectory(path)) {
+      return removeLeadingSlash(path);
+    }
+
+    return path;
+  }
+
+  getScript(player: IPlayer, filename: string): Script | null {
+    const s = player.getCurrentServer();
+    const filepath = this.getFilepath(filename);
+    for (const script of s.scripts) {
+      if (filepath === script.filename) {
+        return script;
+      }
+    }
+
+    return null;
+  }
+
+  getTextFile(player: IPlayer, filename: string): TextFile | null {
+    const s = player.getCurrentServer();
+    const filepath = this.getFilepath(filename);
+    for (const txt of s.textFiles) {
+      if (filepath === txt.fn) {
+        return txt;
+      }
+    }
+
+    return null;
+  }
+
+  getLitFile(player: IPlayer, filename: string): string | null {
+    const s = player.getCurrentServer();
+    const filepath = this.getFilepath(filename);
+    for (const lit of s.messages) {
+      if (typeof lit === "string" && filepath === lit) {
+        return lit;
+      }
+    }
+
+    return null;
+  }
+
+  resetTerminalInput(): void {
+    OldTerminal.resetTerminalInput();
+  }
+
+  cwd(): string {
+    return OldTerminal.currDir;
+  }
+
+  setcwd(dir: string): void {
+    OldTerminal.currDir = dir;
+  }
+
+  async runContract(player: IPlayer, contractName: string): Promise<void> {
+    // There's already an opened contract
+    if (OldTerminal.contractOpen) {
+      return this.error("There's already a Coding Contract in Progress");
+    }
+
+    const serv = player.getCurrentServer();
+    const contract = serv.getContract(contractName);
+    if (contract == null) {
+      return this.error("No such contract");
+    }
+
+    OldTerminal.contractOpen = true;
+    const res = await contract.prompt();
+
+    switch (res) {
+      case CodingContractResult.Success:
+        if (contract.reward !== null) {
+          const reward = player.gainCodingContractReward(contract.reward, contract.getDifficulty());
+          this.print(`Contract SUCCESS - ${reward}`);
+        }
+        serv.removeContract(contract);
+        break;
+      case CodingContractResult.Failure:
+        ++contract.tries;
+        if (contract.tries >= contract.getMaxNumTries()) {
+          this.print("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
+          serv.removeContract(contract);
+        } else {
+          this.print(
+            `Contract <p style='color:red;display:inline'>FAILED</p> - ${
+              contract.getMaxNumTries() - contract.tries
+            } tries remaining`,
+          );
+        }
+        break;
+      case CodingContractResult.Cancelled:
+      default:
+        this.print("Contract cancelled");
+        break;
+    }
+    OldTerminal.contractOpen = false;
+  }
+
+  executeScanAnalyzeCommand(player: IPlayer, depth = 1, all = false): void {
+    // TODO Using array as stack for now, can make more efficient
+    this.print("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
+    this.print(" ");
+
+    // Map of all servers to keep track of which have been visited
+    const visited: {
+      [key: string]: number | undefined;
+    } = {};
+    for (const ip in AllServers) {
+      visited[ip] = 0;
+    }
+
+    const stack: BaseServer[] = [];
+    const depthQueue: number[] = [0];
+    const currServ = player.getCurrentServer();
+    stack.push(currServ);
+    while (stack.length != 0) {
+      const s = stack.pop();
+      if (!s) continue;
+      const d = depthQueue.pop();
+      if (d === undefined) continue;
+      const isHacknet = s instanceof HacknetServer;
+      if (!all && (s as any).purchasedByPlayer && s.hostname != "home") {
+        continue; // Purchased server
+      } else if (visited[s.ip] || d > depth) {
+        continue; // Already visited or out-of-depth
+      } else if (!all && isHacknet) {
+        continue; // Hacknet Server
+      } else {
+        visited[s.ip] = 1;
+      }
+      for (let i = s.serversOnNetwork.length - 1; i >= 0; --i) {
+        const newS = getServerOnNetwork(s, i);
+        if (newS === null) continue;
+        stack.push(newS);
+        depthQueue.push(d + 1);
+      }
+      if (d == 0) {
+        continue;
+      } // Don't print current server
+      const titleDashes = Array((d - 1) * 4 + 1).join("-");
+      if (player.hasProgram(Programs.AutoLink.name)) {
+        this.print("<strong>" + titleDashes + "> <a class='scan-analyze-link'>" + s.hostname + "</a></strong>", false);
+      } else {
+        this.print("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
+      }
+
+      const dashes = titleDashes + "--";
+      let c = "NO";
+      if (s.hasAdminRights) {
+        c = "YES";
+      }
+      this.print(
+        `${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + (s as any).requiredHackingSkill : ""}`,
+      );
+      if (s.hasOwnProperty("numOpenPortsRequired")) {
+        this.print(dashes + "Number of open ports required to NUKE: " + (s as any).numOpenPortsRequired);
+      }
+      this.print(dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam));
+      this.print(" ");
+    }
+
+    const links = document.getElementsByClassName("scan-analyze-link");
+    for (let i = 0; i < links.length; ++i) {
+      (() => {
+        const hostname = links[i].innerHTML.toString();
+        links[i].addEventListener("onclick", () => {
+          if (OldTerminal.analyzeFlag || OldTerminal.hackFlag || OldTerminal.backdoorFlag) {
+            return;
+          }
+          this.connectToServer(player, hostname);
+        });
+      })(); // Immediate invocation
+    }
+  }
+
+  connectToServer(player: IPlayer, server: string): void {
+    const serv = getServer(server);
+    if (serv == null) {
+      this.error("Invalid server. Connection failed.");
+      return;
+    }
+    player.getCurrentServer().isConnectedTo = false;
+    player.currentServer = serv.ip;
+    player.getCurrentServer().isConnectedTo = true;
+    this.print("Connected to " + serv.hostname);
+    this.setcwd("/");
+    if (player.getCurrentServer().hostname == "darkweb") {
+      checkIfConnectedToDarkweb(); // Posts a 'help' message if connecting to dark web
+    }
+    this.resetTerminalInput();
+  }
+
+  executeCommands(engine: IEngine, player: IPlayer, commands: string): void {
+    // Sanitize input
+    commands = commands.trim();
+    commands = commands.replace(/\s\s+/g, " "); // Replace all extra whitespace in command with a single space
+
+    // Handle Terminal History - multiple commands should be saved as one
+    if (OldTerminal.commandHistory[OldTerminal.commandHistory.length - 1] != commands) {
+      OldTerminal.commandHistory.push(commands);
+      if (OldTerminal.commandHistory.length > 50) {
+        OldTerminal.commandHistory.splice(0, 1);
+      }
+    }
+    OldTerminal.commandHistoryIndex = OldTerminal.commandHistory.length;
+    const allCommands = ParseCommands(commands);
+
+    for (let i = 0; i < allCommands.length; i++) {
+      this.executeCommand(engine, player, allCommands[i]);
+    }
+  }
+
+  executeCommand(engine: IEngine, player: IPlayer, command: string): void {
+    if (OldTerminal.hackFlag || OldTerminal.backdoorFlag || OldTerminal.analyzeFlag) {
+      this.error(`Cannot execute command (${command}) while an action is in progress`);
+      return;
+    }
+    // Allow usage of ./
+    if (command.startsWith("./")) {
+      command = "run " + command.slice(2);
+    }
+    // Only split the first space
+    const commandArray = ParseCommand(command);
+    if (commandArray.length == 0) {
+      return;
+    }
+    const s = player.getCurrentServer();
+    /****************** Interactive Tutorial Terminal Commands ******************/
+    if (ITutorial.isRunning) {
+      const n00dlesServ = GetServerByHostname("n00dles");
+      if (n00dlesServ == null) {
+        throw new Error("Could not get n00dles server");
+        return;
+      }
+      switch (ITutorial.currStep) {
+        case iTutorialSteps.TerminalHelp:
+          if (commandArray.length === 1 && commandArray[0] == "help") {
+            this.print(TerminalHelpText);
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalLs:
+          if (commandArray.length === 1 && commandArray[0] == "ls") {
+            ls(this, engine, player, s, commandArray.slice(1));
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalScan:
+          if (commandArray.length === 1 && commandArray[0] == "scan") {
+            scan(this, engine, player, s, commandArray.slice(1));
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalScanAnalyze1:
+          if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
+            this.executeScanAnalyzeCommand(player, 1);
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalScanAnalyze2:
+          if (commandArray.length == 2 && commandArray[0] == "scan-analyze" && commandArray[1] === 2) {
+            this.executeScanAnalyzeCommand(player, 2);
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalConnect:
+          if (commandArray.length == 2) {
+            if (commandArray[0] == "connect" && (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.ip)) {
+              player.getCurrentServer().isConnectedTo = false;
+              player.currentServer = n00dlesServ.ip;
+              player.getCurrentServer().isConnectedTo = true;
+              this.print("Connected to n00dles");
+              iTutorialNextStep();
+            } else {
+              this.print("Wrong command! Try again!");
+              return;
+            }
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalAnalyze:
+          if (commandArray.length === 1 && commandArray[0] === "analyze") {
+            if (commandArray.length !== 1) {
+              this.print("Incorrect usage of analyze command. Usage: analyze");
+              return;
+            }
+            this.startAnalyze();
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalNuke:
+          if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
+            n00dlesServ.hasAdminRights = true;
+            this.print("NUKE successful! Gained root access to n00dles");
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalManualHack:
+          if (commandArray.length == 1 && commandArray[0] == "hack") {
+            this.startHack(player);
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalCreateScript:
+          if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
+            engine.loadScriptEditorContent("n00dles.script", "");
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalFree:
+          if (commandArray.length == 1 && commandArray[0] == "free") {
+            free(this, engine, player, s, commandArray.slice(1));
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.TerminalRunScript:
+          if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
+            run(this, engine, player, s, commandArray.slice(1));
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        case iTutorialSteps.ActiveScriptsToTerminal:
+          if (commandArray.length == 2 && commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
+            // Check that the script exists on this machine
+            const runningScript = findRunningScript("n00dles.script", [], player.getCurrentServer());
+            if (runningScript == null) {
+              this.print("Error: No such script exists");
+              return;
+            }
+            logBoxCreate(runningScript);
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+          }
+          break;
+        default:
+          this.print("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
+          return;
+      }
+      return;
+    }
+    /****************** END INTERACTIVE TUTORIAL ******************/
+    /* Command parser */
+    const commandName = commandArray[0];
+    if (typeof commandName === "number") {
+      this.error(`Command ${commandArray[0]} not found`);
+      return;
+    }
+
+    const commands: {
+      [key: string]: (
+        terminal: ITerminal,
+        engine: IEngine,
+        player: IPlayer,
+        server: BaseServer,
+        args: (string | number)[],
+      ) => void;
+    } = {
+      alias: alias,
+      analyze: analyze,
+      backdoor: backdoor,
+      buy: buy,
+      cat: cat,
+      cd: cd,
+      check: check,
+      cls: clear,
+      clear: clear,
+      connect: connect,
+      download: download,
+      expr: expr,
+      free: free,
+      hack: hack,
+      help: help,
+      home: home,
+      hostname: hostname,
+      ifconfig: ifconfig,
+      kill: kill,
+      killall: killall,
+      ls: ls,
+      lscpu: lscpu,
+      mem: mem,
+      mv: mv,
+      nano: nano,
+      ps: ps,
+      rm: rm,
+      run: run,
+      scan: scan,
+      "scan-analyze": scananalyze,
+      scp: scp,
+      sudov: sudov,
+      tail: tail,
+      theme: theme,
+      top: top,
+      unalias: unalias,
+      wget: wget,
+    };
+
+    const f = commands[commandName.toLowerCase()];
+    if (!f) {
+      this.error(`Command ${commandArray[0]} not found`);
+      return;
+    }
+
+    f(this, engine, player, s, commandArray.slice(1));
+  }
+}

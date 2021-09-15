@@ -24,6 +24,7 @@ import { Exploit } from "../Exploits/Exploit";
 import { ICorporation } from "../Corporation/ICorporation";
 import { IGang } from "../Gang/IGang";
 import { IBladeburner } from "../Bladeburner/IBladeburner";
+import { ICodingContractReward } from "../CodingContracts";
 
 export interface IPlayer {
   // Class members
@@ -207,4 +208,5 @@ export interface IPlayer {
   queueAugmentation(augmentationName: string): void;
   receiveInvite(factionName: string): void;
   updateSkillLevels(): void;
+  gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
 }

@@ -1,5 +1,6 @@
 import { AllServers, createUniqueRandomIp, ipExists } from "./AllServers";
 import { Server, IConstructorParams } from "./Server";
+import { BaseServer } from "./BaseServer";
 import { calculateServerGrowth } from "./formulas/grow";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -141,7 +142,7 @@ export function getServer(s: string): Server | HacknetServer | null {
 // Returns the i-th server on the specified server's network
 // A Server's serverOnNetwork property holds only the IPs. This function returns
 // the actual Server object
-export function getServerOnNetwork(server: Server, i: number): Server | HacknetServer | null {
+export function getServerOnNetwork(server: BaseServer, i: number): Server | HacknetServer | null {
   if (i > server.serversOnNetwork.length) {
     console.error("Tried to get server on network that was out of range");
     return null;
