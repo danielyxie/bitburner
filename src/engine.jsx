@@ -889,37 +889,9 @@ const Engine = {
 
   // Initialization
   init: function () {
-    // Import game link
-    document.getElementById("import-game-link").onclick = function () {
-      saveObject.importGame();
-    };
-
-    // Save, Delete, Import/Export buttons
-    Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
-    Engine.Clickables.saveMainMenuButton.addEventListener("click", function () {
-      saveObject.saveGame(Engine.indexedDb);
-      return false;
-    });
-
-    Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
-    Engine.Clickables.deleteMainMenuButton.addEventListener("click", function () {
-      saveObject.deleteGame(Engine.indexedDb);
-      return false;
-    });
-
-    document.getElementById("export-game-link").addEventListener("click", function () {
-      saveObject.exportGame();
-      return false;
-    });
-
     // Character Overview buttons
     document.getElementById("character-overview-save-button").addEventListener("click", function () {
       saveObject.saveGame(Engine.indexedDb);
-      return false;
-    });
-
-    document.getElementById("character-overview-options-button").addEventListener("click", function () {
-      gameOptionsBoxOpen();
       return false;
     });
 
@@ -960,68 +932,6 @@ const Engine = {
 
     // Character overview screen
     document.getElementById("character-overview-container").style.display = "block";
-
-    // Copy Save Data to Clipboard
-    document.getElementById("copy-save-to-clipboard-link").addEventListener("click", function () {
-      const saveString = saveObject.getSaveString();
-      if (!navigator.clipboard) {
-        // Async Clipboard API not supported, so we'll use this using the
-        // textarea and document.execCommand('copy') trick
-        const textArea = document.createElement("textarea");
-        textArea.value = saveString;
-        textArea.setAttribute("readonly", "");
-        textArea.style.position = "absolute";
-        textArea.left = "-9999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-          const successful = document.execCommand("copy");
-          if (successful) {
-            createStatusText("Copied save to clipboard");
-          } else {
-            createStatusText("Failed to copy save");
-          }
-        } catch (e) {
-          console.error("Unable to copy save data to clipboard using document.execCommand('copy')");
-          createStatusText("Failed to copy save");
-        }
-        document.body.removeChild(textArea);
-      } else {
-        // Use the Async Clipboard API
-        navigator.clipboard.writeText(saveString).then(
-          function () {
-            createStatusText("Copied save to clipboard");
-          },
-          function (err) {
-            console.error(err);
-            console.error("Unable to copy save data to clipboard using Async API");
-            createStatusText("Failed to copy save");
-          },
-        );
-      }
-    });
-
-    // DEBUG Delete active Scripts on home
-    document.getElementById("debug-delete-scripts-link").addEventListener("click", function () {
-      for (const hostname of Object.keys(AllServers)) {
-        AllServers[hostname].runningScripts = [];
-      }
-      dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
-      gameOptionsBoxClose();
-    });
-
-    // DEBUG Soft Reset
-    document.getElementById("debug-soft-reset").addEventListener("click", function () {
-      dialogBoxCreate("Soft Reset!");
-      prestigeAugmentation();
-      gameOptionsBoxClose();
-    });
-
-    // DEBUG File diagnostic
-    document.getElementById("debug-files").addEventListener("click", function () {
-      createPopup("debug-files-diagnostic-popup", FileDiagnosticPopup, {});
-    });
   },
 
   start: function () {
