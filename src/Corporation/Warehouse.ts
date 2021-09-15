@@ -80,6 +80,11 @@ export class Warehouse {
     if (params.corp && params.industry) {
       this.updateSize(params.corp, params.industry);
     }
+
+    // Default smart supply to being enabled if the upgrade is unlocked
+    if (params.corp?.unlockUpgrades[1]) {
+      this.smartSupplyEnabled = true;
+    }
   }
 
   // Re-calculate how much space is being used by this Warehouse
