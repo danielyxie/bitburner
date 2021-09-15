@@ -69,7 +69,6 @@ import { Reputation } from "./ui/React/Reputation";
 import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { MainMenuLinks } from "./ui/MainMenu/Links";
 
-import { FileDiagnosticPopup } from "./Diagnostic/FileDiagnosticPopup";
 import { createPopup } from "./ui/React/createPopup";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
