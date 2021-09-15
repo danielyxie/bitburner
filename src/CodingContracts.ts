@@ -179,7 +179,6 @@ export class CodingContract {
             removePopup(popupId);
           },
           onAttempt: (val: string) => {
-            console.error("attempting");
             if (this.isSolution(val)) {
               resolve(CodingContractResult.Success);
             } else {

@@ -54,7 +54,7 @@ export function executeDarkwebTerminalCommand(commandArray: string[]): void {
   }
 }
 
-function listAllDarkwebItems(): void {
+export function listAllDarkwebItems(): void {
   for (const key in DarkWebItems) {
     const item = DarkWebItems[key];
     postElement(
@@ -65,7 +65,7 @@ function listAllDarkwebItems(): void {
   }
 }
 
-function buyDarkwebItem(itemName: string): void {
+export function buyDarkwebItem(itemName: string): void {
   itemName = itemName.toLowerCase();
 
   // find the program that matches, if any

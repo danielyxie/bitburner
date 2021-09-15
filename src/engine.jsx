@@ -58,7 +58,6 @@ import { Terminal, postVersion } from "./Terminal";
 import { TutorialRoot } from "./Tutorial/ui/TutorialRoot";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 
-import { createStatusText } from "./ui/createStatusText";
 import { CharacterInfo } from "./ui/CharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
 import { Money } from "./ui/React/Money";
@@ -67,8 +66,6 @@ import { Reputation } from "./ui/React/Reputation";
 
 import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { MainMenuLinks } from "./ui/MainMenu/Links";
-
-import { createPopup } from "./ui/React/createPopup";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";

@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { createStyles, makeStyles, useTheme, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 
 import { Theme as BBTheme, colors } from "../../ui/React/Theme";
 
@@ -341,7 +337,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const toggleDrawer = () => setOpen((old) => !old);
+  const toggleDrawer = (): void => setOpen((old) => !old);
   return (
     <BBTheme>
       <Drawer

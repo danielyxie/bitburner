@@ -7,7 +7,7 @@ export interface IEngine {
   _lastUpdate: number;
   hideAllContent: () => void;
   loadTerminalContent: () => void;
-  loadScriptEditorContent: () => void;
+  loadScriptEditorContent: (filename?: string, code?: string) => void;
   loadActiveScriptsContent: () => void;
   loadCreateProgramContent: () => void;
   loadCharacterContent: () => void;
