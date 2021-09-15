@@ -254,6 +254,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     setActiveTab("Milestones");
     props.engine.loadMilestonesContent();
   }
+  function clickOptions(): void {
+    setActiveTab("Options");
+    props.engine.loadGameOptionsContent();
+  }
 
   function clickDev(): void {
     setActiveTab("Dev");
@@ -355,7 +359,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       >
         <ListItem button onClick={toggleDrawer}>
           <ListItemIcon>{!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}</ListItemIcon>
-          <ListItemText primary={<Typography color="primary">Bitburner {CONSTANTS.Version}</Typography>} />
+          <ListItemText primary={<Typography color="primary">Bitburner v{CONSTANTS.Version}</Typography>} />
         </ListItem>
         <Divider />
         <List>
@@ -711,20 +715,21 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 </Typography>
               </ListItemText>
             </ListItem>
-            {/*<ListItem
+            <ListItem
               button
               key={"Options"}
               className={clsx({
                 [classes.active]: activeTab === "Options",
               })}
+              onClick={clickOptions}
             >
               <ListItemIcon>
                 <SettingsIcon color={activeTab !== "Options" ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "Options" ? "secondary" : "primary"}>options</Typography>
+                <Typography color={activeTab !== "Options" ? "secondary" : "primary"}>Options</Typography>
               </ListItemText>
-            </ListItem>*/}
+            </ListItem>
             {process.env.NODE_ENV === "development" && (
               <ListItem
                 button

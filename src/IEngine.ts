@@ -29,4 +29,5 @@ export interface IEngine {
   loadInfiltrationContent: (name: string, difficulty: number, maxLevel: number) => void;
   loadMissionContent: () => void;
   loadResleevingContent: () => void;
+  loadGameOptionsContent: () => void;
 }

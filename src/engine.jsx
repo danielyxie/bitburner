@@ -26,6 +26,7 @@ import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { GameOptionsRoot } from "./ui/React/GameOptionsRoot";
+import { Theme } from "./ui/React/Theme";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
@@ -360,7 +361,28 @@ const Engine = {
     routing.navigateTo(Page.GameOptions);
     Engine.Display.content.style.display = "block";
     MainMenuLinks.City.classList.add("active");
-    ReactDOM.render(<GameOptionsRoot />, Engine.Display.content);
+    ReactDOM.render(
+      <Theme>
+        <GameOptionsRoot
+          player={Player}
+          save={() => saveObject.saveGame(Engine.indexedDb)}
+          delete={() => saveObject.deleteGame(Engine.indexedDb)}
+          export={() => saveObject.exportGame()}
+          import={() => saveObject.importGame()}
+          forceKill={() => {
+            for (const hostname of Object.keys(AllServers)) {
+              AllServers[hostname].runningScripts = [];
+            }
+            dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
+          }}
+          softReset={() => {
+            dialogBoxCreate("Soft Reset!");
+            prestigeAugmentation();
+          }}
+        />
+      </Theme>,
+      Engine.Display.content,
+    );
   },
 
   // Helper function that hides all content

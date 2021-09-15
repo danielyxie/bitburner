@@ -40,12 +40,7 @@ export function CodingContracts(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <Select
-                  id="contract-types-dropdown"
-                  className="dropdown"
-                  onChange={setCodingcontractDropdown}
-                  value={codingcontract}
-                >
+                <Select onChange={setCodingcontractDropdown} value={codingcontract}>
                   {Object.values(CodingContractTypes).map((cc) => (
                     <MenuItem key={cc.name} value={cc.name}>
                       {cc.name}

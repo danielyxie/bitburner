@@ -14,6 +14,7 @@ export const colors = {
   secondary: "#888",
   secondarydark: "#666",
 
+  welllight: "#444",
   well: "#222",
   white: "#fff",
   black: "#000",
@@ -35,6 +36,9 @@ export const theme = createMuiTheme({
       light: colors.errorlight,
       main: colors.error,
       dark: colors.errordark,
+    },
+    background: {
+      paper: colors.well,
     },
   },
   typography: {
@@ -150,12 +154,25 @@ export const theme = createMuiTheme({
         backgroundColor: colors.black,
       },
       paperAnchorDockedLeft: {
-        borderRight: "1px solid #444",
+        borderRight: "1px solid " + colors.welllight,
       },
     },
     MuiDivider: {
       root: {
-        backgroundColor: "#444",
+        backgroundColor: colors.welllight,
+      },
+    },
+    MuiFormControlLabel: {
+      root: {
+        color: colors.primary,
+      },
+    },
+    MuiSwitch: {
+      switchBase: {
+        color: colors.primarydark,
+      },
+      track: {
+        backgroundColor: colors.welllight,
       },
     },
   },

@@ -122,6 +122,11 @@ export enum Page {
    * Purchase Resleeves
    */
   Resleeves = "Re-sleeving",
+
+  /**
+   * Game options
+   */
+  GameOptions = "GameOptions",
 }
 
 /**
