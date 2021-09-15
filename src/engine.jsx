@@ -61,7 +61,6 @@ import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import { createStatusText } from "./ui/createStatusText";
 import { CharacterInfo } from "./ui/CharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
-import { setSettingsLabels } from "./ui/setSettingsLabels";
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
 import { Reputation } from "./ui/React/Reputation";
@@ -72,7 +71,6 @@ import { MainMenuLinks } from "./ui/MainMenu/Links";
 import { createPopup } from "./ui/React/createPopup";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { gameOptionsBoxClose, gameOptionsBoxOpen } from "../utils/GameOptions";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
 import "./Exploits/tampering";
@@ -857,7 +855,6 @@ const Engine = {
 
     ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
     // Initialize labels on game settings
-    setSettingsLabels();
     Terminal.resetTerminalInput();
   },
 
