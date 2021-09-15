@@ -16,14 +16,22 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "2px solid " + theme.palette.primary.main,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+      maxWidth: "80%",
+      maxHeight: "80%",
+      overflow: "auto",
+      "&::-webkit-scrollbar": {
+        // webkit
+        display: "none",
+      },
+      scrollbarWidth: "none", // firefox
     },
   }),
 );
 
 interface IProps {
   open: boolean;
-  close: () => void;
-  children: JSX.Element[] | JSX.Element;
+  onClose: () => void;
+  children: JSX.Element[] | JSX.Element | React.ReactElement[] | React.ReactElement;
 }
 
 export const Modal = (props: IProps): React.ReactElement => {
@@ -31,12 +39,12 @@ export const Modal = (props: IProps): React.ReactElement => {
   return (
     <M
       open={props.open}
-      onClose={props.close}
+      onClose={props.onClose}
       closeAfterTransition
       className={classes.modal}
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500,
+        timeout: 100,
       }}
     >
       <Fade in={props.open}>

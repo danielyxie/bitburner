@@ -16,8 +16,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Link from "@material-ui/core/Link";
 import Tooltip from "@material-ui/core/Tooltip";
-import { Modal } from "../../ui/React/Modal";
-import { FileDiagnosticPopup } from "../../Diagnostic/FileDiagnosticPopup";
+import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 
 import { Settings } from "../../Settings/Settings";
 
@@ -513,9 +512,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           </Box>
         </Grid>
       </Grid>
-      <Modal open={diagnosticOpen} close={() => setDiagnosticOpen(false)}>
-        <FileDiagnosticPopup />
-      </Modal>
+      <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
     </div>
   );
 }
