@@ -159,6 +159,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
     // Run command.
     if (event.keyCode === KEY.ENTER && value !== "") {
       event.preventDefault();
+      terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
       terminal.executeCommands(engine, player, value);
       setValue("");
       return;
