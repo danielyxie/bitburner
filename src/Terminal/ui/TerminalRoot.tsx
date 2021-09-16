@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
     },
     preformatted: {
-      whiteSpace: "pre",
+      whiteSpace: "pre-wrap",
       margin: 0,
     },
   }),
