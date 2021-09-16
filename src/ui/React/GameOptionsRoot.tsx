@@ -50,6 +50,8 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [execTime, setExecTime] = useState(Settings.CodeInstructionRunTime);
   const [logSize, setLogSize] = useState(Settings.MaxLogCapacity);
   const [portSize, setPortSize] = useState(Settings.MaxPortCapacity);
+  const [terminalSize, setTerminalSize] = useState(Settings.MaxTerminalCapacity);
+
   const [autosaveInterval, setAutosaveInterval] = useState(Settings.AutosaveInterval);
 
   const [suppressMessages, setSuppressMessages] = useState(Settings.SuppressMessages);
@@ -84,6 +86,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handlePortSizeChange(event: any, newValue: number | number[]): void {
     setPortSize(newValue as number);
     Settings.MaxPortCapacity = newValue as number;
+  }
+
+  function handleTerminalSizeChange(event: any, newValue: number | number[]): void {
+    setTerminalSize(newValue as number);
+    Settings.MaxTerminalCapacity = newValue as number;
   }
 
   function handleAutosaveIntervalChange(event: any, newValue: number | number[]): void {
@@ -207,6 +214,27 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 min={20}
                 max={100}
                 valueLabelDisplay="auto"
+              />
+            </ListItem>
+            <ListItem>
+              <Tooltip
+                title={
+                  <Typography>
+                    The maximum number of entries that can be written to a the terminal. Setting this too high can cause
+                    the game to use a lot of memory.
+                  </Typography>
+                }
+              >
+                <Typography>Terminal capacity</Typography>
+              </Tooltip>
+              <Slider
+                value={terminalSize}
+                onChange={handleTerminalSizeChange}
+                step={50}
+                min={50}
+                max={500}
+                valueLabelDisplay="auto"
+                marks
               />
             </ListItem>
             <ListItem>

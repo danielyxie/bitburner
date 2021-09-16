@@ -23,6 +23,7 @@ import { TerminalHelpText } from "./HelpText";
 import { GetServerByHostname, getServer, getServerOnNetwork } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
+import { Settings } from "../Settings/Settings";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import {
   calculateHackingChance,
@@ -99,6 +100,13 @@ export class Terminal implements ITerminal {
       return true;
     }
     return false;
+  }
+
+  append(item: Output | Link): void {
+    this.outputHistory.push(item);
+    if (this.outputHistory.length > Settings.MaxTerminalCapacity) {
+      this.outputHistory.slice(this.outputHistory.length - Settings.MaxTerminalCapacity);
+    }
   }
 
   print(s: string, config?: any): void {
