@@ -16,7 +16,7 @@ export function help(
     return;
   }
   if (args.length === 0) {
-    terminal.print(TerminalHelpText);
+    TerminalHelpText.forEach((line) => terminal.print(line));
   } else {
     const cmd = args[0];
     const txt = HelpTexts[cmd];
@@ -24,6 +24,6 @@ export function help(
       terminal.error("No help topics match '" + cmd + "'");
       return;
     }
-    terminal.print(txt);
+    txt.forEach((t) => terminal.print(t));
   }
 }

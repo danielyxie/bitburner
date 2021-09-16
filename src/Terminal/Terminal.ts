@@ -527,7 +527,7 @@ export class Terminal implements ITerminal {
       switch (ITutorial.currStep) {
         case iTutorialSteps.TerminalHelp:
           if (commandArray.length === 1 && commandArray[0] == "help") {
-            this.print(TerminalHelpText);
+            TerminalHelpText.forEach((line) => this.print(line));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
