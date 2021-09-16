@@ -427,9 +427,9 @@ export class Terminal implements ITerminal {
       } // Don't print current server
       const titleDashes = Array((d - 1) * 4 + 1).join("-");
       if (player.hasProgram(Programs.AutoLink.name)) {
-        this.print("<strong>" + titleDashes + "> <a class='scan-analyze-link'>" + s.hostname + "</a></strong>", false);
+        this.print(s.hostname);
       } else {
-        this.print("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
+        this.print(s.hostname);
       }
 
       const dashes = titleDashes + "--";
