@@ -1,1 +1,1 @@
-export declare const Terminal: any;
+export declare const Terminal: ITerminal;

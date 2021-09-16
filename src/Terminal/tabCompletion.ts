@@ -1,5 +1,3 @@
-import { post } from "../ui/postToTerminal";
-
 import { containsAllStrings, longestCommonStart } from "../../utils/StringHelperFunctions";
 
 /**
@@ -9,7 +7,12 @@ import { containsAllStrings, longestCommonStart } from "../../utils/StringHelper
  * @param arg {string} Last argument that is being completed
  * @param allPossibilities {string[]} All values that `arg` can complete to
  */
-export function tabCompletion(command: string, arg: string, allPossibilities: string[]): void {
+export function tabCompletion(
+  command: string,
+  arg: string,
+  allPossibilities: string[],
+  oldValue: string,
+): string[] | string | undefined {
   if (!(allPossibilities.constructor === Array)) {
     return;
   }
@@ -33,14 +36,6 @@ export function tabCompletion(command: string, arg: string, allPossibilities: st
     }
   }
 
-  const textBoxElem = document.getElementById("terminal-input-text-box");
-  if (textBoxElem == null) {
-    console.warn(`Couldn't find terminal input DOM element (id=terminal-input-text-box) when trying to autocomplete`);
-    return;
-  }
-  const textBox = textBoxElem as HTMLInputElement;
-
-  const oldValue = textBox.value;
   const semiColonIndex = oldValue.lastIndexOf(";");
 
   let val = "";
@@ -56,13 +51,11 @@ export function tabCompletion(command: string, arg: string, allPossibilities: st
 
     if (semiColonIndex === -1) {
       // No semicolon, so replace the whole command
-      textBox.value = val;
+      return val;
     } else {
       // Replace only after the last semicolon
-      textBox.value = textBox.value.slice(0, semiColonIndex + 1) + " " + val;
+      return oldValue.slice(0, semiColonIndex + 1) + " " + val;
     }
-
-    textBox.focus();
   } else {
     const longestStartSubstr = longestCommonStart(allPossibilities);
     /**
@@ -70,41 +63,30 @@ export function tabCompletion(command: string, arg: string, allPossibilities: st
      * as whatevers already in terminal, just list all possible options. Otherwise,
      * change the input in the terminal to the longest common starting substr
      */
-    let allOptionsStr = "";
-    for (let i = 0; i < allPossibilities.length; ++i) {
-      allOptionsStr += allPossibilities[i];
-      allOptionsStr += "   ";
-    }
     if (arg === "") {
       if (longestStartSubstr === command) {
-        post("> " + command);
-        post(allOptionsStr);
+        return allPossibilities;
       } else {
         if (semiColonIndex === -1) {
           // No semicolon, so replace the whole command
-          textBox.value = longestStartSubstr;
+          return longestStartSubstr;
         } else {
           // Replace only after the last semicolon
-          textBox.value = `${textBox.value.slice(0, semiColonIndex + 1)} ${longestStartSubstr}`;
+          return `${oldValue.slice(0, semiColonIndex + 1)} ${longestStartSubstr}`;
         }
-
-        textBox.focus();
       }
     } else {
       if (longestStartSubstr === arg) {
         // List all possible options
-        post("> " + command + " " + arg);
-        post(allOptionsStr);
+        return allPossibilities;
       } else {
         if (semiColonIndex == -1) {
           // No semicolon, so replace the whole command
-          textBox.value = `${command} ${longestStartSubstr}`;
+          return `${command} ${longestStartSubstr}`;
         } else {
           // Replace only after the last semicolon
-          textBox.value = `${textBox.value.slice(0, semiColonIndex + 1)} ${command} ${longestStartSubstr}`;
+          return `${oldValue.slice(0, semiColonIndex + 1)} ${command} ${longestStartSubstr}`;
         }
-
-        textBox.focus();
       }
     }
   }

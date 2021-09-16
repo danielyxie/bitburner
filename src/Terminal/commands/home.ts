@@ -19,5 +19,4 @@ export function home(
   player.getCurrentServer().isConnectedTo = true;
   terminal.print("Connected to home");
   terminal.setcwd("/");
-  terminal.resetTerminalInput();
 }

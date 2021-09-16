@@ -1,5 +1,5 @@
 import { postContent, hackProgressBarPost, hackProgressPost } from "../ui/postToTerminal";
-import { ITerminal } from "./ITerminal";
+import { ITerminal, IOutput } from "./ITerminal";
 import { IEngine } from "../IEngine";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
@@ -71,6 +71,7 @@ import { wget } from "./commands/wget";
 import { clear } from "./commands/clear";
 
 export class Terminal implements ITerminal {
+  hasChanges = false;
   // Flags to determine whether the player is currently running a hack or an analyze
   hackFlag = false;
   backdoorFlag = false;
@@ -81,6 +82,8 @@ export class Terminal implements ITerminal {
   commandHistory: string[] = [];
   commandHistoryIndex = 0;
 
+  outputHistory: IOutput[] = [{ text: `Bitburner v${CONSTANTS.Version}`, color: "primary" }];
+
   // True if a Coding Contract prompt is opened
   contractOpen = false;
 
@@ -88,12 +91,22 @@ export class Terminal implements ITerminal {
   // Excludes the trailing forward slash
   currDir = "/";
 
+  pollChanges(): boolean {
+    if (this.hasChanges) {
+      this.hasChanges = false;
+      return true;
+    }
+    return false;
+  }
+
   print(s: string, config?: any): void {
-    postContent(s, config);
+    this.outputHistory.push({ text: s, color: "primary" });
+    this.hasChanges = true;
   }
 
   error(s: string): void {
-    postContent(`ERROR: ${s}`, { color: "#ff2929" });
+    this.outputHistory.push({ text: s, color: "error" });
+    this.hasChanges = true;
   }
 
   startHack(player: IPlayer): void {
@@ -251,7 +264,6 @@ export class Terminal implements ITerminal {
     // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
     $("#hack-progress-bar").attr("id", "old-hack-progress-bar");
     $("#hack-progress").attr("id", "old-hack-progress");
-    this.resetTerminalInput();
     $("input[class=terminal-input]").prop("disabled", false);
   }
 
@@ -320,16 +332,13 @@ export class Terminal implements ITerminal {
     return null;
   }
 
-  resetTerminalInput(): void {
-    OldTerminal.resetTerminalInput();
-  }
-
   cwd(): string {
     return this.currDir;
   }
 
   setcwd(dir: string): void {
     this.currDir = dir;
+    this.hasChanges = true;
   }
 
   async runContract(player: IPlayer, contractName: string): Promise<void> {
@@ -467,7 +476,6 @@ export class Terminal implements ITerminal {
     if (player.getCurrentServer().hostname == "darkweb") {
       checkIfConnectedToDarkweb(); // Posts a 'help' message if connecting to dark web
     }
-    this.resetTerminalInput();
   }
 
   executeCommands(engine: IEngine, player: IPlayer, commands: string): void {
@@ -488,6 +496,11 @@ export class Terminal implements ITerminal {
     for (let i = 0; i < allCommands.length; i++) {
       this.executeCommand(engine, player, allCommands[i]);
     }
+  }
+
+  clear(): void {
+    this.outputHistory = [{ text: `Bitburner v${CONSTANTS.Version}`, color: "primary" }];
+    this.hasChanges = true;
   }
 
   executeCommand(engine: IEngine, player: IPlayer, command: string): void {
@@ -666,8 +679,8 @@ export class Terminal implements ITerminal {
       cat: cat,
       cd: cd,
       check: check,
-      cls: clear,
-      clear: clear,
+      cls: () => this.clear(),
+      clear: () => this.clear(),
       connect: connect,
       download: download,
       expr: expr,

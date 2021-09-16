@@ -2,18 +2,6 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { getElementById } from "../../utils/uiHelpers/getElementById";
 
 /**
- * Adds some output to the terminal.
- * @param input Text or HTML to output to the terminal
- */
-export function post(input: string): void {
-  postContent(input);
-}
-
-export function postError(input: string): void {
-  postContent(`ERROR: ${input}`, { color: "#ff2929" });
-}
-
-/**
  * Adds some output to the terminal with an identifier of "hack-progress-bar"
  * @param input Text or HTML to output to the terminal
  */
@@ -34,10 +22,6 @@ interface IPostContentConfig {
   color?: string; // Additional class for terminal-line. Does NOT replace
 }
 
-export function postElement(element: JSX.Element): void {
-  postContent(renderToStaticMarkup(element));
-}
-
 export function postContent(input: string, config: IPostContentConfig = {}): void {
   // tslint:disable-next-line:max-line-length
   const style = `color: ${
@@ -49,13 +33,4 @@ export function postContent(input: string, config: IPostContentConfig = {}): voi
   } style="${style}">${input}</td></tr>`;
   const inputElement: HTMLElement = getElementById("terminal-input");
   inputElement.insertAdjacentHTML("beforebegin", content);
-  scrollTerminalToBottom();
-}
-
-function scrollTerminalToBottom(): void {
-  const container: HTMLElement = getElementById("terminal-container");
-  container.scrollTop = container.scrollHeight;
-  const td = document.getElementById("terminal-input-td");
-  if (td === null) throw new Error("terminal-input-td should not be null");
-  td.scrollIntoView(false);
 }

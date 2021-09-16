@@ -23,7 +23,7 @@ import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
-import { Terminal, postVersion } from "./Terminal";
+import { Terminal } from "./Terminal";
 
 import { Page, routing } from "./ui/navigationTracking";
 
@@ -65,13 +65,8 @@ function prestigeAugmentation() {
 
   Player.factions = Player.factions.concat(maintainMembership);
 
-  // Now actually go to the Terminal Screen (and reset it)
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
-  Terminal.resetTerminalInput();
+  Terminal.clear();
   Engine.loadTerminalContent();
-  $("#terminal tr:not(:last)").remove();
-  postVersion();
 
   // Delete all Worker Scripts objects
   prestigeWorkerScripts();

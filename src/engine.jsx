@@ -54,7 +54,8 @@ import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import { initSymbolToStockMap, processStockPrices, displayStockMarketContent } from "./StockMarket/StockMarket";
 import { MilestonesRoot } from "./Milestones/ui/MilestonesRoot";
-import { Terminal, postVersion } from "./Terminal";
+import { TerminalRoot } from "./Terminal/ui/TerminalRoot";
+import { Terminal } from "./Terminal";
 import { TutorialRoot } from "./Tutorial/ui/TutorialRoot";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 
@@ -90,7 +91,6 @@ const Engine = {
     // Generic page that most react loads into.
     content: null,
     // Main menu content
-    terminalContent: null,
     infiltrationContent: null,
     workInProgressContent: null,
     redPillContent: null,
@@ -107,10 +107,15 @@ const Engine = {
 
   loadTerminalContent: function () {
     Engine.hideAllContent();
-    Engine.Display.terminalContent.style.display = "block";
-    document.getElementById("terminal-input-td").scrollIntoView(false);
-    routing.navigateTo(Page.Terminal);
-    MainMenuLinks.Terminal.classList.add("active");
+    Engine.Display.content.style.display = "block";
+    routing.navigateTo(Page.CharacterInfo);
+    ReactDOM.render(
+      <Theme>
+        <TerminalRoot terminal={Terminal} engine={this} player={Player} />
+      </Theme>,
+      Engine.Display.content,
+    );
+    MainMenuLinks.Stats.classList.add("active");
   },
 
   loadCharacterContent: function () {
@@ -382,8 +387,6 @@ const Engine = {
 
   // Helper function that hides all content
   hideAllContent: function () {
-    Engine.Display.terminalContent.style.display = "none";
-
     Engine.Display.content.style.display = "none";
     Engine.Display.content.scrollTop = 0;
     ReactDOM.unmountComponentAtNode(Engine.Display.content);
@@ -844,16 +847,12 @@ const Engine = {
     }
 
     ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
-    // Initialize labels on game settings
-    Terminal.resetTerminalInput();
+    Engine.loadTerminalContent();
   },
 
   setDisplayElements: function () {
     Engine.Display.content = document.getElementById("generic-react-container");
     Engine.Display.content.style.display = "none";
-    // Content elements
-    Engine.Display.terminalContent = document.getElementById("terminal-container");
-    routing.navigateTo(Page.Terminal);
 
     Engine.Display.missionContent = document.getElementById("mission-container");
     Engine.Display.missionContent.style.display = "none";
@@ -878,9 +877,6 @@ const Engine = {
 
   // Initialization
   init: function () {
-    // Message at the top of terminal
-    postVersion();
-
     // Player was working cancel button
     if (Player.isWorking) {
       var cancelButton = document.getElementById("work-in-progress-cancel-button");
