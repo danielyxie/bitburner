@@ -238,7 +238,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress messages</Typography>
+                    <Typography>Suppress messages</Typography>
                   </Tooltip>
                 }
               />
@@ -261,7 +261,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress faction invites</Typography>
+                    <Typography>Suppress faction invites</Typography>
                   </Tooltip>
                 }
               />
@@ -284,7 +284,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress travel confirmations</Typography>
+                    <Typography>Suppress travel confirmations</Typography>
                   </Tooltip>
                 }
               />
@@ -306,7 +306,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress buy augmentation confirmation</Typography>
+                    <Typography>Suppress buy augmentation confirmation</Typography>
                   </Tooltip>
                 }
               />
@@ -329,7 +329,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress hospitalization popup</Typography>
+                    <Typography>Suppress hospitalization popup</Typography>
                   </Tooltip>
                 }
               />
@@ -353,7 +353,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                         </Typography>
                       }
                     >
-                      <Typography>Supress bladeburner popup</Typography>
+                      <Typography>Suppress bladeburner popup</Typography>
                     </Tooltip>
                   }
                 />
