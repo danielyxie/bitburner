@@ -4,6 +4,23 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { IEngine } from "../IEngine";
 
 export interface ITerminal {
+  // Flags to determine whether the player is currently running a hack or an analyze
+  hackFlag: boolean;
+  backdoorFlag: boolean;
+  analyzeFlag: boolean;
+  actionStarted: boolean;
+  actionTime: number;
+
+  commandHistory: string[];
+  commandHistoryIndex: number;
+
+  // True if a Coding Contract prompt is opened
+  contractOpen: boolean;
+
+  // Full Path of current directory
+  // Excludes the trailing forward slash
+  currDir: string;
+
   print(s: string, config?: any): void;
   error(s: string): void;
 
