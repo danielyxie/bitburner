@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import ReplyAllIcon from "@material-ui/icons/ReplyAll";
 import ReplyIcon from "@material-ui/icons/Reply";
+import ClearIcon from "@material-ui/icons/Clear";
 
 interface IProps {
   player: IPlayer;
@@ -33,6 +34,11 @@ export function Augmentations(props: IProps): React.ReactElement {
       props.player.queueAugmentation(augName);
     }
   }
+
+  function clearAugs(): void {
+    props.player.augmentations = [];
+  }
+
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -58,6 +64,13 @@ export function Augmentations(props: IProps): React.ReactElement {
                       </IconButton>
                       <IconButton color="primary" onClick={queueAug}>
                         <ReplyIcon />
+                      </IconButton>
+                    </>
+                  }
+                  endAdornment={
+                    <>
+                      <IconButton color="primary" onClick={clearAugs}>
+                        <ClearIcon />
                       </IconButton>
                     </>
                   }
