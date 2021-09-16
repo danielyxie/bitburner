@@ -1,4 +1,3 @@
-import { postContent, hackProgressBarPost, hackProgressPost } from "../ui/postToTerminal";
 import { ITerminal, Output, Link, TTimer } from "./ITerminal";
 import { IEngine } from "../IEngine";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -109,7 +108,7 @@ export class Terminal implements ITerminal {
     }
   }
 
-  print(s: string, config?: any): void {
+  print(s: string): void {
     this.outputHistory.push(new Output(s, "primary"));
     this.hasChanges = true;
   }

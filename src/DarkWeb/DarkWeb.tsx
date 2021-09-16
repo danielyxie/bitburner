@@ -1,11 +1,9 @@
-import * as React from "react";
 import { DarkWebItems } from "./DarkWebItems";
 
 import { Player } from "../Player";
 import { Terminal } from "../Terminal";
 import { SpecialServerIps } from "../Server/SpecialServerIps";
 import { numeralWrapper } from "../ui/numeralFormat";
-import { Money } from "../ui/React/Money";
 
 import { isValidIPAddress } from "../../utils/helpers/isValidIPAddress";
 

@@ -3,7 +3,7 @@
  *
  * TODO: Separate UI functionality into its own component
  */
-import { convertTimeMsToTimeElapsedString, replaceAt } from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Augmentations } from "./Augmentation/Augmentations";
 import { initAugmentations, installAugmentations } from "./Augmentation/AugmentationHelpers";
 import { onExport } from "./ExportBonus";
