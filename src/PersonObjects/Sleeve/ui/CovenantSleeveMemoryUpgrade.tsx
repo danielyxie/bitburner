@@ -81,7 +81,7 @@ export class CovenantSleeveMemoryUpgrade extends React.Component<IProps, IState>
     if (isNaN(this.state.amt)) {
       purchaseBtnContent = <>Invalid value</>;
     } else if (this.state.amt > maxMemory) {
-      purchaseBtnContent = <>Memory cannot exceed 100?</>;
+      purchaseBtnContent = <>Memory cannot exceed 100</>;
     } else {
       purchaseBtnContent = (
         <>
