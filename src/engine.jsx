@@ -96,6 +96,7 @@ const Engine = {
     redPillContent: null,
     cinematicTextContent: null,
     missionContent: null,
+    overview: null,
   },
 
   indexedDb: undefined,
@@ -309,7 +310,7 @@ const Engine = {
   loadMissionContent: function () {
     Engine.hideAllContent();
     document.getElementById("mainmenu-container").style.visibility = "hidden";
-    document.getElementById("character-overview-wrapper").style.visibility = "hidden";
+    document.getElementById("character-overview").style.visibility = "hidden";
     Engine.Display.missionContent.style.display = "block";
     routing.navigateTo(Page.Mission);
   },
@@ -397,15 +398,12 @@ const Engine = {
   },
 
   displayCharacterOverviewInfo: function () {
-    ReactDOM.render(<CharacterOverview player={Player} />, document.getElementById("character-overview-text"));
-
-    const save = document.getElementById("character-overview-save-button");
-    const flashClass = "flashing-button";
-    if (!Settings.AutosaveInterval) {
-      save.classList.add(flashClass);
-    } else {
-      save.classList.remove(flashClass);
-    }
+    ReactDOM.render(
+      <Theme>
+        <CharacterOverview player={Player} save={() => saveObject.saveGame(Engine.indexedDb)} />
+      </Theme>,
+      document.getElementById("character-overview"),
+    );
   },
 
   // Main Game Loop
@@ -573,11 +571,6 @@ const Engine = {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
         saveObject.saveGame(Engine.indexedDb);
       }
-    }
-
-    if (Engine.Counters.updateDisplays <= 0) {
-      Engine.displayCharacterOverviewInfo();
-      Engine.Counters.updateDisplays = 3;
     }
 
     if (Engine.Counters.checkFactionInvitations <= 0) {
@@ -879,16 +872,12 @@ const Engine = {
     // Cinematic Text
     Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
     Engine.Display.cinematicTextContent.style.display = "none";
+
+    Engine.Display.overview = document.getElementById("character-overview");
   },
 
   // Initialization
   init: function () {
-    // Character Overview buttons
-    document.getElementById("character-overview-save-button").addEventListener("click", function () {
-      saveObject.saveGame(Engine.indexedDb);
-      return false;
-    });
-
     // Message at the top of terminal
     postVersion();
 
@@ -922,10 +911,9 @@ const Engine = {
       }
 
       Engine.loadWorkInProgressContent();
-    }
 
-    // Character overview screen
-    document.getElementById("character-overview-container").style.display = "block";
+      Engine.displayCharacterOverviewInfo();
+    }
   },
 
   start: function () {
