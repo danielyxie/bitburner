@@ -4,7 +4,9 @@
  */
 
 import React from "react";
-import { makeStyles, TextField, TextFieldProps } from "@material-ui/core";
+import { TextField, TextFieldProps } from "@mui/material";
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const backgroundColorStyles = {
   backgroundColor: "rgba(57, 54, 54, 0.9)",

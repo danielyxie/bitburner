@@ -26,7 +26,7 @@ import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { GameOptionsRoot } from "./ui/React/GameOptionsRoot";
-import { Theme } from "./ui/React/Theme";
+import { TTheme as Theme } from "./ui/React/Theme";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
@@ -803,7 +803,12 @@ const Engine = {
       removeLoadingScreen();
     }
 
-    ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
+    ReactDOM.render(
+      <Theme>
+        <SidebarRoot engine={this} player={Player} />
+      </Theme>,
+      document.getElementById("sidebar"),
+    );
   },
 
   setDisplayElements: function () {

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
+import Button from "@mui/material/Button";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Programs as AllPrograms } from "../../Programs/Programs";
-import MenuItem from "@material-ui/core/MenuItem";
+import MenuItem from "@mui/material/MenuItem";
 
 interface IProps {
   player: IPlayer;
@@ -17,7 +17,7 @@ interface IProps {
 
 export function Programs(props: IProps): React.ReactElement {
   const [program, setProgram] = useState("NUKE.exe");
-  function setProgramDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+  function setProgramDropdown(event: SelectChangeEvent<string>): void {
     setProgram(event.target.value as string);
   }
   function addProgram(): void {

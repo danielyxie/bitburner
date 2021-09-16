@@ -3,7 +3,7 @@ import { IEngine } from "../../IEngine";
 import { Factions } from "../../Faction/Factions";
 import React, { useState } from "react";
 import { StdButton } from "../../ui/React/StdButton";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";

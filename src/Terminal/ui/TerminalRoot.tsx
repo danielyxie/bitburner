@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { Link as MuiLink } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import { Link as MuiLink } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import Box from "@mui/material/Box";
 import { ITerminal, Output, Link } from "../ITerminal";
 import { IEngine } from "../../IEngine";
 import { IPlayer } from "../../PersonObjects/IPlayer";

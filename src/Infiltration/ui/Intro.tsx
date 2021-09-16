@@ -2,7 +2,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IEngine } from "../../IEngine";
 import React from "react";
 import { StdButton } from "../../ui/React/StdButton";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 
 interface IProps {
   Player: IPlayer;

@@ -1,7 +1,7 @@
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IEngine } from "../../IEngine";
 import React, { useState } from "react";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import { Countdown } from "./Countdown";
 import { BracketGame } from "./BracketGame";
 import { SlashGame } from "./SlashGame";

@@ -1,7 +1,7 @@
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import withStyles from '@mui/styles/withStyles';
+import Grid from "@mui/material/Grid";
 
 const TimerProgress = withStyles(() => ({
   bar: {

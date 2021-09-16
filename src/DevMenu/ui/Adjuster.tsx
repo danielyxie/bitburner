@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import IconButton from "@material-ui/core/IconButton";
-import ExposureZeroIcon from "@material-ui/icons/ExposureZero";
-import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
-import TextField from "@material-ui/core/TextField";
-import Tooltip from "@material-ui/core/Tooltip";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 
 interface IProps {
   label: string;
@@ -37,12 +37,12 @@ export function Adjuster(props: IProps): React.ReactElement {
           startAdornment: (
             <>
               <Tooltip title="Add a lot">
-                <IconButton color="primary" onClick={tons}>
+                <IconButton color="primary" onClick={tons} size="large">
                   <DoubleArrowIcon style={{ transform: "rotate(-90deg)" }} />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Add">
-                <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)}>
+                <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)} size="large">
                   <AddIcon />
                 </IconButton>
               </Tooltip>
@@ -51,13 +51,17 @@ export function Adjuster(props: IProps): React.ReactElement {
           endAdornment: (
             <>
               <Tooltip title="Remove">
-                <IconButton color="primary" onClick={() => subtract(typeof value !== "string" ? value : 0)}>
+                <IconButton
+                  color="primary"
+                  onClick={() => subtract(typeof value !== "string" ? value : 0)}
+                  size="large"
+                >
                   <RemoveIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Reset">
-                <IconButton color="primary" onClick={reset}>
-                  <ExposureZeroIcon />
+                <IconButton color="primary" onClick={reset} size="large">
+                  <ClearIcon />
                 </IconButton>
               </Tooltip>
             </>

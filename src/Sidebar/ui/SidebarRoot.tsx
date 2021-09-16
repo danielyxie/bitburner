@@ -1,47 +1,49 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-import Collapse from "@material-ui/core/Collapse";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
+import Collapse from "@mui/material/Collapse";
 
-import { Theme as BBTheme, colors } from "../../ui/React/Theme";
+import { TTheme as BBTheme, colors } from "../../ui/React/Theme";
 
-import ComputerIcon from "@material-ui/icons/Computer";
-import LastPageIcon from "@material-ui/icons/LastPage"; // Terminal
-import CreateIcon from "@material-ui/icons/Create"; // Create Script
-import StorageIcon from "@material-ui/icons/Storage"; // Active Scripts
-import BugReportIcon from "@material-ui/icons/BugReport"; // Create Program
-import EqualizerIcon from "@material-ui/icons/Equalizer"; // Stats
-import ContactsIcon from "@material-ui/icons/Contacts"; // Factions
-import DoubleArrowIcon from "@material-ui/icons/DoubleArrow"; // Augmentations
-import AccountTreeIcon from "@material-ui/icons/AccountTree"; // Hacknet
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt"; // Sleeves
-import LocationCityIcon from "@material-ui/icons/LocationCity"; // City
-import AirplanemodeActiveIcon from "@material-ui/icons/AirplanemodeActive"; // Travel
-import WorkIcon from "@material-ui/icons/Work"; // Job
-import TrendingUpIcon from "@material-ui/icons/TrendingUp"; // Stock Market
-import FormatBoldIcon from "@material-ui/icons/FormatBold"; // Bladeburner
-import BusinessIcon from "@material-ui/icons/Business"; // Corp
-import SportsMmaIcon from "@material-ui/icons/SportsMma"; // Gang
-import CheckIcon from "@material-ui/icons/Check"; // Milestones
-import HelpIcon from "@material-ui/icons/Help"; // Tutorial
-import SettingsIcon from "@material-ui/icons/Settings"; // options
-import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard"; // Dev
-// import MemoryIcon from "@material-ui/icons/Memory";
-// import ShareIcon from "@material-ui/icons/Share";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import PublicIcon from "@material-ui/icons/Public";
-import LiveHelpIcon from "@material-ui/icons/LiveHelp";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ComputerIcon from "@mui/icons-material/Computer";
+import LastPageIcon from "@mui/icons-material/LastPage"; // Terminal
+import CreateIcon from "@mui/icons-material/Create"; // Create Script
+import StorageIcon from "@mui/icons-material/Storage"; // Active Scripts
+import BugReportIcon from "@mui/icons-material/BugReport"; // Create Program
+import EqualizerIcon from "@mui/icons-material/Equalizer"; // Stats
+import ContactsIcon from "@mui/icons-material/Contacts"; // Factions
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow"; // Augmentations
+import AccountTreeIcon from "@mui/icons-material/AccountTree"; // Hacknet
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt"; // Sleeves
+import LocationCityIcon from "@mui/icons-material/LocationCity"; // City
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive"; // Travel
+import WorkIcon from "@mui/icons-material/Work"; // Job
+import TrendingUpIcon from "@mui/icons-material/TrendingUp"; // Stock Market
+import FormatBoldIcon from "@mui/icons-material/FormatBold"; // Bladeburner
+import BusinessIcon from "@mui/icons-material/Business"; // Corp
+import SportsMmaIcon from "@mui/icons-material/SportsMma"; // Gang
+import CheckIcon from "@mui/icons-material/Check"; // Milestones
+import HelpIcon from "@mui/icons-material/Help"; // Tutorial
+import SettingsIcon from "@mui/icons-material/Settings"; // options
+import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard"; // Dev
+// import MemoryIcon from "@mui/icons-material/Memory";
+// import ShareIcon from "@mui/icons-material/Share";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import PublicIcon from "@mui/icons-material/Public";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { IEngine } from "../../IEngine";
 import { IPlayer } from "../../PersonObjects/IPlayer";
