@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme: Theme) =>
       whiteSpace: "pre-wrap",
       margin: 0,
     },
+    list: {
+      padding: 0,
+      height: "100%",
+      overflowY: "scroll",
+    },
   }),
 );
 
@@ -348,7 +353,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
 
   return (
     <Box position="fixed" bottom="0" width="100%" px={1}>
-      <List classes={{ root: classes.nopadding }}>
+      <List classes={{ root: classes.list }}>
         {terminal.outputHistory.map((item, i) => {
           if (item instanceof Output)
             return (
