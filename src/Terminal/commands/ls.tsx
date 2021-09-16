@@ -114,7 +114,7 @@ export function ls(
   allMessages.sort();
   folders.sort();
 
-  function postSegments(segments: string[], config: any): void {
+  function postSegments(segments: string[]): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
     const filesPerRow = Math.floor(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
@@ -126,13 +126,12 @@ export function ls(
         i++;
       }
       i--;
-      terminal.print(row, config);
+      terminal.print(row);
     }
   }
 
-  const config = { color: "#0000FF" };
   const groups = [
-    { segments: folders, config: config },
+    { segments: folders },
     { segments: allMessages },
     { segments: allTextFiles },
     { segments: allPrograms },
@@ -144,6 +143,6 @@ export function ls(
       terminal.print("");
       terminal.print("");
     }
-    postSegments(groups[i].segments, groups[i].config);
+    postSegments(groups[i].segments);
   }
 }

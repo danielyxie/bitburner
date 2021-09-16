@@ -49,7 +49,7 @@ export interface ITerminal {
   // Excludes the trailing forward slash
   currDir: string;
 
-  print(s: string, config?: any): void;
+  print(s: string): void;
   error(s: string): void;
 
   clear(): void;
