@@ -357,10 +357,6 @@ function prestigeSourceFile(flume) {
     updateHashManagerCapacity(Player);
   }
 
-  // Refresh Main Menu (the 'World' menu, specifically)
-  document.getElementById("world-menu-header").click();
-  document.getElementById("world-menu-header").click();
-
   // Gain int exp
   if (SourceFileFlags[5] !== 0 && !flume) Player.gainIntelligenceExp(300);
 
