@@ -68,7 +68,6 @@ import { theme } from "./commands/theme";
 import { top } from "./commands/top";
 import { unalias } from "./commands/unalias";
 import { wget } from "./commands/wget";
-import { clear } from "./commands/clear";
 
 export class Terminal implements ITerminal {
   hasChanges = false;
