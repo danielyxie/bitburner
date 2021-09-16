@@ -158,7 +158,12 @@ const Engine = {
     Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.CreateProgram);
     MainMenuLinks.CreateProgram.classList.add("active");
-    ReactDOM.render(<Theme><ProgramsRoot player={Player} /></Theme>, Engine.Display.content);
+    ReactDOM.render(
+      <Theme>
+        <ProgramsRoot player={Player} />
+      </Theme>,
+      Engine.Display.content,
+    );
   },
 
   loadFactionsContent: function () {
@@ -263,8 +268,10 @@ const Engine = {
   loadWorkInProgressContent: function () {
     Engine.hideAllContent();
     const mainMenu = document.getElementById("mainmenu-container");
+    console.log("hiding loadWorkInProgressContent");
     mainMenu.style.visibility = "hidden";
     Engine.Display.workInProgressContent.style.display = "block";
+    console.log(Engine.Display.workInProgressContent);
     routing.navigateTo(Page.WorkInProgress);
   },
 
@@ -797,7 +804,6 @@ const Engine = {
     }
 
     ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
-    Engine.loadTerminalContent();
   },
 
   setDisplayElements: function () {
@@ -859,6 +865,8 @@ const Engine = {
       Engine.loadWorkInProgressContent();
 
       Engine.displayCharacterOverviewInfo();
+    } else {
+      Engine.loadTerminalContent();
     }
   },
 
