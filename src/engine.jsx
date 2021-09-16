@@ -153,7 +153,7 @@ const Engine = {
     Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.CreateProgram);
     MainMenuLinks.CreateProgram.classList.add("active");
-    ReactDOM.render(<ProgramsRoot player={Player} />, Engine.Display.content);
+    ReactDOM.render(<Theme><ProgramsRoot player={Player} /></Theme>, Engine.Display.content);
   },
 
   loadFactionsContent: function () {
