@@ -1,5 +1,5 @@
 import { postContent, hackProgressBarPost, hackProgressPost } from "../ui/postToTerminal";
-import { ITerminal, IOutput } from "./ITerminal";
+import { ITerminal, Output, Link, TTimer } from "./ITerminal";
 import { IEngine } from "../IEngine";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
@@ -8,7 +8,6 @@ import { hackWorldDaemon } from "../RedPill";
 import { Programs } from "../Programs/Programs";
 import { CodingContractResult } from "../CodingContracts";
 
-import { Terminal as OldTerminal } from "../Terminal";
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
 import { isScriptFilename } from "../Script/ScriptHelpersTS";
@@ -24,6 +23,7 @@ import { TerminalHelpText } from "./HelpText";
 import { GetServerByHostname, getServer, getServerOnNetwork } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
+import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import {
   calculateHackingChance,
   calculateHackingExpGain,
@@ -72,16 +72,12 @@ import { wget } from "./commands/wget";
 export class Terminal implements ITerminal {
   hasChanges = false;
   // Flags to determine whether the player is currently running a hack or an analyze
-  hackFlag = false;
-  backdoorFlag = false;
-  analyzeFlag = false;
-  actionStarted = false;
-  actionTime = 0;
+  action: TTimer | null = null;
 
   commandHistory: string[] = [];
   commandHistoryIndex = 0;
 
-  outputHistory: IOutput[] = [{ text: `Bitburner v${CONSTANTS.Version}`, color: "primary" }];
+  outputHistory: (Output | Link)[] = [{ text: `Bitburner v${CONSTANTS.Version}`, color: "primary" }];
 
   // True if a Coding Contract prompt is opened
   contractOpen = false;
@@ -89,6 +85,13 @@ export class Terminal implements ITerminal {
   // Full Path of current directory
   // Excludes the trailing forward slash
   currDir = "/";
+
+  process(player: IPlayer, cycles: number): void {
+    if (this.action === null) return;
+    this.action.timeLeft -= (CONSTANTS._idleSpeed * cycles) / 1000;
+    this.hasChanges = true;
+    if (this.action.timeLeft < 0) this.finishAction(player, false);
+  }
 
   pollChanges(): boolean {
     if (this.hasChanges) {
@@ -99,105 +102,85 @@ export class Terminal implements ITerminal {
   }
 
   print(s: string, config?: any): void {
-    this.outputHistory.push({ text: s, color: "primary" });
+    this.outputHistory.push(new Output(s, "primary"));
     this.hasChanges = true;
   }
 
   error(s: string): void {
-    this.outputHistory.push({ text: s, color: "error" });
+    this.outputHistory.push(new Output(s, "error"));
     this.hasChanges = true;
   }
 
   startHack(player: IPlayer): void {
-    this.hackFlag = true;
-
     // Hacking through Terminal should be faster than hacking through a script
-    this.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
-    this.startAction();
+    this.startAction(calculateHackingTime(player.getCurrentServer(), player) / 4, "h");
   }
 
   startBackdoor(player: IPlayer): void {
-    this.backdoorFlag = true;
-
     // Backdoor should take the same amount of time as hack
-    this.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
-    this.startAction();
+    this.startAction(calculateHackingTime(player.getCurrentServer(), player) / 4, "b");
   }
 
   startAnalyze(): void {
-    this.analyzeFlag = true;
-    this.actionTime = 1;
     this.print("Analyzing system...");
-    this.startAction();
+    this.startAction(1, "a");
   }
 
-  startAction(): void {
-    this.actionStarted = true;
-
-    hackProgressPost("Time left:");
-    hackProgressBarPost("[");
-
-    // Disable terminal
-    const elem = document.getElementById("terminal-input-td");
-    if (!elem) throw new Error("terminal-input-td should not be null");
-    elem.innerHTML = '<input type="text" class="terminal-input"/>';
-    $("input[class=terminal-input]").prop("disabled", true);
+  startAction(n: number, action: "h" | "b" | "a"): void {
+    this.action = new TTimer(n, action);
   }
 
   // Complete the hack/analyze command
   finishHack(player: IPlayer, cancelled = false): void {
-    if (!cancelled) {
-      const server = player.getCurrentServer();
+    if (cancelled) return;
+    const server = player.getCurrentServer();
 
-      // Calculate whether hack was successful
-      const hackChance = calculateHackingChance(server, player);
-      const rand = Math.random();
-      const expGainedOnSuccess = calculateHackingExpGain(server, player);
-      const expGainedOnFailure = expGainedOnSuccess / 4;
-      if (rand < hackChance) {
-        // Success!
-        if (
-          SpecialServerIps[SpecialServerNames.WorldDaemon] &&
-          SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
-        ) {
-          if (player.bitNodeN == null) {
-            player.bitNodeN = 1;
-          }
-          hackWorldDaemon(player.bitNodeN);
-          this.hackFlag = false;
-          return;
+    // Calculate whether hack was successful
+    const hackChance = calculateHackingChance(server, player);
+    const rand = Math.random();
+    const expGainedOnSuccess = calculateHackingExpGain(server, player);
+    const expGainedOnFailure = expGainedOnSuccess / 4;
+    if (rand < hackChance) {
+      // Success!
+      if (
+        SpecialServerIps[SpecialServerNames.WorldDaemon] &&
+        SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
+      ) {
+        if (player.bitNodeN == null) {
+          player.bitNodeN = 1;
         }
-        server.backdoorInstalled = true;
-        let moneyGained = calculatePercentMoneyHacked(server, player);
-        moneyGained = Math.floor(server.moneyAvailable * moneyGained);
-
-        if (moneyGained <= 0) {
-          moneyGained = 0;
-        } // Safety check
-
-        server.moneyAvailable -= moneyGained;
-        player.gainMoney(moneyGained);
-        player.recordMoneySource(moneyGained, "hacking");
-        player.gainHackingExp(expGainedOnSuccess);
-        player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
-
-        server.fortify(CONSTANTS.ServerFortifyAmount);
-
-        this.print(
-          `Hack successful! Gained ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(
-            expGainedOnSuccess,
-          )} hacking exp`,
-        );
-      } else {
-        // Failure
-        // player only gains 25% exp for failure? TODO Can change this later to balance
-        player.gainHackingExp(expGainedOnFailure);
-        this.print(
-          `Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`,
-        );
+        hackWorldDaemon(player.bitNodeN);
+        return;
       }
+      server.backdoorInstalled = true;
+      let moneyGained = calculatePercentMoneyHacked(server, player);
+      moneyGained = Math.floor(server.moneyAvailable * moneyGained);
+
+      if (moneyGained <= 0) {
+        moneyGained = 0;
+      } // Safety check
+
+      server.moneyAvailable -= moneyGained;
+      player.gainMoney(moneyGained);
+      player.recordMoneySource(moneyGained, "hacking");
+      player.gainHackingExp(expGainedOnSuccess);
+      player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
+
+      server.fortify(CONSTANTS.ServerFortifyAmount);
+
+      this.print(
+        `Hack successful! Gained ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(
+          expGainedOnSuccess,
+        )} hacking exp`,
+      );
+    } else {
+      // Failure
+      // player only gains 25% exp for failure? TODO Can change this later to balance
+      player.gainHackingExp(expGainedOnFailure);
+      this.print(
+        `Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`,
+      );
     }
-    this.hackFlag = false;
   }
 
   finishBackdoor(player: IPlayer, cancelled = false): void {
@@ -211,13 +194,11 @@ export class Terminal implements ITerminal {
           player.bitNodeN = 1;
         }
         hackWorldDaemon(player.bitNodeN);
-        this.backdoorFlag = false;
         return;
       }
       server.backdoorInstalled = true;
       this.print("Backdoor successful!");
     }
-    this.backdoorFlag = false;
   }
 
   finishAnalyze(player: IPlayer, cancelled = false): void {
@@ -248,22 +229,25 @@ export class Terminal implements ITerminal {
       this.print("HTTP port: " + (currServ.httpPortOpen ? "Open" : "Closed"));
       this.print("SQL port: " + (currServ.sqlPortOpen ? "Open" : "Closed"));
     }
-    this.analyzeFlag = false;
   }
 
   finishAction(player: IPlayer, cancelled = false): void {
-    if (this.hackFlag) {
+    if (this.action === null) {
+      if (!cancelled) throw new Error("Finish action called when there was no action");
+      return;
+    }
+    this.print(this.getProgressText());
+    if (this.action.action === "h") {
       this.finishHack(player, cancelled);
-    } else if (this.backdoorFlag) {
+    } else if (this.action.action === "b") {
       this.finishBackdoor(player, cancelled);
-    } else if (this.analyzeFlag) {
+    } else if (this.action.action === "a") {
       this.finishAnalyze(player, cancelled);
     }
-
-    // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
-    $("#hack-progress-bar").attr("id", "old-hack-progress-bar");
-    $("#hack-progress").attr("id", "old-hack-progress");
-    $("input[class=terminal-input]").prop("disabled", false);
+    if (cancelled) {
+      this.print("Cancelled");
+    }
+    this.action = null;
   }
 
   getFile(player: IPlayer, filename: string): Script | TextFile | string | null {
@@ -427,7 +411,7 @@ export class Terminal implements ITerminal {
       } // Don't print current server
       const titleDashes = Array((d - 1) * 4 + 1).join("-");
       if (player.hasProgram(Programs.AutoLink.name)) {
-        this.print(s.hostname);
+        this.outputHistory.push(new Link(s.hostname));
       } else {
         this.print(s.hostname);
       }
@@ -452,7 +436,7 @@ export class Terminal implements ITerminal {
       (() => {
         const hostname = links[i].innerHTML.toString();
         links[i].addEventListener("onclick", () => {
-          if (this.analyzeFlag || this.hackFlag || this.backdoorFlag) {
+          if (this.action !== null) {
             return;
           }
           this.connectToServer(player, hostname);
@@ -498,12 +482,17 @@ export class Terminal implements ITerminal {
   }
 
   clear(): void {
-    this.outputHistory = [{ text: `Bitburner v${CONSTANTS.Version}`, color: "primary" }];
+    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
     this.hasChanges = true;
   }
 
+  prestige(): void {
+    this.action = null;
+    this.clear();
+  }
+
   executeCommand(engine: IEngine, player: IPlayer, command: string): void {
-    if (this.hackFlag || this.backdoorFlag || this.analyzeFlag) {
+    if (this.action !== null) {
       this.error(`Cannot execute command (${command}) while an action is in progress`);
       return;
     }
@@ -717,5 +706,13 @@ export class Terminal implements ITerminal {
     }
 
     f(this, engine, player, s, commandArray.slice(1));
+  }
+
+  getProgressText(): string {
+    if (this.action === null) throw new Error("trying to get the progress text when there's no action");
+    return createProgressBarText({
+      progress: (this.action.time - this.action.timeLeft) / this.action.time,
+      totalTicks: 50,
+    });
   }
 }

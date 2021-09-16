@@ -2,16 +2,30 @@ import React, { useState, useEffect, useRef } from "react";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import { Link as MuiLink } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import { KEY } from "../../../utils/helpers/keyCodes";
-import { ITerminal } from "../ITerminal";
+import { ITerminal, Output, Link, TTimer } from "../ITerminal";
 import { IEngine } from "../../IEngine";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";
 import { FconfSettings } from "../../Fconf/FconfSettings";
+import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
+
+interface IActionTimerProps {
+  terminal: ITerminal;
+}
+
+function ActionTimer({ terminal }: IActionTimerProps): React.ReactElement {
+  return (
+    <Typography color={"primary"} paragraph={false}>
+      {terminal.getProgressText()}
+    </Typography>
+  );
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -150,6 +164,11 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
       if (terminal.contractOpen) return;
       const ref = terminalInput.current;
       if (ref) ref.focus();
+
+      // Cancel action
+      if (event.keyCode === KEY.C && event.ctrlKey) {
+        terminal.finishAction(player, true);
+      }
     }
     document.addEventListener("keydown", keyDown);
     return () => document.removeEventListener("keydown", keyDown);
@@ -328,15 +347,31 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
   }
 
   return (
-    <Box position="fixed" bottom="0" width="100%">
+    <Box position="fixed" bottom="0" width="100%" px={1}>
       <List classes={{ root: classes.nopadding }}>
-        {terminal.outputHistory.map((output, i) => (
-          <ListItem key={i} classes={{ root: classes.nopadding }}>
-            <Typography classes={{ root: classes.preformatted }} color={output.color} paragraph={false}>
-              {output.text}
-            </Typography>
-          </ListItem>
-        ))}
+        {terminal.outputHistory.map((item, i) => {
+          if (item instanceof Output)
+            return (
+              <ListItem key={i} classes={{ root: classes.nopadding }}>
+                <Typography classes={{ root: classes.preformatted }} color={item.color} paragraph={false}>
+                  {item.text}
+                </Typography>
+              </ListItem>
+            );
+          if (item instanceof Link)
+            return (
+              <ListItem key={i} classes={{ root: classes.nopadding }}>
+                <MuiLink
+                  classes={{ root: classes.preformatted }}
+                  color={"secondary"}
+                  paragraph={false}
+                  onClick={() => terminal.connectToServer(player, item.hostname)}
+                >
+                  &gt;&nbsp;{item.hostname}
+                </MuiLink>
+              </ListItem>
+            );
+        })}
       </List>
       {possibilities.length > 0 && (
         <>
@@ -348,17 +383,23 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
           </Typography>
         </>
       )}
+      {terminal.action !== null && <ActionTimer terminal={terminal} />}
       <TextField
+        color={terminal.action === null ? "primary" : "secondary"}
         autoFocus
+        disabled={terminal.action !== null}
+        autoComplete="off"
         classes={{ root: classes.textfield }}
         value={value}
         onChange={handleValueChange}
         inputRef={terminalInput}
         InputProps={{
+          // for players to hook in
+          id: "terminal-input",
           className: classes.input,
           startAdornment: (
             <>
-              <Typography color="primary">
+              <Typography color={terminal.action === null ? "primary" : "secondary"}>
                 [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
               </Typography>
             </>
