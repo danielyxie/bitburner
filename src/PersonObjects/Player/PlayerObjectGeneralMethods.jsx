@@ -174,11 +174,8 @@ export function prestigeAugmentation() {
   this.hacknetNodes.length = 0;
   this.hashManager.prestige();
 
-  // Reset player multipliers
-  this.resetMultipliers();
-
-  // Re-calculate skills and reset HP
-  this.updateSkillLevels();
+  // Reapply augs, re-calculate skills and reset HP
+  this.reapplyAllAugmentations(true);
   this.hp = this.max_hp;
 }
 
@@ -2307,6 +2304,8 @@ export function reapplyAllAugmentations(resetMultipliers = true) {
     }
     applyAugmentation(this.augmentations[i], true);
   }
+
+  this.updateSkillLevels();
 }
 
 export function reapplyAllSourceFiles() {
