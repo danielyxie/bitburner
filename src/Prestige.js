@@ -241,16 +241,12 @@ function prestigeSourceFile(flume) {
   Player.reapplyAllSourceFiles();
   initCompanies();
 
-  // Clear terminal
-  $("#terminal tr:not(:last)").remove();
-  postVersion();
-
   // Messages
   initMessages();
 
   var mainMenu = document.getElementById("mainmenu-container");
   mainMenu.style.visibility = "visible";
-  Terminal.resetTerminalInput();
+  Terminal.clear();
   Engine.loadTerminalContent();
 
   // BitNode 3: Corporatocracy
