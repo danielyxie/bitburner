@@ -1,5 +1,5 @@
 import { IMap } from "./types";
-import { post } from "./ui/postToTerminal";
+import { Terminal } from "./Terminal";
 
 export let Aliases: IMap<string> = {};
 export let GlobalAliases: IMap<string> = {};
@@ -24,12 +24,12 @@ export function loadGlobalAliases(saveString: string): void {
 export function printAliases(): void {
   for (const name in Aliases) {
     if (Aliases.hasOwnProperty(name)) {
-      post("alias " + name + "=" + Aliases[name]);
+      Terminal.print("alias " + name + "=" + Aliases[name]);
     }
   }
   for (const name in GlobalAliases) {
     if (GlobalAliases.hasOwnProperty(name)) {
-      post("global alias " + name + "=" + GlobalAliases[name]);
+      Terminal.print("global alias " + name + "=" + GlobalAliases[name]);
     }
   }
 }

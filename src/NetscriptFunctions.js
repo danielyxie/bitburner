@@ -145,7 +145,6 @@ import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers"
 import { Exploit } from "./Exploits/Exploit.ts";
 
 import { numeralWrapper } from "./ui/numeralFormat";
-import { post } from "./ui/postToTerminal";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
@@ -1059,10 +1058,10 @@ function NetscriptFunctions(workerScript) {
       if (arguments.length === 0) {
         throw makeRuntimeErrorMsg("tprint", "Takes at least 1 argument.");
       }
-      post(`${workerScript.scriptRef.filename}: ${argsToString(arguments)}`);
+      Terminal.print(`${workerScript.scriptRef.filename}: ${argsToString(arguments)}`);
     },
     tprintf: function (format, ...args) {
-      post(vsprintf(format, args));
+      Terminal.print(vsprintf(format, args));
     },
     clearLog: function () {
       workerScript.scriptRef.clearLog();
@@ -3134,8 +3133,7 @@ function NetscriptFunctions(workerScript) {
         Player.getCurrentServer().isConnectedTo = false;
         Player.currentServer = Player.getHomeComputer().ip;
         Player.getCurrentServer().isConnectedTo = true;
-        Terminal.currDir = "/";
-        Terminal.resetTerminalInput(true);
+        Terminal.setcwd("/");
         return true;
       }
 
@@ -3146,8 +3144,7 @@ function NetscriptFunctions(workerScript) {
           Player.getCurrentServer().isConnectedTo = false;
           Player.currentServer = target.ip;
           Player.getCurrentServer().isConnectedTo = true;
-          Terminal.currDir = "/";
-          Terminal.resetTerminalInput(true);
+          Terminal.setcwd("/");
           return true;
         }
       }

@@ -5,15 +5,17 @@
     terminal which has its own page) */
 
 .generic-menupage-container {
-  padding-left: 2px;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
   flex-grow: 1;
+  height: 100vh;
+  bottom: 0px;
 }
 
 #generic-react-container {
-  padding: 10px;
   overflow-y: scroll;
+  height: 100vh;
+  bottom: 0px;
 }
 
 #generic-react-container::-webkit-scrollbar {

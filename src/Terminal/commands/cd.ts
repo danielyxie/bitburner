@@ -41,8 +41,5 @@ export function cd(
     }
 
     terminal.setcwd(evaledDir);
-
-    // Reset input to update current directory on UI
-    terminal.resetTerminalInput();
   }
 }

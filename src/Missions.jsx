@@ -1590,7 +1590,7 @@ HackingMission.prototype.finishMission = function (win) {
         Mission won! You earned {Reputation(gain)} reputation with {this.faction.name}
       </>,
     );
-    Player.gainIntelligenceExp(this.difficulty * CONSTANTS.IntelligenceHackingMissionBaseExpGain);
+    Player.gainIntelligenceExp(Math.pow(this.difficulty * CONSTANTS.IntelligenceHackingMissionBaseExpGain, 0.5));
     this.faction.playerReputation += gain;
   } else {
     dialogBoxCreate("Mission lost/forfeited! You did not gain any faction reputation.");

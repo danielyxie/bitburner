@@ -3,6 +3,11 @@ import { Script } from "../Script/Script";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IEngine } from "../IEngine";
 
+export interface IOutput {
+  text: string;
+  color: "inherit" | "initial" | "primary" | "secondary" | "error" | "textPrimary" | "textSecondary" | undefined;
+}
+
 export interface ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
   hackFlag: boolean;
@@ -14,6 +19,8 @@ export interface ITerminal {
   commandHistory: string[];
   commandHistoryIndex: number;
 
+  outputHistory: IOutput[];
+
   // True if a Coding Contract prompt is opened
   contractOpen: boolean;
 
@@ -24,6 +31,7 @@ export interface ITerminal {
   print(s: string, config?: any): void;
   error(s: string): void;
 
+  clear(): void;
   startAnalyze(): void;
   startBackdoor(player: IPlayer): void;
   startHack(player: IPlayer): void;
@@ -36,7 +44,6 @@ export interface ITerminal {
   getScript(player: IPlayer, filename: string): Script | null;
   getTextFile(player: IPlayer, filename: string): TextFile | null;
   getLitFile(player: IPlayer, filename: string): string | null;
-  resetTerminalInput(): void;
   cwd(): string;
   setcwd(dir: string): void;
   runContract(player: IPlayer, name: string): void;
@@ -44,4 +51,6 @@ export interface ITerminal {
   connectToServer(player: IPlayer, server: string): void;
   executeCommand(engine: IEngine, player: IPlayer, command: string): void;
   executeCommands(engine: IEngine, player: IPlayer, commands: string): void;
+  // If there was any changes, will return true, once.
+  pollChanges(): boolean;
 }
