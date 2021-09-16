@@ -1,102 +1,207 @@
 // Root React Component for the Corporation UI
-import React from "react";
+import React, { useState, useEffect } from "react";
 
+import { makeStyles } from "@material-ui/core/styles";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Reputation } from "./Reputation";
 
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
+import Collapse from "@material-ui/core/Collapse";
+
+import { colors } from "./Theme";
+
 interface IProps {
   player: IPlayer;
+  save: () => void;
 }
 
-export function CharacterOverview(props: IProps): React.ReactElement {
-  const intelligence = (
-    <tr id="character-int-wrapper">
-      <td className="character-int-cell">Int:&nbsp;</td>
-      <td id="character-int-text" className="character-int-cell character-stat-cell">
-        {numeralWrapper.formatSkill(props.player.intelligence)}
-      </td>
-    </tr>
+function Intelligence({ player }: { player: IPlayer }): React.ReactElement {
+  if (player.intelligence === 0) return <></>;
+  const classes = useStyles();
+  return (
+    <TableRow>
+      <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+        <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
+      </TableCell>
+      <TableCell align="right" classes={{ root: classes.cell }}>
+        <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
+      </TableCell>
+    </TableRow>
   );
+}
 
-  const work = (
-    <>
-      <tr className="character-divider">
-        <td colSpan={2}>Work progress:</td>
-      </tr>
-      <tr>
-        <td colSpan={2}>+{Reputation(props.player.workRepGained)} rep</td>
-      </tr>
-      <tr>
-        <td colSpan={2}>
-          <button
-            onClick={() => props.player.startFocusing()}
-            id="character-overview-options-button"
-            className="character-overview-btn"
-          >
-            Focus
-          </button>
-        </td>
-      </tr>
-    </>
-  );
-
+function Work({ player }: { player: IPlayer }): React.ReactElement {
+  if (!player.isWorking || player.focus) return <></>;
+  const classes = useStyles();
   return (
     <>
-      <table>
-        <tbody>
-          <tr id="character-hp-wrapper">
-            <td className="character-hp-cell">HP:</td>
-            <td id="character-hp-text" className="character-hp-cell character-stat-cell">
-              {numeralWrapper.formatHp(props.player.hp) + " / " + numeralWrapper.formatHp(props.player.max_hp)}
-            </td>
-          </tr>
-          <tr id="character-money-wrapper">
-            <td className="character-money-cell">Money:&nbsp;</td>
-            <td id="character-money-text" className="character-money-cell character-stat-cell">
-              {numeralWrapper.formatMoney(props.player.money.toNumber())}
-            </td>
-          </tr>
-          <tr id="character-hack-wrapper">
-            <td className="character-hack-cell">Hack:&nbsp;</td>
-            <td id="character-hack-text" className="character-hack-cell character-stat-cell">
-              {numeralWrapper.formatSkill(props.player.hacking_skill)}
-            </td>
-          </tr>
-          <tr id="character-str-wrapper" className="character-divider">
-            <td className="character-combat-cell">Str:&nbsp;</td>
-            <td id="character-str-text" className="character-combat-cell character-stat-cell">
-              {numeralWrapper.formatSkill(props.player.strength)}
-            </td>
-          </tr>
-          <tr id="character-def-wrapper">
-            <td className="character-combat-cell">Def:&nbsp;</td>
-            <td id="character-def-text" className="character-combat-cell character-stat-cell">
-              {numeralWrapper.formatSkill(props.player.defense)}
-            </td>
-          </tr>
-          <tr id="character-dex-wrapper">
-            <td className="character-combat-cell">Dex:&nbsp;</td>
-            <td id="character-dex-text" className="character-combat-cell character-stat-cell">
-              {numeralWrapper.formatSkill(props.player.dexterity)}
-            </td>
-          </tr>
-          <tr id="character-agi-wrapper">
-            <td className="character-combat-cell">Agi:&nbsp;</td>
-            <td id="character-agi-text" className="character-combat-cell character-stat-cell">
-              {numeralWrapper.formatSkill(props.player.agility)}
-            </td>
-          </tr>
-          <tr id="character-cha-wrapper" className="character-divider">
-            <td className="character-cha-cell">Cha:&nbsp;</td>
-            <td id="character-cha-text" className="character-cha-cell character-stat-cell">
-              {numeralWrapper.formatSkill(props.player.charisma)}
-            </td>
-          </tr>
-          {props.player.intelligence >= 1 && intelligence}
-          {props.player.isWorking && !props.player.focus && work}
-        </tbody>
-      </table>
+      <TableRow>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Typography>+{Reputation(player.workRepGained)} rep</Typography>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Button onClick={() => player.startFocusing()}>Focus</Button>
+        </TableCell>
+      </TableRow>
     </>
+  );
+}
+
+const useStyles = makeStyles({
+  cellNone: {
+    borderBottom: "none",
+    padding: 0,
+    margin: 0,
+  },
+  cell: {
+    padding: 0,
+    margin: 0,
+  },
+  hp: {
+    color: colors.hp,
+  },
+  money: {
+    color: colors.money,
+  },
+  hack: {
+    color: colors.hack,
+  },
+  combat: {
+    color: colors.combat,
+  },
+  cha: {
+    color: colors.cha,
+  },
+  int: {
+    color: colors.int,
+  },
+});
+
+export function CharacterOverview({ player, save }: IProps): React.ReactElement {
+  const setRerender = useState(false)[1];
+
+  useEffect(() => {
+    const id = setInterval(() => setRerender((old) => !old), 600);
+    return () => clearInterval(id);
+  }, []);
+
+  const classes = useStyles();
+  return (
+    <Paper square>
+      <Box m={1}>
+        <Table size="small">
+          <TableBody>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.hp }}>HP&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.hp }}>
+                  {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
+                </Typography>
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.money }}>
+                  {numeralWrapper.formatMoney(player.money.toNumber())}
+                </Typography>
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.hack }}>
+                  {numeralWrapper.formatSkill(player.hacking_skill)}
+                </Typography>
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>
+                  {numeralWrapper.formatSkill(player.strength)}
+                </Typography>
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>
+                  {numeralWrapper.formatSkill(player.dexterity)}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
+              </TableCell>
+            </TableRow>
+            <Intelligence player={player} />
+            <Work player={player} />
+
+            <TableRow>
+              <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
+                <Button color="primary" onClick={save}>
+                  SAVE
+                </Button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Box>
+    </Paper>
   );
 }

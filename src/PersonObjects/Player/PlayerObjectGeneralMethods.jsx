@@ -200,12 +200,6 @@ export function prestigeSourceFile() {
     }
   }
 
-  const characterMenuHeader = document.getElementById("character-menu-header");
-  if (characterMenuHeader instanceof HTMLElement) {
-    characterMenuHeader.click();
-    characterMenuHeader.click();
-  }
-
   this.timeWorked = 0;
 
   // Gang
@@ -2068,9 +2062,6 @@ export function applyForJob(entryPosType, sing = false) {
   this.jobs[company.name] = pos.name;
   this.companyName = this.location;
 
-  document.getElementById("world-menu-header").click();
-  document.getElementById("world-menu-header").click();
-
   if (sing) {
     return true;
   }
@@ -2186,8 +2177,6 @@ export function applyForEmployeeJob(sing = false) {
   if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[1];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
@@ -2204,8 +2193,6 @@ export function applyForPartTimeEmployeeJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
@@ -2223,8 +2210,6 @@ export function applyForWaiterJob(sing = false) {
   if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[0];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
@@ -2242,8 +2227,6 @@ export function applyForPartTimeWaiterJob(sing = false) {
   if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }

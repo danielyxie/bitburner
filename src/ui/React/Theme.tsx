@@ -18,6 +18,13 @@ export const colors = {
   well: "#222",
   white: "#fff",
   black: "#000",
+
+  hp: "#dd3434",
+  money: "#ffd700",
+  hack: "#adff2f",
+  combat: "#faffdf",
+  cha: "#a671d1",
+  int: "#6495ed",
 };
 
 export const theme = createMuiTheme({
@@ -173,6 +180,12 @@ export const theme = createMuiTheme({
       },
       track: {
         backgroundColor: colors.welllight,
+      },
+    },
+    MuiPaper: {
+      root: {
+        backgroundColor: colors.black,
+        border: "1px solid " + colors.welllight,
       },
     },
   },
