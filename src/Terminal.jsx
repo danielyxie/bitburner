@@ -13,6 +13,8 @@ import { post } from "./ui/postToTerminal";
 
 import { Terminal as TTerminal } from "./Terminal/Terminal";
 
+const NewTerminal = new TTerminal();
+
 import autosize from "autosize";
 
 function postVersion() {
@@ -28,14 +30,14 @@ $(document).keydown(function (event) {
   // Terminal
   if (routing.isOn(Page.Terminal)) {
     var terminalInput = document.getElementById("terminal-input-text-box");
-    if (terminalInput != null && !event.ctrlKey && !event.shiftKey && !Terminal.contractOpen) {
+    if (terminalInput != null && !event.ctrlKey && !event.shiftKey && !NewTerminal.contractOpen) {
       terminalInput.focus();
     }
 
     if (event.keyCode === KEY.ENTER) {
       event.preventDefault(); // Prevent newline from being entered in Script Editor
       const command = getTerminalInput();
-      const dir = Terminal.currDir;
+      const dir = NewTerminal.currDir;
       post(
         "<span class='prompt'>[" +
           (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
@@ -45,7 +47,7 @@ $(document).keydown(function (event) {
 
       if (command.length > 0) {
         Terminal.resetTerminalInput(); // Clear input first
-        new TTerminal().executeCommands(Engine, Player, command);
+        NewTerminal.executeCommands(Engine, Player, command);
       }
     }
 
@@ -54,7 +56,7 @@ $(document).keydown(function (event) {
         // Cancel action
         post("Cancelling...");
         Engine._actionInProgress = false;
-        Terminal.finishAction(true);
+        NewTerminal.finishAction(true);
       } else if (FconfSettings.ENABLE_BASH_HOTKEYS) {
         // Dont prevent default so it still copies
         Terminal.resetTerminalInput(); // Clear Terminal
@@ -63,7 +65,7 @@ $(document).keydown(function (event) {
 
     if (event.keyCode === KEY.L && event.ctrlKey) {
       event.preventDefault();
-      new TTerminal().executeCommands(Engine, Player, "clear"); // Clear screen
+      NewTerminal.executeCommands(Engine, Player, "clear"); // Clear screen
     }
 
     // Ctrl p same as up arrow
@@ -80,20 +82,20 @@ $(document).keydown(function (event) {
       if (terminalInput == null) {
         return;
       }
-      var i = Terminal.commandHistoryIndex;
-      var len = Terminal.commandHistory.length;
+      var i = NewTerminal.commandHistoryIndex;
+      var len = NewTerminal.commandHistory.length;
 
       if (len == 0) {
         return;
       }
       if (i < 0 || i > len) {
-        Terminal.commandHistoryIndex = len;
+        NewTerminal.commandHistoryIndex = len;
       }
 
       if (i != 0) {
-        --Terminal.commandHistoryIndex;
+        --NewTerminal.commandHistoryIndex;
       }
-      var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
+      var prevCommand = NewTerminal.commandHistory[NewTerminal.commandHistoryIndex];
       terminalInput.value = prevCommand;
       setTimeoutRef(function () {
         terminalInput.selectionStart = terminalInput.selectionEnd = 10000;
@@ -111,23 +113,23 @@ $(document).keydown(function (event) {
       if (terminalInput == null) {
         return;
       }
-      var i = Terminal.commandHistoryIndex;
-      var len = Terminal.commandHistory.length;
+      var i = NewTerminal.commandHistoryIndex;
+      var len = NewTerminal.commandHistory.length;
 
       if (len == 0) {
         return;
       }
       if (i < 0 || i > len) {
-        Terminal.commandHistoryIndex = len;
+        NewTerminal.commandHistoryIndex = len;
       }
 
       // Latest command, put nothing
       if (i == len || i == len - 1) {
-        Terminal.commandHistoryIndex = len;
+        NewTerminal.commandHistoryIndex = len;
         terminalInput.value = "";
       } else {
-        ++Terminal.commandHistoryIndex;
-        var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
+        ++NewTerminal.commandHistoryIndex;
+        var prevCommand = NewTerminal.commandHistory[NewTerminal.commandHistoryIndex];
         terminalInput.value = prevCommand;
       }
     }
@@ -157,7 +159,7 @@ $(document).keydown(function (event) {
       if (index < -1) {
         index = 0;
       }
-      const allPos = determineAllPossibilitiesForTabCompletion(Player, input, index, Terminal.currDir);
+      const allPos = determineAllPossibilitiesForTabCompletion(Player, input, index, NewTerminal.currDir);
       if (allPos.length == 0) {
         return;
       }
@@ -245,7 +247,7 @@ $(document).keydown(function (e) {
       terminalCtrlPressed = true;
     } else if (e.shiftKey) {
       shiftKeyPressed = true;
-    } else if (terminalCtrlPressed || shiftKeyPressed || Terminal.contractOpen) {
+    } else if (terminalCtrlPressed || shiftKeyPressed || NewTerminal.contractOpen) {
       // Don't focus
     } else {
       var inputTextBox = document.getElementById("terminal-input-text-box");
@@ -271,29 +273,12 @@ $(document).keyup(function (e) {
 });
 
 let Terminal = {
-  // Flags to determine whether the player is currently running a hack or an analyze
-  hackFlag: false,
-  backdoorFlag: false,
-  analyzeFlag: false,
-  actionStarted: false,
-  actionTime: 0,
-
-  commandHistory: [],
-  commandHistoryIndex: 0,
-
-  // True if a Coding Contract prompt is opened
-  contractOpen: false,
-
-  // Full Path of current directory
-  // Excludes the trailing forward slash
-  currDir: "/",
-
   resetTerminalInput: function (keepInput = false) {
     let input = "";
     if (keepInput) {
       input = getTerminalInput();
     }
-    const dir = Terminal.currDir;
+    const dir = NewTerminal.currDir;
     if (FconfSettings.WRAP_INPUT) {
       document.getElementById("terminal-input-td").innerHTML =
         `<div id='terminal-input-header' class='prompt'>[${Player.getCurrentServer().hostname} ~${dir}]$ </div>` +

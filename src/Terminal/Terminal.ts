@@ -71,6 +71,23 @@ import { wget } from "./commands/wget";
 import { clear } from "./commands/clear";
 
 export class Terminal implements ITerminal {
+  // Flags to determine whether the player is currently running a hack or an analyze
+  hackFlag = false;
+  backdoorFlag = false;
+  analyzeFlag = false;
+  actionStarted = false;
+  actionTime = 0;
+
+  commandHistory: string[] = [];
+  commandHistoryIndex = 0;
+
+  // True if a Coding Contract prompt is opened
+  contractOpen = false;
+
+  // Full Path of current directory
+  // Excludes the trailing forward slash
+  currDir = "/";
+
   print(s: string, config?: any): void {
     postContent(s, config);
   }
@@ -80,30 +97,30 @@ export class Terminal implements ITerminal {
   }
 
   startHack(player: IPlayer): void {
-    OldTerminal.hackFlag = true;
+    this.hackFlag = true;
 
     // Hacking through Terminal should be faster than hacking through a script
-    OldTerminal.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
+    this.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
     this.startAction();
   }
 
   startBackdoor(player: IPlayer): void {
-    OldTerminal.backdoorFlag = true;
+    this.backdoorFlag = true;
 
     // Backdoor should take the same amount of time as hack
-    OldTerminal.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
+    this.actionTime = calculateHackingTime(player.getCurrentServer(), player) / 4;
     this.startAction();
   }
 
   startAnalyze(): void {
-    OldTerminal.analyzeFlag = true;
-    OldTerminal.actionTime = 1;
+    this.analyzeFlag = true;
+    this.actionTime = 1;
     this.print("Analyzing system...");
     this.startAction();
   }
 
   startAction(): void {
-    OldTerminal.actionStarted = true;
+    this.actionStarted = true;
 
     hackProgressPost("Time left:");
     hackProgressBarPost("[");
@@ -135,7 +152,7 @@ export class Terminal implements ITerminal {
             player.bitNodeN = 1;
           }
           hackWorldDaemon(player.bitNodeN);
-          OldTerminal.hackFlag = false;
+          this.hackFlag = false;
           return;
         }
         server.backdoorInstalled = true;
@@ -168,7 +185,7 @@ export class Terminal implements ITerminal {
         );
       }
     }
-    OldTerminal.hackFlag = false;
+    this.hackFlag = false;
   }
 
   finishBackdoor(player: IPlayer, cancelled = false): void {
@@ -182,13 +199,13 @@ export class Terminal implements ITerminal {
           player.bitNodeN = 1;
         }
         hackWorldDaemon(player.bitNodeN);
-        OldTerminal.backdoorFlag = false;
+        this.backdoorFlag = false;
         return;
       }
       server.backdoorInstalled = true;
       this.print("Backdoor successful!");
     }
-    OldTerminal.backdoorFlag = false;
+    this.backdoorFlag = false;
   }
 
   finishAnalyze(player: IPlayer, cancelled = false): void {
@@ -219,22 +236,22 @@ export class Terminal implements ITerminal {
       this.print("HTTP port: " + (currServ.httpPortOpen ? "Open" : "Closed"));
       this.print("SQL port: " + (currServ.sqlPortOpen ? "Open" : "Closed"));
     }
-    OldTerminal.analyzeFlag = false;
+    this.analyzeFlag = false;
   }
 
   finishAction(player: IPlayer, cancelled = false): void {
-    if (OldTerminal.hackFlag) {
+    if (this.hackFlag) {
       this.finishHack(player, cancelled);
-    } else if (OldTerminal.backdoorFlag) {
+    } else if (this.backdoorFlag) {
       this.finishBackdoor(player, cancelled);
-    } else if (OldTerminal.analyzeFlag) {
+    } else if (this.analyzeFlag) {
       this.finishAnalyze(player, cancelled);
     }
 
     // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
     $("#hack-progress-bar").attr("id", "old-hack-progress-bar");
     $("#hack-progress").attr("id", "old-hack-progress");
-    OldTerminal.resetTerminalInput();
+    this.resetTerminalInput();
     $("input[class=terminal-input]").prop("disabled", false);
   }
 
@@ -308,16 +325,16 @@ export class Terminal implements ITerminal {
   }
 
   cwd(): string {
-    return OldTerminal.currDir;
+    return this.currDir;
   }
 
   setcwd(dir: string): void {
-    OldTerminal.currDir = dir;
+    this.currDir = dir;
   }
 
   async runContract(player: IPlayer, contractName: string): Promise<void> {
     // There's already an opened contract
-    if (OldTerminal.contractOpen) {
+    if (this.contractOpen) {
       return this.error("There's already a Coding Contract in Progress");
     }
 
@@ -327,7 +344,7 @@ export class Terminal implements ITerminal {
       return this.error("No such contract");
     }
 
-    OldTerminal.contractOpen = true;
+    this.contractOpen = true;
     const res = await contract.prompt();
 
     switch (res) {
@@ -356,7 +373,7 @@ export class Terminal implements ITerminal {
         this.print("Contract cancelled");
         break;
     }
-    OldTerminal.contractOpen = false;
+    this.contractOpen = false;
   }
 
   executeScanAnalyzeCommand(player: IPlayer, depth = 1, all = false): void {
@@ -427,7 +444,7 @@ export class Terminal implements ITerminal {
       (() => {
         const hostname = links[i].innerHTML.toString();
         links[i].addEventListener("onclick", () => {
-          if (OldTerminal.analyzeFlag || OldTerminal.hackFlag || OldTerminal.backdoorFlag) {
+          if (this.analyzeFlag || this.hackFlag || this.backdoorFlag) {
             return;
           }
           this.connectToServer(player, hostname);
@@ -459,13 +476,13 @@ export class Terminal implements ITerminal {
     commands = commands.replace(/\s\s+/g, " "); // Replace all extra whitespace in command with a single space
 
     // Handle Terminal History - multiple commands should be saved as one
-    if (OldTerminal.commandHistory[OldTerminal.commandHistory.length - 1] != commands) {
-      OldTerminal.commandHistory.push(commands);
-      if (OldTerminal.commandHistory.length > 50) {
-        OldTerminal.commandHistory.splice(0, 1);
+    if (this.commandHistory[this.commandHistory.length - 1] != commands) {
+      this.commandHistory.push(commands);
+      if (this.commandHistory.length > 50) {
+        this.commandHistory.splice(0, 1);
       }
     }
-    OldTerminal.commandHistoryIndex = OldTerminal.commandHistory.length;
+    this.commandHistoryIndex = this.commandHistory.length;
     const allCommands = ParseCommands(commands);
 
     for (let i = 0; i < allCommands.length; i++) {
@@ -474,7 +491,7 @@ export class Terminal implements ITerminal {
   }
 
   executeCommand(engine: IEngine, player: IPlayer, command: string): void {
-    if (OldTerminal.hackFlag || OldTerminal.backdoorFlag || OldTerminal.analyzeFlag) {
+    if (this.hackFlag || this.backdoorFlag || this.analyzeFlag) {
       this.error(`Cannot execute command (${command}) while an action is in progress`);
       return;
     }
