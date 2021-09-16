@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { Theme } from "@mui/material/styles";
+import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import Drawer from "@mui/material/Drawer";
+import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -59,11 +59,50 @@ import { KEY } from "../../../utils/helpers/keyCodes";
 import { FconfSettings } from "../../Fconf/FconfSettings";
 import { Page, routing } from "../../ui/navigationTracking";
 
+const drawerWidth = 240;
+
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(9)} + 1px)`,
+  },
+});
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
       width: theme.spacing(31),
       flexShrink: 0,
+      display: "flex",
       whiteSpace: "nowrap",
     },
     drawerOpen: {
@@ -340,19 +379,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const toggleDrawer = (): void => setOpen((old) => !old);
   return (
     <BBTheme>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
+      <Drawer open={open} anchor="left" variant="permanent">
         <ListItem button onClick={toggleDrawer}>
           <ListItemIcon>{!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}</ListItemIcon>
           <ListItemText primary={<Typography color="primary">Bitburner v{CONSTANTS.Version}</Typography>} />

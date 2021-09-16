@@ -408,6 +408,7 @@ const Engine = {
   },
 
   displayCharacterOverviewInfo: function () {
+    console.log("rendering");
     ReactDOM.render(
       <Theme>
         <CharacterOverview player={Player} save={() => saveObject.saveGame(Engine.indexedDb)} />
@@ -839,6 +840,8 @@ const Engine = {
   // Initialization
   init: function () {
     // Player was working cancel button
+
+    Engine.displayCharacterOverviewInfo();
     if (Player.isWorking) {
       var cancelButton = document.getElementById("work-in-progress-cancel-button");
       cancelButton.addEventListener("click", function () {
@@ -868,8 +871,6 @@ const Engine = {
       }
 
       Engine.loadWorkInProgressContent();
-
-      Engine.displayCharacterOverviewInfo();
     } else {
       Engine.loadTerminalContent();
     }
