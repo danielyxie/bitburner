@@ -57,17 +57,15 @@ import { KEY } from "../../../utils/helpers/keyCodes";
 import { FconfSettings } from "../../Fconf/FconfSettings";
 import { Page, routing } from "../../ui/navigationTracking";
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
-      width: drawerWidth,
+      width: theme.spacing(31),
       flexShrink: 0,
       whiteSpace: "nowrap",
     },
     drawerOpen: {
-      width: drawerWidth,
+      width: theme.spacing(31),
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
