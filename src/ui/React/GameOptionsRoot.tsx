@@ -17,6 +17,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Link from "@material-ui/core/Link";
 import Tooltip from "@material-ui/core/Tooltip";
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
+import { ConfirmationModal } from "./ConfirmationModal";
 
 import { Settings } from "../../Settings/Settings";
 
@@ -68,6 +69,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [disableTextEffects, setDisableTextEffects] = useState(Settings.DisableTextEffects);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
+  const [deleteGameOpen, setDeleteOpen] = useState(false);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -449,7 +451,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         <Grid item xs={12} sm={6}>
           <Box>
             <Button onClick={() => props.save()}>Save Game</Button>
-            <Button onClick={() => props.delete()}>Delete Game</Button>
+            <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
           </Box>
           <Box>
             <Button onClick={() => props.export()}>Export Game</Button>
@@ -513,6 +515,12 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Grid>
       </Grid>
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
+      <ConfirmationModal
+      onConfirm={() => {props.delete(); setDeleteOpen(false);}}
+      open={deleteGameOpen}
+      onClose={() => setDeleteOpen(false)}
+      confirmationText={"Really delete your game? (It's permanent!)"}
+      />
     </div>
   );
 }
