@@ -101,8 +101,13 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
                 </ListItem>
               );
           })}
+
+          {terminal.action !== null && (
+            <ListItem classes={{ root: classes.nopadding }}>
+              <ActionTimer terminal={terminal} />{" "}
+            </ListItem>
+          )}
         </List>
-        {terminal.action !== null && <ActionTimer terminal={terminal} />}
         <div ref={scrollHook}></div>
       </Box>
       <Box position="sticky" bottom={0} width="100%" px={0}>

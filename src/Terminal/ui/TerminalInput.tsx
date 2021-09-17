@@ -4,6 +4,8 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
@@ -326,14 +328,14 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   return (
     <>
       {possibilities.length > 0 && (
-        <>
+        <Paper square>
           <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
             Possible autocomplete candidate:
           </Typography>
           <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
             {possibilities.join(" ")}
           </Typography>
-        </>
+        </Paper>
       )}
       <TextField
         variant="standard"
