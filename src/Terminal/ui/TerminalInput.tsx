@@ -6,7 +6,7 @@ import createStyles from "@mui/styles/createStyles";
 import TextField from "@mui/material/TextField";
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";
@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   terminal: ITerminal;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
 
-export function TerminalInput({ terminal, engine, player }: IProps): React.ReactElement {
+export function TerminalInput({ terminal, router, player }: IProps): React.ReactElement {
   const terminalInput = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState("");
@@ -157,7 +157,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
     if (event.keyCode === KEY.ENTER && value !== "") {
       event.preventDefault();
       terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
-      terminal.executeCommands(engine, player, value);
+      terminal.executeCommands(router, player, value);
       setValue("");
       return;
     }

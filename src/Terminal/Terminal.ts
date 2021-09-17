@@ -1,5 +1,5 @@
 import { ITerminal, Output, Link, TTimer } from "./ITerminal";
-import { IEngine } from "../IEngine";
+import { IRouter } from "../ui/Router";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
@@ -468,7 +468,7 @@ export class Terminal implements ITerminal {
     }
   }
 
-  executeCommands(engine: IEngine, player: IPlayer, commands: string): void {
+  executeCommands(router: IRouter, player: IPlayer, commands: string): void {
     // Sanitize input
     commands = commands.trim();
     commands = commands.replace(/\s\s+/g, " "); // Replace all extra whitespace in command with a single space
@@ -484,7 +484,7 @@ export class Terminal implements ITerminal {
     const allCommands = ParseCommands(commands);
 
     for (let i = 0; i < allCommands.length; i++) {
-      this.executeCommand(engine, player, allCommands[i]);
+      this.executeCommand(router, player, allCommands[i]);
     }
   }
 
@@ -499,7 +499,7 @@ export class Terminal implements ITerminal {
     this.clear();
   }
 
-  executeCommand(engine: IEngine, player: IPlayer, command: string): void {
+  executeCommand(router: IRouter, player: IPlayer, command: string): void {
     if (this.action !== null) {
       this.error(`Cannot execute command (${command}) while an action is in progress`);
       return;
@@ -532,7 +532,7 @@ export class Terminal implements ITerminal {
           break;
         case iTutorialSteps.TerminalLs:
           if (commandArray.length === 1 && commandArray[0] == "ls") {
-            ls(this, engine, player, s, commandArray.slice(1));
+            ls(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
@@ -540,7 +540,7 @@ export class Terminal implements ITerminal {
           break;
         case iTutorialSteps.TerminalScan:
           if (commandArray.length === 1 && commandArray[0] == "scan") {
-            scan(this, engine, player, s, commandArray.slice(1));
+            scan(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
@@ -609,7 +609,7 @@ export class Terminal implements ITerminal {
           break;
         case iTutorialSteps.TerminalCreateScript:
           if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
-            engine.loadScriptEditorContent("n00dles.script", "");
+            router.toScriptEditor("n00dles.script", "");
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
@@ -617,7 +617,7 @@ export class Terminal implements ITerminal {
           break;
         case iTutorialSteps.TerminalFree:
           if (commandArray.length == 1 && commandArray[0] == "free") {
-            free(this, engine, player, s, commandArray.slice(1));
+            free(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
@@ -625,7 +625,7 @@ export class Terminal implements ITerminal {
           break;
         case iTutorialSteps.TerminalRunScript:
           if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
-            run(this, engine, player, s, commandArray.slice(1));
+            run(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
@@ -662,7 +662,7 @@ export class Terminal implements ITerminal {
     const commands: {
       [key: string]: (
         terminal: ITerminal,
-        engine: IEngine,
+        router: IRouter,
         player: IPlayer,
         server: BaseServer,
         args: (string | number)[],
@@ -713,7 +713,7 @@ export class Terminal implements ITerminal {
       return;
     }
 
-    f(this, engine, player, s, commandArray.slice(1));
+    f(this, router, player, s, commandArray.slice(1));
   }
 
   getProgressText(): string {

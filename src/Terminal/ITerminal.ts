@@ -1,7 +1,7 @@
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { IEngine } from "../IEngine";
+import { IRouter } from "../ui/Router";
 
 export class Output {
   text: string;
@@ -70,8 +70,8 @@ export interface ITerminal {
   runContract(player: IPlayer, name: string): void;
   executeScanAnalyzeCommand(player: IPlayer, depth?: number, all?: boolean): void;
   connectToServer(player: IPlayer, server: string): void;
-  executeCommand(engine: IEngine, player: IPlayer, command: string): void;
-  executeCommands(engine: IEngine, player: IPlayer, commands: string): void;
+  executeCommand(router: IRouter, player: IPlayer, command: string): void;
+  executeCommands(router: IRouter, player: IPlayer, commands: string): void;
   // If there was any changes, will return true, once.
   pollChanges(): boolean;
   process(player: IPlayer, cycles: number): void;

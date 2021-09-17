@@ -93,22 +93,18 @@ export class Script {
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
   saveScript(code: string, serverIp: string, otherScripts: Script[]): void {
-    if (routing.isOn(Page.ScriptEditor)) {
-      // Update code and filename
-      this.code = code.replace(/^\s+|\s+$/g, "");
+    // Update code and filename
+    this.code = code.replace(/^\s+|\s+$/g, "");
 
-      const filenameElem: HTMLInputElement | null = document.getElementById(
-        "script-editor-filename",
-      ) as HTMLInputElement;
-      if (filenameElem == null) {
-        console.error(`Failed to get Script filename DOM element`);
-        return;
-      }
-      this.filename = filenameElem.value;
-      this.server = serverIp;
-      this.updateRamUsage(otherScripts);
-      this.markUpdated();
+    const filenameElem: HTMLInputElement | null = document.getElementById("script-editor-filename") as HTMLInputElement;
+    if (filenameElem == null) {
+      console.error(`Failed to get Script filename DOM element`);
+      return;
     }
+    this.filename = filenameElem.value;
+    this.server = serverIp;
+    this.updateRamUsage(otherScripts);
+    this.markUpdated();
   }
 
   /**

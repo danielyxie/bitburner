@@ -207,25 +207,6 @@ const Engine = {
     ReactDOM.render(<MilestonesRoot player={Player} />, Engine.Display.content);
   },
 
-  loadTutorialContent: function () {
-    Engine.hideAllContent();
-    Engine.Display.content.style.display = "block";
-    routing.navigateTo(Page.Tutorial);
-    MainMenuLinks.Tutorial.classList.add("active");
-    ReactDOM.render(<TutorialRoot />, Engine.Display.content);
-  },
-
-  loadDevMenuContent: function () {
-    Engine.hideAllContent();
-    if (process.env.NODE_ENV !== "development") {
-      throw new Error("Cannot create Dev Menu because you are not in a dev build");
-    }
-    Engine.Display.content.style.display = "block";
-    ReactDOM.render(<DevMenuRoot player={Player} engine={this} />, Engine.Display.content);
-    routing.navigateTo(Page.DevMenu);
-    MainMenuLinks.DevMenu.classList.add("active");
-  },
-
   loadLocationContent: function (initiallyInCity = true) {
     Engine.hideAllContent();
     Engine.Display.content.style.display = "block";

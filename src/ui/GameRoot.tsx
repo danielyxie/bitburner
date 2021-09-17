@@ -69,6 +69,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+let filename = "";
+let code = "";
+
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const contentRef = useRef<HTMLDivElement>(null);
   const [faction, setFaction] = useState<Faction | null>(null);
@@ -93,7 +96,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toHacknetNodes: () => setPage(Page.Hacknet),
     toMilestones: () => setPage(Page.Milestones),
     toResleeves: () => setPage(Page.Resleeves),
-    toScriptEditor: () => setPage(Page.CreateScript),
+    toScriptEditor: (fn: string, c: string) => {
+      filename = fn;
+      code = c;
+      setPage(Page.CreateScript);
+    },
     toSleeves: () => setPage(Page.Sleeves),
     toStockMarket: () => setPage(Page.StockMarket),
     toTerminal: () => setPage(Page.Terminal),
@@ -113,19 +120,24 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     },
   };
 
+  useEffect(() => {
+    filename = "";
+    code = "";
+  });
+
   return (
     <>
       <Box display="flex" flexDirection="row" width="100%">
         <SidebarRoot player={player} router={router} page={page} />
         <Box ref={contentRef} className={classes.root} flexGrow={1} display="block" width="100%" px={1} height="100vh">
           {page === Page.Terminal ? (
-            <TerminalRoot terminal={terminal} engine={engine} player={player} />
+            <TerminalRoot terminal={terminal} router={router} player={player} />
           ) : page === Page.Sleeves ? (
             <SleeveRoot player={player} />
           ) : page === Page.Stats ? (
             <CharacterInfo player={player} />
           ) : page === Page.CreateScript ? (
-            <ScriptEditorRoot filename={""} code={""} player={player} engine={engine} />
+            <ScriptEditorRoot filename={filename} code={code} player={player} router={router} />
           ) : page === Page.ActiveScripts ? (
             <ActiveScriptsRoot p={player} workerScripts={workerScripts} />
           ) : page === Page.Hacknet ? (

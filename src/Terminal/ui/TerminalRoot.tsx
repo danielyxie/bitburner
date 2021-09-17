@@ -8,7 +8,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
 import { ITerminal, Output, Link } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
 
@@ -42,11 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   terminal: ITerminal;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
 
-export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactElement {
+export function TerminalRoot({ terminal, router, player }: IProps): React.ReactElement {
   const scrollHook = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -106,7 +106,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
         <div ref={scrollHook}></div>
       </Box>
       <Box position="sticky" bottom={0} width="100%" px={0}>
-        <TerminalInput player={player} engine={engine} terminal={terminal} />
+        <TerminalInput player={player} router={router} terminal={terminal} />
       </Box>
     </>
   );
