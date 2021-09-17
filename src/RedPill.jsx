@@ -92,13 +92,6 @@ function enterBitNode(flume, destroyedBitNode, newBitNode) {
   // Set new Bit Node
   Player.bitNodeN = newBitNode;
 
-  // Reenable terminal
-  $("#hack-progress-bar").attr("id", "old-hack-progress-bar");
-  $("#hack-progress").attr("id", "old-hack-progress");
-  document.getElementById("terminal-input-td").innerHTML =
-    '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
-  $("input[class=terminal-input]").prop("disabled", false);
-
   prestigeSourceFile(flume);
 }
 

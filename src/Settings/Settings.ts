@@ -46,6 +46,11 @@ interface IDefaultSettings {
   MaxPortCapacity: number;
 
   /**
+   * Limit the number of entries in the terminal.
+   */
+  MaxTerminalCapacity: number;
+
+  /**
    * Whether the player should be asked to confirm purchasing each and every augmentation.
    */
   SuppressBuyAugmentationConfirmation: boolean;
@@ -104,6 +109,7 @@ const defaultSettings: IDefaultSettings = {
   Locale: "en",
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
+  MaxTerminalCapacity: 200,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,
   SuppressHospitalizationPopup: false,
@@ -125,6 +131,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   Locale: "en",
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
+  MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
   PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting.Default,
   SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,

@@ -23,7 +23,7 @@ import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
-import { Terminal, postVersion } from "./Terminal";
+import { Terminal } from "./Terminal";
 
 import { Page, routing } from "./ui/navigationTracking";
 
@@ -57,21 +57,13 @@ function prestigeAugmentation() {
     "Fulcrum Secret Technologies",
   ];
 
-  let maintainMembership = Player.factions.filter(function (faction) {
+  const maintainMembership = Player.factions.filter(function (faction) {
     return megaCorpFactions.includes(faction);
   });
-
   Player.prestigeAugmentation();
 
-  Player.factions = Player.factions.concat(maintainMembership);
-
-  // Now actually go to the Terminal Screen (and reset it)
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
-  Terminal.resetTerminalInput();
+  Terminal.clear();
   Engine.loadTerminalContent();
-  $("#terminal tr:not(:last)").remove();
-  postVersion();
 
   // Delete all Worker Scripts objects
   prestigeWorkerScripts();
@@ -125,6 +117,9 @@ function prestigeAugmentation() {
 
   // Re-initialize things - This will update any changes
   initFactions(); // Factions must be initialized before augmentations
+
+  Player.factions = Player.factions.concat(maintainMembership);
+  Player.factions.map((f) => (Factions[f].isMember = true));
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();
@@ -246,16 +241,12 @@ function prestigeSourceFile(flume) {
   Player.reapplyAllSourceFiles();
   initCompanies();
 
-  // Clear terminal
-  $("#terminal tr:not(:last)").remove();
-  postVersion();
-
   // Messages
   initMessages();
 
   var mainMenu = document.getElementById("mainmenu-container");
   mainMenu.style.visibility = "visible";
-  Terminal.resetTerminalInput();
+  Terminal.clear();
   Engine.loadTerminalContent();
 
   // BitNode 3: Corporatocracy

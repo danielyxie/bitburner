@@ -6,7 +6,7 @@ import { Script } from "./Script";
 import { FconfSettings } from "../Fconf/FconfSettings";
 import { Settings } from "../Settings/Settings";
 import { IMap } from "../types";
-import { post } from "../ui/postToTerminal";
+import { Terminal } from "../Terminal";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 import { getTimestamp } from "../../utils/helpers/getTimestamp";
@@ -85,7 +85,7 @@ export class RunningScript {
 
   displayLog(): void {
     for (let i = 0; i < this.logs.length; ++i) {
-      post(this.logs[i]);
+      Terminal.print(this.logs[i]);
     }
   }
 

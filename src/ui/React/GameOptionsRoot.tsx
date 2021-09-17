@@ -2,33 +2,37 @@ import React, { useState } from "react";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Slider from "@material-ui/core/Slider";
-import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Link from "@material-ui/core/Link";
-import Tooltip from "@material-ui/core/Tooltip";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
+import Typography from "@mui/material/Typography";
+import Slider from "@mui/material/Slider";
+import Grid from "@mui/material/Grid";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Link from "@mui/material/Link";
+import Tooltip from "@mui/material/Tooltip";
+
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
+import { ConfirmationModal } from "./ConfirmationModal";
 
 import { Settings } from "../../Settings/Settings";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: theme.spacing(50),
-      padding: theme.spacing(2),
+      width: 50,
+      padding: 2,
       userSelect: "none",
     },
     pad: {
-      padding: theme.spacing(2),
+      padding: 2,
     },
   }),
 );
@@ -49,6 +53,8 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [execTime, setExecTime] = useState(Settings.CodeInstructionRunTime);
   const [logSize, setLogSize] = useState(Settings.MaxLogCapacity);
   const [portSize, setPortSize] = useState(Settings.MaxPortCapacity);
+  const [terminalSize, setTerminalSize] = useState(Settings.MaxTerminalCapacity);
+
   const [autosaveInterval, setAutosaveInterval] = useState(Settings.AutosaveInterval);
 
   const [suppressMessages, setSuppressMessages] = useState(Settings.SuppressMessages);
@@ -68,6 +74,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [disableTextEffects, setDisableTextEffects] = useState(Settings.DisableTextEffects);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
+  const [deleteGameOpen, setDeleteOpen] = useState(false);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -82,6 +89,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handlePortSizeChange(event: any, newValue: number | number[]): void {
     setPortSize(newValue as number);
     Settings.MaxPortCapacity = newValue as number;
+  }
+
+  function handleTerminalSizeChange(event: any, newValue: number | number[]): void {
+    setTerminalSize(newValue as number);
+    Settings.MaxTerminalCapacity = newValue as number;
   }
 
   function handleAutosaveIntervalChange(event: any, newValue: number | number[]): void {
@@ -133,7 +145,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     setDisableTextEffects(event.target.checked);
     Settings.DisableTextEffects = event.target.checked;
   }
-  function handleLocaleChange(event: React.ChangeEvent<{ value: unknown }>): void {
+  function handleLocaleChange(event: SelectChangeEvent<string>): void {
     setLocale(event.target.value as string);
     Settings.Locale = event.target.value as string;
   }
@@ -210,6 +222,27 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <Tooltip
                 title={
+                  <Typography>
+                    The maximum number of entries that can be written to a the terminal. Setting this too high can cause
+                    the game to use a lot of memory.
+                  </Typography>
+                }
+              >
+                <Typography>Terminal capacity</Typography>
+              </Tooltip>
+              <Slider
+                value={terminalSize}
+                onChange={handleTerminalSizeChange}
+                step={50}
+                min={50}
+                max={500}
+                valueLabelDisplay="auto"
+                marks
+              />
+            </ListItem>
+            <ListItem>
+              <Tooltip
+                title={
                   <Typography>The time (in seconds) between each autosave. Set to 0 to disable autosave.</Typography>
                 }
               >
@@ -238,7 +271,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress messages</Typography>
+                    <Typography>Suppress messages</Typography>
                   </Tooltip>
                 }
               />
@@ -261,7 +294,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress faction invites</Typography>
+                    <Typography>Suppress faction invites</Typography>
                   </Tooltip>
                 }
               />
@@ -284,7 +317,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress travel confirmations</Typography>
+                    <Typography>Suppress travel confirmations</Typography>
                   </Tooltip>
                 }
               />
@@ -306,7 +339,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress buy augmentation confirmation</Typography>
+                    <Typography>Suppress buy augmentation confirmation</Typography>
                   </Tooltip>
                 }
               />
@@ -329,7 +362,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Supress hospitalization popup</Typography>
+                    <Typography>Suppress hospitalization popup</Typography>
                   </Tooltip>
                 }
               />
@@ -353,7 +386,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                         </Typography>
                       }
                     >
-                      <Typography>Supress bladeburner popup</Typography>
+                      <Typography>Suppress bladeburner popup</Typography>
                     </Tooltip>
                   }
                 />
@@ -449,7 +482,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         <Grid item xs={12} sm={6}>
           <Box>
             <Button onClick={() => props.save()}>Save Game</Button>
-            <Button onClick={() => props.delete()}>Delete Game</Button>
+            <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
           </Box>
           <Box>
             <Button onClick={() => props.export()}>Export Game</Button>
@@ -513,6 +546,15 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Grid>
       </Grid>
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
+      <ConfirmationModal
+        onConfirm={() => {
+          props.delete();
+          setDeleteOpen(false);
+        }}
+        open={deleteGameOpen}
+        onClose={() => setDeleteOpen(false)}
+        confirmationText={"Really delete your game? (It's permanent!)"}
+      />
     </div>
   );
 }

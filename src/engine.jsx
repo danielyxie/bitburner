@@ -3,7 +3,7 @@
  *
  * TODO: Separate UI functionality into its own component
  */
-import { convertTimeMsToTimeElapsedString, replaceAt } from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Augmentations } from "./Augmentation/Augmentations";
 import { initAugmentations, installAugmentations } from "./Augmentation/AugmentationHelpers";
 import { onExport } from "./ExportBonus";
@@ -26,7 +26,7 @@ import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { GameOptionsRoot } from "./ui/React/GameOptionsRoot";
-import { Theme } from "./ui/React/Theme";
+import { TTheme as Theme } from "./ui/React/Theme";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
@@ -54,11 +54,11 @@ import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import { initSymbolToStockMap, processStockPrices, displayStockMarketContent } from "./StockMarket/StockMarket";
 import { MilestonesRoot } from "./Milestones/ui/MilestonesRoot";
-import { Terminal, postVersion } from "./Terminal";
+import { TerminalRoot } from "./Terminal/ui/TerminalRoot";
+import { Terminal } from "./Terminal";
 import { TutorialRoot } from "./Tutorial/ui/TutorialRoot";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 
-import { createStatusText } from "./ui/createStatusText";
 import { CharacterInfo } from "./ui/CharacterInfo";
 import { Page, routing } from "./ui/navigationTracking";
 import { Money } from "./ui/React/Money";
@@ -67,8 +67,6 @@ import { Reputation } from "./ui/React/Reputation";
 
 import { ActiveScriptsRoot } from "./ui/ActiveScripts/Root";
 import { MainMenuLinks } from "./ui/MainMenu/Links";
-
-import { createPopup } from "./ui/React/createPopup";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
@@ -93,12 +91,12 @@ const Engine = {
     // Generic page that most react loads into.
     content: null,
     // Main menu content
-    terminalContent: null,
     infiltrationContent: null,
     workInProgressContent: null,
     redPillContent: null,
     cinematicTextContent: null,
     missionContent: null,
+    overview: null,
   },
 
   indexedDb: undefined,
@@ -109,10 +107,15 @@ const Engine = {
 
   loadTerminalContent: function () {
     Engine.hideAllContent();
-    Engine.Display.terminalContent.style.display = "block";
-    document.getElementById("terminal-input-td").scrollIntoView(false);
-    routing.navigateTo(Page.Terminal);
-    MainMenuLinks.Terminal.classList.add("active");
+    Engine.Display.content.style.display = "block";
+    routing.navigateTo(Page.CharacterInfo);
+    ReactDOM.render(
+      <Theme>
+        <TerminalRoot terminal={Terminal} engine={this} player={Player} />
+      </Theme>,
+      Engine.Display.content,
+    );
+    MainMenuLinks.Stats.classList.add("active");
   },
 
   loadCharacterContent: function () {
@@ -155,7 +158,12 @@ const Engine = {
     Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.CreateProgram);
     MainMenuLinks.CreateProgram.classList.add("active");
-    ReactDOM.render(<ProgramsRoot player={Player} />, Engine.Display.content);
+    ReactDOM.render(
+      <Theme>
+        <ProgramsRoot player={Player} />
+      </Theme>,
+      Engine.Display.content,
+    );
   },
 
   loadFactionsContent: function () {
@@ -260,8 +268,10 @@ const Engine = {
   loadWorkInProgressContent: function () {
     Engine.hideAllContent();
     const mainMenu = document.getElementById("mainmenu-container");
+    console.log("hiding loadWorkInProgressContent");
     mainMenu.style.visibility = "hidden";
     Engine.Display.workInProgressContent.style.display = "block";
+    console.log(Engine.Display.workInProgressContent);
     routing.navigateTo(Page.WorkInProgress);
   },
 
@@ -312,7 +322,7 @@ const Engine = {
   loadMissionContent: function () {
     Engine.hideAllContent();
     document.getElementById("mainmenu-container").style.visibility = "hidden";
-    document.getElementById("character-overview-wrapper").style.visibility = "hidden";
+    document.getElementById("character-overview").style.visibility = "hidden";
     Engine.Display.missionContent.style.display = "block";
     routing.navigateTo(Page.Mission);
   },
@@ -384,8 +394,6 @@ const Engine = {
 
   // Helper function that hides all content
   hideAllContent: function () {
-    Engine.Display.terminalContent.style.display = "none";
-
     Engine.Display.content.style.display = "none";
     Engine.Display.content.scrollTop = 0;
     ReactDOM.unmountComponentAtNode(Engine.Display.content);
@@ -400,15 +408,13 @@ const Engine = {
   },
 
   displayCharacterOverviewInfo: function () {
-    ReactDOM.render(<CharacterOverview player={Player} />, document.getElementById("character-overview-text"));
-
-    const save = document.getElementById("character-overview-save-button");
-    const flashClass = "flashing-button";
-    if (!Settings.AutosaveInterval) {
-      save.classList.add(flashClass);
-    } else {
-      save.classList.remove(flashClass);
-    }
+    console.log("rendering");
+    ReactDOM.render(
+      <Theme>
+        <CharacterOverview player={Player} save={() => saveObject.saveGame(Engine.indexedDb)} />
+      </Theme>,
+      document.getElementById("character-overview"),
+    );
   },
 
   // Main Game Loop
@@ -446,16 +452,7 @@ const Engine = {
     Player.playtimeSinceLastAug += time;
     Player.playtimeSinceLastBitnode += time;
 
-    // Start Manual hack
-    if (Terminal.actionStarted === true) {
-      Engine._totalActionTime = Terminal.actionTime;
-      Engine._actionTimeLeft = Terminal.actionTime;
-      Engine._actionInProgress = true;
-      Engine._actionProgressBarCount = 1;
-      Engine._actionProgressStr = "[                                                  ]";
-      Engine._actionTimeStr = "Time left: ";
-      Terminal.actionStarted = false;
-    }
+    Terminal.process(Player, numCycles);
 
     // Working
     if (Player.isWorking) {
@@ -521,11 +518,6 @@ const Engine = {
     Engine.decrementAllCounters(numCycles);
     Engine.checkCounters();
 
-    // Manual hacks
-    if (Engine._actionInProgress == true) {
-      Engine.updateHackProgress(numCycles);
-    }
-
     // Update the running time of all active scripts
     updateOnlineScriptTimes(numCycles);
 
@@ -578,11 +570,6 @@ const Engine = {
       }
     }
 
-    if (Engine.Counters.updateDisplays <= 0) {
-      Engine.displayCharacterOverviewInfo();
-      Engine.Counters.updateDisplays = 3;
-    }
-
     if (Engine.Counters.checkFactionInvitations <= 0) {
       const invitedFactions = Player.checkForFactionInvitations();
       if (invitedFactions.length > 0) {
@@ -627,42 +614,6 @@ const Engine = {
         generateRandomContract();
       }
       Engine.Counters.contractGeneration = 3000;
-    }
-  },
-
-  // Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly
-  // TODO Refactor this into Terminal module
-  _totalActionTime: 0,
-  _actionTimeLeft: 0,
-  _actionTimeStr: "Time left: ",
-  _actionProgressStr: "[                                                  ]",
-  _actionProgressBarCount: 1,
-  _actionInProgress: false,
-  updateHackProgress: function (numCycles = 1) {
-    var timeElapsedMilli = numCycles * Engine._idleSpeed;
-    Engine._actionTimeLeft -= timeElapsedMilli / 1000; // Substract idle speed (ms)
-    Engine._actionTimeLeft = Math.max(Engine._actionTimeLeft, 0);
-
-    // Calculate percent filled
-    var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);
-
-    // Update progress bar
-    while (Engine._actionProgressBarCount * 2 <= percent) {
-      Engine._actionProgressStr = replaceAt(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
-      Engine._actionProgressBarCount += 1;
-    }
-
-    // Update hack time remaining
-    Engine._actionTimeStr = "Time left: " + Math.max(0, Math.round(Engine._actionTimeLeft)).toString() + "s";
-    document.getElementById("hack-progress").innerHTML = Engine._actionTimeStr;
-
-    // Dynamically update progress bar
-    document.getElementById("hack-progress-bar").innerHTML = Engine._actionProgressStr.replace(/ /g, "&nbsp;");
-
-    // Once percent is 100, the hack is completed
-    if (percent >= 100) {
-      Engine._actionInProgress = false;
-      Terminal.finishAction();
     }
   },
 
@@ -853,17 +804,17 @@ const Engine = {
       removeLoadingScreen();
     }
 
-    ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
-    // Initialize labels on game settings
-    Terminal.resetTerminalInput();
+    ReactDOM.render(
+      <Theme>
+        <SidebarRoot engine={this} player={Player} />
+      </Theme>,
+      document.getElementById("sidebar"),
+    );
   },
 
   setDisplayElements: function () {
     Engine.Display.content = document.getElementById("generic-react-container");
     Engine.Display.content.style.display = "none";
-    // Content elements
-    Engine.Display.terminalContent = document.getElementById("terminal-container");
-    routing.navigateTo(Page.Terminal);
 
     Engine.Display.missionContent = document.getElementById("mission-container");
     Engine.Display.missionContent.style.display = "none";
@@ -882,20 +833,15 @@ const Engine = {
     // Cinematic Text
     Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
     Engine.Display.cinematicTextContent.style.display = "none";
+
+    Engine.Display.overview = document.getElementById("character-overview");
   },
 
   // Initialization
   init: function () {
-    // Character Overview buttons
-    document.getElementById("character-overview-save-button").addEventListener("click", function () {
-      saveObject.saveGame(Engine.indexedDb);
-      return false;
-    });
-
-    // Message at the top of terminal
-    postVersion();
-
     // Player was working cancel button
+
+    Engine.displayCharacterOverviewInfo();
     if (Player.isWorking) {
       var cancelButton = document.getElementById("work-in-progress-cancel-button");
       cancelButton.addEventListener("click", function () {
@@ -925,10 +871,9 @@ const Engine = {
       }
 
       Engine.loadWorkInProgressContent();
+    } else {
+      Engine.loadTerminalContent();
     }
-
-    // Character overview screen
-    document.getElementById("character-overview-container").style.display = "block";
   },
 
   start: function () {

@@ -1,5 +1,10 @@
 import React from "react";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from "@mui/material/styles";
+
+declare module "@mui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 export const colors = {
   primarylight: "#0f0",
@@ -18,9 +23,16 @@ export const colors = {
   well: "#222",
   white: "#fff",
   black: "#000",
+
+  hp: "#dd3434",
+  money: "#ffd700",
+  hack: "#adff2f",
+  combat: "#faffdf",
+  cha: "#a671d1",
+  int: "#6495ed",
 };
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       light: colors.primarylight,
@@ -47,132 +59,175 @@ export const theme = createMuiTheme({
       textTransform: "none",
     },
   },
-  overrides: {
+  components: {
     MuiInputBase: {
-      root: {
-        backgroundColor: colors.well,
-      },
-      input: {
-        color: colors.primary,
-        "&::placeholder": {
-          userSelect: "none",
-          color: colors.primarydark,
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.well,
+        },
+        input: {
+          color: colors.primary,
+          "&::placeholder": {
+            userSelect: "none",
+            color: colors.primarydark,
+          },
         },
       },
     },
+
     MuiInput: {
-      root: {
-        backgroundColor: colors.well,
-        borderBottomColor: "#fff",
-      },
-      underline: {
-        "&:hover": {
-          borderBottomColor: colors.primarydark,
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.well,
+          borderBottomColor: "#fff",
         },
-        "&:before": {
-          borderBottomColor: colors.primary,
-        },
-        "&:after": {
-          borderBottomColor: colors.primarylight,
+        underline: {
+          "&:hover": {
+            borderBottomColor: colors.primarydark,
+          },
+          "&:before": {
+            borderBottomColor: colors.primary,
+          },
+          "&:after": {
+            borderBottomColor: colors.primarylight,
+          },
         },
       },
     },
+
     MuiInputLabel: {
-      root: {
-        color: colors.primarydark, // why is this switched?
-        userSelect: "none",
-        "&:before": {
-          color: colors.primarylight,
+      styleOverrides: {
+        root: {
+          color: colors.primarydark, // why is this switched?
+          userSelect: "none",
+          "&:before": {
+            color: colors.primarylight,
+          },
         },
       },
     },
     MuiButton: {
-      root: {
-        backgroundColor: "#333",
-        border: "1px solid " + colors.well,
-        color: colors.primary,
-        margin: "5px",
-        padding: "3px 5px",
-        "&:hover": {
-          backgroundColor: colors.black,
-        },
+      styleOverrides: {
+        root: {
+          backgroundColor: "#333",
+          border: "1px solid " + colors.well,
+          // color: colors.primary,
+          margin: "5px",
+          padding: "3px 5px",
+          "&:hover": {
+            backgroundColor: colors.black,
+          },
 
-        borderRadius: 0,
+          borderRadius: 0,
+        },
       },
     },
     MuiSelect: {
-      icon: {
-        color: colors.primary,
+      styleOverrides: {
+        icon: {
+          color: colors.primary,
+        },
       },
     },
     MuiMenu: {
-      list: {
-        backgroundColor: colors.well,
+      styleOverrides: {
+        list: {
+          backgroundColor: colors.well,
+        },
       },
     },
     MuiMenuItem: {
-      root: {
-        color: colors.primary,
+      styleOverrides: {
+        root: {
+          color: colors.primary,
+        },
       },
     },
     MuiAccordionSummary: {
-      root: {
-        backgroundColor: "#111",
+      styleOverrides: {
+        root: {
+          backgroundColor: "#111",
+        },
       },
     },
     MuiAccordionDetails: {
-      root: {
-        backgroundColor: colors.black,
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.black,
+        },
       },
     },
     MuiIconButton: {
-      root: {
-        color: colors.primary,
+      styleOverrides: {
+        root: {
+          color: colors.primary,
+        },
       },
     },
     MuiTooltip: {
-      tooltip: {
-        fontSize: "1em",
-        color: colors.primary,
-        backgroundColor: colors.well,
-        borderRadius: 0,
-        border: "2px solid white",
+      styleOverrides: {
+        tooltip: {
+          fontSize: "1em",
+          color: colors.primary,
+          backgroundColor: colors.well,
+          borderRadius: 0,
+          border: "2px solid white",
+        },
       },
     },
-    MuiSvgIcon: {
-      root: {
-        color: colors.primary,
+    MuiSlider: {
+      styleOverrides: {
+        valueLabel: {
+          color: colors.primary,
+          backgroundColor: colors.well,
+        },
       },
     },
     MuiDrawer: {
-      paper: {
-        "&::-webkit-scrollbar": {
-          // webkit
-          display: "none",
+      styleOverrides: {
+        paper: {
+          "&::-webkit-scrollbar": {
+            // webkit
+            display: "none",
+          },
+          scrollbarWidth: "none", // firefox
+          backgroundColor: colors.black,
         },
-        scrollbarWidth: "none", // firefox
-        backgroundColor: colors.black,
-      },
-      paperAnchorDockedLeft: {
-        borderRight: "1px solid " + colors.welllight,
+        paperAnchorDockedLeft: {
+          borderRight: "1px solid " + colors.welllight,
+        },
       },
     },
     MuiDivider: {
-      root: {
-        backgroundColor: colors.welllight,
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.welllight,
+        },
       },
     },
     MuiFormControlLabel: {
-      root: {
-        color: colors.primary,
+      styleOverrides: {
+        root: {
+          color: colors.primary,
+        },
       },
     },
     MuiSwitch: {
-      switchBase: {
-        color: colors.primarydark,
+      styleOverrides: {
+        switchBase: {
+          color: colors.primarydark,
+        },
+        track: {
+          backgroundColor: colors.welllight,
+        },
       },
-      track: {
-        backgroundColor: colors.welllight,
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.black,
+          border: "1px solid " + colors.welllight,
+        },
       },
     },
   },
@@ -182,6 +237,8 @@ interface IProps {
   children: JSX.Element[] | JSX.Element;
 }
 
-export const Theme = ({ children }: IProps): React.ReactElement => (
-  <ThemeProvider theme={theme}>{children}</ThemeProvider>
+export const TTheme = ({ children }: IProps): React.ReactElement => (
+  <StyledEngineProvider injectFirst>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  </StyledEngineProvider>
 );

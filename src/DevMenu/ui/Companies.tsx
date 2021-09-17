@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
+import Button from "@mui/material/Button";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Companies as AllCompanies } from "../../Company/Companies";
-import MenuItem from "@material-ui/core/MenuItem";
+import MenuItem from "@mui/material/MenuItem";
 import { Adjuster } from "./Adjuster";
 
 const bigNumber = 1e12;
 
 export function Companies(): React.ReactElement {
   const [company, setCompany] = useState("ECorp");
-  function setCompanyDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+  function setCompanyDropdown(event: SelectChangeEvent<string>): void {
     setCompany(event.target.value as string);
   }
   function resetCompanyRep(): void {

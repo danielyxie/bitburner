@@ -174,11 +174,8 @@ export function prestigeAugmentation() {
   this.hacknetNodes.length = 0;
   this.hashManager.prestige();
 
-  // Reset player multipliers
-  this.resetMultipliers();
-
-  // Re-calculate skills and reset HP
-  this.updateSkillLevels();
+  // Reapply augs, re-calculate skills and reset HP
+  this.reapplyAllAugmentations(true);
   this.hp = this.max_hp;
 }
 
@@ -198,12 +195,6 @@ export function prestigeSourceFile() {
       this.sleeves[i].shock = Math.max(25, this.sleeves[i].shock);
       this.sleeves[i].sync = Math.max(25, this.sleeves[i].sync);
     }
-  }
-
-  const characterMenuHeader = document.getElementById("character-menu-header");
-  if (characterMenuHeader instanceof HTMLElement) {
-    characterMenuHeader.click();
-    characterMenuHeader.click();
   }
 
   this.timeWorked = 0;
@@ -2068,9 +2059,6 @@ export function applyForJob(entryPosType, sing = false) {
   this.jobs[company.name] = pos.name;
   this.companyName = this.location;
 
-  document.getElementById("world-menu-header").click();
-  document.getElementById("world-menu-header").click();
-
   if (sing) {
     return true;
   }
@@ -2186,8 +2174,6 @@ export function applyForEmployeeJob(sing = false) {
   if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[1];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
@@ -2204,8 +2190,6 @@ export function applyForPartTimeEmployeeJob(sing = false) {
   var company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
@@ -2223,8 +2207,6 @@ export function applyForWaiterJob(sing = false) {
   if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[0];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
@@ -2242,8 +2224,6 @@ export function applyForPartTimeWaiterJob(sing = false) {
   if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
-    document.getElementById("world-menu-header").click();
-    document.getElementById("world-menu-header").click();
     if (sing) {
       return true;
     }
@@ -2307,6 +2287,8 @@ export function reapplyAllAugmentations(resetMultipliers = true) {
     }
     applyAugmentation(this.augmentations[i], true);
   }
+
+  this.updateSkillLevels();
 }
 
 export function reapplyAllSourceFiles() {

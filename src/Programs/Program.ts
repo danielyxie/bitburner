@@ -1,7 +1,6 @@
-export interface IPlayer {
-  hacking_skill: number;
-  sourceFiles: any[];
-}
+import { BaseServer } from "../Server/BaseServer";
+import { ITerminal } from "../Terminal/ITerminal";
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 export interface IProgramCreate {
   level: number;
@@ -13,10 +12,16 @@ export interface IProgramCreate {
 export class Program {
   name = "";
   create: IProgramCreate | null;
+  run: (terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void;
 
-  constructor(name: string, create: IProgramCreate | null) {
+  constructor(
+    name: string,
+    create: IProgramCreate | null,
+    run: (terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void,
+  ) {
     this.name = name;
     this.create = create;
+    this.run = run;
   }
 
   htmlID(): string {

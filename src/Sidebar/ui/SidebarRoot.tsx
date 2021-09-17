@@ -1,51 +1,48 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { createStyles, makeStyles, useTheme, Theme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import MuiDrawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
+import Collapse from "@mui/material/Collapse";
+import Badge from "@mui/material/Badge";
 
-import { Theme as BBTheme, colors } from "../../ui/React/Theme";
+import { TTheme as BBTheme, colors } from "../../ui/React/Theme";
 
-import ComputerIcon from "@material-ui/icons/Computer";
-import LastPageIcon from "@material-ui/icons/LastPage"; // Terminal
-import CreateIcon from "@material-ui/icons/Create"; // Create Script
-import StorageIcon from "@material-ui/icons/Storage"; // Active Scripts
-import BugReportIcon from "@material-ui/icons/BugReport"; // Create Program
-import EqualizerIcon from "@material-ui/icons/Equalizer"; // Stats
-import ContactsIcon from "@material-ui/icons/Contacts"; // Factions
-import DoubleArrowIcon from "@material-ui/icons/DoubleArrow"; // Augmentations
-import AccountTreeIcon from "@material-ui/icons/AccountTree"; // Hacknet
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt"; // Sleeves
-import LocationCityIcon from "@material-ui/icons/LocationCity"; // City
-import AirplanemodeActiveIcon from "@material-ui/icons/AirplanemodeActive"; // Travel
-import WorkIcon from "@material-ui/icons/Work"; // Job
-import TrendingUpIcon from "@material-ui/icons/TrendingUp"; // Stock Market
-import FormatBoldIcon from "@material-ui/icons/FormatBold"; // Bladeburner
-import BusinessIcon from "@material-ui/icons/Business"; // Corp
-import SportsMmaIcon from "@material-ui/icons/SportsMma"; // Gang
-import CheckIcon from "@material-ui/icons/Check"; // Milestones
-import HelpIcon from "@material-ui/icons/Help"; // Tutorial
-import SettingsIcon from "@material-ui/icons/Settings"; // options
-import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard"; // Dev
-// import MemoryIcon from "@material-ui/icons/Memory";
-// import ShareIcon from "@material-ui/icons/Share";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import PublicIcon from "@material-ui/icons/Public";
-import LiveHelpIcon from "@material-ui/icons/LiveHelp";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ComputerIcon from "@mui/icons-material/Computer";
+import LastPageIcon from "@mui/icons-material/LastPage"; // Terminal
+import CreateIcon from "@mui/icons-material/Create"; // Create Script
+import StorageIcon from "@mui/icons-material/Storage"; // Active Scripts
+import BugReportIcon from "@mui/icons-material/BugReport"; // Create Program
+import EqualizerIcon from "@mui/icons-material/Equalizer"; // Stats
+import ContactsIcon from "@mui/icons-material/Contacts"; // Factions
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow"; // Augmentations
+import AccountTreeIcon from "@mui/icons-material/AccountTree"; // Hacknet
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt"; // Sleeves
+import LocationCityIcon from "@mui/icons-material/LocationCity"; // City
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive"; // Travel
+import WorkIcon from "@mui/icons-material/Work"; // Job
+import TrendingUpIcon from "@mui/icons-material/TrendingUp"; // Stock Market
+import FormatBoldIcon from "@mui/icons-material/FormatBold"; // Bladeburner
+import BusinessIcon from "@mui/icons-material/Business"; // Corp
+import SportsMmaIcon from "@mui/icons-material/SportsMma"; // Gang
+import CheckIcon from "@mui/icons-material/Check"; // Milestones
+import HelpIcon from "@mui/icons-material/Help"; // Tutorial
+import SettingsIcon from "@mui/icons-material/Settings"; // options
+import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard"; // Dev
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import PublicIcon from "@mui/icons-material/Public";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { IEngine } from "../../IEngine";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -63,31 +60,44 @@ import { Page, routing } from "../../ui/navigationTracking";
 
 const drawerWidth = 240;
 
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: theme.spacing(31),
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(2)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(7)} + 1px)`,
+  },
+});
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
+  width: theme.spacing(31),
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: "nowrap",
-    },
-    drawerOpen: {
-      width: drawerWidth,
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerClose: {
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: "hidden",
-      width: theme.spacing(7) + 1,
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9) + 1,
-      },
-    },
     active: {
       borderLeft: "3px solid " + colors.primary,
     },
@@ -130,6 +140,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const flashTutorial = ITutorial.currStep === iTutorialSteps.WorldDescription;
 
+  const augmentationCount = props.player.queuedAugmentations.length;
+  const invitationsCount = props.player.factionInvitations.length;
   const programCount = getAvailableCreatePrograms(props.player).length;
   const canCreateProgram =
     programCount > 0 ||
@@ -341,34 +353,24 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const toggleDrawer = () => setOpen((old) => !old);
+  const toggleDrawer = (): void => setOpen((old) => !old);
   return (
     <BBTheme>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
+      <Drawer open={open} anchor="left" variant="permanent">
         <ListItem button onClick={toggleDrawer}>
-          <ListItemIcon>{!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}</ListItemIcon>
+          <ListItemIcon>
+            {!open ? <ChevronRightIcon color={"primary"} /> : <ChevronLeftIcon color={"primary"} />}
+          </ListItemIcon>
           <ListItemText primary={<Typography color="primary">Bitburner v{CONSTANTS.Version}</Typography>} />
         </ListItem>
         <Divider />
         <List>
           <ListItem button onClick={() => setHackingOpen((old) => !old)}>
             <ListItemIcon>
-              <ComputerIcon />
+              <ComputerIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">Hacking</Typography>} />
-            {hackingOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {hackingOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={hackingOpen} timeout="auto" unmountOnExit>
             <List>
@@ -435,7 +437,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                   onClick={clickCreateProgram}
                 >
                   <ListItemIcon>
-                    <BugReportIcon color={activeTab !== "CreateProgram" ? "secondary" : "primary"} />
+                    <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
+                      <BugReportIcon color={activeTab !== "CreateProgram" ? "secondary" : "primary"} />
+                    </Badge>
                   </ListItemIcon>
                   <ListItemText>
                     <Typography color={activeTab !== "CreateProgram" ? "secondary" : "primary"}>
@@ -450,10 +454,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <Divider />
           <ListItem button onClick={() => setCharacterOpen((old) => !old)}>
             <ListItemIcon>
-              <AccountBoxIcon />
+              <AccountBoxIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">Character</Typography>} />
-            {characterOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {characterOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={characterOpen} timeout="auto" unmountOnExit>
             <ListItem
@@ -483,7 +487,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 onClick={clickFactions}
               >
                 <ListItemIcon>
-                  <ContactsIcon color={activeTab !== "Factions" ? "secondary" : "primary"} />
+                  <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
+                    <ContactsIcon color={activeTab !== "Factions" ? "secondary" : "primary"} />
+                  </Badge>
                 </ListItemIcon>
                 <ListItemText>
                   <Typography color={activeTab !== "Factions" ? "secondary" : "primary"}>Factions</Typography>
@@ -500,10 +506,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 onClick={clickAugmentations}
               >
                 <ListItemIcon>
-                  <DoubleArrowIcon
-                    style={{ transform: "rotate(-90deg)" }}
-                    color={activeTab !== "Augmentations" ? "secondary" : "primary"}
-                  />
+                  <Badge badgeContent={augmentationCount !== 0 ? augmentationCount : undefined} color="error">
+                    <DoubleArrowIcon
+                      style={{ transform: "rotate(-90deg)" }}
+                      color={activeTab !== "Augmentations" ? "secondary" : "primary"}
+                    />
+                  </Badge>
                 </ListItemIcon>
                 <ListItemText>
                   <Typography color={activeTab !== "Augmentations" ? "secondary" : "primary"}>Augmentations</Typography>
@@ -549,10 +557,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <Divider />
           <ListItem button onClick={() => setWorldOpen((old) => !old)}>
             <ListItemIcon>
-              <PublicIcon />
+              <PublicIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">World</Typography>} />
-            {worldOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {worldOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={worldOpen} timeout="auto" unmountOnExit>
             <ListItem
@@ -677,10 +685,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <Divider />
           <ListItem button onClick={() => setHelpOpen((old) => !old)}>
             <ListItemIcon>
-              <LiveHelpIcon />
+              <LiveHelpIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">Help</Typography>} />
-            {helpOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {helpOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={helpOpen} timeout="auto" unmountOnExit>
             <ListItem

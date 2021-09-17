@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
+import Button from "@mui/material/Button";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { AllServers } from "../../Server/AllServers";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServerByHostname } from "../../Server/ServerHelpers";
-import MenuItem from "@material-ui/core/MenuItem";
+import MenuItem from "@mui/material/MenuItem";
 
 export function Servers(): React.ReactElement {
   const [server, setServer] = useState("home");
-  function setServerDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+  function setServerDropdown(event: SelectChangeEvent<string>): void {
     setServer(event.target.value as string);
   }
   function rootServer(): void {

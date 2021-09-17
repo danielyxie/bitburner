@@ -4,16 +4,10 @@
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
     terminal which has its own page) */
 
-.generic-menupage-container {
-  padding-left: 2px;
+#generic-react-container {
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
   flex-grow: 1;
-}
-
-#generic-react-container {
-  padding: 10px;
-  overflow-y: scroll;
 }
 
 #generic-react-container::-webkit-scrollbar {

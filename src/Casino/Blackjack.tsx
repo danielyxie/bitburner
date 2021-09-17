@@ -5,7 +5,7 @@ import { Money } from "../ui/React/Money";
 import { Game } from "./Game";
 import { Deck } from "./CardDeck/Deck";
 import { Hand } from "./CardDeck/Hand";
-import { InputAdornment } from "@material-ui/core";
+import { InputAdornment } from "@mui/material";
 import { ReactCard } from "./CardDeck/ReactCard";
 import { MuiTextField } from "../ui/React/MuiTextField";
 import { MuiButton } from "../ui/React/MuiButton";

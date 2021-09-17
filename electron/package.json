@@ -1,0 +1,7 @@
+{
+  "name": "bitburner",
+  "version": "1.0.0",
+  "description": "A cyberpunk-themed programming incremental game",
+  "main": "main.js",
+  "author": "Daniel Xie"
+}

@@ -1,4 +1,8 @@
 {
+  "name": "bitburner",
+  "license": "SEE LICENSE IN license.txt",
+  "version": "0.53.0",
+  "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie"
   },
@@ -6,13 +10,17 @@
     "url": "https://github.com/danielyxie/bitburner/issues"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@monaco-editor/react": "^4.2.2",
+    "@mui/icons-material": "^5.0.0-rc.1",
+    "@mui/lab": "^5.0.0-alpha.46",
+    "@mui/material": "^5.0.0-rc.1",
+    "@mui/styles": "^5.0.0-rc.1",
     "@types/js-beautify": "^1.13.2",
     "@types/numeral": "0.0.25",
-    "@types/react": "^16.8.6",
-    "@types/react-dom": "^16.8.2",
+    "@types/react": "^17.0.21",
+    "@types/react-dom": "^17.0.9",
     "acorn": "^8.4.1",
     "acorn-walk": "^8.1.1",
     "ajv": "^5.1.5",
@@ -42,8 +50,8 @@
     "node-sass": "^6.0.1",
     "normalize.css": "^8.0.0",
     "numeral": "2.0.6",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-modal": "^3.12.1",
     "sprintf-js": "^1.1.1",
     "tapable": "^1.0.0",
@@ -59,6 +67,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.15.0",
     "@testing-library/cypress": "^8.0.1",
+    "@types/file-saver": "^2.0.3",
     "@types/jest": "^27.0.1",
     "@types/lodash": "^4.14.168",
     "@types/node": "^16.9.1",
@@ -71,6 +80,8 @@
     "bundle-loader": "~0.5.0",
     "css-loader": "^0.28.11",
     "cypress": "^8.3.1",
+    "electron": "^14.0.1",
+    "electron-packager": "^15.4.0",
     "es6-promise-polyfill": "^1.1.1",
     "eslint": "^7.24.0",
     "eslint-plugin-node": "^11.1.0",
@@ -120,8 +131,6 @@
     "node": ">=8 || <=9"
   },
   "homepage": "https://github.com/danielyxie/bitburner",
-  "license": "SEE LICENSE IN license.txt",
-  "name": "bitburner",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danielyxie/bitburner.git"
@@ -144,7 +153,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
-    "watch:dev": "webpack --watch --mode development"
-  },
-  "version": "0.53.0"
+    "watch:dev": "webpack --watch --mode development",
+    "package-electron": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
+  }
 }
