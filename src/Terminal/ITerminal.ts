@@ -56,10 +56,10 @@ export interface ITerminal {
   startAnalyze(): void;
   startBackdoor(player: IPlayer): void;
   startHack(player: IPlayer): void;
-  finishHack(player: IPlayer, cancelled?: boolean): void;
-  finishBackdoor(player: IPlayer, cancelled?: boolean): void;
+  finishHack(router: IRouter, player: IPlayer, cancelled?: boolean): void;
+  finishBackdoor(router: IRouter, player: IPlayer, cancelled?: boolean): void;
   finishAnalyze(player: IPlayer, cancelled?: boolean): void;
-  finishAction(player: IPlayer, cancelled?: boolean): void;
+  finishAction(router: IRouter, player: IPlayer, cancelled?: boolean): void;
   getFilepath(filename: string): string;
   getFile(player: IPlayer, filename: string): Script | TextFile | string | null;
   getScript(player: IPlayer, filename: string): Script | null;
@@ -74,7 +74,7 @@ export interface ITerminal {
   executeCommands(router: IRouter, player: IPlayer, commands: string): void;
   // If there was any changes, will return true, once.
   pollChanges(): boolean;
-  process(player: IPlayer, cycles: number): void;
+  process(router: IRouter, player: IPlayer, cycles: number): void;
   prestige(): void;
   getProgressText(): string;
 }

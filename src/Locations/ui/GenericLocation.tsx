@@ -60,14 +60,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     const content: React.ReactNode[] = [];
 
     if (this.props.loc.types.includes(LocationType.Company)) {
-      content.push(
-        <CompanyLocation
-          engine={this.props.engine}
-          key={"companylocation"}
-          locName={this.props.loc.name}
-          p={this.props.p}
-        />,
-      );
+      content.push(<CompanyLocation key={"companylocation"} locName={this.props.loc.name} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Gym)) {
@@ -79,7 +72,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     }
 
     if (this.props.loc.types.includes(LocationType.Slums)) {
-      content.push(<SlumsLocation key={"slumslocation"} p={this.props.p} />);
+      content.push(<SlumsLocation key={"slumslocation"} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Special)) {
@@ -97,7 +90,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     }
 
     if (this.props.loc.types.includes(LocationType.University)) {
-      content.push(<UniversityLocation key={"universitylocation"} loc={this.props.loc} p={this.props.p} />);
+      content.push(<UniversityLocation key={"universitylocation"} loc={this.props.loc} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Casino)) {

@@ -1,5 +1,4 @@
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
+import { use } from "../../ui/Context";
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { Countdown } from "./Countdown";
@@ -14,8 +13,6 @@ import { WireCuttingGame } from "./WireCuttingGame";
 import { Victory } from "./Victory";
 
 interface IProps {
-  Player: IPlayer;
-  Engine: IEngine;
   StartingDifficulty: number;
   Difficulty: number;
   MaxLevel: number;
@@ -40,6 +37,8 @@ const minigames = [
 ];
 
 export function Game(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const [level, setLevel] = useState(1);
   const [stage, setStage] = useState(Stage.Countdown);
   const [results, setResults] = useState("");
@@ -89,12 +88,10 @@ export function Game(props: IProps): React.ReactElement {
     pushResult(false);
     // Kill the player immediately if they use automation, so
     // it's clear they're not meant to
-    const damage = options?.automated ? props.Player.hp : props.StartingDifficulty * 3;
-    if (props.Player.takeDamage(damage)) {
-      const menu = document.getElementById("mainmenu-container");
-      if (menu === null) throw new Error("mainmenu-container not found");
-      menu.style.visibility = "visible";
-      props.Engine.loadLocationContent();
+    const damage = options?.automated ? player.hp : props.StartingDifficulty * 3;
+    if (player.takeDamage(damage)) {
+      router.toCity();
+      return;
     }
     setupNextGame();
   }
@@ -112,8 +109,6 @@ export function Game(props: IProps): React.ReactElement {
     case Stage.Sell:
       stageComponent = (
         <Victory
-          Player={props.Player}
-          Engine={props.Engine}
           StartingDifficulty={props.StartingDifficulty}
           Difficulty={props.Difficulty}
           MaxLevel={props.MaxLevel}

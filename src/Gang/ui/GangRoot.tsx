@@ -2,20 +2,19 @@
  * React Component for all the gang stuff.
  */
 import React, { useState, useEffect } from "react";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
-import { IEngine } from "../../IEngine";
+import { use } from "../../ui/Context";
+import { Factions } from "../../Faction/Factions";
 import { Gang } from "../Gang";
-import { displayFactionContent } from "../../Faction/FactionHelpers";
 
 interface IProps {
   gang: Gang;
-  player: IPlayer;
-  engine: IEngine;
 }
 
-export function Root(props: IProps): React.ReactElement {
+export function GangRoot(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const [management, setManagement] = useState(true);
   const setRerender = useState(false)[1];
 
@@ -25,8 +24,7 @@ export function Root(props: IProps): React.ReactElement {
   }, []);
 
   function back(): void {
-    props.engine.loadFactionContent();
-    displayFactionContent(props.gang.facName);
+    router.toFaction(Factions[props.gang.facName]);
   }
 
   return (
@@ -48,11 +46,7 @@ export function Root(props: IProps): React.ReactElement {
       >
         Gang Territory
       </a>
-      {management ? (
-        <ManagementSubpage gang={props.gang} player={props.player} />
-      ) : (
-        <TerritorySubpage gang={props.gang} />
-      )}
+      {management ? <ManagementSubpage gang={props.gang} player={player} /> : <TerritorySubpage gang={props.gang} />}
     </div>
   );
 }

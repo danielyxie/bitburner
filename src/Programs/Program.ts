@@ -1,6 +1,7 @@
 import { BaseServer } from "../Server/BaseServer";
 import { ITerminal } from "../Terminal/ITerminal";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { IRouter } from "../ui/Router";
 
 export interface IProgramCreate {
   level: number;
@@ -12,12 +13,12 @@ export interface IProgramCreate {
 export class Program {
   name = "";
   create: IProgramCreate | null;
-  run: (terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void;
+  run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void;
 
   constructor(
     name: string,
     create: IProgramCreate | null,
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void,
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void,
   ) {
     this.name = name;
     this.create = create;

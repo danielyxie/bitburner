@@ -1,7 +1,6 @@
 /**
  * Implementation for what happens when you destroy a BitNode
  */
-import { Engine } from "./engine";
 import { Player } from "./Player";
 import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
@@ -9,20 +8,10 @@ import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SourceFiles } from "./SourceFile/SourceFiles";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { BitverseRoot } from "./BitNode/ui/BitverseRoot";
-import React from "react";
-import ReactDOM from "react-dom";
 
 let redPillFlag = false;
-function hackWorldDaemon(currentNodeNumber, flume = false, quick = false) {
-  // Clear the screen
-  const container = document.getElementById("red-pill-container");
-  ReactDOM.unmountComponentAtNode(container);
-  Engine.loadRedPillContent();
-  ReactDOM.render(
-    <BitverseRoot destroyedBitNodeNum={currentNodeNumber} flume={flume} enter={enterBitNode} quick={quick} />,
-    container,
-  );
+function hackWorldDaemon(router, flume = false, quick = false) {
+  router.toBitVerse(flume, quick);
   redPillFlag = true;
 }
 
@@ -68,12 +57,12 @@ function giveSourceFile(bitNodeNumber) {
       Player.intelligence = 1;
     }
     dialogBoxCreate(
-      "You received a Source-File for destroying a Bit Node!<br><br>" + sourceFile.name + "<br><br>" + sourceFile.info,
+      "You received a Source-File for destroying a BitNode!<br><br>" + sourceFile.name + "<br><br>" + sourceFile.info,
     );
   }
 }
 
-function enterBitNode(flume, destroyedBitNode, newBitNode) {
+export function enterBitNode(router, flume, destroyedBitNode, newBitNode) {
   if (!flume) {
     giveSourceFile(destroyedBitNode);
   } else {
@@ -86,12 +75,14 @@ function enterBitNode(flume, destroyedBitNode, newBitNode) {
     Player.intelligence = 1;
   }
   redPillFlag = false;
-  const container = document.getElementById("red-pill-container");
-  ReactDOM.unmountComponentAtNode(container);
-
   // Set new Bit Node
   Player.bitNodeN = newBitNode;
 
+  if (newBitNode === 6) {
+    router.toBladeburnerCinematic();
+  } else {
+    router.toTerminal();
+  }
   prestigeSourceFile(flume);
 }
 

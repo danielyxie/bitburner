@@ -1,12 +1,8 @@
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
 import React from "react";
 import { StdButton } from "../../ui/React/StdButton";
 import Grid from "@mui/material/Grid";
 
 interface IProps {
-  Player: IPlayer;
-  Engine: IEngine;
   Location: string;
   Difficulty: number;
   MaxLevel: number;

@@ -1,4 +1,3 @@
-import { buyStock, sellStock, shortStock, sellShort } from "./BuyingAndSelling";
 import { IOrderBook } from "./IOrderBook";
 import { IStockMarket } from "./IStockMarket";
 import { Order } from "./Order";
@@ -9,22 +8,16 @@ import { InitStockMetadata } from "./data/InitStockMetadata";
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
-import { StockMarketRoot } from "./ui/StockMarketRoot";
 
 import { CONSTANTS } from "../Constants";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { Player } from "../Player";
 import { IMap } from "../types";
 import { EventEmitter } from "../utils/EventEmitter";
 
-import { Page, routing } from ".././ui/navigationTracking";
 import { numeralWrapper } from ".././ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Reviver } from "../../utils/JSONReviver";
-
-import * as React from "react";
-import * as ReactDOM from "react-dom";
 
 export let StockMarket: IStockMarket = {
   lastUpdate: 0,
@@ -150,7 +143,6 @@ export function loadStockMarket(saveString: string): void {
       ticksUntilCycle: 0,
     } as IStockMarket;
   } else {
-    console.log(JSON.parse(saveString, Reviver));
     StockMarket = JSON.parse(saveString, Reviver);
   }
 }
@@ -313,14 +305,6 @@ export function processStockPrices(numCycles = 1): void {
     stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 10, stock.shareTxForMovement);
   }
 }
-
-let stockMarketContainer: HTMLElement | null = null;
-function setStockMarketContainer(): void {
-  stockMarketContainer = document.getElementById("generic-react-container");
-  document.removeEventListener("DOMContentLoaded", setStockMarketContainer);
-}
-
-document.addEventListener("DOMContentLoaded", setStockMarketContainer);
 
 export function initStockMarketFnForReact(): void {
   initStockMarket();

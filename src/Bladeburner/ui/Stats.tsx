@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { BladeburnerConstants } from "../data/Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
 import { Money } from "../../ui/React/Money";
 import { StatsTable } from "../../ui/React/StatsTable";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { createPopup } from "../../ui/React/createPopup";
 import { Factions } from "../../Faction/Factions";
-import { joinFaction, displayFactionContent } from "../../Faction/FactionHelpers";
+import { IRouter } from "../../ui/Router";
+import { joinFaction } from "../../Faction/FactionHelpers";
 import { IBladeburner } from "../IBladeburner";
 
 import { TravelPopup } from "./TravelPopup";
 
 interface IProps {
   bladeburner: IBladeburner;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
 
@@ -72,8 +72,7 @@ export function Stats(props: IProps): React.ReactElement {
   function openFaction(): void {
     const faction = Factions["Bladeburners"];
     if (faction.isMember) {
-      props.engine.loadFactionContent();
-      displayFactionContent("Bladeburners");
+      props.router.toFaction(faction);
     } else {
       if (props.bladeburner.rank >= BladeburnerConstants.RankNeededForFaction) {
         joinFaction(faction);

@@ -12,6 +12,7 @@ interface IProps {
   player: IPlayer;
   faction: Faction;
   aug: Augmentation;
+  rerender: () => void;
   popupId: string;
 }
 
@@ -24,6 +25,7 @@ export function PurchaseAugmentationPopup(props: IProps): React.ReactElement {
     }
 
     purchaseAugmentation(props.aug, props.faction);
+    props.rerender();
     removePopup(props.popupId);
   }
 

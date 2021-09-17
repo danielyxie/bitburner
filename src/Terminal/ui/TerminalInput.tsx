@@ -17,21 +17,21 @@ import { FconfSettings } from "../../Fconf/FconfSettings";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     textfield: {
-      margin: 0,
+      margin: theme.spacing(0),
       width: "100%",
     },
     input: {
       backgroundColor: "#000",
     },
     nopadding: {
-      padding: 0,
+      padding: theme.spacing(0),
     },
     preformatted: {
       whiteSpace: "pre-wrap",
-      margin: 0,
+      margin: theme.spacing(0),
     },
     list: {
-      padding: 0,
+      padding: theme.spacing(0),
       height: "100%",
     },
   }),
@@ -147,7 +147,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       if (ref) ref.focus();
       // Cancel action
       if (event.keyCode === KEY.C && event.ctrlKey) {
-        terminal.finishAction(player, true);
+        terminal.finishAction(router, player, true);
       }
     }
     document.addEventListener("keydown", keyDown);

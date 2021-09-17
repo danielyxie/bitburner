@@ -3,7 +3,6 @@ import { IRouter } from "../ui/Router";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
-import { hackWorldDaemon } from "../RedPill";
 import { Programs } from "../Programs/Programs";
 import { CodingContractResult } from "../CodingContracts";
 
@@ -86,11 +85,11 @@ export class Terminal implements ITerminal {
   // Excludes the trailing forward slash
   currDir = "/";
 
-  process(player: IPlayer, cycles: number): void {
+  process(router: IRouter, player: IPlayer, cycles: number): void {
     if (this.action === null) return;
     this.action.timeLeft -= (CONSTANTS._idleSpeed * cycles) / 1000;
     this.hasChanges = true;
-    if (this.action.timeLeft < 0) this.finishAction(player, false);
+    if (this.action.timeLeft < 0) this.finishAction(router, player, false);
   }
 
   pollChanges(): boolean {
@@ -138,7 +137,7 @@ export class Terminal implements ITerminal {
   }
 
   // Complete the hack/analyze command
-  finishHack(player: IPlayer, cancelled = false): void {
+  finishHack(router: IRouter, player: IPlayer, cancelled = false): void {
     if (cancelled) return;
     const server = player.getCurrentServer();
 
@@ -156,7 +155,7 @@ export class Terminal implements ITerminal {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
-        hackWorldDaemon(player.bitNodeN);
+        router.toBitVerse(false, false);
         return;
       }
       server.backdoorInstalled = true;
@@ -190,7 +189,7 @@ export class Terminal implements ITerminal {
     }
   }
 
-  finishBackdoor(player: IPlayer, cancelled = false): void {
+  finishBackdoor(router: IRouter, player: IPlayer, cancelled = false): void {
     if (!cancelled) {
       const server = player.getCurrentServer();
       if (
@@ -200,7 +199,7 @@ export class Terminal implements ITerminal {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
-        hackWorldDaemon(player.bitNodeN);
+        router.toBitVerse(false, false);
         return;
       }
       server.backdoorInstalled = true;
@@ -238,16 +237,16 @@ export class Terminal implements ITerminal {
     }
   }
 
-  finishAction(player: IPlayer, cancelled = false): void {
+  finishAction(router: IRouter, player: IPlayer, cancelled = false): void {
     if (this.action === null) {
       if (!cancelled) throw new Error("Finish action called when there was no action");
       return;
     }
     this.print(this.getProgressText());
     if (this.action.action === "h") {
-      this.finishHack(player, cancelled);
+      this.finishHack(router, player, cancelled);
     } else if (this.action.action === "b") {
-      this.finishBackdoor(player, cancelled);
+      this.finishBackdoor(router, player, cancelled);
     } else if (this.action.action === "a") {
       this.finishAnalyze(player, cancelled);
     }

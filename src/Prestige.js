@@ -3,7 +3,6 @@ import { augmentationExists, initAugmentations } from "./Augmentation/Augmentati
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
-import { writeCinematicText } from "./CinematicText";
 import { Companies, initCompanies } from "./Company/Companies";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
 import { Programs } from "./Programs/Programs";
@@ -25,13 +24,7 @@ import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 
-import { Page, routing } from "./ui/navigationTracking";
-
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { exceptionAlert } from "../utils/helpers/exceptionAlert";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
-import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
 
 import Decimal from "decimal.js";
 
@@ -39,9 +32,6 @@ const BitNode8StartingMoney = 250e6;
 
 // Prestige by purchasing augmentation
 function prestigeAugmentation() {
-  // Set Navigation to Terminal screen, for any logic that depends on it
-  routing.navigateTo(Page.Terminal);
-
   initBitNodeMultipliers(Player);
 
   const megaCorpFactions = [
@@ -61,9 +51,6 @@ function prestigeAugmentation() {
     return megaCorpFactions.includes(faction);
   });
   Player.prestigeAugmentation();
-
-  Terminal.clear();
-  Engine.loadTerminalContent();
 
   // Delete all Worker Scripts objects
   prestigeWorkerScripts();
@@ -244,11 +231,6 @@ function prestigeSourceFile(flume) {
   // Messages
   initMessages();
 
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
-  Terminal.clear();
-  Engine.loadTerminalContent();
-
   // BitNode 3: Corporatocracy
   if (Player.bitNodeN === 3) {
     homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
@@ -256,56 +238,6 @@ function prestigeSourceFile(flume) {
       "You received a copy of the Corporation Management Handbook on your home computer. " +
         "Read it if you need help getting started with Corporations!",
     );
-  }
-
-  // BitNode 6: Bladeburner
-  if (Player.bitNodeN === 6) {
-    var cinematicText = [
-      "In the middle of the 21st century, OmniTek Incorporated advanced robot evolution " +
-        "with their Synthoids (synthetic androids), a being virtually identical to a human.",
-      "------",
-      "Their sixth-generation Synthoids, called MK-VI, were stronger, faster, and more " +
-        "intelligent than humans. Many argued that the MK-VI Synthoids were the first " +
-        "example of sentient AI.",
-      "------",
-      "Unfortunately, in 2070 a terrorist group called Ascendis Totalis hacked into OmniTek and " +
-        "uploaded a rogue AI into their Synthoid manufacturing facilities.",
-      "------",
-      "The MK-VI Synthoids infected by the rogue AI turned hostile toward humanity, initiating " +
-        "the deadliest conflict in human history. This dark chapter is now known as the Synthoid Uprising.",
-      "------",
-      "In the aftermath of the Uprising, further manufacturing of Synthoids with advanced AI " +
-        "was banned. MK-VI Synthoids that did not have the rogue Ascendis Totalis AI were " +
-        "allowed to continue their existence.",
-      "------",
-      "The intelligence community believes that not all of the rogue MK-VI Synthoids from the Uprising were " +
-        "found and destroyed, and that many of them are blending in as normal humans in society today. " +
-        "As a result, many nations have created Bladeburner divisions, special units that are tasked with " +
-        "investigating and dealing with Synthoid threats.",
-    ];
-    writeCinematicText(cinematicText)
-      .then(function () {
-        var popupId = "bladeburner-bitnode-start-nsa-notification";
-        var txt = createElement("p", {
-          innerText:
-            "Visit the National Security Agency (NSA) to apply for their Bladeburner " +
-            "division! You will need 100 of each combat stat before doing this.",
-        });
-        var brEl = createElement("br");
-        var okBtn = createElement("a", {
-          class: "a-link-button",
-          innerText: "Got it!",
-          padding: "8px",
-          clickListener: () => {
-            removeElementById(popupId);
-            return false;
-          },
-        });
-        createPopup(popupId, [txt, brEl, okBtn]);
-      })
-      .catch(function (e) {
-        exceptionAlert(e);
-      });
   }
 
   // BitNode 8: Ghost of Wall Street

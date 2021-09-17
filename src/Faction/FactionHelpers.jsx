@@ -1,14 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-
-import { FactionRoot } from "./ui/FactionRoot";
-
 import { Augmentations } from "../Augmentation/Augmentations";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { Engine } from "../engine";
+
 import { Faction } from "./Faction";
 import { Factions } from "./Factions";
 import { HackingMission, setInMission } from "../Missions";
@@ -63,29 +58,6 @@ export function startHackingMission(faction) {
   const mission = new HackingMission(faction.playerReputation, faction);
   setInMission(true, mission); //Sets inMission flag to true
   mission.init();
-}
-
-//Displays the HTML content for a specific faction
-export function displayFactionContent(factionName, initiallyOnAugmentationsPage = false) {
-  const faction = Factions[factionName];
-  if (faction == null) {
-    throw new Error(`Invalid factionName passed into displayFactionContent(): ${factionName}`);
-  }
-
-  if (!faction.isMember) {
-    throw new Error(`Not a member of this faction. Cannot display faction information`);
-  }
-
-  ReactDOM.render(
-    <FactionRoot
-      engine={Engine}
-      initiallyOnAugmentationsPage={initiallyOnAugmentationsPage}
-      faction={faction}
-      p={Player}
-      startHackingMissionFn={startHackingMission}
-    />,
-    Engine.Display.content,
-  );
 }
 
 //Returns a boolean indicating whether the player has the prerequisites for the
@@ -187,9 +159,6 @@ export function purchaseAugmentation(aug, fac, sing = false) {
         );
       }
     }
-
-    // Force a rerender of the Augmentations page
-    displayFactionContent(fac.name, true);
   } else {
     dialogBoxCreate(
       "Hmm, something went wrong when trying to purchase an Augmentation. " +

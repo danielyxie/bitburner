@@ -1,4 +1,5 @@
 import { Faction } from "../Faction/Faction";
+import { LocationName } from "../Locations/data/LocationNames";
 /**
  * The full-screen page the player is currently be on.
  * These pages are mutually exclusive.
@@ -6,26 +7,30 @@ import { Faction } from "../Faction/Faction";
 export enum Page {
   ActiveScripts,
   Augmentations,
+  BitVerse,
   Bladeburner,
-  Stats,
   City,
   Corporation,
   CreateProgram,
+  CreateScript,
   DevMenu,
   Faction,
   Factions,
-  Options,
   Gang,
   Hacknet,
+  Infiltration,
   Job,
   Milestones,
+  Options,
   Resleeves,
-  CreateScript,
   Sleeves,
+  Stats,
   StockMarket,
   Terminal,
   Travel,
   Tutorial,
+  Work,
+  BladeburnerCinematic,
 }
 
 /**
@@ -37,19 +42,22 @@ export interface IRouter {
   // toMission(): void;
   // toRedPill(): void;
   // toworkInProgress(): void;
+  page(): Page;
   toActiveScripts(): void;
   toAugmentations(): void;
+  toBitVerse(flume: boolean, quick: boolean): void;
   toBladeburner(): void;
   toCharacterInfo(): void;
+  toCity(): void; // travel ? city ?
   toCorporation(): void;
   toCreateProgram(): void;
   toDevMenu(): void;
-  toFaction(faction: Faction): void; // faction name
+  toFaction(faction?: Faction): void; // faction name
   toFactions(): void;
   toGameOptions(): void;
   toGang(): void;
   toHacknetNodes(): void;
-  toCity(): void; // travel ? city ?
+  toInfiltration(location: LocationName): void;
   toJob(): void;
   toMilestones(): void;
   toResleeves(): void;
@@ -59,4 +67,6 @@ export interface IRouter {
   toTerminal(): void;
   toTravel(): void;
   toTutorial(): void;
+  toWork(): void;
+  toBladeburnerCinematic(): void;
 }

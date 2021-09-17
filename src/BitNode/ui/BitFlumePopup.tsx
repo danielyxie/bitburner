@@ -1,16 +1,17 @@
 import React from "react";
-import { hackWorldDaemon } from "../../RedPill";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { IRouter } from "../../ui/Router";
 import { removePopup } from "../../ui/React/createPopup";
 
 interface IProps {
   player: IPlayer;
+  router: IRouter;
   popupId: string;
 }
 
 export function BitFlumePopup(props: IProps): React.ReactElement {
   function flume(): void {
-    hackWorldDaemon(props.player.bitNodeN, true, false);
+    props.router.toBitVerse(true, false);
     removePopup(props.popupId);
   }
   return (

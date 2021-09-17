@@ -36,7 +36,7 @@ type IProps = {
   stockMarket: IStockMarket;
 };
 
-export function StockMarketRoot(props: IProps) {
+export function StockMarketRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);

@@ -31,6 +31,7 @@ export function runProgram(
   for (const program of Object.values(Programs)) {
     if (program.name === programName) {
       program.run(
+        router,
         terminal,
         player,
         server,

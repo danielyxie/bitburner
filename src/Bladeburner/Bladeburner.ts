@@ -15,6 +15,7 @@ import { Skill } from "./Skill";
 import { City } from "./City";
 import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { IRouter } from "../ui/Router";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
@@ -25,7 +26,7 @@ import { addOffset } from "../../utils/helpers/addOffset";
 import { Faction } from "../Faction/Faction";
 import { Factions, factionExists } from "../Faction/Factions";
 import { calculateHospitalizationCost } from "../Hospital/Hospital";
-import { hackWorldDaemon, redPillFlag } from "../RedPill";
+import { redPillFlag } from "../RedPill";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Settings } from "../Settings/Settings";
 import { Augmentations } from "../Augmentation/Augmentations";
@@ -1203,7 +1204,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  completeAction(player: IPlayer): void {
+  completeAction(router: IRouter, player: IPlayer): void {
     switch (this.action.type) {
       case ActionTypes["Contract"]:
       case ActionTypes["Operation"]: {
@@ -1338,7 +1339,7 @@ export class Bladeburner implements IBladeburner {
             // Operation Daedalus
             if (action.name === "Operation Daedalus") {
               this.resetAction();
-              return hackWorldDaemon(player.bitNodeN);
+              return router.toBitVerse(false, false);
             }
 
             if (this.logging.blackops) {
@@ -1540,7 +1541,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  processAction(player: IPlayer, seconds: number): void {
+  processAction(router: IRouter, player: IPlayer, seconds: number): void {
     if (this.action.type === ActionTypes["Idle"]) return;
     if (this.actionTimeToComplete <= 0) {
       throw new Error(`Invalid actionTimeToComplete value: ${this.actionTimeToComplete}, type; ${this.action.type}`);
@@ -1555,7 +1556,7 @@ export class Bladeburner implements IBladeburner {
     this.actionTimeOverflow = 0;
     if (this.actionTimeCurrent >= this.actionTimeToComplete) {
       this.actionTimeOverflow = this.actionTimeCurrent - this.actionTimeToComplete;
-      return this.completeAction(player);
+      return this.completeAction(router, player);
     }
   }
 
@@ -1888,10 +1889,10 @@ export class Bladeburner implements IBladeburner {
     });
   }
 
-  process(player: IPlayer): void {
+  process(router: IRouter, player: IPlayer): void {
     // Edge case condition...if Operation Daedalus is complete trigger the BitNode
     if (redPillFlag === false && this.blackops.hasOwnProperty("Operation Daedalus")) {
-      return hackWorldDaemon(player.bitNodeN);
+      return router.toBitVerse(false, false);
     }
 
     // If the Player starts doing some other actions, set action to idle and alert
@@ -1958,7 +1959,7 @@ export class Bladeburner implements IBladeburner {
         this.randomEventCounter += getRandomInt(240, 600);
       }
 
-      this.processAction(player, seconds);
+      this.processAction(router, player, seconds);
 
       // Automation
       if (this.automateEnabled) {

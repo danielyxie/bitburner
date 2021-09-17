@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -14,8 +14,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Collapse from "@mui/material/Collapse";
 import Badge from "@mui/material/Badge";
-
-import { TTheme as BBTheme, colors } from "../../ui/React/Theme";
 
 import ComputerIcon from "@mui/icons-material/Computer";
 import LastPageIcon from "@mui/icons-material/LastPage"; // Terminal
@@ -57,8 +55,6 @@ import { cinematicTextFlag } from "../../CinematicText";
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { FconfSettings } from "../../Fconf/FconfSettings";
 
-const drawerWidth = 240;
-
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
   transition: theme.transitions.create("width", {
@@ -97,7 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     active: {
-      borderLeft: "3px solid " + colors.primary,
+      borderLeft: "3px solid " + theme.palette.primary.main,
     },
     listitem: {},
   }),
