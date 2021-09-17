@@ -1604,7 +1604,7 @@ HackingMission.prototype.finishMission = function (win) {
 
   // Return to Faction page
   document.getElementById("mainmenu-container").style.visibility = "visible";
-  document.getElementById("character-overview-wrapper").style.visibility = "visible";
+  document.getElementById("character-overview").style.visibility = "visible";
   Engine.loadFactionContent();
   displayFactionContent(this.faction.name);
 };
