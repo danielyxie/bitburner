@@ -175,13 +175,6 @@ export const theme = createTheme({
         },
       },
     },
-    MuiSvgIcon: {
-      styleOverrides: {
-        root: {
-          color: colors.primary,
-        },
-      },
-    },
     MuiDrawer: {
       styleOverrides: {
         paper: {
