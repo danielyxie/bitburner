@@ -77,7 +77,7 @@ export class Terminal implements ITerminal {
   commandHistory: string[] = [];
   commandHistoryIndex = 0;
 
-  outputHistory: (Output | Link)[] = [{ text: `Bitburner v${CONSTANTS.Version}`, color: "primary" }];
+  outputHistory: (Output | Link)[] = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
 
   // True if a Coding Contract prompt is opened
   contractOpen = false;
@@ -489,6 +489,7 @@ export class Terminal implements ITerminal {
   }
 
   clear(): void {
+    // TODO: remove this once we figure out the height issue.
     this.outputHistory = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
     this.hasChanges = true;
   }
