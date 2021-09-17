@@ -1,7 +1,7 @@
 // Root React Component for the Corporation UI
 import React, { useState, useEffect } from "react";
 
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Reputation } from "./Reputation";
@@ -20,6 +20,7 @@ import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 
 import { colors } from "./Theme";
+import { Settings } from "../../Settings/Settings";
 
 interface IProps {
   player: IPlayer;
@@ -194,7 +195,7 @@ export function CharacterOverview({ player, save }: IProps): React.ReactElement 
 
             <TableRow>
               <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-                <Button color="primary" onClick={save}>
+                <Button color={Settings.AutosaveInterval !== 0 ? "primary" : "secondary"} onClick={save}>
                   SAVE
                 </Button>
               </TableCell>

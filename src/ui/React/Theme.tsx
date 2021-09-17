@@ -111,7 +111,7 @@ export const theme = createTheme({
         root: {
           backgroundColor: "#333",
           border: "1px solid " + colors.well,
-          color: colors.primary,
+          // color: colors.primary,
           margin: "5px",
           padding: "3px 5px",
           "&:hover": {
