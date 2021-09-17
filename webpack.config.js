@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = (env, argv) => {
   const isDevServer = (env || {}).devServer === true;
@@ -27,6 +28,7 @@ module.exports = (env, argv) => {
   };
 
   const devServerSettings = {
+    hot: true,
     port: 8000,
     publicPath: `/`,
     stats: statsConfig,
@@ -129,6 +131,7 @@ module.exports = (env, argv) => {
           columns: true,
           module: true,
         }),
+      isDevelopment && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
     target: "web",
     entry: entries,
@@ -144,6 +147,7 @@ module.exports = (env, argv) => {
           use: {
             loader: "babel-loader",
             options: {
+              plugins: [isDevelopment && require.resolve("react-refresh/babel")].filter(Boolean),
               cacheDirectory: true,
             },
           },
