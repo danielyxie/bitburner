@@ -62,7 +62,7 @@ import { Page, routing } from "../../ui/navigationTracking";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: theme.spacing(31),
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -76,14 +76,14 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(2)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(9)} + 1px)`,
+    width: `calc(${theme.spacing(7)} + 1px)`,
   },
 });
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
-  width: drawerWidth,
+  width: theme.spacing(31),
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -99,30 +99,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    drawer: {
-      width: theme.spacing(31),
-      flexShrink: 0,
-      display: "flex",
-      whiteSpace: "nowrap",
-    },
-    drawerOpen: {
-      width: theme.spacing(31),
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerClose: {
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: "hidden",
-      width: theme.spacing(7) + 1,
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9) + 1,
-      },
-    },
     active: {
       borderLeft: "3px solid " + colors.primary,
     },
@@ -381,17 +357,19 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     <BBTheme>
       <Drawer open={open} anchor="left" variant="permanent">
         <ListItem button onClick={toggleDrawer}>
-          <ListItemIcon>{!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}</ListItemIcon>
+          <ListItemIcon>
+            {!open ? <ChevronRightIcon color={"primary"} /> : <ChevronLeftIcon color={"primary"} />}
+          </ListItemIcon>
           <ListItemText primary={<Typography color="primary">Bitburner v{CONSTANTS.Version}</Typography>} />
         </ListItem>
         <Divider />
         <List>
           <ListItem button onClick={() => setHackingOpen((old) => !old)}>
             <ListItemIcon>
-              <ComputerIcon />
+              <ComputerIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">Hacking</Typography>} />
-            {hackingOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {hackingOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={hackingOpen} timeout="auto" unmountOnExit>
             <List>
@@ -473,10 +451,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <Divider />
           <ListItem button onClick={() => setCharacterOpen((old) => !old)}>
             <ListItemIcon>
-              <AccountBoxIcon />
+              <AccountBoxIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">Character</Typography>} />
-            {characterOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {characterOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={characterOpen} timeout="auto" unmountOnExit>
             <ListItem
@@ -572,10 +550,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <Divider />
           <ListItem button onClick={() => setWorldOpen((old) => !old)}>
             <ListItemIcon>
-              <PublicIcon />
+              <PublicIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">World</Typography>} />
-            {worldOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {worldOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={worldOpen} timeout="auto" unmountOnExit>
             <ListItem
@@ -700,10 +678,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <Divider />
           <ListItem button onClick={() => setHelpOpen((old) => !old)}>
             <ListItemIcon>
-              <LiveHelpIcon />
+              <LiveHelpIcon color={"primary"} />
             </ListItemIcon>
             <ListItemText primary={<Typography color="primary">Help</Typography>} />
-            {helpOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {helpOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
           </ListItem>
           <Collapse in={helpOpen} timeout="auto" unmountOnExit>
             <ListItem
