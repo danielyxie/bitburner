@@ -140,6 +140,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const flashTutorial = ITutorial.currStep === iTutorialSteps.WorldDescription;
 
+  const augmentationCount = props.player.queuedAugmentations.length;
+  const invitationsCount = props.player.factionInvitations.length;
   const programCount = getAvailableCreatePrograms(props.player).length;
   const canCreateProgram =
     programCount > 0 ||
@@ -435,7 +437,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                   onClick={clickCreateProgram}
                 >
                   <ListItemIcon>
-                    <Badge badgeContent={4} color="primary">
+                    <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
                       <BugReportIcon color={activeTab !== "CreateProgram" ? "secondary" : "primary"} />
                     </Badge>
                   </ListItemIcon>
@@ -485,7 +487,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 onClick={clickFactions}
               >
                 <ListItemIcon>
-                  <ContactsIcon color={activeTab !== "Factions" ? "secondary" : "primary"} />
+                  <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
+                    <ContactsIcon color={activeTab !== "Factions" ? "secondary" : "primary"} />
+                  </Badge>
                 </ListItemIcon>
                 <ListItemText>
                   <Typography color={activeTab !== "Factions" ? "secondary" : "primary"}>Factions</Typography>
@@ -502,10 +506,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 onClick={clickAugmentations}
               >
                 <ListItemIcon>
-                  <DoubleArrowIcon
-                    style={{ transform: "rotate(-90deg)" }}
-                    color={activeTab !== "Augmentations" ? "secondary" : "primary"}
-                  />
+                  <Badge badgeContent={augmentationCount !== 0 ? augmentationCount : undefined} color="error">
+                    <DoubleArrowIcon
+                      style={{ transform: "rotate(-90deg)" }}
+                      color={activeTab !== "Augmentations" ? "secondary" : "primary"}
+                    />
+                  </Badge>
                 </ListItemIcon>
                 <ListItemText>
                   <Typography color={activeTab !== "Augmentations" ? "secondary" : "primary"}>Augmentations</Typography>

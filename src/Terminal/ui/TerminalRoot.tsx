@@ -60,15 +60,23 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
     return () => clearInterval(id);
   }, []);
 
-  const hook = scrollHook.current;
-  if (hook !== null) {
-    setTimeout(() => hook.scrollIntoView(true), 50);
+  function doScroll(): void {
+    const hook = scrollHook.current;
+    if (hook !== null) {
+      setTimeout(() => hook.scrollIntoView(true), 50);
+    }
   }
+
+  doScroll();
+
+  useEffect(() => {
+    setTimeout(doScroll, 50);
+  }, []);
 
   const classes = useStyles();
   return (
     <>
-      <Box width="100%" minHeight="100vh" px={1} justifyContent={"flex-end"}>
+      <Box width="100%" minHeight="100vh" px={1} display={"flex"} alignItems={"flex-end"}>
         <List classes={{ root: classes.list }}>
           {terminal.outputHistory.map((item, i) => {
             if (item instanceof Output)
