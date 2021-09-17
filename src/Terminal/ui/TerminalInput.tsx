@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import Typography from "@mui/material/Typography";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
+import TextField from "@mui/material/TextField";
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
 import { IEngine } from "../../IEngine";
@@ -13,21 +15,21 @@ import { FconfSettings } from "../../Fconf/FconfSettings";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     textfield: {
-      margin: theme.spacing(0),
+      margin: 0,
       width: "100%",
     },
     input: {
       backgroundColor: "#000",
     },
     nopadding: {
-      padding: theme.spacing(0),
+      padding: 0,
     },
     preformatted: {
       whiteSpace: "pre-wrap",
-      margin: theme.spacing(0),
+      margin: 0,
     },
     list: {
-      padding: theme.spacing(0),
+      padding: 0,
       height: "100%",
     },
   }),
@@ -334,6 +336,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
         </>
       )}
       <TextField
+        variant="standard"
         color={terminal.action === null ? "primary" : "secondary"}
         autoFocus
         disabled={terminal.action !== null}

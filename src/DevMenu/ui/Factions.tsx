@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
+import Button from "@mui/material/Button";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Adjuster } from "./Adjuster";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Factions as AllFaction } from "../../Faction/Factions";
-import FormControl from "@material-ui/core/FormControl";
-import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
-import ReplyAllIcon from "@material-ui/icons/ReplyAll";
-import ReplyIcon from "@material-ui/icons/Reply";
-import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import ReplyAllIcon from "@mui/icons-material/ReplyAll";
+import ReplyIcon from "@mui/icons-material/Reply";
+import InputLabel from "@mui/material/InputLabel";
 
 const bigNumber = 1e12;
 
@@ -26,7 +26,7 @@ interface IProps {
 export function Factions(props: IProps): React.ReactElement {
   const [faction, setFaction] = useState("Illuminati");
 
-  function setFactionDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+  function setFactionDropdown(event: SelectChangeEvent<string>): void {
     setFaction(event.target.value as string);
   }
 
@@ -119,10 +119,10 @@ export function Factions(props: IProps): React.ReactElement {
                     value={faction}
                     startAdornment={
                       <>
-                        <IconButton color="primary" onClick={receiveAllInvites}>
+                        <IconButton color="primary" onClick={receiveAllInvites} size="large">
                           <ReplyAllIcon />
                         </IconButton>
-                        <IconButton color="primary" onClick={receiveInvite}>
+                        <IconButton color="primary" onClick={receiveInvite} size="large">
                           <ReplyIcon />
                         </IconButton>
                       </>

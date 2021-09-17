@@ -26,7 +26,7 @@ import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { GameOptionsRoot } from "./ui/React/GameOptionsRoot";
-import { Theme } from "./ui/React/Theme";
+import { TTheme as Theme } from "./ui/React/Theme";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
 import {
@@ -408,6 +408,7 @@ const Engine = {
   },
 
   displayCharacterOverviewInfo: function () {
+    console.log("rendering");
     ReactDOM.render(
       <Theme>
         <CharacterOverview player={Player} save={() => saveObject.saveGame(Engine.indexedDb)} />
@@ -803,7 +804,12 @@ const Engine = {
       removeLoadingScreen();
     }
 
-    ReactDOM.render(<SidebarRoot engine={this} player={Player} />, document.getElementById("sidebar"));
+    ReactDOM.render(
+      <Theme>
+        <SidebarRoot engine={this} player={Player} />
+      </Theme>,
+      document.getElementById("sidebar"),
+    );
   },
 
   setDisplayElements: function () {
@@ -834,6 +840,8 @@ const Engine = {
   // Initialization
   init: function () {
     // Player was working cancel button
+
+    Engine.displayCharacterOverviewInfo();
     if (Player.isWorking) {
       var cancelButton = document.getElementById("work-in-progress-cancel-button");
       cancelButton.addEventListener("click", function () {
@@ -863,8 +871,6 @@ const Engine = {
       }
 
       Engine.loadWorkInProgressContent();
-
-      Engine.displayCharacterOverviewInfo();
     } else {
       Engine.loadTerminalContent();
     }

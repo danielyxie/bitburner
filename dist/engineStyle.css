@@ -1226,116 +1226,10 @@ button {
 /**
  * Styling for the Character Overview Panel (top-right panel)
  */
-#character-overview-wrapper {
+#character-overview {
   position: fixed;
   top: 0;
   right: 0; }
-
-#character-overview-container {
-  display: none;
-  position: absolute;
-  /* Stay in place */
-  right: 0;
-  top: 0;
-  height: auto;
-  /* Full height */
-  padding: 10px 2px;
-  border: 2px solid var(--my-highlight-color);
-  width: auto;
-  max-width: 280px;
-  overflow: auto;
-  /* Enable scroll if needed */
-  background-color: rgba(57, 54, 54, 0.9);
-  /* Fallback color */
-  z-index: 1; }
-
-#character-overview-text {
-  color: #faffdf; }
-  #character-overview-text table {
-    border-collapse: collapse;
-    margin: auto; }
-  #character-overview-text td {
-    padding: 2px;
-    vertical-align: middle; }
-
-.character-stat-text {
-  color: #fff;
-  background-color: #444; }
-
-.character-stat-cell {
-  text-align: right; }
-
-#character-str-wrapper td,
-#character-cha-wrapper td {
-  padding-top: 10px; }
-
-.character-divider td {
-  border-top: 1px #aaa solid;
-  padding-top: 10px; }
-
-#character-hp-wrapper {
-  color: #dd3434; }
-
-.character-hp-cell {
-  color: #dd3434; }
-
-#character-money-wrapper {
-  color: #ffd700; }
-
-.character-money-cell {
-  color: #ffd700; }
-
-#character-hack-wrapper {
-  color: #adff2f; }
-
-.character-hack-cell {
-  color: #adff2f; }
-
-#character-cha-wrapper {
-  color: #a671d1; }
-
-.character-cha-cell {
-  color: #a671d1; }
-
-#character-int-wrapper {
-  color: #6495ed; }
-
-.character-int-cell {
-  color: #6495ed; }
-
-.character-combat-cell {
-  color: #faffdf; }
-
-#character-work-wrapper {
-  color: #adff2f; }
-
-.character-work-cell {
-  color: #adff2f; }
-
-.character-overview-btn {
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  -webkit-box-shadow: 1px 1px 3px #000;
-  -moz-box-shadow: 1px 1px 3px #000;
-  box-shadow: 1px 1px 3px #000;
-  color: #cecece;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: bold;
-  height: 25px;
-  background-color: #000;
-  padding: 5px 8px; }
-
-.character-quick-options {
-  margin-top: 10px;
-  text-align: center; }
-
-.character-overview-btn:hover,
-.character-overview-btn:focus {
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer; }
 
 /* COLORS */
 /* Attributes */
@@ -1639,17 +1533,15 @@ button {
 /* Attributes */
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
     terminal which has its own page) */
-.generic-menupage-container {
-  padding-left: 2px;
+#generic-react-container {
   -ms-overflow-style: none;
   /* for Internet Explorer, Edge */
   scrollbar-width: none;
   /* for Firefox */
-  flex-grow: 1; }
-
-#generic-react-container {
-  padding: 10px;
-  overflow-y: scroll; }
+  flex-grow: 1;
+  overflow-y: scroll;
+  height: 100vh;
+  bottom: 0px; }
 
 #generic-react-container::-webkit-scrollbar {
   display: none;
@@ -3041,7 +2933,9 @@ input[type="checkbox"] {
   overflow-x: auto;
   overflow: visible;
   top: 10px;
-  width: 45%; }
+  width: 45%;
+  vertical-align: top;
+  margin-top: 10px; }
 
 .cmpy-mgmt-industry-overview-panel {
   border: 1px solid #fff;

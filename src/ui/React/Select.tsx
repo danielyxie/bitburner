@@ -4,7 +4,8 @@
  */
 
 import React from "react";
-import { Select as MuiSelect, SelectProps, makeStyles } from "@material-ui/core";
+import { Select as MuiSelect, SelectProps } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import { colors } from "./Theme";
 
 const useStyles = makeStyles({

@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { Link as MuiLink } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
+import React, { useState, useEffect, useRef } from "react";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import { Link as MuiLink } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
+import Box from "@mui/material/Box";
 import { ITerminal, Output, Link } from "../ITerminal";
 import { IEngine } from "../../IEngine";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -45,6 +47,7 @@ interface IProps {
 }
 
 export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactElement {
+  const scrollHook = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -57,36 +60,46 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
     return () => clearInterval(id);
   }, []);
 
+  const hook = scrollHook.current;
+  if (hook !== null) {
+    setTimeout(() => hook.scrollIntoView(true), 10);
+  }
+
   const classes = useStyles();
   return (
-    <Box position="fixed" bottom="0" width="100%" px={1}>
-      <List classes={{ root: classes.list }}>
-        {terminal.outputHistory.map((item, i) => {
-          if (item instanceof Output)
-            return (
-              <ListItem key={i} classes={{ root: classes.nopadding }}>
-                <Typography classes={{ root: classes.preformatted }} color={item.color} paragraph={false}>
-                  {item.text}
-                </Typography>
-              </ListItem>
-            );
-          if (item instanceof Link)
-            return (
-              <ListItem key={i} classes={{ root: classes.nopadding }}>
-                <MuiLink
-                  classes={{ root: classes.preformatted }}
-                  color={"secondary"}
-                  paragraph={false}
-                  onClick={() => terminal.connectToServer(player, item.hostname)}
-                >
-                  &gt;&nbsp;{item.hostname}
-                </MuiLink>
-              </ListItem>
-            );
-        })}
-      </List>
-      {terminal.action !== null && <ActionTimer terminal={terminal} />}
-      <TerminalInput player={player} engine={engine} terminal={terminal} />
-    </Box>
+    <>
+      <Box width="100%" minHeight="100vh" px={1}>
+        <List classes={{ root: classes.list }}>
+          {terminal.outputHistory.map((item, i) => {
+            if (item instanceof Output)
+              return (
+                <ListItem key={i} classes={{ root: classes.nopadding }}>
+                  <Typography classes={{ root: classes.preformatted }} color={item.color} paragraph={false}>
+                    {item.text}
+                  </Typography>
+                </ListItem>
+              );
+            if (item instanceof Link)
+              return (
+                <ListItem key={i} classes={{ root: classes.nopadding }}>
+                  <MuiLink
+                    classes={{ root: classes.preformatted }}
+                    color={"secondary"}
+                    paragraph={false}
+                    onClick={() => terminal.connectToServer(player, item.hostname)}
+                  >
+                    &gt;&nbsp;{item.hostname}
+                  </MuiLink>
+                </ListItem>
+              );
+          })}
+        </List>
+        {terminal.action !== null && <ActionTimer terminal={terminal} />}
+        <div ref={scrollHook}></div>
+      </Box>
+      <Box position="sticky" bottom={0} width="100%" px={1}>
+        <TerminalInput player={player} engine={engine} terminal={terminal} />
+      </Box>
+    </>
   );
 }

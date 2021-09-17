@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@mui/material/Button";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import { generateContract, generateRandomContract, generateRandomContractOnHome } from "../../CodingContractGenerator";
 import { CodingContractTypes } from "../../CodingContracts";
 
 export function CodingContracts(): React.ReactElement {
   const [codingcontract, setCodingcontract] = useState("Find Largest Prime Factor");
-  function setCodingcontractDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+  function setCodingcontractDropdown(event: SelectChangeEvent<string>): void {
     setCodingcontract(event.target.value as string);
   }
 

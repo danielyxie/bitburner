@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import Select from "@material-ui/core/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
-import ReplyAllIcon from "@material-ui/icons/ReplyAll";
-import ReplyIcon from "@material-ui/icons/Reply";
-import ClearIcon from "@material-ui/icons/Clear";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import ReplyAllIcon from "@mui/icons-material/ReplyAll";
+import ReplyIcon from "@mui/icons-material/Reply";
+import ClearIcon from "@mui/icons-material/Clear";
 
 interface IProps {
   player: IPlayer;
@@ -21,7 +21,7 @@ interface IProps {
 export function Augmentations(props: IProps): React.ReactElement {
   const [augmentation, setAugmentation] = useState("Augmented Targeting I");
 
-  function setAugmentationDropdown(event: React.ChangeEvent<{ value: unknown }>): void {
+  function setAugmentationDropdown(event: SelectChangeEvent<string>): void {
     setAugmentation(event.target.value as string);
   }
   function queueAug(): void {
@@ -59,17 +59,17 @@ export function Augmentations(props: IProps): React.ReactElement {
                   value={augmentation}
                   startAdornment={
                     <>
-                      <IconButton color="primary" onClick={queueAllAugs}>
+                      <IconButton color="primary" onClick={queueAllAugs} size="large">
                         <ReplyAllIcon />
                       </IconButton>
-                      <IconButton color="primary" onClick={queueAug}>
+                      <IconButton color="primary" onClick={queueAug} size="large">
                         <ReplyIcon />
                       </IconButton>
                     </>
                   }
                   endAdornment={
                     <>
-                      <IconButton color="primary" onClick={clearAugs}>
+                      <IconButton color="primary" onClick={clearAugs} size="large">
                         <ClearIcon />
                       </IconButton>
                     </>

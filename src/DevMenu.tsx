@@ -3,7 +3,7 @@ import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { IEngine } from "./IEngine";
 
 import React from "react";
-import { Theme } from "./ui/React/Theme";
+import { TTheme as Theme } from "./ui/React/Theme";
 
 import { General } from "./DevMenu/ui/General";
 import { Stats } from "./DevMenu/ui/Stats";

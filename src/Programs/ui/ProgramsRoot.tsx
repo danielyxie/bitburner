@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getAvailableCreatePrograms } from "../ProgramHelpers";
 
-import { Box, ButtonGroup, Tooltip, Typography } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import { Box, ButtonGroup, Tooltip, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
 
 interface IProps {
   player: IPlayer;
