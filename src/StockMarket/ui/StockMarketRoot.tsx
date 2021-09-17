@@ -1,7 +1,7 @@
 /**
  * Root React component for the Stock Market UI
  */
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import { InfoAndPurchases } from "./InfoAndPurchases";
 import { StockTickers } from "./StockTickers";
@@ -36,47 +36,32 @@ type IProps = {
   stockMarket: IStockMarket;
 };
 
-type IState = {
-  rerenderFlag: boolean;
-};
-
-export class StockMarketRoot extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      rerenderFlag: false,
-    };
-
-    this.rerender = this.rerender.bind(this);
+export function StockMarketRoot(props: IProps) {
+  const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
   }
 
-  rerender(): void {
-    this.setState((prevState) => {
-      return {
-        rerenderFlag: !prevState.rerenderFlag,
-      };
-    });
-  }
-
-  render(): React.ReactNode {
-    return (
-      <div className="stock-market-container">
-        <InfoAndPurchases initStockMarket={this.props.initStockMarket} p={this.props.p} rerender={this.rerender} />
-        {this.props.p.hasWseAccount && (
-          <StockTickers
-            buyStockLong={this.props.buyStockLong}
-            buyStockShort={this.props.buyStockShort}
-            cancelOrder={this.props.cancelOrder}
-            eventEmitterForReset={this.props.eventEmitterForReset}
-            p={this.props.p}
-            placeOrder={this.props.placeOrder}
-            sellStockLong={this.props.sellStockLong}
-            sellStockShort={this.props.sellStockShort}
-            stockMarket={this.props.stockMarket}
-          />
-        )}
-      </div>
-    );
-  }
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="stock-market-container">
+      <InfoAndPurchases initStockMarket={props.initStockMarket} p={props.p} rerender={rerender} />
+      {props.p.hasWseAccount && (
+        <StockTickers
+          buyStockLong={props.buyStockLong}
+          buyStockShort={props.buyStockShort}
+          cancelOrder={props.cancelOrder}
+          eventEmitterForReset={props.eventEmitterForReset}
+          p={props.p}
+          placeOrder={props.placeOrder}
+          sellStockLong={props.sellStockLong}
+          sellStockShort={props.sellStockShort}
+          stockMarket={props.stockMarket}
+        />
+      )}
+    </div>
+  );
 }

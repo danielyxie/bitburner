@@ -1141,7 +1141,6 @@ describe("Stock Market Tests", function () {
         Player.setMoney(100e9);
 
         processOrdersRefs = {
-          rerenderFn: () => undefined,
           stockMarket: StockMarket as IStockMarket,
           symbolToStockMap: SymbolToStockMap,
         };

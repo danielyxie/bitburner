@@ -25,9 +25,9 @@ export function ProgramsRoot(props: IProps): React.ReactElement {
       <div>
         <Box>
           <Typography>
-            This page displays any programs that you are able to create. Writing the code for a program takes time, which
-            can vary based on how complex the program is. If you are working on creating a program you can cancel at any
-            time. Your progress will be saved and you can continue later.
+            This page displays any programs that you are able to create. Writing the code for a program takes time,
+            which can vary based on how complex the program is. If you are working on creating a program you can cancel
+            at any time. Your progress will be saved and you can continue later.
           </Typography>
         </Box>
         <ButtonGroup>
@@ -36,15 +36,15 @@ export function ProgramsRoot(props: IProps): React.ReactElement {
             if (create === null) return <></>;
 
             return (
-              <Tooltip title={create.tooltip}>
+              <Tooltip key={program.name} title={create.tooltip}>
                 <Button onClick={() => props.player.startCreateProgramWork(program.name, create.time, create.level)}>
-                {program.name}
+                  {program.name}
                 </Button>
               </Tooltip>
-            )
+            );
           })}
         </ButtonGroup>
       </div>
     </>
-  )
+  );
 }

@@ -12,6 +12,14 @@ import { Faction } from "../Faction/Faction";
 import { prestigeAugmentation } from "../Prestige";
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { AllServers } from "../Server/AllServers";
+import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
+import {
+  cancelOrder,
+  eventEmitterForUiReset,
+  initStockMarketFnForReact,
+  placeOrder,
+  StockMarket,
+} from "../StockMarket/StockMarket";
 
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -41,7 +49,7 @@ import { FactionsRoot } from "../Faction/ui/FactionsRoot";
 import { FactionRoot } from "../Faction/ui/FactionRoot";
 import { CharacterInfo } from "./CharacterInfo";
 import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
-import { StockMarketRoot } from "../Locations/ui/StockMarketRoot";
+import { StockMarketRoot } from "../StockMarket/ui/StockMarketRoot";
 import { workerScripts } from "../Netscript/WorkerScripts";
 
 import { startHackingMission } from "../Faction/FactionHelpers";
@@ -90,7 +98,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toStockMarket: () => setPage(Page.StockMarket),
     toTerminal: () => setPage(Page.Terminal),
     toTutorial: () => setPage(Page.Tutorial),
-    toJob: () => setPage(Page.Job),
+    toJob: () => {
+      player.gotoLocation(player.companyName as LocationName);
+      setPage(Page.Job);
+    },
     toCity: () => {
       // TODO This is bad.
       player.gotoLocation(player.city as unknown as LocationName);
@@ -141,8 +152,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             <ResleeveRoot player={player} />
           ) : page === Page.Travel ? (
             <TravelAgencyRoot p={player} router={router} />
-          ) : page === Page.City ? (
-            <LocationRoot initiallyInCity={true} engine={engine} p={player} router={router} />
           ) : page === Page.StockMarket ? (
             <StockMarketRoot
               buyStockLong={buyStock}
@@ -150,12 +159,16 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               cancelOrder={cancelOrder}
               eventEmitterForReset={eventEmitterForUiReset}
               initStockMarket={initStockMarketFnForReact}
-              p={Player}
+              p={player}
               placeOrder={placeOrder}
               sellStockLong={sellStock}
               sellStockShort={sellShort}
-              stockMarket={castedStockMarket}
+              stockMarket={StockMarket}
             />
+          ) : page === Page.City ? (
+            <LocationRoot initiallyInCity={true} engine={engine} p={player} router={router} />
+          ) : page === Page.Job ? (
+            <LocationRoot initiallyInCity={false} engine={engine} p={player} router={router} />
           ) : page === Page.Options ? (
             <GameOptionsRoot
               player={player}

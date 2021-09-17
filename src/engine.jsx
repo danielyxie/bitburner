@@ -53,7 +53,7 @@ import { initForeignServers, AllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
-import { initSymbolToStockMap, processStockPrices, displayStockMarketContent } from "./StockMarket/StockMarket";
+import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { MilestonesRoot } from "./Milestones/ui/MilestonesRoot";
 import { TerminalRoot } from "./Terminal/ui/TerminalRoot";
 import { Terminal } from "./Terminal";
@@ -308,7 +308,7 @@ const Engine = {
     Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.StockMarket);
     MainMenuLinks.StockMarket.classList.add("active");
-    displayStockMarketContent();
+    //displayStockMarketContent();
   },
 
   loadGangContent: function () {
