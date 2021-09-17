@@ -101,10 +101,7 @@ const useStyles = makeStyles((theme: Theme) =>
     active: {
       borderLeft: "3px solid " + colors.primary,
     },
-    listitem: {
-      paddingTop: theme.spacing(0.1),
-      paddingBottom: theme.spacing(0.1),
-    },
+    listitem: {},
   }),
 );
 
