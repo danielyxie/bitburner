@@ -13,6 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Collapse from "@mui/material/Collapse";
+import Badge from "@mui/material/Badge";
 
 import { TTheme as BBTheme, colors } from "../../ui/React/Theme";
 
@@ -37,8 +38,6 @@ import CheckIcon from "@mui/icons-material/Check"; // Milestones
 import HelpIcon from "@mui/icons-material/Help"; // Tutorial
 import SettingsIcon from "@mui/icons-material/Settings"; // options
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard"; // Dev
-// import MemoryIcon from "@mui/icons-material/Memory";
-// import ShareIcon from "@mui/icons-material/Share";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import PublicIcon from "@mui/icons-material/Public";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
@@ -436,7 +435,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                   onClick={clickCreateProgram}
                 >
                   <ListItemIcon>
-                    <BugReportIcon color={activeTab !== "CreateProgram" ? "secondary" : "primary"} />
+                    <Badge badgeContent={4} color="primary">
+                      <BugReportIcon color={activeTab !== "CreateProgram" ? "secondary" : "primary"} />
+                    </Badge>
                   </ListItemIcon>
                   <ListItemText>
                     <Typography color={activeTab !== "CreateProgram" ? "secondary" : "primary"}>

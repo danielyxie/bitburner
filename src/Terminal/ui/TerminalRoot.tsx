@@ -68,7 +68,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
   const classes = useStyles();
   return (
     <>
-      <Box width="100%" minHeight="100vh" px={1}>
+      <Box width="100%" minHeight="100vh" px={1} justifyContent={"flex-end"}>
         <List classes={{ root: classes.list }}>
           {terminal.outputHistory.map((item, i) => {
             if (item instanceof Output)

@@ -1538,10 +1538,7 @@ button {
   /* for Internet Explorer, Edge */
   scrollbar-width: none;
   /* for Firefox */
-  flex-grow: 1;
-  overflow-y: scroll;
-  height: 100vh;
-  bottom: 0px; }
+  flex-grow: 1; }
 
 #generic-react-container::-webkit-scrollbar {
   display: none;
