@@ -175,6 +175,14 @@ export const theme = createTheme({
         },
       },
     },
+    MuiSlider: {
+      styleOverrides: {
+        valueLabel: {
+          color: colors.primary,
+          backgroundColor: colors.well,
+        },
+      },
+    },
     MuiDrawer: {
       styleOverrides: {
         paper: {

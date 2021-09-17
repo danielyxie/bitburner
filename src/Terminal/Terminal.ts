@@ -109,12 +109,12 @@ export class Terminal implements ITerminal {
   }
 
   print(s: string): void {
-    this.outputHistory.push(new Output(s, "primary"));
+    this.append(new Output(s, "primary"));
     this.hasChanges = true;
   }
 
   error(s: string): void {
-    this.outputHistory.push(new Output(s, "error"));
+    this.append(new Output(s, "error"));
     this.hasChanges = true;
   }
 
@@ -418,7 +418,7 @@ export class Terminal implements ITerminal {
       } // Don't print current server
       const titleDashes = Array((d - 1) * 4 + 1).join("-");
       if (player.hasProgram(Programs.AutoLink.name)) {
-        this.outputHistory.push(new Link(s.hostname));
+        this.append(new Link(s.hostname));
       } else {
         this.print(s.hostname);
       }

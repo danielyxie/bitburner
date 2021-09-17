@@ -57,13 +57,10 @@ function prestigeAugmentation() {
     "Fulcrum Secret Technologies",
   ];
 
-  let maintainMembership = Player.factions.filter(function (faction) {
+  const maintainMembership = Player.factions.filter(function (faction) {
     return megaCorpFactions.includes(faction);
   });
-
   Player.prestigeAugmentation();
-
-  Player.factions = Player.factions.concat(maintainMembership);
 
   Terminal.clear();
   Engine.loadTerminalContent();
@@ -120,6 +117,9 @@ function prestigeAugmentation() {
 
   // Re-initialize things - This will update any changes
   initFactions(); // Factions must be initialized before augmentations
+
+  Player.factions = Player.factions.concat(maintainMembership);
+  Player.factions.map((f) => (Factions[f].isMember = true));
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();
