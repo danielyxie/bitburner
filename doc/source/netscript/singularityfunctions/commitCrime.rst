@@ -26,8 +26,8 @@ commitCrime() Netscript Function
     This function is used to automatically attempt to commit crimes. If you are already in the middle of some 'working' action
     (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.
 
-    This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the 'Rob Store' crime,
-    so running ``commitCrime('rob store')`` will return 60).
+    This function returns the number of milliseconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the 'Rob Store' crime,
+    so running ``commitCrime('rob store')`` will return 60000).
 
     Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts.
     Instead, I would use the :doc:`isBusy<isBusy>` Singularity function to check whether you have finished attempting a crime.
