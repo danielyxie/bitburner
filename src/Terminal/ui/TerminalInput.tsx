@@ -140,9 +140,9 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
       if (terminal.contractOpen) return;
+      if (event.metaKey || event.ctrlKey) return;
       const ref = terminalInput.current;
       if (ref) ref.focus();
-
       // Cancel action
       if (event.keyCode === KEY.C && event.ctrlKey) {
         terminal.finishAction(player, true);
@@ -351,7 +351,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
           className: classes.input,
           startAdornment: (
             <>
-              <Typography color={terminal.action === null ? "primary" : "secondary"}>
+              <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
                 [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
               </Typography>
             </>

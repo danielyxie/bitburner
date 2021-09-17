@@ -62,7 +62,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
 
   const hook = scrollHook.current;
   if (hook !== null) {
-    setTimeout(() => hook.scrollIntoView(true), 10);
+    setTimeout(() => hook.scrollIntoView(true), 50);
   }
 
   const classes = useStyles();
