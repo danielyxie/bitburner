@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -14,8 +14,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Collapse from "@mui/material/Collapse";
 import Badge from "@mui/material/Badge";
-
-import { TTheme as BBTheme, colors } from "../../ui/React/Theme";
 
 import ComputerIcon from "@mui/icons-material/Computer";
 import LastPageIcon from "@mui/icons-material/LastPage"; // Terminal
@@ -44,7 +42,7 @@ import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { IEngine } from "../../IEngine";
+import { IRouter, Page } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CONSTANTS } from "../../Constants";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveTutorial";
@@ -56,9 +54,6 @@ import { inMission } from "../../Missions";
 import { cinematicTextFlag } from "../../CinematicText";
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { FconfSettings } from "../../Fconf/FconfSettings";
-import { Page, routing } from "../../ui/navigationTracking";
-
-const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -83,7 +78,6 @@ const closedMixin = (theme: Theme): CSSObject => ({
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
   width: theme.spacing(31),
-  flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   ...(open && {
@@ -99,7 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     active: {
-      borderLeft: "3px solid " + colors.primary,
+      borderLeft: "3px solid " + theme.palette.primary.main,
     },
     listitem: {},
   }),
@@ -107,7 +101,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   player: IPlayer;
-  engine: IEngine;
+  router: IRouter;
+  page: Page;
 }
 
 export function SidebarRoot(props: IProps): React.ReactElement {
@@ -121,7 +116,6 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  const [activeTab, setActiveTab] = useState("Terminal");
   const [hackingOpen, setHackingOpen] = useState(true);
   const [characterOpen, setCharacterOpen] = useState(true);
   const [worldOpen, setWorldOpen] = useState(true);
@@ -173,108 +167,88 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const canBladeburner = !!(props.player.bladeburner as any);
 
   function clickTerminal(): void {
-    setActiveTab("Terminal");
-    props.engine.loadTerminalContent();
+    props.router.toTerminal();
     if (flashTerminal) iTutorialNextStep();
   }
 
   function clickCreateScripts(): void {
-    setActiveTab("CreateScripts");
-    props.engine.loadScriptEditorContent();
+    props.router.toScriptEditor();
   }
 
   function clickStats(): void {
-    setActiveTab("Stats");
-    props.engine.loadCharacterContent();
+    props.router.toCharacterInfo();
     if (flashStats) iTutorialNextStep();
   }
 
   function clickActiveScripts(): void {
-    setActiveTab("ActiveScripts");
-    props.engine.loadActiveScriptsContent();
+    props.router.toActiveScripts();
     if (flashActiveScripts) iTutorialNextStep();
   }
 
   function clickCreateProgram(): void {
-    setActiveTab("CreateProgram");
-    props.engine.loadCreateProgramContent();
+    props.router.toCreateProgram();
   }
 
   function clickFactions(): void {
-    setActiveTab("Factions");
-    props.engine.loadFactionsContent();
+    props.router.toFactions();
   }
 
   function clickAugmentations(): void {
-    setActiveTab("Augmentations");
-    props.engine.loadAugmentationsContent();
+    props.router.toAugmentations();
   }
 
   function clickSleeves(): void {
-    setActiveTab("Sleeves");
-    props.engine.loadSleevesContent();
+    props.router.toSleeves();
   }
 
   function clickHacknet(): void {
-    setActiveTab("Hacknet");
-    props.engine.loadHacknetNodesContent();
+    props.router.toHacknetNodes();
     if (flashHacknet) iTutorialNextStep();
   }
 
   function clickCity(): void {
-    setActiveTab("City");
-    props.engine.loadLocationContent();
+    props.router.toCity();
     if (flashCity) iTutorialNextStep();
   }
 
   function clickTravel(): void {
-    setActiveTab("Travel");
-    props.engine.loadTravelContent();
+    props.router.toTravel();
   }
 
   function clickJob(): void {
-    setActiveTab("Job");
-    props.engine.loadJobContent();
+    props.router.toJob();
   }
 
   function clickStockMarket(): void {
-    setActiveTab("StockMarket");
-    props.engine.loadStockMarketContent();
+    props.router.toStockMarket();
   }
 
   function clickBladeburner(): void {
-    setActiveTab("Bladeburner");
-    props.engine.loadBladeburnerContent();
+    props.router.toBladeburner();
   }
 
   function clickCorp(): void {
-    setActiveTab("Corp");
-    props.engine.loadCorporationContent();
+    props.router.toCorporation();
   }
 
   function clickGang(): void {
-    setActiveTab("Gang");
-    props.engine.loadGangContent();
+    props.router.toGang();
   }
 
   function clickTutorial(): void {
-    setActiveTab("Tutorial");
-    props.engine.loadTutorialContent();
+    props.router.toTutorial();
     if (flashTutorial) iTutorialNextStep();
   }
 
   function clickMilestones(): void {
-    setActiveTab("Milestones");
-    props.engine.loadMilestonesContent();
+    props.router.toMilestones();
   }
   function clickOptions(): void {
-    setActiveTab("Options");
-    props.engine.loadGameOptionsContent();
+    props.router.toGameOptions();
   }
 
   function clickDev(): void {
-    setActiveTab("Dev");
-    props.engine.loadDevMenuContent();
+    props.router.toDevMenu();
   }
 
   useEffect(() => {
@@ -324,7 +298,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         clickCreateProgram();
       } else if (event.keyCode === KEY.F && event.altKey) {
         // Overriden by Fconf
-        if (routing.isOn(Page.Terminal) && FconfSettings.ENABLE_BASH_HOTKEYS) {
+        if (props.page == Page.Terminal && FconfSettings.ENABLE_BASH_HOTKEYS) {
           return;
         }
         event.preventDefault();
@@ -356,421 +330,427 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const [open, setOpen] = useState(true);
   const toggleDrawer = (): void => setOpen((old) => !old);
   return (
-    <BBTheme>
-      <Drawer open={open} anchor="left" variant="permanent">
-        <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
+    <Drawer open={open} anchor="left" variant="permanent">
+      <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
+        <ListItemIcon>
+          {!open ? <ChevronRightIcon color={"primary"} /> : <ChevronLeftIcon color={"primary"} />}
+        </ListItemIcon>
+        <ListItemText primary={<Typography color="primary">Bitburner v{CONSTANTS.Version}</Typography>} />
+      </ListItem>
+      <Divider />
+      <List>
+        <ListItem classes={{ root: classes.listitem }} button onClick={() => setHackingOpen((old) => !old)}>
           <ListItemIcon>
-            {!open ? <ChevronRightIcon color={"primary"} /> : <ChevronLeftIcon color={"primary"} />}
+            <ComputerIcon color={"primary"} />
           </ListItemIcon>
-          <ListItemText primary={<Typography color="primary">Bitburner v{CONSTANTS.Version}</Typography>} />
+          <ListItemText primary={<Typography color="primary">Hacking</Typography>} />
+          {hackingOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
         </ListItem>
-        <Divider />
-        <List>
-          <ListItem classes={{ root: classes.listitem }} button onClick={() => setHackingOpen((old) => !old)}>
-            <ListItemIcon>
-              <ComputerIcon color={"primary"} />
-            </ListItemIcon>
-            <ListItemText primary={<Typography color="primary">Hacking</Typography>} />
-            {hackingOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
-          </ListItem>
-          <Collapse in={hackingOpen} timeout="auto" unmountOnExit>
-            <List>
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Terminal"}
-                className={clsx({
-                  [classes.active]: activeTab === "Terminal",
-                })}
-                onClick={clickTerminal}
-              >
-                <ListItemIcon>
-                  <LastPageIcon color={flashTerminal ? "error" : activeTab !== "Terminal" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={flashTerminal ? "error" : activeTab !== "Terminal" ? "secondary" : "primary"}>
-                    Terminal
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Create Scripts"}
-                className={clsx({
-                  [classes.active]: activeTab === "CreateScripts",
-                })}
-                onClick={clickCreateScripts}
-              >
-                <ListItemIcon>
-                  <CreateIcon color={activeTab !== "CreateScripts" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "CreateScripts" ? "secondary" : "primary"}>Create Script</Typography>
-                </ListItemText>
-              </ListItem>
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Active Scripts"}
-                className={clsx({
-                  [classes.active]: activeTab === "ActiveScripts",
-                })}
-                onClick={clickActiveScripts}
-              >
-                <ListItemIcon>
-                  <StorageIcon
-                    color={flashActiveScripts ? "error" : activeTab !== "ActiveScripts" ? "secondary" : "primary"}
-                  />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography
-                    color={flashActiveScripts ? "error" : activeTab !== "ActiveScripts" ? "secondary" : "primary"}
-                  >
-                    Active Scripts
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-              {canCreateProgram && (
-                <ListItem
-                  button
-                  key={"Create Program"}
-                  className={clsx({
-                    [classes.active]: activeTab === "CreateProgram",
-                  })}
-                  onClick={clickCreateProgram}
+        <Collapse in={hackingOpen} timeout="auto" unmountOnExit>
+          <List>
+            <ListItem
+              classes={{ root: classes.listitem }}
+              button
+              key={"Terminal"}
+              className={clsx({
+                [classes.active]: props.page === Page.Terminal,
+              })}
+              onClick={clickTerminal}
+            >
+              <ListItemIcon>
+                <LastPageIcon
+                  color={flashTerminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}
+                />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={flashTerminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}>
+                  Terminal
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              classes={{ root: classes.listitem }}
+              button
+              key={"Create Scripts"}
+              className={clsx({
+                [classes.active]: props.page === Page.CreateScript,
+              })}
+              onClick={clickCreateScripts}
+            >
+              <ListItemIcon>
+                <CreateIcon color={props.page !== Page.CreateScript ? "secondary" : "primary"} />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={props.page !== Page.CreateScript ? "secondary" : "primary"}>
+                  Create Script
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              classes={{ root: classes.listitem }}
+              button
+              key={"Active Scripts"}
+              className={clsx({
+                [classes.active]: props.page === Page.ActiveScripts,
+              })}
+              onClick={clickActiveScripts}
+            >
+              <ListItemIcon>
+                <StorageIcon
+                  color={flashActiveScripts ? "error" : props.page !== Page.ActiveScripts ? "secondary" : "primary"}
+                />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography
+                  color={flashActiveScripts ? "error" : props.page !== Page.ActiveScripts ? "secondary" : "primary"}
                 >
-                  <ListItemIcon>
-                    <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
-                      <BugReportIcon color={activeTab !== "CreateProgram" ? "secondary" : "primary"} />
-                    </Badge>
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Typography color={activeTab !== "CreateProgram" ? "secondary" : "primary"}>
-                      Create Program
-                    </Typography>
-                  </ListItemText>
-                </ListItem>
-              )}
-            </List>
-          </Collapse>
-
-          <Divider />
-          <ListItem classes={{ root: classes.listitem }} button onClick={() => setCharacterOpen((old) => !old)}>
-            <ListItemIcon>
-              <AccountBoxIcon color={"primary"} />
-            </ListItemIcon>
-            <ListItemText primary={<Typography color="primary">Character</Typography>} />
-            {characterOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
-          </ListItem>
-          <Collapse in={characterOpen} timeout="auto" unmountOnExit>
-            <ListItem
-              button
-              key={"Stats"}
-              className={clsx({
-                [classes.active]: activeTab === "Stats",
-              })}
-              onClick={clickStats}
-            >
-              <ListItemIcon>
-                <EqualizerIcon color={flashStats ? "error" : activeTab !== "Stats" ? "secondary" : "primary"} />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography color={flashStats ? "error" : activeTab !== "Stats" ? "secondary" : "primary"}>
-                  Stats
+                  Active Scripts
                 </Typography>
               </ListItemText>
             </ListItem>
-            {canOpenFactions && (
+            {canCreateProgram && (
               <ListItem
-                classes={{ root: classes.listitem }}
                 button
-                key={"Factions"}
+                key={"Create Program"}
                 className={clsx({
-                  [classes.active]: activeTab === "Factions",
+                  [classes.active]: props.page === Page.CreateProgram,
                 })}
-                onClick={clickFactions}
+                onClick={clickCreateProgram}
               >
                 <ListItemIcon>
-                  <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
-                    <ContactsIcon color={activeTab !== "Factions" ? "secondary" : "primary"} />
+                  <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
+                    <BugReportIcon color={props.page !== Page.CreateProgram ? "secondary" : "primary"} />
                   </Badge>
                 </ListItemIcon>
                 <ListItemText>
-                  <Typography color={activeTab !== "Factions" ? "secondary" : "primary"}>Factions</Typography>
+                  <Typography color={props.page !== Page.CreateProgram ? "secondary" : "primary"}>
+                    Create Program
+                  </Typography>
                 </ListItemText>
               </ListItem>
             )}
-            {canOpenAugmentations && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Augmentations"}
-                className={clsx({
-                  [classes.active]: activeTab === "Augmentations",
-                })}
-                onClick={clickAugmentations}
-              >
-                <ListItemIcon>
-                  <Badge badgeContent={augmentationCount !== 0 ? augmentationCount : undefined} color="error">
-                    <DoubleArrowIcon
-                      style={{ transform: "rotate(-90deg)" }}
-                      color={activeTab !== "Augmentations" ? "secondary" : "primary"}
-                    />
-                  </Badge>
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "Augmentations" ? "secondary" : "primary"}>Augmentations</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-            <ListItem
-              button
-              key={"Hacknet"}
-              className={clsx({
-                [classes.active]: activeTab === "Hacknet",
-              })}
-              onClick={clickHacknet}
-            >
-              <ListItemIcon>
-                <AccountTreeIcon color={flashHacknet ? "error" : activeTab !== "Hacknet" ? "secondary" : "primary"} />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography color={flashHacknet ? "error" : activeTab !== "Hacknet" ? "secondary" : "primary"}>
-                  Hacknet
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            {canOpenSleeves && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Sleeves"}
-                className={clsx({
-                  [classes.active]: activeTab === "Sleeves",
-                })}
-                onClick={clickSleeves}
-              >
-                <ListItemIcon>
-                  <PeopleAltIcon color={activeTab !== "Sleeves" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "Sleeves" ? "secondary" : "primary"}>Sleeves</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-          </Collapse>
+          </List>
+        </Collapse>
 
-          <Divider />
-          <ListItem classes={{ root: classes.listitem }} button onClick={() => setWorldOpen((old) => !old)}>
+        <Divider />
+        <ListItem classes={{ root: classes.listitem }} button onClick={() => setCharacterOpen((old) => !old)}>
+          <ListItemIcon>
+            <AccountBoxIcon color={"primary"} />
+          </ListItemIcon>
+          <ListItemText primary={<Typography color="primary">Character</Typography>} />
+          {characterOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+        </ListItem>
+        <Collapse in={characterOpen} timeout="auto" unmountOnExit>
+          <ListItem
+            button
+            key={"Stats"}
+            className={clsx({
+              [classes.active]: props.page === Page.Stats,
+            })}
+            onClick={clickStats}
+          >
             <ListItemIcon>
-              <PublicIcon color={"primary"} />
+              <EqualizerIcon color={flashStats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"} />
             </ListItemIcon>
-            <ListItemText primary={<Typography color="primary">World</Typography>} />
-            {worldOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+            <ListItemText>
+              <Typography color={flashStats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"}>
+                Stats
+              </Typography>
+            </ListItemText>
           </ListItem>
-          <Collapse in={worldOpen} timeout="auto" unmountOnExit>
+          {canOpenFactions && (
             <ListItem
+              classes={{ root: classes.listitem }}
               button
-              key={"City"}
+              key={"Factions"}
               className={clsx({
-                [classes.active]: activeTab === "City",
+                [classes.active]: [Page.Factions, Page.Faction].includes(props.page),
               })}
-              onClick={clickCity}
+              onClick={clickFactions}
             >
               <ListItemIcon>
-                <LocationCityIcon color={flashCity ? "error" : activeTab !== "City" ? "secondary" : "primary"} />
+                <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
+                  <ContactsIcon color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"} />
+                </Badge>
               </ListItemIcon>
               <ListItemText>
-                <Typography color={flashCity ? "error" : activeTab !== "City" ? "secondary" : "primary"}>
-                  City
+                <Typography color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"}>
+                  Factions
                 </Typography>
               </ListItemText>
             </ListItem>
+          )}
+          {canOpenAugmentations && (
             <ListItem
+              classes={{ root: classes.listitem }}
               button
-              key={"Travel"}
+              key={"Augmentations"}
               className={clsx({
-                [classes.active]: activeTab === "Travel",
+                [classes.active]: props.page === Page.Augmentations,
               })}
-              onClick={clickTravel}
+              onClick={clickAugmentations}
             >
               <ListItemIcon>
-                <AirplanemodeActiveIcon color={activeTab !== "Travel" ? "secondary" : "primary"} />
+                <Badge badgeContent={augmentationCount !== 0 ? augmentationCount : undefined} color="error">
+                  <DoubleArrowIcon
+                    style={{ transform: "rotate(-90deg)" }}
+                    color={props.page !== Page.Augmentations ? "secondary" : "primary"}
+                  />
+                </Badge>
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "Travel" ? "secondary" : "primary"}>Travel</Typography>
+                <Typography color={props.page !== Page.Augmentations ? "secondary" : "primary"}>
+                  Augmentations
+                </Typography>
               </ListItemText>
             </ListItem>
-            {canJob && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Job"}
-                className={clsx({
-                  [classes.active]: activeTab === "Job",
-                })}
-                onClick={clickJob}
-              >
-                <ListItemIcon>
-                  <WorkIcon color={activeTab !== "Job" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "Job" ? "secondary" : "primary"}>Job</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-            {canStockMarket && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Stock Market"}
-                className={clsx({
-                  [classes.active]: activeTab === "StockMarket",
-                })}
-                onClick={clickStockMarket}
-              >
-                <ListItemIcon>
-                  <TrendingUpIcon color={activeTab !== "StockMarket" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "StockMarket" ? "secondary" : "primary"}>Stock Market</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-            {canBladeburner && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Bladeburner"}
-                className={clsx({
-                  [classes.active]: activeTab === "Bladeburner",
-                })}
-                onClick={clickBladeburner}
-              >
-                <ListItemIcon>
-                  <FormatBoldIcon color={activeTab !== "Bladeburner" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "Bladeburner" ? "secondary" : "primary"}>Bladeburner</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-            {canCorporation && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Corp"}
-                className={clsx({
-                  [classes.active]: activeTab === "Corp",
-                })}
-                onClick={clickCorp}
-              >
-                <ListItemIcon>
-                  <BusinessIcon color={activeTab !== "Corp" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "Corp" ? "secondary" : "primary"}>Corp</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-            {canGang && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Gang"}
-                className={clsx({
-                  [classes.active]: activeTab === "Gang",
-                })}
-                onClick={clickGang}
-              >
-                <ListItemIcon>
-                  <SportsMmaIcon color={activeTab !== "Gang" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "Gang" ? "secondary" : "primary"}>Gang</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-          </Collapse>
+          )}
+          <ListItem
+            button
+            key={"Hacknet"}
+            className={clsx({
+              [classes.active]: props.page === Page.Hacknet,
+            })}
+            onClick={clickHacknet}
+          >
+            <ListItemIcon>
+              <AccountTreeIcon color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"} />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}>
+                Hacknet
+              </Typography>
+            </ListItemText>
+          </ListItem>
+          {canOpenSleeves && (
+            <ListItem
+              classes={{ root: classes.listitem }}
+              button
+              key={"Sleeves"}
+              className={clsx({
+                [classes.active]: props.page === Page.Sleeves,
+              })}
+              onClick={clickSleeves}
+            >
+              <ListItemIcon>
+                <PeopleAltIcon color={props.page !== Page.Sleeves ? "secondary" : "primary"} />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={props.page !== Page.Sleeves ? "secondary" : "primary"}>Sleeves</Typography>
+              </ListItemText>
+            </ListItem>
+          )}
+        </Collapse>
 
-          <Divider />
-          <ListItem classes={{ root: classes.listitem }} button onClick={() => setHelpOpen((old) => !old)}>
+        <Divider />
+        <ListItem classes={{ root: classes.listitem }} button onClick={() => setWorldOpen((old) => !old)}>
+          <ListItemIcon>
+            <PublicIcon color={"primary"} />
+          </ListItemIcon>
+          <ListItemText primary={<Typography color="primary">World</Typography>} />
+          {worldOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+        </ListItem>
+        <Collapse in={worldOpen} timeout="auto" unmountOnExit>
+          <ListItem
+            button
+            key={"City"}
+            className={clsx({
+              [classes.active]: props.page === Page.City,
+            })}
+            onClick={clickCity}
+          >
             <ListItemIcon>
-              <LiveHelpIcon color={"primary"} />
+              <LocationCityIcon color={flashCity ? "error" : props.page !== Page.City ? "secondary" : "primary"} />
             </ListItemIcon>
-            <ListItemText primary={<Typography color="primary">Help</Typography>} />
-            {helpOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+            <ListItemText>
+              <Typography color={flashCity ? "error" : props.page !== Page.City ? "secondary" : "primary"}>
+                City
+              </Typography>
+            </ListItemText>
           </ListItem>
-          <Collapse in={helpOpen} timeout="auto" unmountOnExit>
+          <ListItem
+            button
+            key={"Travel"}
+            className={clsx({
+              [classes.active]: props.page === Page.Travel,
+            })}
+            onClick={clickTravel}
+          >
+            <ListItemIcon>
+              <AirplanemodeActiveIcon color={props.page !== Page.Travel ? "secondary" : "primary"} />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color={props.page !== Page.Travel ? "secondary" : "primary"}>Travel</Typography>
+            </ListItemText>
+          </ListItem>
+          {canJob && (
             <ListItem
+              classes={{ root: classes.listitem }}
               button
-              key={"Milestones"}
+              key={"Job"}
               className={clsx({
-                [classes.active]: activeTab === "Milestones",
+                [classes.active]: props.page === Page.Job,
               })}
-              onClick={clickMilestones}
+              onClick={clickJob}
             >
               <ListItemIcon>
-                <CheckIcon color={activeTab !== "Milestones" ? "secondary" : "primary"} />
+                <WorkIcon color={props.page !== Page.Job ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "Milestones" ? "secondary" : "primary"}>Milestones</Typography>
+                <Typography color={props.page !== Page.Job ? "secondary" : "primary"}>Job</Typography>
               </ListItemText>
             </ListItem>
+          )}
+          {canStockMarket && (
             <ListItem
+              classes={{ root: classes.listitem }}
               button
-              key={"Tutorial"}
+              key={"Stock Market"}
               className={clsx({
-                [classes.active]: activeTab === "Tutorial",
+                [classes.active]: props.page === Page.StockMarket,
               })}
-              onClick={clickTutorial}
+              onClick={clickStockMarket}
             >
               <ListItemIcon>
-                <HelpIcon color={flashTutorial ? "error" : activeTab !== "Tutorial" ? "secondary" : "primary"} />
+                <TrendingUpIcon color={props.page !== Page.StockMarket ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={flashTutorial ? "error" : activeTab !== "Tutorial" ? "secondary" : "primary"}>
-                  Tutorial
-                </Typography>
+                <Typography color={props.page !== Page.StockMarket ? "secondary" : "primary"}>Stock Market</Typography>
               </ListItemText>
             </ListItem>
+          )}
+          {canBladeburner && (
             <ListItem
+              classes={{ root: classes.listitem }}
               button
-              key={"Options"}
+              key={"Bladeburner"}
               className={clsx({
-                [classes.active]: activeTab === "Options",
+                [classes.active]: props.page === Page.Bladeburner,
               })}
-              onClick={clickOptions}
+              onClick={clickBladeburner}
             >
               <ListItemIcon>
-                <SettingsIcon color={activeTab !== "Options" ? "secondary" : "primary"} />
+                <FormatBoldIcon color={props.page !== Page.Bladeburner ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={activeTab !== "Options" ? "secondary" : "primary"}>Options</Typography>
+                <Typography color={props.page !== Page.Bladeburner ? "secondary" : "primary"}>Bladeburner</Typography>
               </ListItemText>
             </ListItem>
-            {process.env.NODE_ENV === "development" && (
-              <ListItem
-                classes={{ root: classes.listitem }}
-                button
-                key={"Dev"}
-                className={clsx({
-                  [classes.active]: activeTab === "Dev",
-                })}
-                onClick={clickDev}
-              >
-                <ListItemIcon>
-                  <DeveloperBoardIcon color={activeTab !== "Dev" ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={activeTab !== "Dev" ? "secondary" : "primary"}>Dev</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-          </Collapse>
-        </List>
-      </Drawer>
-    </BBTheme>
+          )}
+          {canCorporation && (
+            <ListItem
+              classes={{ root: classes.listitem }}
+              button
+              key={"Corp"}
+              className={clsx({
+                [classes.active]: props.page === Page.Corporation,
+              })}
+              onClick={clickCorp}
+            >
+              <ListItemIcon>
+                <BusinessIcon color={props.page !== Page.Corporation ? "secondary" : "primary"} />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={props.page !== Page.Corporation ? "secondary" : "primary"}>Corp</Typography>
+              </ListItemText>
+            </ListItem>
+          )}
+          {canGang && (
+            <ListItem
+              classes={{ root: classes.listitem }}
+              button
+              key={"Gang"}
+              className={clsx({
+                [classes.active]: props.page === Page.Gang,
+              })}
+              onClick={clickGang}
+            >
+              <ListItemIcon>
+                <SportsMmaIcon color={props.page !== Page.Gang ? "secondary" : "primary"} />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={props.page !== Page.Gang ? "secondary" : "primary"}>Gang</Typography>
+              </ListItemText>
+            </ListItem>
+          )}
+        </Collapse>
+
+        <Divider />
+        <ListItem classes={{ root: classes.listitem }} button onClick={() => setHelpOpen((old) => !old)}>
+          <ListItemIcon>
+            <LiveHelpIcon color={"primary"} />
+          </ListItemIcon>
+          <ListItemText primary={<Typography color="primary">Help</Typography>} />
+          {helpOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+        </ListItem>
+        <Collapse in={helpOpen} timeout="auto" unmountOnExit>
+          <ListItem
+            button
+            key={"Milestones"}
+            className={clsx({
+              [classes.active]: props.page === Page.Milestones,
+            })}
+            onClick={clickMilestones}
+          >
+            <ListItemIcon>
+              <CheckIcon color={props.page !== Page.Milestones ? "secondary" : "primary"} />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color={props.page !== Page.Milestones ? "secondary" : "primary"}>Milestones</Typography>
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            key={"Tutorial"}
+            className={clsx({
+              [classes.active]: props.page === Page.Tutorial,
+            })}
+            onClick={clickTutorial}
+          >
+            <ListItemIcon>
+              <HelpIcon color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"} />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"}>
+                Tutorial
+              </Typography>
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            key={"Options"}
+            className={clsx({
+              [classes.active]: props.page === Page.Options,
+            })}
+            onClick={clickOptions}
+          >
+            <ListItemIcon>
+              <SettingsIcon color={props.page !== Page.Options ? "secondary" : "primary"} />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color={props.page !== Page.Options ? "secondary" : "primary"}>Options</Typography>
+            </ListItemText>
+          </ListItem>
+          {process.env.NODE_ENV === "development" && (
+            <ListItem
+              classes={{ root: classes.listitem }}
+              button
+              key={"Dev"}
+              className={clsx({
+                [classes.active]: props.page === Page.DevMenu,
+              })}
+              onClick={clickDev}
+            >
+              <ListItemIcon>
+                <DeveloperBoardIcon color={props.page !== Page.DevMenu ? "secondary" : "primary"} />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={props.page !== Page.DevMenu ? "secondary" : "primary"}>Dev</Typography>
+              </ListItemText>
+            </ListItem>
+          )}
+        </Collapse>
+      </List>
+    </Drawer>
   );
 }

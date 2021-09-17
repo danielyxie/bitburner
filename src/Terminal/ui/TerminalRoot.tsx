@@ -8,7 +8,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
 import { ITerminal, Output, Link } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
 
@@ -42,11 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   terminal: ITerminal;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
 
-export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactElement {
+export function TerminalRoot({ terminal, router, player }: IProps): React.ReactElement {
   const scrollHook = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -76,7 +76,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
   const classes = useStyles();
   return (
     <>
-      <Box width="100%" minHeight="100vh" px={1} display={"flex"} alignItems={"flex-end"}>
+      <Box width="100%" minHeight="100vh" display={"flex"} alignItems={"flex-end"}>
         <List classes={{ root: classes.list }}>
           {terminal.outputHistory.map((item, i) => {
             if (item instanceof Output)
@@ -110,8 +110,8 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
         </List>
         <div ref={scrollHook}></div>
       </Box>
-      <Box position="sticky" bottom={0} width="100%" px={1}>
-        <TerminalInput player={player} engine={engine} terminal={terminal} />
+      <Box position="sticky" bottom={0} width="100%" px={0}>
+        <TerminalInput player={player} router={router} terminal={terminal} />
       </Box>
     </>
   );

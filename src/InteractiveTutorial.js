@@ -63,8 +63,6 @@ function iTutorialStart() {
     ITutorial.stepIsDone[i] = false;
   }
 
-  Engine.loadTerminalContent();
-
   // Don't autosave during this interactive tutorial
   Engine.Counters.autoSaveCounter = Infinity;
   ITutorial.currStep = 0;
@@ -120,7 +118,6 @@ function iTutorialEvaluateStep() {
 
   switch (ITutorial.currStep) {
     case iTutorialSteps.Start:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Welcome to Bitburner, a cyberpunk-themed incremental RPG! " +
           "The game takes place in a dark, dystopian future... The year is 2077...<br><br>" +
@@ -130,7 +127,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "inline-block";
       break;
     case iTutorialSteps.GoToCharacterPage:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Let's start by heading to the Stats page. Click the <code class='interactive-tutorial-tab flashing-button'>Stats</code> tab on " +
           "the main navigation menu (left-hand side of the screen)",
@@ -138,7 +134,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none";
       break;
     case iTutorialSteps.CharacterPage:
-      Engine.loadCharacterContent();
       iTutorialSetText(
         "The <code class='interactive-tutorial-tab'>Stats</code> page shows a lot of important information about your progress, " +
           "such as your skills, money, and bonuses. ",
@@ -146,7 +141,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "inline-block";
       break;
     case iTutorialSteps.CharacterGoToTerminalPage:
-      Engine.loadCharacterContent();
       iTutorialSetText(
         "Let's head to your computer's terminal by clicking the <code class='interactive-tutorial-tab flashing-button'>Terminal</code> tab on the " +
           "main navigation menu.",
@@ -154,7 +148,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none";
       break;
     case iTutorialSteps.TerminalIntro:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "The <code class='interactive-tutorial-tab'>Terminal</code> is used to interface with your home computer as well as " +
           "all of the other machines around the world.",
@@ -162,7 +155,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "inline-block";
       break;
     case iTutorialSteps.TerminalHelp:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Let's try it out. Start by entering the  <code class='interactive-tutorial-command'>help</code> command into the <code class='interactive-tutorial-tab'>Terminal</code> " +
           "(Don't forget to press Enter after typing the command)",
@@ -170,7 +162,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalLs:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "The <code class='interactive-tutorial-command'>help</code> command displays a list of all available <code class='interactive-tutorial-tab'>Terminal</code> commands, how to use them, " +
           "and a description of what they do. <br><br>Let's try another command. Enter the <code class='interactive-tutorial-command'>ls</code> command.",
@@ -178,7 +169,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalScan:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         " <code class='interactive-tutorial-command'>ls</code> is a basic command that shows files " +
           "on the computer. Right now, it shows that you have a program called <code class='interactive-tutorial-command'>NUKE.exe</code> on your computer. " +
@@ -189,7 +179,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalScanAnalyze1:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "The <code class='interactive-tutorial-command'>scan</code> command shows all available network connections. In other words, " +
           "it displays a list of all servers that can be connected to from your " +
@@ -201,7 +190,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalScanAnalyze2:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "You just ran <code class='interactive-tutorial-command'>scan-analyze</code> with a depth of one. This command shows more detailed " +
           "information about each server that you can connect to (servers that are a distance of " +
@@ -211,7 +199,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalConnect:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Now you can see information about all servers that are up to two nodes away, as well " +
           "as figure out how to navigate to those servers through the network. You can only connect to " +
@@ -222,7 +209,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalAnalyze:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "You are now connected to another machine! What can you do now? You can hack it!<br><br> In the year 2077, currency has " +
           "become digital and decentralized. People and corporations store their money " +
@@ -233,7 +219,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalNuke:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "When the <code class='interactive-tutorial-command'>analyze</code> command finishes running it will show useful information " +
           "about hacking the server. <br><br> For this server, the required hacking skill is only <span class='character-hack-cell'>1</span>, " +
@@ -247,7 +232,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalManualHack:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "You now have root access! You can hack the server using the <code class='interactive-tutorial-command'>hack</code> command. " +
           "Try doing that now.",
@@ -255,7 +239,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalHackingMechanics:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "You are now attempting to hack the server. Performing a hack takes time and " +
           "only has a certain percentage chance " +
@@ -270,7 +253,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "inline-block";
       break;
     case iTutorialSteps.TerminalCreateScript:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Hacking is the core mechanic of the game and is necessary for progressing. However, " +
           "you don't want to be hacking manually the entire time. You can automate your hacking " +
@@ -282,7 +264,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalTypeScript:
-      Engine.loadScriptEditorContent("n00dles.script", "");
       iTutorialSetText(
         "This is the script editor. You can use it to program your scripts. Scripts are " +
           "written in a simplified version of javascript. Copy and paste the following code into the script editor: <br><br>" +
@@ -297,7 +278,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered in saveAndCloseScriptEditor() (Script.js)
       break;
     case iTutorialSteps.TerminalFree:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Now we'll run the script. Scripts require a certain amount of RAM to run, and can be " +
           "run on any machine which you have root access to. Different servers have different " +
@@ -307,7 +287,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal commmand
       break;
     case iTutorialSteps.TerminalRunScript:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "We have 4GB of free RAM on this machine, which is enough to run our " +
           "script. Let's run our script using <code class='interactive-tutorial-command'>run n00dles.script</code>.",
@@ -315,7 +294,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal commmand
       break;
     case iTutorialSteps.TerminalGoToActiveScriptsPage:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Your script is now running! " +
           "It will continuously run in the background and will automatically stop if " +
@@ -329,7 +307,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none";
       break;
     case iTutorialSteps.ActiveScriptsPage:
-      Engine.loadActiveScriptsContent();
       iTutorialSetText(
         "This page displays information about all of your scripts that are " +
           "running across every server. You can use this to gauge how well " +
@@ -338,7 +315,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none";
       break;
     case iTutorialSteps.ActiveScriptsToTerminal:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "One last thing about scripts, each active script contains logs that detail " +
           "what it's doing. We can check these logs using the <code class='interactive-tutorial-command'>tail</code> command. Do that " +
@@ -347,7 +323,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none"; // next step triggered by terminal command
       break;
     case iTutorialSteps.TerminalTailScript:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "The log for this script won't show much right now (it might show nothing at all) because it " +
           "just started running...but check back again in a few minutes! <br><br>" +
@@ -361,7 +336,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "inline-block";
       break;
     case iTutorialSteps.GoToHacknetNodesPage:
-      Engine.loadTerminalContent();
       iTutorialSetText(
         "Hacking is not the only way to earn money. One other way to passively " +
           "earn money is by purchasing and upgrading Hacknet Nodes. Let's go to " +
@@ -370,14 +344,12 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none";
       break;
     case iTutorialSteps.HacknetNodesIntroduction:
-      Engine.loadHacknetNodesContent();
       iTutorialSetText(
         "here you can purchase new Hacknet Nodes and upgrade your " + "existing ones. Let's purchase a new one now.",
       );
       nextBtn.style.display = "none"; // Next step triggered by purchaseHacknet() (HacknetNode.js)
       break;
     case iTutorialSteps.HacknetNodesGoToWorldPage:
-      Engine.loadHacknetNodesContent();
       iTutorialSetText(
         "You just purchased a Hacknet Node! This Hacknet Node will passively " +
           "earn you money over time, both online and offline. When you get enough " +
@@ -388,7 +360,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none";
       break;
     case iTutorialSteps.WorldDescription:
-      Engine.loadLocationContent();
       iTutorialSetText(
         "This page lists all of the different locations you can currently " +
           "travel to. Each location has something that you can do. " +
@@ -399,7 +370,6 @@ function iTutorialEvaluateStep() {
       nextBtn.style.display = "none";
       break;
     case iTutorialSteps.TutorialPageInfo:
-      Engine.loadTutorialContent();
       iTutorialSetText(
         "This page contains a lot of different documentation about the game's " +
           "content and mechanics. <strong style='background-color:#444;'> I know it's a lot, but I highly suggest you read " +

@@ -1,12 +1,12 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { Programs } from "../../Programs/Programs";
 
 export function runProgram(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number)[],
@@ -31,6 +31,7 @@ export function runProgram(
   for (const program of Object.values(Programs)) {
     if (program.name === programName) {
       program.run(
+        router,
         terminal,
         player,
         server,

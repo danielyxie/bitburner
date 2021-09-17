@@ -1,5 +1,3 @@
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
 import { Factions } from "../../Faction/Factions";
 import React, { useState } from "react";
 import { StdButton } from "../../ui/React/StdButton";
@@ -7,23 +5,21 @@ import Grid from "@mui/material/Grid";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { use } from "../../ui/Context";
 
 interface IProps {
-  Player: IPlayer;
-  Engine: IEngine;
   StartingDifficulty: number;
   Difficulty: number;
   MaxLevel: number;
 }
 
 export function Victory(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const [faction, setFaction] = useState("none");
 
   function quitInfiltration(): void {
-    const menu = document.getElementById("mainmenu-container");
-    if (!menu) throw new Error("mainmenu-container somehow null");
-    menu.style.visibility = "visible";
-    props.Engine.loadLocationContent();
+    router.toCity();
   }
 
   const levelBonus = props.MaxLevel * Math.pow(1.01, props.MaxLevel);
@@ -43,8 +39,8 @@ export function Victory(props: IProps): React.ReactElement {
     BitNodeMultipliers.InfiltrationMoney;
 
   function sell(): void {
-    props.Player.gainMoney(moneyGain);
-    props.Player.recordMoneySource(moneyGain, "infiltration");
+    player.gainMoney(moneyGain);
+    player.recordMoneySource(moneyGain, "infiltration");
     quitInfiltration();
   }
 
@@ -70,7 +66,7 @@ export function Victory(props: IProps): React.ReactElement {
             <option key={"none"} value={"none"}>
               {"none"}
             </option>
-            {props.Player.factions
+            {player.factions
               .filter((f) => Factions[f].getInfo().offersWork())
               .map((f) => (
                 <option key={f} value={f}>

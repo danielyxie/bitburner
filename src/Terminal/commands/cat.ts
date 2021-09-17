@@ -1,5 +1,5 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { showMessage } from "../../Message/MessageHelpers";
@@ -8,7 +8,7 @@ import { showLiterature } from "../../Literature/LiteratureHelpers";
 
 export function cat(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number)[],

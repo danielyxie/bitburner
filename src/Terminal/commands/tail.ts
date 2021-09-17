@@ -1,5 +1,5 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { logBoxCreate } from "../../../utils/LogBox";
@@ -9,7 +9,7 @@ import { isScriptFilename } from "../../Script/ScriptHelpersTS";
 
 export function tail(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   commandArray: (string | number)[],

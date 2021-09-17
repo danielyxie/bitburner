@@ -12,7 +12,7 @@ import { HospitalLocation } from "./HospitalLocation";
 import { SlumsLocation } from "./SlumsLocation";
 import { SpecialLocation } from "./SpecialLocation";
 import { TechVendorLocation } from "./TechVendorLocation";
-import { TravelAgencyLocation } from "./TravelAgencyLocation";
+import { TravelAgencyRoot } from "./TravelAgencyRoot";
 import { UniversityLocation } from "./UniversityLocation";
 import { CasinoLocation } from "./CasinoLocation";
 
@@ -21,6 +21,7 @@ import { LocationType } from "../LocationTypeEnum";
 import { CityName } from "../data/CityNames";
 
 import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 
@@ -32,6 +33,7 @@ import { CorruptableText } from "../../ui/React/CorruptableText";
 
 type IProps = {
   engine: IEngine;
+  router: IRouter;
   loc: Location;
   p: IPlayer;
   returnToCity: () => void;
@@ -58,14 +60,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     const content: React.ReactNode[] = [];
 
     if (this.props.loc.types.includes(LocationType.Company)) {
-      content.push(
-        <CompanyLocation
-          engine={this.props.engine}
-          key={"companylocation"}
-          locName={this.props.loc.name}
-          p={this.props.p}
-        />,
-      );
+      content.push(<CompanyLocation key={"companylocation"} locName={this.props.loc.name} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Gym)) {
@@ -77,7 +72,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     }
 
     if (this.props.loc.types.includes(LocationType.Slums)) {
-      content.push(<SlumsLocation key={"slumslocation"} p={this.props.p} />);
+      content.push(<SlumsLocation key={"slumslocation"} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Special)) {
@@ -91,11 +86,11 @@ export class GenericLocation extends React.Component<IProps, any> {
     }
 
     if (this.props.loc.types.includes(LocationType.TravelAgency)) {
-      content.push(<TravelAgencyLocation key={"travelagencylocation"} p={this.props.p} travel={this.props.travel} />);
+      content.push(<TravelAgencyRoot key={"travelagencylocation"} p={this.props.p} router={this.props.router} />);
     }
 
     if (this.props.loc.types.includes(LocationType.University)) {
-      content.push(<UniversityLocation key={"universitylocation"} loc={this.props.loc} p={this.props.p} />);
+      content.push(<UniversityLocation key={"universitylocation"} loc={this.props.loc} />);
     }
 
     if (this.props.loc.types.includes(LocationType.Casino)) {

@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { Factions } from "../Factions";
-import { displayFactionContent, joinFaction } from "../FactionHelpers";
+import { Faction } from "../Faction";
+import { joinFaction } from "../FactionHelpers";
 
 interface IProps {
   player: IPlayer;
-  engine: IEngine;
+  router: IRouter;
 }
 
-export function FactionList(props: IProps): React.ReactElement {
+export function FactionsRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
 
-  function openFaction(faction: string): void {
-    props.engine.loadFactionContent();
-    displayFactionContent(faction);
+  function openFaction(faction: Faction): void {
+    props.router.toFaction(faction);
   }
 
   function acceptInvitation(event: React.MouseEvent<HTMLElement>, faction: string): void {
@@ -33,7 +33,7 @@ export function FactionList(props: IProps): React.ReactElement {
           <li key={faction}>
             <a
               className="a-link-button"
-              onClick={() => openFaction(faction)}
+              onClick={() => openFaction(Factions[faction])}
               style={{ padding: "4px", margin: "4px", display: "inline-block" }}
             >
               {faction}

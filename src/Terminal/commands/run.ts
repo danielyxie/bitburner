@@ -1,5 +1,5 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/ScriptHelpersTS";
@@ -8,7 +8,7 @@ import { runProgram } from "./runProgram";
 
 export function run(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number)[],
@@ -30,11 +30,11 @@ export function run(
 
     // Check if its a script or just a program/executable
     if (isScriptFilename(executableName)) {
-      runScript(terminal, engine, player, server, args);
+      runScript(terminal, router, player, server, args);
     } else if (executableName.endsWith(".cct")) {
       terminal.runContract(player, executableName);
     } else {
-      runProgram(terminal, engine, player, server, args);
+      runProgram(terminal, router, player, server, args);
     }
   }
 }

@@ -1,6 +1,7 @@
 import { IPlayer } from "./PersonObjects/IPlayer";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { IEngine } from "./IEngine";
+import { IRouter } from "./ui/Router";
 
 import React from "react";
 import { TTheme as Theme } from "./ui/React/Theme";
@@ -24,6 +25,7 @@ import { TimeSkip } from "./DevMenu/ui/TimeSkip";
 interface IProps {
   player: IPlayer;
   engine: IEngine;
+  router: IRouter;
 }
 
 export function DevMenuRoot(props: IProps): React.ReactElement {
@@ -31,7 +33,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
     <Theme>
       <>
         <h1>Development Menu - Only meant to be used for testing/debugging</h1>
-        <General player={props.player} />
+        <General player={props.player} router={props.router} />
         <Stats player={props.player} />
         <Factions player={props.player} />
         <Augmentations player={props.player} />

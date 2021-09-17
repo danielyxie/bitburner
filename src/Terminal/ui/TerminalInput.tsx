@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";
@@ -17,21 +17,21 @@ import { FconfSettings } from "../../Fconf/FconfSettings";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     textfield: {
-      margin: 0,
+      margin: theme.spacing(0),
       width: "100%",
     },
     input: {
       backgroundColor: "#000",
     },
     nopadding: {
-      padding: 0,
+      padding: theme.spacing(0),
     },
     preformatted: {
       whiteSpace: "pre-wrap",
-      margin: 0,
+      margin: theme.spacing(0),
     },
     list: {
-      padding: 0,
+      padding: theme.spacing(0),
       height: "100%",
     },
   }),
@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   terminal: ITerminal;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
 
-export function TerminalInput({ terminal, engine, player }: IProps): React.ReactElement {
+export function TerminalInput({ terminal, router, player }: IProps): React.ReactElement {
   const terminalInput = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState("");
@@ -147,7 +147,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
       if (ref) ref.focus();
       // Cancel action
       if (event.keyCode === KEY.C && event.ctrlKey) {
-        terminal.finishAction(player, true);
+        terminal.finishAction(router, player, true);
       }
     }
     document.addEventListener("keydown", keyDown);
@@ -159,7 +159,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
     if (event.keyCode === KEY.ENTER && value !== "") {
       event.preventDefault();
       terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
-      terminal.executeCommands(engine, player, value);
+      terminal.executeCommands(router, player, value);
       setValue("");
       return;
     }

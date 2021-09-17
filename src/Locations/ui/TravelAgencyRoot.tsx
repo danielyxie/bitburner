@@ -10,28 +10,43 @@ import { TravelConfirmationPopup } from "./TravelConfirmationPopup";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { IRouter } from "../../ui/Router";
 import { Settings } from "../../Settings/Settings";
 
 import { StdButton } from "../../ui/React/StdButton";
 import { createPopup } from "../../ui/React/createPopup";
 import { Money } from "../../ui/React/Money";
 import { WorldMap } from "../../ui/React/WorldMap";
+import { dialogBoxCreate } from "../../../utils/DialogBox";
 
 type IProps = {
   p: IPlayer;
-  travel: (to: CityName) => void;
+  router: IRouter;
 };
 
-function createTravelPopup(p: IPlayer, city: string, travel: () => void): void {
+function travel(p: IPlayer, router: IRouter, to: CityName): void {
+  const cost = CONSTANTS.TravelCost;
+  if (!p.canAfford(cost)) {
+    dialogBoxCreate(`You cannot afford to travel to ${to}`);
+    return;
+  }
+
+  p.loseMoney(cost);
+  p.travel(to);
+  dialogBoxCreate(<span className="noselect">You are now in {to}!</span>);
+  router.toCity();
+}
+
+function createTravelPopup(p: IPlayer, router: IRouter, city: CityName): void {
   if (Settings.SuppressTravelConfirmation) {
-    travel();
+    travel(p, router, city);
     return;
   }
   const popupId = `travel-confirmation`;
   createPopup(popupId, TravelConfirmationPopup, {
     player: p,
     city: city,
-    travel: travel,
+    travel: () => travel(p, router, city),
     popupId: popupId,
   });
 }
@@ -45,7 +60,7 @@ function ASCIIWorldMap(props: IProps): React.ReactElement {
       </p>
       <WorldMap
         currentCity={props.p.city}
-        onTravel={(city: CityName) => createTravelPopup(props.p, city, () => props.travel(city))}
+        onTravel={(city: CityName) => createTravelPopup(props.p, props.router, city)}
       />
     </div>
   );
@@ -66,7 +81,7 @@ function ListWorldMap(props: IProps): React.ReactElement {
           return (
             <StdButton
               key={city}
-              onClick={() => createTravelPopup(props.p, city, () => props.travel(match[1]))}
+              onClick={() => createTravelPopup(props.p, props.router, city as CityName)}
               style={{ display: "block" }}
               text={`Travel to ${city}`}
             />
@@ -76,10 +91,15 @@ function ListWorldMap(props: IProps): React.ReactElement {
   );
 }
 
-export function TravelAgencyLocation(props: IProps): React.ReactElement {
-  if (Settings.DisableASCIIArt) {
-    return <ListWorldMap p={props.p} travel={props.travel} />;
-  } else {
-    return <ASCIIWorldMap p={props.p} travel={props.travel} />;
-  }
+export function TravelAgencyRoot(props: IProps): React.ReactElement {
+  return (
+    <>
+      <h1>Travel Agency</h1>
+      {Settings.DisableASCIIArt ? (
+        <ListWorldMap p={props.p} router={props.router} />
+      ) : (
+        <ASCIIWorldMap p={props.p} router={props.router} />
+      )}
+    </>
+  );
 }

@@ -8,154 +8,134 @@ import * as React from "react";
 import { Location } from "../Location";
 
 import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getServer } from "../../Server/ServerHelpers";
 import { Server } from "../../Server/Server";
 import { SpecialServerIps } from "../../Server/SpecialServerIps";
 
 import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
+import { use } from "../../ui/Context";
 
 type IProps = {
   loc: Location;
-  p: IPlayer;
 };
 
-export class UniversityLocation extends React.Component<IProps, any> {
-  /**
-   * Stores button styling that sets them all to block display
-   */
-  btnStyle: any;
+export function UniversityLocation(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
 
-  constructor(props: IProps) {
-    super(props);
-
-    this.btnStyle = { display: "block" };
-
-    this.take = this.take.bind(this);
-    this.study = this.study.bind(this);
-    this.dataStructures = this.dataStructures.bind(this);
-    this.networks = this.networks.bind(this);
-    this.algorithms = this.algorithms.bind(this);
-    this.management = this.management.bind(this);
-    this.leadership = this.leadership.bind(this);
-
-    this.calculateCost = this.calculateCost.bind(this);
-  }
-
-  calculateCost(): number {
-    const ip = SpecialServerIps.getIp(this.props.loc.name);
+  function calculateCost(): number {
+    const ip = SpecialServerIps.getIp(props.loc.name);
     const server = getServer(ip);
-    if (server == null || !server.hasOwnProperty("backdoorInstalled")) return this.props.loc.costMult;
+    if (server == null || !server.hasOwnProperty("backdoorInstalled")) return props.loc.costMult;
     const discount = (server as Server).backdoorInstalled ? 0.9 : 1;
-    return this.props.loc.costMult * discount;
+    return props.loc.costMult * discount;
   }
 
-  take(stat: string): void {
-    const loc = this.props.loc;
-    this.props.p.startClass(this.calculateCost(), loc.expMult, stat);
+  function take(stat: string): void {
+    const loc = props.loc;
+    player.startClass(calculateCost(), loc.expMult, stat);
+    router.toWork();
   }
 
-  study(): void {
-    this.take(CONSTANTS.ClassStudyComputerScience);
+  function study(): void {
+    take(CONSTANTS.ClassStudyComputerScience);
   }
 
-  dataStructures(): void {
-    this.take(CONSTANTS.ClassDataStructures);
+  function dataStructures(): void {
+    take(CONSTANTS.ClassDataStructures);
   }
 
-  networks(): void {
-    this.take(CONSTANTS.ClassNetworks);
+  function networks(): void {
+    take(CONSTANTS.ClassNetworks);
   }
 
-  algorithms(): void {
-    this.take(CONSTANTS.ClassAlgorithms);
+  function algorithms(): void {
+    take(CONSTANTS.ClassAlgorithms);
   }
 
-  management(): void {
-    this.take(CONSTANTS.ClassManagement);
+  function management(): void {
+    take(CONSTANTS.ClassManagement);
   }
 
-  leadership(): void {
-    this.take(CONSTANTS.ClassLeadership);
+  function leadership(): void {
+    take(CONSTANTS.ClassLeadership);
   }
 
-  render(): React.ReactNode {
-    const costMult: number = this.calculateCost();
+  const costMult: number = calculateCost();
 
-    const dataStructuresCost = CONSTANTS.ClassDataStructuresBaseCost * costMult;
-    const networksCost = CONSTANTS.ClassNetworksBaseCost * costMult;
-    const algorithmsCost = CONSTANTS.ClassAlgorithmsBaseCost * costMult;
-    const managementCost = CONSTANTS.ClassManagementBaseCost * costMult;
-    const leadershipCost = CONSTANTS.ClassLeadershipBaseCost * costMult;
+  const dataStructuresCost = CONSTANTS.ClassDataStructuresBaseCost * costMult;
+  const networksCost = CONSTANTS.ClassNetworksBaseCost * costMult;
+  const algorithmsCost = CONSTANTS.ClassAlgorithmsBaseCost * costMult;
+  const managementCost = CONSTANTS.ClassManagementBaseCost * costMult;
+  const leadershipCost = CONSTANTS.ClassLeadershipBaseCost * costMult;
 
-    const earnHackingExpTooltip = `Gain hacking experience!`;
-    const earnCharismaExpTooltip = `Gain charisma experience!`;
+  const earnHackingExpTooltip = `Gain hacking experience!`;
+  const earnCharismaExpTooltip = `Gain charisma experience!`;
 
-    return (
-      <div>
-        <StdButton
-          onClick={this.study}
-          style={this.btnStyle}
-          text={`Study Computer Science (free)`}
-          tooltip={earnHackingExpTooltip}
-        />
-        <StdButton
-          onClick={this.dataStructures}
-          style={this.btnStyle}
-          text={
-            <>
-              Take Data Structures course (
-              <Money money={dataStructuresCost} player={this.props.p} /> / sec)
-            </>
-          }
-          tooltip={earnHackingExpTooltip}
-        />
-        <StdButton
-          onClick={this.networks}
-          style={this.btnStyle}
-          text={
-            <>
-              Take Networks course (
-              <Money money={networksCost} player={this.props.p} /> / sec)
-            </>
-          }
-          tooltip={earnHackingExpTooltip}
-        />
-        <StdButton
-          onClick={this.algorithms}
-          style={this.btnStyle}
-          text={
-            <>
-              Take Algorithms course (
-              <Money money={algorithmsCost} player={this.props.p} /> / sec)
-            </>
-          }
-          tooltip={earnHackingExpTooltip}
-        />
-        <StdButton
-          onClick={this.management}
-          style={this.btnStyle}
-          text={
-            <>
-              Take Management course (
-              <Money money={managementCost} player={this.props.p} /> / sec)
-            </>
-          }
-          tooltip={earnCharismaExpTooltip}
-        />
-        <StdButton
-          onClick={this.leadership}
-          style={this.btnStyle}
-          text={
-            <>
-              Take Leadership course (
-              <Money money={leadershipCost} player={this.props.p} /> / sec)
-            </>
-          }
-          tooltip={earnCharismaExpTooltip}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <StdButton
+        onClick={study}
+        style={{ display: "block" }}
+        text={`Study Computer Science (free)`}
+        tooltip={earnHackingExpTooltip}
+      />
+      <StdButton
+        onClick={dataStructures}
+        style={{ display: "block" }}
+        text={
+          <>
+            Take Data Structures course (
+            <Money money={dataStructuresCost} player={player} /> / sec)
+          </>
+        }
+        tooltip={earnHackingExpTooltip}
+      />
+      <StdButton
+        onClick={networks}
+        style={{ display: "block" }}
+        text={
+          <>
+            Take Networks course (
+            <Money money={networksCost} player={player} /> / sec)
+          </>
+        }
+        tooltip={earnHackingExpTooltip}
+      />
+      <StdButton
+        onClick={algorithms}
+        style={{ display: "block" }}
+        text={
+          <>
+            Take Algorithms course (
+            <Money money={algorithmsCost} player={player} /> / sec)
+          </>
+        }
+        tooltip={earnHackingExpTooltip}
+      />
+      <StdButton
+        onClick={management}
+        style={{ display: "block" }}
+        text={
+          <>
+            Take Management course (
+            <Money money={managementCost} player={player} /> / sec)
+          </>
+        }
+        tooltip={earnCharismaExpTooltip}
+      />
+      <StdButton
+        onClick={leadership}
+        style={{ display: "block" }}
+        text={
+          <>
+            Take Leadership course (
+            <Money money={leadershipCost} player={player} /> / sec)
+          </>
+        }
+        tooltip={earnCharismaExpTooltip}
+      />
+    </div>
+  );
 }

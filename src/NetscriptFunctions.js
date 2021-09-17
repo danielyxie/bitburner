@@ -119,13 +119,7 @@ import { SpecialServerIps } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { buyStock, sellStock, shortStock, sellShort } from "./StockMarket/BuyingAndSelling";
 import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
-import {
-  StockMarket,
-  SymbolToStockMap,
-  placeOrder,
-  cancelOrder,
-  displayStockMarketContent,
-} from "./StockMarket/StockMarket";
+import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder } from "./StockMarket/StockMarket";
 import { getBuyTransactionCost, getSellTransactionGain } from "./StockMarket/StockMarketHelpers";
 import { OrderTypes } from "./StockMarket/data/OrderTypes";
 import { PositionTypes } from "./StockMarket/data/PositionTypes";
@@ -1964,18 +1958,14 @@ function NetscriptFunctions(workerScript) {
       updateDynamicRam("buyStock", getRamCost("buyStock"));
       checkTixApiAccess("buyStock");
       const stock = getStockFromSymbol(symbol, "buyStock");
-      const res = buyStock(stock, shares, workerScript, {
-        rerenderFn: displayStockMarketContent,
-      });
+      const res = buyStock(stock, shares, workerScript, {});
       return res ? stock.price : 0;
     },
     sellStock: function (symbol, shares) {
       updateDynamicRam("sellStock", getRamCost("sellStock"));
       checkTixApiAccess("sellStock");
       const stock = getStockFromSymbol(symbol, "sellStock");
-      const res = sellStock(stock, shares, workerScript, {
-        rerenderFn: displayStockMarketContent,
-      });
+      const res = sellStock(stock, shares, workerScript, {});
 
       return res ? stock.price : 0;
     },
@@ -1991,9 +1981,7 @@ function NetscriptFunctions(workerScript) {
         }
       }
       const stock = getStockFromSymbol(symbol, "shortStock");
-      const res = shortStock(stock, shares, workerScript, {
-        rerenderFn: displayStockMarketContent,
-      });
+      const res = shortStock(stock, shares, workerScript, {});
 
       return res ? stock.price : 0;
     },
@@ -2009,9 +1997,7 @@ function NetscriptFunctions(workerScript) {
         }
       }
       const stock = getStockFromSymbol(symbol, "sellShort");
-      const res = sellShort(stock, shares, workerScript, {
-        rerenderFn: displayStockMarketContent,
-      });
+      const res = sellShort(stock, shares, workerScript, {});
 
       return res ? stock.price : 0;
     },
@@ -2168,7 +2154,6 @@ function NetscriptFunctions(workerScript) {
       Player.has4SData = true;
       Player.loseMoney(getStockMarket4SDataCost());
       workerScript.log("purchase4SMarketData", "Purchased 4S Market Data");
-      displayStockMarketContent();
       return true;
     },
     purchase4SMarketDataTixApi: function () {
@@ -2188,7 +2173,6 @@ function NetscriptFunctions(workerScript) {
       Player.has4SDataTixApi = true;
       Player.loseMoney(getStockMarket4STixApiCost());
       workerScript.log("purchase4SMarketDataTixApi", "Purchased 4S Market Data TIX API");
-      displayStockMarketContent();
       return true;
     },
     getPurchasedServerLimit: function () {

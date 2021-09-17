@@ -28,11 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 50,
-      padding: 2,
+      padding: theme.spacing(2),
       userSelect: "none",
-    },
-    pad: {
-      padding: 2,
     },
   }),
 );

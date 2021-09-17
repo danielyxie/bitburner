@@ -2,20 +2,16 @@
 import React, { useState, useEffect } from "react";
 
 import makeStyles from "@mui/styles/makeStyles";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Reputation } from "./Reputation";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import Fab from "@mui/material/Fab";
@@ -23,15 +19,17 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { colors } from "./Theme";
 import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { Page } from "../../ui/Router";
 
 interface IProps {
-  player: IPlayer;
   save: () => void;
 }
 
-function Intelligence({ player }: { player: IPlayer }): React.ReactElement {
-  if (player.intelligence === 0) return <></>;
+function Intelligence(): React.ReactElement {
+  const player = use.Player();
   const classes = useStyles();
+  if (player.intelligence === 0) return <></>;
   return (
     <TableRow>
       <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
@@ -44,9 +42,11 @@ function Intelligence({ player }: { player: IPlayer }): React.ReactElement {
   );
 }
 
-function Work({ player }: { player: IPlayer }): React.ReactElement {
-  if (!player.isWorking || player.focus) return <></>;
+function Work(): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
   const classes = useStyles();
+  if (!player.isWorking || player.focus) return <></>;
   return (
     <>
       <TableRow>
@@ -61,7 +61,14 @@ function Work({ player }: { player: IPlayer }): React.ReactElement {
       </TableRow>
       <TableRow>
         <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Button onClick={() => player.startFocusing()}>Focus</Button>
+          <Button
+            onClick={() => {
+              player.startFocusing();
+              router.toWork();
+            }}
+          >
+            Focus
+          </Button>
         </TableCell>
       </TableRow>
     </>
@@ -101,7 +108,12 @@ const useStyles = makeStyles({
   },
 });
 
-export function CharacterOverview({ player, save }: IProps): React.ReactElement {
+export function CharacterOverview({ save }: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
+
+  if (router.page() === Page.BitVerse) return <></>;
+
   const setRerender = useState(false)[1];
   const [open, setOpen] = useState(true);
 
@@ -112,7 +124,7 @@ export function CharacterOverview({ player, save }: IProps): React.ReactElement 
 
   const classes = useStyles();
   return (
-    <>
+    <div style={{ position: "fixed", top: 0, right: 0, zIndex: 1500 }}>
       <Box display="flex" justifyContent="flex-end" flexDirection={"column"}>
         <Collapse in={open}>
           <Paper square>
@@ -205,8 +217,8 @@ export function CharacterOverview({ player, save }: IProps): React.ReactElement 
                       </Typography>
                     </TableCell>
                   </TableRow>
-                  <Intelligence player={player} />
-                  <Work player={player} />
+                  <Intelligence />
+                  <Work />
 
                   <TableRow>
                     <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
@@ -226,6 +238,6 @@ export function CharacterOverview({ player, save }: IProps): React.ReactElement 
           </Fab>
         </Box>
       </Box>
-    </>
+    </div>
   );
 }

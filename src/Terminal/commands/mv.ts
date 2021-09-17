@@ -1,5 +1,5 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/ScriptHelpersTS";
@@ -8,7 +8,7 @@ import { Script } from "../../Script/Script";
 
 export function mv(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number)[],

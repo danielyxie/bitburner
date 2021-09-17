@@ -1,6 +1,4 @@
 import { CONSTANTS } from "./Constants";
-import { Engine } from "./engine";
-import { displayFactionContent } from "./Faction/FactionHelpers";
 import { Player } from "./Player";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
@@ -1187,7 +1185,7 @@ HackingMission.prototype.process = function (numCycles = 1) {
   });
 
   // Update timer and check if player lost
-  this.time -= storedCycles * Engine._idleSpeed;
+  this.time -= storedCycles * CONSTANTS._idleSpeed;
   if (this.time <= 0) {
     this.finishMission(false);
     return;
@@ -1595,18 +1593,6 @@ HackingMission.prototype.finishMission = function (win) {
   } else {
     dialogBoxCreate("Mission lost/forfeited! You did not gain any faction reputation.");
   }
-
-  // Clear mission container
-  var container = document.getElementById("mission-container");
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
-  }
-
-  // Return to Faction page
-  document.getElementById("mainmenu-container").style.visibility = "visible";
-  document.getElementById("character-overview").style.visibility = "visible";
-  Engine.loadFactionContent();
-  displayFactionContent(this.faction.name);
 };
 
 export { HackingMission, inMission, setInMission, currMission };

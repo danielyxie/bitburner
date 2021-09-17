@@ -3,6 +3,7 @@ import { CONSTANTS } from "../../Constants";
 import { BaseServer } from "../../Server/BaseServer";
 import { Server } from "../../Server/Server";
 import { ITerminal } from "../../Terminal/ITerminal";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
@@ -30,7 +31,7 @@ export interface IProgramCreationParams {
   key: string;
   name: string;
   create: IProgramCreate | null;
-  run: (terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void;
+  run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]) => void;
 }
 
 export const programsMetadata: IProgramCreationParams[] = [
@@ -43,7 +44,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(1),
       time: CONSTANTS.MillisecondsPerFiveMinutes,
     },
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
         terminal.error("Cannot nuke this kind of server.");
         return;
@@ -72,7 +73,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(50),
       time: CONSTANTS.MillisecondsPerFiveMinutes * 2,
     },
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
         terminal.error("Cannot run BruteSSH.exe on this kind of server.");
         return;
@@ -96,7 +97,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(100),
       time: CONSTANTS.MillisecondsPerHalfHour,
     },
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
         terminal.error("Cannot run FTPCrack.exe on this kind of server.");
         return;
@@ -120,7 +121,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(250),
       time: CONSTANTS.MillisecondsPer2Hours,
     },
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
         terminal.error("Cannot run relaySMTP.exe on this kind of server.");
         return;
@@ -144,7 +145,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(500),
       time: CONSTANTS.MillisecondsPer4Hours,
     },
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
         terminal.error("Cannot run HTTPWorm.exe on this kind of server.");
         return;
@@ -168,7 +169,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(750),
       time: CONSTANTS.MillisecondsPer8Hours,
     },
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer): void => {
       if (!(server instanceof Server)) {
         terminal.error("Cannot run SQLInject.exe on this kind of server.");
         return;
@@ -192,7 +193,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(75),
       time: CONSTANTS.MillisecondsPerQuarterHour,
     },
-    run: (terminal: ITerminal): void => {
+    run: (router: IRouter, terminal: ITerminal): void => {
       terminal.print("This executable cannot be run.");
       terminal.print("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
     },
@@ -206,7 +207,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(400),
       time: CONSTANTS.MillisecondsPer2Hours,
     },
-    run: (terminal: ITerminal): void => {
+    run: (router: IRouter, terminal: ITerminal): void => {
       terminal.print("This executable cannot be run.");
       terminal.print("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
     },
@@ -220,7 +221,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(75),
       time: CONSTANTS.MillisecondsPerHalfHour,
     },
-    run: (terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]): void => {
       if (args.length !== 1) {
         terminal.print("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
         return;
@@ -270,7 +271,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: requireHackingLevel(25),
       time: CONSTANTS.MillisecondsPerQuarterHour,
     },
-    run: (terminal: ITerminal): void => {
+    run: (router: IRouter, terminal: ITerminal): void => {
       terminal.print("This executable cannot be run.");
       terminal.print("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
       terminal.print("When using scan-analyze, click on a server's hostname to connect to it.");
@@ -285,10 +286,11 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: bitFlumeRequirements(),
       time: CONSTANTS.MillisecondsPerFiveMinutes / 20,
     },
-    run: (terminal: ITerminal, player: IPlayer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer): void => {
       const popupId = "bitflume-popup";
       createPopup(popupId, BitFlumePopup, {
         player: player,
+        router: router,
         popupId: popupId,
       });
     },
@@ -297,7 +299,7 @@ export const programsMetadata: IProgramCreationParams[] = [
     key: "Flight",
     name: "fl1ght.exe",
     create: null,
-    run: (terminal: ITerminal, player: IPlayer): void => {
+    run: (router: IRouter, terminal: ITerminal, player: IPlayer): void => {
       const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement * 30);
       const fulfilled =
         player.augmentations.length >= numAugReq && player.money.gt(1e11) && player.hacking_skill >= 2500;

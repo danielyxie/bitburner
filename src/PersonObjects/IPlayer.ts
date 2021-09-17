@@ -121,8 +121,33 @@ export interface IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
-  workRepGained: number;
+  createProgramName: string;
+  timeWorkedCreateProgram: number;
+  crimeType: string;
+  timeNeededToCompleteWork: number;
   focus: boolean;
+  className: string;
+  currentWorkFactionName: string;
+  workType: string;
+  currentWorkFactionDescription: string;
+  timeWorked: number;
+  workMoneyGained: number;
+  workMoneyGainRate: number;
+  workRepGained: number;
+  workRepGainRate: number;
+  workHackExpGained: number;
+  workHackExpGainRate: number;
+  workStrExpGained: number;
+  workStrExpGainRate: number;
+  workDefExpGained: number;
+  workDefExpGainRate: number;
+  workDexExpGained: number;
+  workDexExpGainRate: number;
+  workAgiExpGained: number;
+  workAgiExpGainRate: number;
+  workChaExpGained: number;
+  workChaExpGainRate: number;
+  workMoneyLossRate: number;
 
   // Methods
   applyForAgentJob(sing?: boolean): boolean | void;
@@ -209,4 +234,12 @@ export interface IPlayer {
   receiveInvite(factionName: string): void;
   updateSkillLevels(): void;
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
+  stopFocusing(): void;
+  finishFactionWork(cancelled: boolean, sing?: boolean): void;
+  finishClass(sing?: boolean): void;
+  finishWork(cancelled: boolean, sing?: boolean): void;
+  cancelationPenalty(): number;
+  finishWorkPartTime(sing?: boolean): void;
+  finishCrime(cancelled: boolean): void;
+  finishCreateProgramWork(cancelled: boolean): void;
 }

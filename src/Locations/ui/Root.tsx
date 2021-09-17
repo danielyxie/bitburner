@@ -15,6 +15,7 @@ import { LocationName } from "../data/LocationNames";
 
 import { CONSTANTS } from "../../Constants";
 import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
@@ -22,6 +23,7 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 type IProps = {
   initiallyInCity?: boolean;
   engine: IEngine;
+  router: IRouter;
   p: IPlayer;
 };
 
@@ -47,6 +49,10 @@ export class LocationRoot extends React.Component<IProps, IState> {
   }
 
   enterLocation(to: LocationName): void {
+    if (to == LocationName.TravelAgency) {
+      this.props.router.toTravel();
+      return;
+    }
     this.props.p.gotoLocation(to);
     this.setState({
       inCity: false,
@@ -98,6 +104,7 @@ export class LocationRoot extends React.Component<IProps, IState> {
     return (
       <GenericLocation
         engine={this.props.engine}
+        router={this.props.router}
         loc={loc}
         p={this.props.p}
         returnToCity={this.returnToCity}
