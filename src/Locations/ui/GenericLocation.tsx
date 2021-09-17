@@ -12,7 +12,7 @@ import { HospitalLocation } from "./HospitalLocation";
 import { SlumsLocation } from "./SlumsLocation";
 import { SpecialLocation } from "./SpecialLocation";
 import { TechVendorLocation } from "./TechVendorLocation";
-import { TravelAgencyLocation } from "./TravelAgencyLocation";
+import { TravelAgencyRoot } from "./TravelAgencyRoot";
 import { UniversityLocation } from "./UniversityLocation";
 import { CasinoLocation } from "./CasinoLocation";
 
@@ -21,6 +21,7 @@ import { LocationType } from "../LocationTypeEnum";
 import { CityName } from "../data/CityNames";
 
 import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 
@@ -32,6 +33,7 @@ import { CorruptableText } from "../../ui/React/CorruptableText";
 
 type IProps = {
   engine: IEngine;
+  router: IRouter;
   loc: Location;
   p: IPlayer;
   returnToCity: () => void;
@@ -91,7 +93,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     }
 
     if (this.props.loc.types.includes(LocationType.TravelAgency)) {
-      content.push(<TravelAgencyLocation key={"travelagencylocation"} p={this.props.p} travel={this.props.travel} />);
+      content.push(<TravelAgencyRoot key={"travelagencylocation"} p={this.props.p} router={this.props.router} />);
     }
 
     if (this.props.loc.types.includes(LocationType.University)) {

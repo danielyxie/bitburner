@@ -9,7 +9,7 @@ import { InitStockMetadata } from "./data/InitStockMetadata";
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
-import { StockMarketRoot } from "./ui/Root";
+import { StockMarketRoot } from "./ui/StockMarketRoot";
 
 import { CONSTANTS } from "../Constants";
 import { WorkerScript } from "../Netscript/WorkerScript";

@@ -24,8 +24,7 @@ import { CreateGangPopup } from "./CreateGangPopup";
 
 type IProps = {
   engine: IEngine;
-  initiallyOnAugmentationsPage?: boolean;
-  faction: Faction;
+  faction: Faction | null;
   p: IPlayer;
   startHackingMissionFn: (faction: Faction) => void;
 };
@@ -33,6 +32,7 @@ type IProps = {
 type IState = {
   rerenderFlag: boolean;
   purchasingAugs: boolean;
+  faction: Faction;
 };
 
 // Info text for all options on the UI
@@ -74,11 +74,13 @@ const GangNames = [
 
 export class FactionRoot extends React.Component<IProps, IState> {
   constructor(props: IProps) {
+    if (props.faction === null) throw new Error("Trying to render the Faction page with null faction");
     super(props);
 
     this.state = {
       rerenderFlag: false,
-      purchasingAugs: props.initiallyOnAugmentationsPage ? props.initiallyOnAugmentationsPage : false,
+      purchasingAugs: false,
+      faction: props.faction,
     };
 
     this.manageGang = this.manageGang.bind(this);
@@ -101,7 +103,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
     const popupId = "create-gang-popup";
     createPopup(popupId, CreateGangPopup, {
       popupId: popupId,
-      facName: this.props.faction.name,
+      facName: this.state.faction.name,
       p: this.props.p,
       engine: this.props.engine,
     });
@@ -130,22 +132,22 @@ export class FactionRoot extends React.Component<IProps, IState> {
   }
 
   startFieldWork(): void {
-    this.props.p.startFactionFieldWork(this.props.faction);
+    this.props.p.startFactionFieldWork(this.state.faction);
   }
 
   startHackingContracts(): void {
-    this.props.p.startFactionHackWork(this.props.faction);
+    this.props.p.startFactionHackWork(this.state.faction);
   }
 
   startHackingMission(): void {
-    const fac = this.props.faction;
+    const fac = this.state.faction;
     this.props.p.singularityStopWork();
     this.props.engine.loadMissionContent();
     this.props.startHackingMissionFn(fac);
   }
 
   startSecurityWork(): void {
-    this.props.p.startFactionSecurityWork(this.props.faction);
+    this.props.p.startFactionSecurityWork(this.state.faction);
   }
 
   render(): React.ReactNode {
@@ -154,7 +156,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
 
   renderMainPage(): React.ReactNode {
     const p = this.props.p;
-    const faction = this.props.faction;
+    const faction = this.state.faction;
     const factionInfo = faction.getInfo();
 
     // We have a special flag for whether the player this faction is the player's
@@ -200,7 +202,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
         )}
         {!isPlayersGang && factionInfo.offersWork() && (
           <DonateOption
-            faction={this.props.faction}
+            faction={this.state.faction}
             p={this.props.p}
             rerender={this.rerender}
             favorToDonate={favorToDonate}
@@ -222,7 +224,7 @@ export class FactionRoot extends React.Component<IProps, IState> {
   renderAugmentationsPage(): React.ReactNode {
     return (
       <>
-        <AugmentationsPage faction={this.props.faction} p={this.props.p} routeToMainPage={this.routeToMain} />
+        <AugmentationsPage faction={this.state.faction} p={this.props.p} routeToMainPage={this.routeToMain} />
       </>
     );
   }

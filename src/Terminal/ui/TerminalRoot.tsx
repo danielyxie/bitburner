@@ -76,7 +76,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
   const classes = useStyles();
   return (
     <>
-      <Box width="100%" minHeight="100vh" px={1} display={"flex"} alignItems={"flex-end"}>
+      <Box width="100%" minHeight="100vh" display={"flex"} alignItems={"flex-end"}>
         <List classes={{ root: classes.list }}>
           {terminal.outputHistory.map((item, i) => {
             if (item instanceof Output)
@@ -105,7 +105,7 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
         {terminal.action !== null && <ActionTimer terminal={terminal} />}
         <div ref={scrollHook}></div>
       </Box>
-      <Box position="sticky" bottom={0} width="100%" px={1}>
+      <Box position="sticky" bottom={0} width="100%" px={0}>
         <TerminalInput player={player} engine={engine} terminal={terminal} />
       </Box>
     </>

@@ -19,13 +19,14 @@ import { CONSTANTS } from "./Constants";
 import { DevMenuRoot } from "./DevMenu";
 import { Factions, initFactions } from "./Faction/Factions";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
-import { FactionList } from "./Faction/ui/FactionList";
+import { FactionsRoot } from "./Faction/ui/FactionsRoot";
 import { Root as BladeburnerRoot } from "./Bladeburner/ui/Root";
 import { Root as GangRoot } from "./Gang/ui/Root";
 import { SidebarRoot } from "./Sidebar/ui/SidebarRoot";
 import { CorporationRoot } from "./Corporation/ui/CorporationRoot";
 import { ResleeveRoot } from "./PersonObjects/Resleeving/ui/ResleeveRoot";
 import { GameOptionsRoot } from "./ui/React/GameOptionsRoot";
+import { GameRoot } from "./ui/GameRoot";
 import { TTheme as Theme } from "./ui/React/Theme";
 import { SleeveRoot } from "./PersonObjects/Sleeve/ui/SleeveRoot";
 import { displayInfiltrationContent } from "./Infiltration/Helper";
@@ -106,16 +107,16 @@ const Engine = {
   _idleSpeed: 200, // Speed (in ms) at which the main loop is updated
 
   loadTerminalContent: function () {
-    Engine.hideAllContent();
-    Engine.Display.content.style.display = "block";
-    routing.navigateTo(Page.CharacterInfo);
-    ReactDOM.render(
-      <Theme>
-        <TerminalRoot terminal={Terminal} engine={this} player={Player} />
-      </Theme>,
-      Engine.Display.content,
-    );
-    MainMenuLinks.Stats.classList.add("active");
+    // Engine.hideAllContent();
+    // Engine.Display.content.style.display = "block";
+    // routing.navigateTo(Page.CharacterInfo);
+    // ReactDOM.render(
+    //   <Theme>
+    //     <TerminalRoot terminal={Terminal} engine={this} player={Player} />
+    //   </Theme>,
+    //   Engine.Display.content,
+    // );
+    // MainMenuLinks.Stats.classList.add("active");
   },
 
   loadCharacterContent: function () {
@@ -171,7 +172,7 @@ const Engine = {
     Engine.Display.content.style.display = "block";
     routing.navigateTo(Page.Factions);
     MainMenuLinks.Factions.classList.add("active");
-    ReactDOM.render(<FactionList player={Player} engine={this} />, Engine.Display.content);
+    ReactDOM.render(<FactionsRoot player={Player} engine={this} />, Engine.Display.content);
   },
 
   // TODO reactify
@@ -394,9 +395,9 @@ const Engine = {
 
   // Helper function that hides all content
   hideAllContent: function () {
-    Engine.Display.content.style.display = "none";
-    Engine.Display.content.scrollTop = 0;
-    ReactDOM.unmountComponentAtNode(Engine.Display.content);
+    // Engine.Display.content.style.display = "none";
+    // Engine.Display.content.scrollTop = 0;
+    // ReactDOM.unmountComponentAtNode(Engine.Display.content);
 
     Engine.Display.infiltrationContent.style.display = "none";
     ReactDOM.unmountComponentAtNode(Engine.Display.infiltrationContent);
@@ -408,7 +409,6 @@ const Engine = {
   },
 
   displayCharacterOverviewInfo: function () {
-    console.log("rendering");
     ReactDOM.render(
       <Theme>
         <CharacterOverview player={Player} save={() => saveObject.saveGame(Engine.indexedDb)} />
@@ -806,15 +806,15 @@ const Engine = {
 
     ReactDOM.render(
       <Theme>
-        <SidebarRoot engine={this} player={Player} />
+        <GameRoot terminal={Terminal} engine={this} player={Player} />
       </Theme>,
-      document.getElementById("sidebar"),
+      document.getElementById("mainmenu-container"),
     );
   },
 
   setDisplayElements: function () {
-    Engine.Display.content = document.getElementById("generic-react-container");
-    Engine.Display.content.style.display = "none";
+    // Engine.Display.content = document.getElementById("generic-react-container");
+    // Engine.Display.content.style.display = "none";
 
     Engine.Display.missionContent = document.getElementById("mission-container");
     Engine.Display.missionContent.style.display = "none";

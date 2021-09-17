@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { FactionRoot } from "./ui/Root";
+import { FactionRoot } from "./ui/FactionRoot";
 
 import { Augmentations } from "../Augmentation/Augmentations";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";

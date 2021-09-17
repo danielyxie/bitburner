@@ -308,7 +308,7 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   return (
-    <div className="script-editor-wrapper">
+    <>
       <div id="script-editor-filename-wrapper">
         <p id="script-editor-filename-tag" className="noselect">
           {" "}
@@ -328,7 +328,7 @@ export function Root(props: IProps): React.ReactElement {
         beforeMount={beforeMount}
         onMount={onMount}
         loading={<p>Loading script editor!</p>}
-        height="80%"
+        height="90%"
         defaultLanguage="javascript"
         defaultValue={code}
         onChange={updateCode}
@@ -352,6 +352,6 @@ export function Root(props: IProps): React.ReactElement {
           Netscript Documentation
         </a>
       </div>
-    </div>
+    </>
   );
 }
