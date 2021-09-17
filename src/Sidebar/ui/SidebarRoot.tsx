@@ -101,6 +101,10 @@ const useStyles = makeStyles((theme: Theme) =>
     active: {
       borderLeft: "3px solid " + colors.primary,
     },
+    listitem: {
+      paddingTop: theme.spacing(0.1),
+      paddingBottom: theme.spacing(0.1),
+    },
   }),
 );
 
@@ -357,7 +361,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   return (
     <BBTheme>
       <Drawer open={open} anchor="left" variant="permanent">
-        <ListItem button onClick={toggleDrawer}>
+        <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
           <ListItemIcon>
             {!open ? <ChevronRightIcon color={"primary"} /> : <ChevronLeftIcon color={"primary"} />}
           </ListItemIcon>
@@ -365,7 +369,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         </ListItem>
         <Divider />
         <List>
-          <ListItem button onClick={() => setHackingOpen((old) => !old)}>
+          <ListItem classes={{ root: classes.listitem }} button onClick={() => setHackingOpen((old) => !old)}>
             <ListItemIcon>
               <ComputerIcon color={"primary"} />
             </ListItemIcon>
@@ -375,6 +379,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           <Collapse in={hackingOpen} timeout="auto" unmountOnExit>
             <List>
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Terminal"}
                 className={clsx({
@@ -392,6 +397,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 </ListItemText>
               </ListItem>
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Create Scripts"}
                 className={clsx({
@@ -407,6 +413,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 </ListItemText>
               </ListItem>
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Active Scripts"}
                 className={clsx({
@@ -452,7 +459,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           </Collapse>
 
           <Divider />
-          <ListItem button onClick={() => setCharacterOpen((old) => !old)}>
+          <ListItem classes={{ root: classes.listitem }} button onClick={() => setCharacterOpen((old) => !old)}>
             <ListItemIcon>
               <AccountBoxIcon color={"primary"} />
             </ListItemIcon>
@@ -479,6 +486,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             </ListItem>
             {canOpenFactions && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Factions"}
                 className={clsx({
@@ -498,6 +506,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             )}
             {canOpenAugmentations && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Augmentations"}
                 className={clsx({
@@ -537,6 +546,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             </ListItem>
             {canOpenSleeves && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Sleeves"}
                 className={clsx({
@@ -555,7 +565,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           </Collapse>
 
           <Divider />
-          <ListItem button onClick={() => setWorldOpen((old) => !old)}>
+          <ListItem classes={{ root: classes.listitem }} button onClick={() => setWorldOpen((old) => !old)}>
             <ListItemIcon>
               <PublicIcon color={"primary"} />
             </ListItemIcon>
@@ -597,6 +607,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             </ListItem>
             {canJob && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Job"}
                 className={clsx({
@@ -614,6 +625,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             )}
             {canStockMarket && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Stock Market"}
                 className={clsx({
@@ -631,6 +643,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             )}
             {canBladeburner && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Bladeburner"}
                 className={clsx({
@@ -648,6 +661,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             )}
             {canCorporation && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Corp"}
                 className={clsx({
@@ -665,6 +679,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             )}
             {canGang && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Gang"}
                 className={clsx({
@@ -683,7 +698,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           </Collapse>
 
           <Divider />
-          <ListItem button onClick={() => setHelpOpen((old) => !old)}>
+          <ListItem classes={{ root: classes.listitem }} button onClick={() => setHelpOpen((old) => !old)}>
             <ListItemIcon>
               <LiveHelpIcon color={"primary"} />
             </ListItemIcon>
@@ -740,6 +755,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             </ListItem>
             {process.env.NODE_ENV === "development" && (
               <ListItem
+                classes={{ root: classes.listitem }}
                 button
                 key={"Dev"}
                 className={clsx({
