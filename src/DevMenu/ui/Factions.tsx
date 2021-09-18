@@ -119,10 +119,10 @@ export function Factions(props: IProps): React.ReactElement {
                     value={faction}
                     startAdornment={
                       <>
-                        <IconButton color="primary" onClick={receiveAllInvites} size="large">
+                        <IconButton onClick={receiveAllInvites} size="large">
                           <ReplyAllIcon />
                         </IconButton>
-                        <IconButton color="primary" onClick={receiveInvite} size="large">
+                        <IconButton onClick={receiveInvite} size="large">
                           <ReplyIcon />
                         </IconButton>
                       </>

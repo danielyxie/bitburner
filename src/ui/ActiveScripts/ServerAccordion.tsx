@@ -5,10 +5,14 @@
 import * as React from "react";
 
 import Typography from "@mui/material/Typography";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+
+import Paper from "@mui/material/Paper";
+import Collapse from "@mui/material/Collapse";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import ExpandLess from "@mui/icons-material/ExpandLess";
 import { ServerAccordionContent } from "./ServerAccordionContent";
 
 import { BaseServer } from "../../Server/BaseServer";
@@ -22,6 +26,7 @@ type IProps = {
 };
 
 export function ServerAccordion(props: IProps): React.ReactElement {
+  const [open, setOpen] = React.useState(false);
   const server = props.server;
 
   // Accordion's header text
@@ -38,15 +43,14 @@ export function ServerAccordion(props: IProps): React.ReactElement {
   const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`;
 
   return (
-    <Accordion TransitionProps={{ unmountOnExit: true }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography style={{ whiteSpace: "pre-wrap" }} color="primary">
-          {headerTxt}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
+    <>
+      <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
+        <ListItemText primary={<Typography style={{ whiteSpace: "pre-wrap" }}>{headerTxt}</Typography>} />
+        {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
+      </ListItemButton>
+      <Collapse in={open} timeout={0} unmountOnExit>
         <ServerAccordionContent workerScripts={props.workerScripts} />
-      </AccordionDetails>
-    </Accordion>
+      </Collapse>
+    </>
   );
 }

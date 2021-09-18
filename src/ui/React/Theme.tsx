@@ -23,6 +23,10 @@ export const colors = {
   warning: "#cc0",
   warningdark: "#990",
 
+  infolight: "#69f",
+  info: "#36c",
+  infodark: "#039",
+
   welllight: "#444",
   well: "#222",
   white: "#fff",
@@ -53,6 +57,11 @@ export const theme = createTheme({
       main: colors.error,
       dark: colors.errordark,
     },
+    info: {
+      light: colors.infolight,
+      main: colors.info,
+      dark: colors.infodark,
+    },
     warning: {
       light: colors.warninglight,
       main: colors.warning,
@@ -73,6 +82,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: colors.well,
+          color: colors.primary,
         },
         input: {
           "&::placeholder": {
@@ -114,22 +124,22 @@ export const theme = createTheme({
         },
       },
     },
-    // MuiButton: {
-    //   styleOverrides: {
-    //     root: {
-    //       backgroundColor: "#333",
-    //       border: "1px solid " + colors.well,
-    //       // color: colors.primary,
-    //       margin: "5px",
-    //       padding: "3px 5px",
-    //       "&:hover": {
-    //         backgroundColor: colors.black,
-    //       },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#333",
+          border: "1px solid " + colors.well,
+          // color: colors.primary,
+          margin: "5px",
+          padding: "3px 5px",
+          "&:hover": {
+            backgroundColor: colors.black,
+          },
 
-    //       borderRadius: 0,
-    //     },
-    //   },
-    // },
+          borderRadius: 0,
+        },
+      },
+    },
     MuiSelect: {
       styleOverrides: {
         icon: {
@@ -233,8 +243,16 @@ export const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
+          borderRadius: 0,
           backgroundColor: colors.black,
           border: "1px solid " + colors.welllight,
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        select: {
+          color: colors.primary,
         },
       },
     },

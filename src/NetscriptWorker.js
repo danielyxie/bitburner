@@ -586,7 +586,7 @@ export function createAndAddWorkerScript(runningScriptObj, server, parent) {
  * Updates the online running time stat of all running scripts
  */
 export function updateOnlineScriptTimes(numCycles = 1) {
-  var time = (numCycles * Engine._idleSpeed) / 1000; //seconds
+  var time = (numCycles * CONSTANTS._idleSpeed) / 1000; //seconds
   for (const ws of workerScripts.values()) {
     ws.scriptRef.onlineRunningTime += time;
   }

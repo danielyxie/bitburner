@@ -333,18 +333,18 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     <Drawer open={open} anchor="left" variant="permanent">
       <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
         <ListItemIcon>
-          {!open ? <ChevronRightIcon color={"primary"} /> : <ChevronLeftIcon color={"primary"} />}
+          {!open ? <ChevronRightIcon color="primary" /> : <ChevronLeftIcon color="primary" />}
         </ListItemIcon>
-        <ListItemText primary={<Typography color="primary">Bitburner v{CONSTANTS.Version}</Typography>} />
+        <ListItemText primary={<Typography>Bitburner v{CONSTANTS.Version}</Typography>} />
       </ListItem>
       <Divider />
       <List>
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setHackingOpen((old) => !old)}>
           <ListItemIcon>
-            <ComputerIcon color={"primary"} />
+            <ComputerIcon color="primary" />
           </ListItemIcon>
-          <ListItemText primary={<Typography color="primary">Hacking</Typography>} />
-          {hackingOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+          <ListItemText primary={<Typography>Hacking</Typography>} />
+          {hackingOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItem>
         <Collapse in={hackingOpen} timeout="auto" unmountOnExit>
           <List>
@@ -435,10 +435,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <Divider />
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setCharacterOpen((old) => !old)}>
           <ListItemIcon>
-            <AccountBoxIcon color={"primary"} />
+            <AccountBoxIcon color="primary" />
           </ListItemIcon>
-          <ListItemText primary={<Typography color="primary">Character</Typography>} />
-          {characterOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+          <ListItemText primary={<Typography>Character</Typography>} />
+          {characterOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItem>
         <Collapse in={characterOpen} timeout="auto" unmountOnExit>
           <ListItem
@@ -545,10 +545,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <Divider />
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setWorldOpen((old) => !old)}>
           <ListItemIcon>
-            <PublicIcon color={"primary"} />
+            <PublicIcon color="primary" />
           </ListItemIcon>
-          <ListItemText primary={<Typography color="primary">World</Typography>} />
-          {worldOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+          <ListItemText primary={<Typography>World</Typography>} />
+          {worldOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItem>
         <Collapse in={worldOpen} timeout="auto" unmountOnExit>
           <ListItem
@@ -678,10 +678,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <Divider />
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setHelpOpen((old) => !old)}>
           <ListItemIcon>
-            <LiveHelpIcon color={"primary"} />
+            <LiveHelpIcon color="primary" />
           </ListItemIcon>
-          <ListItemText primary={<Typography color="primary">Help</Typography>} />
-          {helpOpen ? <ExpandLessIcon color={"primary"} /> : <ExpandMoreIcon color={"primary"} />}
+          <ListItemText primary={<Typography>Help</Typography>} />
+          {helpOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItem>
         <Collapse in={helpOpen} timeout="auto" unmountOnExit>
           <ListItem

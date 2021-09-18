@@ -53,23 +53,21 @@ export function Augmentations(props: IProps): React.ReactElement {
               </td>
               <td>
                 <Select
-                  id="dev-augs-dropdown"
-                  className="dropdown"
                   onChange={setAugmentationDropdown}
                   value={augmentation}
                   startAdornment={
                     <>
-                      <IconButton color="primary" onClick={queueAllAugs} size="large">
+                      <IconButton onClick={queueAllAugs} size="large">
                         <ReplyAllIcon />
                       </IconButton>
-                      <IconButton color="primary" onClick={queueAug} size="large">
+                      <IconButton onClick={queueAug} size="large">
                         <ReplyIcon />
                       </IconButton>
                     </>
                   }
                   endAdornment={
                     <>
-                      <IconButton color="primary" onClick={clearAugs} size="large">
+                      <IconButton onClick={clearAugs} size="large">
                         <ClearIcon />
                       </IconButton>
                     </>

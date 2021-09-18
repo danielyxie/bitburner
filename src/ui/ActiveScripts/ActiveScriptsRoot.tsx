@@ -10,6 +10,7 @@ import { ServerAccordions } from "./ServerAccordions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
 type IProps = {
   workerScripts: Map<number, WorkerScript>;
