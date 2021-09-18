@@ -40,12 +40,12 @@ export function ServerAccordion(props: IProps): React.ReactElement {
     progress: server.ramUsed / server.maxRam,
     totalTicks: 30,
   };
-  const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`;
+  const headerTxt = `${createProgressBarText(barOptions)}`;
 
   return (
     <>
       <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
-        <ListItemText primary={<Typography style={{ whiteSpace: "pre-wrap" }}>{headerTxt}</Typography>} />
+        <ListItemText primary={<Typography style={{ whiteSpace: "pre-wrap" }}>{paddedName}[<Typography display="inline" className="active-scripts-accordion-override">{headerTxt}</Typography>]</Typography>} />
         {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
       </ListItemButton>
       <Collapse in={open} timeout={0} unmountOnExit>

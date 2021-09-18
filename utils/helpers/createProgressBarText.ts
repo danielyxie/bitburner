@@ -1,3 +1,5 @@
+import { Typography } from "@mui/material";
+
 /**
  * Represents the possible configuration values that can be provided when creating the progress bar text.
  */
@@ -43,5 +45,5 @@ export function createProgressBarText(params: IProgressBarConfiguration): string
   const dashes: number = Math.max(derived.totalTicks - bars, 0);
 
   // String.prototype.repeat isn't completley supported, but good enough for our purposes
-  return `[${"|".repeat(bars)}${"-".repeat(dashes)}]`;
+  return `${"|".repeat(bars)}${"-".repeat(dashes)}`;
 }
