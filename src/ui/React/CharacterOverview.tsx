@@ -13,9 +13,11 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import Fab from "@mui/material/Fab";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
 import { colors } from "./Theme";
 import { Settings } from "../../Settings/Settings";
@@ -222,9 +224,9 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
 
                   <TableRow>
                     <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-                      <Button color={Settings.AutosaveInterval !== 0 ? "primary" : "secondary"} onClick={save}>
-                        SAVE
-                      </Button>
+                      <IconButton onClick={save}>
+                        <SaveAltIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>

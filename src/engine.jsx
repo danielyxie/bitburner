@@ -34,6 +34,8 @@ import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
+import { Locations } from "./Locations/Locations";
+import { LocationName } from "./Locations/data/LocationNames";
 
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
@@ -80,17 +82,29 @@ const Engine = {
     // Working
     if (Player.isWorking) {
       if (Player.workType == CONSTANTS.WorkTypeFaction) {
-        Player.workForFaction(numCycles);
+        if (Player.workForFaction(numCycles)) {
+          Router.toFaction();
+        }
       } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-        Player.createProgramWork(numCycles);
+        if (Player.createProgramWork(numCycles)) {
+          Router.toTerminal();
+        }
       } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-        Player.takeClass(numCycles);
+        if (Player.takeClass(numCycles)) {
+          Router.toCity();
+        }
       } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
-        Player.commitCrime(numCycles);
+        if (Player.commitCrime(numCycles)) {
+          Router.toLocation(Locations[LocationName.Slums]);
+        }
       } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-        Player.workPartTime(numCycles);
+        if (Player.workPartTime(numCycles)) {
+          Router.toCity();
+        }
       } else {
-        Player.work(numCycles);
+        if (Player.work(numCycles)) {
+          Router.toCity();
+        }
       }
     }
 
@@ -278,7 +292,6 @@ const Engine = {
         } else {
           Player.work(numCyclesOffline);
         }
-        Player.focus = false;
       } else {
         for (let i = 0; i < Player.factions.length; i++) {
           const facName = Player.factions[i];

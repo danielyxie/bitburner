@@ -14,6 +14,8 @@ import { StatsTable } from "./React/StatsTable";
 import { Money } from "./React/Money";
 import { use } from "./Context";
 
+import Typography from "@mui/material/Typography";
+
 function LastEmployer(): React.ReactElement {
   const player = use.Player();
   if (player.companyName) {
@@ -162,7 +164,7 @@ function CurrentBitNode(): React.ReactElement {
   return <></>;
 }
 
-export function CharacterInfo(): React.ReactElement {
+export function CharacterStats(): React.ReactElement {
   const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {

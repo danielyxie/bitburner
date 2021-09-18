@@ -337,13 +337,18 @@ export function WorkInProgressRoot(): React.ReactElement {
           % complete. <br />
           If you cancel, your work will be saved and you can come back to complete the program later.
         </p>
-        <button className="work-button" onClick={() => player.finishCreateProgramWork(true)}>
+        <button
+          className="work-button"
+          onClick={() => {
+            player.finishCreateProgramWork(true);
+            router.toTerminal();
+          }}
+        >
           Cancel work on creating program
         </button>
       </div>
     );
   }
 
-  setTimeout(() => router.toCity(), 50);
   return <></>;
 }

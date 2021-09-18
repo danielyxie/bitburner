@@ -176,7 +176,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   }
 
   function clickStats(): void {
-    props.router.toCharacterInfo();
+    props.router.toStats();
     if (flashStats) iTutorialNextStep();
   }
 

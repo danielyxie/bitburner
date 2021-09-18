@@ -13,11 +13,15 @@ import Switch from "@mui/material/Switch";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Link from "@mui/material/Link";
 import Tooltip from "@mui/material/Tooltip";
+
+import DownloadIcon from "@mui/icons-material/Download";
+import UploadIcon from "@mui/icons-material/Upload";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { ConfirmationModal } from "./ConfirmationModal";
@@ -461,8 +465,16 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
           </Box>
           <Box>
-            <Button onClick={() => props.export()}>Export Game</Button>
-            <Button onClick={() => props.import()}>Import Game</Button>
+            <Tooltip title={<Typography>export</Typography>}>
+              <IconButton onClick={() => props.export()}>
+                <DownloadIcon color="primary" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={<Typography>import</Typography>}>
+              <IconButton onClick={() => props.import()}>
+                <UploadIcon color="primary" />
+              </IconButton>
+            </Tooltip>
           </Box>
           <Box>
             <Tooltip

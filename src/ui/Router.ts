@@ -50,7 +50,7 @@ export interface IRouter {
   toAugmentations(): void;
   toBitVerse(flume: boolean, quick: boolean): void;
   toBladeburner(): void;
-  toCharacterInfo(): void;
+  toStats(): void;
   toCity(): void; // travel ? city ?
   toCorporation(): void;
   toCreateProgram(): void;

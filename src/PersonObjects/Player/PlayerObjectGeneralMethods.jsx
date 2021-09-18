@@ -587,13 +587,15 @@ export function work(numCycles) {
   this.workRepGainRate = this.getWorkRepGain();
   this.processWorkEarnings(numCycles);
 
+  const comp = Companies[this.companyName];
+  influenceStockThroughCompanyWork(comp, this.workRepGainRate, numCycles);
+
   // If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
   if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
     return this.finishWork(false);
+    return true;
   }
-
-  const comp = Companies[this.companyName];
-  influenceStockThroughCompanyWork(comp, this.workRepGainRate, numCycles);
+  return false;
 }
 
 export function finishWork(cancelled, sing = false) {
@@ -711,7 +713,9 @@ export function workPartTime(numCycles) {
   //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
   if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
     return this.finishWorkPartTime();
+    return true;
   }
+  return false;
 }
 
 export function finishWorkPartTime(sing = false) {
@@ -877,8 +881,10 @@ export function workForFaction(numCycles) {
 
   //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
   if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
-    return this.finishFactionWork(false);
+    this.finishFactionWork(false);
+    return true;
   }
+  return false;
 }
 
 export function finishFactionWork(cancelled, sing = false) {
@@ -1211,7 +1217,9 @@ export function createProgramWork(numCycles) {
 
   if (this.timeWorkedCreateProgram >= this.timeNeededToCompleteWork) {
     this.finishCreateProgramWork(false);
+    return true;
   }
+  return false;
 }
 
 export function finishCreateProgramWork(cancelled) {
@@ -1314,6 +1322,7 @@ export function startClass(costMult, expMult, className) {
 export function takeClass(numCycles) {
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
   this.processWorkEarnings(numCycles);
+  return false;
 }
 
 //The 'sing' argument defines whether or not this function was called
@@ -1403,7 +1412,11 @@ export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, c
 export function commitCrime(numCycles) {
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
-  if (this.timeWorked >= this.timeNeededToCompleteWork) this.finishCrime(false);
+  if (this.timeWorked >= this.timeNeededToCompleteWork) {
+    this.finishCrime(false);
+    return true;
+  }
+  return false;
 }
 
 export function finishCrime(cancelled) {

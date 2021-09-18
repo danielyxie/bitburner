@@ -53,7 +53,7 @@ import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
 import { ActiveScriptsRoot } from "../ui/ActiveScripts/ActiveScriptsRoot";
 import { FactionsRoot } from "../Faction/ui/FactionsRoot";
 import { FactionRoot } from "../Faction/ui/FactionRoot";
-import { CharacterInfo } from "./CharacterInfo";
+import { CharacterStats } from "./CharacterStats";
 import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
 import { StockMarketRoot } from "../StockMarket/ui/StockMarketRoot";
 import { BitverseRoot } from "../BitNode/ui/BitverseRoot";
@@ -100,7 +100,7 @@ export let Router: IRouter = {
   toBladeburner: () => {
     throw new Error("Router called before initialization");
   },
-  toCharacterInfo: () => {
+  toStats: () => {
     throw new Error("Router called before initialization");
   },
   toCity: () => {
@@ -179,7 +179,6 @@ function determineStartPage(player: IPlayer): Page {
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
   const [page, setPage] = useState(determineStartPage(player));
-  const contentRef = useRef<HTMLDivElement>(null);
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
   );
@@ -199,7 +198,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toActiveScripts: () => setPage(Page.ActiveScripts),
     toAugmentations: () => setPage(Page.Augmentations),
     toBladeburner: () => setPage(Page.Bladeburner),
-    toCharacterInfo: () => setPage(Page.Stats),
+    toStats: () => setPage(Page.Stats),
     toCorporation: () => setPage(Page.Corporation),
     toCreateProgram: () => setPage(Page.CreateProgram),
     toDevMenu: () => setPage(Page.DevMenu),
@@ -256,6 +255,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   useEffect(() => {
     filename = "";
     code = "";
+    window.scrollTo(0, 0);
   });
 
   return (
@@ -273,21 +273,13 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         ) : (
           <Box display="flex" flexDirection="row" width="100%">
             <SidebarRoot player={player} router={Router} page={page} />
-            <Box
-              ref={contentRef}
-              className={classes.root}
-              flexGrow={1}
-              display="block"
-              width="100%"
-              px={1}
-              height="100vh"
-            >
+            <Box className={classes.root} flexGrow={1} display="block" width="100%" px={1} height="100vh">
               {page === Page.Terminal ? (
                 <TerminalRoot terminal={terminal} router={Router} player={player} />
               ) : page === Page.Sleeves ? (
                 <SleeveRoot player={player} />
               ) : page === Page.Stats ? (
-                <CharacterInfo />
+                <CharacterStats />
               ) : page === Page.CreateScript ? (
                 <ScriptEditorRoot filename={filename} code={code} player={player} router={Router} />
               ) : page === Page.ActiveScripts ? (
