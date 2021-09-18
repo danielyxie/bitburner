@@ -148,7 +148,7 @@ function CurrentBitNode(): React.ReactElement {
     return (
       <>
         <Typography variant="h5" color="primary">
-          BitNode-{player.bitNodeN}: {BitNodes[index].name}
+          BitNode {player.bitNodeN}: {BitNodes[index].name}
         </Typography>
         <Typography sx={{ mx: 2 }} style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>
           {BitNodes[index].info}
