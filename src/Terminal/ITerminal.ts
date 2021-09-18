@@ -73,7 +73,6 @@ export interface ITerminal {
   executeCommand(router: IRouter, player: IPlayer, command: string): void;
   executeCommands(router: IRouter, player: IPlayer, commands: string): void;
   // If there was any changes, will return true, once.
-  pollChanges(): boolean;
   process(router: IRouter, player: IPlayer, cycles: number): void;
   prestige(): void;
   getProgressText(): string;

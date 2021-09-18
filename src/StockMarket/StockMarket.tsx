@@ -311,4 +311,4 @@ export function initStockMarketFnForReact(): void {
   initSymbolToStockMap();
 }
 
-export const eventEmitterForUiReset = new EventEmitter();
+export const eventEmitterForUiReset = new EventEmitter<[]>();

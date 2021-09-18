@@ -45,7 +45,7 @@ export function prestigeWorkerScripts() {
     killWorkerScript(ws);
   }
 
-  WorkerScriptStartStopEventEmitter.emitEvent();
+  WorkerScriptStartStopEventEmitter.emit();
   workerScripts.clear();
 }
 
@@ -501,7 +501,7 @@ export function createAndAddWorkerScript(runningScriptObj, server, parent) {
 
   // Add the WorkerScript to the global pool
   workerScripts.set(pid, s);
-  WorkerScriptStartStopEventEmitter.emitEvent();
+  WorkerScriptStartStopEventEmitter.emit();
 
   // Start the script's execution
   let p = null; // Script's resulting promise

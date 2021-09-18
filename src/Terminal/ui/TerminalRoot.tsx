@@ -11,6 +11,7 @@ import { ITerminal, Output, Link } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
+import { TerminalEvents } from "../TerminalEvents";
 
 interface IActionTimerProps {
   terminal: ITerminal;
@@ -55,10 +56,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
   }
 
   useEffect(() => {
-    const id = setInterval(() => {
-      if (terminal.pollChanges()) rerender();
-    }, 100);
-    return () => clearInterval(id);
+    return TerminalEvents.subscribe(rerender);
   }, []);
 
   function doScroll(): void {

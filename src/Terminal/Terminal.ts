@@ -5,6 +5,7 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
 import { Programs } from "../Programs/Programs";
 import { CodingContractResult } from "../CodingContracts";
+import { TerminalEvents } from "./TerminalEvents";
 
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
@@ -69,7 +70,6 @@ import { unalias } from "./commands/unalias";
 import { wget } from "./commands/wget";
 
 export class Terminal implements ITerminal {
-  hasChanges = false;
   // Flags to determine whether the player is currently running a hack or an analyze
   action: TTimer | null = null;
 
@@ -88,16 +88,8 @@ export class Terminal implements ITerminal {
   process(router: IRouter, player: IPlayer, cycles: number): void {
     if (this.action === null) return;
     this.action.timeLeft -= (CONSTANTS._idleSpeed * cycles) / 1000;
-    this.hasChanges = true;
+    TerminalEvents.emit();
     if (this.action.timeLeft < 0) this.finishAction(router, player, false);
-  }
-
-  pollChanges(): boolean {
-    if (this.hasChanges) {
-      this.hasChanges = false;
-      return true;
-    }
-    return false;
   }
 
   append(item: Output | Link): void {
@@ -109,12 +101,12 @@ export class Terminal implements ITerminal {
 
   print(s: string): void {
     this.append(new Output(s, "primary"));
-    this.hasChanges = true;
+    TerminalEvents.emit();
   }
 
   error(s: string): void {
     this.append(new Output(s, "error"));
-    this.hasChanges = true;
+    TerminalEvents.emit();
   }
 
   startHack(player: IPlayer): void {
@@ -327,7 +319,7 @@ export class Terminal implements ITerminal {
 
   setcwd(dir: string): void {
     this.currDir = dir;
-    this.hasChanges = true;
+    TerminalEvents.emit();
   }
 
   async runContract(player: IPlayer, contractName: string): Promise<void> {
@@ -490,7 +482,7 @@ export class Terminal implements ITerminal {
   clear(): void {
     // TODO: remove this once we figure out the height issue.
     this.outputHistory = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
-    this.hasChanges = true;
+    TerminalEvents.emit();
   }
 
   prestige(): void {

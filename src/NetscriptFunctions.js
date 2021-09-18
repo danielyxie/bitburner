@@ -1359,7 +1359,7 @@ function NetscriptFunctions(workerScript) {
       for (let i = server.runningScripts.length - 1; i >= 0; --i) {
         killWorkerScript(server.runningScripts[i], server.ip, false);
       }
-      WorkerScriptStartStopEventEmitter.emitEvent();
+      WorkerScriptStartStopEventEmitter.emit();
       workerScript.log(
         "killall",
         `Killing all scripts on '${server.hostname}'. May take a few minutes for the scripts to die.`,

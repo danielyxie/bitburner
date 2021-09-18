@@ -9,6 +9,6 @@ export function killall(terminal: ITerminal, router: IRouter, player: IPlayer, s
   for (let i = server.runningScripts.length - 1; i >= 0; --i) {
     killWorkerScript(server.runningScripts[i], server.ip, false);
   }
-  WorkerScriptStartStopEventEmitter.emitEvent();
+  WorkerScriptStartStopEventEmitter.emit();
   terminal.print("Killing all running scripts");
 }

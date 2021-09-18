@@ -49,11 +49,7 @@ export function ServerAccordions(props: IProps): React.ReactElement {
   }
 
   useEffect(() => {
-    WorkerScriptStartStopEventEmitter.addSubscriber({
-      cb: rerender,
-      id: subscriberId,
-    });
-    return () => WorkerScriptStartStopEventEmitter.removeSubscriber(subscriberId);
+    return WorkerScriptStartStopEventEmitter.subscribe(rerender);
   }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {

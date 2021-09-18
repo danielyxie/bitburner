@@ -31,7 +31,7 @@ type IProps = {
   buyStockLong: txFn;
   buyStockShort: txFn;
   cancelOrder: (params: any) => void;
-  eventEmitterForReset?: EventEmitter;
+  eventEmitterForReset?: EventEmitter<[]>;
   p: IPlayer;
   placeOrder: placeOrderFn;
   sellStockLong: txFn;
