@@ -15,7 +15,7 @@
   vertical-align: middle; }
 
 :root {
-  --my-font-color: #6f3;
+  --my-font-color: #0c0;
   --my-background-color: #000;
   --my-highlight-color: #fff;
   --my-prompt-color: #f92672; }
@@ -573,7 +573,7 @@ input[type="checkbox"] {
   vertical-align: middle; }
 
 :root {
-  --my-font-color: #6f3;
+  --my-font-color: #0c0;
   --my-background-color: #000;
   --my-highlight-color: #fff;
   --my-prompt-color: #f92672; }
@@ -1376,113 +1376,11 @@ button {
 
 /* COLORS */
 /* Attributes */
-.active-scripts-list {
-  list-style-type: none; }
-
-.active-scripts-container > p {
-  width: 70%;
-  margin: 6px;
-  padding: 4px; }
-
-.active-scripts-container .accordion-header > pre {
-  color: white; }
-
-.active-scripts-server-header {
-  background-color: #444;
-  font-size: 20px;
-  color: #fff;
-  margin: 6px 6px 0 6px;
-  padding: 6px;
-  cursor: pointer;
-  width: 60%;
-  text-align: left;
-  border: none;
-  outline: none; }
-  .active-scripts-server-header:after {
-    content: "\2795";
-    /* "plus" sign (+) */
-    font-size: 13px;
-    color: #fff;
-    float: right;
-    margin-left: 5px; }
-  .active-scripts-server-header.active, .active-scripts-server-header:hover {
-    background-color: #555; }
-
-.active-scripts-server-header.active:after {
-  content: "\2796";
-  /* "minus" sign (-) */
-  font-size: 13px;
-  color: #fff;
-  float: right;
-  margin-left: 5px; }
-
-.active-scripts-server-header.active:hover {
-  background-color: #666; }
-
-.active-scripts-server-panel {
-  margin: 0 6px 6px 6px;
-  padding: 0 6px 6px 6px;
-  width: 55%;
-  margin-left: 5%;
-  display: none; }
-  .active-scripts-server-panel div,
-  .active-scripts-server-panel ul,
-  .active-scripts-server-panel ul > li {
-    background-color: #555; }
-
-.active-scripts-script-header {
-  background-color: #555;
-  border: none;
-  color: var(--my-font-color);
-  cursor: pointer;
-  display: block;
-  outline: none;
-  padding: 4px 25px 4px 10px;
-  position: relative;
-  text-align: left;
-  width: auto; }
-  .active-scripts-script-header:after {
-    content: "\2795";
-    /* "plus" sign (+) */
-    font-size: 13px;
-    float: right;
-    margin-left: 5px;
-    color: transparent;
-    text-shadow: 0 0 0 var(--my-font-color);
-    position: absolute;
-    bottom: 4px; }
-  .active-scripts-script-header.active:after {
-    content: "\2796";
-    /* "minus" sign (-) */ }
-  .active-scripts-script-header:hover, .active-scripts-script-header.active:hover {
-    background-color: #666; }
-  .active-scripts-script-header.active {
-    background-color: #555; }
-
-.active-scripts-script-panel {
-  background-color: #555;
-  display: none;
-  font-size: 14px;
-  margin-bottom: 6px;
-  padding: 0 18px;
-  width: auto; }
-  .active-scripts-script-panel pre,
-  .active-scripts-script-panel h2,
-  .active-scripts-script-panel ul,
-  .active-scripts-script-panel li {
-    background-color: #555;
-    width: auto;
-    color: #fff;
-    margin-left: 5%; }
-
-/* COLORS */
-/* Attributes */
 /**
  * Styling for the Hacknet Nodes UI Page
  */
 .hacknet-general-info {
-  margin: 10px;
-  width: 70vw; }
+  margin: 10px; }
 
 #hacknet-nodes-container li {
   float: left;
@@ -1650,8 +1548,7 @@ button {
 /* COLORS */
 /* Attributes */
 .augmentations-content > p {
-  font-size: 14px;
-  width: 70%; }
+  font-size: 14px; }
 
 .augmentations-list button,
 .augmentations-list div {
@@ -1824,7 +1721,7 @@ button {
   vertical-align: middle; }
 
 :root {
-  --my-font-color: #6f3;
+  --my-font-color: #0c0;
   --my-background-color: #000;
   --my-highlight-color: #fff;
   --my-prompt-color: #f92672; }
@@ -2691,11 +2588,11 @@ input[type="checkbox"] {
   width: 100%;
   height: 100%;
   background: #000;
-  color: #6f3; }
+  color: #0c0; }
   .loaderoverlay .loaderspinner, .loaderoverlay .loaderspinner:before, .loaderoverlay .loaderspinner:after {
     border: 20px solid rgba(0, 0, 0, 0);
-    border-top-color: #6f3;
-    border-bottom-color: #6f3;
+    border-top-color: #0c0;
+    border-bottom-color: #0c0;
     border-radius: 1000px;
     position: absolute;
     top: 50%;
