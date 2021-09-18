@@ -136,7 +136,7 @@ export function Stats(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Experience / Stats</h2>
       </AccordionSummary>

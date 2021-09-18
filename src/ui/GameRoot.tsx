@@ -278,7 +278,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               ) : page === Page.CreateScript ? (
                 <ScriptEditorRoot filename={filename} code={code} player={player} router={Router} />
               ) : page === Page.ActiveScripts ? (
-                <ActiveScriptsRoot p={player} workerScripts={workerScripts} />
+                <ActiveScriptsRoot workerScripts={workerScripts} />
               ) : page === Page.Hacknet ? (
                 <HacknetRoot player={player} />
               ) : page === Page.CreateProgram ? (

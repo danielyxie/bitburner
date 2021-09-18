@@ -19,6 +19,10 @@ export const colors = {
   secondary: "#888",
   secondarydark: "#666",
 
+  warninglight: "#ff0",
+  warning: "#cc0",
+  warningdark: "#990",
+
   welllight: "#444",
   well: "#222",
   white: "#fff",
@@ -49,6 +53,11 @@ export const theme = createTheme({
       main: colors.error,
       dark: colors.errordark,
     },
+    warning: {
+      light: colors.warninglight,
+      main: colors.warning,
+      dark: colors.warningdark,
+    },
     background: {
       paper: colors.well,
     },
@@ -66,7 +75,6 @@ export const theme = createTheme({
           backgroundColor: colors.well,
         },
         input: {
-          color: colors.primary,
           "&::placeholder": {
             userSelect: "none",
             color: colors.primarydark,
@@ -106,22 +114,22 @@ export const theme = createTheme({
         },
       },
     },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "#333",
-          border: "1px solid " + colors.well,
-          // color: colors.primary,
-          margin: "5px",
-          padding: "3px 5px",
-          "&:hover": {
-            backgroundColor: colors.black,
-          },
+    // MuiButton: {
+    //   styleOverrides: {
+    //     root: {
+    //       backgroundColor: "#333",
+    //       border: "1px solid " + colors.well,
+    //       // color: colors.primary,
+    //       margin: "5px",
+    //       padding: "3px 5px",
+    //       "&:hover": {
+    //         backgroundColor: colors.black,
+    //       },
 
-          borderRadius: 0,
-        },
-      },
-    },
+    //       borderRadius: 0,
+    //     },
+    //   },
+    // },
     MuiSelect: {
       styleOverrides: {
         icon: {

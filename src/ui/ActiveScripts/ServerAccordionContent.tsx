@@ -14,11 +14,13 @@ export function ServerAccordionContent(props: IProps): React.ReactElement {
     return <ServerAccordionContentPaginated workerScripts={props.workerScripts} />;
   }
 
-  const scripts = props.workerScripts.map((ws) => {
-    return <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />;
-  });
-
-  return <ul>{scripts}</ul>;
+  return (
+    <ul>
+      {props.workerScripts.map((ws) => {
+        return <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />;
+      })}
+    </ul>
+  );
 }
 
 export function ServerAccordionContentPaginated(props: IProps): React.ReactElement {

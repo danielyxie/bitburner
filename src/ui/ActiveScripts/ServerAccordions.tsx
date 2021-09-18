@@ -2,7 +2,7 @@
  * React Component for rendering the Accordion elements for all servers
  * on which scripts are running
  */
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import { ServerAccordion } from "./ServerAccordion";
 
@@ -18,7 +18,7 @@ interface IServerData {
 }
 
 interface IServerToScriptsMap {
-  [key: string]: IServerData;
+  [key: string]: IServerData | undefined;
 }
 
 type IProps = {
@@ -31,72 +31,47 @@ type IState = {
 
 const subscriberId = "ActiveScriptsUI";
 
-export class ServerAccordions extends React.Component<IProps, IState> {
-  serverToScriptMap: IServerToScriptsMap = {};
-
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      rerenderFlag: false,
-    };
-
-    this.updateServerToScriptsMap();
-
-    this.rerender = this.rerender.bind(this);
+export function ServerAccordions(props: IProps): React.ReactElement {
+  const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
   }
 
-  componentDidMount(): void {
+  useEffect(() => {
     WorkerScriptStartStopEventEmitter.addSubscriber({
-      cb: this.rerender,
+      cb: rerender,
       id: subscriberId,
     });
-  }
+    return () => WorkerScriptStartStopEventEmitter.removeSubscriber(subscriberId);
+  }, []);
 
-  componentWillUnmount(): void {
-    WorkerScriptStartStopEventEmitter.removeSubscriber(subscriberId);
-  }
-
-  updateServerToScriptsMap(): void {
-    const map: IServerToScriptsMap = {};
-
-    for (const ws of this.props.workerScripts.values()) {
-      const server = getServer(ws.serverIp);
-      if (server == null) {
-        console.warn(`WorkerScript has invalid IP address: ${ws.serverIp}`);
-        continue;
-      }
-
-      if (map[server.hostname] == null) {
-        map[server.hostname] = {
-          server: server,
-          workerScripts: [],
-        };
-      }
-
-      map[server.hostname].workerScripts.push(ws);
+  const serverToScriptMap: IServerToScriptsMap = {};
+  for (const ws of props.workerScripts.values()) {
+    const server = getServer(ws.serverIp);
+    if (server == null) {
+      console.warn(`WorkerScript has invalid IP address: ${ws.serverIp}`);
+      continue;
     }
 
-    this.serverToScriptMap = map;
+    let data = serverToScriptMap[server.hostname];
+
+    if (data === undefined) {
+      serverToScriptMap[server.hostname] = {
+        server: server,
+        workerScripts: [],
+      };
+      data = serverToScriptMap[server.hostname];
+    }
+    if (data !== undefined) data.workerScripts.push(ws);
   }
 
-  rerender(): void {
-    this.updateServerToScriptsMap();
-    this.setState((prevState) => {
-      return { rerenderFlag: !prevState.rerenderFlag };
-    });
-  }
-
-  render(): React.ReactNode {
-    const elems = Object.keys(this.serverToScriptMap).map((serverName) => {
-      const data = this.serverToScriptMap[serverName];
-      return <ServerAccordion key={serverName} server={data.server} workerScripts={data.workerScripts} />;
-    });
-
-    return (
-      <ul className="active-scripts-list" id="active-scripts-list">
-        {elems}
-      </ul>
-    );
-  }
+  return (
+    <ul className="active-scripts-list" id="active-scripts-list">
+      {Object.values(serverToScriptMap).map((data) => {
+        return (
+          data && <ServerAccordion key={data.server.hostname} server={data.server} workerScripts={data.workerScripts} />
+        );
+      })}
+    </ul>
+  );
 }

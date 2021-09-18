@@ -4,7 +4,11 @@
  */
 import * as React from "react";
 
-import { BBAccordion } from "../React/BBAccordion";
+import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ServerAccordionContent } from "./ServerAccordionContent";
 
 import { BaseServer } from "../../Server/BaseServer";
@@ -34,9 +38,15 @@ export function ServerAccordion(props: IProps): React.ReactElement {
   const headerTxt = `${paddedName} ${createProgressBarText(barOptions)}`;
 
   return (
-    <BBAccordion
-      headerContent={<pre>{headerTxt}</pre>}
-      panelContent={<ServerAccordionContent workerScripts={props.workerScripts} />}
-    />
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography style={{ whiteSpace: "pre-wrap" }} color="primary">
+          {headerTxt}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <ServerAccordionContent workerScripts={props.workerScripts} />
+      </AccordionDetails>
+    </Accordion>
   );
 }
