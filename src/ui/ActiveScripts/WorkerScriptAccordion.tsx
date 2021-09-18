@@ -78,7 +78,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
       </ListItemButton>
       <Collapse in={open} timeout={0} unmountOnExit>
         <Box mx={6}>
-          <Table padding="none">
+          <Table padding="none" size="small">
             <TableBody>
               <TableRow>
                 <TableCell className={classes.noborder}>
@@ -163,7 +163,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
           </Table>
 
           <Button onClick={logClickHandler}>
-            <Typography>Log</Typography>
+            <Typography>LOG</Typography>
           </Button>
           <IconButton onClick={killScriptClickHandler}>
             <DeleteIcon color="error" />
