@@ -47,7 +47,8 @@ export function WorkInProgressRoot(): React.ReactElement {
           <br />
           You have earned: <br />
           <br />
-          <Money money={player.workMoneyGained} /> ({MoneyRate(player.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
+          <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />){" "}
+          <br />
           <br />
           {Reputation(player.workRepGained)} ({ReputationRate(player.workRepGainRate * CYCLES_PER_SEC)}) reputation for
           this faction <br />
@@ -112,7 +113,8 @@ export function WorkInProgressRoot(): React.ReactElement {
           <br />
           <br />
           This has cost you: <br />
-          <Money money={-player.workMoneyGained} /> ({MoneyRate(player.workMoneyLossRate * CYCLES_PER_SEC)}) <br />
+          <Money money={-player.workMoneyGained} /> (<MoneyRate money={player.workMoneyLossRate * CYCLES_PER_SEC} />){" "}
+          <br />
           <br />
           You have gained: <br />
           {numeralWrapper.formatExp(player.workHackExpGained)} (
@@ -173,7 +175,8 @@ export function WorkInProgressRoot(): React.ReactElement {
           <br />
           You have earned: <br />
           <br />
-          <Money money={player.workMoneyGained} /> ({MoneyRate(player.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
+          <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />){" "}
+          <br />
           <br />
           {Reputation(player.workRepGained)} ({ReputationRate(player.workRepGainRate * CYCLES_PER_SEC)}) reputation for
           this company <br />
@@ -241,7 +244,8 @@ export function WorkInProgressRoot(): React.ReactElement {
           <br />
           You have earned: <br />
           <br />
-          <Money money={player.workMoneyGained} /> ({MoneyRate(player.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
+          <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />){" "}
+          <br />
           <br />
           {Reputation(player.workRepGained)} (
           {Reputation(`${numeralWrapper.formatExp(player.workRepGainRate * CYCLES_PER_SEC)} / sec`)}

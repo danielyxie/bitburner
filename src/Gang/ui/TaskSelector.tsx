@@ -28,7 +28,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
   const tasks = props.gang.getAllTaskNames();
 
   const data = [
-    [`Money:`, MoneyRate(5 * props.member.calculateMoneyGain(props.gang))],
+    [`Money:`, <MoneyRate money={5 * props.member.calculateMoneyGain(props.gang)} />],
     [`Respect:`, `${numeralWrapper.formatRespect(5 * props.member.calculateRespectGain(props.gang))} / sec`],
     [`Wanted Level:`, `${numeralWrapper.formatWanted(5 * props.member.calculateWantedLevelGain(props.gang))} / sec`],
     [`Total Respect:`, `${numeralWrapper.formatRespect(props.member.earnedRespect)}`],

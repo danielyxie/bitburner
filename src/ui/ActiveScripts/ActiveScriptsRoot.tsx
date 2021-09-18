@@ -8,10 +8,11 @@ import { ScriptProduction } from "./ScriptProduction";
 import { ServerAccordions } from "./ServerAccordions";
 
 import { WorkerScript } from "../../Netscript/WorkerScript";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
 type IProps = {
-  p: IPlayer;
   workerScripts: Map<number, WorkerScript>;
 };
 
@@ -27,15 +28,15 @@ export function ActiveScriptsRoot(props: IProps): React.ReactElement {
   }, []);
 
   return (
-    <div className="active-scripts-container">
-      <p>
+    <>
+      <Typography>
         This page displays a list of all of your scripts that are currently running across every machine. It also
         provides information about each script's production. The scripts are categorized by the hostname of the servers
         on which they are running.
-      </p>
+      </Typography>
 
       <ScriptProduction {...props} />
       <ServerAccordions {...props} />
-    </div>
+    </>
   );
 }

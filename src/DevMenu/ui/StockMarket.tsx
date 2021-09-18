@@ -80,7 +80,7 @@ export function StockMarket(): React.ReactElement {
     );
   }
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Stock Market</h2>
       </AccordionSummary>

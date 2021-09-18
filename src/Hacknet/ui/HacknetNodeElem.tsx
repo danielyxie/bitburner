@@ -144,7 +144,8 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
         <div className={"row"}>
           <p>Production:</p>
           <span className={"text money-gold"}>
-            <Money money={node.totalMoneyGenerated} player={props.player} /> ({MoneyRate(node.moneyGainRatePerSecond)})
+            <Money money={node.totalMoneyGenerated} player={props.player} /> (
+            <MoneyRate money={node.moneyGainRatePerSecond} />)
           </span>
         </div>
         <div className={"row"}>

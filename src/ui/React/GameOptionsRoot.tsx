@@ -257,7 +257,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={<Switch color="primary" checked={suppressMessages} onChange={handleSuppressMessagesChange} />}
+                control={<Switch checked={suppressMessages} onChange={handleSuppressMessagesChange} />}
                 label={
                   <Tooltip
                     title={
@@ -275,13 +275,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={
-                  <Switch
-                    color="primary"
-                    checked={suppressFactionInvites}
-                    onChange={handleSuppressFactionInvitesChange}
-                  />
-                }
+                control={<Switch checked={suppressFactionInvites} onChange={handleSuppressFactionInvitesChange} />}
                 label={
                   <Tooltip
                     title={
@@ -299,11 +293,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <FormControlLabel
                 control={
-                  <Switch
-                    color="primary"
-                    checked={suppressTravelConfirmations}
-                    onChange={handleSuppressTravelConfirmationsChange}
-                  />
+                  <Switch checked={suppressTravelConfirmations} onChange={handleSuppressTravelConfirmationsChange} />
                 }
                 label={
                   <Tooltip
@@ -323,7 +313,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <FormControlLabel
                 control={
                   <Switch
-                    color="primary"
                     checked={suppressBuyAugmentationConfirmation}
                     onChange={handleSuppressBuyAugmentationConfirmationChange}
                   />
@@ -344,11 +333,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <FormControlLabel
                 control={
-                  <Switch
-                    color="primary"
-                    checked={suppressHospitalizationPopup}
-                    onChange={handleSuppressHospitalizationPopupChange}
-                  />
+                  <Switch checked={suppressHospitalizationPopup} onChange={handleSuppressHospitalizationPopupChange} />
                 }
                 label={
                   <Tooltip
@@ -368,11 +353,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <ListItem>
                 <FormControlLabel
                   control={
-                    <Switch
-                      color="primary"
-                      checked={suppressBladeburnerPopup}
-                      onChange={handleSuppressBladeburnerPopupChange}
-                    />
+                    <Switch checked={suppressBladeburnerPopup} onChange={handleSuppressBladeburnerPopupChange} />
                   }
                   label={
                     <Tooltip
@@ -391,7 +372,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             )}
             <ListItem>
               <FormControlLabel
-                control={<Switch color="primary" checked={disableHotkeys} onChange={handleDisableHotkeysChange} />}
+                control={<Switch checked={disableHotkeys} onChange={handleDisableHotkeysChange} />}
                 label={
                   <Tooltip
                     title={
@@ -409,7 +390,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={<Switch color="primary" checked={disableASCIIArt} onChange={handleDisableASCIIArtChange} />}
+                control={<Switch checked={disableASCIIArt} onChange={handleDisableASCIIArtChange} />}
                 label={
                   <Tooltip title={<Typography>If this is set all ASCII art will be disabled.</Typography>}>
                     <Typography>Disable ascii art</Typography>
@@ -419,9 +400,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={
-                  <Switch color="primary" checked={disableTextEffects} onChange={handleDisableTextEffectsChange} />
-                }
+                control={<Switch checked={disableTextEffects} onChange={handleDisableTextEffectsChange} />}
                 label={
                   <Tooltip
                     title={

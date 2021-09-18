@@ -6,8 +6,23 @@ import * as React from "react";
 
 import { numeralWrapper } from "../numeralFormat";
 
-import { BBAccordion } from "../React/BBAccordion";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AccordionButton } from "../React/AccordionButton";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+
+import Collapse from "@mui/material/Collapse";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import ExpandLess from "@mui/icons-material/ExpandLess";
 
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -23,6 +38,7 @@ type IProps = {
 };
 
 export function WorkerScriptAccordion(props: IProps): React.ReactElement {
+  const [open, setOpen] = React.useState(false);
   const workerScript = props.workerScript;
   const scriptRef = workerScript.scriptRef;
 
@@ -41,12 +57,13 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   const offlineEps = scriptRef.offlineExpGained / scriptRef.offlineRunningTime;
 
   return (
-    <BBAccordion
-      headerClass="active-scripts-script-header"
-      headerContent={<>{props.workerScript.name}</>}
-      panelClass="active-scripts-script-panel"
-      panelContent={
-        <>
+    <>
+      <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
+        <ListItemText primary={<Typography style={{ whiteSpace: "pre-wrap" }}>{props.workerScript.name}</Typography>} />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open} timeout={0} unmountOnExit>
+        <Box m={3}>
           <pre>Threads: {numeralWrapper.formatThreads(props.workerScript.scriptRef.threads)}</pre>
           <pre>Args: {arrayToString(props.workerScript.args)}</pre>
           <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
@@ -68,10 +85,14 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
           </pre>
           <pre>{Array(26).join(" ") + numeralWrapper.formatExp(offlineEps) + " hacking exp / second"}</pre>
 
-          <AccordionButton onClick={logClickHandler} text="Log" />
-          <AccordionButton onClick={killScriptClickHandler} text="Kill Script" />
-        </>
-      }
-    />
+          <Button onClick={logClickHandler}>
+            <Typography>Log</Typography>
+          </Button>
+          <IconButton onClick={killScriptClickHandler}>
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Box>
+      </Collapse>
+    </>
   );
 }

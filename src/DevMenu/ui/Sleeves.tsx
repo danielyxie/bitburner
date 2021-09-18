@@ -38,7 +38,7 @@ export function Sleeves(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Sleeves</h2>
       </AccordionSummary>

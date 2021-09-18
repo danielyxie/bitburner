@@ -4,7 +4,6 @@ import { IEngine } from "./IEngine";
 import { IRouter } from "./ui/Router";
 
 import React from "react";
-import { TTheme as Theme } from "./ui/React/Theme";
 
 import { General } from "./DevMenu/ui/General";
 import { Stats } from "./DevMenu/ui/Stats";
@@ -30,32 +29,30 @@ interface IProps {
 
 export function DevMenuRoot(props: IProps): React.ReactElement {
   return (
-    <Theme>
-      <>
-        <h1>Development Menu - Only meant to be used for testing/debugging</h1>
-        <General player={props.player} router={props.router} />
-        <Stats player={props.player} />
-        <Factions player={props.player} />
-        <Augmentations player={props.player} />
-        <SourceFiles player={props.player} />
-        <Programs player={props.player} />
-        <Servers />
-        <Companies />
+    <>
+      <h1>Development Menu - Only meant to be used for testing/debugging</h1>
+      <General player={props.player} router={props.router} />
+      <Stats player={props.player} />
+      <Factions player={props.player} />
+      <Augmentations player={props.player} />
+      <SourceFiles player={props.player} />
+      <Programs player={props.player} />
+      <Servers />
+      <Companies />
 
-        {props.player.bladeburner instanceof Bladeburner && <BladeburnerElem player={props.player} />}
+      {props.player.bladeburner instanceof Bladeburner && <BladeburnerElem player={props.player} />}
 
-        {props.player.inGang() && <Gang player={props.player} />}
+      {props.player.inGang() && <Gang player={props.player} />}
 
-        {props.player.hasCorporation() && <Corporation player={props.player} />}
+      {props.player.hasCorporation() && <Corporation player={props.player} />}
 
-        <CodingContracts />
+      <CodingContracts />
 
-        {props.player.hasWseAccount && <StockMarket />}
+      {props.player.hasWseAccount && <StockMarket />}
 
-        {props.player.sleeves.length > 0 && <Sleeves player={props.player} />}
+      {props.player.sleeves.length > 0 && <Sleeves player={props.player} />}
 
-        <TimeSkip player={props.player} engine={props.engine} />
-      </>
-    </Theme>
+      <TimeSkip player={props.player} engine={props.engine} />
+    </>
   );
 }

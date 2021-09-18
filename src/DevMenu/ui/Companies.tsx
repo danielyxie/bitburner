@@ -69,7 +69,7 @@ export function Companies(): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Companies</h2>
       </AccordionSummary>

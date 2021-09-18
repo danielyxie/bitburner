@@ -19,6 +19,14 @@ export const colors = {
   secondary: "#888",
   secondarydark: "#666",
 
+  warninglight: "#ff0",
+  warning: "#cc0",
+  warningdark: "#990",
+
+  infolight: "#69f",
+  info: "#36c",
+  infodark: "#039",
+
   welllight: "#444",
   well: "#222",
   white: "#fff",
@@ -49,6 +57,16 @@ export const theme = createTheme({
       main: colors.error,
       dark: colors.errordark,
     },
+    info: {
+      light: colors.infolight,
+      main: colors.info,
+      dark: colors.infodark,
+    },
+    warning: {
+      light: colors.warninglight,
+      main: colors.warning,
+      dark: colors.warningdark,
+    },
     background: {
       paper: colors.well,
     },
@@ -64,9 +82,9 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: colors.well,
+          color: colors.primary,
         },
         input: {
-          color: colors.primary,
           "&::placeholder": {
             userSelect: "none",
             color: colors.primarydark,
@@ -225,8 +243,16 @@ export const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
+          borderRadius: 0,
           backgroundColor: colors.black,
           border: "1px solid " + colors.welllight,
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        select: {
+          color: colors.primary,
         },
       },
     },

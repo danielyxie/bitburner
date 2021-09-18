@@ -25,7 +25,7 @@ export function PlayerInfo(props: IProps): React.ReactElement {
   if (hasServers) {
     prod = HashRate(props.totalProduction);
   } else {
-    prod = MoneyRate(props.totalProduction);
+    prod = <MoneyRate money={props.totalProduction} />;
   }
 
   return (

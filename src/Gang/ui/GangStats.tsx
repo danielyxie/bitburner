@@ -55,7 +55,9 @@ export function GangStats(props: IProps): React.ReactElement {
       </p>
       <br />
       <div>
-        <p style={{ display: "inline-block" }}>Money gain rate: {MoneyRate(5 * props.gang.moneyGainRate)}</p>
+        <p style={{ display: "inline-block" }}>
+          Money gain rate: <MoneyRate money={5 * props.gang.moneyGainRate} />
+        </p>
       </div>
       <br />
       <p className="tooltip" style={{ display: "inline-block" }}>

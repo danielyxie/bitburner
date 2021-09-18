@@ -51,7 +51,7 @@ export function SourceFiles(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Source-Files</h2>
       </AccordionSummary>
