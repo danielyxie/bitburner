@@ -274,7 +274,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               ) : page === Page.Sleeves ? (
                 <SleeveRoot player={player} />
               ) : page === Page.Stats ? (
-                <CharacterInfo player={player} />
+                <CharacterInfo />
               ) : page === Page.CreateScript ? (
                 <ScriptEditorRoot filename={filename} code={code} player={player} router={Router} />
               ) : page === Page.ActiveScripts ? (

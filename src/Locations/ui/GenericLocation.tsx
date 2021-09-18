@@ -76,9 +76,7 @@ export class GenericLocation extends React.Component<IProps, any> {
     }
 
     if (this.props.loc.types.includes(LocationType.Special)) {
-      content.push(
-        <SpecialLocation engine={this.props.engine} key={"speciallocation"} loc={this.props.loc} p={this.props.p} />,
-      );
+      content.push(<SpecialLocation key={"speciallocation"} loc={this.props.loc} />);
     }
 
     if (this.props.loc.types.includes(LocationType.TechVendor)) {

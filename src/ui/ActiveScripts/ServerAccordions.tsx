@@ -17,6 +17,7 @@ import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptS
 import { getServer } from "../../Server/ServerHelpers";
 import { BaseServer } from "../../Server/BaseServer";
 import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
+import SearchIcon from "@mui/icons-material/Search";
 
 // Map of server hostname -> all workerscripts on that server for all active scripts
 interface IServerData {
@@ -100,7 +101,7 @@ export function ServerAccordions(props: IProps): React.ReactElement {
         autoFocus
         variant="standard"
         InputProps={{
-          startAdornment: <Typography m={1}>Filter:</Typography>,
+          startAdornment: <SearchIcon />,
           spellCheck: false,
         }}
       />

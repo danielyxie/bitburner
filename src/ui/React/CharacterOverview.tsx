@@ -233,8 +233,8 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
           </Paper>
         </Collapse>
         <Box display="flex" justifyContent="flex-end">
-          <Fab classes={{ root: classes.nobackground }} color="secondary" onClick={() => setOpen((old) => !old)}>
-            <VisibilityOffIcon />
+          <Fab classes={{ root: classes.nobackground }} onClick={() => setOpen((old) => !old)}>
+            <VisibilityOffIcon color="primary" />
           </Fab>
         </Box>
       </Box>

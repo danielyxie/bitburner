@@ -98,7 +98,8 @@ export class LocationRoot extends React.Component<IProps, IState> {
     }
 
     if (loc.types.includes(LocationType.StockMarket)) {
-      this.props.engine.loadStockMarketContent();
+      setTimeout(() => this.props.router.toStockMarket(), 50);
+      return <></>;
     }
 
     return (
