@@ -6,6 +6,10 @@ import * as React from "react";
 
 import { numeralWrapper } from "../numeralFormat";
 
+import Table from "@mui/material/Table";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TableBody from "@mui/material/TableBody";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -19,6 +23,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 import Collapse from "@mui/material/Collapse";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -32,12 +38,20 @@ import { logBoxCreate } from "../../../utils/LogBox";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { arrayToString } from "../../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";
+import { MoneyRate } from "../React/MoneyRate";
+
+const useStyles = makeStyles({
+  noborder: {
+    borderBottom: "none",
+  },
+});
 
 type IProps = {
   workerScript: WorkerScript;
 };
 
 export function WorkerScriptAccordion(props: IProps): React.ReactElement {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const workerScript = props.workerScript;
   const scriptRef = workerScript.scriptRef;
@@ -59,34 +73,97 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   return (
     <>
       <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
-        <ListItemText primary={<Typography style={{ whiteSpace: "pre-wrap" }}>{props.workerScript.name}</Typography>} />
+        <ListItemText primary={<Typography>└ {props.workerScript.name}</Typography>} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout={0} unmountOnExit>
-        <Box m={3}>
-          <pre>Threads: {numeralWrapper.formatThreads(props.workerScript.scriptRef.threads)}</pre>
-          <pre>Args: {arrayToString(props.workerScript.args)}</pre>
-          <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
-          <pre>Offline Time: {convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</pre>
-          <pre>
-            Total online production: <Money money={scriptRef.onlineMoneyMade} />
-          </pre>
-          <pre>{Array(26).join(" ") + numeralWrapper.formatExp(scriptRef.onlineExpGained) + " hacking exp"}</pre>
-          <pre>
-            Online production rate: <Money money={onlineMps} /> / second
-          </pre>
-          <pre>{Array(25).join(" ") + numeralWrapper.formatExp(onlineEps) + " hacking exp / second"}</pre>
-          <pre>
-            Total offline production: <Money money={scriptRef.offlineMoneyMade} />
-          </pre>
-          <pre>{Array(27).join(" ") + numeralWrapper.formatExp(scriptRef.offlineExpGained) + " hacking exp"}</pre>
-          <pre>
-            Offline production rate: <Money money={offlineMps} /> / second
-          </pre>
-          <pre>{Array(26).join(" ") + numeralWrapper.formatExp(offlineEps) + " hacking exp / second"}</pre>
+        <Box mx={6}>
+          <Table padding="none" size="small">
+            <TableBody>
+              <TableRow>
+                <TableCell className={classes.noborder}>
+                  <Typography>└ Threads:</Typography>
+                </TableCell>
+                <TableCell className={classes.noborder}>
+                  <Typography>{numeralWrapper.formatThreads(props.workerScript.scriptRef.threads)}</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.noborder} colSpan={2}>
+                  <Typography>└ Args: {arrayToString(props.workerScript.args)}</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.noborder}>
+                  <Typography>└ Online Time:</Typography>
+                </TableCell>
+                <TableCell className={classes.noborder}>
+                  <Typography>{convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.noborder}>
+                  <Typography>└ Offline Time:</Typography>
+                </TableCell>
+                <TableCell className={classes.noborder}>
+                  <Typography>{convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.noborder}>
+                  <Typography>└ Total online production:</Typography>
+                </TableCell>
+                <TableCell className={classes.noborder} align="left">
+                  <Typography>
+                    <Money money={scriptRef.onlineMoneyMade} />
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.noborder} colSpan={1} />
+                <TableCell className={classes.noborder} align="left">
+                  <Typography>&nbsp;{numeralWrapper.formatExp(scriptRef.onlineExpGained) + " hacking exp"}</Typography>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell className={classes.noborder}>
+                  <Typography>└ Online production rate:</Typography>
+                </TableCell>
+                <TableCell className={classes.noborder} align="left">
+                  <Typography>
+                    <MoneyRate money={onlineMps} />
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.noborder} colSpan={1} />
+                <TableCell className={classes.noborder} align="left">
+                  <Typography>&nbsp;{numeralWrapper.formatExp(onlineEps) + " hacking exp / sec"}</Typography>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell className={classes.noborder}>
+                  <Typography>└ Total offline production:</Typography>
+                </TableCell>
+                <TableCell className={classes.noborder} align="left">
+                  <Typography>
+                    <Money money={scriptRef.offlineMoneyMade} />
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.noborder} colSpan={1} />
+                <TableCell className={classes.noborder} align="left">
+                  <Typography>&nbsp;{numeralWrapper.formatExp(scriptRef.offlineExpGained) + " hacking exp"}</Typography>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
 
           <Button onClick={logClickHandler}>
-            <Typography>Log</Typography>
+            <Typography>LOG</Typography>
           </Button>
           <IconButton onClick={killScriptClickHandler}>
             <DeleteIcon color="error" />

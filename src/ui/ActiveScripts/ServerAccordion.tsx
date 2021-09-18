@@ -10,6 +10,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -43,14 +44,16 @@ export function ServerAccordion(props: IProps): React.ReactElement {
   const headerTxt = `${createProgressBarText(barOptions)}`;
 
   return (
-    <>
-      <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
+    <Box component={Paper}>
+      <ListItemButton onClick={() => setOpen((old) => !old)}>
         <ListItemText primary={<Typography style={{ whiteSpace: "pre-wrap" }}>{paddedName}[<Typography display="inline" className="active-scripts-accordion-override">{headerTxt}</Typography>]</Typography>} />
         {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
       </ListItemButton>
-      <Collapse in={open} timeout={0} unmountOnExit>
-        <ServerAccordionContent workerScripts={props.workerScripts} />
-      </Collapse>
-    </>
+      <Box mx={2}>
+        <Collapse in={open} timeout={0} unmountOnExit>
+          <ServerAccordionContent workerScripts={props.workerScripts} />
+        </Collapse>
+      </Box>
+    </Box>
   );
 }
