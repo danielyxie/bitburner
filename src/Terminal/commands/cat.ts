@@ -33,12 +33,10 @@ export function cat(
         showLiterature(file);
         return;
       } else if (filename.endsWith(".msg")) {
-        const file = server.messages[i];
-        if (typeof file === "string") throw new Error(".msg file should not be a .lit");
-        if (file.filename === filename) {
-          showMessage(file);
-          return;
-        }
+        const file = server.messages[i] as Message;
+        if (file.filename !== filename) continue;
+        showMessage(file);
+        return;
       }
     }
   } else if (filename.endsWith(".txt")) {
