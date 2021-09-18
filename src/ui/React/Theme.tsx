@@ -68,6 +68,7 @@ export const theme = createTheme({
       dark: colors.warningdark,
     },
     background: {
+      default: colors.black,
       paper: colors.well,
     },
   },

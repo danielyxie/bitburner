@@ -74,7 +74,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
     <>
       <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
         <ListItemText primary={<Typography>└ {props.workerScript.name}</Typography>} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
       </ListItemButton>
       <Collapse in={open} timeout={0} unmountOnExit>
         <Box mx={6}>
