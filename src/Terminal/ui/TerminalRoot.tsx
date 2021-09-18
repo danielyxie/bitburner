@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     preformatted: {
       whiteSpace: "pre-wrap",
+      overflowWrap: "anywhere",
       margin: theme.spacing(0),
     },
     list: {
