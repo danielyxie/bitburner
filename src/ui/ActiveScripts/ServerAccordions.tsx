@@ -9,6 +9,7 @@ import { ServerAccordion } from "./ServerAccordion";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import TablePagination from "@mui/material/TablePagination";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -103,7 +104,7 @@ export function ServerAccordions(props: IProps): React.ReactElement {
           spellCheck: false,
         }}
       />
-      <List>
+      <List dense={true}>
         {filtered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data) => {
           return (
             data && (

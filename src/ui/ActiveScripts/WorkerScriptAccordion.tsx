@@ -59,11 +59,13 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   return (
     <>
       <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
-        <ListItemText primary={<Typography style={{ whiteSpace: "pre-wrap" }}>{props.workerScript.name}</Typography>} />
+        <ListItemText
+          primary={<Typography style={{ whiteSpace: "pre-wrap" }}>└ {props.workerScript.name}</Typography>}
+        />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout={0} unmountOnExit>
-        <Box m={3}>
+        <Box mx={4}>
           <pre>Threads: {numeralWrapper.formatThreads(props.workerScript.scriptRef.threads)}</pre>
           <pre>Args: {arrayToString(props.workerScript.args)}</pre>
           <pre>Online Time: {convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</pre>
