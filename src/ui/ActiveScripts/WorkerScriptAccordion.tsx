@@ -82,7 +82,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
             <TableBody>
               <TableRow>
                 <TableCell className={classes.noborder}>
-                  <Typography>Threads:</Typography>
+                  <Typography>└ Threads:</Typography>
                 </TableCell>
                 <TableCell className={classes.noborder}>
                   <Typography>{numeralWrapper.formatThreads(props.workerScript.scriptRef.threads)}</Typography>
@@ -90,12 +90,12 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
               </TableRow>
               <TableRow>
                 <TableCell className={classes.noborder} colSpan={2}>
-                  <Typography>Args: {arrayToString(props.workerScript.args)}</Typography>
+                  <Typography>└ Args: {arrayToString(props.workerScript.args)}</Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className={classes.noborder}>
-                  <Typography>Online Time:</Typography>
+                  <Typography>└ Online Time:</Typography>
                 </TableCell>
                 <TableCell className={classes.noborder}>
                   <Typography>{convertTimeMsToTimeElapsedString(scriptRef.onlineRunningTime * 1e3)}</Typography>
@@ -103,7 +103,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
               </TableRow>
               <TableRow>
                 <TableCell className={classes.noborder}>
-                  <Typography>Offline Time:</Typography>
+                  <Typography>└ Offline Time:</Typography>
                 </TableCell>
                 <TableCell className={classes.noborder}>
                   <Typography>{convertTimeMsToTimeElapsedString(scriptRef.offlineRunningTime * 1e3)}</Typography>
@@ -111,7 +111,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
               </TableRow>
               <TableRow>
                 <TableCell className={classes.noborder}>
-                  <Typography>Total online production:</Typography>
+                  <Typography>└ Total online production:</Typography>
                 </TableCell>
                 <TableCell className={classes.noborder} align="left">
                   <Typography>
@@ -128,7 +128,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
 
               <TableRow>
                 <TableCell className={classes.noborder}>
-                  <Typography>Online production rate:</Typography>
+                  <Typography>└ Online production rate:</Typography>
                 </TableCell>
                 <TableCell className={classes.noborder} align="left">
                   <Typography>
@@ -145,7 +145,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
 
               <TableRow>
                 <TableCell className={classes.noborder}>
-                  <Typography>Total offline production:</Typography>
+                  <Typography>└ Total offline production:</Typography>
                 </TableCell>
                 <TableCell className={classes.noborder} align="left">
                   <Typography>
