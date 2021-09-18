@@ -7,6 +7,9 @@ import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
 import { LocationName } from "../Locations/data/LocationNames";
+import { Location } from "../Locations/Location";
+import { Locations } from "../Locations/Locations";
+
 import { Faction } from "../Faction/Faction";
 import { prestigeAugmentation } from "../Prestige";
 import { dialogBoxCreate } from "../../utils/DialogBox";
@@ -40,7 +43,8 @@ import { WorkInProgressRoot } from "./WorkInProgressRoot";
 import { GameOptionsRoot } from "../ui/React/GameOptionsRoot";
 import { SleeveRoot } from "../PersonObjects/Sleeve/ui/SleeveRoot";
 import { HacknetRoot } from "../Hacknet/ui/HacknetRoot";
-import { LocationRoot } from "../Locations/ui/Root";
+import { GenericLocation } from "../Locations/ui/GenericLocation";
+import { LocationCity } from "../Locations/ui/City";
 import { ProgramsRoot } from "../Programs/ui/ProgramsRoot";
 import { Root as ScriptEditorRoot } from "../ScriptEditor/ui/Root";
 import { MilestonesRoot } from "../Milestones/ui/MilestonesRoot";
@@ -162,6 +166,9 @@ export let Router: IRouter = {
   toBladeburnerCinematic: () => {
     throw new Error("Router called before initialization");
   },
+  toLocation: () => {
+    throw new Error("Router called before initialization");
+  },
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -171,15 +178,19 @@ function determineStartPage(player: IPlayer): Page {
 
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [faction, setFaction] = useState<Faction | null>(
-    player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : null,
-  );
   const [page, setPage] = useState(determineStartPage(player));
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [faction, setFaction] = useState<Faction>(
+    player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
+  );
+  if (faction === undefined && page === Page.Faction)
+    throw new Error("Trying to go to a page without the proper setup");
 
   const [flume, setFlume] = useState<boolean>(false);
   const [quick, setQuick] = useState<boolean>(false);
-  const [location, setLocation] = useState<LocationName>(LocationName.Sector12);
+  const [location, setLocation] = useState<Location>(undefined as unknown as Location);
+  if (location === undefined && (page === Page.Infiltration || page === Page.Location || page === Page.Job))
+    throw new Error("Trying to go to a page without the proper setup");
 
   const [cinematicText, setCinematicText] = useState("");
 
@@ -212,12 +223,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toTerminal: () => setPage(Page.Terminal),
     toTutorial: () => setPage(Page.Tutorial),
     toJob: () => {
-      player.gotoLocation(player.companyName as LocationName);
+      setLocation(Locations[player.companyName]);
       setPage(Page.Job);
     },
     toCity: () => {
-      // TODO This conversion is bad.
-      player.gotoLocation(player.city as unknown as LocationName);
       setPage(Page.City);
     },
     toTravel: () => {
@@ -229,7 +238,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setQuick(quick);
       setPage(Page.BitVerse);
     },
-    toInfiltration: (location: LocationName) => {
+    toInfiltration: (location: Location) => {
       setLocation(location);
       setPage(Page.Infiltration);
     },
@@ -237,6 +246,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toBladeburnerCinematic: () => {
       setPage(Page.BladeburnerCinematic);
       setCinematicText(cinematicText);
+    },
+    toLocation: (location: Location) => {
+      setLocation(location);
+      setPage(Page.Location);
     },
   };
 
@@ -317,9 +330,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   stockMarket={StockMarket}
                 />
               ) : page === Page.City ? (
-                <LocationRoot initiallyInCity={true} engine={engine} p={player} router={Router} />
+                <LocationCity />
               ) : page === Page.Job ? (
-                <LocationRoot initiallyInCity={false} engine={engine} p={player} router={Router} />
+                <GenericLocation loc={location} />
+              ) : page === Page.Location ? (
+                <GenericLocation loc={location} />
               ) : page === Page.Options ? (
                 <GameOptionsRoot
                   player={player}

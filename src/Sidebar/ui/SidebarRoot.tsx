@@ -555,7 +555,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             button
             key={"City"}
             className={clsx({
-              [classes.active]: props.page === Page.City,
+              [classes.active]:
+                props.page === Page.City || props.page === Page.Resleeves || props.page === Page.Location,
             })}
             onClick={clickCity}
           >

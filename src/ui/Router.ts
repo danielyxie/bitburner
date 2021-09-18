@@ -1,5 +1,7 @@
 import { Faction } from "../Faction/Faction";
 import { LocationName } from "../Locations/data/LocationNames";
+import { Location } from "../Locations/Location";
+
 /**
  * The full-screen page the player is currently be on.
  * These pages are mutually exclusive.
@@ -31,6 +33,7 @@ export enum Page {
   Tutorial,
   Work,
   BladeburnerCinematic,
+  Location,
 }
 
 /**
@@ -57,7 +60,7 @@ export interface IRouter {
   toGameOptions(): void;
   toGang(): void;
   toHacknetNodes(): void;
-  toInfiltration(location: LocationName): void;
+  toInfiltration(location: Location): void;
   toJob(): void;
   toMilestones(): void;
   toResleeves(): void;
@@ -69,4 +72,5 @@ export interface IRouter {
   toTutorial(): void;
   toWork(): void;
   toBladeburnerCinematic(): void;
+  toLocation(location: Location): void;
 }

@@ -1,9 +1,10 @@
 import React from "react";
 import { StdButton } from "../../ui/React/StdButton";
+import { Location } from "../../Locations/Location";
 import Grid from "@mui/material/Grid";
 
 interface IProps {
-  Location: string;
+  Location: Location;
   Difficulty: number;
   MaxLevel: number;
   start: () => void;

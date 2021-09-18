@@ -2,12 +2,12 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import React, { useState } from "react";
 import { Intro } from "./Intro";
 import { Game } from "./Game";
-import { LocationName } from "../../Locations/data/LocationNames";
+import { Location } from "../../Locations/Location";
 import { Locations } from "../../Locations/Locations";
 import { use } from "../../ui/Context";
 
 interface IProps {
-  location: LocationName;
+  location: Location;
 }
 function calcDifficulty(player: IPlayer, startingDifficulty: number): number {
   const totalStats = player.strength + player.defense + player.dexterity + player.agility + player.charisma;
@@ -22,9 +22,8 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
   const router = use.Router();
   const [start, setStart] = useState(false);
 
-  const loc = Locations[props.location];
-  if (loc.infiltrationData === undefined) throw new Error("Trying to do infiltration on invalid location.");
-  const startingDifficulty = loc.infiltrationData.startingSecurityLevel;
+  if (props.location.infiltrationData === undefined) throw new Error("Trying to do infiltration on invalid location.");
+  const startingDifficulty = props.location.infiltrationData.startingSecurityLevel;
   const difficulty = calcDifficulty(player, startingDifficulty);
 
   function cancel(): void {
@@ -36,7 +35,7 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
       <Intro
         Location={props.location}
         Difficulty={difficulty}
-        MaxLevel={loc.infiltrationData.maxClearanceLevel}
+        MaxLevel={props.location.infiltrationData.maxClearanceLevel}
         start={() => setStart(true)}
         cancel={cancel}
       />
@@ -47,7 +46,7 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
     <Game
       StartingDifficulty={startingDifficulty}
       Difficulty={difficulty}
-      MaxLevel={loc.infiltrationData.maxClearanceLevel}
+      MaxLevel={props.location.infiltrationData.maxClearanceLevel}
     />
   );
 }

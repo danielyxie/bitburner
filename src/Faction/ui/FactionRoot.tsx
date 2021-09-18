@@ -22,7 +22,7 @@ import { use } from "../../ui/Context";
 import { CreateGangPopup } from "./CreateGangPopup";
 
 type IProps = {
-  faction: Faction | null;
+  faction: Faction;
   startHackingMissionFn: (faction: Faction) => void;
 };
 
@@ -65,7 +65,6 @@ const GangNames = [
 
 export function FactionRoot(props: IProps): React.ReactElement {
   const faction = props.faction;
-  if (faction === null) throw new Error("Trying to render the Faction page with null faction");
 
   const player = use.Player();
   const router = use.Router();

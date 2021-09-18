@@ -157,7 +157,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     if (!loc.infiltrationData)
       throw new Error(`trying to start infiltration at ${props.locName} but the infiltrationData is null`);
 
-    router.toInfiltration(props.locName);
+    router.toInfiltration(loc);
   }
 
   function work(e: React.MouseEvent<HTMLElement>): void {

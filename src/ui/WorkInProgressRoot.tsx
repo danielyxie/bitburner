@@ -10,6 +10,9 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { Factions } from "../Faction/Factions";
 import { Company } from "../Company/Company";
 import { Companies } from "../Company/Companies";
+import { Locations } from "../Locations/Locations";
+import { LocationName } from "../Locations/data/LocationNames";
+
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
@@ -308,7 +311,13 @@ export function WorkInProgressRoot(): React.ReactElement {
         <br />
         <pre>{progressBar}</pre>
 
-        <button className="work-button" onClick={() => player.finishCrime(true)}>
+        <button
+          className="work-button"
+          onClick={() => {
+            router.toLocation(Locations[LocationName.Slums]);
+            player.finishCrime(true);
+          }}
+        >
           Cancel crime
         </button>
       </div>
