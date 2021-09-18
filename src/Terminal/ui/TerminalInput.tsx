@@ -42,16 +42,23 @@ interface IProps {
   router: IRouter;
   player: IPlayer;
 }
+// Save command in case we de-load this screen.
+let command = "";
 
 export function TerminalInput({ terminal, router, player }: IProps): React.ReactElement {
   const terminalInput = useRef<HTMLInputElement>(null);
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(command);
   const [possibilities, setPossibilities] = useState<string[]>([]);
   const classes = useStyles();
 
+  function saveValue(value: string): void {
+    command = value;
+    setValue(value);
+  }
+
   function handleValueChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setValue(event.target.value);
+    saveValue(event.target.value);
     setPossibilities([]);
   }
 
@@ -66,13 +73,13 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     switch (mod.toLowerCase()) {
       case "backspace":
         if (start > 0 && start <= inputLength + 1) {
-          setValue(inputText.substr(0, start - 1) + inputText.substr(start));
+          saveValue(inputText.substr(0, start - 1) + inputText.substr(start));
         }
         break;
       case "deletewordbefore": // Delete rest of word before the cursor
         for (let delStart = start - 1; delStart > 0; --delStart) {
           if (inputText.charAt(delStart) === " ") {
-            setValue(inputText.substr(0, delStart) + inputText.substr(start));
+            saveValue(inputText.substr(0, delStart) + inputText.substr(start));
             return;
           }
         }
@@ -80,7 +87,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       case "deletewordafter": // Delete rest of word after the cursor
         for (let delStart = start + 1; delStart <= value.length + 1; ++delStart) {
           if (inputText.charAt(delStart) === " ") {
-            setValue(inputText.substr(0, start) + inputText.substr(delStart));
+            saveValue(inputText.substr(0, start) + inputText.substr(delStart));
             return;
           }
         }
@@ -160,7 +167,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       event.preventDefault();
       terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
       terminal.executeCommands(router, player, value);
-      setValue("");
+      saveValue("");
       return;
     }
 
@@ -207,7 +214,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
       const newValue = tabCompletion(command, arg, allPos, value);
       if (typeof newValue === "string" && newValue !== "") {
-        setValue(newValue);
+        saveValue(newValue);
       }
       if (Array.isArray(newValue)) {
         setPossibilities(newValue);
@@ -242,7 +249,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         --terminal.commandHistoryIndex;
       }
       const prevCommand = terminal.commandHistory[terminal.commandHistoryIndex];
-      setValue(prevCommand);
+      saveValue(prevCommand);
       const ref = terminalInput.current;
       if (ref) {
         setTimeout(function () {
@@ -272,11 +279,11 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       // Latest command, put nothing
       if (i == len || i == len - 1) {
         terminal.commandHistoryIndex = len;
-        setValue("");
+        saveValue("");
       } else {
         ++terminal.commandHistoryIndex;
         const prevCommand = terminal.commandHistory[terminal.commandHistoryIndex];
-        setValue(prevCommand);
+        saveValue(prevCommand);
       }
     }
 
