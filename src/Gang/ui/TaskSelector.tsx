@@ -46,7 +46,9 @@ export function TaskSelector(props: IProps): React.ReactElement {
           </option>
         ))}
       </select>
-      <div>{StatsTable(data)}</div>
+      <div>
+        <StatsTable rows={data} />
+      </div>
     </>
   );
 }

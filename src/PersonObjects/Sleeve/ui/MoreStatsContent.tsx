@@ -10,20 +10,20 @@ interface IProps {
 export function MoreStatsContent(props: IProps): React.ReactElement {
   return (
     <>
-      {StatsTable(
-        [
+      <StatsTable
+        rows={[
           ["Hacking: ", props.sleeve.hacking_skill, `(${numeralWrapper.formatExp(props.sleeve.hacking_exp)} exp)`],
           ["Strength: ", props.sleeve.strength, `(${numeralWrapper.formatExp(props.sleeve.strength_exp)} exp)`],
           ["Defense: ", props.sleeve.defense, `(${numeralWrapper.formatExp(props.sleeve.defense_exp)} exp)`],
           ["Dexterity: ", props.sleeve.dexterity, `(${numeralWrapper.formatExp(props.sleeve.dexterity_exp)} exp)`],
           ["Agility: ", props.sleeve.agility, `(${numeralWrapper.formatExp(props.sleeve.agility_exp)} exp)`],
           ["Charisma: ", props.sleeve.charisma, `(${numeralWrapper.formatExp(props.sleeve.charisma_exp)} exp)`],
-        ],
-        "Stats:",
-      )}
+        ]}
+        title="Stats:"
+      />
       <br />
-      {StatsTable(
-        [
+      <StatsTable
+        rows={[
           ["Hacking Level multiplier: ", numeralWrapper.formatPercentage(props.sleeve.hacking_mult)],
           ["Hacking Experience multiplier: ", numeralWrapper.formatPercentage(props.sleeve.hacking_exp_mult)],
           ["Strength Level multiplier: ", numeralWrapper.formatPercentage(props.sleeve.strength_mult)],
@@ -41,9 +41,9 @@ export function MoreStatsContent(props: IProps): React.ReactElement {
           ["Salary multiplier: ", numeralWrapper.formatPercentage(props.sleeve.work_money_mult)],
           ["Crime Money multiplier: ", numeralWrapper.formatPercentage(props.sleeve.crime_money_mult)],
           ["Crime Success multiplier: ", numeralWrapper.formatPercentage(props.sleeve.crime_success_mult)],
-        ],
-        "Multipliers:",
-      )}
+        ]}
+        title="Multipliers:"
+      />
     </>
   );
 }

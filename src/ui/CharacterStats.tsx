@@ -15,16 +15,19 @@ import { Money } from "./React/Money";
 import { use } from "./Context";
 
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Modal } from "./React/Modal";
+
+import TableBody from "@mui/material/TableBody";
+import { Table, TableCell } from "./React/Table";
+import TableRow from "@mui/material/TableRow";
 
 function LastEmployer(): React.ReactElement {
   const player = use.Player();
   if (player.companyName) {
-    return (
-      <>
-        <span>Employer at which you last worked: {player.companyName}</span>
-        <br />
-      </>
-    );
+    return <Typography>Employer at which you last worked: {player.companyName}</Typography>;
   }
   return <></>;
 }
@@ -32,12 +35,7 @@ function LastEmployer(): React.ReactElement {
 function LastJob(): React.ReactElement {
   const player = use.Player();
   if (player.companyName !== "") {
-    return (
-      <>
-        <span>Job you last worked: {player.jobs[player.companyName]}</span>
-        <br />
-      </>
-    );
+    return <Typography>Job you last worked: {player.jobs[player.companyName]}</Typography>;
   }
   return <></>;
 }
@@ -47,15 +45,13 @@ function Employers(): React.ReactElement {
   if (player.jobs && Object.keys(player.jobs).length !== 0)
     return (
       <>
-        <span>All Employers:</span>
-        <br />
+        <Typography>All Employers:</Typography>
+
         <ul>
           {Object.keys(player.jobs).map((j) => (
-            <li key={j}> * {j}</li>
+            <Typography key={j}> * {j}</Typography>
           ))}
         </ul>
-        <br />
-        <br />
       </>
     );
   return <></>;
@@ -67,14 +63,14 @@ function Hacknet(): React.ReactElement {
   if (!(player.bitNodeN === 9 || SourceFileFlags[9] > 0)) {
     return (
       <>
-        <span>{`Hacknet Nodes owned: ${player.hacknetNodes.length}`}</span>
+        <Typography>{`Hacknet Nodes owned: ${player.hacknetNodes.length}`}</Typography>
         <br />
       </>
     );
   } else {
     return (
       <>
-        <span>{`Hacknet Servers owned: ${player.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}`}</span>
+        <Typography>{`Hacknet Servers owned: ${player.hacknetNodes.length} / ${HacknetServerConstants.MaxServers}`}</Typography>
         <br />
       </>
     );
@@ -85,10 +81,14 @@ function Intelligence(): React.ReactElement {
   const player = use.Player();
   if (player.intelligence > 0 && (player.bitNodeN === 5 || SourceFileFlags[5] > 0)) {
     return (
-      <tr key="5">
-        <td>Intelligence:</td>
-        <td style={{ textAlign: "right" }}>{numeralWrapper.formatSkill(player.intelligence)}</td>
-      </tr>
+      <TableRow>
+        <TableCell>
+          <Typography>Intelligence:&nbsp;</Typography>
+        </TableCell>
+        <TableCell align="right">
+          <Typography>{numeralWrapper.formatSkill(player.intelligence)}&nbsp;</Typography>
+        </TableCell>
+      </TableRow>
     );
   }
   return <></>;
@@ -98,29 +98,30 @@ function MultiplierTable(props: any): React.ReactElement {
   function bn5Stat(r: any): JSX.Element {
     if (SourceFileFlags[5] > 0 && r.length > 2 && r[1] != r[2]) {
       return (
-        <td key="2" style={{ textAlign: "right" }}>
-          {" "}
-          ({numeralWrapper.formatPercentage(r[2])})
-        </td>
+        <TableCell key="2" align="right">
+          <Typography noWrap>({numeralWrapper.formatPercentage(r[2])})</Typography>
+        </TableCell>
       );
     }
     return <></>;
   }
   return (
     <>
-      <table>
-        <tbody>
+      <Table size="small" padding="none">
+        <TableBody>
           {props.rows.map((r: any) => (
-            <tr key={r[0]}>
-              <td key="0">{`${r[0]} multiplier:`}</td>
-              <td key="1" style={{ textAlign: "right", paddingLeft: "5px" }}>
-                {numeralWrapper.formatPercentage(r[1])}
-              </td>
+            <TableRow key={r[0]}>
+              <TableCell key="0">
+                <Typography noWrap>{`${r[0]} multiplier:`}&nbsp;</Typography>
+              </TableCell>
+              <TableCell key="1" align="right">
+                <Typography noWrap>{numeralWrapper.formatPercentage(r[1])}</Typography>
+              </TableCell>
               {bn5Stat(r)}
-            </tr>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </>
   );
 }
@@ -129,17 +130,14 @@ function BladeburnerMults(): React.ReactElement {
   const player = use.Player();
   if (!player.canAccessBladeburner()) return <></>;
   return (
-    <>
-      <MultiplierTable
-        rows={[
-          ["Bladeburner Success Chance", player.bladeburner_max_stamina_mult],
-          ["Bladeburner Max Stamina", player.bladeburner_stamina_gain_mult],
-          ["Bladeburner Stamina Gain", player.bladeburner_analysis_mult],
-          ["Bladeburner Field Analysis", player.bladeburner_success_chance_mult],
-        ]}
-      />
-      <br />
-    </>
+    <MultiplierTable
+      rows={[
+        ["Bladeburner Success Chance", player.bladeburner_max_stamina_mult],
+        ["Bladeburner Max Stamina", player.bladeburner_stamina_gain_mult],
+        ["Bladeburner Stamina Gain", player.bladeburner_analysis_mult],
+        ["Bladeburner Field Analysis", player.bladeburner_success_chance_mult],
+      ]}
+    />
   );
 }
 
@@ -149,14 +147,12 @@ function CurrentBitNode(): React.ReactElement {
     const index = "BitNode" + player.bitNodeN;
     return (
       <>
-        <span>
-          Current BitNode: {player.bitNodeN} ({BitNodes[index].name})
-        </span>
-        <br />
-        <br />
-        <div style={{ width: "60%", fontSize: "13px", marginLeft: "2%" }}>
-          <span style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</span>
-        </div>
+        <Typography variant="h5" color="primary">
+          BitNode-{player.bitNodeN}: {BitNodes[index].name}
+        </Typography>
+        <Typography sx={{ mx: 2 }} style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>
+          {BitNodes[index].info}
+        </Typography>
       </>
     );
   }
@@ -164,18 +160,13 @@ function CurrentBitNode(): React.ReactElement {
   return <></>;
 }
 
-export function CharacterStats(): React.ReactElement {
+interface IMoneyModalProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
   const player = use.Player();
-  const setRerender = useState(false)[1];
-  function rerender(): void {
-    setRerender((old) => !old);
-  }
-
-  useEffect(() => {
-    const id = setInterval(rerender, 20);
-    return () => clearInterval(id);
-  }, []);
-
   function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
     const parts: any[][] = [[`Total:`, <Money money={src.total} />]];
     if (src.bladeburner) {
@@ -221,32 +212,52 @@ export function CharacterStats(): React.ReactElement {
       parts.push([`Sleeves:`, <Money money={src.sleeves} />]);
     }
 
-    return StatsTable(parts);
+    return <StatsTable rows={parts} wide />;
   }
 
-  function openMoneyModal(): void {
-    let content = (
+  let content = (
+    <>
+      <Typography variant="h6" color="primary">
+        Money earned since you last installed Augmentations
+      </Typography>
+      <br />
+      {convertMoneySourceTrackerToString(player.moneySourceA)}
+    </>
+  );
+  if (player.sourceFiles.length !== 0) {
+    content = (
       <>
-        <u>Money earned since you last installed Augmentations:</u>
+        {content}
         <br />
-        {convertMoneySourceTrackerToString(player.moneySourceA)}
+        <br />
+        <Typography variant="h6" color="primary">
+          Money earned in this BitNode
+        </Typography>
+        <br />
+        {convertMoneySourceTrackerToString(player.moneySourceB)}
       </>
     );
-    if (player.sourceFiles.length !== 0) {
-      content = (
-        <>
-          {content}
-          <br />
-          <br />
-          <u>Money earned in this BitNode:</u>
-          <br />
-          {convertMoneySourceTrackerToString(player.moneySourceB)}
-        </>
-      );
-    }
-
-    dialogBoxCreate(content, false);
   }
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      {content}
+    </Modal>
+  );
+}
+
+export function CharacterStats(): React.ReactElement {
+  const player = use.Player();
+  const [moneyOpen, setMoneyOpen] = useState(false);
+  const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 20);
+    return () => clearInterval(id);
+  }, []);
 
   const timeRows = [
     ["Time played since last Augmentation:", convertTimeMsToTimeElapsedString(player.playtimeSinceLastAug)],
@@ -261,88 +272,105 @@ export function CharacterStats(): React.ReactElement {
 
   return (
     <>
-      <pre>
-        <b>General</b>
-        <br />
-        <br />
-        <span>Current City: {player.city}</span>
-        <br />
+      <Typography variant="h5" color="primary">
+        General
+      </Typography>
+      <Box sx={{ mx: 2 }}>
+        <Typography>Current City: {player.city}</Typography>
         <LastEmployer />
         <LastJob />
         <Employers />
-        <span>
+
+        <Typography>
           Money: <Money money={player.money.toNumber()} />
-        </span>
-        <button
-          className="popup-box-button"
-          style={{ display: "inline-block", float: "none" }}
-          onClick={openMoneyModal}
-        >
-          Money Statistics & Breakdown
-        </button>
-        <br />
-        <br />
-        <b>Stats</b>
-        <table>
-          <tbody>
-            <tr key="0">
-              <td key="0">Hacking:</td>
-              <td key="1" style={{ textAlign: "right" }}>
-                {numeralWrapper.formatSkill(player.hacking_skill)}
-              </td>
-              <td key="2" style={{ textAlign: "right" }}>
-                ({numeralWrapper.formatExp(player.hacking_exp)} exp)
-              </td>
-            </tr>
-            <tr key="1">
-              <td key="0">Strength:</td>
-              <td key="1" style={{ textAlign: "right" }}>
-                {numeralWrapper.formatSkill(player.strength)}
-              </td>
-              <td key="2" style={{ textAlign: "right" }}>
-                ({numeralWrapper.formatExp(player.strength_exp)} exp)
-              </td>
-            </tr>
-            <tr key="2">
-              <td key="0">Defense:</td>
-              <td key="1" style={{ textAlign: "right" }}>
-                {numeralWrapper.formatSkill(player.defense)}
-              </td>
-              <td key="2" style={{ textAlign: "right" }}>
-                ({numeralWrapper.formatExp(player.defense_exp)} exp)
-              </td>
-            </tr>
-            <tr key="3">
-              <td key="0">Dexterity:</td>
-              <td key="1" style={{ textAlign: "right" }}>
-                {numeralWrapper.formatSkill(player.dexterity)}
-              </td>
-              <td key="2" style={{ textAlign: "right" }}>
-                ({numeralWrapper.formatExp(player.dexterity_exp)} exp)
-              </td>
-            </tr>
-            <tr key="4">
-              <td key="0">Agility:</td>
-              <td key="1" style={{ textAlign: "right" }}>
-                {numeralWrapper.formatSkill(player.agility)}
-              </td>
-              <td key="2" style={{ textAlign: "right" }}>
-                ({numeralWrapper.formatExp(player.agility_exp)} exp)
-              </td>
-            </tr>
-            <tr key="5">
-              <td key="0">Charisma:</td>
-              <td key="1" style={{ textAlign: "right" }}>
-                {numeralWrapper.formatSkill(player.charisma)}
-              </td>
-              <td key="2" style={{ textAlign: "right" }}>
-                ({numeralWrapper.formatExp(player.charisma_exp)} exp)
-              </td>
-            </tr>
+          <IconButton onClick={() => setMoneyOpen(true)}>
+            <MoreHorizIcon color="info" />
+          </IconButton>
+        </Typography>
+      </Box>
+      <br />
+      <Typography variant="h5" color="primary">
+        Stats
+      </Typography>
+      <Box sx={{ mx: 2 }}>
+        <Table size="small" padding="none">
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <Typography noWrap>Hacking:&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>{numeralWrapper.formatSkill(player.hacking_skill)}&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>({numeralWrapper.formatExp(player.hacking_exp)} exp)</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography noWrap>Strength:&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>{numeralWrapper.formatSkill(player.strength)}&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>({numeralWrapper.formatExp(player.strength_exp)} exp)</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography noWrap>Defense:&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>{numeralWrapper.formatSkill(player.defense)}&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>({numeralWrapper.formatExp(player.defense_exp)} exp)</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography noWrap>Dexterity:&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>{numeralWrapper.formatSkill(player.dexterity)}&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>({numeralWrapper.formatExp(player.dexterity_exp)} exp)</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography noWrap>Agility:&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>{numeralWrapper.formatSkill(player.agility)}&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>({numeralWrapper.formatExp(player.agility_exp)} exp)</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography noWrap>Charisma:&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>{numeralWrapper.formatSkill(player.charisma)}&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography noWrap>({numeralWrapper.formatExp(player.charisma_exp)} exp)</Typography>
+              </TableCell>
+            </TableRow>
             <Intelligence />
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
         <br />
+      </Box>
+      <br />
+      <Typography variant="h5" color="primary">
+        Multipliers
+      </Typography>
+      <Box sx={{ mx: 2 }}>
         <MultiplierTable
           rows={[
             ["Hacking Chance", player.hacking_chance_mult],
@@ -447,23 +475,22 @@ export function CharacterStats(): React.ReactElement {
           ]}
         />
         <br />
-
         <BladeburnerMults />
-        <br />
+      </Box>
+      <br />
 
-        <b>Misc.</b>
-        <br />
-        <br />
-        <span>{`Servers owned: ${player.purchasedServers.length} / ${getPurchaseServerLimit()}`}</span>
-        <br />
+      <Typography variant="h5" color="primary">
+        Misc
+      </Typography>
+      <Box sx={{ mx: 2 }}>
+        <Typography>{`Servers owned: ${player.purchasedServers.length} / ${getPurchaseServerLimit()}`}</Typography>
         <Hacknet />
-        <span>{`Augmentations installed: ${player.augmentations.length}`}</span>
-        <br />
-        <br />
-        {StatsTable(timeRows)}
-        <br />
-        <CurrentBitNode />
-      </pre>
+        <Typography>{`Augmentations installed: ${player.augmentations.length}`}</Typography>
+        <StatsTable rows={timeRows} />
+      </Box>
+      <br />
+      <CurrentBitNode />
+      <MoneyModal open={moneyOpen} onClose={() => setMoneyOpen(false)} />
     </>
   );
 }

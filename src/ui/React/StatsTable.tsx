@@ -1,39 +1,35 @@
-import * as React from "react";
+import React from "react";
 
-export function StatsTable(rows: any[][], title?: string): React.ReactElement {
-  let titleElem = <></>;
-  if (title) {
-    titleElem = (
-      <>
-        <h2>
-          <u>{title}</u>
-        </h2>
-        <br />
-      </>
-    );
-  }
+import { Table, TableCell } from "./Table";
+import TableBody from "@mui/material/TableBody";
+import { Table as MuiTable } from "@mui/material";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+
+interface IProps {
+  rows: any[][];
+  title?: string;
+  wide?: boolean;
+}
+
+export function StatsTable({ rows, title, wide }: IProps): React.ReactElement {
+  const T = wide ? MuiTable : Table;
   return (
     <>
-      {titleElem}
-      <table>
-        <tbody>
-          {rows.map((row: any[]) => {
-            return (
-              <tr key={row[0]}>
-                {row.map((elem: any, i: number) => {
-                  let style = {};
-                  if (i !== 0) style = { textAlign: "right", paddingLeft: ".25em" };
-                  return (
-                    <td key={i} style={style}>
-                      {elem}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {title && <Typography>{title}</Typography>}
+      <T size="small" padding="none">
+        <TableBody>
+          {rows.map((row: any[]) => (
+            <TableRow key={row[0]}>
+              {row.map((elem: any, i: number) => (
+                <TableCell key={i} align={i !== 0 ? "right" : "left"}>
+                  <Typography noWrap>{elem}</Typography>
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </T>
     </>
   );
 }

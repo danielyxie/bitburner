@@ -147,12 +147,14 @@ export function Stats(props: IProps): React.ReactElement {
       </p>
       <p>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</p>
       <br />
-      {StatsTable([
-        ["Aug. Success Chance mult: ", formatNumber(props.player.bladeburner_success_chance_mult * 100, 1) + "%"],
-        ["Aug. Max Stamina mult: ", formatNumber(props.player.bladeburner_max_stamina_mult * 100, 1) + "%"],
-        ["Aug. Stamina Gain mult: ", formatNumber(props.player.bladeburner_stamina_gain_mult * 100, 1) + "%"],
-        ["Aug. Field Analysis mult: ", formatNumber(props.player.bladeburner_analysis_mult * 100, 1) + "%"],
-      ])}
+      <StatsTable
+        rows={[
+          ["Aug. Success Chance mult: ", formatNumber(props.player.bladeburner_success_chance_mult * 100, 1) + "%"],
+          ["Aug. Max Stamina mult: ", formatNumber(props.player.bladeburner_max_stamina_mult * 100, 1) + "%"],
+          ["Aug. Stamina Gain mult: ", formatNumber(props.player.bladeburner_stamina_gain_mult * 100, 1) + "%"],
+          ["Aug. Field Analysis mult: ", formatNumber(props.player.bladeburner_analysis_mult * 100, 1) + "%"],
+        ]}
+      />
       <br />
       <a onClick={openTravel} className="a-link-button" style={{ display: "inline-block" }}>
         Travel
