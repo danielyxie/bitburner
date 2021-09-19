@@ -17,7 +17,7 @@ import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import Fab from "@mui/material/Fab";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import SaveIcon from "@mui/icons-material/Save";
 
 import { colors } from "./Theme";
 import { Settings } from "../../Settings/Settings";
@@ -275,7 +275,7 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
             <TableRow>
               <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
                 <IconButton onClick={save}>
-                  <SaveAltIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
+                  <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
                 </IconButton>
               </TableCell>
             </TableRow>
