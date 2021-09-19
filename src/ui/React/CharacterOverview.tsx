@@ -117,7 +117,6 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
 
-  if (router.page() === Page.BitVerse) return <></>;
   const setRerender = useState(false)[1];
 
   useEffect(() => {

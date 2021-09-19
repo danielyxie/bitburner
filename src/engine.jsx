@@ -51,12 +51,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 const Engine = {
-  // Display objects
-  // TODO-Refactor this into its own component
-  Display: {
-    missionContent: null,
-  },
-
   indexedDb: undefined,
 
   // Time variables (milliseconds unix epoch time)
@@ -258,7 +252,6 @@ const Engine = {
     // Load game from save or create new game
     if (loadGame(saveString)) {
       initBitNodeMultipliers(Player);
-      Engine.setDisplayElements(); // Sets variables for important DOM elements
       updateSourceFileFlags(Player);
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
@@ -416,11 +409,6 @@ const Engine = {
       </Theme>,
       document.getElementById("mainmenu-container"),
     );
-  },
-
-  setDisplayElements: function () {
-    Engine.Display.missionContent = document.getElementById("mission-container");
-    Engine.Display.missionContent.style.display = "none";
   },
 
   start: function () {

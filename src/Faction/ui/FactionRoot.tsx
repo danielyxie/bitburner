@@ -23,7 +23,6 @@ import { CreateGangPopup } from "./CreateGangPopup";
 
 type IProps = {
   faction: Faction;
-  startHackingMissionFn: (faction: Faction) => void;
 };
 
 // Info text for all options on the UI
@@ -114,7 +113,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
   function startHackingMission(faction: Faction): void {
     player.singularityStopWork();
-    props.startHackingMissionFn(faction);
+    router.toHackingMission(faction);
   }
 
   function startSecurityWork(faction: Faction): void {

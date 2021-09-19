@@ -10,6 +10,7 @@ import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { isString } from "../utils/helpers/isString";
 
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
+import { Router } from "./ui/GameRoot";
 
 // For some reason `jsplumb` needs to be imported exactly like this,
 // lowercase p, and later in the code used as `jsPlumb` uppercase P. wtf.
@@ -1593,6 +1594,7 @@ HackingMission.prototype.finishMission = function (win) {
   } else {
     dialogBoxCreate("Mission lost/forfeited! You did not gain any faction reputation.");
   }
+  Router.toFaction();
 };
 
 export { HackingMission, inMission, setInMission, currMission };
