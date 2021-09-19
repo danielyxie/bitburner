@@ -9,6 +9,9 @@ import { onExport } from "../ExportBonus";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
+import { ITutorial } from "../InteractiveTutorial";
+import { InteractiveTutorialRoot } from "./InteractiveTutorial/InteractiveTutorialRoot";
+import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
 
 import { Faction } from "../Faction/Faction";
 import { prestigeAugmentation } from "../Prestige";
@@ -31,6 +34,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { Page, IRouter } from "./Router";
+import { Overview } from "./React/Overview";
 import { SidebarRoot } from "../Sidebar/ui/SidebarRoot";
 import { AugmentationsRoot } from "../Augmentation/ui/AugmentationsRoot";
 import { DevMenuRoot } from "../DevMenu";
@@ -179,6 +183,7 @@ function determineStartPage(player: IPlayer): Page {
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
   const [page, setPage] = useState(determineStartPage(player));
+  const setRerender = useState(0)[1];
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
   );
@@ -192,6 +197,13 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     throw new Error("Trying to go to a page without the proper setup");
 
   const [cinematicText, setCinematicText] = useState("");
+
+  function rerender(): void {
+    setRerender((old) => old + 1);
+  }
+  useEffect(() => {
+    return ITutorialEvents.subscribe(rerender);
+  }, []);
 
   Router = {
     page: () => page,
@@ -255,13 +267,19 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   useEffect(() => {
     filename = "";
     code = "";
-    window.scrollTo(0, 0);
+    if (page !== Page.Terminal) window.scrollTo(0, 0);
   });
 
   return (
     <Context.Player.Provider value={player}>
       <Context.Router.Provider value={Router}>
-        <CharacterOverview save={() => saveObject.saveGame(engine.indexedDb)} />
+        <Overview>
+          {!ITutorial.isRunning ? (
+            <CharacterOverview save={() => saveObject.saveGame(engine.indexedDb)} />
+          ) : (
+            <InteractiveTutorialRoot />
+          )}
+        </Overview>
         {page === Page.BitVerse ? (
           <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
         ) : page === Page.Infiltration ? (

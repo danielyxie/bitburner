@@ -103,6 +103,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     lastPosition = null;
 
+    // this is duplicate code with saving later.
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
       //Make sure filename + code properly follow tutorial
       if (filename !== "n00dles.script") {
@@ -117,20 +118,24 @@ export function Root(props: IProps): React.ReactElement {
       //Save the script
       const server = props.player.getCurrentServer();
       if (server === null) throw new Error("Server should not be null but it is.");
+      let found = false;
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
           server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
-          props.router.toTerminal();
-          return iTutorialNextStep();
+          found = true;
         }
       }
 
-      // If the current script does NOT exist, create a new one
-      const script = new Script();
-      script.saveScript(code, props.player.currentServer, server.scripts);
-      server.scripts.push(script);
+      if (!found) {
+        const script = new Script();
+        script.saveScript(code, props.player.currentServer, server.scripts);
+        server.scripts.push(script);
+      }
 
-      return iTutorialNextStep();
+      iTutorialNextStep();
+
+      props.router.toTerminal();
+      return;
     }
 
     if (filename == "") {

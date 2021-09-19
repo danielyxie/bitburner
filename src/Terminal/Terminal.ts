@@ -88,8 +88,8 @@ export class Terminal implements ITerminal {
   process(router: IRouter, player: IPlayer, cycles: number): void {
     if (this.action === null) return;
     this.action.timeLeft -= (CONSTANTS._idleSpeed * cycles) / 1000;
-    TerminalEvents.emit();
     if (this.action.timeLeft < 0) this.finishAction(router, player, false);
+    TerminalEvents.emit();
   }
 
   append(item: Output | Link): void {
@@ -97,16 +97,15 @@ export class Terminal implements ITerminal {
     if (this.outputHistory.length > Settings.MaxTerminalCapacity) {
       this.outputHistory.slice(this.outputHistory.length - Settings.MaxTerminalCapacity);
     }
+    TerminalEvents.emit();
   }
 
   print(s: string): void {
     this.append(new Output(s, "primary"));
-    TerminalEvents.emit();
   }
 
   error(s: string): void {
     this.append(new Output(s, "error"));
-    TerminalEvents.emit();
   }
 
   startHack(player: IPlayer): void {
@@ -246,6 +245,7 @@ export class Terminal implements ITerminal {
       this.print("Cancelled");
     }
     this.action = null;
+    TerminalEvents.emit();
   }
 
   getFile(player: IPlayer, filename: string): Script | TextFile | string | null {
@@ -515,51 +515,47 @@ export class Terminal implements ITerminal {
       switch (ITutorial.currStep) {
         case iTutorialSteps.TerminalHelp:
           if (commandArray.length === 1 && commandArray[0] == "help") {
-            TerminalHelpText.forEach((line) => this.print(line));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalLs:
           if (commandArray.length === 1 && commandArray[0] == "ls") {
-            ls(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalScan:
           if (commandArray.length === 1 && commandArray[0] == "scan") {
-            scan(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalScanAnalyze1:
           if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
-            this.executeScanAnalyzeCommand(player, 1);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalScanAnalyze2:
           if (commandArray.length == 2 && commandArray[0] == "scan-analyze" && commandArray[1] === 2) {
-            this.executeScanAnalyzeCommand(player, 2);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalConnect:
           if (commandArray.length == 2) {
             if (commandArray[0] == "connect" && (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.ip)) {
-              player.getCurrentServer().isConnectedTo = false;
-              player.currentServer = n00dlesServ.ip;
-              player.getCurrentServer().isConnectedTo = true;
-              this.print("Connected to n00dles");
               iTutorialNextStep();
             } else {
               this.print("Wrong command! Try again!");
@@ -567,80 +563,69 @@ export class Terminal implements ITerminal {
             }
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalAnalyze:
           if (commandArray.length === 1 && commandArray[0] === "analyze") {
-            if (commandArray.length !== 1) {
-              this.print("Incorrect usage of analyze command. Usage: analyze");
-              return;
-            }
-            this.startAnalyze();
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalNuke:
           if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
-            n00dlesServ.hasAdminRights = true;
-            this.print("NUKE successful! Gained root access to n00dles");
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalManualHack:
           if (commandArray.length == 1 && commandArray[0] == "hack") {
-            this.startHack(player);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalCreateScript:
           if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
-            router.toScriptEditor("n00dles.script", "");
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalFree:
           if (commandArray.length == 1 && commandArray[0] == "free") {
-            free(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalRunScript:
           if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
-            run(this, router, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.ActiveScriptsToTerminal:
           if (commandArray.length == 2 && commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
-            // Check that the script exists on this machine
-            const runningScript = findRunningScript("n00dles.script", [], player.getCurrentServer());
-            if (runningScript == null) {
-              this.print("Error: No such script exists");
-              return;
-            }
-            logBoxCreate(runningScript);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         default:
-          this.print("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
+          this.print("Please follow the tutorial, or click 'EXIT' if you'd like to skip it");
           return;
       }
-      return;
     }
     /****************** END INTERACTIVE TUTORIAL ******************/
     /* Command parser */

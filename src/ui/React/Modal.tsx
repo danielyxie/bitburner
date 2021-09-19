@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
     paper: {
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: theme.palette.background.default,
       border: "2px solid " + theme.palette.primary.main,
-      boxShadow: theme.shadows[5],
+      boxShadow: `0px 3px 5px -1px ${theme.palette.primary.dark},0px 5px 8px 0px ${theme.palette.primary.dark},0px 1px 14px 0px ${theme.palette.primary.dark}`,
       padding: 2,
       maxWidth: "80%",
       maxHeight: "80%",

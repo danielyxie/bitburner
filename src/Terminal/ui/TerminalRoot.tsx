@@ -50,9 +50,9 @@ interface IProps {
 
 export function TerminalRoot({ terminal, router, player }: IProps): React.ReactElement {
   const scrollHook = useRef<HTMLDivElement>(null);
-  const setRerender = useState(false)[1];
+  const setRerender = useState(0)[1];
   function rerender(): void {
-    setRerender((old) => !old);
+    setRerender((old) => old + 1);
   }
 
   useEffect(() => {

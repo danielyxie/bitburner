@@ -21,8 +21,9 @@ import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
 import { colors } from "./Theme";
 import { Settings } from "../../Settings/Settings";
-import { use } from "../../ui/Context";
-import { Page } from "../../ui/Router";
+import { use } from "../Context";
+import { Page } from "../Router";
+import { Overview } from "./Overview";
 
 interface IProps {
   save: () => void;
@@ -105,9 +106,6 @@ const useStyles = makeStyles({
   int: {
     color: colors.int,
   },
-  nobackground: {
-    backgroundColor: "#0000",
-  },
 });
 
 export function CharacterOverview({ save }: IProps): React.ReactElement {
@@ -115,9 +113,7 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
   const router = use.Router();
 
   if (router.page() === Page.BitVerse) return <></>;
-
   const setRerender = useState(false)[1];
-  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const id = setInterval(() => setRerender((old) => !old), 600);
@@ -126,120 +122,103 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
 
   const classes = useStyles();
   return (
-    <div style={{ position: "fixed", top: 0, right: 0, zIndex: 1500 }}>
-      <Box display="flex" justifyContent="flex-end" flexDirection={"column"}>
-        <Collapse in={open}>
-          <Paper square>
-            <Box m={1}>
-              <Table size="small">
-                <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.hp }}>HP&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.hp }}>
-                        {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+    <Paper square>
+      <Box m={1}>
+        <Table size="small">
+          <TableBody>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.hp }}>HP&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.hp }}>
+                  {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
+                </Typography>
+              </TableCell>
+            </TableRow>
 
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.money }}>
-                        {numeralWrapper.formatMoney(player.money.toNumber())}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.money }}>
+                  {numeralWrapper.formatMoney(player.money.toNumber())}
+                </Typography>
+              </TableCell>
+            </TableRow>
 
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-                      <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cell }}>
-                      <Typography classes={{ root: classes.hack }}>
-                        {numeralWrapper.formatSkill(player.hacking_skill)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.hack }}>
+                  {numeralWrapper.formatSkill(player.hacking_skill)}
+                </Typography>
+              </TableCell>
+            </TableRow>
 
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.combat }}>
-                        {numeralWrapper.formatSkill(player.strength)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>
+                  {numeralWrapper.formatSkill(player.strength)}
+                </Typography>
+              </TableCell>
+            </TableRow>
 
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.combat }}>
-                        {numeralWrapper.formatSkill(player.defense)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
+              </TableCell>
+            </TableRow>
 
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.combat }}>
-                        {numeralWrapper.formatSkill(player.dexterity)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-                      <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cell }}>
-                      <Typography classes={{ root: classes.combat }}>
-                        {numeralWrapper.formatSkill(player.agility)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>
+                  {numeralWrapper.formatSkill(player.dexterity)}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
+              </TableCell>
+            </TableRow>
 
-                  <TableRow>
-                    <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
-                    </TableCell>
-                    <TableCell align="right" classes={{ root: classes.cellNone }}>
-                      <Typography classes={{ root: classes.cha }}>
-                        {numeralWrapper.formatSkill(player.charisma)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                  <Intelligence />
-                  <Work />
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
+              </TableCell>
+            </TableRow>
+            <Intelligence />
+            <Work />
 
-                  <TableRow>
-                    <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-                      <IconButton onClick={save}>
-                        <SaveAltIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Box>
-          </Paper>
-        </Collapse>
-        <Box display="flex" justifyContent="flex-end">
-          <Fab classes={{ root: classes.nobackground }} onClick={() => setOpen((old) => !old)}>
-            <VisibilityOffIcon color="primary" />
-          </Fab>
-        </Box>
+            <TableRow>
+              <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
+                <IconButton onClick={save}>
+                  <SaveAltIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </Box>
-    </div>
+    </Paper>
   );
 }
