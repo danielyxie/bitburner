@@ -6,7 +6,7 @@ import "../css/tooltips.scss";
 import "../css/buttons.scss";
 import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
-import "../css/terminal.scss";
+
 import "../css/scripteditor.scss";
 import "../css/hacknetnodes.scss";
 import "../css/menupages.scss";

@@ -76,7 +76,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
   return (
     <>
       <Box width="100%" minHeight="100vh" display={"flex"} alignItems={"flex-end"}>
-        <List classes={{ root: classes.list }}>
+        <List id="terminal" classes={{ root: classes.list }}>
           {terminal.outputHistory.map((item, i) => {
             if (item instanceof Output)
               return (
