@@ -41,6 +41,11 @@ function Intelligence(): React.ReactElement {
       <TableCell align="right" classes={{ root: classes.cell }}>
         <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
       </TableCell>
+      <TableCell align="right" classes={{ root: classes.cell }}>
+        <Typography id="overview-int-hook" classes={{ root: classes.int }}>
+          {/*Hook for player scripts*/}
+        </Typography>
+      </TableCell>
     </TableRow>
   );
 }
@@ -135,6 +140,11 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
                   {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
                 </Typography>
               </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography id="overview-hp-hook" classes={{ root: classes.hp }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
             </TableRow>
 
             <TableRow>
@@ -144,6 +154,11 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
               <TableCell align="right" classes={{ root: classes.cellNone }}>
                 <Typography classes={{ root: classes.money }}>
                   {numeralWrapper.formatMoney(player.money.toNumber())}
+                </Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography id="overview-money-hook" classes={{ root: classes.money }}>
+                  {/*Hook for player scripts*/}
                 </Typography>
               </TableCell>
             </TableRow>
@@ -157,6 +172,11 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
                   {numeralWrapper.formatSkill(player.hacking_skill)}
                 </Typography>
               </TableCell>
+              <TableCell align="right" classes={{ root: classes.cell }}>
+                <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
             </TableRow>
 
             <TableRow>
@@ -168,6 +188,11 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
                   {numeralWrapper.formatSkill(player.strength)}
                 </Typography>
               </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
             </TableRow>
 
             <TableRow>
@@ -176,6 +201,11 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
               </TableCell>
               <TableCell align="right" classes={{ root: classes.cellNone }}>
                 <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
               </TableCell>
             </TableRow>
 
@@ -188,6 +218,11 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
                   {numeralWrapper.formatSkill(player.dexterity)}
                 </Typography>
               </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
@@ -195,6 +230,11 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
               </TableCell>
               <TableCell align="right" classes={{ root: classes.cell }}>
                 <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cell }}>
+                <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
               </TableCell>
             </TableRow>
 
@@ -205,8 +245,31 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
               <TableCell align="right" classes={{ root: classes.cellNone }}>
                 <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
               </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
             </TableRow>
             <Intelligence />
+
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                <Typography id="overview-extra-hook-0" classes={{ root: classes.hack }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
+              <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+                <Typography id="overview-extra-hook-1" classes={{ root: classes.hack }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
+              <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+                <Typography id="overview-extra-hook-2" classes={{ root: classes.hack }}>
+                  {/*Hook for player scripts*/}
+                </Typography>
+              </TableCell>
+            </TableRow>
             <Work />
 
             <TableRow>
