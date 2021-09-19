@@ -28,6 +28,7 @@ const orderedITutorialSteps = [
   "TerminalNuke", // NUKE n00dles
   "TerminalManualHack", // Hack n00dles
   "TerminalHackingMechanics", // Explanation of hacking mechanics
+  "TerminalGoHome", // Go home before creating a script.
   "TerminalCreateScript", // Create a script using 'nano'
   "TerminalTypeScript", // Script Editor page - Type script and then save & close
   "TerminalFree", // Using 'Free' Terminal command

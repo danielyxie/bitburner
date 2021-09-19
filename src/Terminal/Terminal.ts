@@ -590,6 +590,14 @@ export class Terminal implements ITerminal {
             return;
           }
           break;
+        case iTutorialSteps.TerminalGoHome:
+          if (commandArray.length == 1 && commandArray[0] == "home") {
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+            return;
+          }
+          break;
         case iTutorialSteps.TerminalCreateScript:
           if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
             iTutorialNextStep();

@@ -4,5 +4,7 @@
   "trashAssetsBeforeRuns": true,
   "screenshotsFolder": ".cypress/screenshots",
   "videosFolder": ".cypress/videos",
-  "videoUploadOnPasses": false
+  "videoUploadOnPasses": false,
+  "viewportWidth": 1980,
+  "viewportHeight": 1080
 }

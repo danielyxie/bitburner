@@ -3,19 +3,19 @@ export {};
 describe("tutorial", () => {
   it("completes the tutorial", () => {
     cy.findByText(/dark, dystopian future/);
-    cy.findByRole("button", { name: "Next" }).click();
+    cy.findByRole("button", { name: "next" }).click();
 
     cy.findByText(/heading to the Stats page/);
     cy.findByRole("button", { name: "Stats" }).click();
 
     cy.findByText(/lot of important information/);
-    cy.findByRole("button", { name: "Next" }).click();
+    cy.findByRole("button", { name: "next" }).click();
 
     cy.findByText(/head to your computer's terminal/);
     cy.findByRole("button", { name: "Terminal" }).click();
 
     cy.findByText(/is used to interface/);
-    cy.findByRole("button", { name: "Next" }).click();
+    cy.findByRole("button", { name: "next" }).click();
 
     cy.findByText(/Let's try it out/i);
     cy.findByRole("textbox").type("help{enter}");
@@ -29,7 +29,7 @@ describe("tutorial", () => {
     cy.findByText(/that's great and all/i);
     cy.findByRole("textbox").type("scan-analyze{enter}");
 
-    cy.findByText(/this command shows more detailed information/i);
+    cy.findByText(/shows more detailed information/i);
     cy.findByRole("textbox").type("scan-analyze 2{enter}");
 
     cy.findByText(/now you can see information/i);
@@ -46,10 +46,11 @@ describe("tutorial", () => {
     cy.findByRole("textbox").type("hack{enter}");
 
     cy.findByText(/now attempting to hack the server/i);
-    cy.findByRole("button", { name: "Next" }).click();
+    cy.findByRole("button", { name: "next" }).click();
 
-    cy.findByText(/hacking exp/i);
-    cy.findByRole("textbox", { timeout: 15_000 }).should("not.be.disabled").type("nano n00dles.script{enter}");
+    cy.findByRole("textbox", { timeout: 15_000 }).should("not.be.disabled").type("home{enter}");
+
+    cy.findByRole("textbox").type("nano n00dles.script{enter}");
 
     // monaco can take a bit
     cy.findByRole("code", { timeout: 15_000 }).type("{selectall}{del}").type("while(true) {{}{enter}hack('n00dles');");
@@ -72,7 +73,7 @@ describe("tutorial", () => {
     cy.findByRole("textbox").type("tail n00dles.script{enter}");
 
     cy.findByText(/The log for this script won't show much/i);
-    cy.findByRole("button", { name: "Next" }).click();
+    cy.findByRole("button", { name: "next" }).click();
 
     cy.findByText(/Hacking is not the only way to earn money/i);
     cy.findByRole("button", { name: "Hacknet" }).click();
@@ -87,7 +88,7 @@ describe("tutorial", () => {
     cy.findByRole("button", { name: "Tutorial" }).click();
 
     cy.findByText(/a lot of different documentation about the game/i);
-    cy.findByRole("button", { name: "Finish Tutorial" }).click();
+    cy.findByRole("button", { name: "next" }).click();
     cy.findByText("Got it!").click();
 
     cy.findByText(/Tutorial \(AKA Links to Documentation\)/i);

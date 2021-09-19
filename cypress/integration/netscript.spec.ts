@@ -2,7 +2,7 @@ export {};
 
 describe("netscript", () => {
   it("creates and runs a NetScript 2.0 script", () => {
-    cy.findByRole("button", { name: "Exit Tutorial" }).click();
+    cy.findByRole("button", { name: "SKIP TUTORIAL" }).click();
     cy.findByText("Got it!").click();
 
     cy.findByRole("textbox").type("connect n00dles{enter}");
@@ -32,7 +32,7 @@ describe("netscript", () => {
   });
 
   it("errors and shows a dialog box when static RAM !== dynamic RAM", () => {
-    cy.findByRole("button", { name: "Exit Tutorial" }).click();
+    cy.findByRole("button", { name: "SKIP TUTORIAL" }).click();
     cy.findByText("Got it!").click();
 
     cy.findByRole("textbox").type("nano script.js{enter}");
