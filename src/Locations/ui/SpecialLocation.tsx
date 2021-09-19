@@ -17,7 +17,6 @@ import { CreateCorporationPopup } from "../../Corporation/ui/CreateCorporationPo
 import { createPopup } from "../../ui/React/createPopup";
 import { LocationName } from "../data/LocationNames";
 
-import { IEngine } from "../../IEngine";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { use } from "../../ui/Context";
 

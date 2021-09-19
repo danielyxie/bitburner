@@ -36,6 +36,7 @@ import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import { Locations } from "./Locations/Locations";
 import { LocationName } from "./Locations/data/LocationNames";
+import { LoadingScreen } from "./ui/LoadingScreen";
 
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
@@ -399,14 +400,6 @@ const Engine = {
       // Start interactive tutorial
       iTutorialStart();
     }
-
-    ReactDOM.render(
-      <Theme>
-        <GameRoot terminal={Terminal} engine={this} player={Player} />
-      </Theme>,
-      document.getElementById("mainmenu-container"),
-    );
-    Router.toTerminal();
   },
 
   start: function () {
@@ -429,8 +422,7 @@ const Engine = {
   },
 };
 
-var indexedDbRequest;
-window.onload = function () {
+function load(cb) {
   if (!window.indexedDB) {
     return Engine.load(null); // Will try to load from localstorage
   }
@@ -445,7 +437,8 @@ window.onload = function () {
   indexedDbRequest.onerror = function (e) {
     console.error("Error opening indexedDB: ");
     console.error(e);
-    return Engine.load(null); // Try to load from localstorage
+    Engine.load(null); // Try to load from localstorage
+    cb();
   };
 
   indexedDbRequest.onsuccess = function (e) {
@@ -455,11 +448,13 @@ window.onload = function () {
     var request = objectStore.get("save");
     request.onerror = function (e) {
       console.error("Error in Database request to get savestring: " + e);
-      return Engine.load(null); // Try to load from localstorage
+      Engine.load(null); // Try to load from localstorage
+      cb();
     };
 
     request.onsuccess = function () {
       Engine.load(request.result);
+      cb();
     };
   };
 
@@ -467,6 +462,15 @@ window.onload = function () {
     const db = e.target.result;
     db.createObjectStore("savestring");
   };
-};
+}
 
-export { Engine };
+var indexedDbRequest;
+
+ReactDOM.render(
+  <Theme>
+    <LoadingScreen />
+  </Theme>,
+  document.getElementById("mainmenu-container"),
+);
+
+export { Engine, load };

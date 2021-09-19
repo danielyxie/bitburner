@@ -63,7 +63,6 @@ import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
 import { StockMarketRoot } from "../StockMarket/ui/StockMarketRoot";
 import { BitverseRoot } from "../BitNode/ui/BitverseRoot";
 import { CharacterOverview } from "./React/CharacterOverview";
-import { LoadingScreen } from "./LoadingScreen";
 import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
 
@@ -186,7 +185,7 @@ function determineStartPage(player: IPlayer): Page {
 
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
-  const [page, setPage] = useState(/*determineStartPage(player)*/ Page.Loading);
+  const [page, setPage] = useState(determineStartPage(player));
   const setRerender = useState(0)[1];
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
@@ -288,9 +287,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             <InteractiveTutorialRoot />
           )}
         </Overview>
-        {page === Page.Loading ? (
-          <LoadingScreen />
-        ) : page === Page.BitVerse ? (
+        {page === Page.BitVerse ? (
           <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
         ) : page === Page.Infiltration ? (
           <InfiltrationRoot location={location} />

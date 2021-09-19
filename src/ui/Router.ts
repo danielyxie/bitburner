@@ -1,5 +1,4 @@
 import { Faction } from "../Faction/Faction";
-import { LocationName } from "../Locations/data/LocationNames";
 import { Location } from "../Locations/Location";
 
 /**

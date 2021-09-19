@@ -7,7 +7,14 @@ import { Theme } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 
+import { Terminal } from "../Terminal";
+import { Engine } from "../engine";
+import { Player } from "../Player";
+import { GameRoot } from "./GameRoot";
+
 import { CONSTANTS } from "../Constants";
+
+import { load } from "../engine";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,13 +29,26 @@ const useStyles = makeStyles((theme: Theme) =>
 export function LoadingScreen(): React.ReactElement {
   const classes = useStyles();
   const [show, setShow] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
+  console.log("renredering");
   useEffect(() => {
     const id = setTimeout(() => {
-      setShow(true);
+      if (!loaded) setShow(true);
     }, 2000);
     return () => clearTimeout(id);
+  });
+
+  useEffect(() => {
+    load(() => {
+      setLoaded(true);
+    });
   }, []);
+
+  if (loaded) {
+    return <GameRoot terminal={Terminal} engine={Engine} player={Player} />;
+  }
+
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
       <Grid item>
