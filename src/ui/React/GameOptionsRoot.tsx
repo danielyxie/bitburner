@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
@@ -13,7 +13,7 @@ import Switch from "@mui/material/Switch";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -24,6 +24,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
+import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 
 import { Settings } from "../../Settings/Settings";
@@ -43,13 +44,14 @@ interface IProps {
   save: () => void;
   delete: () => void;
   export: () => void;
-  import: () => void;
+  import: (evt: any) => void;
   forceKill: () => void;
   softReset: () => void;
 }
 
 export function GameOptionsRoot(props: IProps): React.ReactElement {
   const classes = useStyles();
+  const importInput = useRef<HTMLInputElement>(null);
 
   const [execTime, setExecTime] = useState(Settings.CodeInstructionRunTime);
   const [logSize, setLogSize] = useState(Settings.MaxLogCapacity);
@@ -149,6 +151,22 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
     setLocale(event.target.value as string);
     Settings.Locale = event.target.value as string;
+  }
+
+  function importSave(): void {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // var fileSelector = clearEventListeners("import-game-file-selector");
+      // fileSelector.addEventListener("change", openImportFileHandler, false);
+      const ii = importInput.current;
+      if (ii === null) throw new Error("import input should not be null");
+      ii.click();
+    } else {
+      dialogBoxCreate("ERR: Your browser does not support HTML5 File API. Cannot import.");
+    }
+  }
+
+  function onImport(event: React.ChangeEvent<HTMLInputElement>): void {
+    props.import(event);
   }
 
   return (
@@ -466,14 +484,17 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           </Box>
           <Box>
             <Tooltip title={<Typography>export</Typography>}>
-              <IconButton onClick={() => props.export()}>
+              <Button onClick={() => props.export()}>
                 <DownloadIcon color="primary" />
-              </IconButton>
+                <Typography>Export</Typography>
+              </Button>
             </Tooltip>
             <Tooltip title={<Typography>import</Typography>}>
-              <IconButton onClick={() => props.import()}>
+              <Button onClick={importSave}>
                 <UploadIcon color="primary" />
-              </IconButton>
+                <Typography>Import</Typography>
+                <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
+              </Button>
             </Tooltip>
           </Box>
           <Box>

@@ -4,7 +4,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { IEngine } from "../IEngine";
 import { ITerminal } from "../Terminal/ITerminal";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
-import { saveObject } from "../SaveObject";
+import { saveObject, openImportFileHandler } from "../SaveObject";
 import { onExport } from "../ExportBonus";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Location } from "../Locations/Location";
@@ -63,6 +63,7 @@ import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
 import { StockMarketRoot } from "../StockMarket/ui/StockMarketRoot";
 import { BitverseRoot } from "../BitNode/ui/BitverseRoot";
 import { CharacterOverview } from "./React/CharacterOverview";
+import { LoadingScreen } from "./LoadingScreen";
 import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
 
@@ -185,7 +186,7 @@ function determineStartPage(player: IPlayer): Page {
 
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
-  const [page, setPage] = useState(determineStartPage(player));
+  const [page, setPage] = useState(/*determineStartPage(player)*/ Page.Loading);
   const setRerender = useState(0)[1];
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
@@ -287,7 +288,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             <InteractiveTutorialRoot />
           )}
         </Overview>
-        {page === Page.BitVerse ? (
+        {page === Page.Loading ? (
+          <LoadingScreen />
+        ) : page === Page.BitVerse ? (
           <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
         ) : page === Page.Infiltration ? (
           <InfiltrationRoot location={location} />
@@ -360,7 +363,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   save={() => saveObject.saveGame(engine.indexedDb)}
                   delete={() => saveObject.deleteGame(engine.indexedDb)}
                   export={() => saveObject.exportGame()}
-                  import={() => saveObject.importGame()}
+                  import={openImportFileHandler}
                   forceKill={() => {
                     for (const hostname of Object.keys(AllServers)) {
                       AllServers[hostname].runningScripts = [];

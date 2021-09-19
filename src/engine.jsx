@@ -43,7 +43,7 @@ import { Reputation } from "./ui/React/Reputation";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
-import { removeLoadingScreen } from "../utils/uiHelpers/removeLoadingScreen";
+
 import "./Exploits/tampering";
 import "./Exploits/unclickable";
 
@@ -375,7 +375,6 @@ const Engine = {
 
       Player.lastUpdate = Engine._lastUpdate;
       Engine.start(); // Run main game loop and Scripts loop
-      removeLoadingScreen();
       const timeOfflineString = convertTimeMsToTimeElapsedString(time);
       dialogBoxCreate(
         <>
@@ -388,7 +387,6 @@ const Engine = {
       // No save found, start new game
       initBitNodeMultipliers(Player);
       initSpecialServerIps();
-      Engine.setDisplayElements(); // Sets variables for important DOM elements
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();
       initForeignServers(Player.getHomeComputer());
@@ -400,7 +398,6 @@ const Engine = {
 
       // Start interactive tutorial
       iTutorialStart();
-      removeLoadingScreen();
     }
 
     ReactDOM.render(
@@ -409,6 +406,7 @@ const Engine = {
       </Theme>,
       document.getElementById("mainmenu-container"),
     );
+    Router.toTerminal();
   },
 
   start: function () {

@@ -38,7 +38,7 @@
     <% } %>
   </head>
   <body>
-    <div id="entire-game-container" style="visibility: hidden">
+    <div id="entire-game-container">
       <div id="mainmenu-container" style="display: flex; flex-direction: row">
         <!-- Main menu -->
         <div id="sidebar" style=""></div>
@@ -51,33 +51,6 @@
       </div>
     </div>
 
-    <input type="file" id="import-game-file-selector" name="file" />
-
-    <!-- Loader (Loading screen) -->
-    <div id="loader" class="loaderoverlay">
-      <div class="loaderspinner"></div>
-      <div class="loaderlabel">Loading Bitburner...</div>
-      <div id="killAllMessageWrapper" class="killAllMessage killAllMessageWrapperHidden">
-        <script>
-          setTimeout(function () {
-            var w = document.getElementById("killAllMessageWrapper");
-            if (w == null) {
-              return;
-            }
-            w.classList.remove("killAllMessageWrapperHidden");
-            w.classList.add("killAllMessageWrapperShow");
-          }, 2000);
-        </script>
-        <p>
-          If the game fails to load, consider
-          <a href="?noScripts">killing all scripts</a>
-        </p>
-      </div>
-    </div>
-
     <div id="unclickable" style="display: none">Click on this to upgrade your Source-File -1!</div>
   </body>
-
-  <!-- Misc Scripts -->
-  <script src="src/ThirdParty/raphael.min.js"></script>
 </html>

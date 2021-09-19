@@ -35,6 +35,7 @@ export enum Page {
   BladeburnerCinematic,
   Location,
   HackingMission,
+  Loading,
 }
 
 /**

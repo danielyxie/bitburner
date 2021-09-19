@@ -538,4 +538,4 @@ function openImportFileHandler(evt) {
   reader.readAsText(file);
 }
 
-export { saveObject, loadGame };
+export { saveObject, loadGame, openImportFileHandler };
