@@ -344,7 +344,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             <ComputerIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary={<Typography>Hacking</Typography>} />
-          {hackingOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          {hackingOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
         </ListItem>
         <Collapse in={hackingOpen} timeout="auto" unmountOnExit>
           <List>
@@ -438,7 +438,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             <AccountBoxIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary={<Typography>Character</Typography>} />
-          {characterOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          {characterOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
         </ListItem>
         <Collapse in={characterOpen} timeout="auto" unmountOnExit>
           <ListItem
@@ -548,7 +548,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             <PublicIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary={<Typography>World</Typography>} />
-          {worldOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          {worldOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
         </ListItem>
         <Collapse in={worldOpen} timeout="auto" unmountOnExit>
           <ListItem
@@ -682,7 +682,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             <LiveHelpIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary={<Typography>Help</Typography>} />
-          {helpOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          {helpOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
         </ListItem>
         <Collapse in={helpOpen} timeout="auto" unmountOnExit>
           <ListItem
