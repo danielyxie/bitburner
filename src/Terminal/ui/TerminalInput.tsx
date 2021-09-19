@@ -149,7 +149,6 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
       if (terminal.contractOpen) return;
-      if (event.metaKey || event.ctrlKey) return;
       const ref = terminalInput.current;
       if (ref) ref.focus();
       // Cancel action
