@@ -4,9 +4,8 @@ function isNumber(str: string): boolean {
   if (typeof str != "string") {
     return false;
   } // Only process strings
-  return !isNaN(parseFloat(str));
+  return !isNaN(str as unknown as number) && !isNaN(parseFloat(str));
 }
-
 export function ParseCommands(commands: string): string[] {
   // Sanitize input
   commands = commands.trim();
