@@ -20,6 +20,7 @@ function load(cb: () => void): void {
    * Object store is called savestring
    * key for the Object store is called save
    */
+  // Version 1 is important
   const indexedDbRequest: IDBOpenDBRequest = window.indexedDB.open("bitburnerSave", 1);
 
   indexedDbRequest.onerror = function (this: IDBRequest<IDBDatabase>, ev: Event) {
@@ -44,6 +45,12 @@ function load(cb: () => void): void {
       Engine.load(this.result);
       cb();
     };
+  };
+
+  // This is called when there's no db to begin with. It's important.
+  indexedDbRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
+    const db = this.result;
+    db.createObjectStore("savestring");
   };
 }
 

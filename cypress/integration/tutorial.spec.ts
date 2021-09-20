@@ -88,7 +88,7 @@ describe("tutorial", () => {
     cy.findByRole("button", { name: "Tutorial" }).click();
 
     cy.findByText(/a lot of different documentation about the game/i);
-    cy.findByRole("button", { name: "next" }).click();
+    cy.findByRole("button", { name: "FINISH TUTORIAL" }).click();
     cy.findByText("Got it!").click();
 
     cy.findByText(/Tutorial \(AKA Links to Documentation\)/i);
