@@ -41,7 +41,7 @@ function prestigeAugmentation() {
     "Blade Industries",
     "NWO",
     "Clarke Incorporated",
-    "Omnitek Incorporated",
+    "OmniTek Incorporated",
     "Four Sigma",
     "KuaiGong International",
     "Fulcrum Secret Technologies",
