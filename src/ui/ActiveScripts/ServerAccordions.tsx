@@ -35,13 +35,6 @@ export function ServerAccordions(props: IProps): React.ReactElement {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const setRerender = useState(false)[1];
-  function rerender(): void {
-    setRerender((old) => !old);
-  }
-
-  useEffect(() => {
-    return WorkerScriptStartStopEventEmitter.subscribe(rerender);
-  }, []);
 
   const handleChangePage = (event: unknown, newPage: number): void => {
     setPage(newPage);
@@ -78,6 +71,19 @@ export function ServerAccordions(props: IProps): React.ReactElement {
   }
 
   const filtered = Object.values(serverToScriptMap).filter((data) => data && data.server.hostname.includes(filter));
+
+  function rerender(): void {
+    setRerender((old) => !old);
+
+    let safePage = page;
+    while (safePage * rowsPerPage + 1 >= filtered.length) {
+      safePage--;
+    }
+
+    if (safePage != page) setPage(safePage);
+  }
+
+  useEffect(() => WorkerScriptStartStopEventEmitter.subscribe(rerender));
 
   return (
     <>

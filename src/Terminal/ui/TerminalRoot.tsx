@@ -11,7 +11,7 @@ import { ITerminal, Output, Link } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
-import { TerminalEvents } from "../TerminalEvents";
+import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
 
 interface IActionTimerProps {
   terminal: ITerminal;
@@ -51,13 +51,17 @@ interface IProps {
 export function TerminalRoot({ terminal, router, player }: IProps): React.ReactElement {
   const scrollHook = useRef<HTMLDivElement>(null);
   const setRerender = useState(0)[1];
+  const [key, setKey] = useState(0);
   function rerender(): void {
     setRerender((old) => old + 1);
   }
 
-  useEffect(() => {
-    return TerminalEvents.subscribe(rerender);
-  }, []);
+  function clear(): void {
+    setKey((key) => key + 1);
+  }
+
+  useEffect(() => TerminalEvents.subscribe(rerender), []);
+  useEffect(() => TerminalClearEvents.subscribe(clear), []);
 
   function doScroll(): void {
     const hook = scrollHook.current;
@@ -76,7 +80,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
   return (
     <>
       <Box width="100%" minHeight="100vh" display={"flex"} alignItems={"flex-end"}>
-        <List id="terminal" classes={{ root: classes.list }}>
+        <List key={key} id="terminal" classes={{ root: classes.list }}>
           {terminal.outputHistory.map((item, i) => {
             if (item instanceof Output)
               return (

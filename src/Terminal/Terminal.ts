@@ -5,7 +5,7 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
 import { Programs } from "../Programs/Programs";
 import { CodingContractResult } from "../CodingContracts";
-import { TerminalEvents } from "./TerminalEvents";
+import { TerminalEvents, TerminalClearEvents } from "./TerminalEvents";
 
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
@@ -480,6 +480,7 @@ export class Terminal implements ITerminal {
     // TODO: remove this once we figure out the height issue.
     this.outputHistory = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
     TerminalEvents.emit();
+    TerminalClearEvents.emit();
   }
 
   prestige(): void {

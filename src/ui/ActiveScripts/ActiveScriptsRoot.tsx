@@ -22,8 +22,8 @@ export function ActiveScriptsRoot(props: IProps): React.ReactElement {
   }
 
   useEffect(() => {
-    const id = setInterval(rerender, 20);
-    return () => clearInterval(id);
+    // const id = setInterval(rerender, 20);
+    // return () => clearInterval(id);
   }, []);
 
   return (
