@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
 import { Factions } from "../Factions";
@@ -20,7 +20,13 @@ interface IProps {
 
 export function FactionsRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
-
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
+  useEffect(() => {
+    const id = setInterval(rerender, 1000);
+    return () => clearInterval(id);
+  }, []);
   function openFaction(faction: Faction): void {
     props.router.toFaction(faction);
   }

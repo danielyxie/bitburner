@@ -85,7 +85,8 @@ export function Root(props: IProps): React.ReactElement {
 
   // store the last known state in case we need to restart without nano.
   useEffect(() => {
-    if (props.filename === "") return;
+    if (props.filename === undefined) return;
+    console.log("setting to " + props.filename);
     lastFilename = props.filename;
     lastCode = props.code;
     lastPosition = null;

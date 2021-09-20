@@ -138,9 +138,6 @@ export function WorkInProgressRoot(): React.ReactElement {
         <button onClick={cancel} className="work-button">
           {stopText}
         </button>
-        <button onClick={unfocus} className="work-button">
-          Do something else simultaneously
-        </button>
       </div>
     );
   }
