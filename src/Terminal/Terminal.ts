@@ -242,7 +242,6 @@ export class Terminal implements ITerminal {
       this.print("Cancelled");
     }
     this.action = null;
-    console.log("done");
     TerminalEvents.emit();
   }
 
