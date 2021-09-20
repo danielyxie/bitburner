@@ -104,13 +104,11 @@ export function FactionRoot(props: IProps): React.ReactElement {
   }
 
   function startFieldWork(faction: Faction): void {
-    player.startFactionFieldWork(faction);
-    router.toWork();
+    player.startFactionFieldWork(router, faction);
   }
 
   function startHackingContracts(faction: Faction): void {
-    player.startFactionHackWork(faction);
-    router.toWork();
+    player.startFactionHackWork(router, faction);
   }
 
   function startHackingMission(faction: Faction): void {
@@ -119,8 +117,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
   }
 
   function startSecurityWork(faction: Faction): void {
-    player.startFactionSecurityWork(faction);
-    router.toWork();
+    player.startFactionSecurityWork(router, faction);
   }
 
   function MainPage({ faction }: { faction: Faction }): React.ReactElement {

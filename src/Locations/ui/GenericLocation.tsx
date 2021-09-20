@@ -47,7 +47,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     }
 
     if (loc.types.includes(LocationType.Gym)) {
-      content.push(<GymLocation key={"gymlocation"} loc={loc} p={player} />);
+      content.push(<GymLocation key={"gymlocation"} router={router} loc={loc} p={player} />);
     }
 
     if (loc.types.includes(LocationType.Hospital)) {

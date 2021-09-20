@@ -1,6 +1,7 @@
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
+import { IRouter } from "../ui/Router";
 
 export interface IConstructorParams {
   hacking_success_weight?: number;
@@ -85,11 +86,12 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(p: IPlayer, div = 1, singParams: any = null): number {
+  commit(router: IRouter, p: IPlayer, div = 1, singParams: any = null): number {
     if (div <= 0) {
       div = 1;
     }
     p.startCrime(
+      router,
       this.type,
       this.hacking_exp / div,
       this.strength_exp / div,

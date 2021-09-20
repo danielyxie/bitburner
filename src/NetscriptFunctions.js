@@ -136,7 +136,8 @@ import { Interpreter } from "./JSInterpreter";
 import { NetscriptPort } from "./NetscriptPort";
 import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
-import { Exploit } from "./Exploits/Exploit.ts";
+import { Exploit } from "./Exploits/Exploit";
+import { Router } from "./ui/GameRoot";
 
 import { numeralWrapper } from "./ui/numeralFormat";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
@@ -2894,7 +2895,7 @@ function NetscriptFunctions(workerScript) {
           workerScript.log("universityCourse", `Invalid class name: ${className}.`);
           return false;
       }
-      Player.startClass(costMult, expMult, task);
+      Player.startClass(Router, costMult, expMult, task);
       workerScript.log("universityCourse", `Started ${task} at ${universityName}`);
       return true;
     },
@@ -2971,19 +2972,19 @@ function NetscriptFunctions(workerScript) {
       switch (stat.toLowerCase()) {
         case "strength".toLowerCase():
         case "str".toLowerCase():
-          Player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
+          Player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymStrength);
           break;
         case "defense".toLowerCase():
         case "def".toLowerCase():
-          Player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
+          Player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymDefense);
           break;
         case "dexterity".toLowerCase():
         case "dex".toLowerCase():
-          Player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
+          Player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymDexterity);
           break;
         case "agility".toLowerCase():
         case "agi".toLowerCase():
-          Player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
+          Player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymAgility);
           break;
         default:
           workerScript.log("gymWorkout", `Invalid stat: ${stat}.`);
@@ -3419,9 +3420,9 @@ function NetscriptFunctions(workerScript) {
       }
 
       if (companyPosition.isPartTimeJob()) {
-        Player.startWorkPartTime(companyName);
+        Player.startWorkPartTime(Router, companyName);
       } else {
-        Player.startWork(companyName);
+        Player.startWork(Router, companyName);
       }
       workerScript.log("workForCompany", `Began working at '${Player.companyName}' as a '${companyPositionName}'`);
       return true;
@@ -3660,7 +3661,7 @@ function NetscriptFunctions(workerScript) {
             workerScript.log("workForFaction", `Faction '${fac.name}' do not need help with hacking contracts.`);
             return false;
           }
-          Player.startFactionHackWork(fac);
+          Player.startFactionHackWork(Router, fac);
           workerScript.log("workForFaction", `Started carrying out hacking contracts for '${fac.name}'`);
           return true;
         case "field":
@@ -3670,7 +3671,7 @@ function NetscriptFunctions(workerScript) {
             workerScript.log("workForFaction", `Faction '${fac.name}' do not need help with field missions.`);
             return false;
           }
-          Player.startFactionFieldWork(fac);
+          Player.startFactionFieldWork(Router, fac);
           workerScript.log("workForFaction", `Started carrying out field missions for '${fac.name}'`);
           return true;
         case "security":
@@ -3680,7 +3681,7 @@ function NetscriptFunctions(workerScript) {
             workerScript.log("workForFaction", `Faction '${fac.name}' do not need help with security work.`);
             return false;
           }
-          Player.startFactionSecurityWork(fac);
+          Player.startFactionSecurityWork(Router, fac);
           workerScript.log("workForFaction", `Started carrying out security work for '${fac.name}'`);
           return true;
         default:
@@ -3781,7 +3782,7 @@ function NetscriptFunctions(workerScript) {
         return false;
       }
 
-      Player.startCreateProgramWork(p.name, p.create.time, p.create.level);
+      Player.startCreateProgramWork(Router, p.name, p.create.time, p.create.level);
       workerScript.log("createProgram", `Began creating program: '${name}'`);
       return true;
     },
@@ -3806,7 +3807,7 @@ function NetscriptFunctions(workerScript) {
         throw makeRuntimeErrorMsg("commitCrime", `Invalid crime: '${crimeRoughName}'`);
       }
       workerScript.log("commitCrime", `Attempting to commit ${crime.name}...`);
-      return crime.commit(Player, 1, { workerscript: workerScript });
+      return crime.commit(Router, Player, 1, { workerscript: workerScript });
     },
     getCrimeChance: function (crimeRoughName) {
       updateDynamicRam("getCrimeChance", getRamCost("getCrimeChance"));

@@ -37,8 +37,7 @@ export function ProgramsRoot(): React.ReactElement {
               <Tooltip key={program.name} title={create.tooltip}>
                 <Button
                   onClick={() => {
-                    player.startCreateProgramWork(program.name, create.time, create.level);
-                    router.toWork();
+                    player.startCreateProgramWork(router, program.name, create.time, create.level);
                   }}
                 >
                   {program.name}

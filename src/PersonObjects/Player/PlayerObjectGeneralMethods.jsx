@@ -546,7 +546,7 @@ export function processWorkEarnings(numCycles = 1) {
 }
 
 /* Working for Company */
-export function startWork(companyName) {
+export function startWork(router, companyName) {
   this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
   this.isWorking = true;
   this.focus = true;
@@ -563,6 +563,7 @@ export function startWork(companyName) {
   this.workMoneyGainRate = this.getWorkMoneyGain();
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
+  router.toWork();
 }
 
 export function cancelationPenalty() {
@@ -678,7 +679,7 @@ export function finishWork(cancelled, sing = false) {
   this.resetWorkStatus();
 }
 
-export function startWorkPartTime(companyName) {
+export function startWorkPartTime(router, companyName) {
   this.resetWorkStatus(CONSTANTS.WorkTypeCompanyPartTime, companyName);
   this.isWorking = true;
   this.focus = true;
@@ -695,6 +696,7 @@ export function startWorkPartTime(companyName) {
   this.workMoneyGainRate = this.getWorkMoneyGain();
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
+  router.toWork();
 }
 
 export function workPartTime(numCycles) {
@@ -785,7 +787,7 @@ export function stopFocusing() {
 }
 
 /* Working for Faction */
-export function startFactionWork(faction) {
+export function startFactionWork(router, faction) {
   //Update reputation gain rate to account for faction favor
   var favorMult = 1 + faction.favor / 100;
   if (isNaN(favorMult)) {
@@ -800,9 +802,10 @@ export function startFactionWork(faction) {
   this.currentWorkFactionName = faction.name;
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
+  router.toWork();
 }
 
-export function startFactionHackWork(faction) {
+export function startFactionHackWork(router, faction) {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -814,10 +817,10 @@ export function startFactionHackWork(faction) {
   this.factionWorkType = CONSTANTS.FactionWorkHacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
 
-  this.startFactionWork(faction);
+  this.startFactionWork(router, faction);
 }
 
-export function startFactionFieldWork(faction) {
+export function startFactionFieldWork(router, faction) {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
 
   this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -831,10 +834,10 @@ export function startFactionFieldWork(faction) {
   this.factionWorkType = CONSTANTS.FactionWorkField;
   this.currentWorkFactionDescription = "carrying out field missions";
 
-  this.startFactionWork(faction);
+  this.startFactionWork(router, faction);
 }
 
-export function startFactionSecurityWork(faction) {
+export function startFactionSecurityWork(router, faction) {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -848,7 +851,7 @@ export function startFactionSecurityWork(faction) {
   this.factionWorkType = CONSTANTS.FactionWorkSecurity;
   this.currentWorkFactionDescription = "performing security detail";
 
-  this.startFactionWork(faction);
+  this.startFactionWork(router, faction);
 }
 
 export function workForFaction(numCycles) {
@@ -1171,7 +1174,7 @@ export function getWorkRepGain() {
 // }
 
 /* Creating a Program */
-export function startCreateProgramWork(programName, time, reqLevel) {
+export function startCreateProgramWork(router, programName, time, reqLevel) {
   this.resetWorkStatus();
   this.isWorking = true;
   this.focus = true;
@@ -1203,6 +1206,7 @@ export function startCreateProgramWork(programName, time, reqLevel) {
   }
 
   this.createProgramName = programName;
+  router.toWork();
 }
 
 export function createProgramWork(numCycles) {
@@ -1246,7 +1250,7 @@ export function finishCreateProgramWork(cancelled) {
 }
 
 /* Studying/Taking Classes */
-export function startClass(costMult, expMult, className) {
+export function startClass(router, costMult, expMult, className) {
   this.resetWorkStatus();
   this.isWorking = true;
   this.focus = true;
@@ -1317,6 +1321,7 @@ export function startClass(costMult, expMult, className) {
   this.workDexExpGainRate = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
   this.workAgiExpGainRate = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
   this.workChaExpGainRate = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  router.toWork();
 }
 
 export function takeClass(numCycles) {
@@ -1385,7 +1390,19 @@ export function finishClass(sing = false) {
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
-export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, chaExp, money, time, singParams = null) {
+export function startCrime(
+  router,
+  crimeType,
+  hackExp,
+  strExp,
+  defExp,
+  dexExp,
+  agiExp,
+  chaExp,
+  money,
+  time,
+  singParams = null,
+) {
   this.crimeType = crimeType;
 
   this.resetWorkStatus();
@@ -1407,6 +1424,7 @@ export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, c
   this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
   this.timeNeededToCompleteWork = time;
+  router.toWork();
 }
 
 export function commitCrime(numCycles) {
