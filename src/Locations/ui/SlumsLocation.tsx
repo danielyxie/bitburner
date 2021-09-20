@@ -114,6 +114,7 @@ export function SlumsLocation(): React.ReactElement {
   return (
     <div>
       <AutoupdatingStdButton
+        label={`Shoplift (${numeralWrapper.formatPercentage(shopliftChance)} chance of success)`}
         intervalTime={5e3}
         onClick={shoplift}
         style={{ display: "block" }}
@@ -121,6 +122,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to shoplift from a low-end retailer"}
       />
       <AutoupdatingStdButton
+        label={`Rob store (${numeralWrapper.formatPercentage(robStoreChance)} chance of success)`}
         intervalTime={5e3}
         onClick={robStore}
         style={{ display: "block" }}
@@ -128,6 +130,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to commit armed robbery on a high-end store"}
       />
       <AutoupdatingStdButton
+        label={`Mug someone (${numeralWrapper.formatPercentage(mugChance)} chance of success)`}
         intervalTime={5e3}
         onClick={mug}
         style={{ display: "block" }}
@@ -135,6 +138,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to mug a random person on the street"}
       />
       <AutoupdatingStdButton
+        label={`Larceny (${numeralWrapper.formatPercentage(larcenyChance)} chance of success)`}
         intervalTime={5e3}
         onClick={larceny}
         style={{ display: "block" }}
@@ -142,6 +146,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to rob property from someone's house"}
       />
       <AutoupdatingStdButton
+        label={`Deal Drugs (${numeralWrapper.formatPercentage(drugsChance)} chance of success)`}
         intervalTime={5e3}
         onClick={dealDrugs}
         style={{ display: "block" }}
@@ -149,6 +154,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to deal drugs"}
       />
       <AutoupdatingStdButton
+        label={`Bond Forgery (${numeralWrapper.formatPercentage(bondChance)} chance of success)`}
         intervalTime={5e3}
         onClick={bondForgery}
         style={{ display: "block" }}
@@ -156,6 +162,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to forge corporate bonds"}
       />
       <AutoupdatingStdButton
+        label={`Traffick illegal Arms (${numeralWrapper.formatPercentage(armsChance)} chance of success)`}
         intervalTime={5e3}
         onClick={traffickArms}
         style={{ display: "block" }}
@@ -163,6 +170,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to smuggle illegal arms into the city"}
       />
       <AutoupdatingStdButton
+        label={`Homicide (${numeralWrapper.formatPercentage(homicideChance)} chance of success)`}
         intervalTime={5e3}
         onClick={homicide}
         style={{ display: "block" }}
@@ -170,6 +178,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to murder a random person on the street"}
       />
       <AutoupdatingStdButton
+        label={`Grand theft Auto (${numeralWrapper.formatPercentage(gtaChance)} chance of success)`}
         intervalTime={5e3}
         onClick={grandTheftAuto}
         style={{ display: "block" }}
@@ -177,6 +186,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to commit grand theft auto"}
       />
       <AutoupdatingStdButton
+        label={`Kidnap and Ransom (${numeralWrapper.formatPercentage(kidnapChance)} chance of success)`}
         intervalTime={5e3}
         onClick={kidnap}
         style={{ display: "block" }}
@@ -184,6 +194,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to kidnap and ransom a high-profile-target"}
       />
       <AutoupdatingStdButton
+        label={`Assassinate (${numeralWrapper.formatPercentage(assassinateChance)} chance of success)`}
         intervalTime={5e3}
         onClick={assassinate}
         style={{ display: "block" }}
@@ -191,6 +202,7 @@ export function SlumsLocation(): React.ReactElement {
         tooltip={"Attempt to assassinate a high-profile target"}
       />
       <AutoupdatingStdButton
+        label={`Heist (${numeralWrapper.formatPercentage(heistChance)} chance of success)`}
         intervalTime={5e3}
         onClick={heist}
         style={{ display: "block" }}

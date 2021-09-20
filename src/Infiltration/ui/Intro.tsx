@@ -48,11 +48,12 @@ function coloredArrow(difficulty: number): JSX.Element {
 }
 
 export function Intro(props: IProps): React.ReactElement {
+  console.log(props);
   return (
     <>
       <Grid container spacing={3}>
         <Grid item xs={10}>
-          <h1>Infiltrating {props.Location}</h1>
+          <h1>Infiltrating {props.Location.name}</h1>
         </Grid>
         <Grid item xs={10}>
           <h2>Maximum level: {props.MaxLevel}</h2>

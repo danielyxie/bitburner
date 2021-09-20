@@ -35,6 +35,7 @@ function LocationLetter(location: Location): React.ReactElement {
   if (!location) return <span>*</span>;
   return (
     <span
+      aria-label={location.name}
       key={location.name}
       className="tooltip"
       style={{

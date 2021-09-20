@@ -7,6 +7,7 @@
 import * as React from "react";
 
 interface IProps {
+  label?: string;
   disabled?: boolean;
   intervalTime?: number;
   onClick?: (e: React.MouseEvent<HTMLElement>) => any;
@@ -65,7 +66,12 @@ export class AutoupdatingStdButton extends React.Component<IProps, IState> {
     };
 
     return (
-      <button className={className} onClick={this.props.onClick} style={this.props.style}>
+      <button
+        aria-label={this.props.label || ""}
+        className={className}
+        onClick={this.props.onClick}
+        style={this.props.style}
+      >
         {this.props.text}
         {hasTooltip && <span className={"tooltiptext"} dangerouslySetInnerHTML={tooltipMarkup}></span>}
       </button>

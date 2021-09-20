@@ -57,7 +57,7 @@ module.exports = (env, argv) => {
         $: "jquery",
       }),
       new HtmlWebpackPlugin({
-        title: "Bitburner" + (isDevelopment ? " - development" : ""),
+        title: "Bitburner",
         template: "src/index.html",
         favicon: "favicon.ico",
         googleAnalytics: {

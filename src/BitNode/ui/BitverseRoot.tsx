@@ -44,7 +44,11 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
   }
 
   return (
-    <a className={`bitnode ${cssClass} tooltip`} onClick={openPortalPopup}>
+    <button
+      className={`bitnode ${cssClass} tooltip`}
+      aria-label={`enter-bitnode-${bitNode.number.toString()}`}
+      onClick={openPortalPopup}
+    >
       <strong>O</strong>
       <span className="tooltiptext">
         <strong>
@@ -56,7 +60,7 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
         {bitNode.desc}
         <br />
       </span>
-    </a>
+    </button>
   );
 }
 
