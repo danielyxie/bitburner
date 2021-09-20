@@ -5,6 +5,14 @@ import { Factions } from "../Factions";
 import { Faction } from "../Faction";
 import { joinFaction } from "../FactionHelpers";
 
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import Button from "@mui/material/Button";
+import TableBody from "@mui/material/TableBody";
+import { Table, TableCell } from "../../ui/React/Table";
+import TableRow from "@mui/material/TableRow";
+
 interface IProps {
   player: IPlayer;
   router: IRouter;
@@ -17,7 +25,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
     props.router.toFaction(faction);
   }
 
-  function acceptInvitation(event: React.MouseEvent<HTMLElement>, faction: string): void {
+  function acceptInvitation(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, faction: string): void {
     if (!event.isTrusted) return;
     joinFaction(Factions[faction]);
     setRerender((x) => !x);
@@ -25,41 +33,43 @@ export function FactionsRoot(props: IProps): React.ReactElement {
 
   return (
     <>
-      <h1>Factions</h1>
-      <p>Lists all factions you have joined</p>
+      <Typography variant="h5" color="primary">
+        Factions
+      </Typography>
+      <Typography>Lists all factions you have joined</Typography>
       <br />
-      <ul>
+      <Box display="flex" flexDirection="column">
         {props.player.factions.map((faction: string) => (
-          <li key={faction}>
-            <a
-              className="a-link-button"
-              onClick={() => openFaction(Factions[faction])}
-              style={{ padding: "4px", margin: "4px", display: "inline-block" }}
-            >
-              {faction}
-            </a>
-          </li>
+          <Link key={faction} variant="h6" onClick={() => openFaction(Factions[faction])}>
+            {faction}
+          </Link>
         ))}
-      </ul>
+      </Box>
       <br />
-      <h1>Outstanding Faction Invitations</h1>
-      <p style={{ width: "70%" }}>
-        Lists factions you have been invited to. You can accept these faction invitations at any time.
-      </p>
-      <ul>
-        {props.player.factionInvitations.map((faction: string) => (
-          <li key={faction} style={{ padding: "6px", margin: "6px" }}>
-            <p style={{ display: "inline", margin: "4px", padding: "4px" }}>{faction}</p>
-            <a
-              className="a-link-button"
-              onClick={(e) => acceptInvitation(e, faction)}
-              style={{ display: "inline", margin: "4px", padding: "4px" }}
-            >
-              Accept Faction Invitation
-            </a>
-          </li>
-        ))}
-      </ul>
+      {props.player.factionInvitations.length > 0 && (
+        <>
+          <Typography variant="h5" color="primary">
+            Outstanding Faction Invitations
+          </Typography>
+          <Typography>
+            Lists factions you have been invited to. You can accept these faction invitations at any time.
+          </Typography>
+          <Table size="small" padding="none">
+            <TableBody>
+              {props.player.factionInvitations.map((faction: string) => (
+                <TableRow key={faction}>
+                  <TableCell>
+                    <Typography noWrap>{faction}</Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button onClick={(e) => acceptInvitation(e, faction)}>Join!</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </>
+      )}
     </>
   );
 }

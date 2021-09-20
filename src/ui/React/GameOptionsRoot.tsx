@@ -486,13 +486,13 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <Tooltip title={<Typography>export</Typography>}>
               <Button onClick={() => props.export()}>
                 <DownloadIcon color="primary" />
-                <Typography>Export</Typography>
+                Export
               </Button>
             </Tooltip>
             <Tooltip title={<Typography>import</Typography>}>
               <Button onClick={importSave}>
                 <UploadIcon color="primary" />
-                <Typography>Import</Typography>
+                Import
                 <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
               </Button>
             </Tooltip>
