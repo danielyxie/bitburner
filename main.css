@@ -282,7 +282,7 @@ a:visited {
 
 #status-text-container {
   background-color: transparent;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 50%; }
 
