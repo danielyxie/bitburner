@@ -85,7 +85,7 @@ export class Terminal implements ITerminal {
   process(router: IRouter, player: IPlayer, cycles: number): void {
     if (this.action === null) return;
     this.action.timeLeft -= (CONSTANTS._idleSpeed * cycles) / 1000;
-    if (this.action.timeLeft < 0) this.finishAction(router, player, false);
+    if (this.action.timeLeft < 0.01) this.finishAction(router, player, false);
     TerminalEvents.emit();
   }
 

@@ -121,7 +121,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.53.0",
+  Version: "0.54.0",
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -344,83 +344,48 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v0.53.0 - 2021-09-09 Way too many things. (hydroflame & community)
+    v0.54.0 - 2021-09-20 One big react node (hydroflame & community)
     -------------------------------------------
 
-    ** Dev? **
+    ** UI **
 
-    * The entire codebase has been run through a code prettifier, hurray for consistency. (@threehams)
-    * Lots of test. (@threehams)
-    * Massive improvements to build speed. (@threehams)
-    * Dev notes: This won't affect any players but is immensely useful for me.
+    * The UI is now completely(ish) in react and I'm starting to implement
+      Material-UI everywhere. This will help make the game feel more consistent.
+    * Major help from (@threehams)
+    * New Terminal
+    * New Active Scripts page
+    * New sidebar.
+    * New Character overview
+    * New tutorial
+    * New options page
+    * New create program page (@Nolshine)
 
-    ** Hacknet **
+    ** Netscript ** 
 
-    * Converted to ts/react
+    * Add companyName to getPlayer
 
-    ** Resleeving **
+    ** Factions **
 
-    * Converted to ts/react
+    * Megacorp factions are no longer removed when installing.
 
-    ** Sleeves **
+    ** Corporation **
 
-    * Converted to ts/react. The ui should also have a better feel.
-    * Fixed a bug that allowed players to recover shock much faster than intended.
-
-    ** BN10 **
-
-    * You have access to Sleeves right away
-    * In BN10 Sleeves start with 75 shock and 25 sync.
-
-    ** MathJax **
-
-    * Several tooltips have been updated to display the relevant formula in Mathjax, e.g. Favor and reputation
-
-    ** Corporation ** 
-
-    * Completely rewritten in React. Paving the way for bigger change.
-    * Smart Supply is now smarter and won't deadlock the warehouse. It is also more configurable.
-    * Several UI fixes.
-
-    ** Bladeburner ** 
-
-    * Action count is no longer decided when joining the Bladeburners. Experiences for all players should be more similar.
-
-    ** Factions ** 
-
-    * No factions have home computer ram requirement. This caused some confusion for new players.
-
-    ** Gang ** 
-
-    * Made it clear when there's a new equipment coming up.
-
-    ** Netscript **
-
-    * getActionCountRemaining now returns Infinity for bladeburner general actions. (@brubsy)
-    * getActionEstimatedSuccessChance now returns 100% for Diplomacy and Hyperbolic Regeneration Chamber. (@brubsy)
-    * disableLog('ALL') now disables all logs individually, meaning you can re-enable the ones you want after. (@Cass)
-    * getPlayer returns numPeopleKilled.
-    * Dynamic RAM calculation errors have a better error message.
-    * Hide some functions from autocomplete.
-    * Added getAugmentationPrice, getAugmentationRepReq, deprecated getAugmentationCost. (@TempFound)
-    * Fixed bug where some crime API would return "assassinate" when that's not accepted in other functions.
-
-    ** Coding Contract **
-
-    * Spiralize Matrix is easier to read.
+    * All research tooltips are always visible.
+    * Smart supply is enabled by default if purchased (@Nolshine)
 
     ** Misc. **
 
-    * The world map is now used in sleeve travel and bladeburner travel.
-    * noselect a bunch of stuff.
-    * Ascii maps letters are more contrasting
-    * Updated documentation for infiltration.
-    * Most money costs in the game will turn grey/cyan when you don't have enough money.
-    * Donation textbox has better look & feel.
-    * Tech vendors ram & cores buttons have better look and feels.
-    * cores cost modified to be a formula instead of a semi-random array of numbers.
-    * Tech vendors now give a hint about where to get bigger servers.
-    * logboxes now displays whitespaces exactly. (@Cass)
+    * Fix "Game saved" animation. (@Nolshine)
+    * Update commitCrime documentation (@Tryneus)
+    * Fix logbox scrolling weird (@Nolshine)
+    * Fix weird scrolling in corporations (@BartKoppelmans)
+    * Fix typo (@BartKoppelmans & @Nolshine)
+    * Delete game now has a confirmation modal (@Nolshine)
+    * Fix issue where skills would not get properly updated when entering new
+      BN. (@Nolshine)
+    * Convert create gang to popup (@vmesecher)
+    * Fixed a bug that prevented travel to Sector-12 and New Tokyo when not using
+      ASCII art.
     * nerf noodle bar
 `,
 

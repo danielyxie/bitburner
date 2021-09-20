@@ -3,6 +3,50 @@
 Changelog
 =========
 
+v0.54.0 - 2021-09-20 One big react node (hydroflame & community)
+-------------------------------------------
+
+** UI **
+
+* The UI is now completely(ish) in react and I'm starting to implement
+  Material-UI everywhere. This will help make the game feel more consistent.
+* Major help from (@threehams)
+* New Terminal
+* New Active Scripts page
+* New sidebar.
+* New Character overview
+* New tutorial
+* New options page
+* New create program page (@Nolshine)
+
+** Netscript ** 
+
+* Add companyName to getPlayer
+
+** Factions **
+
+* Megacorp factions are no longer removed when installing.
+
+** Corporation **
+
+* All research tooltips are always visible.
+* Smart supply is enabled by default if purchased (@Nolshine)
+
+** Misc. **
+
+* Fix "Game saved" animation. (@Nolshine)
+* Update commitCrime documentation (@Tryneus)
+* Fix logbox scrolling weird (@Nolshine)
+* Fix weird scrolling in corporations (@BartKoppelmans)
+* Fix typo (@BartKoppelmans & @Nolshine)
+* Delete game now has a confirmation modal (@Nolshine)
+* Fix issue where skills would not get properly updated when entering new
+  BN. (@Nolshine)
+* Convert create gang to popup (@vmesecher)
+* Fixed a bug that prevented travel to Sector-12 and New Tokyo when not using
+  ASCII art.
+* nerf noodle bar
+
 v0.53.0 - 2021-09-09 Way too many things. (hydroflame & community)
 -------------------------------------------
 
