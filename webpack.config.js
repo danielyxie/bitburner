@@ -5,15 +5,14 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = (env, argv) => {
   const isDevServer = (env || {}).devServer === true;
   const runInContainer = (env || {}).runInContainer === true;
   const isDevelopment = argv.mode === "development";
   const outputDirectory = isDevServer ? "dist-dev" : "dist";
-  const entries = {};
-  entries[`${outputDirectory}/engine`] = "./src/engine.jsx";
-  entries[`${outputDirectory}/engineStyle`] = "./src/engineStyle.js";
+  const entry = "./src/index.tsx";
 
   const statsConfig = {
     builtAt: true,
@@ -27,6 +26,7 @@ module.exports = (env, argv) => {
   };
 
   const devServerSettings = {
+    hot: true,
     port: 8000,
     publicPath: `/`,
     stats: statsConfig,
@@ -57,7 +57,7 @@ module.exports = (env, argv) => {
         $: "jquery",
       }),
       new HtmlWebpackPlugin({
-        title: "Bitburner" + (isDevelopment ? " - development" : ""),
+        title: "Bitburner",
         template: "src/index.html",
         favicon: "favicon.ico",
         googleAnalytics: {
@@ -129,9 +129,10 @@ module.exports = (env, argv) => {
           columns: true,
           module: true,
         }),
+      isDevelopment && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
     target: "web",
-    entry: entries,
+    entry: entry,
     output: {
       path: path.resolve(__dirname, "./"),
       filename: "[name].bundle.js",
@@ -144,6 +145,7 @@ module.exports = (env, argv) => {
           use: {
             loader: "babel-loader",
             options: {
+              plugins: [isDevelopment && require.resolve("react-refresh/babel")].filter(Boolean),
               cacheDirectory: true,
             },
           },

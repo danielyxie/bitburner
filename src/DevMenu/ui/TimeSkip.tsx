@@ -28,9 +28,9 @@ export function TimeSkip(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Sleeves</h2>
+        <h2>Time skip</h2>
       </AccordionSummary>
       <AccordionDetails>
         <Button onClick={timeskip(60 * 1000)}>1 minute</Button>

@@ -25,6 +25,7 @@ import { ICorporation } from "../Corporation/ICorporation";
 import { IGang } from "../Gang/IGang";
 import { IBladeburner } from "../Bladeburner/IBladeburner";
 import { ICodingContractReward } from "../CodingContracts";
+import { IRouter } from "../ui/Router";
 
 export interface IPlayer {
   // Class members
@@ -121,8 +122,33 @@ export interface IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
-  workRepGained: number;
+  createProgramName: string;
+  timeWorkedCreateProgram: number;
+  crimeType: string;
+  timeNeededToCompleteWork: number;
   focus: boolean;
+  className: string;
+  currentWorkFactionName: string;
+  workType: string;
+  currentWorkFactionDescription: string;
+  timeWorked: number;
+  workMoneyGained: number;
+  workMoneyGainRate: number;
+  workRepGained: number;
+  workRepGainRate: number;
+  workHackExpGained: number;
+  workHackExpGainRate: number;
+  workStrExpGained: number;
+  workStrExpGainRate: number;
+  workDefExpGained: number;
+  workDefExpGainRate: number;
+  workDexExpGained: number;
+  workDexExpGainRate: number;
+  workAgiExpGained: number;
+  workAgiExpGainRate: number;
+  workChaExpGained: number;
+  workChaExpGainRate: number;
+  workMoneyLossRate: number;
 
   // Methods
   applyForAgentJob(sing?: boolean): boolean | void;
@@ -175,9 +201,10 @@ export interface IPlayer {
   setMoney(amt: number): void;
   singularityStopWork(): void;
   startBladeburner(p: any): void;
-  startClass(costMult: number, expMult: number, className: string): void;
+  startClass(router: IRouter, costMult: number, expMult: number, className: string): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startCrime(
+    router: IRouter,
     crimeType: string,
     hackExp: number,
     strExp: number,
@@ -189,13 +216,13 @@ export interface IPlayer {
     time: number,
     singParams: any,
   ): void;
-  startFactionFieldWork(faction: Faction): void;
-  startFactionHackWork(faction: Faction): void;
-  startFactionSecurityWork(faction: Faction): void;
+  startFactionFieldWork(router: IRouter, faction: Faction): void;
+  startFactionHackWork(router: IRouter, faction: Faction): void;
+  startFactionSecurityWork(router: IRouter, faction: Faction): void;
   startFocusing(): void;
   startGang(facName: string, isHacking: boolean): void;
-  startWork(companyName: string): void;
-  startWorkPartTime(companyName: string): void;
+  startWork(router: IRouter, companyName: string): void;
+  startWorkPartTime(router: IRouter, companyName: string): void;
   takeDamage(amt: number): boolean;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
@@ -204,9 +231,17 @@ export interface IPlayer {
   getCasinoWinnings(): number;
   quitJob(company: string): void;
   createHacknetServer(): void;
-  startCreateProgramWork(programName: string, time: number, reqLevel: number): void;
+  startCreateProgramWork(router: IRouter, programName: string, time: number, reqLevel: number): void;
   queueAugmentation(augmentationName: string): void;
   receiveInvite(factionName: string): void;
   updateSkillLevels(): void;
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
+  stopFocusing(): void;
+  finishFactionWork(cancelled: boolean, sing?: boolean): void;
+  finishClass(sing?: boolean): void;
+  finishWork(cancelled: boolean, sing?: boolean): void;
+  cancelationPenalty(): number;
+  finishWorkPartTime(sing?: boolean): void;
+  finishCrime(cancelled: boolean): void;
+  finishCreateProgramWork(cancelled: boolean): void;
 }

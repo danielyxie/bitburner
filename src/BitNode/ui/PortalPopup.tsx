@@ -1,13 +1,15 @@
 import React from "react";
 
 import { BitNodes } from "../BitNode";
+import { IRouter } from "../../ui/Router";
 import { removePopup } from "../../ui/React/createPopup";
 interface IProps {
   n: number;
   level: number;
   destroyedBitNode: number;
   flume: boolean;
-  enter: (flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
+  router: IRouter;
+  enter: (router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
   popupId: string;
 }
 
@@ -33,7 +35,7 @@ export function PortalPopup(props: IProps): React.ReactElement {
       <button
         className="std-button"
         onClick={() => {
-          props.enter(props.flume, props.destroyedBitNode, props.n);
+          props.enter(props.router, props.flume, props.destroyedBitNode, props.n);
           removePopup(props.popupId);
         }}
       >

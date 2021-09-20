@@ -97,7 +97,7 @@ export function Factions(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Factions</h2>
       </AccordionSummary>
@@ -119,10 +119,10 @@ export function Factions(props: IProps): React.ReactElement {
                     value={faction}
                     startAdornment={
                       <>
-                        <IconButton color="primary" onClick={receiveAllInvites} size="large">
+                        <IconButton onClick={receiveAllInvites} size="large" arial-label="receive-all-invitation">
                           <ReplyAllIcon />
                         </IconButton>
-                        <IconButton color="primary" onClick={receiveInvite} size="large">
+                        <IconButton onClick={receiveInvite} size="large" arial-label="receive-one-invitation">
                           <ReplyIcon />
                         </IconButton>
                       </>

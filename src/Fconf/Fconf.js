@@ -207,10 +207,10 @@ function setTheme() {
     /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(FconfSettings.THEME_BACKGROUND_COLOR) &&
     /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(FconfSettings.THEME_PROMPT_COLOR)
   ) {
-    document.body.style.setProperty("--my-highlight-color", FconfSettings.THEME_HIGHLIGHT_COLOR);
-    document.body.style.setProperty("--my-font-color", FconfSettings.THEME_FONT_COLOR);
-    document.body.style.setProperty("--my-background-color", FconfSettings.THEME_BACKGROUND_COLOR);
-    document.body.style.setProperty("--my-prompt-color", FconfSettings.THEME_PROMPT_COLOR);
+    // document.body.style.setProperty("--my-highlight-color", FconfSettings.THEME_HIGHLIGHT_COLOR);
+    // document.body.style.setProperty("--my-font-color", FconfSettings.THEME_FONT_COLOR);
+    // document.body.style.setProperty("--my-background-color", FconfSettings.THEME_BACKGROUND_COLOR);
+    // document.body.style.setProperty("--my-prompt-color", FconfSettings.THEME_PROMPT_COLOR);
   }
 }
 

@@ -9,7 +9,6 @@ import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStart
 import { generateNextPid } from "./Netscript/Pid";
 
 import { CONSTANTS } from "./Constants";
-import { Engine } from "./engine";
 import { Interpreter } from "./JSInterpreter";
 import { isScriptErrorMessage, makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
@@ -45,7 +44,7 @@ export function prestigeWorkerScripts() {
     killWorkerScript(ws);
   }
 
-  WorkerScriptStartStopEventEmitter.emitEvent();
+  WorkerScriptStartStopEventEmitter.emit();
   workerScripts.clear();
 }
 
@@ -501,7 +500,7 @@ export function createAndAddWorkerScript(runningScriptObj, server, parent) {
 
   // Add the WorkerScript to the global pool
   workerScripts.set(pid, s);
-  WorkerScriptStartStopEventEmitter.emitEvent();
+  WorkerScriptStartStopEventEmitter.emit();
 
   // Start the script's execution
   let p = null; // Script's resulting promise
@@ -586,7 +585,7 @@ export function createAndAddWorkerScript(runningScriptObj, server, parent) {
  * Updates the online running time stat of all running scripts
  */
 export function updateOnlineScriptTimes(numCycles = 1) {
-  var time = (numCycles * Engine._idleSpeed) / 1000; //seconds
+  var time = (numCycles * CONSTANTS._idleSpeed) / 1000; //seconds
   for (const ws of workerScripts.values()) {
     ws.scriptRef.onlineRunningTime += time;
   }

@@ -3,6 +3,7 @@ import { City } from "./City";
 import { Skill } from "./Skill";
 import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 
 export interface IBladeburner {
@@ -103,11 +104,11 @@ export interface IBladeburner {
   completeOperation(success: boolean): void;
   getActionObject(actionId: IActionIdentifier): IAction | null;
   completeContract(success: boolean): void;
-  completeAction(player: IPlayer): void;
+  completeAction(router: IRouter, player: IPlayer): void;
   changeRank(player: IPlayer, change: number): void;
-  processAction(player: IPlayer, seconds: number): void;
+  processAction(router: IRouter, player: IPlayer, seconds: number): void;
   calculateStaminaGainPerSecond(player: IPlayer): number;
   calculateMaxStamina(player: IPlayer): void;
   create(): void;
-  process(player: IPlayer): void;
+  process(router: IRouter, player: IPlayer): void;
 }

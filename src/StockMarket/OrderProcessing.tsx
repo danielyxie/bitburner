@@ -21,7 +21,6 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import * as React from "react";
 
 export interface IProcessOrderRefs {
-  rerenderFn: () => void;
   stockMarket: IStockMarket;
   symbolToStockMap: IMap<Stock>;
 }
@@ -116,7 +115,6 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
   // When orders are executed, the buying and selling functions shouldn't
   // emit popup dialog boxes. This options object configures the functions for that
   const opts = {
-    rerenderFn: refs.rerenderFn,
     suppressDialog: true,
   };
 
@@ -158,7 +156,6 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
             {numeralWrapper.formatShares(Math.round(order.shares))} shares)
           </>,
         );
-        refs.rerenderFn();
         return;
       }
     }

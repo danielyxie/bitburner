@@ -116,7 +116,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
     }
 
     if (rerenderUi) {
-      WorkerScriptStartStopEventEmitter.emitEvent();
+      WorkerScriptStartStopEventEmitter.emit();
     }
   } else {
     console.error(`Invalid argument passed into removeWorkerScript():`);

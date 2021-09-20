@@ -3,7 +3,7 @@
  * This is the component for displaying a single faction's UI, not the list of all
  * accessible factions
  */
-import * as React from "react";
+import React, { useState } from "react";
 
 import { AugmentationsPage } from "./AugmentationsPage";
 import { DonateOption } from "./DonateOption";
@@ -11,28 +11,18 @@ import { Info } from "./Info";
 import { Option } from "./Option";
 
 import { CONSTANTS } from "../../Constants";
-import { IEngine } from "../../IEngine";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../../Faction/Faction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { createSleevePurchasesFromCovenantPopup } from "../../PersonObjects/Sleeve/SleeveCovenantPurchases";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 import { createPopup } from "../../ui/React/createPopup";
+import { use } from "../../ui/Context";
 import { CreateGangPopup } from "./CreateGangPopup";
 
 type IProps = {
-  engine: IEngine;
-  initiallyOnAugmentationsPage?: boolean;
   faction: Faction;
-  p: IPlayer;
-  startHackingMissionFn: (faction: Faction) => void;
-};
-
-type IState = {
-  rerenderFlag: boolean;
-  purchasingAugs: boolean;
 };
 
 // Info text for all options on the UI
@@ -72,89 +62,66 @@ const GangNames = [
   "The Black Hand",
 ];
 
-export class FactionRoot extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
+export function FactionRoot(props: IProps): React.ReactElement {
+  const faction = props.faction;
 
-    this.state = {
-      rerenderFlag: false,
-      purchasingAugs: props.initiallyOnAugmentationsPage ? props.initiallyOnAugmentationsPage : false,
-    };
+  const player = use.Player();
+  const router = use.Router();
+  const [, setRerenderFlag] = useState(false);
+  const [purchasingAugs, setPurchasingAugs] = useState(false);
 
-    this.manageGang = this.manageGang.bind(this);
-    this.rerender = this.rerender.bind(this);
-    this.routeToMain = this.routeToMain.bind(this);
-    this.routeToPurchaseAugs = this.routeToPurchaseAugs.bind(this);
-    this.sleevePurchases = this.sleevePurchases.bind(this);
-    this.startFieldWork = this.startFieldWork.bind(this);
-    this.startHackingContracts = this.startHackingContracts.bind(this);
-    this.startHackingMission = this.startHackingMission.bind(this);
-    this.startSecurityWork = this.startSecurityWork.bind(this);
-  }
-
-  manageGang(): void {
+  function manageGang(faction: Faction): void {
     // If player already has a gang, just go to the gang UI
-    if (this.props.p.inGang()) {
-      return this.props.engine.loadGangContent();
+    if (player.inGang()) {
+      return router.toGang();
     }
 
     const popupId = "create-gang-popup";
     createPopup(popupId, CreateGangPopup, {
       popupId: popupId,
-      facName: this.props.faction.name,
-      p: this.props.p,
-      engine: this.props.engine,
+      facName: faction.name,
+      player: player,
+      router: router,
     });
   }
 
-  rerender(): void {
-    this.setState((prevState) => {
-      return {
-        rerenderFlag: !prevState.rerenderFlag,
-      };
-    });
+  function rerender(): void {
+    setRerenderFlag((old) => !old);
   }
 
   // Route to the main faction page
-  routeToMain(): void {
-    this.setState({ purchasingAugs: false });
+  function routeToMain(): void {
+    setPurchasingAugs(false);
   }
 
   // Route to the purchase augmentation UI for this faction
-  routeToPurchaseAugs(): void {
-    this.setState({ purchasingAugs: true });
+  function routeToPurchaseAugs(): void {
+    setPurchasingAugs(true);
   }
 
-  sleevePurchases(): void {
-    createSleevePurchasesFromCovenantPopup(this.props.p);
+  function sleevePurchases(): void {
+    createSleevePurchasesFromCovenantPopup(player);
   }
 
-  startFieldWork(): void {
-    this.props.p.startFactionFieldWork(this.props.faction);
+  function startFieldWork(faction: Faction): void {
+    player.startFactionFieldWork(router, faction);
   }
 
-  startHackingContracts(): void {
-    this.props.p.startFactionHackWork(this.props.faction);
+  function startHackingContracts(faction: Faction): void {
+    player.startFactionHackWork(router, faction);
   }
 
-  startHackingMission(): void {
-    const fac = this.props.faction;
-    this.props.p.singularityStopWork();
-    this.props.engine.loadMissionContent();
-    this.props.startHackingMissionFn(fac);
+  function startHackingMission(faction: Faction): void {
+    player.singularityStopWork();
+    router.toHackingMission(faction);
   }
 
-  startSecurityWork(): void {
-    this.props.p.startFactionSecurityWork(this.props.faction);
+  function startSecurityWork(faction: Faction): void {
+    player.startFactionSecurityWork(router, faction);
   }
 
-  render(): React.ReactNode {
-    return this.state.purchasingAugs ? this.renderAugmentationsPage() : this.renderMainPage();
-  }
-
-  renderMainPage(): React.ReactNode {
-    const p = this.props.p;
-    const faction = this.props.faction;
+  function MainPage({ faction }: { faction: Faction }): React.ReactElement {
+    const p = player;
     const factionInfo = faction.getInfo();
 
     // We have a special flag for whether the player this faction is the player's
@@ -181,49 +148,51 @@ export class FactionRoot extends React.Component<IProps, IState> {
       <div className="faction-container">
         <h1>{faction.name}</h1>
         <Info faction={faction} factionInfo={factionInfo} />
-        {canAccessGang && <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={this.manageGang} />}
+        {canAccessGang && <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={() => manageGang(faction)} />}
         {!isPlayersGang && factionInfo.offerHackingMission && (
-          <Option buttonText={"Hacking Mission"} infoText={hackingMissionInfo} onClick={this.startHackingMission} />
+          <Option
+            buttonText={"Hacking Mission"}
+            infoText={hackingMissionInfo}
+            onClick={() => startHackingMission(faction)}
+          />
         )}
         {!isPlayersGang && factionInfo.offerHackingWork && (
           <Option
             buttonText={"Hacking Contracts"}
             infoText={hackingContractsInfo}
-            onClick={this.startHackingContracts}
+            onClick={() => startHackingContracts(faction)}
           />
         )}
         {!isPlayersGang && factionInfo.offerFieldWork && (
-          <Option buttonText={"Field Work"} infoText={fieldWorkInfo} onClick={this.startFieldWork} />
+          <Option buttonText={"Field Work"} infoText={fieldWorkInfo} onClick={() => startFieldWork(faction)} />
         )}
         {!isPlayersGang && factionInfo.offerSecurityWork && (
-          <Option buttonText={"Security Work"} infoText={securityWorkInfo} onClick={this.startSecurityWork} />
+          <Option buttonText={"Security Work"} infoText={securityWorkInfo} onClick={() => startSecurityWork(faction)} />
         )}
         {!isPlayersGang && factionInfo.offersWork() && (
           <DonateOption
-            faction={this.props.faction}
-            p={this.props.p}
-            rerender={this.rerender}
+            faction={faction}
+            p={player}
+            rerender={rerender}
             favorToDonate={favorToDonate}
             disabled={!canDonate}
           />
         )}
-        <Option buttonText={"Purchase Augmentations"} infoText={augmentationsInfo} onClick={this.routeToPurchaseAugs} />
+        <Option buttonText={"Purchase Augmentations"} infoText={augmentationsInfo} onClick={routeToPurchaseAugs} />
         {canPurchaseSleeves && (
           <Option
             buttonText={"Purchase & Upgrade Duplicate Sleeves"}
             infoText={sleevePurchasesInfo}
-            onClick={this.sleevePurchases}
+            onClick={sleevePurchases}
           />
         )}
       </div>
     );
   }
 
-  renderAugmentationsPage(): React.ReactNode {
-    return (
-      <>
-        <AugmentationsPage faction={this.props.faction} p={this.props.p} routeToMainPage={this.routeToMain} />
-      </>
-    );
-  }
+  return purchasingAugs ? (
+    <AugmentationsPage faction={faction} routeToMainPage={routeToMain} />
+  ) : (
+    <MainPage faction={faction} />
+  );
 }

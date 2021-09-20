@@ -4,9 +4,11 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";
@@ -15,21 +17,21 @@ import { FconfSettings } from "../../Fconf/FconfSettings";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     textfield: {
-      margin: 0,
+      margin: theme.spacing(0),
       width: "100%",
     },
     input: {
       backgroundColor: "#000",
     },
     nopadding: {
-      padding: 0,
+      padding: theme.spacing(0),
     },
     preformatted: {
       whiteSpace: "pre-wrap",
-      margin: 0,
+      margin: theme.spacing(0),
     },
     list: {
-      padding: 0,
+      padding: theme.spacing(0),
       height: "100%",
     },
   }),
@@ -37,19 +39,26 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   terminal: ITerminal;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
+// Save command in case we de-load this screen.
+let command = "";
 
-export function TerminalInput({ terminal, engine, player }: IProps): React.ReactElement {
+export function TerminalInput({ terminal, router, player }: IProps): React.ReactElement {
   const terminalInput = useRef<HTMLInputElement>(null);
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(command);
   const [possibilities, setPossibilities] = useState<string[]>([]);
   const classes = useStyles();
 
+  function saveValue(value: string): void {
+    command = value;
+    setValue(value);
+  }
+
   function handleValueChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setValue(event.target.value);
+    saveValue(event.target.value);
     setPossibilities([]);
   }
 
@@ -64,13 +73,13 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
     switch (mod.toLowerCase()) {
       case "backspace":
         if (start > 0 && start <= inputLength + 1) {
-          setValue(inputText.substr(0, start - 1) + inputText.substr(start));
+          saveValue(inputText.substr(0, start - 1) + inputText.substr(start));
         }
         break;
       case "deletewordbefore": // Delete rest of word before the cursor
         for (let delStart = start - 1; delStart > 0; --delStart) {
           if (inputText.charAt(delStart) === " ") {
-            setValue(inputText.substr(0, delStart) + inputText.substr(start));
+            saveValue(inputText.substr(0, delStart) + inputText.substr(start));
             return;
           }
         }
@@ -78,7 +87,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
       case "deletewordafter": // Delete rest of word after the cursor
         for (let delStart = start + 1; delStart <= value.length + 1; ++delStart) {
           if (inputText.charAt(delStart) === " ") {
-            setValue(inputText.substr(0, start) + inputText.substr(delStart));
+            saveValue(inputText.substr(0, start) + inputText.substr(delStart));
             return;
           }
         }
@@ -140,12 +149,11 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
       if (terminal.contractOpen) return;
-      if (event.metaKey || event.ctrlKey) return;
       const ref = terminalInput.current;
       if (ref) ref.focus();
       // Cancel action
       if (event.keyCode === KEY.C && event.ctrlKey) {
-        terminal.finishAction(player, true);
+        terminal.finishAction(router, player, true);
       }
     }
     document.addEventListener("keydown", keyDown);
@@ -157,8 +165,8 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
     if (event.keyCode === KEY.ENTER && value !== "") {
       event.preventDefault();
       terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
-      terminal.executeCommands(engine, player, value);
-      setValue("");
+      terminal.executeCommands(router, player, value);
+      saveValue("");
       return;
     }
 
@@ -205,7 +213,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
 
       const newValue = tabCompletion(command, arg, allPos, value);
       if (typeof newValue === "string" && newValue !== "") {
-        setValue(newValue);
+        saveValue(newValue);
       }
       if (Array.isArray(newValue)) {
         setPossibilities(newValue);
@@ -240,7 +248,7 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
         --terminal.commandHistoryIndex;
       }
       const prevCommand = terminal.commandHistory[terminal.commandHistoryIndex];
-      setValue(prevCommand);
+      saveValue(prevCommand);
       const ref = terminalInput.current;
       if (ref) {
         setTimeout(function () {
@@ -270,11 +278,11 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
       // Latest command, put nothing
       if (i == len || i == len - 1) {
         terminal.commandHistoryIndex = len;
-        setValue("");
+        saveValue("");
       } else {
         ++terminal.commandHistoryIndex;
         const prevCommand = terminal.commandHistory[terminal.commandHistoryIndex];
-        setValue(prevCommand);
+        saveValue(prevCommand);
       }
     }
 
@@ -326,14 +334,14 @@ export function TerminalInput({ terminal, engine, player }: IProps): React.React
   return (
     <>
       {possibilities.length > 0 && (
-        <>
+        <Paper square>
           <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
             Possible autocomplete candidate:
           </Typography>
           <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
             {possibilities.join(" ")}
           </Typography>
-        </>
+        </Paper>
       )}
       <TextField
         variant="standard"

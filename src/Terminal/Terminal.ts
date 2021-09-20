@@ -1,11 +1,11 @@
 import { ITerminal, Output, Link, TTimer } from "./ITerminal";
-import { IEngine } from "../IEngine";
+import { IRouter } from "../ui/Router";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
-import { hackWorldDaemon } from "../RedPill";
 import { Programs } from "../Programs/Programs";
 import { CodingContractResult } from "../CodingContracts";
+import { TerminalEvents, TerminalClearEvents } from "./TerminalEvents";
 
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
@@ -15,10 +15,7 @@ import { AllServers } from "../Server/AllServers";
 
 import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
 import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
-import { logBoxCreate } from "../../utils/LogBox";
 import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
-import { findRunningScript } from "../Script/ScriptHelpers";
-import { TerminalHelpText } from "./HelpText";
 import { GetServerByHostname, getServer, getServerOnNetwork } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
@@ -70,7 +67,6 @@ import { unalias } from "./commands/unalias";
 import { wget } from "./commands/wget";
 
 export class Terminal implements ITerminal {
-  hasChanges = false;
   // Flags to determine whether the player is currently running a hack or an analyze
   action: TTimer | null = null;
 
@@ -86,19 +82,11 @@ export class Terminal implements ITerminal {
   // Excludes the trailing forward slash
   currDir = "/";
 
-  process(player: IPlayer, cycles: number): void {
+  process(router: IRouter, player: IPlayer, cycles: number): void {
     if (this.action === null) return;
     this.action.timeLeft -= (CONSTANTS._idleSpeed * cycles) / 1000;
-    this.hasChanges = true;
-    if (this.action.timeLeft < 0) this.finishAction(player, false);
-  }
-
-  pollChanges(): boolean {
-    if (this.hasChanges) {
-      this.hasChanges = false;
-      return true;
-    }
-    return false;
+    if (this.action.timeLeft < 0.01) this.finishAction(router, player, false);
+    TerminalEvents.emit();
   }
 
   append(item: Output | Link): void {
@@ -106,16 +94,15 @@ export class Terminal implements ITerminal {
     if (this.outputHistory.length > Settings.MaxTerminalCapacity) {
       this.outputHistory.slice(this.outputHistory.length - Settings.MaxTerminalCapacity);
     }
+    TerminalEvents.emit();
   }
 
   print(s: string): void {
     this.append(new Output(s, "primary"));
-    this.hasChanges = true;
   }
 
   error(s: string): void {
     this.append(new Output(s, "error"));
-    this.hasChanges = true;
   }
 
   startHack(player: IPlayer): void {
@@ -138,7 +125,7 @@ export class Terminal implements ITerminal {
   }
 
   // Complete the hack/analyze command
-  finishHack(player: IPlayer, cancelled = false): void {
+  finishHack(router: IRouter, player: IPlayer, cancelled = false): void {
     if (cancelled) return;
     const server = player.getCurrentServer();
 
@@ -156,7 +143,7 @@ export class Terminal implements ITerminal {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
-        hackWorldDaemon(player.bitNodeN);
+        router.toBitVerse(false, false);
         return;
       }
       server.backdoorInstalled = true;
@@ -190,7 +177,7 @@ export class Terminal implements ITerminal {
     }
   }
 
-  finishBackdoor(player: IPlayer, cancelled = false): void {
+  finishBackdoor(router: IRouter, player: IPlayer, cancelled = false): void {
     if (!cancelled) {
       const server = player.getCurrentServer();
       if (
@@ -200,7 +187,7 @@ export class Terminal implements ITerminal {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
-        hackWorldDaemon(player.bitNodeN);
+        router.toBitVerse(false, false);
         return;
       }
       server.backdoorInstalled = true;
@@ -238,16 +225,16 @@ export class Terminal implements ITerminal {
     }
   }
 
-  finishAction(player: IPlayer, cancelled = false): void {
+  finishAction(router: IRouter, player: IPlayer, cancelled = false): void {
     if (this.action === null) {
       if (!cancelled) throw new Error("Finish action called when there was no action");
       return;
     }
     this.print(this.getProgressText());
     if (this.action.action === "h") {
-      this.finishHack(player, cancelled);
+      this.finishHack(router, player, cancelled);
     } else if (this.action.action === "b") {
-      this.finishBackdoor(player, cancelled);
+      this.finishBackdoor(router, player, cancelled);
     } else if (this.action.action === "a") {
       this.finishAnalyze(player, cancelled);
     }
@@ -255,6 +242,7 @@ export class Terminal implements ITerminal {
       this.print("Cancelled");
     }
     this.action = null;
+    TerminalEvents.emit();
   }
 
   getFile(player: IPlayer, filename: string): Script | TextFile | string | null {
@@ -328,7 +316,7 @@ export class Terminal implements ITerminal {
 
   setcwd(dir: string): void {
     this.currDir = dir;
-    this.hasChanges = true;
+    TerminalEvents.emit();
   }
 
   async runContract(player: IPlayer, contractName: string): Promise<void> {
@@ -468,7 +456,7 @@ export class Terminal implements ITerminal {
     }
   }
 
-  executeCommands(engine: IEngine, player: IPlayer, commands: string): void {
+  executeCommands(router: IRouter, player: IPlayer, commands: string): void {
     // Sanitize input
     commands = commands.trim();
     commands = commands.replace(/\s\s+/g, " "); // Replace all extra whitespace in command with a single space
@@ -484,14 +472,15 @@ export class Terminal implements ITerminal {
     const allCommands = ParseCommands(commands);
 
     for (let i = 0; i < allCommands.length; i++) {
-      this.executeCommand(engine, player, allCommands[i]);
+      this.executeCommand(router, player, allCommands[i]);
     }
   }
 
   clear(): void {
     // TODO: remove this once we figure out the height issue.
     this.outputHistory = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
-    this.hasChanges = true;
+    TerminalEvents.emit();
+    TerminalClearEvents.emit();
   }
 
   prestige(): void {
@@ -499,7 +488,7 @@ export class Terminal implements ITerminal {
     this.clear();
   }
 
-  executeCommand(engine: IEngine, player: IPlayer, command: string): void {
+  executeCommand(router: IRouter, player: IPlayer, command: string): void {
     if (this.action !== null) {
       this.error(`Cannot execute command (${command}) while an action is in progress`);
       return;
@@ -524,51 +513,47 @@ export class Terminal implements ITerminal {
       switch (ITutorial.currStep) {
         case iTutorialSteps.TerminalHelp:
           if (commandArray.length === 1 && commandArray[0] == "help") {
-            TerminalHelpText.forEach((line) => this.print(line));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalLs:
           if (commandArray.length === 1 && commandArray[0] == "ls") {
-            ls(this, engine, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalScan:
           if (commandArray.length === 1 && commandArray[0] == "scan") {
-            scan(this, engine, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalScanAnalyze1:
           if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
-            this.executeScanAnalyzeCommand(player, 1);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalScanAnalyze2:
           if (commandArray.length == 2 && commandArray[0] == "scan-analyze" && commandArray[1] === 2) {
-            this.executeScanAnalyzeCommand(player, 2);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalConnect:
           if (commandArray.length == 2) {
             if (commandArray[0] == "connect" && (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.ip)) {
-              player.getCurrentServer().isConnectedTo = false;
-              player.currentServer = n00dlesServ.ip;
-              player.getCurrentServer().isConnectedTo = true;
-              this.print("Connected to n00dles");
               iTutorialNextStep();
             } else {
               this.print("Wrong command! Try again!");
@@ -576,80 +561,77 @@ export class Terminal implements ITerminal {
             }
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalAnalyze:
           if (commandArray.length === 1 && commandArray[0] === "analyze") {
-            if (commandArray.length !== 1) {
-              this.print("Incorrect usage of analyze command. Usage: analyze");
-              return;
-            }
-            this.startAnalyze();
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalNuke:
           if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
-            n00dlesServ.hasAdminRights = true;
-            this.print("NUKE successful! Gained root access to n00dles");
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalManualHack:
           if (commandArray.length == 1 && commandArray[0] == "hack") {
-            this.startHack(player);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
+          }
+          break;
+        case iTutorialSteps.TerminalGoHome:
+          if (commandArray.length == 1 && commandArray[0] == "home") {
+            iTutorialNextStep();
+          } else {
+            this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalCreateScript:
           if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
-            engine.loadScriptEditorContent("n00dles.script", "");
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalFree:
           if (commandArray.length == 1 && commandArray[0] == "free") {
-            free(this, engine, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.TerminalRunScript:
           if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
-            run(this, engine, player, s, commandArray.slice(1));
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         case iTutorialSteps.ActiveScriptsToTerminal:
           if (commandArray.length == 2 && commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
-            // Check that the script exists on this machine
-            const runningScript = findRunningScript("n00dles.script", [], player.getCurrentServer());
-            if (runningScript == null) {
-              this.print("Error: No such script exists");
-              return;
-            }
-            logBoxCreate(runningScript);
             iTutorialNextStep();
           } else {
             this.print("Bad command. Please follow the tutorial");
+            return;
           }
           break;
         default:
-          this.print("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
+          this.print("Please follow the tutorial, or click 'EXIT' if you'd like to skip it");
           return;
       }
-      return;
     }
     /****************** END INTERACTIVE TUTORIAL ******************/
     /* Command parser */
@@ -662,7 +644,7 @@ export class Terminal implements ITerminal {
     const commands: {
       [key: string]: (
         terminal: ITerminal,
-        engine: IEngine,
+        router: IRouter,
         player: IPlayer,
         server: BaseServer,
         args: (string | number)[],
@@ -713,7 +695,7 @@ export class Terminal implements ITerminal {
       return;
     }
 
-    f(this, engine, player, s, commandArray.slice(1));
+    f(this, router, player, s, commandArray.slice(1));
   }
 
   getProgressText(): string {

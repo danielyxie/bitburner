@@ -1,13 +1,10 @@
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
 import React from "react";
 import { StdButton } from "../../ui/React/StdButton";
+import { Location } from "../../Locations/Location";
 import Grid from "@mui/material/Grid";
 
 interface IProps {
-  Player: IPlayer;
-  Engine: IEngine;
-  Location: string;
+  Location: Location;
   Difficulty: number;
   MaxLevel: number;
   start: () => void;
@@ -51,11 +48,12 @@ function coloredArrow(difficulty: number): JSX.Element {
 }
 
 export function Intro(props: IProps): React.ReactElement {
+  console.log(props);
   return (
     <>
       <Grid container spacing={3}>
         <Grid item xs={10}>
-          <h1>Infiltrating {props.Location}</h1>
+          <h1>Infiltrating {props.Location.name}</h1>
         </Grid>
         <Grid item xs={10}>
           <h2>Maximum level: {props.MaxLevel}</h2>

@@ -36,46 +36,10 @@
       ga("send", "pageview");
     </script>
     
-  <link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="dist/engineStyle.css" rel="stylesheet"></head>
+  <link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="main.css" rel="stylesheet"></head>
   <body>
-    <div id="entire-game-container" style="visibility: hidden">
-      <div id="mainmenu-container" style="display: flex; flex-direction: row">
-        <!-- Main menu -->
-        <div id="sidebar" style=""></div>
-        <div id="generic-react-container"></div>
-      </div>
-
-      <div id="infiltration-container" class="generic-fullscreen-container"></div>
-      <div id="mission-container" class="generic-fullscreen-container"></div>
-
-      <!-- Work in progress screen -->
-      <div id="work-in-progress-container" class="generic-fullscreen-container">
-        <p id="work-in-progress-text"></p>
-
-        <button id="work-in-progress-cancel-button" class="work-button">Cancel Work</button>
-        <button id="work-in-progress-something-else-button" class="work-button">
-          Do something else simultaneously
-        </button>
-      </div>
-
-      <!-- Red Pill Container -->
-      <div id="red-pill-container" class="generic-fullscreen-container"></div>
-
-      <!-- Cinematic Text Container -->
-      <div id="cinematic-text-container" class="generic-fullscreen-container"></div>
-
-      <!-- Interactive Tutorial Text Screen -->
-      <div id="interactive-tutorial-wrapper">
-        <div id="interactive-tutorial-container">
-          <p id="interactive-tutorial-text"></p>
-          <button id="interactive-tutorial-exit">Exit Tutorial</button>
-          <button id="interactive-tutorial-next">Next</button>
-          <button id="interactive-tutorial-back">Back</button>
-        </div>
-      </div>
-
-      <!-- Character Overview Screen -->
-      <div id="character-overview"></div>
+    <div id="entire-game-container">
+      <div id="mainmenu-container" style="display: flex; flex-direction: row"></div>
 
       <!-- Status text -->
       <div id="status-text-container">
@@ -83,33 +47,8 @@
       </div>
     </div>
 
-    <input type="file" id="import-game-file-selector" name="file"/>
-
-    <!-- Loader (Loading screen) -->
-    <div id="loader" class="loaderoverlay">
-      <div class="loaderspinner"></div>
-      <div class="loaderlabel">Loading Bitburner...</div>
-      <div id="killAllMessageWrapper" class="killAllMessage killAllMessageWrapperHidden">
-        <script>
-          setTimeout(function () {
-            var w = document.getElementById("killAllMessageWrapper");
-            if (w == null) {
-              return;
-            }
-            w.classList.remove("killAllMessageWrapperHidden");
-            w.classList.add("killAllMessageWrapperShow");
-          }, 2000);
-        </script>
-        <p>
-          If the game fails to load, consider
-          <a href="?noScripts">killing all scripts</a>
-        </p>
-      </div>
-    </div>
-
     <div id="unclickable" style="display: none">Click on this to upgrade your Source-File -1!</div>
-  <script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="dist/engine.bundle.js"></script><script type="text/javascript" src="dist/engineStyle.bundle.js"></script></body>
+  <script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
 
-  <!-- Misc Scripts -->
   <script src="src/ThirdParty/raphael.min.js"></script>
 </html>

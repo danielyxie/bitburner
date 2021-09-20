@@ -14,10 +14,8 @@ import { CONSTANTS } from "../../Constants";
 import { Programs } from "../../Programs/Programs";
 import { determineCrimeSuccess } from "../../Crime/CrimeHelpers";
 import { Crimes } from "../../Crime/Crimes";
-import { Engine } from "../../engine";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
-import { displayFactionContent } from "../../Faction/FactionHelpers";
 import { resetGangs } from "../../Gang/AllGangs";
 import { hasHacknetServers } from "../../Hacknet/HacknetHelpers";
 import { Cities } from "../../Locations/Cities";
@@ -48,18 +46,12 @@ import Decimal from "decimal.js";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Money } from "../../ui/React/Money";
-import { MoneyRate } from "../../ui/React/MoneyRate";
-import { ReputationRate } from "../../ui/React/ReputationRate";
 
 import React from "react";
-import ReactDOM from "react-dom";
-
-const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
 export function init() {
   /* Initialize Player's home computer */
@@ -518,8 +510,6 @@ export function resetWorkStatus(generalType, group, workType) {
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.className = "";
-
-  ReactDOM.unmountComponentAtNode(document.getElementById("work-in-progress-text"));
 }
 
 export function processWorkEarnings(numCycles = 1) {
@@ -556,7 +546,7 @@ export function processWorkEarnings(numCycles = 1) {
 }
 
 /* Working for Company */
-export function startWork(companyName) {
+export function startWork(router, companyName) {
   this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
   this.isWorking = true;
   this.focus = true;
@@ -573,25 +563,7 @@ export function startWork(companyName) {
   this.workMoneyGainRate = this.getWorkMoneyGain();
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-
-  //Remove all old event listeners from Cancel button
-  var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
-  newCancelButton.innerHTML = "Cancel Work";
-  newCancelButton.addEventListener("click", () => {
-    this.finishWork(true);
-    return false;
-  });
-
-  const focusButton = clearEventListeners("work-in-progress-something-else-button");
-  focusButton.style.visibility = "visible";
-  focusButton.innerHTML = "Do something else simultaneously";
-  focusButton.addEventListener("click", () => {
-    this.stopFocusing();
-    return false;
-  });
-
-  //Display Work In Progress Screen
-  Engine.loadWorkInProgressContent();
+  router.toWork();
 }
 
 export function cancelationPenalty() {
@@ -607,78 +579,24 @@ export function work(numCycles) {
   // Cap the number of cycles being processed to whatever would put you at
   // the work time limit (8 hours)
   var overMax = false;
-  if (this.timeWorked + Engine._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
+  if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
     overMax = true;
-    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / Engine._idleSpeed);
+    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / CONSTANTS._idleSpeed);
   }
-  this.timeWorked += Engine._idleSpeed * numCycles;
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
   this.workRepGainRate = this.getWorkRepGain();
   this.processWorkEarnings(numCycles);
 
+  const comp = Companies[this.companyName];
+  influenceStockThroughCompanyWork(comp, this.workRepGainRate, numCycles);
+
   // If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
   if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
     return this.finishWork(false);
+    return true;
   }
-
-  const comp = Companies[this.companyName];
-  let companyRep = "0";
-  if (comp == null || !(comp instanceof Company)) {
-    console.error(`Could not find Company: ${this.companyName}`);
-  } else {
-    companyRep = comp.playerReputation;
-  }
-
-  influenceStockThroughCompanyWork(comp, this.workRepGainRate, numCycles);
-
-  const position = this.jobs[this.companyName];
-
-  const penalty = this.cancelationPenalty();
-
-  const penaltyString = penalty === 0.5 ? "half" : "three-quarters";
-
-  var elem = document.getElementById("work-in-progress-text");
-  ReactDOM.render(
-    <>
-      You are currently working as a {position} at {this.companyName} (Current Company Reputation:{" "}
-      {Reputation(companyRep)})<br />
-      <br />
-      You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}
-      <br />
-      <br />
-      You have earned: <br />
-      <br />
-      <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
-      <br />
-      {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this
-      company <br />
-      <br />
-      {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) hacking exp <br />
-      <br />
-      {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) strength exp <br />
-      {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {`${numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) defense exp <br />
-      {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {`${numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) dexterity exp <br />
-      {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {`${numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) agility exp <br />
-      <br />
-      {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {`${numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) charisma exp <br />
-      <br />
-      You will automatically finish after working for 8 hours. You can cancel earlier if you wish, but you will only
-      gain {penaltyString} of the reputation you've earned so far.
-    </>,
-    elem,
-  );
+  return false;
 }
 
 export function finishWork(cancelled, sing = false) {
@@ -731,10 +649,7 @@ export function finishWork(cancelled, sing = false) {
     dialogBoxCreate(content);
   }
 
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
   this.isWorking = false;
-  Engine.loadLocationContent(false);
 
   if (sing) {
     var res =
@@ -764,7 +679,7 @@ export function finishWork(cancelled, sing = false) {
   this.resetWorkStatus();
 }
 
-export function startWorkPartTime(companyName) {
+export function startWorkPartTime(router, companyName) {
   this.resetWorkStatus(CONSTANTS.WorkTypeCompanyPartTime, companyName);
   this.isWorking = true;
   this.focus = true;
@@ -781,27 +696,18 @@ export function startWorkPartTime(companyName) {
   this.workMoneyGainRate = this.getWorkMoneyGain();
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-
-  var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
-  newCancelButton.innerHTML = "Stop Working";
-  newCancelButton.addEventListener("click", () => {
-    this.finishWorkPartTime();
-    return false;
-  });
-
-  //Display Work In Progress Screen
-  Engine.loadWorkInProgressContent();
+  router.toWork();
 }
 
 export function workPartTime(numCycles) {
   //Cap the number of cycles being processed to whatever would put you at the
   //work time limit (8 hours)
   var overMax = false;
-  if (this.timeWorked + Engine._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
+  if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
     overMax = true;
-    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / Engine._idleSpeed);
+    numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / CONSTANTS._idleSpeed);
   }
-  this.timeWorked += Engine._idleSpeed * numCycles;
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
   this.workRepGainRate = this.getWorkRepGain();
   this.processWorkEarnings(numCycles);
@@ -809,61 +715,9 @@ export function workPartTime(numCycles) {
   //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
   if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
     return this.finishWorkPartTime();
+    return true;
   }
-
-  var comp = Companies[this.companyName],
-    companyRep = "0";
-  if (comp == null || !(comp instanceof Company)) {
-    console.error(`Could not find Company: ${this.companyName}`);
-  } else {
-    companyRep = comp.playerReputation;
-  }
-
-  const position = this.jobs[this.companyName];
-
-  const elem = document.getElementById("work-in-progress-text");
-  ReactDOM.render(
-    <>
-      You are currently working as a {position} at {this.companyName} (Current Company Reputation:{" "}
-      {Reputation(companyRep)})<br />
-      <br />
-      You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}
-      <br />
-      <br />
-      You have earned: <br />
-      <br />
-      <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
-      <br />
-      {Reputation(this.workRepGained)} (
-      {Reputation(`${numeralWrapper.formatExp(this.workRepGainRate * CYCLES_PER_SEC)} / sec`)}
-      ) reputation for this company <br />
-      <br />
-      {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {`${numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) hacking exp <br />
-      <br />
-      {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {`${numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) strength exp <br />
-      {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {`${numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) defense exp <br />
-      {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {`${numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) dexterity exp <br />
-      {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {`${numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) agility exp <br />
-      <br />
-      {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {`${numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
-      ) charisma exp <br />
-      <br />
-      You will automatically finish after working for 8 hours. You can cancel earlier if you wish, and there will be no
-      penalty because this is a part-time job.
-    </>,
-    elem,
-  );
+  return false;
 }
 
 export function finishWorkPartTime(sing = false) {
@@ -894,10 +748,7 @@ export function finishWorkPartTime(sing = false) {
     dialogBoxCreate(content);
   }
 
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
   this.isWorking = false;
-  Engine.loadLocationContent(false);
   if (sing) {
     var res =
       "You worked for " +
@@ -928,21 +779,15 @@ export function finishWorkPartTime(sing = false) {
 }
 
 export function startFocusing() {
-  const mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "hidden";
   this.focus = true;
-  Engine.loadWorkInProgressContent();
 }
 
 export function stopFocusing() {
-  const mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
   this.focus = false;
-  Engine.loadTerminalContent();
 }
 
 /* Working for Faction */
-export function startFactionWork(faction) {
+export function startFactionWork(router, faction) {
   //Update reputation gain rate to account for faction favor
   var favorMult = 1 + faction.favor / 100;
   if (isNaN(favorMult)) {
@@ -957,27 +802,10 @@ export function startFactionWork(faction) {
   this.currentWorkFactionName = faction.name;
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
-
-  const cancelButton = clearEventListeners("work-in-progress-cancel-button");
-  cancelButton.innerHTML = "Stop Faction Work";
-  cancelButton.addEventListener("click", () => {
-    this.finishFactionWork(true);
-    return false;
-  });
-
-  const focusButton = clearEventListeners("work-in-progress-something-else-button");
-  focusButton.style.visibility = "visible";
-  focusButton.innerHTML = "Do something else simultaneously";
-  focusButton.addEventListener("click", () => {
-    this.stopFocusing();
-    return false;
-  });
-
-  //Display Work In Progress Screen
-  Engine.loadWorkInProgressContent();
+  router.toWork();
 }
 
-export function startFactionHackWork(faction) {
+export function startFactionHackWork(router, faction) {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -989,10 +817,10 @@ export function startFactionHackWork(faction) {
   this.factionWorkType = CONSTANTS.FactionWorkHacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
 
-  this.startFactionWork(faction);
+  this.startFactionWork(router, faction);
 }
 
-export function startFactionFieldWork(faction) {
+export function startFactionFieldWork(router, faction) {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
 
   this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -1006,10 +834,10 @@ export function startFactionFieldWork(faction) {
   this.factionWorkType = CONSTANTS.FactionWorkField;
   this.currentWorkFactionDescription = "carrying out field missions";
 
-  this.startFactionWork(faction);
+  this.startFactionWork(router, faction);
 }
 
-export function startFactionSecurityWork(faction) {
+export function startFactionSecurityWork(router, faction) {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -1023,7 +851,7 @@ export function startFactionSecurityWork(faction) {
   this.factionWorkType = CONSTANTS.FactionWorkSecurity;
   this.currentWorkFactionDescription = "performing security detail";
 
-  this.startFactionWork(faction);
+  this.startFactionWork(router, faction);
 }
 
 export function workForFaction(numCycles) {
@@ -1046,56 +874,20 @@ export function workForFaction(numCycles) {
 
   //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
   var overMax = false;
-  if (this.timeWorked + Engine._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer20Hours) {
+  if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer20Hours) {
     overMax = true;
-    numCycles = Math.round((CONSTANTS.MillisecondsPer20Hours - this.timeWorked) / Engine._idleSpeed);
+    numCycles = Math.round((CONSTANTS.MillisecondsPer20Hours - this.timeWorked) / CONSTANTS._idleSpeed);
   }
-  this.timeWorked += Engine._idleSpeed * numCycles;
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
   this.processWorkEarnings(numCycles);
 
   //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
   if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
-    return this.finishFactionWork(false);
+    this.finishFactionWork(false);
+    return true;
   }
-
-  const elem = document.getElementById("work-in-progress-text");
-  ReactDOM.render(
-    <>
-      You are currently {this.currentWorkFactionDescription} for your faction {faction.name}
-      <br />
-      (Current Faction Reputation: {Reputation(faction.playerReputation)}). <br />
-      You have been doing this for {convertTimeMsToTimeElapsedString(this.timeWorked)}
-      <br />
-      <br />
-      You have earned: <br />
-      <br />
-      <Money money={this.workMoneyGained} /> ({MoneyRate(this.workMoneyGainRate * CYCLES_PER_SEC)}) <br />
-      <br />
-      {Reputation(this.workRepGained)} ({ReputationRate(this.workRepGainRate * CYCLES_PER_SEC)}) reputation for this
-      faction <br />
-      <br />
-      {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
-      <br />
-      {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
-      {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
-      {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
-      {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br />
-      <br />
-      {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br />
-      <br />
-      You will automatically finish after working for 20 hours. You can cancel earlier if you wish.
-      <br />
-      There is no penalty for cancelling earlier.
-    </>,
-    elem,
-  );
+  return false;
 }
 
 export function finishFactionWork(cancelled, sing = false) {
@@ -1125,13 +917,8 @@ export function finishFactionWork(cancelled, sing = false) {
     );
   }
 
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
-
   this.isWorking = false;
 
-  Engine.loadFactionContent();
-  displayFactionContent(faction.name);
   if (sing) {
     var res =
       "You worked for your faction " +
@@ -1387,7 +1174,7 @@ export function getWorkRepGain() {
 // }
 
 /* Creating a Program */
-export function startCreateProgramWork(programName, time, reqLevel) {
+export function startCreateProgramWork(router, programName, time, reqLevel) {
   this.resetWorkStatus();
   this.isWorking = true;
   this.focus = true;
@@ -1419,19 +1206,7 @@ export function startCreateProgramWork(programName, time, reqLevel) {
   }
 
   this.createProgramName = programName;
-
-  var cancelButton = clearEventListeners("work-in-progress-cancel-button");
-  cancelButton.innerHTML = "Cancel work on creating program";
-  cancelButton.addEventListener("click", () => {
-    this.finishCreateProgramWork(true);
-    return false;
-  });
-
-  const focusButton = clearEventListeners("work-in-progress-something-else-button");
-  focusButton.style.visibility = "hidden";
-
-  //Display Work In Progress Screen
-  Engine.loadWorkInProgressContent();
+  router.toWork();
 }
 
 export function createProgramWork(numCycles) {
@@ -1441,28 +1216,14 @@ export function createProgramWork(numCycles) {
   skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
 
   //Skill multiplier directly applied to "time worked"
-  this.timeWorked += Engine._idleSpeed * numCycles;
-  this.timeWorkedCreateProgram += Engine._idleSpeed * numCycles * skillMult;
-  var programName = this.createProgramName;
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
+  this.timeWorkedCreateProgram += CONSTANTS._idleSpeed * numCycles * skillMult;
 
   if (this.timeWorkedCreateProgram >= this.timeNeededToCompleteWork) {
     this.finishCreateProgramWork(false);
+    return true;
   }
-
-  const elem = document.getElementById("work-in-progress-text");
-  ReactDOM.render(
-    <>
-      You are currently working on coding {programName}.<br />
-      <br />
-      You have been working for {convertTimeMsToTimeElapsedString(this.timeWorked)}
-      <br />
-      <br />
-      The program is {((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 100).toFixed(2)}
-      % complete. <br />
-      If you cancel, your work will be saved and you can come back to complete the program later.
-    </>,
-    elem,
-  );
+  return false;
 }
 
 export function finishCreateProgramWork(cancelled) {
@@ -1483,17 +1244,13 @@ export function finishCreateProgramWork(cancelled) {
     this.gainIntelligenceExp(this.createProgramReqLvl / CONSTANTS.IntelligenceProgramBaseExpGain);
   }
 
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
-
   this.isWorking = false;
 
-  Engine.loadTerminalContent();
   this.resetWorkStatus();
 }
 
 /* Studying/Taking Classes */
-export function startClass(costMult, expMult, className) {
+export function startClass(router, costMult, expMult, className) {
   this.resetWorkStatus();
   this.isWorking = true;
   this.focus = true;
@@ -1501,7 +1258,7 @@ export function startClass(costMult, expMult, className) {
 
   this.className = className;
 
-  const gameCPS = 1000 / Engine._idleSpeed;
+  const gameCPS = 1000 / CONSTANTS._idleSpeed;
 
   //Find cost and exp gain per game cycle
   var cost = 0;
@@ -1564,62 +1321,13 @@ export function startClass(costMult, expMult, className) {
   this.workDexExpGainRate = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
   this.workAgiExpGainRate = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
   this.workChaExpGainRate = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-
-  var cancelButton = clearEventListeners("work-in-progress-cancel-button");
-  if (
-    className == CONSTANTS.ClassGymStrength ||
-    className == CONSTANTS.ClassGymDefense ||
-    className == CONSTANTS.ClassGymDexterity ||
-    className == CONSTANTS.ClassGymAgility
-  ) {
-    cancelButton.innerHTML = "Stop training at gym";
-  } else {
-    cancelButton.innerHTML = "Stop taking course";
-  }
-  cancelButton.addEventListener("click", () => {
-    this.finishClass();
-    return false;
-  });
-
-  const focusButton = clearEventListeners("work-in-progress-something-else-button");
-  focusButton.style.visibility = "hidden";
-
-  //Display Work In Progress Screen
-  Engine.loadWorkInProgressContent();
+  router.toWork();
 }
 
 export function takeClass(numCycles) {
-  this.timeWorked += Engine._idleSpeed * numCycles;
-  var className = this.className;
-
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
   this.processWorkEarnings(numCycles);
-
-  const elem = document.getElementById("work-in-progress-text");
-  ReactDOM.render(
-    <>
-      You have been {className} for {convertTimeMsToTimeElapsedString(this.timeWorked)}
-      <br />
-      <br />
-      This has cost you: <br />
-      <Money money={-this.workMoneyGained} /> ({MoneyRate(this.workMoneyLossRate * CYCLES_PER_SEC)}) <br />
-      <br />
-      You have gained: <br />
-      {numeralWrapper.formatExp(this.workHackExpGained)} (
-      {numeralWrapper.formatExp(this.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
-      {numeralWrapper.formatExp(this.workStrExpGained)} (
-      {numeralWrapper.formatExp(this.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
-      {numeralWrapper.formatExp(this.workDefExpGained)} (
-      {numeralWrapper.formatExp(this.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
-      {numeralWrapper.formatExp(this.workDexExpGained)} (
-      {numeralWrapper.formatExp(this.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
-      {numeralWrapper.formatExp(this.workAgiExpGained)} (
-      {numeralWrapper.formatExp(this.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br />
-      {numeralWrapper.formatExp(this.workChaExpGained)} (
-      {numeralWrapper.formatExp(this.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br />
-      You may cancel at any time
-    </>,
-    elem,
-  );
+  return false;
 }
 
 //The 'sing' argument defines whether or not this function was called
@@ -1650,12 +1358,8 @@ export function finishClass(sing = false) {
     );
   }
 
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
-
   this.isWorking = false;
 
-  Engine.loadLocationContent(false);
   if (sing) {
     var res =
       "After " +
@@ -1686,7 +1390,19 @@ export function finishClass(sing = false) {
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
-export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, chaExp, money, time, singParams = null) {
+export function startCrime(
+  router,
+  crimeType,
+  hackExp,
+  strExp,
+  defExp,
+  dexExp,
+  agiExp,
+  chaExp,
+  money,
+  time,
+  singParams = null,
+) {
   this.crimeType = crimeType;
 
   this.resetWorkStatus();
@@ -1708,49 +1424,17 @@ export function startCrime(crimeType, hackExp, strExp, defExp, dexExp, agiExp, c
   this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
   this.timeNeededToCompleteWork = time;
-
-  //Remove all old event listeners from Cancel button
-  const newCancelButton = clearEventListeners("work-in-progress-cancel-button");
-  newCancelButton.innerHTML = "Cancel crime";
-  newCancelButton.addEventListener("click", () => {
-    this.finishCrime(true);
-    return false;
-  });
-
-  const focusButton = clearEventListeners("work-in-progress-something-else-button");
-  focusButton.style.visibility = "hidden";
-
-  //Display Work In Progress Screen
-  Engine.loadWorkInProgressContent();
+  router.toWork();
 }
 
 export function commitCrime(numCycles) {
-  this.timeWorked += Engine._idleSpeed * numCycles;
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
   if (this.timeWorked >= this.timeNeededToCompleteWork) {
     this.finishCrime(false);
-    return;
+    return true;
   }
-
-  var percent = Math.round((this.timeWorked / this.timeNeededToCompleteWork) * 100);
-  var numBars = Math.round(percent / 5);
-  if (numBars < 0) {
-    numBars = 0;
-  }
-  if (numBars > 20) {
-    numBars = 20;
-  }
-  var progressBar = "[" + Array(numBars + 1).join("|") + Array(20 - numBars + 1).join(" ") + "]";
-
-  var txt = document.getElementById("work-in-progress-text");
-  txt.innerHTML =
-    "You are attempting to " +
-    this.crimeType +
-    ".<br>" +
-    "Time remaining: " +
-    convertTimeMsToTimeElapsedString(this.timeNeededToCompleteWork - this.timeWorked) +
-    "<br>" +
-    progressBar.replace(/ /g, "&nbsp;");
+  return false;
 }
 
 export function finishCrime(cancelled) {
@@ -1892,11 +1576,9 @@ export function finishCrime(cancelled) {
   }
   this.committingCrimeThruSingFn = false;
   this.singFnCrimeWorkerScript = null;
-  var mainMenu = document.getElementById("mainmenu-container");
-  mainMenu.style.visibility = "visible";
   this.isWorking = false;
+  this.crimeType = "";
   this.resetWorkStatus();
-  Engine.loadLocationContent(false);
 }
 
 //Cancels the player's current "work" assignment and gives the proper rewards

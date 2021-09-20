@@ -1,5 +1,5 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { Server } from "../../Server/Server";
@@ -7,7 +7,7 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 
 export function backdoor(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number)[],

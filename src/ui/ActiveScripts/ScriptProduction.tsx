@@ -4,45 +4,61 @@
  */
 import * as React from "react";
 
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { Money } from "../React/Money";
+import { MoneyRate } from "../React/MoneyRate";
+import { use } from "../Context";
 
-type IProps = {
-  p: IPlayer;
-  workerScripts: Map<number, WorkerScript>;
-};
+import Typography from "@mui/material/Typography";
 
-export function ScriptProduction(props: IProps): React.ReactElement {
-  const prodRateSinceLastAug = props.p.scriptProdSinceLastAug / (props.p.playtimeSinceLastAug / 1000);
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 
-  let onlineProduction = 0;
-  for (const ws of props.workerScripts.values()) {
-    onlineProduction += ws.scriptRef.onlineMoneyMade / ws.scriptRef.onlineRunningTime;
-  }
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    cell: {
+      borderBottom: "none",
+      padding: theme.spacing(1),
+      margin: theme.spacing(1),
+      whiteSpace: "nowrap",
+    },
+    size: {
+      width: "1px",
+    },
+  }),
+);
+export function ScriptProduction(): React.ReactElement {
+  const player = use.Player();
+  const classes = useStyles();
+  const prodRateSinceLastAug = player.scriptProdSinceLastAug / (player.playtimeSinceLastAug / 1000);
 
   return (
-    <p id="active-scripts-total-prod">
-      Total online production of Active scripts:&nbsp;
-      <span className="money-gold">
-        <span id="active-scripts-total-production-active">
-          <Money money={onlineProduction} />
-        </span>{" "}
-        / sec
-      </span>
-      <br />
-      Total online production since last Aug installation:&nbsp;
-      <span id="active-scripts-total-prod-aug-total" className="money-gold">
-        <Money money={props.p.scriptProdSinceLastAug} />
-      </span>
-      &nbsp;(
-      <span className="money-gold">
-        <span id="active-scripts-total-prod-aug-avg" className="money-gold">
-          <Money money={prodRateSinceLastAug} />
-        </span>{" "}
-        / sec
-      </span>
-      )
-    </p>
+    <Table size="small" classes={{ root: classes.size }}>
+      <TableBody>
+        <TableRow>
+          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+            <Typography variant="body2">Total online production of Active scripts:</Typography>
+          </TableCell>
+          <TableCell align="left" classes={{ root: classes.cell }}>
+            <Typography variant="body2">
+              <MoneyRate money={player.scriptProdSinceLastAug} />
+            </Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow style={{ width: "1px" }}>
+          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+            <Typography variant="body2">Total online production since last Aug installation:</Typography>
+          </TableCell>
+          <TableCell align="left" classes={{ root: classes.cell }}>
+            <Typography variant="body2">
+              (<MoneyRate money={prodRateSinceLastAug} />)
+            </Typography>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }

@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { BladeburnerConstants } from "../data/Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
 import { Money } from "../../ui/React/Money";
 import { StatsTable } from "../../ui/React/StatsTable";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { createPopup } from "../../ui/React/createPopup";
 import { Factions } from "../../Faction/Factions";
-import { joinFaction, displayFactionContent } from "../../Faction/FactionHelpers";
+import { IRouter } from "../../ui/Router";
+import { joinFaction } from "../../Faction/FactionHelpers";
 import { IBladeburner } from "../IBladeburner";
 
 import { TravelPopup } from "./TravelPopup";
 
 interface IProps {
   bladeburner: IBladeburner;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
 
@@ -72,8 +72,7 @@ export function Stats(props: IProps): React.ReactElement {
   function openFaction(): void {
     const faction = Factions["Bladeburners"];
     if (faction.isMember) {
-      props.engine.loadFactionContent();
-      displayFactionContent("Bladeburners");
+      props.router.toFaction(faction);
     } else {
       if (props.bladeburner.rank >= BladeburnerConstants.RankNeededForFaction) {
         joinFaction(faction);
@@ -148,12 +147,14 @@ export function Stats(props: IProps): React.ReactElement {
       </p>
       <p>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</p>
       <br />
-      {StatsTable([
-        ["Aug. Success Chance mult: ", formatNumber(props.player.bladeburner_success_chance_mult * 100, 1) + "%"],
-        ["Aug. Max Stamina mult: ", formatNumber(props.player.bladeburner_max_stamina_mult * 100, 1) + "%"],
-        ["Aug. Stamina Gain mult: ", formatNumber(props.player.bladeburner_stamina_gain_mult * 100, 1) + "%"],
-        ["Aug. Field Analysis mult: ", formatNumber(props.player.bladeburner_analysis_mult * 100, 1) + "%"],
-      ])}
+      <StatsTable
+        rows={[
+          ["Aug. Success Chance mult: ", formatNumber(props.player.bladeburner_success_chance_mult * 100, 1) + "%"],
+          ["Aug. Max Stamina mult: ", formatNumber(props.player.bladeburner_max_stamina_mult * 100, 1) + "%"],
+          ["Aug. Stamina Gain mult: ", formatNumber(props.player.bladeburner_stamina_gain_mult * 100, 1) + "%"],
+          ["Aug. Field Analysis mult: ", formatNumber(props.player.bladeburner_analysis_mult * 100, 1) + "%"],
+        ]}
+      />
       <br />
       <a onClick={openTravel} className="a-link-button" style={{ display: "inline-block" }}>
         Travel

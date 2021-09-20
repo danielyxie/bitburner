@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
+import { IRouter } from "../../ui/Router";
 import { BitNodes } from "../BitNode";
+import { enterBitNode } from "../../RedPill";
 import { PortalPopup } from "./PortalPopup";
 import { createPopup } from "../../ui/React/createPopup";
 import { CinematicText } from "../../ui/React/CinematicText";
+import { use } from "../../ui/Context";
 
 interface IPortalProps {
   n: number;
   level: number;
   destroyedBitNode: number;
   flume: boolean;
-  enter: (flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
+  enter: (router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
 }
 function BitNodePortal(props: IPortalProps): React.ReactElement {
+  const router = use.Router();
   const bitNode = BitNodes[`BitNode${props.n}`];
   if (bitNode == null) {
     return <>O</>;
@@ -32,6 +36,7 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
       n: props.n,
       level: props.level,
       enter: props.enter,
+      router: router,
       destroyedBitNode: props.destroyedBitNode,
       flume: props.flume,
       popupId: popupId,
@@ -39,7 +44,11 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
   }
 
   return (
-    <a className={`bitnode ${cssClass} tooltip`} onClick={openPortalPopup}>
+    <button
+      className={`bitnode ${cssClass} tooltip`}
+      aria-label={`enter-bitnode-${bitNode.number.toString()}`}
+      onClick={openPortalPopup}
+    >
       <strong>O</strong>
       <span className="tooltiptext">
         <strong>
@@ -51,24 +60,26 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
         {bitNode.desc}
         <br />
       </span>
-    </a>
+    </button>
   );
 }
 
 interface IProps {
   flume: boolean;
-  destroyedBitNodeNum: number;
   quick: boolean;
-  enter: (flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
+  enter: (router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
 }
 
 export function BitverseRoot(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const enter = enterBitNode;
+  const destroyed = player.bitNodeN;
   const [destroySequence, setDestroySequence] = useState(true && !props.quick);
 
   // Update NextSourceFileFlags
   const nextSourceFileFlags = SourceFileFlags.slice();
   if (!props.flume) {
-    if (nextSourceFileFlags[props.destroyedBitNodeNum] < 3) ++nextSourceFileFlags[props.destroyedBitNodeNum];
+    if (nextSourceFileFlags[destroyed] < 3) ++nextSourceFileFlags[destroyed];
   }
 
   if (destroySequence) {
@@ -84,7 +95,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
           "0020 7124696B 0000FF69 74652E6F FFFF1111",
           "----------------------------------------",
           "Failsafe initiated...",
-          `Restarting BitNode-${props.destroyedBitNodeNum}...`,
+          `Restarting BitNode-${destroyed}...`,
           "...........",
           "...........",
           "[ERROR] FAILED TO AUTOMATICALLY REBOOT BITNODE",
@@ -96,6 +107,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
           "..............................................",
         ]}
         onDone={() => setDestroySequence(false)}
+        auto={true}
       />
     );
   }
@@ -116,16 +128,16 @@ export function BitverseRoot(props: IProps): React.ReactElement {
       <pre> \| O   |  |_/    |\|   \ O    \__|    \_|  |   O |/ </pre>
       <pre>  | |   |_/       | |    \|    /  |       \_|   | |  </pre>
       <pre>   \|   /          \|     |   /  /          \   |/   </pre>
-      <pre>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  |    </pre>
-      <pre>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} /> |  |            |     |     |            |  | <BitNodePortal n={12} level={nextSourceFileFlags[12]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  </pre>
+      <pre>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  |    </pre>
+      <pre>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> |  |            |     |     |            |  | <BitNodePortal n={12} level={nextSourceFileFlags[12]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  </pre>
       <pre>  | |  |            /    / \    \            |  | |  </pre>
-      <pre>   \|  |           /  <BitNodePortal n={7} level={nextSourceFileFlags[7]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} /> /   \ <BitNodePortal n={8} level={nextSourceFileFlags[8]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  \           |  |/   </pre>
+      <pre>   \|  |           /  <BitNodePortal n={7} level={nextSourceFileFlags[7]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> /   \ <BitNodePortal n={8} level={nextSourceFileFlags[8]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  \           |  |/   </pre>
       <pre>    \  |          /  / |     | \  \          |  /    </pre>
-      <pre>     \ \JUMP <BitNodePortal n={5} level={nextSourceFileFlags[5]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />3R |  |  |     |  |  | R3<BitNodePortal n={6} level={nextSourceFileFlags[6]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} /> PMUJ/ /     </pre>
+      <pre>     \ \JUMP <BitNodePortal n={5} level={nextSourceFileFlags[5]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />3R |  |  |     |  |  | R3<BitNodePortal n={6} level={nextSourceFileFlags[6]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> PMUJ/ /     </pre>
       <pre>      \||    |   |  |  |     |  |  |   |    ||/      </pre>
       <pre>       \|     \_ |  |  |     |  |  | _/     |/       </pre>
       <pre>        \       \| /    \   /    \ |/       /        </pre>
-      <pre>         <BitNodePortal n={1} level={nextSourceFileFlags[1]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />       |/   <BitNodePortal n={2} level={nextSourceFileFlags[2]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />  | |  <BitNodePortal n={3} level={nextSourceFileFlags[3]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />   \|       <BitNodePortal n={4} level={nextSourceFileFlags[4]} enter={props.enter} flume={props.flume} destroyedBitNode={props.destroyedBitNodeNum} />         </pre>
+      <pre>         <BitNodePortal n={1} level={nextSourceFileFlags[1]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />       |/   <BitNodePortal n={2} level={nextSourceFileFlags[2]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  | |  <BitNodePortal n={3} level={nextSourceFileFlags[3]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />   \|       <BitNodePortal n={4} level={nextSourceFileFlags[4]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />         </pre>
       <pre>         |       |    |  | |  |    |       |         </pre>
       <pre>          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          </pre>
       <br />

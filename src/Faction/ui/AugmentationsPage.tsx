@@ -1,52 +1,37 @@
 /**
  * Root React Component for displaying a faction's "Purchase Augmentations" page
  */
-import * as React from "react";
+import React, { useState } from "react";
 
 import { PurchaseableAugmentation } from "./PurchaseableAugmentation";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../../Faction/Faction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
 
 import { StdButton } from "../../ui/React/StdButton";
+import { use } from "../../ui/Context";
 
 type IProps = {
   faction: Faction;
-  p: IPlayer;
   routeToMainPage: () => void;
 };
 
-type IState = {
-  rerenderFlag: boolean;
-  sortOrder: PurchaseAugmentationsOrderSetting;
-};
-
-const infoStyleMarkup = {
-  width: "70%",
-};
-
-export class AugmentationsPage extends React.Component<IProps, IState> {
+export function AugmentationsPage(props: IProps): React.ReactElement {
+  const player = use.Player();
   // Flag for whether the player has a gang with this faction
-  isPlayersGang: boolean;
-  constructor(props: IProps) {
-    super(props);
+  const isPlayersGang = player.inGang() && player.getGangName() === props.faction.name;
 
-    this.isPlayersGang = props.p.inGang() && props.p.getGangName() === props.faction.name;
+  const setRerender = useState(false)[1];
 
-    this.state = {
-      rerenderFlag: false,
-      sortOrder: PurchaseAugmentationsOrderSetting.Default,
-    };
-
-    this.rerender = this.rerender.bind(this);
+  function rerender(): void {
+    setRerender((old) => !old);
   }
 
-  getAugs(): string[] {
-    if (this.isPlayersGang) {
+  function getAugs(): string[] {
+    if (isPlayersGang) {
       const augs: string[] = [];
       for (const augName in Augmentations) {
         const aug = Augmentations[augName];
@@ -57,25 +42,25 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
 
       return augs;
     } else {
-      return this.props.faction.augmentations.slice();
+      return props.faction.augmentations.slice();
     }
   }
 
-  getAugsSorted(): string[] {
+  function getAugsSorted(): string[] {
     switch (Settings.PurchaseAugmentationsOrder) {
       case PurchaseAugmentationsOrderSetting.Cost: {
-        return this.getAugsSortedByCost();
+        return getAugsSortedByCost();
       }
       case PurchaseAugmentationsOrderSetting.Reputation: {
-        return this.getAugsSortedByReputation();
+        return getAugsSortedByReputation();
       }
       default:
-        return this.getAugsSortedByDefault();
+        return getAugsSortedByDefault();
     }
   }
 
-  getAugsSortedByCost(): string[] {
-    const augs = this.getAugs();
+  function getAugsSortedByCost(): string[] {
+    const augs = getAugs();
     augs.sort((augName1, augName2) => {
       const aug1 = Augmentations[augName1],
         aug2 = Augmentations[augName2];
@@ -89,8 +74,8 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
     return augs;
   }
 
-  getAugsSortedByReputation(): string[] {
-    const augs = this.getAugs();
+  function getAugsSortedByReputation(): string[] {
+    const augs = getAugs();
     augs.sort((augName1, augName2) => {
       const aug1 = Augmentations[augName1],
         aug2 = Augmentations[augName2];
@@ -103,88 +88,70 @@ export class AugmentationsPage extends React.Component<IProps, IState> {
     return augs;
   }
 
-  getAugsSortedByDefault(): string[] {
-    return this.getAugs();
+  function getAugsSortedByDefault(): string[] {
+    return getAugs();
   }
 
-  switchSortOrder(newOrder: PurchaseAugmentationsOrderSetting): void {
+  function switchSortOrder(newOrder: PurchaseAugmentationsOrderSetting): void {
     Settings.PurchaseAugmentationsOrder = newOrder;
-    this.rerender();
+    rerender();
   }
 
-  rerender(): void {
-    this.setState((prevState) => {
-      return {
-        rerenderFlag: !prevState.rerenderFlag,
-      };
-    });
-  }
+  const augs = getAugsSorted();
+  const purchasable = augs.filter(
+    (aug: string) =>
+      aug === AugmentationNames.NeuroFluxGovernor ||
+      (!player.augmentations.some((a) => a.name === aug) && !player.queuedAugmentations.some((a) => a.name === aug)),
+  );
 
-  render(): React.ReactNode {
-    const augs = this.getAugsSorted();
-    const purchasable = augs.filter(
-      (aug: string) => aug === AugmentationNames.NeuroFluxGovernor ||
-        (!this.props.p.augmentations.some((a) => a.name === aug) &&
-          !this.props.p.queuedAugmentations.some((a) => a.name === aug)),
-    );
+  const purchaseableAugmentation = (aug: string): React.ReactNode => {
+    return <PurchaseableAugmentation augName={aug} faction={props.faction} key={aug} p={player} rerender={rerender} />;
+  };
 
-    const purchaseableAugmentation = (aug: string): React.ReactNode => {
-      return (
-        <PurchaseableAugmentation
-          augName={aug}
-          faction={this.props.faction}
-          key={aug}
-          p={this.props.p}
-          rerender={this.rerender}
-        />
-      );
-    };
+  const augListElems = purchasable.map((aug) => purchaseableAugmentation(aug));
 
-    const augListElems = purchasable.map((aug) => purchaseableAugmentation(aug));
-
-    let ownedElem = <></>;
-    const owned = augs.filter((aug: string) => !purchasable.includes(aug));
-    if (owned.length !== 0) {
-      ownedElem = (
-        <>
-          <br />
-          <h2>Purchased Augmentations</h2>
-          <p style={infoStyleMarkup}>This factions also offers these augmentations but you already own them.</p>
-          {owned.map((aug) => purchaseableAugmentation(aug))}
-        </>
-      );
-    }
-
-    return (
-      <div>
-        <StdButton onClick={this.props.routeToMainPage} text={"Back"} />
-        <h1>Faction Augmentations</h1>
-        <p style={infoStyleMarkup}>
-          These are all of the Augmentations that are available to purchase from {this.props.faction.name}.
-          Augmentations are powerful upgrades that will enhance your abilities.
-        </p>
-        <StdButton onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)} text={"Sort by Cost"} />
-        <StdButton
-          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}
-          text={"Sort by Reputation"}
-        />
-        <StdButton
-          onClick={() => this.switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}
-          text={"Sort by Default Order"}
-        />
+  let ownedElem = <></>;
+  const owned = augs.filter((aug: string) => !purchasable.includes(aug));
+  if (owned.length !== 0) {
+    ownedElem = (
+      <>
         <br />
-        {augListElems}
-        {ownedElem}
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-      </div>
+        <h2>Purchased Augmentations</h2>
+        <p>This factions also offers these augmentations but you already own them.</p>
+        {owned.map((aug) => purchaseableAugmentation(aug))}
+      </>
     );
   }
+
+  return (
+    <div>
+      <StdButton onClick={props.routeToMainPage} text={"Back"} />
+      <h1>Faction Augmentations</h1>
+      <p>
+        These are all of the Augmentations that are available to purchase from {props.faction.name}. Augmentations are
+        powerful upgrades that will enhance your abilities.
+      </p>
+      <StdButton onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)} text={"Sort by Cost"} />
+      <StdButton
+        onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}
+        text={"Sort by Reputation"}
+      />
+      <StdButton
+        onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}
+        text={"Sort by Default Order"}
+      />
+      <br />
+      {augListElems}
+      {ownedElem}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+  );
 }

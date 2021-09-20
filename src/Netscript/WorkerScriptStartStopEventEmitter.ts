@@ -3,4 +3,4 @@
  */
 import { EventEmitter } from "../utils/EventEmitter";
 
-export const WorkerScriptStartStopEventEmitter = new EventEmitter();
+export const WorkerScriptStartStopEventEmitter = new EventEmitter<[]>();

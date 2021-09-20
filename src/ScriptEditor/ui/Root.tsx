@@ -9,7 +9,7 @@ import { Options } from "./Options";
 import { js_beautify as beautifyCode } from "js-beautify";
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { parseFconfSettings } from "../../Fconf/Fconf";
 import { isScriptFilename } from "../../Script/ScriptHelpersTS";
@@ -53,7 +53,7 @@ interface IProps {
   filename: string;
   code: string;
   player: IPlayer;
-  engine: IEngine;
+  router: IRouter;
 }
 
 /*
@@ -85,7 +85,8 @@ export function Root(props: IProps): React.ReactElement {
 
   // store the last known state in case we need to restart without nano.
   useEffect(() => {
-    if (props.filename === "") return;
+    if (props.filename === undefined) return;
+    console.log("setting to " + props.filename);
     lastFilename = props.filename;
     lastCode = props.code;
     lastPosition = null;
@@ -103,7 +104,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     lastPosition = null;
 
-    // TODO(hydroflame): re-enable the tutorial.
+    // this is duplicate code with saving later.
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
       //Make sure filename + code properly follow tutorial
       if (filename !== "n00dles.script") {
@@ -118,20 +119,24 @@ export function Root(props: IProps): React.ReactElement {
       //Save the script
       const server = props.player.getCurrentServer();
       if (server === null) throw new Error("Server should not be null but it is.");
+      let found = false;
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
           server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
-          props.engine.loadTerminalContent();
-          return iTutorialNextStep();
+          found = true;
         }
       }
 
-      // If the current script does NOT exist, create a new one
-      const script = new Script();
-      script.saveScript(code, props.player.currentServer, server.scripts);
-      server.scripts.push(script);
+      if (!found) {
+        const script = new Script();
+        script.saveScript(code, props.player.currentServer, server.scripts);
+        server.scripts.push(script);
+      }
 
-      return iTutorialNextStep();
+      iTutorialNextStep();
+
+      props.router.toTerminal();
+      return;
     }
 
     if (filename == "") {
@@ -160,7 +165,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
           server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
-          props.engine.loadTerminalContent();
+          props.router.toTerminal();
           return;
         }
       }
@@ -173,7 +178,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === filename) {
           server.textFiles[i].write(code);
-          props.engine.loadTerminalContent();
+          props.router.toTerminal();
           return;
         }
       }
@@ -183,7 +188,7 @@ export function Root(props: IProps): React.ReactElement {
       dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
       return;
     }
-    props.engine.loadTerminalContent();
+    props.router.toTerminal();
   }
 
   function beautify(): void {
@@ -308,7 +313,7 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   return (
-    <div className="script-editor-wrapper">
+    <>
       <div id="script-editor-filename-wrapper">
         <p id="script-editor-filename-tag" className="noselect">
           {" "}
@@ -328,7 +333,7 @@ export function Root(props: IProps): React.ReactElement {
         beforeMount={beforeMount}
         onMount={onMount}
         loading={<p>Loading script editor!</p>}
-        height="80%"
+        height="90%"
         defaultLanguage="javascript"
         defaultValue={code}
         onChange={updateCode}
@@ -352,6 +357,6 @@ export function Root(props: IProps): React.ReactElement {
           Netscript Documentation
         </a>
       </div>
-    </div>
+    </>
   );
 }

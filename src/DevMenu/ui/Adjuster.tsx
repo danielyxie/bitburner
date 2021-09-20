@@ -37,12 +37,12 @@ export function Adjuster(props: IProps): React.ReactElement {
           startAdornment: (
             <>
               <Tooltip title="Add a lot">
-                <IconButton color="primary" onClick={tons} size="large">
+                <IconButton onClick={tons} size="large">
                   <DoubleArrowIcon style={{ transform: "rotate(-90deg)" }} />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Add">
-                <IconButton color="primary" onClick={() => add(typeof value !== "string" ? value : 0)} size="large">
+                <IconButton onClick={() => add(typeof value !== "string" ? value : 0)} size="large">
                   <AddIcon />
                 </IconButton>
               </Tooltip>
@@ -51,16 +51,12 @@ export function Adjuster(props: IProps): React.ReactElement {
           endAdornment: (
             <>
               <Tooltip title="Remove">
-                <IconButton
-                  color="primary"
-                  onClick={() => subtract(typeof value !== "string" ? value : 0)}
-                  size="large"
-                >
+                <IconButton onClick={() => subtract(typeof value !== "string" ? value : 0)} size="large">
                   <RemoveIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Reset">
-                <IconButton color="primary" onClick={reset} size="large">
+                <IconButton onClick={reset} size="large">
                   <ClearIcon />
                 </IconButton>
               </Tooltip>

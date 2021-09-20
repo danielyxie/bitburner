@@ -340,15 +340,13 @@ export class Blackjack extends Game<Props, State> {
         {/* Buttons */}
         {!gameInProgress ? (
           <div>
-            <MuiButton color="primary" onClick={this.startOnClick} disabled={wagerInvalid || !this.canStartGame()}>
+            <MuiButton onClick={this.startOnClick} disabled={wagerInvalid || !this.canStartGame()}>
               Start
             </MuiButton>
           </div>
         ) : (
           <div>
-            <MuiButton color="primary" onClick={this.playerHit}>
-              Hit
-            </MuiButton>
+            <MuiButton onClick={this.playerHit}>Hit</MuiButton>
             <MuiButton color="secondary" onClick={this.playerStay}>
               Stay
             </MuiButton>

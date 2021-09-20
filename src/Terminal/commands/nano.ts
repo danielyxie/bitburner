@@ -1,5 +1,5 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/ScriptHelpersTS";
@@ -7,7 +7,7 @@ import { createFconf } from "../../Fconf/Fconf";
 
 export function nano(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number)[],
@@ -21,7 +21,7 @@ export function nano(
     const filename = args[0] + "";
     if (filename === ".fconf") {
       const text = createFconf();
-      engine.loadScriptEditorContent(filename, text);
+      router.toScriptEditor(filename, text);
       return;
     } else if (isScriptFilename(filename)) {
       const filepath = terminal.getFilepath(filename);
@@ -33,17 +33,17 @@ export function nano(
 
 }`;
         }
-        engine.loadScriptEditorContent(filepath, code);
+        router.toScriptEditor(filepath, code);
       } else {
-        engine.loadScriptEditorContent(filepath, script.code);
+        router.toScriptEditor(filepath, script.code);
       }
     } else if (filename.endsWith(".txt")) {
       const filepath = terminal.getFilepath(filename);
       const txt = terminal.getTextFile(player, filename);
       if (txt == null) {
-        engine.loadScriptEditorContent(filepath);
+        router.toScriptEditor(filepath);
       } else {
-        engine.loadScriptEditorContent(filepath, txt.text);
+        router.toScriptEditor(filepath, txt.text);
       }
     } else {
       terminal.error(

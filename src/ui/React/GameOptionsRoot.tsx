@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
@@ -13,13 +13,18 @@ import Switch from "@mui/material/Switch";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Link from "@mui/material/Link";
 import Tooltip from "@mui/material/Tooltip";
 
+import DownloadIcon from "@mui/icons-material/Download";
+import UploadIcon from "@mui/icons-material/Upload";
+
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
+import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 
 import { Settings } from "../../Settings/Settings";
@@ -28,11 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 50,
-      padding: 2,
+      padding: theme.spacing(2),
       userSelect: "none",
-    },
-    pad: {
-      padding: 2,
     },
   }),
 );
@@ -42,13 +44,14 @@ interface IProps {
   save: () => void;
   delete: () => void;
   export: () => void;
-  import: () => void;
+  import: (evt: any) => void;
   forceKill: () => void;
   softReset: () => void;
 }
 
 export function GameOptionsRoot(props: IProps): React.ReactElement {
   const classes = useStyles();
+  const importInput = useRef<HTMLInputElement>(null);
 
   const [execTime, setExecTime] = useState(Settings.CodeInstructionRunTime);
   const [logSize, setLogSize] = useState(Settings.MaxLogCapacity);
@@ -148,6 +151,22 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
     setLocale(event.target.value as string);
     Settings.Locale = event.target.value as string;
+  }
+
+  function importSave(): void {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // var fileSelector = clearEventListeners("import-game-file-selector");
+      // fileSelector.addEventListener("change", openImportFileHandler, false);
+      const ii = importInput.current;
+      if (ii === null) throw new Error("import input should not be null");
+      ii.click();
+    } else {
+      dialogBoxCreate("ERR: Your browser does not support HTML5 File API. Cannot import.");
+    }
+  }
+
+  function onImport(event: React.ChangeEvent<HTMLInputElement>): void {
+    props.import(event);
   }
 
   return (
@@ -260,7 +279,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={<Switch color="primary" checked={suppressMessages} onChange={handleSuppressMessagesChange} />}
+                control={<Switch checked={suppressMessages} onChange={handleSuppressMessagesChange} />}
                 label={
                   <Tooltip
                     title={
@@ -278,13 +297,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={
-                  <Switch
-                    color="primary"
-                    checked={suppressFactionInvites}
-                    onChange={handleSuppressFactionInvitesChange}
-                  />
-                }
+                control={<Switch checked={suppressFactionInvites} onChange={handleSuppressFactionInvitesChange} />}
                 label={
                   <Tooltip
                     title={
@@ -302,11 +315,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <FormControlLabel
                 control={
-                  <Switch
-                    color="primary"
-                    checked={suppressTravelConfirmations}
-                    onChange={handleSuppressTravelConfirmationsChange}
-                  />
+                  <Switch checked={suppressTravelConfirmations} onChange={handleSuppressTravelConfirmationsChange} />
                 }
                 label={
                   <Tooltip
@@ -326,7 +335,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <FormControlLabel
                 control={
                   <Switch
-                    color="primary"
                     checked={suppressBuyAugmentationConfirmation}
                     onChange={handleSuppressBuyAugmentationConfirmationChange}
                   />
@@ -347,11 +355,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <FormControlLabel
                 control={
-                  <Switch
-                    color="primary"
-                    checked={suppressHospitalizationPopup}
-                    onChange={handleSuppressHospitalizationPopupChange}
-                  />
+                  <Switch checked={suppressHospitalizationPopup} onChange={handleSuppressHospitalizationPopupChange} />
                 }
                 label={
                   <Tooltip
@@ -371,11 +375,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <ListItem>
                 <FormControlLabel
                   control={
-                    <Switch
-                      color="primary"
-                      checked={suppressBladeburnerPopup}
-                      onChange={handleSuppressBladeburnerPopupChange}
-                    />
+                    <Switch checked={suppressBladeburnerPopup} onChange={handleSuppressBladeburnerPopupChange} />
                   }
                   label={
                     <Tooltip
@@ -394,7 +394,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             )}
             <ListItem>
               <FormControlLabel
-                control={<Switch color="primary" checked={disableHotkeys} onChange={handleDisableHotkeysChange} />}
+                control={<Switch checked={disableHotkeys} onChange={handleDisableHotkeysChange} />}
                 label={
                   <Tooltip
                     title={
@@ -412,7 +412,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={<Switch color="primary" checked={disableASCIIArt} onChange={handleDisableASCIIArtChange} />}
+                control={<Switch checked={disableASCIIArt} onChange={handleDisableASCIIArtChange} />}
                 label={
                   <Tooltip title={<Typography>If this is set all ASCII art will be disabled.</Typography>}>
                     <Typography>Disable ascii art</Typography>
@@ -422,9 +422,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <FormControlLabel
-                control={
-                  <Switch color="primary" checked={disableTextEffects} onChange={handleDisableTextEffectsChange} />
-                }
+                control={<Switch checked={disableTextEffects} onChange={handleDisableTextEffectsChange} />}
                 label={
                   <Tooltip
                     title={
@@ -485,8 +483,19 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
           </Box>
           <Box>
-            <Button onClick={() => props.export()}>Export Game</Button>
-            <Button onClick={() => props.import()}>Import Game</Button>
+            <Tooltip title={<Typography>export</Typography>}>
+              <Button onClick={() => props.export()}>
+                <DownloadIcon color="primary" />
+                Export
+              </Button>
+            </Tooltip>
+            <Tooltip title={<Typography>import</Typography>}>
+              <Button onClick={importSave}>
+                <UploadIcon color="primary" />
+                Import
+                <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
+              </Button>
+            </Tooltip>
           </Box>
           <Box>
             <Tooltip
@@ -532,9 +541,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </Link>
             <Link href="https://bitburner.readthedocs.io/en/latest/index.html" target="_blank">
               <Typography>Documentation</Typography>
-            </Link>
-            <Link href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank">
-              <Typography>Changelog</Typography>
             </Link>
             <Link href="https://discord.gg/TFc3hKD" target="_blank">
               <Typography>Discord</Typography>

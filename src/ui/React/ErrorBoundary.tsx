@@ -7,7 +7,7 @@ import * as React from "react";
 import { EventEmitter } from "../../utils/EventEmitter";
 
 type IProps = {
-  eventEmitterForReset?: EventEmitter;
+  eventEmitterForReset?: EventEmitter<[]>;
   id?: string;
 };
 
@@ -29,6 +29,7 @@ const styleMarkup = {
 };
 
 export class ErrorBoundary extends React.Component<IProps, IState> {
+  unsubscribe: (() => void) | null = null;
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -50,16 +51,13 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
     };
 
     if (this.hasEventEmitter()) {
-      (this.props.eventEmitterForReset as EventEmitter).addSubscriber({
-        cb: cb,
-        id: this.props.id as string,
-      });
+      this.unsubscribe = (this.props.eventEmitterForReset as EventEmitter<[]>).subscribe(cb);
     }
   }
 
   componentWillUnmount(): void {
-    if (this.hasEventEmitter()) {
-      (this.props.eventEmitterForReset as EventEmitter).removeSubscriber(this.props.id as string);
+    if (this.unsubscribe !== null) {
+      this.unsubscribe();
     }
   }
 

@@ -35,7 +35,7 @@ export function Programs(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Programs</h2>
       </AccordionSummary>

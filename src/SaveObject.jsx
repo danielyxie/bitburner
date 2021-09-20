@@ -120,7 +120,6 @@ function evaluateVersionCompatibility(ver) {
   if (ver <= "0.41.2") {
     // Player's company position is now a string
     if (Player.companyPosition != null && typeof Player.companyPosition !== "string") {
-      console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
       Player.companyPosition = Player.companyPosition.data.positionName;
       if (Player.companyPosition == null) {
         Player.companyPosition = "";
@@ -131,12 +130,10 @@ function evaluateVersionCompatibility(ver) {
     for (var companyName in Companies) {
       const company = Companies[companyName];
       if ((company.name == null || company.name === 0 || company.name === "") && company.companyName != null) {
-        console.log("Changed company name property to be compatible with v0.41.2");
         company.name = company.companyName;
       }
 
       if (company.companyPositions instanceof Array) {
-        console.log("Changed company companyPositions property to be compatible with v0.41.2");
         const pos = {};
 
         for (let i = 0; i < company.companyPositions.length; ++i) {
@@ -150,7 +147,6 @@ function evaluateVersionCompatibility(ver) {
   // This version allowed players to hold multiple jobs
   if (ver < "0.43.0") {
     if (Player.companyName !== "" && Player.companyPosition != null && Player.companyPosition !== "") {
-      console.log("Copied player's companyName and companyPosition properties to the Player.jobs map for v0.43.0");
       Player.jobs[Player.companyName] = Player.companyPosition;
     }
 
@@ -161,14 +157,11 @@ function evaluateVersionCompatibility(ver) {
 function loadGame(saveString) {
   if (saveString === "" || saveString == null || saveString === undefined) {
     if (!window.localStorage.getItem("bitburnerSave")) {
-      console.log("No save file to load");
       return false;
     }
     saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
-    console.log("Loading game from localStorage");
   } else {
     saveString = decodeURIComponent(escape(atob(saveString)));
-    console.log("Loading game from IndexedDB");
   }
 
   var saveObj = JSON.parse(saveString, Reviver);
@@ -485,9 +478,7 @@ BitburnerSaveObject.prototype.deleteGame = function (db) {
 
   // Delete from indexedDB
   var request = db.transaction(["savestring"], "readwrite").objectStore("savestring").delete("save");
-  request.onsuccess = function () {
-    console.log("Successfully deleted save from indexedDb");
-  };
+  request.onsuccess = function () {};
   request.onerror = function (e) {
     console.error(`Failed to delete save from indexedDb: ${e}`);
   };
@@ -538,4 +529,4 @@ function openImportFileHandler(evt) {
   reader.readAsText(file);
 }
 
-export { saveObject, loadGame };
+export { saveObject, loadGame, openImportFileHandler };

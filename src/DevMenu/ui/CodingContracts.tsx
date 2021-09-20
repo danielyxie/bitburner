@@ -25,7 +25,7 @@ export function CodingContracts(): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Coding Contracts</h2>
       </AccordionSummary>

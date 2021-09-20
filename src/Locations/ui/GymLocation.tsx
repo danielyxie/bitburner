@@ -15,10 +15,12 @@ import { SpecialServerIps } from "../../Server/SpecialServerIps";
 
 import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
+import { IRouter } from "../../ui/Router";
 
 type IProps = {
   loc: Location;
   p: IPlayer;
+  router: IRouter;
 };
 
 export class GymLocation extends React.Component<IProps, any> {
@@ -50,7 +52,7 @@ export class GymLocation extends React.Component<IProps, any> {
 
   train(stat: string): void {
     const loc = this.props.loc;
-    this.props.p.startClass(this.calculateCost(), loc.expMult, stat);
+    this.props.p.startClass(this.props.router, this.calculateCost(), loc.expMult, stat);
   }
 
   trainStrength(): void {

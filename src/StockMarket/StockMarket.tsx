@@ -1,4 +1,3 @@
-import { buyStock, sellStock, shortStock, sellShort } from "./BuyingAndSelling";
 import { IOrderBook } from "./IOrderBook";
 import { IStockMarket } from "./IStockMarket";
 import { Order } from "./Order";
@@ -9,24 +8,23 @@ import { InitStockMetadata } from "./data/InitStockMetadata";
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
-import { StockMarketRoot } from "./ui/Root";
 
 import { CONSTANTS } from "../Constants";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { Player } from "../Player";
 import { IMap } from "../types";
 import { EventEmitter } from "../utils/EventEmitter";
 
-import { Page, routing } from ".././ui/navigationTracking";
 import { numeralWrapper } from ".././ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Reviver } from "../../utils/JSONReviver";
 
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-
-export let StockMarket: IStockMarket | IMap<any> = {}; // Maps full stock name -> Stock object
+export let StockMarket: IStockMarket = {
+  lastUpdate: 0,
+  Orders: {},
+  storedCycles: 0,
+  ticksUntilCycle: 0,
+} as IStockMarket; // Maps full stock name -> Stock object
 export const SymbolToStockMap: IMap<Stock> = {}; // Maps symbol -> Stock object
 
 export function placeOrder(
@@ -70,12 +68,10 @@ export function placeOrder(
 
   // Process to see if it should be executed immediately
   const processOrderRefs = {
-    rerenderFn: displayStockMarketContent,
     stockMarket: StockMarket as IStockMarket,
     symbolToStockMap: SymbolToStockMap,
   };
   processOrders(stock, order.type, order.pos, processOrderRefs);
-  displayStockMarketContent();
 
   return true;
 }
@@ -100,7 +96,6 @@ export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScri
     for (let i = 0; i < stockOrders.length; ++i) {
       if (order == stockOrders[i]) {
         stockOrders.splice(i, 1);
-        displayStockMarketContent();
         return true;
       }
     }
@@ -125,7 +120,6 @@ export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScri
         params.pos === order.pos
       ) {
         stockOrders.splice(i, 1);
-        displayStockMarketContent();
         if (workerScript) {
           workerScript.scriptRef.log("Successfully cancelled order: " + orderTxt);
         }
@@ -142,14 +136,24 @@ export function cancelOrder(params: ICancelOrderParams, workerScript: WorkerScri
 
 export function loadStockMarket(saveString: string): void {
   if (saveString === "") {
-    StockMarket = {};
+    StockMarket = {
+      lastUpdate: 0,
+      Orders: {},
+      storedCycles: 0,
+      ticksUntilCycle: 0,
+    } as IStockMarket;
   } else {
     StockMarket = JSON.parse(saveString, Reviver);
   }
 }
 
 export function deleteStockMarket(): void {
-  StockMarket = {};
+  StockMarket = {
+    lastUpdate: 0,
+    Orders: {},
+    storedCycles: 0,
+    ticksUntilCycle: 0,
+  } as IStockMarket;
 }
 
 export function initStockMarket(): void {
@@ -269,8 +273,7 @@ export function processStockPrices(numCycles = 1): void {
 
     const c = Math.random();
     const processOrderRefs = {
-      rerenderFn: displayStockMarketContent,
-      stockMarket: StockMarket as IStockMarket,
+      stockMarket: StockMarket,
       symbolToStockMap: SymbolToStockMap,
     };
     if (c < chc) {
@@ -301,48 +304,11 @@ export function processStockPrices(numCycles = 1): void {
     // Shares required for price movement gradually approaches max over time
     stock.shareTxUntilMovement = Math.min(stock.shareTxUntilMovement + 10, stock.shareTxForMovement);
   }
-
-  displayStockMarketContent();
 }
 
-let stockMarketContainer: HTMLElement | null = null;
-function setStockMarketContainer(): void {
-  stockMarketContainer = document.getElementById("generic-react-container");
-  document.removeEventListener("DOMContentLoaded", setStockMarketContainer);
-}
-
-document.addEventListener("DOMContentLoaded", setStockMarketContainer);
-
-function initStockMarketFnForReact(): void {
+export function initStockMarketFnForReact(): void {
   initStockMarket();
   initSymbolToStockMap();
 }
 
-const eventEmitterForUiReset = new EventEmitter();
-
-export function displayStockMarketContent(): void {
-  if (!routing.isOn(Page.StockMarket)) {
-    return;
-  }
-
-  eventEmitterForUiReset.emitEvent();
-
-  if (stockMarketContainer instanceof HTMLElement) {
-    const castedStockMarket = StockMarket as IStockMarket;
-    ReactDOM.render(
-      <StockMarketRoot
-        buyStockLong={buyStock}
-        buyStockShort={shortStock}
-        cancelOrder={cancelOrder}
-        eventEmitterForReset={eventEmitterForUiReset}
-        initStockMarket={initStockMarketFnForReact}
-        p={Player}
-        placeOrder={placeOrder}
-        sellStockLong={sellStock}
-        sellStockShort={sellShort}
-        stockMarket={castedStockMarket}
-      />,
-      stockMarketContainer,
-    );
-  }
-}
+export const eventEmitterForUiReset = new EventEmitter<[]>();

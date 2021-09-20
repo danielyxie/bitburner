@@ -51,7 +51,7 @@ export function SourceFiles(props: IProps): React.ReactElement {
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Source-Files</h2>
       </AccordionSummary>
@@ -72,10 +72,18 @@ export function SourceFiles(props: IProps): React.ReactElement {
               </td>
               <td>
                 <ButtonGroup>
-                  <Button onClick={setAllSF(0)}>0</Button>
-                  <Button onClick={setAllSF(1)}>1</Button>
-                  <Button onClick={setAllSF(2)}>2</Button>
-                  <Button onClick={setAllSF(3)}>3</Button>
+                  <Button aria-label="all-sf-0" onClick={setAllSF(0)}>
+                    0
+                  </Button>
+                  <Button aria-label="all-sf-1" onClick={setAllSF(1)}>
+                    1
+                  </Button>
+                  <Button aria-label="all-sf-2" onClick={setAllSF(2)}>
+                    2
+                  </Button>
+                  <Button aria-label="all-sf-3" onClick={setAllSF(3)}>
+                    3
+                  </Button>
                 </ButtonGroup>
               </td>
             </tr>

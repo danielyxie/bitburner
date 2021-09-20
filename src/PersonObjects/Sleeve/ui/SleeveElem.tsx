@@ -175,7 +175,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
     // });
   } else {
     data = [
-      [`Money:`, MoneyRate(5 * props.sleeve.gainRatesForTask.money)],
+      [`Money:`, <MoneyRate money={5 * props.sleeve.gainRatesForTask.money} />],
       [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.hack)} / s`],
       [`Strength Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.str)} / s`],
       [`Defense Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.def)} / s`],

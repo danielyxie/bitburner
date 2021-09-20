@@ -1,5 +1,5 @@
 import { ITerminal } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { showMessage } from "../../Message/MessageHelpers";
@@ -8,7 +8,7 @@ import { showLiterature } from "../../Literature/LiteratureHelpers";
 
 export function cat(
   terminal: ITerminal,
-  engine: IEngine,
+  router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number)[],
@@ -33,12 +33,10 @@ export function cat(
         showLiterature(file);
         return;
       } else if (filename.endsWith(".msg")) {
-        const file = server.messages[i];
-        if (typeof file === "string") throw new Error(".msg file should not be a .lit");
-        if (file.filename === filename) {
-          showMessage(file);
-          return;
-        }
+        const file = server.messages[i] as Message;
+        if (file.filename !== filename) continue;
+        showMessage(file);
+        return;
       }
     }
   } else if (filename.endsWith(".txt")) {

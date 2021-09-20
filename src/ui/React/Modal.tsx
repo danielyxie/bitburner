@@ -3,8 +3,8 @@ import { Theme } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import M from "@mui/material/Modal";
-import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
+import Box from "@mui/material/Box";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
     paper: {
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: theme.palette.background.default,
       border: "2px solid " + theme.palette.primary.main,
-      boxShadow: theme.shadows[5],
+      boxShadow: `0px 3px 5px -1px ${theme.palette.primary.dark},0px 5px 8px 0px ${theme.palette.primary.dark},0px 1px 14px 0px ${theme.palette.primary.dark}`,
       padding: 2,
       maxWidth: "80%",
       maxHeight: "80%",
@@ -39,18 +39,11 @@ interface IProps {
 export const Modal = (props: IProps): React.ReactElement => {
   const classes = useStyles();
   return (
-    <M
-      open={props.open}
-      onClose={props.onClose}
-      closeAfterTransition
-      className={classes.modal}
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 100,
-      }}
-    >
+    <M open={props.open} onClose={props.onClose} closeAfterTransition className={classes.modal}>
       <Fade in={props.open}>
-        <div className={classes.paper}>{props.children}</div>
+        <div className={classes.paper}>
+          <Box sx={{ m: 2 }}>{props.children}</Box>
+        </div>
       </Fade>
     </M>
   );

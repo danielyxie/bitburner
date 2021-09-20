@@ -1,70 +1,50 @@
 import React, { useState } from "react";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { WorkerScriptAccordion } from "./WorkerScriptAccordion";
-import { AccordionButton } from "../React/AccordionButton";
-
-const pageSize = 20;
+import List from "@mui/material/List";
+import TablePagination from "@mui/material/TablePagination";
+import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
 
 interface IProps {
   workerScripts: WorkerScript[];
 }
 
 export function ServerAccordionContent(props: IProps): React.ReactElement {
-  if (props.workerScripts.length > pageSize) {
-    return <ServerAccordionContentPaginated workerScripts={props.workerScripts} />;
-  }
-
-  const scripts = props.workerScripts.map((ws) => {
-    return <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />;
-  });
-
-  return <ul>{scripts}</ul>;
-}
-
-export function ServerAccordionContentPaginated(props: IProps): React.ReactElement {
   const [page, setPage] = useState(0);
-  const scripts: React.ReactElement[] = [];
-  const maxPage = Math.ceil(props.workerScripts.length / pageSize);
-  const maxScript = Math.min((page + 1) * pageSize, props.workerScripts.length);
-  for (let i = page * pageSize; i < maxScript; i++) {
-    const ws = props.workerScripts[i];
-    scripts.push(<WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleChangePage = (event: unknown, newPage: number): void => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  let safePage = page;
+  while (safePage * rowsPerPage + 1 > props.workerScripts.length) {
+    safePage--;
   }
 
-  function capPage(page: number): number {
-    if (page < 0) {
-      page = 0;
-    }
-
-    if (maxPage - 1 < page) {
-      page = maxPage - 1;
-    }
-
-    return page;
-  }
-
-  // in case we're on an invalid page number because scripts were killed.
-  const capped = capPage(page);
-  if (capped !== page) setPage(capped);
-
-  function changePage(n: number): void {
-    setPage((newPage) => {
-      newPage += n;
-      newPage = Math.round(newPage);
-      return capPage(newPage);
-    });
-  }
+  if (safePage != page) setPage(safePage);
 
   return (
     <>
-      <ul>{scripts}</ul>
-      <AccordionButton onClick={() => changePage(-1e99)} text="<<" />
-      <AccordionButton onClick={() => changePage(-1)} text="<" />
-      <span className="text">
-        {page + 1} / {maxPage}
-      </span>
-      <AccordionButton onClick={() => changePage(1)} text=">" />
-      <AccordionButton onClick={() => changePage(1e99)} text=">>" />
+      <List dense disablePadding>
+        {props.workerScripts.slice(safePage * rowsPerPage, safePage * rowsPerPage + rowsPerPage).map((ws) => (
+          <WorkerScriptAccordion key={`${ws.name}_${ws.args}`} workerScript={ws} />
+        ))}
+      </List>
+      <TablePagination
+        rowsPerPageOptions={[10, 15, 20]}
+        component="div"
+        count={props.workerScripts.length}
+        rowsPerPage={rowsPerPage}
+        page={safePage}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        ActionsComponent={TablePaginationActionsAll}
+      />
     </>
   );
 }

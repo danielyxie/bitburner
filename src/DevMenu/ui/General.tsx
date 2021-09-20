@@ -8,10 +8,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { hackWorldDaemon } from "../../RedPill";
+import { IRouter } from "../../ui/Router";
 
 interface IProps {
   player: IPlayer;
+  router: IRouter;
 }
 
 export function General(props: IProps): React.ReactElement {
@@ -26,23 +27,23 @@ export function General(props: IProps): React.ReactElement {
   }
 
   function quickB1tFlum3(): void {
-    hackWorldDaemon(props.player.bitNodeN, true, true);
+    props.router.toBitVerse(true, true);
   }
 
   function b1tflum3(): void {
-    hackWorldDaemon(props.player.bitNodeN, true);
+    props.router.toBitVerse(true, false);
   }
 
   function quickHackW0r1dD43m0n(): void {
-    hackWorldDaemon(props.player.bitNodeN, false, true);
+    props.router.toBitVerse(false, true);
   }
 
   function hackW0r1dD43m0n(): void {
-    hackWorldDaemon(props.player.bitNodeN);
+    props.router.toBitVerse(false, false);
   }
 
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>General</h2>
       </AccordionSummary>

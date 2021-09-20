@@ -1,5 +1,5 @@
 import React from "react";
-import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from "@mui/material/styles";
+import { createTheme, ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 
 declare module "@mui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -18,6 +18,14 @@ export const colors = {
   secondarylight: "#AAA",
   secondary: "#888",
   secondarydark: "#666",
+
+  warninglight: "#ff0",
+  warning: "#cc0",
+  warningdark: "#990",
+
+  infolight: "#69f",
+  info: "#36c",
+  infodark: "#039",
 
   welllight: "#444",
   well: "#222",
@@ -49,7 +57,18 @@ export const theme = createTheme({
       main: colors.error,
       dark: colors.errordark,
     },
+    info: {
+      light: colors.infolight,
+      main: colors.info,
+      dark: colors.infodark,
+    },
+    warning: {
+      light: colors.warninglight,
+      main: colors.warning,
+      dark: colors.warningdark,
+    },
     background: {
+      default: colors.black,
       paper: colors.well,
     },
   },
@@ -64,9 +83,9 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: colors.well,
+          color: colors.primary,
         },
         input: {
-          color: colors.primary,
           "&::placeholder": {
             userSelect: "none",
             color: colors.primarydark,
@@ -225,8 +244,16 @@ export const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
+          borderRadius: 0,
           backgroundColor: colors.black,
           border: "1px solid " + colors.welllight,
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        select: {
+          color: colors.primary,
         },
       },
     },

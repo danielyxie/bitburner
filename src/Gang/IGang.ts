@@ -2,6 +2,7 @@ import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMember } from "./GangMember";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { IAscensionResult } from "./IAscensionResult";
 
 export interface IGang {
   facName: string;
@@ -37,8 +38,9 @@ export interface IGang {
   getWantedPenalty(): number;
   calculatePower(): number;
   killMember(member: GangMember): void;
-  ascendMember(member: GangMember, workerScript: WorkerScript): void;
+  ascendMember(member: GangMember, workerScript: WorkerScript): IAscensionResult;
   getDiscount(): number;
   getAllTaskNames(): string[];
   getUpgradeCost(upg: GangMemberUpgrade): number;
+  toJSON(): any;
 }

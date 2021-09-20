@@ -8,9 +8,10 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
 import { ITerminal, Output, Link } from "../ITerminal";
-import { IEngine } from "../../IEngine";
+import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
+import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
 
 interface IActionTimerProps {
   terminal: ITerminal;
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     preformatted: {
       whiteSpace: "pre-wrap",
+      overflowWrap: "anywhere",
       margin: theme.spacing(0),
     },
     list: {
@@ -42,23 +44,24 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   terminal: ITerminal;
-  engine: IEngine;
+  router: IRouter;
   player: IPlayer;
 }
 
-export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactElement {
+export function TerminalRoot({ terminal, router, player }: IProps): React.ReactElement {
   const scrollHook = useRef<HTMLDivElement>(null);
-  const setRerender = useState(false)[1];
+  const setRerender = useState(0)[1];
+  const [key, setKey] = useState(0);
   function rerender(): void {
-    setRerender((old) => !old);
+    setRerender((old) => old + 1);
   }
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (terminal.pollChanges()) rerender();
-    }, 100);
-    return () => clearInterval(id);
-  }, []);
+  function clear(): void {
+    setKey((key) => key + 1);
+  }
+
+  useEffect(() => TerminalEvents.subscribe(rerender), []);
+  useEffect(() => TerminalClearEvents.subscribe(clear), []);
 
   function doScroll(): void {
     const hook = scrollHook.current;
@@ -76,8 +79,8 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
   const classes = useStyles();
   return (
     <>
-      <Box width="100%" minHeight="100vh" px={1} display={"flex"} alignItems={"flex-end"}>
-        <List classes={{ root: classes.list }}>
+      <Box width="100%" minHeight="100vh" display={"flex"} alignItems={"flex-end"}>
+        <List key={key} id="terminal" classes={{ root: classes.list }}>
           {terminal.outputHistory.map((item, i) => {
             if (item instanceof Output)
               return (
@@ -101,12 +104,17 @@ export function TerminalRoot({ terminal, engine, player }: IProps): React.ReactE
                 </ListItem>
               );
           })}
+
+          {terminal.action !== null && (
+            <ListItem classes={{ root: classes.nopadding }}>
+              <ActionTimer terminal={terminal} />{" "}
+            </ListItem>
+          )}
         </List>
-        {terminal.action !== null && <ActionTimer terminal={terminal} />}
         <div ref={scrollHook}></div>
       </Box>
-      <Box position="sticky" bottom={0} width="100%" px={1}>
-        <TerminalInput player={player} engine={engine} terminal={terminal} />
+      <Box position="sticky" bottom={0} width="100%" px={0}>
+        <TerminalInput player={player} router={router} terminal={terminal} />
       </Box>
     </>
   );
