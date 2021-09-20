@@ -542,9 +542,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <Link href="https://bitburner.readthedocs.io/en/latest/index.html" target="_blank">
               <Typography>Documentation</Typography>
             </Link>
-            <Link href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank">
-              <Typography>Changelog</Typography>
-            </Link>
             <Link href="https://discord.gg/TFc3hKD" target="_blank">
               <Typography>Discord</Typography>
             </Link>
