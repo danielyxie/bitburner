@@ -4,16 +4,19 @@
 import React from "react";
 import { removePopup } from "../../ui/React/createPopup";
 import { StdButton } from "../../ui/React/StdButton";
-import { use } from "../../ui/Context";
+import { IRouter } from "../../ui/Router";
+import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface ICreateGangPopupProps {
   popupId: string;
   facName: string;
+  player: IPlayer;
+  router: IRouter;
 }
 
 export function CreateGangPopup(props: ICreateGangPopupProps): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
+  const player = props.player;
+  const router = props.router;
   const combatGangText =
     "This is a COMBAT gang. Members in this gang will have different tasks than HACKING gangs. " +
     "Compared to hacking gangs, progression with combat gangs can be more difficult as territory management " +

@@ -80,6 +80,8 @@ export function FactionRoot(props: IProps): React.ReactElement {
     createPopup(popupId, CreateGangPopup, {
       popupId: popupId,
       facName: faction.name,
+      player: player,
+      router: router,
     });
   }
 
