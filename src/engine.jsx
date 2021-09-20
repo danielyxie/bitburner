@@ -13,8 +13,8 @@ import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
-import { GameRoot, Router } from "./ui/GameRoot";
-import { TTheme as Theme } from "./ui/React/Theme";
+import { Router } from "./ui/GameRoot";
+
 import {
   getHackingWorkRepGain,
   getFactionSecurityWorkRepGain,
@@ -36,7 +36,6 @@ import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
 import { Locations } from "./Locations/Locations";
 import { LocationName } from "./Locations/data/LocationNames";
-import { LoadingScreen } from "./ui/LoadingScreen";
 
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
@@ -49,7 +48,6 @@ import "./Exploits/tampering";
 import "./Exploits/unclickable";
 
 import React from "react";
-import ReactDOM from "react-dom";
 
 const Engine = {
   indexedDb: undefined,
@@ -465,12 +463,5 @@ function load(cb) {
 }
 
 var indexedDbRequest;
-
-ReactDOM.render(
-  <Theme>
-    <LoadingScreen />
-  </Theme>,
-  document.getElementById("mainmenu-container"),
-);
 
 export { Engine, load };

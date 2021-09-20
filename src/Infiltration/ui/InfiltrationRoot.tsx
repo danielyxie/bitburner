@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Intro } from "./Intro";
 import { Game } from "./Game";
 import { Location } from "../../Locations/Location";
-import { Locations } from "../../Locations/Locations";
 import { use } from "../../ui/Context";
 
 interface IProps {

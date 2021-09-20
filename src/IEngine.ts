@@ -30,4 +30,5 @@ export interface IEngine {
   loadMissionContent: () => void;
   loadResleevingContent: () => void;
   loadGameOptionsContent: () => void;
+  load: (save: string) => void;
 }

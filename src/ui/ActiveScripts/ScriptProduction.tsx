@@ -4,13 +4,10 @@
  */
 import * as React from "react";
 
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
 import { use } from "../Context";
 
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -18,13 +15,7 @@ import createStyles from "@mui/styles/createStyles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
-type IProps = {
-  workerScripts: Map<number, WorkerScript>;
-};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,15 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-export function ScriptProduction(props: IProps): React.ReactElement {
+export function ScriptProduction(): React.ReactElement {
   const player = use.Player();
   const classes = useStyles();
   const prodRateSinceLastAug = player.scriptProdSinceLastAug / (player.playtimeSinceLastAug / 1000);
-
-  let onlineProduction = 0;
-  for (const ws of props.workerScripts.values()) {
-    onlineProduction += ws.scriptRef.onlineMoneyMade / ws.scriptRef.onlineRunningTime;
-  }
 
   return (
     <Table size="small" classes={{ root: classes.size }}>
@@ -58,7 +44,7 @@ export function ScriptProduction(props: IProps): React.ReactElement {
           </TableCell>
           <TableCell align="left" classes={{ root: classes.cell }}>
             <Typography variant="body2">
-              <Money money={player.scriptProdSinceLastAug} />
+              <MoneyRate money={player.scriptProdSinceLastAug} />
             </Typography>
           </TableCell>
         </TableRow>

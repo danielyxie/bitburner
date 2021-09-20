@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import { Theme } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
 
 import { Terminal } from "../Terminal";
 import { Engine } from "../engine";
@@ -14,24 +10,47 @@ import { GameRoot } from "./GameRoot";
 
 import { CONSTANTS } from "../Constants";
 
-import { load } from "../engine";
+function load(cb: () => void): void {
+  if (!window.indexedDB) {
+    return Engine.load(""); // Will try to load from localstorage
+  }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    center: {
-      position: "fixed",
-      top: "50%",
-      left: "50%",
-    },
-  }),
-);
+  /**
+   * DB is called bitburnerSave
+   * Object store is called savestring
+   * key for the Object store is called save
+   */
+  const indexedDbRequest: IDBOpenDBRequest = window.indexedDB.open("bitburnerSave", 1);
+
+  indexedDbRequest.onerror = function (this: IDBRequest<IDBDatabase>, ev: Event) {
+    console.error("Error opening indexedDB: ");
+    console.error(ev);
+    Engine.load(""); // Try to load from localstorage
+    cb();
+  };
+
+  indexedDbRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
+    Engine.indexedDb = this.result;
+    const transaction = Engine.indexedDb.transaction(["savestring"]);
+    const objectStore = transaction.objectStore("savestring");
+    const request: IDBRequest<string> = objectStore.get("save");
+    request.onerror = function (this: IDBRequest<string>, ev: Event) {
+      console.error("Error in Database request to get savestring: " + ev);
+      Engine.load(""); // Try to load from localstorage
+      cb();
+    };
+
+    request.onsuccess = function (this: IDBRequest<string>) {
+      Engine.load(this.result);
+      cb();
+    };
+  };
+}
 
 export function LoadingScreen(): React.ReactElement {
-  const classes = useStyles();
   const [show, setShow] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  console.log("renredering");
   useEffect(() => {
     const id = setTimeout(() => {
       if (!loaded) setShow(true);

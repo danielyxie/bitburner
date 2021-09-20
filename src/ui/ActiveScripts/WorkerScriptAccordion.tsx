@@ -14,21 +14,15 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { AccordionButton } from "../React/AccordionButton";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
 
 import Collapse from "@mui/material/Collapse";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -67,8 +61,6 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   // Calculations for script stats
   const onlineMps = scriptRef.onlineMoneyMade / scriptRef.onlineRunningTime;
   const onlineEps = scriptRef.onlineExpGained / scriptRef.onlineRunningTime;
-  const offlineMps = scriptRef.offlineMoneyMade / scriptRef.offlineRunningTime;
-  const offlineEps = scriptRef.offlineExpGained / scriptRef.offlineRunningTime;
 
   return (
     <>

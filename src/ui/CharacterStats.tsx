@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { numeralWrapper } from "../ui/numeralFormat";
-import { BitNodes } from "../BitNode/BitNode";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { MoneySourceTracker } from "../utils/MoneySourceTracker";
-import { dialogBoxCreate } from "../../utils/DialogBox";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
@@ -13,6 +9,8 @@ import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import { StatsTable } from "./React/StatsTable";
 import { Money } from "./React/Money";
 import { use } from "./Context";
+import { MoneySourceTracker } from "../utils/MoneySourceTracker";
+import { BitNodes } from "../BitNode/BitNode";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";

@@ -7,11 +7,9 @@ import Button from "@mui/material/Button";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import { ITutorialEvents } from "./ITutorialEvents";
-import { use } from "../Context";
 import { CopyableText } from "../React/CopyableText";
 
 import ListItem from "@mui/material/ListItem";
-import TextField from "@mui/material/TextField";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import HelpIcon from "@mui/icons-material/Help";

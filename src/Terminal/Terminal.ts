@@ -15,10 +15,7 @@ import { AllServers } from "../Server/AllServers";
 
 import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
 import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
-import { logBoxCreate } from "../../utils/LogBox";
 import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
-import { findRunningScript } from "../Script/ScriptHelpers";
-import { TerminalHelpText } from "./HelpText";
 import { GetServerByHostname, getServer, getServerOnNetwork } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";

@@ -1,14 +1,6 @@
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
@@ -22,23 +14,23 @@ interface TablePaginationActionsProps {
   onPageChange: (event: React.MouseEvent<HTMLButtonElement>, newPage: number) => void;
 }
 
-export function TablePaginationActionsAll(props: TablePaginationActionsProps) {
+export function TablePaginationActionsAll(props: TablePaginationActionsProps): React.ReactElement {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 

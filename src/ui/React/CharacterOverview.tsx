@@ -14,16 +14,11 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import Fab from "@mui/material/Fab";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { colors } from "./Theme";
 import { Settings } from "../../Settings/Settings";
 import { use } from "../Context";
-import { Page } from "../Router";
-import { Overview } from "./Overview";
 
 interface IProps {
   save: () => void;
@@ -115,7 +110,6 @@ const useStyles = makeStyles({
 
 export function CharacterOverview({ save }: IProps): React.ReactElement {
   const player = use.Player();
-  const router = use.Router();
 
   const setRerender = useState(false)[1];
 

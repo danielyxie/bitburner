@@ -17,7 +17,6 @@ import { CreateCorporationPopup } from "../../Corporation/ui/CreateCorporationPo
 import { createPopup } from "../../ui/React/createPopup";
 import { LocationName } from "../data/LocationNames";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { use } from "../../ui/Context";
 
 import { AutoupdatingStdButton } from "../../ui/React/AutoupdatingStdButton";
@@ -29,14 +28,10 @@ type IProps = {
   loc: Location;
 };
 
-type IState = {
-  inBladeburner: boolean;
-};
-
 export function SpecialLocation(props: IProps): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
-  const [rerender, setRerender] = useState(false);
+  const setRerender = useState(false)[1];
   const inBladeburner = player.inBladeburner();
   /**
    * Click handler for "Create Corporation" button at Sector-12 City Hall

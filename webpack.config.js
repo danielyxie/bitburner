@@ -12,9 +12,7 @@ module.exports = (env, argv) => {
   const runInContainer = (env || {}).runInContainer === true;
   const isDevelopment = argv.mode === "development";
   const outputDirectory = isDevServer ? "dist-dev" : "dist";
-  const entries = {};
-  entries[`${outputDirectory}/engine`] = "./src/engine.jsx";
-  entries[`${outputDirectory}/engineStyle`] = "./src/engineStyle.js";
+  const entry = "./src/index.tsx";
 
   const statsConfig = {
     builtAt: true,
@@ -134,7 +132,7 @@ module.exports = (env, argv) => {
       isDevelopment && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
     target: "web",
-    entry: entries,
+    entry: entry,
     output: {
       path: path.resolve(__dirname, "./"),
       filename: "[name].bundle.js",

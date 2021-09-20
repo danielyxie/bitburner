@@ -18,9 +18,7 @@ import { CasinoLocation } from "./CasinoLocation";
 
 import { Location } from "../Location";
 import { LocationType } from "../LocationTypeEnum";
-import { CityName } from "../data/CityNames";
 
-import { IRouter } from "../../ui/Router";
 import { Settings } from "../../Settings/Settings";
 
 import { SpecialServerIps } from "../../Server/SpecialServerIps";

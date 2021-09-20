@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { WorkerScriptAccordion } from "./WorkerScriptAccordion";
-import { AccordionButton } from "../React/AccordionButton";
-import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import TablePagination from "@mui/material/TablePagination";
 import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
-
-const pageSize = 20;
 
 interface IProps {
   workerScripts: WorkerScript[];
@@ -16,11 +12,11 @@ interface IProps {
 export function ServerAccordionContent(props: IProps): React.ReactElement {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (event: unknown, newPage: number): void => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

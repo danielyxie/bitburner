@@ -7,9 +7,6 @@ import React, { useState, useEffect } from "react";
 import { ServerAccordion } from "./ServerAccordion";
 
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import TablePagination from "@mui/material/TablePagination";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -33,12 +30,6 @@ type IProps = {
   workerScripts: Map<number, WorkerScript>;
 };
 
-type IState = {
-  rerenderFlag: boolean;
-};
-
-const subscriberId = "ActiveScriptsUI";
-
 export function ServerAccordions(props: IProps): React.ReactElement {
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(0);
@@ -52,11 +43,11 @@ export function ServerAccordions(props: IProps): React.ReactElement {
     return WorkerScriptStartStopEventEmitter.subscribe(rerender);
   }, []);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (event: unknown, newPage: number): void => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
