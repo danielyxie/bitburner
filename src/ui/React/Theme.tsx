@@ -163,8 +163,6 @@ export function refreshTheme() {
             backgroundColor: "#333",
             border: "1px solid " + colors.well,
             // color: colors.primary,
-            margin: "5px",
-            padding: "3px 5px",
             "&:hover": {
               backgroundColor: colors.black,
             },
