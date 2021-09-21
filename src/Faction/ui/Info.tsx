@@ -28,7 +28,7 @@ type IProps = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     noformat: {
-      whiteSpace: "pre",
+      whiteSpace: "pre-wrap",
     },
   }),
 );
