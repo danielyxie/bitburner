@@ -19,13 +19,55 @@ import { IMap } from "../../types";
 
 import { StdButton } from "../../ui/React/StdButton";
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+import { TableCell } from "../../ui/React/Table";
+import TableRow from "@mui/material/TableRow";
 
-type IProps = {
+interface IReqProps {
+  augName: string;
+  p: IPlayer;
+  hasReq: boolean;
+  rep: number;
+  hasRep: boolean;
+  cost: number;
+  hasCost: boolean;
+}
+
+function Requirements(props: IReqProps): React.ReactElement {
+  const aug = Augmentations[props.augName];
+  if (!props.hasReq) {
+    return (
+      <TableCell colSpan={2}>
+        <Typography color="error">Requires {aug.prereqs.map((aug) => AugFormat(aug))}</Typography>
+      </TableCell>
+    );
+  }
+
+  let color = !props.hasRep && !props.hasCost ? "error" : "primary";
+  return (
+    <>
+      <TableCell>
+        <Typography color={color}>
+          <Money money={props.cost} player={props.p} />
+        </Typography>
+      </TableCell>
+      <TableCell>
+        <Typography color={color}>Requires {Reputation(props.rep)} faction reputation</Typography>
+      </TableCell>
+    </>
+  );
+}
+
+interface IProps {
   augName: string;
   faction: Faction;
   p: IPlayer;
   rerender: () => void;
-};
+  owned?: boolean;
+}
 
 export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   const aug = Augmentations[props.augName];
@@ -37,22 +79,6 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
 
   function getRepCost(): number {
     return aug.baseRepRequirement * props.faction.getInfo().augmentationRepRequirementMult;
-  }
-
-  function handleClick(): void {
-    if (!Settings.SuppressBuyAugmentationConfirmation) {
-      const popupId = "purchase-augmentation-popup";
-      createPopup(popupId, PurchaseAugmentationPopup, {
-        aug: aug,
-        faction: props.faction,
-        player: props.p,
-        rerender: props.rerender,
-        popupId: popupId,
-      });
-    } else {
-      purchaseAugmentation(aug, props.faction);
-      props.rerender();
-    }
   }
 
   // Whether the player has the prerequisite Augmentations
@@ -94,18 +120,21 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
 
   const moneyCost = getMoneyCost();
   const repCost = getRepCost();
+  const hasReq = hasPrereqs();
+  const hasRep = hasReputation();
+  const hasCost = aug.baseCost !== 0 && props.p.money.lt(aug.baseCost * props.faction.getInfo().augmentationPriceMult);
 
   // Determine UI properties
   let disabled = false;
-  let status: JSX.Element = <></>;
-  let color = "";
-  if (!hasPrereqs()) {
+  let status: JSX.Element | null = null;
+  let color: "primary" | "error" = "primary";
+  if (!hasReq) {
     disabled = true;
     status = <>LOCKED (Requires {aug.prereqs.map((aug) => AugFormat(aug))} as prerequisite)</>;
-    color = "red";
+    color = "error";
   } else if (aug.name !== AugmentationNames.NeuroFluxGovernor && (aug.owned || owned())) {
     disabled = true;
-  } else if (hasReputation()) {
+  } else if (hasRep) {
     status = (
       <>
         UNLOCKED (at {Reputation(repCost)} faction reputation) - <Money money={moneyCost} player={props.p} />
@@ -118,14 +147,12 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
         LOCKED (Requires {Reputation(repCost)} faction reputation - <Money money={moneyCost} player={props.p} />)
       </>
     );
-    color = "red";
+    color = "error";
   }
 
-  const txtStyle: IMap<string> = {
-    display: "inline-block",
-  };
-  if (color !== "") {
-    txtStyle.color = color;
+  if (hasCost) {
+    disabled = true;
+    color = "error";
   }
 
   // Determine button txt
@@ -154,25 +181,59 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
       </>
     );
 
+  function handleClick(): void {
+    if (disabled) return;
+    if (!Settings.SuppressBuyAugmentationConfirmation) {
+      const popupId = "purchase-augmentation-popup";
+      createPopup(popupId, PurchaseAugmentationPopup, {
+        aug: aug,
+        faction: props.faction,
+        player: props.p,
+        rerender: props.rerender,
+        popupId: popupId,
+      });
+    } else {
+      purchaseAugmentation(aug, props.faction);
+      props.rerender();
+    }
+  }
+
   return (
-    <li key={aug.name}>
-      <span
-        style={{
-          margin: "4px",
-          padding: "4px",
-        }}
-      >
-        <StdButton
-          disabled={disabled}
-          onClick={handleClick}
-          style={{
-            display: "inline-block",
-          }}
-          text={btnTxt}
-          tooltip={tooltip}
+    <TableRow>
+      {!props.owned && (
+        <TableCell>
+          {status && (
+            <Button onClick={handleClick} color={color}>
+              Buy
+            </Button>
+          )}
+        </TableCell>
+      )}
+      <TableCell>
+        <Box display="flex">
+          <Tooltip
+            title={<Typography>{tooltip}</Typography>}
+            placement="top"
+            disableFocusListener
+            disableTouchListener
+            enterDelay={500}
+            leaveDelay={0}
+          >
+            <Typography>{btnTxt}</Typography>
+          </Tooltip>
+        </Box>
+      </TableCell>
+      {!props.owned && (
+        <Requirements
+          augName={props.augName}
+          p={props.p}
+          cost={moneyCost}
+          rep={repCost}
+          hasReq={hasReq}
+          hasRep={hasRep}
+          hasCost={hasCost}
         />
-        <p style={txtStyle}>{status}</p>
-      </span>
-    </li>
+      )}
+    </TableRow>
   );
 }

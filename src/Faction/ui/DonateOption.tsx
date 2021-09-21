@@ -7,6 +7,7 @@ import { CONSTANTS } from "../../Constants";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { repFromDonation } from "../formulas/donation";
+import { Favor } from "../../ui/React/Favor";
 
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
@@ -17,6 +18,11 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { MathComponent } from "mathjax-react";
+
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 type IProps = {
   faction: Faction;
@@ -67,36 +73,45 @@ export function DonateOption(props: IProps): React.ReactElement {
   function Status(): React.ReactElement {
     if (donateAmt === null) return <></>;
     if (!canDonate()) {
-      if (props.p.money.lt(donateAmt)) return <p>Insufficient funds</p>;
-      return <p>Invalid donate amount entered!</p>;
+      if (props.p.money.lt(donateAmt)) return <Typography>Insufficient funds</Typography>;
+      return <Typography>Invalid donate amount entered!</Typography>;
     }
-    return <p>This donation will result in {Reputation(repFromDonation(donateAmt, props.p))} reputation gain</p>;
+    return (
+      <Typography>
+        This donation will result in {Reputation(repFromDonation(donateAmt, props.p))} reputation gain
+      </Typography>
+    );
   }
 
   return (
-    <div className={"faction-work-div"}>
-      <div className={"faction-work-div-wrapper"}>
-        <input
-          className="text-input"
-          onChange={onChange}
-          placeholder={"Donation amount"}
-          style={inputStyleMarkup}
-          disabled={props.disabled}
-        />
-        <StdButton onClick={donate} text={"Donate Money"} disabled={props.disabled || !canDonate()} />
-        <Status />
-        {props.disabled ? (
-          <p>
-            Unlocked at {props.favorToDonate} favor with {props.faction.name}
-          </p>
-        ) : (
-          <div className="text">
+    <Paper sx={{ my: 1, p: 1, width: "100%" }}>
+      <Status />
+      {props.disabled ? (
+        <Typography>
+          Unlock donations at {Favor(props.favorToDonate)} favor with {props.faction.name}
+        </Typography>
+      ) : (
+        <>
+          <TextField
+            variant="standard"
+            onChange={onChange}
+            placeholder={"Donation amount"}
+            disabled={props.disabled}
+            InputProps={{
+              endAdornment: (
+                <Button onClick={donate} disabled={props.disabled || !canDonate()}>
+                  donate
+                </Button>
+              ),
+            }}
+          />
+          <Typography>
             <MathComponent
               tex={String.raw`reputation = \frac{\text{donation amount} \times \text{reputation multiplier}}{10^{${digits}}}`}
             />
-          </div>
-        )}
-      </div>
-    </div>
+          </Typography>
+        </>
+      )}
+    </Paper>
   );
 }

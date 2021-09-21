@@ -14,6 +14,11 @@ import { Settings } from "../../Settings/Settings";
 import { StdButton } from "../../ui/React/StdButton";
 import { use } from "../../ui/Context";
 
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TableBody from "@mui/material/TableBody";
+import Table from "@mui/material/Table";
+
 type IProps = {
   faction: Faction;
   routeToMainPage: () => void;
@@ -31,6 +36,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   }
 
   function getAugs(): string[] {
+    console.log(props.faction.augmentations);
     if (isPlayersGang) {
       const augs: string[] = [];
       for (const augName in Augmentations) {
@@ -104,8 +110,17 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       (!player.augmentations.some((a) => a.name === aug) && !player.queuedAugmentations.some((a) => a.name === aug)),
   );
 
-  const purchaseableAugmentation = (aug: string): React.ReactNode => {
-    return <PurchaseableAugmentation augName={aug} faction={props.faction} key={aug} p={player} rerender={rerender} />;
+  const purchaseableAugmentation = (aug: string, owned = false): React.ReactNode => {
+    return (
+      <PurchaseableAugmentation
+        augName={aug}
+        faction={props.faction}
+        key={aug}
+        p={player}
+        rerender={rerender}
+        owned={owned}
+      />
+    );
   };
 
   const augListElems = purchasable.map((aug) => purchaseableAugmentation(aug));
@@ -116,42 +131,33 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     ownedElem = (
       <>
         <br />
-        <h2>Purchased Augmentations</h2>
-        <p>This factions also offers these augmentations but you already own them.</p>
-        {owned.map((aug) => purchaseableAugmentation(aug))}
+        <Typography variant="h4">Purchased Augmentations</Typography>
+        <Typography>This factions also offers these augmentations but you already own them.</Typography>
+        {owned.map((aug) => purchaseableAugmentation(aug, true))}
       </>
     );
   }
 
   return (
     <div>
-      <StdButton onClick={props.routeToMainPage} text={"Back"} />
-      <h1>Faction Augmentations</h1>
-      <p>
+      <Button onClick={props.routeToMainPage}>Back</Button>
+      <Typography variant="h4">Faction Augmentations</Typography>
+      <Typography>
         These are all of the Augmentations that are available to purchase from {props.faction.name}. Augmentations are
         powerful upgrades that will enhance your abilities.
-      </p>
-      <StdButton onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)} text={"Sort by Cost"} />
-      <StdButton
-        onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}
-        text={"Sort by Reputation"}
-      />
-      <StdButton
-        onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}
-        text={"Sort by Default Order"}
-      />
+      </Typography>
+      <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>
+      <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}>Sort by Reputation</Button>
+      <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>Sort by Default Order</Button>
       <br />
-      {augListElems}
-      {ownedElem}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+
+      <Table size="small" padding="none">
+        <TableBody>{augListElems}</TableBody>
+      </Table>
+
+      <Table size="small" padding="none">
+        <TableBody>{ownedElem}</TableBody>
+      </Table>
     </div>
   );
 }

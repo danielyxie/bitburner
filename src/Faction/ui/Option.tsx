@@ -7,21 +7,24 @@ import * as React from "react";
 
 import { StdButton } from "../../ui/React/StdButton";
 
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+
 type IProps = {
   buttonText: string;
   infoText: string;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
-export class Option extends React.Component<IProps, any> {
-  render(): React.ReactNode {
-    return (
-      <div className={"faction-work-div"}>
-        <div className={"faction-work-div-wrapper"}>
-          <StdButton onClick={this.props.onClick} text={this.props.buttonText} />
-          <p>{this.props.infoText}</p>
-        </div>
-      </div>
-    );
-  }
+export function Option(props: IProps): React.ReactElement {
+  return (
+    <Box>
+      <Paper sx={{ my: 1, p: 1, width: "100%" }}>
+        <Button onClick={props.onClick}>{props.buttonText}</Button>
+        <Typography>{props.infoText}</Typography>
+      </Paper>
+    </Box>
+  );
 }

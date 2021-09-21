@@ -1,11 +1,30 @@
 import React from "react";
 import { createTheme, ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 
-declare module "@mui/styles/defaultTheme" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
+declare module "@mui/material/styles" {
+  interface Theme {
+    colors: {
+      hp: React.CSSProperties["color"];
+      money: React.CSSProperties["color"];
+      hack: React.CSSProperties["color"];
+      combat: React.CSSProperties["color"];
+      cha: React.CSSProperties["color"];
+      int: React.CSSProperties["color"];
+      rep: React.CSSProperties["color"];
+    };
+  }
+  interface ThemeOptions {
+    colors: {
+      hp: React.CSSProperties["color"];
+      money: React.CSSProperties["color"];
+      hack: React.CSSProperties["color"];
+      combat: React.CSSProperties["color"];
+      cha: React.CSSProperties["color"];
+      int: React.CSSProperties["color"];
+      rep: React.CSSProperties["color"];
+    };
+  }
 }
-
 export const colors = {
   primarylight: "#0f0",
   primary: "#0c0",
@@ -38,9 +57,19 @@ export const colors = {
   combat: "#faffdf",
   cha: "#a671d1",
   int: "#6495ed",
+  rep: "#faffdf",
 };
 
 export const theme = createTheme({
+  colors: {
+    hp: "#dd3434",
+    money: "#ffd700",
+    hack: "#adff2f",
+    combat: "#faffdf",
+    cha: "#a671d1",
+    int: "#6495ed",
+    rep: "#faffdf",
+  },
   palette: {
     primary: {
       light: colors.primarylight,
@@ -191,6 +220,7 @@ export const theme = createTheme({
           backgroundColor: colors.well,
           borderRadius: 0,
           border: "2px solid white",
+          maxWidth: "100vh",
         },
       },
     },
