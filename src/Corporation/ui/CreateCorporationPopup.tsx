@@ -4,10 +4,12 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { removePopup } from "../../ui/React/createPopup";
 import { Money } from "../../ui/React/Money";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { IRouter } from "../../ui/Router";
 
 interface IProps {
   player: IPlayer;
   popupId: string;
+  router: IRouter;
 }
 
 export function CreateCorporationPopup(props: IProps): React.ReactElement {
@@ -40,6 +42,7 @@ export function CreateCorporationPopup(props: IProps): React.ReactElement {
         "and manage your company in the City.",
     );
     removePopup(props.popupId);
+    props.router.toCorporation();
   }
 
   function seed(): void {
@@ -55,6 +58,7 @@ export function CreateCorporationPopup(props: IProps): React.ReactElement {
         "You can visit and manage your company in the City.",
     );
     removePopup(props.popupId);
+    props.router.toCorporation();
   }
 
   return (
