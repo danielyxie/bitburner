@@ -344,14 +344,10 @@ export class Terminal implements ITerminal {
       case CodingContractResult.Failure:
         ++contract.tries;
         if (contract.tries >= contract.getMaxNumTries()) {
-          this.print("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
+          this.print("Contract FAILED - Contract is now self-destructing");
           serv.removeContract(contract);
         } else {
-          this.print(
-            `Contract <p style='color:red;display:inline'>FAILED</p> - ${
-              contract.getMaxNumTries() - contract.tries
-            } tries remaining`,
-          );
+          this.print(`Contract FAILED - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
         }
         break;
       case CodingContractResult.Cancelled:

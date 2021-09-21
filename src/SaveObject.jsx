@@ -135,6 +135,7 @@ function evaluateVersionCompatibility(ver) {
 }
 
 function loadGame(saveString) {
+  if (!saveString) return false;
   saveString = decodeURIComponent(escape(atob(saveString)));
 
   const saveObj = JSON.parse(saveString, Reviver);
