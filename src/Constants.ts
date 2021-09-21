@@ -72,6 +72,7 @@ export const CONSTANTS: {
   GameCyclesPerQuarterHour: number;
   MillisecondsPerFiveMinutes: number;
   GameCyclesPerFiveMinutes: number;
+  BaseFocusBonus: number;
   FactionWorkHacking: string;
   FactionWorkField: string;
   FactionWorkSecurity: string;
@@ -285,6 +286,8 @@ export const CONSTANTS: {
   GameCyclesPerFiveMinutes: 300000 / 200,
 
   // Player Work & Action
+  BaseFocusBonus: 0.8,
+  
   FactionWorkHacking: "Faction Hacking Work",
   FactionWorkField: "Faction Field Work",
   FactionWorkSecurity: "Faction Security Work",
