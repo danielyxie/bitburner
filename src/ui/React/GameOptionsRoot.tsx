@@ -28,6 +28,7 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 
 import { Settings } from "../../Settings/Settings";
+import { save, deleteGame } from "../../db";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,9 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   player: IPlayer;
   save: () => void;
-  delete: () => void;
   export: () => void;
-  import: (evt: any) => void;
   forceKill: () => void;
   softReset: () => void;
 }
@@ -153,20 +152,38 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     Settings.Locale = event.target.value as string;
   }
 
-  function importSave(): void {
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      // var fileSelector = clearEventListeners("import-game-file-selector");
-      // fileSelector.addEventListener("change", openImportFileHandler, false);
-      const ii = importInput.current;
-      if (ii === null) throw new Error("import input should not be null");
-      ii.click();
-    } else {
-      dialogBoxCreate("ERR: Your browser does not support HTML5 File API. Cannot import.");
-    }
+  function startImport(): void {
+    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) return;
+    const ii = importInput.current;
+    if (ii === null) throw new Error("import input should not be null");
+    ii.click();
   }
 
   function onImport(event: React.ChangeEvent<HTMLInputElement>): void {
-    props.import(event);
+    const files = event.target.files;
+    if (files === null) return;
+    const file = files[0];
+    if (!file) {
+      dialogBoxCreate("Invalid file selected");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (this: FileReader, e: ProgressEvent<FileReader>) {
+      const target = e.target;
+      if (target === null) {
+        console.error("error importing file");
+        return;
+      }
+      const result = target.result;
+      if (typeof result !== "string" || result === null) {
+        console.error("FileReader event was not type string");
+        return;
+      }
+      const contents = result;
+      save(contents).then(() => location.reload());
+    };
+    reader.readAsText(file);
   }
 
   return (
@@ -490,7 +507,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               </Button>
             </Tooltip>
             <Tooltip title={<Typography>import</Typography>}>
-              <Button onClick={importSave}>
+              <Button onClick={startImport}>
                 <UploadIcon color="primary" />
                 Import
                 <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
@@ -554,8 +571,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
       <ConfirmationModal
         onConfirm={() => {
-          props.delete();
           setDeleteOpen(false);
+          deleteGame()
+            .then(() => location.reload())
+            .catch((r) => console.error(`Could not delete game: ${r}`));
         }}
         open={deleteGameOpen}
         onClose={() => setDeleteOpen(false)}

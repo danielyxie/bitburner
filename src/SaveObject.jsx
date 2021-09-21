@@ -22,6 +22,7 @@ import * as ExportBonus from "./ExportBonus";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { save } from "./db";
 
 import Decimal from "decimal.js";
 
@@ -84,33 +85,12 @@ BitburnerSaveObject.prototype.getSaveString = function () {
   return saveString;
 };
 
-BitburnerSaveObject.prototype.saveGame = function (db) {
-  var saveString = this.getSaveString();
+BitburnerSaveObject.prototype.saveGame = function () {
+  const saveString = this.getSaveString();
 
-  // We'll save to both localstorage and indexedDb
-  var objectStore = db.transaction(["savestring"], "readwrite").objectStore("savestring");
-  var request = objectStore.put(saveString, "save");
-
-  request.onerror = function (e) {
-    console.error("Error saving game to IndexedDB: " + e);
-  };
-
-  try {
-    window.localStorage.setItem("bitburnerSave", saveString);
-  } catch (e) {
-    if (e.code == 22) {
-      createStatusText("Save failed for localStorage! Check console(F12)");
-      console.error(
-        "Failed to save game to localStorage because the size of the save file " +
-          "is too large. However, the game will still be saved to IndexedDb if your browser " +
-          "supports it. If you would like to save to localStorage as well, then " +
-          "consider killing several of your scripts to " +
-          "fix this, or increasing the size of your browsers localStorage",
-      );
-    }
-  }
-
-  createStatusText("Game saved!");
+  save(saveString)
+    .then(() => createStatusText("Game saved!"))
+    .catch((err) => console.error(err));
 };
 
 // Makes necessary changes to the loaded/imported data to ensure
@@ -155,16 +135,9 @@ function evaluateVersionCompatibility(ver) {
 }
 
 function loadGame(saveString) {
-  if (saveString === "" || saveString == null || saveString === undefined) {
-    if (!window.localStorage.getItem("bitburnerSave")) {
-      return false;
-    }
-    saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
-  } else {
-    saveString = decodeURIComponent(escape(atob(saveString)));
-  }
+  saveString = decodeURIComponent(escape(atob(saveString)));
 
-  var saveObj = JSON.parse(saveString, Reviver);
+  const saveObj = JSON.parse(saveString, Reviver);
 
   loadPlayer(saveObj.PlayerSave);
   loadAllServers(saveObj.AllServersSave);
@@ -224,13 +197,6 @@ function loadGame(saveString) {
   } else {
     Settings.init();
   }
-  // if (saveObj.hasOwnProperty("FconfSettingsSave")) {
-  //   try {
-  //     loadFconf(saveObj.FconfSettingsSave);
-  //   } catch (e) {
-  //     console.error("ERROR: Failed to parse .fconf Settings.");
-  //   }
-  // }
   if (saveObj.hasOwnProperty("LastExportBonus")) {
     try {
       ExportBonus.setLastExportBonus(JSON.parse(saveObj.LastExportBonus));
@@ -267,173 +233,6 @@ function loadGame(saveString) {
   return true;
 }
 
-function loadImportedGame(saveObj, saveString) {
-  var tempSaveObj = null;
-  var tempPlayer = null;
-
-  // Check to see if the imported save file can be parsed. If any
-  // errors are caught it will fail
-  try {
-    var decodedSaveString = decodeURIComponent(escape(atob(saveString)));
-    tempSaveObj = JSON.parse(decodedSaveString, Reviver);
-
-    tempPlayer = JSON.parse(tempSaveObj.PlayerSave, Reviver);
-
-    // Parse Decimal.js objects
-    tempPlayer.money = new Decimal(tempPlayer.money);
-
-    JSON.parse(tempSaveObj.AllServersSave, Reviver);
-    JSON.parse(tempSaveObj.CompaniesSave, Reviver);
-    JSON.parse(tempSaveObj.FactionsSave, Reviver);
-    JSON.parse(tempSaveObj.SpecialServerIpsSave, Reviver);
-    if (tempSaveObj.hasOwnProperty("AliasesSave")) {
-      try {
-        JSON.parse(tempSaveObj.AliasesSave, Reviver);
-      } catch (e) {
-        console.error(`Parsing Aliases save failed: ${e}`);
-      }
-    }
-    if (tempSaveObj.hasOwnProperty("GlobalAliases")) {
-      try {
-        JSON.parse(tempSaveObj.AliasesSave, Reviver);
-      } catch (e) {
-        console.error(`Parsing Global Aliases save failed: ${e}`);
-      }
-    }
-    if (tempSaveObj.hasOwnProperty("MessagesSave")) {
-      try {
-        JSON.parse(tempSaveObj.MessagesSave, Reviver);
-      } catch (e) {
-        console.error(`Parsing Messages save failed: ${e}`);
-        initMessages();
-      }
-    } else {
-      initMessages();
-    }
-    if (saveObj.hasOwnProperty("StockMarketSave")) {
-      try {
-        JSON.parse(tempSaveObj.StockMarketSave, Reviver);
-      } catch (e) {
-        console.error(`Parsing StockMarket save failed: ${e}`);
-      }
-    }
-    if (saveObj.hasOwnProperty("LastExportBonus")) {
-      try {
-        if (saveObj.LastExportBonus) ExportBonus.setLastExportBonus(JSON.parse(saveObj.LastExportBonus));
-      } catch (err) {
-        ExportBonus.setLastExportBonus(new Date().getTime());
-        console.error("ERROR: Failed to parse last export bonus Settings " + err);
-      }
-    }
-    if (tempSaveObj.hasOwnProperty("VersionSave")) {
-      try {
-        var ver = JSON.parse(tempSaveObj.VersionSave, Reviver);
-        evaluateVersionCompatibility(ver);
-      } catch (e) {
-        console.error("Parsing Version save failed: " + e);
-      }
-    }
-    if (tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
-      try {
-        loadAllGangs(tempSaveObj.AllGangsSave);
-      } catch (e) {
-        console.error(`Failed to parse AllGangsSave: {e}`);
-        throw e;
-      }
-    }
-  } catch (e) {
-    dialogBoxCreate("Error importing game: " + e.toString());
-    return false;
-  }
-
-  // Since the save file is valid, load everything for real
-  saveString = decodeURIComponent(escape(atob(saveString)));
-  saveObj = JSON.parse(saveString, Reviver);
-
-  loadPlayer(saveObj.PlayerSave);
-  loadAllServers(saveObj.AllServersSave);
-  loadCompanies(saveObj.CompaniesSave);
-  loadFactions(saveObj.FactionsSave);
-  loadSpecialServerIps(saveObj.SpecialServerIpsSave);
-
-  if (saveObj.hasOwnProperty("AliasesSave")) {
-    try {
-      loadAliases(saveObj.AliasesSave);
-    } catch (e) {
-      loadAliases("");
-    }
-  } else {
-    loadAliases("");
-  }
-  if (saveObj.hasOwnProperty("GlobalAliasesSave")) {
-    try {
-      loadGlobalAliases(saveObj.GlobalAliasesSave);
-    } catch (e) {
-      loadGlobalAliases("");
-    }
-  } else {
-    loadGlobalAliases("");
-  }
-  if (saveObj.hasOwnProperty("MessagesSave")) {
-    try {
-      loadMessages(saveObj.MessagesSave);
-    } catch (e) {
-      initMessages();
-    }
-  } else {
-    initMessages();
-  }
-  if (saveObj.hasOwnProperty("StockMarketSave")) {
-    try {
-      loadStockMarket(saveObj.StockMarketSave);
-    } catch (e) {
-      loadStockMarket("");
-    }
-  } else {
-    loadStockMarket("");
-  }
-  if (saveObj.hasOwnProperty("SettingsSave")) {
-    try {
-      Settings.load(saveObj.SettingsSave);
-    } catch (e) {
-      Settings.init();
-    }
-  } else {
-    Settings.init();
-  }
-  // if (saveObj.hasOwnProperty("FconfSettingsSave")) {
-  //   try {
-  //     loadFconf(saveObj.FconfSettingsSave);
-  //   } catch (e) {
-  //     console.error("ERROR: Failed to load .fconf settings when importing");
-  //   }
-  // }
-  if (saveObj.hasOwnProperty("VersionSave")) {
-    try {
-      var ver = JSON.parse(saveObj.VersionSave, Reviver);
-      evaluateVersionCompatibility(ver);
-
-      if (ver != CONSTANTS.Version) {
-        createNewUpdateText();
-      }
-    } catch (e) {
-      createNewUpdateText();
-    }
-  } else {
-    createNewUpdateText();
-  }
-  if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
-    try {
-      loadAllGangs(saveObj.AllGangsSave);
-    } catch (e) {
-      console.error("ERROR: Failed to parse AllGangsSave: " + e);
-    }
-  }
-  saveObject.saveGame(Engine.indexedDb);
-  setTimeout(() => location.reload(), 1000);
-  return true;
-}
-
 BitburnerSaveObject.prototype.exportGame = function () {
   const saveString = this.getSaveString();
 
@@ -458,31 +257,6 @@ BitburnerSaveObject.prototype.exportGame = function () {
       window.URL.revokeObjectURL(url);
     }, 0);
   }
-};
-
-BitburnerSaveObject.prototype.importGame = function () {
-  if (window.File && window.FileReader && window.FileList && window.Blob) {
-    var fileSelector = clearEventListeners("import-game-file-selector");
-    fileSelector.addEventListener("change", openImportFileHandler, false);
-    $("#import-game-file-selector").click();
-  } else {
-    dialogBoxCreate("ERR: Your browser does not support HTML5 File API. Cannot import.");
-  }
-};
-
-BitburnerSaveObject.prototype.deleteGame = function (db) {
-  // Delete from local storage
-  if (window.localStorage.getItem("bitburnerSave")) {
-    window.localStorage.removeItem("bitburnerSave");
-  }
-
-  // Delete from indexedDB
-  var request = db.transaction(["savestring"], "readwrite").objectStore("savestring").delete("save");
-  request.onsuccess = function () {};
-  request.onerror = function (e) {
-    console.error(`Failed to delete save from indexedDb: ${e}`);
-  };
-  createStatusText("Game deleted!");
 };
 
 function createNewUpdateText() {
@@ -514,19 +288,4 @@ BitburnerSaveObject.fromJSON = function (value) {
 
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;
 
-function openImportFileHandler(evt) {
-  var file = evt.target.files[0];
-  if (!file) {
-    dialogBoxCreate("Invalid file selected");
-    return;
-  }
-
-  var reader = new FileReader();
-  reader.onload = function (e) {
-    var contents = e.target.result;
-    loadImportedGame(saveObject, contents);
-  };
-  reader.readAsText(file);
-}
-
-export { saveObject, loadGame, openImportFileHandler };
+export { saveObject, loadGame };

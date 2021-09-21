@@ -61,7 +61,6 @@ import { scananalyze } from "./commands/scananalyze";
 import { scp } from "./commands/scp";
 import { sudov } from "./commands/sudov";
 import { tail } from "./commands/tail";
-import { theme } from "./commands/theme";
 import { top } from "./commands/top";
 import { unalias } from "./commands/unalias";
 import { wget } from "./commands/wget";
@@ -683,7 +682,6 @@ export class Terminal implements ITerminal {
       scp: scp,
       sudov: sudov,
       tail: tail,
-      theme: theme,
       top: top,
       unalias: unalias,
       wget: wget,

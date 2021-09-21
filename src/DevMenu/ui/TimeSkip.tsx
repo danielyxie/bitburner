@@ -22,7 +22,7 @@ export function TimeSkip(props: IProps): React.ReactElement {
     return () => {
       props.player.lastUpdate -= time;
       props.engine._lastUpdate -= time;
-      saveObject.saveGame(props.engine.indexedDb);
+      saveObject.saveGame();
       setTimeout(() => location.reload(), 1000);
     };
   }

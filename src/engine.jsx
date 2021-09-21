@@ -50,8 +50,6 @@ import "./Exploits/unclickable";
 import React from "react";
 
 const Engine = {
-  indexedDb: undefined,
-
   // Time variables (milliseconds unix epoch time)
   _lastUpdate: new Date().getTime(),
 
@@ -196,7 +194,7 @@ const Engine = {
         Engine.Counters.autoSaveCounter = Infinity;
       } else {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
-        saveObject.saveGame(Engine.indexedDb);
+        saveObject.saveGame();
       }
     }
 
@@ -420,48 +418,4 @@ const Engine = {
   },
 };
 
-function load(cb) {
-  if (!window.indexedDB) {
-    return Engine.load(null); // Will try to load from localstorage
-  }
-
-  /**
-   * DB is called bitburnerSave
-   * Object store is called savestring
-   * key for the Object store is called save
-   */
-  indexedDbRequest = window.indexedDB.open("bitburnerSave", 1);
-
-  indexedDbRequest.onerror = function (e) {
-    console.error("Error opening indexedDB: ");
-    console.error(e);
-    Engine.load(null); // Try to load from localstorage
-    cb();
-  };
-
-  indexedDbRequest.onsuccess = function (e) {
-    Engine.indexedDb = e.target.result;
-    var transaction = Engine.indexedDb.transaction(["savestring"]);
-    var objectStore = transaction.objectStore("savestring");
-    var request = objectStore.get("save");
-    request.onerror = function (e) {
-      console.error("Error in Database request to get savestring: " + e);
-      Engine.load(null); // Try to load from localstorage
-      cb();
-    };
-
-    request.onsuccess = function () {
-      Engine.load(request.result);
-      cb();
-    };
-  };
-
-  indexedDbRequest.onupgradeneeded = function (e) {
-    const db = e.target.result;
-    db.createObjectStore("savestring");
-  };
-}
-
-var indexedDbRequest;
-
-export { Engine, load };
+export { Engine };

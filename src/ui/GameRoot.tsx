@@ -4,7 +4,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { IEngine } from "../IEngine";
 import { ITerminal } from "../Terminal/ITerminal";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
-import { saveObject, openImportFileHandler } from "../SaveObject";
+import { saveObject } from "../SaveObject";
 import { onExport } from "../ExportBonus";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Location } from "../Locations/Location";
@@ -282,7 +282,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       <Context.Router.Provider value={Router}>
         <Overview>
           {!ITutorial.isRunning ? (
-            <CharacterOverview save={() => saveObject.saveGame(engine.indexedDb)} />
+            <CharacterOverview save={() => saveObject.saveGame()} />
           ) : (
             <InteractiveTutorialRoot />
           )}
@@ -357,10 +357,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               ) : page === Page.Options ? (
                 <GameOptionsRoot
                   player={player}
-                  save={() => saveObject.saveGame(engine.indexedDb)}
-                  delete={() => saveObject.deleteGame(engine.indexedDb)}
+                  save={() => saveObject.saveGame()}
                   export={() => saveObject.exportGame()}
-                  import={openImportFileHandler}
                   forceKill={() => {
                     for (const hostname of Object.keys(AllServers)) {
                       AllServers[hostname].runningScripts = [];
