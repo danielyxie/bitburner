@@ -36,7 +36,6 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   }
 
   function getAugs(): string[] {
-    console.log(props.faction.augmentations);
     if (isPlayersGang) {
       const augs: string[] = [];
       for (const augName in Augmentations) {

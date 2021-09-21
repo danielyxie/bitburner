@@ -44,13 +44,15 @@ export function Info(props: IProps): React.ReactElement {
       <Box display="flex">
         <Tooltip
           title={
-            <Typography>
-              You will have {Favor(props.faction.favor + favorGain)} faction favor after installing an Augmentation.
+            <>
+              <Typography>
+                You will have {Favor(props.faction.favor + favorGain)} faction favor after installing an Augmentation.
+              </Typography>
               <MathComponent tex={String.raw`\large{r = \text{total faction reputation}}`} />
               <MathComponent
                 tex={String.raw`\large{favor=\left\lfloor\log_{1.02}\left(\frac{r+25000}{25500}\right)\right\rfloor}`}
               />
-            </Typography>
+            </>
           }
         >
           <Typography>Reputation: {Reputation(props.faction.playerReputation)}</Typography>
@@ -62,13 +64,15 @@ export function Info(props: IProps): React.ReactElement {
       <Box display="flex">
         <Tooltip
           title={
-            <Typography>
-              Faction favor increases the rate at which you earn reputation for this faction by 1% per favor. Faction
-              favor is gained whenever you install an Augmentation. The amount of favor you gain depends on the total
-              amount of reputation you earned with this faction. Across all resets.
+            <>
+              <Typography>
+                Faction favor increases the rate at which you earn reputation for this faction by 1% per favor. Faction
+                favor is gained whenever you install an Augmentation. The amount of favor you gain depends on the total
+                amount of reputation you earned with this faction. Across all resets.
+              </Typography>
               <MathComponent tex={String.raw`\large{r = reputation}`} />
               <MathComponent tex={String.raw`\large{\Delta r = \Delta r \times \frac{100+favor}{100}}`} />
-            </Typography>
+            </>
           }
         >
           <Typography>Faction Favor: {Favor(props.faction.favor)}</Typography>

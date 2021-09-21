@@ -40,24 +40,29 @@ function Requirements(props: IReqProps): React.ReactElement {
   const aug = Augmentations[props.augName];
   if (!props.hasReq) {
     return (
-      <TableCell colSpan={2}>
-        <Typography color="error">Requires {aug.prereqs.map((aug) => AugFormat(aug))}</Typography>
+      <TableCell key={1} colSpan={2}>
+        <Typography color="error">
+          Requires{" "}
+          {aug.prereqs.map((aug, i) => (
+            <AugFormat key={i} name={aug} />
+          ))}
+        </Typography>
       </TableCell>
     );
   }
 
-  let color = !props.hasRep && !props.hasCost ? "error" : "primary";
+  let color = !props.hasRep || !props.hasCost ? "error" : "primary";
   return (
-    <>
-      <TableCell>
+    <React.Fragment key="f">
+      <TableCell key={1}>
         <Typography color={color}>
           <Money money={props.cost} player={props.p} />
         </Typography>
       </TableCell>
-      <TableCell>
+      <TableCell key={2}>
         <Typography color={color}>Requires {Reputation(props.rep)} faction reputation</Typography>
       </TableCell>
-    </>
+    </React.Fragment>
   );
 }
 
@@ -122,38 +127,10 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   const repCost = getRepCost();
   const hasReq = hasPrereqs();
   const hasRep = hasReputation();
-  const hasCost = aug.baseCost !== 0 && props.p.money.lt(aug.baseCost * props.faction.getInfo().augmentationPriceMult);
+  const hasCost = aug.baseCost !== 0 && props.p.money.gt(aug.baseCost * props.faction.getInfo().augmentationPriceMult);
 
   // Determine UI properties
-  let disabled = false;
-  let status: JSX.Element | null = null;
-  let color: "primary" | "error" = "primary";
-  if (!hasReq) {
-    disabled = true;
-    status = <>LOCKED (Requires {aug.prereqs.map((aug) => AugFormat(aug))} as prerequisite)</>;
-    color = "error";
-  } else if (aug.name !== AugmentationNames.NeuroFluxGovernor && (aug.owned || owned())) {
-    disabled = true;
-  } else if (hasRep) {
-    status = (
-      <>
-        UNLOCKED (at {Reputation(repCost)} faction reputation) - <Money money={moneyCost} player={props.p} />
-      </>
-    );
-  } else {
-    disabled = true;
-    status = (
-      <>
-        LOCKED (Requires {Reputation(repCost)} faction reputation - <Money money={moneyCost} player={props.p} />)
-      </>
-    );
-    color = "error";
-  }
-
-  if (hasCost) {
-    disabled = true;
-    color = "error";
-  }
+  const color: "error" | "primary" = !hasReq || !hasRep || !hasCost ? "error" : "primary";
 
   // Determine button txt
   let btnTxt = aug.name;
@@ -162,16 +139,16 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   }
 
   let tooltip = <></>;
-  if (typeof aug.info === "string")
+  if (typeof aug.info === "string") {
     tooltip = (
       <>
-        <span dangerouslySetInnerHTML={{ __html: aug.info }} />
+        <span>{aug.info}</span>
         <br />
         <br />
         {aug.stats}
       </>
     );
-  else
+  } else
     tooltip = (
       <>
         {aug.info}
@@ -182,7 +159,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
     );
 
   function handleClick(): void {
-    if (disabled) return;
+    if (color === "error") return;
     if (!Settings.SuppressBuyAugmentationConfirmation) {
       const popupId = "purchase-augmentation-popup";
       createPopup(popupId, PurchaseAugmentationPopup, {
@@ -201,15 +178,13 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   return (
     <TableRow>
       {!props.owned && (
-        <TableCell>
-          {status && (
-            <Button onClick={handleClick} color={color}>
-              Buy
-            </Button>
-          )}
+        <TableCell key={0}>
+          <Button onClick={handleClick} color={color}>
+            Buy
+          </Button>
         </TableCell>
       )}
-      <TableCell>
+      <TableCell key={1}>
         <Box display="flex">
           <Tooltip
             title={<Typography>{tooltip}</Typography>}
@@ -225,6 +200,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
       </TableCell>
       {!props.owned && (
         <Requirements
+          key={2}
           augName={props.augName}
           p={props.p}
           cost={moneyCost}
