@@ -553,6 +553,9 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </Tooltip>
           </Box>
           <Box>
+            <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
+              <Typography>Report bug</Typography>
+            </Link>
             <Link href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank">
               <Typography>Changelog</Typography>
             </Link>
