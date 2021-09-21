@@ -196,7 +196,8 @@ export class Roulette extends Game<IProps, IState> {
       if (playerWin && Math.random() > 0.9) {
         playerWin = false;
         while (this.state.strategy.match(n)) {
-          n++;
+          console.log("er)");
+          n = (n + 1) % 36;
         }
       }
       if (playerWin) {
