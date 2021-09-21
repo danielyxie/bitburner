@@ -74,13 +74,6 @@ export function ServerAccordions(props: IProps): React.ReactElement {
 
   function rerender(): void {
     setRerender((old) => !old);
-
-    let safePage = page;
-    while (safePage * rowsPerPage + 1 >= filtered.length) {
-      safePage--;
-    }
-
-    if (safePage != page) setPage(safePage);
   }
 
   useEffect(() => WorkerScriptStartStopEventEmitter.subscribe(rerender));
@@ -108,7 +101,7 @@ export function ServerAccordions(props: IProps): React.ReactElement {
         })}
       </List>
       <TablePagination
-        rowsPerPageOptions={[10, 15, 20]}
+        rowsPerPageOptions={[10, 15, 20, 100]}
         component="div"
         count={filtered.length}
         rowsPerPage={rowsPerPage}
