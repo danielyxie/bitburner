@@ -22,6 +22,7 @@ import { use } from "../../ui/Context";
 import { CreateGangPopup } from "./CreateGangPopup";
 
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 type IProps = {
   faction: Faction;
@@ -148,6 +149,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
     return (
       <>
+        <Button onClick={() => router.toFactions()}>Back</Button>
         <Typography variant="h4" color="primary">
           {faction.name}
         </Typography>
