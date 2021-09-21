@@ -3,7 +3,9 @@ getAugmentationCost() Netscript Function
 
 .. js:function:: getAugmentationCost(augName)
 
-    .. warning:: This function is deprecated.
+    .. warning:: This function is deprecated. It still functions, but new
+                 scripts should prefer :doc:`getAugmentationPrice<getAugmentationPrice>`
+                 and :doc:`getAugmentationRepReq<getAugmentationRepReq>` instead.
 
     :RAM cost: 5 GB
 
