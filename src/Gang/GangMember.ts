@@ -218,28 +218,41 @@ export class GangMember {
     return points.hack > 0 || points.str > 0 || points.def > 0 || points.dex > 0 || points.agi > 0 || points.cha > 0;
   }
 
-  getAscensionResults(): IMults {
+  getCurrentAscensionMults(): IMults {
+    return {
+      hack: this.calculateAscensionMult(this.hack_asc_points),
+      str: this.calculateAscensionMult(this.str_asc_points),
+      def: this.calculateAscensionMult(this.def_asc_points),
+      dex: this.calculateAscensionMult(this.dex_asc_points),
+      agi: this.calculateAscensionMult(this.agi_asc_points),
+      cha: this.calculateAscensionMult(this.cha_asc_points)
+    }
+  }
+
+  getAscensionMultsAfterAscend(): IMults {
     const points = this.getGainedAscensionPoints();
     return {
-      hack:
-        this.calculateAscensionMult(this.hack_asc_points + points.hack) /
-        this.calculateAscensionMult(this.hack_asc_points),
-      str:
-        this.calculateAscensionMult(this.str_asc_points + points.str) /
-        this.calculateAscensionMult(this.str_asc_points),
-      def:
-        this.calculateAscensionMult(this.def_asc_points + points.def) /
-        this.calculateAscensionMult(this.def_asc_points),
-      dex:
-        this.calculateAscensionMult(this.dex_asc_points + points.dex) /
-        this.calculateAscensionMult(this.dex_asc_points),
-      agi:
-        this.calculateAscensionMult(this.agi_asc_points + points.agi) /
-        this.calculateAscensionMult(this.agi_asc_points),
-      cha:
-        this.calculateAscensionMult(this.cha_asc_points + points.cha) /
-        this.calculateAscensionMult(this.cha_asc_points),
-    };
+      hack: this.calculateAscensionMult(this.hack_asc_points + points.hack),
+      str: this.calculateAscensionMult(this.str_asc_points + points.str),
+      def: this.calculateAscensionMult(this.def_asc_points + points.def),
+      dex: this.calculateAscensionMult(this.dex_asc_points + points.dex),
+      agi: this.calculateAscensionMult(this.agi_asc_points + points.agi),
+      cha: this.calculateAscensionMult(this.cha_asc_points + points.cha),
+    }
+  }
+
+  getAscensionResults(): IMults {
+    const postAscend = this.getAscensionMultsAfterAscend();
+    const preAscend = this.getCurrentAscensionMults();
+
+    return {
+      hack: postAscend.hack / preAscend.hack,
+      str: postAscend.str / preAscend.str,
+      def: postAscend.def / preAscend.def,
+      dex: postAscend.dex / preAscend.dex,
+      agi: postAscend.agi / preAscend.agi,
+      cha: postAscend.cha / preAscend.cha,
+    }
   }
 
   ascend(): IAscensionResult {
