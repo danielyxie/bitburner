@@ -27,6 +27,8 @@ hack() Netscript Function
     A successful :doc:`hack<hack>` on a server will raise that server's security
     level by 0.002.
 
+    Action time is calculated at the start, effect is calculated at the end.
+
     Example:
 
     .. code-block:: javascript
