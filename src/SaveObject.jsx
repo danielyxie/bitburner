@@ -224,19 +224,19 @@ function loadGame(saveString) {
   } else {
     Settings.init();
   }
-  if (saveObj.hasOwnProperty("FconfSettingsSave")) {
-    try {
-      loadFconf(saveObj.FconfSettingsSave);
-    } catch (e) {
-      console.error("ERROR: Failed to parse .fconf Settings.");
-    }
-  }
+  // if (saveObj.hasOwnProperty("FconfSettingsSave")) {
+  //   try {
+  //     loadFconf(saveObj.FconfSettingsSave);
+  //   } catch (e) {
+  //     console.error("ERROR: Failed to parse .fconf Settings.");
+  //   }
+  // }
   if (saveObj.hasOwnProperty("LastExportBonus")) {
     try {
       ExportBonus.setLastExportBonus(JSON.parse(saveObj.LastExportBonus));
     } catch (err) {
       ExportBonus.setLastExportBonus(new Date().getTime());
-      console.error("ERROR: Failed to parse .fconf Settings " + err);
+      console.error("ERROR: Failed to parse last export bonus Settings " + err);
     }
   }
   if (saveObj.hasOwnProperty("VersionSave")) {
@@ -319,10 +319,10 @@ function loadImportedGame(saveObj, saveString) {
     }
     if (saveObj.hasOwnProperty("LastExportBonus")) {
       try {
-        ExportBonus.setLastExportBonus(JSON.parse(saveObj.LastExportBonus));
+        if (saveObj.LastExportBonus) ExportBonus.setLastExportBonus(JSON.parse(saveObj.LastExportBonus));
       } catch (err) {
         ExportBonus.setLastExportBonus(new Date().getTime());
-        console.error("ERROR: Failed to parse .fconf Settings " + err);
+        console.error("ERROR: Failed to parse last export bonus Settings " + err);
       }
     }
     if (tempSaveObj.hasOwnProperty("VersionSave")) {
@@ -401,13 +401,13 @@ function loadImportedGame(saveObj, saveString) {
   } else {
     Settings.init();
   }
-  if (saveObj.hasOwnProperty("FconfSettingsSave")) {
-    try {
-      loadFconf(saveObj.FconfSettingsSave);
-    } catch (e) {
-      console.error("ERROR: Failed to load .fconf settings when importing");
-    }
-  }
+  // if (saveObj.hasOwnProperty("FconfSettingsSave")) {
+  //   try {
+  //     loadFconf(saveObj.FconfSettingsSave);
+  //   } catch (e) {
+  //     console.error("ERROR: Failed to load .fconf settings when importing");
+  //   }
+  // }
   if (saveObj.hasOwnProperty("VersionSave")) {
     try {
       var ver = JSON.parse(saveObj.VersionSave, Reviver);
@@ -430,7 +430,7 @@ function loadImportedGame(saveObj, saveString) {
     }
   }
   saveObject.saveGame(Engine.indexedDb);
-  location.reload();
+  setTimeout(() => location.reload(), 1000);
   return true;
 }
 
