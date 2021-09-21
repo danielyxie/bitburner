@@ -70,16 +70,20 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
   return (
     <div>
       <PopupCloseButton popup={PopupId} text={"Close"} />
-      <p>
-        Would you like to purchase an additional Duplicate Sleeve from The Covenant for{" "}
-        <Money money={purchaseCost()} player={props.p} />?
-      </p>
-      <br />
-      <p>
-        These Duplicate Sleeves are permanent (they persist through BitNodes). You can purchase a total of{" "}
-        {MaxSleevesFromCovenant} from The Covenant.
-      </p>
-      <StdButton disabled={purchaseDisabled} onClick={purchaseOnClick} text={"Purchase"} />
+      {props.p.sleevesFromCovenant < MaxSleevesFromCovenant && (
+        <>
+          <p>
+            Would you like to purchase an additional Duplicate Sleeve from The Covenant for{" "}
+            <Money money={purchaseCost()} player={props.p} />?
+          </p>
+          <br />
+          <p>
+            These Duplicate Sleeves are permanent (they persist through BitNodes). You can purchase a total of{" "}
+            {MaxSleevesFromCovenant} from The Covenant.
+          </p>
+          <StdButton disabled={purchaseDisabled} onClick={purchaseOnClick} text={"Purchase"} />
+        </>
+      )}
       <br />
       <br />
       <p>
