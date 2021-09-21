@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, globalShortcut } = require("electron");
+const { app, BrowserWindow, Menu, globalShortcut, shell } = require("electron");
 
 Menu.setApplicationMenu(false);
 function createWindow() {
@@ -19,6 +19,17 @@ function createWindow() {
   });
   globalShortcut.register("f8", function () {
     win.loadFile("index.html", { query: { noScripts: "true" } });
+  });
+
+  win.webContents.on("new-window", function (e, url) {
+    // make sure local urls stay in electron perimeter
+    if ("file://" === url.substr(0, "file://".length)) {
+      return;
+    }
+
+    // and open every other protocols on the browser
+    e.preventDefault();
+    shell.openExternal(url);
   });
 }
 
