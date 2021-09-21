@@ -6,6 +6,7 @@ import { removePopup } from "../../../ui/React/createPopup";
 import { Money } from "../../../ui/React/Money";
 import { WorldMap } from "../../../ui/React/WorldMap";
 import { CityName } from "../../../Locations/data/CityNames";
+import { Settings } from "../../../Settings/Settings";
 import { dialogBoxCreate } from "../../../../utils/DialogBox";
 
 interface IProps {
@@ -34,7 +35,15 @@ export function TravelPopup(props: IProps): React.ReactElement {
         study. Traveling to a different city costs <Money money={CONSTANTS.TravelCost} player={props.player} />. It will
         also set your current sleeve task to idle.
       </p>
-      <WorldMap currentCity={props.sleeve.city} onTravel={(city: CityName) => travel(city)} />
+      {Settings.DisableASCIIArt ? (
+        Object.values(CityName).map((city: CityName) => (
+          <button key={city} className="std-button" onClick={() => travel(city)}>
+            {city}
+          </button>
+        ))
+      ) : (
+        <WorldMap currentCity={props.sleeve.city} onTravel={(city: CityName) => travel(city)} />
+      )}
     </>
   );
 }
