@@ -74,17 +74,23 @@ export function AscensionPopup(props: IProps): React.ReactElement {
         <br />
         In return, they will gain the following permanent boost to stat multipliers:
         <br />
-        Hacking: x{numeralWrapper.format(preAscend.hack, "0.000")} =&gt; x{numeralWrapper.format(postAscend.hack, "0.000")}
+        Hacking: x{numeralWrapper.format(preAscend.hack, "0.000")} =&gt; x
+        {numeralWrapper.format(postAscend.hack, "0.000")}
         <br />
-        Strength: x{numeralWrapper.format(preAscend.str, "0.000")} =&gt; x{numeralWrapper.format(postAscend.str, "0.000")}
+        Strength: x{numeralWrapper.format(preAscend.str, "0.000")} =&gt; x
+        {numeralWrapper.format(postAscend.str, "0.000")}
         <br />
-        Defense: x{numeralWrapper.format(preAscend.def, "0.000")} =&gt; x{numeralWrapper.format(postAscend.def, "0.000")}
+        Defense: x{numeralWrapper.format(preAscend.def, "0.000")} =&gt; x
+        {numeralWrapper.format(postAscend.def, "0.000")}
         <br />
-        Dexterity: x{numeralWrapper.format(preAscend.dex, "0.000")} =&gt; x{numeralWrapper.format(postAscend.dex, "0.000")}
+        Dexterity: x{numeralWrapper.format(preAscend.dex, "0.000")} =&gt; x
+        {numeralWrapper.format(postAscend.dex, "0.000")}
         <br />
-        Agility: x{numeralWrapper.format(preAscend.agi, "0.000")} =&gt; x{numeralWrapper.format(postAscend.agi, "0.000")}
+        Agility: x{numeralWrapper.format(preAscend.agi, "0.000")} =&gt; x
+        {numeralWrapper.format(postAscend.agi, "0.000")}
         <br />
-        Charisma: x{numeralWrapper.format(preAscend.cha, "0.000")} =&gt; x{numeralWrapper.format(postAscend.cha, "0.000")}
+        Charisma: x{numeralWrapper.format(preAscend.cha, "0.000")} =&gt; x
+        {numeralWrapper.format(postAscend.cha, "0.000")}
         <br />
       </pre>
       <button className="std-button" onClick={confirm}>

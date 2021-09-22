@@ -225,8 +225,8 @@ export class GangMember {
       def: this.calculateAscensionMult(this.def_asc_points),
       dex: this.calculateAscensionMult(this.dex_asc_points),
       agi: this.calculateAscensionMult(this.agi_asc_points),
-      cha: this.calculateAscensionMult(this.cha_asc_points)
-    }
+      cha: this.calculateAscensionMult(this.cha_asc_points),
+    };
   }
 
   getAscensionMultsAfterAscend(): IMults {
@@ -238,7 +238,7 @@ export class GangMember {
       dex: this.calculateAscensionMult(this.dex_asc_points + points.dex),
       agi: this.calculateAscensionMult(this.agi_asc_points + points.agi),
       cha: this.calculateAscensionMult(this.cha_asc_points + points.cha),
-    }
+    };
   }
 
   getAscensionResults(): IMults {
@@ -252,7 +252,7 @@ export class GangMember {
       dex: postAscend.dex / preAscend.dex,
       agi: postAscend.agi / preAscend.agi,
       cha: postAscend.cha / preAscend.cha,
-    }
+    };
   }
 
   ascend(): IAscensionResult {

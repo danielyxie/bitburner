@@ -26,7 +26,7 @@ export function Overview({ children }: IProps): React.ReactElement {
   if (router.page() === Page.BitVerse || router.page() === Page.HackingMission || router.page() === Page.Loading)
     return <></>;
   let icon;
-  if (open){
+  if (open) {
     icon = <VisibilityOffIcon color="primary" />;
   } else {
     icon = <VisibilityIcon color="primary" />;

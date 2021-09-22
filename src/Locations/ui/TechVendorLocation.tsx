@@ -13,12 +13,10 @@ import { CoresButton } from "./CoresButton";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getPurchaseServerCost } from "../../Server/ServerPurchases";
 
-
 import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
 import { createPopup } from "../../ui/React/createPopup";
 import { PurchaseServerPopup } from "./PurchaseServerPopup";
-
 
 type IProps = {
   loc: Location;
@@ -26,8 +24,6 @@ type IProps = {
 };
 
 export function TechVendorLocation(props: IProps): React.ReactElement {
-  
-
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -40,7 +36,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
       cost: cost,
       p: p,
       popupId: popupId,
-      rerender: rerender
+      rerender: rerender,
     });
   }
 

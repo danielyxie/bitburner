@@ -16,15 +16,15 @@ export function createStatusText(text: string): void {
     statusElement.style.display = "none";
     statusElement.classList.remove("status-text");
   };
-  
+
   if (x !== undefined) {
     clearTimeout(x);
     // Likely not needed due to clearTimeout, but just in case...
     x = undefined;
     // reset the element's animation
-    statusElement.style.animation = 'none';
-    setTimeout(function() {
-      statusElement.style.animation = '';
+    statusElement.style.animation = "none";
+    setTimeout(function () {
+      statusElement.style.animation = "";
     }, 10);
   }
 

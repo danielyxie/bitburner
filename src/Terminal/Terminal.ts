@@ -403,7 +403,7 @@ export class Terminal implements ITerminal {
       if (player.hasProgram(Programs.AutoLink.name)) {
         this.append(new Link(titleDashes, s.hostname));
       } else {
-        this.print(titleDashes+s.hostname);
+        this.print(titleDashes + s.hostname);
       }
 
       const dashes = titleDashes + "--";

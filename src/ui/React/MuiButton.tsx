@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Button, ButtonProps } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 const useStyles = makeStyles({
   // Tries to emulate StdButton in buttons.scss
   root: {

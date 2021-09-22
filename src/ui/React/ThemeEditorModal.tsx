@@ -51,11 +51,7 @@ function ColorEditor({ name }: { name: string }): React.ReactElement {
         InputProps={{
           startAdornment: (
             <>
-              <ColorPicker
-                hideTextfield
-                value={color}
-                onChange={onColorPickerChange}
-              />
+              <ColorPicker hideTextfield value={color} onChange={onColorPickerChange} />
             </>
           ),
           endAdornment: (
