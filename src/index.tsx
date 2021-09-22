@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { TTheme as Theme, ThemeEvents } from "./ui/React/Theme";
+import { TTheme as Theme, ThemeEvents, refreshTheme } from "./ui/React/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import "./engineStyle";
 
@@ -13,6 +13,7 @@ ReactDOM.render(
 );
 
 function rerender() {
+  refreshTheme();
   ReactDOM.render(
     <Theme>
       <LoadingScreen />

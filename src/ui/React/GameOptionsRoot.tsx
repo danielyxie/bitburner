@@ -26,6 +26,7 @@ import UploadIcon from "@mui/icons-material/Upload";
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
+import { ThemeEditorModal } from "./ThemeEditorModal";
 
 import { Settings } from "../../Settings/Settings";
 import { save, deleteGame } from "../../db";
@@ -80,6 +81,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
+  const [themeEditorOpen, setThemeEditorOpen] = useState(false);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -600,6 +602,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             >
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
+            <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
           </Box>
           <Box>
             <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
@@ -632,6 +635,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         onClose={() => setDeleteOpen(false)}
         confirmationText={"Really delete your game? (It's permanent!)"}
       />
+      <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
     </div>
   );
 }
