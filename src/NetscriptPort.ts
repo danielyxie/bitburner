@@ -1,51 +1,55 @@
 import { Settings } from "./Settings/Settings";
 
-export class NetscriptPort {
-  data: any[] = [];
+interface IPort {}
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  write(data: any): any {
-    this.data.push(data);
-    if (this.data.length > Settings.MaxPortCapacity) {
-      return this.data.shift();
-    }
-    return null;
-  }
+export function NetscriptPort(): IPort {
+  const data: any[] = [];
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  tryWrite(data: any): boolean {
-    if (this.data.length >= Settings.MaxPortCapacity) {
-      return false;
-    }
-    this.data.push(data);
-    return true;
-  }
+  return {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    write: (value: any): any => {
+      data.push(value);
+      if (data.length > Settings.MaxPortCapacity) {
+        return data.shift();
+      }
+      return null;
+    },
 
-  read(): any {
-    if (this.data.length === 0) {
-      return "NULL PORT DATA";
-    }
-    return this.data.shift();
-  }
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    tryWrite: (value: any): boolean => {
+      if (data.length >= Settings.MaxPortCapacity) {
+        return false;
+      }
+      data.push(value);
+      return true;
+    },
 
-  peek(): any {
-    if (this.data.length === 0) {
-      return "NULL PORT DATA";
-    } else {
-      const foo = this.data.slice();
-      return foo[0];
-    }
-  }
+    read: (): any => {
+      if (data.length === 0) {
+        return "NULL PORT DATA";
+      }
+      return data.shift();
+    },
 
-  full(): boolean {
-    return this.data.length == Settings.MaxPortCapacity;
-  }
+    peek: (): any => {
+      if (data.length === 0) {
+        return "NULL PORT DATA";
+      } else {
+        const foo = data.slice();
+        return foo[0];
+      }
+    },
 
-  empty(): boolean {
-    return this.data.length === 0;
-  }
+    full: (): boolean => {
+      return data.length == Settings.MaxPortCapacity;
+    },
 
-  clear(): void {
-    this.data.length = 0;
-  }
+    empty: (): boolean => {
+      return data.length === 0;
+    },
+
+    clear: (): void => {
+      data.length = 0;
+    },
+  };
 }

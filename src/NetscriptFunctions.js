@@ -2354,7 +2354,7 @@ function NetscriptFunctions(workerScript) {
           );
         }
         var port = NetscriptPorts[port - 1];
-        if (port == null || !(port instanceof NetscriptPort)) {
+        if (port == null || !(port instanceof Object)) {
           throw makeRuntimeErrorMsg("write", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
         return port.write(data);
@@ -2421,7 +2421,7 @@ function NetscriptFunctions(workerScript) {
           );
         }
         var port = NetscriptPorts[port - 1];
-        if (port == null || !(port instanceof NetscriptPort)) {
+        if (port == null || !(port instanceof Object)) {
           throw makeRuntimeErrorMsg("tryWrite", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
         return port.tryWrite(data);
@@ -2442,7 +2442,7 @@ function NetscriptFunctions(workerScript) {
           );
         }
         var port = NetscriptPorts[port - 1];
-        if (port == null || !(port instanceof NetscriptPort)) {
+        if (port == null || !(port instanceof Object)) {
           throw makeRuntimeErrorMsg("read", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
         return port.read();
@@ -2489,7 +2489,7 @@ function NetscriptFunctions(workerScript) {
         );
       }
       var port = NetscriptPorts[port - 1];
-      if (port == null || !(port instanceof NetscriptPort)) {
+      if (port == null || !(port instanceof Object)) {
         throw makeRuntimeErrorMsg("peek", `Could not find port: ${port}. This is a bug. Report to dev.`);
       }
       return port.peek();
@@ -2506,7 +2506,7 @@ function NetscriptFunctions(workerScript) {
           );
         }
         var port = NetscriptPorts[port - 1];
-        if (port == null || !(port instanceof NetscriptPort)) {
+        if (port == null || !(port instanceof Object)) {
           throw makeRuntimeErrorMsg("clear", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
         return port.clear();
@@ -2542,7 +2542,7 @@ function NetscriptFunctions(workerScript) {
         );
       }
       var port = NetscriptPorts[port - 1];
-      if (port == null || !(port instanceof NetscriptPort)) {
+      if (port == null || !(port instanceof Object)) {
         throw makeRuntimeErrorMsg("getPortHandle", `Could not find port: ${port}. This is a bug. Report to dev.`);
       }
       return port;
