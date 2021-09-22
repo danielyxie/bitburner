@@ -45,7 +45,14 @@ export function StdButton(props: IStdButtonProps): React.ReactElement {
   }
 
   return (
-    <button className={className} id={props.id} onClick={props.onClick} onKeyUp={props.onKeyUp} style={props.style} autoFocus={props.autoFocus}>
+    <button
+      className={className}
+      id={props.id}
+      onClick={props.onClick}
+      onKeyUp={props.onKeyUp}
+      style={props.style}
+      autoFocus={props.autoFocus}
+    >
       {props.text}
       {hasTooltip && tooltip}
     </button>

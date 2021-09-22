@@ -66,9 +66,9 @@ const GangNames = [
 ];
 
 export function FactionRoot(props: IProps): React.ReactElement {
-      const setRerender = useState(false)[1];
+  const setRerender = useState(false)[1];
   function rerender(): void {
-       setRerender((old) => !old);
+    setRerender((old) => !old);
   }
   const faction = props.faction;
 
@@ -90,7 +90,6 @@ export function FactionRoot(props: IProps): React.ReactElement {
       router: router,
     });
   }
-
 
   // Route to the main faction page
   function routeToMain(): void {

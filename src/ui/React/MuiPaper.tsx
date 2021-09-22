@@ -6,7 +6,7 @@
 import React from "react";
 import { Paper, PaperProps } from "@mui/material";
 
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 
 const useStyles = makeStyles({
   root: {

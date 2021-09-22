@@ -52,7 +52,7 @@ export function DonateOption(props: IProps): React.ReactElement {
     const amt = numeralWrapper.parseMoney(event.target.value);
     if (event.target.value === "" || isNaN(amt)) setDonateAmt(null);
     else setDonateAmt(amt);
-    console.log('set')
+    console.log("set");
   }
 
   function donate(): void {
