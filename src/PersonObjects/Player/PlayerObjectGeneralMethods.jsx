@@ -513,7 +513,7 @@ export function resetWorkStatus(generalType, group, workType) {
 }
 
 export function processWorkEarnings(numCycles = 1) {
-  const focusBonus;
+  const focusBonus = 0;
   if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
     focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   } else {
