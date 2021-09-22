@@ -1,12 +1,16 @@
 import LinearProgress from "@mui/material/LinearProgress";
 import React, { useState, useEffect } from "react";
-import withStyles from '@mui/styles/withStyles';
+import withStyles from "@mui/styles/withStyles";
+import { Theme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 
-const TimerProgress = withStyles(() => ({
+const TimerProgress = withStyles((theme: Theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+  },
   bar: {
     transition: "none",
-    backgroundColor: "#adff2f",
+    backgroundColor: theme.palette.primary.main,
   },
 }))(LinearProgress);
 
@@ -36,7 +40,7 @@ export function GameTimer(props: IProps): React.ReactElement {
   // bar physically reaches the end
   return (
     <Grid item xs={12}>
-      <TimerProgress variant="determinate" value={v} />
+      <TimerProgress variant="determinate" value={v} color="primary" />
     </Grid>
   );
 }
