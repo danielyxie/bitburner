@@ -39,7 +39,7 @@ export function ls(
   }
 
   // If the second argument is not a pipe, then it must be for listing a directory
-  if (numArgs >= 2 && args[0] !== "|") {
+  if (numArgs >= 1 && args[0] !== "|") {
     const newPath = evaluateDirectoryPath(args[0] + "", terminal.cwd());
     prefix = newPath ? newPath : "";
     if (prefix != null) {
