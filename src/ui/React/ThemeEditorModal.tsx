@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import DoneIcon from "@mui/icons-material/Done";
 import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
+import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
 import { Settings, defaultSettings } from "../../Settings/Settings";
 
@@ -30,9 +31,15 @@ function ColorEditor({ name }: { name: string }): React.ReactElement {
     setColor(defaultSettings.theme[name]);
     ThemeEvents.emit();
   }
+
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setColor(event.target.value);
   }
+
+  function onColorPickerChange(newValue: Color): void {
+    setColor("#" + newValue.hex.toLowerCase());
+  }
+
   return (
     <>
       <TextField
@@ -42,6 +49,15 @@ function ColorEditor({ name }: { name: string }): React.ReactElement {
         onChange={onChange}
         variant="standard"
         InputProps={{
+          startAdornment: (
+            <>
+              <ColorPicker
+                hideTextfield
+                value={color}
+                onChange={onColorPickerChange}
+              />
+            </>
+          ),
           endAdornment: (
             <>
               <IconButton onClick={set} disabled={!valid}>
