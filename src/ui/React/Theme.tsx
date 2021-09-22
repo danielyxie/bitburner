@@ -290,7 +290,6 @@ function refreshTheme() {
       },
     },
   });
-  console.log("refreshed");
 }
 refreshTheme();
 

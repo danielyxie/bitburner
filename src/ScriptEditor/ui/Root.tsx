@@ -76,7 +76,7 @@ let lastPosition: monaco.Position | null = null;
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
-  const [code, setCode] = useState<string>(props.code ? props.code : lastCode);
+  const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
   const [ram, setRAM] = useState("RAM: ???");
   const [options, setOptions] = useState<Options>({
     theme: Settings.MonacoTheme,
@@ -86,7 +86,6 @@ export function Root(props: IProps): React.ReactElement {
   // store the last known state in case we need to restart without nano.
   useEffect(() => {
     if (props.filename === undefined) return;
-    console.log("setting to " + props.filename);
     lastFilename = props.filename;
     lastCode = props.code;
     lastPosition = null;
