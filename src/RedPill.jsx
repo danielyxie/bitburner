@@ -9,7 +9,11 @@ import { SourceFiles } from "./SourceFile/SourceFiles";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
 
-let redPillFlag = false;
+export let redPillFlag = false;
+
+export function setRedPillFlag(b) {
+  redPillFlag = b;
+}
 
 function giveSourceFile(bitNodeNumber) {
   var sourceFileKey = "SourceFile" + bitNodeNumber.toString();
@@ -81,5 +85,3 @@ export function enterBitNode(router, flume, destroyedBitNode, newBitNode) {
   }
   prestigeSourceFile(flume);
 }
-
-export { redPillFlag };

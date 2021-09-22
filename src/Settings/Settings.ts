@@ -39,6 +39,16 @@ interface IDefaultSettings {
   DisableTextEffects: boolean;
 
   /**
+   * Enable bash hotkeys
+   */
+  EnableBashHotkeys: boolean;
+
+  /**
+   * Enable timestamps
+   */
+  EnableTimestamps: boolean;
+
+  /**
    * Locale used for display numbers
    */
   Locale: string;
@@ -87,6 +97,39 @@ interface IDefaultSettings {
    * Whether the user should be displayed a popup message when his Bladeburner actions are cancelled.
    */
   SuppressBladeburnerPopup: boolean;
+
+  /*
+   * Theme colors
+   */
+  theme: {
+    [key: string]: string | undefined;
+    primarylight: string;
+    primary: string;
+    primarydark: string;
+    errorlight: string;
+    error: string;
+    errordark: string;
+    secondarylight: string;
+    secondary: string;
+    secondarydark: string;
+    warninglight: string;
+    warning: string;
+    warningdark: string;
+    infolight: string;
+    info: string;
+    infodark: string;
+    welllight: string;
+    well: string;
+    white: string;
+    black: string;
+    hp: string;
+    money: string;
+    hack: string;
+    combat: string;
+    cha: string;
+    int: string;
+    rep: string;
+  };
 }
 
 /**
@@ -108,7 +151,7 @@ interface ISettings extends IDefaultSettings {
   MonacoInsertSpaces: boolean;
 }
 
-const defaultSettings: IDefaultSettings = {
+export const defaultSettings: IDefaultSettings = {
   ActiveScriptsServerPageSize: 10,
   ActiveScriptsScriptPageSize: 10,
   AutosaveInterval: 60,
@@ -116,6 +159,8 @@ const defaultSettings: IDefaultSettings = {
   DisableASCIIArt: false,
   DisableHotkeys: false,
   DisableTextEffects: false,
+  EnableBashHotkeys: false,
+  EnableTimestamps: false,
   Locale: "en",
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
@@ -126,6 +171,35 @@ const defaultSettings: IDefaultSettings = {
   SuppressMessages: false,
   SuppressTravelConfirmation: false,
   SuppressBladeburnerPopup: false,
+
+  theme: {
+    primarylight: "#0f0",
+    primary: "#0c0",
+    primarydark: "#090",
+    errorlight: "#f00",
+    error: "#c00",
+    errordark: "#900",
+    secondarylight: "#AAA",
+    secondary: "#888",
+    secondarydark: "#666",
+    warninglight: "#ff0",
+    warning: "#cc0",
+    warningdark: "#990",
+    infolight: "#69f",
+    info: "#36c",
+    infodark: "#039",
+    welllight: "#444",
+    well: "#222",
+    white: "#fff",
+    black: "#000",
+    hp: "#dd3434",
+    money: "#ffd700",
+    hack: "#adff2f",
+    combat: "#faffdf",
+    cha: "#a671d1",
+    int: "#6495ed",
+    rep: "#faffdf",
+  },
 };
 
 /**
@@ -140,6 +214,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   DisableASCIIArt: defaultSettings.DisableASCIIArt,
   DisableHotkeys: defaultSettings.DisableHotkeys,
   DisableTextEffects: defaultSettings.DisableTextEffects,
+  EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
+  EnableTimestamps: defaultSettings.EnableTimestamps,
   Locale: "en",
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
@@ -154,6 +230,35 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   MonacoTheme: "vs-dark",
   MonacoInsertSpaces: false,
+
+  theme: {
+    primarylight: defaultSettings.theme.primarylight,
+    primary: defaultSettings.theme.primary,
+    primarydark: defaultSettings.theme.primarydark,
+    errorlight: defaultSettings.theme.errorlight,
+    error: defaultSettings.theme.error,
+    errordark: defaultSettings.theme.errordark,
+    secondarylight: defaultSettings.theme.secondarylight,
+    secondary: defaultSettings.theme.secondary,
+    secondarydark: defaultSettings.theme.secondarydark,
+    warninglight: defaultSettings.theme.warninglight,
+    warning: defaultSettings.theme.warning,
+    warningdark: defaultSettings.theme.warningdark,
+    infolight: defaultSettings.theme.infolight,
+    info: defaultSettings.theme.info,
+    infodark: defaultSettings.theme.infodark,
+    welllight: defaultSettings.theme.welllight,
+    well: defaultSettings.theme.well,
+    white: defaultSettings.theme.white,
+    black: defaultSettings.theme.black,
+    hp: defaultSettings.theme.hp,
+    money: defaultSettings.theme.money,
+    hack: defaultSettings.theme.hack,
+    combat: defaultSettings.theme.combat,
+    cha: defaultSettings.theme.cha,
+    int: defaultSettings.theme.int,
+    rep: defaultSettings.theme.rep,
+  },
   init() {
     Object.assign(Settings, defaultSettings);
   },

@@ -35,7 +35,7 @@ import { simple as walksimple } from "acorn-walk";
 // Netscript Ports are instantiated here
 export const NetscriptPorts = [];
 for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
-  NetscriptPorts.push(new NetscriptPort());
+  NetscriptPorts.push(NetscriptPort());
 }
 
 export function prestigeWorkerScripts() {

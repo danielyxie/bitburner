@@ -2,6 +2,8 @@ import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IRouter } from "../ui/Router";
+import { Settings } from "../Settings/Settings";
+import { getTimestamp } from "../../utils/helpers/getTimestamp";
 
 export class Output {
   text: string;
@@ -10,6 +12,7 @@ export class Output {
     text: string,
     color: "inherit" | "initial" | "primary" | "secondary" | "error" | "textPrimary" | "textSecondary" | undefined,
   ) {
+    if (Settings.EnableTimestamps) text = "[" + getTimestamp() + "] " + text;
     this.text = text;
     this.color = color;
   }
@@ -18,6 +21,7 @@ export class Output {
 export class Link {
   hostname: string;
   constructor(hostname: string) {
+    if (Settings.EnableTimestamps) hostname = "[" + getTimestamp() + "] " + hostname;
     this.hostname = hostname;
   }
 }

@@ -5,23 +5,25 @@
 
 import React from "react";
 import { Select as MuiSelect, SelectProps } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
-import { colors } from "./Theme";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
-const useStyles = makeStyles({
-  // Tries to emulate StdButton in buttons.scss
-  root: {
-    backgroundColor: colors.well,
-    color: colors.primarydark,
-    margin: "5px",
-    padding: "3px 5px",
-    "&:after": {
-      backgroundColor: colors.well,
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.primary.dark,
+      margin: "5px",
+      padding: "3px 5px",
+      "&:after": {
+        backgroundColor: theme.palette.background.paper,
+      },
+
+      borderRadius: 0,
     },
-
-    borderRadius: 0,
-  },
-});
+  }),
+);
 
 export const Select: React.FC<SelectProps> = (props: SelectProps) => {
   return (

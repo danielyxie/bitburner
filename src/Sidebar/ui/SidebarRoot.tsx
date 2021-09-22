@@ -52,7 +52,6 @@ import { redPillFlag } from "../../RedPill";
 
 import { inMission } from "../../Missions";
 import { KEY } from "../../../utils/helpers/keyCodes";
-import { FconfSettings } from "../../Fconf/FconfSettings";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -297,7 +296,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         clickCreateProgram();
       } else if (event.keyCode === KEY.F && event.altKey) {
         // Overriden by Fconf
-        if (props.page == Page.Terminal && FconfSettings.ENABLE_BASH_HOTKEYS) {
+        if (props.page == Page.Terminal && Settings.EnableBashHotkeys) {
           return;
         }
         event.preventDefault();

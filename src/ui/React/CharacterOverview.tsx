@@ -18,7 +18,6 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
 
-import { colors } from "./Theme";
 import { Settings } from "../../Settings/Settings";
 import { use } from "../Context";
 

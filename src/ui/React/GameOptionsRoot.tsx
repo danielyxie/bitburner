@@ -26,6 +26,7 @@ import UploadIcon from "@mui/icons-material/Upload";
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
+import { ThemeEditorModal } from "./ThemeEditorModal";
 
 import { Settings } from "../../Settings/Settings";
 import { save, deleteGame } from "../../db";
@@ -74,9 +75,13 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [disableHotkeys, setDisableHotkeys] = useState(Settings.DisableHotkeys);
   const [disableASCIIArt, setDisableASCIIArt] = useState(Settings.DisableASCIIArt);
   const [disableTextEffects, setDisableTextEffects] = useState(Settings.DisableTextEffects);
+  const [enableBashHotkeys, setEnableBashHotkeys] = useState(Settings.EnableBashHotkeys);
+  const [enableTimestamps, setEnableTimestamps] = useState(Settings.EnableTimestamps);
+
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
+  const [themeEditorOpen, setThemeEditorOpen] = useState(false);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -150,6 +155,15 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
     setLocale(event.target.value as string);
     Settings.Locale = event.target.value as string;
+  }
+
+  function handleEnableBashHotkeysChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setEnableBashHotkeys(event.target.checked);
+    Settings.EnableBashHotkeys = event.target.checked;
+  }
+  function handleEnableTimestampsChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setEnableTimestamps(event.target.checked);
+    Settings.EnableTimestamps = event.target.checked;
   }
 
   function startImport(): void {
@@ -454,6 +468,43 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 }
               />
             </ListItem>
+
+            <ListItem>
+              <FormControlLabel
+                control={<Switch checked={enableBashHotkeys} onChange={handleEnableBashHotkeysChange} />}
+                label={
+                  <Tooltip
+                    title={
+                      <Typography>
+                        Improved Bash emulation mode. Setting this to 1 enables several new Terminal shortcuts and
+                        features that more closely resemble a real Bash-style shell. Note that when this mode is
+                        enabled, the default browser shortcuts are overriden by the new Bash shortcuts.
+                      </Typography>
+                    }
+                  >
+                    <Typography>Enable bash hotkeys</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <FormControlLabel
+                control={<Switch checked={enableTimestamps} onChange={handleEnableTimestampsChange} />}
+                label={
+                  <Tooltip
+                    title={
+                      <Typography>
+                        Terminal commands and log entries will be timestamped. The timestamp will have the format: M/D
+                        h:m
+                      </Typography>
+                    }
+                  >
+                    <Typography>Enable timestamps</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
+
             <ListItem>
               <Tooltip title={<Typography>Sets the locale for displaying numbers.</Typography>}>
                 <Typography>Locale&nbsp;</Typography>
@@ -551,6 +602,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             >
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
+            <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
           </Box>
           <Box>
             <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
@@ -583,6 +635,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         onClose={() => setDeleteOpen(false)}
         confirmationText={"Really delete your game? (It's permanent!)"}
       />
+      <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
     </div>
   );
 }

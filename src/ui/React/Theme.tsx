@@ -1,5 +1,9 @@
 import React from "react";
 import { createTheme, ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import { EventEmitter } from "../../utils/EventEmitter";
+import { Settings } from "../../Settings/Settings";
+
+export const ThemeEvents = new EventEmitter<[]>();
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -25,83 +29,49 @@ declare module "@mui/material/styles" {
     };
   }
 }
-export let colors = {
-  primarylight: "#0f0",
-  primary: "#0c0",
-  primarydark: "#090",
-
-  errorlight: "#f00",
-  error: "#c00",
-  errordark: "#900",
-
-  secondarylight: "#AAA",
-  secondary: "#888",
-  secondarydark: "#666",
-
-  warninglight: "#ff0",
-  warning: "#cc0",
-  warningdark: "#990",
-
-  infolight: "#69f",
-  info: "#36c",
-  infodark: "#039",
-
-  welllight: "#444",
-  well: "#222",
-  white: "#fff",
-  black: "#000",
-
-  hp: "#dd3434",
-  money: "#ffd700",
-  hack: "#adff2f",
-  combat: "#faffdf",
-  cha: "#a671d1",
-  int: "#6495ed",
-  rep: "#faffdf",
-};
 
 let theme: Theme;
 
-function refreshTheme() {
+export function refreshTheme() {
   theme = createTheme({
     colors: {
-      hp: "#dd3434",
-      money: "#ffd700",
-      hack: "#adff2f",
-      combat: "#faffdf",
-      cha: "#a671d1",
-      int: "#6495ed",
-      rep: "#faffdf",
+      hp: Settings.theme.hp,
+      money: Settings.theme.money,
+      hack: Settings.theme.hack,
+      combat: Settings.theme.combat,
+      cha: Settings.theme.cha,
+      int: Settings.theme.int,
+      rep: Settings.theme.rep,
     },
     palette: {
       primary: {
-        light: colors.primarylight,
-        main: colors.primary,
-        dark: colors.primarydark,
+        light: Settings.theme.primarylight,
+        main: Settings.theme.primary,
+        dark: Settings.theme.primarydark,
       },
       secondary: {
-        light: colors.secondarylight,
-        main: colors.secondary,
-        dark: colors.secondarydark,
+        light: Settings.theme.secondarylight,
+        main: Settings.theme.secondary,
+        dark: Settings.theme.secondarydark,
       },
       error: {
-        light: colors.errorlight,
-        main: colors.error,
-        dark: colors.errordark,
+        light: Settings.theme.errorlight,
+        main: Settings.theme.error,
+        dark: Settings.theme.errordark,
       },
       info: {
-        light: colors.infolight,
-        main: colors.info,
-        dark: colors.infodark,
+        light: Settings.theme.infolight,
+        main: Settings.theme.info,
+        dark: Settings.theme.infodark,
       },
       warning: {
-        light: colors.warninglight,
-        main: colors.warning,
-        dark: colors.warningdark,
+        light: Settings.theme.warninglight,
+        main: Settings.theme.warning,
+        dark: Settings.theme.warningdark,
       },
       background: {
-        default: colors.black,
-        paper: colors.well,
+        default: Settings.theme.black,
+        paper: Settings.theme.well,
       },
     },
     typography: {
@@ -114,13 +84,13 @@ function refreshTheme() {
       MuiInputBase: {
         styleOverrides: {
           root: {
-            backgroundColor: colors.well,
-            color: colors.primary,
+            backgroundColor: Settings.theme.well,
+            color: Settings.theme.primary,
           },
           input: {
             "&::placeholder": {
               userSelect: "none",
-              color: colors.primarydark,
+              color: Settings.theme.primarydark,
             },
           },
         },
@@ -129,18 +99,18 @@ function refreshTheme() {
       MuiInput: {
         styleOverrides: {
           root: {
-            backgroundColor: colors.well,
+            backgroundColor: Settings.theme.well,
             borderBottomColor: "#fff",
           },
           underline: {
             "&:hover": {
-              borderBottomColor: colors.primarydark,
+              borderBottomColor: Settings.theme.primarydark,
             },
             "&:before": {
-              borderBottomColor: colors.primary,
+              borderBottomColor: Settings.theme.primary,
             },
             "&:after": {
-              borderBottomColor: colors.primarylight,
+              borderBottomColor: Settings.theme.primarylight,
             },
           },
         },
@@ -149,10 +119,10 @@ function refreshTheme() {
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color: colors.primarydark, // why is this switched?
+            color: Settings.theme.primarydark, // why is this switched?
             userSelect: "none",
             "&:before": {
-              color: colors.primarylight,
+              color: Settings.theme.primarylight,
             },
           },
         },
@@ -161,10 +131,10 @@ function refreshTheme() {
         styleOverrides: {
           root: {
             backgroundColor: "#333",
-            border: "1px solid " + colors.well,
-            // color: colors.primary,
+            border: "1px solid " + Settings.theme.well,
+            // color: Settings.theme.primary,
             "&:hover": {
-              backgroundColor: colors.black,
+              backgroundColor: Settings.theme.black,
             },
 
             borderRadius: 0,
@@ -174,21 +144,21 @@ function refreshTheme() {
       MuiSelect: {
         styleOverrides: {
           icon: {
-            color: colors.primary,
+            color: Settings.theme.primary,
           },
         },
       },
       MuiMenu: {
         styleOverrides: {
           list: {
-            backgroundColor: colors.well,
+            backgroundColor: Settings.theme.well,
           },
         },
       },
       MuiMenuItem: {
         styleOverrides: {
           root: {
-            color: colors.primary,
+            color: Settings.theme.primary,
           },
         },
       },
@@ -202,14 +172,14 @@ function refreshTheme() {
       MuiAccordionDetails: {
         styleOverrides: {
           root: {
-            backgroundColor: colors.black,
+            backgroundColor: Settings.theme.black,
           },
         },
       },
       MuiIconButton: {
         styleOverrides: {
           root: {
-            color: colors.primary,
+            color: Settings.theme.primary,
           },
         },
       },
@@ -217,8 +187,8 @@ function refreshTheme() {
         styleOverrides: {
           tooltip: {
             fontSize: "1em",
-            color: colors.primary,
-            backgroundColor: colors.well,
+            color: Settings.theme.primary,
+            backgroundColor: Settings.theme.well,
             borderRadius: 0,
             border: "2px solid white",
             maxWidth: "100vh",
@@ -228,8 +198,8 @@ function refreshTheme() {
       MuiSlider: {
         styleOverrides: {
           valueLabel: {
-            color: colors.primary,
-            backgroundColor: colors.well,
+            color: Settings.theme.primary,
+            backgroundColor: Settings.theme.well,
           },
         },
       },
@@ -241,34 +211,34 @@ function refreshTheme() {
               display: "none",
             },
             scrollbarWidth: "none", // firefox
-            backgroundColor: colors.black,
+            backgroundColor: Settings.theme.black,
           },
           paperAnchorDockedLeft: {
-            borderRight: "1px solid " + colors.welllight,
+            borderRight: "1px solid " + Settings.theme.welllight,
           },
         },
       },
       MuiDivider: {
         styleOverrides: {
           root: {
-            backgroundColor: colors.welllight,
+            backgroundColor: Settings.theme.welllight,
           },
         },
       },
       MuiFormControlLabel: {
         styleOverrides: {
           root: {
-            color: colors.primary,
+            color: Settings.theme.primary,
           },
         },
       },
       MuiSwitch: {
         styleOverrides: {
           switchBase: {
-            color: colors.primarydark,
+            color: Settings.theme.primarydark,
           },
           track: {
-            backgroundColor: colors.welllight,
+            backgroundColor: Settings.theme.welllight,
           },
         },
       },
@@ -276,21 +246,20 @@ function refreshTheme() {
         styleOverrides: {
           root: {
             borderRadius: 0,
-            backgroundColor: colors.black,
-            border: "1px solid " + colors.welllight,
+            backgroundColor: Settings.theme.black,
+            border: "1px solid " + Settings.theme.welllight,
           },
         },
       },
       MuiTablePagination: {
         styleOverrides: {
           select: {
-            color: colors.primary,
+            color: Settings.theme.primary,
           },
         },
       },
     },
   });
-  console.log("refreshed");
 }
 refreshTheme();
 

@@ -48,17 +48,18 @@ function addMessageToServer(msg, serverHostname) {
 
 //Checks if any of the 'timed' messages should be sent
 function checkForMessagesToSend() {
-  var jumper0 = Messages[MessageFilenames.Jumper0];
-  var jumper1 = Messages[MessageFilenames.Jumper1];
-  var jumper2 = Messages[MessageFilenames.Jumper2];
-  var jumper3 = Messages[MessageFilenames.Jumper3];
-  var jumper4 = Messages[MessageFilenames.Jumper4];
-  var cybersecTest = Messages[MessageFilenames.CyberSecTest];
-  var nitesecTest = Messages[MessageFilenames.NiteSecTest];
-  var bitrunnersTest = Messages[MessageFilenames.BitRunnersTest];
-  var redpill = Messages[MessageFilenames.RedPill];
+  if (redPillFlag) return;
+  const jumper0 = Messages[MessageFilenames.Jumper0];
+  const jumper1 = Messages[MessageFilenames.Jumper1];
+  const jumper2 = Messages[MessageFilenames.Jumper2];
+  const jumper3 = Messages[MessageFilenames.Jumper3];
+  const jumper4 = Messages[MessageFilenames.Jumper4];
+  const cybersecTest = Messages[MessageFilenames.CyberSecTest];
+  const nitesecTest = Messages[MessageFilenames.NiteSecTest];
+  const bitrunnersTest = Messages[MessageFilenames.BitRunnersTest];
+  const redpill = Messages[MessageFilenames.RedPill];
 
-  var redpillOwned = false;
+  const redpillOwned = false;
   if (Augmentations[AugmentationNames.TheRedPill].owned) {
     redpillOwned = true;
   }

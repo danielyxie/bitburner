@@ -48,7 +48,6 @@ function coloredArrow(difficulty: number): JSX.Element {
 }
 
 export function Intro(props: IProps): React.ReactElement {
-  console.log(props);
   return (
     <>
       <Grid container spacing={3}>

@@ -75,7 +75,7 @@ export class RunningScript {
     }
 
     let logEntry = txt;
-    if (FconfSettings.ENABLE_TIMESTAMPS) {
+    if (Settings.EnableTimestamps) {
       logEntry = "[" + getTimestamp() + "] " + logEntry;
     }
 
