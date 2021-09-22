@@ -66,16 +66,10 @@ const GangNames = [
 ];
 
 export function FactionRoot(props: IProps): React.ReactElement {
-    const setRerender = useState(false)[1];
+      const setRerender = useState(false)[1];
   function rerender(): void {
-    setRerender((old) => !old);
+       setRerender((old) => !old);
   }
-
-  useEffect(() => {
-    const id = setInterval(rerender, 1000);
-    return () => clearInterval(id);
-  }, []);
-
   const faction = props.faction;
 
   const player = use.Player();
