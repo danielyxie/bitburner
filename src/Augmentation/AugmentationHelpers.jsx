@@ -2352,6 +2352,11 @@ function initAugmentations() {
         "micromanages the activity and levels of various neuroreceptor " +
         "chemicals and modulates electrical acvitiy to optimize concentration, " +
         "allowing the user to multitask much more effectively.",
+      stats: (
+        <>
+          This augmentation removes the penalty for not focusing on actions such as working in a job or working for a faction.
+        </>
+      )
     });
     NeuroreceptorManager.addToFactions([
       "NiteSec",

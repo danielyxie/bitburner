@@ -73,7 +73,6 @@ export const CONSTANTS: {
   MillisecondsPerFiveMinutes: number;
   GameCyclesPerFiveMinutes: number;
   BaseFocusBonus: number;
-  NeuroreceptorManagerFocusBonus: number;
   FactionWorkHacking: string;
   FactionWorkField: string;
   FactionWorkSecurity: string;
