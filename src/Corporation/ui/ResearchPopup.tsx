@@ -77,8 +77,9 @@ export function ResearchPopup(props: IProps): React.ReactElement {
 
   return (
     <div id={props.popupId}>
-      <div id={props.popupId + "outer-box"}></div>
       <div>
+        Research points: {props.industry.sciResearch.qty}
+        <br />
         Multipliers from research:
         <br />* Advertising Multiplier: x{researchTree.getAdvertisingMultiplier()}
         <br />* Employee Charisma Multiplier: x{researchTree.getEmployeeChaMultiplier()}
