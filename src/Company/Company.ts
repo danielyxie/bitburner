@@ -13,6 +13,7 @@ export interface IConstructorParams {
   expMultiplier: number;
   salaryMultiplier: number;
   jobStatReqOffset: number;
+  isMegacorp?: boolean;
 }
 
 const DefaultConstructorParams: IConstructorParams = {
@@ -34,6 +35,11 @@ export class Company {
    * Description and general information about company
    */
   info: string;
+
+  /**
+   * Has faction associated.
+   */
+  isMegacorp: boolean;
 
   /**
    * Object that holds all available positions in this Company.
@@ -79,6 +85,8 @@ export class Company {
     this.playerReputation = 1;
     this.favor = 0;
     this.rolloverRep = 0;
+    this.isMegacorp = false;
+    if (p.isMegacorp) this.isMegacorp = true;
   }
 
   hasPosition(pos: CompanyPosition | string): boolean {

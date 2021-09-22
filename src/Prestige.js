@@ -34,21 +34,8 @@ const BitNode8StartingMoney = 250e6;
 function prestigeAugmentation() {
   initBitNodeMultipliers(Player);
 
-  const megaCorpFactions = [
-    "ECorp",
-    "MegaCorp",
-    "Bachman & Associates",
-    "Blade Industries",
-    "NWO",
-    "Clarke Incorporated",
-    "OmniTek Incorporated",
-    "Four Sigma",
-    "KuaiGong International",
-    "Fulcrum Secret Technologies",
-  ];
-
   const maintainMembership = Player.factions.filter(function (faction) {
-    return megaCorpFactions.includes(faction);
+    return Factions[faction].getInfo().keep;
   });
   Player.prestigeAugmentation();
 
