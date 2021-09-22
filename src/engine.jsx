@@ -29,6 +29,7 @@ import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
+import { ThemeEvents } from "./ui/React/Theme";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
@@ -250,6 +251,8 @@ const Engine = {
     startUnclickable();
     // Load game from save or create new game
     if (loadGame(saveString)) {
+      ThemeEvents.emit();
+
       initBitNodeMultipliers(Player);
       updateSourceFileFlags(Player);
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
