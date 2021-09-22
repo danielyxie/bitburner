@@ -54,7 +54,7 @@ interface IConstructorParams {
   programs?: string[];
 }
 
-function generateStatsDescription(mults: IMap<number>, programs?: string[], startingMoney?: number, focusBonus?: number): JSX.Element {
+function generateStatsDescription(mults: IMap<number>, programs?: string[], startingMoney?: number): JSX.Element {
   const f = (x: number, decimals = 0): string => {
     // look, I don't know how to make a "smart decimals"
     // todo, make it smarter
@@ -335,13 +335,6 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
       <>
         {desc}
         <br />+{f(mults.bladeburner_success_chance_mult - 1)} Bladeburner Contracts and Operations success chance
-      </>
-    );
-  if (focusBonus)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(focusBonus)} Focus penalty reduction
       </>
     );
 
