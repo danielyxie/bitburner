@@ -390,10 +390,6 @@ export class Augmentation {
   // The Player/Person classes
   mults: IMap<number> = {};
 
-  // Focus penalty reduction given by this Augmentation.
-  // Isn't really a multiplier, so it's out here on its own.
-  focusBonus?: number;
-
   // Initial cost. Doesn't change when you purchase multiple Augmentation
   startingCost = 0;
 
