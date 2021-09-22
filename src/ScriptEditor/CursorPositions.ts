@@ -3,7 +3,7 @@ export type Position = {
   column: number;
 };
 
-export class PositionTracker {
+class PositionTracker {
   positions: Map<string, Position>;
 
   constructor() {

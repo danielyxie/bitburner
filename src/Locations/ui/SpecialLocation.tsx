@@ -41,6 +41,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     createPopup(popupId, CreateCorporationPopup, {
       player: player,
       popupId: popupId,
+      router: router,
     });
   }
 

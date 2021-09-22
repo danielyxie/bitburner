@@ -10,10 +10,6 @@ import { SourceFiles } from "./SourceFile/SourceFiles";
 import { dialogBoxCreate } from "../utils/DialogBox";
 
 let redPillFlag = false;
-function hackWorldDaemon(router, flume = false, quick = false) {
-  router.toBitVerse(flume, quick);
-  redPillFlag = true;
-}
 
 function giveSourceFile(bitNodeNumber) {
   var sourceFileKey = "SourceFile" + bitNodeNumber.toString();
@@ -86,4 +82,4 @@ export function enterBitNode(router, flume, destroyedBitNode, newBitNode) {
   prestigeSourceFile(flume);
 }
 
-export { redPillFlag, hackWorldDaemon };
+export { redPillFlag };

@@ -29,6 +29,9 @@ export function PortalPopup(props: IProps): React.ReactElement {
       Source-File Level: {props.level} / {maxSourceFileLevel}
       <br />
       <br />
+      Difficulty: {["easy", "normal", "hard"][bitNode.difficulty]}
+      <br />
+      <br />
       {bitNode.info}
       <br />
       <br />

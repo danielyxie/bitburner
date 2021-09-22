@@ -4,6 +4,7 @@
  */
 import * as React from "react";
 
+import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
 import { use } from "../Context";
 
@@ -40,17 +41,12 @@ export function ScriptProduction(): React.ReactElement {
       <TableBody>
         <TableRow>
           <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-            <Typography variant="body2">Total online production of Active scripts:</Typography>
+            <Typography variant="body2">Total production:</Typography>
           </TableCell>
           <TableCell align="left" classes={{ root: classes.cell }}>
             <Typography variant="body2">
-              <MoneyRate money={player.scriptProdSinceLastAug} />
+              <Money money={player.scriptProdSinceLastAug} />
             </Typography>
-          </TableCell>
-        </TableRow>
-        <TableRow style={{ width: "1px" }}>
-          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-            <Typography variant="body2">Total online production since last Aug installation:</Typography>
           </TableCell>
           <TableCell align="left" classes={{ root: classes.cell }}>
             <Typography variant="body2">

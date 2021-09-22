@@ -16,8 +16,11 @@ class BitNode {
   // BitNode number
   number: number;
 
-  constructor(n: number, name: string, desc = "", info: JSX.Element = <></>) {
+  difficulty: 0 | 1 | 2;
+
+  constructor(n: number, difficulty: 0 | 1 | 2, name: string, desc = "", info: JSX.Element = <></>) {
     this.number = n;
+    this.difficulty = difficulty;
     this.name = name;
     this.desc = desc;
     this.info = info;
@@ -28,6 +31,7 @@ export const BitNodes: IMap<BitNode> = {};
 
 BitNodes["BitNode1"] = new BitNode(
   1,
+  0,
   "Source Genesis",
   "The original BitNode",
   (
@@ -54,6 +58,7 @@ BitNodes["BitNode1"] = new BitNode(
 );
 BitNodes["BitNode2"] = new BitNode(
   2,
+  0,
   "Rise of the Underworld",
   "From the shadows, they rose", //Gangs
   (
@@ -101,6 +106,7 @@ BitNodes["BitNode2"] = new BitNode(
 );
 BitNodes["BitNode3"] = new BitNode(
   3,
+  0,
   "Corporatocracy",
   "The Price of Civilization",
   (
@@ -140,6 +146,7 @@ BitNodes["BitNode3"] = new BitNode(
 );
 BitNodes["BitNode4"] = new BitNode(
   4,
+  1,
   "The Singularity",
   "The Man and the Machine",
   (
@@ -164,6 +171,7 @@ BitNodes["BitNode4"] = new BitNode(
 );
 BitNodes["BitNode5"] = new BitNode(
   5,
+  1,
   "Artificial Intelligence",
   "Posthuman",
   (
@@ -211,6 +219,7 @@ BitNodes["BitNode5"] = new BitNode(
 );
 BitNodes["BitNode6"] = new BitNode(
   6,
+  1,
   "Bladeburners",
   "Like Tears in Rain",
   (
@@ -255,6 +264,7 @@ BitNodes["BitNode6"] = new BitNode(
 );
 BitNodes["BitNode7"] = new BitNode(
   7,
+  2,
   "Bladeburners 2079",
   "More human than humans",
   (
@@ -303,6 +313,7 @@ BitNodes["BitNode7"] = new BitNode(
 );
 BitNodes["BitNode8"] = new BitNode(
   8,
+  2,
   "Ghost of Wall Street",
   "Money never sleeps",
   (
@@ -347,6 +358,7 @@ BitNodes["BitNode8"] = new BitNode(
 );
 BitNodes["BitNode9"] = new BitNode(
   9,
+  2,
   "Hacktocracy",
   "Hacknet Unleashed",
   (
@@ -389,6 +401,7 @@ BitNodes["BitNode9"] = new BitNode(
 );
 BitNodes["BitNode10"] = new BitNode(
   10,
+  2,
   "Digital Carbon",
   "Your body is not who you are",
   (
@@ -428,6 +441,7 @@ BitNodes["BitNode10"] = new BitNode(
 );
 BitNodes["BitNode11"] = new BitNode(
   11,
+  1,
   "The Big Crash",
   "Okay. Sell it all.",
   (
@@ -492,6 +506,7 @@ BitNodes["BitNode11"] = new BitNode(
 );
 BitNodes["BitNode12"] = new BitNode(
   12,
+  0,
   "The Recursion",
   "Repeat.",
   (
@@ -507,18 +522,18 @@ BitNodes["BitNode12"] = new BitNode(
   ),
 );
 // Books: Frontera, Shiner
-BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
-BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
-BitNodes["BitNode15"] = new BitNode(15, "", "COMING SOON");
-BitNodes["BitNode16"] = new BitNode(16, "", "COMING SOON");
-BitNodes["BitNode17"] = new BitNode(17, "", "COMING SOON");
-BitNodes["BitNode18"] = new BitNode(18, "", "COMING SOON");
-BitNodes["BitNode19"] = new BitNode(19, "", "COMING SOON");
-BitNodes["BitNode20"] = new BitNode(20, "", "COMING SOON");
-BitNodes["BitNode21"] = new BitNode(21, "", "COMING SOON");
-BitNodes["BitNode22"] = new BitNode(22, "", "COMING SOON");
-BitNodes["BitNode23"] = new BitNode(23, "", "COMING SOON");
-BitNodes["BitNode24"] = new BitNode(24, "", "COMING SOON");
+BitNodes["BitNode13"] = new BitNode(13, 2, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
+BitNodes["BitNode14"] = new BitNode(14, 2, "", "COMING SOON");
+BitNodes["BitNode15"] = new BitNode(15, 2, "", "COMING SOON");
+BitNodes["BitNode16"] = new BitNode(16, 2, "", "COMING SOON");
+BitNodes["BitNode17"] = new BitNode(17, 2, "", "COMING SOON");
+BitNodes["BitNode18"] = new BitNode(18, 2, "", "COMING SOON");
+BitNodes["BitNode19"] = new BitNode(19, 2, "", "COMING SOON");
+BitNodes["BitNode20"] = new BitNode(20, 2, "", "COMING SOON");
+BitNodes["BitNode21"] = new BitNode(21, 2, "", "COMING SOON");
+BitNodes["BitNode22"] = new BitNode(22, 2, "", "COMING SOON");
+BitNodes["BitNode23"] = new BitNode(23, 2, "", "COMING SOON");
+BitNodes["BitNode24"] = new BitNode(24, 2, "", "COMING SOON");
 
 export function initBitNodeMultipliers(p: IPlayer): void {
   if (p.bitNodeN == null) {

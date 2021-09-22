@@ -535,7 +535,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
   const content = contents[step];
   if (content === undefined) throw new Error("error in the tutorial");
   return (
-    <Paper square sx={{ maxWidth: "35vh", p: 2 }}>
+    <Paper square sx={{ maxWidth: "70vw", p: 2 }}>
       {content.content}
       {step !== iTutorialSteps.TutorialPageInfo && (
         <>

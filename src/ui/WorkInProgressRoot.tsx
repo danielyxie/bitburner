@@ -32,11 +32,11 @@ export function WorkInProgressRoot(): React.ReactElement {
   const faction = Factions[player.currentWorkFactionName];
   if (player.workType == CONSTANTS.WorkTypeFaction) {
     function cancel(): void {
-      router.toFaction();
+      router.toFaction(faction);
       player.finishFactionWork(true);
     }
     function unfocus(): void {
-      router.toFaction();
+      router.toFaction(faction);
       player.stopFocusing();
     }
     return (

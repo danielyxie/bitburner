@@ -4,55 +4,12 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
 import { Terminal } from "../Terminal";
-import { Engine } from "../engine";
+import { load } from "../db";
 import { Player } from "../Player";
+import { Engine } from "../engine";
 import { GameRoot } from "./GameRoot";
 
 import { CONSTANTS } from "../Constants";
-
-function load(cb: () => void): void {
-  if (!window.indexedDB) {
-    return Engine.load(""); // Will try to load from localstorage
-  }
-
-  /**
-   * DB is called bitburnerSave
-   * Object store is called savestring
-   * key for the Object store is called save
-   */
-  // Version 1 is important
-  const indexedDbRequest: IDBOpenDBRequest = window.indexedDB.open("bitburnerSave", 1);
-
-  indexedDbRequest.onerror = function (this: IDBRequest<IDBDatabase>, ev: Event) {
-    console.error("Error opening indexedDB: ");
-    console.error(ev);
-    Engine.load(""); // Try to load from localstorage
-    cb();
-  };
-
-  indexedDbRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
-    Engine.indexedDb = this.result;
-    const transaction = Engine.indexedDb.transaction(["savestring"]);
-    const objectStore = transaction.objectStore("savestring");
-    const request: IDBRequest<string> = objectStore.get("save");
-    request.onerror = function (this: IDBRequest<string>, ev: Event) {
-      console.error("Error in Database request to get savestring: " + ev);
-      Engine.load(""); // Try to load from localstorage
-      cb();
-    };
-
-    request.onsuccess = function (this: IDBRequest<string>) {
-      Engine.load(this.result);
-      cb();
-    };
-  };
-
-  // This is called when there's no db to begin with. It's important.
-  indexedDbRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
-    const db = this.result;
-    db.createObjectStore("savestring");
-  };
-}
 
 export function LoadingScreen(): React.ReactElement {
   const [show, setShow] = useState(false);
@@ -66,9 +23,19 @@ export function LoadingScreen(): React.ReactElement {
   });
 
   useEffect(() => {
-    load(() => {
-      setLoaded(true);
-    });
+    async function doLoad() {
+      await load()
+        .then((saveString) => {
+          Engine.load(saveString);
+          setLoaded(true);
+        })
+        .catch((reason) => {
+          console.error(reason);
+          Engine.load("");
+          setLoaded(true);
+        });
+    }
+    doLoad();
   }, []);
 
   if (loaded) {

@@ -62,6 +62,7 @@ export function ResearchPopup(props: IProps): React.ReactElement {
           Research(props.industry, allResearch[i]);
         } catch (err) {
           dialogBoxCreate(err + "");
+          return;
         }
 
         dialogBoxCreate(

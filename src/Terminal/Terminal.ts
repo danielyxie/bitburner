@@ -61,7 +61,6 @@ import { scananalyze } from "./commands/scananalyze";
 import { scp } from "./commands/scp";
 import { sudov } from "./commands/sudov";
 import { tail } from "./commands/tail";
-import { theme } from "./commands/theme";
 import { top } from "./commands/top";
 import { unalias } from "./commands/unalias";
 import { wget } from "./commands/wget";
@@ -345,14 +344,10 @@ export class Terminal implements ITerminal {
       case CodingContractResult.Failure:
         ++contract.tries;
         if (contract.tries >= contract.getMaxNumTries()) {
-          this.print("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
+          this.print("Contract FAILED - Contract is now self-destructing");
           serv.removeContract(contract);
         } else {
-          this.print(
-            `Contract <p style='color:red;display:inline'>FAILED</p> - ${
-              contract.getMaxNumTries() - contract.tries
-            } tries remaining`,
-          );
+          this.print(`Contract FAILED - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
         }
         break;
       case CodingContractResult.Cancelled:
@@ -683,7 +678,6 @@ export class Terminal implements ITerminal {
       scp: scp,
       sudov: sudov,
       tail: tail,
-      theme: theme,
       top: top,
       unalias: unalias,
       wget: wget,

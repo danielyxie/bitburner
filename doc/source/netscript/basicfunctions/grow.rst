@@ -28,6 +28,8 @@ grow() Netscript Function
     server, but there is no required hacking level to run the command. It also
     raises the security level of the target server by 0.004 per thread.
 
+    Action time is calculated at the start, effect is calculated at the end.
+
     Example:
 
     .. code-block:: javascript

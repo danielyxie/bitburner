@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const DeadCodePlugin = require("webpack-deadcode-plugin");
 
 module.exports = (env, argv) => {
   const isDevServer = (env || {}).devServer === true;
@@ -130,6 +131,10 @@ module.exports = (env, argv) => {
           module: true,
         }),
       isDevelopment && new ReactRefreshWebpackPlugin(),
+      new DeadCodePlugin({
+        patterns: ["src/**/*.(js|jsx|css|ts|tsx)"],
+        exclude: ["**/*.(stories|spec).(js|jsx)"],
+      }),
     ].filter(Boolean),
     target: "web",
     entry: entry,

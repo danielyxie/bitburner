@@ -58,7 +58,8 @@
     "treant-js": "^1.0.1",
     "unused-webpack-plugin": "^2.4.0",
     "uuid": "^3.2.1",
-    "w3c-blob": "0.0.1"
+    "w3c-blob": "0.0.1",
+    "webpack-deadcode-plugin": "^0.1.15"
   },
   "description": "A cyberpunk-themed incremental game",
   "devDependencies": {

@@ -1,14 +1,19 @@
 # npm install electron --save-dev
 # npm install electron-packager --save-dev
 
-mkdir -p .package/dist || true
+mkdir -p .package/dist/src/ThirdParty || true
+mkdir -p .package/src/ThirdParty || true
 
 cp index.html .package
 cp electron/* .package
-cp dist/engine.bundle.js .package/dist
-cp dist/engineStyle.css .package/dist
+# The css files
 cp dist/vendor.css .package/dist
-cp dist/engineStyle.bundle.js .package/dist
-cp dist/vendor.bundle.js .package/dist
+cp main.css .package/main.css
+
+# The js files.
+cp dist/vendor.bundle.js .package/dist/vendor.bundle.js
+cp main.bundle.js .package/main.bundle.js
+
+cp src/ThirdParty/raphael.min.js .package/src/ThirdParty/raphael.min.js
 
 npm run package-electron

@@ -95,7 +95,7 @@ function BulkPurchase(props: IProps): React.ReactElement {
         style={{ margin: "5px" }}
         onKeyDown={onKeyDown}
       />
-      <button className="std-button">Confirm Bulk Purchase</button>
+      <button className="std-button" onClick={bulkPurchase}>Confirm Bulk Purchase</button>
     </>
   );
 }

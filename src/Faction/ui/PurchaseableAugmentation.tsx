@@ -19,13 +19,60 @@ import { IMap } from "../../types";
 
 import { StdButton } from "../../ui/React/StdButton";
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+import { TableCell } from "../../ui/React/Table";
+import TableRow from "@mui/material/TableRow";
 
-type IProps = {
+interface IReqProps {
+  augName: string;
+  p: IPlayer;
+  hasReq: boolean;
+  rep: number;
+  hasRep: boolean;
+  cost: number;
+  hasCost: boolean;
+}
+
+function Requirements(props: IReqProps): React.ReactElement {
+  const aug = Augmentations[props.augName];
+  if (!props.hasReq) {
+    return (
+      <TableCell key={1} colSpan={2}>
+        <Typography color="error">
+          Requires{" "}
+          {aug.prereqs.map((aug, i) => (
+            <AugFormat key={i} name={aug} />
+          ))}
+        </Typography>
+      </TableCell>
+    );
+  }
+
+  let color = !props.hasRep || !props.hasCost ? "error" : "primary";
+  return (
+    <React.Fragment key="f">
+      <TableCell key={1}>
+        <Typography color={color}>
+          <Money money={props.cost} player={props.p} />
+        </Typography>
+      </TableCell>
+      <TableCell key={2}>
+        <Typography color={color}>Requires {Reputation(props.rep)} faction reputation</Typography>
+      </TableCell>
+    </React.Fragment>
+  );
+}
+
+interface IProps {
   augName: string;
   faction: Faction;
   p: IPlayer;
   rerender: () => void;
-};
+  owned?: boolean;
+}
 
 export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   const aug = Augmentations[props.augName];
@@ -37,22 +84,6 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
 
   function getRepCost(): number {
     return aug.baseRepRequirement * props.faction.getInfo().augmentationRepRequirementMult;
-  }
-
-  function handleClick(): void {
-    if (!Settings.SuppressBuyAugmentationConfirmation) {
-      const popupId = "purchase-augmentation-popup";
-      createPopup(popupId, PurchaseAugmentationPopup, {
-        aug: aug,
-        faction: props.faction,
-        player: props.p,
-        rerender: props.rerender,
-        popupId: popupId,
-      });
-    } else {
-      purchaseAugmentation(aug, props.faction);
-      props.rerender();
-    }
   }
 
   // Whether the player has the prerequisite Augmentations
@@ -94,39 +125,12 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
 
   const moneyCost = getMoneyCost();
   const repCost = getRepCost();
+  const hasReq = hasPrereqs();
+  const hasRep = hasReputation();
+  const hasCost = aug.baseCost !== 0 && props.p.money.gt(aug.baseCost * props.faction.getInfo().augmentationPriceMult);
 
   // Determine UI properties
-  let disabled = false;
-  let status: JSX.Element = <></>;
-  let color = "";
-  if (!hasPrereqs()) {
-    disabled = true;
-    status = <>LOCKED (Requires {aug.prereqs.map((aug) => AugFormat(aug))} as prerequisite)</>;
-    color = "red";
-  } else if (aug.name !== AugmentationNames.NeuroFluxGovernor && (aug.owned || owned())) {
-    disabled = true;
-  } else if (hasReputation()) {
-    status = (
-      <>
-        UNLOCKED (at {Reputation(repCost)} faction reputation) - <Money money={moneyCost} player={props.p} />
-      </>
-    );
-  } else {
-    disabled = true;
-    status = (
-      <>
-        LOCKED (Requires {Reputation(repCost)} faction reputation - <Money money={moneyCost} player={props.p} />)
-      </>
-    );
-    color = "red";
-  }
-
-  const txtStyle: IMap<string> = {
-    display: "inline-block",
-  };
-  if (color !== "") {
-    txtStyle.color = color;
-  }
+  const color: "error" | "primary" = !hasReq || !hasRep || !hasCost ? "error" : "primary";
 
   // Determine button txt
   let btnTxt = aug.name;
@@ -135,16 +139,16 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   }
 
   let tooltip = <></>;
-  if (typeof aug.info === "string")
+  if (typeof aug.info === "string") {
     tooltip = (
       <>
-        <span dangerouslySetInnerHTML={{ __html: aug.info }} />
+        <span>{aug.info}</span>
         <br />
         <br />
         {aug.stats}
       </>
     );
-  else
+  } else
     tooltip = (
       <>
         {aug.info}
@@ -154,25 +158,60 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
       </>
     );
 
+  function handleClick(): void {
+    if (color === "error") return;
+    if (!Settings.SuppressBuyAugmentationConfirmation) {
+      const popupId = "purchase-augmentation-popup";
+      createPopup(popupId, PurchaseAugmentationPopup, {
+        aug: aug,
+        faction: props.faction,
+        player: props.p,
+        rerender: props.rerender,
+        popupId: popupId,
+      });
+    } else {
+      purchaseAugmentation(aug, props.faction);
+      props.rerender();
+    }
+  }
+
   return (
-    <li key={aug.name}>
-      <span
-        style={{
-          margin: "4px",
-          padding: "4px",
-        }}
-      >
-        <StdButton
-          disabled={disabled}
-          onClick={handleClick}
-          style={{
-            display: "inline-block",
-          }}
-          text={btnTxt}
-          tooltip={tooltip}
+    <TableRow>
+      {!props.owned && (
+        <TableCell key={0}>
+          <Button onClick={handleClick} color={color}>
+            Buy
+          </Button>
+        </TableCell>
+      )}
+      <TableCell key={1}>
+        <Box display="flex">
+          <Tooltip
+            title={<Typography>{tooltip}</Typography>}
+            placement="top"
+            disableFocusListener
+            disableTouchListener
+            enterNextDelay={1000}
+            enterDelay={500}
+            leaveDelay={0}
+            leaveTouchDelay={0}
+          >
+            <Typography>{btnTxt}</Typography>
+          </Tooltip>
+        </Box>
+      </TableCell>
+      {!props.owned && (
+        <Requirements
+          key={2}
+          augName={props.augName}
+          p={props.p}
+          cost={moneyCost}
+          rep={repCost}
+          hasReq={hasReq}
+          hasRep={hasRep}
+          hasCost={hasCost}
         />
-        <p style={txtStyle}>{status}</p>
-      </span>
-    </li>
+      )}
+    </TableRow>
   );
 }

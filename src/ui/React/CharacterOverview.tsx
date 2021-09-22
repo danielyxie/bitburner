@@ -1,7 +1,9 @@
 // Root React Component for the Corporation UI
 import React, { useState, useEffect } from "react";
 
+import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Reputation } from "./Reputation";
 
@@ -78,35 +80,37 @@ function Work(): React.ReactElement {
   );
 }
 
-const useStyles = makeStyles({
-  cellNone: {
-    borderBottom: "none",
-    padding: 0,
-    margin: 0,
-  },
-  cell: {
-    padding: 0,
-    margin: 0,
-  },
-  hp: {
-    color: colors.hp,
-  },
-  money: {
-    color: colors.money,
-  },
-  hack: {
-    color: colors.hack,
-  },
-  combat: {
-    color: colors.combat,
-  },
-  cha: {
-    color: colors.cha,
-  },
-  int: {
-    color: colors.int,
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    cellNone: {
+      borderBottom: "none",
+      padding: 0,
+      margin: 0,
+    },
+    cell: {
+      padding: 0,
+      margin: 0,
+    },
+    hp: {
+      color: theme.colors.hp,
+    },
+    money: {
+      color: theme.colors.money,
+    },
+    hack: {
+      color: theme.colors.hack,
+    },
+    combat: {
+      color: theme.colors.combat,
+    },
+    cha: {
+      color: theme.colors.cha,
+    },
+    int: {
+      color: theme.colors.int,
+    },
+  }),
+);
 
 export function CharacterOverview({ save }: IProps): React.ReactElement {
   const player = use.Player();

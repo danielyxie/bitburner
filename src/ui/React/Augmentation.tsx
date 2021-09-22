@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function Augmentation(name: string): JSX.Element {
+export function Augmentation({ name }: { name: string }): JSX.Element {
   return (
     <span className={"samefont"} style={{ color: "white" }}>
       {name}

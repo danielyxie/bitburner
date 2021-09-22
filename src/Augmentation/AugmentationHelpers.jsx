@@ -211,7 +211,7 @@ function initAugmentations() {
     name: AugmentationNames.Targeting3,
     moneyCost: 1.15e8,
     repCost: 2.75e4,
-    info: "The latest version of the 'Augmented Targeting' implant adds the ability to " + "lock-on and track threats.",
+    info: "The latest version of the 'Augmented Targeting' implant adds the ability to lock-on and track threats.",
     prereqs: [AugmentationNames.Targeting2],
     dexterity_mult: 1.3,
   });

@@ -21,6 +21,9 @@ import { createPopup } from "../../ui/React/createPopup";
 import { use } from "../../ui/Context";
 import { CreateGangPopup } from "./CreateGangPopup";
 
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
 type IProps = {
   faction: Faction;
 };
@@ -145,8 +148,11 @@ export function FactionRoot(props: IProps): React.ReactElement {
     }
 
     return (
-      <div className="faction-container">
-        <h1>{faction.name}</h1>
+      <>
+        <Button onClick={() => router.toFactions()}>Back</Button>
+        <Typography variant="h4" color="primary">
+          {faction.name}
+        </Typography>
         <Info faction={faction} factionInfo={factionInfo} />
         {canAccessGang && <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={() => manageGang(faction)} />}
         {!isPlayersGang && factionInfo.offerHackingMission && (
@@ -186,7 +192,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
             onClick={sleevePurchases}
           />
         )}
-      </div>
+      </>
     );
   }
 
