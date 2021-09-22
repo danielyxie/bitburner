@@ -45,6 +45,11 @@ export class FactionInfo {
    */
   offerSecurityWork: boolean;
 
+  /**
+   * Keep faction on install.
+   */
+  keep: boolean;
+
   constructor(
     infoText: JSX.Element,
     enemies: string[],
@@ -52,6 +57,7 @@ export class FactionInfo {
     offerHackingWork: boolean,
     offerFieldWork: boolean,
     offerSecurityWork: boolean,
+    keep: boolean,
   ) {
     this.infoText = infoText;
     this.enemies = enemies;
@@ -63,6 +69,7 @@ export class FactionInfo {
     // These are always all 1 for now.
     this.augmentationPriceMult = 1;
     this.augmentationRepRequirementMult = 1;
+    this.keep = keep;
   }
 
   offersWork(): boolean {
@@ -88,6 +95,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     false,
+    false,
   ),
 
   Daedalus: new FactionInfo(
@@ -96,6 +104,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    false,
     false,
   ),
 
@@ -114,6 +123,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     false,
+    false,
   ),
 
   // Megacorporations, each forms its own faction
@@ -125,6 +135,7 @@ export const FactionInfos: IMap<FactionInfo> = {
       </>
     ),
     [],
+    true,
     true,
     true,
     true,
@@ -147,6 +158,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    true,
   ),
 
   "Bachman & Associates": new FactionInfo(
@@ -163,9 +175,10 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    true,
   ),
 
-  "Blade Industries": new FactionInfo(<>Augmentation is Salvation.</>, [], true, true, true, true),
+  "Blade Industries": new FactionInfo(<>Augmentation is Salvation.</>, [], true, true, true, true, true),
 
   NWO: new FactionInfo(
     (
@@ -180,13 +193,15 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    true,
   ),
 
-  "Clarke Incorporated": new FactionInfo(<>The Power of the Genome - Unlocked.</>, [], true, true, true, true),
+  "Clarke Incorporated": new FactionInfo(<>The Power of the Genome - Unlocked.</>, [], true, true, true, true, true),
 
   "OmniTek Incorporated": new FactionInfo(
     <>Simply put, our mission is to design and build robots that make a difference.</>,
     [],
+    true,
     true,
     true,
     true,
@@ -205,9 +220,10 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    true,
   ),
 
-  "KuaiGong International": new FactionInfo(<>Dream big. Work hard. Make history.</>, [], true, true, true, true),
+  "KuaiGong International": new FactionInfo(<>Dream big. Work hard. Make history.</>, [], true, true, true, true, true),
 
   // Other Corporations
   "Fulcrum Secret Technologies": new FactionInfo(
@@ -221,6 +237,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     false,
+    true,
     true,
   ),
 
@@ -243,6 +260,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     false,
     false,
+    false,
   ),
 
   "The Black Hand": new FactionInfo(
@@ -260,6 +278,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    false,
     false,
   ),
 
@@ -305,6 +324,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     false,
     false,
+    false,
   ),
 
   // City factions, essentially governments
@@ -315,8 +335,9 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    false,
   ),
-  Chongqing: new FactionInfo(<>Serve the People.</>, ["Sector-12", "Aevum", "Volhaven"], true, true, true, true),
+  Chongqing: new FactionInfo(<>Serve the People.</>, ["Sector-12", "Aevum", "Volhaven"], true, true, true, true, false),
   Ishima: new FactionInfo(
     <>The East Asian Order of the Future.</>,
     ["Sector-12", "Aevum", "Volhaven"],
@@ -324,8 +345,17 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    false,
   ),
-  "New Tokyo": new FactionInfo(<>Asia's World City.</>, ["Sector-12", "Aevum", "Volhaven"], true, true, true, true),
+  "New Tokyo": new FactionInfo(
+    <>Asia's World City.</>,
+    ["Sector-12", "Aevum", "Volhaven"],
+    true,
+    true,
+    true,
+    true,
+    false,
+  ),
   "Sector-12": new FactionInfo(
     <>The City of the Future.</>,
     ["Chongqing", "New Tokyo", "Ishima", "Volhaven"],
@@ -333,6 +363,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    false,
   ),
   Volhaven: new FactionInfo(
     <>Benefit, Honor, and Glory.</>,
@@ -341,6 +372,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    false,
   ),
 
   // Criminal Organizations/Gangs
@@ -351,6 +383,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     true,
+    false,
   ),
 
   "The Dark Army": new FactionInfo(
@@ -360,9 +393,10 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     false,
+    false,
   ),
 
-  "The Syndicate": new FactionInfo(<>Honor holds you back.</>, [], true, true, true, true),
+  "The Syndicate": new FactionInfo(<>Honor holds you back.</>, [], true, true, true, true, false),
 
   Silhouette: new FactionInfo(
     (
@@ -380,6 +414,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
     true,
     false,
+    false,
   ),
 
   Tetrads: new FactionInfo(
@@ -389,14 +424,15 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
     true,
     true,
+    false,
   ),
 
-  "Slum Snakes": new FactionInfo(<>Slum Snakes rule!</>, [], false, false, true, true),
+  "Slum Snakes": new FactionInfo(<>Slum Snakes rule!</>, [], false, false, true, true, false),
 
   // Earlygame factions - factions the player will prestige with early on that don't belong in other categories.
-  Netburners: new FactionInfo(<>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>, [], true, true, false, false),
+  Netburners: new FactionInfo(<>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>, [], true, true, false, false, false),
 
-  "Tian Di Hui": new FactionInfo(<>Obey Heaven and work righteously.</>, [], true, true, false, true),
+  "Tian Di Hui": new FactionInfo(<>Obey Heaven and work righteously.</>, [], true, true, false, true, false),
 
   CyberSec: new FactionInfo(
     (
@@ -409,6 +445,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     [],
     true,
     true,
+    false,
     false,
     false,
   ),
@@ -425,6 +462,7 @@ export const FactionInfos: IMap<FactionInfo> = {
       </>
     ),
     [],
+    false,
     false,
     false,
     false,

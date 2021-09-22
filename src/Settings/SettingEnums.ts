@@ -96,6 +96,7 @@ export enum PurchaseAugmentationsOrderSetting {
   Cost,
   Default,
   Reputation,
+  Purchasable,
 }
 
 /**

@@ -55,12 +55,14 @@ function Requirements(props: IReqProps): React.ReactElement {
   return (
     <React.Fragment key="f">
       <TableCell key={1}>
-        <Typography color={color}>
+        <Typography>
           <Money money={props.cost} player={props.p} />
         </Typography>
       </TableCell>
       <TableCell key={2}>
-        <Typography color={color}>Requires {Reputation(props.rep)} faction reputation</Typography>
+        <Typography color={props.hasRep ? "primary" : "error"}>
+          Requires {Reputation(props.rep)} faction reputation
+        </Typography>
       </TableCell>
     </React.Fragment>
   );
@@ -77,24 +79,6 @@ interface IProps {
 export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   const aug = Augmentations[props.augName];
   if (aug == null) throw new Error(`aug ${props.augName} does not exists`);
-
-  function getMoneyCost(): number {
-    return aug.baseCost * props.faction.getInfo().augmentationPriceMult;
-  }
-
-  function getRepCost(): number {
-    return aug.baseRepRequirement * props.faction.getInfo().augmentationRepRequirementMult;
-  }
-
-  // Whether the player has the prerequisite Augmentations
-  function hasPrereqs(): boolean {
-    return hasAugmentationPrereqs(aug);
-  }
-
-  // Whether the player has enough rep for this Augmentation
-  function hasReputation(): boolean {
-    return props.faction.playerReputation >= getRepCost();
-  }
 
   // Whether the player has this augmentations (purchased OR installed)
   function owned(): boolean {
@@ -123,11 +107,11 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
     return <></>;
   }
 
-  const moneyCost = getMoneyCost();
-  const repCost = getRepCost();
-  const hasReq = hasPrereqs();
-  const hasRep = hasReputation();
-  const hasCost = aug.baseCost !== 0 && props.p.money.gt(aug.baseCost * props.faction.getInfo().augmentationPriceMult);
+  const moneyCost = aug.baseCost * props.faction.getInfo().augmentationPriceMult;
+  const repCost = aug.baseRepRequirement * props.faction.getInfo().augmentationRepRequirementMult;
+  const hasReq = hasAugmentationPrereqs(aug);
+  const hasRep = props.faction.playerReputation >= repCost;
+  const hasCost = aug.baseCost === 0 || props.p.money.gt(aug.baseCost * props.faction.getInfo().augmentationPriceMult);
 
   // Determine UI properties
   const color: "error" | "primary" = !hasReq || !hasRep || !hasCost ? "error" : "primary";
