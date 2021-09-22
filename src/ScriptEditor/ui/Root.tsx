@@ -25,6 +25,7 @@ import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
 
+  let loaded=false;
 let symbols: string[] = [];
 (function () {
   const ns = NetscriptFunctions({} as WorkerScript);
@@ -309,6 +310,7 @@ export function Root(props: IProps): React.ReactElement {
     });
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
+    loaded=true
   }
 
   return (

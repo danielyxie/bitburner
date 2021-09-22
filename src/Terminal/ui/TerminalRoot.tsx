@@ -93,13 +93,13 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
             if (item instanceof Link)
               return (
                 <ListItem key={i} classes={{ root: classes.nopadding }}>
-                  <MuiLink
+                  <Typography>{item.dashes}&gt;&nbsp;</Typography><MuiLink
                     classes={{ root: classes.preformatted }}
                     color={"secondary"}
                     paragraph={false}
                     onClick={() => terminal.connectToServer(player, item.hostname)}
                   >
-                    &gt;&nbsp;{item.hostname}
+                    {item.hostname}
                   </MuiLink>
                 </ListItem>
               );

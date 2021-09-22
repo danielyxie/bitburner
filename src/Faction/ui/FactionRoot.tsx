@@ -3,7 +3,7 @@
  * This is the component for displaying a single faction's UI, not the list of all
  * accessible factions
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { AugmentationsPage } from "./AugmentationsPage";
 import { DonateOption } from "./DonateOption";
@@ -66,11 +66,20 @@ const GangNames = [
 ];
 
 export function FactionRoot(props: IProps): React.ReactElement {
+    const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 1000);
+    return () => clearInterval(id);
+  }, []);
+
   const faction = props.faction;
 
   const player = use.Player();
   const router = use.Router();
-  const [, setRerenderFlag] = useState(false);
   const [purchasingAugs, setPurchasingAugs] = useState(false);
 
   function manageGang(faction: Faction): void {
@@ -88,9 +97,6 @@ export function FactionRoot(props: IProps): React.ReactElement {
     });
   }
 
-  function rerender(): void {
-    setRerenderFlag((old) => !old);
-  }
 
   // Route to the main faction page
   function routeToMain(): void {

@@ -3340,6 +3340,7 @@ function NetscriptFunctions(workerScript) {
       updateDynamicRam("stopAction", getRamCost("stopAction"));
       checkSingularityAccess("stopAction", 1);
       if (Player.isWorking) {
+        Router.toTerminal();
         var txt = Player.singularityStopWork();
         workerScript.log("stopAction", txt);
         return true;
