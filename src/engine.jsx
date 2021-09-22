@@ -44,8 +44,8 @@ import { Reputation } from "./ui/React/Reputation";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 
-import "./Exploits/tampering";
-import "./Exploits/unclickable";
+import { startTampering } from "./Exploits/tampering";
+import { startUnclickable } from "./Exploits/unclickable";
 
 import React from "react";
 
@@ -246,6 +246,8 @@ const Engine = {
   },
 
   load: function (saveString) {
+    startTampering();
+    startUnclickable();
     // Load game from save or create new game
     if (loadGame(saveString)) {
       initBitNodeMultipliers(Player);

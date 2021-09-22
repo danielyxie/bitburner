@@ -13,6 +13,7 @@ import { WorkerScript } from "../../Netscript/WorkerScript";
 import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 import { getServer } from "../../Server/ServerHelpers";
 import { BaseServer } from "../../Server/BaseServer";
+import { Settings } from "../../Settings/Settings";
 import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -33,7 +34,7 @@ type IProps = {
 export function ServerAccordions(props: IProps): React.ReactElement {
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(Settings.ActiveScriptsServerPageSize);
   const setRerender = useState(false)[1];
 
   const handleChangePage = (event: unknown, newPage: number): void => {
@@ -41,6 +42,7 @@ export function ServerAccordions(props: IProps): React.ReactElement {
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    Settings.ActiveScriptsServerPageSize = parseInt(event.target.value, 10);
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

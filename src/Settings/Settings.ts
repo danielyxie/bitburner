@@ -6,6 +6,14 @@ import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } fro
  */
 interface IDefaultSettings {
   /**
+   * How many servers per page
+   */
+  ActiveScriptsServerPageSize: number;
+  /**
+   * How many scripts per page
+   */
+  ActiveScriptsScriptPageSize: number;
+  /**
    * How often the game should autosave the player's progress, in seconds.
    */
   AutosaveInterval: number;
@@ -101,6 +109,8 @@ interface ISettings extends IDefaultSettings {
 }
 
 const defaultSettings: IDefaultSettings = {
+  ActiveScriptsServerPageSize: 10,
+  ActiveScriptsScriptPageSize: 10,
   AutosaveInterval: 60,
   CodeInstructionRunTime: 50,
   DisableASCIIArt: false,
@@ -123,6 +133,8 @@ const defaultSettings: IDefaultSettings = {
  */
 // tslint:disable-next-line:variable-name
 export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
+  ActiveScriptsServerPageSize: defaultSettings.ActiveScriptsServerPageSize,
+  ActiveScriptsScriptPageSize: defaultSettings.ActiveScriptsScriptPageSize,
   AutosaveInterval: defaultSettings.AutosaveInterval,
   CodeInstructionRunTime: 25,
   DisableASCIIArt: defaultSettings.DisableASCIIArt,

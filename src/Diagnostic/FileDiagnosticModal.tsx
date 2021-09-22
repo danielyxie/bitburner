@@ -20,7 +20,7 @@ interface IServerProps {
   ip: string;
 }
 
-export function ServerAccordion(props: IServerProps): React.ReactElement {
+function ServerAccordion(props: IServerProps): React.ReactElement {
   const server = AllServers[props.ip];
   let totalSize = 0;
   for (const f of server.scripts) {

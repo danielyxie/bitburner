@@ -2,7 +2,7 @@ import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
 
 // Makes a blob that contains the code of a given script.
-export function makeScriptBlob(code) {
+function makeScriptBlob(code) {
   return new Blob([code], { type: "text/javascript" });
 }
 
@@ -93,7 +93,7 @@ function shouldCompile(script, scripts) {
  *                         the script parameter.
  */
 // BUG: apparently seen is never consulted. Oops.
-export function _getScriptUrls(script, scripts, seen) {
+function _getScriptUrls(script, scripts, seen) {
   // Inspired by: https://stackoverflow.com/a/43834063/91401
   /** @type {ScriptUrl[]} */
   const urlStack = [];

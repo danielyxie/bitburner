@@ -60,9 +60,9 @@ export let colors = {
   rep: "#faffdf",
 };
 
-export let theme: Theme;
+let theme: Theme;
 
-export function refreshTheme() {
+function refreshTheme() {
   theme = createTheme({
     colors: {
       hp: "#dd3434",

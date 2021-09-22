@@ -51,7 +51,6 @@ import { Settings } from "../../Settings/Settings";
 import { redPillFlag } from "../../RedPill";
 
 import { inMission } from "../../Missions";
-import { cinematicTextFlag } from "../../CinematicText";
 import { KEY } from "../../../utils/helpers/keyCodes";
 import { FconfSettings } from "../../Fconf/FconfSettings";
 
@@ -268,7 +267,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-o - Options
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
-      if (props.player.isWorking || redPillFlag || inMission || cinematicTextFlag) return;
+      if (props.player.isWorking || redPillFlag || inMission) return;
       if (event.keyCode == KEY.T && event.altKey) {
         event.preventDefault();
         clickTerminal();

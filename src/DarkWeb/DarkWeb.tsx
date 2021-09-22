@@ -24,35 +24,6 @@ export function checkIfConnectedToDarkweb(): void {
   }
 }
 
-//Handler for dark web commands. The terminal's executeCommand() function will pass
-//dark web-specific commands into this. It will pass in the raw split command array
-//rather than the command string
-export function executeDarkwebTerminalCommand(commandArray: string[]): void {
-  if (commandArray.length == 0) {
-    return;
-  }
-  switch (commandArray[0]) {
-    case "buy": {
-      if (commandArray.length != 2) {
-        Terminal.error("Incorrect number of arguments. Usage: ");
-        Terminal.print("buy -l");
-        Terminal.print("buy [item name]");
-        return;
-      }
-      const arg = commandArray[1];
-      if (arg == "-l" || arg == "-1" || arg == "--list") {
-        listAllDarkwebItems();
-      } else {
-        buyDarkwebItem(arg);
-      }
-      break;
-    }
-    default:
-      Terminal.error("Command not found");
-      break;
-  }
-}
-
 export function listAllDarkwebItems(): void {
   for (const key in DarkWebItems) {
     const item = DarkWebItems[key];
