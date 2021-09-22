@@ -3,8 +3,6 @@ import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
 import { Engine } from "./engine";
 import { Factions, loadFactions } from "./Faction/Factions";
-import { loadFconf } from "./Fconf/Fconf";
-import { FconfSettings } from "./Fconf/FconfSettings";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
@@ -42,7 +40,6 @@ function BitburnerSaveObject() {
   this.MessagesSave = "";
   this.StockMarketSave = "";
   this.SettingsSave = "";
-  this.FconfSettingsSave = "";
   this.VersionSave = "";
   this.AllGangsSave = "";
   this.LastExportBonus = "";
@@ -74,7 +71,6 @@ BitburnerSaveObject.prototype.getSaveString = function () {
   this.MessagesSave = JSON.stringify(Messages);
   this.StockMarketSave = JSON.stringify(StockMarket);
   this.SettingsSave = JSON.stringify(Settings);
-  this.FconfSettingsSave = JSON.stringify(FconfSettings);
   this.VersionSave = JSON.stringify(CONSTANTS.Version);
   this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
   if (Player.inGang()) {

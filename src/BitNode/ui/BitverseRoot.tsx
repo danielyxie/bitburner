@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { IRouter } from "../../ui/Router";
 import { BitNodes } from "../BitNode";
-import { enterBitNode } from "../../RedPill";
+import { enterBitNode, setRedPillFlag } from "../../RedPill";
 import { PortalPopup } from "./PortalPopup";
 import { createPopup } from "../../ui/React/createPopup";
 import { CinematicText } from "../../ui/React/CinematicText";
@@ -71,6 +71,7 @@ interface IProps {
 }
 
 export function BitverseRoot(props: IProps): React.ReactElement {
+  setRedPillFlag(true);
   const player = use.Player();
   const enter = enterBitNode;
   const destroyed = player.bitNodeN;

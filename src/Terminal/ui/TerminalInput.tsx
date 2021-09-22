@@ -12,7 +12,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { determineAllPossibilitiesForTabCompletion } from "../determineAllPossibilitiesForTabCompletion";
 import { tabCompletion } from "../tabCompletion";
-import { FconfSettings } from "../../Fconf/FconfSettings";
+import { Settings } from "../../Settings/Settings";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -230,11 +230,8 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Select previous command.
-    if (
-      event.keyCode === KEY.UPARROW ||
-      (FconfSettings.ENABLE_BASH_HOTKEYS && event.keyCode === KEY.P && event.ctrlKey)
-    ) {
-      if (FconfSettings.ENABLE_BASH_HOTKEYS) {
+    if (event.keyCode === KEY.UPARROW || (Settings.EnableBashHotkeys && event.keyCode === KEY.P && event.ctrlKey)) {
+      if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
       const i = terminal.commandHistoryIndex;
@@ -261,11 +258,8 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Select next command
-    if (
-      event.keyCode === KEY.DOWNARROW ||
-      (FconfSettings.ENABLE_BASH_HOTKEYS && event.keyCode === KEY.M && event.ctrlKey)
-    ) {
-      if (FconfSettings.ENABLE_BASH_HOTKEYS) {
+    if (event.keyCode === KEY.DOWNARROW || (Settings.EnableBashHotkeys && event.keyCode === KEY.M && event.ctrlKey)) {
+      if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
       const i = terminal.commandHistoryIndex;
@@ -290,7 +284,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Extra Bash Emulation Hotkeys, must be enabled through .fconf
-    if (FconfSettings.ENABLE_BASH_HOTKEYS) {
+    if (Settings.EnableBashHotkeys) {
       if (event.keyCode === KEY.A && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("home");

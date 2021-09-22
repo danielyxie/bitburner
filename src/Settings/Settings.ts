@@ -39,6 +39,16 @@ interface IDefaultSettings {
   DisableTextEffects: boolean;
 
   /**
+   * Enable bash hotkeys
+   */
+  EnableBashHotkeys: boolean;
+
+  /**
+   * Enable timestamps
+   */
+  EnableTimestamps: boolean;
+
+  /**
    * Locale used for display numbers
    */
   Locale: string;
@@ -116,6 +126,8 @@ const defaultSettings: IDefaultSettings = {
   DisableASCIIArt: false,
   DisableHotkeys: false,
   DisableTextEffects: false,
+  EnableBashHotkeys: false,
+  EnableTimestamps: false,
   Locale: "en",
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
@@ -140,6 +152,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   DisableASCIIArt: defaultSettings.DisableASCIIArt,
   DisableHotkeys: defaultSettings.DisableHotkeys,
   DisableTextEffects: defaultSettings.DisableTextEffects,
+  EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
+  EnableTimestamps: defaultSettings.EnableTimestamps,
   Locale: "en",
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,

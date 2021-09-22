@@ -1,5 +1,8 @@
 import React from "react";
 import { createTheme, ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import { EventEmitter } from "../../utils/EventEmitter";
+
+export const ThemeEvents = new EventEmitter<[]>();
 
 declare module "@mui/material/styles" {
   interface Theme {
