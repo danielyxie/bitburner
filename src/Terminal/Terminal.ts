@@ -401,9 +401,9 @@ export class Terminal implements ITerminal {
       } // Don't print current server
       const titleDashes = Array((d - 1) * 4 + 1).join("-");
       if (player.hasProgram(Programs.AutoLink.name)) {
-        this.append(new Link(s.hostname));
+        this.append(new Link(titleDashes, s.hostname));
       } else {
-        this.print(s.hostname);
+        this.print(titleDashes+s.hostname);
       }
 
       const dashes = titleDashes + "--";
@@ -419,19 +419,6 @@ export class Terminal implements ITerminal {
       }
       this.print(dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam));
       this.print(" ");
-    }
-
-    const links = document.getElementsByClassName("scan-analyze-link");
-    for (let i = 0; i < links.length; ++i) {
-      (() => {
-        const hostname = links[i].innerHTML.toString();
-        links[i].addEventListener("onclick", () => {
-          if (this.action !== null) {
-            return;
-          }
-          this.connectToServer(player, hostname);
-        });
-      })(); // Immediate invocation
     }
   }
 

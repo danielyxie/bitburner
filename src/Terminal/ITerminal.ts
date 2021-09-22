@@ -20,9 +20,11 @@ export class Output {
 
 export class Link {
   hostname: string;
-  constructor(hostname: string) {
-    if (Settings.EnableTimestamps) hostname = "[" + getTimestamp() + "] " + hostname;
+  dashes: string;
+  constructor(dashes: string, hostname: string) {
+    if (Settings.EnableTimestamps) dashes = "[" + getTimestamp() + "] " + dashes;
     this.hostname = hostname;
+    this.dashes = dashes;
   }
 }
 
