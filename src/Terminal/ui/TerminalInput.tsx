@@ -149,12 +149,15 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
       if (terminal.contractOpen) return;
-      const ref = terminalInput.current;
-      if (ref) ref.focus();
-      // Cancel action
-      if (event.keyCode === KEY.C && event.ctrlKey) {
+      if (terminal.action !== null && event.keyCode === KEY.C && event.ctrlKey) {
         terminal.finishAction(router, player, true);
+        return;
       }
+      const ref = terminalInput.current;
+      if (event.ctrlKey || event.metaKey) return;
+      if (event.keyCode === KEY.C && (event.ctrlKey || event.metaKey)) return; // trying to copy
+
+      if (ref) ref.focus();
     }
     document.addEventListener("keydown", keyDown);
     return () => document.removeEventListener("keydown", keyDown);
