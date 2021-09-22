@@ -2,7 +2,7 @@
  * React component for general information about the faction. This includes the
  * factions "motto", reputation, favor, and gameplay instructions
  */
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 
 import { Faction } from "../../Faction/Faction";
 import { FactionInfo } from "../../Faction/FactionInfo";
@@ -34,6 +34,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export function Info(props: IProps): React.ReactElement {
+      const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 1000);
+    return () => clearInterval(id);
+  }, []);
+
   const classes = useStyles();
 
   const favorGain = props.faction.getFavorGain()[0];
