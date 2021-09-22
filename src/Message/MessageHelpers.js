@@ -59,7 +59,7 @@ function checkForMessagesToSend() {
   const bitrunnersTest = Messages[MessageFilenames.BitRunnersTest];
   const redpill = Messages[MessageFilenames.RedPill];
 
-  const redpillOwned = false;
+  let redpillOwned = false;
   if (Augmentations[AugmentationNames.TheRedPill].owned) {
     redpillOwned = true;
   }
