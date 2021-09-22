@@ -513,7 +513,9 @@ export function resetWorkStatus(generalType, group, workType) {
 }
 
 export function processWorkEarnings(numCycles = 1) {
-  const focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  const focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus +
+  (this.hasAugmentation(AugmentationNames["NeuroreceptorManager"]) ? CONSTANTS.NeuroreceptorManagerFocusBonus : 0);
+  console.log(focusBonus);
   const hackExpGain = focusBonus * this.workHackExpGainRate * numCycles;
   const strExpGain = focusBonus * this.workStrExpGainRate * numCycles;
   const defExpGain = focusBonus * this.workDefExpGainRate * numCycles;

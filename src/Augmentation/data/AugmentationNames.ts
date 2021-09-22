@@ -109,6 +109,7 @@ export const AugmentationNames: IMap<string> = {
   BladeArmorOmnibeam: "BLADE-51b Tesla Armor: Omnibeam Upgrade",
   BladeArmorIPU: "BLADE-51b Tesla Armor: IPU Upgrade",
   BladesSimulacrum: "The Blade's Simulacrum",
+  NeuroreceptorManager: "Neuroreceptor Management Implant",
 
   //Wasteland Augs
   //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System

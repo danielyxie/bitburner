@@ -2342,6 +2342,26 @@ function initAugmentations() {
     });
     BladesSimulacrum.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladesSimulacrum);
+
+    const NeuroreceptorManager = new Augmentation({
+      name: AugmentationNames.NeuroreceptorManager,
+      repCost: 0.75e5,
+      moneyCost: 5.5e8,
+      info:
+        "A brain implant carefully assembled around the synapses, which " +
+        "micromanages the activity and levels of various neuroreceptor " +
+        "chemicals and modulates electrical acvitiy to optimize concentration, " +
+        "allowing the user to multitask much more effectively.",
+    });
+    NeuroreceptorManager.addToFactions([
+      "NiteSec",
+      "The Black Hand",
+      "BitRunners",
+    ])
+    if (augmentationExists(AugmentationNames.NeuroreceptorManager)) {
+      delete Augmentations[AugmentationNames.NeuroreceptorManager];
+    }
+    AddToAugmentations(NeuroreceptorManager);
   }
 
   // Update costs based on how many have been purchased
