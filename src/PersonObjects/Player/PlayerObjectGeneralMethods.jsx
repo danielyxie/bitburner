@@ -480,7 +480,8 @@ export function queryStatFromString(str) {
 
 /******* Working functions *******/
 export function resetWorkStatus(generalType, group, workType) {
-  if (generalType === this.workType && group === this.companyName) return;
+  if (this.workType !== CONSTANTS.WorkTypeFaction && generalType === this.workType && group === this.companyName)
+    return;
   if (generalType === this.workType && group === this.currentWorkFactionName && workType === this.factionWorkType)
     return;
   if (this.isWorking) this.singularityStopWork();
