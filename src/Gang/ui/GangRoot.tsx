@@ -8,13 +8,13 @@ import { use } from "../../ui/Context";
 import { Factions } from "../../Faction/Factions";
 import { Gang } from "../Gang";
 
-interface IProps {
-  gang: Gang;
-}
-
-export function GangRoot(props: IProps): React.ReactElement {
+export function GangRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
+  const gang = (function () {
+    if (player.gang === null) throw new Error("Gang should not be null");
+    return player.gang;
+  })();
   const [management, setManagement] = useState(true);
   const setRerender = useState(false)[1];
 
@@ -24,7 +24,7 @@ export function GangRoot(props: IProps): React.ReactElement {
   }, []);
 
   function back(): void {
-    router.toFaction(Factions[props.gang.facName]);
+    router.toFaction(Factions[gang.facName]);
   }
 
   return (
@@ -46,7 +46,7 @@ export function GangRoot(props: IProps): React.ReactElement {
       >
         Gang Territory
       </a>
-      {management ? <ManagementSubpage gang={props.gang} player={player} /> : <TerritorySubpage gang={props.gang} />}
+      {management ? <ManagementSubpage gang={gang} player={player} /> : <TerritorySubpage gang={gang} />}
     </div>
   );
 }

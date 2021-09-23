@@ -8,7 +8,7 @@ import Decimal from "decimal.js";
 
 export let Player = new PlayerObject();
 
-export function loadPlayer(saveString) {
+export function loadPlayer(saveString: string): void {
   Player = JSON.parse(saveString, Reviver);
 
   // Parse Decimal.js objects
@@ -19,8 +19,8 @@ export function loadPlayer(saveString) {
     Player.corporation.revenue = new Decimal(Player.corporation.revenue);
     Player.corporation.expenses = new Decimal(Player.corporation.expenses);
 
-    for (var i = 0; i < Player.corporation.divisions.length; ++i) {
-      var ind = Player.corporation.divisions[i];
+    for (let i = 0; i < Player.corporation.divisions.length; ++i) {
+      const ind = Player.corporation.divisions[i];
       ind.lastCycleRevenue = new Decimal(ind.lastCycleRevenue);
       ind.lastCycleExpenses = new Decimal(ind.lastCycleExpenses);
       ind.thisCycleRevenue = new Decimal(ind.thisCycleRevenue);

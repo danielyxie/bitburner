@@ -2,6 +2,7 @@ import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
 import { IRouter } from "../ui/Router";
+import { WorkerScript } from "../Netscript/WorkerScript";
 
 export interface IConstructorParams {
   hacking_success_weight?: number;
@@ -86,7 +87,7 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(router: IRouter, p: IPlayer, div = 1, singParams: any = null): number {
+  commit(router: IRouter, p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
@@ -101,7 +102,7 @@ export class Crime {
       this.charisma_exp / div,
       this.money / div,
       this.time,
-      singParams,
+      workerScript,
     );
 
     return this.time;

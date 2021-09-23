@@ -20,20 +20,34 @@ export function canAccessGang(this: IPlayer): boolean {
 }
 
 export function getGangFaction(this: IPlayer): Faction {
-  const fac = Factions[this.gang.facName];
+  const gang = this.gang;
+  if (gang === null) {
+    throw new Error("Cannot get gang faction because player is not in a gang.");
+  }
+  const fac = Factions[gang.facName];
   if (fac == null) {
-    throw new Error(`Gang has invalid faction name: ${this.gang.facName}`);
+    throw new Error(`Gang has invalid faction name: ${gang.facName}`);
   }
 
   return fac;
 }
 
 export function getGangName(this: IPlayer): string {
-  return this.inGang() ? this.gang.facName : "";
+  if (!this.inGang()) return "";
+  const gang = this.gang;
+  if (gang === null) {
+    throw new Error("Cannot get gang faction because player is not in a gang.");
+  }
+  return gang.facName;
 }
 
 export function hasGangWith(this: IPlayer, facName: string): boolean {
-  return this.inGang() && this.gang.facName === facName;
+  if (!this.inGang()) return false;
+  const gang = this.gang;
+  if (gang === null) {
+    throw new Error("Cannot get gang faction because player is not in a gang.");
+  }
+  return gang.facName === facName;
 }
 
 export function inGang(this: IPlayer): boolean {

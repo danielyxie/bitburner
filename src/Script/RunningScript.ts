@@ -3,7 +3,6 @@
  * A Script can have multiple active instances
  */
 import { Script } from "./Script";
-import { FconfSettings } from "../Fconf/FconfSettings";
 import { Settings } from "../Settings/Settings";
 import { IMap } from "../types";
 import { Terminal } from "../Terminal";

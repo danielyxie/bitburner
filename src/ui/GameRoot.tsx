@@ -326,11 +326,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               ) : page === Page.DevMenu ? (
                 <DevMenuRoot player={player} engine={engine} router={Router} />
               ) : page === Page.Gang ? (
-                <GangRoot gang={player.gang} />
+                <GangRoot />
               ) : page === Page.Corporation ? (
-                <CorporationRoot corp={player.corporation} player={player} />
+                <CorporationRoot />
               ) : page === Page.Bladeburner ? (
-                <BladeburnerRoot bladeburner={player.bladeburner} />
+                <BladeburnerRoot />
               ) : page === Page.Resleeves ? (
                 <ResleeveRoot player={player} />
               ) : page === Page.Travel ? (

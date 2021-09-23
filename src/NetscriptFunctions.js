@@ -3808,7 +3808,7 @@ function NetscriptFunctions(workerScript) {
         throw makeRuntimeErrorMsg("commitCrime", `Invalid crime: '${crimeRoughName}'`);
       }
       workerScript.log("commitCrime", `Attempting to commit ${crime.name}...`);
-      return crime.commit(Router, Player, 1, { workerscript: workerScript });
+      return crime.commit(Router, Player, 1, workerScript);
     },
     getCrimeChance: function (crimeRoughName) {
       updateDynamicRam("getCrimeChance", getRamCost("getCrimeChance"));

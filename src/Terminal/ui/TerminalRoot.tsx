@@ -12,6 +12,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
 import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
+import _ from "lodash";
 
 interface IActionTimerProps {
   terminal: ITerminal;
@@ -60,8 +61,8 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     setKey((key) => key + 1);
   }
 
-  useEffect(() => TerminalEvents.subscribe(rerender), []);
-  useEffect(() => TerminalClearEvents.subscribe(clear), []);
+  useEffect(() => TerminalEvents.subscribe(_.debounce(rerender, 50, { maxWait: 50 })), []);
+  useEffect(() => TerminalClearEvents.subscribe(_.debounce(clear, 50, { maxWait: 50 })), []);
 
   function doScroll(): void {
     const hook = scrollHook.current;

@@ -10,6 +10,7 @@ import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { MainPanel } from "./MainPanel";
 import { Industries } from "../IndustryData";
+import { use } from "../../ui/Context";
 
 interface IExpandButtonProps {
   corp: ICorporation;
@@ -38,12 +39,10 @@ function ExpandButton(props: IExpandButtonProps): React.ReactElement {
   return <HeaderTab current={false} onClick={openNewIndustryPopup} text={"Expand into new Industry"} />;
 }
 
-interface IProps {
-  corp: ICorporation;
-  player: IPlayer;
-}
-
-export function CorporationRoot(props: IProps): React.ReactElement {
+export function CorporationRoot(): React.ReactElement {
+  const player = use.Player();
+  const corporation = player.corporation;
+  if (corporation === null) return <></>;
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -62,9 +61,9 @@ export function CorporationRoot(props: IProps): React.ReactElement {
           current={divisionName === "Overview"}
           key={"overview"}
           onClick={() => setDivisionName("Overview")}
-          text={props.corp.name}
+          text={corporation.name}
         />
-        {props.corp.divisions.map((division: IIndustry) => (
+        {corporation.divisions.map((division: IIndustry) => (
           <HeaderTab
             current={division.name === divisionName}
             key={division.name}
@@ -72,9 +71,9 @@ export function CorporationRoot(props: IProps): React.ReactElement {
             text={division.name}
           />
         ))}
-        <ExpandButton corp={props.corp} setDivisionName={setDivisionName} />
+        <ExpandButton corp={corporation} setDivisionName={setDivisionName} />
       </div>
-      <MainPanel rerender={rerender} corp={props.corp} divisionName={divisionName} player={props.player} />
+      <MainPanel rerender={rerender} corp={corporation} divisionName={divisionName} player={player} />
     </div>
   );
 }
