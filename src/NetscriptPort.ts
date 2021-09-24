@@ -1,6 +1,14 @@
 import { Settings } from "./Settings/Settings";
 
-interface IPort {}
+export interface IPort {
+  write: (value: any) => any;
+  tryWrite: (value: any) => boolean;
+  read: () => any;
+  peek: () => any;
+  full: () => boolean;
+  empty: () => boolean;
+  clear: () => void;
+}
 
 export function NetscriptPort(): IPort {
   const data: any[] = [];
