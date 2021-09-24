@@ -133,7 +133,7 @@ import { NetscriptPorts, runScriptFromScript, startWorkerScript } from "./Netscr
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
-import { Interpreter } from "./JSInterpreter";
+import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { NetscriptPort } from "./NetscriptPort";
 import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";

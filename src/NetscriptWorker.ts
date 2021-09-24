@@ -9,7 +9,7 @@ import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStart
 import { generateNextPid } from "./Netscript/Pid";
 
 import { CONSTANTS } from "./Constants";
-import { Interpreter } from "./JSInterpreter";
+import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { isScriptErrorMessage, makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
