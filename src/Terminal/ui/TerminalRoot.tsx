@@ -61,8 +61,8 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     setKey((key) => key + 1);
   }
 
-  useEffect(() => TerminalEvents.subscribe(rerender), []);
-  useEffect(() => TerminalClearEvents.subscribe(clear), []);
+  useEffect(() => TerminalEvents.subscribe(_.debounce(async () => rerender(), 25, { maxWait: 50 })), []);
+  useEffect(() => TerminalClearEvents.subscribe(_.debounce(async () => clear(), 25, { maxWait: 50 })), []);
 
   function doScroll(): void {
     const hook = scrollHook.current;
