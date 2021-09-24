@@ -2625,3 +2625,13 @@ export function getIntelligenceBonus(this: IPlayer, weight: number) {
 export function getCasinoWinnings(this: IPlayer) {
   return this.moneySourceA.casino;
 }
+
+export function getMult(this: IPlayer, name: string): number {
+  if (!this.hasOwnProperty(name)) return 1;
+  return (this as any)[name];
+}
+
+export function setMult(this: IPlayer, name: string, mult: number): void {
+  if (!this.hasOwnProperty(name)) return;
+  (this as any)[name] = mult;
+}

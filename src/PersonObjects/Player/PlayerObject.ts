@@ -208,7 +208,7 @@ export class PlayerObject implements IPlayer {
   inGang: () => boolean;
   isQualified: (company: Company, position: CompanyPosition) => boolean;
   loseMoney: (money: number) => void;
-  reapplyAllAugmentations: (resetMultipliers: boolean) => void;
+  reapplyAllAugmentations: (resetMultipliers?: boolean) => void;
   reapplyAllSourceFiles: () => void;
   regenerateHp: (amt: number) => void;
   recordMoneySource: (amt: number, source: string) => void;
@@ -279,6 +279,8 @@ export class PlayerObject implements IPlayer {
   commitCrime: (numCycles: number) => boolean;
   checkForFactionInvitations: () => void;
   setBitNodeNumber: (n: number) => void;
+  getMult: (name: string) => number;
+  setMult: (name: string, mult: number) => void;
 
   constructor() {
     //Skills and stats
@@ -570,6 +572,9 @@ export class PlayerObject implements IPlayer {
     this.factionWorkType = "";
     this.committingCrimeThruSingFn = false;
     this.singFnCrimeWorkerScript = null;
+
+    this.getMult = generalMethods.getMult;
+    this.setMult = generalMethods.setMult;
   }
 
   /**

@@ -201,7 +201,7 @@ export interface IPlayer {
   inGang(): boolean;
   isQualified(company: Company, position: CompanyPosition): boolean;
   loseMoney(money: number): void;
-  reapplyAllAugmentations(resetMultipliers: boolean): void;
+  reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
   regenerateHp(amt: number): void;
   recordMoneySource(amt: number, source: string): void;
@@ -272,4 +272,6 @@ export interface IPlayer {
   commitCrime(numCycles: number): boolean;
   checkForFactionInvitations(): void;
   setBitNodeNumber(n: number): void;
+  getMult(name: string): number;
+  setMult(name: string, mult: number): void;
 }

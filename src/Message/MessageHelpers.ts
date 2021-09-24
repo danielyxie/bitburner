@@ -11,7 +11,7 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { Reviver } from "../../utils/JSONReviver";
 
 //Sends message to player, including a pop up
-function sendMessage(msg, forced = false) {
+function sendMessage(msg: Message, forced = false): void {
   msg.recvd = true;
   if (forced || !Settings.SuppressMessages) {
     showMessage(msg);
@@ -19,7 +19,7 @@ function sendMessage(msg, forced = false) {
   addMessageToServer(msg, "home");
 }
 
-function showMessage(msg) {
+function showMessage(msg: Message): void {
   var txt =
     "Message received from unknown sender: <br><br>" +
     "<i>" +
@@ -32,14 +32,16 @@ function showMessage(msg) {
 }
 
 //Adds a message to a server
-function addMessageToServer(msg, serverHostname) {
+function addMessageToServer(msg: Message, serverHostname: string): void {
   var server = GetServerByHostname(serverHostname);
   if (server == null) {
     console.warn(`Could not find server ${serverHostname}`);
     return;
   }
   for (var i = 0; i < server.messages.length; ++i) {
-    if (server.messages[i].filename === msg.filename) {
+    const msg = server.messages[i];
+    if (typeof msg === "string") continue;
+    if (msg.filename === msg.filename) {
       return; //Already exists
     }
   }
@@ -95,13 +97,13 @@ function checkForMessagesToSend() {
   }
 }
 
-function AddToAllMessages(msg) {
+function AddToAllMessages(msg: Message): void {
   Messages[msg.filename] = msg;
 }
 
-let Messages = {};
+let Messages: { [key: string]: Message | undefined } = {};
 
-function loadMessages(saveString) {
+function loadMessages(saveString: string): void {
   Messages = JSON.parse(saveString, Reviver);
 }
 

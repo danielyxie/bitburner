@@ -10,7 +10,7 @@ import { Money } from "../ui/React/Money";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
-interface IConstructorParams {
+export interface IConstructorParams {
   info: string | JSX.Element;
   stats?: JSX.Element;
   isSpecial?: boolean;

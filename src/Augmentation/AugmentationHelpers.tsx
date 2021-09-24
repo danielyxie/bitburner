@@ -1,6 +1,6 @@
-import { Augmentation } from "./Augmentation";
+import { Augmentation, IConstructorParams } from "./Augmentation";
 import { Augmentations } from "./Augmentations";
-import { PlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
+import { PlayerOwnedAugmentation, IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 import { AugmentationNames } from "./data/AugmentationNames";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -18,13 +18,13 @@ import { WHRNG } from "../Casino/RNG";
 
 import React from "react";
 
-function AddToAugmentations(aug) {
-  var name = aug.name;
+function AddToAugmentations(aug: Augmentation): void {
+  const name = aug.name;
   Augmentations[name] = aug;
 }
 
-function getRandomBonus() {
-  var bonuses = [
+function getRandomBonus(): any {
+  const bonuses = [
     {
       bonuses: {
         hacking_chance_mult: 1.25,
@@ -124,7 +124,7 @@ function initAugmentations() {
   //Time-Based Augment Test
   const randomBonuses = getRandomBonus();
 
-  const UnstableCircadianModulatorParams = {
+  const UnstableCircadianModulatorParams: IConstructorParams = {
     name: AugmentationNames.UnstableCircadianModulator,
     moneyCost: 5e9,
     repCost: 3.625e5,
@@ -133,7 +133,7 @@ function initAugmentations() {
       "unpredictable results based on your circadian rhythm.",
   };
   Object.keys(randomBonuses.bonuses).forEach(
-    (key) => (UnstableCircadianModulatorParams[key] = randomBonuses.bonuses[key]),
+    (key) => ((UnstableCircadianModulatorParams as any)[key] = randomBonuses.bonuses[key]),
   );
   const UnstableCircadianModulator = new Augmentation(UnstableCircadianModulatorParams);
 
@@ -2359,7 +2359,7 @@ function initAugmentations() {
 }
 
 //Resets an Augmentation during (re-initizliation)
-function resetAugmentation(newAugObject) {
+function resetAugmentation(newAugObject: Augmentation): void {
   if (!(newAugObject instanceof Augmentation)) {
     throw new Error("Invalid argument 'newAugObject' passed into resetAugmentation");
   }
@@ -2370,18 +2370,16 @@ function resetAugmentation(newAugObject) {
   AddToAugmentations(newAugObject);
 }
 
-function applyAugmentation(aug, reapply = false) {
+function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
   Augmentations[aug.name].owned = true;
 
   const augObj = Augmentations[aug.name];
 
   // Apply multipliers
   for (const mult in augObj.mults) {
-    if (Player[mult] == null) {
-      console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
-    } else {
-      Player[mult] *= augObj.mults[mult];
-    }
+    const v = Player.getMult(mult) * augObj.mults[mult];
+    Player.setMult(mult, v);
+    console.log(`${mult} ${v}`);
   }
 
   // Special logic for NeuroFlux Governor
@@ -2445,11 +2443,11 @@ function installAugmentations() {
   prestigeAugmentation();
 }
 
-function augmentationExists(name) {
+function augmentationExists(name: string) {
   return Augmentations.hasOwnProperty(name);
 }
 
-export function isRepeatableAug(aug) {
+export function isRepeatableAug(aug: Augmentation): boolean {
   const augName = aug instanceof Augmentation ? aug.name : aug;
 
   if (augName === AugmentationNames.NeuroFluxGovernor) {
