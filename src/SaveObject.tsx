@@ -27,90 +27,125 @@ import Decimal from "decimal.js";
 /* SaveObject.js
  *  Defines the object used to save/load games
  */
-let saveObject = new BitburnerSaveObject();
 
-function BitburnerSaveObject() {
-  this.PlayerSave = "";
-  this.AllServersSave = "";
-  this.CompaniesSave = "";
-  this.FactionsSave = "";
-  this.SpecialServerIpsSave = "";
-  this.AliasesSave = "";
-  this.GlobalAliasesSave = "";
-  this.MessagesSave = "";
-  this.StockMarketSave = "";
-  this.SettingsSave = "";
-  this.VersionSave = "";
-  this.AllGangsSave = "";
-  this.LastExportBonus = "";
+class BitburnerSaveObject {
+  PlayerSave = "";
+  AllServersSave = "";
+  CompaniesSave = "";
+  FactionsSave = "";
+  SpecialServerIpsSave = "";
+  AliasesSave = "";
+  GlobalAliasesSave = "";
+  MessagesSave = "";
+  StockMarketSave = "";
+  SettingsSave = "";
+  VersionSave = "";
+  AllGangsSave = "";
+  LastExportBonus = "";
+
+  getSaveString(): string {
+    this.PlayerSave = JSON.stringify(Player);
+
+    // Delete all logs from all running scripts
+    var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
+    for (var ip in TempAllServers) {
+      var server = TempAllServers[ip];
+      if (server == null) {
+        continue;
+      }
+      for (var i = 0; i < server.runningScripts.length; ++i) {
+        var runningScriptObj = server.runningScripts[i];
+        runningScriptObj.logs.length = 0;
+        runningScriptObj.logs = [];
+      }
+    }
+
+    this.AllServersSave = JSON.stringify(TempAllServers);
+    this.CompaniesSave = JSON.stringify(Companies);
+    this.FactionsSave = JSON.stringify(Factions);
+    this.SpecialServerIpsSave = JSON.stringify(SpecialServerIps);
+    this.AliasesSave = JSON.stringify(Aliases);
+    this.GlobalAliasesSave = JSON.stringify(GlobalAliases);
+    this.MessagesSave = JSON.stringify(Messages);
+    this.StockMarketSave = JSON.stringify(StockMarket);
+    this.SettingsSave = JSON.stringify(Settings);
+    this.VersionSave = JSON.stringify(CONSTANTS.Version);
+    this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
+    if (Player.inGang()) {
+      this.AllGangsSave = JSON.stringify(AllGangs);
+    }
+    var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
+
+    return saveString;
+  }
+
+  saveGame(): void {
+    const saveString = this.getSaveString();
+
+    save(saveString)
+      .then(() => createStatusText("Game saved!"))
+      .catch((err) => console.error(err));
+  }
+
+  exportGame(): void {
+    const saveString = this.getSaveString();
+
+    // Save file name is based on current timestamp and BitNode
+    const epochTime = Math.round(Date.now() / 1000);
+    const bn = Player.bitNodeN;
+    const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
+    var file = new Blob([saveString], { type: "text/plain" });
+    if (window.navigator.msSaveOrOpenBlob) {
+      // IE10+
+      window.navigator.msSaveOrOpenBlob(file, filename);
+    } else {
+      // Others
+      var a = document.createElement("a"),
+        url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeoutRef(function () {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  }
+
+  toJSON(): any {
+    return Generic_toJSON("BitburnerSaveObject", this);
+  }
+
+  static fromJSON(value: { data: any }): BitburnerSaveObject {
+    return Generic_fromJSON(BitburnerSaveObject, value.data);
+  }
 }
-
-BitburnerSaveObject.prototype.getSaveString = function () {
-  this.PlayerSave = JSON.stringify(Player);
-
-  // Delete all logs from all running scripts
-  var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
-  for (var ip in TempAllServers) {
-    var server = TempAllServers[ip];
-    if (server == null) {
-      continue;
-    }
-    for (var i = 0; i < server.runningScripts.length; ++i) {
-      var runningScriptObj = server.runningScripts[i];
-      runningScriptObj.logs.length = 0;
-      runningScriptObj.logs = [];
-    }
-  }
-
-  this.AllServersSave = JSON.stringify(TempAllServers);
-  this.CompaniesSave = JSON.stringify(Companies);
-  this.FactionsSave = JSON.stringify(Factions);
-  this.SpecialServerIpsSave = JSON.stringify(SpecialServerIps);
-  this.AliasesSave = JSON.stringify(Aliases);
-  this.GlobalAliasesSave = JSON.stringify(GlobalAliases);
-  this.MessagesSave = JSON.stringify(Messages);
-  this.StockMarketSave = JSON.stringify(StockMarket);
-  this.SettingsSave = JSON.stringify(Settings);
-  this.VersionSave = JSON.stringify(CONSTANTS.Version);
-  this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
-  if (Player.inGang()) {
-    this.AllGangsSave = JSON.stringify(AllGangs);
-  }
-  var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-
-  return saveString;
-};
-
-BitburnerSaveObject.prototype.saveGame = function () {
-  const saveString = this.getSaveString();
-
-  save(saveString)
-    .then(() => createStatusText("Game saved!"))
-    .catch((err) => console.error(err));
-};
 
 // Makes necessary changes to the loaded/imported data to ensure
 // the game stills works with new versions
-function evaluateVersionCompatibility(ver) {
+function evaluateVersionCompatibility(ver: string) {
+  // We have to do this because ts won't let us otherwise
+  const anyPlayer = Player as any;
   // This version refactored the Company/job-related code
   if (ver <= "0.41.2") {
     // Player's company position is now a string
-    if (Player.companyPosition != null && typeof Player.companyPosition !== "string") {
-      Player.companyPosition = Player.companyPosition.data.positionName;
-      if (Player.companyPosition == null) {
-        Player.companyPosition = "";
+    if (anyPlayer.companyPosition != null && typeof anyPlayer.companyPosition !== "string") {
+      anyPlayer.companyPosition = anyPlayer.companyPosition.data.positionName;
+      if (anyPlayer.companyPosition == null) {
+        anyPlayer.companyPosition = "";
       }
     }
 
     // The "companyName" property of all Companies is renamed to "name"
-    for (var companyName in Companies) {
-      const company = Companies[companyName];
-      if ((company.name == null || company.name === 0 || company.name === "") && company.companyName != null) {
+    for (const companyName in Companies) {
+      const company: any = Companies[companyName];
+      if (company.name == 0 && company.companyName != null) {
         company.name = company.companyName;
       }
 
       if (company.companyPositions instanceof Array) {
-        const pos = {};
+        const pos: any = {};
 
         for (let i = 0; i < company.companyPositions.length; ++i) {
           pos[company.companyPositions[i]] = true;
@@ -122,15 +157,15 @@ function evaluateVersionCompatibility(ver) {
 
   // This version allowed players to hold multiple jobs
   if (ver < "0.43.0") {
-    if (Player.companyName !== "" && Player.companyPosition != null && Player.companyPosition !== "") {
-      Player.jobs[Player.companyName] = Player.companyPosition;
+    if (anyPlayer.companyName !== "" && anyPlayer.companyPosition != null && anyPlayer.companyPosition !== "") {
+      anyPlayer.jobs[anyPlayer.companyName] = anyPlayer.companyPosition;
     }
 
-    delete Player.companyPosition;
+    delete anyPlayer.companyPosition;
   }
 }
 
-function loadGame(saveString) {
+function loadGame(saveString: string): boolean {
   if (!saveString) return false;
   saveString = decodeURIComponent(escape(atob(saveString)));
 
@@ -230,32 +265,6 @@ function loadGame(saveString) {
   return true;
 }
 
-BitburnerSaveObject.prototype.exportGame = function () {
-  const saveString = this.getSaveString();
-
-  // Save file name is based on current timestamp and BitNode
-  const epochTime = Math.round(Date.now() / 1000);
-  const bn = Player.bitNodeN;
-  const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
-  var file = new Blob([saveString], { type: "text/plain" });
-  if (window.navigator.msSaveOrOpenBlob) {
-    // IE10+
-    window.navigator.msSaveOrOpenBlob(file, filename);
-  } else {
-    // Others
-    var a = document.createElement("a"),
-      url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeoutRef(function () {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
-};
-
 function createNewUpdateText() {
   dialogBoxCreate(
     "New update!<br>" +
@@ -275,14 +284,8 @@ function createBetaUpdateText() {
   );
 }
 
-BitburnerSaveObject.prototype.toJSON = function () {
-  return Generic_toJSON("BitburnerSaveObject", this);
-};
-
-BitburnerSaveObject.fromJSON = function (value) {
-  return Generic_fromJSON(BitburnerSaveObject, value.data);
-};
-
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;
 
 export { saveObject, loadGame };
+
+let saveObject = new BitburnerSaveObject();
