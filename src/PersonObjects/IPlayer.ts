@@ -238,7 +238,7 @@ export interface IPlayer {
   getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
   quitJob(company: string): void;
-  createHacknetServer(): void;
+  createHacknetServer(): HacknetServer;
   startCreateProgramWork(router: IRouter, programName: string, time: number, reqLevel: number): void;
   queueAugmentation(augmentationName: string): void;
   receiveInvite(factionName: string): void;

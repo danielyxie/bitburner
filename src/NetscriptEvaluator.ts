@@ -2,8 +2,9 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { isString } from "../utils/helpers/isString";
 import { AllServers } from "./Server/AllServers";
+import { WorkerScript } from "./Netscript/WorkerScript";
 
-export function netscriptDelay(time, workerScript) {
+export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
   return new Promise(function (resolve) {
     workerScript.delay = setTimeoutRef(() => {
       workerScript.delay = null;
@@ -13,7 +14,7 @@ export function netscriptDelay(time, workerScript) {
   });
 }
 
-export function makeRuntimeRejectMsg(workerScript, msg, exp = null) {
+export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string, exp: any = null) {
   var lineNum = "";
   if (exp != null) {
     var num = getErrorLineNumber(exp, workerScript);
@@ -21,13 +22,17 @@ export function makeRuntimeRejectMsg(workerScript, msg, exp = null) {
   }
   const server = AllServers[workerScript.serverIp];
   if (server == null) {
-    throw new Error(`WorkerScript constructed with invalid server ip: ${this.serverIp}`);
+    throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.serverIp}`);
   }
 
   return "|" + server.hostname + "|" + workerScript.name + "|" + msg + lineNum;
 }
 
-export function resolveNetscriptRequestedThreads(workerScript, functionName, requestedThreads) {
+export function resolveNetscriptRequestedThreads(
+  workerScript: WorkerScript,
+  functionName: string,
+  requestedThreads: number,
+) {
   const threads = workerScript.scriptRef.threads;
   if (!requestedThreads) {
     return isNaN(threads) || threads < 1 ? 1 : threads;
@@ -48,19 +53,22 @@ export function resolveNetscriptRequestedThreads(workerScript, functionName, req
   return requestedThreadsAsInt;
 }
 
-export function getErrorLineNumber(exp, workerScript) {
-  var code = workerScript.scriptRef.codeCode();
+export function getErrorLineNumber(exp: any, workerScript: WorkerScript): number {
+  return -1;
+  // TODO wtf is codeCode?
 
-  //Split code up to the start of the node
-  try {
-    code = code.substring(0, exp.start);
-    return (code.match(/\n/g) || []).length + 1;
-  } catch (e) {
-    return -1;
-  }
+  // var code = workerScript.scriptRef.codeCode();
+
+  // //Split code up to the start of the node
+  // try {
+  //   code = code.substring(0, exp.start);
+  //   return (code.match(/\n/g) || []).length + 1;
+  // } catch (e) {
+  //   return -1;
+  // }
 }
 
-export function isScriptErrorMessage(msg) {
+export function isScriptErrorMessage(msg: string): boolean {
   if (!isString(msg)) {
     return false;
   }

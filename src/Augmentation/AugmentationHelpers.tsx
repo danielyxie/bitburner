@@ -2379,7 +2379,6 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
   for (const mult in augObj.mults) {
     const v = Player.getMult(mult) * augObj.mults[mult];
     Player.setMult(mult, v);
-    console.log(`${mult} ${v}`);
   }
 
   // Special logic for NeuroFlux Governor

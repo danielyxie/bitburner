@@ -14,6 +14,7 @@ import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
 import { initMessages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
+import { Router } from "./ui/GameRoot";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
@@ -31,7 +32,7 @@ import Decimal from "decimal.js";
 const BitNode8StartingMoney = 250e6;
 
 // Prestige by purchasing augmentation
-function prestigeAugmentation() {
+function prestigeAugmentation(): void {
   initBitNodeMultipliers(Player);
 
   const maintainMembership = Player.factions.filter(function (faction) {
@@ -42,7 +43,7 @@ function prestigeAugmentation() {
   // Delete all Worker Scripts objects
   prestigeWorkerScripts();
 
-  var homeComp = Player.getHomeComputer();
+  const homeComp = Player.getHomeComputer();
   // Delete all servers except home computer
   prestigeAllServers();
 
@@ -70,14 +71,14 @@ function prestigeAugmentation() {
   initForeignServers(Player.getHomeComputer());
 
   // Gain favor for Companies
-  for (var member in Companies) {
+  for (const member in Companies) {
     if (Companies.hasOwnProperty(member)) {
       Companies[member].gainFavor();
     }
   }
 
   // Gain favor for factions
-  for (var member in Factions) {
+  for (const member in Factions) {
     if (Factions.hasOwnProperty(member)) {
       Factions[member].gainFavor();
     }
@@ -86,7 +87,7 @@ function prestigeAugmentation() {
   // Stop a Terminal action if there is onerror
   if (Engine._actionInProgress) {
     Engine._actionInProgress = false;
-    Terminal.finishAction(true);
+    Terminal.finishAction(Router, Player, true);
   }
 
   // Re-initialize things - This will update any changes
@@ -102,8 +103,9 @@ function prestigeAugmentation() {
   initMessages();
 
   // Gang
-  if (Player.inGang()) {
-    const faction = Factions[Player.gang.facName];
+  const gang = Player.gang;
+  if (Player.inGang() && gang !== null) {
+    const faction = Factions[gang.facName];
     if (faction instanceof Faction) {
       joinFaction(faction);
     }
@@ -131,8 +133,12 @@ function prestigeAugmentation() {
 
   // Red Pill
   if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
-    var WorldDaemon = AllServers[SpecialServerIps[SpecialServerNames.WorldDaemon]];
-    var DaedalusServer = AllServers[SpecialServerIps[SpecialServerNames.DaedalusServer]];
+    const WorldDaemonIP = SpecialServerIps[SpecialServerNames.WorldDaemon];
+    if (typeof WorldDaemonIP !== "string") throw new Error("WorldDaemonIP should be string");
+    const WorldDaemon = AllServers[WorldDaemonIP];
+    const DaedalusServerIP = SpecialServerIps[SpecialServerNames.DaedalusServer];
+    if (typeof DaedalusServerIP !== "string") throw new Error("DaedalusServerIP should be string");
+    const DaedalusServer = AllServers[DaedalusServerIP];
     if (WorldDaemon && DaedalusServer) {
       WorldDaemon.serversOnNetwork.push(DaedalusServer.ip);
       DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);
@@ -143,7 +149,7 @@ function prestigeAugmentation() {
 }
 
 // Prestige by destroying Bit Node and gaining a Source File
-function prestigeSourceFile(flume) {
+function prestigeSourceFile(flume: boolean): void {
   initBitNodeMultipliers(Player);
   updateSourceFileFlags(Player);
 
@@ -191,7 +197,7 @@ function prestigeSourceFile(flume) {
   // Stop a Terminal action if there is one
   if (Engine._actionInProgress) {
     Engine._actionInProgress = false;
-    Terminal.finishAction(true);
+    Terminal.finishAction(Router, Player, true);
   }
 
   // Delete all Augmentations
@@ -249,7 +255,6 @@ function prestigeSourceFile(flume) {
     deleteStockMarket();
   }
 
-  if (Player.inGang()) clearGangUI();
   Player.gang = null;
   Player.corporation = null;
   resetIndustryResearchTrees();
