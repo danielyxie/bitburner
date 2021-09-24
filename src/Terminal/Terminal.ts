@@ -3,13 +3,14 @@ import { IRouter } from "../ui/Router";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { BaseServer } from "../Server/BaseServer";
+import { Server } from "../Server/Server";
 import { Programs } from "../Programs/Programs";
 import { CodingContractResult } from "../CodingContracts";
 import { TerminalEvents, TerminalClearEvents } from "./TerminalEvents";
 
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
-import { isScriptFilename } from "../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../Script/isScriptFilename";
 import { CONSTANTS } from "../Constants";
 import { AllServers } from "../Server/AllServers";
 
@@ -91,7 +92,7 @@ export class Terminal implements ITerminal {
   append(item: Output | Link): void {
     this.outputHistory.push(item);
     if (this.outputHistory.length > Settings.MaxTerminalCapacity) {
-      this.outputHistory.slice(this.outputHistory.length - Settings.MaxTerminalCapacity);
+      this.outputHistory.splice(0, this.outputHistory.length - Settings.MaxTerminalCapacity);
     }
     TerminalEvents.emit();
   }
@@ -106,12 +107,22 @@ export class Terminal implements ITerminal {
 
   startHack(player: IPlayer): void {
     // Hacking through Terminal should be faster than hacking through a script
-    this.startAction(calculateHackingTime(player.getCurrentServer(), player) / 4, "h");
+    const server = player.getCurrentServer();
+    if (server instanceof HacknetServer) {
+      this.error("Cannot hack this kind of server");
+      return;
+    }
+    this.startAction(calculateHackingTime(server, player) / 4, "h");
   }
 
   startBackdoor(player: IPlayer): void {
     // Backdoor should take the same amount of time as hack
-    this.startAction(calculateHackingTime(player.getCurrentServer(), player) / 4, "b");
+    const server = player.getCurrentServer();
+    if (server instanceof HacknetServer) {
+      this.error("Cannot backdoor this kind of server");
+      return;
+    }
+    this.startAction(calculateHackingTime(server, player) / 4, "b");
   }
 
   startAnalyze(): void {
@@ -127,6 +138,10 @@ export class Terminal implements ITerminal {
   finishHack(router: IRouter, player: IPlayer, cancelled = false): void {
     if (cancelled) return;
     const server = player.getCurrentServer();
+    if (server instanceof HacknetServer) {
+      this.error("Cannot hack this kind of server");
+      return;
+    }
 
     // Calculate whether hack was successful
     const hackChance = calculateHackingChance(server, player);
@@ -179,6 +194,10 @@ export class Terminal implements ITerminal {
   finishBackdoor(router: IRouter, player: IPlayer, cancelled = false): void {
     if (!cancelled) {
       const server = player.getCurrentServer();
+      if (server instanceof HacknetServer) {
+        this.error("Cannot hack this kind of server");
+        return;
+      }
       if (
         SpecialServerIps[SpecialServerNames.WorldDaemon] &&
         SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
@@ -203,24 +222,30 @@ export class Terminal implements ITerminal {
       this.print("Organization name: " + (!isHacknet ? org : "player"));
       const hasAdminRights = (!isHacknet && currServ.hasAdminRights) || isHacknet;
       this.print("Root Access: " + (hasAdminRights ? "YES" : "NO"));
-      const hackingSkill = currServ.requiredHackingSkill;
-      this.print("Required hacking skill: " + (!isHacknet ? hackingSkill : "N/A"));
-      const security = currServ.hackDifficulty;
-      this.print("Server security level: " + (!isHacknet ? numeralWrapper.formatServerSecurity(security) : "N/A"));
-      const hackingChance = calculateHackingChance(currServ, player);
-      this.print("Chance to hack: " + (!isHacknet ? numeralWrapper.formatPercentage(hackingChance) : "N/A"));
-      const hackingTime = calculateHackingTime(currServ, player) * 1000;
-      this.print("Time to hack: " + (!isHacknet ? convertTimeMsToTimeElapsedString(hackingTime, true) : "N/A"));
+      if (currServ instanceof Server) {
+        const hackingSkill = currServ.requiredHackingSkill;
+        this.print("Required hacking skill: " + (!isHacknet ? hackingSkill : "N/A"));
+        const security = currServ.hackDifficulty;
+        this.print("Server security level: " + (!isHacknet ? numeralWrapper.formatServerSecurity(security) : "N/A"));
+        const hackingChance = calculateHackingChance(currServ, player);
+        this.print("Chance to hack: " + (!isHacknet ? numeralWrapper.formatPercentage(hackingChance) : "N/A"));
+        const hackingTime = calculateHackingTime(currServ, player) * 1000;
+        this.print("Time to hack: " + (!isHacknet ? convertTimeMsToTimeElapsedString(hackingTime, true) : "N/A"));
+      }
       this.print(
-        `Total money available on server: ${!isHacknet ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"}`,
+        `Total money available on server: ${
+          !(currServ instanceof HacknetServer) ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"
+        }`,
       );
-      const numPort = currServ.numOpenPortsRequired;
-      this.print("Required number of open ports for NUKE: " + (!isHacknet ? numPort : "N/A"));
-      this.print("SSH port: " + (currServ.sshPortOpen ? "Open" : "Closed"));
-      this.print("FTP port: " + (currServ.ftpPortOpen ? "Open" : "Closed"));
-      this.print("SMTP port: " + (currServ.smtpPortOpen ? "Open" : "Closed"));
-      this.print("HTTP port: " + (currServ.httpPortOpen ? "Open" : "Closed"));
-      this.print("SQL port: " + (currServ.sqlPortOpen ? "Open" : "Closed"));
+      if (currServ instanceof Server) {
+        const numPort = currServ.numOpenPortsRequired;
+        this.print("Required number of open ports for NUKE: " + (!isHacknet ? numPort : "N/A"));
+        this.print("SSH port: " + (currServ.sshPortOpen ? "Open" : "Closed"));
+        this.print("FTP port: " + (currServ.ftpPortOpen ? "Open" : "Closed"));
+        this.print("SMTP port: " + (currServ.smtpPortOpen ? "Open" : "Closed"));
+        this.print("HTTP port: " + (currServ.httpPortOpen ? "Open" : "Closed"));
+        this.print("SQL port: " + (currServ.sqlPortOpen ? "Open" : "Closed"));
+      }
     }
   }
 

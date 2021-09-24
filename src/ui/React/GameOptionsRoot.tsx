@@ -195,7 +195,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         return;
       }
       const contents = result;
-      save(contents).then(() => location.reload());
+      save(contents).then(() => setTimeout(() => location.reload(), 1000));
     };
     reader.readAsText(file);
   }
@@ -628,7 +628,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         onConfirm={() => {
           setDeleteOpen(false);
           deleteGame()
-            .then(() => location.reload())
+            .then(() => setTimeout(() => location.reload(), 1000))
             .catch((r) => console.error(`Could not delete game: ${r}`));
         }}
         open={deleteGameOpen}

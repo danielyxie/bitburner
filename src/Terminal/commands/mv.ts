@@ -2,7 +2,7 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 import { TextFile } from "../../TextFile";
 import { Script } from "../../Script/Script";
 

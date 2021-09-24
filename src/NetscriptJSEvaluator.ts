@@ -1,8 +1,10 @@
 import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
+import { WorkerScript } from "./Netscript/WorkerScript";
+import { Script } from "./Script/Script";
 
 // Makes a blob that contains the code of a given script.
-function makeScriptBlob(code) {
+function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
@@ -14,10 +16,11 @@ function makeScriptBlob(code) {
 // (i.e. hack, grow, etc.).
 // When the promise returned by this resolves, we'll have finished
 // running the main function of the script.
-export async function executeJSScript(scripts = [], workerScript) {
+export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript) {
   let loadedModule;
-  let urls = null;
+  let uurls: ScriptUrl[] = [];
   let script = workerScript.getScript();
+  if (script === null) throw new Error("script is null");
   if (shouldCompile(script, scripts)) {
     // The URL at the top is the one we want to import. It will
     // recursively import all the other modules in the urlStack.
@@ -27,31 +30,24 @@ export async function executeJSScript(scripts = [], workerScript) {
     // load fully dynamic content. So we hide the import from webpack
     // by placing it inside an eval call.
     script.markUpdated();
-    urls = _getScriptUrls(script, scripts, []);
-    script.url = urls[urls.length - 1].url;
-    script.module = new Promise((resolve) => resolve(eval("import(urls[urls.length - 1].url)")));
-    script.dependencies = urls;
+    uurls = _getScriptUrls(script, scripts, []);
+    script.url = uurls[uurls.length - 1].url;
+    script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
+    script.dependencies = uurls;
   }
   loadedModule = await script.module;
 
   let ns = workerScript.env.vars;
 
-  try {
-    // TODO: putting await in a non-async function yields unhelpful
-    // "SyntaxError: unexpected reserved word" with no line number information.
-    if (!loadedModule.main) {
-      throw makeRuntimeRejectMsg(
-        workerScript,
-        `${script.filename} cannot be run because it does not have a main function.`,
-      );
-    }
-    return loadedModule.main(ns);
-  } finally {
-    // Revoke the generated URLs
-    if (urls != null) {
-      for (const b in urls) URL.revokeObjectURL(b.url);
-    }
+  // TODO: putting await in a non-async function yields unhelpful
+  // "SyntaxError: unexpected reserved word" with no line number information.
+  if (!loadedModule.main) {
+    throw makeRuntimeRejectMsg(
+      workerScript,
+      `${script.filename} cannot be run because it does not have a main function.`,
+    );
   }
+  return loadedModule.main(ns);
 }
 
 /** Returns whether we should compile the script parameter.
@@ -59,7 +55,7 @@ export async function executeJSScript(scripts = [], workerScript) {
  * @param {Script} script
  * @param {Script[]} scripts
  */
-function shouldCompile(script, scripts) {
+function shouldCompile(script: Script, scripts: Script[]): boolean {
   if (script.module === "") return true;
   return script.dependencies.some((dep) => {
     const depScript = scripts.find((s) => s.filename == dep.filename);
@@ -93,7 +89,7 @@ function shouldCompile(script, scripts) {
  *                         the script parameter.
  */
 // BUG: apparently seen is never consulted. Oops.
-function _getScriptUrls(script, scripts, seen) {
+function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): ScriptUrl[] {
   // Inspired by: https://stackoverflow.com/a/43834063/91401
   /** @type {ScriptUrl[]} */
   const urlStack = [];

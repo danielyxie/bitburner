@@ -11,8 +11,7 @@ import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { parseFconfSettings } from "../../Fconf/Fconf";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 import { Script } from "../../Script/Script";
 import { TextFile } from "../../TextFile";
 import { calculateRamUsage } from "../../Script/RamCalculations";
@@ -144,7 +143,7 @@ export function Root(props: IProps): React.ReactElement {
       return;
     }
 
-    if (filename !== ".fconf" && !isValidFilePath(filename)) {
+    if (!isValidFilePath(filename)) {
       dialogBoxCreate(
         "Script filename can contain only alphanumerics, hyphens, and underscores, and must end with an extension.",
       );
@@ -153,14 +152,7 @@ export function Root(props: IProps): React.ReactElement {
 
     const server = props.player.getCurrentServer();
     if (server === null) throw new Error("Server should not be null but it is.");
-    if (filename === ".fconf") {
-      try {
-        parseFconfSettings(code);
-      } catch (e) {
-        dialogBoxCreate(`Invalid .fconf file: ${e}`);
-        return;
-      }
-    } else if (isScriptFilename(filename)) {
+    if (isScriptFilename(filename)) {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {

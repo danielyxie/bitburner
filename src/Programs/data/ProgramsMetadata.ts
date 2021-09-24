@@ -53,10 +53,9 @@ export const programsMetadata: IProgramCreationParams[] = [
         terminal.print("You already have root access to this computer. There is no reason to run NUKE.exe");
         return;
       }
-
-      if (server.openPortCount >= player.getCurrentServer().numOpenPortsRequired) {
+      if (server.openPortCount >= server.numOpenPortsRequired) {
         server.hasAdminRights = true;
-        terminal.print("NUKE successful! Gained root access to " + player.getCurrentServer().hostname);
+        terminal.print("NUKE successful! Gained root access to " + server.hostname);
         // TODO: Make this take time rather than be instant
         return;
       }

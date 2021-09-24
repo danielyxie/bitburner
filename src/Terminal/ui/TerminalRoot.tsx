@@ -12,6 +12,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
 import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
+import _ from "lodash";
 
 interface IActionTimerProps {
   terminal: ITerminal;

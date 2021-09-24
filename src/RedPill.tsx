@@ -8,14 +8,15 @@ import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SourceFiles } from "./SourceFile/SourceFiles";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
+import { IRouter } from "./ui/Router";
 
 export let redPillFlag = false;
 
-export function setRedPillFlag(b) {
+export function setRedPillFlag(b: boolean): void {
   redPillFlag = b;
 }
 
-function giveSourceFile(bitNodeNumber) {
+function giveSourceFile(bitNodeNumber: number): void {
   var sourceFileKey = "SourceFile" + bitNodeNumber.toString();
   var sourceFile = SourceFiles[sourceFileKey];
   if (sourceFile == null) {
@@ -62,7 +63,7 @@ function giveSourceFile(bitNodeNumber) {
   }
 }
 
-export function enterBitNode(router, flume, destroyedBitNode, newBitNode) {
+export function enterBitNode(router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number): void {
   if (!flume) {
     giveSourceFile(destroyedBitNode);
   } else {

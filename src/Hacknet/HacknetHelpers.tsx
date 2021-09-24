@@ -479,13 +479,12 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
         break;
       }
       case "Sell for Corporation Funds": {
-        // This will throw if player doesn't have a corporation
-        try {
-          player.corporation.funds = player.corporation.funds.plus(upg.value);
-        } catch (e) {
+        const corp = player.corporation;
+        if (corp === null) {
           player.hashManager.refundUpgrade(upgName);
           return false;
         }
+        corp.funds = corp.funds.plus(upg.value);
         break;
       }
       case "Reduce Minimum Security": {
@@ -530,36 +529,35 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
       }
       case "Exchange for Corporation Research": {
         // This will throw if player doesn't have a corporation
-        try {
-          for (const division of player.corporation.divisions) {
-            division.sciResearch.qty += upg.value;
-          }
-        } catch (e) {
+        const corp = player.corporation;
+        if (corp === null) {
           player.hashManager.refundUpgrade(upgName);
           return false;
+        }
+        for (const division of corp.divisions) {
+          division.sciResearch.qty += upg.value;
         }
         break;
       }
       case "Exchange for Bladeburner Rank": {
         // This will throw if player isnt in Bladeburner
-        try {
-          player.bladeburner.changeRank(player, upg.value);
-        } catch (e) {
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) {
           player.hashManager.refundUpgrade(upgName);
           return false;
         }
+        bladeburner.changeRank(player, upg.value);
         break;
       }
       case "Exchange for Bladeburner SP": {
-        // This will throw if player isn't in Bladeburner
-        try {
-          // As long as we don't change `Bladeburner.totalSkillPoints`, this
-          // shouldn't affect anything else
-          player.bladeburner.skillPoints += upg.value;
-        } catch (e) {
+        // This will throw if player isnt in Bladeburner
+        const bladeburner = player.bladeburner;
+        if (bladeburner === null) {
           player.hashManager.refundUpgrade(upgName);
           return false;
         }
+
+        bladeburner.skillPoints += upg.value;
         break;
       }
       case "Generate Coding Contract": {

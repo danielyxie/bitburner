@@ -15,43 +15,42 @@ interface IProps {
 }
 
 export function Bladeburner(props: IProps): React.ReactElement {
+  const bladeburner = props.player.bladeburner;
+  if (bladeburner === null) return <></>;
   function modifyBladeburnerRank(modify: number): (x: number) => void {
     return function (rank: number): void {
-      if (props.player.bladeburner) {
-        props.player.bladeburner.changeRank(props.player, rank * modify);
-      }
+      if (!bladeburner) return;
+      bladeburner.changeRank(props.player, rank * modify);
     };
   }
 
   function resetBladeburnerRank(): void {
-    props.player.bladeburner.rank = 0;
-    props.player.bladeburner.maxRank = 0;
+    if (!bladeburner) return;
+    bladeburner.rank = 0;
+    bladeburner.maxRank = 0;
   }
 
   function addTonsBladeburnerRank(): void {
-    if (props.player.bladeburner) {
-      props.player.bladeburner.changeRank(props.player, bigNumber);
-    }
+    if (!bladeburner) return;
+
+    bladeburner.changeRank(props.player, bigNumber);
   }
 
   function modifyBladeburnerCycles(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      if (props.player.bladeburner) {
-        props.player.bladeburner.storedCycles += cycles * modify;
-      }
+      if (!bladeburner) return;
+      bladeburner.storedCycles += cycles * modify;
     };
   }
 
   function resetBladeburnerCycles(): void {
-    if (props.player.bladeburner) {
-      props.player.bladeburner.storedCycles = 0;
-    }
+    if (!bladeburner) return;
+    bladeburner.storedCycles = 0;
   }
 
   function addTonsBladeburnerCycles(): void {
-    if (props.player.bladeburner) {
-      props.player.bladeburner.storedCycles += bigNumber;
-    }
+    if (!bladeburner) return;
+    bladeburner.storedCycles += bigNumber;
   }
 
   return (

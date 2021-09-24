@@ -3,7 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { findRunningScript } from "../../Script/ScriptHelpers";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 
 export function check(
   terminal: ITerminal,

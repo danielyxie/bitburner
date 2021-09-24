@@ -17,6 +17,7 @@
     "@mui/lab": "^5.0.0-alpha.46",
     "@mui/material": "^5.0.0-rc.1",
     "@mui/styles": "^5.0.0-rc.1",
+    "@types/escodegen": "^0.0.7",
     "@types/js-beautify": "^1.13.2",
     "@types/numeral": "0.0.25",
     "@types/react": "^17.0.21",

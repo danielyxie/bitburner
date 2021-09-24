@@ -26,6 +26,8 @@ import { IGang } from "../Gang/IGang";
 import { IBladeburner } from "../Bladeburner/IBladeburner";
 import { ICodingContractReward } from "../CodingContracts";
 import { IRouter } from "../ui/Router";
+import { WorkerScript } from "../Netscript/WorkerScript";
+import { HacknetServer } from "../Hacknet/HacknetServer";
 
 export interface IPlayer {
   // Class members
@@ -33,14 +35,12 @@ export interface IPlayer {
   bitNodeN: number;
   city: CityName;
   companyName: string;
-  corporation: ICorporation;
-  gang: IGang;
-  bladeburner: IBladeburner;
+  corporation: ICorporation | null;
+  gang: IGang | null;
+  bladeburner: IBladeburner | null;
   currentServer: string;
   factions: string[];
   factionInvitations: string[];
-  firstProgramAvailable: boolean;
-  firstTimeTraveled: boolean;
   hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
   has4SData: boolean;
   has4SDataTixApi: boolean;
@@ -122,9 +122,13 @@ export interface IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  createProgramReqLvl: number;
+  factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
   crimeType: string;
+  committingCrimeThruSingFn: boolean;
+  singFnCrimeWorkerScript: WorkerScript | null;
   timeNeededToCompleteWork: number;
   focus: boolean;
   className: string;
@@ -151,20 +155,23 @@ export interface IPlayer {
   workMoneyLossRate: number;
 
   // Methods
-  applyForAgentJob(sing?: boolean): boolean | void;
-  applyForBusinessConsultantJob(sing?: boolean): boolean | void;
-  applyForBusinessJob(sing?: boolean): boolean | void;
-  applyForEmployeeJob(sing?: boolean): boolean | void;
-  applyForItJob(sing?: boolean): boolean | void;
-  applyForJob(entryPosType: CompanyPosition, sing?: boolean): boolean | void;
-  applyForNetworkEngineerJob(sing?: boolean): boolean | void;
-  applyForPartTimeEmployeeJob(sing?: boolean): boolean | void;
-  applyForPartTimeWaiterJob(sing?: boolean): boolean | void;
-  applyForSecurityEngineerJob(sing?: boolean): boolean | void;
-  applyForSecurityJob(sing?: boolean): boolean | void;
-  applyForSoftwareConsultantJob(sing?: boolean): boolean | void;
-  applyForSoftwareJob(sing?: boolean): boolean | void;
-  applyForWaiterJob(sing?: boolean): boolean | void;
+  work(numCycles: number): boolean;
+  workPartTime(numCycles: number): boolean;
+  workForFaction(numCycles: number): boolean;
+  applyForAgentJob(sing?: boolean): boolean;
+  applyForBusinessConsultantJob(sing?: boolean): boolean;
+  applyForBusinessJob(sing?: boolean): boolean;
+  applyForEmployeeJob(sing?: boolean): boolean;
+  applyForItJob(sing?: boolean): boolean;
+  applyForJob(entryPosType: CompanyPosition, sing?: boolean): boolean;
+  applyForNetworkEngineerJob(sing?: boolean): boolean;
+  applyForPartTimeEmployeeJob(sing?: boolean): boolean;
+  applyForPartTimeWaiterJob(sing?: boolean): boolean;
+  applyForSecurityEngineerJob(sing?: boolean): boolean;
+  applyForSecurityJob(sing?: boolean): boolean;
+  applyForSoftwareConsultantJob(sing?: boolean): boolean;
+  applyForSoftwareJob(sing?: boolean): boolean;
+  applyForWaiterJob(sing?: boolean): boolean;
   canAccessBladeburner(): boolean;
   canAccessCorporation(): boolean;
   canAccessGang(): boolean;
@@ -178,11 +185,11 @@ export interface IPlayer {
   gainCharismaExp(exp: number): void;
   gainIntelligenceExp(exp: number): void;
   gainMoney(money: number): void;
-  getCurrentServer(): Server;
+  getCurrentServer(): Server | HacknetServer;
   getGangFaction(): Faction;
   getGangName(): string;
   getHomeComputer(): Server;
-  getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition;
+  getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition | null;
   getUpgradeHomeRamCost(): number;
   gotoLocation(to: LocationName): boolean;
   hasAugmentation(aug: Augmentation): boolean;
@@ -194,13 +201,14 @@ export interface IPlayer {
   inGang(): boolean;
   isQualified(company: Company, position: CompanyPosition): boolean;
   loseMoney(money: number): void;
-  reapplyAllAugmentations(resetMultipliers: boolean): void;
+  reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
   regenerateHp(amt: number): void;
   recordMoneySource(amt: number, source: string): void;
   setMoney(amt: number): void;
   singularityStopWork(): void;
   startBladeburner(p: any): void;
+  startFactionWork(router: IRouter, faction: Faction): void;
   startClass(router: IRouter, costMult: number, expMult: number, className: string): void;
   startCorporation(corpName: string, additionalShares?: number): void;
   startCrime(
@@ -230,18 +238,40 @@ export interface IPlayer {
   getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
   quitJob(company: string): void;
-  createHacknetServer(): void;
+  createHacknetServer(): HacknetServer;
   startCreateProgramWork(router: IRouter, programName: string, time: number, reqLevel: number): void;
   queueAugmentation(augmentationName: string): void;
   receiveInvite(factionName: string): void;
   updateSkillLevels(): void;
   gainCodingContractReward(reward: ICodingContractReward, difficulty?: number): string;
   stopFocusing(): void;
-  finishFactionWork(cancelled: boolean, sing?: boolean): void;
-  finishClass(sing?: boolean): void;
-  finishWork(cancelled: boolean, sing?: boolean): void;
+  finishFactionWork(cancelled: boolean, sing?: boolean): string;
+  finishClass(sing?: boolean): string;
+  finishWork(cancelled: boolean, sing?: boolean): string;
   cancelationPenalty(): number;
-  finishWorkPartTime(sing?: boolean): void;
-  finishCrime(cancelled: boolean): void;
-  finishCreateProgramWork(cancelled: boolean): void;
+  finishWorkPartTime(sing?: boolean): string;
+  finishCrime(cancelled: boolean): string;
+  finishCreateProgramWork(cancelled: boolean): string;
+  resetMultipliers(): void;
+  prestigeAugmentation(): void;
+  prestigeSourceFile(): void;
+  calculateSkill(exp: number, mult?: number): number;
+  resetWorkStatus(generalType?: string, group?: string, workType?: string): void;
+  getWorkHackExpGain(): number;
+  getWorkStrExpGain(): number;
+  getWorkDefExpGain(): number;
+  getWorkDexExpGain(): number;
+  getWorkAgiExpGain(): number;
+  getWorkChaExpGain(): number;
+  getWorkRepGain(): number;
+  getWorkMoneyGain(): number;
+  processWorkEarnings(cycles: number): void;
+  hospitalize(): void;
+  createProgramWork(numCycles: number): boolean;
+  takeClass(numCycles: number): boolean;
+  commitCrime(numCycles: number): boolean;
+  checkForFactionInvitations(): Faction[];
+  setBitNodeNumber(n: number): void;
+  getMult(name: string): number;
+  setMult(name: string, mult: number): void;
 }

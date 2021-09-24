@@ -15,12 +15,16 @@ export function hasTorRouter(this: IPlayer): boolean {
   return SpecialServerIps.hasOwnProperty("Darkweb Server");
 }
 
-export function getCurrentServer(this: IPlayer): Server | HacknetServer | null {
-  return AllServers[this.currentServer];
+export function getCurrentServer(this: IPlayer): Server | HacknetServer {
+  const server = AllServers[this.currentServer];
+  if (server === null) throw new Error("somehow connected to a server that does not exist.");
+  return server;
 }
 
-export function getHomeComputer(this: IPlayer): Server | HacknetServer | null {
-  return AllServers[this.homeComputer];
+export function getHomeComputer(this: IPlayer): Server {
+  const home = AllServers[this.homeComputer];
+  if (home instanceof Server) return home;
+  throw new Error("home computer was not a normal server");
 }
 
 export function getUpgradeHomeRamCost(this: IPlayer): number {

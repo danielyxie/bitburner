@@ -3,32 +3,25 @@
  * to TypeScript at the moment
  */
 export interface IEngine {
-  indexedDb: any;
   _lastUpdate: number;
-  hideAllContent: () => void;
-  loadTerminalContent: () => void;
-  loadScriptEditorContent: (filename?: string, code?: string) => void;
-  loadActiveScriptsContent: () => void;
-  loadCreateProgramContent: () => void;
-  loadCharacterContent: () => void;
-  loadFactionsContent: () => void;
-  loadAugmentationsContent: () => void;
-  loadHacknetNodesContent: () => void;
-  loadSleevesContent: () => void;
-  loadLocationContent: () => void;
-  loadTravelContent: () => void;
-  loadJobContent: () => void;
-  loadStockMarketContent: () => void;
-  loadBladeburnerContent: () => void;
-  loadCorporationContent: () => void;
-  loadGangContent: () => void;
-  loadMilestonesContent: () => void;
-  loadTutorialContent: () => void;
-  loadDevMenuContent: () => void;
-  loadFactionContent: () => void;
-  loadInfiltrationContent: (name: string, difficulty: number, maxLevel: number) => void;
-  loadMissionContent: () => void;
-  loadResleevingContent: () => void;
-  loadGameOptionsContent: () => void;
-  load: (save: string) => void;
+  updateGame: (numCycles?: number) => void;
+  Counters: {
+    [key: string]: number | undefined;
+    autoSaveCounter: number;
+    updateSkillLevelsCounter: number;
+    updateDisplays: number;
+    updateDisplaysLong: number;
+    updateActiveScriptsDisplay: number;
+    createProgramNotifications: number;
+    augmentationsNotifications: number;
+    checkFactionInvitations: number;
+    passiveFactionGrowth: number;
+    messages: number;
+    mechanicProcess: number;
+    contractGeneration: number;
+  };
+  decrementAllCounters: (numCycles?: number) => void;
+  checkCounters: () => void;
+  load: (saveString: string) => void;
+  start: () => void;
 }

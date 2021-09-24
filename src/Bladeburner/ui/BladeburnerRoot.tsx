@@ -6,13 +6,11 @@ import { AllPages } from "./AllPages";
 import { use } from "../../ui/Context";
 import { IBladeburner } from "../IBladeburner";
 
-interface IProps {
-  bladeburner: IBladeburner;
-}
-
-export function BladeburnerRoot(props: IProps): React.ReactElement {
+export function BladeburnerRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
+  const bladeburner = player.bladeburner;
+  if (bladeburner === null) return <></>;
   return (
     <div className="bladeburner-container">
       <div style={{ height: "60%", display: "block", position: "relative" }}>
@@ -24,9 +22,9 @@ export function BladeburnerRoot(props: IProps): React.ReactElement {
             border: "1px solid white",
           }}
         >
-          <Stats bladeburner={props.bladeburner} player={player} router={router} />
+          <Stats bladeburner={bladeburner} player={player} router={router} />
         </div>
-        <Console bladeburner={props.bladeburner} player={player} />
+        <Console bladeburner={bladeburner} player={player} />
       </div>
       <div
         style={{
@@ -38,7 +36,7 @@ export function BladeburnerRoot(props: IProps): React.ReactElement {
           position: "relative",
         }}
       >
-        <AllPages bladeburner={props.bladeburner} player={player} />
+        <AllPages bladeburner={bladeburner} player={player} />
       </div>
     </div>
   );

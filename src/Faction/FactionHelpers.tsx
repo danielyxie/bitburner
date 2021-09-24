@@ -1,4 +1,5 @@
 import { Augmentations } from "../Augmentation/Augmentations";
+import { Augmentation } from "../Augmentation/Augmentation";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -20,7 +21,7 @@ import { dialogBoxCreate } from "../../utils/DialogBox";
 import { createPopup } from "../ui/React/createPopup";
 import { InvitationPopup } from "./ui/InvitationPopup";
 
-export function inviteToFaction(faction) {
+export function inviteToFaction(faction: Faction): void {
   Player.factionInvitations.push(faction.name);
   faction.alreadyInvited = true;
   if (!Settings.SuppressFactionInvites) {
@@ -33,7 +34,7 @@ export function inviteToFaction(faction) {
   }
 }
 
-export function joinFaction(faction) {
+export function joinFaction(faction: Faction): void {
   if (faction.isMember) return;
   faction.isMember = true;
   Player.factions.push(faction.name);
@@ -54,7 +55,7 @@ export function joinFaction(faction) {
   }
 }
 
-export function startHackingMission(faction) {
+export function startHackingMission(faction: Faction): void {
   const mission = new HackingMission(faction.playerReputation, faction);
   setInMission(true, mission); //Sets inMission flag to true
   mission.init();
@@ -62,7 +63,7 @@ export function startHackingMission(faction) {
 
 //Returns a boolean indicating whether the player has the prerequisites for the
 //specified Augmentation
-export function hasAugmentationPrereqs(aug) {
+export function hasAugmentationPrereqs(aug: Augmentation): boolean {
   let hasPrereqs = true;
   if (aug.prereqs && aug.prereqs.length > 0) {
     for (let i = 0; i < aug.prereqs.length; ++i) {
@@ -88,7 +89,7 @@ export function hasAugmentationPrereqs(aug) {
   return hasPrereqs;
 }
 
-export function purchaseAugmentation(aug, fac, sing = false) {
+export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = false): string {
   const factionInfo = fac.getInfo();
   var hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
@@ -111,13 +112,6 @@ export function purchaseAugmentation(aug, fac, sing = false) {
     }
     dialogBoxCreate(txt);
   } else if (aug.baseCost === 0 || Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
-    if (Player.firstAugPurchased === false) {
-      Player.firstAugPurchased = true;
-      document.getElementById("augmentations-tab").style.display = "list-item";
-      document.getElementById("character-menu-header").click();
-      document.getElementById("character-menu-header").click();
-    }
-
     var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
       queuedAugmentation.level = getNextNeurofluxLevel();
@@ -166,9 +160,10 @@ export function purchaseAugmentation(aug, fac, sing = false) {
         "reproduce this.",
     );
   }
+  return "";
 }
 
-export function getNextNeurofluxLevel() {
+export function getNextNeurofluxLevel(): number {
   // Get current Neuroflux level based on Player's augmentations
   let currLevel = 0;
   for (var i = 0; i < Player.augmentations.length; ++i) {
@@ -186,7 +181,7 @@ export function getNextNeurofluxLevel() {
   return currLevel + 1;
 }
 
-export function processPassiveFactionRepGain(numCycles) {
+export function processPassiveFactionRepGain(numCycles: number): void {
   for (const name in Factions) {
     if (name === Player.currentWorkFactionName) continue;
     if (!Factions.hasOwnProperty(name)) continue;

@@ -50,7 +50,29 @@ import { startUnclickable } from "./Exploits/unclickable";
 
 import React from "react";
 
-const Engine = {
+const Engine: {
+  _lastUpdate: number;
+  updateGame: (numCycles?: number) => void;
+  Counters: {
+    [key: string]: number | undefined;
+    autoSaveCounter: number;
+    updateSkillLevelsCounter: number;
+    updateDisplays: number;
+    updateDisplaysLong: number;
+    updateActiveScriptsDisplay: number;
+    createProgramNotifications: number;
+    augmentationsNotifications: number;
+    checkFactionInvitations: number;
+    passiveFactionGrowth: number;
+    messages: number;
+    mechanicProcess: number;
+    contractGeneration: number;
+  };
+  decrementAllCounters: (numCycles?: number) => void;
+  checkCounters: () => void;
+  load: (saveString: string) => void;
+  start: () => void;
+} = {
   // Time variables (milliseconds unix epoch time)
   _lastUpdate: new Date().getTime(),
 
@@ -106,7 +128,7 @@ const Engine = {
     }
 
     // Gang, if applicable
-    if (Player.inGang()) {
+    if (Player.inGang() && Player.gang !== null) {
       Player.gang.process(numCycles, Player);
     }
 
@@ -175,10 +197,10 @@ const Engine = {
   },
 
   decrementAllCounters: function (numCycles = 1) {
-    for (var counter in Engine.Counters) {
-      if (Engine.Counters.hasOwnProperty(counter)) {
-        Engine.Counters[counter] = Engine.Counters[counter] - numCycles;
-      }
+    for (const counterName in Engine.Counters) {
+      const counter = Engine.Counters[counterName];
+      if (counter === undefined) throw new Error("counter should not be undefined");
+      Engine.Counters[counterName] = counter - numCycles;
     }
   },
 
@@ -328,8 +350,9 @@ const Engine = {
       }
 
       // Gang progress for BitNode 2
-      if (Player.inGang()) {
-        Player.gang.process(numCyclesOffline, Player);
+      const gang = Player.gang;
+      if (Player.inGang() && gang !== null) {
+        gang.process(numCyclesOffline, Player);
       }
 
       // Corporation offline progress

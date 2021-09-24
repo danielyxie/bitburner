@@ -4,8 +4,8 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { logBoxCreate } from "../../../utils/LogBox";
 import { findRunningScriptByPid } from "../../Script/ScriptHelpers";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 import { compareArrays } from "../../../utils/helpers/compareArrays";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
 
 export function tail(
   terminal: ITerminal,

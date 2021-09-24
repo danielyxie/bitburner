@@ -9,7 +9,7 @@ import { isValidFilePath } from "../Terminal/DirectoryHelpers";
 import { TextFile } from "../TextFile";
 import { IReturnStatus } from "../types";
 
-import { isScriptFilename } from "../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../Script/isScriptFilename";
 
 import { createRandomIp } from "../../utils/IPAddress";
 import { compareArrays } from "../../utils/helpers/compareArrays";

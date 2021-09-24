@@ -103,7 +103,8 @@ import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
 import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelpers";
-import { isScriptFilename } from "./Script/ScriptHelpersTS";
+import { isScriptFilename } from "./Script/isScriptFilename";
+
 import { AllServers, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
 import { RunningScript } from "./Script/RunningScript";
 import {
@@ -132,7 +133,7 @@ import { NetscriptPorts, runScriptFromScript, startWorkerScript } from "./Netscr
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
-import { Interpreter } from "./JSInterpreter";
+import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { NetscriptPort } from "./NetscriptPort";
 import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
@@ -3808,7 +3809,7 @@ function NetscriptFunctions(workerScript) {
         throw makeRuntimeErrorMsg("commitCrime", `Invalid crime: '${crimeRoughName}'`);
       }
       workerScript.log("commitCrime", `Attempting to commit ${crime.name}...`);
-      return crime.commit(Router, Player, 1, { workerscript: workerScript });
+      return crime.commit(Router, Player, 1, workerScript);
     },
     getCrimeChance: function (crimeRoughName) {
       updateDynamicRam("getCrimeChance", getRamCost("getCrimeChance"));

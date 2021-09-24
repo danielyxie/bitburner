@@ -295,7 +295,6 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         event.preventDefault();
         clickCreateProgram();
       } else if (event.keyCode === KEY.F && event.altKey) {
-        // Overriden by Fconf
         if (props.page == Page.Terminal && Settings.EnableBashHotkeys) {
           return;
         }

@@ -2,8 +2,7 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
-import { createFconf } from "../../Fconf/Fconf";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 
 export function nano(
   terminal: ITerminal,
@@ -19,11 +18,7 @@ export function nano(
 
   try {
     const filename = args[0] + "";
-    if (filename === ".fconf") {
-      const text = createFconf();
-      router.toScriptEditor(filename, text);
-      return;
-    } else if (isScriptFilename(filename)) {
+    if (isScriptFilename(filename)) {
       const filepath = terminal.getFilepath(filename);
       const script = terminal.getScript(player, filename);
       if (script == null) {
