@@ -119,7 +119,13 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
 
   // Note: the environment that we pass to the JS script only needs to contain the functions visible
   // to that script, which env.vars does at this point.
-  return executeJSScript(workerScript.getServer().scripts, workerScript).catch((e) => {
+  return new Promise<WorkerScript>((resolve, reject) => {
+    executeJSScript(workerScript.getServer().scripts, workerScript)
+      .then(() => {
+        resolve(workerScript);
+      })
+      .catch((e) => reject(e));
+  }).catch((e) => {
     if (e instanceof Error) {
       workerScript.errorMessage = makeRuntimeRejectMsg(
         workerScript,
@@ -518,7 +524,7 @@ export function createAndAddWorkerScript(
 
   // Once the code finishes (either resolved or rejected, doesnt matter), set its
   // running status to false
-  p.then(function (w) {
+  p.then(function (w: WorkerScript) {
     // On natural death, the earnings are transfered to the parent if it still exists.
     if (parent !== undefined) {
       if (parent.running) {

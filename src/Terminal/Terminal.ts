@@ -92,7 +92,7 @@ export class Terminal implements ITerminal {
   append(item: Output | Link): void {
     this.outputHistory.push(item);
     if (this.outputHistory.length > Settings.MaxTerminalCapacity) {
-      this.outputHistory.slice(this.outputHistory.length - Settings.MaxTerminalCapacity);
+      this.outputHistory.splice(0, this.outputHistory.length - Settings.MaxTerminalCapacity);
     }
     TerminalEvents.emit();
   }
