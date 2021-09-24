@@ -68,7 +68,7 @@ export class WorkerScript {
    * Used for static RAM calculation. Stores names of all functions that have
    * already been checked by this script
    */
-  loadedFns: IMap<string> = {};
+  loadedFns: IMap<boolean> = {};
 
   /**
    * Filename of script
