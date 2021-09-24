@@ -85,8 +85,7 @@ function prestigeAugmentation(): void {
   }
 
   // Stop a Terminal action if there is onerror
-  if (Engine._actionInProgress) {
-    Engine._actionInProgress = false;
+  if (Terminal.action !== null) {
     Terminal.finishAction(Router, Player, true);
   }
 
@@ -195,8 +194,7 @@ function prestigeSourceFile(flume: boolean): void {
   }
 
   // Stop a Terminal action if there is one
-  if (Engine._actionInProgress) {
-    Engine._actionInProgress = false;
+  if (Terminal.action !== null) {
     Terminal.finishAction(Router, Player, true);
   }
 

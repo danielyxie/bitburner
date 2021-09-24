@@ -270,7 +270,7 @@ export interface IPlayer {
   createProgramWork(numCycles: number): boolean;
   takeClass(numCycles: number): boolean;
   commitCrime(numCycles: number): boolean;
-  checkForFactionInvitations(): void;
+  checkForFactionInvitations(): Faction[];
   setBitNodeNumber(n: number): void;
   getMult(name: string): number;
   setMult(name: string, mult: number): void;

@@ -2015,8 +2015,8 @@ export function reapplyAllSourceFiles(this: IPlayer): void {
 //This function sets the requirements to join a Faction. It checks whether the Player meets
 //those requirements and will return an array of all factions that the Player should
 //receive an invitation to
-export function checkForFactionInvitations(this: IPlayer) {
-  let invitedFactions = []; //Array which will hold all Factions the player should be invited to
+export function checkForFactionInvitations(this: IPlayer): Faction[] {
+  let invitedFactions: Faction[] = []; //Array which will hold all Factions the player should be invited to
 
   var numAugmentations = this.augmentations.length;
 
